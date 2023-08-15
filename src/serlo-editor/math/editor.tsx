@@ -1,7 +1,7 @@
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import { useState, createRef, useEffect, useRef } from 'react'
+import { useState, createRef } from 'react'
 import { createPortal } from 'react-dom'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { Key } from 'ts-key-enum'
@@ -36,7 +36,6 @@ export function MathEditor(props: MathEditorProps) {
   const anchorRef = createRef<HTMLDivElement>()
   const [isHelpOpen, setIsHelpOpen] = useState(false)
   const [hasError, setHasError] = useState(false)
-  const targetRef = useRef<HTMLDivElement | null>(null)
 
   const mathStrings = useEditorStrings().plugins.text.math
 
@@ -52,38 +51,6 @@ export function MathEditor(props: MathEditorProps) {
       enableOnFormTags: true,
     }
   )
-
-  useEffect(() => {
-    targetRef.current = document.querySelector<HTMLDivElement>(
-      '.toolbar-controls-target'
-    )
-
-    if (targetRef.current) {
-      return
-    }
-
-    // eslint-disable-next-line no-console
-    console.warn(
-      'MathEditor: Could not find toolbar-controls-target to create portal'
-    )
-    const observer = new MutationObserver((mutationsList) => {
-      for (const mutation of mutationsList) {
-        if (mutation.type === 'childList') {
-          const target = document.querySelector<HTMLDivElement>(
-            '.toolbar-controls-target'
-          )
-          if (target) {
-            targetRef.current = target
-            observer.disconnect()
-          }
-        }
-      }
-    })
-
-    observer.observe(document.body, { childList: true, subtree: true })
-
-    return () => observer.disconnect()
-  }, [])
 
   const isVisualMode = (visual && !hasError) || false
 
@@ -202,7 +169,10 @@ export function MathEditor(props: MathEditorProps) {
   }
 
   function renderControlsPortal(children: JSX.Element) {
-    if (!targetRef.current) return null
-    return createPortal(children, targetRef.current)
+    return createPortal(
+      children,
+      document.querySelector<HTMLDivElement>('.toolbar-controls-target') ??
+        document.body
+    )
   }
 }
