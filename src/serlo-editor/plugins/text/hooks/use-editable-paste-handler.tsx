@@ -26,9 +26,8 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
 
   return useCallback(
     (event: React.ClipboardEvent) => {
-      const storeState = store.getState()
-
       // Exit if unable to select document data or if not allowed to manipulate siblings
+      const storeState = store.getState()
       const document = selectDocument(storeState, id)
       const mayManipulateSiblings = selectMayManipulateSiblings(storeState, id)
       if (!document || !mayManipulateSiblings) return
@@ -39,9 +38,8 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       if (!files.length && !text) return
 
       // Iterate through all plugins and try to process clipboard data
-      const plugins = editorPlugins.getAllWithData()
       let media
-      for (const { plugin, type } of plugins) {
+      for (const { plugin, type } of editorPlugins.getAllWithData()) {
         const state = plugin.onFiles?.(files) ?? plugin.onText?.(text)
         if (state?.state) {
           media = { state: state.state as unknown, pluginType: type }
@@ -62,8 +60,7 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       }
 
       // Insert the plugin with appropriate type and state
-      const { pluginType, state } = media
-      insertPlugin({ pluginType, editor, id, dispatch, state })
+      insertPlugin({ editor, id, dispatch, ...media })
     },
     [dispatch, editor, id, textStrings]
   )
