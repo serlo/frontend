@@ -161,8 +161,10 @@ export function MathEditor(props: MathEditorProps) {
   }
 
   function renderControlsPortal(children: JSX.Element) {
-    return createPortal(children, document.querySelector<HTMLDivElement>(
-      '.toolbar-controls-target'
-    ) ?? document.body)
+    return createPortal(
+      children,
+      document.querySelector<HTMLDivElement>('.toolbar-controls-target') ??
+        document.body
+    )
   }
 }
