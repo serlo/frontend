@@ -41,8 +41,7 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       // Iterate through all plugins and try to process clipboard data
       const plugins = editorPlugins.getAllWithData()
       let media
-      for (let i = 0; i < plugins.length; i++) {
-        const { plugin, type } = plugins[i]
+      for (const { plugin, type } of plugins) {
         const state = plugin.onFiles?.(files) ?? plugin.onText?.(text)
         if (state?.state) {
           media = { state: state.state as unknown, pluginType: type }
