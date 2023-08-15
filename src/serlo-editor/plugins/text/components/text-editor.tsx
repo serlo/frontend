@@ -21,9 +21,9 @@ import {
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { HoverOverlay } from '@/serlo-editor/editor-ui'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { isSelectionWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/list'
+import { SlateHoverOverlay } from '@/serlo-editor/editor-ui/slate-hover-overlay'
 import type { EditorPluginProps } from '@/serlo-editor/plugin'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import {
@@ -418,9 +418,9 @@ export function TextEditor(props: TextEditorProps) {
       <LinkControls serloLinkSearch={config.serloLinkSearch} />
 
       {showSuggestions && (
-        <HoverOverlay position="below">
+        <SlateHoverOverlay position="below">
           <Suggestions {...suggestionsProps} />
-        </HoverOverlay>
+        </SlateHoverOverlay>
       )}
     </Slate>
   )

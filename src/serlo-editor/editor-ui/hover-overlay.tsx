@@ -1,13 +1,15 @@
 import { createRef, useEffect, useState, ReactNode, RefObject } from 'react'
+import { BaseSelection } from 'slate'
 
 import { tw } from '@/helper/tw'
 
 export type HoverPosition = 'above' | 'below'
 
-interface HoverOverlayProps {
+export interface HoverOverlayProps {
   children: ReactNode
   position: HoverPosition
   anchor?: RefObject<HTMLElement>
+  selection?: BaseSelection
 }
 
 export function HoverOverlay(props: HoverOverlayProps) {
@@ -16,7 +18,7 @@ export function HoverOverlay(props: HoverOverlayProps) {
 
   const windowSelection = window.getSelection()
 
-  const { anchor, children } = props
+  const { anchor, children, selection } = props
 
   useEffect(() => {
     if (!overlay.current) return
@@ -53,7 +55,7 @@ export function HoverOverlay(props: HoverOverlayProps) {
       ),
       0
     )}px`
-  }, [overlay, anchor, positionAbove, windowSelection])
+  }, [overlay, anchor, positionAbove, windowSelection, selection])
 
   return (
     <div
