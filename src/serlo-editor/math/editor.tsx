@@ -125,15 +125,8 @@ export function MathEditor(props: MathEditorProps) {
                 props.onEditorChange(e.target.value === 'visual')
               }}
             >
-              <option
-                value="visual"
-                data-qa="editor-plugin-toolbar-math-visual"
-              >
-                {mathStrings.visual}
-              </option>
-              <option value="latex" data-qa="editor-plugin-toolbar-math-latex">
-                {mathStrings.latex}
-              </option>
+              <option value="visual">{mathStrings.visual}</option>
+              <option value="latex">{mathStrings.latex}</option>
             </select>
             {!disableBlock && (
               <button
