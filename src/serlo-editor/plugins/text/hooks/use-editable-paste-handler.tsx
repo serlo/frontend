@@ -26,16 +26,16 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
 
   return useCallback(
     (event: React.ClipboardEvent) => {
+      // Exit if no files or text in clipboard data
+      const files = Array.from(event.clipboardData.files)
+      const text = event.clipboardData.getData('text')
+      if (!files.length && !text) return
+
       // Exit if unable to select document data or if not allowed to manipulate siblings
       const storeState = store.getState()
       const document = selectDocument(storeState, id)
       const mayManipulateSiblings = selectMayManipulateSiblings(storeState, id)
       if (!document || !mayManipulateSiblings) return
-
-      // Exit if no files or text in clipboard data
-      const files = Array.from(event.clipboardData.files)
-      const text = event.clipboardData.getData('text')
-      if (!files.length && !text) return
 
       // Iterate through all plugins and try to process clipboard data
       let media
@@ -48,7 +48,7 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       }
 
       // Exit if no media was processed from clipboard data
-      if (media?.state === undefined) return
+      if (!media) return
 
       // Prevent URL being pasted as text in the text plugin
       event.preventDefault()
