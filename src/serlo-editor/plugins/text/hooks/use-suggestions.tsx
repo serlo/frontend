@@ -160,13 +160,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
 
     // split the text-plugin and insert selected new plugin
     setTimeout(() => {
-      insertPlugin({
-        pluginType,
-        editor,
-        store,
-        id,
-        dispatch,
-      })
+      insertPlugin({ pluginType, editor, id, dispatch })
     })
   }
 

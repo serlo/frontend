@@ -12,7 +12,6 @@ import {
   useAppDispatch,
   store,
 } from '@/serlo-editor/store'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface UseEditablePasteHandlerArgs {
   editor: SlateEditor
@@ -27,93 +26,41 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
 
   return useCallback(
     (event: React.ClipboardEvent) => {
-      const isListActive = isSelectionWithinList(editor)
-
-      const document = selectDocument(store.getState(), id)
-      if (!document) return
-
-      const mayManipulateSiblings = selectMayManipulateSiblings(
-        store.getState(),
-        id
-      )
-      if (!mayManipulateSiblings) return
-
+      // Exit if no files or text in clipboard data
       const files = Array.from(event.clipboardData.files)
       const text = event.clipboardData.getData('text')
+      if (!files.length && !text) return
 
-      // Handle pasted images or image URLs
-      if (files?.length > 0 || text) {
-        const imagePlugin = editorPlugins.getByType(EditorPluginType.Image)
-        if (!imagePlugin) return
+      // Exit if unable to select document data or if not allowed to manipulate siblings
+      const storeState = store.getState()
+      const document = selectDocument(storeState, id)
+      const mayManipulateSiblings = selectMayManipulateSiblings(storeState, id)
+      if (!document || !mayManipulateSiblings) return
 
-        const imagePluginState =
-          imagePlugin.onFiles?.(files) ?? imagePlugin.onText?.(text)
-
-        if (imagePluginState !== undefined) {
-          if (isListActive) {
-            showToastNotice(textStrings.noElementPasteInLists, 'warning')
-            return
-          }
-
-          insertPlugin({
-            pluginType: EditorPluginType.Image,
-            editor,
-            store,
-            id,
-            dispatch,
-            state: imagePluginState.state,
-          })
-          return
+      // Iterate through all plugins and try to process clipboard data
+      let media
+      for (const { plugin, type } of editorPlugins.getAllWithData()) {
+        const state = plugin.onFiles?.(files) ?? plugin.onText?.(text)
+        if (state?.state) {
+          media = { state: state.state as unknown, pluginType: type }
+          break
         }
       }
 
-      if (text) {
-        // Handle pasted video URLs
-        const videoPluginState = editorPlugins
-          .getByType(EditorPluginType.Video)
-          ?.onText?.(text)
-        if (videoPluginState !== undefined) {
-          event.preventDefault()
+      // Exit if no media was processed from clipboard data
+      if (!media) return
 
-          if (isListActive) {
-            showToastNotice(textStrings.noElementPasteInLists, 'warning')
-            return
-          }
+      // Prevent URL being pasted as text in the text plugin
+      event.preventDefault()
 
-          insertPlugin({
-            pluginType: EditorPluginType.Video,
-            editor,
-            store,
-            id,
-            dispatch,
-            state: videoPluginState.state,
-          })
-          return
-        }
-
-        // Handle pasted geogebra URLs
-        const geogebraPluginState = editorPlugins
-          .getByType(EditorPluginType.Geogebra)
-          ?.onText?.(text)
-        if (geogebraPluginState !== undefined) {
-          event.preventDefault()
-
-          if (isListActive) {
-            showToastNotice(textStrings.noElementPasteInLists, 'warning')
-            return
-          }
-
-          insertPlugin({
-            pluginType: EditorPluginType.Geogebra,
-            editor,
-            store,
-            id,
-            dispatch,
-            state: geogebraPluginState.state,
-          })
-          return
-        }
+      // Prevent pasting media when selection is within a list
+      if (isSelectionWithinList(editor)) {
+        showToastNotice(textStrings.noElementPasteInLists, 'warning')
+        return
       }
+
+      // Insert the plugin with appropriate type and state
+      insertPlugin({ editor, id, dispatch, ...media })
     },
     [dispatch, editor, id, textStrings]
   )
