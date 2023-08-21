@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 
 import { abSubmission } from '@/helper/ab-submission'
 
-const experiments: {
+export const experiments: {
   experiment: string
   ids: number[]
   start: number
