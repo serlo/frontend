@@ -81,6 +81,7 @@
     "react-modal": "^3.16.1",
     "react-notify-toast": "Entkenntnis/tmp-react-notify-toast",
     "react-redux": "^8.1.2",
+    "react-simple-star-rating": "^5.1.7",
     "react-syntax-highlighter": "^15.5.0",
     "react-textarea-autosize": "^8.5.2",
     "redux": "^4.2.1",
