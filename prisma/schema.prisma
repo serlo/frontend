@@ -51,3 +51,22 @@ model PrototypeThreadStatus {
   threadId String @id @db.VarChar(24)
   status   String @db.VarChar(24)
 }
+
+model ABTestingData {
+  id           Int      @id @default(autoincrement())
+
+  group        String   @db.VarChar(8)
+  experiment   String   @db.VarChar(64)
+  entityId     Int
+
+  type         String   @db.VarChar(8)
+  result       String   @db.VarChar(8)
+  
+  sessionId    String   @db.VarChar(64)
+  isProduction Boolean
+  timestamp    DateTime @default(now())
+
+  @@index([experiment])
+  @@index([entityId])
+  @@index([timestamp])
+}
