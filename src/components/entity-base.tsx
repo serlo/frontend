@@ -47,6 +47,9 @@ const DonationsBanner = dynamic<DonationsBannerProps>(() =>
 
 export function EntityBase({ children, page, entityId }: EntityBaseProps) {
   const [survey, setSurvey] = useState(false)
+
+  // TODO: setup here: state? memo? -> useState, because it's client only
+
   const { asPath } = useRouter()
   const { lang } = useInstanceData()
   const [answers] = useState(
