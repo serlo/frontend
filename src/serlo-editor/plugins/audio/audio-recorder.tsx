@@ -36,7 +36,8 @@ export function AudioRecorder({
   const audioStrings = useEditorStrings().plugins.audio
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
 
-  const recordedChunks: BlobPart[] = []
+  const recordedChunks = useRef<BlobPart[]>([])
+
   const canTrashAudio =
     status === RecordingStatus.UPLOADING || status === RecordingStatus.UPLOADED
 
@@ -65,12 +66,14 @@ export function AudioRecorder({
 
       mediaRecorderRef.current.ondataavailable = (event) => {
         if (event.data.size > 0) {
-          recordedChunks.push(event.data)
+          recordedChunks.current.push(event.data)
         }
       }
 
       mediaRecorderRef.current.onstop = () => {
-        const audioBlob = new Blob(recordedChunks, { type: 'audio/wav' })
+        const audioBlob = new Blob(recordedChunks.current, {
+          type: 'audio/wav',
+        })
         blobToBase64(audioBlob)
 
         const url = URL.createObjectURL(audioBlob)
