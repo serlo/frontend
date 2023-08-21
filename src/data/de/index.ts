@@ -751,8 +751,8 @@ export const loggedInData = {
         text: {
           title: 'Text',
           description: "Schreibe Text und Matheformeln, und formatiere sie.",
-          placeholder: 'Write something or add element:',
-          addButtonExplanation: 'Click to insert new element',
+          placeholder: "Schreib etwas oder füge Elemente ein:",
+          addButtonExplanation: "Klicke, um ein neues Element einzufügen",
           quote: "Zitat",
           setColor: "Einfärben",
           resetColor: "Farbe zurücksetzen",
