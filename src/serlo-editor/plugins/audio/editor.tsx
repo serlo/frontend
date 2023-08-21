@@ -39,6 +39,7 @@ export const AudioEditor = (props: AudioProps) => {
         {showRecorder ? (
           <div className="relative">
             <AudioRecorder
+              base64AudioRecording={state.base64AudioRecording.value}
               setBase64AudioRecording={(base64AudioRecording: string) => {
                 // as there can only be a src/url or recording, we are resetting
                 // the url

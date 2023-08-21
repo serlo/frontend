@@ -14,6 +14,7 @@ const getCurrentDateFormatted = (): string => {
 }
 
 interface AudioRecorderProps {
+  base64AudioRecording: string
   setBase64AudioRecording: (base64AudioRecording: string) => void
 }
 
@@ -24,7 +25,10 @@ enum RecordingStatus {
   UPLOADED = 'uploaded',
 }
 
-export function AudioRecorder({ setBase64AudioRecording }: AudioRecorderProps) {
+export function AudioRecorder({
+  setBase64AudioRecording,
+  base64AudioRecording,
+}: AudioRecorderProps) {
   const [status, setStatus] = useState<RecordingStatus>(RecordingStatus.IDLE)
   const [audioURL, setAudioURL] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -33,7 +37,14 @@ export function AudioRecorder({ setBase64AudioRecording }: AudioRecorderProps) {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
 
   const recordedChunks: BlobPart[] = []
-  console.log('AudioRecorder called: ', { status, audioURL })
+  const canTrashAudio =
+    status === RecordingStatus.UPLOADING || status === RecordingStatus.UPLOADED
+
+  useEffect(() => {
+    if (base64AudioRecording) {
+      setStatus(RecordingStatus.UPLOADED)
+    }
+  }, [base64AudioRecording])
 
   useEffect(() => {
     if (status === RecordingStatus.RECORDING) {
@@ -106,7 +117,6 @@ export function AudioRecorder({ setBase64AudioRecording }: AudioRecorderProps) {
   }
 
   const stopRecording = () => {
-    console.log('StopRecording called: ', { mediaRecorderRef, status })
     if (mediaRecorderRef.current) {
       setStatus(RecordingStatus.UPLOADING)
 
@@ -135,22 +145,23 @@ export function AudioRecorder({ setBase64AudioRecording }: AudioRecorderProps) {
           <button
             disabled={status === RecordingStatus.UPLOADING}
             onClick={startRecording}
-            className="serlo-button rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:cursor-default disabled:bg-gray-300"
+            className={`serlo-button rounded-lg ${
+              canTrashAudio ? 'rounded-r-none' : ''
+            } bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:cursor-default disabled:bg-gray-300`}
           >
             {status === RecordingStatus.UPLOADED
               ? 'Record again'
               : 'Start Recording'}
           </button>
 
-          {status === RecordingStatus.UPLOADING ||
-            (status === RecordingStatus.UPLOADED && (
-              <button
-                onClick={deleteAudio}
-                className="serlo-button rounded bg-red-300 p-2 transition"
-              >
-                <FaIcon icon={faTrash} className="cursor-pointer" />
-              </button>
-            ))}
+          {canTrashAudio && (
+            <button
+              onClick={deleteAudio}
+              className="serlo-button rounded rounded-l-none bg-red-300 p-2 transition"
+            >
+              <FaIcon icon={faTrash} className="cursor-pointer" />
+            </button>
+          )}
         </div>
       )}
 
