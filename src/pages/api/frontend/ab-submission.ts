@@ -30,9 +30,14 @@ export default async function handler(
       typeof topicId === 'number' &&
       typeof experiment === 'string' &&
       typeof type === 'string' &&
-      ['sc', 'mc', 'input', 'h5p', 'text', 'ival'].includes(type) &&
+      ['sc', 'mc', 'input', 'h5p', 'text', 'ival', 'visit', 'rating'].includes(
+        type
+      ) &&
       typeof result === 'string' &&
-      (['correct', 'wrong', 'open'].includes(result) || type === 'ival') &&
+      (['correct', 'wrong', 'open'].includes(result) ||
+        type === 'ival' ||
+        type === 'rating' ||
+        type === 'visit') &&
       result.length <= 8 &&
       typeof sessionId === 'string' &&
       typeof isProduction === 'boolean'
