@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 
+import { abSubmission } from '@/helper/ab-submission'
+
 const experiments: {
   experiment: string
   ids: number[]
@@ -21,12 +23,12 @@ export const ABProvider = ABContext.Provider
 export function useAB() {
   const value = useContext(ABContext)
 
-  return value ?? {}
+  return value ?? null
 }
 
-type ABValue = null | {
-  entityId: number
-  experiments: string[]
+export type ABValue = null | {
+  topicId: number
+  experiment: string
   group: string
 }
 
@@ -41,17 +43,27 @@ export function useABValue(entityId: number) {
       group = Math.random() < 0.5 ? 'a' : 'b'
       sessionStorage.setItem('___serlo_ab_group___', group)
     }
+    const experiment = experiments.find(
+      (exp) =>
+        exp.ids.includes(entityId) &&
+        exp.start >= Date.now() &&
+        exp.end < Date.now()
+    )?.experiment
+    if (!experiment) {
+      return // no experiments active
+    }
+    abSubmission({
+      entityId: -1,
+      experiment,
+      group,
+      result: '',
+      topicId: entityId,
+      type: 'visit',
+    })
     setValue({
       group,
-      entityId,
-      experiments: experiments
-        .filter(
-          (exp) =>
-            exp.ids.includes(entityId) &&
-            exp.start >= Date.now() &&
-            exp.end < Date.now()
-        )
-        .map((exp) => exp.experiment),
+      topicId: entityId,
+      experiment,
     })
   }, [entityId])
 

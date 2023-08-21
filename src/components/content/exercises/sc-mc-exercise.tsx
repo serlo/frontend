@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 
+import { useAB } from '@/contexts/ab'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EditorPluginScMcExercise } from '@/frontend-node-types'
 import {
@@ -34,6 +35,7 @@ export function ScMcExercise({
   const exStrings = useInstanceData().strings.content.exercises
 
   const { asPath } = useRouter()
+  const ab = useAB()
 
   return (
     <ScMcExerciseRenderer
@@ -59,13 +61,16 @@ export function ScMcExercise({
   )
 
   function onEvaluate(correct: boolean, type: ExerciseSubmissionData['type']) {
-    exerciseSubmission({
-      path: asPath,
-      entityId: context.entityId,
-      revisionId: context.revisionId,
-      result: correct ? 'correct' : 'wrong',
-      type,
-    })
+    exerciseSubmission(
+      {
+        path: asPath,
+        entityId: context.entityId,
+        revisionId: context.revisionId,
+        result: correct ? 'correct' : 'wrong',
+        type,
+      },
+      ab
+    )
   }
 
   function renderRevisionExtra(
