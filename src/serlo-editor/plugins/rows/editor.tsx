@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-import { RowsProps } from '.'
+import type { RowsProps } from '.'
 import { AllowedChildPlugins } from './allowed-child-plugins-context'
 import { RowEditor } from './components/row-editor'
 import { RowSeparator } from './components/row-separator'

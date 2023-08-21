@@ -44,14 +44,26 @@ module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
   transpilePackages: ['ramda'], // context: https://github.com/vercel/next.js/issues/40183
-  /*experimental: {
-    fallbackNodePolyfills: false,
-  },*/ // breaks styled-components unfortunately, see https://github.com/serlo/frontend/issues/2010
   images: {
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'assets.serlo.org',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'embed.serlo.org',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'community.serlo.org',
         port: '',
         pathname: '/**',
       },

@@ -39,15 +39,12 @@ export function InviteModal({ isOpen, onClose, type }: InviteModalProps) {
       <p className="serlo-p mb-0 mt-24 border-t-[1px] pt-8 text-base">
         {replacePlaceholders(modalStrings.psText, {
           link: (
-            <a onClick={onClose}>
-              <Link
-                href={
-                  lang === 'de' ? '/community' : footerData.participationHref
-                }
-              >
-                {modalStrings.psLinkText}
-              </Link>
-            </a>
+            <Link
+              href={lang === 'de' ? '/community' : footerData.participationHref}
+              onClick={onClose}
+            >
+              {modalStrings.psLinkText}
+            </Link>
           ),
         })}
       </p>
@@ -57,27 +54,26 @@ export function InviteModal({ isOpen, onClose, type }: InviteModalProps) {
   function renderButtons() {
     return (
       <>
-        {' '}
-        <a
+        <Link
+          className="serlo-button-blue"
+          href={loginUrl}
           onClick={() => {
             submitEvent('invite2edit-click-login-' + type)
             onClose()
           }}
         >
-          <Link className="serlo-button-blue" href={loginUrl}>
-            {modalStrings.loginButton}
-          </Link>
-        </a>
-        <a
+          {modalStrings.loginButton}
+        </Link>
+        <Link
+          className="serlo-button-green ml-4"
+          href={registrationUrl}
           onClick={() => {
             submitEvent('invite2edit-click-register-' + type)
             onClose()
           }}
         >
-          <Link className="serlo-button-green ml-4" href={registrationUrl}>
-            {modalStrings.registerButton}
-          </Link>
-        </a>
+          {modalStrings.registerButton}
+        </Link>
       </>
     )
   }

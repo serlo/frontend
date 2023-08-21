@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { MultimediaProps } from '..'
+import type { MultimediaProps } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { getPluginTitle } from '@/serlo-editor/plugin/helpers/get-plugin-title'

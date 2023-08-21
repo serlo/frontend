@@ -1,6 +1,6 @@
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 
-import { HighlightProps } from '.'
+import type { HighlightProps } from '.'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'

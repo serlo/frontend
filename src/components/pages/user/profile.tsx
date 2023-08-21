@@ -1,5 +1,6 @@
 import { faInfoCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { NextPage } from 'next'
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
 import { useAuthentication } from '@/auth/use-authentication'
@@ -108,10 +109,12 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   function renderProfileImage() {
     return (
       <figure className="mx-auto h-44 w-44 [contain:content] sm:mx-0">
-        <img
+        <Image
           src={imageUrl}
           alt={`Profile image of ${username}`}
-          className="block h-full w-full rounded-full"
+          width={176}
+          height={176}
+          className="block rounded-full"
         />
         {isOwnProfile && !isNewlyRegisteredUser && (
           <Link

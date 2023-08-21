@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { GeogebraProps } from '.'
+import type { GeogebraProps } from '.'
 import { GeogebraRenderer, parseId } from './renderer'
 import { GeogebraToolbar } from './toolbar'
 import { FaIcon } from '@/components/fa-icon'

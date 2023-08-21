@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import Image from 'next/image'
 
 import { Link } from '@/components/content/link'
-import { TeamDataEntry } from '@/components/pages/editor/editor-team'
+import type { TeamDataEntry } from '@/components/pages/editor/editor-team'
 import { getAvatarUrl } from '@/components/user/user-link'
 
 export interface PageTeamRendererProps {
@@ -52,7 +52,8 @@ export const PageTeamRenderer = ({
             src={imageSrc}
             alt={`${firstName} ${lastName}`}
             fill
-            style={{ borderRadius: '99rem' }}
+            className="rounded-full"
+            sizes={compact ? '8rem' : '11rem'}
           />
         </div>
         <b>

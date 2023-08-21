@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { ScMcExerciseProps } from '.'
+import type { ScMcExerciseProps } from '.'
 import { ScMcExerciseRenderer } from './renderer'
 import { ScMcExerciseToolbar } from './toolbar'
 import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'

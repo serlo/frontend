@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-import { EntityBaseProps } from './entity-base'
+import type { EntityBaseProps } from './entity-base'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
 

@@ -7,8 +7,8 @@ import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import {
-  EditorPlugin,
-  EditorPluginProps,
+  type EditorPlugin,
+  type EditorPluginProps,
   child,
   object,
   string,

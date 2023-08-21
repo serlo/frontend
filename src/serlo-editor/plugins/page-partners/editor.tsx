@@ -1,4 +1,4 @@
-import { PagePartnersPluginProps } from '.'
+import type { PagePartnersPluginProps } from '.'
 import { PartnerList } from '@/components/landing/rework/partner-list'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'

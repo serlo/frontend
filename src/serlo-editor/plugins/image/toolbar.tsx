@@ -1,7 +1,7 @@
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { Dispatch, SetStateAction } from 'react'
 
-import { ImageProps } from '.'
+import type { ImageProps } from '.'
 import { SettingsModalControls } from './controls/settings-modal-controls'
 import { UploadButton } from './controls/upload-button'
 import { FaIcon } from '@/components/fa-icon'

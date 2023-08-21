@@ -8,7 +8,7 @@ import { NoAuthItem } from './no-auth-item'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 
-const AuthItems = dynamic<{}>(() =>
+const AuthItems = dynamic(() =>
   import('./auth-items').then((mod) => mod.AuthItems)
 )
 

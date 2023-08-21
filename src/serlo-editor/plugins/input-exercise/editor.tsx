@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { InputExerciseProps } from '.'
+import type { InputExerciseProps } from '.'
 import { InputExerciseRenderer } from './renderer'
 import { InputExerciseToolbar } from './toolbar'
 import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'

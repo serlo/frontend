@@ -751,7 +751,8 @@ export const loggedInData = {
         text: {
           title: 'Text',
           description: 'Compose content using rich text and math formulas.',
-          placeholder: 'Write something or add elements with ⊕.',
+          placeholder: 'Write something or add element:',
+          addButtonExplanation: 'Click to insert new element',
           quote: 'Quote',
           setColor: 'Set color',
           resetColor: 'Reset color',
@@ -798,7 +799,8 @@ export const loggedInData = {
             mathSymbols: 'Math symbols',
             eG: 'e.g.',
             functions: "செயல்பாடுகள்",
-            displayAsBlock: 'Display as block'
+            displayAsBlock: 'Display as block',
+            closeMathFormulaEditor: "Close math formula editor"
           }
         },
         video: {

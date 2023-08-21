@@ -751,7 +751,8 @@ export const loggedInData = {
         text: {
           title: 'Text',
           description: "Schreibe Text und Matheformeln, und formatiere sie.",
-          placeholder: "Schreib etwas oder füge mit ⊕ Elemente ein.",
+          placeholder: "Schreib etwas oder füge Elemente ein:",
+          addButtonExplanation: "Klicke, um ein neues Element einzufügen",
           quote: "Zitat",
           setColor: "Einfärben",
           resetColor: "Farbe zurücksetzen",
@@ -798,7 +799,8 @@ export const loggedInData = {
             mathSymbols: "Mathematische Symbole",
             eG: "z.B.",
             functions: "Funktionen",
-            displayAsBlock: "eigene Zeile"
+            displayAsBlock: "eigene Zeile",
+            closeMathFormulaEditor: "Mathe-Formel Editor schließen"
           }
         },
         video: {

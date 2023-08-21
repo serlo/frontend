@@ -5,7 +5,7 @@ import {
 import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
 
-import { PageTeamPluginProps } from '.'
+import type { PageTeamPluginProps } from '.'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'

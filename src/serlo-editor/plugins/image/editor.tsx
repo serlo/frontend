@@ -1,7 +1,7 @@
 import { faImages } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
 
-import { ImageProps } from '.'
+import type { ImageProps } from '.'
 import { InlineSrcControls } from './controls/inline-src-controls'
 import { ImageRenderer } from './renderer'
 import { ImageToolbar } from './toolbar'
@@ -30,6 +30,7 @@ export function ImageEditor(props: ImageProps) {
 
   const isLoading = isTempFile(state.src.value) && !state.src.value.loaded
 
+  // eslint-disable-next-line @typescript-eslint/no-base-to-string
   const src = state.src.value.toString()
 
   useEffect(() => {
@@ -54,7 +55,7 @@ export function ImageEditor(props: ImageProps) {
         />
       ) : null}
 
-      <div className="relative [&_img]:min-h-[15rem]">
+      <div className="relative z-[2] [&_img]:min-h-[4rem]">
         <ImageRenderer
           image={{
             src,

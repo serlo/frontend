@@ -21,7 +21,6 @@ module.exports = {
   rules: {
     // eslint
     'no-duplicate-imports': 'error',
-    'no-unused-vars': 'off',
     'no-console': 'warn',
     'no-warning-comments': 'warn',
     eqeqeq: ['error', 'always'],
@@ -29,10 +28,7 @@ module.exports = {
     // @typescript-eslint/eslint-plugin
     '@typescript-eslint/ban-ts-comment': 'warn',
     '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-extraneous-class': 'error',
-    '@typescript-eslint/no-parameter-properties': 'off',
     '@typescript-eslint/no-this-alias': 'warn',
     '@typescript-eslint/no-unsafe-assignment': 'error',
     '@typescript-eslint/no-unsafe-call': 'error',
@@ -52,6 +48,9 @@ module.exports = {
     '@typescript-eslint/prefer-ts-expect-error': 'error',
     '@typescript-eslint/restrict-template-expressions': 'error',
     '@typescript-eslint/no-misused-promises': 'off',
+    '@typescript-eslint/no-unsafe-enum-comparison': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-redundant-type-constituents': 'off',
 
     // eslint-plugin-import
     'import/export': 'error',
@@ -66,23 +65,8 @@ module.exports = {
     'import/no-commonjs': 'error',
     'import/no-cycle': 'error',
     'import/no-default-export': 'error',
-    'import/prefer-default-export': 'off',
     'import/no-deprecated': 'error',
     'import/no-extraneous-dependencies': ['error'],
-    'import/no-internal-modules': [
-      'error',
-      {
-        allow: [
-          '@ory/integrations/ui',
-          'graphiql/esm/components/GraphiQL',
-          'graphql-request/dist/types',
-          'msw/*',
-          'next/*',
-          'public/_assets/**/*',
-          'redux-saga/effects',
-        ],
-      },
-    ],
     'import/no-mutable-exports': 'error',
     'import/no-self-import': 'error',
     'import/no-unassigned-import': [
@@ -127,9 +111,6 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'react-hooks/rules-of-hooks': 'error',
 
-    // eslint-plugin-next
-    '@next/next/no-img-element': 'off',
-
     // styledjsx exceptions
     'react/no-unknown-property': [
       2,
@@ -142,6 +123,11 @@ module.exports = {
     'import/internal-regex': '^@/',
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+    'import/resolver': {
+      typescript: {
+        project: './tsconfig.eslint.json',
+      },
     },
     react: {
       version: 'detect',

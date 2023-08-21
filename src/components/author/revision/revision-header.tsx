@@ -1,7 +1,7 @@
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
-import { Dispatch, SetStateAction } from 'react'
+import { type Dispatch, type SetStateAction } from 'react'
 
-import { DisplayModes } from './revision'
+import type { DisplayModes } from './display-modes'
 import { RevisionModeSwitcher } from './revision-mode-switcher'
 import { RevisionNotice } from './revision-notice'
 import { Link } from '@/components/content/link'
@@ -11,7 +11,7 @@ import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
-import { RevisionData } from '@/data-types'
+import type { RevisionData } from '@/data-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 

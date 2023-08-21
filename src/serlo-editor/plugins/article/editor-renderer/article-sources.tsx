@@ -3,8 +3,8 @@ import {
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons'
 
-import { ArticleProps } from '..'
-import { buttonClass } from '../editor'
+import type { ArticleProps } from '..'
+import { buttonClass } from '../const/button-class'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'

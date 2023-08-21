@@ -3,8 +3,7 @@ import { HeadTags } from '@/components/head-tags'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { UserTools } from '@/components/user-tools/user-tools'
-// eslint-disable-next-line import/extensions
-import { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
+import type { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
 
 const h2Class =
   'mx-side text-4xl leading-cozy tracking-tight font-extrabold text-gray-700'

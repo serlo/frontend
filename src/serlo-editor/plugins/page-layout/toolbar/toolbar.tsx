@@ -1,8 +1,8 @@
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import { Dispatch, SetStateAction } from 'react'
+import { type Dispatch, type SetStateAction } from 'react'
 
 import { LayoutChooser } from './layout-chooser'
-import { PageLayoutPluginProps } from '..'
+import type { PageLayoutPluginProps } from '..'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'

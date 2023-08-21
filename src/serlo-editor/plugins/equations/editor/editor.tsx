@@ -9,10 +9,11 @@ import { useHotkeys } from 'react-hotkeys-hook'
 import { toTransformationTarget, TransformationTarget } from './editor-renderer'
 import { useGridFocus } from './grid-focus'
 import { StepEditor } from './step-editor'
-import { EquationsProps } from '..'
+import { StepSegment } from './step-segment'
+import type { EquationsProps } from '..'
 import {
   EquationsRenderer,
-  EquationsRendererStep,
+  type EquationsRendererStep,
   renderDownArrow,
 } from '../renderer'
 import { Sign } from '../sign'
@@ -32,13 +33,6 @@ import {
   selectFocusTree,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-
-export enum StepSegment {
-  Left = 0,
-  Right = 1,
-  Transform = 2,
-  Explanation = 3,
-}
 
 export function EquationsEditor(props: EquationsProps) {
   const { domFocusWithin, state } = props
@@ -334,13 +328,13 @@ export function EquationsEditor(props: EquationsProps) {
   }
 }
 
-export function firstColumn(transformationTarget: TransformationTarget) {
+function firstColumn(transformationTarget: TransformationTarget) {
   return transformationTarget === TransformationTarget.Term
     ? StepSegment.Right
     : StepSegment.Left
 }
 
-export function lastColumn(transformationTarget: TransformationTarget) {
+function lastColumn(transformationTarget: TransformationTarget) {
   return transformationTarget === TransformationTarget.Term
     ? StepSegment.Right
     : StepSegment.Transform

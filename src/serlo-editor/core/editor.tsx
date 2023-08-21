@@ -37,7 +37,7 @@ export function Editor(props: EditorProps) {
   )
 }
 
-export function InnerDocument({
+function InnerDocument({
   children,
   editable = true,
   onChange,

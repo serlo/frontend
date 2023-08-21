@@ -1,7 +1,7 @@
 import KaTeX from 'katex'
 import { memo } from 'react'
 
-import type { MathElement } from '../types'
+import type { MathElement } from '../types/text-editor'
 
 export const MathFormula = memo(function MathFormula({
   element,

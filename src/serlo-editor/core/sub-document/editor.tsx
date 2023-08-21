@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import * as R from 'ramda'
 import {
   useState,
@@ -7,9 +8,8 @@ import {
   useCallback,
   FocusEvent,
 } from 'react'
-import { createPortal } from 'react-dom'
 
-import { SubDocumentProps } from '.'
+import type { SubDocumentProps } from '.'
 import { useEnableEditorHotkeys } from './use-enable-editor-hotkeys'
 import {
   runChangeDocumentSaga,
@@ -19,13 +19,11 @@ import {
   useAppSelector,
   useAppDispatch,
 } from '../../store'
-import { StateUpdater } from '../../types/internal__plugin-state'
-import { SideToolbarAndWrapper } from '@/serlo-editor/editor-ui/side-toolbar-and-wrapper'
+import type { StateUpdater } from '../../types/internal__plugin-state'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
-  const [hasSideToolbar, setHasSideToolbar] = useState(false)
   const dispatch = useAppDispatch()
   const document = useAppSelector((state) => selectDocument(state, id))
 
@@ -38,9 +36,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
   useEnableEditorHotkeys(id, plugin, domFocus === 'focusWithin')
   const containerRef = useRef<HTMLDivElement>(null)
-  const sideToolbarRef = useRef<HTMLDivElement>(
-    window.document.createElement('div')
-  )
   const autofocusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
 
   useEffect(() => {
@@ -86,20 +81,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
     setDomFocus(() => getFocusWithin())
   }, [])
-
-  const renderIntoSideToolbar = useCallback(
-    (children: React.ReactNode) => {
-      return (
-        <RenderIntoSideToolbar
-          setHasSideToolbar={setHasSideToolbar}
-          sideToolbarRef={sideToolbarRef}
-        >
-          {children}
-        </RenderIntoSideToolbar>
-      )
-    },
-    [sideToolbarRef]
-  )
 
   return useMemo(() => {
     if (!document) {
@@ -148,9 +129,16 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       Object.hasOwn(config, 'isInlineChildEditor') &&
       (config.isInlineChildEditor as boolean)
 
+    const isTemplatePlugin = document.plugin.startsWith('type-')
+
     return (
       <div
-        className="outline-none"
+        className={clsx(
+          'outline-none',
+          isInlineChildEditor || isTemplatePlugin
+            ? ''
+            : 'plugin-wrapper-container relative -ml-[7px] mb-6 min-h-[10px] pl-[5px]'
+        )}
         tabIndex={-1} // removing this makes selecting e.g. images impossible somehow
         onMouseDown={handleFocus}
         onFocus={noVisualFocusHandling ? undefined : handleDomFocus}
@@ -159,26 +147,17 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         data-document
         data-document-focusable={noVisualFocusHandling ? undefined : true}
       >
-        <SideToolbarAndWrapper
-          hasSideToolbar={hasSideToolbar}
-          focused={domFocus === 'focus'}
-          renderSideToolbar={pluginProps && pluginProps.renderSideToolbar}
-          isInlineChildEditor={isInlineChildEditor}
-          sideToolbarRef={sideToolbarRef}
-        >
-          <plugin.Component
-            renderIntoSideToolbar={renderIntoSideToolbar}
-            containerRef={containerRef}
-            id={id}
-            editable
-            domFocusWithin={domFocus !== false}
-            domFocus={domFocus === 'focus'}
-            config={config}
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            state={state}
-            autofocusRef={autofocusRef}
-          />
-        </SideToolbarAndWrapper>
+        <plugin.Component
+          containerRef={containerRef}
+          id={id}
+          editable
+          domFocusWithin={domFocus !== false}
+          domFocus={domFocus === 'focus'}
+          config={config}
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          state={state}
+          autofocusRef={autofocusRef}
+        />
       </div>
     )
   }, [
@@ -186,28 +165,10 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     plugin,
     pluginProps,
     handleFocus,
-    handleDomFocus,
     noVisualFocusHandling,
-    hasSideToolbar,
-    domFocus,
-    renderIntoSideToolbar,
+    handleDomFocus,
     id,
+    domFocus,
     dispatch,
   ])
-}
-
-function RenderIntoSideToolbar({
-  children,
-  setHasSideToolbar,
-  sideToolbarRef,
-}: {
-  children: React.ReactNode
-  setHasSideToolbar: (value: boolean) => void
-  sideToolbarRef: React.MutableRefObject<HTMLDivElement>
-}) {
-  useEffect(() => {
-    setHasSideToolbar(true)
-  })
-  if (!sideToolbarRef.current) return null
-  return createPortal(children, sideToolbarRef.current)
 }

@@ -40,7 +40,7 @@ export function HighlightRenderer({
       <SyntaxHighlighter
         language={language.toLowerCase()}
         showLineNumbers={showLineNumbers}
-        style={style as unknown}
+        style={style}
         customStyle={{
           backgroundColor: 'transparent',
         }}

@@ -1,25 +1,20 @@
-import {
-  faCirclePlus,
-  faImages,
-  faParagraph,
-  faTrashCan,
-} from '@fortawesome/free-solid-svg-icons'
+import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { KeyboardEvent, useState } from 'react'
 
-import { SerloTableProps } from '.'
+import type { SerloTableProps } from '.'
+import { CellSwitchButton } from './cell-switch-button'
 import { useAreImagesDisabledInTable } from './contexts/are-images-disabled-in-table-context'
 import { SerloTableRenderer, TableType } from './renderer'
 import { SerloTableToolbar } from './toolbar'
+import { getTableType } from './utils/get-table-type'
 import { TextEditorConfig } from '../text'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { ChildStateType, StateTypesReturnType } from '@/serlo-editor/plugin'
 import {
   store,
   selectIsDocumentEmpty,
   focus,
-  selectDocument,
   useAppDispatch,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
@@ -40,6 +35,9 @@ const newCell = { content: { plugin: EditorPluginType.Text } }
 export function SerloTableEditor(props: SerloTableProps) {
   const { config, domFocusWithin, state } = props
   const { rows } = state
+
+  const [updateHack, setUpdateHack] = useState(0)
+
   const dispatch = useAppDispatch()
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -78,8 +76,13 @@ export function SerloTableEditor(props: SerloTableProps) {
       return {
         cells: row.columns.map((cell) => (
           <div className="min-h-[2rem] pr-2" key={cell.content.id}>
-            {!selectIsDocumentEmpty(store.getState(), cell.content.id) &&
-              cell.content.render()}
+            {cell.content.render({
+              config: {
+                isInlineChildEditor: true,
+                placeholder: '',
+                updateHack,
+              },
+            })}
           </div>
         )),
       }
@@ -131,9 +134,13 @@ export function SerloTableEditor(props: SerloTableProps) {
             cell.content.id
           )
 
-          const onKeyUpHandler = () => {
+          const onKeyUpHandler = (e: KeyboardEvent<HTMLDivElement>) => {
             // hack: redraw when isEmpty changes. (onKeyUp bc. keyDown is captured for some keys)
-            setUpdate((val) => val + 1)
+            if (e.key === 'Delete' || e.key === 'Backspace') {
+              if (!isClear) setUpdateHack((count) => count + 1)
+            } else {
+              if (isClear) setUpdateHack((count) => count + 1)
+            }
           }
           const onKeyDownHandler = (e: KeyboardEvent<HTMLDivElement>) => {
             if (
@@ -164,9 +171,13 @@ export function SerloTableEditor(props: SerloTableProps) {
                     : cellTextFormattingOptions,
                 } as TextEditorConfig,
               })}
-              {config.allowImageInTableCells && !areImagesDisabled
-                ? renderSwitchButton(cell, isHead, isClear)
-                : null}
+              {config.allowImageInTableCells && !areImagesDisabled ? (
+                <CellSwitchButton
+                  cell={cell}
+                  isHead={isHead}
+                  isClear={isClear}
+                />
+              ) : null}
               {/* hack: make sure we capture most clicks in cells */}
               <style jsx global>{`
                 .serlo-td,
@@ -183,37 +194,6 @@ export function SerloTableEditor(props: SerloTableProps) {
         }),
       }
     })
-  }
-
-  function renderSwitchButton(
-    cell: StateTypesReturnType<{
-      content: ChildStateType<string, unknown>
-    }>,
-    isHead: boolean,
-    isClear: boolean
-  ) {
-    if (isHead || !isClear) return null
-
-    const isImage =
-      selectDocument(store.getState(), cell.content.id)?.plugin ===
-      EditorPluginType.Image
-
-    return (
-      <button
-        onMouseDown={(e) => e.stopPropagation()} // hack to stop editor from stealing events
-        onClick={() => {
-          cell.content.replace(
-            isImage ? EditorPluginType.Text : EditorPluginType.Image
-          )
-        }}
-        className="serlo-button-light absolute m-2 block hidden py-0.5 text-sm group-focus-within/cell:block"
-        title={
-          isImage ? tableStrings.convertToText : tableStrings.convertToImage
-        }
-      >
-        <FaIcon icon={isImage ? faParagraph : faImages} />
-      </button>
-    )
   }
 
   function renderInlineNav(rowIndex: number, colIndex: number) {
@@ -350,12 +330,4 @@ export function SerloTableEditor(props: SerloTableProps) {
   function replaceWithType(input: string, isRow: boolean) {
     return input.replace('%type%', tableStrings[isRow ? 'row' : 'column'])
   }
-}
-
-export function getTableType(text: string): TableType {
-  return isTableType(text) ? text : TableType.OnlyColumnHeader
-}
-
-function isTableType(text: string): text is TableType {
-  return Object.values<string>(TableType).includes(text)
 }

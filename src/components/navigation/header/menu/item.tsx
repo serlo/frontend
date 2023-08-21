@@ -6,12 +6,12 @@ import {
 } from '@radix-ui/react-navigation-menu'
 import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
-import { PointerEventHandler } from 'react'
 
 import { Icon } from './icon'
+import { preventHover } from './prevent-hover'
 import { SubContent } from './sub-content'
 import { FaIcon } from '@/components/fa-icon'
-import { HeaderLinkData } from '@/data-types'
+import type { HeaderLinkData } from '@/data-types'
 import { submitEvent } from '@/helper/submit-event'
 import { tw } from '@/helper/tw'
 
@@ -24,10 +24,6 @@ export const styledLinkCls = tw`
   md:px-[7px] md:py-0.5 md:text-center md:text-[0.9rem]
   md:leading-tight md:text-brand-700 md:transition
 `
-
-export const preventHover: PointerEventHandler = (event) => {
-  if (window.innerWidth < 1024) event.preventDefault()
-}
 
 export interface ItemProps {
   link: HeaderLinkData

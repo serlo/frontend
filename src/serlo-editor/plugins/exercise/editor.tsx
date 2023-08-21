@@ -1,11 +1,11 @@
-import { faRandom, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { ReactNode, useState } from 'react'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
-import { ExerciseProps } from '.'
+import type { ExerciseProps } from '.'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { tw } from '@/helper/tw'
 import { AddButton } from '@/serlo-editor/editor-ui'
-import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
+import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { store, selectDocument } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
@@ -17,14 +17,18 @@ const interactiveExerciseTypes = [
 
 export function ExerciseEditor({ editable, state }: ExerciseProps) {
   const { content, interactive } = state
-  const [showOptions, setShowOptions] = useState(false)
 
   const exStrings = useEditorStrings().templatePlugins.exercise
   return (
     <>
       {content.render()}
       {interactive.defined ? (
-        interactive.render({ renderSideToolbar })
+        <>
+          <nav className="relative flex justify-end">
+            {editable ? renderChildTools() : null}
+          </nav>
+          {interactive.render()}
+        </>
       ) : editable ? (
         <>
           <p className="mb-2 text-gray-400">
@@ -36,6 +40,7 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
                 <AddButton
                   key={type}
                   onClick={() => interactive.create({ plugin: type })}
+                  secondary
                 >
                   {exStrings[type]}
                 </AddButton>
@@ -47,49 +52,42 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
     </>
   )
 
-  function renderSideToolbar(children: ReactNode) {
+  function renderChildTools() {
     return (
       <>
-        <div className="relative" onMouseLeave={() => setShowOptions(false)}>
-          <PluginToolbarButton
-            icon={<FaIcon icon={faRandom} />}
-            label={exStrings.changeInteractive}
-            onClick={() => setShowOptions(true)}
-          />
-          <PluginToolbarButton
-            icon={<FaIcon icon={faTrashAlt} />}
-            label={exStrings.removeInteractive}
-            onClick={() => {
-              if (interactive.defined) interactive.remove()
+        <label className="serlo-tooltip-trigger mr-2">
+          <EditorTooltip text={exStrings.changeInteractive} />
+          <select
+            onChange={({ target }) => {
+              if (interactive.defined)
+                interactive.replace(
+                  target.value as (typeof interactiveExerciseTypes)[number]
+                )
             }}
-          />
-          {showOptions ? (
-            <div className="absolute -top-3 left-6 whitespace-nowrap pl-3">
-              <div className="rounded-md bg-[rgba(255,255,255,0.95)] p-2 shadow-menu">
-                {interactiveExerciseTypes
-                  .filter(
-                    (type) =>
-                      !interactive || type !== getCurrentInteractivePlugin()
-                  )
-                  .map((type) => {
-                    return (
-                      <div
-                        key={type}
-                        className="w-full min-w-[150px] cursor-pointer px-2.5 py-1.5 hover:text-[rgb(70,155,255)]"
-                        onClick={() => {
-                          if (interactive.defined) interactive.replace(type)
-                          setShowOptions(false)
-                        }}
-                      >
-                        {exStrings[type]}
-                      </div>
-                    )
-                  })}
-              </div>
-            </div>
-          ) : null}
-        </div>
-        {children}
+            className={tw`
+                    mr-2 cursor-pointer rounded-md !border border-gray-500 bg-editor-primary-100 px-1 py-[1px] text-sm transition-all
+                  hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
+                  `}
+            value={getCurrentInteractivePlugin() ?? ''}
+          >
+            {interactiveExerciseTypes.map((type) => {
+              return (
+                <option key={type} value={type}>
+                  {exStrings[type]}
+                </option>
+              )
+            })}
+          </select>
+        </label>
+        <button
+          className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
+          onClick={() => {
+            if (interactive.defined) interactive.remove()
+          }}
+        >
+          <EditorTooltip text={exStrings.removeInteractive} />
+          <FaIcon icon={faTrashAlt} />
+        </button>
       </>
     )
   }

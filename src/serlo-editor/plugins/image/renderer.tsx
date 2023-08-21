@@ -32,6 +32,7 @@ export function ImageRenderer({
       <div style={{ maxWidth }} className="mx-auto">
         {wrapWithLink(
           placeholder ?? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               className="serlo-img"
               src={src}

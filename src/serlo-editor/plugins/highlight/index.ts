@@ -1,9 +1,9 @@
 import { HighlightEditor } from './editor'
-import { HighlightRenderer, HighlightRendererProps } from './renderer'
+import { HighlightRenderer, type HighlightRendererProps } from './renderer'
 import {
+  type EditorPlugin,
+  type EditorPluginProps,
   boolean,
-  EditorPlugin,
-  EditorPluginProps,
   object,
   string,
 } from '@/serlo-editor/plugin'

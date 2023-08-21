@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { ArticleProps } from '.'
+import type { ArticleProps } from '.'
 import { ArticleAddModal } from './add-modal/article-add-modal'
 import { ArticleExercises } from './editor-renderer/article-exercises'
 import { ArticleRelatedContentSection } from './editor-renderer/article-related-content-section'
@@ -95,6 +95,3 @@ export function ArticleEditor({ editable, state }: ArticleProps) {
     )
   }
 }
-
-export const buttonClass =
-  'serlo-button text-editor-primary hover:bg-editor-primary hover:text-almost-black w-8'

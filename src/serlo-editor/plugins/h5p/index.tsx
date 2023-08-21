@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react'
 import { H5pRenderer, parseH5pUrl } from './renderer'
 import { EditorInput } from '@/serlo-editor/editor-ui'
 import {
-  EditorPlugin,
-  EditorPluginProps,
+  type EditorPlugin,
+  type EditorPluginProps,
+  type StringStateType,
   string,
-  StringStateType,
 } from '@/serlo-editor/plugin'
 
 export type H5pPluginState = StringStateType

@@ -751,7 +751,8 @@ export const loggedInData = {
         text: {
           title: "Texto",
           description: "Redacta el contenido usando texto enriquecido y fórmulas matemáticas.",
-          placeholder: 'Write something or add elements with ⊕.',
+          placeholder: 'Write something or add element:',
+          addButtonExplanation: 'Click to insert new element',
           quote: "Cita",
           setColor: "Elegir color",
           resetColor: "Restablecer color",
@@ -798,7 +799,8 @@ export const loggedInData = {
             mathSymbols: "Símbolos matemáticos",
             eG: "por ejemplo,",
             functions: "Funciones",
-            displayAsBlock: "Mostrar en bloque"
+            displayAsBlock: "Mostrar en bloque",
+            closeMathFormulaEditor: "Close math formula editor"
           }
         },
         video: {

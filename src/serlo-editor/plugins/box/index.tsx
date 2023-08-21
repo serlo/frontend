@@ -1,8 +1,8 @@
 import { BoxEditor } from './editor'
 import {
+  type EditorPlugin,
+  type EditorPluginProps,
   child,
-  EditorPlugin,
-  EditorPluginProps,
   object,
   string,
 } from '@/serlo-editor/plugin'

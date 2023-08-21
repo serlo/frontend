@@ -1,9 +1,9 @@
 import { AnchorEditor } from './editor'
 import {
-  EditorPlugin,
-  EditorPluginProps,
+  type EditorPlugin,
+  type EditorPluginProps,
+  type StringStateType,
   string,
-  StringStateType,
 } from '../../plugin'
 
 // will probably be replaced. refactoring not necessary

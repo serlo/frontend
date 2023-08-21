@@ -751,7 +751,8 @@ export const loggedInData = {
         text: {
           title: "Texte",
           description: "Créer contenu en utilisant du texte riche (RTF) et des formules mathématiques.",
-          placeholder: 'Write something or add elements with ⊕.',
+          placeholder: 'Write something or add element:',
+          addButtonExplanation: 'Click to insert new element',
           quote: "Citation",
           setColor: "Définir la couleur",
           resetColor: "Réinitialiser la couleur",
@@ -798,7 +799,8 @@ export const loggedInData = {
             mathSymbols: "Symboles mathématiques",
             eG: "par ex.",
             functions: "Fonctions",
-            displayAsBlock: "Afficher comme un bloc"
+            displayAsBlock: "Afficher comme un bloc",
+            closeMathFormulaEditor: "Close math formula editor"
           }
         },
         video: {

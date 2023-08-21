@@ -1,8 +1,8 @@
 import clsx from 'clsx'
 
-import { BoxProps } from '.'
+import type { BoxProps } from '.'
 import {
-  BoxType,
+  type BoxType,
   BoxRenderer,
   boxTypeStyle,
   defaultStyle,

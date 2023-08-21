@@ -1,24 +1,28 @@
 import { request } from 'graphql-request'
 
 import { createBreadcrumbs } from './create-breadcrumbs'
-import {
+import type {
   MainUuidQuery,
   RevisionUuidQuery,
   RevisionUuidQueryVariables,
 } from './graphql-types/operations'
 import { dataQuery } from './query'
-import { MainUuidType } from './query-types'
+import type { MainUuidType } from './query-types'
 import { revisionQuery } from './revision/query'
 import { testAreaId } from './testArea'
 import { endpoint } from '@/api/endpoint'
-import { BreadcrumbsData, UuidType, UuidWithRevType } from '@/data-types'
+import {
+  type BreadcrumbsData,
+  UuidType,
+  type UuidWithRevType,
+} from '@/data-types'
 import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 import {
   editorResponseToState,
   isError,
 } from '@/serlo-editor-integration/editor-response-to-state'
 import { revisionResponseToResponse } from '@/serlo-editor-integration/revision-response-to-response'
-import { SerloEditorProps } from '@/serlo-editor-integration/serlo-editor'
+import type { SerloEditorProps } from '@/serlo-editor-integration/serlo-editor'
 
 export interface EditorPageData {
   initialState: SerloEditorProps['initialState']

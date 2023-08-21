@@ -1,35 +1,35 @@
 import { EditorPluginType } from './types/editor-plugin-type'
 import {
   isEdtr,
-  Edtr,
-  Legacy,
-  RowsPlugin,
-  OtherPlugin,
-  Splish,
+  type Edtr,
+  type Legacy,
+  type RowsPlugin,
+  type OtherPlugin,
+  type Splish,
 } from './types/legacy-editor-to-editor-types'
 import { TemplatePluginType } from './types/template-plugin-type'
-import { appletTypeState } from '../serlo-editor/plugins/serlo-template-plugins/applet'
-import { articleTypeState } from '../serlo-editor/plugins/serlo-template-plugins/article'
+import type { AppletTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/applet'
+import type { ArticleTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/article'
 import {
-  Entity,
-  License,
-  Uuid,
+  type Entity,
+  type License,
+  type Uuid,
 } from '../serlo-editor/plugins/serlo-template-plugins/common/common'
-import { courseTypeState } from '../serlo-editor/plugins/serlo-template-plugins/course/course'
-import { coursePageTypeState } from '../serlo-editor/plugins/serlo-template-plugins/course/course-page'
-import { eventTypeState } from '../serlo-editor/plugins/serlo-template-plugins/event'
-import { pageTypeState } from '../serlo-editor/plugins/serlo-template-plugins/page'
-import { taxonomyTypeState } from '../serlo-editor/plugins/serlo-template-plugins/taxonomy'
-import { textExerciseTypeState } from '../serlo-editor/plugins/serlo-template-plugins/text-exercise'
-import { textExerciseGroupTypeState } from '../serlo-editor/plugins/serlo-template-plugins/text-exercise-group'
-import { textSolutionTypeState } from '../serlo-editor/plugins/serlo-template-plugins/text-solution'
-import { userTypeState } from '../serlo-editor/plugins/serlo-template-plugins/user'
-import { videoTypeState } from '../serlo-editor/plugins/serlo-template-plugins/video'
+import type { CourseTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/course/course'
+import type { CoursePageTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/course/course-page'
+import type { EventTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/event'
+import type { PageTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/page'
+import type { TaxonomyTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/taxonomy'
+import type { TextExerciseTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/text-exercise'
+import type { TextExerciseGroupTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/text-exercise-group'
+import type { TextSolutionTypeState } from '../serlo-editor/plugins/serlo-template-plugins/text-solution'
+import type { UserTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/user'
+import type { VideoTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/video'
 import { UuidType, UuidRevType } from '@/data-types'
-import { User, MainUuidType } from '@/fetcher/query-types'
+import type { User, MainUuidType } from '@/fetcher/query-types'
 import { FrontendNodeType } from '@/frontend-node-types'
 import { triggerSentry } from '@/helper/trigger-sentry'
-import { StateType, StateTypeSerializedType } from '@/serlo-editor/plugin'
+import type { StateType, StateTypeSerializedType } from '@/serlo-editor/plugin'
 
 const empty: RowsPlugin = { plugin: EditorPluginType.Rows, state: [] }
 
@@ -112,7 +112,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
 
   function convertApplet(
     uuid: Extract<MainUuidType, { __typename: 'Applet' }>
-  ): DeserializedState<typeof appletTypeState> {
+  ): DeserializedState<AppletTypePluginState> {
     stack.push({ id: uuid.id, type: 'applet' })
     return {
       initialState: {
@@ -134,7 +134,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
 
   function convertArticle(
     uuid: Extract<MainUuidType, { __typename: 'Article' }>
-  ): DeserializedState<typeof articleTypeState> {
+  ): DeserializedState<ArticleTypePluginState> {
     stack.push({ id: uuid.id, type: 'article' })
     return {
       initialState: {
@@ -187,7 +187,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
 
   function convertCourse(
     uuid: Extract<MainUuidType, { __typename: 'Course' }>
-  ): DeserializedState<typeof courseTypeState> {
+  ): DeserializedState<CourseTypePluginState> {
     stack.push({ id: uuid.id, type: 'course' })
     return {
       initialState: {
@@ -226,7 +226,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
       Extract<MainUuidType, { __typename: 'CoursePage' }>,
       'id' | 'currentRevision'
     >
-  ): DeserializedState<typeof coursePageTypeState> {
+  ): DeserializedState<CoursePageTypePluginState> {
     stack.push({ id: uuid.id, type: 'course-page' })
     return {
       initialState: {
@@ -251,7 +251,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
 
   function convertEvent(
     uuid: Extract<MainUuidType, { __typename: 'Event' }>
-  ): DeserializedState<typeof eventTypeState> {
+  ): DeserializedState<EventTypePluginState> {
     stack.push({ id: uuid.id, type: 'event' })
     return {
       initialState: {
@@ -272,7 +272,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
 
   function convertPage(
     uuid: Extract<MainUuidType, { __typename: 'Page' }>
-  ): DeserializedState<typeof pageTypeState> {
+  ): DeserializedState<PageTypePluginState> {
     stack.push({ id: uuid.id, type: 'page' })
     return {
       initialState: {
@@ -289,7 +289,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
 
   function convertTaxonomy(
     uuid: Extract<MainUuidType, { __typename: 'TaxonomyTerm' }>
-  ): DeserializedState<typeof taxonomyTypeState> {
+  ): DeserializedState<TaxonomyTypePluginState> {
     stack.push({ id: uuid.id, type: 'taxonomy' })
     return {
       initialState: {
@@ -313,7 +313,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
 
   function convertTextExercise(
     uuid: Extract<MainUuidType, { __typename: 'Exercise' }>
-  ): DeserializedState<typeof textExerciseTypeState> {
+  ): DeserializedState<TextExerciseTypePluginState> {
     stack.push({ id: uuid.id, type: 'text-exercise' })
     const convertd = convertEditorState(content)
 
@@ -366,7 +366,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
 
   function convertTextExerciseGroup(
     uuid: Extract<MainUuidType, { __typename: 'ExerciseGroup' }>
-  ): DeserializedState<typeof textExerciseGroupTypeState> {
+  ): DeserializedState<TextExerciseGroupTypePluginState> {
     stack.push({ id: uuid.id, type: 'text-exercise-group' })
 
     const exercises = uuid.exercises
@@ -408,7 +408,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
 
   function convertTextSolution(
     uuid: Extract<MainUuidType, { __typename: 'Solution' }>
-  ): DeserializedState<typeof textSolutionTypeState> {
+  ): DeserializedState<TextSolutionTypeState> {
     stack.push({ id: uuid.id, type: 'text-solution' })
 
     const solutionContent = uuid.currentRevision?.content ?? ''
@@ -445,14 +445,14 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     }
   }
 
-  function convertUser(uuid: User): DeserializedState<typeof userTypeState> {
+  function convertUser(uuid: User): DeserializedState<UserTypePluginState> {
     stack.push({ id: uuid.id, type: 'user' })
     return convertUserByDescription(uuid.description)
   }
 
   function convertVideo(
     uuid: Extract<MainUuidType, { __typename: 'Video' }>
-  ): DeserializedState<typeof videoTypeState> {
+  ): DeserializedState<VideoTypePluginState> {
     stack.push({ id: uuid.id, type: FrontendNodeType.Video })
     return {
       initialState: {
