@@ -13,24 +13,34 @@ export default async function handler(
 
   try {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const { path, entityId, revisionId, type, result, sessionId } = req.body
+    const {
+      group,
+      entityId,
+      experiment,
+      type,
+      result,
+      sessionId,
+      isProduction,
+      topicId,
+    } = req.body
 
     if (
-      typeof path === 'string' &&
+      typeof group === 'string' &&
       typeof entityId === 'number' &&
-      typeof revisionId === 'number' &&
+      typeof topicId === 'number' &&
+      typeof experiment === 'string' &&
       typeof type === 'string' &&
       ['sc', 'mc', 'input', 'h5p', 'text', 'ival'].includes(type) &&
       typeof result === 'string' &&
       (['correct', 'wrong', 'open'].includes(result) || type === 'ival') &&
       result.length <= 8 &&
-      typeof sessionId === 'string'
+      typeof sessionId === 'string' &&
+      typeof isProduction === 'boolean'
     ) {
-      if (path.length < 1024 && sessionId.length < 64) {
+      if (group.length < 8 && experiment.length < 64 && sessionId.length < 64) {
         if (
           Math.floor(entityId) === entityId &&
-          Math.floor(revisionId) === revisionId &&
-          entityId > 0
+          (entityId > 0 || entityId === -1)
         ) {
           await prisma.aBTestingData.create({
             data: {
@@ -38,9 +48,10 @@ export default async function handler(
               type,
               result,
               sessionId,
-              isProduction: false,
-              experiment: 'testv1',
-              group: 'B',
+              isProduction,
+              experiment,
+              group,
+              topicId,
             },
           })
           res.send('ok')

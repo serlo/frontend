@@ -58,6 +58,7 @@ model ABTestingData {
   group        String   @db.VarChar(8)
   experiment   String   @db.VarChar(64)
   entityId     Int
+  topicId      Int
 
   type         String   @db.VarChar(8)
   result       String   @db.VarChar(8)

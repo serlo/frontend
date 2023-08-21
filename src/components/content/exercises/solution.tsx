@@ -8,6 +8,7 @@ import { CommentAreaEntityProps } from '@/components/comments/comment-area-entit
 import { Lazy } from '@/components/content/lazy'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
+import { useAB } from '@/contexts/ab'
 import { ExerciseInlineType } from '@/data-types'
 import {
   FrontendExerciseNode,
@@ -42,6 +43,7 @@ export function Solution({
 }: SolutionProps) {
   const { asPath } = useRouter()
   const auth = useAuthentication()
+  const ab = useAB()
 
   const solutionVisibleOnInit = forceVisible
     ? true
@@ -107,13 +109,16 @@ export function Solution({
           (isPrintMode && !printModeSolutionVisible)
         }
         onSolutionOpen={() =>
-          exerciseSubmission({
-            path: asPath,
-            entityId: node.context.id,
-            revisionId: node.context.revisionId,
-            type: 'text',
-            result: 'open',
-          })
+          exerciseSubmission(
+            {
+              path: asPath,
+              entityId: node.context.id,
+              revisionId: node.context.revisionId,
+              type: 'text',
+              result: 'open',
+            },
+            ab
+          )
         }
       />
     </>
