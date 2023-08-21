@@ -1,4 +1,5 @@
 import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { Fragment, useState } from 'react'
 import { RatingProps } from 'react-simple-star-rating'
@@ -16,7 +17,6 @@ import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { abSubmission } from '@/helper/ab-submission'
 import { renderArticle } from '@/schema/article-renderer'
-import clsx from 'clsx'
 
 export interface TopicProps {
   data: TaxonomyData
