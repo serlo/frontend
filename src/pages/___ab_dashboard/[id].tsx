@@ -13,10 +13,10 @@ interface ABResultsProps {
 interface GroupData {
   avg: number
   ratingCount: number
-  bounceRate: number
+  /*bounceRate: number
   visits: number
   reached3solvesPercentage: number
-  reached3solvesTime: number
+  reached3solvesTime: number*/
 }
 
 export const ABResults: NextPage<ABResultsProps> = ({
@@ -34,12 +34,12 @@ export const ABResults: NextPage<ABResultsProps> = ({
           <h1 className="serlo-h1">A/B-Test Dashboard für {experiment}</h1>
           <div className="serlo-h2">Bewertung</div>
           <div className="mx-side">
-            A (Original): Ø {groupA.avg.toFixed(2)}, {groupA.ratingCount}{' '}
-            Bewertungen
+            A (Original): Ø {groupA.avg ? groupA.avg.toFixed(2) : '--'},{' '}
+            {groupA.ratingCount} Bewertungen
           </div>
           <div className="mx-side">
-            B (Variante): Ø {groupB.avg.toFixed(2)}, {groupB.ratingCount}{' '}
-            Bewertungen
+            B (Variante): Ø {groupB.avg ? groupB.avg.toFixed(2) : '--'},{' '}
+            {groupB.ratingCount} Bewertungen
           </div>
           <div className="serlo-h2">Bounce-Rate</div>
           <div className="mx-side mb-block">
@@ -52,11 +52,11 @@ export const ABResults: NextPage<ABResultsProps> = ({
           <div className="serlo-h2">Nutzungseffizienz</div>
           <div className="mx-side mb-block">
             Anteil Aufrufe, die zu 3 bearbeiteten Aufgaben führen und die
-            Median-Zeit dafür (niedrigere Zeit ist besser).
+            Median-Zeit dafür (kürzere Zeit ist besser).
           </div>
           <div className="mx-side">A (Original): xxx.xx % mit xxx min</div>
           <div className="mx-side">B (Variante): xxx.xx % mit xxx min</div>
-          <div></div>
+          <div className="h-24"></div>
         </div>
       </FrontendClientBase>
     </>
@@ -112,5 +112,4 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-const average = (arr: number[]) =>
-  arr.reduce((p, c) => p + c, 0) / arr.length || 0
+const average = (arr: number[]) => arr.reduce((p, c) => p + c, 0) / arr.length
