@@ -9,10 +9,10 @@ const experiments: {
   end: number
 }[] = [
   {
-    experiment: 'headingsv1',
-    ids: [1553],
+    experiment: 'baseline',
+    ids: [25103],
     start: -1,
-    end: -1,
+    end: new Date('2023-09-15T00:00:00+0200').getTime(),
   },
 ]
 
@@ -46,8 +46,8 @@ export function useABValue(entityId: number) {
     const experiment = experiments.find(
       (exp) =>
         exp.ids.includes(entityId) &&
-        exp.start >= Date.now() &&
-        exp.end < Date.now()
+        exp.start <= Date.now() &&
+        exp.end > Date.now()
     )?.experiment
     if (!experiment) {
       return // no experiments active
