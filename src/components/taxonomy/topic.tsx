@@ -37,7 +37,6 @@ export function Topic({ data }: TopicProps) {
 
   const ab = useAB()
 
-  console.log('topic ab', ab)
   const [hasFeedback, setHasFeedback] = useState(false)
 
   const isExerciseFolder = data.taxonomyType === TaxonomyTermType.ExerciseFolder
