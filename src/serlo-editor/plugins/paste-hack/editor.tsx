@@ -27,6 +27,7 @@ const StateDecoder = t.strict({
         t.literal(EditorPluginType.Geogebra),
         t.literal(EditorPluginType.Anchor),
         t.literal(EditorPluginType.Video),
+        t.literal(EditorPluginType.Audio),
         t.literal(EditorPluginType.SerloTable),
         t.literal(EditorPluginType.Highlight),
         t.literal(EditorPluginType.Injection),

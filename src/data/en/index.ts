@@ -173,6 +173,7 @@ export const instanceData = {
         proof: 'Proof',
       },
       loadingVideoFailed: 'Something went wrong',
+      loadingAudioFailed: 'Something went wrong',
     },
     consent: {
       title: 'Consent for external Content',
@@ -886,6 +887,17 @@ export const loggedInData = {
           titlePlaceholder: 'Title',
           url: 'URL',
           seoTitle: 'Title for search engines',
+        },
+        audio: {
+          title: 'Audio',
+          description: 'Link to audio files or record your own',
+          audioUrl: 'Audio URL',
+          audioDescription: 'Description',
+          titlePlaceholder: 'Title',
+          url: 'URL',
+          seoTitle: 'Title for search engines',
+          unexpectedErrorWhileRecording: 'Something went wrong when recording the audio',
+          recordingSuccessfullyUploaded: 'Successfully uploaded audio recording!',
         },
       },
       templatePlugins: {
