@@ -156,7 +156,7 @@ export function Topic({ data }: TopicProps) {
                   }}
                 />
                 <div className={clsx('mt-3', hasFeedback ? '' : 'invisible')}>
-                  Danke für dein Feedback &#10084;
+                  Danke für dein Feedback! &#10084;
                 </div>
               </div>
             )}
