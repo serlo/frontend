@@ -3,18 +3,17 @@ import { Editor as SlateEditor, Node } from 'slate'
 
 import { sliceNodesAfterSelection } from './document'
 import {
-  RootStore,
   insertPluginChildAfter,
   runReplaceDocumentSaga,
   selectDocument,
   selectMayManipulateSiblings,
   selectParent,
+  store,
 } from '@/serlo-editor/store'
 
 export interface insertPluginArgs {
   pluginType: string
   editor: SlateEditor
-  store: RootStore
   id: string
   dispatch: ThunkDispatch<unknown, unknown, Action<unknown>>
   state?: unknown
@@ -23,12 +22,11 @@ export interface insertPluginArgs {
 export function insertPlugin({
   pluginType,
   editor,
-  store,
   id,
   dispatch,
   state,
 }: insertPluginArgs) {
-  const storeState = store.getState() as unknown
+  const storeState = store.getState()
 
   const document = selectDocument(storeState, id)
   const mayManipulateSiblings = selectMayManipulateSiblings(storeState, id)
@@ -40,7 +38,7 @@ export function insertPlugin({
   const isEditorEmpty =
     Node.string(editor) === '' || Node.string(editor) === '/'
 
-  if (mayManipulateSiblings && isEditorEmpty) {
+  if (isEditorEmpty) {
     dispatch(runReplaceDocumentSaga({ id, pluginType, state }))
     return
   }
