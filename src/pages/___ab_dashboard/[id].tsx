@@ -30,6 +30,7 @@ export const ABResults: NextPage<ABResultsProps> = ({
     <>
       <Head>
         <title>A/B-Test Dashboard</title>
+        <meta name="robots" content="noindex" />
       </Head>
       <FrontendClientBase>
         <div>
@@ -91,7 +92,6 @@ interface IntermediateData {
 export const getStaticProps: GetStaticProps<ABResultsProps> = async (
   context
 ) => {
-  // quite stupid to use fetchPageData here, why not calling requestPage directly?
   const experiment = context.params?.id as string
 
   const intermediate: { a: IntermediateData; b: IntermediateData } = {
@@ -196,7 +196,6 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
   }
 }
 
-// it could be that this page is only working on staging because of the amount of data?
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [],
