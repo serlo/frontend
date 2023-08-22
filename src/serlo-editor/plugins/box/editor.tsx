@@ -22,7 +22,7 @@ const titleFormattingOptions = [
 ]
 
 export function BoxEditor(props: BoxProps) {
-  const { domFocusWithin } = props
+  const { editable } = props
   const { title, type, content, anchorId } = props.state
   const hasNoType = type.value === ''
   const typedValue = (hasNoType ? 'blank' : type.value) as BoxType
@@ -56,7 +56,7 @@ export function BoxEditor(props: BoxProps) {
 
   return (
     <>
-      {domFocusWithin ? <BoxToolbar {...props} /> : null}
+      {editable ? <BoxToolbar {...props} /> : null}
 
       <BoxRenderer
         boxType={typedValue}
