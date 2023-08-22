@@ -16,8 +16,8 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { abSubmission } from '@/helper/ab-submission'
-import { renderArticle } from '@/schema/article-renderer'
 import { tw } from '@/helper/tw'
+import { renderArticle } from '@/schema/article-renderer'
 
 export interface TopicProps {
   data: TaxonomyData
