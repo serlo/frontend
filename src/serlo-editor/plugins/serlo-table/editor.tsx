@@ -175,6 +175,10 @@ export function SerloTableEditor(props: SerloTableProps) {
                   cell={cell}
                   isHead={isHead}
                   isClear={isClear}
+                  isFocused={
+                    focusedIndexes.col === colIndex &&
+                    focusedIndexes.row === rowIndex
+                  }
                 />
               ) : null}
               {/* hack: make sure we capture most clicks in cells */}
