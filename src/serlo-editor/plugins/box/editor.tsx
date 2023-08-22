@@ -54,7 +54,7 @@ export function BoxEditor(props: BoxProps) {
           )}
         >
           <b className="block pb-4">{editorStrings.plugins.box.type}</b>
-          <ul className="unstyled-list pb-8">{renderSettingsList()}</ul>
+          <ul className="unstyled-list pb-8">{renderSettingsListItems()}</ul>
         </figure>
       </>
     )
@@ -85,7 +85,7 @@ export function BoxEditor(props: BoxProps) {
     </>
   )
 
-  function renderSettingsList() {
+  function renderSettingsListItems() {
     return types.map((boxType) => {
       const typedBoxType = boxType as BoxType
       const listStyle = boxTypeStyle[typedBoxType]
