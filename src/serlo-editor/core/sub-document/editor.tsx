@@ -28,9 +28,9 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const document = useAppSelector((state) => selectDocument(state, id))
 
   const focused = useAppSelector((state) => selectIsFocused(state, id))
-  const [domFocus, setDomFocus] = useState<'focus' | 'focusWithin' | false>(
-    focused ? 'focusWithin' : false
-  )
+  const [domFocus, setDomFocus] = useState<
+    'focus' | 'focusWithin' | 'focusWithinInline' | false
+  >(focused ? 'focusWithin' : false)
 
   const plugin = editorPlugins.getByType(document?.plugin ?? '')
 
@@ -62,12 +62,18 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     if (e.type === 'blur' && target.contains(e.relatedTarget)) return
 
     const getFocusWithin = () => {
-      const hasFocusedChild = !!target.querySelector(
+      const focusedChild = target.querySelector(
         '[data-document-focusable]:focus-within'
       )
+      const isFocusedChildInline = focusedChild?.hasAttribute(
+        'data-document-inline-child-editor'
+      )
+
       return target.contains(window.document.activeElement)
-        ? hasFocusedChild
-          ? 'focusWithin'
+        ? focusedChild
+          ? isFocusedChildInline
+            ? 'focusWithinInline'
+            : 'focusWithin'
           : 'focus'
         : false
     }
@@ -145,12 +151,16 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         ref={containerRef}
         data-document
         data-document-focusable={noVisualFocusHandling ? undefined : true}
+        data-document-inline-child-editor={
+          isInlineChildEditor ? true : undefined
+        }
       >
         <plugin.Component
           containerRef={containerRef}
           id={id}
           editable
           domFocusWithin={domFocus !== false}
+          domFocusWithinInline={domFocus === 'focusWithinInline'}
           domFocus={domFocus === 'focus'}
           config={config}
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
