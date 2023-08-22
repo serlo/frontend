@@ -113,7 +113,7 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
   }
 
   const data = await prisma.aBTestingData.findMany({
-    where: { experiment },
+    where: { experiment, isProduction: true },
     orderBy: { timestamp: 'asc' },
   })
 
