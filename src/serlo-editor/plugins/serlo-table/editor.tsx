@@ -11,12 +11,7 @@ import { getTableType } from './utils/get-table-type'
 import { TextEditorConfig } from '../text'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import {
-  store,
-  selectIsDocumentEmpty,
-  focus,
-  useAppDispatch,
-} from '@/serlo-editor/store'
+import { store, selectIsDocumentEmpty } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const headerTextFormattingOptions = ['code', 'katex', 'links', 'math']
@@ -36,12 +31,8 @@ export function SerloTableEditor(props: SerloTableProps) {
   const { config, domFocusWithin, state } = props
   const { rows } = state
 
-  const [updateHack, setUpdateHack] = useState(0)
-
-  const dispatch = useAppDispatch()
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_update, setUpdate] = useState(0)
+  const [_updateHack, setUpdateHack] = useState(0)
 
   const [focusedIndexes, setFocusedIndexes] = useState<{
     row?: number
@@ -80,7 +71,6 @@ export function SerloTableEditor(props: SerloTableProps) {
               config: {
                 isInlineChildEditor: true,
                 placeholder: '',
-                updateHack,
               },
             })}
           </div>
@@ -101,8 +91,10 @@ export function SerloTableEditor(props: SerloTableProps) {
             onClick={(e) => {
               // another hack to make focus ux at least ok
               const target = e.target as HTMLDivElement
-              const hackDiv = target.querySelector('.hackdiv') as HTMLDivElement
-              hackDiv?.focus()
+              const slateEditorDiv = target.querySelector(
+                '.hackdiv [data-slate-editor]'
+              ) as HTMLDivElement
+              slateEditorDiv?.focus()
             }}
           >
             <SerloTableRenderer isEdit rows={rowsJSX} tableType={tableType} />
@@ -122,13 +114,6 @@ export function SerloTableEditor(props: SerloTableProps) {
           const isColHead = showColumnHeader && rowIndex === 0
           const isRowHead = showRowHeader && colIndex === 0
           const isHead = isRowHead || isColHead
-          const isLast =
-            rowIndex === rows.length - 1 &&
-            colIndex === rows[0].columns.length - 1
-          const dispatchFocus = () => {
-            dispatch(focus(cell.content.id))
-            updateFocus()
-          }
           const isClear = selectIsDocumentEmpty(
             store.getState(),
             cell.content.id
@@ -142,22 +127,12 @@ export function SerloTableEditor(props: SerloTableProps) {
               if (isClear) setUpdateHack((count) => count + 1)
             }
           }
-          const onKeyDownHandler = (e: KeyboardEvent<HTMLDivElement>) => {
-            if (
-              e.key === 'Tab' &&
-              (e.target as HTMLElement).tagName === 'BUTTON' &&
-              isLast
-            ) {
-              insertRow()
-            }
-          }
 
           return (
             <div
               key={colIndex}
-              onFocus={dispatchFocus} // hack: focus slate directly on tab
+              onFocus={updateFocus}
               onKeyUp={onKeyUpHandler} // keyUp because some onKeyDown keys are not bubbling
-              onKeyDown={onKeyDownHandler}
               className="hackdiv group/cell min-h-[3.5rem] pb-6 pr-2"
             >
               {renderInlineNav(rowIndex, colIndex)}
