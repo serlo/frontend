@@ -16,6 +16,7 @@ import { MaxWidthDiv } from './navigation/max-width-div'
 import { SecondaryMenu } from './navigation/secondary-menu'
 import { NewsletterPopup } from './scripts/newsletter-popup'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
+import { ABProvider, useABValue } from '@/contexts/ab'
 import { useInstanceData } from '@/contexts/instance-context'
 import {
   type EntityPageBase,
@@ -46,9 +47,12 @@ const DonationsBanner = dynamic<DonationsBannerProps>(() =>
 )
 
 export function EntityBase({ children, page, entityId }: EntityBaseProps) {
-  const [survey, setSurvey] = useState(false)
+  const abValue = useABValue(entityId)
+
   const { asPath } = useRouter()
   const { lang } = useInstanceData()
+
+  const [survey, setSurvey] = useState(false)
   const [answers] = useState(
     shuffleArray([
       <button
@@ -105,7 +109,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       page.entityData.typename === UuidType.GroupedExercise)
 
   return (
-    <>
+    <ABProvider value={abValue}>
       {survey && (
         <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/30">
           <div className="relative z-[1200] mx-side w-[500px] rounded-xl bg-white text-center">
@@ -184,7 +188,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
           )}
         </MaxWidthDiv>
       </div>
-    </>
+    </ABProvider>
   )
 
   function renderBreadcrumbs() {
