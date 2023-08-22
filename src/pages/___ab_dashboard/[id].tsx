@@ -18,6 +18,8 @@ interface GroupData {
   visits: number
   reached3solvesPercentage: number
   reached3solvesTime: number
+  solved: number
+  timeOnPage: number
 }
 
 export const ABResults: NextPage<ABResultsProps> = ({
@@ -75,6 +77,17 @@ export const ABResults: NextPage<ABResultsProps> = ({
           <div className="mx-side">
             B (Variante): {(groupB.reached3solvesPercentage * 100).toFixed(2)} %
             mit {(groupB.reached3solvesTime / 60000).toFixed(1)} min
+          </div>
+          <div className="serlo-h2">Engagement</div>
+          <div className="mx-side mb-4">Anzahl gelöster Aufgaben (median):</div>
+          <div className="mx-side">A (Original): {groupA.solved}</div>
+          <div className="mx-side">B (Variante): {groupB.solved}</div>
+          <div className="mx-side mb-4 mt-block">Verweildauer (median):</div>
+          <div className="mx-side">
+            A (Original): {(groupA.timeOnPage / 1000 / 60).toFixed(1)} min
+          </div>
+          <div className="mx-side">
+            B (Variante): {(groupB.timeOnPage / 1000 / 60).toFixed(1)} min
           </div>
           <div className="h-24"></div>
         </div>
@@ -182,6 +195,15 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
         bounceRate: bouncedSessionsA / visitsA || 0,
         reached3solvesTime: reached3solvesTimeA || 0,
         reached3solvesPercentage: reached3A / visitsA || 0,
+        solved: median(sessionsA.map((s) => s.solved.size)) || 0,
+        timeOnPage:
+          median(
+            sessionsA.map(
+              (s) =>
+                s.events[s.events.length - 1].timestamp.getTime() -
+                s.events[0].timestamp.getTime()
+            )
+          ) || 0,
       },
       groupB: {
         avg: average(intermediate.b.ratings),
@@ -190,6 +212,15 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
         bounceRate: bouncedSessionsB / visitsB || 0,
         reached3solvesTime: reached3solvesTimeB || 0,
         reached3solvesPercentage: reached3B / visitsB || 0,
+        solved: median(sessionsB.map((s) => s.solved.size)) || 0,
+        timeOnPage:
+          median(
+            sessionsB.map(
+              (s) =>
+                s.events[s.events.length - 1].timestamp.getTime() -
+                s.events[0].timestamp.getTime()
+            )
+          ) || 0,
       },
     },
     revalidate: 10,
