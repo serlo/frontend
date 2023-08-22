@@ -54,13 +54,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     [focused, id, dispatch]
   )
 
-  const noVisualFocusHandling = document?.plugin
-    ? document.plugin.startsWith('type-') ||
-      [EditorPluginType.Article, EditorPluginType.Rows].includes(
-        document.plugin as EditorPluginType
-      )
-    : true
-
   const handleDomFocus = useCallback((e: FocusEvent<HTMLDivElement>) => {
     const target = containerRef.current
     if (!target) return
@@ -131,6 +124,12 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
     const isTemplatePlugin = document.plugin.startsWith('type-')
 
+    const noVisualFocusHandling =
+      isTemplatePlugin ||
+      [EditorPluginType.Article, EditorPluginType.Rows].includes(
+        document.plugin as EditorPluginType
+      )
+
     return (
       <div
         className={clsx(
@@ -165,7 +164,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     plugin,
     pluginProps,
     handleFocus,
-    noVisualFocusHandling,
     handleDomFocus,
     id,
     domFocus,
