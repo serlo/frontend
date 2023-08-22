@@ -119,6 +119,8 @@ export function TextEditor(props: TextEditorProps) {
     ([node, path]: NodeEntry) => {
       const { selection } = editor
       if (
+        !focused ||
+        !editable ||
         selection === null ||
         Editor.isEditor(node) ||
         !Range.includes(selection, path) ||
@@ -129,8 +131,10 @@ export function TextEditor(props: TextEditorProps) {
       }
       return [{ ...selection, showPlaceholder: true }]
     },
-    [editor]
+    [editable, editor, focused]
   )
+
+  const shouldShowStaticPlaceholder = config.noLinebreaks || config.placeholder
 
   return (
     <Slate
@@ -154,10 +158,12 @@ export function TextEditor(props: TextEditorProps) {
         renderElement={handleRenderElement}
         renderLeaf={handleRenderLeaf}
         decorate={
-          config.noLinebreaks ? undefined : decorateEmptyLinesWithPlaceholder
+          shouldShowStaticPlaceholder
+            ? undefined
+            : decorateEmptyLinesWithPlaceholder
         }
         placeholder={
-          editable && config.noLinebreaks
+          editable && shouldShowStaticPlaceholder
             ? config.placeholder ?? textStrings.placeholder
             : undefined
         }
