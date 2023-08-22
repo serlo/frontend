@@ -47,12 +47,12 @@ const DonationsBanner = dynamic<DonationsBannerProps>(() =>
 )
 
 export function EntityBase({ children, page, entityId }: EntityBaseProps) {
-  const [survey, setSurvey] = useState(false)
-
-  const value = useABValue(entityId)
+  const abValue = useABValue(entityId)
 
   const { asPath } = useRouter()
   const { lang } = useInstanceData()
+
+  const [survey, setSurvey] = useState(false)
   const [answers] = useState(
     shuffleArray([
       <button
@@ -109,7 +109,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       page.entityData.typename === UuidType.GroupedExercise)
 
   return (
-    <ABProvider value={value}>
+    <ABProvider value={abValue}>
       {survey && (
         <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/30">
           <div className="relative z-[1200] mx-side w-[500px] rounded-xl bg-white text-center">

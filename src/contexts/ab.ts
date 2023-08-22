@@ -38,11 +38,6 @@ export function useABValue(entityId: number) {
   useEffect(() => {
     // check which experiment is currently active
     // check group and set group if appropriate
-    let group = sessionStorage.getItem('___serlo_ab_group___')
-    if (!group) {
-      group = Math.random() < 0.5 ? 'a' : 'b'
-      sessionStorage.setItem('___serlo_ab_group___', group)
-    }
     const experiment = experiments.find(
       (exp) =>
         exp.ids.includes(entityId) &&
@@ -51,6 +46,11 @@ export function useABValue(entityId: number) {
     )?.experiment
     if (!experiment) {
       return // no experiments active
+    }
+    let group = sessionStorage.getItem('___serlo_ab_group___')
+    if (!group) {
+      group = Math.random() < 0.5 ? 'a' : 'b'
+      sessionStorage.setItem('___serlo_ab_group___', group)
     }
     abSubmission({
       entityId: -1,
