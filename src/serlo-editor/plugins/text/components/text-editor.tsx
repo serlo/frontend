@@ -12,6 +12,7 @@ import { useSlateRenderHandlers } from '../hooks/use-slate-render-handlers'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import type { TextEditorConfig, TextEditorState } from '../types/config'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { SlateHoverOverlay } from '@/serlo-editor/editor-ui/slate-hover-overlay'
 import type { EditorPluginProps } from '@/serlo-editor/plugin'
@@ -25,6 +26,7 @@ export type TextEditorProps = EditorPluginProps<
 export function TextEditor(props: TextEditorProps) {
   const { state, id, editable, focused, containerRef } = props
 
+  const textStrings = useEditorStrings().plugins.text
   const config = useTextConfig(props.config)
 
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
@@ -150,7 +152,14 @@ export function TextEditor(props: TextEditorProps) {
         onPaste={handleEditablePaste}
         renderElement={handleRenderElement}
         renderLeaf={handleRenderLeaf}
-        decorate={decorateEmptyLinesWithPlaceholder}
+        decorate={
+          config.noLinebreaks ? undefined : decorateEmptyLinesWithPlaceholder
+        }
+        placeholder={
+          editable && config.noLinebreaks
+            ? config.placeholder ?? textStrings.placeholder
+            : undefined
+        }
         // `[&>[data-slate-node]]:mx-side` fixes placeholder position in safari
         // `outline-none` removes the ugly outline present in Slate v0.94.1
         className="outline-none [&>[data-slate-node]]:mx-side"
