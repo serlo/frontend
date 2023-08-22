@@ -4245,6 +4245,7 @@ __metadata:
     react-modal: ^3.16.1
     react-notify-toast: Entkenntnis/tmp-react-notify-toast
     react-redux: ^8.1.2
+    react-simple-star-rating: ^5.1.7
     react-syntax-highlighter: ^15.5.0
     react-textarea-autosize: ^8.5.2
     redux: ^4.2.1
@@ -12834,6 +12835,16 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
     "@types/react":
       optional: true
   checksum: 2c7fe9cbd766f5e54beb4bec2e2efb2de3583037b23fef8fa511ab426ed7f1ae992382db5acd8ab5bfb030a4b93a06a2ebca41377d6eeaf0e6791bb0a59616a4
+  languageName: node
+  linkType: hard
+
+"react-simple-star-rating@npm:^5.1.7":
+  version: 5.1.7
+  resolution: "react-simple-star-rating@npm:5.1.7"
+  peerDependencies:
+    react: ">=18.0.0"
+    react-dom: ">=18.0.0"
+  checksum: e7b3f75dc2c86d46ba684ba1fe3364e005bdaf7e438b6c857613c9920d3a60a547751dc80a9223caec8098d9996de36b042f9c91cc045e25f5200122576f6c06
   languageName: node
   linkType: hard
 
