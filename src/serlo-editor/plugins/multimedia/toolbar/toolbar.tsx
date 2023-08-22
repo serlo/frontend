@@ -1,28 +1,34 @@
 import { faCog } from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
 import { ReactNode, RefObject, useState } from 'react'
 
+import type { MultimediaProps } from '..'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { tw } from '@/helper/tw'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-interface MultimediaToolbarProps {
-  id: string
+type MultimediaToolbarProps = {
   children: ReactNode
   containerRef: RefObject<HTMLDivElement> | undefined
-}
+} & MultimediaProps
 
 export const MultimediaToolbar = ({
   id,
   children,
   containerRef,
+  domFocus,
+  domFocusWithin,
 }: MultimediaToolbarProps) => {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const editorStrings = useEditorStrings()
 
-  return (
+  if (!domFocusWithin) return null
+
+  return domFocus ? (
     <PluginToolbar
       pluginType={EditorPluginType.Multimedia}
       pluginSettings={
@@ -54,5 +60,16 @@ export const MultimediaToolbar = ({
       pluginControls={<PluginDefaultTools pluginId={id} />}
       className="-top-[35px] left-[21px] w-[calc(100%-37px)]"
     />
+  ) : (
+    <button
+      className={clsx(
+        tw`
+            absolute -top-6 right-14 z-50 block h-6 rounded-t-md bg-gray-100
+            px-2 pt-0.5 text-sm font-bold hover:bg-editor-primary-100
+          `
+      )}
+    >
+      {editorStrings.plugins.multimedia.title}
+    </button>
   )
 }

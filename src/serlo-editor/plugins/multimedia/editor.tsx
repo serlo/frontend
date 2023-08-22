@@ -8,14 +8,10 @@ import { MultimediaTypeSelect } from './toolbar/type-select'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { AreImagesDisabledInTableContext } from '@/serlo-editor/plugins/serlo-table/contexts/are-images-disabled-in-table-context'
-import { selectIsFocused, useAppSelector } from '@/serlo-editor/store'
 
 export function MultimediaEditor(props: MultimediaProps) {
-  const { id, config, state, domFocus, domFocusWithin, containerRef } = props
+  const { config, state, domFocusWithin, containerRef } = props
   const { explanation, multimedia, width } = state
-
-  // TODO: make work with domFocus instead
-  const focused = useAppSelector((state) => selectIsFocused(state, id))
 
   const multimediaStrings = useEditorStrings().plugins.multimedia
 
@@ -61,33 +57,18 @@ export function MultimediaEditor(props: MultimediaProps) {
 
   return (
     <div className="group/multimedia" data-qa="plugin-multimedia-wrapper">
-      {domFocus ? (
-        <MultimediaToolbar id={props.id} containerRef={containerRef}>
-          <MultimediaSizeSelect
-            state={state.width}
-            title={multimediaStrings.chooseSize}
+      <MultimediaToolbar {...props} containerRef={containerRef}>
+        <MultimediaSizeSelect
+          state={state.width}
+          title={multimediaStrings.chooseSize}
+        />
+        {config.allowedPlugins.length > 1 && (
+          <MultimediaTypeSelect
+            allowedPlugins={config.allowedPlugins}
+            state={state.multimedia}
           />
-          {config.allowedPlugins.length > 1 && (
-            <MultimediaTypeSelect
-              allowedPlugins={config.allowedPlugins}
-              state={state.multimedia}
-            />
-          )}
-        </MultimediaToolbar>
-      ) : null}
-
-      <button
-        className={clsx(
-          tw`
-            absolute -top-6 right-8 z-50 block h-6 rounded-t-md bg-gray-100
-            px-2 pt-0.5 text-sm font-bold hover:bg-editor-primary-100
-          `,
-          focused ? 'hidden' : ''
         )}
-        data-qa="plugin-multimedia-parent-button"
-      >
-        {multimediaStrings.title}
-      </button>
+      </MultimediaToolbar>
 
       <div className={pluginToolbarAndStyleHacks}>
         <AreImagesDisabledInTableContext.Provider value>
