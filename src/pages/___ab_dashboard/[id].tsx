@@ -192,6 +192,7 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
         reached3solvesPercentage: reached3B / visitsB || 0,
       },
     },
+    revalidate: 10,
   }
 }
 
