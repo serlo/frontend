@@ -138,14 +138,15 @@ export function TextEditor(props: TextEditorProps) {
       initialValue={state.value.value}
       onChange={handleEditorChange}
     >
-      {focused && (
+      {focused ? (
         <TextToolbar
           id={id}
           toolbarControls={toolbarControls}
           config={config}
           containerRef={containerRef}
         />
-      )}
+      ) : null}
+
       <Editable
         readOnly={!editable}
         onKeyDown={handleEditableKeyDown}
@@ -165,13 +166,16 @@ export function TextEditor(props: TextEditorProps) {
         className="outline-none [&>[data-slate-node]]:mx-side"
         data-qa="plugin-text-editor"
       />
-      <LinkControls serloLinkSearch={config.serloLinkSearch} />
 
-      {showSuggestions && (
+      {focused ? (
+        <LinkControls serloLinkSearch={config.serloLinkSearch} />
+      ) : null}
+
+      {showSuggestions ? (
         <SlateHoverOverlay position="below">
           <Suggestions {...suggestionsProps} />
         </SlateHoverOverlay>
-      )}
+      ) : null}
     </Slate>
   )
 }
