@@ -307,7 +307,7 @@ function createToolbarControls(
       title: textStrings.orderedList,
       isActive: isSelectionWithinOrderedList,
       onClick: toggleOrderedList,
-      renderIcon: () => <FaIcon icon={faListOl} />,
+      renderIcon: () => <FaIcon className="h-[15px]" icon={faListOl} />,
     },
     // Unordered list
     {
@@ -315,7 +315,7 @@ function createToolbarControls(
       title: textStrings.unorderedList,
       isActive: isSelectionWithinUnorderedList,
       onClick: toggleUnorderedList,
-      renderIcon: () => <FaIcon icon={faListUl} />,
+      renderIcon: () => <FaIcon className="h-[15px]" icon={faListUl} />,
     },
     // Math
     {
@@ -323,7 +323,9 @@ function createToolbarControls(
       title: textStrings.mathFormula,
       isActive: isMathActive,
       onClick: toggleMath,
-      renderIcon: () => <FaIcon icon={faSquareRootVariable} />,
+      renderIcon: () => (
+        <FaIcon className="h-[15px]" icon={faSquareRootVariable} />
+      ),
     },
     // Code
     {
@@ -331,7 +333,7 @@ function createToolbarControls(
       title: textStrings.code,
       isActive: isCodeActive,
       onClick: toggleCode,
-      renderIcon: () => <FaIcon icon={faCode} />,
+      renderIcon: () => <FaIcon className="h-[15px]" icon={faCode} />,
     },
   ].map((option) => {
     return {

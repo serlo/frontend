@@ -1,4 +1,3 @@
-import isHotkey from 'is-hotkey'
 import React, { useMemo, useEffect, useCallback } from 'react'
 import { createEditor, Node, Transforms, Range, Editor, NodeEntry } from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
@@ -6,31 +5,16 @@ import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 import { LinkControls } from './link/link-controls'
 import { Suggestions } from './suggestions'
 import { TextToolbar } from './text-toolbar'
+import { useEditableKeydownHandler } from '../hooks/use-editable-key-down-handler'
+import { useEditablePasteHandler } from '../hooks/use-editable-paste-handler'
 import { useEditorChange } from '../hooks/use-editor-change'
 import { useSlateRenderHandlers } from '../hooks/use-slate-render-handlers'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import type { TextEditorConfig, TextEditorState } from '../types/config'
-import { emptyDocumentFactory, mergePlugins } from '../utils/document'
-import { insertPlugin } from '../utils/insert-plugin'
-import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { showToastNotice } from '@/helper/show-toast-notice'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
-import { isSelectionWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { SlateHoverOverlay } from '@/serlo-editor/editor-ui/slate-hover-overlay'
 import type { EditorPluginProps } from '@/serlo-editor/plugin'
-import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
-import {
-  focusNext,
-  focusPrevious,
-  selectDocument,
-  selectMayManipulateSiblings,
-  useAppDispatch,
-  selectFocusTree,
-  store,
-} from '@/serlo-editor/store'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export type TextEditorProps = EditorPluginProps<
   TextEditorState,
@@ -40,9 +24,6 @@ export type TextEditorProps = EditorPluginProps<
 // Regular text editor - used as a standalone plugin
 export function TextEditor(props: TextEditorProps) {
   const { state, id, editable, focused, containerRef } = props
-
-  const dispatch = useAppDispatch()
-  const textStrings = useEditorStrings().plugins.text
 
   const config = useTextConfig(props.config)
 
@@ -56,13 +37,27 @@ export function TextEditor(props: TextEditorProps) {
   const suggestions = useSuggestions({ editor, id, editable, focused })
   const { showSuggestions, suggestionsProps } = suggestions
 
-  const { handleRenderElement, handleRenderLeaf } = useSlateRenderHandlers(
+  const { handleRenderElement, handleRenderLeaf } = useSlateRenderHandlers({
+    editor,
     focused,
-    config.placeholder
-  )
+    placeholder: config.placeholder,
+    id,
+  })
   const { previousSelection, handleEditorChange } = useEditorChange({
     editor,
     state,
+  })
+  const handleEditableKeyDown = useEditableKeydownHandler({
+    config,
+    editor,
+    id,
+    showSuggestions,
+    previousSelection,
+    state,
+  })
+  const handleEditablePaste = useEditablePasteHandler({
+    editor,
+    id,
   })
 
   // Workaround for setting selection when adding a new editor:
@@ -115,250 +110,6 @@ export function TextEditor(props: TextEditorProps) {
       clearTimeout(timeout)
     }
   }, [editor, focused])
-
-  const handleEditableKeyDown = useCallback(
-    (event: React.KeyboardEvent) => {
-      // If linebreaks are disabled in the config, prevent any enter key handling
-      if (config.noLinebreaks && event.key === 'Enter') {
-        event.preventDefault()
-      }
-
-      // Handle specific keyboard commands
-      // (only if selection is collapsed and suggestions are not shown)
-      const { selection } = editor
-      if (selection && Range.isCollapsed(selection) && !showSuggestions) {
-        const isListActive = isSelectionWithinList(editor)
-
-        // Special handler for links. If you move right and end up at the right edge of a link,
-        // this handler unselects the link, so you can write normal text behind it.
-        if (isHotkey('right', event)) {
-          const { path, offset } = selection.focus
-          const node = Node.get(editor, path)
-          const parent = Node.parent(editor, path)
-
-          if (node && parent) {
-            if (Object.hasOwn(parent, 'type') && parent.type === 'a') {
-              if (
-                Object.hasOwn(node, 'text') &&
-                node.text.length - 1 <= offset
-              ) {
-                Transforms.move(editor)
-                Transforms.move(editor, { unit: 'offset' })
-                event.preventDefault()
-              }
-            }
-          }
-        }
-
-        // Special handler for links. Handle linebreaks while editing a link text
-        if (event.key === 'Enter') {
-          const { path, offset } = selection.focus
-          const node = Node.get(editor, path)
-          const parent = Node.parent(editor, path)
-
-          if (node && parent) {
-            if (
-              Object.hasOwn(parent, 'type') &&
-              parent.type === 'a' &&
-              Object.hasOwn(node, 'text')
-            ) {
-              // cursor is on left of link (but still on link): normal line break
-              if (offset === 0) return
-
-              // cursor is right of link(but still on link): line break without continuing link
-              // normal text in new line
-              event.preventDefault()
-              if (node.text.length === offset) Transforms.move(editor)
-              // cursor is somewhere inside link: no line break, no action
-              else return false
-            }
-          }
-        }
-
-        // Special behaviours when creating new lines
-        if (isHotkey(['enter', 'shift+enter'], event) && !isListActive) {
-          // Prevent two consecutive empty lines.
-          // Wrapped in `setTimeout` to let Slate's built-in function to run first
-          setTimeout(() => {
-            const { path } = selection.focus
-            const currentLine = Node.get(editor, path)
-
-            // If not an empty line, do nothing
-            if (Node.string(currentLine).length) return
-            const nodeLineIndex = path[0]
-
-            // If first line is empty: do not allow a new line by deleting new line
-            if (nodeLineIndex === 0) {
-              editor.deleteBackward('block')
-              return
-            }
-            // If current and previous line are empty:  do not allow a new line by deleting new line
-            const previousLine = Node.get(editor, [nodeLineIndex - 1, 0])
-            if (!Node.string(previousLine).length) {
-              editor.deleteBackward('block')
-            }
-          })
-
-          // Prevent newlines in headings. Instead, add a new paragraph as the next block.
-          const fragmentChild = editor.getFragment()[0]
-          const isHeading =
-            Object.hasOwn(fragmentChild, 'type') && fragmentChild.type === 'h'
-
-          if (isHeading) {
-            event.preventDefault()
-            Transforms.insertNodes(editor, emptyDocumentFactory().value)
-          }
-        }
-
-        // Merge with previous Slate instance on "backspace" key,
-        // or merge with next Slate instance on "delete" key
-        const isBackspaceAtStart =
-          isHotkey('backspace', event) && isSelectionAtStart(editor, selection)
-        const isDeleteAtEnd =
-          isHotkey('delete', event) && isSelectionAtEnd(editor, selection)
-        if ((isBackspaceAtStart || isDeleteAtEnd) && !isListActive) {
-          event.preventDefault()
-
-          // Get direction of merge
-          const direction = isBackspaceAtStart ? 'previous' : 'next'
-
-          // Merge plugins within Slate and get the merge value
-          const newValue = mergePlugins(direction, editor, store, id)
-
-          // Update Redux document state with the new value
-          if (newValue) {
-            state.set({ value: newValue, selection }, ({ value }) => ({
-              value,
-              selection: previousSelection.current,
-            }))
-          }
-        }
-
-        // Jump to previous/next plugin on pressing "up"/"down" arrow keys at start/end of text block
-        const isUpArrowAtStart =
-          isHotkey('up', event) && isSelectionAtStart(editor, selection)
-        if (isUpArrowAtStart) {
-          event.preventDefault()
-          const focusTree = selectFocusTree(store.getState())
-          dispatch(focusPrevious(focusTree))
-        }
-        const isDownArrowAtEnd =
-          isHotkey('down', event) && isSelectionAtEnd(editor, selection)
-        if (isDownArrowAtEnd) {
-          event.preventDefault()
-          const focusTree = selectFocusTree(store.getState())
-          dispatch(focusNext(focusTree))
-        }
-      }
-
-      textFormattingOptions.handleHotkeys(event, editor)
-      textFormattingOptions.handleMarkdownShortcuts(event, editor)
-      textFormattingOptions.handleListsShortcuts(event, editor)
-    },
-    [
-      config.noLinebreaks,
-      dispatch,
-      editor,
-      id,
-      showSuggestions,
-      previousSelection,
-      state,
-      textFormattingOptions,
-    ]
-  )
-
-  const handleEditablePaste = useCallback(
-    (event: React.ClipboardEvent) => {
-      const isListActive = isSelectionWithinList(editor)
-
-      const document = selectDocument(store.getState(), id)
-      if (!document) return
-
-      const mayManipulateSiblings = selectMayManipulateSiblings(
-        store.getState(),
-        id
-      )
-      if (!mayManipulateSiblings) return
-
-      const files = Array.from(event.clipboardData.files)
-      const text = event.clipboardData.getData('text')
-
-      // Handle pasted images or image URLs
-      if (files?.length > 0 || text) {
-        const imagePlugin = editorPlugins.getByType(EditorPluginType.Image)
-        if (!imagePlugin) return
-
-        const imagePluginState =
-          imagePlugin.onFiles?.(files) ?? imagePlugin.onText?.(text)
-
-        if (imagePluginState !== undefined) {
-          if (isListActive) {
-            showToastNotice(textStrings.noElementPasteInLists, 'warning')
-            return
-          }
-
-          insertPlugin({
-            pluginType: EditorPluginType.Image,
-            editor,
-            store,
-            id,
-            dispatch,
-            state: imagePluginState,
-          })
-          return
-        }
-      }
-
-      if (text) {
-        // Handle pasted video URLs
-        const videoPluginState = editorPlugins
-          .getByType(EditorPluginType.Video)
-          ?.onText?.(text)
-        if (videoPluginState !== undefined) {
-          event.preventDefault()
-
-          if (isListActive) {
-            showToastNotice(textStrings.noElementPasteInLists, 'warning')
-            return
-          }
-
-          insertPlugin({
-            pluginType: EditorPluginType.Video,
-            editor,
-            store,
-            id,
-            dispatch,
-            state: videoPluginState,
-          })
-          return
-        }
-
-        // Handle pasted geogebra URLs
-        const geogebraPluginState = editorPlugins
-          .getByType(EditorPluginType.Geogebra)
-          ?.onText?.(text)
-        if (geogebraPluginState !== undefined) {
-          event.preventDefault()
-
-          if (isListActive) {
-            showToastNotice(textStrings.noElementPasteInLists, 'warning')
-            return
-          }
-
-          insertPlugin({
-            pluginType: EditorPluginType.Geogebra,
-            editor,
-            store,
-            id,
-            dispatch,
-            state: geogebraPluginState,
-          })
-          return
-        }
-      }
-    },
-    [dispatch, editor, id, textStrings]
-  )
 
   // Show a placeholder on empty lines.
   // https://jkrsp.com/slate-js-placeholder-per-line/
