@@ -155,7 +155,6 @@ export function SerloTableEditor(props: SerloTableProps) {
           return (
             <div
               key={colIndex}
-              tabIndex={0} // capture tab
               onFocus={dispatchFocus} // hack: focus slate directly on tab
               onKeyUp={onKeyUpHandler} // keyUp because some onKeyDown keys are not bubbling
               onKeyDown={onKeyDownHandler}

@@ -83,7 +83,10 @@ export function TextEditor(props: TextEditorProps) {
       }
 
       try {
-        ReactEditor.focus(editor) // Focus this text editor
+        // Focus this text editor
+        ReactEditor.focus(editor)
+        // Set selection to the start
+        Transforms.select(editor, { offset: 0, path: [0, 0] })
       } catch (error) {
         // Focusing did not work. Happens sometimes. Ignore and skip focusing this time.
         // eslint-disable-next-line no-console
@@ -99,11 +102,6 @@ export function TextEditor(props: TextEditorProps) {
       const isFirstChildParagraph =
         'type' in editor.children[0] && editor.children[0].type === 'p'
       if (!isFirstChildParagraph) return
-
-      // If the editor is empty, set the cursor at the start
-      if (text === '') {
-        Transforms.select(editor, { offset: 0, path: [0, 0] })
-      }
 
       // If the editor only has a forward slash, set the cursor
       // after it, so that the user can type to filter suggestions
