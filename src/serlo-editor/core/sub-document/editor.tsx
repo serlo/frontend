@@ -175,7 +175,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           'outline-none',
           isInlineChildEditor || isTemplatePlugin
             ? ''
-            : 'plugin-wrapper-container relative -ml-[7px] mb-6 min-h-[10px] pl-[5px]'
+            : 'plugin-wrapper-container relative -ml-[7px] mb-6 min-h-[10px] pl-[5px]',
+          isLastRowInRootRowsPlugin ? '!mb-28' : ''
         )}
         tabIndex={-1} // removing this makes selecting e.g. images impossible somehow
         onMouseDown={handleFocus}

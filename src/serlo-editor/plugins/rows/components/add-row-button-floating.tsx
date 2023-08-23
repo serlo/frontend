@@ -5,31 +5,16 @@ import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 
-interface AddRowButtonProps {
+interface AddRowButtonFloatingProps {
   focused: boolean
   onClick: React.MouseEventHandler<HTMLButtonElement>
-  visuallyEmphasized?: boolean
 }
 
-export function AddRowButton({
+export function AddRowButtonFloating({
   focused,
   onClick,
-  visuallyEmphasized = false,
-}: AddRowButtonProps) {
+}: AddRowButtonFloatingProps) {
   const rowsStrings = useEditorStrings().plugins.rows
-
-  if (visuallyEmphasized)
-    return (
-      <button
-        className="serlo-button-editor-secondary"
-        data-qa="add-new-plugin-row-button"
-        onClick={onClick}
-        title={rowsStrings.addAnElement}
-      >
-        <FaIcon icon={faCirclePlus} className="text-xl" />{' '}
-        <span className="text-almost-black">{rowsStrings.addAnElement}</span>
-      </button>
-    )
 
   return (
     <div className="group flex justify-center">
