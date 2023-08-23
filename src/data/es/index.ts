@@ -161,7 +161,8 @@ export const instanceData = {
         theorem: "Teorema",
         proof: "Prueba"
       },
-      loadingVideoFailed: "Algo ha fallado"
+      loadingVideoFailed: "Algo ha fallado",
+      loadingAudioFailed: 'Something went wrong'
     },
     consent: {
       title: "Consentimiento para contenido externo",
@@ -176,6 +177,7 @@ export const instanceData = {
       video: "Reproducir vídeo de %provider%",
       applet: "Cargar Applet de %provider%",
       twingle: "Cargar formulario de donación",
+      audio: 'Play audio from %provider%',
       general: "Activar"
     },
     comments: {
@@ -811,6 +813,11 @@ export const loggedInData = {
           titlePlaceholder: "Título",
           url: 'URL',
           seoTitle: "Título para motores de búsqueda"
+        },
+        audio: {
+          title: 'Audio',
+          description: 'Link to audio files on Vocaroo',
+          audioUrl: 'Enter Audio URL'
         }
       },
       templatePlugins: {
