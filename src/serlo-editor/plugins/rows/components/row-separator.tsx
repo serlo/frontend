@@ -1,43 +1,24 @@
-import clsx from 'clsx'
-
-import { AddRowButton } from './add-row-button'
-import type { RowsPluginConfig } from '..'
+import { AddRowButtonFloating } from './add-row-button-floating'
+import { AddRowButtonLarge } from './add-row-button-large'
 
 interface RowSeparatorProps {
-  config: RowsPluginConfig
-  isFirst?: boolean
-  isLast?: boolean
   visuallyEmphasizeAddButton?: boolean
-  onClick: React.MouseEventHandler<HTMLButtonElement>
   focused?: boolean
+  onClick: React.MouseEventHandler<HTMLButtonElement>
 }
 
 export function RowSeparator({
-  isFirst,
-  isLast = false,
   visuallyEmphasizeAddButton = false,
-  onClick,
   focused,
+  onClick,
 }: RowSeparatorProps) {
   return (
-    <div
-      className={clsx(
-        'absolute z-[1] h-auto w-full',
-        isFirst ? 'top-0' : 'bottom-0',
-        isFirst && isLast
-          ? ''
-          : isFirst
-          ? '-translate-y-full'
-          : isLast
-          ? 'translate-y-[170%]'
-          : 'translate-y-full'
+    <div className="absolute bottom-0 z-[1] h-auto w-full translate-y-full">
+      {visuallyEmphasizeAddButton ? (
+        <AddRowButtonLarge onClick={onClick} />
+      ) : (
+        <AddRowButtonFloating focused={focused || false} onClick={onClick} />
       )}
-    >
-      <AddRowButton
-        focused={focused || false}
-        onClick={onClick}
-        visuallyEmphasized={visuallyEmphasizeAddButton}
-      />
     </div>
   )
 }

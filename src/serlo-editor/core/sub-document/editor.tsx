@@ -18,14 +18,26 @@ import {
   selectIsFocused,
   useAppSelector,
   useAppDispatch,
+  insertPluginChildAfter,
+  selectParent,
+  store,
+  selectMayManipulateSiblings,
+  selectIsLastRowInRootRowsPlugin,
 } from '../../store'
 import type { StateUpdater } from '../../types/internal__plugin-state'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
+import { RowSeparator } from '@/serlo-editor/plugins/rows/components/row-separator'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const dispatch = useAppDispatch()
   const document = useAppSelector((state) => selectDocument(state, id))
+  const mayManipulateSiblings = useAppSelector((state) =>
+    selectMayManipulateSiblings(state, id)
+  )
+  const isLastRowInRootRowsPlugin = useAppSelector((state) =>
+    selectIsLastRowInRootRowsPlugin(state, id)
+  )
 
   const focused = useAppSelector((state) => selectIsFocused(state, id))
   const [domFocus, setDomFocus] = useState<
@@ -99,7 +111,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     const overrideConfig = (pluginProps && pluginProps.config) || {}
     const config = R.mergeDeepRight(defaultConfig, overrideConfig)
 
-    const onChange = (
+    function handleChange(
       initial: StateUpdater<unknown>,
       additional: {
         executor?: ReturnType<
@@ -107,7 +119,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         >['payload']['state']['executor']
         reverse?: ReturnType<typeof runChangeDocumentSaga>['payload']['reverse']
       } = {}
-    ) => {
+    ) {
       dispatch(
         runChangeDocumentSaga({
           id,
@@ -120,9 +132,30 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       )
     }
 
-    // Take the default state for this plugin (set in serlo-editor/plugins/[plugin_type]/index.tsx) and add the individual plugin state obtained from the redux state.
+    function handleAddButtonClick() {
+      const textPluginWithSuggestions = {
+        plugin: EditorPluginType.Text,
+        state: [{ type: 'p', children: [{ text: '/' }] }],
+      }
+
+      const parent = selectParent(store.getState(), id)
+      if (!parent) return null
+
+      setTimeout(() => {
+        dispatch(
+          insertPluginChildAfter({
+            parent: parent.id,
+            sibling: id,
+            document: textPluginWithSuggestions,
+          })
+        )
+      })
+    }
+
+    // Take the default state for this plugin (set in serlo-editor/plugins/[plugin_type]/index.tsx)
+    // and add the individual plugin state obtained from the redux state.
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const state = plugin.state.init(document.state, onChange)
+    const state = plugin.state.init(document.state, handleChange)
 
     const isInlineChildEditor =
       Object.hasOwn(config, 'isInlineChildEditor') &&
@@ -142,7 +175,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           'outline-none',
           isInlineChildEditor || isTemplatePlugin
             ? ''
-            : 'plugin-wrapper-container relative -ml-[7px] mb-6 min-h-[10px] pl-[5px]'
+            : 'plugin-wrapper-container relative -ml-[7px] mb-6 min-h-[10px] pl-[5px]',
+          isLastRowInRootRowsPlugin ? '!mb-28' : ''
         )}
         tabIndex={-1} // removing this makes selecting e.g. images impossible somehow
         onMouseDown={handleFocus}
@@ -167,6 +201,16 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           state={state}
           autofocusRef={autofocusRef}
         />
+        {mayManipulateSiblings ? (
+          <RowSeparator
+            focused={domFocus === 'focus'}
+            onClick={(event: React.MouseEvent) => {
+              event.preventDefault()
+              handleAddButtonClick()
+            }}
+            visuallyEmphasizeAddButton={isLastRowInRootRowsPlugin}
+          />
+        ) : null}
       </div>
     )
   }, [
@@ -177,6 +221,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     handleDomFocus,
     id,
     domFocus,
+    mayManipulateSiblings,
+    isLastRowInRootRowsPlugin,
     dispatch,
   ])
 }
