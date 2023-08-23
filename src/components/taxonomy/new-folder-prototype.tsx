@@ -37,7 +37,7 @@ const hardcodedDataforDreisatz = [
     type: 'Single Choice',
   },
   {
-    title: 'Reise nach Hogwarts',
+    title: 'Reisezeit nach Hogwarts',
     difficulty: 3,
     img: 'https://assets.serlo.org/b3deaf80-41ac-11ee-89f0-6196501948c9/image.png',
     type: 'Single Choice',

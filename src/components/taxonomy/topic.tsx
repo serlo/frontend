@@ -135,6 +135,8 @@ export function Topic({ data }: TopicProps) {
       return (
         <>
           <NewFolderPrototype data={data} />
+          <div className="h-24"></div>
+          {renderSurvey()}
         </>
       )
     }
