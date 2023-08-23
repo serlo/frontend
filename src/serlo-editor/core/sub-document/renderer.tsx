@@ -2,6 +2,7 @@ import * as R from 'ramda'
 import { useRef } from 'react'
 
 import type { SubDocumentProps } from '.'
+import { DomFocus } from './editor'
 import { selectDocument, useAppSelector } from '../../store'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
@@ -33,8 +34,8 @@ export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {
       config={config}
       id={id}
       editable={false}
-      domFocus={false}
       domFocusWithin={false}
+      domFocusState={DomFocus.notFocused}
       autofocusRef={focusRef}
     />
   )

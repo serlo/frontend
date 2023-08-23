@@ -18,30 +18,49 @@ import {
   selectIsFocused,
   useAppSelector,
   useAppDispatch,
+  insertPluginChildAfter,
+  selectParent,
+  store,
+  selectMayManipulateSiblings,
+  selectIsLastRowInRootRowsPlugin,
 } from '../../store'
 import type { StateUpdater } from '../../types/internal__plugin-state'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
+import { RowSeparator } from '@/serlo-editor/plugins/rows/components/row-separator'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+
+export enum DomFocus {
+  focus = 'focus',
+  focusWithin = 'focusWithin',
+  focusWithinInline = 'focusWithinInline',
+  notFocused = 'notFocused',
+}
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const dispatch = useAppDispatch()
   const document = useAppSelector((state) => selectDocument(state, id))
+  const mayManipulateSiblings = useAppSelector((state) =>
+    selectMayManipulateSiblings(state, id)
+  )
+  const isLastRowInRootRowsPlugin = useAppSelector((state) =>
+    selectIsLastRowInRootRowsPlugin(state, id)
+  )
 
   const focused = useAppSelector((state) => selectIsFocused(state, id))
-  const [domFocus, setDomFocus] = useState<'focus' | 'focusWithin' | false>(
-    focused ? 'focusWithin' : false
+  const [domFocusState, setDomFocus] = useState<DomFocus>(
+    focused ? DomFocus.focusWithin : DomFocus.notFocused
   )
 
   const plugin = editorPlugins.getByType(document?.plugin ?? '')
 
-  useEnableEditorHotkeys(id, plugin, domFocus === 'focusWithin')
+  useEnableEditorHotkeys(id, plugin, domFocusState === DomFocus.focusWithin)
   const containerRef = useRef<HTMLDivElement>(null)
   const autofocusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
 
   useEffect(() => {
-    if (domFocus !== 'focus') return
+    if (domFocusState !== 'focus') return
     setTimeout(() => autofocusRef.current?.focus())
-  }, [domFocus])
+  }, [domFocusState])
 
   const handleFocus = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -54,13 +73,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     [focused, id, dispatch]
   )
 
-  const noVisualFocusHandling = document?.plugin
-    ? document.plugin.startsWith('type-') ||
-      [EditorPluginType.Article, EditorPluginType.Rows].includes(
-        document.plugin as EditorPluginType
-      )
-    : true
-
   const handleDomFocus = useCallback((e: FocusEvent<HTMLDivElement>) => {
     const target = containerRef.current
     if (!target) return
@@ -69,14 +81,20 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     if (e.type === 'blur' && target.contains(e.relatedTarget)) return
 
     const getFocusWithin = () => {
-      const hasFocusedChild = !!target.querySelector(
+      const focusedChild = target.querySelector(
         '[data-document-focusable]:focus-within'
       )
+      const isFocusedChildInline = focusedChild?.hasAttribute(
+        'data-document-inline-child-editor'
+      )
+
       return target.contains(window.document.activeElement)
-        ? hasFocusedChild
-          ? 'focusWithin'
-          : 'focus'
-        : false
+        ? focusedChild
+          ? isFocusedChildInline
+            ? DomFocus.focusWithinInline
+            : DomFocus.focusWithin
+          : DomFocus.focus
+        : DomFocus.notFocused
     }
 
     setDomFocus(() => getFocusWithin())
@@ -100,7 +118,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     const overrideConfig = (pluginProps && pluginProps.config) || {}
     const config = R.mergeDeepRight(defaultConfig, overrideConfig)
 
-    const onChange = (
+    function handleChange(
       initial: StateUpdater<unknown>,
       additional: {
         executor?: ReturnType<
@@ -108,7 +126,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         >['payload']['state']['executor']
         reverse?: ReturnType<typeof runChangeDocumentSaga>['payload']['reverse']
       } = {}
-    ) => {
+    ) {
       dispatch(
         runChangeDocumentSaga({
           id,
@@ -121,9 +139,30 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       )
     }
 
-    // Take the default state for this plugin (set in serlo-editor/plugins/[plugin_type]/index.tsx) and add the individual plugin state obtained from the redux state.
+    function handleAddButtonClick() {
+      const textPluginWithSuggestions = {
+        plugin: EditorPluginType.Text,
+        state: [{ type: 'p', children: [{ text: '/' }] }],
+      }
+
+      const parent = selectParent(store.getState(), id)
+      if (!parent) return null
+
+      setTimeout(() => {
+        dispatch(
+          insertPluginChildAfter({
+            parent: parent.id,
+            sibling: id,
+            document: textPluginWithSuggestions,
+          })
+        )
+      })
+    }
+
+    // Take the default state for this plugin (set in serlo-editor/plugins/[plugin_type]/index.tsx)
+    // and add the individual plugin state obtained from the redux state.
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const state = plugin.state.init(document.state, onChange)
+    const state = plugin.state.init(document.state, handleChange)
 
     const isInlineChildEditor =
       Object.hasOwn(config, 'isInlineChildEditor') &&
@@ -131,13 +170,20 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
     const isTemplatePlugin = document.plugin.startsWith('type-')
 
+    const noVisualFocusHandling =
+      isTemplatePlugin ||
+      [EditorPluginType.Article, EditorPluginType.Rows].includes(
+        document.plugin as EditorPluginType
+      )
+
     return (
       <div
         className={clsx(
           'outline-none',
           isInlineChildEditor || isTemplatePlugin
             ? ''
-            : 'plugin-wrapper-container relative -ml-[7px] mb-6 min-h-[10px] pl-[5px]'
+            : 'plugin-wrapper-container relative -ml-[7px] mb-6 min-h-[10px] pl-[5px]',
+          isLastRowInRootRowsPlugin ? '!mb-28' : ''
         )}
         tabIndex={-1} // removing this makes selecting e.g. images impossible somehow
         onMouseDown={handleFocus}
@@ -146,18 +192,31 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         ref={containerRef}
         data-document
         data-document-focusable={noVisualFocusHandling ? undefined : true}
+        data-document-inline-child-editor={
+          isInlineChildEditor ? true : undefined
+        }
       >
         <plugin.Component
           containerRef={containerRef}
           id={id}
           editable
-          domFocusWithin={domFocus !== false}
-          domFocus={domFocus === 'focus'}
+          domFocusWithin={domFocusState !== DomFocus.notFocused}
+          domFocusState={domFocusState}
           config={config}
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           state={state}
           autofocusRef={autofocusRef}
         />
+        {mayManipulateSiblings ? (
+          <RowSeparator
+            focused={domFocusState === DomFocus.focus}
+            onClick={(event: React.MouseEvent) => {
+              event.preventDefault()
+              handleAddButtonClick()
+            }}
+            visuallyEmphasizeAddButton={isLastRowInRootRowsPlugin}
+          />
+        ) : null}
       </div>
     )
   }, [
@@ -165,10 +224,11 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     plugin,
     pluginProps,
     handleFocus,
-    noVisualFocusHandling,
     handleDomFocus,
     id,
-    domFocus,
+    domFocusState,
+    mayManipulateSiblings,
+    isLastRowInRootRowsPlugin,
     dispatch,
   ])
 }

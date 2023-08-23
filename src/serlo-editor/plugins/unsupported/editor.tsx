@@ -23,7 +23,7 @@ export const UnsupportedEditor: React.FunctionComponent<
     <>
       {domFocusWithin ? (
         <PluginToolbar
-          pluginType={EditorPluginType.PagePartners}
+          pluginType={EditorPluginType.Unsupported}
           pluginControls={<PluginDefaultTools pluginId={id} />}
         />
       ) : null}
