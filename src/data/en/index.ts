@@ -893,8 +893,7 @@ export const loggedInData = {
         audio: {
           title: 'Audio',
           description: 'Link to audio files on Vocaroo',
-          audioUrl: 'Enter Audio URL',
-          seoTitle: 'Title for search engines'
+          audioUrl: 'Enter Audio URL'
         },
       },
       templatePlugins: {
