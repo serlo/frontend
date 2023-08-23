@@ -1,10 +1,9 @@
-import { faLink } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 import type { AudioProps } from '.'
 import { parseAudioUrl, AudioRenderer } from './renderer'
+import { ShowAudioSettingsButton } from './show-audio-settings-button'
 import { AudioToolbar } from './toolbar'
-import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export const AudioEditor = (props: AudioProps) => {
@@ -12,8 +11,7 @@ export const AudioEditor = (props: AudioProps) => {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const [src, type] = parseAudioUrl(state.src.value)
   const couldBeValid = type !== undefined
-  // i18n string
-  const { audioUrl } = useEditorStrings().plugins.audio
+  const audioStrings = useEditorStrings().plugins.audio
 
   return (
     <>
@@ -33,32 +31,10 @@ export const AudioEditor = (props: AudioProps) => {
           <ShowAudioSettingsButton
             openSettings={() => setShowSettingsModal(true)}
           >
-            {audioUrl}
+            {audioStrings.audioUrl}
           </ShowAudioSettingsButton>
         </div>
       )}
     </>
-  )
-}
-
-interface ShowAudioSettingsButtonProps {
-  openSettings: () => void
-  children: JSX.Element | string
-}
-
-export function ShowAudioSettingsButton({
-  openSettings,
-  children,
-}: ShowAudioSettingsButtonProps) {
-  return (
-    <div className="flex justify-around space-x-4">
-      <button
-        className="flex cursor-pointer flex-col items-center border-none bg-transparent p-0"
-        onClick={openSettings}
-      >
-        <FaIcon icon={faLink} className="text-2xl" />
-        <span className="mt-2">{children}</span>
-      </button>
-    </div>
   )
 }
