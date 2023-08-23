@@ -3,6 +3,7 @@ import {
   StateTypeReturnType,
   StateTypeSerializedType,
 } from './internal__plugin-state'
+import type { DomFocus } from '../core/sub-document/editor'
 
 // A Serlo Editor plugin
 export interface EditorPlugin<
@@ -117,19 +118,18 @@ export interface EditorPluginProps<
   editable: boolean
 
   /**
-   * `true` if the activeElement is inside of document but not inside another sub-document
-   */
-  domFocus: boolean
-
-  /**
-   * `true` if the activeElement is inside of document
+   * `true` if the plugin or something inside is focused
    */
   domFocusWithin: boolean
 
   /**
-   * `true` if the activeElement is inside of document and is an inline text editor
+   * more detailed info on the focus state of the plugin. Can be:
+   * 'focus' (focused directly)
+   * 'focusWithin' (like domFocusWithin above)
+   * 'focusWithinInline' (special case when focused child is an inline text editor)
+   * 'notFocused' (no focus on or in plugin)
    */
-  domFocusWithinInline: boolean
+  domFocusState: DomFocus
 
   /**
    * Ref to use for an input element. The element will receive focus, when the plugin is focused.

@@ -29,6 +29,13 @@ import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { RowSeparator } from '@/serlo-editor/plugins/rows/components/row-separator'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
+export enum DomFocus {
+  focus = 'focus',
+  focusWithin = 'focusWithin',
+  focusWithinInline = 'focusWithinInline',
+  notFocused = 'notFocused',
+}
+
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const dispatch = useAppDispatch()
   const document = useAppSelector((state) => selectDocument(state, id))
@@ -40,20 +47,20 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   )
 
   const focused = useAppSelector((state) => selectIsFocused(state, id))
-  const [domFocus, setDomFocus] = useState<
-    'focus' | 'focusWithin' | 'focusWithinInline' | false
-  >(focused ? 'focusWithin' : false)
+  const [domFocusState, setDomFocus] = useState<DomFocus>(
+    focused ? DomFocus.focusWithin : DomFocus.notFocused
+  )
 
   const plugin = editorPlugins.getByType(document?.plugin ?? '')
 
-  useEnableEditorHotkeys(id, plugin, domFocus === 'focusWithin')
+  useEnableEditorHotkeys(id, plugin, domFocusState === DomFocus.focusWithin)
   const containerRef = useRef<HTMLDivElement>(null)
   const autofocusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
 
   useEffect(() => {
-    if (domFocus !== 'focus') return
+    if (domFocusState !== 'focus') return
     setTimeout(() => autofocusRef.current?.focus())
-  }, [domFocus])
+  }, [domFocusState])
 
   const handleFocus = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -84,10 +91,10 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       return target.contains(window.document.activeElement)
         ? focusedChild
           ? isFocusedChildInline
-            ? 'focusWithinInline'
-            : 'focusWithin'
-          : 'focus'
-        : false
+            ? DomFocus.focusWithinInline
+            : DomFocus.focusWithin
+          : DomFocus.focus
+        : DomFocus.notFocused
     }
 
     setDomFocus(() => getFocusWithin())
@@ -193,9 +200,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           containerRef={containerRef}
           id={id}
           editable
-          domFocusWithin={domFocus !== false}
-          domFocusWithinInline={domFocus === 'focusWithinInline'}
-          domFocus={domFocus === 'focus'}
+          domFocusWithin={domFocusState !== DomFocus.notFocused}
+          domFocusState={domFocusState}
           config={config}
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           state={state}
@@ -203,7 +209,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         />
         {mayManipulateSiblings ? (
           <RowSeparator
-            focused={domFocus === 'focus'}
+            focused={domFocusState === DomFocus.focus}
             onClick={(event: React.MouseEvent) => {
               event.preventDefault()
               handleAddButtonClick()
@@ -220,7 +226,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     handleFocus,
     handleDomFocus,
     id,
-    domFocus,
+    domFocusState,
     mayManipulateSiblings,
     isLastRowInRootRowsPlugin,
     dispatch,

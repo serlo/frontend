@@ -3,6 +3,7 @@ import { type BoxType, types } from './renderer'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
+import { DomFocus } from '@/serlo-editor/core/sub-document/editor'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { ParentButton } from '@/serlo-editor/editor-ui/plugin-toolbar/parent-button'
@@ -13,17 +14,21 @@ export const BoxToolbar = ({
   id,
   state,
   domFocusWithin,
-  domFocusWithinInline,
-  domFocus,
+  domFocusState,
 }: BoxProps) => {
   const boxStrings = useEditorStrings().plugins.box
   const { strings } = useInstanceData()
 
   if (!domFocusWithin) return null
 
+  const shouldShowToolbar = [
+    DomFocus.focus,
+    DomFocus.focusWithinInline,
+  ].includes(domFocusState)
+
   return (
     <>
-      {domFocus || domFocusWithinInline ? (
+      {shouldShowToolbar ? (
         <PluginToolbar
           pluginType={EditorPluginType.Box}
           pluginSettings={
@@ -55,7 +60,7 @@ export const BoxToolbar = ({
           pluginControls={<PluginDefaultTools pluginId={id} />}
         />
       ) : null}
-      <ParentButton domFocus={domFocus} title={boxStrings.title} />
+      <ParentButton show={!shouldShowToolbar} title={boxStrings.title} />
     </>
   )
 }

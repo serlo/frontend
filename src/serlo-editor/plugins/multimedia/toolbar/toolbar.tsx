@@ -5,6 +5,7 @@ import type { MultimediaProps } from '..'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { DomFocus } from '@/serlo-editor/core/sub-document/editor'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { ParentButton } from '@/serlo-editor/editor-ui/plugin-toolbar/parent-button'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
@@ -19,17 +20,19 @@ export const MultimediaToolbar = ({
   id,
   children,
   containerRef,
-  domFocus,
   domFocusWithin,
+  domFocusState,
 }: MultimediaToolbarProps) => {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const editorStrings = useEditorStrings()
 
   if (!domFocusWithin) return null
 
+  const shouldShowToolbar = domFocusState === DomFocus.focus
+
   return (
     <>
-      {domFocus ? (
+      {shouldShowToolbar ? (
         <PluginToolbar
           pluginType={EditorPluginType.Multimedia}
           pluginSettings={
@@ -63,7 +66,7 @@ export const MultimediaToolbar = ({
         />
       ) : null}
       <ParentButton
-        domFocus={domFocus}
+        show={!shouldShowToolbar}
         title={editorStrings.plugins.multimedia.title}
       />
     </>

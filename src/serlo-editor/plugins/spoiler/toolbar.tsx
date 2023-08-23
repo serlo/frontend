@@ -1,22 +1,25 @@
 import type { SpoilerProps } from '.'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { DomFocus } from '@/serlo-editor/core/sub-document/editor'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { ParentButton } from '@/serlo-editor/editor-ui/plugin-toolbar/parent-button'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-export const SpoilerToolbar = ({ domFocus, id }: SpoilerProps) => {
+export const SpoilerToolbar = ({ domFocusState, id }: SpoilerProps) => {
   const spoilerStrings = useEditorStrings().plugins.spoiler
+
+  const shouldShowToolbar = domFocusState === DomFocus.focus
 
   return (
     <>
-      {domFocus ? (
+      {shouldShowToolbar ? (
         <PluginToolbar
           pluginType={EditorPluginType.Spoiler}
           pluginControls={<PluginDefaultTools pluginId={id} />}
         />
       ) : null}
-      <ParentButton domFocus={domFocus} title={spoilerStrings.title} />
+      <ParentButton show={!shouldShowToolbar} title={spoilerStrings.title} />
     </>
   )
 }
