@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { MouseEvent, useCallback } from 'react'
 
 import type { BoxProps } from '.'
 import { type BoxType, types } from './renderer'
@@ -19,6 +20,19 @@ export const BoxToolbar = ({
 }: BoxProps) => {
   const boxStrings = useEditorStrings().plugins.box
   const { strings } = useInstanceData()
+
+  const handleFocusParentButtonClick = useCallback((event: MouseEvent) => {
+    const target = event.target as HTMLButtonElement
+    const pluginWrapperContainer = target.closest(
+      '.plugin-wrapper-container'
+    ) as HTMLDivElement
+
+    if (pluginWrapperContainer) {
+      event.preventDefault()
+      event.stopPropagation()
+      pluginWrapperContainer.focus()
+    }
+  }, [])
 
   if (!domFocusWithin) return null
 
@@ -55,6 +69,7 @@ export const BoxToolbar = ({
     />
   ) : (
     <button
+      onMouseDown={handleFocusParentButtonClick}
       className={clsx(
         tw`
             absolute -top-6 right-14 z-50 block h-6 rounded-t-md bg-gray-100
