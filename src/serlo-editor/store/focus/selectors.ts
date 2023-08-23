@@ -100,16 +100,13 @@ export const selectIsLastRowInRootRowsPlugin = createSelector(
   [(state: State) => state, (_state, leafId: string) => leafId],
   (state, leafId) => {
     const rootNode = selectFocusTree(state)
-    console.log('rootNode: ', rootNode)
     if (!rootNode) return false
 
     const rootRowsPlugin = rootNode.children?.[0]?.children?.[1]
-    console.log('rootRowsPlugin: ', rootRowsPlugin)
     if (!rootRowsPlugin) return false
 
     const lastRowInRootRowsPlugin =
       rootRowsPlugin.children?.[rootRowsPlugin.children.length - 1]
-    console.log('lastRowInRootRowsPlugin: ', lastRowInRootRowsPlugin)
     if (!lastRowInRootRowsPlugin) return false
 
     return leafId === lastRowInRootRowsPlugin.id
