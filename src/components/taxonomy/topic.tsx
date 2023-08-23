@@ -160,6 +160,7 @@ export function Topic({ data }: TopicProps) {
 
   function renderSurvey() {
     if (!ab) return
+    if (ab.topicId !== data.id) return
     return (
       <div className=" mx-auto my-12  max-w-[420px] rounded-xl bg-brand-50 p-4 text-center ">
         <strong>Wie gut gefällt dir dieser Aufgabenordner?</strong>
