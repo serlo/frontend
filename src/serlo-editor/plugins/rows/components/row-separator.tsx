@@ -1,23 +1,21 @@
 import clsx from 'clsx'
 
 import { AddRowButton } from './add-row-button'
-import type { RowsPluginConfig } from '..'
 
 interface RowSeparatorProps {
-  config: RowsPluginConfig
   isFirst?: boolean
   isLast?: boolean
   visuallyEmphasizeAddButton?: boolean
-  onClick: React.MouseEventHandler<HTMLButtonElement>
   focused?: boolean
+  onClick: React.MouseEventHandler<HTMLButtonElement>
 }
 
 export function RowSeparator({
   isFirst,
   isLast = false,
   visuallyEmphasizeAddButton = false,
-  onClick,
   focused,
+  onClick,
 }: RowSeparatorProps) {
   return (
     <div

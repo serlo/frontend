@@ -8,7 +8,7 @@ import { selectAncestorPluginTypes, useAppSelector } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function RowsEditor({ state, config, id, editable }: RowsProps) {
-  const pluginTypesOfAncestors = useAppSelector((state) =>
+  const typesOfAncestors = useAppSelector((state) =>
     selectAncestorPluginTypes(state, id)
   )
 
@@ -34,19 +34,9 @@ export function RowsEditor({ state, config, id, editable }: RowsProps) {
     )
   }
 
-  // Prevent add button being visually emphasized when this RowsEditor is contained within certain plugin types.
-  const visuallyEmphasizeLastAddButton =
-    pluginTypesOfAncestors !== null &&
-    pluginTypesOfAncestors.every((pluginType) => {
-      return (
-        pluginType !== EditorPluginType.Box &&
-        pluginType !== EditorPluginType.Spoiler &&
-        pluginType !== EditorPluginType.Multimedia &&
-        pluginType !== EditorPluginType.Important
-      )
-    }) &&
-    pluginTypesOfAncestors[pluginTypesOfAncestors.length - 1] !==
-      EditorPluginType.Rows
+  const isRootRowsEditor =
+    !typesOfAncestors?.some(isPluginWithoutEmphasizedAddButton) &&
+    typesOfAncestors?.[typesOfAncestors.length - 1] !== EditorPluginType.Rows
 
   const isDocumentEmpty = state.length === 0
 
@@ -55,43 +45,37 @@ export function RowsEditor({ state, config, id, editable }: RowsProps) {
       <div
         className={clsx(
           'relative mt-[25px]',
-          visuallyEmphasizeLastAddButton ? 'mb-[75px]' : undefined
+          isRootRowsEditor ? 'mb-[75px]' : undefined
         )}
       >
         <RowSeparator
-          config={config}
           isFirst
           isLast={isDocumentEmpty}
-          visuallyEmphasizeAddButton={
-            visuallyEmphasizeLastAddButton && isDocumentEmpty
-          }
+          visuallyEmphasizeAddButton={isRootRowsEditor && isDocumentEmpty}
           focused={state.length === 0}
           onClick={(event: React.MouseEvent) => {
             event.preventDefault()
             insertRowWithSuggestionsOpen(0)
           }}
         />
-        {state.map((row, index) => {
-          const isLastRowEditor = index === state.length - 1
-          return (
-            <RowEditor
-              config={config}
-              key={row.id}
-              onAddButtonClick={() => {
-                insertRowWithSuggestionsOpen(index + 1)
-              }}
-              index={index}
-              rows={state}
-              row={row}
-              isFirst={index === 0}
-              isLast={isLastRowEditor}
-              visuallyEmphasizeAddButton={
-                visuallyEmphasizeLastAddButton && isLastRowEditor
-              }
-            />
-          )
-        })}
+        {state.map((row, index) => (
+          <RowEditor
+            config={config}
+            key={row.id}
+            index={index}
+            rows={state}
+            row={row}
+          />
+        ))}
       </div>
     </AllowedChildPlugins.Provider>
   )
 }
+
+const isPluginWithoutEmphasizedAddButton = (pluginType: EditorPluginType) =>
+  [
+    EditorPluginType.Box,
+    EditorPluginType.Spoiler,
+    EditorPluginType.Multimedia,
+    EditorPluginType.Important,
+  ].includes(pluginType)

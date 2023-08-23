@@ -10,6 +10,7 @@ import {
 import { selectRoot } from '../root'
 import { State } from '../types'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const selectSelf = (state: State) => state.focus
 
@@ -80,17 +81,37 @@ export const selectAncestorPluginTypes = createDeepEqualSelector(
     if (!rootNode) return null
 
     let currentId = leafId
-    let pluginTypes: string[] = []
+    let pluginTypes: EditorPluginType[] = []
 
     while (currentId !== rootNode.id) {
       const parentNode = findParent(rootNode, currentId)
       if (!parentNode) return null
       const pluginType = selectDocument(state, parentNode.id)?.plugin
       if (pluginType === undefined) return null
-      pluginTypes = [pluginType, ...pluginTypes]
+      pluginTypes = [pluginType as EditorPluginType, ...pluginTypes]
       currentId = parentNode.id
     }
 
     return pluginTypes
+  }
+)
+
+export const selectIsLastRowInRootRowsPlugin = createSelector(
+  [(state: State) => state, (_state, leafId: string) => leafId],
+  (state, leafId) => {
+    const rootNode = selectFocusTree(state)
+    console.log('rootNode: ', rootNode)
+    if (!rootNode) return false
+
+    const rootRowsPlugin = rootNode.children?.[0]?.children?.[1]
+    console.log('rootRowsPlugin: ', rootRowsPlugin)
+    if (!rootRowsPlugin) return false
+
+    const lastRowInRootRowsPlugin =
+      rootRowsPlugin.children?.[rootRowsPlugin.children.length - 1]
+    console.log('lastRowInRootRowsPlugin: ', lastRowInRootRowsPlugin)
+    if (!lastRowInRootRowsPlugin) return false
+
+    return leafId === lastRowInRootRowsPlugin.id
   }
 )
