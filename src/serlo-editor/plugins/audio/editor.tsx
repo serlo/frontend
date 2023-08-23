@@ -1,6 +1,4 @@
-import {
-  faLink,
-} from '@fortawesome/free-solid-svg-icons'
+import { faLink } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 import type { AudioProps } from '.'
