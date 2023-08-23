@@ -79,10 +79,18 @@ export const ABResults: NextPage<ABResultsProps> = ({
             mit {(groupB.reached3solvesTime / 60000).toFixed(1)} min
           </div>
           <div className="serlo-h2">Engagement</div>
-          <div className="mx-side mb-4">Anzahl gelöster Aufgaben (median):</div>
+          <div className="mx-side mb-block">
+            Betrachtet werden Sessions, die nicht gebounced sind (d.h. mind. 2
+            Aktivitäten).
+          </div>
+          <div className="mx-side mb-4 font-bold">
+            Anzahl gelöster Aufgaben (median):
+          </div>
           <div className="mx-side">A (Original): {groupA.solved}</div>
           <div className="mx-side">B (Variante): {groupB.solved}</div>
-          <div className="mx-side mb-4 mt-block">Verweildauer (median):</div>
+          <div className="mx-side mb-4 mt-block font-bold">
+            Verweildauer (median):
+          </div>
           <div className="mx-side">
             A (Original): {(groupA.timeOnPage / 1000 / 60).toFixed(1)} min
           </div>
@@ -172,6 +180,9 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
   const bouncedSessionsA = sessionsA.filter((s) => s.events.length <= 1).length
   const bouncedSessionsB = sessionsB.filter((s) => s.events.length <= 1).length
 
+  const notBouncedSessionsA = sessionsA.filter((s) => s.events.length > 1)
+  const notBouncedSessionsB = sessionsB.filter((s) => s.events.length > 1)
+
   const reached3A = sessionsA.filter((s) => s.reached3solved >= 0).length
   const reached3B = sessionsB.filter((s) => s.reached3solved >= 0).length
 
@@ -195,10 +206,10 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
         bounceRate: bouncedSessionsA / visitsA || 0,
         reached3solvesTime: reached3solvesTimeA || 0,
         reached3solvesPercentage: reached3A / visitsA || 0,
-        solved: median(sessionsA.map((s) => s.solved.size)) || 0,
+        solved: median(notBouncedSessionsA.map((s) => s.solved.size)) || 0,
         timeOnPage:
           median(
-            sessionsA.map(
+            notBouncedSessionsA.map(
               (s) =>
                 s.events[s.events.length - 1].timestamp.getTime() -
                 s.events[0].timestamp.getTime()
@@ -212,10 +223,10 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
         bounceRate: bouncedSessionsB / visitsB || 0,
         reached3solvesTime: reached3solvesTimeB || 0,
         reached3solvesPercentage: reached3B / visitsB || 0,
-        solved: median(sessionsB.map((s) => s.solved.size)) || 0,
+        solved: median(notBouncedSessionsB.map((s) => s.solved.size)) || 0,
         timeOnPage:
           median(
-            sessionsB.map(
+            notBouncedSessionsB.map(
               (s) =>
                 s.events[s.events.length - 1].timestamp.getTime() -
                 s.events[0].timestamp.getTime()
