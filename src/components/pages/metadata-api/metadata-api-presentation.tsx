@@ -71,7 +71,7 @@ export const MetadataApiPresentation = () => {
             </div>
             <div className="mx-4 flex-1 pb-4 pt-4">
               <b className="font-handwritten text-4xl text-brand">
-                Around 1 Mio
+                ~1 Mio
               </b>
               <br />
               Students and teachers are using the materials every month
