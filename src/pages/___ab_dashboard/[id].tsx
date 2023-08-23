@@ -18,8 +18,10 @@ interface GroupData {
   visits: number
   reached3solvesPercentage: number
   reached3solvesTime: number
+  reached3count: number
   solved: number
   timeOnPage: number
+  notBounced: number
 }
 
 export const ABResults: NextPage<ABResultsProps> = ({
@@ -72,16 +74,18 @@ export const ABResults: NextPage<ABResultsProps> = ({
           </div>
           <div className="mx-side">
             A (Original): {(groupA.reached3solvesPercentage * 100).toFixed(2)} %
-            mit {(groupA.reached3solvesTime / 60000).toFixed(1)} min
+            mit {(groupA.reached3solvesTime / 60000).toFixed(1)} min (
+            {groupA.reached3count} Sessions)
           </div>
           <div className="mx-side">
             B (Variante): {(groupB.reached3solvesPercentage * 100).toFixed(2)} %
-            mit {(groupB.reached3solvesTime / 60000).toFixed(1)} min
+            mit {(groupB.reached3solvesTime / 60000).toFixed(1)} min (
+            {groupA.reached3count} Sessions)
           </div>
           <div className="serlo-h2">Engagement</div>
           <div className="mx-side mb-block">
-            Betrachtet werden Sessions, die nicht gebounced sind (d.h. mind. 2
-            Aktivitäten).
+            Betrachtet werden Sessions, die nicht gebounced sind (A:{' '}
+            {groupA.notBounced} Sessions / B: {groupB.notBounced} Sessions).
           </div>
           <div className="mx-side mb-4 font-bold">
             Anzahl gelöster Aufgaben (median):
@@ -206,6 +210,7 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
         bounceRate: bouncedSessionsA / visitsA || 0,
         reached3solvesTime: reached3solvesTimeA || 0,
         reached3solvesPercentage: reached3A / visitsA || 0,
+        reached3count: reached3A,
         solved: median(notBouncedSessionsA.map((s) => s.solved.size)) || 0,
         timeOnPage:
           median(
@@ -215,6 +220,7 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
                 s.events[0].timestamp.getTime()
             )
           ) || 0,
+        notBounced: visitsA - bouncedSessionsA,
       },
       groupB: {
         avg: average(intermediate.b.ratings),
@@ -223,6 +229,7 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
         bounceRate: bouncedSessionsB / visitsB || 0,
         reached3solvesTime: reached3solvesTimeB || 0,
         reached3solvesPercentage: reached3B / visitsB || 0,
+        reached3count: reached3B,
         solved: median(notBouncedSessionsB.map((s) => s.solved.size)) || 0,
         timeOnPage:
           median(
@@ -232,6 +239,7 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
                 s.events[0].timestamp.getTime()
             )
           ) || 0,
+        notBounced: visitsB - bouncedSessionsB,
       },
     },
     revalidate: 10,
@@ -248,6 +256,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 const average = (arr: number[]) => arr.reduce((p, c) => p + c, 0) / arr.length
 
 function median(arr: number[]) {
+  arr.sort((a, b) => a - b)
   const middle = Math.floor(arr.length / 2)
   if (arr.length % 2 === 0) {
     return (arr[middle - 1] + arr[middle]) / 2
