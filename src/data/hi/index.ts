@@ -161,7 +161,8 @@ export const instanceData = {
         theorem: 'Theorem',
         proof: 'Proof'
       },
-      loadingVideoFailed: 'Something went wrong'
+      loadingVideoFailed: 'Something went wrong',
+      loadingAudioFailed: 'Something went wrong'
     },
     consent: {
       title: "बाहरी सामग्री के लिए सहमति",
@@ -176,6 +177,7 @@ export const instanceData = {
       video: "से वीडियो चलाएं %provider%",
       applet: "%provider% से लोड एप्लेट ",
       twingle: "लोड दान प्रपत्र",
+      audio: 'Play audio from %provider%',
       general: 'Activate'
     },
     comments: {
@@ -811,6 +813,11 @@ export const loggedInData = {
           titlePlaceholder: "शीर्षक",
           url: 'URL',
           seoTitle: 'Title for search engines'
+        },
+        audio: {
+          title: 'Audio',
+          description: 'Link to audio files on Vocaroo',
+          audioUrl: 'Enter Audio URL'
         }
       },
       templatePlugins: {
