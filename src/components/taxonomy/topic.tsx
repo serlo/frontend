@@ -24,11 +24,11 @@ export interface TopicProps {
 }
 
 const hardcodedDataforDreisatz = [
-  { title: 'Aufgabe 1', difficulty: 1, img: '' },
-  { title: 'Aufgabe 2', difficulty: 1, img: '' },
-  { title: 'Aufgabe 3', difficulty: 2, img: '' },
-  { title: 'Aufgabe 4', difficulty: 3, img: '' },
-  { title: 'Aufgabe 5', difficulty: 4, img: '' },
+  { title: 'Aufgabe 1', difficulty: 1, img: '', type: 'single choice' },
+  { title: 'Aufgabe 2', difficulty: 1, img: '', type: 'Eingabefeld' },
+  { title: 'Aufgabe 3', difficulty: 2, img: '', type: 'single choice' },
+  { title: 'Aufgabe 4', difficulty: 3, img: '', type: 'single choice' },
+  { title: 'Aufgabe 5', difficulty: 4, img: '', type: 'single choice' },
 ]
 
 const DonationsBanner = dynamic<DonationsBannerProps>(() =>
@@ -176,6 +176,9 @@ export function Topic({ data }: TopicProps) {
                   e.stopPropagation()
                 }}
               >
+                <h2 className="mx-side text-lg font-bold">
+                  {hardcodedDataforDreisatz[showInModal].title}
+                </h2>
                 {renderArticle(
                   [element],
                   `tax${data.id}`,
@@ -195,6 +198,15 @@ export function Topic({ data }: TopicProps) {
         <div className="mx-side flex flex-wrap">
           {data.exercisesContent.map((exercise, i) => {
             const entry = hardcodedDataforDreisatz[i]
+            const solved = JSON.parse(
+              sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
+            ) as number[]
+            const isSolved = solved.includes(exercise.context.id)
+            const solvedPercentage = exercise.children
+              ? exercise.children.filter((child) =>
+                  solved.includes(child.context.id)
+                ).length / exercise.children.length
+              : -1
             return (
               <Fragment key={i}>
                 <div
@@ -203,10 +215,39 @@ export function Topic({ data }: TopicProps) {
                     setShowInModal(i)
                   }}
                 >
-                  <div className="h-16 w-full bg-brand-100 pt-2 text-center text-gray-600">
-                    image
+                  <div className="flex h-16 w-full items-center justify-center bg-brand-100 pt-2 text-center text-gray-600">
+                    {/* eslint-disable-next-line @next/next/no-img-element*/}
+                    <img
+                      alt="Serlo"
+                      src="/_assets/img/serlo-logo.svg"
+                      width={80}
+                    ></img>
                   </div>
-                  <div className="mx-2 mt-3 font-bold">{entry.title}</div>
+                  <div
+                    className={clsx(
+                      'relative h-[142px] rounded-b',
+                      isSolved && 'bg-green-200',
+                      solvedPercentage > 0 &&
+                        'to-whote bg-gradient-to-r to-white',
+                      solvedPercentage > 0 &&
+                        solvedPercentage < 0.5 &&
+                        'from-green-50',
+                      solvedPercentage >= 0.5 && 'from-green-200'
+                    )}
+                  >
+                    <div className="mx-3 pt-3 text-lg font-bold">
+                      {entry.title}
+                    </div>
+                    <div className="mx-3 mt-3 text-sm">{entry.type}</div>
+                    <div className="mx-3 mt-3 text-sm">
+                      {renderDifficulty(entry.difficulty)}
+                    </div>
+                    {solvedPercentage > 0 && (
+                      <div className="mx-3 mt-2 text-sm">
+                        Fortschritt: {(solvedPercentage * 100).toFixed(0)}%
+                      </div>
+                    )}
+                  </div>
                 </div>
               </Fragment>
             )
@@ -230,6 +271,22 @@ export function Topic({ data }: TopicProps) {
         )
       })
     )
+  }
+
+  function renderDifficulty(dif: number) {
+    if (dif === 1) {
+      return <>★☆☆☆ einfach</>
+    }
+    if (dif === 2) {
+      return <>★★☆☆ moderat</>
+    }
+    if (dif === 3) {
+      return <>★★★☆ schwer</>
+    }
+    if (dif === 4) {
+      return <>★★★★ Bonus</>
+    }
+    return null
   }
 
   function renderSurvey() {
