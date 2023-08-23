@@ -70,9 +70,11 @@ export const MetadataApiPresentation = () => {
               <Link href="https://serlo.org/editor">Serlo Editor</Link>
             </div>
             <div className="mx-4 flex-1 pb-4 pt-4">
-              <b className="font-handwritten text-4xl text-brand">650,000+</b>
+              <b className="font-handwritten text-4xl text-brand">
+                Around 1 Mio
+              </b>
               <br />
-              Users per month are already learning with the materials
+              Students and teachers are using the materials every month
             </div>
           </div>
         </section>

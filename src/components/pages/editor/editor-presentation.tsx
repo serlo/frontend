@@ -107,9 +107,11 @@ export function EditorPresentation() {
               Educational resources have been created with the Serlo Editor
             </div>
             <div className="mt-5 flex-1">
-              <b className="font-handwritten text-4xl text-brand">650,000+</b>
+              <b className="font-handwritten text-4xl text-brand">
+                Around 1 Mio
+              </b>
               <br />
-              Users per month learn with Serlo Editor content
+              Students and teachers per month use Serlo Editor content
             </div>
             <div className="mt-5 flex-1">
               <b className="font-handwritten text-4xl text-brand">500+</b>
