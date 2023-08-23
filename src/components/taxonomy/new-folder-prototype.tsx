@@ -119,7 +119,7 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
         return (
           <Fragment key={i}>
             <div
-              className="mb-5 mr-4 h-[238px] w-[176px] cursor-pointer rounded border hover:border-brand"
+              className="mb-5 mr-4 h-[238px] w-[176px] cursor-pointer rounded border hover:border-brand hover:outline hover:outline-2 hover:outline-brand"
               onClick={() => {
                 setShowInModal(i)
               }}
@@ -146,13 +146,13 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
               </div>
               <div
                 className={clsx(
-                  'relative h-[142px] rounded-b',
-                  isSolved && 'bg-green-200',
+                  'relative h-[140px] rounded-b',
+                  isSolved && 'bg-brandgreen',
                   solvedPercentage > 0 && 'to-whote bg-gradient-to-r to-white',
                   solvedPercentage > 0 &&
                     solvedPercentage < 0.5 &&
                     'from-green-50',
-                  solvedPercentage >= 0.5 && 'from-green-200'
+                  solvedPercentage >= 0.5 && 'from-brandgreen'
                 )}
               >
                 <div className="h-[74px] px-2 py-1 text-lg font-bold">
