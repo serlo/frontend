@@ -162,7 +162,7 @@ export const instanceData = {
         proof: "Beweis"
       },
       loadingVideoFailed: "Etwas ist schiefgelaufen",
-      loadingAudioFailed: 'Something went wrong'
+      loadingAudioFailed: "Etwas ist schiefgelaufen"
     },
     consent: {
       title: "Einwilligungen für externe Inhalte",
@@ -177,7 +177,7 @@ export const instanceData = {
       video: "Video abspielen von %provider%",
       applet: "Applet laden von %provider%",
       twingle: "Spendenformular laden",
-      audio: 'Play audio from %provider%',
+      audio: "Audio abspielen von %provider%",
       general: "Aktivieren"
     },
     comments: {
@@ -816,8 +816,8 @@ export const loggedInData = {
         },
         audio: {
           title: 'Audio',
-          description: 'Link to audio files on Vocaroo',
-          audioUrl: 'Enter Audio URL'
+          description: "Audioaufnahmen von Vocaroo einbinden",
+          audioUrl: "Audio URL eingeben"
         }
       },
       templatePlugins: {
