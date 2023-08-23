@@ -51,6 +51,7 @@ export function SpoilerEditor(props: SpoilerProps) {
             px-2 pt-0.5 text-sm font-bold hover:bg-editor-primary-100
           `
         )}
+        data-qa="plugin-spoiler-parent-button"
       >
         {editorStrings.plugins.spoiler.title}
       </button>
