@@ -24,11 +24,31 @@ export interface TopicProps {
 }
 
 const hardcodedDataforDreisatz = [
-  { title: 'Aufgabe 1', difficulty: 1, img: '', type: 'single choice' },
-  { title: 'Aufgabe 2', difficulty: 1, img: '', type: 'Eingabefeld' },
-  { title: 'Aufgabe 3', difficulty: 2, img: '', type: 'single choice' },
-  { title: 'Aufgabe 4', difficulty: 3, img: '', type: 'single choice' },
-  { title: 'Aufgabe 5', difficulty: 4, img: '', type: 'single choice' },
+  {
+    title: 'An der Eisdiele',
+    difficulty: 2,
+    img: 'https://assets.serlo.org/eb36f500-4184-11ee-b109-a3f2e53ad6dd/image.png',
+    type: 'Auswahlaufgabe',
+  },
+  {
+    title: 'Kinobesuch',
+    difficulty: 2,
+    img: 'https://assets.serlo.org/f6a665a0-4185-11ee-b109-a3f2e53ad6dd/image.png',
+    type: 'Eingabefeld',
+  },
+  {
+    title: '3 Übungen (1)',
+    difficulty: 2,
+    img: '',
+    type: 'Auswahlaufgabe',
+  },
+  { title: '3 Übungen (2)', difficulty: 3, img: '', type: 'Auswahlaufgabe' },
+  {
+    title: 'Reise nach Hogwarts',
+    difficulty: 2,
+    img: 'https://assets.serlo.org/d459ebb0-4186-11ee-b109-a3f2e53ad6dd/image.png',
+    type: 'Auswahlaufgabe',
+  },
 ]
 
 const DonationsBanner = dynamic<DonationsBannerProps>(() =>
@@ -168,7 +188,7 @@ export function Topic({ data }: TopicProps) {
               </button>
               <div
                 className={tw`
-              relative z-[200] mx-8 my-8 flex flex
+              relative z-[200] mx-8 mb-16 mt-8 flex flex
               max-h-[calc(100%-48px)] min-h-[400px]
               w-[900px] max-w-full flex-col overflow-y-auto rounded-xl bg-white px-6 py-8
             `}
@@ -215,13 +235,20 @@ export function Topic({ data }: TopicProps) {
                     setShowInModal(i)
                   }}
                 >
-                  <div className="flex h-16 w-full items-center justify-center bg-brand-100 pt-2 text-center text-gray-600">
-                    {/* eslint-disable-next-line @next/next/no-img-element*/}
-                    <img
-                      alt="Serlo"
-                      src="/_assets/img/serlo-logo.svg"
-                      width={80}
-                    ></img>
+                  <div
+                    className="flex h-16 w-full items-center justify-center bg-brand-100 bg-cover bg-center pt-2 text-center text-gray-600"
+                    style={
+                      entry.img ? { backgroundImage: `url(${entry.img})` } : {}
+                    }
+                  >
+                    {entry.img ? null : (
+                      /* eslint-disable-next-line @next/next/no-img-element*/
+                      <img
+                        alt="Serlo"
+                        src="/_assets/img/serlo-logo.svg"
+                        width={80}
+                      ></img>
+                    )}
                   </div>
                   <div
                     className={clsx(
@@ -238,7 +265,7 @@ export function Topic({ data }: TopicProps) {
                     <div className="mx-3 pt-3 text-lg font-bold">
                       {entry.title}
                     </div>
-                    <div className="mx-3 mt-3 text-sm">{entry.type}</div>
+                    <div className="mx-3 mt-4 text-sm">{entry.type}</div>
                     <div className="mx-3 mt-3 text-sm">
                       {renderDifficulty(entry.difficulty)}
                     </div>
