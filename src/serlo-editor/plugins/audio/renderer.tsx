@@ -1,7 +1,9 @@
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
 
+import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
+import { ExternalProvider } from '@/helper/use-consent'
 
 export enum AudioType {
   Vocaroo = 'vocaroo',
@@ -30,14 +32,17 @@ export function AudioRenderer({ src, type }: AudioRendererProps) {
     const vocarooIdMatch = src.match(/voca\.ro\/([\w\d]+)/)
     const vocarooId = vocarooIdMatch ? vocarooIdMatch[1] : null
 
+    const vocarooUrl = `https://vocaroo.com/embed/${vocarooId}?autoplay=0`
     return (
       <div>
-        <iframe
-          width="300"
-          height="60"
-          src={`https://vocaroo.com/embed/${vocarooId}?autoplay=0`}
-          allow="autoplay"
-        />
+        <PrivacyWrapper
+          type="audio"
+          provider={ExternalProvider.Vocaroo}
+          embedUrl={vocarooUrl}
+          className="print:hidden"
+        >
+          <iframe width="300" height="60" src={vocarooUrl} allow="autoplay" />
+        </PrivacyWrapper>
       </div>
     )
   }
