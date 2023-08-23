@@ -7,7 +7,7 @@ import { TaxonomyData } from '@/data-types'
 import { tw } from '@/helper/tw'
 import { renderArticle } from '@/schema/article-renderer'
 
-interface NewFolderPrototypeProps {
+export interface NewFolderPrototypeProps {
   data: TaxonomyData
 }
 
