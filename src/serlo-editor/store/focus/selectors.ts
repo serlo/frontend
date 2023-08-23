@@ -1,4 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit'
+import { last } from 'ramda'
 
 import { findParent } from './helpers'
 import type { FocusTreeNode } from './types'
@@ -97,18 +98,14 @@ export const selectAncestorPluginTypes = createDeepEqualSelector(
 )
 
 export const selectIsLastRowInRootRowsPlugin = createSelector(
-  [(state: State) => state, (_state, leafId: string) => leafId],
-  (state, leafId) => {
+  [(state: State) => state, (_state, id: string) => id],
+  (state, id) => {
     const rootNode = selectFocusTree(state)
     if (!rootNode) return false
 
-    const rootRowsPlugin = rootNode.children?.[0]?.children?.[1]
-    if (!rootRowsPlugin) return false
+    const rootRowsPluginRows = rootNode.children?.[0]?.children?.[1]?.children
+    if (!rootRowsPluginRows) return false
 
-    const lastRowInRootRowsPlugin =
-      rootRowsPlugin.children?.[rootRowsPlugin.children.length - 1]
-    if (!lastRowInRootRowsPlugin) return false
-
-    return leafId === lastRowInRootRowsPlugin.id
+    return id === last(rootRowsPluginRows)?.id
   }
 )
