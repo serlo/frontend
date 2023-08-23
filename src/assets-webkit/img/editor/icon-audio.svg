@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 61 40" fill="none">
+  <!-- Background -->
+  <path fill="#FFF5E9" d="M.084 0h60v40h-60z" />
+
+  <!-- Main Body for Speaker -->
+  <path fill="#FFDDB2" d="M10.584 10.18h15v20h-15z" />
+
+  <!-- Speaker Details -->
+  <circle cx="18.084" cy="20.18" r="2.5" fill="#57534F" />
+  <path fill="#57534F" d="M26.084 20.18h3v2h-3z" />
+
+  <!-- Sound Waves -->
+  <circle cx="30.084" cy="20.18" r="3" stroke="#FFBB62" strokeWidth="2" fill="none" />
+  <circle cx="30.084" cy="20.18" r="6" stroke="#FFBB62" strokeWidth="2" fill="none" />
+  <circle cx="30.084" cy="20.18" r="9" stroke="#FFBB62" strokeWidth="2" fill="none" />
+
+  <!-- Base Shadow -->
+  <path fill="#000" fillOpacity=".08" d="M8.62 32.181h42.928v2.638H8.62z" />
+</svg>
