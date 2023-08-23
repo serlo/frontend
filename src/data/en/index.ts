@@ -892,8 +892,8 @@ export const loggedInData = {
         },
         audio: {
           title: 'Audio',
-          description: 'Link to audio files or record your own',
-          audioUrl: 'Audio URL',
+          description: 'Link to audio files on Vocaroo',
+          audioUrl: 'Enter Audio URL',
           url: 'URL',
           seoTitle: 'Title for search engines'
         },

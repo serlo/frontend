@@ -1,5 +1,11 @@
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import { Dispatch, SetStateAction } from 'react'
+import {
+  KeyboardEvent as ReactKeyboardEvent,
+  Dispatch,
+  SetStateAction,
+} from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
+import { Key } from 'ts-key-enum'
 
 import type { AudioProps } from '.'
 import { EditorInput } from '../../editor-ui'
@@ -21,6 +27,25 @@ export const AudioToolbar = ({
   setShowSettingsModal: Dispatch<SetStateAction<boolean>>
 }) => {
   const audioStrings = useEditorStrings().plugins.audio
+
+  useHotkeys(
+    [Key.Escape],
+    (event) => {
+      event.preventDefault()
+      setShowSettingsModal(false)
+    },
+    {
+      enableOnContentEditable: true,
+      enableOnFormTags: true,
+      scopes: ['global'],
+    }
+  )
+
+  const handleInputEnter = (event: ReactKeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      setShowSettingsModal(false)
+    }
+  }
 
   return (
     <PluginToolbar
@@ -51,6 +76,7 @@ export const AudioToolbar = ({
                   }}
                   inputWidth="100%"
                   width="100%"
+                  onKeyDown={handleInputEnter}
                   placeholder="voca.ro/audio-id"
                   ref={autofocusRef}
                   className="block"
