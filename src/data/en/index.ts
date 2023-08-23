@@ -893,12 +893,8 @@ export const loggedInData = {
           title: 'Audio',
           description: 'Link to audio files or record your own',
           audioUrl: 'Audio URL',
-          audioDescription: 'Description',
-          titlePlaceholder: 'Title',
           url: 'URL',
-          seoTitle: 'Title for search engines',
-          unexpectedErrorWhileRecording: 'Something went wrong when recording the audio',
-          recordingSuccessfullyUploaded: 'Successfully uploaded audio recording!',
+          seoTitle: 'Title for search engines'
         },
       },
       templatePlugins: {
