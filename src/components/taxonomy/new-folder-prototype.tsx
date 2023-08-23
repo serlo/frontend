@@ -119,7 +119,11 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
         return (
           <Fragment key={i}>
             <div
-              className="mb-5 mr-4 h-[238px] w-[176px] cursor-pointer rounded border shadow-lg hover:border-brand hover:outline hover:outline-2 hover:outline-brand"
+              className={tw`
+                mb-5 mr-4 h-[238px] w-[176px] cursor-pointer
+                rounded border hover:border-brand hover:shadow-lg hover:outline
+                hover:outline-2 hover:outline-brand
+              `}
               onClick={() => {
                 setShowInModal(i)
               }}
