@@ -15,7 +15,11 @@ import IconVideo from '@/assets-webkit/img/editor/icon-video.svg'
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { type LoggedInData, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import type { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
+import { isProduction } from '@/helper/is-production'
+import type {
+  PluginWithData,
+  PluginsWithData,
+} from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { importantPlugin } from '@/serlo-editor/plugins/_on-the-way-out/important/important'
 import { layoutPlugin } from '@/serlo-editor/plugins/_on-the-way-out/layout'
 import { anchorPlugin } from '@/serlo-editor/plugins/anchor'
@@ -134,12 +138,17 @@ export function createPlugins({
       visibleInSuggestions: true,
       icon: <IconVideo />,
     },
-    {
-      type: EditorPluginType.Audio,
-      plugin: audioPlugin,
-      visibleInSuggestions: true,
-      icon: <IconAudio />,
-    },
+    ...(isProduction
+      ? []
+      : [
+          {
+            type: EditorPluginType.Audio,
+            plugin: audioPlugin,
+            visibleInSuggestions: true,
+            icon: <IconAudio />,
+          } as PluginWithData,
+        ]),
+
     {
       type: EditorPluginType.Anchor,
       plugin: anchorPlugin,
