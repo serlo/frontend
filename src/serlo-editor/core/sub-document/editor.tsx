@@ -26,7 +26,8 @@ import {
 } from '../../store'
 import type { StateUpdater } from '../../types/internal__plugin-state'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
-import { RowSeparator } from '@/serlo-editor/plugins/rows/components/row-separator'
+import { AddRowButtonFloating } from '@/serlo-editor/plugins/rows/components/add-row-button-floating'
+import { AddRowButtonLarge } from '@/serlo-editor/plugins/rows/components/add-row-button-large'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
@@ -162,55 +163,65 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       (config.isInlineChildEditor as boolean)
 
     const isTemplatePlugin = document.plugin.startsWith('type-')
+    const isRowsPlugin = document.plugin === EditorPluginType.Rows
 
     const noVisualFocusHandling =
       isTemplatePlugin ||
-      [EditorPluginType.Article, EditorPluginType.Rows].includes(
-        document.plugin as EditorPluginType
-      )
+      isRowsPlugin ||
+      EditorPluginType.Article === document.plugin
 
     return (
-      <div
-        className={clsx(
-          'outline-none',
-          isInlineChildEditor || isTemplatePlugin
-            ? ''
-            : 'plugin-wrapper-container relative -ml-[7px] mb-6 min-h-[10px] pl-[5px]'
-        )}
-        tabIndex={-1} // removing this makes selecting e.g. images impossible somehow
-        onMouseDown={handleFocus}
-        onFocus={noVisualFocusHandling ? undefined : handleDomFocus}
-        onBlur={noVisualFocusHandling ? undefined : handleDomFocus}
-        ref={containerRef}
-        data-document
-        data-document-focusable={noVisualFocusHandling ? undefined : true}
-        data-document-inline-child-editor={
-          isInlineChildEditor ? true : undefined
-        }
-      >
-        <plugin.Component
-          containerRef={containerRef}
-          id={id}
-          editable
-          domFocusWithin={domFocus !== false}
-          domFocusWithinInline={domFocus === 'focusWithinInline'}
-          domFocus={domFocus === 'focus'}
-          config={config}
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          state={state}
-          autofocusRef={autofocusRef}
-        />
-        {mayManipulateSiblings ? (
-          <RowSeparator
-            focused={domFocus === 'focus'}
+      <>
+        <div
+          className={clsx(
+            'outline-none',
+            isInlineChildEditor || isTemplatePlugin
+              ? ''
+              : 'plugin-wrapper-container relative -ml-[7px] mb-6 min-h-[10px] pl-[5px]',
+            isLastRowInRootRowsPlugin ? '!mb-28' : ''
+          )}
+          tabIndex={-1} // removing this makes selecting e.g. images impossible somehow
+          onMouseDown={handleFocus}
+          onFocus={noVisualFocusHandling ? undefined : handleDomFocus}
+          onBlur={noVisualFocusHandling ? undefined : handleDomFocus}
+          ref={containerRef}
+          data-document
+          data-document-focusable={noVisualFocusHandling ? undefined : true}
+          data-document-inline-child-editor={
+            isInlineChildEditor ? true : undefined
+          }
+        >
+          <plugin.Component
+            containerRef={containerRef}
+            id={id}
+            editable
+            domFocusWithin={domFocus !== false}
+            domFocusWithinInline={domFocus === 'focusWithinInline'}
+            domFocus={domFocus === 'focus'}
+            config={config}
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            state={state}
+            autofocusRef={autofocusRef}
+          />
+          {mayManipulateSiblings ? (
+            <AddRowButtonFloating
+              focused={domFocus === 'focus'}
+              onClick={(event: React.MouseEvent) => {
+                event.preventDefault()
+                handleAddButtonClick()
+              }}
+            />
+          ) : null}
+        </div>
+        {isLastRowInRootRowsPlugin ? (
+          <AddRowButtonLarge
             onClick={(event: React.MouseEvent) => {
               event.preventDefault()
               handleAddButtonClick()
             }}
-            visuallyEmphasizeAddButton={isLastRowInRootRowsPlugin}
           />
         ) : null}
-      </div>
+      </>
     )
   }, [
     document,

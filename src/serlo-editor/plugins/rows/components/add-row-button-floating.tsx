@@ -5,34 +5,36 @@ import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 
-interface AddRowButtonProps {
-  focused: boolean
+interface AddRowButtonFloatingProps {
   onClick: React.MouseEventHandler<HTMLButtonElement>
-  visuallyEmphasized?: boolean
+  isFirst?: boolean
+  isLast?: boolean
+  focused?: boolean
 }
 
-export function AddRowButton({
+export function AddRowButtonFloating({
   focused,
+  isFirst,
+  isLast = false,
   onClick,
-  visuallyEmphasized = false,
-}: AddRowButtonProps) {
+}: AddRowButtonFloatingProps) {
   const rowsStrings = useEditorStrings().plugins.rows
 
-  if (visuallyEmphasized)
-    return (
-      <button
-        className="serlo-button-editor-secondary"
-        data-qa="add-new-plugin-row-button"
-        onClick={onClick}
-        title={rowsStrings.addAnElement}
-      >
-        <FaIcon icon={faCirclePlus} className="text-xl" />{' '}
-        <span className="text-almost-black">{rowsStrings.addAnElement}</span>
-      </button>
-    )
-
   return (
-    <div className="group flex justify-center">
+    <div
+      className={clsx(
+        'absolute z-[1] h-auto w-full',
+        'group flex justify-center',
+        isFirst ? 'top-0' : 'bottom-0',
+        isFirst && isLast
+          ? ''
+          : isFirst
+          ? '-translate-y-full'
+          : isLast
+          ? 'translate-y-[170%]'
+          : 'translate-y-full'
+      )}
+    >
       <button
         className={clsx(
           tw`

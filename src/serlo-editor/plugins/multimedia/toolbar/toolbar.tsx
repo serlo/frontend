@@ -1,6 +1,6 @@
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import { MouseEvent, ReactNode, RefObject, useCallback, useState } from 'react'
+import { ReactNode, RefObject, useState } from 'react'
 
 import type { MultimediaProps } from '..'
 import { FaIcon } from '@/components/fa-icon'
@@ -25,19 +25,6 @@ export const MultimediaToolbar = ({
 }: MultimediaToolbarProps) => {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const editorStrings = useEditorStrings()
-
-  const handleFocusParentButtonClick = useCallback((event: MouseEvent) => {
-    const target = event.target as HTMLButtonElement
-    const pluginWrapperContainer = target.closest(
-      '.plugin-wrapper-container'
-    ) as HTMLDivElement
-
-    if (pluginWrapperContainer) {
-      event.preventDefault()
-      event.stopPropagation()
-      pluginWrapperContainer.focus()
-    }
-  }, [])
 
   if (!domFocusWithin) return null
 
@@ -75,7 +62,6 @@ export const MultimediaToolbar = ({
     />
   ) : (
     <button
-      onMouseDown={handleFocusParentButtonClick}
       className={clsx(
         tw`
             absolute -top-6 right-14 z-50 block h-6 rounded-t-md bg-gray-100
