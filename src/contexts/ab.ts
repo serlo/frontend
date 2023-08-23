@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 
+import { useAuthentication } from '@/auth/use-authentication'
 import { abSubmission } from '@/helper/ab-submission'
 
 export const experiments: {
@@ -28,6 +29,9 @@ export const ABProvider = ABContext.Provider
 
 export function useAB() {
   const value = useContext(ABContext)
+  const auth = useAuthentication()
+
+  if (auth) return null
 
   return value ?? null
 }

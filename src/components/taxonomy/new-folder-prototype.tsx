@@ -13,29 +13,34 @@ export interface NewFolderPrototypeProps {
 
 const hardcodedDataforDreisatz = [
   {
-    title: 'An der Eisdiele',
-    difficulty: 2,
-    img: 'https://assets.serlo.org/eb36f500-4184-11ee-b109-a3f2e53ad6dd/image.png',
-    type: 'Auswahlaufgabe',
+    title: 'Eiskugeln Preise',
+    difficulty: 1,
+    img: 'https://assets.serlo.org/5ca4f940-41ac-11ee-89f0-6196501948c9/image.png',
+    type: 'Single Choice',
   },
   {
-    title: 'Kinobesuch',
+    title: 'Kinopreise berechnen',
     difficulty: 2,
-    img: 'https://assets.serlo.org/f6a665a0-4185-11ee-b109-a3f2e53ad6dd/image.png',
-    type: 'Eingabefeld',
+    img: 'https://assets.serlo.org/83e53100-41ac-11ee-89f0-6196501948c9/image.png',
+    type: 'Aufgabe mit Eingabefeld',
   },
   {
-    title: '3 Übungen (1)',
+    title: 'Vertiefungs-aufgaben',
+    difficulty: 1,
+    img: '',
+    type: 'Single Choice',
+  },
+  {
+    title: 'Vertiefungs-aufgaben',
     difficulty: 2,
     img: '',
-    type: 'Auswahlaufgabe',
+    type: 'Single Choice',
   },
-  { title: '3 Übungen (2)', difficulty: 3, img: '', type: 'Auswahlaufgabe' },
   {
     title: 'Reise nach Hogwarts',
-    difficulty: 2,
-    img: 'https://assets.serlo.org/d459ebb0-4186-11ee-b109-a3f2e53ad6dd/image.png',
-    type: 'Auswahlaufgabe',
+    difficulty: 3,
+    img: 'https://assets.serlo.org/b3deaf80-41ac-11ee-89f0-6196501948c9/image.png',
+    type: 'Single Choice',
   },
 ]
 
@@ -114,13 +119,13 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
         return (
           <Fragment key={i}>
             <div
-              className="mb-5 mr-4 h-52 w-[176px] cursor-pointer rounded border hover:border-brand"
+              className="mb-5 mr-4 h-[238px] w-[176px] cursor-pointer rounded border hover:border-brand"
               onClick={() => {
                 setShowInModal(i)
               }}
             >
               <div
-                className="flex h-16 w-full items-center justify-center bg-brand-100 bg-cover bg-center pt-2 text-center text-gray-600"
+                className="flex h-24 w-full items-center justify-center bg-brand-100 bg-cover bg-center pt-2 text-center text-gray-600"
                 style={
                   entry.img ? { backgroundImage: `url(${entry.img})` } : {}
                 }
@@ -129,8 +134,13 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
                   /* eslint-disable-next-line @next/next/no-img-element*/
                   <img
                     alt="Serlo"
-                    src="/_assets/img/serlo-logo.svg"
-                    width={80}
+                    src={
+                      entry.type === 'Single Choice'
+                        ? 'https://assets.serlo.org/65df4c50-41ab-11ee-89f0-6196501948c9/image.png'
+                        : '/_assets/img/serlo-logo.svg'
+                    }
+                    width={74}
+                    className="-mt-1"
                   ></img>
                 )}
               </div>
@@ -145,16 +155,13 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
                   solvedPercentage >= 0.5 && 'from-green-200'
                 )}
               >
-                <div className="mx-3 pt-3 text-lg font-bold">{entry.title}</div>
-                <div className="mx-3 mt-4 text-sm">{entry.type}</div>
-                <div className="mx-3 mt-3 text-sm">
+                <div className="h-[74px] px-2 py-1 text-lg font-bold">
+                  {entry.title}
+                </div>
+                <div className="h-8 px-2 py-1 text-sm">{entry.type}</div>
+                <div className="h-8 px-2 py-1 text-sm">
                   {renderDifficulty(entry.difficulty)}
                 </div>
-                {solvedPercentage > 0 && (
-                  <div className="mx-3 mt-2 text-sm">
-                    Fortschritt: {(solvedPercentage * 100).toFixed(0)}%
-                  </div>
-                )}
               </div>
             </div>
           </Fragment>
@@ -166,16 +173,25 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
 
 function renderDifficulty(dif: number) {
   if (dif === 1) {
-    return <>★☆☆☆ einfach</>
+    return (
+      <>
+        <span className="inline-block w-14">leicht</span> ★☆☆
+      </>
+    )
   }
   if (dif === 2) {
-    return <>★★☆☆ moderat</>
+    return (
+      <>
+        <span className="inline-block w-14">moderat</span> ★★☆
+      </>
+    )
   }
   if (dif === 3) {
-    return <>★★★☆ schwer</>
-  }
-  if (dif === 4) {
-    return <>★★★★ Bonus</>
+    return (
+      <>
+        <span className="inline-block w-14">knifflig</span> ★★★
+      </>
+    )
   }
   return null
 }
