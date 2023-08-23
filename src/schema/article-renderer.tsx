@@ -455,9 +455,7 @@ function renderElement({
   if (element.type === FrontendNodeType.Audio) {
     return (
       <Lazy noPrint>
-        <Audio
-          srcOrBase64={element.state.src || element.state.base64AudioRecording}
-        />
+        <Audio src={element.state.src} />
       </Lazy>
     )
   }

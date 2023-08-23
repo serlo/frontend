@@ -390,7 +390,6 @@ export type FrontendAudioNode = EditorAudioPlugin & {
   children?: undefined
   pluginId?: string
   src: string
-  base64AudioRecording: string
 }
 
 export type FrontendCodeNode = EditorHighlightPlugin & {

@@ -27,15 +27,12 @@ export const AudioToolbar = ({
       pluginType={EditorPluginType.Audio}
       pluginSettings={
         <>
-          {/* We are not showing the button to edit the audio URL if it's a base64 file */}
-          {!state.base64AudioRecording.value && (
-            <button
-              onClick={() => setShowSettingsModal(true)}
-              className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
-            >
-              {audioStrings.audioUrl} <FaIcon icon={faPencilAlt} />
-            </button>
-          )}
+          <button
+            onClick={() => setShowSettingsModal(true)}
+            className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+          >
+            {audioStrings.audioUrl} <FaIcon icon={faPencilAlt} />
+          </button>
           {/* In the future we want a popovers per setting, but this is faster for now */}
           {showSettingsModal ? (
             <ModalWithCloseButton
@@ -50,10 +47,6 @@ export const AudioToolbar = ({
                   label={`${audioStrings.audioUrl}: `}
                   value={state.src.value}
                   onChange={(e) => {
-                    // as there can only be an external src/url or recording, we
-                    // are resetting the file (right now base64) upon the user
-                    // providing a url
-                    state.base64AudioRecording.set('')
                     state.src.set(e.target.value)
                   }}
                   inputWidth="100%"

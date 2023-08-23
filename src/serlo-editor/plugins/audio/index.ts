@@ -1,5 +1,5 @@
 import { AudioEditor } from './editor'
-import { AudioType, parseAudioUrl } from './renderer'
+import { parseAudioUrl } from './renderer'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -7,7 +7,7 @@ import {
   string,
 } from '../../plugin'
 
-const audioState = object({ src: string(), base64AudioRecording: string() })
+const audioState = object({ src: string() })
 
 export type AudioProps = EditorPluginProps<AudioPluginState>
 export type AudioPluginState = typeof audioState
@@ -22,8 +22,7 @@ export const audioPlugin: EditorPlugin<AudioPluginState> = {
     if (type)
       return {
         state: {
-          src: type === AudioType.Vocaroo ? src : '',
-          base64AudioRecording: type === AudioType.File ? src : '',
+          src,
         },
       }
   },

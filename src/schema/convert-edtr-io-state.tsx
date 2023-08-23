@@ -343,9 +343,9 @@ function convertPlugin(
   }
 
   if (node.plugin === EditorPluginType.Audio) {
-    if (!node.state.src && !node.state.base64AudioRecording) {
+    if (!node.state.src) {
       // eslint-disable-next-line no-console
-      console.warn('No src and no recording for audio plugin found. Remove it!')
+      console.warn('No src for audio plugin found. Remove it!')
       return []
     }
 
@@ -353,7 +353,6 @@ function convertPlugin(
       {
         type: FrontendNodeType.Audio,
         src: node.state.src,
-        base64AudioRecording: node.state.base64AudioRecording,
         pluginId: node.id,
         plugin: EditorPluginType.Audio,
         state: node.state,

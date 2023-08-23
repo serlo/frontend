@@ -5,17 +5,17 @@ import {
 } from '@/serlo-editor/plugins/audio/renderer'
 
 export interface AudioProps {
-  srcOrBase64: string
+  src: string
   license?: LicenseData
 }
 
-export function Audio({ srcOrBase64 }: AudioProps) {
-  const [iframeSrcOrBase64, type] = parseAudioUrl(srcOrBase64)
+export function Audio({ src }: AudioProps) {
+  const [iframeSrc, type] = parseAudioUrl(src)
 
   return (
     <>
-      <AudioRenderer srcOrBase64={iframeSrcOrBase64} type={type} />
-      <p className="serlo-p hidden print:block">[{srcOrBase64}]</p>
+      <AudioRenderer src={iframeSrc} type={type} />
+      <p className="serlo-p hidden print:block">[{src}]</p>
     </>
   )
 }
