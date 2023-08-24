@@ -23,21 +23,11 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { MathRenderer } from '@/serlo-editor/math'
-import {
-  store,
-  focus,
-  focusNext,
-  focusPrevious,
-  selectIsDocumentEmpty,
-  useAppDispatch,
-  selectFocusTree,
-} from '@/serlo-editor/store'
+import { store, selectIsDocumentEmpty } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function EquationsEditor(props: EquationsProps) {
   const { domFocusWithin, state } = props
-
-  const dispatch = useAppDispatch()
 
   const transformationTarget = toTransformationTarget(
     state.transformationTarget.value
@@ -100,24 +90,7 @@ export function EquationsEditor(props: EquationsProps) {
   const gridFocus = useGridFocus({
     rows: state.steps.length,
     columns: 4,
-    focusNext: () => {
-      const focusTree = selectFocusTree(store.getState())
-      dispatch(focusNext(focusTree))
-    },
-    focusPrevious: () => {
-      const focusTree = selectFocusTree(store.getState())
-      dispatch(focusPrevious(focusTree))
-    },
     transformationTarget,
-    onFocusChanged: (state) => {
-      if (state === 'firstExplanation') {
-        dispatch(focus(props.state.firstExplanation.id))
-      } else if (state.column === StepSegment.Explanation) {
-        dispatch(focus(props.state.steps[state.row].explanation.id))
-      } else {
-        dispatch(focus(props.id))
-      }
-    },
   })
 
   useEffect(() => {
@@ -126,7 +99,6 @@ export function EquationsEditor(props: EquationsProps) {
         row: 0,
         column: firstColumn(transformationTarget),
       })
-      dispatch(focus(props.id))
     }
     //prevents loop
     // eslint-disable-next-line react-hooks/exhaustive-deps

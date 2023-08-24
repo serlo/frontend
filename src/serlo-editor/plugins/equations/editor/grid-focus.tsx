@@ -18,24 +18,19 @@ export interface GridFocus {
   moveLeft: () => void
 }
 
+// TODO: can't move out of plugin with tab, it just creates a new line every time
+
 export function useGridFocus({
   rows,
   columns,
-  focusNext,
-  focusPrevious,
-  onFocusChanged,
   transformationTarget,
 }: {
   rows: number
   columns: number
-  focusNext: () => void
-  focusPrevious: () => void
-  onFocusChanged: (args: GridFocusState) => void
   transformationTarget: TransformationTarget
 }): GridFocus {
   const [focus, setFocusState] = useState<GridFocusState | null>(null)
   const setFocus = (state: GridFocusState) => {
-    onFocusChanged(state)
     setFocusState(state)
   }
   const isFocused = (state: GridFocusState) => {
@@ -66,7 +61,7 @@ export function useGridFocus({
         focus.row === rows - 1 &&
         focus.column === lastColumn(transformationTarget)
       ) {
-        focusNext()
+        // do nothing for now
       } else if (transformationTarget === TransformationTarget.Term) {
         if (focus.column === StepSegment.Right) {
           setFocus({ row: focus.row, column: StepSegment.Explanation })
@@ -84,14 +79,11 @@ export function useGridFocus({
     },
     moveLeft() {
       if (focus === null) return
-      if (focus === 'firstExplanation') {
-        focusPrevious()
-        return
-      }
+      if (focus === 'firstExplanation') return
 
       if (transformationTarget === TransformationTarget.Term) {
         if (focus.row === 0 && focus.column === StepSegment.Right) {
-          focusPrevious()
+          // do nothing for now
         } else if (focus.column === StepSegment.Right) {
           setFocus({ row: focus.row - 1, column: StepSegment.Explanation })
         } else {

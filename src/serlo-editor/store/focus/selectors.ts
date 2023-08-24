@@ -13,13 +13,6 @@ import { State } from '../types'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-const selectSelf = (state: State) => state.focus
-
-export const selectIsFocused = createSelector(
-  [selectSelf, (_state, id: string) => id],
-  (focus, id: string) => focus === id
-)
-
 export const selectFocusTree: (
   state: State,
   id?: string
