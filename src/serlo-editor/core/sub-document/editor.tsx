@@ -1,21 +1,12 @@
 import clsx from 'clsx'
 import * as R from 'ramda'
-import {
-  useState,
-  useRef,
-  useEffect,
-  useMemo,
-  useCallback,
-  FocusEvent,
-} from 'react'
+import { useState, useRef, useMemo, useCallback, FocusEvent } from 'react'
 
 import type { SubDocumentProps } from '.'
 import { useEnableEditorHotkeys } from './use-enable-editor-hotkeys'
 import {
   runChangeDocumentSaga,
-  focus,
   selectDocument,
-  selectIsFocused,
   useAppSelector,
   useAppDispatch,
   insertPluginChildAfter,
@@ -46,32 +37,13 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     selectIsLastRowInRootRowsPlugin(state, id)
   )
 
-  const focused = useAppSelector((state) => selectIsFocused(state, id))
-  const [domFocusState, setDomFocus] = useState<DomFocus>(
-    focused ? DomFocus.focusWithin : DomFocus.notFocused
-  )
+  const [domFocusState, setDomFocus] = useState<DomFocus>(DomFocus.notFocused)
 
   const plugin = editorPlugins.getByType(document?.plugin ?? '')
 
   useEnableEditorHotkeys(id, plugin, domFocusState === DomFocus.focusWithin)
   const containerRef = useRef<HTMLDivElement>(null)
   const autofocusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
-
-  useEffect(() => {
-    if (domFocusState !== 'focus') return
-    setTimeout(() => autofocusRef.current?.focus())
-  }, [domFocusState])
-
-  const handleFocus = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      // Find closest document
-      const target = (e.target as HTMLDivElement).closest('[data-document]')
-      if (!focused && target === containerRef.current) {
-        dispatch(focus(id))
-      }
-    },
-    [focused, id, dispatch]
-  )
 
   const handleDomFocus = useCallback((e: FocusEvent<HTMLDivElement>) => {
     const target = containerRef.current
@@ -97,7 +69,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         : DomFocus.notFocused
     }
 
-    setDomFocus(() => getFocusWithin())
+    setDomFocus(getFocusWithin)
   }, [])
 
   return useMemo(() => {
@@ -186,7 +158,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           isLastRowInRootRowsPlugin ? '!mb-28' : ''
         )}
         tabIndex={-1} // removing this makes selecting e.g. images impossible somehow
-        onMouseDown={handleFocus}
         onFocus={noVisualFocusHandling ? undefined : handleDomFocus}
         onBlur={noVisualFocusHandling ? undefined : handleDomFocus}
         ref={containerRef}
@@ -223,7 +194,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     document,
     plugin,
     pluginProps,
-    handleFocus,
     handleDomFocus,
     id,
     domFocusState,

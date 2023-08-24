@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import type { ArticleProps } from '.'
 import { ArticleAddModal } from './add-modal/article-add-modal'
@@ -22,8 +22,18 @@ export function ArticleEditor({ editable, state }: ArticleProps) {
 
   const modalStrings = useEditorStrings().templatePlugins.article.addModal
 
+  // Focus the article introduction explanation on page load
+  // TODO: Move this into a focus-dedicated hook
+  const ref = useRef<HTMLDivElement | null>(null)
+  useEffect(() => {
+    const explanationTextPlugin = ref.current?.querySelector<HTMLDivElement>(
+      '.explanation-wrapper > .plugin-wrapper-container'
+    )
+    explanationTextPlugin?.focus()
+  }, [])
+
   return (
-    <>
+    <div ref={ref}>
       <ArticleRenderer
         introduction={introduction.render()}
         content={content.render()}
@@ -81,7 +91,7 @@ export function ArticleEditor({ editable, state }: ArticleProps) {
           setModalOpen={setModalOpen}
         />
       )}
-    </>
+    </div>
   )
 
   function renderButton(text: string, noIcon?: boolean) {
