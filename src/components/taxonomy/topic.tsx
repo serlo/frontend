@@ -125,6 +125,16 @@ export function Topic({ data }: TopicProps) {
   }
 
   function renderExercises() {
+    if (ab?.experiment === 'reorder_trig' && ab.group === 'b') {
+      const a1 = data.exercisesContent[0]
+      const a2 = data.exercisesContent[1]
+      if (a1.context.id === 57741 && a2.context.id === 52806) {
+        a1.positionOnPage = 1
+        a2.positionOnPage = 0
+        data.exercisesContent[0] = a2
+        data.exercisesContent[1] = a1
+      }
+    }
     return (
       hasExercises &&
       data.exercisesContent &&
