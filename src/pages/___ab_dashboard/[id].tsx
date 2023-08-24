@@ -80,7 +80,7 @@ export const ABResults: NextPage<ABResultsProps> = ({
           <div className="mx-side">
             B (Variante): {(groupB.reached3solvesPercentage * 100).toFixed(2)} %
             mit {(groupB.reached3solvesTime / 60000).toFixed(1)} min (
-            {groupA.reached3count} Sessions)
+            {groupB.reached3count} Sessions)
           </div>
           <div className="serlo-h2">Engagement</div>
           <div className="mx-side mb-block">
