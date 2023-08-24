@@ -91,6 +91,9 @@ export const useEnableEditorHotkeys = (
             sibling: id,
           })
         )
+        setTimeout(() => {
+          dispatch(focusNext(selectFocusTree(store.getState())))
+        })
       })
     },
     {

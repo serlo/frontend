@@ -3,9 +3,11 @@ import { Editor as SlateEditor, Node } from 'slate'
 
 import { sliceNodesAfterSelection } from './document'
 import {
+  focusNext,
   insertPluginChildAfter,
   runReplaceDocumentSaga,
   selectDocument,
+  selectFocusTree,
   selectMayManipulateSiblings,
   selectParent,
   store,
@@ -70,4 +72,7 @@ export function insertPlugin({
       document: { plugin: pluginType, state },
     })
   )
+  setTimeout(() => {
+    dispatch(focusNext(selectFocusTree(store.getState())))
+  })
 }

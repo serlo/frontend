@@ -23,6 +23,8 @@ import {
   store,
   selectMayManipulateSiblings,
   selectIsLastRowInRootRowsPlugin,
+  focusNext,
+  selectFocusTree,
 } from '../../store'
 import type { StateUpdater } from '../../types/internal__plugin-state'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
@@ -47,9 +49,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   )
 
   const focused = useAppSelector((state) => selectIsFocused(state, id))
-  const [domFocusState, setDomFocus] = useState<DomFocus>(
-    focused ? DomFocus.focusWithin : DomFocus.notFocused
-  )
+  const [domFocusState, setDomFocus] = useState<DomFocus>(DomFocus.notFocused)
 
   const plugin = editorPlugins.getByType(document?.plugin ?? '')
 
@@ -156,6 +156,9 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
             document: textPluginWithSuggestions,
           })
         )
+        setTimeout(() => {
+          dispatch(focusNext(selectFocusTree(store.getState())))
+        })
       })
     }
 

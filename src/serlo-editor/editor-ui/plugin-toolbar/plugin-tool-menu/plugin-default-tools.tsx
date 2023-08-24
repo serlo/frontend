@@ -5,8 +5,10 @@ import { AnchorLinkCopyTool } from './anchor-link-copy-tool'
 import { DropdownButton } from './dropdown-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import {
+  focusNext,
   insertPluginChildAfter,
   removePluginChild,
+  selectFocusTree,
   selectParent,
   selectSerializedDocumentWithoutIds,
   store,
@@ -24,13 +26,11 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
   const pluginStrings = useEditorStrings().plugins
 
   const handleDuplicatePlugin = useCallback(() => {
-    const parent = selectParent(store.getState(), pluginId)
+    const state = store.getState()
+    const parent = selectParent(state, pluginId)
     if (!parent) return
 
-    const document = selectSerializedDocumentWithoutIds(
-      store.getState(),
-      pluginId
-    )
+    const document = selectSerializedDocumentWithoutIds(state, pluginId)
     if (!document) return
 
     dispatch(
@@ -40,6 +40,9 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
         document,
       })
     )
+    setTimeout(() => {
+      dispatch(focusNext(selectFocusTree(state)))
+    })
   }, [dispatch, pluginId])
 
   const handleRemovePlugin = useCallback(() => {
@@ -57,6 +60,9 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
           document: { plugin: EditorPluginType.Text },
         })
       )
+      setTimeout(() => {
+        dispatch(focusNext(selectFocusTree(store.getState())))
+      })
     }
 
     dispatch(
