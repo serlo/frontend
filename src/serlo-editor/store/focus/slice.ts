@@ -19,15 +19,17 @@ export const focusSlice = createSlice({
       const next = findNextNode(action.payload, state)
       if (!next) return state
       const nextDomElement = document.getElementById(next) as HTMLDivElement
-      if (nextDomElement) nextDomElement.focus()
+      nextDomElement?.focus()
       return next
     },
     focusPrevious(state, action: PayloadAction<FocusTreeNode | null>) {
       if (!state || !action.payload) return state
       const previous = findPreviousNode(action.payload, state)
       if (!previous) return state
-      const previousDomElement = document.getElementById(previous) as HTMLDivElement
-      if (previousDomElement) previousDomElement.focus()
+      const previousDomElement = document.getElementById(
+        previous
+      ) as HTMLDivElement
+      previousDomElement?.focus()
       return previous
     },
   },
