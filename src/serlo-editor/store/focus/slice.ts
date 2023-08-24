@@ -16,21 +16,27 @@ export const focusSlice = createSlice({
     },
     focusNext(state, action: PayloadAction<FocusTreeNode | null>) {
       if (!state || !action.payload) return state
-      const next = findNextNode(action.payload, state)
+      const _id = document.activeElement?.closest(
+        '.plugin-wrapper-container'
+      )?.id
+      const next = findNextNode(action.payload, _id ?? state)
       if (!next) return state
       const nextDomElement = document.getElementById(next) as HTMLDivElement
       nextDomElement?.focus()
-      return next
+      return state // make sure we don't use old logic
     },
     focusPrevious(state, action: PayloadAction<FocusTreeNode | null>) {
       if (!state || !action.payload) return state
-      const previous = findPreviousNode(action.payload, state)
+      const _id = document.activeElement?.closest(
+        '.plugin-wrapper-container'
+      )?.id
+      const previous = findPreviousNode(action.payload, _id ?? state)
       if (!previous) return state
       const previousDomElement = document.getElementById(
         previous
       ) as HTMLDivElement
       previousDomElement?.focus()
-      return previous
+      return state // make sure we don't use old logic
     },
   },
   extraReducers: (builder) => {
