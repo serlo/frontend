@@ -1,5 +1,6 @@
 import { EditorPluginType } from './types/editor-plugin-type'
 import { TemplatePluginType } from './types/template-plugin-type'
+import IconAudio from '@/assets-webkit/img/editor/icon-audio.svg'
 import IconBox from '@/assets-webkit/img/editor/icon-box.svg'
 import IconEquation from '@/assets-webkit/img/editor/icon-equation.svg'
 import IconGeogebra from '@/assets-webkit/img/editor/icon-geogebra.svg'
@@ -14,11 +15,16 @@ import IconVideo from '@/assets-webkit/img/editor/icon-video.svg'
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { type LoggedInData, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import type { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
+import { isProduction } from '@/helper/is-production'
+import type {
+  PluginWithData,
+  PluginsWithData,
+} from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { importantPlugin } from '@/serlo-editor/plugins/_on-the-way-out/important/important'
 import { layoutPlugin } from '@/serlo-editor/plugins/_on-the-way-out/layout'
 import { anchorPlugin } from '@/serlo-editor/plugins/anchor'
 import { articlePlugin } from '@/serlo-editor/plugins/article'
+import { audioPlugin } from '@/serlo-editor/plugins/audio'
 import { createBoxPlugin } from '@/serlo-editor/plugins/box'
 import { equationsPlugin } from '@/serlo-editor/plugins/equations'
 import { exercisePlugin } from '@/serlo-editor/plugins/exercise'
@@ -132,6 +138,17 @@ export function createPlugins({
       visibleInSuggestions: true,
       icon: <IconVideo />,
     },
+    ...(isProduction
+      ? []
+      : [
+          {
+            type: EditorPluginType.Audio,
+            plugin: audioPlugin,
+            visibleInSuggestions: true,
+            icon: <IconAudio />,
+          } as PluginWithData,
+        ]),
+
     {
       type: EditorPluginType.Anchor,
       plugin: anchorPlugin,

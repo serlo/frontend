@@ -12,6 +12,7 @@ import { useSlateRenderHandlers } from '../hooks/use-slate-render-handlers'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import type { TextEditorConfig, TextEditorState } from '../types/config'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { SlateHoverOverlay } from '@/serlo-editor/editor-ui/slate-hover-overlay'
 import type { EditorPluginProps } from '@/serlo-editor/plugin'
@@ -25,6 +26,7 @@ export type TextEditorProps = EditorPluginProps<
 export function TextEditor(props: TextEditorProps) {
   const { state, id, editable, focused, containerRef } = props
 
+  const textStrings = useEditorStrings().plugins.text
   const config = useTextConfig(props.config)
 
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
@@ -117,6 +119,8 @@ export function TextEditor(props: TextEditorProps) {
     ([node, path]: NodeEntry) => {
       const { selection } = editor
       if (
+        !focused ||
+        !editable ||
         selection === null ||
         Editor.isEditor(node) ||
         !Range.includes(selection, path) ||
@@ -127,8 +131,10 @@ export function TextEditor(props: TextEditorProps) {
       }
       return [{ ...selection, showPlaceholder: true }]
     },
-    [editor]
+    [editable, editor, focused]
   )
+
+  const shouldShowStaticPlaceholder = config.noLinebreaks || config.placeholder
 
   return (
     <Slate
@@ -136,33 +142,46 @@ export function TextEditor(props: TextEditorProps) {
       initialValue={state.value.value}
       onChange={handleEditorChange}
     >
-      {focused && (
+      {focused ? (
         <TextToolbar
           id={id}
           toolbarControls={toolbarControls}
           config={config}
           containerRef={containerRef}
         />
-      )}
+      ) : null}
+
       <Editable
         readOnly={!editable}
         onKeyDown={handleEditableKeyDown}
         onPaste={handleEditablePaste}
         renderElement={handleRenderElement}
         renderLeaf={handleRenderLeaf}
-        decorate={decorateEmptyLinesWithPlaceholder}
+        decorate={
+          shouldShowStaticPlaceholder
+            ? undefined
+            : decorateEmptyLinesWithPlaceholder
+        }
+        placeholder={
+          editable && shouldShowStaticPlaceholder
+            ? config.placeholder ?? textStrings.placeholder
+            : undefined
+        }
         // `[&>[data-slate-node]]:mx-side` fixes placeholder position in safari
         // `outline-none` removes the ugly outline present in Slate v0.94.1
         className="outline-none [&>[data-slate-node]]:mx-side"
         data-qa="plugin-text-editor"
       />
-      <LinkControls serloLinkSearch={config.serloLinkSearch} />
 
-      {showSuggestions && (
+      {focused ? (
+        <LinkControls serloLinkSearch={config.serloLinkSearch} />
+      ) : null}
+
+      {showSuggestions ? (
         <SlateHoverOverlay position="below">
           <Suggestions {...suggestionsProps} />
         </SlateHoverOverlay>
-      )}
+      ) : null}
     </Slate>
   )
 }
