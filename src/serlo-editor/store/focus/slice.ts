@@ -18,13 +18,17 @@ export const focusSlice = createSlice({
       if (!state || !action.payload) return state
       const next = findNextNode(action.payload, state)
       if (!next) return state
+      const nextDomElement = document.getElementById(next) as HTMLDivElement
+      if (nextDomElement) nextDomElement.focus()
       return next
     },
     focusPrevious(state, action: PayloadAction<FocusTreeNode | null>) {
       if (!state || !action.payload) return state
-      const next = findPreviousNode(action.payload, state)
-      if (!next) return state
-      return next
+      const previous = findPreviousNode(action.payload, state)
+      if (!previous) return state
+      const previousDomElement = document.getElementById(previous) as HTMLDivElement
+      if (previousDomElement) previousDomElement.focus()
+      return previous
     },
   },
   extraReducers: (builder) => {

@@ -53,7 +53,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
   const plugin = editorPlugins.getByType(document?.plugin ?? '')
 
-  useEnableEditorHotkeys(id, plugin, domFocusState === DomFocus.focusWithin)
+  useEnableEditorHotkeys(id, plugin, domFocusState === DomFocus.focus)
   const containerRef = useRef<HTMLDivElement>(null)
   const autofocusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
 
@@ -185,6 +185,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
             : 'plugin-wrapper-container relative -ml-[7px] mb-6 min-h-[10px] pl-[5px]',
           isLastRowInRootRowsPlugin ? '!mb-28' : ''
         )}
+        id={id}
         tabIndex={-1} // removing this makes selecting e.g. images impossible somehow
         onMouseDown={handleFocus}
         onFocus={noVisualFocusHandling ? undefined : handleDomFocus}
