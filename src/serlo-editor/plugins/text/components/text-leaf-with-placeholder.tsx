@@ -27,7 +27,7 @@ export function TextLeafWithPlaceholder(
   return (
     <>
       <span
-        className="pointer-events-none absolute block w-full text-gray-300 [user-select:none]"
+        className="pointer-events-none absolute -mt-[5px] block w-full text-gray-300 [user-select:none]"
         contentEditable={false}
       >
         {customPlaceholder ?? textStrings.placeholder}{' '}

@@ -130,8 +130,9 @@ export function TextEditor(props: TextEditorProps) {
       const isEmptyElement =
         Element.isElement(node) && Editor.isEmpty(editor, node)
 
+      const isFirstLine = path[0] === 0
       if (
-        !focused ||
+        (!focused && !isFirstLine) ||
         !editable ||
         selection === null ||
         Editor.isEditor(node) ||
@@ -176,7 +177,7 @@ export function TextEditor(props: TextEditorProps) {
             : decorateEmptyLinesWithPlaceholder
         }
         placeholder={
-          editable && shouldShowStaticPlaceholder
+          (editable && shouldShowStaticPlaceholder) || !editor.selection
             ? config.placeholder ?? textStrings.placeholder
             : undefined
         }
