@@ -104,7 +104,7 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
     )
   }
   return (
-    <div className="mx-side flex flex-wrap">
+    <div className="mx-side flex flex-col items-center mobile:flex-row mobile:flex-wrap">
       {data.exercisesContent.map((exercise, i) => {
         const entry = hardcodedDataforDreisatz[i]
         const solved = JSON.parse(
