@@ -1,5 +1,14 @@
 import React, { useMemo, useEffect, useCallback } from 'react'
-import { createEditor, Node, Transforms, Range, Editor, NodeEntry } from 'slate'
+import {
+  createEditor,
+  Node,
+  Transforms,
+  Range,
+  NodeEntry,
+  Editor,
+  Path,
+  Element,
+} from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 
 import { LinkControls } from './link/link-controls'
@@ -12,6 +21,7 @@ import { useSlateRenderHandlers } from '../hooks/use-slate-render-handlers'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import type { TextEditorConfig, TextEditorState } from '../types/config'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { SlateHoverOverlay } from '@/serlo-editor/editor-ui/slate-hover-overlay'
 import type { EditorPluginProps } from '@/serlo-editor/plugin'
@@ -20,6 +30,55 @@ export type TextEditorProps = EditorPluginProps<
   TextEditorState,
   TextEditorConfig
 >
+
+function withNormalizations(editor: Editor) {
+  const builtinNormalizeNode = editor.normalizeNode
+
+  editor.normalizeNode = (entry) => {
+    const entryWasDeleted = removeIfEmptyParagraphNextToOtherEmptyParagraph(
+      editor,
+      entry
+    )
+    function removeIfEmptyParagraphNextToOtherEmptyParagraph(
+      editor: Editor,
+      entry: NodeEntry
+    ) {
+      const [node, path] = entry
+      const isEmptyParagraph =
+        Element.isElement(node) &&
+        node.type === 'p' &&
+        Editor.isEmpty(editor, node)
+
+      if (isEmptyParagraph && nextSiblingIsEmptyParagraph()) {
+        Transforms.removeNodes(editor, { at: path })
+        showToastNotice(
+          'Aufeinander folgende leere Zeilen werden nicht unterstützt. Nutze einen neues Text-Element für Zeilenabstand.',
+          'default',
+          4000
+        )
+        return true
+      }
+
+      return false
+
+      function nextSiblingIsEmptyParagraph() {
+        const nextSiblingPath = Path.next(path)
+        if (!Node.has(editor, nextSiblingPath)) return false
+        const nextSiblingNode = Node.get(editor, nextSiblingPath)
+        if (!Element.isElement(nextSiblingNode)) return false
+        if (nextSiblingNode.type !== 'p') return false
+        if (!Editor.isEmpty(editor, nextSiblingNode)) return false
+        return true
+      }
+    }
+
+    if (entryWasDeleted) return // Do not run further normalizations on this entry because it was deleted
+
+    builtinNormalizeNode(entry)
+  }
+
+  return editor
+}
 
 // Regular text editor - used as a standalone plugin
 export function TextEditor(props: TextEditorProps) {
@@ -30,7 +89,7 @@ export function TextEditor(props: TextEditorProps) {
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
   const { createTextEditor, toolbarControls } = textFormattingOptions
   const editor = useMemo(
-    () => createTextEditor(withReact(createEditor())),
+    () => withNormalizations(createTextEditor(withReact(createEditor()))),
     [createTextEditor]
   )
 
