@@ -35,8 +35,9 @@ export function RowsEditor({ state, config, id, editable }: RowsProps) {
 
   return (
     <AllowedChildPlugins.Provider value={config.allowedPlugins}>
-      <div className="relative mt-[25px]">
+      <div className="relative mt-6">
         {state.map((row, index) => {
+          const hideAddButton = showLargeAddButton && index === state.length - 1
           return (
             <RowEditor
               config={config}
@@ -47,7 +48,7 @@ export function RowsEditor({ state, config, id, editable }: RowsProps) {
               index={index}
               rows={state}
               row={row}
-              hideAddButton={showLargeAddButton && index === state.length - 1}
+              hideAddButton={hideAddButton}
             />
           )
         })}
