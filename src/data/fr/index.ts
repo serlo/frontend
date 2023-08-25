@@ -161,7 +161,8 @@ export const instanceData = {
         theorem: 'Theorem',
         proof: 'Proof'
       },
-      loadingVideoFailed: 'Something went wrong'
+      loadingVideoFailed: 'Something went wrong',
+      loadingAudioFailed: 'Something went wrong'
     },
     consent: {
       title: "Consentement pour le contenu externe",
@@ -176,6 +177,7 @@ export const instanceData = {
       video: "Jouer la vidéo de %provider%",
       applet: "Charger l'Applet de %provider%",
       twingle: "Charger le formulaire de don",
+      audio: 'Play audio from %provider%',
       general: 'Activate'
     },
     comments: {
@@ -751,7 +753,8 @@ export const loggedInData = {
         text: {
           title: "Texte",
           description: "Créer contenu en utilisant du texte riche (RTF) et des formules mathématiques.",
-          placeholder: 'Write something or add elements with ⊕.',
+          placeholder: 'Write something or add element:',
+          addButtonExplanation: 'Click to insert new element',
           quote: "Citation",
           setColor: "Définir la couleur",
           resetColor: "Réinitialiser la couleur",
@@ -810,6 +813,11 @@ export const loggedInData = {
           titlePlaceholder: "Titre",
           url: 'URL',
           seoTitle: "Titre pour les moteurs de recherche"
+        },
+        audio: {
+          title: 'Audio',
+          description: 'Link to audio files on Vocaroo',
+          audioUrl: 'Enter Audio URL'
         }
       },
       templatePlugins: {

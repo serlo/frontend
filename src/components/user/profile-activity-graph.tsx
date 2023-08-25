@@ -3,15 +3,12 @@ import { useState, useEffect } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { colors } from '@/helper/colors'
 
 interface ProfileActivityGraphProps {
   value: number
   maxValue: number
   title: string
 }
-
-const mutedBrightBackgroundGreen = '#EDFAC5'
 
 const maxLevel = 5
 const fullRadius = 50
@@ -83,23 +80,17 @@ export function ProfileActivityGraph({
             r={progressRadius}
             cx={fullRadius}
             cy={fullRadius}
-            style={{
-              fill: 'none',
-              stroke: mutedBrightBackgroundGreen,
-              strokeWidth: radiusStep,
-            }}
+            className="fill-none stroke-brandgreen-50"
+            style={{ strokeWidth: radiusStep }}
           />
           <circle
             r={progressRadius}
             cx={fullRadius}
             cy={fullRadius}
+            className="origin-center rotate-90 fill-none stroke-brandgreen-300"
             style={{
-              fill: 'none',
-              stroke: colors.brandGreen300,
               strokeWidth: radiusStep,
               transition: 'all ease 3s',
-              transformOrigin: 'center',
-              transform: 'rotate(90deg)',
               strokeDasharray: dashArray,
               strokeDashoffset: dashOffset,
             }}
@@ -108,14 +99,13 @@ export function ProfileActivityGraph({
             r={innerRadius}
             cx={fullRadius}
             cy={fullRadius}
-            style={{ fill: colors.brandGreen }}
+            className="fill-brandgreen"
           />
           <text
-            className="fill-current font-bold text-white"
+            className="fill-current text-xs font-bold text-white"
             textAnchor="middle"
             x={fullRadius}
             y="54"
-            style={{ fontSize: 12 }}
           >
             {value}
           </text>

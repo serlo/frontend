@@ -63,6 +63,7 @@ export interface CustomText {
   em?: true
   code?: true
   color?: number
+  showPlaceholder?: boolean
 }
 
 declare module 'slate' {

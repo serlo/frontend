@@ -6,6 +6,7 @@ export enum ExternalProvider {
   Twingle = 'Twingle',
   GoogleSearch = 'GoogleSearch',
   H5p = 'H5P',
+  Vocaroo = 'Vocaroo',
 }
 
 export function useConsent() {
