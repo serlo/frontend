@@ -18,6 +18,7 @@ interface GroupData {
   visits: number
   reached3solvesPercentage: number
   reached3solvesTime: number
+  solvedCountRaw: number[]
   reached3count: number
   solved: number
   timeOnPage: number
@@ -100,6 +101,7 @@ export const ABResults: NextPage<ABResultsProps> = ({
             {groupB.reached3count} Sessions)
           </div>
           <div className="mx-side mt-3">Konfidenz: {reached3Niveau} %</div>
+
           <div className="serlo-h2">Engagement</div>
           <div className="mx-side mb-block">
             Betrachtet werden Sessions, die nicht gebounced sind (A:{' '}
@@ -118,6 +120,15 @@ export const ABResults: NextPage<ABResultsProps> = ({
           </div>
           <div className="mx-side">
             B (Variante): {(groupB.timeOnPage / 1000 / 60).toFixed(1)} min
+          </div>
+          <div className="serlo-h2">Rohdaten</div>
+          <div className="mx-side mt-5">
+            Anzahl gelöste Aufgaben A:{' '}
+            {JSON.stringify(groupA.solvedCountRaw, null, 2)}
+          </div>
+          <div className="mx-side">
+            Anzahl gelöste Aufgaben B:{' '}
+            {JSON.stringify(groupB.solvedCountRaw, null, 2)}
           </div>
           <div className="h-24"></div>
         </div>
@@ -239,6 +250,7 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
             )
           ) || 0,
         notBounced: visitsA - bouncedSessionsA,
+        solvedCountRaw: notBouncedSessionsA.map((s) => s.solved.size),
       },
       groupB: {
         avg: average(intermediate.b.ratings),
@@ -258,6 +270,7 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
             )
           ) || 0,
         notBounced: visitsB - bouncedSessionsB,
+        solvedCountRaw: notBouncedSessionsB.map((s) => s.solved.size),
       },
     },
     revalidate: 10,
