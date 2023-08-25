@@ -21,7 +21,7 @@ export function AddRowButton({
   if (visuallyEmphasized)
     return (
       <button
-        className="serlo-button-editor-secondary"
+        className="serlo-button-editor-secondary mx-side"
         data-qa="add-new-plugin-row-button"
         onClick={onClick}
         title={rowsStrings.addAnElement}
