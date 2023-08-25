@@ -1,5 +1,13 @@
 import React, { useMemo, useEffect, useCallback } from 'react'
-import { createEditor, Node, Transforms, Range, Editor, NodeEntry } from 'slate'
+import {
+  createEditor,
+  Node,
+  Transforms,
+  Range,
+  Editor,
+  NodeEntry,
+  Element,
+} from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 
 import { LinkControls } from './link/link-controls'
@@ -118,6 +126,10 @@ export function TextEditor(props: TextEditorProps) {
   const decorateEmptyLinesWithPlaceholder = useCallback(
     ([node, path]: NodeEntry) => {
       const { selection } = editor
+
+      const isEmptyElement =
+        Element.isElement(node) && Editor.isEmpty(editor, node)
+
       if (
         !focused ||
         !editable ||
@@ -125,7 +137,8 @@ export function TextEditor(props: TextEditorProps) {
         Editor.isEditor(node) ||
         !Range.includes(selection, path) ||
         !Range.isCollapsed(selection) ||
-        Editor.string(editor, [path[0]]) !== ''
+        Editor.string(editor, [path[0]]) !== '' ||
+        !isEmptyElement
       ) {
         return []
       }
