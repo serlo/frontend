@@ -121,7 +121,7 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
             <div
               className={tw`
                 mb-5 mr-4 h-[238px] w-[176px] cursor-pointer
-                rounded border hover:border-brand hover:shadow-lg hover:outline
+                rounded border hover:border-brand hover:shadow-xl hover:outline
                 hover:outline-2 hover:outline-brand
               `}
               onClick={() => {
