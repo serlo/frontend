@@ -12,6 +12,7 @@ import {
   string,
   upload,
 } from '../../plugin'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const imageState = object({
@@ -64,6 +65,8 @@ export function createImagePlugin(
               caption: { plugin: EditorPluginType.Text },
             },
           }
+        } else {
+          for (const error of validation.errors) showToastNotice(error.message)
         }
       }
     },
@@ -83,5 +86,5 @@ export type ImageProps = EditorPluginProps<ImagePluginState, ImageConfig>
 
 export interface ImagePluginConfig {
   upload: UploadHandler<string>
-  validate: UploadValidator
+  validate: UploadValidator<Array<{ errorCode: number; message: string }>>
 }
