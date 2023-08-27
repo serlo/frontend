@@ -1,4 +1,5 @@
 import { ImageEditor } from './editor'
+import type { FileError } from './image-with-serlo-config'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -86,5 +87,5 @@ export type ImageProps = EditorPluginProps<ImagePluginState, ImageConfig>
 
 export interface ImagePluginConfig {
   upload: UploadHandler<string>
-  validate: UploadValidator<Array<{ errorCode: number; message: string }>>
+  validate: UploadValidator<FileError[]>
 }
