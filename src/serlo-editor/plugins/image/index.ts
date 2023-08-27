@@ -23,7 +23,6 @@ const imageState = object({
     child({
       plugin: EditorPluginType.Text,
       config: {
-        formattingOptions: ['code', 'katex', 'links', 'math', 'richText'],
         noLinebreaks: true,
       },
     })
