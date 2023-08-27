@@ -29,7 +29,8 @@ const cellTextFormattingOptions = [
   'links',
   'lists',
   'math',
-  'richText',
+  'richTextBold',
+  'richTextItalic',
 ]
 
 const newCell = { content: { plugin: EditorPluginType.Text } }
