@@ -14,7 +14,6 @@ function createBoxState(allowedPlugins: (EditorPluginType | string)[]) {
     title: child({
       plugin: EditorPluginType.Text,
       config: {
-        formattingOptions: ['code', 'katex', 'math'],
         noLinebreaks: true,
       },
     }),
