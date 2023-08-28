@@ -18,8 +18,9 @@ export function RowsEditor({ state, config, id, editable }: RowsProps) {
     })
   }
 
+  const isParentTemplatePlugin = parentType?.startsWith('type-')
   const showLargeAddButton =
-    parentType === EditorPluginType.Article || parentType?.startsWith('type-')
+    parentType === EditorPluginType.Article || isParentTemplatePlugin
 
   if (!editable) {
     return (
