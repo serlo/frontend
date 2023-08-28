@@ -64,9 +64,9 @@ const hardcodedDataforDreisatz = [
 export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
   const [showInModal, setShowInModal] = useState(-1)
 
-  const solved = JSON.parse(
+  /*const solved = JSON.parse(
     sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
-  ) as number[]
+  ) as number[]*/
   const [, triggerRender] = useState(1)
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -233,10 +233,10 @@ function ExerciseWrapper({
   element: FrontendExerciseGroupNode | FrontendExerciseNode
   title: string
 }) {
-  const [index, setIndex] = useState(0)
-  const solved = JSON.parse(
+  const [index] = useState(0)
+  /*const solved = JSON.parse(
     sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
-  ) as number[]
+  ) as number[]*/
   // element.children![index].positionInGroup = undefined
   return (
     <>
