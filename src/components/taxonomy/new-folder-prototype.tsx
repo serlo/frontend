@@ -46,6 +46,18 @@ const hardcodedDataforDreisatz = [
     img: 'https://assets.serlo.org/b3deaf80-41ac-11ee-89f0-6196501948c9/image.png',
     type: 'Single Choice',
   },
+  {
+    title: 'Placeholder',
+    difficulty: 3,
+    img: '',
+    type: 'Single Choice',
+  },
+  {
+    title: 'Placeholder',
+    difficulty: 3,
+    img: '',
+    type: 'Single Choice',
+  },
 ]
 
 export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
@@ -105,13 +117,15 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
             <h2 className="mx-side text-lg font-bold">
               {hardcodedDataforDreisatz[showInModal].title}
             </h2>
-            {element.type === FrontendNodeType.Exercise
-              ? renderArticle(
-                  [element],
-                  `tax${data.id}`,
-                  `ex${element.context.id}`
-                )
-              : renderExerciseGroup(element)}
+            {element.type === FrontendNodeType.Exercise ? (
+              renderArticle(
+                [element],
+                `tax${data.id}`,
+                `ex${element.context.id}`
+              )
+            ) : (
+              <ExerciseGroupWrapper element={element} />
+            )}
             {isSolved && (
               <div className="absolute bottom-10 left-0 right-0 flex justify-center">
                 <button
@@ -204,10 +218,6 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
       })}
     </div>
   )
-
-  function renderExerciseGroup(element: FrontendExerciseGroupNode) {
-    return renderArticle([element], `tax${data.id}`, `ex${element.context.id}`)
-  }
 }
 
 function renderDifficulty(dif: number) {
@@ -233,4 +243,51 @@ function renderDifficulty(dif: number) {
     )
   }
   return null
+}
+
+function ExerciseGroupWrapper({
+  element,
+}: {
+  element: FrontendExerciseGroupNode
+}) {
+  const [index, setIndex] = useState(0)
+  const solved = JSON.parse(
+    sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
+  ) as number[]
+  element.children![index].positionInGroup = undefined
+  return (
+    <div>
+      <div className="mx-2 mt-4 flex justify-center">
+        {element.children?.map((child, i) => (
+          <button
+            className={clsx(
+              'mx-2 inline-block',
+              i === index && 'font-bold',
+              solved.includes(child.context.id) && 'text-brandgreen'
+            )}
+            key={child.context.id}
+            onClick={() => {
+              setIndex(i)
+            }}
+          >
+            Teilaufgabe {String.fromCharCode(i + 97)}
+          </button>
+        ))}
+      </div>
+      <div key={index}>
+        {renderArticle(
+          [element.children![index]],
+          `ex${element.children![index].context.id}`
+        )}
+      </div>
+      <style jsx global>{`
+        li.serlo-grouped-exercise-wrapper:before {
+          display: none;
+        }
+        li.serlo-grouped-exercise-wrapper {
+          list-style-type: none;
+        }
+      `}</style>
+    </div>
+  )
 }
