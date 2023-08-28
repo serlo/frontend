@@ -51,7 +51,7 @@ export function MultimediaEditor(props: MultimediaProps) {
       {editable && !focused ? (
         <button
           className={tw`
-            absolute right-side top-[-59px] z-50 hidden h-6 rounded-t-md bg-gray-100
+            absolute right-side top-[-56px] z-50 hidden h-6 rounded-t-md bg-gray-100
             px-2 pt-0.5 text-sm font-bold
             hover:bg-editor-primary-100 group-focus-within/multimedia:block
           `}

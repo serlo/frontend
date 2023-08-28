@@ -35,16 +35,23 @@ export function getStyleHacks(
 
     // put top child toolbars in position of multimedia toolbar (for article intro, first rows child, media child)
     tw`
-    [&_.explanation-wrapper>.plugin-wrapper-container_.plugin-toolbar]:!-top-[53px]
-    [&_.explanation-wrapper_.rows-child:first-child_.plugin-toolbar]:!-top-[77px]
-    [&_.media-wrapper_.plugin-toolbar]:!top-[-35px]
+    [&_.explanation-wrapper>.plugin-wrapper-container_.plugin-toolbar]:!-top-[50px]
+    [&_.explanation-wrapper_.rows-child:first-child_.plugin-toolbar]:!-top-[74px]
+    [&_.media-wrapper_.plugin-toolbar]:!top-[-32px]
     `,
 
     // adapt to borders of parent
     tw`
-    [&_.explanation-wrapper_.plugin-toolbar]:ml-[3px]
+    [&_.explanation-wrapper_.plugin-toolbar]:ml-[-2px]
     [&_.explanation-wrapper_.plugin-toolbar]:mr-[-3px]
     [&_.explanation-wrapper_.plugin-toolbar]:mt-[-1px]
+    `,
+
+    // adapt to borders of parent
+    tw`
+    [&_.explanation-wrapper_.rows-child:not(:first-child)_.plugin-toolbar]:!ml-[1px]
+    [&_.explanation-wrapper_.rows-child:not(:first-child)_.plugin-toolbar]:!mr-0
+    [&_.explanation-wrapper_.rows-child:not(:first-child)_.plugin-toolbar]:rounded-t-none
     `,
 
     // make media-child's toolbar full width of multimedia plugin
