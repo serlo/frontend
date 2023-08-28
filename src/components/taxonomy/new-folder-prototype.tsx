@@ -20,31 +20,31 @@ const hardcodedDataforDreisatz = [
     title: 'Eiskugeln Preise',
     difficulty: 1,
     img: 'https://assets.serlo.org/5ca4f940-41ac-11ee-89f0-6196501948c9/image.png',
-    type: 'Single Choice',
+    type: 'Auswahlaufgabe',
   },
   {
     title: 'Kinopreise berechnen',
     difficulty: 2,
     img: 'https://assets.serlo.org/83e53100-41ac-11ee-89f0-6196501948c9/image.png',
-    type: 'Aufgabe mit Eingabefeld',
+    type: 'Rechenaufgabe',
   },
   {
     title: 'Vertiefungs-aufgaben',
     difficulty: 1,
     img: '',
-    type: 'Single Choice',
+    type: 'Auswahlaufgabe',
   },
   {
     title: 'Vertiefungs-aufgaben',
     difficulty: 2,
     img: '',
-    type: 'Single Choice',
+    type: 'Auswahlaufgabe',
   },
   {
     title: 'Reisezeit nach Hogwarts',
     difficulty: 3,
     img: 'https://assets.serlo.org/b3deaf80-41ac-11ee-89f0-6196501948c9/image.png',
-    type: 'Single Choice',
+    type: 'Auswahlaufgabe',
   },
   {
     title: 'Kuchenrezept',
@@ -56,7 +56,7 @@ const hardcodedDataforDreisatz = [
     title: 'Wohnung streichen',
     difficulty: 1,
     img: 'https://assets.serlo.org/73d9ae70-459a-11ee-b109-a3f2e53ad6dd/image.jpg',
-    type: 'Aufgabe mit Eingabefeld',
+    type: 'Rechenaufgabe',
   },
 ]
 
@@ -184,7 +184,7 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
                   <img
                     alt="Serlo"
                     src={
-                      entry.type === 'Single Choice'
+                      entry.type === 'Auswahlaufgabe'
                         ? 'https://assets.serlo.org/65df4c50-41ab-11ee-89f0-6196501948c9/image.png'
                         : '/_assets/img/serlo-logo.svg'
                     }
@@ -231,7 +231,7 @@ function renderDifficulty(dif: number) {
   if (dif === 2) {
     return (
       <>
-        <span className="inline-block w-14">moderat</span> ★★☆
+        <span className="inline-block w-14">mittel</span> ★★☆
       </>
     )
   }
