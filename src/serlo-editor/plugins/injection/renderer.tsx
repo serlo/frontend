@@ -33,13 +33,17 @@ export function InjectionRenderer({
     }
 
     const encodedHref = encodeURI(href.startsWith('/') ? href : `/${href}`)
-    const fetchUrl = `${window.location.protocol}//${window.location.host}/_next/data/${buildId}/${lang}${encodedHref}.json`
+    const fetchUrl =
+      window.location.hostname === 'localhost'
+        ? `${window.location.protocol}//${window.location.host}/api/frontend/${encodedHref}`
+        : `${window.location.protocol}//${window.location.host}/_next/data/${buildId}/${lang}${encodedHref}.json`
     try {
       void fetch(fetchUrl)
         .then((res) => res.json())
         .then((json) => {
-          const pageData = (json as { pageProps: SlugProps }).pageProps
-            ?.pageData
+          const pageData = (json as SlugProps['pageData']).kind
+            ? (json as SlugProps['pageData'])
+            : (json as { pageProps: SlugProps }).pageProps?.pageData
           if (pageData && pageData.kind === 'single-entity') {
             setId(pageData.entityData.id)
             setContent(pageData.entityData.content ?? false)

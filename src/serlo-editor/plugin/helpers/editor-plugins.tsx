@@ -1,6 +1,6 @@
 import { EditorPlugin } from '../internal-plugin'
 
-interface PluginWithData {
+export interface PluginWithData {
   type: string
   plugin: EditorPlugin | EditorPlugin<any, any>
   visibleInSuggestions?: boolean

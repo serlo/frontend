@@ -121,6 +121,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     return (
       <div
         className={clsx(
+          `plugin-${document?.plugin}`,
           'outline-none',
           isInlineChildEditor || isTemplatePlugin
             ? ''

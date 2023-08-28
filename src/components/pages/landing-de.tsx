@@ -79,7 +79,7 @@ export function LandingDE({ data }: LandingDEProps) {
             </span>
           </p>
           <p className="mx-auto mb-8 max-w-2xl px-2">
-            Jeden Monat nutzen über eine Million Schüler*innen und Lehrkräfte
+            Monatlich nutzen rund eine Million Schüler*innen und Lehrkräfte
             Serlo.
           </p>
           <Link

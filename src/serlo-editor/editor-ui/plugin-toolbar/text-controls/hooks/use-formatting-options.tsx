@@ -73,12 +73,12 @@ const isRegisteredTextPlugin = (
 const registeredHotkeys = [
   {
     hotkey: 'mod+b',
-    option: TextEditorFormattingOption.richText,
+    option: TextEditorFormattingOption.richTextBold,
     handler: toggleBoldMark,
   },
   {
     hotkey: 'mod+i',
-    option: TextEditorFormattingOption.richText,
+    option: TextEditorFormattingOption.richTextItalic,
     handler: toggleItalicMark,
   },
   {
@@ -221,7 +221,7 @@ function createToolbarControls(
   const allFormattingOptions = [
     // Bold
     {
-      name: TextEditorFormattingOption.richText,
+      name: TextEditorFormattingOption.richTextBold,
       title: textStrings.bold,
       isActive: isBoldActive,
       onClick: toggleBoldMark,
@@ -229,7 +229,7 @@ function createToolbarControls(
     },
     // Italic
     {
-      name: TextEditorFormattingOption.richText,
+      name: TextEditorFormattingOption.richTextItalic,
       title: textStrings.italic,
       isActive: isItalicActive,
       onClick: toggleItalicMark,
@@ -307,7 +307,7 @@ function createToolbarControls(
       title: textStrings.orderedList,
       isActive: isSelectionWithinOrderedList,
       onClick: toggleOrderedList,
-      renderIcon: () => <FaIcon icon={faListOl} />,
+      renderIcon: () => <FaIcon className="h-[15px]" icon={faListOl} />,
     },
     // Unordered list
     {
@@ -315,7 +315,7 @@ function createToolbarControls(
       title: textStrings.unorderedList,
       isActive: isSelectionWithinUnorderedList,
       onClick: toggleUnorderedList,
-      renderIcon: () => <FaIcon icon={faListUl} />,
+      renderIcon: () => <FaIcon className="h-[15px]" icon={faListUl} />,
     },
     // Math
     {
@@ -323,7 +323,9 @@ function createToolbarControls(
       title: textStrings.mathFormula,
       isActive: isMathActive,
       onClick: toggleMath,
-      renderIcon: () => <FaIcon icon={faSquareRootVariable} />,
+      renderIcon: () => (
+        <FaIcon className="h-[15px]" icon={faSquareRootVariable} />
+      ),
     },
     // Code
     {
@@ -331,7 +333,7 @@ function createToolbarControls(
       title: textStrings.code,
       isActive: isCodeActive,
       onClick: toggleCode,
-      renderIcon: () => <FaIcon icon={faCode} />,
+      renderIcon: () => <FaIcon className="h-[15px]" icon={faCode} />,
     },
   ].map((option) => {
     return {

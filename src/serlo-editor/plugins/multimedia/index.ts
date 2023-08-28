@@ -14,6 +14,7 @@ const defaultConfig: MultimediaConfig = {
   allowedPlugins: [
     EditorPluginType.Image,
     EditorPluginType.Video,
+    EditorPluginType.Audio,
     EditorPluginType.Geogebra,
   ],
   explanation: {

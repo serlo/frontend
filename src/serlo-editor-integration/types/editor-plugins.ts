@@ -10,6 +10,7 @@ import type { StateTypeSerializedType } from '@/serlo-editor/plugin'
 import type { BlockquotePluginState } from '@/serlo-editor/plugins/_on-the-way-out/blockquote'
 import type { TablePluginState } from '@/serlo-editor/plugins/_on-the-way-out/table'
 import type { AnchorPluginState } from '@/serlo-editor/plugins/anchor'
+import { AudioPluginState } from '@/serlo-editor/plugins/audio'
 import { BoxPluginState } from '@/serlo-editor/plugins/box'
 import { EquationsPluginState } from '@/serlo-editor/plugins/equations'
 import type { GeogebraPluginState } from '@/serlo-editor/plugins/geogebra'
@@ -157,6 +158,11 @@ export interface EditorVideoPlugin {
   state: StateTypeSerializedType<VideoPluginState>
   id?: string
 }
+export interface EditorAudioPlugin {
+  plugin: EditorPluginType.Audio
+  state: StateTypeSerializedType<AudioPluginState>
+  id?: string
+}
 export interface EditorPageLayoutPlugin {
   plugin: EditorPluginType.PageLayout
   state: StateTypeSerializedType<PageLayoutPluginState>
@@ -183,6 +189,7 @@ export type SupportedEditorPlugin =
   | EditorGeogebraPlugin
   | EditorAnchorPlugin
   | EditorVideoPlugin
+  | EditorAudioPlugin
   | EditorTablePlugin
   | EditorSerloTablePlugin
   | EditorHighlightPlugin

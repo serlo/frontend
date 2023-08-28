@@ -1,7 +1,6 @@
-import clsx from 'clsx'
 import { useRef } from 'react'
 
-import { RowSeparator } from './row-separator'
+import { AddRowButtonFloating } from './add-row-button-floating'
 import type { RowsPluginConfig, RowsPluginState } from '..'
 import { EditorRowRenderer } from '../editor-renderer'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
@@ -14,9 +13,7 @@ interface RowEditorProps {
   index: number
   rows: StateTypeReturnType<RowsPluginState>
   row: StateTypeReturnType<RowsPluginState>[0]
-  visuallyEmphasizeAddButton?: boolean
-  isFirst?: boolean
-  isLast?: boolean
+  hideAddButton?: boolean
 }
 
 export function RowEditor({
@@ -25,24 +22,18 @@ export function RowEditor({
   index,
   row,
   rows,
-  visuallyEmphasizeAddButton = false,
-  isFirst = false,
-  isLast = false,
+  hideAddButton = false,
 }: RowEditorProps) {
   const focused = useAppSelector((state) => selectIsFocused(state, row.id))
   const plugins = editorPlugins.getAllWithData()
   const dropContainer = useRef<HTMLDivElement>(null)
 
   return (
-    // bigger drop zone with padding hack
     <div
       key={row.id}
       ref={dropContainer}
-      className={clsx(
-        'rows-child relative -ml-12 pl-12',
-        isFirst && 'first',
-        isLast && 'last'
-      )}
+      // bigger drop zone with padding hack
+      className="rows-child relative -ml-12 pl-12"
     >
       <EditorRowRenderer
         config={config}
@@ -52,15 +43,13 @@ export function RowEditor({
         plugins={plugins}
         dropContainer={dropContainer}
       />
-      <RowSeparator
-        config={config}
+      <AddRowButtonFloating
         focused={focused}
         onClick={(event: React.MouseEvent) => {
           event.preventDefault()
           onAddButtonClick(index + 1)
         }}
-        isLast={isLast}
-        visuallyEmphasizeAddButton={visuallyEmphasizeAddButton}
+        hide={hideAddButton}
       />
     </div>
   )

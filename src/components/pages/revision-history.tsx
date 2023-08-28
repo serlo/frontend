@@ -7,7 +7,6 @@ import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { Revision, Revisions } from '@/fetcher/query-types'
-import { colors } from '@/helper/colors'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
 
 export interface RevisionHistoryProps {
@@ -132,14 +131,10 @@ export function RevisionHistory({
   function getStatus(trashed?: boolean, isCurrent?: boolean) {
     return (
       <span
-        className="inline-block h-4 w-4 rounded-full"
-        style={{
-          backgroundColor: trashed
-            ? '#c56c6c'
-            : isCurrent
-            ? colors.brandGreen
-            : '#eee',
-        }}
+        className={clsx(
+          'inline-block h-4 w-4 rounded-full',
+          trashed ? '#c56c6c' : isCurrent ? 'bg-brandgreen' : '#eee'
+        )}
         title={
           trashed
             ? strings.revisions.rejectedNotice

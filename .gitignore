@@ -38,3 +38,6 @@ tsconfig.tsbuildinfo
 
 # asdf-vm
 .tool-versions
+
+# nvm
+.nvmrc

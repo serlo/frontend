@@ -1,6 +1,7 @@
 export enum EditorPluginType {
   Anchor = 'anchor',
   Article = 'article',
+  Audio = 'audio',
   ArticleIntroduction = 'articleIntroduction',
   Blockquote = 'blockquote',
   Box = 'box',
