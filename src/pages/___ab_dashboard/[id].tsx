@@ -19,6 +19,7 @@ interface GroupData {
   reached3solvesPercentage: number
   reached3solvesTime: number
   solvedCountRaw: number[]
+  timeRaw: number[]
   reached3count: number
   solved: number
   timeOnPage: number
@@ -224,6 +225,12 @@ export const ABResults: NextPage<ABResultsProps> = ({
             Anzahl gelöste Aufgaben B:{' '}
             {JSON.stringify(groupB.solvedCountRaw, null, 2)}
           </div>
+          <div className="mx-side mt-5">
+            Verweildauer A (min): {JSON.stringify(groupA.timeRaw, null, 2)}
+          </div>
+          <div className="mx-side">
+            Verweildauer B (min): {JSON.stringify(groupB.timeRaw, null, 2)}
+          </div>
           <div className="h-24"></div>
         </div>
       </FrontendClientBase>
@@ -335,6 +342,12 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
     const viewed2 = sessions[g].filter((s) => s.solViewed.size >= 2).length
     const viewed3 = sessions[g].filter((s) => s.solViewed.size >= 3).length
 
+    const timesOnPages = notBouncedSessions.map(
+      (s) =>
+        s.events[s.events.length - 1].timestamp.getTime() -
+        s.events[0].timestamp.getTime()
+    )
+
     output[g] = {
       avg: average(intermediate[g].ratings),
       ratingCount: intermediate[g].ratings.length,
@@ -344,14 +357,7 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
       reached3solvesPercentage: reached3 / visits || 0,
       reached3count: reached3,
       solved: median(notBouncedSessions.map((s) => s.solved.size)) || 0,
-      timeOnPage:
-        median(
-          notBouncedSessions.map(
-            (s) =>
-              s.events[s.events.length - 1].timestamp.getTime() -
-              s.events[0].timestamp.getTime()
-          )
-        ) || 0,
+      timeOnPage: median(timesOnPages) || 0,
       notBounced: visits - bouncedSessions,
       solvedCountRaw: notBouncedSessions.map((s) => s.solved.size),
       reached1,
@@ -360,6 +366,7 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
       viewed1,
       viewed2,
       viewed3,
+      timeRaw: timesOnPages.map((a) => parseFloat((a / 1000 / 60).toFixed(1))),
     }
   }
 
