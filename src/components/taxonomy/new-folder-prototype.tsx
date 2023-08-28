@@ -1,11 +1,12 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { TaxonomyData } from '@/data-types'
 import {
   FrontendExerciseGroupNode,
+  FrontendExerciseNode,
   FrontendNodeType,
 } from '@/frontend-node-types'
 import { tw } from '@/helper/tw'
@@ -23,40 +24,40 @@ const hardcodedDataforDreisatz = [
     type: 'Auswahlaufgabe',
   },
   {
+    title: 'Kuchenrezept',
+    difficulty: 1,
+    img: 'https://assets.serlo.org/1c88de00-45ab-11ee-89f0-6196501948c9/image.jpg',
+    type: 'Zuordnungsaufgabe',
+  },
+  {
+    title: 'Vertiefungs\xADaufgaben',
+    difficulty: 1,
+    img: '',
+    type: 'Auswahlaufgabe',
+  },
+  {
     title: 'Kinopreise berechnen',
     difficulty: 2,
     img: 'https://assets.serlo.org/83e53100-41ac-11ee-89f0-6196501948c9/image.png',
     type: 'Rechenaufgabe',
   },
   {
-    title: 'Vertiefungs-aufgaben',
-    difficulty: 1,
+    title: 'Vertiefungs\xADaufgaben',
+    difficulty: 2,
     img: '',
     type: 'Auswahlaufgabe',
   },
   {
-    title: 'Vertiefungs-aufgaben',
+    title: 'Wohnung streichen',
     difficulty: 2,
-    img: '',
-    type: 'Auswahlaufgabe',
+    img: 'https://assets.serlo.org/73d9ae70-459a-11ee-b109-a3f2e53ad6dd/image.jpg',
+    type: 'Rechenaufgabe',
   },
   {
     title: 'Reisezeit nach Hogwarts',
     difficulty: 3,
     img: 'https://assets.serlo.org/b3deaf80-41ac-11ee-89f0-6196501948c9/image.png',
     type: 'Auswahlaufgabe',
-  },
-  {
-    title: 'Kuchenrezept',
-    difficulty: 1,
-    img: '',
-    type: 'Zuordnungsaufgabe',
-  },
-  {
-    title: 'Wohnung streichen',
-    difficulty: 1,
-    img: 'https://assets.serlo.org/73d9ae70-459a-11ee-b109-a3f2e53ad6dd/image.jpg',
-    type: 'Rechenaufgabe',
   },
 ]
 
@@ -82,7 +83,7 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
       <>
         <div className="fixed inset-0 z-[150] bg-gray-100"></div>
         <div
-          className="fixed inset-0 z-[200] flex items-center justify-center"
+          className="exercise-modal fixed inset-0 z-[200] h-full"
           onClick={() => {
             setShowInModal(-1)
           }}
@@ -106,38 +107,18 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
           </button>
           <div
             className={tw`
-          relative z-[200] mx-8 mb-16 mt-8 flex
-          flex max-h-[calc(100%-48px)]
-          min-h-[400px] w-[900px] max-w-full flex-col overflow-y-auto rounded-xl bg-white px-6 py-8
+          pointer-events-none relative
+          z-[200] mx-auto flex
+          h-full w-[900px] max-w-full flex-col overflow-y-hidden px-6
         `}
             onClick={(e) => {
               e.stopPropagation()
             }}
           >
-            <h2 className="mx-side text-lg font-bold">
-              {hardcodedDataforDreisatz[showInModal].title}
-            </h2>
-            {element.type === FrontendNodeType.Exercise ? (
-              renderArticle(
-                [element],
-                `tax${data.id}`,
-                `ex${element.context.id}`
-              )
-            ) : (
-              <ExerciseGroupWrapper element={element} />
-            )}
-            {isSolved && (
-              <div className="absolute bottom-10 left-0 right-0 flex justify-center">
-                <button
-                  className="serlo-button-green"
-                  onClick={() => {
-                    setShowInModal(-1)
-                  }}
-                >
-                  zurück zur Übersicht
-                </button>
-              </div>
-            )}
+            <ExerciseWrapper
+              element={element}
+              title={hardcodedDataforDreisatz[showInModal].title}
+            />
           </div>
         </div>
         <style jsx global>{`
@@ -245,49 +226,81 @@ function renderDifficulty(dif: number) {
   return null
 }
 
-function ExerciseGroupWrapper({
+function ExerciseWrapper({
   element,
+  title,
 }: {
-  element: FrontendExerciseGroupNode
+  element: FrontendExerciseGroupNode | FrontendExerciseNode
+  title: string
 }) {
   const [index, setIndex] = useState(0)
   const solved = JSON.parse(
     sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
   ) as number[]
-  element.children![index].positionInGroup = undefined
+  // element.children![index].positionInGroup = undefined
   return (
-    <div>
-      <div className="mx-2 mt-4 flex justify-center">
-        {element.children?.map((child, i) => (
-          <button
-            className={clsx(
-              'mx-2 inline-block',
-              i === index && 'font-bold',
-              solved.includes(child.context.id) && 'text-brandgreen'
-            )}
-            key={child.context.id}
-            onClick={() => {
-              setIndex(i)
-            }}
-          >
-            Teilaufgabe {String.fromCharCode(i + 97)}
+    <>
+      <div className="flex-1"></div>
+      <div className="flex-1">
+        <div className="pointer-events-auto max-h-[calc(100vh-150px)] overflow-y-auto rounded-xl bg-white ">
+          <div>
+            <h2 className="mx-side hyphens-manual text-lg font-bold">
+              {title}
+            </h2>
+            <div key={index}>{renderArticle([element])}</div>
+          </div>
+        </div>
+        <div className=" flex justify-between">
+          <button className="serlo-button-blue-transparent pointer-events-auto">
+            vorherige Teilaufgabe
           </button>
-        ))}
+          <button className="serlo-button-blue-transparent pointer-events-auto">
+            nächste Teilaufgabe
+          </button>
+        </div>
+        <style jsx global>{`
+          li.serlo-grouped-exercise-wrapper:before {
+            display: none;
+          }
+          li.serlo-grouped-exercise-wrapper {
+            list-style-type: none;
+          }
+        `}</style>
       </div>
-      <div key={index}>
-        {renderArticle(
-          [element.children![index]],
-          `ex${element.children![index].context.id}`
-        )}
-      </div>
-      <style jsx global>{`
-        li.serlo-grouped-exercise-wrapper:before {
-          display: none;
-        }
-        li.serlo-grouped-exercise-wrapper {
-          list-style-type: none;
-        }
-      `}</style>
-    </div>
+      <div className="flex-1"></div>
+    </>
   )
 }
+
+/*
+
+
+{element.type === FrontendNodeType.Exercise ? (
+              <div className="pointer-events-auto flex-1 overflow-y-auto rounded-xl bg-white">
+                {renderArticle(
+                  [element],
+                  `tax${data.id}`,
+                  `ex${element.context.id}`
+                )}
+                {isSolved && (
+                  <div className="absolute bottom-10 left-0 right-0 flex justify-center">
+                    <button
+                      className="serlo-button-green"
+                      onClick={() => {
+                        setShowInModal(-1)
+                      }}
+                    >
+                      zurück zur Übersicht
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <ExerciseGroupWrapper
+                element={element}
+                title={hardcodedDataforDreisatz[showInModal].title}
+              />
+            )}
+
+
+            */
