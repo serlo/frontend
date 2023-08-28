@@ -73,12 +73,12 @@ const isRegisteredTextPlugin = (
 const registeredHotkeys = [
   {
     hotkey: 'mod+b',
-    option: TextEditorFormattingOption.richText,
+    option: TextEditorFormattingOption.richTextBold,
     handler: toggleBoldMark,
   },
   {
     hotkey: 'mod+i',
-    option: TextEditorFormattingOption.richText,
+    option: TextEditorFormattingOption.richTextItalic,
     handler: toggleItalicMark,
   },
   {
@@ -221,7 +221,7 @@ function createToolbarControls(
   const allFormattingOptions = [
     // Bold
     {
-      name: TextEditorFormattingOption.richText,
+      name: TextEditorFormattingOption.richTextBold,
       title: textStrings.bold,
       isActive: isBoldActive,
       onClick: toggleBoldMark,
@@ -229,7 +229,7 @@ function createToolbarControls(
     },
     // Italic
     {
-      name: TextEditorFormattingOption.richText,
+      name: TextEditorFormattingOption.richTextItalic,
       title: textStrings.italic,
       isActive: isItalicActive,
       onClick: toggleItalicMark,
