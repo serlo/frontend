@@ -177,6 +177,22 @@ export function EditorRowRenderer({
       <hr className="m-0 border-2 border-editor-primary p-0" />
     ) : null
 
+  const rowChildPluginType = selectSerializedDocument(store.getState(), row.id)
+    ?.plugin as EditorPluginType | undefined
+
+  // do not show border for plugins that have a visible border/shape already
+  const shouldShowBorder =
+    rowChildPluginType &&
+    ![
+      EditorPluginType.Box,
+      EditorPluginType.Geogebra,
+      EditorPluginType.Highlight,
+      EditorPluginType.Multimedia,
+      EditorPluginType.SerloTable,
+      EditorPluginType.Spoiler,
+      EditorPluginType.Video,
+    ].includes(rowChildPluginType)
+
   return (
     <>
       {draggingAbove ? dropPreview : null}
@@ -184,14 +200,16 @@ export function EditorRowRenderer({
         ref={container}
         className={clsx(
           'rows-editor-renderer-container',
-          'border-l-2 border-transparent transition-colors',
-          tw`
-          focus-within:border-gray-600
-          hover:!border-gray-300
-          hover:focus-within:!border-gray-600
-          [&:has(.rows-editor-renderer-container:focus-within)]:border-transparent
-          [&:hover:has(.rows-editor-renderer-container:focus-within)]:!border-gray-300
-          `,
+          'border-l-2 border-transparent',
+          shouldShowBorder &&
+            tw`
+            transition-colors
+            focus-within:border-gray-400
+            hover:!border-gray-200
+            hover:focus-within:!border-gray-400
+            [&:has(.rows-editor-renderer-container:focus-within)]:border-transparent
+            [&:hover:has(.rows-editor-renderer-container:focus-within)]:!border-gray-200
+            `,
           tw`
           [&:focus-within>.rows-tools]:opacity-100
           [&:has(.rows-editor-renderer-container:focus-within)>.rows-tools]:opacity-0
