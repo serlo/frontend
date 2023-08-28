@@ -336,8 +336,8 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
     const viewed3 = sessions[g].filter((s) => s.solViewed.size >= 3).length
 
     output[g] = {
-      avg: average(intermediate.a.ratings),
-      ratingCount: intermediate.a.ratings.length,
+      avg: average(intermediate[g].ratings),
+      ratingCount: intermediate[g].ratings.length,
       visits,
       bounceRate: bouncedSessions / visits || 0,
       reached3solvesTime: 0,
