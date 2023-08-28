@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { useRef } from 'react'
 
 import { AddRowButtonFloating } from './add-row-button-floating'
@@ -30,11 +29,11 @@ export function RowEditor({
   const dropContainer = useRef<HTMLDivElement>(null)
 
   return (
-    // bigger drop zone with padding hack
     <div
       key={row.id}
       ref={dropContainer}
-      className={clsx('rows-child relative -ml-12 pl-12')}
+      // bigger drop zone with padding hack
+      className="rows-child relative -ml-12 pl-12"
     >
       <EditorRowRenderer
         config={config}
@@ -50,7 +49,7 @@ export function RowEditor({
           event.preventDefault()
           onAddButtonClick(index + 1)
         }}
-        hideAddButton={hideAddButton}
+        hide={hideAddButton}
       />
     </div>
   )

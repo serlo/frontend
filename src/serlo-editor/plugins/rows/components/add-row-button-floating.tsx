@@ -14,7 +14,7 @@ interface AddRowButtonFloatingProps {
 export function AddRowButtonFloating({
   focused,
   onClick,
-  hide = false,
+  hide,
 }: AddRowButtonFloatingProps) {
   const rowsStrings = useEditorStrings().plugins.rows
 
