@@ -148,7 +148,14 @@ export function TextEditor(props: TextEditorProps) {
     [editable, editor, focused]
   )
 
-  const shouldShowStaticPlaceholder = config.noLinebreaks || config.placeholder
+  // fallback to static placeholder when:
+  // - for inline text plugins
+  // - we define a custom placeholder text
+  // - when the editor was newly created and never had a selection
+  //   (e.g.on a new box plugin) to make sure the text plugin never just an empty line
+  //   decorator unfortunately does not work when there is no selection.
+  const shouldShowStaticPlaceholder =
+    config.noLinebreaks || config.placeholder || !editor.selection
 
   return (
     <Slate
@@ -177,7 +184,7 @@ export function TextEditor(props: TextEditorProps) {
             : decorateEmptyLinesWithPlaceholder
         }
         placeholder={
-          (editable && shouldShowStaticPlaceholder) || !editor.selection
+          editable && shouldShowStaticPlaceholder
             ? config.placeholder ?? textStrings.placeholder
             : undefined
         }
