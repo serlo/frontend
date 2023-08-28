@@ -63,8 +63,9 @@ export function EditorRowRenderer({
 
           // If the dragged plugin was the only plugin in the current rows plugin,
           // add an empty text plugin to replace it
-          if (rows.length > 1) return
-          rows.insert(0, { plugin: EditorPluginType.Text })
+          if (rows.length <= 1) {
+            rows.insert(0, { plugin: EditorPluginType.Text })
+          }
         },
       }
     },
