@@ -5,6 +5,7 @@ import { StoreSerializeHelpers } from '../../types/internal__plugin-state'
 import { createDeepEqualSelector } from '../helpers'
 import { State } from '../types'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const selectSelf = (state: State) => state.documents
 
@@ -19,6 +20,11 @@ export const selectDocument = createSelector(
     if (!id) return null
     return documents[id] || null
   }
+)
+
+export const selectDocumentPluginType = createSelector(
+  [selectSelf, (_state, id: string) => id],
+  (documents, id) => documents[id].plugin as EditorPluginType
 )
 
 export const selectSerializedDocument = createDeepEqualSelector(

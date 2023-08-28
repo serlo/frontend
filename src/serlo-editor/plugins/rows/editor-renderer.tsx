@@ -12,6 +12,7 @@ import { StateTypeReturnType } from '@/serlo-editor/plugin'
 import { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import {
   DocumentState,
+  selectDocumentPluginType,
   selectSerializedDocument,
   store,
 } from '@/serlo-editor/store'
@@ -24,6 +25,16 @@ interface RowDragObject {
 }
 
 const validFileTypes = [NativeTypes.FILE, NativeTypes.URL]
+
+const pluginsWithOwnBorder = [
+  EditorPluginType.Box,
+  EditorPluginType.Geogebra,
+  EditorPluginType.Highlight,
+  EditorPluginType.Multimedia,
+  EditorPluginType.SerloTable,
+  EditorPluginType.Spoiler,
+  EditorPluginType.Video,
+]
 
 export function EditorRowRenderer({
   config,
@@ -177,21 +188,8 @@ export function EditorRowRenderer({
       <hr className="m-0 border-2 border-editor-primary p-0" />
     ) : null
 
-  const rowChildPluginType = selectSerializedDocument(store.getState(), row.id)
-    ?.plugin as EditorPluginType | undefined
-
-  // do not show border for plugins that have a visible border/shape already
-  const shouldShowBorder =
-    rowChildPluginType &&
-    ![
-      EditorPluginType.Box,
-      EditorPluginType.Geogebra,
-      EditorPluginType.Highlight,
-      EditorPluginType.Multimedia,
-      EditorPluginType.SerloTable,
-      EditorPluginType.Spoiler,
-      EditorPluginType.Video,
-    ].includes(rowChildPluginType)
+  const rowPluginType = selectDocumentPluginType(store.getState(), row.id)
+  const shouldShowBorder = !pluginsWithOwnBorder.includes(rowPluginType)
 
   return (
     <>
