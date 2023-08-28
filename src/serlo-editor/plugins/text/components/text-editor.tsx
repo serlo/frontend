@@ -1,5 +1,13 @@
 import React, { useMemo, useEffect, useCallback } from 'react'
-import { createEditor, Node, Transforms, Range, Editor, NodeEntry } from 'slate'
+import {
+  createEditor,
+  Node,
+  Transforms,
+  Range,
+  Editor,
+  NodeEntry,
+  Element,
+} from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 
 import { LinkControls } from './link/link-controls'
@@ -118,14 +126,20 @@ export function TextEditor(props: TextEditorProps) {
   const decorateEmptyLinesWithPlaceholder = useCallback(
     ([node, path]: NodeEntry) => {
       const { selection } = editor
+
+      const isEmptyElement =
+        Element.isElement(node) && Editor.isEmpty(editor, node)
+
+      const isFirstLine = path[0] === 0
       if (
-        !focused ||
+        (!focused && !isFirstLine) ||
         !editable ||
         selection === null ||
         Editor.isEditor(node) ||
         !Range.includes(selection, path) ||
         !Range.isCollapsed(selection) ||
-        Editor.string(editor, [path[0]]) !== ''
+        Editor.string(editor, [path[0]]) !== '' ||
+        !isEmptyElement
       ) {
         return []
       }
@@ -134,7 +148,14 @@ export function TextEditor(props: TextEditorProps) {
     [editable, editor, focused]
   )
 
-  const shouldShowStaticPlaceholder = config.noLinebreaks || config.placeholder
+  // fallback to static placeholder when:
+  // - for inline text plugins
+  // - we define a custom placeholder text
+  // - when the editor was newly created and never had a selection
+  //   (e.g.on a new box plugin) to make sure the text plugin never just an empty line
+  //   decorator unfortunately does not work when there is no selection.
+  const shouldShowStaticPlaceholder =
+    config.noLinebreaks || config.placeholder || !editor.selection
 
   return (
     <Slate

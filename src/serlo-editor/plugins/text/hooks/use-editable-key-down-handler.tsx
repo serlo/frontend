@@ -100,28 +100,6 @@ export const useEditableKeydownHandler = (
 
         // Special behaviours when creating new lines
         if (isHotkey(['enter', 'shift+enter'], event) && !isListActive) {
-          // Prevent two consecutive empty lines.
-          // Wrapped in `setTimeout` to let Slate's built-in function to run first
-          setTimeout(() => {
-            const { path } = selection.focus
-            const currentLine = Node.get(editor, path)
-
-            // If not an empty line, do nothing
-            if (Node.string(currentLine).length) return
-            const nodeLineIndex = path[0]
-
-            // If first line is empty: do not allow a new line by deleting new line
-            if (nodeLineIndex === 0) {
-              editor.deleteBackward('block')
-              return
-            }
-            // If current and previous line are empty:  do not allow a new line by deleting new line
-            const previousLine = Node.get(editor, [nodeLineIndex - 1, 0])
-            if (!Node.string(previousLine).length) {
-              editor.deleteBackward('block')
-            }
-          })
-
           // Prevent newlines in headings. Instead, add a new paragraph as the next block.
           const fragmentChild = editor.getFragment()[0]
           const isHeading =
