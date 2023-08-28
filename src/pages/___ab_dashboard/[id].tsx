@@ -202,76 +202,66 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
     }
   }
 
-  const sessions = Object.values(bySession)
+  const allSessions = Object.values(bySession)
 
-  const sessionsA = sessions.filter((a) => a.group === 'a')
-  const sessionsB = sessions.filter((a) => a.group === 'b')
+  const sessionsA = allSessions.filter((a) => a.group === 'a')
+  const sessionsB = allSessions.filter((a) => a.group === 'b')
 
-  const visitsA = sessionsA.length
-  const visitsB = sessionsB.length
+  const sessions = {
+    a: sessionsA,
+    b: sessionsB,
+  }
 
-  const bouncedSessionsA = sessionsA.filter((s) => s.events.length <= 1).length
-  const bouncedSessionsB = sessionsB.filter((s) => s.events.length <= 1).length
+  const output: { a: null | GroupData; b: null | GroupData } = {
+    a: null,
+    b: null,
+  }
 
-  const notBouncedSessionsA = sessionsA.filter((s) => s.events.length > 1)
-  const notBouncedSessionsB = sessionsB.filter((s) => s.events.length > 1)
+  for (const group in sessions) {
+    const g = group as 'a' | 'b'
+    const visits = sessions[g].length
 
-  const reached3A = sessionsA.filter((s) => s.reached3solved >= 0).length
-  const reached3B = sessionsB.filter((s) => s.reached3solved >= 0).length
+    const bouncedSessions = sessions[g].filter(
+      (s) => s.events.length <= 1
+    ).length
 
-  const reached3TimesA = sessionsA
-    .filter((s) => s.reached3solved >= 0)
-    .map((s) => s.reached3solved - s.firstStart)
-  const reached3TimesB = sessionsB
-    .filter((s) => s.reached3solved >= 0)
-    .map((s) => s.reached3solved - s.firstStart)
+    const notBouncedSessions = sessions[g].filter((s) => s.events.length > 1)
 
-  const reached3solvesTimeA = median(reached3TimesA)
-  const reached3solvesTimeB = median(reached3TimesB)
+    const reached3 = sessions[g].filter((s) => s.reached3solved >= 0).length
+
+    const reached3Times = sessions[g]
+      .filter((s) => s.reached3solved >= 0)
+      .map((s) => s.reached3solved - s.firstStart)
+
+    const reached3solvesTime = median(reached3Times)
+
+    output[g] = {
+      avg: average(intermediate.a.ratings),
+      ratingCount: intermediate.a.ratings.length,
+      visits,
+      bounceRate: bouncedSessions / visits || 0,
+      reached3solvesTime: reached3solvesTime || 0,
+      reached3solvesPercentage: reached3 / visits || 0,
+      reached3count: reached3,
+      solved: median(notBouncedSessions.map((s) => s.solved.size)) || 0,
+      timeOnPage:
+        median(
+          notBouncedSessions.map(
+            (s) =>
+              s.events[s.events.length - 1].timestamp.getTime() -
+              s.events[0].timestamp.getTime()
+          )
+        ) || 0,
+      notBounced: visits - bouncedSessions,
+      solvedCountRaw: notBouncedSessions.map((s) => s.solved.size),
+    }
+  }
 
   return {
     props: {
       experiment,
-      groupA: {
-        avg: average(intermediate.a.ratings),
-        ratingCount: intermediate.a.ratings.length,
-        visits: visitsA,
-        bounceRate: bouncedSessionsA / visitsA || 0,
-        reached3solvesTime: reached3solvesTimeA || 0,
-        reached3solvesPercentage: reached3A / visitsA || 0,
-        reached3count: reached3A,
-        solved: median(notBouncedSessionsA.map((s) => s.solved.size)) || 0,
-        timeOnPage:
-          median(
-            notBouncedSessionsA.map(
-              (s) =>
-                s.events[s.events.length - 1].timestamp.getTime() -
-                s.events[0].timestamp.getTime()
-            )
-          ) || 0,
-        notBounced: visitsA - bouncedSessionsA,
-        solvedCountRaw: notBouncedSessionsA.map((s) => s.solved.size),
-      },
-      groupB: {
-        avg: average(intermediate.b.ratings),
-        ratingCount: intermediate.b.ratings.length,
-        visits: visitsB,
-        bounceRate: bouncedSessionsB / visitsB || 0,
-        reached3solvesTime: reached3solvesTimeB || 0,
-        reached3solvesPercentage: reached3B / visitsB || 0,
-        reached3count: reached3B,
-        solved: median(notBouncedSessionsB.map((s) => s.solved.size)) || 0,
-        timeOnPage:
-          median(
-            notBouncedSessionsB.map(
-              (s) =>
-                s.events[s.events.length - 1].timestamp.getTime() -
-                s.events[0].timestamp.getTime()
-            )
-          ) || 0,
-        notBounced: visitsB - bouncedSessionsB,
-        solvedCountRaw: notBouncedSessionsB.map((s) => s.solved.size),
-      },
+      groupA: output['a']!,
+      groupB: output['b']!,
     },
     revalidate: 10,
   }
