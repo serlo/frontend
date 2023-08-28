@@ -4,6 +4,10 @@ import { Fragment, useState } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { TaxonomyData } from '@/data-types'
+import {
+  FrontendExerciseGroupNode,
+  FrontendNodeType,
+} from '@/frontend-node-types'
 import { tw } from '@/helper/tw'
 import { renderArticle } from '@/schema/article-renderer'
 
@@ -46,9 +50,22 @@ const hardcodedDataforDreisatz = [
 
 export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
   const [showInModal, setShowInModal] = useState(-1)
+
+  const solved = JSON.parse(
+    sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
+  ) as number[]
+  const [, triggerRender] = useState(1)
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  ;(window as any).__triggerRender = () => {
+    triggerRender((x) => x + 1)
+  }
+
   if (showInModal >= 0) {
     const element = data.exercisesContent[showInModal]
     element.positionOnPage = undefined
+
+    const isSolved = solved.includes(element.context.id)
     return (
       <>
         <div className="fixed inset-0 z-[150] bg-gray-100"></div>
@@ -77,9 +94,9 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
           </button>
           <div
             className={tw`
-          relative z-[200] mx-8 mb-16 mt-8 flex flex
-          max-h-[calc(100%-48px)] min-h-[400px]
-          w-[900px] max-w-full flex-col overflow-y-auto rounded-xl bg-white px-6 py-8
+          relative z-[200] mx-8 mb-16 mt-8 flex
+          flex max-h-[calc(100%-48px)]
+          min-h-[400px] w-[900px] max-w-full flex-col overflow-y-auto rounded-xl bg-white px-6 py-8
         `}
             onClick={(e) => {
               e.stopPropagation()
@@ -88,10 +105,24 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
             <h2 className="mx-side text-lg font-bold">
               {hardcodedDataforDreisatz[showInModal].title}
             </h2>
-            {renderArticle(
-              [element],
-              `tax${data.id}`,
-              `ex${element.context.id}`
+            {element.type === FrontendNodeType.Exercise
+              ? renderArticle(
+                  [element],
+                  `tax${data.id}`,
+                  `ex${element.context.id}`
+                )
+              : renderExerciseGroup(element)}
+            {isSolved && (
+              <div className="absolute bottom-10 left-0 right-0 flex justify-center">
+                <button
+                  className="serlo-button-green"
+                  onClick={() => {
+                    setShowInModal(-1)
+                  }}
+                >
+                  zurück zur Übersicht
+                </button>
+              </div>
             )}
           </div>
         </div>
@@ -173,6 +204,10 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
       })}
     </div>
   )
+
+  function renderExerciseGroup(element: FrontendExerciseGroupNode) {
+    return renderArticle([element], `tax${data.id}`, `ex${element.context.id}`)
+  }
 }
 
 function renderDifficulty(dif: number) {

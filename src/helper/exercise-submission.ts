@@ -39,6 +39,8 @@ export function exerciseSubmission(data: ExerciseSubmissionData, ab: ABValue) {
         '___serlo_solved_in_session___',
         JSON.stringify(solved)
       )
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+      ;(window as any)?.__triggerRender()
     }
   }
 
