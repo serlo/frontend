@@ -15,6 +15,7 @@ import {
   selectSerializedDocument,
   store,
 } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface RowDragObject {
   id: string
@@ -54,10 +55,17 @@ export function EditorRowRenderer({
         id: row.id,
         serialized: selectSerializedDocument(store.getState(), row.id),
         onDrop() {
+          // Remove the dragged plugin from its original rows plugin
           rows.set((list) => {
             const index = list.findIndex((id) => id === row.id)
             return R.remove(index, 1, list)
           })
+
+          // If the dragged plugin was the only plugin in the current rows plugin,
+          // add an empty text plugin to replace it
+          if (rows.length <= 1) {
+            rows.insert(0, { plugin: EditorPluginType.Text })
+          }
         },
       }
     },
@@ -102,12 +110,12 @@ export function EditorRowRenderer({
         if (!canDrop(item.id)) return
 
         const draggingAbove = isDraggingAbove(monitor)
+        item.onDrop()
         rows.set((list, deserializer) => {
           const index =
             list.findIndex((id) => id === row.id) + (draggingAbove ? 0 : 1)
           return R.insert(index, deserializer(item.serialized), list)
         })
-        item.onDrop()
         return
       }
 
