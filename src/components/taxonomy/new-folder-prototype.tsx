@@ -47,16 +47,16 @@ const hardcodedDataforDreisatz = [
     type: 'Single Choice',
   },
   {
-    title: 'Placeholder',
-    difficulty: 3,
+    title: 'Kuchenrezept',
+    difficulty: 1,
     img: '',
-    type: 'Single Choice',
+    type: 'Zuordnungsaufgabe',
   },
   {
-    title: 'Placeholder',
-    difficulty: 3,
-    img: '',
-    type: 'Single Choice',
+    title: 'Wohnung streichen',
+    difficulty: 1,
+    img: 'https://assets.serlo.org/73d9ae70-459a-11ee-b109-a3f2e53ad6dd/image.jpg',
+    type: 'Aufgabe mit Eingabefeld',
   },
 ]
 
