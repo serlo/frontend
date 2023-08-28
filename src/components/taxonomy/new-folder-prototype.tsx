@@ -1,13 +1,13 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useState } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { TaxonomyData } from '@/data-types'
 import {
   FrontendExerciseGroupNode,
   FrontendExerciseNode,
-  FrontendNodeType,
+  //FrontendNodeType,
 } from '@/frontend-node-types'
 import { tw } from '@/helper/tw'
 import { renderArticle } from '@/schema/article-renderer'
@@ -78,7 +78,7 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
     const element = data.exercisesContent[showInModal]
     element.positionOnPage = undefined
 
-    const isSolved = solved.includes(element.context.id)
+    //const isSolved = solved.includes(element.context.id)
     return (
       <>
         <div className="fixed inset-0 z-[150] bg-gray-100"></div>
