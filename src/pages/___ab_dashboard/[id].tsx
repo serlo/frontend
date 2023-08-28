@@ -19,10 +19,17 @@ interface GroupData {
   reached3solvesPercentage: number
   reached3solvesTime: number
   solvedCountRaw: number[]
+  timeRaw: number[]
   reached3count: number
   solved: number
   timeOnPage: number
   notBounced: number
+  reached1: number
+  reached2: number
+  reached3: number
+  viewed1: number
+  viewed2: number
+  viewed3: number
 }
 
 export const ABResults: NextPage<ABResultsProps> = ({
@@ -40,11 +47,46 @@ export const ABResults: NextPage<ABResultsProps> = ({
     groupB.notBounced
   )
 
+  const reached1Niveau = confidence(
+    groupA.visits,
+    groupB.visits,
+    groupA.reached1,
+    groupB.reached1
+  )
+
+  const reached2Niveau = confidence(
+    groupA.visits,
+    groupB.visits,
+    groupA.reached2,
+    groupB.reached2
+  )
+
   const reached3Niveau = confidence(
     groupA.visits,
     groupB.visits,
-    groupA.reached3count,
-    groupB.reached3count
+    groupA.reached3,
+    groupB.reached3
+  )
+
+  const viewed1Niveau = confidence(
+    groupA.visits,
+    groupB.visits,
+    groupA.viewed1,
+    groupB.viewed1
+  )
+
+  const viewed2Niveau = confidence(
+    groupA.visits,
+    groupB.visits,
+    groupA.viewed2,
+    groupB.viewed2
+  )
+
+  const viewed3Niveau = confidence(
+    groupA.visits,
+    groupB.visits,
+    groupA.viewed3,
+    groupB.viewed3
   )
 
   return (
@@ -85,22 +127,75 @@ export const ABResults: NextPage<ABResultsProps> = ({
             {groupB.visits} Aufrufen
           </div>
           <div className="mx-side mt-3">Konfidenz: {bounceNiveau} %</div>
-          <div className="serlo-h2">Nutzungseffizienz</div>
+          <div className="serlo-h2">Aktivierungsrate - gelöste Aufgaben</div>
           <div className="mx-side mb-block">
-            Anteil Aufrufe, die zu 3 bearbeiteten Aufgaben führen und die
-            Median-Zeit dafür (kürzere Zeit ist besser).
+            Anteil Aufrufe, die zu 1, 2 oder 3 gelösten Aufgaben führen.
+          </div>
+          <div className="mx-side mb-2 font-bold">1 Aufgabe</div>
+          <div className="mx-side">
+            A (Original): {((groupA.reached1 / groupA.visits) * 100).toFixed(2)}{' '}
+            % ({groupA.reached1} Sessions)
           </div>
           <div className="mx-side">
-            A (Original): {(groupA.reached3solvesPercentage * 100).toFixed(2)} %
-            mit {(groupA.reached3solvesTime / 60000).toFixed(1)} min (
-            {groupA.reached3count} Sessions)
+            B (Variante): {((groupB.reached1 / groupB.visits) * 100).toFixed(2)}{' '}
+            % ({groupB.reached1} Sessions)
+          </div>
+          <div className="mx-side mt-3">Konfidenz: {reached1Niveau} %</div>
+          <div className="mx-side mb-2 mt-4 font-bold">2 Aufgaben</div>
+          <div className="mx-side">
+            A (Original): {((groupA.reached2 / groupA.visits) * 100).toFixed(2)}{' '}
+            % ({groupA.reached2} Sessions)
           </div>
           <div className="mx-side">
-            B (Variante): {(groupB.reached3solvesPercentage * 100).toFixed(2)} %
-            mit {(groupB.reached3solvesTime / 60000).toFixed(1)} min (
-            {groupB.reached3count} Sessions)
+            B (Variante): {((groupB.reached2 / groupB.visits) * 100).toFixed(2)}{' '}
+            % ({groupB.reached2} Sessions)
+          </div>
+          <div className="mx-side mt-3">Konfidenz: {reached2Niveau} %</div>
+          <div className="mx-side mb-2 mt-4 font-bold">3 Aufgaben</div>
+          <div className="mx-side">
+            A (Original): {((groupA.reached3 / groupA.visits) * 100).toFixed(2)}{' '}
+            % ({groupA.reached3} Sessions)
+          </div>
+          <div className="mx-side">
+            B (Variante): {((groupB.reached3 / groupB.visits) * 100).toFixed(2)}{' '}
+            % ({groupB.reached3} Sessions)
           </div>
           <div className="mx-side mt-3">Konfidenz: {reached3Niveau} %</div>
+
+          <div className="serlo-h2">Aktivierungsrate - geöffnete Lösungen</div>
+          <div className="mx-side mb-block">
+            Anteil Aufrufe, die zu 1, 2 oder 3 geöffnete Lösungen führen.
+          </div>
+          <div className="mx-side mb-2 font-bold">1 Lösung</div>
+          <div className="mx-side">
+            A (Original): {((groupA.viewed1 / groupA.visits) * 100).toFixed(2)}{' '}
+            % ({groupA.viewed1} Sessions)
+          </div>
+          <div className="mx-side">
+            B (Variante): {((groupB.viewed1 / groupB.visits) * 100).toFixed(2)}{' '}
+            % ({groupB.viewed1} Sessions)
+          </div>
+          <div className="mx-side mt-3">Konfidenz: {viewed1Niveau} %</div>
+          <div className="mx-side mb-2 mt-4 font-bold">2 Lösungen</div>
+          <div className="mx-side">
+            A (Original): {((groupA.viewed2 / groupA.visits) * 100).toFixed(2)}{' '}
+            % ({groupA.viewed2} Sessions)
+          </div>
+          <div className="mx-side">
+            B (Variante): {((groupB.viewed2 / groupB.visits) * 100).toFixed(2)}{' '}
+            % ({groupB.viewed2} Sessions)
+          </div>
+          <div className="mx-side mt-3">Konfidenz: {viewed2Niveau} %</div>
+          <div className="mx-side mb-2 mt-4 font-bold">3 Lösungen</div>
+          <div className="mx-side">
+            A (Original): {((groupA.viewed3 / groupA.visits) * 100).toFixed(2)}{' '}
+            % ({groupA.viewed3} Sessions)
+          </div>
+          <div className="mx-side">
+            B (Variante): {((groupB.viewed3 / groupB.visits) * 100).toFixed(2)}{' '}
+            % ({groupB.viewed3} Sessions)
+          </div>
+          <div className="mx-side mt-3">Konfidenz: {viewed3Niveau} %</div>
 
           <div className="serlo-h2">Engagement</div>
           <div className="mx-side mb-block">
@@ -129,6 +224,12 @@ export const ABResults: NextPage<ABResultsProps> = ({
           <div className="mx-side">
             Anzahl gelöste Aufgaben B:{' '}
             {JSON.stringify(groupB.solvedCountRaw, null, 2)}
+          </div>
+          <div className="mx-side mt-5">
+            Verweildauer A (min): {JSON.stringify(groupA.timeRaw, null, 2)}
+          </div>
+          <div className="mx-side">
+            Verweildauer B (min): {JSON.stringify(groupB.timeRaw, null, 2)}
           </div>
           <div className="h-24"></div>
         </div>
@@ -163,6 +264,7 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
       events: (typeof data)[number][]
       firstStart: number
       solved: Set<number>
+      solViewed: Set<number>
       reached3solved: number
       group: string
     }
@@ -178,6 +280,7 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
       events: [],
       firstStart: -1,
       solved: new Set(),
+      solViewed: new Set(),
       reached3solved: -1,
       group: '',
     })
@@ -193,6 +296,9 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
         val.reached3solved = entry.timestamp.getTime()
       }
     }
+    if (entry.result === 'open') {
+      val.solViewed.add(entry.entityId)
+    }
     if (entry.type === 'visit') {
       if (val.events.every((entry) => entry.type !== 'visit')) {
         val.events.push(entry)
@@ -202,76 +308,73 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
     }
   }
 
-  const sessions = Object.values(bySession)
+  const allSessions = Object.values(bySession)
 
-  const sessionsA = sessions.filter((a) => a.group === 'a')
-  const sessionsB = sessions.filter((a) => a.group === 'b')
+  const sessionsA = allSessions.filter((a) => a.group === 'a')
+  const sessionsB = allSessions.filter((a) => a.group === 'b')
 
-  const visitsA = sessionsA.length
-  const visitsB = sessionsB.length
+  const sessions = {
+    a: sessionsA,
+    b: sessionsB,
+  }
 
-  const bouncedSessionsA = sessionsA.filter((s) => s.events.length <= 1).length
-  const bouncedSessionsB = sessionsB.filter((s) => s.events.length <= 1).length
+  const output: { a: null | GroupData; b: null | GroupData } = {
+    a: null,
+    b: null,
+  }
 
-  const notBouncedSessionsA = sessionsA.filter((s) => s.events.length > 1)
-  const notBouncedSessionsB = sessionsB.filter((s) => s.events.length > 1)
+  for (const group in sessions) {
+    const g = group as 'a' | 'b'
 
-  const reached3A = sessionsA.filter((s) => s.reached3solved >= 0).length
-  const reached3B = sessionsB.filter((s) => s.reached3solved >= 0).length
+    const visits = sessions[g].length
 
-  const reached3TimesA = sessionsA
-    .filter((s) => s.reached3solved >= 0)
-    .map((s) => s.reached3solved - s.firstStart)
-  const reached3TimesB = sessionsB
-    .filter((s) => s.reached3solved >= 0)
-    .map((s) => s.reached3solved - s.firstStart)
+    const bouncedSessions = sessions[g].filter(
+      (s) => s.events.length <= 1
+    ).length
 
-  const reached3solvesTimeA = median(reached3TimesA)
-  const reached3solvesTimeB = median(reached3TimesB)
+    const notBouncedSessions = sessions[g].filter((s) => s.events.length > 1)
+
+    const reached1 = sessions[g].filter((s) => s.solved.size >= 1).length
+    const reached2 = sessions[g].filter((s) => s.solved.size >= 2).length
+    const reached3 = sessions[g].filter((s) => s.solved.size >= 3).length
+
+    const viewed1 = sessions[g].filter((s) => s.solViewed.size >= 1).length
+    const viewed2 = sessions[g].filter((s) => s.solViewed.size >= 2).length
+    const viewed3 = sessions[g].filter((s) => s.solViewed.size >= 3).length
+
+    const timesOnPages = notBouncedSessions.map(
+      (s) =>
+        s.events[s.events.length - 1].timestamp.getTime() -
+        s.events[0].timestamp.getTime()
+    )
+
+    output[g] = {
+      avg: average(intermediate[g].ratings),
+      ratingCount: intermediate[g].ratings.length,
+      visits,
+      bounceRate: bouncedSessions / visits || 0,
+      reached3solvesTime: 0,
+      reached3solvesPercentage: reached3 / visits || 0,
+      reached3count: reached3,
+      solved: median(notBouncedSessions.map((s) => s.solved.size)) || 0,
+      timeOnPage: median(timesOnPages) || 0,
+      notBounced: visits - bouncedSessions,
+      solvedCountRaw: notBouncedSessions.map((s) => s.solved.size),
+      reached1,
+      reached2,
+      reached3,
+      viewed1,
+      viewed2,
+      viewed3,
+      timeRaw: timesOnPages.map((a) => parseFloat((a / 1000 / 60).toFixed(1))),
+    }
+  }
 
   return {
     props: {
       experiment,
-      groupA: {
-        avg: average(intermediate.a.ratings),
-        ratingCount: intermediate.a.ratings.length,
-        visits: visitsA,
-        bounceRate: bouncedSessionsA / visitsA || 0,
-        reached3solvesTime: reached3solvesTimeA || 0,
-        reached3solvesPercentage: reached3A / visitsA || 0,
-        reached3count: reached3A,
-        solved: median(notBouncedSessionsA.map((s) => s.solved.size)) || 0,
-        timeOnPage:
-          median(
-            notBouncedSessionsA.map(
-              (s) =>
-                s.events[s.events.length - 1].timestamp.getTime() -
-                s.events[0].timestamp.getTime()
-            )
-          ) || 0,
-        notBounced: visitsA - bouncedSessionsA,
-        solvedCountRaw: notBouncedSessionsA.map((s) => s.solved.size),
-      },
-      groupB: {
-        avg: average(intermediate.b.ratings),
-        ratingCount: intermediate.b.ratings.length,
-        visits: visitsB,
-        bounceRate: bouncedSessionsB / visitsB || 0,
-        reached3solvesTime: reached3solvesTimeB || 0,
-        reached3solvesPercentage: reached3B / visitsB || 0,
-        reached3count: reached3B,
-        solved: median(notBouncedSessionsB.map((s) => s.solved.size)) || 0,
-        timeOnPage:
-          median(
-            notBouncedSessionsB.map(
-              (s) =>
-                s.events[s.events.length - 1].timestamp.getTime() -
-                s.events[0].timestamp.getTime()
-            )
-          ) || 0,
-        notBounced: visitsB - bouncedSessionsB,
-        solvedCountRaw: notBouncedSessionsB.map((s) => s.solved.size),
-      },
+      groupA: output['a']!,
+      groupB: output['b']!,
     },
     revalidate: 10,
   }

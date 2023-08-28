@@ -14,7 +14,7 @@ import { selectHasFocusedChild, useAppSelector } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const captionFormattingOptions = [
-  TextEditorFormattingOption.richText,
+  TextEditorFormattingOption.richTextBold,
   TextEditorFormattingOption.links,
   TextEditorFormattingOption.math,
   TextEditorFormattingOption.code,

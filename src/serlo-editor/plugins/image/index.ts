@@ -1,4 +1,5 @@
 import { ImageEditor } from './editor'
+import type { FileError } from './image-with-serlo-config'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -12,6 +13,7 @@ import {
   string,
   upload,
 } from '../../plugin'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const imageState = object({
@@ -23,7 +25,6 @@ const imageState = object({
     child({
       plugin: EditorPluginType.Text,
       config: {
-        formattingOptions: ['code', 'katex', 'links', 'math', 'richText'],
         noLinebreaks: true,
       },
     })
@@ -64,6 +65,8 @@ export function createImagePlugin(
               caption: { plugin: EditorPluginType.Text },
             },
           }
+        } else {
+          for (const error of validation.errors) showToastNotice(error.message)
         }
       }
     },
@@ -83,5 +86,5 @@ export type ImageProps = EditorPluginProps<ImagePluginState, ImageConfig>
 
 export interface ImagePluginConfig {
   upload: UploadHandler<string>
-  validate: UploadValidator
+  validate: UploadValidator<FileError[]>
 }
