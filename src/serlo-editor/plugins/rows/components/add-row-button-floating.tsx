@@ -8,19 +8,19 @@ import { tw } from '@/helper/tw'
 interface AddRowButtonFloatingProps {
   onClick: React.MouseEventHandler<HTMLButtonElement>
   focused?: boolean
-  hideAddButton?: boolean
+  hide?: boolean
 }
 
 export function AddRowButtonFloating({
   focused,
   onClick,
-  hideAddButton = false,
+  hide = false,
 }: AddRowButtonFloatingProps) {
   const rowsStrings = useEditorStrings().plugins.rows
 
   return (
     <div className="absolute bottom-0 z-[1] h-auto w-full translate-y-full">
-      {hideAddButton ? null : (
+      {hide ? null : (
         <div className="group flex justify-center">
           <button
             className={clsx(
