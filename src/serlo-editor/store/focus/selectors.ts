@@ -56,6 +56,14 @@ export const selectParent = createSelector(
   }
 )
 
+export const selectParentType = createSelector(
+  [(state: State) => state, (_state, id: string) => id],
+  (state, id) => {
+    const parentNode = selectParent(state, id)
+    return parentNode && selectDocument(state, parentNode?.id)?.plugin
+  }
+)
+
 export const selectAncestorPluginIds = createDeepEqualSelector(
   [(state: State) => state, (_state, leaf: string) => leaf],
   (state, leaf) => {
