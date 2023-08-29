@@ -3,7 +3,6 @@ import { Action } from '@reduxjs/toolkit'
 export interface State {
   documents: Record<string, DocumentState>
   focus: string | null
-  root: string | null
   history: HistoryState
 }
 

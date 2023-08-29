@@ -16,16 +16,15 @@ import {
  * @param getFocusableChildren - Allows to override the default order of focusable children
  */
 export function object<Ds extends Record<string, StateType>>(
-  types: Ds,
-  getFocusableChildren: (children: { [K in keyof Ds]: { id: string }[] }) => {
-    id: string
-  }[] = (children) => {
-    return R.flatten<readonly FocusableChild[][]>(R.values(children))
-  }
+  types: Ds
 ): ObjectStateType<Ds> {
   type S = StateTypesSerializedType<Ds>
   type T = StateTypesValueType<Ds>
   type U = StateTypesReturnType<Ds>
+
+  const getObjectChildIds = (children: {
+    [K in keyof Ds]: { id: string }[]
+  }) => R.flatten<readonly FocusableChild[][]>(R.values(children))
 
   return {
     init(state, onChange) {
@@ -106,7 +105,7 @@ export function object<Ds extends Record<string, StateType>>(
       const children = R.mapObjIndexed((type, key) => {
         return type.getFocusableChildren(state[key])
       }, types) as { [K in keyof Ds]: { id: string }[] }
-      return getFocusableChildren(children)
+      return getObjectChildIds(children)
     },
   }
 }
