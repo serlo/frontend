@@ -136,19 +136,23 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
         const solved = JSON.parse(
           sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
         ) as number[]
-        const isSolved = solved.includes(exercise.context.id)
         const solvedPercentage = exercise.children
           ? exercise.children.filter((child) =>
               solved.includes(child.context.id)
             ).length / exercise.children.length
           : -1
+
+        const isSolved =
+          solved.includes(exercise.context.id) || solvedPercentage === 1
+
+        console.log(solvedPercentage)
         return (
           <Fragment key={i}>
             <div
               className={tw`
-                mb-5 mr-4 h-[238px] w-[176px] cursor-pointer
-                rounded border hover:border-brand hover:shadow-xl hover:outline
-                hover:outline-2 hover:outline-brand
+                relative mb-5 mr-4 h-[238px] w-[176px]
+                cursor-pointer rounded border hover:border-brand hover:shadow-xl
+                hover:outline hover:outline-2 hover:outline-brand
               `}
               onClick={() => {
                 setShowInModal(i)
@@ -177,12 +181,7 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
               <div
                 className={clsx(
                   'relative h-[140px] rounded-b',
-                  isSolved && 'bg-brandgreen',
-                  solvedPercentage > 0 && 'to-whote bg-gradient-to-r to-white',
-                  solvedPercentage > 0 &&
-                    solvedPercentage < 0.5 &&
-                    'from-green-50',
-                  solvedPercentage >= 0.5 && 'from-brandgreen'
+                  isSolved && 'bg-brandgreen'
                 )}
               >
                 <div className="h-[74px] px-2 py-1 text-lg font-bold">
@@ -191,6 +190,16 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
                 <div className="h-8 px-2 py-1 text-sm">{entry.type}</div>
                 <div className="h-8 px-2 py-1 text-sm">
                   {renderDifficulty(entry.difficulty)}
+                </div>
+                <div className="absolute inset-x-0 bottom-0 h-1">
+                  {solvedPercentage > 0 && !isSolved && (
+                    <div
+                      className="h-full bg-brandgreen"
+                      style={{
+                        width: `${(100 * solvedPercentage).toFixed(2)}%`,
+                      }}
+                    ></div>
+                  )}
                 </div>
               </div>
             </div>
