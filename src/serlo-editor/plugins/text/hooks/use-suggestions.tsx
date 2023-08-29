@@ -230,13 +230,24 @@ function filterPlugins(
   const search = text.replace('/', '').toLowerCase()
   if (!search.length) return plugins
 
-  const startingWithSearchString = plugins.filter(({ title }) => {
-    return title.toLowerCase()?.startsWith(search)
-  })
-  const containingSearchString = plugins.filter(({ title }) => {
-    const value = title?.toLowerCase()
-    return value?.includes(search) && !value?.startsWith(search)
+  const filterResults = new Set<SuggestionOption>()
+
+  // title or pluginType start with search string
+  plugins.forEach((entry) => {
+    if (
+      entry.title.toLowerCase()?.startsWith(search) ||
+      entry.pluginType.startsWith(search)
+    ) {
+      filterResults.add(entry)
+    }
   })
 
-  return [...startingWithSearchString, ...containingSearchString]
+  // title includes search string
+  plugins.forEach((entry) => {
+    if (entry.title.toLowerCase()?.includes(search)) {
+      filterResults.add(entry)
+    }
+  })
+
+  return [...filterResults]
 }
