@@ -17,6 +17,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { abSubmission } from '@/helper/ab-submission'
+import { isProduction } from '@/helper/is-production'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface TopicProps {
@@ -130,7 +131,10 @@ export function Topic({ data }: TopicProps) {
   }
 
   function renderExercises() {
-    if (ab?.experiment === 'dreisatzv0') {
+    if (
+      ab?.experiment === 'dreisatzv0' &&
+      (!isProduction || ab.group === 'b')
+    ) {
       // here is the place for new exercise view
       return (
         <>
