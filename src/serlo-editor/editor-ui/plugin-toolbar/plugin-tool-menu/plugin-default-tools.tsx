@@ -1,8 +1,9 @@
 import { faClone, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { useCallback } from 'react'
+import { useCallback, useContext } from 'react'
 
 import { AnchorLinkCopyTool } from './anchor-link-copy-tool'
 import { DropdownButton } from './dropdown-button'
+import { PluginToolMenuCustomizationContext } from './plugin-tool-menu-customization-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import {
   insertPluginChildAfter,
@@ -22,6 +23,9 @@ interface PluginDefaultToolsProps {
 export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
   const dispatch = useAppDispatch()
   const pluginStrings = useEditorStrings().plugins
+  const { hideAnchorLinkButton } = useContext(
+    PluginToolMenuCustomizationContext
+  )
 
   const handleDuplicatePlugin = useCallback(() => {
     const parent = selectParent(store.getState(), pluginId)
@@ -81,7 +85,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
         icon={faTrashAlt}
         dataQa="remove-plugin-button"
       />
-      <AnchorLinkCopyTool pluginId={pluginId} />
+      {hideAnchorLinkButton ? null : <AnchorLinkCopyTool pluginId={pluginId} />}
     </>
   )
 }
