@@ -235,7 +235,7 @@ function filterPlugins(
   // title or pluginType start with search string
   plugins.forEach((entry) => {
     if (
-      entry.title.toLowerCase()?.startsWith(search) ||
+      entry.title.toLowerCase().startsWith(search) ||
       entry.pluginType.startsWith(search)
     ) {
       filterResults.add(entry)
@@ -244,7 +244,7 @@ function filterPlugins(
 
   // title includes search string
   plugins.forEach((entry) => {
-    if (entry.title.toLowerCase()?.includes(search)) {
+    if (entry.title.toLowerCase().includes(search)) {
       filterResults.add(entry)
     }
   })
