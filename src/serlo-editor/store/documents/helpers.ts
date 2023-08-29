@@ -59,7 +59,8 @@ export function getSerializedDocument({
   const plugin = editorPlugins.getByType(document.plugin)
 
   const serializeHelpers: StoreSerializeHelpers = {
-    getDocument: (id: string) => getSerializedDocument({ documents, id }),
+    getDocument: (id: string) =>
+      getSerializedDocument({ documents, id, omitId }),
     omitId,
   }
 
