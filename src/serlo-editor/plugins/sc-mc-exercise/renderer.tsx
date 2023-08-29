@@ -77,7 +77,7 @@ export function ScMcExerciseRenderer({
                   />
                   <label
                     className={clsx(
-                      /* we override some styles in the answer content because it's not standalone */
+                      /* we override some styles in the answer content to show it inline */
                       'flex cursor-pointer items-center [&_.slate-container]:mb-0 [&_.slate-p]:ml-2',
                       focused === i && 'outline-gray'
                     )}
@@ -159,7 +159,7 @@ export function ScMcExerciseRenderer({
                   />
                   <label
                     className={clsx(
-                      /* we override some styles in the answer content because it's not standalone */
+                      /* we override some styles in the answer content to show it inline */
                       'flex cursor-pointer items-center [&_.slate-container]:mb-0 [&_.slate-p]:ml-2',
                       focused === i && 'outline-gray'
                     )}
