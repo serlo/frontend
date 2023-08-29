@@ -17,7 +17,7 @@ import { isSelectionWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/t
 import {
   focusNext,
   focusPrevious,
-  selectFocusTree,
+  selectChildTree,
   store,
   useAppDispatch,
 } from '@/serlo-editor/store'
@@ -140,14 +140,14 @@ export const useEditableKeydownHandler = (
           isHotkey('up', event) && isSelectionAtStart(editor, selection)
         if (isUpArrowAtStart) {
           event.preventDefault()
-          const focusTree = selectFocusTree(store.getState())
+          const focusTree = selectChildTree(store.getState())
           dispatch(focusPrevious(focusTree))
         }
         const isDownArrowAtEnd =
           isHotkey('down', event) && isSelectionAtEnd(editor, selection)
         if (isDownArrowAtEnd) {
           event.preventDefault()
-          const focusTree = selectFocusTree(store.getState())
+          const focusTree = selectChildTree(store.getState())
           dispatch(focusNext(focusTree))
         }
       }

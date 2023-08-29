@@ -7,7 +7,7 @@ import {
   runReplaceDocumentSaga,
   selectDocument,
   selectMayManipulateSiblings,
-  selectParent,
+  selectChildTreeOfParent,
   store,
 } from '@/serlo-editor/store'
 
@@ -30,7 +30,7 @@ export function insertPlugin({
 
   const document = selectDocument(storeState, id)
   const mayManipulateSiblings = selectMayManipulateSiblings(storeState, id)
-  const parent = selectParent(storeState, id)
+  const parent = selectChildTreeOfParent(storeState, id)
 
   if (!document || !mayManipulateSiblings || !parent) return
   const parentPluginType = document.plugin

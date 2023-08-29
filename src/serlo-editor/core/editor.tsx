@@ -1,4 +1,4 @@
-import { useMemo, useEffect, ReactNode, useRef } from 'react'
+import { useMemo, useEffect, ReactNode, useRef, useState } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { HotkeysProvider, useHotkeys } from 'react-hotkeys-hook'
@@ -12,14 +12,13 @@ import {
   undo,
   redo,
   selectPendingChanges,
-  selectRoot,
   selectHasPendingChanges,
-  selectSerializedRootDocument,
   store,
   useAppDispatch,
-  useAppSelector,
   DocumentState,
+  selectSerializedDocument,
 } from '../store'
+import { ROOT } from '../store/root/constants'
 
 /**
  * Renders a single editor for an Serlo Editor document
@@ -44,7 +43,7 @@ function InnerDocument({
   onChange,
   ...props
 }: EditorProps) {
-  const id = useAppSelector(selectRoot)
+  const [isInitialized, setIsInitialized] = useState(false)
   const dispatch = useAppDispatch()
 
   const wrapperRef = useRef<HTMLDivElement | null>(null)
@@ -58,7 +57,7 @@ function InnerDocument({
       if (currentPendingChanges !== pendingChanges) {
         onChange({
           changed: selectHasPendingChanges(store.getState()),
-          getDocument: () => selectSerializedRootDocument(store.getState()),
+          getDocument: () => selectSerializedDocument(store.getState(), ROOT),
         })
         pendingChanges = currentPendingChanges
       }
@@ -67,6 +66,7 @@ function InnerDocument({
 
   useEffect(() => {
     dispatch(runInitRootSaga({ initialState: props.initialState }))
+    setIsInitialized(true)
   }, [props.initialState, dispatch])
   const editableContextValue = useMemo(() => editable, [editable])
 
@@ -129,13 +129,13 @@ function InnerDocument({
     }
   )
 
-  if (!id) return null
+  if (!isInitialized) return null
 
   return (
     <div className="relative" ref={wrapperRef}>
       <PreferenceContextProvider>
         <EditableContext.Provider value={editableContextValue}>
-          {renderChildren(id)}
+          {renderChildren(ROOT)}
         </EditableContext.Provider>
       </PreferenceContextProvider>
     </div>

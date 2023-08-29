@@ -1,12 +1,11 @@
 import { checkIsAllowedNesting } from '../utils/check-is-allowed-nesting'
 import {
   store,
-  findParent,
-  selectDocument,
-  selectAncestorPluginIds,
+  selectAncestorDocumentIds,
   selectAncestorPluginTypes,
-  selectFocusTree,
-  FocusTreeNode,
+  selectDocument,
+  ChildTreeNode,
+  selectChildTreeOfParent,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
@@ -42,14 +41,12 @@ export function useCanDrop(
   }
 
   function wouldDropInOwnChildren(dragId: string) {
-    const focusPath = selectAncestorPluginIds(store.getState(), id) || []
+    const focusPath = selectAncestorDocumentIds(store.getState(), id) || []
     return focusPath.includes(dragId)
   }
 
   function wouldDropAtInitialPosition(dragId: string) {
-    const focusTree = selectFocusTree(store.getState())
-    if (!focusTree) return true
-    const parent = findParent(focusTree, dragId)
+    const parent = selectChildTreeOfParent(store.getState(), dragId)
 
     const dropIndex = getChildPosition(parent, id)
     // Different parents, so definitely not dropped at initial position
@@ -62,7 +59,7 @@ export function useCanDrop(
   }
 
   function getChildPosition(
-    parent: FocusTreeNode | null,
+    parent: ChildTreeNode | null,
     childId: string
   ): number | null {
     if (!parent) return null

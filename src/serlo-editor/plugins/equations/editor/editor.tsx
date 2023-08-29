@@ -33,7 +33,7 @@ import {
   selectIsDocumentEmpty,
   useAppSelector,
   useAppDispatch,
-  selectFocusTree,
+  selectChildTree,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
@@ -58,11 +58,11 @@ export function EquationsEditor(props: EquationsProps) {
     rows: state.steps.length,
     columns: 4,
     focusNext: () => {
-      const focusTree = selectFocusTree(store.getState())
+      const focusTree = selectChildTree(store.getState())
       dispatch(focusNext(focusTree))
     },
     focusPrevious: () => {
-      const focusTree = selectFocusTree(store.getState())
+      const focusTree = selectChildTree(store.getState())
       dispatch(focusPrevious(focusTree))
     },
     transformationTarget,

@@ -7,7 +7,7 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import {
   insertPluginChildAfter,
   removePluginChild,
-  selectParent,
+  selectChildTreeOfParent,
   selectSerializedDocumentWithoutIds,
   store,
   useAppDispatch,
@@ -24,7 +24,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
   const pluginStrings = useEditorStrings().plugins
 
   const handleDuplicatePlugin = useCallback(() => {
-    const parent = selectParent(store.getState(), pluginId)
+    const parent = selectChildTreeOfParent(store.getState(), pluginId)
     if (!parent) return
 
     const document = selectSerializedDocumentWithoutIds(
@@ -43,7 +43,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
   }, [dispatch, pluginId])
 
   const handleRemovePlugin = useCallback(() => {
-    const parent = selectParent(store.getState(), pluginId)
+    const parent = selectChildTreeOfParent(store.getState(), pluginId)
     if (!parent || !parent.children?.length) return
 
     const isOnlyChild = parent.children?.length === 1
