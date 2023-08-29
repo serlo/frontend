@@ -193,7 +193,7 @@ export function EquationsEditor(props: EquationsProps) {
   return (
     <div ref={pluginFocusWrapper}>
       {props.focused || hasFocusWithin ? <EquationsToolbar {...props} /> : null}
-      <div className="py-2.5">
+      <div className="mx-side py-2.5">
         <table className="whitespace-nowrap">
           {renderFirstExplanation()}
           {state.steps.map((step, row) => {
