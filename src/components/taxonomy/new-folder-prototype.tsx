@@ -5,6 +5,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { Fragment, useState } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 import { FaIcon } from '../fa-icon'
 import { TaxonomyData } from '@/data-types'
@@ -72,6 +73,10 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
     sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
   ) as number[]*/
 
+  useHotkeys(['esc'], () => {
+    setShowInModal(-1)
+  })
+
   if (showInModal >= 0) {
     const element = data.exercisesContent[showInModal]
     element.positionOnPage = undefined
@@ -85,12 +90,6 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
           onClick={() => {
             //setShowInModal(-1)
           }}
-          onKeyDown={(e) => {
-            if (e.key === 'Escape') {
-              setShowInModal(-1)
-            }
-          }}
-          tabIndex={-1}
         >
           <button
             onClick={() => {
@@ -249,7 +248,10 @@ function ExerciseWrapper({
     triggerRender((x) => x + 1)
   }
 
-  const isSolvedInThisSession = val > 1 && solved.includes(element.context.id)
+  const isSolvedInThisSession =
+    val > 1 &&
+    (solved.includes(element.context.id) ||
+      (element.children && solved.includes(element.children[index].context.id)))
 
   if (element.type === FrontendNodeType.Exercise) {
     element.task.edtrState!.content = element.task.edtrState!.content.filter(
@@ -302,7 +304,12 @@ function ExerciseWrapper({
     <Fragment key={index}>
       <div className="flex-1" />
       <div className="flex-1">
-        <div className="pointer-events-auto max-h-[calc(100vh-150px)] overflow-y-auto rounded-xl bg-white ">
+        <div
+          className={clsx(
+            'pointer-events-auto max-h-[calc(100vh-150px)] overflow-y-auto rounded-xl bg-white',
+            isSolvedInThisSession && '[&_.serlo-button-blue]:invisible'
+          )}
+        >
           <div>
             <h2 className="mx-side mt-6 hyphens-manual text-lg font-bold">
               {title}
@@ -318,6 +325,7 @@ function ExerciseWrapper({
               className="pointer-events-auto rounded-xl bg-brand-50 px-8 py-4 font-bold text-brand transition-colors hover:bg-brand hover:bg-brand-700 hover:text-white"
               onClick={() => {
                 setIndex((i) => i - 1)
+                triggerRender(1)
               }}
             >
               <FaIcon icon={faCaretLeft} /> vorherige Teilaufgabe
@@ -327,12 +335,27 @@ function ExerciseWrapper({
           )}
           {index + 1 < element.children!.length ? (
             <button
-              className="pointer-events-auto rounded-xl bg-brand-50 px-8 py-4 font-bold text-brand transition-colors hover:bg-brand hover:bg-brand-700 hover:text-white"
+              className={clsx(
+                'pointer-events-auto rounded-xl  px-8 py-4 font-bold  transition-colors',
+                isSolvedInThisSession
+                  ? 'bg-brand text-white'
+                  : 'bg-brand-50 text-brand hover:bg-brand hover:text-white'
+              )}
               onClick={() => {
                 setIndex((i) => i + 1)
+                triggerRender(1)
               }}
             >
               nächste Teilaufgabe <FaIcon icon={faCaretRight} />
+            </button>
+          ) : isSolvedInThisSession ? (
+            <button
+              className="pointer-events-auto rounded-xl bg-brand px-8 py-4 font-bold text-white transition-colors hover:bg-brand-700"
+              onClick={() => {
+                close()
+              }}
+            >
+              Zurück zum Aufgabenordner
             </button>
           ) : (
             <div />
@@ -351,36 +374,3 @@ function ExerciseWrapper({
     </Fragment>
   )
 }
-
-/*
-
-
-{element.type === FrontendNodeType.Exercise ? (
-              <div className="pointer-events-auto flex-1 overflow-y-auto rounded-xl bg-white">
-                {renderArticle(
-                  [element],
-                  `tax${data.id}`,
-                  `ex${element.context.id}`
-                )}
-                {isSolved && (
-                  <div className="absolute bottom-10 left-0 right-0 flex justify-center">
-                    <button
-                      className="serlo-button-green"
-                      onClick={() => {
-                        setShowInModal(-1)
-                      }}
-                    >
-                      zurück zur Übersicht
-                    </button>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <ExerciseGroupWrapper
-                element={element}
-                title={hardcodedDataforDreisatz[showInModal].title}
-              />
-            )}
-
-
-            */
