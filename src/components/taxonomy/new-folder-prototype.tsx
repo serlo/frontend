@@ -7,7 +7,7 @@ import { TaxonomyData } from '@/data-types'
 import {
   FrontendExerciseGroupNode,
   FrontendExerciseNode,
-  //FrontendNodeType,
+  FrontendNodeType,
 } from '@/frontend-node-types'
 import { tw } from '@/helper/tw'
 import { renderArticle } from '@/schema/article-renderer'
@@ -67,12 +67,6 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
   /*const solved = JSON.parse(
     sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
   ) as number[]*/
-  const [, triggerRender] = useState(1)
-
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  ;(window as any).__triggerRender = () => {
-    triggerRender((x) => x + 1)
-  }
 
   if (showInModal >= 0) {
     const element = data.exercisesContent[showInModal]
@@ -118,6 +112,9 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
             <ExerciseWrapper
               element={element}
               title={hardcodedDataforDreisatz[showInModal].title}
+              close={() => {
+                setShowInModal(-1)
+              }}
             />
           </div>
         </div>
@@ -229,22 +226,81 @@ function renderDifficulty(dif: number) {
 function ExerciseWrapper({
   element,
   title,
+  close,
 }: {
   element: FrontendExerciseGroupNode | FrontendExerciseNode
   title: string
+  close: () => void
 }) {
   const [index] = useState(0)
-  /*const solved = JSON.parse(
+  const solved = JSON.parse(
     sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
-  ) as number[]*/
+  ) as number[]
   // element.children![index].positionInGroup = undefined
+
+  const [val, triggerRender] = useState(1)
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  ;(window as any).__triggerRender = () => {
+    triggerRender((x) => x + 1)
+  }
+
+  const isSolvedInThisSession = val > 1 && solved.includes(element.context.id)
+
+  if (element.type === FrontendNodeType.Exercise) {
+    element.task.edtrState!.content = element.task.edtrState!.content.filter(
+      (x) => {
+        if (x.children && x.children[0].type === FrontendNodeType.H) {
+          return false
+        }
+        return true
+      }
+    )
+    return (
+      <>
+        <div className="flex-1" />
+        <div className="flex-1">
+          <div
+            className={clsx(
+              'pointer-events-auto max-h-[calc(100vh-150px)] overflow-y-auto rounded-xl bg-white',
+              isSolvedInThisSession && '[&_.serlo-button-blue]:invisible'
+            )}
+          >
+            <div>
+              <h2 className="mx-side mt-6 hyphens-manual text-xl font-bold">
+                {title}
+              </h2>
+              <div key={index}>{renderArticle([element])}</div>
+            </div>
+          </div>
+          <div
+            className={clsx(
+              ' mt-2.5 flex justify-end',
+              !isSolvedInThisSession && 'hidden'
+            )}
+          >
+            <button
+              className="pointer-events-auto rounded-xl bg-brand px-8 py-4 font-bold text-white transition-colors hover:bg-brand-700"
+              onClick={() => {
+                close()
+              }}
+            >
+              Zurück zum Aufgabenordner
+            </button>
+          </div>
+        </div>
+        <div className="flex-1" />
+      </>
+    )
+  }
+
   return (
     <>
-      <div className="flex-1"></div>
+      <div className="flex-1" />
       <div className="flex-1">
         <div className="pointer-events-auto max-h-[calc(100vh-150px)] overflow-y-auto rounded-xl bg-white ">
           <div>
-            <h2 className="mx-side hyphens-manual text-lg font-bold">
+            <h2 className="mx-side mt-6 hyphens-manual text-lg font-bold">
               {title}
             </h2>
             <div key={index}>{renderArticle([element])}</div>
@@ -267,7 +323,7 @@ function ExerciseWrapper({
           }
         `}</style>
       </div>
-      <div className="flex-1"></div>
+      <div className="flex-1" />
     </>
   )
 }
