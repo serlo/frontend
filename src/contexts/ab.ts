@@ -19,7 +19,7 @@ export const experiments: {
     experiment: 'dreisatzv0',
     ids: [66809],
     start: -1,
-    end: new Date('2023-09-15T00:00:00+0200').getTime(),
+    end: new Date('2023-09-30T00:00:00+0200').getTime(),
   },
   {
     experiment: 'reorder_trig',
