@@ -4,7 +4,7 @@ import {
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
 import { includes } from 'ramda'
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
 import { toTransformationTarget, TransformationTarget } from './editor-renderer'
@@ -53,6 +53,34 @@ export function EquationsEditor(props: EquationsProps) {
   const transformationTarget = toTransformationTarget(
     state.transformationTarget.value
   )
+
+  const gridFocus = useGridFocus({
+    rows: state.steps.length,
+    columns: 4,
+    focusNext: () => {
+      const focusTree = selectFocusTree(store.getState())
+      dispatch(focusNext(focusTree))
+    },
+    focusPrevious: () => {
+      const focusTree = selectFocusTree(store.getState())
+      dispatch(focusPrevious(focusTree))
+    },
+    transformationTarget,
+    onFocusChanged: (state) => {
+      if (state === 'firstExplanation') {
+        dispatch(focus(props.state.firstExplanation.id))
+      } else if (state?.column === StepSegment.Explanation) {
+        dispatch(focus(props.state.steps[state.row].explanation.id))
+      } else {
+        dispatch(focus(props.id))
+      }
+    },
+  })
+  const { setFocus } = gridFocus
+
+  const resetFocus = useCallback(() => {
+    setFocus(null)
+  }, [setFocus])
 
   const pluginFocusWrapper = useRef<HTMLDivElement>(null)
 
@@ -107,29 +135,6 @@ export function EquationsEditor(props: EquationsProps) {
       enabled: focused,
     }
   )
-
-  const gridFocus = useGridFocus({
-    rows: state.steps.length,
-    columns: 4,
-    focusNext: () => {
-      const focusTree = selectFocusTree(store.getState())
-      dispatch(focusNext(focusTree))
-    },
-    focusPrevious: () => {
-      const focusTree = selectFocusTree(store.getState())
-      dispatch(focusPrevious(focusTree))
-    },
-    transformationTarget,
-    onFocusChanged: (state) => {
-      if (state === 'firstExplanation') {
-        dispatch(focus(props.state.firstExplanation.id))
-      } else if (state.column === StepSegment.Explanation) {
-        dispatch(focus(props.state.steps[state.row].explanation.id))
-      } else {
-        dispatch(focus(props.id))
-      }
-    },
-  })
 
   useEffect(() => {
     if (nestedFocus) {
@@ -202,6 +207,7 @@ export function EquationsEditor(props: EquationsProps) {
                 <tr>
                   <StepEditor
                     gridFocus={gridFocus}
+                    resetFocus={resetFocus}
                     row={row}
                     state={step}
                     transformationTarget={transformationTarget}
