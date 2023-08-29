@@ -7,6 +7,8 @@ import { selectDocuments } from '../documents'
 import { handleRecursiveInserts } from '../documents/saga'
 import { persistHistory } from '../history'
 
+// TODO: Move initRootSaga to documents slice and remove root slice completely
+
 export function* rootSaga() {
   yield takeEvery(runInitRootSaga, initRootSaga)
 }

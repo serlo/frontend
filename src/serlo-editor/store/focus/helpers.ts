@@ -14,7 +14,7 @@ export function findNextChildTreeNode(
 
   // Has sibling
   if (index + 1 < children.length) {
-    // Go deep to find a child node
+    // Go deep to find a child state type node
     let current = children[index + 1]
     while (current.children && current.children.length > 0) {
       current = current.children[0]
@@ -38,7 +38,7 @@ export function findPreviousChildTreeNode(
   const index = children.findIndex((child) => child.id === from)
   // Has sibling
   if (index >= 1) {
-    // Go deep to find a child node
+    // Go deep to find a child state type node
     let current = children[index - 1]
     while (current.children && current.children.length > 0) {
       current = current.children[current.children.length - 1]
