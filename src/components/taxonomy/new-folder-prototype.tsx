@@ -145,7 +145,6 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
         const isSolved =
           solved.includes(exercise.context.id) || solvedPercentage === 1
 
-        console.log(solvedPercentage)
         return (
           <Fragment key={i}>
             <div
