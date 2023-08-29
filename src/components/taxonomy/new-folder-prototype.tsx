@@ -1,4 +1,8 @@
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCaretLeft,
+  faCaretRight,
+  faTimes,
+} from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { Fragment, useState } from 'react'
 
@@ -79,7 +83,7 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
         <div
           className="exercise-modal fixed inset-0 z-[200] h-full"
           onClick={() => {
-            setShowInModal(-1)
+            //setShowInModal(-1)
           }}
           onKeyDown={(e) => {
             if (e.key === 'Escape') {
@@ -232,7 +236,7 @@ function ExerciseWrapper({
   title: string
   close: () => void
 }) {
-  const [index] = useState(0)
+  const [index, setIndex] = useState(0)
   const solved = JSON.parse(
     sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
   ) as number[]
@@ -295,7 +299,7 @@ function ExerciseWrapper({
   }
 
   return (
-    <>
+    <Fragment key={index}>
       <div className="flex-1" />
       <div className="flex-1">
         <div className="pointer-events-auto max-h-[calc(100vh-150px)] overflow-y-auto rounded-xl bg-white ">
@@ -303,16 +307,36 @@ function ExerciseWrapper({
             <h2 className="mx-side mt-6 hyphens-manual text-lg font-bold">
               {title}
             </h2>
-            <div key={index}>{renderArticle([element])}</div>
+
+            <div className="mt-6">{renderArticle(element.content)}</div>
+            <div>{renderArticle([element.children![index]])}</div>
           </div>
         </div>
-        <div className=" flex justify-between">
-          <button className="serlo-button-blue-transparent pointer-events-auto">
-            vorherige Teilaufgabe
-          </button>
-          <button className="serlo-button-blue-transparent pointer-events-auto">
-            nächste Teilaufgabe
-          </button>
+        <div className="mt-2.5 flex justify-between">
+          {index > 0 ? (
+            <button
+              className="pointer-events-auto rounded-xl bg-brand-50 px-8 py-4 font-bold text-brand transition-colors hover:bg-brand hover:bg-brand-700 hover:text-white"
+              onClick={() => {
+                setIndex((i) => i - 1)
+              }}
+            >
+              <FaIcon icon={faCaretLeft} /> vorherige Teilaufgabe
+            </button>
+          ) : (
+            <div />
+          )}
+          {index + 1 < element.children!.length ? (
+            <button
+              className="pointer-events-auto rounded-xl bg-brand-50 px-8 py-4 font-bold text-brand transition-colors hover:bg-brand hover:bg-brand-700 hover:text-white"
+              onClick={() => {
+                setIndex((i) => i + 1)
+              }}
+            >
+              nächste Teilaufgabe <FaIcon icon={faCaretRight} />
+            </button>
+          ) : (
+            <div />
+          )}
         </div>
         <style jsx global>{`
           li.serlo-grouped-exercise-wrapper:before {
@@ -324,7 +348,7 @@ function ExerciseWrapper({
         `}</style>
       </div>
       <div className="flex-1" />
-    </>
+    </Fragment>
   )
 }
 
