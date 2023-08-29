@@ -121,7 +121,7 @@ export function AddRevision({
       </Head>
       {renderBacklink()}
       <div className="controls-portal sticky top-0 z-[90] bg-white md:bg-transparent" />
-      <div className="edtr-io serlo-editor-hacks mx-auto mb-24 max-w-[816px]">
+      <div className="serlo-editor-hacks mx-auto mb-24 max-w-[816px]">
         <SerloEditor
           entityNeedsReview={entityNeedsReview}
           onSave={onSave}
