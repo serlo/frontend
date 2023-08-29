@@ -77,7 +77,8 @@ export function ScMcExerciseRenderer({
                   />
                   <label
                     className={clsx(
-                      'serlo-spacing-fix flex cursor-pointer items-center [&_.slate-container]:mb-0 [&_.slate-p]:ml-2',
+                      /* we override some styles in the answer content because it's not standalone */
+                      'flex cursor-pointer items-center [&_.slate-container]:mb-0 [&_.slate-p]:ml-2',
                       focused === i && 'outline-gray'
                     )}
                     htmlFor={id}
@@ -158,7 +159,8 @@ export function ScMcExerciseRenderer({
                   />
                   <label
                     className={clsx(
-                      'serlo-spacing-fix flex cursor-pointer items-center [&>div>*]:ml-2',
+                      /* we override some styles in the answer content because it's not standalone */
+                      'flex cursor-pointer items-center [&_.slate-container]:mb-0 [&_.slate-p]:ml-2',
                       focused === i && 'outline-gray'
                     )}
                     htmlFor={id}
