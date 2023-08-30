@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 import { ClientOnlyPortal } from './client-only-portal'
 import { entity } from '../common/common'
-import { FaIcon, type FaIconProps } from '@/components/fa-icon'
+import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useLeaveConfirm } from '@/helper/use-leave-confirm'
@@ -47,8 +47,8 @@ export function ToolbarMain({
       <ClientOnlyPortal selector=".controls-portal">
         <nav className="flex h-14 w-full justify-between pl-5 pr-3 pt-6">
           <div className="md:-ml-28 lg:-ml-52">
-            {renderHistoryButton('Undo', faUndo, undo, !undoable)}
-            {renderHistoryButton('Redo', faRedo, redo, !redoable)}
+            {renderHistoryButton('undo')}
+            {renderHistoryButton('redo')}
           </div>
           {renderSaveButton()}
         </nav>
@@ -63,23 +63,25 @@ export function ToolbarMain({
     </>
   )
 
-  function renderHistoryButton(
-    title: string,
-    icon: FaIconProps['icon'],
-    action: typeof undo | typeof redo,
-    disabled: boolean
-  ) {
+  function renderHistoryButton(type: 'undo' | 'redo') {
+    const isUndo = type === 'undo'
+    const disabled = isUndo ? !undoable : !redoable
+    const onClick = () => dispatch(isUndo ? undo() : redo())
     return (
       <button
         className={clsx(
           'serlo-button serlo-tooltip-trigger',
           disabled ? 'cursor-default text-gray-300' : 'serlo-button-light'
         )}
-        onClick={() => dispatch(action())}
+        onClick={onClick}
         disabled={disabled}
+        data-qa={`editor-toolbar-${type}`}
       >
-        <EditorTooltip text={title} className="top-8 !-ml-3" />
-        <FaIcon icon={icon} />
+        <EditorTooltip
+          text={isUndo ? 'Undo' : 'Redo'}
+          className="top-8 !-ml-3"
+        />
+        <FaIcon icon={isUndo ? faUndo : faRedo} />
       </button>
     )
   }
