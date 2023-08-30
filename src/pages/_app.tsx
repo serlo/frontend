@@ -1,11 +1,7 @@
-import { AppProps } from 'next/app'
-
 // add font-faces to global css
 import '@/assets-webkit/fonts/default.css'
 import '@/assets-webkit/fonts/katex/katex.css'
 import '@/assets-webkit/styles/serlo-tailwind.css'
-
-import { isRenderedPage } from '@/helper/rendered-page'
 
 // polyfills to make future available now
 if (!Object.hasOwn) {
