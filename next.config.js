@@ -84,4 +84,14 @@ module.exports = withBundleAnalyzer({
       skipDefaultConversion: true,
     },
   },
+  async rewrites() {
+    return process.env.NODE_ENV === 'development'
+      ? [
+          {
+            source: '/app-dir-testing/:path*',
+            destination: '/app-dir-testing/en/:path*', // <- you can set the language of the frontend here
+          },
+        ]
+      : []
+  },
 })
