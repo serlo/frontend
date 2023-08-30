@@ -1,3 +1,5 @@
+'use client'
+
 // polyfills to make future available now
 if (!Object.hasOwn) {
   Object.defineProperty(Object, 'hasOwn', {
