@@ -8,6 +8,7 @@ import { FaIcon, type FaIconProps } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useLeaveConfirm } from '@/helper/use-leave-confirm'
+import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import type { StateTypeReturnType } from '@/serlo-editor/plugin'
 import {
   redo,
@@ -44,12 +45,12 @@ export function ToolbarMain({
   return (
     <>
       <ClientOnlyPortal selector=".controls-portal">
-        <nav className="flex h-12 w-full justify-between pl-5 pr-3 pt-4">
-          <div>
+        <nav className="flex h-14 w-full justify-between pl-5 pr-3 pt-6">
+          <div className="md:-ml-28 lg:-ml-52">
             {renderHistoryButton('Undo', faUndo, undo, !undoable)}
             {renderHistoryButton('Redo', faRedo, redo, !redoable)}
           </div>
-          <div>{renderSaveButton()}</div>
+          {renderSaveButton()}
         </nav>
       </ClientOnlyPortal>
       <SaveModal
@@ -71,15 +72,13 @@ export function ToolbarMain({
     return (
       <button
         className={clsx(
-          'serlo-button',
+          'serlo-button serlo-tooltip-trigger',
           disabled ? 'cursor-default text-gray-300' : 'serlo-button-light'
         )}
-        onClick={() => {
-          void dispatch(action())
-        }}
+        onClick={() => dispatch(action())}
         disabled={disabled}
-        title={title}
       >
+        <EditorTooltip text={title} className="top-8 !-ml-3" />
         <FaIcon icon={icon} />
       </button>
     )
@@ -88,12 +87,11 @@ export function ToolbarMain({
   function renderSaveButton() {
     return (
       <button
-        className="serlo-button-green ml-2"
+        className="serlo-button-green ml-2 md:mr-[-11.5vw] lg:-mr-52 xl:-mr-64"
         onClick={() => {
           if (isChanged) setSaveModalOpen(true)
           else showToastNotice('👀 ' + editorStrings.noChangesWarning)
         }}
-        title="Save"
       >
         <FaIcon icon={faSave} /> {editorStrings.edtrIo.save}
       </button>
