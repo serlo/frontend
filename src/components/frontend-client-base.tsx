@@ -1,10 +1,11 @@
+'use client'
+
 import type { AuthorizationPayload } from '@serlo/authorization'
 import Cookies from 'js-cookie'
-import { Router, useRouter } from 'next/router'
+import { Router } from 'next/router'
 import NProgress from 'nprogress'
 import { PropsWithChildren, useState, useEffect } from 'react'
 import { default as ToastNotice } from 'react-notify-toast'
-import { getInstanceDataByLang } from 'src/helper/feature-i18n'
 
 import { ConditionalWrap } from './conditional-wrap'
 import { HeaderFooter } from './header-footer'
@@ -14,6 +15,7 @@ import { checkLoggedIn } from '@/auth/cookie/check-logged-in'
 import { PrintMode } from '@/components/print-mode'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
+import { LocaleContextProvider } from '@/contexts/locale-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { InstanceData, LoggedInData } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
@@ -27,6 +29,8 @@ export type FrontendClientBaseProps = PropsWithChildren<{
   entityId?: number
   authorization?: AuthorizationPayload
   loadLoggedInData?: boolean
+  locale?: Instance
+  instanceData: InstanceData
 }>
 
 Router.events.on('routeChangeStart', () => {
@@ -45,9 +49,9 @@ Router.events.on('routeChangeComplete', (url, { shallow }) => {
 Router.events.on('routeChangeError', () => NProgress.done())
 
 // assumes that the lang-strings in the i18n files are actually valid Instance strings
-type FixedInstanceData = ReturnType<typeof getInstanceDataByLang> & {
+/*type FixedInstanceData = ReturnType<typeof getInstanceDataByLang> & {
   lang: Instance
-}
+}*/
 
 export function FrontendClientBase({
   children,
@@ -57,8 +61,10 @@ export function FrontendClientBase({
   entityId,
   authorization,
   loadLoggedInData,
+  locale,
+  instanceData,
 }: FrontendClientBaseProps) {
-  const { locale } = useRouter()
+  /*const { locale } = useRouter()
   const [instanceData] = useState<InstanceData>(() => {
     if (typeof window === 'undefined') {
       // load instance data for server side rendering
@@ -73,7 +79,7 @@ export function FrontendClientBase({
           ?.textContent ?? '{}'
       ) as FixedInstanceData
     }
-  })
+  })*/
 
   useEffect(() => {
     //tiny history
@@ -118,25 +124,27 @@ export function FrontendClientBase({
       <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
         <LoggedInDataProvider value={loggedInData}>
           <EntityIdProvider value={entityId}>
-            <ConditionalWrap
-              condition={!noHeaderFooter}
-              wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
-            >
+            <LocaleContextProvider value={locale}>
               <ConditionalWrap
-                condition={!noContainers}
-                wrapper={(kids) => (
-                  <div className="relative">
-                    <MaxWidthDiv showNav={showNav}>
-                      <main id="content">{kids}</main>
-                    </MaxWidthDiv>
-                  </div>
-                )}
+                condition={!noHeaderFooter}
+                wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
               >
-                {/* should not be necessary…?*/}
-                {children as JSX.Element}
+                <ConditionalWrap
+                  condition={!noContainers}
+                  wrapper={(kids) => (
+                    <div className="relative">
+                      <MaxWidthDiv showNav={showNav}>
+                        <main id="content">{kids}</main>
+                      </MaxWidthDiv>
+                    </div>
+                  )}
+                >
+                  {/* should not be necessary…?*/}
+                  {children as JSX.Element}
+                </ConditionalWrap>
               </ConditionalWrap>
-            </ConditionalWrap>
-            <ToastNotice />
+              <ToastNotice />
+            </LocaleContextProvider>
           </EntityIdProvider>
         </LoggedInDataProvider>
       </AuthProvider>

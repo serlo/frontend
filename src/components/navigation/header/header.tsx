@@ -1,6 +1,7 @@
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import { Router, useRouter } from 'next/router'
+import { usePathname, useRouter } from 'next/navigation'
+import { Router } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { Logo } from './logo'
@@ -16,10 +17,11 @@ import { tw } from '@/helper/tw'
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { strings } = useInstanceData()
+  const pathname = usePathname()
   const router = useRouter()
 
-  const isLanding = router.route === '/'
-  const hideQuickbar = router.route === '/search' || isLanding
+  const isLanding = pathname === '/'
+  const hideQuickbar = pathname === '/search' || isLanding
 
   useEffect(() => {
     const escapeHandler = (event: KeyboardEvent) => {

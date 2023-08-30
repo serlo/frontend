@@ -1,10 +1,11 @@
 import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
+import { usePathname } from 'next/dist/client/components/navigation'
 import { default as NextLink } from 'next/link'
-import { useRouter } from 'next/router'
 import { ForwardedRef, forwardRef, ReactNode } from 'react'
 
 import { FaIcon } from '../fa-icon'
+import { useLocale } from '@/contexts/locale-context'
 
 export interface LinkProps {
   href?: string
@@ -58,7 +59,8 @@ function InternalLink({
   ref,
   title,
 }: LinkProps & { ref?: ForwardedRef<HTMLAnchorElement> }) {
-  const router = useRouter()
+  const pathname = usePathname()
+  const locale = useLocale()
 
   const { parsedHref, clientSide, isExternal, isContentOnly } = parseLink()
 
@@ -69,10 +71,10 @@ function InternalLink({
     : renderClientSideLink(parsedHref)
 
   function parseLink() {
-    if (!href || href === undefined || href === '' || !router.locale)
+    if (!href || href === undefined || href === '' || !locale)
       return { parsedHref: '', clientSide: false }
 
-    const _href = href.replace(`https://${router.locale}.serlo.org`, '')
+    const _href = href.replace(`https://${locale}.serlo.org`, '')
 
     const isAbsolute = _href.includes('//')
     const isSerloSubdomain = isAbsolute && _href.includes('.serlo.org') //e.g. community.serlo.org
@@ -80,7 +82,7 @@ function InternalLink({
     const isAnchor = _href.startsWith('#') || _href.startsWith('/#')
     const isMailto = _href.startsWith('mailto:')
     // pathname maps to the page that rendered the site, this is more reliable
-    const isContentOnly = router.pathname.startsWith('/content-only/') //router.pathname
+    const isContentOnly = pathname?.startsWith('/content-only/') //router.pathname
 
     if (isAnchor || isMailto || isSerloSubdomain || isExternal || isContentOnly)
       return { parsedHref: href, clientSide: false, isExternal, isContentOnly }
