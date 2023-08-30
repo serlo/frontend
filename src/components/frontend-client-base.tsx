@@ -30,7 +30,7 @@ export type FrontendClientBaseProps = PropsWithChildren<{
   authorization?: AuthorizationPayload
   loadLoggedInData?: boolean
   locale?: Instance
-  instanceData: InstanceData
+  instanceData?: InstanceData
 }>
 
 Router.events.on('routeChangeStart', () => {
@@ -64,6 +64,7 @@ export function FrontendClientBase({
   locale,
   instanceData,
 }: FrontendClientBaseProps) {
+  if (!instanceData) throw 'bad'
   /*const { locale } = useRouter()
   const [instanceData] = useState<InstanceData>(() => {
     if (typeof window === 'undefined') {
@@ -152,6 +153,7 @@ export function FrontendClientBase({
   )
 
   function getCachedLoggedInData() {
+    if (!instanceData) throw 'bad'
     if (
       typeof window === 'undefined' ||
       window.location.hostname === 'localhost'
@@ -165,6 +167,7 @@ export function FrontendClientBase({
   }
 
   function fetchLoggedInData() {
+    if (!instanceData?.lang) throw 'bad'
     const cookies = typeof window === 'undefined' ? {} : Cookies.get()
     if (loggedInData) return
     if (isLoggedIn || loadLoggedInData) {
