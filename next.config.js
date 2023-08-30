@@ -89,7 +89,7 @@ module.exports = withBundleAnalyzer({
       ? [
           {
             source: '/app-dir-testing/:path*',
-            destination: '/app-dir-testing/en/:path*', // <- you can set the language of the frontend here
+            destination: '/app-dir-testing/de/:path*', // <- you can set the language of the frontend here
           },
         ]
       : []
