@@ -1,9 +1,10 @@
 'use client'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import { LandingDE } from '@/components/pages/landing-de'
 import { InstanceData } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import { getInstanceDataByLang } from '@/helper/feature-i18n'
+import { getInstanceDataByLang, getLandingData } from '@/helper/feature-i18n'
 
 export default function Page({
   params: { lang },
@@ -14,8 +15,10 @@ export default function Page({
     <FrontendClientBase
       locale={lang}
       instanceData={getInstanceDataByLang(lang) as InstanceData}
+      noContainers
+      noHeaderFooter
     >
-      Hello world from App Direcotry
+      <LandingDE data={getLandingData('de')} />
     </FrontendClientBase>
   )
 }

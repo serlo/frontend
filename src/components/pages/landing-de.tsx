@@ -1,3 +1,5 @@
+'use client'
+
 import { HeadTags } from '../head-tags'
 import { CommunityWall } from '../landing/rework/community-wall/community-wall'
 import { FooterNew } from '../landing/rework/footer-new'
