@@ -38,7 +38,7 @@ import {
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function EquationsEditor(props: EquationsProps) {
-  const { focused, state, id } = props
+  const { focused, state } = props
 
   const dispatch = useAppDispatch()
   const focusedElement = useAppSelector(selectFocused)
@@ -78,21 +78,26 @@ export function EquationsEditor(props: EquationsProps) {
   })
   const { setFocus } = gridFocus
 
+  const pluginFocusWrapper = useRef<HTMLDivElement>(null)
+
   const resetFocus = useCallback(() => {
     setFocus(null)
-
-    setTimeout(() => {
-      const childTree = selectChildTree(store.getState(), id)
-      if (childTree) dispatch(focus(childTree.id))
-    }, 1)
-  }, [setFocus, id, dispatch])
-
-  const pluginFocusWrapper = useRef<HTMLDivElement>(null)
+    pluginFocusWrapper?.current?.focus()
+  }, [setFocus])
 
   useHotkeys(
     'tab',
     (event) => {
       handleKeyDown(event, () => {
+        const isPluginWrapperFocused =
+          pluginFocusWrapper.current === document.activeElement
+
+        // Restore focus to first explanation
+        if (isPluginWrapperFocused) {
+          gridFocus.setFocus('firstExplanation')
+          return
+        }
+
         if (
           gridFocus.isFocused({
             row: state.steps.length - 1,
@@ -119,7 +124,16 @@ export function EquationsEditor(props: EquationsProps) {
   useHotkeys(
     'shift+tab',
     (event) => {
-      handleKeyDown(event, () => gridFocus.moveLeft())
+      handleKeyDown(event, () => {
+        const isPluginWrapperFocused =
+          pluginFocusWrapper.current === document.activeElement
+        // Restore focus to first explanation
+        if (isPluginWrapperFocused) {
+          gridFocus.setFocus('firstExplanation')
+          return
+        }
+        gridFocus.moveLeft()
+      })
     },
     {
       scopes: ['global'],
@@ -201,7 +215,7 @@ export function EquationsEditor(props: EquationsProps) {
       : false
 
   return (
-    <div ref={pluginFocusWrapper}>
+    <div ref={pluginFocusWrapper} className="outline-none" tabIndex={-1}>
       {props.focused || hasFocusWithin ? <EquationsToolbar {...props} /> : null}
       <div className="mx-side py-2.5">
         <table className="whitespace-nowrap">
