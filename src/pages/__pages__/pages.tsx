@@ -4,10 +4,10 @@ import {
   faTrashAlt,
   faTrashRestore,
 } from '@fortawesome/free-solid-svg-icons'
-import request, { gql } from 'graphql-request'
-import { GetStaticProps } from 'next'
+//import request, { gql } from 'graphql-request'
+//import { GetStaticPaths, GetStaticProps } from 'next'
 
-import { endpoint } from '@/api/endpoint'
+//import { endpoint } from '@/api/endpoint'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
@@ -17,9 +17,9 @@ import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
-  Instance,
+  //Instance,
   PagesQuery,
-  PagesQueryVariables,
+  //PagesQueryVariables,
 } from '@/fetcher/graphql-types/operations'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
@@ -30,6 +30,7 @@ interface PagesProps {
 }
 
 export default renderedPageNoHooks<PagesProps>((props) => {
+  return <></> // _app override not working here
   return (
     <FrontendClientBase>
       <Content {...props} />
@@ -110,7 +111,7 @@ function Content({ pages }: PagesProps) {
   }
 }
 
-export const getStaticProps: GetStaticProps<PagesProps> = async (context) => {
+/*export const getStaticProps: GetStaticProps<PagesProps> = async (context) => {
   const instance = context.locale! as Instance
 
   const result = await request<PagesQuery, PagesQueryVariables>(
@@ -141,3 +142,4 @@ export const pagesQuery = gql`
     }
   }
 `
+*/
