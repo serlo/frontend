@@ -7,10 +7,10 @@ import {
   focusNext,
   focusPrevious,
   selectDocument,
-  selectParent,
+  selectChildTreeOfParent,
   selectMayManipulateSiblings,
   removePluginChild,
-  selectFocusTree,
+  selectChildTree,
   store,
 } from '@/serlo-editor/store'
 
@@ -60,7 +60,7 @@ export function mergePlugins(
     store.getState(),
     id
   )
-  const parent = selectParent(store.getState(), id)
+  const parent = selectChildTreeOfParent(store.getState(), id)
   if (!mayManipulateSiblings || !parent) return
 
   const adjacentSibling = getAdjacentSiblingByDirection(id, direction)
@@ -70,7 +70,7 @@ export function mergePlugins(
   // If the editor is empty, remove the current Slate instance
   // and focus the one it's been merged with
   if (Node.string(editor) === '') {
-    const focusTree = selectFocusTree(store.getState())
+    const focusTree = selectChildTree(store.getState())
     const focusAction = direction === 'previous' ? focusPrevious : focusNext
     store.dispatch(focusAction(focusTree))
     store.dispatch(removePluginChild({ parent: parent.id, child: id }))
@@ -153,7 +153,7 @@ function getAdjacentSiblingByDirection(
   id: string,
   direction: 'previous' | 'next'
 ) {
-  const parent = selectParent(store.getState(), id)
+  const parent = selectChildTreeOfParent(store.getState(), id)
   const allChildrenOfParent = parent?.children || []
   const indexWithinParent = allChildrenOfParent.findIndex(
     (child) => child.id === id

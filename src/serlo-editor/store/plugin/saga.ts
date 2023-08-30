@@ -7,9 +7,14 @@ import {
   removePluginChild,
 } from './saga-actions'
 import { EditorPlugin } from '../../types/internal__plugin'
-import { runChangeDocumentSaga, selectDocument } from '../documents'
-import { selectFocusTree } from '../focus'
+import {
+  runChangeDocumentSaga,
+  selectDocument,
+  selectChildTree,
+} from '../documents'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
+
+// TODO: Move all plugin sagas to documents slice and remove plugin slice
 
 export function* pluginSaga() {
   yield all([
@@ -23,8 +28,8 @@ function* insertChildBeforeSaga({
   payload,
 }: ReturnType<typeof insertPluginChildBefore>) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const parent: ReturnType<typeof selectFocusTree> = yield select(
-    selectFocusTree,
+  const parent: ReturnType<typeof selectChildTree> = yield select(
+    selectChildTree,
     payload.parent
   )
   if (!parent || !parent.children) return

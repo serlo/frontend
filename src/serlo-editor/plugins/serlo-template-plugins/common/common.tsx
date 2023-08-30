@@ -50,10 +50,7 @@ export function entityType<
   Childs extends Record<string, StateType>
 >(
   ownTypes: Ds,
-  children: Childs,
-  getFocusableChildren?: (children: { [K in keyof Ds]: { id: string }[] }) => {
-    id: string
-  }[]
+  children: Childs
 ): StateType<
   StateTypesSerializedType<Ds & Childs>,
   StateTypesValueType<Ds & Childs>,
@@ -61,10 +58,7 @@ export function entityType<
     replaceOwnState: (newValue: StateTypesSerializedType<Ds>) => void
   }
 > {
-  const objectType = object<Ds & Childs>(
-    { ...ownTypes, ...children },
-    getFocusableChildren
-  )
+  const objectType = object<Ds & Childs>({ ...ownTypes, ...children })
   return {
     ...objectType,
     init(state, onChange) {

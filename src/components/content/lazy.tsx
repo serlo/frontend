@@ -4,6 +4,7 @@ import { ReactNode } from 'react'
 import LazyLoad from 'react-lazyload'
 
 import { isPrintMode } from '../print-mode'
+import { useAB } from '@/contexts/ab'
 
 export interface LazyProps {
   children: ReactNode
@@ -13,6 +14,7 @@ export interface LazyProps {
 
 export function Lazy(props: LazyProps) {
   const router = useRouter()
+  const ab = useAB()
 
   if (isPrintMode) {
     if (props.noPrint) return null
@@ -20,7 +22,10 @@ export function Lazy(props: LazyProps) {
   }
 
   // disable lazy load if content-only and probably within iframe
-  if (router.pathname.startsWith('/content-only/')) {
+  if (
+    router.pathname.startsWith('/content-only/') ||
+    ab?.experiment === 'dreisatzv0'
+  ) {
     return <>{props.children}</>
   }
 

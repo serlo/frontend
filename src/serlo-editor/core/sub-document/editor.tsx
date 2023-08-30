@@ -5,14 +5,14 @@ import { useRef, useEffect, useMemo, useCallback } from 'react'
 import type { SubDocumentProps } from '.'
 import { useEnableEditorHotkeys } from './use-enable-editor-hotkeys'
 import {
-  runChangeDocumentSaga,
   focus,
+  runChangeDocumentSaga,
+  selectChildTreeOfParent,
   selectDocument,
   selectIsFocused,
-  useAppSelector,
-  useAppDispatch,
-  selectParent,
   store,
+  useAppDispatch,
+  useAppSelector,
 } from '../../store'
 import type { StateUpdater } from '../../types/internal__plugin-state'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
@@ -59,7 +59,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       const target = (e.target as HTMLDivElement).closest('[data-document]')
       if (!focused && target === containerRef.current) {
         if (document?.plugin === 'rows') {
-          const parent = selectParent(store.getState(), id)
+          const parent = selectChildTreeOfParent(store.getState(), id)
           if (parent) dispatch(focus(parent.id))
         } else {
           dispatch(focus(id))

@@ -5,10 +5,10 @@ import { Key } from 'ts-key-enum'
 import {
   focusNext,
   focusPrevious,
-  selectParent,
+  selectChildTreeOfParent,
   insertPluginChildAfter,
   removePluginChild,
-  selectFocusTree,
+  selectChildTree,
   useAppDispatch,
   store,
   selectMayManipulateSiblings,
@@ -53,7 +53,7 @@ export const useEnableEditorHotkeys = (
     Key.ArrowUp,
     (e) => {
       handleKeyDown(e, () => {
-        dispatch(focusPrevious(selectFocusTree(store.getState())))
+        dispatch(focusPrevious(selectChildTree(store.getState())))
       })
     },
     {
@@ -68,7 +68,7 @@ export const useEnableEditorHotkeys = (
     Key.ArrowDown,
     (e) => {
       handleKeyDown(e, () => {
-        dispatch(focusNext(selectFocusTree(store.getState())))
+        dispatch(focusNext(selectChildTree(store.getState())))
       })
     },
     {
@@ -83,7 +83,7 @@ export const useEnableEditorHotkeys = (
     Key.Enter,
     (e) => {
       handleKeyDown(e, () => {
-        const parent = selectParent(store.getState(), id)
+        const parent = selectChildTreeOfParent(store.getState(), id)
         if (!parent) return
         dispatch(
           insertPluginChildAfter({
@@ -106,13 +106,13 @@ export const useEnableEditorHotkeys = (
       handleKeyDown(e, () => {
         if (!e) return
         if (mayManipulateSiblings) {
-          const parent = selectParent(store.getState(), id)
+          const parent = selectChildTreeOfParent(store.getState(), id)
           if (!parent) return
 
           if (e.key === 'Backspace') {
-            dispatch(focusPrevious(selectFocusTree(store.getState())))
+            dispatch(focusPrevious(selectChildTree(store.getState())))
           } else if (e.key === 'Delete') {
-            dispatch(focusNext(selectFocusTree(store.getState())))
+            dispatch(focusNext(selectChildTree(store.getState())))
           }
           dispatch(removePluginChild({ parent: parent.id, child: id }))
         }

@@ -27,6 +27,23 @@ export function exerciseSubmission(data: ExerciseSubmissionData, ab: ABValue) {
     })
   }
 
+  if (ab?.experiment === 'dreisatzv0') {
+    if (data.result === 'correct') {
+      const solved = JSON.parse(
+        sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
+      ) as number[]
+      if (!solved.includes(data.entityId)) {
+        solved.push(data.entityId)
+      }
+      sessionStorage.setItem(
+        '___serlo_solved_in_session___',
+        JSON.stringify(solved)
+      )
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+      ;(window as any)?.__triggerRender()
+    }
+  }
+
   if (!isProduction) return // don't submit outside of production
 
   if (!sessionStorage.getItem(sesionStorageKey)) {
