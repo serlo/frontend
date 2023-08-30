@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 
 import { useInstanceData } from '@/contexts/instance-context'
 import { BreadcrumbsData, HeadData } from '@/data-types'
@@ -15,10 +15,9 @@ interface HeadTagsProps {
 export function HeadTags({ data, breadcrumbsData, noindex }: HeadTagsProps) {
   const { title, contentType, metaDescription, metaImage } = data
   const { strings, lang } = useInstanceData()
-  const router = useRouter()
+  const pathname = usePathname()
 
-  const canonicalHref =
-    `https://${lang}.serlo.org` + router.asPath.split('?')[0]
+  const canonicalHref = `https://${lang}.serlo.org` + pathname
 
   return (
     <Head>
