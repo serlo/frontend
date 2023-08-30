@@ -38,7 +38,7 @@ import {
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function EquationsEditor(props: EquationsProps) {
-  const { focused, state } = props
+  const { focused, state, id } = props
 
   const dispatch = useAppDispatch()
   const focusedElement = useAppSelector(selectFocused)
@@ -80,7 +80,12 @@ export function EquationsEditor(props: EquationsProps) {
 
   const resetFocus = useCallback(() => {
     setFocus(null)
-  }, [setFocus])
+
+    setTimeout(() => {
+      const childTree = selectChildTree(store.getState(), id)
+      if (childTree) dispatch(focus(childTree.id))
+    }, 1)
+  }, [setFocus, id, dispatch])
 
   const pluginFocusWrapper = useRef<HTMLDivElement>(null)
 
