@@ -1,7 +1,9 @@
+'use client'
+
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import Cookies from 'js-cookie'
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import { type ReactNode, useEffect, useState } from 'react'
 
 import type { CommentAreaEntityProps } from './comments/comment-area-entity'
@@ -49,7 +51,7 @@ const DonationsBanner = dynamic<DonationsBannerProps>(() =>
 export function EntityBase({ children, page, entityId }: EntityBaseProps) {
   const abValue = useABValue(entityId)
 
-  const { asPath } = useRouter()
+  const pathname = usePathname()
   const { lang } = useInstanceData()
 
   const [survey, setSurvey] = useState(false)
@@ -267,7 +269,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
         },
         body: JSON.stringify({
           event,
-          path: asPath,
+          path: pathname,
           isProduction,
         }),
       })

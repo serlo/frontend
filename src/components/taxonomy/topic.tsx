@@ -1,3 +1,5 @@
+'use client'
+
 import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import dynamic from 'next/dynamic'

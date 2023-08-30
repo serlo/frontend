@@ -1,3 +1,5 @@
+'use client'
+
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import { ReactNode } from 'react'
 import LazyLoad from 'react-lazyload'
 
@@ -13,7 +13,7 @@ export interface LazyProps {
 }
 
 export function Lazy(props: LazyProps) {
-  const router = useRouter()
+  const pathname = usePathname() ?? ''
   const ab = useAB()
 
   if (isPrintMode) {
@@ -23,7 +23,7 @@ export function Lazy(props: LazyProps) {
 
   // disable lazy load if content-only and probably within iframe
   if (
-    router.pathname.startsWith('/content-only/') ||
+    pathname.startsWith('/content-only/') ||
     ab?.experiment === 'dreisatzv0'
   ) {
     return <>{props.children}</>

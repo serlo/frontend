@@ -1,5 +1,3 @@
-'use client'
-
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LandingDE } from '@/components/pages/landing-de'
 import { InstanceData } from '@/data-types'

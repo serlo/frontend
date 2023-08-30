@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 
 import type { FrontendImageNode } from '@/frontend-node-types'
 import { hasVisibleContent } from '@/helper/has-visible-content'
@@ -12,7 +12,7 @@ interface ImageProps {
 }
 
 export function Image({ element, extraInfo, renderNested }: ImageProps) {
-  const router = useRouter()
+  const pathname = usePathname() ?? ''
   const { alt, href, maxWidth, src, caption } = element
 
   return (
@@ -37,7 +37,7 @@ export function Image({ element, extraInfo, renderNested }: ImageProps) {
   function getSemanticSource() {
     if (!src) return src
     const semanticNameSource =
-      alt && alt.length > 3 ? alt : router.asPath.split('/').pop()
+      alt && alt.length > 3 ? alt : pathname.split('/').pop()
     const semanticName = semanticNameSource?.replace(/[^\w+]/g, '')
     return semanticName && semanticName.length > 3
       ? src.replace('/image.', `/${semanticName}.`)

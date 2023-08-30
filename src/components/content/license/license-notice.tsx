@@ -1,6 +1,6 @@
 import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons'
 import { faSlash } from '@fortawesome/free-solid-svg-icons'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 
 import { LicenseIcons } from './license-icons'
 import { Link } from '../link'
@@ -17,11 +17,8 @@ interface LicenseNoticeProps {
 
 export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
   const { lang, strings } = useInstanceData()
-  const router = useRouter()
-  const urlSlugArray = Array.isArray(router.query.slug)
-    ? router.query.slug
-    : [router.query.slug]
-  const canonicalHref = `https://${lang}.serlo.org/` + urlSlugArray.join('/')
+  const pathname = usePathname()
+  const canonicalHref = `https://${lang}.serlo.org/` + pathname
 
   const { title, isDefault, url, id, shortTitle } = data
   // only link license
