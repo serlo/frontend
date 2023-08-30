@@ -1,3 +1,4 @@
+import { Polyfills } from './polyfills'
 import { colors } from '@/helper/colors'
 
 // add font-faces to global css
@@ -128,6 +129,7 @@ export default function RootLayout({
         ></script>
       </head>
       <body style={bodyStyles}>
+        <Polyfills />
         {children}
         <script async defer src="https://sa.serlo.org/latest.js" />
         <noscript>
