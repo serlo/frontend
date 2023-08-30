@@ -135,7 +135,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['src/pages/**/*'],
+      files: ['src/pages/**/*', 'src/app/**/*'],
       rules: {
         'import/no-default-export': 'off',
         'react/display-name': 'off',
