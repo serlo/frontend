@@ -36,11 +36,11 @@ module.exports = withBundleAnalyzer({
 
     return config
   },
-  i18n: {
+  /*i18n: {
     locales: ['de', 'en', 'ta', 'hi', 'fr', 'es'],
     defaultLocale: 'de',
     localeDetection: false,
-  },
+  },*/
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
   transpilePackages: ['ramda'], // context: https://github.com/vercel/next.js/issues/40183
@@ -88,8 +88,8 @@ module.exports = withBundleAnalyzer({
     return process.env.NODE_ENV === 'development'
       ? [
           {
-            source: '/app-dir-testing/:path*',
-            destination: '/app-dir-testing/de/:path*', // <- you can set the language of the frontend here
+            source: '/:path*',
+            destination: '/de/:path*', // <- set language of frontend here
           },
         ]
       : []
