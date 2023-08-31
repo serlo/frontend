@@ -1,9 +1,9 @@
 import { renderSubline } from './overview'
+import type { PersonioPosition } from '@/__pages__/jobs/[[...jobId]]'
 import { HeadTags } from '@/components/head-tags'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { UserTools } from '@/components/user-tools/user-tools'
-import type { PersonioPosition } from '@/__pages__/jobs/[[...jobId]]'
 
 const h2Class =
   'mx-side text-4xl leading-cozy tracking-tight font-extrabold text-gray-700'

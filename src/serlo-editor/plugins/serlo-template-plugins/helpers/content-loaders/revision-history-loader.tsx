@@ -3,6 +3,7 @@ import request from 'graphql-request'
 import NProgress from 'nprogress'
 import { useState } from 'react'
 
+import { revisionHistoryQuery } from '@/__pages__/entity/repository/history/[id]'
 import { endpoint } from '@/api/endpoint'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { FaIcon } from '@/components/fa-icon'
@@ -17,7 +18,6 @@ import type { Revisions } from '@/fetcher/query-types'
 import { revisionQuery } from '@/fetcher/revision/query'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
-import { revisionHistoryQuery } from '@/__pages__/entity/repository/history/[id]'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import {
   editorResponseToState,
