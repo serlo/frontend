@@ -40,11 +40,11 @@ export function TextEditor(props: TextEditorProps) {
 
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
   const { createTextEditor, toolbarControls } = textFormattingOptions
-  const editor = useMemo(
-    () =>
-      createTextEditor(withReact(withEmptyLinesRestriction(createEditor()))),
-    [createTextEditor]
-  )
+  const editor = useMemo(() => {
+    return createTextEditor(
+      withReact(withEmptyLinesRestriction(createEditor()))
+    )
+  }, [createTextEditor])
 
   const suggestions = useSuggestions({ editor, id, editable, focused })
   const { showSuggestions, suggestionsProps } = suggestions
