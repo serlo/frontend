@@ -11,7 +11,6 @@ import { HSpace } from './content/h-space'
 import { Horizon } from './content/horizon'
 import { Lazy } from './content/lazy'
 import { FaIcon } from './fa-icon'
-import { HeadTags } from './head-tags'
 import { JsonLd } from './json-ld'
 import { Breadcrumbs } from './navigation/breadcrumbs'
 import { MaxWidthDiv } from './navigation/max-width-div'
@@ -149,13 +148,6 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       )}
       {page.secondaryMenuData && (
         <SecondaryMenu data={page.secondaryMenuData} />
-      )}
-      {page.metaData && (
-        <HeadTags
-          data={page.metaData}
-          breadcrumbsData={page.breadcrumbsData}
-          noindex={'entityData' in page && page.entityData.trashed}
-        />
       )}
       {page.kind === 'single-entity' || page.kind === 'taxonomy' ? (
         <JsonLd data={page} id={entityId} />

@@ -1,10 +1,11 @@
-import { Polyfills } from './polyfills'
-import { colors } from '@/helper/colors'
+import type { Metadata } from 'next'
 
+import { Polyfills } from './polyfills'
 // add font-faces to global css
 import '@/assets-webkit/fonts/default.css'
 import '@/assets-webkit/fonts/katex/katex.css'
 import '@/assets-webkit/styles/serlo-tailwind.css'
+import { colors } from '@/helper/colors'
 
 const bodyStyles = {
   fontFamily: 'Karmilla, sans-serif',
@@ -24,6 +25,43 @@ const sentryLoader = `
   }
 `
 
+export const metadata: Metadata = {
+  themeColor: colors.brand,
+  manifest: '/_assets/site.webmanifest?v=1',
+  icons: {
+    icon: [
+      {
+        url: '/_assets/favicon-32x32.png',
+        sizes: '32x32',
+        type: 'image/png',
+      },
+      {
+        url: '/_assets/favicon-16x16.png',
+        sizes: '16x16',
+        type: 'image/png',
+      },
+    ],
+    shortcut: '/_assets/favicon.ico',
+    other: [
+      {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        url: '/_assets/apple-touch-icon.png',
+      },
+      {
+        rel: 'mask-icon',
+        url: '/_assets/safari-pinned-tab.svg',
+        color: colors.brand,
+      },
+    ],
+  },
+  robots: { googleBot: { 'max-image-preview': 'large' } },
+  openGraph: {
+    siteName: 'serlo.org',
+    type: 'website',
+  },
+}
+
 export default function RootLayout({
   // Layouts must accept a children prop.
   // This will be populated with nested layouts or pages
@@ -37,45 +75,14 @@ export default function RootLayout({
     <html className="bg-brand-100 print:serlo-print-style" lang={params.lang}>
       {/* background on html for overscroll area */}
       <head>
-        <meta property="og:site_name" content="Serlo" />
-        <meta property="og:type" content="website" />
-        <meta name="robots" content="max-image-preview:large" />
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/_assets/apple-touch-icon.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/_assets/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/_assets/favicon-16x16.png"
-        />
-        <link rel="manifest" href="/_assets/site.webmanifest?v=1" />
-        <link
-          rel="mask-icon"
-          href="/_assets/safari-pinned-tab.svg"
-          color={colors.brand}
-        />
-        <link rel="shortcut icon" href="/_assets/favicon.ico" />
-        <meta name="msapplication-TileColor" content={colors.brand} />
-        <meta
-          name="msapplication-config"
-          content="/_assets/browserconfig.xml"
-        />
-        <meta name="theme-color" content={colors.brand}></meta>
         <link
           href="/_assets/opensearch.de.xml"
           rel="search"
           type="application/opensearchdescription+xml"
           title="Serlo (de)"
         />
+        {/* TODO: https://nextjs.org/docs/app/api-reference/functions/generate-metadata#resource-hints */}
+        {/* or other modern font loading apprach */}
         <link
           rel="preload"
           href="/_assets/fonts/karmilla/karmilla-regular.woff2"
