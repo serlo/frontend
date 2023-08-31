@@ -58,8 +58,8 @@ function shouldNodeBeRemoved(
   // Collect the amount of empty paragraph siblings. It should never be more than 1.
   let amountOfEmptyParagraphSiblings = isPreviousSiblingEmptyParagraph ? 1 : 0
 
-  // If the next sibling is an empty paragraph,
-  // increment the amount of empty paragraph siblings.
+  // If the next sibling is an empty paragraph, increment the amount
+  // of empty paragraph siblings and check if they are more than 1.
   const nextSiblingPath = Path.next(path)
   let isNextSiblingEmptyParagraph = false
   if (Node.has(editor, nextSiblingPath)) {
@@ -67,11 +67,10 @@ function shouldNodeBeRemoved(
     isNextSiblingEmptyParagraph = isEmptyParagraph(editor, nextSibling)
     if (isNextSiblingEmptyParagraph) amountOfEmptyParagraphSiblings += 1
   }
-  // Early return if the amount of empty paragraph siblings is already more than 1.
   if (amountOfEmptyParagraphSiblings > 1) return true
 
-  // If the sibling before previous is an empty paragraph,
-  // increment the amount of empty paragraph siblings.
+  // If the sibling before previous is an empty paragraph, increment the
+  // amount of empty paragraph siblings and check if they are more than 1.
   const siblingBeforePreviousPath =
     Path.hasPrevious(previousSiblingPath) && Path.previous(previousSiblingPath)
   if (
@@ -86,11 +85,10 @@ function shouldNodeBeRemoved(
       amountOfEmptyParagraphSiblings += 1
     }
   }
-  // Early return if the amount of empty paragraph siblings is already more than 1.
   if (amountOfEmptyParagraphSiblings > 1) return true
 
-  // If the sibling after next is an empty paragraph,
-  // increment the amount of empty paragraph siblings.
+  // If the sibling after next is an empty paragraph, increment the amount
+  // of empty paragraph siblings and check if they are more than 1.
   const siblingAfterNextPath = Path.next(nextSiblingPath)
   if (Node.has(editor, siblingAfterNextPath)) {
     const siblingAfterNext = Node.get(editor, siblingAfterNextPath)
@@ -101,6 +99,5 @@ function shouldNodeBeRemoved(
       amountOfEmptyParagraphSiblings += 1
     }
   }
-  // Return true if the amount of empty paragraph siblings is already more than 1.
   return amountOfEmptyParagraphSiblings > 1
 }
