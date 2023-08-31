@@ -1,4 +1,5 @@
-import { BaseOperation, Editor, Element, Node, Path, Transforms } from 'slate'
+import { Editor, Element, Node, Path, Transforms } from 'slate'
+import { ReactEditor } from 'slate-react'
 
 // Slate normalization docs: https://docs.slatejs.org/concepts/11-normalizing
 // While editing a Text plugin: Two adjacent empty lines are allowed,
@@ -10,10 +11,12 @@ export const withEmptyLinesRestriction = (editor: Editor) => {
 
   editor.normalizeNode = (entry, { operation } = { operation: undefined }) => {
     const [node, path] = entry
+    const isBlur = (operation as unknown as string) === 'blur'
 
-    if (shouldNodeBeRemoved(editor, node, path, operation)) {
+    if (shouldNodeBeRemoved(editor, node, path, isBlur)) {
       Transforms.removeNodes(editor, { at: path })
       // TODO: Show warning?
+      if (isBlur) ReactEditor.blur(editor)
       return
     }
 
@@ -33,7 +36,7 @@ function shouldNodeBeRemoved(
   editor: Editor,
   node: Node,
   path: Path,
-  operation?: BaseOperation
+  isBlur: boolean
 ) {
   // If the node is not an empty paragraph, it shouldn't be removed
   if (!isEmptyParagraph(editor, node)) return false
@@ -50,9 +53,7 @@ function shouldNodeBeRemoved(
     editor,
     previousSibling
   )
-  // @ts-expect-error `operation` can only be `BaseOperation`, but we use
-  //                  this 'blur' hack to do special normalization on blur.
-  if (operation === 'blur') return isPreviousSiblingEmptyParagraph
+  if (isBlur) return isPreviousSiblingEmptyParagraph
 
   // Collect the amount of empty paragraph siblings. It should never be more than 1.
   let amountOfEmptyParagraphSiblings = isPreviousSiblingEmptyParagraph ? 1 : 0
@@ -62,8 +63,9 @@ function shouldNodeBeRemoved(
   const nextSiblingPath = Path.next(path)
   if (Node.has(editor, nextSiblingPath)) {
     const nextSibling = Node.get(editor, nextSiblingPath)
-    if (isEmptyParagraph(editor, nextSibling))
+    if (isEmptyParagraph(editor, nextSibling)) {
       amountOfEmptyParagraphSiblings += 1
+    }
   }
   // Early return if the amount of empty paragraph siblings is already more than 1.
   if (amountOfEmptyParagraphSiblings > 1) return true
