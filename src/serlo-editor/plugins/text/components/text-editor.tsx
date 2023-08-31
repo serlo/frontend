@@ -19,7 +19,7 @@ import { useEditorChange } from '../hooks/use-editor-change'
 import { useSlateRenderHandlers } from '../hooks/use-slate-render-handlers'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
-import { withEmptyLines } from '../plugins'
+import { withEmptyLinesRestriction } from '../plugins'
 import type { TextEditorConfig, TextEditorState } from '../types/config'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
@@ -41,7 +41,8 @@ export function TextEditor(props: TextEditorProps) {
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
   const { createTextEditor, toolbarControls } = textFormattingOptions
   const editor = useMemo(
-    () => createTextEditor(withReact(withEmptyLines(createEditor()))),
+    () =>
+      createTextEditor(withReact(withEmptyLinesRestriction(createEditor()))),
     [createTextEditor]
   )
 
