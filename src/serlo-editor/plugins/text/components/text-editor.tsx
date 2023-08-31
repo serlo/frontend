@@ -123,6 +123,26 @@ export function TextEditor(props: TextEditorProps) {
     }
   }, [editor, focused])
 
+  // Workaround for removing double empty lines on editor blur.
+  // Normalization is forced on blur and handled in
+  // `withEmptyLinesRestriction` plugin.
+  // `useEffect` and event delegation are used because `<Editable`
+  // `onBlur` doesn't work when custom-empty-line-placeholder is
+  // shown before bluring the editor. More info on event delegation:
+  // https://www.quirksmode.org/blog/archives/2008/04/delegating_the.html
+  useEffect(() => {
+    const handleBlur = () => {
+      // @ts-expect-error `operation` can only be `BaseOperation`, but we use
+      //                  this 'blur' hack to do special normalization on blur.
+      editor.normalize({ force: true, operation: 'blur' })
+    }
+    const container = containerRef?.current
+    container?.addEventListener('blur', handleBlur, true)
+    return () => {
+      container?.removeEventListener('blur', handleBlur, true)
+    }
+  }, [containerRef, editor, id])
+
   // Show a placeholder on empty lines.
   // https://jkrsp.com/slate-js-placeholder-per-line/
   const decorateEmptyLinesWithPlaceholder = useCallback(
@@ -149,12 +169,6 @@ export function TextEditor(props: TextEditorProps) {
     },
     [editable, editor, focused]
   )
-
-  // TODO: When the new custom placeholder is shown, the onBlur won't work
-  const handleEditableBlur = useCallback(() => {
-    // @ts-expect-error TODO: Explain the hack here
-    editor.normalize({ force: true, operation: 'blur' })
-  }, [editor])
 
   // fallback to static placeholder when:
   // - for inline text plugins
@@ -184,7 +198,6 @@ export function TextEditor(props: TextEditorProps) {
         readOnly={!editable}
         onKeyDown={handleEditableKeyDown}
         onPaste={handleEditablePaste}
-        onBlur={handleEditableBlur}
         renderElement={handleRenderElement}
         renderLeaf={handleRenderLeaf}
         decorate={

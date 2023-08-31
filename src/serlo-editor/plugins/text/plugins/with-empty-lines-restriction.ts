@@ -1,6 +1,10 @@
 import { BaseOperation, Editor, Element, Node, Path, Transforms } from 'slate'
 
-// Docs: https://docs.slatejs.org/concepts/11-normalizing
+// Slate normalization docs: https://docs.slatejs.org/concepts/11-normalizing
+// While editing a Text plugin: Two adjacent empty lines are allowed,
+// so that one of them could be transformed into another plugin,
+// using the plus button.
+// On Text plugin blur: Only one empty line is allowed.
 export const withEmptyLinesRestriction = (editor: Editor) => {
   const { normalizeNode } = editor
 
@@ -25,8 +29,6 @@ function isEmptyParagraph(editor: Editor, node: Node) {
   )
 }
 
-// A node should be removed if it is an empty paragraph,
-//  and it has a sibling that is an empty paragraph.
 function shouldNodeBeRemoved(
   editor: Editor,
   node: Node,
