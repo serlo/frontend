@@ -2,17 +2,19 @@ import { faHashtag } from '@fortawesome/free-solid-svg-icons'
 
 import { DropdownButton } from './dropdown-button'
 import { shouldUseFeature } from '@/components/user/profile-experimental'
-import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 interface AnchorLinkCopyToolProps {
+  serloEntityId: number
   pluginId: string
 }
 
-export function AnchorLinkCopyTool({ pluginId }: AnchorLinkCopyToolProps) {
-  const serloEntityId = useEntityId()
+export function AnchorLinkCopyTool({
+  pluginId,
+  serloEntityId,
+}: AnchorLinkCopyToolProps) {
   const editorStrings = useEditorStrings()
   const { strings } = useInstanceData()
 
