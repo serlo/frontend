@@ -19,7 +19,6 @@ export function AnchorLinkCopyTool({
   const { strings } = useInstanceData()
 
   if (
-    !serloEntityId ||
     !navigator.clipboard ||
     !window.location.href.includes('add-revision') ||
     !shouldUseFeature('editorAnchorLinkCopyTool')
