@@ -85,7 +85,13 @@ module.exports = withBundleAnalyzer({
     },
   },
   async rewrites() {
-    return process.env.NODE_ENV === 'development'
+    console.log(
+      'debugging: check for git commit ref',
+      process.env.VERCEL_GIT_COMMIT_REF
+    )
+    return process.env.NODE_ENV === 'development' ||
+      (process.env.NEXT_PUBLIC_ENV === 'preview' && // all preview builds except staging
+        process.env.VERCEL_GIT_COMMIT_REF !== 'staging')
       ? [
           {
             source: '/:path*',
