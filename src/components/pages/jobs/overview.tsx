@@ -3,13 +3,13 @@ import Image from 'next/image'
 import { default as NextLink } from 'next/link'
 import { Fragment } from 'react'
 
+import type { PersonioPosition } from '@/__pages__/jobs/[[...jobId]]'
 import { Link } from '@/components/content/link'
 import { HeadTags } from '@/components/head-tags'
 import { UserTools } from '@/components/user-tools/user-tools'
 import type { CommunityWallPerson } from '@/data/de/community-people'
 import { breakpoints } from '@/helper/breakpoints'
 import { tw } from '@/helper/tw'
-import type { PersonioPosition } from '@/__pages__/jobs/[[...jobId]]'
 
 const testimonials = [
   {
