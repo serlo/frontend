@@ -61,11 +61,11 @@ function shouldNodeBeRemoved(
   // If the next sibling is an empty paragraph,
   // increment the amount of empty paragraph siblings.
   const nextSiblingPath = Path.next(path)
+  let isNextSiblingEmptyParagraph = false
   if (Node.has(editor, nextSiblingPath)) {
     const nextSibling = Node.get(editor, nextSiblingPath)
-    if (isEmptyParagraph(editor, nextSibling)) {
-      amountOfEmptyParagraphSiblings += 1
-    }
+    isNextSiblingEmptyParagraph = isEmptyParagraph(editor, nextSibling)
+    if (isNextSiblingEmptyParagraph) amountOfEmptyParagraphSiblings += 1
   }
   // Early return if the amount of empty paragraph siblings is already more than 1.
   if (amountOfEmptyParagraphSiblings > 1) return true
@@ -79,7 +79,10 @@ function shouldNodeBeRemoved(
     Node.has(editor, siblingBeforePreviousPath)
   ) {
     const siblingBeforePrevious = Node.get(editor, siblingBeforePreviousPath)
-    if (isEmptyParagraph(editor, siblingBeforePrevious)) {
+    if (
+      isPreviousSiblingEmptyParagraph &&
+      isEmptyParagraph(editor, siblingBeforePrevious)
+    ) {
       amountOfEmptyParagraphSiblings += 1
     }
   }
@@ -91,7 +94,10 @@ function shouldNodeBeRemoved(
   const siblingAfterNextPath = Path.next(nextSiblingPath)
   if (Node.has(editor, siblingAfterNextPath)) {
     const siblingAfterNext = Node.get(editor, siblingAfterNextPath)
-    if (isEmptyParagraph(editor, siblingAfterNext)) {
+    if (
+      isNextSiblingEmptyParagraph &&
+      isEmptyParagraph(editor, siblingAfterNext)
+    ) {
       amountOfEmptyParagraphSiblings += 1
     }
   }
