@@ -87,7 +87,7 @@ module.exports = withBundleAnalyzer({
   async rewrites() {
     const isRewriting =
       process.env.NODE_ENV === 'development' ||
-      (process.env.NEXT_PUBLIC_ENV === 'preview' && // all preview builds except staging
+      (process.env.VERCEL_ENV === 'preview' && // all preview builds except staging
         process.env.VERCEL_GIT_COMMIT_REF !== 'staging')
 
     return isRewriting
