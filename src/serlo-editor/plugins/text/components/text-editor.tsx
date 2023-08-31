@@ -7,6 +7,7 @@ import {
   Editor,
   NodeEntry,
   Element,
+  BaseOperation,
 } from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 
@@ -19,6 +20,7 @@ import { useEditorChange } from '../hooks/use-editor-change'
 import { useSlateRenderHandlers } from '../hooks/use-slate-render-handlers'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
+import { withEmptyLines } from '../plugins'
 import type { TextEditorConfig, TextEditorState } from '../types/config'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
@@ -40,7 +42,7 @@ export function TextEditor(props: TextEditorProps) {
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
   const { createTextEditor, toolbarControls } = textFormattingOptions
   const editor = useMemo(
-    () => createTextEditor(withReact(createEditor())),
+    () => createTextEditor(withReact(withEmptyLines(createEditor()))),
     [createTextEditor]
   )
 
@@ -148,6 +150,12 @@ export function TextEditor(props: TextEditorProps) {
     [editable, editor, focused]
   )
 
+  // TODO: When the new custom placeholder is shown, the onBlur won't work
+  const handleEditableBlur = useCallback(() => {
+    // @ts-expect-error TODO: Explain the hack here
+    editor.normalize({ force: true, operation: 'blur' }) as BaseOperation
+  }, [editor])
+
   // fallback to static placeholder when:
   // - for inline text plugins
   // - we define a custom placeholder text
@@ -176,6 +184,7 @@ export function TextEditor(props: TextEditorProps) {
         readOnly={!editable}
         onKeyDown={handleEditableKeyDown}
         onPaste={handleEditablePaste}
+        onBlur={handleEditableBlur}
         renderElement={handleRenderElement}
         renderLeaf={handleRenderLeaf}
         decorate={
