@@ -7,7 +7,6 @@ import {
   Editor,
   NodeEntry,
   Element,
-  BaseOperation,
 } from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 
@@ -153,7 +152,7 @@ export function TextEditor(props: TextEditorProps) {
   // TODO: When the new custom placeholder is shown, the onBlur won't work
   const handleEditableBlur = useCallback(() => {
     // @ts-expect-error TODO: Explain the hack here
-    editor.normalize({ force: true, operation: 'blur' }) as BaseOperation
+    editor.normalize({ force: true, operation: 'blur' })
   }, [editor])
 
   // fallback to static placeholder when:
