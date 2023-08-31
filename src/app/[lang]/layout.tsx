@@ -128,7 +128,7 @@ export default function RootLayout({
           }}
         ></script>
       </head>
-      <body style={bodyStyles}>
+      <body style={bodyStyles} id="__next">
         <Polyfills />
         {children}
         <script async defer src="https://sa.serlo.org/latest.js" />

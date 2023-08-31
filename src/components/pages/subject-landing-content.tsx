@@ -1,3 +1,5 @@
+'use client'
+
 import type { deSubjectLandingSubjects } from './subject-landing'
 import { HeadTags } from '../head-tags'
 import { FooterNew } from '../landing/rework/footer-new'
