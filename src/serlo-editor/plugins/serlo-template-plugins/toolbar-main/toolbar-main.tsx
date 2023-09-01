@@ -46,7 +46,7 @@ export function ToolbarMain({
     <>
       <ClientOnlyPortal selector=".controls-portal">
         <nav className="flex h-14 w-full justify-between pl-5 pr-3 pt-6">
-          <div className="md:-ml-28 lg:-ml-52">
+          <div className="pointer-events-auto md:-ml-28 lg:-ml-52">
             {renderHistoryButton('undo')}
             {renderHistoryButton('redo')}
           </div>
@@ -89,7 +89,7 @@ export function ToolbarMain({
   function renderSaveButton() {
     return (
       <button
-        className="serlo-button-green ml-2 md:mr-[-11.5vw] lg:-mr-52 xl:-mr-64"
+        className="serlo-button-green pointer-events-auto ml-2 md:mr-[-11.5vw] lg:-mr-52 xl:-mr-64"
         onClick={() => {
           if (isChanged) setSaveModalOpen(true)
           else showToastNotice('👀 ' + editorStrings.noChangesWarning)

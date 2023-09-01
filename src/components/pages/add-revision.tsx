@@ -120,7 +120,7 @@ export function AddRevision({
         )}${id ? ` (${id})` : ''}`}</title>
       </Head>
       {renderBacklink()}
-      <div className="controls-portal sticky top-0 z-[90] bg-white md:bg-transparent" />
+      <div className="controls-portal pointer-events-none sticky top-0 z-[90] bg-white md:bg-transparent" />
       <div className="serlo-editor-hacks mx-auto mb-24 max-w-[816px]">
         <SerloEditor
           entityNeedsReview={entityNeedsReview}
