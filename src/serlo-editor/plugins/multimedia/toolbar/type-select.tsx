@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 
 import type { MultimediaProps } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -14,13 +14,16 @@ import {
 interface MultimediaTypeSelectProps {
   allowedPlugins: MultimediaProps['config']['allowedPlugins']
   state: MultimediaProps['state']['multimedia']
+  stateCache: Record<string, unknown>
+  setStateCache: Dispatch<SetStateAction<Record<string, unknown>>>
 }
 
 export const MultimediaTypeSelect = ({
   allowedPlugins,
   state,
+  stateCache,
+  setStateCache,
 }: MultimediaTypeSelectProps) => {
-  const [stateCache, setStateCache] = useState<Record<string, unknown>>({})
   const pluginStrings = useEditorStrings().plugins
   const currentPluginType = useAppSelector((storeState) =>
     selectDocument(storeState, state.id)
