@@ -27,6 +27,12 @@ export const experiments: {
     start: -1,
     end: new Date('2023-09-15T00:00:00+0200').getTime(),
   },
+  {
+    experiment: 'headings',
+    ids: [25616],
+    start: -1,
+    end: new Date('2023-09-30T00:00:00+0200').getTime(),
+  },
 ]
 
 const ABContext = createContext<ABValue>(null)
