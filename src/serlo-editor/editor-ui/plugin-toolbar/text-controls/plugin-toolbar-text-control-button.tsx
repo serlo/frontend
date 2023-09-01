@@ -38,6 +38,7 @@ export function PluginToolbarTextControlButton({
       <EditorTooltip
         text={text}
         hotkeys={hotkeyWithClosingBracket?.slice(0, -1)}
+        className="top-8"
       />
       {children}
     </button>

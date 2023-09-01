@@ -26,6 +26,7 @@ export function InlineSrcControls({ state }: ImageProps) {
             mb-side mr-2 block w-60 rounded-xl border-2 border-editor-primary-100 bg-editor-primary-100
             px-2.5 py-[3px] text-almost-black focus:border-editor-primary focus:outline-none
           `}
+          data-qa="plugin-image-src"
         />
       </label>
     </p>

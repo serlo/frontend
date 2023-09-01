@@ -24,6 +24,7 @@ const defaultConfig: MultimediaConfig = {
         EditorPluginType.Text,
         EditorPluginType.Highlight,
         EditorPluginType.Anchor,
+        EditorPluginType.Audio,
         EditorPluginType.Equations,
         EditorPluginType.Image,
         EditorPluginType.SerloTable,

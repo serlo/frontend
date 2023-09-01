@@ -24,6 +24,13 @@ export interface TopicProps {
   data: TaxonomyData
 }
 
+const headingsDataTemp: { [key: number]: string } = {
+  29637: 'Baumdiagramm zeichnen',
+  29581: 'Abzählen mit Baumdiagramm',
+  5011: 'Passende Zahlen bauen',
+  5007: 'Kombinationen finden',
+}
+
 const DonationsBanner = dynamic<DonationsBannerProps>(() =>
   import(
     '@/components/content/donations-banner-experiment/donations-banner'
@@ -160,12 +167,19 @@ export function Topic({ data }: TopicProps) {
       data.exercisesContent.map((exercise, i) => {
         return (
           <Fragment key={i}>
+            {ab?.experiment === 'headings' &&
+              ab.group === 'b' &&
+              headingsDataTemp[exercise.context.id] && (
+                <div className="mx-side -mb-10 mt-16 text-xl font-bold">
+                  {headingsDataTemp[exercise.context.id]}
+                </div>
+              )}
             {renderArticle(
               [exercise],
               `tax${data.id}`,
               `ex${exercise.context.id}`
             )}
-            {i === 1 && renderSurvey()}
+            {i === (ab?.experiment === 'headings' ? 3 : 1) && renderSurvey()}
           </Fragment>
         )
       })
