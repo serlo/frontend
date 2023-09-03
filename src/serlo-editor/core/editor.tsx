@@ -69,8 +69,6 @@ function InnerDocument({
       if (event.target instanceof HTMLElement) {
         let currentElement: HTMLElement | null = event.target
 
-        console.log(new Date().toISOString(), currentElement)
-
         const newFocusPath: typeof focusPath = []
         let pluginPath: Array<number | string> = []
 
