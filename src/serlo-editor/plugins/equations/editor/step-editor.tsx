@@ -1,5 +1,3 @@
-import { startsWith } from 'ramda'
-
 import { TransformationTarget } from './editor-renderer'
 import { InlineMath } from './inline-math'
 import type { stepProps } from '..'
