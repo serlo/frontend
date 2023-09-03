@@ -29,7 +29,7 @@ export function EquationsEditor(props: EquationsProps) {
   const { state, id: pluginId } = props
 
   const currentFocus = useContext(FocusContext)
-  const nestedFocus = currentFocus.some((plugin) => plugin.id === pluginId)
+  const hasNestedFocus = currentFocus.some((plugin) => plugin.id === pluginId)
 
   const transformationTarget = toTransformationTarget(
     state.transformationTarget.value
@@ -37,7 +37,7 @@ export function EquationsEditor(props: EquationsProps) {
 
   const equationsStrings = useEditorStrings().plugins.equations
 
-  if (!nestedFocus)
+  if (!hasNestedFocus)
     return (
       <EquationsRenderer
         firstExplanation={
@@ -79,7 +79,7 @@ export function EquationsEditor(props: EquationsProps) {
 
   return (
     <div className="outline-none" tabIndex={-1}>
-      {nestedFocus ? <EquationsToolbar {...props} /> : null}
+      {hasNestedFocus ? <EquationsToolbar {...props} /> : null}
       <div className="mx-side py-2.5">
         <table className="whitespace-nowrap">
           {renderFirstExplanation()}
@@ -206,7 +206,7 @@ export function EquationsEditor(props: EquationsProps) {
   }
 
   function renderAddButton() {
-    if (!nestedFocus) return
+    if (!hasNestedFocus) return
 
     return (
       <button
@@ -219,11 +219,9 @@ export function EquationsEditor(props: EquationsProps) {
   }
 
   function renderButtons(row: number) {
-    if (!nestedFocus) return
+    if (!hasNestedFocus) return
     const buttonClass = tw`serlo-button-editor-secondary serlo-tooltip-trigger mr-2 h-8 w-8`
 
-    // Add `tabIndex={-1}` to the buttons so that they are not accessible via
-    // Tab or Shift + Tab.
     return (
       <div className="ml-6 text-right">
         {row === 0 ? null : (
