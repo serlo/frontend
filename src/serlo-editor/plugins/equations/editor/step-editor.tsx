@@ -1,45 +1,31 @@
+import { startsWith } from 'ramda'
+
 import { TransformationTarget } from './editor-renderer'
-import type { GridFocus } from './grid-focus'
 import { InlineMath } from './inline-math'
-import { StepSegment } from './step-segment'
 import type { stepProps } from '..'
 import { renderSignToString, Sign } from '../sign'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { getPathDataAndIsFocus } from '@/serlo-editor/editor-ui/focus-helper'
 import type { StateTypeReturnType } from '@/serlo-editor/plugin'
+import { FocusPath } from '@/serlo-editor/types'
 
 export interface StepEditorProps {
-  gridFocus: GridFocus
-
-  resetFocus: () => void
   row: number
   state: StateTypeReturnType<typeof stepProps>
   transformationTarget: TransformationTarget
+  path: Array<string | number>
+  currentFocus: FocusPath
+  pluginId: string
 }
 
 export function StepEditor(props: StepEditorProps) {
   const equationsStrings = useEditorStrings().plugins.equations
-  const { gridFocus, resetFocus, row, state, transformationTarget } = props
+  const { row, state, transformationTarget, path, currentFocus } = props
+  const { pluginId } = props
 
   return (
     <>
-      {transformationTarget === TransformationTarget.Equation && (
-        <td
-          className="text-right"
-          onClick={() => gridFocus.setFocus({ row, column: StepSegment.Left })}
-        >
-          <InlineMath
-            focused={gridFocus.isFocused({ row, column: StepSegment.Left })}
-            placeholder={
-              row === 0 ? '3x+1' : `[${equationsStrings.leftHandSide}]`
-            }
-            state={state.left}
-            onChange={(src) => state.left.set(src)}
-            onFocusNext={() => gridFocus.moveRight()}
-            onFocusPrevious={() => gridFocus.moveLeft()}
-            closeMathEditorOverlay={resetFocus}
-          />
-        </td>
-      )}
+      {transformationTarget === TransformationTarget.Equation && renderLeft()}
       <td className="px-[3px] py-0 text-center align-baseline">
         {(transformationTarget === 'equation' || row !== 0) && (
           <select
@@ -60,12 +46,46 @@ export function StepEditor(props: StepEditorProps) {
           </select>
         )}
       </td>
-      <td
-        className="align-baseline"
-        onClick={() => gridFocus.setFocus({ row, column: StepSegment.Right })}
-      >
+      {renderRight()}
+      {transformationTarget === TransformationTarget.Equation &&
+        renderTransform()}
+    </>
+  )
+
+  function renderLeft() {
+    const { isFocused, pathData } = getPathDataAndIsFocus({
+      pluginId,
+      path: [...path, 'left'],
+      currentFocus,
+    })
+
+    return (
+      <td className="text-right" {...pathData}>
         <InlineMath
-          focused={gridFocus.isFocused({ row, column: StepSegment.Right })}
+          focused={isFocused}
+          placeholder={
+            row === 0 ? '3x+1' : `[${equationsStrings.leftHandSide}]`
+          }
+          state={state.left}
+          onChange={(src) => state.left.set(src)}
+          onFocusNext={() => void 0}
+          onFocusPrevious={() => void 0}
+        />
+      </td>
+    )
+  }
+
+  function renderRight() {
+    const { isFocused, pathData } = getPathDataAndIsFocus({
+      pluginId,
+      path: [...path, 'right'],
+      currentFocus,
+    })
+
+    return (
+      <td className="align-baseline" {...pathData}>
+        <InlineMath
+          focused={isFocused}
           placeholder={
             row === 0
               ? '4x+3x'
@@ -75,37 +95,36 @@ export function StepEditor(props: StepEditorProps) {
           }
           state={state.right}
           onChange={(src) => state.right.set(src)}
-          onFocusNext={() => gridFocus.moveRight()}
-          onFocusPrevious={() => gridFocus.moveLeft()}
-          closeMathEditorOverlay={resetFocus}
+          onFocusNext={() => void 0}
+          onFocusPrevious={() => void 0}
         />
       </td>
-      {transformationTarget === TransformationTarget.Equation && (
-        <td
-          className="pl-[5px] align-baseline"
-          onClick={() =>
-            gridFocus.setFocus({ row, column: StepSegment.Transform })
+    )
+  }
+
+  function renderTransform() {
+    const { isFocused, pathData } = getPathDataAndIsFocus({
+      pluginId,
+      path: [...path, 'transform'],
+      currentFocus,
+    })
+
+    return (
+      <td className="pl-[5px] align-baseline" {...pathData}>
+        |{' '}
+        <InlineMath
+          focused={isFocused}
+          placeholder={
+            row === 0
+              ? equationsStrings.transformationExample
+              : `[${equationsStrings.transformation}]`
           }
-        >
-          |{' '}
-          <InlineMath
-            focused={gridFocus.isFocused({
-              row,
-              column: StepSegment.Transform,
-            })}
-            placeholder={
-              row === 0
-                ? equationsStrings.transformationExample
-                : `[${equationsStrings.transformation}]`
-            }
-            state={state.transform}
-            onChange={(src) => state.transform.set(src)}
-            onFocusNext={() => gridFocus.moveRight()}
-            onFocusPrevious={() => gridFocus.moveLeft()}
-            closeMathEditorOverlay={resetFocus}
-          />
-        </td>
-      )}
-    </>
-  )
+          state={state.transform}
+          onChange={(src) => state.transform.set(src)}
+          onFocusNext={() => void 0}
+          onFocusPrevious={() => void 0}
+        />
+      </td>
+    )
+  }
 }

@@ -3,14 +3,10 @@ import {
   faPlusCircle,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
-import { includes } from 'ramda'
-import { useCallback, useEffect, useRef } from 'react'
-import { useHotkeys } from 'react-hotkeys-hook'
+import { useContext } from 'react'
 
 import { toTransformationTarget, TransformationTarget } from './editor-renderer'
-import { useGridFocus } from './grid-focus'
 import { StepEditor } from './step-editor'
-import { StepSegment } from './step-segment'
 import type { EquationsProps } from '..'
 import {
   EquationsRenderer,
@@ -22,150 +18,22 @@ import { EquationsToolbar } from '../toolbar'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
+import { FocusContext } from '@/serlo-editor/core'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
+import { getPathDataForFocus } from '@/serlo-editor/editor-ui/focus-helper'
 import { MathRenderer } from '@/serlo-editor/math'
-import {
-  store,
-  focus,
-  focusNext,
-  focusPrevious,
-  selectFocused,
-  selectIsDocumentEmpty,
-  useAppSelector,
-  useAppDispatch,
-  selectChildTree,
-} from '@/serlo-editor/store'
+import { store, selectIsDocumentEmpty } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function EquationsEditor(props: EquationsProps) {
-  const { focused, state } = props
+  const { state, id: pluginId } = props
 
-  const dispatch = useAppDispatch()
-  const focusedElement = useAppSelector(selectFocused)
-  const nestedFocus =
-    focused ||
-    includes(
-      focusedElement,
-      props.state.steps.map((step) => step.explanation.id)
-    ) ||
-    focusedElement === state.firstExplanation.id
+  const currentFocus = useContext(FocusContext)
+  const nestedFocus = currentFocus.some((plugin) => plugin.id === pluginId)
 
   const transformationTarget = toTransformationTarget(
     state.transformationTarget.value
   )
-
-  const gridFocus = useGridFocus({
-    rows: state.steps.length,
-    columns: 4,
-    focusNext: () => {
-      const focusTree = selectChildTree(store.getState())
-      dispatch(focusNext(focusTree))
-    },
-    focusPrevious: () => {
-      const focusTree = selectChildTree(store.getState())
-      dispatch(focusPrevious(focusTree))
-    },
-    transformationTarget,
-    onFocusChanged: (state) => {
-      if (state === 'firstExplanation') {
-        dispatch(focus(props.state.firstExplanation.id))
-      } else if (state?.column === StepSegment.Explanation) {
-        dispatch(focus(props.state.steps[state.row].explanation.id))
-      } else {
-        dispatch(focus(props.id))
-      }
-    },
-  })
-  const { setFocus } = gridFocus
-
-  const pluginFocusWrapper = useRef<HTMLDivElement>(null)
-
-  const resetFocus = useCallback(() => {
-    setFocus(null)
-    pluginFocusWrapper?.current?.focus()
-  }, [setFocus])
-
-  useHotkeys(
-    'tab',
-    (event) => {
-      handleKeyDown(event, () => {
-        const isPluginWrapperFocused =
-          pluginFocusWrapper.current === document.activeElement
-
-        // Restore focus to first explanation
-        if (isPluginWrapperFocused) {
-          gridFocus.setFocus('firstExplanation')
-          return
-        }
-
-        if (
-          gridFocus.isFocused({
-            row: state.steps.length - 1,
-            column: lastColumn(transformationTarget),
-          })
-        ) {
-          const index = state.steps.length
-          insertNewEquationAt(index)
-          gridFocus.setFocus({
-            row: index - 1,
-            column: StepSegment.Explanation,
-          })
-        } else {
-          gridFocus.moveRight()
-        }
-      })
-    },
-    {
-      scopes: ['global'],
-      enabled: focused,
-    }
-  )
-
-  useHotkeys(
-    'shift+tab',
-    (event) => {
-      handleKeyDown(event, () => {
-        const isPluginWrapperFocused =
-          pluginFocusWrapper.current === document.activeElement
-        // Restore focus to first explanation
-        if (isPluginWrapperFocused) {
-          gridFocus.setFocus('firstExplanation')
-          return
-        }
-        gridFocus.moveLeft()
-      })
-    },
-    {
-      scopes: ['global'],
-      enabled: focused,
-    }
-  )
-
-  useHotkeys(
-    'return',
-    (event) => {
-      handleKeyDown(event, () => {
-        if (!gridFocus.focus || gridFocus.focus === 'firstExplanation') return
-        insertNewEquationWithFocus(gridFocus.focus.row + 1)
-      })
-    },
-    {
-      scopes: ['global'],
-      enabled: focused,
-    }
-  )
-
-  useEffect(() => {
-    if (nestedFocus) {
-      gridFocus.setFocus({
-        row: 0,
-        column: firstColumn(transformationTarget),
-      })
-      dispatch(focus(props.id))
-    }
-    //prevents loop
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nestedFocus])
 
   const equationsStrings = useEditorStrings().plugins.equations
 
@@ -209,25 +77,34 @@ export function EquationsEditor(props: EquationsProps) {
     })
   }
 
-  const hasFocusWithin =
-    typeof window !== 'undefined' && pluginFocusWrapper.current
-      ? pluginFocusWrapper.current.contains(document.activeElement)
-      : false
-
   return (
-    <div ref={pluginFocusWrapper} className="outline-none" tabIndex={-1}>
-      {props.focused || hasFocusWithin ? <EquationsToolbar {...props} /> : null}
+    <div className="outline-none" tabIndex={-1}>
+      {nestedFocus ? <EquationsToolbar {...props} /> : null}
       <div className="mx-side py-2.5">
         <table className="whitespace-nowrap">
           {renderFirstExplanation()}
           {state.steps.map((step, row) => {
+            const path = ['steps', row]
+
             return (
-              <tbody key={step.explanation.id}>
+              <tbody
+                key={step.explanation.id}
+                {...getPathDataForFocus({
+                  pluginId,
+                  path,
+                  targetPath: [
+                    ...path,
+                    transformationTarget !== 'term' ? 'left' : 'right',
+                  ],
+                  currentFocus,
+                })}
+              >
                 <tr>
                   <StepEditor
-                    gridFocus={gridFocus}
-                    resetFocus={resetFocus}
                     row={row}
+                    path={path}
+                    pluginId={pluginId}
+                    currentFocus={currentFocus}
                     state={step}
                     transformationTarget={transformationTarget}
                   />
@@ -243,12 +120,11 @@ export function EquationsEditor(props: EquationsProps) {
               return (
                 <tr
                   className="[&_div]:m-0"
-                  onFocus={() =>
-                    gridFocus.setFocus({
-                      row,
-                      column: StepSegment.Explanation,
-                    })
-                  }
+                  {...getPathDataForFocus({
+                    pluginId,
+                    path: [...path, 'explanation'],
+                    currentFocus,
+                  })}
                 >
                   {transformationTarget === TransformationTarget.Equation && (
                     <td />
@@ -288,7 +164,13 @@ export function EquationsEditor(props: EquationsProps) {
     if (transformationTarget === TransformationTarget.Term) return
 
     return (
-      <tbody onFocus={() => gridFocus.setFocus('firstExplanation')}>
+      <tbody
+        {...getPathDataForFocus({
+          pluginId,
+          path: ['firstExplanation'],
+          currentFocus,
+        })}
+      >
         <tr className="text-center [&_div]:m-0">
           <td colSpan={3}>
             {state.firstExplanation.render({
@@ -309,11 +191,6 @@ export function EquationsEditor(props: EquationsProps) {
     )
   }
 
-  function handleKeyDown(e: KeyboardEvent | undefined, callback: () => void) {
-    e && e.preventDefault()
-    callback()
-  }
-
   function insertNewEquationAt(index: number) {
     state.steps.insert(index, {
       left: '',
@@ -326,10 +203,6 @@ export function EquationsEditor(props: EquationsProps) {
 
   function insertNewEquationWithFocus(index: number) {
     insertNewEquationAt(index)
-    gridFocus.setFocus({
-      row: index,
-      column: firstColumn(transformationTarget),
-    })
   }
 
   function renderAddButton() {
@@ -367,16 +240,4 @@ export function EquationsEditor(props: EquationsProps) {
       </div>
     )
   }
-}
-
-function firstColumn(transformationTarget: TransformationTarget) {
-  return transformationTarget === TransformationTarget.Term
-    ? StepSegment.Right
-    : StepSegment.Left
-}
-
-function lastColumn(transformationTarget: TransformationTarget) {
-  return transformationTarget === TransformationTarget.Term
-    ? StepSegment.Right
-    : StepSegment.Transform
 }

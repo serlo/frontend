@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import { Fragment, type ReactNode } from 'react'
 
 import { Sign, renderSignToString } from './sign'
+import { getPathData } from '@/serlo-editor/editor-ui/focus-helper'
 
 export interface EquationsRendererStep {
   left: string
@@ -36,13 +37,21 @@ export function EquationsRenderer({
   )
 
   function renderStep(step: EquationsRendererStep, i: number) {
+    const path = ['steps', i]
+
     return (
       <Fragment key={i}>
-        <tr>
+        <tr
+          {...getPathData([
+            ...path,
+            transformationTarget !== 'term' ? 'left' : 'right',
+          ])}
+        >
           {transformationTarget !== 'term' &&
             renderTD(
               step.left ? renderStepFormula('left') : null,
-              'text-right'
+              'text-right',
+              [...path, 'left']
             )}
           {transformationTarget !== 'term' || i !== 0 ? (
             renderTD(
@@ -54,18 +63,24 @@ export function EquationsRenderer({
           )}
           {renderTD(
             step.right ? renderStepFormula('right') : null,
-            'text-left'
+            'text-left',
+            [...path, 'right']
           )}
           {renderTD(
             step.transform ? (
               <span className="border-l border-black pl-1">
                 {renderStepFormula('transform')}
               </span>
-            ) : null
+            ) : null,
+            undefined,
+            [...path, 'transform']
           )}
         </tr>
         {step.explanation ? (
-          <tr className="text-brandgreen-darker whitespace-normal">
+          <tr
+            className="text-brandgreen-darker whitespace-normal"
+            {...getPathData([...path, 'explanation'])}
+          >
             <td />
             {renderDownArrow()}
             <td colSpan={2} className="relative -left-side px-1 pb-3 pt-1">
@@ -78,10 +93,14 @@ export function EquationsRenderer({
 
     function renderTD(
       content: JSX.Element | ReactNode[] | null,
-      align?: 'text-left' | 'text-right' | 'text-center'
+      align?: 'text-left' | 'text-right' | 'text-center',
+      path?: Array<string | number>
     ) {
       return (
-        <td className={clsx('px-1 pb-3 pt-1 align-baseline text-lg', align)}>
+        <td
+          className={clsx('px-1 pb-3 pt-1 align-baseline text-lg', align)}
+          {...getPathData(path)}
+        >
           {content}
         </td>
       )
@@ -97,12 +116,18 @@ export function EquationsRenderer({
 
     return (
       <>
-        <tr className="text-brandgreen-darker whitespace-normal text-center">
+        <tr
+          className="text-brandgreen-darker whitespace-normal text-center"
+          {...getPathData(['firstExplanation'])}
+        >
           <td className="relative -left-side pb-4" colSpan={3}>
             {firstExplanation}
           </td>
         </tr>
-        <tr className="text-brandgreen-darker">
+        <tr
+          className="text-brandgreen-darker"
+          {...getPathData(['firstExplanation'])}
+        >
           <td />
           {renderDownArrow()}
         </tr>
