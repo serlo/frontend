@@ -64,6 +64,9 @@ function InnerDocument({
 
   const [focusPath, setFocusPath] = useState<FocusPath>([])
 
+  // Function which is called for any change of focus via click or when Tab was
+  // entered. It receives the information from the data-plugin-path which
+  // property is focused now and saves it in the focus context.
   const onFocusinHandler = useCallback(
     (event: FocusEvent) => {
       if (event.target instanceof HTMLElement) {

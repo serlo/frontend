@@ -222,6 +222,8 @@ export function EquationsEditor(props: EquationsProps) {
     if (!hasNestedFocus) return
     const buttonClass = tw`serlo-button-editor-secondary serlo-tooltip-trigger mr-2 h-8 w-8`
 
+    // Add `tabIndex={-1}` to the buttons so that they are not accessible via
+    // Tab or Shift + Tab.
     return (
       <div className="ml-6 text-right">
         {row === 0 ? null : (
