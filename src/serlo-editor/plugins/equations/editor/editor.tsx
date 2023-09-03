@@ -222,18 +222,25 @@ export function EquationsEditor(props: EquationsProps) {
     if (!nestedFocus) return
     const buttonClass = tw`serlo-button-editor-secondary serlo-tooltip-trigger mr-2 h-8 w-8`
 
+    // Add `tabIndex={-1}` to the buttons so that they are not accessible via
+    // Tab or Shift + Tab.
     return (
       <div className="ml-6 text-right">
         {row === 0 ? null : (
           <button
             onClick={() => state.steps.move(row, row - 1)}
             className={buttonClass}
+            tabIndex={-1}
           >
             <EditorTooltip text={equationsStrings.moveUpLabel} />
             <FaIcon icon={faArrowCircleUp} className="-ml-0.25 align-[-3px]" />
           </button>
         )}
-        <button className={buttonClass} onClick={() => state.steps.remove(row)}>
+        <button
+          className={buttonClass}
+          onClick={() => state.steps.remove(row)}
+          tabIndex={-1}
+        >
           <EditorTooltip text={equationsStrings.removeRowLabel} />
           <FaIcon icon={faTrashAlt} className="align-baseline text-[15px]" />
         </button>
