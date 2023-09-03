@@ -1,10 +1,22 @@
-import { useMemo, useEffect, ReactNode, useRef, useState } from 'react'
+import { isEqual } from 'lodash'
+import {
+  useMemo,
+  useEffect,
+  ReactNode,
+  useRef,
+  useState,
+  useCallback,
+} from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { HotkeysProvider, useHotkeys } from 'react-hotkeys-hook'
 import { Provider } from 'react-redux'
 
-import { EditableContext, PreferenceContextProvider } from './contexts'
+import {
+  EditableContext,
+  PreferenceContextProvider,
+  FocusContext,
+} from './contexts'
 import { useBlurOnOutsideClick } from './hooks/use-blur-on-outside-click'
 import { SubDocument } from './sub-document'
 import {
@@ -19,6 +31,7 @@ import {
   selectSerializedDocument,
 } from '../store'
 import { ROOT } from '../store/root/constants'
+import { FocusPath } from '@/serlo-editor/types'
 
 /**
  * Renders a single editor for an Serlo Editor document
@@ -48,6 +61,50 @@ function InnerDocument({
 
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   useBlurOnOutsideClick(wrapperRef)
+
+  const [focusPath, setFocusPath] = useState<FocusPath>([])
+
+  const onFocusinHandler = useCallback(
+    (event: FocusEvent) => {
+      if (event.target instanceof HTMLElement) {
+        let currentElement: HTMLElement | null = event.target
+
+        console.log(new Date().toISOString(), currentElement)
+
+        const newFocusPath: typeof focusPath = []
+        let pluginPath: Array<number | string> = []
+
+        while (currentElement) {
+          const pluginProperty = currentElement.getAttribute('data-plugin-path')
+
+          if (pluginProperty && pluginPath.length === 0) {
+            // TODO: security
+            pluginPath = JSON.parse(pluginProperty) as Array<number | string>
+          }
+
+          const pluginId = currentElement.getAttribute('data-plugin-id')
+          const pluginType = currentElement.getAttribute('data-plugin-type')
+
+          if (pluginId !== null && pluginType !== null) {
+            newFocusPath.unshift({
+              id: pluginId,
+              type: pluginType,
+              path: pluginPath,
+            })
+
+            pluginPath = []
+          }
+
+          currentElement = currentElement.parentElement
+        }
+
+        if (!isEqual(focusPath, newFocusPath)) {
+          setFocusPath(newFocusPath)
+        }
+      }
+    },
+    [setFocusPath]
+  )
 
   useEffect(() => {
     if (typeof onChange !== 'function') return
@@ -132,10 +189,18 @@ function InnerDocument({
   if (!isInitialized) return null
 
   return (
-    <div className="relative" ref={wrapperRef}>
+    <div
+      className="relative"
+      ref={(div) => {
+        wrapperRef.current = div
+        div?.addEventListener('focusin', onFocusinHandler)
+      }}
+    >
       <PreferenceContextProvider>
         <EditableContext.Provider value={editableContextValue}>
-          {renderChildren(ROOT)}
+          <FocusContext.Provider value={focusPath}>
+            {renderChildren(ROOT)}
+          </FocusContext.Provider>
         </EditableContext.Provider>
       </PreferenceContextProvider>
     </div>

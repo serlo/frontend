@@ -130,6 +130,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         onMouseDown={handleFocus}
         ref={containerRef}
         data-document
+        data-plugin-id={id}
+        data-plugin-type={document?.plugin}
         tabIndex={-1}
       >
         <plugin.Component
