@@ -69,7 +69,7 @@ export function mergePlugins(
 
   // If the editor is empty, remove the current Slate instance
   // and focus the one it's been merged with
-  if (Node.string(editor) === '') {
+  if (Node.string(editor) === '' && editor.children.length <= 1) {
     const focusTree = selectChildTree(store.getState())
     const focusAction = direction === 'previous' ? focusPrevious : focusNext
     store.dispatch(focusAction(focusTree))
