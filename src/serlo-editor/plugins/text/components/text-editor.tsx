@@ -19,6 +19,7 @@ import { useEditorChange } from '../hooks/use-editor-change'
 import { useSlateRenderHandlers } from '../hooks/use-slate-render-handlers'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
+import { withCorrectVoidBehavior } from '../plugins/with-correct-void-behavior'
 import type { TextEditorConfig, TextEditorState } from '../types/config'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
@@ -39,10 +40,9 @@ export function TextEditor(props: TextEditorProps) {
 
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
   const { createTextEditor, toolbarControls } = textFormattingOptions
-  const editor = useMemo(
-    () => createTextEditor(withReact(createEditor())),
-    [createTextEditor]
-  )
+  const editor = useMemo(() => {
+    return createTextEditor(withReact(withCorrectVoidBehavior(createEditor())))
+  }, [createTextEditor])
 
   const suggestions = useSuggestions({ editor, id, editable, focused })
   const { showSuggestions, suggestionsProps } = suggestions
