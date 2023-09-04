@@ -361,7 +361,7 @@
 
     &:hover > .serlo-tooltip,
     &:focus > .serlo-tooltip {
-      @apply not-sr-only absolute pb-[0.7rem] opacity-95;
+      @apply not-sr-only absolute pb-[0.7rem] opacity-90;
     }
   }
 

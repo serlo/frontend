@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import type { MultimediaProps } from '.'
 import { MultimediaRenderer } from './renderer'
 import { getStyleHacks } from './style-hacks'
@@ -14,6 +16,7 @@ import {
 } from '@/serlo-editor/store'
 
 export function MultimediaEditor(props: MultimediaProps) {
+  const [stateCache, setStateCache] = useState<Record<string, unknown>>({})
   const { config, state, editable, focused } = props
   const { explanation, multimedia, width } = state
 
@@ -44,6 +47,8 @@ export function MultimediaEditor(props: MultimediaProps) {
             <MultimediaTypeSelect
               allowedPlugins={config.allowedPlugins}
               state={state.multimedia}
+              stateCache={stateCache}
+              setStateCache={setStateCache}
             />
           )}
         </MultimediaToolbar>
