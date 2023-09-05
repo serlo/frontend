@@ -137,7 +137,6 @@ export function FrontendClientBase({
                 {children as JSX.Element}
               </ConditionalWrap>
             </ConditionalWrap>
-            <MaintenanceBanner />
             <ToastNotice />
           </EntityIdProvider>
         </LoggedInDataProvider>
