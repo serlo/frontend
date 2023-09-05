@@ -2,8 +2,8 @@ export function MaintenanceBanner() {
   return (
     <div className="absolute left-0 right-0 top-0 z-20 hidden h-10 bg-brand-200 sm:block">
       <p className="p-2 text-right">
-        <b>Vorsicht:</b> Am Mittwoch (06.09) ab 22 Uhr wird Serlo gewartet und
-        für einige Stunden nicht verfügbar sein 🧑‍🔧
+        <span className="font-bold">Vorsicht:</span> Am Mittwoch (06.09) ab 22
+        Uhr wird Serlo gewartet und für einige Stunden nicht verfügbar sein 🧑‍🔧
       </p>
       <style jsx global>
         {`
