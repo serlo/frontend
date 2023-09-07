@@ -17,7 +17,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { CommentStatus, Instance } from '@/fetcher/graphql-types/operations'
 import { useCommentDataAll } from '@/fetcher/use-comment-data-all'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
-import { set } from 'nprogress'
 
 export function CommentAreaAllThreads() {
   const [filter, setFilter] = useState('')
