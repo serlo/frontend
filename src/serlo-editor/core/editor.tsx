@@ -17,7 +17,6 @@ import {
   PreferenceContextProvider,
   FocusContext,
 } from './contexts'
-import { useBlurOnOutsideClick } from './hooks/use-blur-on-outside-click'
 import { SubDocument } from './sub-document'
 import {
   runInitRootSaga,
@@ -29,6 +28,7 @@ import {
   useAppDispatch,
   DocumentState,
   selectSerializedDocument,
+  focus,
 } from '../store'
 import { ROOT } from '../store/root/constants'
 import { FocusPath } from '@/serlo-editor/types'
@@ -60,7 +60,6 @@ function InnerDocument({
   const dispatch = useAppDispatch()
 
   const wrapperRef = useRef<HTMLDivElement | null>(null)
-  useBlurOnOutsideClick(wrapperRef)
 
   const [focusPath, setFocusPath] = useState<FocusPath>([])
 
@@ -105,6 +104,7 @@ function InnerDocument({
     }
   }, [])
 
+  // Attach focus management event listeners
   useEffect(() => {
     const wrapperElement = wrapperRef.current
 
@@ -116,6 +116,29 @@ function InnerDocument({
       wrapperElement?.removeEventListener('focusin', onFocusinHandler)
     }
   }, [onFocusinHandler, isInitialized])
+
+  // Handle clicks outside of the editor (reset focus state)
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      const clickedElement = event.target as Element
+      if (
+        document.body.contains(clickedElement) && // clicked element is present in the document
+        wrapperRef.current && // provided wrapper is defined
+        !wrapperRef.current.contains(clickedElement) && // clicked element is not a child of the provided wrapper
+        !clickedElement.closest('.ReactModalPortal') // clicked element is not a part of a modal
+      ) {
+        dispatch(focus(null)) // reset the focus state in Redux store (blur the editor)
+        setFocusPath([]) // reset the focus state in useState hook
+      }
+    }
+
+    // Bind the event listener
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [dispatch])
 
   useEffect(() => {
     if (typeof onChange !== 'function') return
