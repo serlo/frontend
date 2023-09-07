@@ -30,7 +30,7 @@ export function CommentAreaAllThreadsThread({
   const href = thread.object.alias
   const latestCommentId = thread.comments.nodes.at(-1)?.id
 
-  const [status, setStatus] = useState<string>(thread.status)
+  const [status, setStatus] = useState<CommentStatus>(thread.status)
 
   const { strings } = useInstanceData()
 
@@ -74,12 +74,13 @@ export function CommentAreaAllThreadsThread({
               disabled={!canSetStatus}
               value={status}
               onChange={(e) => {
-                setStatus(e.target.value)
+                const newStatus = e.target.value as CommentStatus
+                setStatus(newStatus)
                 submitEvent('thread_status_set')
                 onMutate()
                 void mutateStatus({
                   id: [thread.id],
-                  status: e.target.value as CommentStatus,
+                  status: newStatus,
                 })
               }}
             >
