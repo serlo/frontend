@@ -208,7 +208,7 @@ export function SerloTableEditor(props: SerloTableProps) {
             </>
           ) : null}
         </nav>
-        <nav className="absolute -mt-12">
+        <nav className="absolute bottom-12">
           {showColButtons ? (
             <>
               {renderInlineAddButton(false)}
@@ -309,7 +309,7 @@ export function SerloTableEditor(props: SerloTableProps) {
       <button
         className={clsx(
           'serlo-button-light',
-          isRow ? 'm-4 -mt-4 w-auto' : 'mb-16'
+          isRow ? 'm-4 mt-0 w-auto' : 'mb-16'
         )}
         title={replaceWithType(tableStrings.addType, isRow)}
         onClick={() => {
