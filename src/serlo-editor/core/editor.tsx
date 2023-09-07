@@ -1,4 +1,7 @@
-import { isEqual } from 'lodash'
+import * as t from 'io-ts'
+
+// TODO: Remove
+import { isEqual, get as getPath } from 'lodash'
 import {
   useMemo,
   useEffect,
@@ -29,6 +32,7 @@ import {
   DocumentState,
   selectSerializedDocument,
   focus,
+  selectDocument,
 } from '../store'
 import { ROOT } from '../store/root/constants'
 import { FocusPath } from '@/serlo-editor/types'
@@ -95,6 +99,30 @@ function InnerDocument({
         }
 
         currentElement = currentElement.parentElement
+      }
+
+      const lastElement = newFocusPath.at(-1)
+
+      if (lastElement !== undefined && lastElement.path.length > 0) {
+        const document = selectSerializedDocument(
+          store.getState(),
+          lastElement.id
+        )
+
+        if (document !== null) {
+          const targetedPlugin = getPath(
+            document.state,
+            lastElement.path
+          ) as unknown
+
+          if (t.type({ id: t.string, plugin: t.string }).is(targetedPlugin)) {
+            newFocusPath.push({
+              id: targetedPlugin.id,
+              type: targetedPlugin.plugin,
+              path: [],
+            })
+          }
+        }
       }
 
       setFocusPath((oldFocusPath) => {
