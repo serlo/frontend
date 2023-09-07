@@ -258,7 +258,8 @@ export function SerloTableEditor(props: SerloTableProps) {
         <button
           className="serlo-button-blue-transparent text-brand-400"
           title={replaceWithType(tableStrings.deleteType, isRow)}
-          onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
+          // prevent editor from stealing events
+          onMouseDown={(e) => e.stopPropagation()}
           onClick={onRemove}
         >
           <FaIcon icon={faTrashCan} />
