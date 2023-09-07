@@ -3996,7 +3996,6 @@ __metadata:
     "@types/jest": ^29.5.3
     "@types/js-cookie": ^3.0.3
     "@types/katex": ^0.16.2
-    "@types/lodash": ^4.14.196
     "@types/node": ^18.17.4
     "@types/nprogress": ^0.2.0
     "@types/prismjs": ^1.26.0
@@ -4041,7 +4040,6 @@ __metadata:
     jest: ^27.5.1
     js-cookie: ^3.0.5
     katex: ^0.16.8
-    lodash: ^4.17.21
     msw: ^0.47.4
     next: ^13.4.19
     npm-run-all: ^4.1.5
@@ -4534,7 +4532,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.14.149, @types/lodash@npm:^4.14.196":
+"@types/lodash@npm:^4.14.149":
   version: 4.14.196
   resolution: "@types/lodash@npm:4.14.196"
   checksum: 201d17c3e62ae02a93c99ec78e024b2be9bd75564dd8fd8c26f6ac51a985ab280d28ce2688c3bcdfe785b0991cd9814edff19ee000234c7b45d9a697f09feb6a
