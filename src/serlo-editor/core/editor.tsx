@@ -1,7 +1,5 @@
 import * as t from 'io-ts'
-
-// TODO: Remove
-import { isEqual, get as getPath } from 'lodash'
+import { equals } from 'ramda'
 import {
   useMemo,
   useEffect,
@@ -32,7 +30,6 @@ import {
   DocumentState,
   selectSerializedDocument,
   focus,
-  selectDocument,
 } from '../store'
 import { ROOT } from '../store/root/constants'
 import { FocusPath } from '@/serlo-editor/types'
@@ -110,10 +107,10 @@ function InnerDocument({
         )
 
         if (document !== null) {
-          const targetedPlugin = getPath(
-            document.state,
-            lastElement.path
-          ) as unknown
+          const targetedPlugin = lastElement.path.reduce(
+            (acc, curr) => acc && acc[curr as keyof typeof acc],
+            document.state as unknown
+          )
 
           if (t.type({ id: t.string, plugin: t.string }).is(targetedPlugin)) {
             newFocusPath.push({
@@ -126,7 +123,7 @@ function InnerDocument({
       }
 
       setFocusPath((oldFocusPath) => {
-        if (isEqual(oldFocusPath, newFocusPath)) return oldFocusPath
+        if (equals(oldFocusPath, newFocusPath)) return oldFocusPath
         return newFocusPath
       })
     }
