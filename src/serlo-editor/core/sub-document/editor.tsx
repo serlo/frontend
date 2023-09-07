@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import * as R from 'ramda'
-import { useRef, useEffect, useMemo, useCallback } from 'react'
+import { useRef, useEffect, useMemo, useCallback, useContext } from 'react'
 
 import type { SubDocumentProps } from '.'
 import { useEnableEditorHotkeys } from './use-enable-editor-hotkeys'
@@ -15,6 +15,7 @@ import {
   useAppSelector,
 } from '../../store'
 import type { StateUpdater } from '../../types/internal__plugin-state'
+import { FocusContext } from '../contexts'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
@@ -22,6 +23,11 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const document = useAppSelector((state) => selectDocument(state, id))
 
   const focused = useAppSelector((state) => selectIsFocused(state, id))
+  const currentFocus = useContext(FocusContext)
+  const focusFromCurrentFocus = currentFocus.some((plugin) => plugin.id === id)
+  const areWeInsideEquationsPlugin = currentFocus.some(
+    (plugin) => plugin.type === 'equations'
+  )
 
   const plugin = editorPlugins.getByType(document?.plugin ?? '')
 
@@ -138,7 +144,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           containerRef={containerRef}
           id={id}
           editable
-          focused={focused}
+          focused={areWeInsideEquationsPlugin ? focusFromCurrentFocus : focused}
           config={config}
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           state={state}
