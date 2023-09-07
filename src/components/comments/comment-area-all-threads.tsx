@@ -70,6 +70,7 @@ export function CommentAreaAllThreads() {
               value={status ?? ''}
               onChange={(e) => {
                 setStatus(e.target.value)
+                setShowRefresh(false)
               }}
               className="ml-10 cursor-pointer appearance-none rounded-lg bg-brand-400 p-3 pr-9 [&>option:selected]:bg-brand-100 [&>option]:bg-white"
             >
@@ -79,7 +80,7 @@ export function CommentAreaAllThreads() {
               <option value={CommentStatus.NoStatus}>kein Status</option>
             </select>
           </span>
-          {showRefresh && (
+          {showRefresh && status && (
             <button
               onClick={() => {
                 const cur = status
@@ -89,8 +90,9 @@ export function CommentAreaAllThreads() {
                   setStatus(cur)
                 }, 10)
               }}
+              className="serlo-link ml-10"
             >
-              aktualisieren
+              Filter aktualisieren
             </button>
           )}
         </div>
