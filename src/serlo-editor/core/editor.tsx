@@ -67,45 +67,55 @@ function InnerDocument({
   // Function which is called for any change of focus via click or when Tab was
   // entered. It receives the information from the data-plugin-path which
   // property is focused now and saves it in the focus context.
-  const onFocusinHandler = useCallback(
-    (event: FocusEvent) => {
-      if (event.target instanceof HTMLElement) {
-        let currentElement: HTMLElement | null = event.target
+  const onFocusinHandler = useCallback((event: FocusEvent) => {
+    if (event.target instanceof HTMLElement) {
+      let currentElement: HTMLElement | null = event.target
 
-        const newFocusPath: typeof focusPath = []
-        let pluginPath: Array<number | string> = []
+      const newFocusPath: typeof focusPath = []
+      let pluginPath: Array<number | string> = []
 
-        while (currentElement) {
-          const pluginProperty = currentElement.getAttribute('data-plugin-path')
+      while (currentElement) {
+        const pluginProperty = currentElement.getAttribute('data-plugin-path')
 
-          if (pluginProperty && pluginPath.length === 0) {
-            // TODO: security
-            pluginPath = JSON.parse(pluginProperty) as Array<number | string>
-          }
-
-          const pluginId = currentElement.getAttribute('data-plugin-id')
-          const pluginType = currentElement.getAttribute('data-plugin-type')
-
-          if (pluginId !== null && pluginType !== null) {
-            newFocusPath.unshift({
-              id: pluginId,
-              type: pluginType,
-              path: pluginPath,
-            })
-
-            pluginPath = []
-          }
-
-          currentElement = currentElement.parentElement
+        if (pluginProperty && pluginPath.length === 0) {
+          // TODO: security
+          pluginPath = JSON.parse(pluginProperty) as Array<number | string>
         }
 
-        if (!isEqual(focusPath, newFocusPath)) {
-          setFocusPath(newFocusPath)
+        const pluginId = currentElement.getAttribute('data-plugin-id')
+        const pluginType = currentElement.getAttribute('data-plugin-type')
+
+        if (pluginId !== null && pluginType !== null) {
+          newFocusPath.unshift({
+            id: pluginId,
+            type: pluginType,
+            path: pluginPath,
+          })
+
+          pluginPath = []
         }
+
+        currentElement = currentElement.parentElement
       }
-    },
-    [setFocusPath]
-  )
+
+      setFocusPath((oldFocusPath) => {
+        if (isEqual(oldFocusPath, newFocusPath)) return oldFocusPath
+        return newFocusPath
+      })
+    }
+  }, [])
+
+  useEffect(() => {
+    const wrapperElement = wrapperRef.current
+
+    if (wrapperElement) {
+      wrapperElement.addEventListener('focusin', onFocusinHandler)
+    }
+
+    return () => {
+      wrapperElement?.removeEventListener('focusin', onFocusinHandler)
+    }
+  }, [onFocusinHandler, isInitialized])
 
   useEffect(() => {
     if (typeof onChange !== 'function') return
@@ -190,13 +200,7 @@ function InnerDocument({
   if (!isInitialized) return null
 
   return (
-    <div
-      className="relative"
-      ref={(div) => {
-        wrapperRef.current = div
-        div?.addEventListener('focusin', onFocusinHandler)
-      }}
-    >
+    <div className="relative" ref={wrapperRef}>
       <PreferenceContextProvider>
         <EditableContext.Provider value={editableContextValue}>
           <FocusContext.Provider value={focusPath}>
