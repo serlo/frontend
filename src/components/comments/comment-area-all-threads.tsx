@@ -14,15 +14,21 @@ import { StaticInfoPanel } from '../static-info-panel'
 import { PleaseLogIn } from '../user/please-log-in'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
-import { Instance } from '@/fetcher/graphql-types/operations'
+import { CommentStatus, Instance } from '@/fetcher/graphql-types/operations'
 import { useCommentDataAll } from '@/fetcher/use-comment-data-all'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export function CommentAreaAllThreads() {
   const [filter, setFilter] = useState('')
+  const [status, setStatus] = useState<string | null>('')
+
+  const [showRefresh, setShowRefresh] = useState(false)
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { commentData, error, loading, loadMore } = useCommentDataAll(filter)
+  const { commentData, error, loading, loadMore } = useCommentDataAll(
+    filter,
+    (status ? status : undefined) as CommentStatus
+  )
   const { lang, strings } = useInstanceData()
   const auth = useAuthentication()
 
@@ -60,7 +66,35 @@ export function CommentAreaAllThreads() {
               <option value="czEwNjA4MQ==">Fächer im Aufbau</option>
               <option value="czE4MTg4Mw==">Lerntipps</option>
             </select>
+            <select
+              value={status ?? ''}
+              onChange={(e) => {
+                setStatus(e.target.value)
+                setShowRefresh(false)
+              }}
+              className="ml-10 cursor-pointer appearance-none rounded-lg bg-brand-400 p-3 pr-9 [&>option:selected]:bg-brand-100 [&>option]:bg-white"
+            >
+              <option value="">jeder Status</option>
+              <option value={CommentStatus.Open}>offen</option>
+              <option value={CommentStatus.Done}>abgeschlossen</option>
+              <option value={CommentStatus.NoStatus}>kein Status</option>
+            </select>
           </span>
+          {showRefresh && status && (
+            <button
+              onClick={() => {
+                const cur = status
+                setStatus(null)
+                setShowRefresh(false)
+                setTimeout(() => {
+                  setStatus(cur)
+                }, 10)
+              }}
+              className="serlo-link ml-10"
+            >
+              Filter aktualisieren
+            </button>
+          )}
         </div>
       )}
       <Guard data={commentData} error={error}>
@@ -98,7 +132,15 @@ export function CommentAreaAllThreads() {
     }
 
     return commentData?.map((thread) => {
-      return <CommentAreaAllThreadsThread key={thread.id} thread={thread} />
+      return (
+        <CommentAreaAllThreadsThread
+          key={thread.id}
+          thread={thread}
+          onMutate={() => {
+            setShowRefresh(true)
+          }}
+        />
+      )
     })
   }
 }

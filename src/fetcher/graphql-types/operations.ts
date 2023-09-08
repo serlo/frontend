@@ -594,6 +594,12 @@ export interface CommentEdge {
   node: Comment;
 }
 
+export enum CommentStatus {
+  Done = 'done',
+  NoStatus = 'noStatus',
+  Open = 'open'
+}
+
 export interface Course extends AbstractEntity, AbstractRepository, AbstractTaxonomyTermChild, AbstractUuid, InstanceAware, ThreadAware {
   __typename?: 'Course';
   alias: Scalars['String']['output'];
@@ -882,6 +888,12 @@ export interface CreateThreadNotificationEvent extends AbstractNotificationEvent
   object: AbstractUuid;
   objectId: Scalars['Int']['output'];
   thread: Thread;
+}
+
+export interface DefaultResponse {
+  __typename?: 'DefaultResponse';
+  query: Query;
+  success: Scalars['Boolean']['output'];
 }
 
 export interface DeletedEntitiesConnection {
@@ -2500,6 +2512,7 @@ export interface Thread {
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['String']['output'];
   object: AbstractUuid;
+  status: CommentStatus;
   title?: Maybe<Scalars['String']['output']>;
   trashed: Scalars['Boolean']['output'];
 }
@@ -2560,20 +2573,15 @@ export interface ThreadEditCommentInput {
   content: Scalars['String']['input'];
 }
 
-export interface ThreadEditCommentResponse {
-  __typename?: 'ThreadEditCommentResponse';
-  query: Query;
-  success: Scalars['Boolean']['output'];
-}
-
 export interface ThreadMutation {
   __typename?: 'ThreadMutation';
-  createComment?: Maybe<ThreadCreateCommentResponse>;
-  createThread?: Maybe<ThreadCreateThreadResponse>;
-  editComment?: Maybe<ThreadEditCommentResponse>;
-  setCommentState?: Maybe<ThreadSetCommentStateResponse>;
-  setThreadArchived?: Maybe<ThreadSetThreadArchivedResponse>;
-  setThreadState?: Maybe<ThreadSetThreadStateResponse>;
+  createComment: ThreadCreateCommentResponse;
+  createThread: ThreadCreateThreadResponse;
+  editComment: DefaultResponse;
+  setCommentState: DefaultResponse;
+  setThreadArchived: DefaultResponse;
+  setThreadState: DefaultResponse;
+  setThreadStatus: DefaultResponse;
 }
 
 
@@ -2606,6 +2614,11 @@ export interface ThreadMutationSetThreadStateArgs {
   input: ThreadSetThreadStateInput;
 }
 
+
+export interface ThreadMutationSetThreadStatusArgs {
+  input: ThreadSetThreadStatusInput;
+}
+
 export interface ThreadQuery {
   __typename?: 'ThreadQuery';
   allThreads: AllThreadsConnection;
@@ -2616,6 +2629,7 @@ export interface ThreadQueryAllThreadsArgs {
   after?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
+  status?: InputMaybe<CommentStatus>;
   subjectId?: InputMaybe<Scalars['String']['input']>;
 }
 
@@ -2624,21 +2638,9 @@ export interface ThreadSetCommentStateInput {
   trashed: Scalars['Boolean']['input'];
 }
 
-export interface ThreadSetCommentStateResponse {
-  __typename?: 'ThreadSetCommentStateResponse';
-  query: Query;
-  success: Scalars['Boolean']['output'];
-}
-
 export interface ThreadSetThreadArchivedInput {
   archived: Scalars['Boolean']['input'];
   id: Array<Scalars['String']['input']>;
-}
-
-export interface ThreadSetThreadArchivedResponse {
-  __typename?: 'ThreadSetThreadArchivedResponse';
-  query: Query;
-  success: Scalars['Boolean']['output'];
 }
 
 export interface ThreadSetThreadStateInput {
@@ -2646,10 +2648,9 @@ export interface ThreadSetThreadStateInput {
   trashed: Scalars['Boolean']['input'];
 }
 
-export interface ThreadSetThreadStateResponse {
-  __typename?: 'ThreadSetThreadStateResponse';
-  query: Query;
-  success: Scalars['Boolean']['output'];
+export interface ThreadSetThreadStatusInput {
+  id: Array<Scalars['String']['input']>;
+  status: CommentStatus;
 }
 
 export interface ThreadsConnection {
@@ -3352,10 +3353,11 @@ export type GetAllThreadsQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']['input']>;
   instance?: InputMaybe<Instance>;
   subjectId?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<CommentStatus>;
 }>;
 
 
-export type GetAllThreadsQuery = { __typename?: 'Query', thread: { __typename?: 'ThreadQuery', allThreads: { __typename?: 'AllThreadsConnection', pageInfo: { __typename?: 'HasNextPageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'Thread', id: string, archived: boolean, trashed: boolean, object: { __typename: 'Applet', id: number, alias: string } | { __typename: 'AppletRevision', id: number, alias: string } | { __typename: 'Article', id: number, alias: string } | { __typename: 'ArticleRevision', id: number, alias: string } | { __typename: 'Comment', id: number, alias: string } | { __typename: 'Course', id: number, alias: string } | { __typename: 'CoursePage', id: number, alias: string } | { __typename: 'CoursePageRevision', id: number, alias: string } | { __typename: 'CourseRevision', id: number, alias: string } | { __typename: 'Event', id: number, alias: string } | { __typename: 'EventRevision', id: number, alias: string } | { __typename: 'Exercise', id: number, alias: string } | { __typename: 'ExerciseGroup', id: number, alias: string } | { __typename: 'ExerciseGroupRevision', id: number, alias: string } | { __typename: 'ExerciseRevision', id: number, alias: string } | { __typename: 'GroupedExercise', id: number, alias: string } | { __typename: 'GroupedExerciseRevision', id: number, alias: string } | { __typename: 'Page', id: number, alias: string } | { __typename: 'PageRevision', id: number, alias: string } | { __typename: 'Solution', id: number, alias: string } | { __typename: 'SolutionRevision', id: number, alias: string } | { __typename: 'TaxonomyTerm', id: number, alias: string } | { __typename: 'User', id: number, alias: string } | { __typename: 'Video', id: number, alias: string } | { __typename: 'VideoRevision', id: number, alias: string }, comments: { __typename?: 'CommentConnection', nodes: Array<{ __typename?: 'Comment', id: number, trashed: boolean, content: string, archived: boolean, createdAt: string, author: { __typename?: 'User', username: string, alias: string, id: number, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } }> } }> } } };
+export type GetAllThreadsQuery = { __typename?: 'Query', thread: { __typename?: 'ThreadQuery', allThreads: { __typename?: 'AllThreadsConnection', pageInfo: { __typename?: 'HasNextPageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'Thread', id: string, archived: boolean, trashed: boolean, status: CommentStatus, object: { __typename: 'Applet', id: number, alias: string } | { __typename: 'AppletRevision', id: number, alias: string } | { __typename: 'Article', id: number, alias: string } | { __typename: 'ArticleRevision', id: number, alias: string } | { __typename: 'Comment', id: number, alias: string } | { __typename: 'Course', id: number, alias: string } | { __typename: 'CoursePage', id: number, alias: string } | { __typename: 'CoursePageRevision', id: number, alias: string } | { __typename: 'CourseRevision', id: number, alias: string } | { __typename: 'Event', id: number, alias: string } | { __typename: 'EventRevision', id: number, alias: string } | { __typename: 'Exercise', id: number, alias: string } | { __typename: 'ExerciseGroup', id: number, alias: string } | { __typename: 'ExerciseGroupRevision', id: number, alias: string } | { __typename: 'ExerciseRevision', id: number, alias: string } | { __typename: 'GroupedExercise', id: number, alias: string } | { __typename: 'GroupedExerciseRevision', id: number, alias: string } | { __typename: 'Page', id: number, alias: string } | { __typename: 'PageRevision', id: number, alias: string } | { __typename: 'Solution', id: number, alias: string } | { __typename: 'SolutionRevision', id: number, alias: string } | { __typename: 'TaxonomyTerm', id: number, alias: string } | { __typename: 'User', id: number, alias: string } | { __typename: 'Video', id: number, alias: string } | { __typename: 'VideoRevision', id: number, alias: string }, comments: { __typename?: 'CommentConnection', nodes: Array<{ __typename?: 'Comment', id: number, trashed: boolean, content: string, archived: boolean, createdAt: string, author: { __typename?: 'User', username: string, alias: string, id: number, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } }> } }> } } };
 
 export type GetCommentsQueryVariables = Exact<{
   id: Scalars['Int']['input'];
@@ -3459,42 +3461,49 @@ export type ThreadSetArchivedMutationVariables = Exact<{
 }>;
 
 
-export type ThreadSetArchivedMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', setThreadArchived?: { __typename?: 'ThreadSetThreadArchivedResponse', success: boolean } | null } };
+export type ThreadSetArchivedMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', setThreadArchived: { __typename?: 'DefaultResponse', success: boolean } } };
 
 export type ThreadSetStateMutationVariables = Exact<{
   input: ThreadSetThreadStateInput;
 }>;
 
 
-export type ThreadSetStateMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', setThreadState?: { __typename?: 'ThreadSetThreadStateResponse', success: boolean } | null } };
+export type ThreadSetStateMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', setThreadState: { __typename?: 'DefaultResponse', success: boolean } } };
 
 export type ThreadSetCommentStateMutationVariables = Exact<{
   input: ThreadSetCommentStateInput;
 }>;
 
 
-export type ThreadSetCommentStateMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', setCommentState?: { __typename?: 'ThreadSetCommentStateResponse', success: boolean } | null } };
+export type ThreadSetCommentStateMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', setCommentState: { __typename?: 'DefaultResponse', success: boolean } } };
 
 export type CreateThreadMutationVariables = Exact<{
   input: ThreadCreateThreadInput;
 }>;
 
 
-export type CreateThreadMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', createThread?: { __typename?: 'ThreadCreateThreadResponse', success: boolean } | null } };
+export type CreateThreadMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', createThread: { __typename?: 'ThreadCreateThreadResponse', success: boolean } } };
 
 export type CreateCommentMutationVariables = Exact<{
   input: ThreadCreateCommentInput;
 }>;
 
 
-export type CreateCommentMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', createComment?: { __typename?: 'ThreadCreateCommentResponse', success: boolean } | null } };
+export type CreateCommentMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', createComment: { __typename?: 'ThreadCreateCommentResponse', success: boolean } } };
 
 export type EditCommentMutationVariables = Exact<{
   input: ThreadEditCommentInput;
 }>;
 
 
-export type EditCommentMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', editComment?: { __typename?: 'ThreadEditCommentResponse', success: boolean } | null } };
+export type EditCommentMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', editComment: { __typename?: 'DefaultResponse', success: boolean } } };
+
+export type SetThreadStatusMutationVariables = Exact<{
+  input: ThreadSetThreadStatusInput;
+}>;
+
+
+export type SetThreadStatusMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', setThreadStatus: { __typename?: 'DefaultResponse', success: boolean } } };
 
 export type AddPageRevisionMutationVariables = Exact<{
   input: PageAddRevisionInput;

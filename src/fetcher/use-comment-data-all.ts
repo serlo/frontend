@@ -1,6 +1,7 @@
 import { gql } from 'graphql-request'
 
 import {
+  CommentStatus,
   GetAllThreadsQuery,
   GetAllThreadsQueryVariables,
 } from './graphql-types/operations'
@@ -13,6 +14,7 @@ const query = gql`
     $after: String
     $instance: Instance
     $subjectId: String
+    $status: CommentStatus
   ) {
     thread {
       allThreads(
@@ -20,6 +22,7 @@ const query = gql`
         first: $first
         after: $after
         subjectId: $subjectId
+        status: $status
       ) {
         pageInfo {
           hasNextPage
@@ -29,6 +32,7 @@ const query = gql`
           id
           archived
           trashed
+          status
           object {
             __typename
             id
@@ -60,7 +64,7 @@ const query = gql`
 export type GetAllThreadsNode =
   GetAllThreadsQuery['thread']['allThreads']['nodes'][number]
 
-export function useCommentDataAll(subjectId?: string) {
+export function useCommentDataAll(subjectId?: string, status?: CommentStatus) {
   const { lang } = useInstanceData()
 
   const resp = useGraphqlSwrPaginationWithAuth<GetAllThreadsNode>({
@@ -69,6 +73,7 @@ export function useCommentDataAll(subjectId?: string) {
       first: 10,
       instance: lang,
       subjectId,
+      status,
     } as GetAllThreadsQueryVariables,
     config: {
       refreshInterval: 1 * 60 * 1000, //1min
