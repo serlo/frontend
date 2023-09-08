@@ -12,6 +12,7 @@ import {
   ThreadSetCommentStateInput,
   ThreadSetThreadArchivedInput,
   ThreadSetThreadStateInput,
+  ThreadSetThreadStatusInput,
 } from '@/fetcher/graphql-types/operations'
 
 const threadCacheShouldMutate = (key: string) => {
@@ -184,5 +185,23 @@ export function useEditCommentMutation() {
       mutateSWRCache(threadCacheShouldMutate)
     }
     return success
+  }
+}
+
+const setThreadStatusMutation = gql`
+  mutation setThreadStatus($input: ThreadSetThreadStatusInput!) {
+    thread {
+      setThreadStatus(input: $input) {
+        success
+      }
+    }
+  }
+`
+
+export function useSetThreadStatusMutation() {
+  const mutationFetch = useMutationFetch()
+
+  return async function (input: ThreadSetThreadStatusInput) {
+    return await mutationFetch(setThreadStatusMutation, input)
   }
 }
