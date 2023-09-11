@@ -130,82 +130,88 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
     )
   }
   return (
-    <div className="mx-side flex flex-col items-center mobile:flex-row mobile:flex-wrap">
-      {data.exercisesContent.map((exercise, i) => {
-        const entry = hardcodedDataforDreisatz[i]
-        const solved = JSON.parse(
-          sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
-        ) as number[]
-        const solvedPercentage = exercise.children
-          ? exercise.children.filter((child) =>
-              solved.includes(child.context.id)
-            ).length / exercise.children.length
-          : -1
+    <>
+      <div className="my-12 rounded-xl bg-brand-100 p-4 px-side">
+        Hallo, wir probieren hier ein neues Design aus. Du findest die Aufgaben,
+        wenn du auf eine der Kacheln klickst.
+      </div>
+      <div className="mx-side flex flex-col items-center mobile:flex-row mobile:flex-wrap">
+        {data.exercisesContent.map((exercise, i) => {
+          const entry = hardcodedDataforDreisatz[i]
+          const solved = JSON.parse(
+            sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
+          ) as number[]
+          const solvedPercentage = exercise.children
+            ? exercise.children.filter((child) =>
+                solved.includes(child.context.id)
+              ).length / exercise.children.length
+            : -1
 
-        const isSolved =
-          solved.includes(exercise.context.id) || solvedPercentage === 1
+          const isSolved =
+            solved.includes(exercise.context.id) || solvedPercentage === 1
 
-        return (
-          <Fragment key={i}>
-            <div
-              className={tw`
+          return (
+            <Fragment key={i}>
+              <div
+                className={tw`
                 relative mb-5 mr-4 h-[238px] w-[176px]
                 cursor-pointer rounded border hover:border-brand hover:shadow-xl
                 hover:outline hover:outline-2 hover:outline-brand
               `}
-              onClick={() => {
-                setShowInModal(i)
-              }}
-            >
-              <div
-                className="flex h-24 w-full items-center justify-center bg-brand-100 bg-cover bg-center pt-2 text-center text-gray-600"
-                style={
-                  entry.img ? { backgroundImage: `url(${entry.img})` } : {}
-                }
+                onClick={() => {
+                  setShowInModal(i)
+                }}
               >
-                {entry.img ? null : (
-                  /* eslint-disable-next-line @next/next/no-img-element*/
-                  <img
-                    alt="Serlo"
-                    src={
-                      entry.type === 'Auswahlaufgabe'
-                        ? 'https://assets.serlo.org/65df4c50-41ab-11ee-89f0-6196501948c9/image.png'
-                        : '/_assets/img/serlo-logo.svg'
-                    }
-                    width={74}
-                    className="-mt-1"
-                  ></img>
-                )}
-              </div>
-              <div
-                className={clsx(
-                  'relative h-[140px] rounded-b',
-                  isSolved && 'bg-brandgreen'
-                )}
-              >
-                <div className="h-[74px] px-2 py-1 text-lg font-bold">
-                  {entry.title}
-                </div>
-                <div className="h-8 px-2 py-1 text-sm">{entry.type}</div>
-                <div className="h-8 px-2 py-1 text-sm">
-                  {renderDifficulty(entry.difficulty)}
-                </div>
-                <div className="absolute inset-x-0 bottom-0 h-1">
-                  {solvedPercentage > 0 && !isSolved && (
-                    <div
-                      className="h-full bg-brandgreen"
-                      style={{
-                        width: `${(100 * solvedPercentage).toFixed(2)}%`,
-                      }}
-                    ></div>
+                <div
+                  className="flex h-24 w-full items-center justify-center bg-brand-100 bg-cover bg-center pt-2 text-center text-gray-600"
+                  style={
+                    entry.img ? { backgroundImage: `url(${entry.img})` } : {}
+                  }
+                >
+                  {entry.img ? null : (
+                    /* eslint-disable-next-line @next/next/no-img-element*/
+                    <img
+                      alt="Serlo"
+                      src={
+                        entry.type === 'Auswahlaufgabe'
+                          ? 'https://assets.serlo.org/65df4c50-41ab-11ee-89f0-6196501948c9/image.png'
+                          : '/_assets/img/serlo-logo.svg'
+                      }
+                      width={74}
+                      className="-mt-1"
+                    ></img>
                   )}
                 </div>
+                <div
+                  className={clsx(
+                    'relative h-[140px] rounded-b',
+                    isSolved && 'bg-brandgreen'
+                  )}
+                >
+                  <div className="h-[74px] px-2 py-1 text-lg font-bold">
+                    {entry.title}
+                  </div>
+                  <div className="h-8 px-2 py-1 text-sm">{entry.type}</div>
+                  <div className="h-8 px-2 py-1 text-sm">
+                    {renderDifficulty(entry.difficulty)}
+                  </div>
+                  <div className="absolute inset-x-0 bottom-0 h-1">
+                    {solvedPercentage > 0 && !isSolved && (
+                      <div
+                        className="h-full bg-brandgreen"
+                        style={{
+                          width: `${(100 * solvedPercentage).toFixed(2)}%`,
+                        }}
+                      ></div>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-          </Fragment>
-        )
-      })}
-    </div>
+            </Fragment>
+          )
+        })}
+      </div>
+    </>
   )
 }
 
