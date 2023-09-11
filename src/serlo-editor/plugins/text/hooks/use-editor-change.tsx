@@ -2,7 +2,6 @@ import { useCallback, useMemo, useRef } from 'react'
 import { Descendant, Editor, Transforms } from 'slate'
 
 import type { TextEditorProps } from '../components/text-editor'
-import { CustomElement, ListElementType, Paragraph } from '../types/text-editor'
 
 interface UseEditorChangeArgs {
   editor: Editor
@@ -31,33 +30,13 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
 
   const handleEditorChange = useCallback(
     (newValue: Descendant[]) => {
-      let modifiedValue = []
-      modifiedValue = newValue
-
-      // Add an empty line in front of list elements at th start of the block
-      // This way we avoid list related merging issues
-      if (newValue.length > 0) {
-        const first_child = newValue[0] as CustomElement
-        if (
-          first_child.type === ListElementType.ORDERED_LIST ||
-          first_child.type === ListElementType.UNORDERED_LIST
-        ) {
-          const empty_text_node = {
-            children: [{ text: '' }],
-            type: 'p',
-          } as Paragraph
-          modifiedValue = [empty_text_node, ...modifiedValue]
-          editor.insertNode(empty_text_node, { at: [0] })
-        }
-      }
-
       const isAstChange = editor.operations.some(
         ({ type }) => type !== 'set_selection'
       )
       if (isAstChange) {
-        previousValue.current = modifiedValue
+        previousValue.current = newValue
         state.set(
-          { value: modifiedValue, selection: editor.selection },
+          { value: newValue, selection: editor.selection },
           ({ value }) => ({ value, selection: previousSelection.current })
         )
       }
