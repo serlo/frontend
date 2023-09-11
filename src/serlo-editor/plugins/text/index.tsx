@@ -1,17 +1,18 @@
 import { Node } from 'slate'
 
 import { TextEditor, type TextEditorProps } from './components/text-editor'
+import { createDefaultTextNode, isListNode } from './plugins'
 import type { TextEditorConfig, TextEditorState } from './types/config'
-import type {
-  CustomElement,
-  CustomText,
-  Paragraph,
-  List,
-  ListItem,
-  ListItemText,
-  Heading,
-  Link,
-  MathElement,
+import {
+  type CustomElement,
+  type CustomText,
+  type Paragraph,
+  type List,
+  type ListItem,
+  type ListItemText,
+  type Heading,
+  type Link,
+  type MathElement,
 } from './types/text-editor'
 import { emptyDocumentFactory } from './utils/document'
 import { isEmptyObject } from './utils/object'
@@ -37,6 +38,13 @@ const createTextPlugin = (
       const firstChild = (value[0] as CustomElement).children[0]
       if (isEmptyObject(firstChild)) {
         return emptyDocumentFactory()
+      }
+
+      // Add an empty line in front of list elements at the start of the block
+      // This way we avoid list related merging issues
+      const firstElement = value[0] as CustomElement
+      if (isListNode(firstElement)) {
+        value = [createDefaultTextNode(), ...value]
       }
 
       return { value, selection: null }
