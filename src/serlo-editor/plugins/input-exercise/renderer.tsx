@@ -15,6 +15,7 @@ interface InputExersiseRendererProps {
     feedback: JSX.Element | null
   }[]
   onEvaluate?: (correct: boolean, val: string) => void
+  alternativeButtonDesign?: boolean
 }
 
 interface FeedbackData {
@@ -27,6 +28,7 @@ export function InputExerciseRenderer({
   unit,
   answers,
   onEvaluate,
+  alternativeButtonDesign,
 }: InputExersiseRendererProps) {
   const [feedback, setFeedback] = useState<FeedbackData | null>(null)
   const [value, setValue] = useState('')
@@ -67,7 +69,9 @@ export function InputExerciseRenderer({
       {A && (
         <a
           className={clsx(
-            'serlo-button-blue mt-4 !text-white',
+            alternativeButtonDesign
+              ? 'serlo-button-blue ml-3 mt-4 rounded-xl px-8 py-4 !text-white'
+              : 'serlo-button-blue mt-4 !text-white',
             value === '' && 'pointer-events-none opacity-0'
           )}
           onClick={evaluate}

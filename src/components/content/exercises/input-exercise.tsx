@@ -34,6 +34,9 @@ export function InputExercise({
         unit={data.unit}
         answers={renderAnswers()}
         onEvaluate={onEvaluate}
+        alternativeButtonDesign={
+          ab?.experiment === 'dreisatzv0' && ab.group === 'b'
+        }
       />
       {isRevisionView && renderRevisionExtra()}
     </>
