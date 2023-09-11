@@ -40,10 +40,12 @@ export function Editor(props: EditorProps) {
 
 const pluginIds = [
   '2866db2d-6210-4579-a6cf-6e01b282bbbf',
-  '44cf6a69-d925-420a-8b0e-998b152b7200',
-  '649d16bc-6189-43c1-a7c0-ba2effc6fca7',
-  'c6b1f38f-40b6-4aa2-bb75-571945d6fa25',
   '7d59264e-b2e5-45a9-92a7-dc0a123949a6',
+  '649d16bc-6189-43c1-a7c0-ba2effc6fca7',
+  '44cf6a69-d925-420a-8b0e-998b152b7200',
+  'c6b1f38f-40b6-4aa2-bb75-571945d6fa25',
+  'bc070871-4e7c-41a9-91d8-8546a4a130a5',
+  '3db8191b-9954-4ce2-b1d2-fb2cf2ee83af',
 ]
 
 function InnerDocument({
