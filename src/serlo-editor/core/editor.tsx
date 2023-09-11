@@ -17,6 +17,7 @@ import {
   useAppDispatch,
   DocumentState,
   selectSerializedDocument,
+  focus,
 } from '../store'
 import { ROOT } from '../store/root/constants'
 
@@ -37,6 +38,14 @@ export function Editor(props: EditorProps) {
   )
 }
 
+const pluginIds = [
+  '2866db2d-6210-4579-a6cf-6e01b282bbbf',
+  '44cf6a69-d925-420a-8b0e-998b152b7200',
+  '649d16bc-6189-43c1-a7c0-ba2effc6fca7',
+  'c6b1f38f-40b6-4aa2-bb75-571945d6fa25',
+  '7d59264e-b2e5-45a9-92a7-dc0a123949a6',
+]
+
 function InnerDocument({
   children,
   editable = true,
@@ -48,6 +57,16 @@ function InnerDocument({
 
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   useBlurOnOutsideClick(wrapperRef)
+
+  const [counter, setCounter] = useState(0)
+
+  useEffect(() => {
+    setTimeout(() => setCounter(counter + 1), 2000)
+    if (counter > 0) {
+      const toFocus = pluginIds[counter % pluginIds.length]
+      dispatch(focus(toFocus))
+    }
+  }, [counter, dispatch])
 
   useEffect(() => {
     if (typeof onChange !== 'function') return

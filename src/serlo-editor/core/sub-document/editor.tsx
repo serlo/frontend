@@ -29,6 +29,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const autofocusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
 
+  console.log('render subdocument editor', id)
+
   useEffect(() => {
     if (focused) {
       setTimeout(() => {
@@ -117,7 +119,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       (config.isInlineChildEditor as boolean)
 
     const isTemplatePlugin = document.plugin.startsWith('type-')
-
+    console.log('no useMemo in', id)
     return (
       <div
         className={clsx(
