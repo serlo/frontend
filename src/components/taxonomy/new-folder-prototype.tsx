@@ -131,7 +131,7 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
   }
   return (
     <>
-      <div className="my-12 rounded-xl bg-brand-100 p-4 px-side">
+      <div className="mb-16 mt-12 rounded-xl bg-editor-primary-200 p-4 px-side">
         Hallo, wir probieren hier ein neues Design aus. Du findest die Aufgaben,
         wenn du auf eine der Kacheln klickst.
       </div>
