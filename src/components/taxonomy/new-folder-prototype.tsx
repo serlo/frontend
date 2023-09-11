@@ -131,9 +131,19 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
   }
   return (
     <>
-      <div className="mb-16 mt-12 rounded-xl bg-editor-primary-200 p-4 px-side">
-        Hallo, wir probieren hier ein neues Design aus. Du findest die Aufgaben,
-        wenn du auf eine der Kacheln klickst.
+      <div className="relative hidden xl:block">
+        <div className="absolute -left-[245px] w-[240px] rounded-xl bg-editor-primary-200 p-4 px-side">
+          Hey! Wir probieren hier gerade ein neues Design aus. Du findest die
+          Aufgaben, wenn du auf die Kacheln klickst.
+        </div>
+        <FaIcon
+          icon={faCaretRight}
+          className="absolute -left-[6px] mt-12 text-3xl text-editor-primary-200"
+        />
+      </div>
+      <div className="mx-side mb-12 rounded-xl bg-editor-primary-200 p-4 px-side mobile:mx-0 xl:hidden">
+        Hey! Wir probieren hier gerade ein neues Design aus. Du findest die
+        Aufgaben, wenn du auf die Kacheln klickst.
       </div>
       <div className="mx-side flex flex-col items-center mobile:flex-row mobile:flex-wrap">
         {data.exercisesContent.map((exercise, i) => {
