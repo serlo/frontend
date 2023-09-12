@@ -1,6 +1,7 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
 import type { ExerciseProps } from '.'
+import { Experiment } from './experiment'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
@@ -47,6 +48,7 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
               )
             })}
           </div>
+          <Experiment />
         </>
       ) : null}
     </>
