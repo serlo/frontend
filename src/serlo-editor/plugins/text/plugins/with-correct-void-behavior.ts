@@ -64,9 +64,10 @@ export const withCorrectVoidBehavior = (editor: Editor) => {
     const parentPath = Path.parent(editor.selection.anchor.path)
     const parentNode = Node.get(editor, parentPath)
     const parentIsEmpty = Node.string(parentNode).length === 0
+    const nextNodePath = Path.next(parentPath)
+    const nextNodeExists = Node.has(editor, nextNodePath)
 
-    if (parentIsEmpty) {
-      const nextNodePath = Path.next(parentPath)
+    if (parentIsEmpty && nextNodeExists) {
       const nextNode = Node.get(editor, nextNodePath)
       if (Editor.isVoid(editor, nextNode as MathElement)) {
         return Transforms.removeNodes(editor)
