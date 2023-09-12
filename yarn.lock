@@ -4092,6 +4092,7 @@ __metadata:
     ts-unused-exports: ^9.0.5
     typescript: ^5.1.6
     uuid: ^9.0.0
+    wavesurfer.js: ^7.3.0
   languageName: unknown
   linkType: soft
 
@@ -14790,6 +14791,13 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
     glob-to-regexp: ^0.4.1
     graceful-fs: ^4.1.2
   checksum: 23d4bc58634dbe13b86093e01c6a68d8096028b664ab7139d58f0c37d962d549a940e98f2f201cecdabd6f9c340338dc73ef8bf094a2249ef582f35183d1a131
+  languageName: node
+  linkType: hard
+
+"wavesurfer.js@npm:^7.3.0":
+  version: 7.3.0
+  resolution: "wavesurfer.js@npm:7.3.0"
+  checksum: 6a319ce41eadc871bc6bef0f8803092819fd0b7a149e2588b0d2e61932c9ba7216418d0f0039d6b9941327f3635bdb5a595f79c6c709b570055aabb71c1d2cbc
   languageName: node
   linkType: hard
 

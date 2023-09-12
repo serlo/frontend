@@ -1,39 +1,30 @@
-import { useState } from 'react'
-
 import type { AudioProps } from '.'
-import { parseAudioUrl, AudioRenderer } from './renderer'
-import { ShowAudioSettingsButton } from './show-audio-settings-button'
+import { AudioRecorder } from './audio-recorder'
+import { AudioRenderer } from './renderer'
 import { AudioToolbar } from './toolbar'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
+// import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export const AudioEditor = (props: AudioProps) => {
-  const { focused, state } = props
-  const [showSettingsModal, setShowSettingsModal] = useState(false)
-  const [src, type] = parseAudioUrl(state.src.value)
-  const couldBeValid = type !== undefined
-  const audioStrings = useEditorStrings().plugins.audio
+  const { focused, state, editable } = props
+  const src = state.src.value
+
+  console.log('AudioEditor rendered with src value (should be a url)', { src })
+  // const audioStrings = useEditorStrings().plugins.audio
 
   return (
     <>
-      {focused && (
-        <AudioToolbar
-          {...props}
-          showSettingsModal={showSettingsModal}
-          setShowSettingsModal={setShowSettingsModal}
-        />
-      )}
-      {couldBeValid ? (
+      {focused && <AudioToolbar {...props} audioUrl={src as string} />}
+      {src && !editable ? (
         <div>
-          <AudioRenderer src={src} type={type} />
+          <AudioRenderer src={src} />
         </div>
       ) : (
-        <div className="pb-8 pt-8">
-          <ShowAudioSettingsButton
-            openSettings={() => setShowSettingsModal(true)}
-          >
-            {audioStrings.audioUrl}
-          </ShowAudioSettingsButton>
-        </div>
+        // In edit mode, we render the recorder which will also render the audio
+        // player
+        <AudioRecorder
+          base64AudioRecording=""
+          setBase64AudioRecording={() => void undefined}
+        />
       )}
     </>
   )

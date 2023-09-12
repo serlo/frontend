@@ -1,6 +1,10 @@
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import React, { useEffect, useState, useRef } from 'react'
 
+import { AudioPlayer } from './audio-player'
+import { RecordingStatus } from './audio-recording-status'
+import { useAudioSurfer } from './audio-recording-visualization'
+import { formatTime } from './format-time'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -18,13 +22,6 @@ interface AudioRecorderProps {
   setBase64AudioRecording: (base64AudioRecording: string) => void
 }
 
-enum RecordingStatus {
-  IDLE = 'idle',
-  RECORDING = 'recording',
-  UPLOADING = 'uploading',
-  UPLOADED = 'uploaded',
-}
-
 export function AudioRecorder({
   // TODO change props
   setBase64AudioRecording,
@@ -38,6 +35,8 @@ export function AudioRecorder({
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
 
   const recordedChunks = useRef<BlobPart[]>([])
+
+  const waveformRef = useAudioSurfer({ status })
 
   const canTrashAudio =
     status === RecordingStatus.UPLOADING || status === RecordingStatus.UPLOADED
@@ -78,6 +77,8 @@ export function AudioRecorder({
         blobToBase64(audioBlob)
 
         const url = URL.createObjectURL(audioBlob)
+
+        console.log('Audio url:', url)
         setAudioURL(url)
         setStatus(RecordingStatus.UPLOADED)
       }
@@ -117,7 +118,14 @@ export function AudioRecorder({
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current = null
     }
+
+    recordedChunks.current = []
+    if (audioURL) {
+      URL.revokeObjectURL(audioURL)
+    }
+
     setAudioURL(null)
+    setRecordTime(0)
     setStatus(RecordingStatus.IDLE)
     setBase64AudioRecording('')
   }
@@ -133,57 +141,58 @@ export function AudioRecorder({
   }
 
   return (
-    <div className="flex flex-col items-center p-4">
-      {status === RecordingStatus.RECORDING ? (
-        <>
+    <>
+      <div className="flex flex-row items-center rounded border border-editor-primary-500 bg-editor-primary-500">
+        {status === RecordingStatus.UPLOADED && audioURL && (
+          <AudioPlayer audioFile={audioURL} />
+        )}
+
+        {status === RecordingStatus.IDLE && (
+          // Record button: small circle
           <button
-            onClick={stopRecording}
-            className="serlo-button serlo-button-editor-secondary rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-600 disabled:cursor-default disabled:bg-gray-300"
-          >
-            Stop Recording
-          </button>
-          <div className="mt-2 text-gray-700">
-            Recording: {recordTime} seconds
-          </div>{' '}
-        </>
-      ) : (
-        <div className="flex items-center p-4">
-          <button
-            disabled={status === RecordingStatus.UPLOADING}
+            className="flex items-center rounded border border-editor-primary-400 bg-editor-primary-400 p-4 "
             onClick={startRecording}
-            className={`serlo-button rounded-lg ${
-              canTrashAudio ? 'rounded-r-none' : ''
-            } bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:cursor-default disabled:bg-gray-300`}
           >
-            {status === RecordingStatus.UPLOADED
-              ? 'Record again'
-              : 'Start Recording'}
+            <div className=" h-4 w-4 rounded-full bg-red-200"></div>
           </button>
-
-          {canTrashAudio && (
+        )}
+        {status === RecordingStatus.RECORDING && (
+          // Stop recording button: small square
+          <>
             <button
-              onClick={deleteAudio}
-              className="serlo-button rounded rounded-l-none bg-red-300 p-2 transition"
+              onClick={stopRecording}
+              className="flex items-center rounded border border-editor-primary-400 bg-editor-primary-400 p-4 "
             >
-              <FaIcon icon={faTrash} className="cursor-pointer" />
+              <div className="h-4 w-4 rounded border border-red-200 bg-red-200"></div>
             </button>
-          )}
-        </div>
-      )}
+            {/* Renders wave as the user is speaking */}
+            <div
+              className="bg-grey-700 ml-4 max-h-[50px] w-full transition-all duration-200 ease-linear"
+              ref={waveformRef}
+            />
+          </>
+        )}
 
-      {audioURL && (
-        <div className="mt-4">
-          <a
-            href={audioURL}
-            download={`serlo_audio_${getCurrentDateFormatted()}.wav`}
-            className="serlo-button-editor-secondary font-semibold text-blue-600 underline hover:text-blue-700"
+        {canTrashAudio ? (
+          <button
+            onClick={deleteAudio}
+            className="serlo-button ml-4 ml-auto flex items-center rounded border border-editor-primary-400 bg-red-200 p-4 transition"
           >
-            Download recorded audio
-          </a>
-        </div>
-      )}
-
+            <FaIcon
+              icon={faTrash}
+              className="cursor-pointer text-base text-gray-700"
+            />
+          </button>
+        ) : (
+          <div className="ml-auto mr-8">
+            <p className="text-bg-grey-700 ml-4">
+              {/* When not recording, we want to yield --:-- instead of 00:00 */}
+              {formatTime(recordTime, status !== RecordingStatus.RECORDING)}
+            </p>
+          </div>
+        )}
+      </div>
       {error && <p className="mt-4 text-red-600">{error}</p>}
-    </div>
+    </>
   )
 }

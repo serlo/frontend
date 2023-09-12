@@ -892,8 +892,10 @@ export const loggedInData = {
         },
         audio: {
           title: 'Audio',
-          description: 'Link to audio files on Vocaroo',
-          audioUrl: 'Enter Audio URL'
+          description: 'Record audio with explanations',
+          download: 'Download',
+          unexpectedErrorWhileRecording: 'Unexpected error while recording',
+          recordingSuccessfullyUploaded: 'Recording was successfully uploaded',
         },
       },
       templatePlugins: {

@@ -9,6 +9,8 @@ const brandGreen = '#95bc1a'
 const sunflower = '#ffbe5e'
 const sunflowerColors = {
   DEFAULT: sunflower,
+  500: '#ffefda',
+  400: '#ffd8a6',
   300: sunflower,
   200: '#ffdaa3',
   100: '#fff1db',
@@ -56,9 +58,12 @@ module.exports = {
           200: colors.orange[200],
           50: colors.orange[50],
         },
+
         red: {
           DEFAULT: colors.red[900],
           100: colors.red[100],
+          // pastel red
+          200: '#ff8686',
         },
       },
       borderWidth: {

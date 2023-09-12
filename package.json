@@ -97,7 +97,8 @@
     "tippy.js": "^6.3.7",
     "ts-debounce": "^4.0.0",
     "ts-key-enum": "^2.0.12",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "wavesurfer.js": "^7.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.22.10",

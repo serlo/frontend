@@ -1,60 +1,27 @@
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
 
-import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
+import { AudioPlayer } from './audio-player'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { ExternalProvider } from '@/helper/use-consent'
-
-export enum AudioType {
-  Vocaroo = 'vocaroo',
-}
+import { FileState } from '@/serlo-editor/plugin/upload'
 
 interface AudioRendererProps {
-  src: string
-  type?: AudioType
+  src: string | File | FileState<Blob>
 }
 
-export function AudioRenderer({ src, type }: AudioRendererProps) {
+export function AudioRenderer({ src }: AudioRendererProps) {
   const { strings } = useInstanceData()
 
-  if (!type) {
+  if (!src) {
     return (
       <div className="mx-side text-center print:hidden">
         <FaIcon icon={faFilm} className="h-16" />
         <p className="serlo-p text-almost-black">
-          {src ? `${strings.content.loadingAudioFailed}: ${src}` : ''}
+          {strings.content.loadingAudioFailed}
         </p>
       </div>
     )
   }
 
-  if (type === AudioType.Vocaroo) {
-    const vocarooIdMatch = src.match(/voca\.ro\/([\w\d]+)/)
-    const vocarooId = vocarooIdMatch ? vocarooIdMatch[1] : null
-
-    const vocarooUrl = `https://vocaroo.com/embed/${vocarooId}?autoplay=0`
-    return (
-      <div>
-        <PrivacyWrapper
-          type="audio"
-          provider={ExternalProvider.Vocaroo}
-          embedUrl={vocarooUrl}
-          className="print:hidden"
-        >
-          <iframe width="300" height="60" src={vocarooUrl} allow="autoplay" />
-        </PrivacyWrapper>
-      </div>
-    )
-  }
-
-  return <p>Unknown audio type</p>
-}
-
-export function parseAudioUrl(src: string): [string, AudioType | undefined] {
-  const vocarooRegex = /^(https?:\/\/)?(voca\.ro\/)([a-zA-Z0-9_-]+)/
-  if (vocarooRegex.test(src)) {
-    return [src, AudioType.Vocaroo]
-  }
-
-  return [src, undefined]
+  return <AudioPlayer audioFile={src as Blob} />
 }
