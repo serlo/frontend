@@ -10,6 +10,7 @@ import { QuickbarData, findResults } from '@/components/navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { useHotkeysScope } from '@/serlo-editor/core/contexts/hotkeys-scope-context'
 
 // based on Quickbar, duplicates some code
 
@@ -45,10 +46,14 @@ export function LinkOverlayEditMode({
   }, [query, quickbarData, value, serloLinkSearch])
 
   const results = quickbarData ? findResults(quickbarData, query) : []
+  const scope = useHotkeysScope()
   useEffect(() => {
-    disableScope('root-up-down-enter')
+    //disableScope('root-up-down-enter')
+    scope.rootUpDownEnter = false
 
-    return () => enableScope('root-up-down-enter')
+    return () => {
+      scope.rootUpDownEnter = true
+    } /*() => enableScope('root-up-down-enter')*/
   }, [enableScope, disableScope])
 
   function chooseEntry(index?: number) {

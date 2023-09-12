@@ -8,6 +8,7 @@ import {
   EditorStrings,
   useEditorStrings,
 } from '@/contexts/logged-in-data-context'
+import { useHotkeysScope } from '@/serlo-editor/core/contexts/hotkeys-scope-context'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { AllowedChildPlugins } from '@/serlo-editor/plugins/rows'
 import { checkIsAllowedNesting } from '@/serlo-editor/plugins/rows/utils/check-is-allowed-nesting'
@@ -42,6 +43,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const [selected, setSelected] = useState(0)
   const suggestionsRef = useRef<HTMLDivElement>(null)
   const { editor, id, editable, focused } = args
+  console.log(editor)
   const pluginsStrings = useEditorStrings().plugins
 
   const { selection } = editor
@@ -65,17 +67,29 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const filteredOptions = useMemo(() => {
     return filterPlugins(allOptions, text, id)
   }, [allOptions, id, text])
+
+  console.log(
+    'check show suggestion',
+    editable,
+    focused,
+    text,
+    filteredOptions.length
+  )
+
   const showSuggestions =
     editable && focused && text.startsWith('/') && filteredOptions.length > 0
+
+  const scope = useHotkeysScope()
+  scope.rootUpDownEnter = !showSuggestions
 
   const { enableScope, disableScope } = useHotkeysContext()
 
   useEffect(() => {
-    if (showSuggestions) {
+    /*if (showSuggestions) {
       disableScope('root-up-down-enter')
     } else {
       enableScope('root-up-down-enter')
-    }
+    }*/
   }, [enableScope, disableScope, showSuggestions])
 
   const options = showSuggestions ? filteredOptions : []

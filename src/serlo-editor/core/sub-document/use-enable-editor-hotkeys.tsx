@@ -15,6 +15,7 @@ import {
   useAppSelector,
   selectIsDocumentEmpty,
 } from '../../store'
+import { useHotkeysScope } from '../contexts/hotkeys-scope-context'
 import type { EditorPlugin } from '@/serlo-editor/plugin'
 
 export const useEnableEditorHotkeys = (
@@ -31,8 +32,11 @@ export const useEnableEditorHotkeys = (
   )
 
   const { enableScope } = useHotkeysContext()
+  const scope = useHotkeysScope()
+  scope.rootUpDownEnter = true
+
   useEffect(() => {
-    enableScope('root-up-down-enter')
+    //enableScope('root-up-down-enter')
   }, [enableScope])
 
   const handleKeyDown = (event: KeyboardEvent, callback: () => void) => {
@@ -53,7 +57,9 @@ export const useEnableEditorHotkeys = (
     Key.ArrowUp,
     (e) => {
       handleKeyDown(e, () => {
-        dispatch(focusPrevious(selectChildTree(store.getState())))
+        if (scope.rootUpDownEnter) {
+          dispatch(focusPrevious(selectChildTree(store.getState())))
+        }
       })
     },
     {
@@ -68,7 +74,9 @@ export const useEnableEditorHotkeys = (
     Key.ArrowDown,
     (e) => {
       handleKeyDown(e, () => {
-        dispatch(focusNext(selectChildTree(store.getState())))
+        if (scope.rootUpDownEnter) {
+          dispatch(focusNext(selectChildTree(store.getState())))
+        }
       })
     },
     {
@@ -83,14 +91,16 @@ export const useEnableEditorHotkeys = (
     Key.Enter,
     (e) => {
       handleKeyDown(e, () => {
-        const parent = selectChildTreeOfParent(store.getState(), id)
-        if (!parent) return
-        dispatch(
-          insertPluginChildAfter({
-            parent: parent.id,
-            sibling: id,
-          })
-        )
+        if (scope.rootUpDownEnter) {
+          const parent = selectChildTreeOfParent(store.getState(), id)
+          if (!parent) return
+          dispatch(
+            insertPluginChildAfter({
+              parent: parent.id,
+              sibling: id,
+            })
+          )
+        }
       })
     },
     {

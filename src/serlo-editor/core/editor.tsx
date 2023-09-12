@@ -1,10 +1,14 @@
 import { useMemo, useEffect, ReactNode, useRef, useState } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { HotkeysProvider, useHotkeys } from 'react-hotkeys-hook'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { Provider } from 'react-redux'
 
 import { EditableContext, PreferenceContextProvider } from './contexts'
+import {
+  HotkeysScopeProvider,
+  ScopeData,
+} from './contexts/hotkeys-scope-context'
 import { useBlurOnOutsideClick } from './hooks/use-blur-on-outside-click'
 import { SubDocument } from './sub-document'
 import {
@@ -24,14 +28,14 @@ import { ROOT } from '../store/root/constants'
  * Renders a single editor for an Serlo Editor document
  */
 export function Editor(props: EditorProps) {
+  const scopeData = useRef<ScopeData>({ rootUpDownEnter: true })
+
   return (
     <Provider store={store}>
       <DndProvider backend={HTML5Backend}>
-        <HotkeysProvider
-          initiallyActiveScopes={['global', 'root-up-down-enter']}
-        >
+        <HotkeysScopeProvider value={scopeData.current}>
           <InnerDocument {...props} />
-        </HotkeysProvider>
+        </HotkeysScopeProvider>
       </DndProvider>
     </Provider>
   )
