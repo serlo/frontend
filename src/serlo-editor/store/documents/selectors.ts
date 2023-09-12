@@ -1,10 +1,19 @@
 import { createSelector } from '@reduxjs/toolkit'
 import * as R from 'ramda'
 
-import { StoreSerializeHelpers } from '../../types/internal__plugin-state'
-import { createDeepEqualSelector } from '../helpers'
+import {
+  getChildTree,
+  findChildTreeNodeParentById,
+  getSerializedDocument,
+} from './helpers'
+import { ChildTreeNode } from './types'
+import {
+  createDeepEqualSelector,
+  createJsonStringifySelector,
+} from '../helpers'
 import { State } from '../types'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const selectSelf = (state: State) => state.documents
 
@@ -21,56 +30,30 @@ export const selectDocument = createSelector(
   }
 )
 
+export const selectDocumentPluginType = createSelector(
+  [selectSelf, (_state, id: string) => id],
+  (documents, id) => documents[id].plugin as EditorPluginType
+)
+
 export const selectSerializedDocument = createDeepEqualSelector(
-  [(state: State) => state, (_state, id: string) => id],
-  (state: State, id) => {
-    const doc = selectDocument(state, id)
-    if (!doc) return null
-    const plugin = editorPlugins.getByType(doc.plugin)
-    if (!plugin) return null
-    const serializeHelpers: StoreSerializeHelpers = {
-      getDocument: (id: string) => selectSerializedDocument(state, id),
-    }
-    return {
-      plugin: doc.plugin,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      state: plugin.state.serialize(doc.state, serializeHelpers),
-    }
-  }
+  [selectSelf, (_state, id: string) => id],
+  (documents, id) => getSerializedDocument({ documents, id })
 )
 
 export const selectSerializedDocumentWithoutIds = createDeepEqualSelector(
-  [(state: State) => state, (_state, id: string) => id],
-  (state: State, id) => {
-    const doc = selectDocument(state, id)
-    if (!doc) return null
-    const plugin = editorPlugins.getByType(doc.plugin)
-    if (!plugin) return null
-    const serializeHelpers: StoreSerializeHelpers = {
-      getDocument: (id: string) =>
-        selectSerializedDocumentWithoutIds(state, id),
-      omitId: true,
-    }
-
-    return {
-      plugin: doc.plugin,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      state: plugin.state.serialize(doc.state, serializeHelpers),
-    }
-  }
+  [selectSelf, (_state, id: string) => id],
+  (documents, id) => getSerializedDocument({ documents, id, omitId: true })
 )
 
 export const selectIsDocumentEmpty = createSelector(
-  [(state: State) => state, (_state, id: string) => id],
-  (state, id: string) => {
-    const doc = selectDocument(state, id)
-    if (!doc) return false
-    const plugin = editorPlugins.getByType(doc.plugin)
-    if (!plugin) return false
+  [selectSelf, (_state, id: string) => id],
+  (documents, id: string) => {
+    const document = documents[id]
+    const plugin = editorPlugins.getByType(document.plugin)
 
     if (typeof plugin.isEmpty === 'function') {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const state = plugin.state.init(doc.state, () => {})
+      const state = plugin.state.init(document.state, () => {})
       return plugin.isEmpty(state)
     }
 
@@ -78,6 +61,79 @@ export const selectIsDocumentEmpty = createSelector(
     const initialState = plugin.state.createInitialState({
       createDocument: () => {},
     })
-    return R.equals(doc.state, initialState)
+    return R.equals(document.state, initialState)
+  }
+)
+export const selectChildTree: (
+  state: State,
+  id?: string
+) => ChildTreeNode | null = createJsonStringifySelector(
+  [selectSelf, (_state, id?: string) => id],
+  (documents, id) => getChildTree(documents, id)
+)
+
+export const selectChildTreeOfParent = createSelector(
+  [selectSelf, (_state, id: string) => id],
+  (documents, id) => {
+    const tree = getChildTree(documents)
+    return findChildTreeNodeParentById(tree, id)
+  }
+)
+
+export const selectParentPluginType = createSelector(
+  [selectSelf, (_state, id: string) => id],
+  (documents, id) => {
+    const tree = getChildTree(documents)
+    const parentNode = findChildTreeNodeParentById(tree, id)
+    return parentNode && documents[parentNode.id].plugin
+  }
+)
+
+export const selectAncestorDocumentIds = createDeepEqualSelector(
+  [selectSelf, (_state, id: string) => id],
+  (documents, id) => {
+    const root = getChildTree(documents)
+    let current = id
+    let path: string[] = [id]
+
+    while (current !== root.id) {
+      const parent = findChildTreeNodeParentById(root, current)
+      if (!parent) return null
+      current = parent.id
+      path = [current, ...path]
+    }
+
+    return path
+  }
+)
+
+export const selectAncestorPluginTypes = createDeepEqualSelector(
+  [selectSelf, (_state, id: string) => id],
+  (documents, id) => {
+    const rootNode = getChildTree(documents)
+    let currentId = id
+    let pluginTypes: string[] = []
+
+    while (currentId !== rootNode.id) {
+      const parentNode = findChildTreeNodeParentById(rootNode, currentId)
+      if (!parentNode) return null
+      const pluginType = documents[parentNode.id].plugin
+      pluginTypes = [pluginType, ...pluginTypes]
+      currentId = parentNode.id
+    }
+
+    return pluginTypes
+  }
+)
+
+export const selectMayManipulateSiblings = createSelector(
+  [selectSelf, (_state, id: string) => id],
+  (documents, id: string) => {
+    const root = getChildTree(documents)
+
+    const parentNode = findChildTreeNodeParentById(root, id)
+    if (!parentNode) return false
+
+    return documents[parentNode.id].plugin === EditorPluginType.Rows
   }
 )

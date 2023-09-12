@@ -10,6 +10,7 @@ import {
   faPlayCircle,
   faUser,
   faUserEdit,
+  faPlay,
 } from '@fortawesome/free-solid-svg-icons'
 
 import { FaIconProps } from '@/components/fa-icon'
@@ -47,6 +48,7 @@ export function getIconByTypename(
 
 export const entityIconMapping = {
   applet: faCubes,
+  audio: faPlay,
   article: faNewspaper,
   course: faGraduationCap,
   coursepage: faGraduationCap,

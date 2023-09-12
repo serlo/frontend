@@ -12,6 +12,7 @@ import { BoxToolbar } from './toolbar'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { tw } from '@/helper/tw'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { selectIsEmptyRows } from '@/serlo-editor/plugins/rows'
 import { selectIsFocused, useAppSelector } from '@/serlo-editor/store'
@@ -22,7 +23,7 @@ const titleFormattingOptions = [
 ]
 
 export function BoxEditor(props: BoxProps) {
-  const { focused } = props
+  const { focused, editable } = props
   const { title, type, content, anchorId } = props.state
   const hasNoType = type.value === ''
   const typedValue = (hasNoType ? 'blank' : type.value) as BoxType
@@ -54,7 +55,7 @@ export function BoxEditor(props: BoxProps) {
           )}
         >
           <b className="block pb-4">{editorStrings.plugins.box.type}</b>
-          <ul className="unstyled-list pb-8">{renderSettingsLis()}</ul>
+          <ul className="unstyled-list pb-8">{renderSettingsListItems()}</ul>
         </figure>
       </>
     )
@@ -64,28 +65,42 @@ export function BoxEditor(props: BoxProps) {
     <>
       {hasFocus ? <BoxToolbar {...props} /> : null}
 
-      <BoxRenderer
-        boxType={typedValue}
-        title={
-          <div className="-ml-1 inline-block max-h-6 min-w-[15rem] font-bold">
-            {title.render({
-              config: {
-                placeholder: editorStrings.plugins.box.titlePlaceholder,
-                formattingOptions: titleFormattingOptions,
-                isInlineChildEditor: true,
-              },
-            })}
-          </div>
-        }
-        anchorId={anchorId.value}
+      <div
+        className={clsx(
+          hasFocus && '[&>figure]:rounded-t-none',
+          editable &&
+            tw`
+            [&>figure>div]:!mt-8
+            [&_.plugin-toolbar]:ml-[-2px]
+            [&_.plugin-toolbar]:mr-[-16px]
+            [&_.plugin-toolbar]:rounded-none
+            [&_.rows-child:first-child_.plugin-toolbar:before]:hidden
+          `
+        )}
       >
-        <div className="-ml-3 px-side">{content.render()}</div>
-      </BoxRenderer>
+        <BoxRenderer
+          boxType={typedValue}
+          title={
+            <div className="-ml-1 inline-block max-h-6 min-w-[15rem] font-bold">
+              {title.render({
+                config: {
+                  placeholder: editorStrings.plugins.box.titlePlaceholder,
+                  formattingOptions: titleFormattingOptions,
+                  isInlineChildEditor: true,
+                },
+              })}
+            </div>
+          }
+          anchorId={anchorId.value}
+        >
+          <div className="-ml-3 px-side">{content.render()}</div>
+        </BoxRenderer>
+      </div>
       {renderWarning()}
     </>
   )
 
-  function renderSettingsLis() {
+  function renderSettingsListItems() {
     return types.map((boxType) => {
       const typedBoxType = boxType as BoxType
       const listStyle = boxTypeStyle[typedBoxType]

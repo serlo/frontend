@@ -17,7 +17,7 @@ interface PrivacyWrapperProps {
   children: JSX.Element
   className?: string
   placeholder?: JSX.Element
-  type: 'video' | 'applet' | 'twingle'
+  type: 'video' | 'applet' | 'twingle' | 'audio'
   provider: ExternalProvider
   embedUrl?: string
   twingleCallback?: () => void
@@ -63,6 +63,13 @@ export function PrivacyWrapper({
       confirmLoad()
     }
     setConsentGiven(consentGiven)
+
+    // If we already have the consent (in localstorage, we can show the iframe
+    // immediately)
+    if (consentGiven && provider === ExternalProvider.Vocaroo) {
+      setShowIframe(true)
+    }
+
     // only run on first load
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -88,6 +95,8 @@ export function PrivacyWrapper({
     const buttonLabel = replacePlaceholders(strings.embed[type], {
       provider: provider,
     })
+
+    if (showIframe && provider === ExternalProvider.Vocaroo) return null
     if (isTwingle && showIframe) return null
 
     const previewImageUrl = isTwingle

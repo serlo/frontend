@@ -7,6 +7,7 @@ import { ExerciseGroup } from '../components/content/exercises/exercise-group'
 import { LicenseNotice } from '../components/content/license/license-notice'
 import { Link } from '../components/content/link'
 import { Article } from '@/components/content/article'
+import { Audio } from '@/components/content/audio'
 import { Box } from '@/components/content/box'
 import { EquationProps, Equations } from '@/components/content/equations'
 import { Exercise } from '@/components/content/exercises/exercise'
@@ -433,6 +434,13 @@ function renderElement({
     return (
       <Lazy noPrint>
         <Video src={element.state.src} license={element.license} />
+      </Lazy>
+    )
+  }
+  if (element.type === FrontendNodeType.Audio) {
+    return (
+      <Lazy noPrint>
+        <Audio src={element.state.src} />
       </Lazy>
     )
   }

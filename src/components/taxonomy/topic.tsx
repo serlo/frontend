@@ -1,7 +1,10 @@
 import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
 import dynamic from 'next/dynamic'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
+import { RatingProps } from 'react-simple-star-rating'
 
+import { NewFolderPrototypeProps } from './new-folder-prototype'
 import { SubTopic } from './sub-topic'
 import { TopicCategories } from './topic-categories'
 import { FaIcon } from '../fa-icon'
@@ -9,13 +12,23 @@ import { StaticInfoPanel } from '../static-info-panel'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
+import { useAB } from '@/contexts/ab'
 import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
+import { abSubmission } from '@/helper/ab-submission'
+import { isProduction } from '@/helper/is-production'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface TopicProps {
   data: TaxonomyData
+}
+
+const headingsDataTemp: { [key: number]: string } = {
+  29637: 'Baumdiagramm zeichnen',
+  29581: 'Abzählen mit Baumdiagramm',
+  5011: 'Passende Zahlen bauen',
+  5007: 'Kombinationen finden',
 }
 
 const DonationsBanner = dynamic<DonationsBannerProps>(() =>
@@ -24,8 +37,20 @@ const DonationsBanner = dynamic<DonationsBannerProps>(() =>
   ).then((mod) => mod.DonationsBanner)
 )
 
+const Rating = dynamic<RatingProps>(() =>
+  import('react-simple-star-rating').then((mod) => mod.Rating)
+)
+
+const NewFolderPrototype = dynamic<NewFolderPrototypeProps>(() =>
+  import('./new-folder-prototype').then((mod) => mod.NewFolderPrototype)
+)
+
 export function Topic({ data }: TopicProps) {
   const { strings } = useInstanceData()
+
+  const ab = useAB()
+
+  const [hasFeedback, setHasFeedback] = useState(false)
 
   const isExerciseFolder = data.taxonomyType === TaxonomyTermType.ExerciseFolder
   const isTopic = data.taxonomyType === TaxonomyTermType.Topic
@@ -113,20 +138,80 @@ export function Topic({ data }: TopicProps) {
   }
 
   function renderExercises() {
+    if (
+      ab?.experiment === 'dreisatzv0' &&
+      (!isProduction || ab.group === 'b')
+    ) {
+      // here is the place for new exercise view
+      return (
+        <>
+          <NewFolderPrototype data={data} />
+          <div className="h-24"></div>
+          {renderSurvey()}
+        </>
+      )
+    }
+    if (ab?.experiment === 'reorder_trig' && ab.group === 'b') {
+      const a1 = data.exercisesContent[0]
+      const a2 = data.exercisesContent[1]
+      if (a1.context.id === 57741 && a2.context.id === 52806) {
+        a1.positionOnPage = 1
+        a2.positionOnPage = 0
+        data.exercisesContent[0] = a2
+        data.exercisesContent[1] = a1
+      }
+    }
     return (
       hasExercises &&
       data.exercisesContent &&
       data.exercisesContent.map((exercise, i) => {
         return (
           <Fragment key={i}>
+            {ab?.experiment === 'headings' &&
+              ab.group === 'b' &&
+              headingsDataTemp[exercise.context.id] && (
+                <div className="mx-side -mb-10 mt-16 text-xl font-bold">
+                  {headingsDataTemp[exercise.context.id]}
+                </div>
+              )}
             {renderArticle(
               [exercise],
               `tax${data.id}`,
               `ex${exercise.context.id}`
             )}
+            {i === (ab?.experiment === 'headings' ? 3 : 1) && renderSurvey()}
           </Fragment>
         )
       })
+    )
+  }
+
+  function renderSurvey() {
+    if (!ab) return
+    if (ab.topicId !== data.id) return
+    return (
+      <div className=" mx-auto my-12  max-w-[420px] rounded-xl bg-brand-50 p-4 text-center ">
+        <strong>Wie gut gefällt dir dieser Aufgabenordner?</strong>
+        <Rating
+          className="mt-4 [&_svg]:inline"
+          readonly={hasFeedback}
+          onClick={(rate) => {
+            //submit_event(`rate_quest_${core.ws.quest.id}_${rate}`, core)
+            abSubmission({
+              entityId: -1,
+              experiment: ab.experiment,
+              group: ab.group,
+              result: rate.toString(),
+              topicId: ab.topicId,
+              type: 'rating',
+            })
+            setHasFeedback(true)
+          }}
+        />
+        <div className={clsx('mt-3', hasFeedback ? '' : 'invisible')}>
+          Danke für dein Feedback! &#10084;
+        </div>
+      </div>
     )
   }
 

@@ -16,6 +16,7 @@ interface InlineMathProps {
   onChange: (state: string) => void
   onFocusNext: () => void
   onFocusPrevious: () => void
+  closeMathEditorOverlay?: () => void
   focused?: boolean
   prefix?: string
   suffix?: string
@@ -30,6 +31,7 @@ export function InlineMath(props: InlineMathProps) {
     focused,
     onFocusNext,
     onFocusPrevious,
+    closeMathEditorOverlay,
     onChange,
     state,
     prefix = '',
@@ -52,7 +54,9 @@ export function InlineMath(props: InlineMathProps) {
       onChange={onChange}
       onMoveOutRight={onFocusNext}
       onMoveOutLeft={onFocusPrevious}
-      closeMathEditorOverlay={onFocusNext}
+      // When the math editor is rendered within the equations plugin, we simply
+      // close the mathEditorOverlay without focusing the next plugin
+      closeMathEditorOverlay={closeMathEditorOverlay || onFocusNext}
     />
   )
 }

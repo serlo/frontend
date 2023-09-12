@@ -9,7 +9,7 @@ import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import {
   store,
-  selectParent,
+  selectChildTreeOfParent,
   insertPluginChildBefore,
   selectSerializedDocument,
   removePluginChild,
@@ -27,6 +27,7 @@ const StateDecoder = t.strict({
         t.literal(EditorPluginType.Geogebra),
         t.literal(EditorPluginType.Anchor),
         t.literal(EditorPluginType.Video),
+        t.literal(EditorPluginType.Audio),
         t.literal(EditorPluginType.SerloTable),
         t.literal(EditorPluginType.Highlight),
         t.literal(EditorPluginType.Injection),
@@ -69,7 +70,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
 
       const content = decoded.right
 
-      const parentPlugin = selectParent(store.getState(), props.id)
+      const parentPlugin = selectChildTreeOfParent(store.getState(), props.id)
 
       if (
         parentPlugin === null ||

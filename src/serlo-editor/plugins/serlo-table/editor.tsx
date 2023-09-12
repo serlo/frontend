@@ -11,6 +11,7 @@ import { getTableType } from './utils/get-table-type'
 import { TextEditorConfig } from '../text'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import {
   store,
   selectFocused,
@@ -21,15 +22,21 @@ import {
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-const headerTextFormattingOptions = ['code', 'katex', 'links', 'math']
+const headerTextFormattingOptions = [
+  TextEditorFormattingOption.code,
+  TextEditorFormattingOption.katex,
+  TextEditorFormattingOption.links,
+  TextEditorFormattingOption.math,
+]
 const cellTextFormattingOptions = [
-  'code',
-  'colors',
-  'katex',
-  'links',
-  'lists',
-  'math',
-  'richText',
+  TextEditorFormattingOption.code,
+  TextEditorFormattingOption.colors,
+  TextEditorFormattingOption.katex,
+  TextEditorFormattingOption.links,
+  TextEditorFormattingOption.lists,
+  TextEditorFormattingOption.math,
+  TextEditorFormattingOption.richTextBold,
+  TextEditorFormattingOption.richTextItalic,
 ]
 
 const newCell = { content: { plugin: EditorPluginType.Text } }
@@ -201,7 +208,7 @@ export function SerloTableEditor(props: SerloTableProps) {
             </>
           ) : null}
         </nav>
-        <nav className="absolute -mt-12">
+        <nav className="absolute bottom-12">
           {showColButtons ? (
             <>
               {renderInlineAddButton(false)}
@@ -302,7 +309,7 @@ export function SerloTableEditor(props: SerloTableProps) {
       <button
         className={clsx(
           'serlo-button-light',
-          isRow ? 'm-4 -mt-4 w-auto' : 'mb-16'
+          isRow ? 'm-4 mt-0 w-auto' : 'mb-16'
         )}
         title={replaceWithType(tableStrings.addType, isRow)}
         onClick={() => {

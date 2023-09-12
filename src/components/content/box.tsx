@@ -14,7 +14,7 @@ export function Box({
   if (!children || !children.length || !boxType) return null
 
   const content = renderNested(children, 'children')
-  const unwrappedTitle = title?.[0].children
+  const unwrappedTitle = title?.[0]?.children
 
   return (
     <BoxRenderer

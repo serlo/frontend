@@ -7,11 +7,11 @@ import {
   focusNext,
   focusPrevious,
   selectDocument,
-  selectParent,
+  selectChildTreeOfParent,
   selectMayManipulateSiblings,
   removePluginChild,
-  RootStore,
-  selectFocusTree,
+  selectChildTree,
+  store,
 } from '@/serlo-editor/store'
 
 interface DocumentState {
@@ -54,20 +54,23 @@ export function sliceNodesAfterSelection(editor: SlateEditor) {
 export function mergePlugins(
   direction: 'previous' | 'next',
   editor: SlateEditor,
-  store: RootStore,
   id: string
 ) {
   const mayManipulateSiblings = selectMayManipulateSiblings(
     store.getState(),
     id
   )
-  const parent = selectParent(store.getState(), id)
+  const parent = selectChildTreeOfParent(store.getState(), id)
   if (!mayManipulateSiblings || !parent) return
+
+  const adjacentSibling = getAdjacentSiblingByDirection(id, direction)
+  const adjacentDocument = selectDocument(store.getState(), adjacentSibling?.id)
+  if (!adjacentSibling || !adjacentDocument) return
 
   // If the editor is empty, remove the current Slate instance
   // and focus the one it's been merged with
-  if (Node.string(editor) === '') {
-    const focusTree = selectFocusTree(store.getState())
+  if (Node.string(editor) === '' && editor.children.length <= 1) {
+    const focusTree = selectChildTree(store.getState())
     const focusAction = direction === 'previous' ? focusPrevious : focusNext
     store.dispatch(focusAction(focusTree))
     store.dispatch(removePluginChild({ parent: parent.id, child: id }))
@@ -87,18 +90,10 @@ export function mergePlugins(
     const isFirstChild = indexWithinParent < 1
     if (isFirstChild) return
 
-    // Exit if unable to get value of previous sibling
-    const previousSibling = allChildrenOfParent[indexWithinParent - 1]
-    const previousDocument = selectDocument(
-      store.getState(),
-      previousSibling.id
-    )
-    if (!previousDocument) return
-
     // If previous and current plugin are both text plugins
     // merge them and return the merge value
-    if (previousDocument.plugin === currentDocument.plugin) {
-      const previousDocumentValue = (previousDocument.state as DocumentState)
+    if (adjacentDocument.plugin === currentDocument.plugin) {
+      const previousDocumentValue = (adjacentDocument.state as DocumentState)
         .value
       const previousDocumentChildrenCount = previousDocumentValue.length
 
@@ -112,7 +107,7 @@ export function mergePlugins(
       store.dispatch(
         removePluginChild({
           parent: parent.id,
-          child: previousSibling.id,
+          child: adjacentSibling.id,
         })
       )
 
@@ -132,15 +127,10 @@ export function mergePlugins(
     const isLastChild = indexWithinParent + 1 >= allChildrenOfParent.length
     if (isLastChild) return
 
-    // Exit if unable to get value of next sibling
-    const nextSibling = allChildrenOfParent[indexWithinParent + 1]
-    const nextDocument = selectDocument(store.getState(), nextSibling.id)
-    if (!nextDocument) return
-
     // If next and current plugin are both text plugins
     // merge them and return the merge value
-    if (nextDocument.plugin === currentDocument.plugin) {
-      const nextDocumentValue = (nextDocument.state as DocumentState).value
+    if (adjacentDocument.plugin === currentDocument.plugin) {
+      const nextDocumentValue = (adjacentDocument.state as DocumentState).value
 
       // Merge editor values
       const newValue = [...editor.children, ...nextDocumentValue]
@@ -150,11 +140,25 @@ export function mergePlugins(
 
       // Remove the merged plugin
       store.dispatch(
-        removePluginChild({ parent: parent.id, child: nextSibling.id })
+        removePluginChild({ parent: parent.id, child: adjacentSibling.id })
       )
 
       // Return the merge value
       return newValue
     }
   }
+}
+
+function getAdjacentSiblingByDirection(
+  id: string,
+  direction: 'previous' | 'next'
+) {
+  const parent = selectChildTreeOfParent(store.getState(), id)
+  const allChildrenOfParent = parent?.children || []
+  const indexWithinParent = allChildrenOfParent.findIndex(
+    (child) => child.id === id
+  )
+  const index =
+    direction === 'previous' ? indexWithinParent - 1 : indexWithinParent + 1
+  return allChildrenOfParent[index]
 }

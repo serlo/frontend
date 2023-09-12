@@ -12,9 +12,11 @@ import { StateTypeReturnType } from '@/serlo-editor/plugin'
 import { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import {
   DocumentState,
+  selectDocumentPluginType,
   selectSerializedDocument,
   store,
 } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface RowDragObject {
   id: string
@@ -23,6 +25,16 @@ interface RowDragObject {
 }
 
 const validFileTypes = [NativeTypes.FILE, NativeTypes.URL]
+
+const pluginsWithOwnBorder = [
+  EditorPluginType.Box,
+  EditorPluginType.Geogebra,
+  EditorPluginType.Highlight,
+  EditorPluginType.Multimedia,
+  EditorPluginType.SerloTable,
+  EditorPluginType.Spoiler,
+  EditorPluginType.Video,
+]
 
 export function EditorRowRenderer({
   config,
@@ -54,10 +66,17 @@ export function EditorRowRenderer({
         id: row.id,
         serialized: selectSerializedDocument(store.getState(), row.id),
         onDrop() {
+          // Remove the dragged plugin from its original rows plugin
           rows.set((list) => {
             const index = list.findIndex((id) => id === row.id)
             return R.remove(index, 1, list)
           })
+
+          // If the dragged plugin was the only plugin in the current rows plugin,
+          // add an empty text plugin to replace it
+          if (rows.length <= 1) {
+            rows.insert(0, { plugin: EditorPluginType.Text })
+          }
         },
       }
     },
@@ -102,12 +121,12 @@ export function EditorRowRenderer({
         if (!canDrop(item.id)) return
 
         const draggingAbove = isDraggingAbove(monitor)
+        item.onDrop()
         rows.set((list, deserializer) => {
           const index =
             list.findIndex((id) => id === row.id) + (draggingAbove ? 0 : 1)
           return R.insert(index, deserializer(item.serialized), list)
         })
-        item.onDrop()
         return
       }
 
@@ -169,6 +188,9 @@ export function EditorRowRenderer({
       <hr className="m-0 border-2 border-editor-primary p-0" />
     ) : null
 
+  const rowPluginType = selectDocumentPluginType(store.getState(), row.id)
+  const shouldShowBorder = !pluginsWithOwnBorder.includes(rowPluginType)
+
   return (
     <>
       {draggingAbove ? dropPreview : null}
@@ -176,14 +198,16 @@ export function EditorRowRenderer({
         ref={container}
         className={clsx(
           'rows-editor-renderer-container',
-          'border-l-2 border-transparent transition-colors',
-          tw`
-          focus-within:border-gray-600
-          hover:!border-gray-300
-          hover:focus-within:!border-gray-600
-          [&:has(.rows-editor-renderer-container:focus-within)]:border-transparent
-          [&:hover:has(.rows-editor-renderer-container:focus-within)]:!border-gray-300
-          `,
+          'border-l-2 border-transparent',
+          shouldShowBorder &&
+            tw`
+            transition-colors
+            focus-within:border-gray-400
+            hover:!border-gray-200
+            hover:focus-within:!border-gray-400
+            [&:has(.rows-editor-renderer-container:focus-within)]:border-transparent
+            [&:hover:has(.rows-editor-renderer-container:focus-within)]:!border-gray-200
+            `,
           tw`
           [&:focus-within>.rows-tools]:opacity-100
           [&:has(.rows-editor-renderer-container:focus-within)>.rows-tools]:opacity-0

@@ -173,6 +173,7 @@ export const instanceData = {
         proof: 'Proof',
       },
       loadingVideoFailed: 'Something went wrong',
+      loadingAudioFailed: 'Something went wrong',
     },
     consent: {
       title: 'Consent for external Content',
@@ -189,6 +190,7 @@ export const instanceData = {
       video: 'Play Video from %provider%',
       applet: 'Load Applet from %provider%',
       twingle: 'Load Donation Form',
+      audio: 'Play audio from %provider%',
       general: 'Activate',
     },
     comments: {
@@ -826,7 +828,8 @@ export const loggedInData = {
         text: {
           title: 'Text',
           description: 'Compose content using rich text and math formulas.',
-          placeholder: 'Write something or add elements with \u2295.',
+          placeholder: 'Write something or add element:',
+          addButtonExplanation: 'Click to insert new element',
           quote: 'Quote',
           setColor: 'Set color',
           resetColor: 'Reset color',
@@ -886,6 +889,11 @@ export const loggedInData = {
           titlePlaceholder: 'Title',
           url: 'URL',
           seoTitle: 'Title for search engines',
+        },
+        audio: {
+          title: 'Audio',
+          description: 'Link to audio files on Vocaroo',
+          audioUrl: 'Enter Audio URL'
         },
       },
       templatePlugins: {

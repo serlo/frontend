@@ -7,6 +7,7 @@ import type { CustomText } from './serlo-editor/plugins/text'
 import { EditorPluginType } from './serlo-editor-integration/types/editor-plugin-type'
 import type {
   EditorAnchorPlugin,
+  EditorAudioPlugin,
   EditorGeogebraPlugin,
   EditorH5PPlugin,
   EditorHighlightPlugin,
@@ -23,6 +24,7 @@ import type {
 export enum FrontendNodeType {
   Anchor = EditorPluginType.Anchor,
   Article = EditorPluginType.Article,
+  Audio = EditorPluginType.Audio,
   Box = EditorPluginType.Box,
   Code = EditorPluginType.Highlight,
   Equations = EditorPluginType.Equations,
@@ -365,6 +367,13 @@ export type FrontendVideoNode = EditorVideoPlugin & {
   pluginId?: string
 }
 
+export type FrontendAudioNode = EditorAudioPlugin & {
+  type: FrontendNodeType.Audio
+  children?: undefined
+  pluginId?: string
+  src: string
+}
+
 export type FrontendCodeNode = EditorHighlightPlugin & {
   type: FrontendNodeType.Code
   children?: undefined
@@ -420,6 +429,7 @@ export type FrontendVoidNode =
   | FrontendExerciseNode
   | FrontendSolutionNode
   | FrontendVideoNode
+  | FrontendAudioNode
   | FrontendCodeNode
   | FrontendEquationsNode
 

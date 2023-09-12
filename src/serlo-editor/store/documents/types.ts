@@ -18,3 +18,8 @@ export type PureReplaceDocumentAction = PayloadAction<{
   plugin: string
   state?: unknown
 }>
+
+export interface ChildTreeNode {
+  id: string
+  children?: Array<ChildTreeNode>
+}
