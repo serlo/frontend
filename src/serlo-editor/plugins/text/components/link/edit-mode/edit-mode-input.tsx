@@ -57,6 +57,7 @@ export function EditModeInput({
         onKeyDown={onKeyDown}
         onPaste={onPaste}
         spellCheck={false}
+        data-focus="preserve"
       />
       {query ? (
         <div

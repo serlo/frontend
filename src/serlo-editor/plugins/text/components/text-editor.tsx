@@ -125,17 +125,30 @@ export function TextEditor(props: TextEditorProps) {
   // Ensure that slate is focused by manually setting focus on every render.
   // Does not interfere with ReactEditor.focus(), because it checks for activeElement
   useEffect(() => {
-    if (focused) {
-      try {
-        const el = ReactEditor.toDOMNode(editor, editor)
-        // We have to focus document first, otherwise focus is not doing anything
-        document.documentElement.focus({ preventScroll: true })
-        el.focus({ preventScroll: true })
-      } catch (e) {
-        // As above, rarely the selection is invalid on first renders and toDOMNode fails.
-        // In all cases, there is another rerender afterwards, so try it again later.
+    // focus() is only working in chrome if I wrap it in set timeout
+    setTimeout(() => {
+      if (focused) {
+        try {
+          // Preserve focus for inline text areas that manage focus themselves
+          // and would lose focus if we set focus on slate
+          if (
+            document.activeElement?.getAttribute('data-focus') === 'preserve'
+          ) {
+            return
+          }
+          const el = ReactEditor.toDOMNode(editor, editor)
+          // We have to focus document first, otherwise focus is not doing anything (firefox)
+          document.documentElement.focus({ preventScroll: true })
+          el.focus({ preventScroll: true })
+          //console.log('additional focus')
+        } catch (e) {
+          // As above, rarely the selection is invalid on first renders and toDOMNode fails.
+          // In most, there is another rerender afterwards, so try it again later.
+          // fast refresh in browser is causing a lot of errors, investigate
+          // console.warn('failed to set focus', e)
+        }
       }
-    }
+    }, 0)
   })
 
   // Show a placeholder on empty lines.

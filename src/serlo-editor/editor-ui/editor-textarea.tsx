@@ -24,6 +24,7 @@ export const EditorTextarea = forwardRef<
       {...props}
       ref={ref}
       data-qa={dataQa}
+      data-focus="preserve"
       onKeyDown={(e) => {
         if (!ref || typeof ref === 'function' || !ref.current) return
 
