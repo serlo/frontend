@@ -68,15 +68,19 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const showSuggestions =
     editable && focused && text.startsWith('/') && filteredOptions.length > 0
 
-  const { enableScope, disableScope } = useHotkeysContext()
+  const { enableScope, disableScope, enabledScopes } = useHotkeysContext()
 
   useEffect(() => {
     if (showSuggestions) {
-      disableScope('root-up-down-enter')
+      if (enabledScopes.includes('root-up-down-enter')) {
+        disableScope('root-up-down-enter')
+      }
     } else {
-      enableScope('root-up-down-enter')
+      if (!enabledScopes.includes('root-up-down-enter')) {
+        enableScope('root-up-down-enter')
+      }
     }
-  }, [enableScope, disableScope, showSuggestions])
+  }, [enableScope, disableScope, showSuggestions, enabledScopes])
 
   const options = showSuggestions ? filteredOptions : []
 
