@@ -11,7 +11,8 @@ export const withEmptyLinesRestriction = (editor: Editor) => {
 
   editor.normalizeNode = (entry, { operation } = { operation: undefined }) => {
     const [node, path] = entry
-    const isBlur = (operation as unknown as string) === 'blur'
+    // custom operation type
+    const isBlur = (operation?.type as string) === 'blur_container'
 
     if (shouldNodeBeRemoved(editor, node, path, isBlur)) {
       Transforms.removeNodes(editor, { at: path })

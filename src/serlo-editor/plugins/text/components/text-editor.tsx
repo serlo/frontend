@@ -135,9 +135,8 @@ export function TextEditor(props: TextEditorProps) {
   // https://www.quirksmode.org/blog/archives/2008/04/delegating_the.html
   useEffect(() => {
     const handleBlur = () => {
-      // @ts-expect-error `operation` can only be `BaseOperation`, but we use
-      //                  this 'blur' hack to do special normalization on blur.
-      editor.normalize({ force: true, operation: 'blur' })
+      // @ts-expect-error custom operation to do special normalization only on blur.
+      editor.normalize({ force: true, operation: { type: 'blur_container' } })
     }
     const container = containerRef?.current
     container?.addEventListener('blur', handleBlur, true)
