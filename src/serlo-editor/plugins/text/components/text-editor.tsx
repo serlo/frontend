@@ -121,6 +121,23 @@ export function TextEditor(props: TextEditorProps) {
     }
   }, [editor, focused])
 
+  // Any rerender can cause slate to lose focus (while still being the active element)
+  // Ensure that slate is focused by manually setting focus on every render.
+  // Does not interfere with ReactEditor.focus(), because it checks for activeElement
+  useEffect(() => {
+    if (focused) {
+      try {
+        const el = ReactEditor.toDOMNode(editor, editor)
+        // We have to focus document first, otherwise focus is not doing anything
+        document.documentElement.focus({ preventScroll: true })
+        el.focus({ preventScroll: true })
+      } catch (e) {
+        // As above, rarely the selection is invalid on first renders and toDOMNode fails.
+        // In all cases, there is another rerender afterwards, so try it again later.
+      }
+    }
+  })
+
   // Show a placeholder on empty lines.
   // https://jkrsp.com/slate-js-placeholder-per-line/
   const decorateEmptyLinesWithPlaceholder = useCallback(
