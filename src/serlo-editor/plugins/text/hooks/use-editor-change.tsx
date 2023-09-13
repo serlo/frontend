@@ -1,52 +1,92 @@
-import { useCallback, useMemo, useRef } from 'react'
-import { Descendant, Editor, Transforms } from 'slate'
+import { useCallback, useEffect, useMemo } from 'react'
+import { Descendant, Editor, Transforms, withoutNormalizing } from 'slate'
+import { ReactEditor } from 'slate-react'
 
 import type { TextEditorProps } from '../components/text-editor'
+import { intermediateStore } from '../utils/intermediate-store'
 
 interface UseEditorChangeArgs {
   editor: Editor
   state: TextEditorProps['state']
+  id: string
+  focused: boolean
 }
 
 export const useEditorChange = (args: UseEditorChangeArgs) => {
-  const { editor, state } = args
+  const { editor, state, id, focused } = args
 
-  const previousValue = useRef(state.value.value)
-  const previousSelection = useRef(state.value.selection)
+  // setup store on first render
+  if (!intermediateStore[id]) {
+    intermediateStore[id] = {
+      value: state.value.value,
+      selection: state.value.selection,
+      needRefocus: 1,
+    }
+  }
 
   useMemo(() => {
     const { selection, value } = state.value
-    // The selection can only be null when the text plugin is initialized
-    // (In this case an update of the slate editor is not necessary)
-    if (!selection) return
 
-    Transforms.setSelection(editor, selection)
-
-    if (previousValue.current !== value) {
-      previousValue.current = value
+    // we received a new (different) state from core
+    if (intermediateStore[id].value !== value) {
+      console.log('updating editor state', selection, value, id)
+      intermediateStore[id].value = value
+      intermediateStore[id].selection = selection
       editor.children = value
+      withoutNormalizing(editor, () => {
+        Transforms.deselect(editor)
+        Transforms.select(editor, selection ?? Editor.start(editor, []))
+      })
     }
-  }, [editor, state.value])
+  }, [editor, state.value, id])
 
   const handleEditorChange = useCallback(
     (newValue: Descendant[]) => {
       const isAstChange = editor.operations.some(
         ({ type }) => type !== 'set_selection'
       )
+      const storeEntry = intermediateStore[id]
+
       if (isAstChange) {
-        previousValue.current = newValue
+        storeEntry.value = newValue
         state.set(
           { value: newValue, selection: editor.selection },
-          ({ value }) => ({ value, selection: previousSelection.current })
+          ({ value }) => ({ value, selection: storeEntry.selection })
         )
+        console.log('selection checkpoint', editor.selection, id)
+        //storeEntry.previousSelection = editor.selection
       }
-      previousSelection.current = editor.selection
+
+      storeEntry.selection = editor.selection
     },
-    [editor.operations, editor.selection, state]
+    [editor.operations, editor.selection, state, id]
   )
 
+  useEffect(() => {
+    const storeEntry = intermediateStore[id]
+    if (focused && storeEntry.needRefocus > 0) {
+      const selection = storeEntry.selection ?? Editor.start(editor, [])
+
+      console.log('re select editor')
+      withoutNormalizing(editor, () => {
+        Transforms.deselect(editor)
+        Transforms.select(editor, selection)
+      })
+
+      ReactEditor.focus(editor)
+      //console.log('select', selection, id)
+      storeEntry.needRefocus--
+    }
+  })
+
+  useEffect(() => {
+    if (focused) {
+      intermediateStore[id].needRefocus = 2
+    }
+  }, [focused])
+
   return {
-    previousSelection,
+    previousSelection: intermediateStore[id].selection,
     handleEditorChange,
   }
 }

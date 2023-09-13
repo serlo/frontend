@@ -8,7 +8,7 @@ import {
   NodeEntry,
   Element,
 } from 'slate'
-import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
+import { Editable, Slate, withReact } from 'slate-react'
 
 import { LinkControls } from './link/link-controls'
 import { Suggestions } from './suggestions'
@@ -21,6 +21,7 @@ import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import { withCorrectVoidBehavior } from '../plugins/with-correct-void-behavior'
 import type { TextEditorConfig, TextEditorState } from '../types/config'
+import { intermediateStore } from '../utils/intermediate-store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { SlateHoverOverlay } from '@/serlo-editor/editor-ui/slate-hover-overlay'
@@ -53,16 +54,17 @@ export function TextEditor(props: TextEditorProps) {
     placeholder: config.placeholder,
     id,
   })
-  const { previousSelection, handleEditorChange } = useEditorChange({
+  const { handleEditorChange } = useEditorChange({
     editor,
     state,
+    id,
+    focused,
   })
   const handleEditableKeyDown = useEditableKeydownHandler({
     config,
     editor,
     id,
     showSuggestions,
-    previousSelection,
     state,
   })
   const handleEditablePaste = useEditablePasteHandler({
@@ -70,56 +72,42 @@ export function TextEditor(props: TextEditorProps) {
     id,
   })
 
+  //if (focused || id === '2e1450e1-a847-4e3c-a0f6-d2934a012132') {
+  //  console.log('SLATE selection', editor.selection, id)
+  //}
+
   // Workaround for setting selection when adding a new editor:
   useEffect(() => {
-    // ReactEditor.focus(editor) does not work without being wrapped in setTimeout
-    // See: https://stackoverflow.com/a/61353519
-    const timeout = setTimeout(() => {
-      // Get the current text value of the editor
-      const text = Node.string(editor)
+    // Get the current text value of the editor
+    const text = Node.string(editor)
 
-      // If the editor is not focused, remove the suggestions search
-      // and exit the useEffect hook
-      if (focused === false) {
-        if (text.startsWith('/')) {
-          editor.deleteBackward('line')
-        }
-        return
+    // If the editor is not focused, remove the suggestions search
+    // and exit the useEffect hook
+    if (focused === false) {
+      if (text.startsWith('/')) {
+        editor.deleteBackward('line')
       }
-
-      try {
-        ReactEditor.focus(editor) // Focus this text editor
-      } catch (error) {
-        // Focusing did not work. Happens sometimes. Ignore and skip focusing this time.
-        // eslint-disable-next-line no-console
-        console.warn(
-          'Failed to focus text editor. Continued execution. Details:'
-        )
-        // eslint-disable-next-line no-console
-        console.warn(error)
-        return
-      }
-
-      // If the first child of the editor is not a paragraph, do nothing
-      const isFirstChildParagraph =
-        'type' in editor.children[0] && editor.children[0].type === 'p'
-      if (!isFirstChildParagraph) return
-
-      // If the editor is empty, set the cursor at the start
-      if (text === '') {
-        Transforms.select(editor, { offset: 0, path: [0, 0] })
-      }
-
-      // If the editor only has a forward slash, set the cursor
-      // after it, so that the user can type to filter suggestions
-      if (text === '/') {
-        Transforms.select(editor, { offset: 1, path: [0, 0] })
-      }
-    })
-    return () => {
-      clearTimeout(timeout)
+      return
     }
-  }, [editor, focused])
+
+    // If the first child of the editor is not a paragraph, do nothing
+    const isFirstChildParagraph =
+      'type' in editor.children[0] && editor.children[0].type === 'p'
+    if (!isFirstChildParagraph) return
+
+    // If the editor is empty, set the cursor at the start
+    if (text === '') {
+      Transforms.select(editor, { offset: 0, path: [0, 0] })
+      intermediateStore[id].selection = editor.selection
+    }
+
+    // If the editor only has a forward slash, set the cursor
+    // after it, so that the user can type to filter suggestions
+    if (text === '/') {
+      Transforms.select(editor, { offset: 1, path: [0, 0] })
+      intermediateStore[id].selection = editor.selection
+    }
+  }, [editor, focused, id])
 
   // Show a placeholder on empty lines.
   // https://jkrsp.com/slate-js-placeholder-per-line/
@@ -160,7 +148,7 @@ export function TextEditor(props: TextEditorProps) {
   return (
     <Slate
       editor={editor}
-      initialValue={state.value.value}
+      initialValue={intermediateStore[id].value}
       onChange={handleEditorChange}
     >
       {focused ? (
