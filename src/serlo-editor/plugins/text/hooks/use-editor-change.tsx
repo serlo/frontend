@@ -29,7 +29,6 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
 
     // we received a new (different) state from core
     if (intermediateStore[id].value !== value) {
-      console.log('updating editor state', selection, value, id)
       intermediateStore[id].value = value
       intermediateStore[id].selection = selection
       editor.children = value
@@ -53,8 +52,6 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
           { value: newValue, selection: editor.selection },
           ({ value }) => ({ value, selection: storeEntry.selection })
         )
-        console.log('selection checkpoint', editor.selection, id)
-        //storeEntry.previousSelection = editor.selection
       }
 
       storeEntry.selection = editor.selection
@@ -67,14 +64,12 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
     if (focused && storeEntry.needRefocus > 0) {
       const selection = storeEntry.selection ?? Editor.start(editor, [])
 
-      console.log('re select editor')
       withoutNormalizing(editor, () => {
         Transforms.deselect(editor)
         Transforms.select(editor, selection)
       })
 
       ReactEditor.focus(editor)
-      //console.log('select', selection, id)
       storeEntry.needRefocus--
     }
   })
@@ -83,7 +78,7 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
     if (focused) {
       intermediateStore[id].needRefocus = 2
     }
-  }, [focused])
+  }, [focused, id])
 
   return {
     previousSelection: intermediateStore[id].selection,
