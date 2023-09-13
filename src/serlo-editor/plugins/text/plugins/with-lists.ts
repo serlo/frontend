@@ -3,7 +3,7 @@ import {
   withLists as withListsPlugin,
   withListsReact,
 } from '@prezly/slate-lists'
-import { Editor as SlateEditor, Element, Node } from 'slate'
+import { Editor, Element, Node } from 'slate'
 
 import {
   List,
@@ -27,7 +27,7 @@ const createListItemNode = (props: Partial<ListItem> = {}): ListItem => ({
   type: ListElementType.LIST_ITEM,
 })
 
-export const withLists = (editor: SlateEditor) => {
+export const withLists = (editor: Editor) => {
   const editorWithListsPlugin = withListsPlugin({
     isConvertibleToListTextNode(node: Node) {
       return Element.isElementType(node, 'p')

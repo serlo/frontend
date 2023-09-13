@@ -19,6 +19,7 @@ import { useEditorChange } from '../hooks/use-editor-change'
 import { useSlateRenderHandlers } from '../hooks/use-slate-render-handlers'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
+import { withEmptyLinesRestriction } from '../plugins'
 import { withCorrectVoidBehavior } from '../plugins/with-correct-void-behavior'
 import type { TextEditorConfig, TextEditorState } from '../types/config'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -41,7 +42,11 @@ export function TextEditor(props: TextEditorProps) {
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
   const { createTextEditor, toolbarControls } = textFormattingOptions
   const editor = useMemo(() => {
-    return createTextEditor(withReact(withCorrectVoidBehavior(createEditor())))
+    return createTextEditor(
+      withReact(
+        withEmptyLinesRestriction(withCorrectVoidBehavior(createEditor()))
+      )
+    )
   }, [createTextEditor])
 
   const suggestions = useSuggestions({ editor, id, editable, focused })
@@ -120,6 +125,25 @@ export function TextEditor(props: TextEditorProps) {
       clearTimeout(timeout)
     }
   }, [editor, focused])
+
+  // Workaround for removing double empty lines on editor blur.
+  // Normalization is forced on blur and handled in
+  // `withEmptyLinesRestriction` plugin.
+  // `useEffect` and event delegation are used because `<Editable`
+  // `onBlur` doesn't work when custom-empty-line-placeholder is
+  // shown before bluring the editor. More info on event delegation:
+  // https://www.quirksmode.org/blog/archives/2008/04/delegating_the.html
+  useEffect(() => {
+    const handleBlur = () => {
+      // @ts-expect-error custom operation to do special normalization only on blur.
+      editor.normalize({ force: true, operation: { type: 'blur_container' } })
+    }
+    const container = containerRef?.current
+    container?.addEventListener('blur', handleBlur, true)
+    return () => {
+      container?.removeEventListener('blur', handleBlur, true)
+    }
+  }, [containerRef, editor, id])
 
   // Show a placeholder on empty lines.
   // https://jkrsp.com/slate-js-placeholder-per-line/

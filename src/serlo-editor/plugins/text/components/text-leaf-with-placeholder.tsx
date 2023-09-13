@@ -17,7 +17,7 @@ export function TextLeafWithPlaceholder(
   const textStrings = useEditorStrings().plugins.text
 
   const leafElement = (
-    <span {...attributes}>
+    <span {...attributes} data-qa="plugin-text-leaf-element">
       <TextLeafRenderer {...props} />
     </span>
   )
@@ -29,6 +29,7 @@ export function TextLeafWithPlaceholder(
       <span
         className="pointer-events-none absolute -mt-[5px] block w-full text-gray-400 [user-select:none]"
         contentEditable={false}
+        data-qa="plugin-text-leaf-element-with-placeholder"
       >
         {customPlaceholder ?? textStrings.placeholder}{' '}
         {onAdd ? (
