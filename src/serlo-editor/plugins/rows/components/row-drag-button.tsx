@@ -18,7 +18,7 @@ export function RowDragButton({ drag }: RowDragButtonProps) {
     <div
       className={clsx(
         'rows-tools',
-        'absolute left-2 z-30 rounded-l-md bg-white bg-opacity-70 opacity-0 transition-opacity'
+        'absolute left-2 z-[21] rounded-l-md bg-white bg-opacity-70 opacity-0 transition-opacity'
       )}
     >
       <button
