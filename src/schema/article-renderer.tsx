@@ -332,15 +332,6 @@ function renderElement({
   if (element.type === FrontendNodeType.Li) {
     return <li>{children}</li>
   }
-  if (element.type === FrontendNodeType.Table) {
-    return (
-      <div className="mb-block max-w-[100vw] overflow-auto">
-        <table className="serlo-table">
-          <tbody>{children}</tbody>
-        </table>
-      </div>
-    )
-  }
   if (element.type === FrontendNodeType.SerloTable) {
     return <SerloTable {...element} renderNested={nestedRenderer} />
   }
@@ -365,12 +356,6 @@ function renderElement({
         {children}
       </div>
     )
-  }
-  if (element.type === FrontendNodeType.Important) {
-    return <div className="serlo-important">{children}</div>
-  }
-  if (element.type === FrontendNodeType.Blockquote) {
-    return <blockquote className="serlo-blockquote">{children}</blockquote>
   }
   if (element.type === FrontendNodeType.Box) {
     return <Box {...element} renderNested={nestedRenderer} />
