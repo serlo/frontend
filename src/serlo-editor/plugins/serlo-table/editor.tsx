@@ -125,9 +125,6 @@ export function SerloTableEditor(props: SerloTableProps) {
                 '[&>div>[data-slate-editor]]:pr-2',
                 '[&>div>[data-slate-editor]]:pb-block'
               )}
-              onClick={() => {
-                dispatch(focus(cell.content.id))
-              }}
             >
               {renderInlineNav(rowIndex, colIndex)}
               {cell.content.render({
