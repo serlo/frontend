@@ -11,6 +11,7 @@ import { getTableType } from './utils/get-table-type'
 import { TextEditorConfig } from '../text'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import {
   store,
@@ -69,14 +70,14 @@ export function SerloTableEditor(props: SerloTableProps) {
     <>
       {props.focused || nestedFocus ? <SerloTableToolbar {...props} /> : null}
 
-      <div className="relative">
+      <div className="relative pt-[19px]">
         <div className="flex">
           <div className="flex flex-col">
             <SerloTableRenderer rows={rowsJSX} tableType={tableType} />
-            {renderAddButton(true)}
+            {nestedFocus ? renderAddRowButton() : null}
           </div>
 
-          {nestedFocus ? renderAddButton(false) : null}
+          {nestedFocus ? renderAddColButton() : null}
         </div>
       </div>
     </>
@@ -165,7 +166,7 @@ export function SerloTableEditor(props: SerloTableProps) {
 
     return (
       <>
-        <nav className="absolute -ml-10 -mt-2 flex flex-col">
+        <nav className="absolute -ml-7 -mt-2 flex flex-col">
           {showRowButtons ? (
             <>
               {renderInlineAddButton(true)}
@@ -173,7 +174,7 @@ export function SerloTableEditor(props: SerloTableProps) {
             </>
           ) : null}
         </nav>
-        <nav className="absolute bottom-12">
+        <nav className="absolute -top-2">
           {showColButtons ? (
             <>
               {renderInlineAddButton(false)}
@@ -192,11 +193,16 @@ export function SerloTableEditor(props: SerloTableProps) {
 
       return (
         <button
-          className="serlo-button-blue-transparent text-brand-400"
-          title={replaceWithType(tableStrings.addTypeBefore, isRow)}
+          className={clsx(
+            'serlo-tooltip-trigger text-gray-300 transition-colors hover:text-editor-primary focus:text-editor-primary',
+            isRow ? '' : 'mr-2'
+          )}
           onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
           onClick={onInlineAdd}
         >
+          <EditorTooltip
+            text={replaceWithType(tableStrings.addTypeBefore, isRow)}
+          />
           <FaIcon icon={faCirclePlus} />
         </button>
       )
@@ -215,7 +221,7 @@ export function SerloTableEditor(props: SerloTableProps) {
         const empty = isRow ? isEmptyRow(rowIndex) : isEmptyCol(colIndex)
 
         if (!empty && !window.confirm(confirmString)) {
-          setUpdateHack((count) => count + 1)
+          // setUpdateHack((count) => count + 1)
           return
         }
         if (isRow) removeRow(rowIndex)
@@ -243,11 +249,13 @@ export function SerloTableEditor(props: SerloTableProps) {
 
       return (
         <button
-          className="serlo-button-blue-transparent text-brand-400"
-          title={replaceWithType(tableStrings.deleteType, isRow)}
+          className="serlo-tooltip-trigger text-gray-300 transition-colors hover:text-editor-primary focus:text-editor-primary"
           onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
           onClick={onRemove}
         >
+          <EditorTooltip
+            text={replaceWithType(tableStrings.deleteType, isRow)}
+          />
           <FaIcon icon={faTrashCan} />
         </button>
       )
@@ -291,19 +299,38 @@ export function SerloTableEditor(props: SerloTableProps) {
     rows.remove(rowIndex)
   }
 
-  function renderAddButton(isRow: boolean) {
+  function renderAddRowButton() {
+    return (
+      <div className="relative">
+        <button
+          className={clsx(
+            'serlo-button-editor-secondary serlo-tooltip-trigger',
+            'absolute -bottom-1.5 z-20 mx-side w-[calc(100%-1.9rem)]'
+          )}
+          onClick={() => insertRow()}
+        >
+          <EditorTooltip
+            text={replaceWithType(tableStrings.addType, true)}
+            className="-left-0.5 -top-9"
+          />
+          +
+        </button>
+      </div>
+    )
+  }
+
+  function renderAddColButton() {
     return (
       <button
         className={clsx(
-          'serlo-button-light',
-          isRow ? 'm-4 mt-0 w-auto' : 'mb-16'
+          'serlo-button-editor-secondary serlo-tooltip-trigger -ml-1 mb-16'
         )}
-        title={replaceWithType(tableStrings.addType, isRow)}
-        onClick={() => {
-          if (isRow) insertRow()
-          else insertCol()
-        }}
+        onClick={() => insertCol()}
       >
+        <EditorTooltip
+          text={replaceWithType(tableStrings.addType, false)}
+          className="left-8 top-0"
+        />
         +
       </button>
     )
