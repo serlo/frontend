@@ -1,10 +1,10 @@
 // In some places (e.g. tables plugin) we only render slate on focus.
 // To make the rendering work and persist value/selection/focus, we
-// introduce an intermediate store as a proxy.
+// store the state here
 
 import { Descendant, Selection } from 'slate'
 
-export const intermediateStore: {
+export const instanceStateStore: {
   [pluginId: string]: {
     selection: Selection
     value: Descendant[]

@@ -3,7 +3,7 @@ import { Descendant, Editor, Transforms, withoutNormalizing } from 'slate'
 import { ReactEditor } from 'slate-react'
 
 import type { TextEditorProps } from '../components/text-editor'
-import { intermediateStore } from '../utils/intermediate-store'
+import { instanceStateStore } from '../utils/instance-state-store'
 
 interface UseEditorChangeArgs {
   editor: Editor
@@ -16,8 +16,8 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
   const { editor, state, id, focused } = args
 
   // setup store on first render
-  if (!intermediateStore[id]) {
-    intermediateStore[id] = {
+  if (!instanceStateStore[id]) {
+    instanceStateStore[id] = {
       value: state.value.value,
       selection: state.value.selection,
       needRefocus: 1,
@@ -28,9 +28,9 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
     const { selection, value } = state.value
 
     // we received a new (different) state from core
-    if (intermediateStore[id].value !== value) {
-      intermediateStore[id].value = value
-      intermediateStore[id].selection = selection
+    if (instanceStateStore[id].value !== value) {
+      instanceStateStore[id].value = value
+      instanceStateStore[id].selection = selection
       editor.children = value
       withoutNormalizing(editor, () => {
         Transforms.deselect(editor)
@@ -44,7 +44,7 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
       const isAstChange = editor.operations.some(
         ({ type }) => type !== 'set_selection'
       )
-      const storeEntry = intermediateStore[id]
+      const storeEntry = instanceStateStore[id]
 
       if (isAstChange) {
         storeEntry.value = newValue
@@ -60,7 +60,7 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
   )
 
   useEffect(() => {
-    const storeEntry = intermediateStore[id]
+    const storeEntry = instanceStateStore[id]
     if (focused && storeEntry.needRefocus > 0) {
       // Fix crash in fast refresh: if this component is updated, slate needs a moment
       // to sync with dom. Don't try accessing slate in these situations
@@ -82,12 +82,12 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
 
   useEffect(() => {
     if (focused) {
-      intermediateStore[id].needRefocus = 2
+      instanceStateStore[id].needRefocus = 2
     }
   }, [focused, id])
 
   return {
-    previousSelection: intermediateStore[id].selection,
+    previousSelection: instanceStateStore[id].selection,
     handleEditorChange,
   }
 }

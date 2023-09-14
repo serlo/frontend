@@ -21,7 +21,7 @@ import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import { withCorrectVoidBehavior } from '../plugins/with-correct-void-behavior'
 import type { TextEditorConfig, TextEditorState } from '../types/config'
-import { intermediateStore } from '../utils/intermediate-store'
+import { instanceStateStore } from '../utils/instance-state-store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { SlateHoverOverlay } from '@/serlo-editor/editor-ui/slate-hover-overlay'
@@ -99,14 +99,14 @@ export function TextEditor(props: TextEditorProps) {
     // If the editor is empty, set the cursor at the start
     if (text === '') {
       Transforms.select(editor, { offset: 0, path: [0, 0] })
-      intermediateStore[id].selection = editor.selection
+      instanceStateStore[id].selection = editor.selection
     }
 
     // If the editor only has a forward slash, set the cursor
     // after it, so that the user can type to filter suggestions
     if (text === '/') {
       Transforms.select(editor, { offset: 1, path: [0, 0] })
-      intermediateStore[id].selection = editor.selection
+      instanceStateStore[id].selection = editor.selection
     }
   }, [editor, focused, id])
 
@@ -149,7 +149,7 @@ export function TextEditor(props: TextEditorProps) {
   return (
     <Slate
       editor={editor}
-      initialValue={intermediateStore[id].value}
+      initialValue={instanceStateStore[id].value}
       onChange={handleEditorChange}
     >
       {focused ? (
