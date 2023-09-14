@@ -44,7 +44,8 @@ const newCell = { content: { plugin: EditorPluginType.Text } }
 export function SerloTableEditor(props: SerloTableProps) {
   const { rows } = props.state
 
-  const [updateHack, setUpdateHack] = useState(0)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_updateHack, setUpdateHack] = useState(0)
 
   const dispatch = useAppDispatch()
   const focusedElement = useAppSelector(selectFocused)
@@ -62,44 +63,24 @@ export function SerloTableEditor(props: SerloTableProps) {
     tableType === TableType.OnlyColumnHeader ||
     tableType === TableType.ColumnAndRowHeader
 
-  return nestedFocus ? renderActiveTable() : renderInactiveTable()
+  const rowsJSX = renderActiveCellsIntoObject()
 
-  function renderInactiveTable() {
-    const rowsJSX = rows.map((row) => {
-      return {
-        cells: row.columns.map((cell) => (
-          <div className="min-h-[2rem] pr-2" key={cell.content.id}>
-            {cell.content.render({
-              config: {
-                isInlineChildEditor: true,
-                placeholder: '',
-                updateHack,
-              },
-            })}
-          </div>
-        )),
-      }
-    })
-    return <SerloTableRenderer rows={rowsJSX} tableType={tableType} />
-  }
+  return (
+    <>
+      {props.focused || nestedFocus ? <SerloTableToolbar {...props} /> : null}
 
-  function renderActiveTable() {
-    const rowsJSX = renderActiveCellsIntoObject()
-
-    return (
-      <>
-        {props.focused || nestedFocus ? <SerloTableToolbar {...props} /> : null}
+      <div className="relative">
         <div className="flex">
           <div className="flex flex-col">
-            <SerloTableRenderer isEdit rows={rowsJSX} tableType={tableType} />
+            <SerloTableRenderer rows={rowsJSX} tableType={tableType} />
             {renderAddButton(true)}
           </div>
 
-          {renderAddButton(false)}
+          {nestedFocus ? renderAddButton(false) : null}
         </div>
-      </>
-    )
-  }
+      </div>
+    </>
+  )
 
   function renderActiveCellsIntoObject() {
     return rows.map((row, rowIndex) => {
@@ -139,7 +120,10 @@ export function SerloTableEditor(props: SerloTableProps) {
               key={colIndex}
               onKeyUp={onKeyUpHandler} // keyUp because some onKeyDown keys are not bubbling
               onKeyDown={onKeyDownHandler}
-              className="min-h-[3.5rem] pb-6 pr-2"
+              className={clsx(
+                '[&>div>[data-slate-editor]]:pr-2',
+                '[&>div>[data-slate-editor]]:pb-block'
+              )}
               onClick={() => {
                 dispatch(focus(cell.content.id))
               }}
@@ -161,17 +145,6 @@ export function SerloTableEditor(props: SerloTableProps) {
                   isClear={isClear}
                 />
               ) : null}
-              {/* hack: make sure we capture most clicks in cells */}
-              <style jsx global>{`
-                .serlo-td,
-                .serlo-th {
-                  height: 1rem;
-                  min-width: 4rem;
-                }
-                .hackdiv > div > div > div {
-                  margin-bottom: 0;
-                }
-              `}</style>
             </div>
           )
         }),

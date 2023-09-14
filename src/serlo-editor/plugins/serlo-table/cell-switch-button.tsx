@@ -45,7 +45,7 @@ export function CellSwitchButton({
           isImage ? EditorPluginType.Text : EditorPluginType.Image
         )
       }}
-      className="serlo-button-light absolute m-2 block py-0.5 text-sm"
+      className="serlo-button-light absolute -mt-5 ml-3.5 block px-1 pb-0.25 pt-[3px] text-sm"
       title={isImage ? tableStrings.convertToText : tableStrings.convertToImage}
     >
       <FaIcon icon={isImage ? faParagraph : faImages} />
