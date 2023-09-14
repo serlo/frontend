@@ -3,14 +3,12 @@ export enum EditorPluginType {
   Article = 'article',
   Audio = 'audio',
   ArticleIntroduction = 'articleIntroduction',
-  Blockquote = 'blockquote',
   Box = 'box',
   Equations = 'equations',
   Geogebra = 'geogebra',
   H5p = 'h5p',
   Highlight = 'highlight',
   Image = 'image',
-  Important = 'important',
   Injection = 'injection',
   Layout = 'layout',
   Multimedia = 'multimedia',
@@ -23,7 +21,7 @@ export enum EditorPluginType {
   Rows = 'rows',
   SerloTable = 'serloTable',
   Spoiler = 'spoiler',
-  Table = 'table',
+
   Text = 'text',
   Video = 'video',
 

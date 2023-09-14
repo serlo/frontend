@@ -20,38 +20,33 @@ export async function requestUser(
     instance,
   })
 
-  if (!uuid) {
+  if (!uuid || uuid.__typename !== UuidType.User) {
     return { kind: 'not-found' }
   }
 
-  if (uuid.__typename === UuidType.User) {
-    return {
-      kind: 'user/profile',
-      newsletterPopup: false,
-      userData: {
-        ...uuid,
-        motivation: uuid.motivation ?? undefined,
-        chatUrl: uuid.chatUrl ?? undefined,
-        description: getDescription(uuid),
-        roles: uuid.roles.nodes.map((role) => {
-          return {
-            role: role.role,
-            instance:
-              !role.scope || role.scope === Scope.Serlo
-                ? null
-                : (role.scope.substring('serlo.org:'.length) as Instance),
-          }
-        }),
-      },
-      authorization,
-    }
-  } else {
-    return { kind: 'not-found' }
-  }
-}
+  const description =
+    !uuid.description || uuid.description === 'NULL'
+      ? undefined
+      : convertState(uuid.description)
 
-function getDescription(uuid: User) {
-  return uuid.description === null || uuid.description === 'NULL'
-    ? undefined
-    : convertState(uuid.description)
+  return {
+    kind: 'user/profile',
+    newsletterPopup: false,
+    userData: {
+      ...uuid,
+      motivation: uuid.motivation ?? undefined,
+      chatUrl: uuid.chatUrl ?? undefined,
+      description,
+      roles: uuid.roles.nodes.map((role) => {
+        return {
+          role: role.role,
+          instance:
+            !role.scope || role.scope === Scope.Serlo
+              ? null
+              : (role.scope.substring('serlo.org:'.length) as Instance),
+        }
+      }),
+    },
+    authorization,
+  }
 }
