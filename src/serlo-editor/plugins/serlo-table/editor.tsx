@@ -141,8 +141,7 @@ export function SerloTableEditor(props: SerloTableProps) {
               onKeyDown={onKeyDownHandler}
               className="min-h-[3.5rem] pb-6 pr-2"
               onClick={() => {
-                // to investigate: fix conflict with removing row/col
-                // dispatch(focus(cell.content.id))
+                dispatch(focus(cell.content.id))
               }}
             >
               {renderInlineNav(rowIndex, colIndex)}
