@@ -72,12 +72,13 @@ export function TextEditor(props: TextEditorProps) {
     id,
   })
 
-  //if (focused || id === '2e1450e1-a847-4e3c-a0f6-d2934a012132') {
-  //  console.log('SLATE selection', editor.selection, id)
-  //}
-
   // Workaround for setting selection when adding a new editor:
   useEffect(() => {
+    // Fix crash in fast refresh: if this component is updated, slate needs a moment
+    // to sync with dom. Don't try accessing slate in these situations
+    if (editor.children.length === 0) {
+      return
+    }
     // Get the current text value of the editor
     const text = Node.string(editor)
 
