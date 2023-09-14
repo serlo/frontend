@@ -54,7 +54,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   }, [focused, plugin])
 
   const handleFocus = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.FocusEvent) => {
       // Find closest document
       const target = (e.target as HTMLDivElement).closest('[data-document]')
       if (!focused && target === containerRef.current) {
@@ -127,7 +127,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
             ? ''
             : 'plugin-wrapper-container relative -ml-[7px] mb-6 min-h-[10px] pl-[5px]'
         )}
-        onMouseDown={handleFocus}
+        onFocus={handleFocus}
         ref={containerRef}
         data-document
         tabIndex={-1}
