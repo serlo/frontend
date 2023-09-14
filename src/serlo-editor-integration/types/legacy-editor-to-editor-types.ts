@@ -77,19 +77,16 @@ export interface OtherPlugin {
   plugin:
     | EditorPluginType.Anchor
     | EditorPluginType.Article
-    | EditorPluginType.Blockquote
     | 'error'
     | EditorPluginType.Exercise
     | EditorPluginType.Geogebra
     | EditorPluginType.Highlight
     | EditorPluginType.Image
-    | EditorPluginType.Important
     | EditorPluginType.Injection
     | EditorPluginType.InputExercise
     | EditorPluginType.Spoiler
     | EditorPluginType.ScMcExercise
     | EditorPluginType.Solution
-    | EditorPluginType.Table
     | EditorPluginType.Text
     | EditorPluginType.Video
   state: unknown

@@ -70,34 +70,6 @@ describe('edtr io plugins', () => {
     })
   })
 
-  test('plugin: important', () => {
-    const result = convert({
-      plugin: EditorPluginType.Important,
-      state: {
-        plugin: EditorPluginType.Text,
-        state: [
-          { type: FrontendNodeType.P, children: [{ text: '"Merksatz"' }] },
-        ],
-      },
-    })
-    expect(result).toEqual([
-      {
-        type: FrontendNodeType.Important,
-        children: [
-          {
-            type: FrontendNodeType.SlateContainer,
-            children: [
-              {
-                type: FrontendNodeType.SlateP,
-                children: [{ type: FrontendNodeType.Text, text: '"Merksatz"' }],
-              },
-            ],
-          },
-        ],
-      },
-    ])
-  })
-
   describe('plugin: layout', () => {
     test('default', () => {
       const result = convert({
@@ -132,32 +104,6 @@ describe('edtr io plugins', () => {
         },
       ])
     })
-  })
-
-  test('plugin: blockquote', () => {
-    const result = convert({
-      plugin: EditorPluginType.Blockquote,
-      state: {
-        plugin: EditorPluginType.Text,
-        state: [{ type: FrontendNodeType.P, children: [{ text: 'A quote' }] }],
-      },
-    })
-    expect(result).toEqual([
-      {
-        type: FrontendNodeType.Blockquote,
-        children: [
-          {
-            type: FrontendNodeType.SlateContainer,
-            children: [
-              {
-                type: FrontendNodeType.SlateP,
-                children: [{ type: FrontendNodeType.Text, text: 'A quote' }],
-              },
-            ],
-          },
-        ],
-      },
-    ])
   })
 
   describe('plugin: geogebra', () => {
@@ -326,56 +272,6 @@ describe('edtr io plugins', () => {
             children: [{ type: FrontendNodeType.Text, text: 'More info' }],
           },
           { type: FrontendNodeType.SpoilerBody, children: [] },
-        ],
-      },
-    ])
-  })
-
-  test('plugin: table', () => {
-    const result = convert({
-      plugin: EditorPluginType.Table,
-      state: '|||\n|||\n|Week 1|Intro into something|\n',
-    })
-
-    expect(result).toEqual([
-      {
-        type: FrontendNodeType.Table,
-        children: [
-          {
-            type: FrontendNodeType.Tr,
-            children: [
-              { type: FrontendNodeType.Th, children: [] },
-              { type: FrontendNodeType.Th, children: [] },
-            ],
-          },
-          {
-            type: FrontendNodeType.Tr,
-            children: [
-              {
-                type: FrontendNodeType.Td,
-                children: [
-                  {
-                    type: FrontendNodeType.P,
-                    children: [{ type: FrontendNodeType.Text, text: 'Week 1' }],
-                  },
-                ],
-              },
-              {
-                type: FrontendNodeType.Td,
-                children: [
-                  {
-                    type: FrontendNodeType.P,
-                    children: [
-                      {
-                        type: FrontendNodeType.Text,
-                        text: 'Intro into something',
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
         ],
       },
     ])
