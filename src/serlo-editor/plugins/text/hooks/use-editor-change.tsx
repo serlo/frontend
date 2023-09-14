@@ -83,8 +83,16 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
   useEffect(() => {
     if (focused) {
       instanceStateStore[id].needRefocus = 2
+
+      if (editor.children.length === 0) {
+        return
+      }
+      instanceStateStore[id].selection = {
+        anchor: Editor.start(editor, []),
+        focus: Editor.start(editor, []),
+      }
     }
-  }, [focused, id])
+  }, [focused, id, editor])
 
   return {
     previousSelection: instanceStateStore[id].selection,
