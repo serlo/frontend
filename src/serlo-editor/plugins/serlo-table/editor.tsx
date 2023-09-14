@@ -9,6 +9,7 @@ import { SerloTableRenderer, TableType } from './renderer'
 import { SerloTableToolbar } from './toolbar'
 import { getTableType } from './utils/get-table-type'
 import { TextEditorConfig } from '../text'
+import { instanceStateStore } from '../text/utils/instance-state-store'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
@@ -219,7 +220,18 @@ export function SerloTableEditor(props: SerloTableProps) {
         const empty = isRow ? isEmptyRow(rowIndex) : isEmptyCol(colIndex)
 
         if (!empty && !window.confirm(confirmString)) {
-          // setUpdateHack((count) => count + 1)
+          // Regain focus after canceling popup
+          // We need this (slight) hack because the editor is not tracking the focus if
+          // an alert happens, to the text-plugin will not refocus itself
+          // More a proof of concept that such a patch is possible, but not a good
+          // general solution ...
+          const cellPluginState =
+            instanceStateStore[
+              rows[focusedRowIndex ?? 0].columns[focusedColIndex ?? 0].content
+                .id
+            ]
+          if (cellPluginState) cellPluginState.needRefocus++
+          setUpdateHack((count) => count + 1)
           return
         }
         if (isRow) removeRow(rowIndex)
@@ -238,11 +250,9 @@ export function SerloTableEditor(props: SerloTableProps) {
           ? colIndex + 1
           : colIndex - 1
 
-        setTimeout(() => {
-          dispatch(
-            focus(rows[rowToFocusAfter].columns[colToFocusAfter].content.id)
-          )
-        })
+        dispatch(
+          focus(rows[rowToFocusAfter].columns[colToFocusAfter].content.id)
+        )
       }
 
       return (
