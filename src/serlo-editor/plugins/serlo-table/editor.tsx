@@ -137,10 +137,12 @@ export function SerloTableEditor(props: SerloTableProps) {
           return (
             <div
               key={colIndex}
-              tabIndex={0} // capture tab
               onKeyUp={onKeyUpHandler} // keyUp because some onKeyDown keys are not bubbling
               onKeyDown={onKeyDownHandler}
               className="min-h-[3.5rem] pb-6 pr-2"
+              onClick={() => {
+                dispatch(focus(cell.content.id))
+              }}
             >
               {renderInlineNav(rowIndex, colIndex)}
               {cell.content.render({
