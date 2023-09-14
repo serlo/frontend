@@ -11,7 +11,7 @@ export interface Question {
   id: string
 }
 
-export interface OutputScMcExercise {
+export interface ScMcExerciseState {
   content: Question
   interactive: {
     plugin: EditorPluginType.ScMcExercise
@@ -34,7 +34,7 @@ export interface OutputScMcExercise {
   }
 }
 
-export interface OutputInputExercise {
+export interface InputExerciseState {
   content: Question
   interactive: {
     plugin: EditorPluginType.InputExercise
@@ -52,5 +52,19 @@ export interface OutputInputExercise {
       }>
     }
     id: string
+  }
+}
+
+export interface TypeTextExercise {
+  plugin: 'type-text-exercise'
+  state: {
+    changes: ''
+    content: {
+      plugin: 'exercise'
+      state: ScMcExerciseState | InputExerciseState
+    }
+    id: 0
+    revision: 0
+    'text-solution': null
   }
 }

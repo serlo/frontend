@@ -2,11 +2,15 @@ import { either as E } from 'fp-ts'
 import { v4 as uuidv4 } from 'uuid'
 
 import { InputDecoder } from './decoders'
-import { OutputInputExercise, OutputScMcExercise, Question } from './types'
+import {
+  InputExerciseState,
+  ScMcExerciseState,
+  Question,
+  TypeTextExercise,
+} from './types'
 import { CustomText, MathElement, Paragraph } from '@/serlo-editor/plugins/text'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-// TODO: Add exercise entity wrapper to JSON
 export function convertAiGeneratedDataToEditorData(input: string) {
   try {
     const parsed = JSON.parse(input) as unknown
@@ -14,24 +18,19 @@ export function convertAiGeneratedDataToEditorData(input: string) {
     const decoded = InputDecoder.decode(parsed)
 
     if (E.isLeft(decoded)) {
-      // eslint-disable-next-line no-console
-      console.error(
-        'An error occured while converting AI generated exercise data to editor data: ',
-        'The data from the API has an invalid structure.'
-      )
-      return
+      throw new TypeError('The data from the API has an invalid structure.')
     }
 
     const inputContent = decoded.right
 
-    let output: OutputScMcExercise | OutputInputExercise
+    let exerciseState: InputExerciseState | ScMcExerciseState
 
-    // Define the output object for ScMcExercise
+    // Define and return the output object for ScMcExercise
     if (
       inputContent.type === 'multiple_choice' ||
       inputContent.type === 'single_choice'
     ) {
-      output = {
+      exerciseState = {
         content: createQuestion(inputContent.question),
         interactive: {
           plugin: EditorPluginType.ScMcExercise,
@@ -49,12 +48,12 @@ export function convertAiGeneratedDataToEditorData(input: string) {
         },
       }
 
-      return output
+      return withTypeTextExerciseWrapper(exerciseState)
     }
 
-    // Define the output object for InputExercise
+    // Define and return the output object for InputExercise
     if (inputContent.type === 'short_answer') {
-      output = {
+      exerciseState = {
         content: createQuestion(inputContent.question),
         interactive: {
           plugin: EditorPluginType.InputExercise,
@@ -67,14 +66,35 @@ export function convertAiGeneratedDataToEditorData(input: string) {
         },
       }
 
-      return output
+      return withTypeTextExerciseWrapper(exerciseState)
     }
+
+    return null
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(
       'An error occured while converting AI generated exercise data to editor data: ',
       error
     )
+    return null
+  }
+}
+
+function withTypeTextExerciseWrapper(
+  state: InputExerciseState | ScMcExerciseState
+): TypeTextExercise {
+  return {
+    plugin: 'type-text-exercise',
+    state: {
+      changes: '',
+      content: {
+        plugin: 'exercise',
+        state,
+      },
+      id: 0,
+      revision: 0,
+      'text-solution': null,
+    },
   }
 }
 
