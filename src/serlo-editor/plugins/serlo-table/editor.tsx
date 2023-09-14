@@ -234,9 +234,11 @@ export function SerloTableEditor(props: SerloTableProps) {
           ? colIndex + 1
           : colIndex - 1
 
-        dispatch(
-          focus(rows[rowToFocusAfter].columns[colToFocusAfter].content.id)
-        )
+        setTimeout(() => {
+          dispatch(
+            focus(rows[rowToFocusAfter].columns[colToFocusAfter].content.id)
+          )
+        })
       }
 
       return (
