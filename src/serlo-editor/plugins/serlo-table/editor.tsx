@@ -322,7 +322,7 @@ export function SerloTableEditor(props: SerloTableProps) {
     return (
       <button
         className={clsx(
-          'serlo-button-editor-secondary serlo-tooltip-trigger -ml-1 mb-16'
+          'serlo-button-editor-secondary serlo-tooltip-trigger -ml-1 mb-8 px-2.5'
         )}
         onClick={() => insertCol()}
       >
