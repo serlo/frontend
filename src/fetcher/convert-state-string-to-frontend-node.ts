@@ -1,7 +1,9 @@
 import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
 import { ConvertNode, convert } from '@/schema/convert-edtr-io-state'
 
-export function convertState(raw?: string): FrontendContentNode[] {
+export function convertStateStringToFrontendNode(
+  raw?: string
+): FrontendContentNode[] {
   if (!raw) return []
 
   // serlo editor state

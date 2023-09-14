@@ -1,4 +1,4 @@
-import { convertState } from './convert-state'
+import { convertStateStringToFrontendNode } from './convert-state-string-to-frontend-node'
 import { createInlineLicense } from './create-inline-license'
 import { RevisionUuidQuery } from './graphql-types/operations'
 import { MainUuidType } from './query-types'
@@ -60,7 +60,7 @@ export function createExercise(
         taskLegacy = convert(taskState)
       }
     } else {
-      taskLegacy = convertState(content)
+      taskLegacy = convertStateStringToFrontendNode(content)
     }
   }
   return {
@@ -108,7 +108,7 @@ function createSolutionData(solution: BareExercise['solution']) {
         solutionEdtrState = solutionState
       }
     } else {
-      solutionLegacy = convertState(content)
+      solutionLegacy = convertStateStringToFrontendNode(content)
     }
   }
   return {
@@ -167,7 +167,7 @@ export function createExerciseGroup(
 
   return {
     type: FrontendNodeType.ExerciseGroup,
-    content: convertState(uuid.currentRevision?.content),
+    content: convertStateStringToFrontendNode(uuid.currentRevision?.content),
     positionOnPage: pageIndex,
     license: createInlineLicense(uuid.license),
     children,
