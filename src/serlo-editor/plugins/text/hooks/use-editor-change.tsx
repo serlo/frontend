@@ -15,7 +15,7 @@ interface UseEditorChangeArgs {
 export const useEditorChange = (args: UseEditorChangeArgs) => {
   const { editor, state, id, focused } = args
 
-  // setup store on first render
+  // Setup store on first render
   if (!instanceStateStore[id]) {
     instanceStateStore[id] = {
       value: state.value.value,
@@ -62,12 +62,6 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
   useEffect(() => {
     const storeEntry = instanceStateStore[id]
     if (focused && storeEntry.needRefocus > 0) {
-      // Fix crash in fast refresh: if this component is updated, slate needs a moment
-      // to sync with dom. Don't try accessing slate in these situations
-      if (editor.children.length === 0) {
-        return
-      }
-
       const selection = storeEntry.selection ?? Editor.start(editor, [])
 
       withoutNormalizing(editor, () => {
@@ -84,9 +78,6 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
     if (focused) {
       instanceStateStore[id].needRefocus = 2
 
-      if (editor.children.length === 0) {
-        return
-      }
       instanceStateStore[id].selection = {
         anchor: Editor.start(editor, []),
         focus: Editor.start(editor, []),
