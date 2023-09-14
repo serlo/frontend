@@ -46,8 +46,7 @@ const newCell = { content: { plugin: EditorPluginType.Text } }
 export function SerloTableEditor(props: SerloTableProps) {
   const { rows } = props.state
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_updateHack, setUpdateHack] = useState(0)
+  const [, setUpdateHack] = useState(0)
 
   const dispatch = useAppDispatch()
   const focusedElement = useAppSelector(selectFocused)
