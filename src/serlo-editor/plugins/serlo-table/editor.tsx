@@ -90,15 +90,7 @@ export function SerloTableEditor(props: SerloTableProps) {
       <>
         {props.focused || nestedFocus ? <SerloTableToolbar {...props} /> : null}
         <div className="flex">
-          <div
-            className="flex flex-col"
-            onClick={(e) => {
-              // another hack to make focus ux at least ok
-              const target = e.target as HTMLDivElement
-              const hackDiv = target.querySelector('.hackdiv') as HTMLDivElement
-              hackDiv?.focus()
-            }}
-          >
+          <div className="flex flex-col">
             <SerloTableRenderer isEdit rows={rowsJSX} tableType={tableType} />
             {renderAddButton(true)}
           </div>
@@ -119,7 +111,6 @@ export function SerloTableEditor(props: SerloTableProps) {
           const isLast =
             rowIndex === rows.length - 1 &&
             colIndex === rows[0].columns.length - 1
-          const dispatchFocus = () => dispatch(focus(cell.content.id))
           const isClear = selectIsDocumentEmpty(
             store.getState(),
             cell.content.id
@@ -147,10 +138,9 @@ export function SerloTableEditor(props: SerloTableProps) {
             <div
               key={colIndex}
               tabIndex={0} // capture tab
-              onFocus={dispatchFocus} // hack: focus slate directly on tab
               onKeyUp={onKeyUpHandler} // keyUp because some onKeyDown keys are not bubbling
               onKeyDown={onKeyDownHandler}
-              className="hackdiv min-h-[3.5rem] pb-6 pr-2"
+              className="min-h-[3.5rem] pb-6 pr-2"
             >
               {renderInlineNav(rowIndex, colIndex)}
               {cell.content.render({
@@ -249,9 +239,29 @@ export function SerloTableEditor(props: SerloTableProps) {
       const onRemove = () => {
         const empty = isRow ? isEmptyRow(rowIndex) : isEmptyCol(colIndex)
 
-        if (!empty && !window.confirm(confirmString)) return
+        if (!empty && !window.confirm(confirmString)) {
+          setUpdateHack((count) => count + 1)
+          return
+        }
         if (isRow) removeRow(rowIndex)
         else removeCol(colIndex)
+
+        // dispatch focus
+        const rowToFocusAfter = isRow
+          ? rowIndex + 1 < rows.length
+            ? rowIndex + 1
+            : rowIndex - 1
+          : focusedRowIndex ?? 0
+
+        const colToFocusAfter = isRow
+          ? focusedColIndex ?? 0
+          : colIndex + 1 < rows[0].columns.length
+          ? colIndex + 1
+          : colIndex - 1
+
+        dispatch(
+          focus(rows[rowToFocusAfter].columns[colToFocusAfter].content.id)
+        )
       }
 
       return (
@@ -323,8 +333,8 @@ export function SerloTableEditor(props: SerloTableProps) {
   }
 
   function findFocus() {
-    let focusedRowIndex = undefined
-    let focusedColIndex = undefined
+    let focusedRowIndex: number | undefined = undefined
+    let focusedColIndex: number | undefined = undefined
 
     rows.some((row, rowIndex) =>
       row.columns.some((cell, colIndex) => {
