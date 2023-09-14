@@ -174,7 +174,7 @@ export function SerloTableEditor(props: SerloTableProps) {
             </>
           ) : null}
         </nav>
-        <nav className="absolute -top-2">
+        <nav className="absolute -top-2 z-20">
           {showColButtons ? (
             <>
               {renderInlineAddButton(false)}
@@ -202,6 +202,7 @@ export function SerloTableEditor(props: SerloTableProps) {
         >
           <EditorTooltip
             text={replaceWithType(tableStrings.addTypeBefore, isRow)}
+            className="top-6"
           />
           <FaIcon icon={faCirclePlus} />
         </button>
@@ -255,6 +256,7 @@ export function SerloTableEditor(props: SerloTableProps) {
         >
           <EditorTooltip
             text={replaceWithType(tableStrings.deleteType, isRow)}
+            className="top-6"
           />
           <FaIcon icon={faTrashCan} />
         </button>
