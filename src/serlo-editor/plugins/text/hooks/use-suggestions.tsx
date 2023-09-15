@@ -43,6 +43,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const [selected, setSelected] = useState(0)
   const suggestionsRef = useRef<HTMLDivElement>(null)
   const { editor, id, editable, focused } = args
+  console.log(editor)
   const pluginsStrings = useEditorStrings().plugins
 
   const { selection } = editor
@@ -66,6 +67,14 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const filteredOptions = useMemo(() => {
     return filterPlugins(allOptions, text, id)
   }, [allOptions, id, text])
+
+  console.log(
+    'check show suggestion',
+    editable,
+    focused,
+    text,
+    filteredOptions.length
+  )
 
   const showSuggestions =
     editable && focused && text.startsWith('/') && filteredOptions.length > 0

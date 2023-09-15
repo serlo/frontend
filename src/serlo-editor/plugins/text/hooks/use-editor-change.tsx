@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { Descendant, Editor, Transforms, withoutNormalizing } from 'slate'
 import { ReactEditor } from 'slate-react'
 
@@ -15,14 +15,12 @@ interface UseEditorChangeArgs {
 export const useEditorChange = (args: UseEditorChangeArgs) => {
   const { editor, state, id, focused } = args
 
-  const [, rerender] = useState(0)
-
   // Setup store on first render
   if (!instanceStateStore[id]) {
     instanceStateStore[id] = {
       value: state.value.value,
       selection: state.value.selection,
-      needRefocus: 2,
+      needRefocus: 1,
     }
   }
 
@@ -61,7 +59,6 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
     [editor.operations, editor.selection, state, id]
   )
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const storeEntry = instanceStateStore[id]
     if (focused && storeEntry.needRefocus > 0) {
@@ -73,25 +70,18 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
       })
 
       ReactEditor.focus(editor)
-      console.log('focus', id)
       storeEntry.needRefocus--
-      if (storeEntry.needRefocus > 0) {
-        rerender((val) => val + 1)
-        console.log('RERENDER', id)
-      }
     }
   })
 
   useEffect(() => {
     if (focused) {
-      console.log('detect focused')
       instanceStateStore[id].needRefocus = 2
 
       instanceStateStore[id].selection = {
         anchor: Editor.start(editor, []),
         focus: Editor.start(editor, []),
       }
-      rerender((val) => val + 1)
     }
   }, [focused, id, editor])
 
