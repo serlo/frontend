@@ -43,20 +43,21 @@ export function TextEditor(props: TextEditorProps) {
 
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
   const { createTextEditor, toolbarControls } = textFormattingOptions
-  const editor = useMemo(() => {
-    return createTextEditor(
-      withReact(
-        withEmptyLinesRestriction(withCorrectVoidBehavior(createEditor()))
-      )
-    )
-  }, [createTextEditor])
 
-  // Fast Refresh will rerun useMemo and create a new editor instance,
-  // but <Slate /> is confused by it.
-  // Generate a unique key per editor instance and set it on the component
-  // to syncronize rerendering
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const editorKey = useMemo(() => v4(), [createTextEditor])
+  const { editor, editorKey } = useMemo(() => {
+    return {
+      editor: createTextEditor(
+        withReact(
+          withEmptyLinesRestriction(withCorrectVoidBehavior(createEditor()))
+        )
+      ),
+      // Fast Refresh will rerun useMemo and create a new editor instance,
+      // but <Slate /> is confused by it
+      // Generate a unique key per editor instance and set it on the component
+      // to syncronize rerendering
+      editorKey: v4(),
+    }
+  }, [createTextEditor])
 
   const suggestions = useSuggestions({ editor, id, editable, focused })
   const { showSuggestions, suggestionsProps } = suggestions
