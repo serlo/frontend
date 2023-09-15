@@ -38,6 +38,8 @@ export type TextEditorProps = EditorPluginProps<
 export function TextEditor(props: TextEditorProps) {
   const { state, id, editable, focused, containerRef } = props
 
+  console.log('text editor', id)
+
   const textStrings = useEditorStrings().plugins.text
   const config = useTextConfig(props.config)
 
@@ -96,6 +98,8 @@ export function TextEditor(props: TextEditorProps) {
     if (focused === false) {
       if (text.startsWith('/')) {
         editor.deleteBackward('line')
+        instanceStateStore[id].value = editor.children
+        instanceStateStore[id].selection = editor.selection
       }
       return
     }
