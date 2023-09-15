@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { Descendant, Editor, Transforms, withoutNormalizing } from 'slate'
 import { ReactEditor } from 'slate-react'
 
@@ -20,7 +20,6 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
     instanceStateStore[id] = {
       value: state.value.value,
       selection: state.value.selection,
-      needRefocus: 1,
     }
   }
 
@@ -39,49 +38,28 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
     }
   }, [editor, state.value, id])
 
-  const handleEditorChange = useCallback(
-    (newValue: Descendant[]) => {
-      const isAstChange = editor.operations.some(
-        ({ type }) => type !== 'set_selection'
-      )
-      const storeEntry = instanceStateStore[id]
-
-      if (isAstChange) {
-        storeEntry.value = newValue
-        state.set(
-          { value: newValue, selection: editor.selection },
-          ({ value }) => ({ value, selection: storeEntry.selection })
-        )
-      }
-
-      storeEntry.selection = editor.selection
-    },
-    [editor.operations, editor.selection, state, id]
-  )
-
-  useEffect(() => {
+  const handleEditorChange = (newValue: Descendant[]) => {
+    const isAstChange = editor.operations.some(
+      ({ type }) => type !== 'set_selection'
+    )
     const storeEntry = instanceStateStore[id]
-    if (focused && storeEntry.needRefocus > 0) {
-      const selection = storeEntry.selection ?? Editor.start(editor, [])
 
-      withoutNormalizing(editor, () => {
-        Transforms.deselect(editor)
-        Transforms.select(editor, selection)
-      })
-
-      ReactEditor.focus(editor)
-      storeEntry.needRefocus--
+    if (isAstChange) {
+      storeEntry.value = newValue
+      state.set(
+        { value: newValue, selection: editor.selection },
+        ({ value }) => ({ value, selection: storeEntry.selection })
+      )
     }
-  })
+
+    storeEntry.selection = editor.selection
+  }
 
   useEffect(() => {
     if (focused) {
-      instanceStateStore[id].needRefocus = 2
-
-      instanceStateStore[id].selection = {
-        anchor: Editor.start(editor, []),
-        focus: Editor.start(editor, []),
-      }
+      setTimeout(() => {
+        ReactEditor.focus(editor)
+      })
     }
   }, [focused, id, editor])
 

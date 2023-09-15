@@ -35,7 +35,7 @@ export interface SuggestionOption {
 
 const hotkeyConfig = {
   enableOnContentEditable: true,
-  scopes: ['global'],
+  // scopes: ['global'],
 }
 
 export const useSuggestions = (args: useSuggestionsArgs) => {
@@ -43,7 +43,6 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const [selected, setSelected] = useState(0)
   const suggestionsRef = useRef<HTMLDivElement>(null)
   const { editor, id, editable, focused } = args
-  console.log(editor)
   const pluginsStrings = useEditorStrings().plugins
 
   const { selection } = editor
@@ -68,13 +67,13 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     return filterPlugins(allOptions, text, id)
   }, [allOptions, id, text])
 
-  console.log(
+  /*console.log(
     'check show suggestion',
     editable,
     focused,
     text,
     filteredOptions.length
-  )
+  )*/
 
   const showSuggestions =
     editable && focused && text.startsWith('/') && filteredOptions.length > 0

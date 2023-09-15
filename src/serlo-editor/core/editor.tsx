@@ -95,7 +95,7 @@ function InnerDocument({
     {
       enableOnContentEditable: true,
       enableOnFormTags: true,
-      scopes: ['global'],
+      // scopes: ['global'],
     }
   )
 
@@ -116,7 +116,7 @@ function InnerDocument({
     {
       enableOnContentEditable: true,
       enableOnFormTags: true,
-      scopes: ['global'],
+      // scopes: ['global'],
     }
   )
 
@@ -129,7 +129,7 @@ function InnerDocument({
     {
       enableOnContentEditable: true,
       enableOnFormTags: true,
-      scopes: ['global'],
+      // scopes: ['global'],
     }
   )
 

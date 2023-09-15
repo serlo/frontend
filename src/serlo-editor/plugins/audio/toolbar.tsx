@@ -37,7 +37,7 @@ export const AudioToolbar = ({
     {
       enableOnContentEditable: true,
       enableOnFormTags: true,
-      scopes: ['global'],
+      // scopes: ['global'],
     }
   )
 

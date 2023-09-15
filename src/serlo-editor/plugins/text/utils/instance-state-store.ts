@@ -8,6 +8,5 @@ export const instanceStateStore: {
   [pluginId: string]: {
     selection: Selection
     value: Descendant[]
-    needRefocus: number
   }
 } = {}

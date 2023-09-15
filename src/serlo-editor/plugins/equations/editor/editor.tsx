@@ -116,7 +116,7 @@ export function EquationsEditor(props: EquationsProps) {
       })
     },
     {
-      scopes: ['global'],
+      // scopes: ['global'],
       enabled: focused,
     }
   )
@@ -136,7 +136,7 @@ export function EquationsEditor(props: EquationsProps) {
       })
     },
     {
-      scopes: ['global'],
+      // scopes: ['global'],
       enabled: focused,
     }
   )
@@ -150,7 +150,7 @@ export function EquationsEditor(props: EquationsProps) {
       })
     },
     {
-      scopes: ['global'],
+      // scopes: ['global'],
       enabled: focused,
     }
   )

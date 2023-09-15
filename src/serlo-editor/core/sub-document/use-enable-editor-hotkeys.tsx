@@ -65,7 +65,7 @@ export const useEnableEditorHotkeys = (
     {
       enableOnContentEditable: true,
       enableOnFormTags: true,
-      scopes: ['root-up-down-enter'],
+      // scopes: ['root-up-down-enter'],
       enabled: isFocused,
     }
   )
@@ -82,7 +82,7 @@ export const useEnableEditorHotkeys = (
     {
       enableOnContentEditable: true,
       enableOnFormTags: true,
-      scopes: ['root-up-down-enter'],
+      // scopes: ['root-up-down-enter'],
       enabled: isFocused,
     }
   )
@@ -106,7 +106,7 @@ export const useEnableEditorHotkeys = (
     {
       enableOnContentEditable: true,
       enableOnFormTags: false,
-      scopes: ['root-up-down-enter'],
+      // scopes: ['root-up-down-enter'],
       enabled: isFocused,
     }
   )
@@ -132,7 +132,7 @@ export const useEnableEditorHotkeys = (
     {
       enableOnContentEditable: true,
       enableOnFormTags: false,
-      scopes: ['global'],
+      // scopes: ['global'],
       enabled: isFocused,
     }
 }
