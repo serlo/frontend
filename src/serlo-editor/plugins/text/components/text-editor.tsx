@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useCallback } from 'react'
+import React, { useMemo, useEffect, useCallback, useState } from 'react'
 import {
   createEditor,
   Node,
@@ -59,6 +59,7 @@ export function TextEditor(props: TextEditorProps) {
     }
   }, [createTextEditor])
 
+  const [, rerenderForSuggestions] = useState(0)
   const suggestions = useSuggestions({ editor, id, editable, focused })
   const { showSuggestions, suggestionsProps } = suggestions
 
@@ -116,6 +117,7 @@ export function TextEditor(props: TextEditorProps) {
     if (text === '/') {
       Transforms.select(editor, { offset: 1, path: [0, 0] })
       instanceStateStore[id].selection = editor.selection
+      rerenderForSuggestions((val) => val + 1)
     }
   }, [editor, focused, id])
 
