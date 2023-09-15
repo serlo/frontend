@@ -1,4 +1,8 @@
-import { faPencilAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import {
+  faPencilAlt,
+  faPlusCircle,
+  faStar,
+} from '@fortawesome/free-solid-svg-icons'
 import { TaxonomyTerm } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
@@ -13,6 +17,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
+import { GenerateExerciseButton } from '../generate-exercise-button'
 
 const InviteModal = dynamic<InviteModalProps>(() =>
   import('@/components/user-tools/edit-or-invite/invite-modal').then(
@@ -46,6 +51,8 @@ export function TaxAddOrInvite({ data, aboveContent }: TaxAddOrInviteProps) {
   const href = getEditHref()
   const showEditAction = href || isInvite
 
+  console.log('AuthorToolsData: ', data)
+
   const title = isExerciseFolder
     ? strings.editOrAdd.addNewExercises
     : strings.editOrAdd.addNewEntities
@@ -77,12 +84,16 @@ export function TaxAddOrInvite({ data, aboveContent }: TaxAddOrInviteProps) {
           ) : null}
         </>
       ) : (
-        <MoreAuthorTools
-          data={data}
-          aboveContent={aboveContent}
-          taxNewItems
-          title={title}
-        />
+        <>
+          {isExerciseFolder && <GenerateExerciseButton data={data} />}
+
+          <MoreAuthorTools
+            data={data}
+            aboveContent={aboveContent}
+            taxNewItems
+            title={title}
+          />
+        </>
       )}
     </>
   )

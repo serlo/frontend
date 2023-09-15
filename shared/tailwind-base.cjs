@@ -47,6 +47,7 @@ module.exports = {
         },
         gray: colors.neutral,
         berry: '#857189',
+        lightblue: '#b8e7ff',
         newgreen: '#2fceb1',
         'editor-primary': sunflowerColors,
         'almost-black': '#404040',

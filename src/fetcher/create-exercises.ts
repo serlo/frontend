@@ -63,8 +63,12 @@ export function createExercise(
       taskLegacy = convertState(content)
     }
   }
-  return {
-    type: FrontendNodeType.Exercise,
+
+  const exercise = {
+    // This must be a bug in TypeScript but without this conversion, upon
+    // returning the exercise it says: Type 'FrontendNodeType' is not assignable
+    // to type 'FrontendNodeType.Exercise'
+    type: FrontendNodeType.Exercise as FrontendNodeType.Exercise,
     grouped: false,
     positionOnPage: index,
     trashed: uuid.trashed,
@@ -82,6 +86,9 @@ export function createExercise(
     href: uuid.alias,
     unrevisedRevisions: uuid.revisions?.totalCount,
   }
+
+  console.log('Exercise created:', exercise)
+  return exercise
 }
 
 function createSolutionData(solution: BareExercise['solution']) {

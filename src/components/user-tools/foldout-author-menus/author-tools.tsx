@@ -57,6 +57,7 @@ export interface AuthorToolsData {
   alias?: string
   taxonomyType?: TaxonomyTermType
   revisionId?: number
+  title?: string
   parentId?: number
   courseId?: number
   grouped?: boolean

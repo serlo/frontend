@@ -100,6 +100,11 @@ export const instanceData = {
       pdf: 'Download as PDF',
       pdfNoSolutions: 'PDF without solutions',
     },
+    ai: {
+      exerciseGeneration: {
+        title: 'Generate exercises with AI',
+      },
+    },
     editOrAdd: {
       button: 'Edit',
       addNewEntities: 'Add new content',
