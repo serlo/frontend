@@ -35,7 +35,6 @@ export interface SuggestionOption {
 
 const hotkeyConfig = {
   enableOnContentEditable: true,
-  // scopes: ['global'],
 }
 
 export const useSuggestions = (args: useSuggestionsArgs) => {
