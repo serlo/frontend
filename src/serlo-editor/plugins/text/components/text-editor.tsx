@@ -9,6 +9,7 @@ import {
   Element,
 } from 'slate'
 import { Editable, Slate, withReact } from 'slate-react'
+import { v4 } from 'uuid'
 
 import { LinkControls } from './link/link-controls'
 import { Suggestions } from './suggestions'
@@ -42,12 +43,20 @@ export function TextEditor(props: TextEditorProps) {
 
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
   const { createTextEditor, toolbarControls } = textFormattingOptions
-  const editor = useMemo(() => {
-    return createTextEditor(
-      withReact(
-        withEmptyLinesRestriction(withCorrectVoidBehavior(createEditor()))
-      )
-    )
+
+  const { editor, editorKey } = useMemo(() => {
+    return {
+      editor: createTextEditor(
+        withReact(
+          withEmptyLinesRestriction(withCorrectVoidBehavior(createEditor()))
+        )
+      ),
+      // Fast Refresh will rerun useMemo and create a new editor instance,
+      // but <Slate /> is confused by it
+      // Generate a unique key per editor instance and set it on the component
+      // to syncronize rerendering
+      editorKey: v4(),
+    }
   }, [createTextEditor])
 
   const suggestions = useSuggestions({ editor, id, editable, focused })
@@ -79,11 +88,6 @@ export function TextEditor(props: TextEditorProps) {
 
   // Workaround for setting selection when adding a new editor:
   useEffect(() => {
-    // Fix crash in fast refresh: if this component is updated, slate needs a moment
-    // to sync with dom. Don't try accessing slate in these situations
-    if (editor.children.length === 0) {
-      return
-    }
     // Get the current text value of the editor
     const text = Node.string(editor)
 
@@ -175,6 +179,7 @@ export function TextEditor(props: TextEditorProps) {
       editor={editor}
       initialValue={instanceStateStore[id].value}
       onChange={handleEditorChange}
+      key={editorKey}
     >
       {focused ? (
         <TextToolbar
