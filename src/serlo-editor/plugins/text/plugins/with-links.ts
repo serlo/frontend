@@ -1,6 +1,6 @@
-import { Editor as SlateEditor } from 'slate'
+import { Editor } from 'slate'
 
-export const withLinks = (editor: SlateEditor) => {
+export const withLinks = (editor: Editor) => {
   const { isInline } = editor
 
   editor.isInline = (element) => {

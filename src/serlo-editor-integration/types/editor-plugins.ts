@@ -1,5 +1,4 @@
 import { EditorPluginType } from './editor-plugin-type'
-import type { ImportantPluginState } from '../../serlo-editor/plugins/_on-the-way-out/important/important'
 import type { LayoutPluginState } from '../../serlo-editor/plugins/_on-the-way-out/layout'
 import type { ArticlePluginState } from '../../serlo-editor/plugins/article'
 import type { ExercisePluginState } from '../../serlo-editor/plugins/exercise'
@@ -7,8 +6,6 @@ import type { InjectionPluginState } from '../../serlo-editor/plugins/injection'
 import type { SolutionPluginState } from '../../serlo-editor/plugins/solution'
 import type { UnsupportedPluginState } from '../../serlo-editor/plugins/unsupported'
 import type { StateTypeSerializedType } from '@/serlo-editor/plugin'
-import type { BlockquotePluginState } from '@/serlo-editor/plugins/_on-the-way-out/blockquote'
-import type { TablePluginState } from '@/serlo-editor/plugins/_on-the-way-out/table'
 import type { AnchorPluginState } from '@/serlo-editor/plugins/anchor'
 import { AudioPluginState } from '@/serlo-editor/plugins/audio'
 import { BoxPluginState } from '@/serlo-editor/plugins/box'
@@ -48,11 +45,6 @@ export interface EditorArticlePlugin {
   state: StateTypeSerializedType<ArticlePluginState>
   id?: string
 }
-export interface EditorBlockquotePlugin {
-  plugin: EditorPluginType.Blockquote
-  state: StateTypeSerializedType<BlockquotePluginState>
-  id?: string
-}
 export interface EditorBoxPlugin {
   plugin: EditorPluginType.Box
   state: StateTypeSerializedType<BoxPluginState>
@@ -86,11 +78,6 @@ export interface EditorHighlightPlugin {
 export interface EditorImagePlugin {
   plugin: EditorPluginType.Image
   state: StateTypeSerializedType<ImagePluginState>
-  id?: string
-}
-export interface EditorImportantPlugin {
-  plugin: EditorPluginType.Important
-  state: StateTypeSerializedType<ImportantPluginState>
   id?: string
 }
 export interface EditorInjectionPlugin {
@@ -136,11 +123,6 @@ export interface EditorSerloInjectionPlugin {
 export interface EditorSolutionPlugin {
   plugin: EditorPluginType.Solution
   state: StateTypeSerializedType<SolutionPluginState>
-  id?: string
-}
-export interface EditorTablePlugin {
-  plugin: EditorPluginType.Table
-  state: StateTypeSerializedType<TablePluginState>
   id?: string
 }
 export interface EditorSerloTablePlugin {
@@ -190,15 +172,12 @@ export type SupportedEditorPlugin =
   | EditorAnchorPlugin
   | EditorVideoPlugin
   | EditorAudioPlugin
-  | EditorTablePlugin
   | EditorSerloTablePlugin
   | EditorHighlightPlugin
   | EditorSerloInjectionPlugin
   | EditorLayoutPlugin
   | EditorMultimediaPlugin
   | EditorSpoilerPlugin
-  | EditorImportantPlugin
-  | EditorBlockquotePlugin
   | EditorBoxPlugin
   | EditorImagePlugin
   | EditorTextPlugin
