@@ -104,7 +104,7 @@ export function Solution({
           ) : null
         }
         hideToggle={
-          (!node.solution.edtrState && !node.solution.legacy) ||
+          !node.solution.edtrState ||
           node.solution.trashed ||
           (isPrintMode && !printModeSolutionVisible)
         }
@@ -132,8 +132,6 @@ export function Solution({
 
 // simplify after migration
 function getSolutionContent(node: FrontendSolutionNode['solution']) {
-  if (node.legacy)
-    return { steps: node.legacy, strategy: [], prerequisite: undefined }
   if (!node.edtrState) return null
 
   const state = node.edtrState

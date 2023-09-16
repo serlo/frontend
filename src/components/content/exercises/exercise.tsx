@@ -66,9 +66,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
   }
 
   function renderExerciseTask() {
-    if (node.task.legacy) {
-      return renderNested(node.task.legacy, 'task')
-    } else if (node.task.edtrState) {
+    if (node.task.edtrState) {
       return renderNested(node.task.edtrState.content, 'task')
     }
     return null

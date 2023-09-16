@@ -29,7 +29,7 @@ function isSupportedEditorPlugin(
 export type ConvertData =
   | SupportedEditorPlugin
   | UnknownEditorPlugin
-  | FrontendContentNode
+  // | FrontendContentNode
   | SlateElementOrText
 
 export type ConvertNode = ConvertData | ConvertData[] | undefined

@@ -61,12 +61,6 @@ export async function prettifyLinks(pageData: RequestPageData) {
         walk(node.children)
       }
       if (node.type === FrontendNodeType.Exercise) {
-        if (node.solution.legacy) {
-          walk(node.solution.legacy)
-        }
-        if (node.task.legacy) {
-          walk(node.task.legacy)
-        }
         if (node.solution.edtrState) {
           const prereq = node.solution.edtrState.prerequisite
           if (prereq) {

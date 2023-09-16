@@ -256,8 +256,7 @@ export type FrontendInjectionNode = EditorInjectionPlugin & {
   pluginId?: string
 }
 
-interface BareSolution {
-  legacy?: FrontendContentNode[]
+export interface BareSolution {
   edtrState?: SolutionEditorState
   license?: LicenseData
   trashed: boolean
@@ -267,7 +266,6 @@ export interface FrontendExerciseNode {
   type: FrontendNodeType.Exercise
   trashed?: boolean
   task: {
-    legacy?: FrontendContentNode[]
     edtrState?: TaskEditorState
     license?: LicenseData
   }
