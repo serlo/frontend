@@ -86,7 +86,7 @@ export function MathEditor(props: MathEditorProps) {
             className={clsx(
               props.inline
                 ? 'inline-block'
-                : 'my-[0.9em] flex flex-col items-center'
+                : 'my-[1.45em] flex flex-col items-center'
             )}
           >
             <VisualEditor
