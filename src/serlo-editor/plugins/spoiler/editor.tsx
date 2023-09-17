@@ -9,7 +9,7 @@ import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plug
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function SpoilerEditor(props: SpoilerProps) {
-  const { state, editable, autofocusRef, id, focused } = props
+  const { state, editable, id, focused } = props
   const editorStrings = useEditorStrings()
 
   const title = editable ? (
@@ -17,7 +17,6 @@ export function SpoilerEditor(props: SpoilerProps) {
       onChange={(e) => state.title.set(e.target.value)}
       value={state.title.value}
       placeholder={editorStrings.plugins.spoiler.enterATitle}
-      ref={autofocusRef}
       className="-my-1 w-full rounded-md bg-transparent p-1 focus:bg-brand-100 focus:outline-none"
     />
   ) : (

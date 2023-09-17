@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import * as R from 'ramda'
-import { useRef, useEffect, useMemo, useCallback } from 'react'
+import { useRef, useMemo, useCallback } from 'react'
 
 import type { SubDocumentProps } from '.'
 import { useEnableEditorHotkeys } from './use-enable-editor-hotkeys'
@@ -27,7 +27,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
   useEnableEditorHotkeys(id, plugin, focused)
   const containerRef = useRef<HTMLDivElement>(null)
-  const autofocusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
 
   const handleFocus = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -116,7 +115,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           config={config}
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           state={state}
-          autofocusRef={autofocusRef}
         />
       </div>
     )
