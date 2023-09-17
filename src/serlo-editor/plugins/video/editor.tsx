@@ -7,9 +7,12 @@ import { FaIcon } from '@/components/fa-icon'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { EmbedWrapper } from '@/serlo-editor/editor-ui/embed-wrapper'
 
+export type SettingsModalState = 'url' | 'description' | false
+
 export const VideoEditor = (props: VideoProps) => {
   const { focused, state } = props
-  const [showSettingsModal, setShowSettingsModal] = useState(false)
+  const [showSettingsModal, setShowSettingsModal] =
+    useState<SettingsModalState>(false)
   const [iframeSrc, type] = parseVideoUrl(state.src.value)
   const couldBeValid = type !== undefined
 
@@ -35,7 +38,7 @@ export const VideoEditor = (props: VideoProps) => {
         <div
           className="mx-side cursor-pointer rounded-lg bg-editor-primary-50 py-32 text-center"
           data-qa="plugin-video-placeholder"
-          onClick={() => setShowSettingsModal(true)}
+          onClick={() => setShowSettingsModal('url')}
         >
           <FaIcon
             icon={entityIconMapping['video']}

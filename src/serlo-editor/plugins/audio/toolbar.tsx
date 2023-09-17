@@ -68,6 +68,7 @@ export const AudioToolbar = ({
 
               <div className="mx-side mb-3">
                 <EditorInput
+                  autoFocus
                   label={`${audioStrings.audioUrl}: `}
                   value={state.src.value}
                   onChange={(e) => {

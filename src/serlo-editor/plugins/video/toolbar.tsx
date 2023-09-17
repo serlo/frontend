@@ -2,6 +2,7 @@ import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { Dispatch, SetStateAction } from 'react'
 
 import type { VideoProps } from '.'
+import type { SettingsModalState } from './editor'
 import { EditorInput } from '../../editor-ui'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
@@ -16,8 +17,8 @@ export const VideoToolbar = ({
   showSettingsModal,
   setShowSettingsModal,
 }: VideoProps & {
-  showSettingsModal: boolean
-  setShowSettingsModal: Dispatch<SetStateAction<boolean>>
+  showSettingsModal: SettingsModalState
+  setShowSettingsModal: Dispatch<SetStateAction<SettingsModalState>>
 }) => {
   const videoStrings = useEditorStrings().plugins.video
 
@@ -27,13 +28,13 @@ export const VideoToolbar = ({
       pluginSettings={
         <>
           <button
-            onClick={() => setShowSettingsModal(true)}
+            onClick={() => setShowSettingsModal('url')}
             className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
           >
             {videoStrings.videoUrl} <FaIcon icon={faPencilAlt} />
           </button>
           <button
-            onClick={() => setShowSettingsModal(true)}
+            onClick={() => setShowSettingsModal('description')}
             className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
           >
             {videoStrings.videoDescription} <FaIcon icon={faPencilAlt} />
@@ -41,7 +42,7 @@ export const VideoToolbar = ({
           {/* In the future we want a popovers per setting, but this is faster for now */}
           {showSettingsModal ? (
             <ModalWithCloseButton
-              isOpen={showSettingsModal}
+              isOpen={!!showSettingsModal}
               onCloseClick={() => setShowSettingsModal(false)}
               className="!top-1/3 !max-w-xl"
             >
@@ -49,16 +50,7 @@ export const VideoToolbar = ({
 
               <div className="mx-side mb-3">
                 <EditorInput
-                  label={`${videoStrings.videoDescription}: `}
-                  value={state.alt.value}
-                  onChange={(e) => state.alt.set(e.target.value)}
-                  width="100%"
-                  inputWidth="100%"
-                  className="block"
-                />
-              </div>
-              <div className="mx-side mb-3">
-                <EditorInput
+                  autoFocus={showSettingsModal === 'url'}
                   label={`${videoStrings.videoUrl}: `}
                   value={state.src.value}
                   onChange={(e) => {
@@ -67,6 +59,17 @@ export const VideoToolbar = ({
                   inputWidth="100%"
                   width="100%"
                   placeholder="(YouTube, Wikimedia Commons, Vimeo)"
+                  className="block"
+                />
+              </div>
+              <div className="mx-side mb-3">
+                <EditorInput
+                  autoFocus={showSettingsModal === 'description'}
+                  label={`${videoStrings.videoDescription}: `}
+                  value={state.alt.value}
+                  onChange={(e) => state.alt.set(e.target.value)}
+                  width="100%"
+                  inputWidth="100%"
                   className="block"
                 />
               </div>

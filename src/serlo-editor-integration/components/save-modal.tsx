@@ -185,6 +185,7 @@ export function SaveModal({
         {edtrIoStrings.changes}{' '}
         <span className="font-bold text-red-500">*</span>
         <textarea
+          autoFocus
           value={changesText}
           onChange={(e) => {
             const { value } = e.target as HTMLTextAreaElement
