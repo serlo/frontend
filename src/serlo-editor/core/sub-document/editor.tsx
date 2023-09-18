@@ -30,14 +30,23 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
   const handleFocus = useCallback(
     (e: React.FocusEvent) => {
+      console.log(id, 'sub document focus handler')
       // Find closest document
       const target = (e.target as HTMLDivElement).closest('[data-document]')
       if (!focused && target === containerRef.current) {
         if (document?.plugin === 'rows') {
           const parent = selectChildTreeOfParent(store.getState(), id)
-          if (parent) dispatch(focus(parent.id))
+          if (parent) {
+            setTimeout(() => {
+              console.log(id, 'focus parent', parent.id)
+              dispatch(focus(parent.id))
+            }, 100)
+          }
         } else {
-          dispatch(focus(id))
+          setTimeout(() => {
+            console.log(id, 'focus me')
+            dispatch(focus(id))
+          }, 100)
         }
       }
     },

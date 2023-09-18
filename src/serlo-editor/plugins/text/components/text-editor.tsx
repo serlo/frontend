@@ -8,6 +8,7 @@ import {
   Element,
   withoutNormalizing,
   Descendant,
+  Node,
 } from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 import { v4 } from 'uuid'
@@ -39,7 +40,7 @@ export type TextEditorRenderingState =
   | 'updateValue'
   | 'focus'
   | 'synchronized'
-  | 'captureChange'
+  | 'resetCursor'
 
 // Regular text editor - used as a standalone plugin
 export function TextEditor(props: TextEditorProps) {
@@ -92,11 +93,11 @@ export function TextEditor(props: TextEditorProps) {
         ({ value }) => ({ value, selection: editor.selection })
       )
     }
-    if (textEditorRenderingState.current === 'captureChange') {
+    /*if (textEditorRenderingState.current === 'captureChange') {
       console.log(id, 'change captured')
       textEditorRenderingState.current = 'init'
       triggerRender((val) => val + 1)
-    }
+    }*/
 
     // storeEntry.selection = editor.selection
   }
@@ -132,38 +133,42 @@ export function TextEditor(props: TextEditorProps) {
   })
 
   // Workaround for setting selection when adding a new editor:
-  /* useEffect(() => {
-    // Get the current text value of the editor
-    const text = Node.string(editor)
+  useEffect(() => {
+    if (textEditorRenderingState.current === 'synchronized') {
+      // Get the current text value of the editor
+      const text = Node.string(editor)
 
-    // If the editor is not focused, remove the suggestions search
-    // and exit the useEffect hook
-    if (focused === false) {
-      if (text.startsWith('/')) {
-        editor.deleteBackward('line')
+      // If the editor is not focused, remove the suggestions search
+      // and exit the useEffect hook
+      if (focused === false) {
+        if (text.startsWith('/')) {
+          editor.deleteBackward('line')
+        }
+        return
       }
-      return
-    }
 
-    // If the first child of the editor is not a paragraph, do nothing
-    const isFirstChildParagraph =
-      'type' in editor.children[0] && editor.children[0].type === 'p'
-    if (!isFirstChildParagraph) return
+      // If the first child of the editor is not a paragraph, do nothing
+      const isFirstChildParagraph =
+        'type' in editor.children[0] && editor.children[0].type === 'p'
+      if (!isFirstChildParagraph) return
 
-    // If the editor is empty, set the cursor at the start
-    if (text === '') {
-      Transforms.select(editor, { offset: 0, path: [0, 0] })
-      // instanceStateStore[id].selection = editor.selection
-    }
+      // If the editor is empty, set the cursor at the start
+      if (text === '') {
+        Transforms.select(editor, { offset: 0, path: [0, 0] })
+        // instanceStateStore[id].selection = editor.selection
+      }
 
-    // If the editor only has a forward slash, set the cursor
-    // after it, so that the user can type to filter suggestions
-    if (text === '/') {
-      Transforms.select(editor, { offset: 1, path: [0, 0] })
-      // instanceStateStore[id].selection = editor.selection
-      // rerenderForSuggestions((val) => val + 1)
+      // If the editor only has a forward slash, set the cursor
+      // after it, so that the user can type to filter suggestions
+      if (text === '/') {
+        setTimeout(() => {
+          Transforms.select(editor, { offset: 1, path: [0, 0] })
+        })
+        // instanceStateStore[id].selection = editor.selection
+        // rerenderForSuggestions((val) => val + 1)
+      }
     }
-  }, [editor, focused, id])*/
+  }, [editor, focused, id])
 
   // Workaround for removing double empty lines on editor blur.
   // Normalization is forced on blur and handled in
@@ -256,20 +261,16 @@ export function TextEditor(props: TextEditorProps) {
         // `outline-none` removes the ugly outline present in Slate v0.94.1
         className="outline-none [&>[data-slate-node]]:mx-side"
         data-qa="plugin-text-editor"
-        onClickCapture={() => {
-          console.log(id, 'on click capture')
-          textEditorRenderingState.current = 'captureChange'
-          withoutNormalizing(editor, () => {
-            Transforms.select(
-              editor,
-              editor.selection ?? Editor.start(editor, [])
-            )
-          })
+        onClick={() => {
+          console.log(id, 'on click')
+          textEditorRenderingState.current = 'init'
+
           // triggerRender((val) => val + 1)
         }}
         onFocus={() => {
           console.log(id, 'on focus')
-          ReactEditor.focus(editor)
+          //ReactEditor.focus(editor)
+          textEditorRenderingState.current = 'resetCursor'
         }}
       />
 
@@ -286,7 +287,13 @@ export function TextEditor(props: TextEditorProps) {
   )
 
   function checkRenderingState() {
-    if (textEditorRenderingState.current === 'captureChange') {
+    if (textEditorRenderingState.current === 'resetCursor') {
+      withoutNormalizing(editor, () => {
+        Transforms.deselect(editor)
+        Transforms.select(editor, Editor.start(editor, []))
+      })
+      textEditorRenderingState.current = 'updateValue'
+      triggerRender((val) => val + 1)
       return
     }
 
