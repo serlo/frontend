@@ -13,7 +13,6 @@ import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin
 export const VideoToolbar = ({
   id,
   state,
-  autofocusRef,
   showSettingsModal,
   setShowSettingsModal,
 }: VideoProps & {
@@ -68,7 +67,6 @@ export const VideoToolbar = ({
                   inputWidth="100%"
                   width="100%"
                   placeholder="(YouTube, Wikimedia Commons, Vimeo)"
-                  ref={autofocusRef}
                   className="block"
                 />
               </div>
