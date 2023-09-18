@@ -5,7 +5,7 @@ import { Editor as SlateEditor, Range, Node, Transforms } from 'slate'
 import { useTextConfig } from './use-text-config'
 import type { TextEditorProps } from '../components/text-editor'
 import { emptyDocumentFactory, mergePlugins } from '../utils/document'
-import { instanceStateStore } from '../utils/instance-state-store'
+// import { instanceStateStore } from '../utils/instance-state-store'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { isSelectionWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/list'
@@ -124,7 +124,7 @@ export const useEditableKeydownHandler = (
           if (newValue) {
             state.set({ value: newValue, selection }, ({ value }) => ({
               value,
-              selection: instanceStateStore[id].selection,
+              selection: editor.selection, // TODO: use previous selection value
             }))
           }
         }
