@@ -1,4 +1,10 @@
-import { Descendant, Node, Editor as SlateEditor, Transforms } from 'slate'
+import {
+  BaseSelection,
+  Descendant,
+  Node,
+  Editor as SlateEditor,
+  Transforms,
+} from 'slate'
 
 import { isSelectionAtEnd } from './selection'
 import type { TextEditorState } from '../types/config'
@@ -111,16 +117,23 @@ export function mergePlugins(
         })
       )
 
-      // Set selection to where it was before the merge
-      setTimeout(() => {
-        Transforms.select(editor, {
+      // New selection should start at the point where the plugins merged
+      const newSelection: BaseSelection = {
+        anchor: {
           offset: 0,
           path: [previousDocumentChildrenCount, 0],
-        })
-      })
+        },
+        focus: {
+          offset: 0,
+          path: [previousDocumentChildrenCount, 0],
+        },
+      }
 
       // Return the merge value
-      return newValue
+      return {
+        value: newValue,
+        selection: newSelection,
+      }
     }
   } else {
     // Exit if text plugin is the last child of its parent
@@ -144,7 +157,10 @@ export function mergePlugins(
       )
 
       // Return the merge value
-      return newValue
+      return {
+        value: newValue,
+        selection: editor.selection,
+      }
     }
   }
 }
