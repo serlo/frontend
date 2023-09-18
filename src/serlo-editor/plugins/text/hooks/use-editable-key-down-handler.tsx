@@ -1,23 +1,18 @@
 import isHotkey from 'is-hotkey'
 import { useCallback } from 'react'
-import {
-  Editor as SlateEditor,
-  Range,
-  Node,
-  Transforms,
-  BaseRange,
-} from 'slate'
+import { Editor as SlateEditor, Range, Node, Transforms } from 'slate'
 
 import { useTextConfig } from './use-text-config'
 import type { TextEditorProps } from '../components/text-editor'
 import { emptyDocumentFactory, mergePlugins } from '../utils/document'
+import { instanceStateStore } from '../utils/instance-state-store'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { isSelectionWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import {
   focusNext,
   focusPrevious,
-  selectFocusTree,
+  selectChildTree,
   store,
   useAppDispatch,
 } from '@/serlo-editor/store'
@@ -27,14 +22,13 @@ interface UseEditableKeydownHandlerArgs {
   editor: SlateEditor
   id: string
   showSuggestions: boolean
-  previousSelection: React.MutableRefObject<BaseRange | null>
   state: TextEditorProps['state']
 }
 
 export const useEditableKeydownHandler = (
   args: UseEditableKeydownHandlerArgs
 ) => {
-  const { showSuggestions, config, editor, id, state, previousSelection } = args
+  const { showSuggestions, config, editor, id, state } = args
 
   const dispatch = useAppDispatch()
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
@@ -100,28 +94,6 @@ export const useEditableKeydownHandler = (
 
         // Special behaviours when creating new lines
         if (isHotkey(['enter', 'shift+enter'], event) && !isListActive) {
-          // Prevent two consecutive empty lines.
-          // Wrapped in `setTimeout` to let Slate's built-in function to run first
-          setTimeout(() => {
-            const { path } = selection.focus
-            const currentLine = Node.get(editor, path)
-
-            // If not an empty line, do nothing
-            if (Node.string(currentLine).length) return
-            const nodeLineIndex = path[0]
-
-            // If first line is empty: do not allow a new line by deleting new line
-            if (nodeLineIndex === 0) {
-              editor.deleteBackward('block')
-              return
-            }
-            // If current and previous line are empty:  do not allow a new line by deleting new line
-            const previousLine = Node.get(editor, [nodeLineIndex - 1, 0])
-            if (!Node.string(previousLine).length) {
-              editor.deleteBackward('block')
-            }
-          })
-
           // Prevent newlines in headings. Instead, add a new paragraph as the next block.
           const fragmentChild = editor.getFragment()[0]
           const isHeading =
@@ -146,13 +118,13 @@ export const useEditableKeydownHandler = (
           const direction = isBackspaceAtStart ? 'previous' : 'next'
 
           // Merge plugins within Slate and get the merge value
-          const newValue = mergePlugins(direction, editor, store, id)
+          const newValue = mergePlugins(direction, editor, id)
 
           // Update Redux document state with the new value
           if (newValue) {
             state.set({ value: newValue, selection }, ({ value }) => ({
               value,
-              selection: previousSelection.current,
+              selection: instanceStateStore[id].selection,
             }))
           }
         }
@@ -162,14 +134,14 @@ export const useEditableKeydownHandler = (
           isHotkey('up', event) && isSelectionAtStart(editor, selection)
         if (isUpArrowAtStart) {
           event.preventDefault()
-          const focusTree = selectFocusTree(store.getState())
+          const focusTree = selectChildTree(store.getState())
           dispatch(focusPrevious(focusTree))
         }
         const isDownArrowAtEnd =
           isHotkey('down', event) && isSelectionAtEnd(editor, selection)
         if (isDownArrowAtEnd) {
           event.preventDefault()
-          const focusTree = selectFocusTree(store.getState())
+          const focusTree = selectChildTree(store.getState())
           dispatch(focusNext(focusTree))
         }
       }
@@ -184,7 +156,6 @@ export const useEditableKeydownHandler = (
       editor,
       id,
       showSuggestions,
-      previousSelection,
       state,
       textFormattingOptions,
     ]

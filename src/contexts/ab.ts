@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 
+import { useAuthentication } from '@/auth/use-authentication'
 import { abSubmission } from '@/helper/ab-submission'
 
 export const experiments: {
@@ -14,6 +15,24 @@ export const experiments: {
     start: -1,
     end: new Date('2023-09-15T00:00:00+0200').getTime(),
   },
+  {
+    experiment: 'dreisatzv0',
+    ids: [66809],
+    start: -1,
+    end: new Date('2023-09-30T00:00:00+0200').getTime(),
+  },
+  {
+    experiment: 'reorder_trig',
+    ids: [30680],
+    start: -1,
+    end: new Date('2023-09-15T00:00:00+0200').getTime(),
+  },
+  {
+    experiment: 'headings',
+    ids: [25616],
+    start: -1,
+    end: new Date('2023-09-30T00:00:00+0200').getTime(),
+  },
 ]
 
 const ABContext = createContext<ABValue>(null)
@@ -22,6 +41,9 @@ export const ABProvider = ABContext.Provider
 
 export function useAB() {
   const value = useContext(ABContext)
+  const auth = useAuthentication()
+
+  if (auth) return null
 
   return value ?? null
 }

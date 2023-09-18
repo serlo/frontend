@@ -25,19 +25,16 @@ export enum FrontendNodeType {
   Anchor = EditorPluginType.Anchor,
   Article = EditorPluginType.Article,
   Audio = EditorPluginType.Audio,
-  Blockquote = EditorPluginType.Blockquote,
   Box = EditorPluginType.Box,
   Code = EditorPluginType.Highlight,
   Equations = EditorPluginType.Equations,
   Geogebra = EditorPluginType.Geogebra,
   Image = EditorPluginType.Image,
-  Important = EditorPluginType.Important,
   Injection = EditorPluginType.Injection,
   Multimedia = EditorPluginType.Multimedia,
   PageLayout = EditorPluginType.PageLayout,
   PagePartners = EditorPluginType.PagePartners,
   PageTeam = EditorPluginType.PageTeam,
-  Table = EditorPluginType.Table,
   Td = 'td',
   Th = 'th',
   Tr = 'tr',
@@ -201,16 +198,6 @@ export interface FrontendColNode {
   children?: FrontendContentNode[]
 }
 
-export interface FrontendImportantNode {
-  type: FrontendNodeType.Important
-  children?: FrontendContentNode[]
-}
-
-export interface FrontendBlockquoteNode {
-  type: FrontendNodeType.Blockquote
-  children?: FrontendContentNode[]
-}
-
 export interface FrontendBoxNode {
   type: FrontendNodeType.Box
   boxType: BoxType
@@ -240,11 +227,6 @@ export interface FrontendSerloTrNode {
 export interface FrontendSerloTdNode {
   type: FrontendNodeType.SerloTd
   children?: FrontendContentNode[]
-}
-
-export interface FrontendTableNode {
-  type: FrontendNodeType.Table
-  children?: FrontendTrNode[]
 }
 
 export interface FrontendTrNode {
@@ -459,8 +441,6 @@ export type FrontendElementNode =
   | FrontendSpoilerBodyNode
   | FrontendLiNode
   | FrontendColNode
-  | FrontendImportantNode
-  | FrontendBlockquoteNode
   | FrontendBoxNode
   | FrontendThNode
   | FrontendTdNode
@@ -471,7 +451,6 @@ export type FrontendElementNode =
 export type FrontendRestrictedElementNode =
   | FrontendArticleNode
   | FrontendSpoilerContainerNode
-  | FrontendTableNode
   | FrontendSerloTableNode
   | FrontendSerloTrNode
   | FrontendUlNode

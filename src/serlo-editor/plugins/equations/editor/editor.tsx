@@ -4,7 +4,7 @@ import {
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
 import { includes } from 'ramda'
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
 import { toTransformationTarget, TransformationTarget } from './editor-renderer'
@@ -33,7 +33,7 @@ import {
   selectIsDocumentEmpty,
   useAppSelector,
   useAppDispatch,
-  selectFocusTree,
+  selectChildTree,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
@@ -54,12 +54,50 @@ export function EquationsEditor(props: EquationsProps) {
     state.transformationTarget.value
   )
 
+  const gridFocus = useGridFocus({
+    rows: state.steps.length,
+    columns: 4,
+    focusNext: () => {
+      const focusTree = selectChildTree(store.getState())
+      dispatch(focusNext(focusTree))
+    },
+    focusPrevious: () => {
+      const focusTree = selectChildTree(store.getState())
+      dispatch(focusPrevious(focusTree))
+    },
+    transformationTarget,
+    onFocusChanged: (state) => {
+      if (state === 'firstExplanation') {
+        dispatch(focus(props.state.firstExplanation.id))
+      } else if (state?.column === StepSegment.Explanation) {
+        dispatch(focus(props.state.steps[state.row].explanation.id))
+      } else {
+        dispatch(focus(props.id))
+      }
+    },
+  })
+  const { setFocus } = gridFocus
+
   const pluginFocusWrapper = useRef<HTMLDivElement>(null)
+
+  const resetFocus = useCallback(() => {
+    setFocus(null)
+    pluginFocusWrapper?.current?.focus()
+  }, [setFocus])
 
   useHotkeys(
     'tab',
     (event) => {
       handleKeyDown(event, () => {
+        const isPluginWrapperFocused =
+          pluginFocusWrapper.current === document.activeElement
+
+        // Restore focus to first explanation
+        if (isPluginWrapperFocused) {
+          gridFocus.setFocus('firstExplanation')
+          return
+        }
+
         if (
           gridFocus.isFocused({
             row: state.steps.length - 1,
@@ -86,7 +124,16 @@ export function EquationsEditor(props: EquationsProps) {
   useHotkeys(
     'shift+tab',
     (event) => {
-      handleKeyDown(event, () => gridFocus.moveLeft())
+      handleKeyDown(event, () => {
+        const isPluginWrapperFocused =
+          pluginFocusWrapper.current === document.activeElement
+        // Restore focus to first explanation
+        if (isPluginWrapperFocused) {
+          gridFocus.setFocus('firstExplanation')
+          return
+        }
+        gridFocus.moveLeft()
+      })
     },
     {
       scopes: ['global'],
@@ -107,29 +154,6 @@ export function EquationsEditor(props: EquationsProps) {
       enabled: focused,
     }
   )
-
-  const gridFocus = useGridFocus({
-    rows: state.steps.length,
-    columns: 4,
-    focusNext: () => {
-      const focusTree = selectFocusTree(store.getState())
-      dispatch(focusNext(focusTree))
-    },
-    focusPrevious: () => {
-      const focusTree = selectFocusTree(store.getState())
-      dispatch(focusPrevious(focusTree))
-    },
-    transformationTarget,
-    onFocusChanged: (state) => {
-      if (state === 'firstExplanation') {
-        dispatch(focus(props.state.firstExplanation.id))
-      } else if (state.column === StepSegment.Explanation) {
-        dispatch(focus(props.state.steps[state.row].explanation.id))
-      } else {
-        dispatch(focus(props.id))
-      }
-    },
-  })
 
   useEffect(() => {
     if (nestedFocus) {
@@ -191,9 +215,9 @@ export function EquationsEditor(props: EquationsProps) {
       : false
 
   return (
-    <div ref={pluginFocusWrapper}>
+    <div ref={pluginFocusWrapper} className="outline-none" tabIndex={-1}>
       {props.focused || hasFocusWithin ? <EquationsToolbar {...props} /> : null}
-      <div className="py-2.5">
+      <div className="mx-side py-2.5">
         <table className="whitespace-nowrap">
           {renderFirstExplanation()}
           {state.steps.map((step, row) => {
@@ -202,6 +226,7 @@ export function EquationsEditor(props: EquationsProps) {
                 <tr>
                   <StepEditor
                     gridFocus={gridFocus}
+                    resetFocus={resetFocus}
                     row={row}
                     state={step}
                     transformationTarget={transformationTarget}

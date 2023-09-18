@@ -9,6 +9,8 @@ import type { StateTypeReturnType } from '@/serlo-editor/plugin'
 
 export interface StepEditorProps {
   gridFocus: GridFocus
+
+  resetFocus: () => void
   row: number
   state: StateTypeReturnType<typeof stepProps>
   transformationTarget: TransformationTarget
@@ -16,7 +18,7 @@ export interface StepEditorProps {
 
 export function StepEditor(props: StepEditorProps) {
   const equationsStrings = useEditorStrings().plugins.equations
-  const { gridFocus, row, state, transformationTarget } = props
+  const { gridFocus, resetFocus, row, state, transformationTarget } = props
 
   return (
     <>
@@ -34,6 +36,7 @@ export function StepEditor(props: StepEditorProps) {
             onChange={(src) => state.left.set(src)}
             onFocusNext={() => gridFocus.moveRight()}
             onFocusPrevious={() => gridFocus.moveLeft()}
+            closeMathEditorOverlay={resetFocus}
           />
         </td>
       )}
@@ -74,6 +77,7 @@ export function StepEditor(props: StepEditorProps) {
           onChange={(src) => state.right.set(src)}
           onFocusNext={() => gridFocus.moveRight()}
           onFocusPrevious={() => gridFocus.moveLeft()}
+          closeMathEditorOverlay={resetFocus}
         />
       </td>
       {transformationTarget === TransformationTarget.Equation && (
@@ -98,6 +102,7 @@ export function StepEditor(props: StepEditorProps) {
             onChange={(src) => state.transform.set(src)}
             onFocusNext={() => gridFocus.moveRight()}
             onFocusPrevious={() => gridFocus.moveLeft()}
+            closeMathEditorOverlay={resetFocus}
           />
         </td>
       )}

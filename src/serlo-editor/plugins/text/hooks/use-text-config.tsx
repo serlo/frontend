@@ -8,7 +8,8 @@ const defaultFormattingOptions: TextEditorFormattingOption[] = [
   TextEditorFormattingOption.links,
   TextEditorFormattingOption.lists,
   TextEditorFormattingOption.math,
-  TextEditorFormattingOption.richText,
+  TextEditorFormattingOption.richTextBold,
+  TextEditorFormattingOption.richTextItalic,
 ]
 
 export const useTextConfig = (config: TextEditorConfig) => ({

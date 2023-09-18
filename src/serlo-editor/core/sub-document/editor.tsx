@@ -1,18 +1,18 @@
 import clsx from 'clsx'
 import * as R from 'ramda'
-import { useRef, useEffect, useMemo, useCallback } from 'react'
+import { useRef, useMemo, useCallback } from 'react'
 
 import type { SubDocumentProps } from '.'
 import { useEnableEditorHotkeys } from './use-enable-editor-hotkeys'
 import {
-  runChangeDocumentSaga,
   focus,
+  runChangeDocumentSaga,
+  selectChildTreeOfParent,
   selectDocument,
   selectIsFocused,
-  useAppSelector,
-  useAppDispatch,
-  selectParent,
   store,
+  useAppDispatch,
+  useAppSelector,
 } from '../../store'
 import type { StateUpdater } from '../../types/internal__plugin-state'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
@@ -27,31 +27,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
   useEnableEditorHotkeys(id, plugin, focused)
   const containerRef = useRef<HTMLDivElement>(null)
-  const autofocusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
-
-  useEffect(() => {
-    if (focused) {
-      setTimeout(() => {
-        if (autofocusRef.current) {
-          autofocusRef.current.focus()
-        }
-      })
-    }
-  }, [focused])
-
-  useEffect(() => {
-    if (
-      focused &&
-      containerRef.current &&
-      document &&
-      plugin &&
-      !plugin.state.getFocusableChildren(document.state).length
-    ) {
-      containerRef.current.focus()
-    }
-    // `document` should not be part of the dependencies because we only want to call this once when the document gets focused
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [focused, plugin])
 
   const handleFocus = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -59,7 +34,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       const target = (e.target as HTMLDivElement).closest('[data-document]')
       if (!focused && target === containerRef.current) {
         if (document?.plugin === 'rows') {
-          const parent = selectParent(store.getState(), id)
+          const parent = selectChildTreeOfParent(store.getState(), id)
           if (parent) dispatch(focus(parent.id))
         } else {
           dispatch(focus(id))
@@ -121,6 +96,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     return (
       <div
         className={clsx(
+          `plugin-${document?.plugin}`,
           'outline-none',
           isInlineChildEditor || isTemplatePlugin
             ? ''
@@ -139,7 +115,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           config={config}
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           state={state}
-          autofocusRef={autofocusRef}
         />
       </div>
     )

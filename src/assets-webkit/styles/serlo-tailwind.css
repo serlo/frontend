@@ -120,10 +120,6 @@
     @apply overflow-x-auto overflow-y-hidden text-lg leading-browser;
     @apply my-[1em] px-side;
   }
-  .serlo-important {
-    @apply mx-4 mb-block border-l-6 border-brand p-2.5;
-    @apply mx-side;
-  }
   .serlo-spoiler-body {
     @apply pb-3.5 pt-6;
   }
@@ -223,9 +219,6 @@
     @apply rounded-lg bg-brand text-xl font-bold text-white;
     @apply mb-5 block px-8 py-4 text-center tracking-tight;
     @apply hover:bg-brand-500 hover:no-underline;
-  }
-  .serlo-blockquote {
-    @apply mx-side my-block border-l-6 border-brand-200 p-2.5;
   }
   .serlo-revision-extra-info {
     .serlo-p:last-child {
@@ -362,7 +355,7 @@
 
     &:hover > .serlo-tooltip,
     &:focus > .serlo-tooltip {
-      @apply not-sr-only absolute pb-[0.7rem] opacity-95;
+      @apply not-sr-only absolute z-[23] pb-[0.7rem] opacity-90;
     }
   }
 

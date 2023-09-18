@@ -5,7 +5,6 @@ import createSagaMiddleware from 'redux-saga'
 import { documentsSlice } from './documents'
 import { focusSlice } from './focus'
 import { historySlice } from './history'
-import { rootSlice } from './root'
 import { saga } from './saga'
 
 const sagaMiddleware = createSagaMiddleware()
@@ -15,13 +14,15 @@ export const store = configureStore({
     documents: documentsSlice.reducer,
     focus: focusSlice.reducer,
     history: historySlice.reducer,
-    root: rootSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       // https://github.com/serlo/backlog/issues/127
       serializableCheck: {
-        ignoredActions: ['documents/runChangeDocumentSaga'],
+        ignoredActions: [
+          'documents/runChangeDocumentSaga',
+          'history/commitTemporaryActionToHistory',
+        ],
       },
     }).concat([sagaMiddleware]),
 })

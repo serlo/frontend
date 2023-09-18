@@ -9,6 +9,7 @@ type GridFocusState =
       column: number
     }
   | 'firstExplanation'
+  | null
 
 export interface GridFocus {
   focus: GridFocusState | null
@@ -44,7 +45,7 @@ export function useGridFocus({
 
     return (
       state !== 'firstExplanation' &&
-      focus.row === state.row &&
+      focus.row === state?.row &&
       focus.column === state.column
     )
   }

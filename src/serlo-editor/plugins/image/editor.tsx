@@ -14,7 +14,7 @@ import { selectHasFocusedChild, useAppSelector } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const captionFormattingOptions = [
-  TextEditorFormattingOption.richText,
+  TextEditorFormattingOption.richTextBold,
   TextEditorFormattingOption.links,
   TextEditorFormattingOption.math,
   TextEditorFormattingOption.code,
@@ -60,7 +60,10 @@ export function ImageEditor(props: ImageProps) {
         />
       ) : null}
 
-      <div className="relative z-[2] [&_img]:min-h-[4rem]">
+      <div
+        className="relative z-[2] [&_img]:min-h-[4rem]"
+        data-qa="plugin-image-editor"
+      >
         <ImageRenderer
           image={{
             src,
@@ -85,7 +88,10 @@ export function ImageEditor(props: ImageProps) {
   function renderPlaceholder() {
     if (!isLoading && src.length) return null
     return (
-      <div className="relative w-full rounded-lg bg-editor-primary-50 px-side py-32 text-center">
+      <div
+        className="relative w-full rounded-lg bg-editor-primary-50 px-side py-32 text-center"
+        data-qa="plugin-image-placeholder"
+      >
         <FaIcon
           icon={faImages}
           className="mb-4 text-7xl text-editor-primary-200"

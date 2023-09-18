@@ -4,10 +4,11 @@ import { useState } from 'react'
 
 import { ClientOnlyPortal } from './client-only-portal'
 import { entity } from '../common/common'
-import { FaIcon, type FaIconProps } from '@/components/fa-icon'
+import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useLeaveConfirm } from '@/helper/use-leave-confirm'
+import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import type { StateTypeReturnType } from '@/serlo-editor/plugin'
 import {
   redo,
@@ -44,12 +45,12 @@ export function ToolbarMain({
   return (
     <>
       <ClientOnlyPortal selector=".controls-portal">
-        <nav className="flex h-12 w-full justify-between pl-5 pr-3 pt-4">
-          <div>
-            {renderHistoryButton('Undo', faUndo, undo, !undoable)}
-            {renderHistoryButton('Redo', faRedo, redo, !redoable)}
+        <nav className="flex h-14 w-full justify-between pl-5 pr-3 pt-6">
+          <div className="pointer-events-auto md:-ml-28 lg:-ml-52">
+            {renderHistoryButton('undo')}
+            {renderHistoryButton('redo')}
           </div>
-          <div>{renderSaveButton()}</div>
+          {renderSaveButton()}
         </nav>
       </ClientOnlyPortal>
       <SaveModal
@@ -62,25 +63,25 @@ export function ToolbarMain({
     </>
   )
 
-  function renderHistoryButton(
-    title: string,
-    icon: FaIconProps['icon'],
-    action: typeof undo | typeof redo,
-    disabled: boolean
-  ) {
+  function renderHistoryButton(type: 'undo' | 'redo') {
+    const isUndo = type === 'undo'
+    const disabled = isUndo ? !undoable : !redoable
+    const onClick = () => dispatch(isUndo ? undo() : redo())
     return (
       <button
         className={clsx(
-          'serlo-button',
+          'serlo-button serlo-tooltip-trigger',
           disabled ? 'cursor-default text-gray-300' : 'serlo-button-light'
         )}
-        onClick={() => {
-          void dispatch(action())
-        }}
+        onClick={onClick}
         disabled={disabled}
-        title={title}
+        data-qa={`editor-toolbar-${type}`}
       >
-        <FaIcon icon={icon} />
+        <EditorTooltip
+          text={isUndo ? 'Undo' : 'Redo'}
+          className="top-8 !-ml-3"
+        />
+        <FaIcon icon={isUndo ? faUndo : faRedo} />
       </button>
     )
   }
@@ -88,12 +89,11 @@ export function ToolbarMain({
   function renderSaveButton() {
     return (
       <button
-        className="serlo-button-green ml-2"
+        className="serlo-button-green pointer-events-auto ml-2 md:mr-[-11.5vw] lg:-mr-52 xl:-mr-64"
         onClick={() => {
           if (isChanged) setSaveModalOpen(true)
           else showToastNotice('👀 ' + editorStrings.noChangesWarning)
         }}
-        title="Save"
       >
         <FaIcon icon={faSave} /> {editorStrings.edtrIo.save}
       </button>

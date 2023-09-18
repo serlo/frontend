@@ -9,7 +9,7 @@ import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import {
   store,
-  selectParent,
+  selectChildTreeOfParent,
   insertPluginChildBefore,
   selectSerializedDocument,
   removePluginChild,
@@ -70,7 +70,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
 
       const content = decoded.right
 
-      const parentPlugin = selectParent(store.getState(), props.id)
+      const parentPlugin = selectChildTreeOfParent(store.getState(), props.id)
 
       if (
         parentPlugin === null ||
@@ -132,6 +132,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
           </a>
         </p>
         <textarea
+          autoFocus
           ref={textareaRef}
           className={tw`
             mb-7 mt-1 flex w-full items-center rounded-2xl

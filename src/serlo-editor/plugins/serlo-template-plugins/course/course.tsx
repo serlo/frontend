@@ -126,6 +126,7 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
         >
           <div className="mx-side mb-3 mt-12">
             <SettingsTextarea
+              autoFocus
               label={courseStrings.seoDesc}
               state={meta_description}
             />

@@ -1,13 +1,14 @@
 import { faClone, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { useCallback } from 'react'
+import { useCallback, useContext } from 'react'
 
 import { AnchorLinkCopyTool } from './anchor-link-copy-tool'
 import { DropdownButton } from './dropdown-button'
+import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import {
   insertPluginChildAfter,
   removePluginChild,
-  selectParent,
+  selectChildTreeOfParent,
   selectSerializedDocumentWithoutIds,
   store,
   useAppDispatch,
@@ -23,8 +24,11 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
   const dispatch = useAppDispatch()
   const pluginStrings = useEditorStrings().plugins
 
+  // using useContext directly so result can also be null for edusharing
+  const serloEntityId = useContext(EntityIdContext)
+
   const handleDuplicatePlugin = useCallback(() => {
-    const parent = selectParent(store.getState(), pluginId)
+    const parent = selectChildTreeOfParent(store.getState(), pluginId)
     if (!parent) return
 
     const document = selectSerializedDocumentWithoutIds(
@@ -43,7 +47,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
   }, [dispatch, pluginId])
 
   const handleRemovePlugin = useCallback(() => {
-    const parent = selectParent(store.getState(), pluginId)
+    const parent = selectChildTreeOfParent(store.getState(), pluginId)
     if (!parent || !parent.children?.length) return
 
     const isOnlyChild = parent.children?.length === 1
@@ -81,7 +85,9 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
         icon={faTrashAlt}
         dataQa="remove-plugin-button"
       />
-      <AnchorLinkCopyTool pluginId={pluginId} />
+      {serloEntityId ? (
+        <AnchorLinkCopyTool serloEntityId={serloEntityId} pluginId={pluginId} />
+      ) : null}
     </>
   )
 }
