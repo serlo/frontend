@@ -37,7 +37,7 @@ export function createExercise(
     positionOnPage: index,
     trashed: uuid.trashed,
     task: {
-      edtrState: createTaskData(uuid.currentRevision?.content),
+      content: createTaskData(uuid.currentRevision?.content),
       license: createInlineLicense(uuid.license),
     },
     solution: createSolutionData(uuid.solution),
@@ -52,7 +52,7 @@ export function createExercise(
 }
 
 export interface TaskEditorStateInput {
-  content: ConvertNode // edtr-io plugin "exercise"
+  content: ConvertNode // serlo-editor plugin "exercise"
   interactive?:
     | EditorScMcExercisePlugin
     | EditorInputExercisePlugin
@@ -129,7 +129,7 @@ function createSolutionData(
   const raw = solution?.currentRevision?.content
 
   if (!raw || !raw.startsWith('{'))
-    return { edtrState: { strategy: [], steps: [] }, trashed: true }
+    return { content: { strategy: [], steps: [] }, trashed: true }
   const solutionState = (
     JSON.parse(raw) as { plugin: ''; state: SolutionEditorStateInput }
   ).state
@@ -137,7 +137,7 @@ function createSolutionData(
   const strategy = convert(solutionState.strategy)
 
   return {
-    edtrState: {
+    content: {
       ...solutionState,
       // compat: (probably quite fragile) if strategy is empty, we ignore it
       strategy: hasVisibleContent(strategy) ? strategy : [],

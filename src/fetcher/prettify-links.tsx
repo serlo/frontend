@@ -61,8 +61,8 @@ export async function prettifyLinks(pageData: RequestPageData) {
         walk(node.children)
       }
       if (node.type === FrontendNodeType.Exercise) {
-        if (node.solution.edtrState) {
-          const prereq = node.solution.edtrState.prerequisite
+        if (node.solution.content) {
+          const prereq = node.solution.content.prerequisite
           if (prereq) {
             const id =
               typeof prereq.id === 'string' ? parseInt(prereq.id) : prereq.id
@@ -77,11 +77,11 @@ export async function prettifyLinks(pageData: RequestPageData) {
               })
             }
           }
-          walk(node.solution.edtrState.steps)
-          walk(node.solution.edtrState.strategy)
+          walk(node.solution.content.steps)
+          walk(node.solution.content.strategy)
         }
-        if (node.task.edtrState) {
-          walk(node.task.edtrState.content)
+        if (node.task.content) {
+          walk(node.task.content.content)
         }
       }
       if (node.type === FrontendNodeType.Article) {
