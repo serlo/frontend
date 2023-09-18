@@ -97,6 +97,7 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
         >
           <div className="mx-side mb-3 mt-12">
             <SettingsTextarea
+              autoFocus
               label={appletStrings.seoTitle}
               state={meta_title}
             />
