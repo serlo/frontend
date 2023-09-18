@@ -3,7 +3,7 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
-import { endpoint } from '@/api/endpoint'
+import { graphqlEndpoint } from '@/api/endpoint'
 import { useAuthentication } from '@/auth/use-authentication'
 import { CommentAreaAllThreadsThread } from '@/components/comments/comment-area-all-threads-thread'
 import { FrontendClientBase } from '@/components/frontend-client-base'
@@ -117,7 +117,7 @@ function OldComments() {
         const comments = []
 
         for (const uuid of data[group]) {
-          const client = new GraphQLClient(endpoint)
+          const client = new GraphQLClient(graphqlEndpoint)
           const result: GetCommentsForOldCommentsQuery = await client.request(
             query,
             {

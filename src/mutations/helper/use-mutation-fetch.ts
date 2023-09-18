@@ -3,7 +3,7 @@ import { ClientError, GraphQLClient } from 'graphql-request'
 
 import { showToastNotice } from '../../helper/show-toast-notice'
 import { triggerSentry } from '../../helper/trigger-sentry'
-import { endpoint } from '@/api/endpoint'
+import { graphqlEndpoint } from '@/api/endpoint'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import type {
@@ -71,7 +71,7 @@ export function useMutationFetch() {
     }
 
     async function executeQuery(): Promise<MutationResponse> {
-      const client = new GraphQLClient(endpoint, {
+      const client = new GraphQLClient(graphqlEndpoint, {
         credentials: 'include',
       })
       return client.request(query, { input })

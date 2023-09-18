@@ -1,7 +1,7 @@
 import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
 
-import { endpoint } from '@/api/endpoint'
+import { graphqlEndpoint } from '@/api/endpoint'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
@@ -75,7 +75,7 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
   const result = await request<
     GetTaxonomyTypeQuery,
     GetTaxonomyTypeQueryVariables
-  >(endpoint, getTaxonomyTypeQuery, { id: taxonomyId })
+  >(graphqlEndpoint, getTaxonomyTypeQuery, { id: taxonomyId })
 
   const entityType = context.params?.type
   const isValidType =

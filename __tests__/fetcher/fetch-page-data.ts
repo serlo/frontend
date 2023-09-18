@@ -15,7 +15,7 @@ import {
   exerciseUuidMock,
   coursePageUuidMock,
 } from '../../__fixtures__/api_mockdata'
-import { endpoint } from '@/api/endpoint'
+import { graphqlEndpoint } from '@/api/endpoint'
 import { SingleEntityPage, TaxonomyPage } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
 import { serloDomain } from '@/helper/urls/serlo-domain'
@@ -381,7 +381,7 @@ describe('check all supported typenames with stored api-data', () => {
 
   test('typename: Course', async () => {
     server.use(
-      rest.post(endpoint, (req, res, ctx) => {
+      rest.post(graphqlEndpoint, (req, res, ctx) => {
         const body = req.body! as {
           query: string
           variables: { id?: number; alias?: { path: string; instance: 'de' } }
@@ -484,7 +484,7 @@ describe('check all supported typenames with stored api-data', () => {
 
 function givenApiReturnsUuid(uuid: object) {
   server.use(
-    rest.post(endpoint, (req, res, ctx) => {
+    rest.post(graphqlEndpoint, (req, res, ctx) => {
       return res(
         ctx.json({
           data: {

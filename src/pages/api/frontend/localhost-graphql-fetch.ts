@@ -1,7 +1,7 @@
 import { GraphQLClient } from 'graphql-request'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { endpoint } from '@/api/endpoint'
+import { graphqlEndpoint } from '@/api/endpoint'
 import { ParsedArgs } from '@/api/graphql-fetch'
 
 export default async function handler(
@@ -14,7 +14,7 @@ export default async function handler(
     res.status(403).json({ message: 'No auth cookie provided!' })
 
   function executeQuery() {
-    const client = new GraphQLClient(endpoint, {
+    const client = new GraphQLClient(graphqlEndpoint, {
       credentials: 'include',
       headers: { Cookie: req.headers.cookie! },
     })

@@ -7,7 +7,7 @@ import {
   UnrevisedRevisionsQuery,
   UnrevisedRevisionsQueryVariables,
 } from '../graphql-types/operations'
-import { endpoint } from '@/api/endpoint'
+import { graphqlEndpoint } from '@/api/endpoint'
 import { UnrevisedRevisionsPage } from '@/data-types'
 
 export async function requestUnrevisedRevisionsBySubjects(
@@ -20,7 +20,7 @@ export async function requestUnrevisedRevisionsBySubjects(
     const data = await request<
       UnrevisedRevisionsQuery,
       UnrevisedRevisionsQueryVariables
-    >(endpoint, unrevisedRevisionsSubjectsQuery, variables)
+    >(graphqlEndpoint, unrevisedRevisionsSubjectsQuery, variables)
 
     const subject = data.subject
     const authorization = data.authorization as AuthorizationPayload

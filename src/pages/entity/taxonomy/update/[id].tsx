@@ -4,7 +4,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import { Fragment, useState } from 'react'
 
-import { endpoint } from '@/api/endpoint'
+import { graphqlEndpoint } from '@/api/endpoint'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
@@ -176,7 +176,7 @@ export const getStaticProps: GetStaticProps<UpdateTaxonomyLinksProps> = async (
   if (isNaN(id)) return { notFound: true }
 
   const result = await request<GetUuidPathsQuery, GetUuidPathsQueryVariables>(
-    endpoint,
+    graphqlEndpoint,
     getUuidPathsQuery,
     { id }
   )

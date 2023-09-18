@@ -1,6 +1,6 @@
 import { GraphQLClient, type RequestDocument } from 'graphql-request'
 
-import { endpoint } from '@/api/endpoint'
+import { graphqlEndpoint } from '@/api/endpoint'
 import type { AuthenticationPayload } from '@/auth/auth-provider'
 
 export interface ParsedArgs {
@@ -16,7 +16,7 @@ export function createGraphqlFetch() {
     return await executeQuery()
 
     function executeQuery() {
-      const client = new GraphQLClient(endpoint)
+      const client = new GraphQLClient(graphqlEndpoint)
       return client.request(query, variables)
     }
   }
@@ -33,7 +33,7 @@ export function createAuthAwareGraphqlFetch(auth: AuthenticationPayload) {
 
     function executeQuery() {
       const { query, variables } = JSON.parse(args) as ParsedArgs
-      const client = new GraphQLClient(endpoint, {
+      const client = new GraphQLClient(graphqlEndpoint, {
         credentials: 'include',
       })
       return client.request(query, variables)

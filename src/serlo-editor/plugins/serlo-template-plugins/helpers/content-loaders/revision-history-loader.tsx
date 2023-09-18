@@ -3,7 +3,7 @@ import request from 'graphql-request'
 import NProgress from 'nprogress'
 import { useState } from 'react'
 
-import { endpoint } from '@/api/endpoint'
+import { graphqlEndpoint } from '@/api/endpoint'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
@@ -123,7 +123,7 @@ export function RevisionHistoryLoader<T>({
         const data = await request<
           RevisionUuidQuery,
           RevisionUuidQueryVariables
-        >(endpoint, revisionQuery, {
+        >(graphqlEndpoint, revisionQuery, {
           id,
         })
         const { uuid } = data

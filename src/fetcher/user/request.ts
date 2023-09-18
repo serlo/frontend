@@ -4,7 +4,7 @@ import { request } from 'graphql-request'
 import { userQuery } from './query'
 import { convertState } from '../convert-state'
 import { User } from '../query-types'
-import { endpoint } from '@/api/endpoint'
+import { graphqlEndpoint } from '@/api/endpoint'
 import { PageNotFound, UserPage, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 
@@ -15,7 +15,7 @@ export async function requestUser(
   const { uuid, authorization } = await request<{
     uuid: User
     authorization: AuthorizationPayload
-  }>(endpoint, userQuery, {
+  }>(graphqlEndpoint, userQuery, {
     path,
     instance,
   })

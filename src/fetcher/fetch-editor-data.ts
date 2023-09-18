@@ -10,7 +10,7 @@ import { dataQuery } from './query'
 import type { MainUuidType } from './query-types'
 import { revisionQuery } from './revision/query'
 import { testAreaId } from './testArea'
-import { endpoint } from '@/api/endpoint'
+import { graphqlEndpoint } from '@/api/endpoint'
 import {
   type BreadcrumbsData,
   UuidType,
@@ -61,12 +61,12 @@ export async function fetchEditorData(
     const { uuid } = await request<
       RevisionUuidQuery,
       RevisionUuidQueryVariables
-    >(endpoint, revisionQuery, {
+    >(graphqlEndpoint, revisionQuery, {
       id: revisionId,
     })
     data = revisionResponseToResponse(uuid)
   } else {
-    const { uuid } = await request<MainUuidQuery>(endpoint, dataQuery, {
+    const { uuid } = await request<MainUuidQuery>(graphqlEndpoint, dataQuery, {
       alias: { instance, path: alias },
     })
     data = uuid
