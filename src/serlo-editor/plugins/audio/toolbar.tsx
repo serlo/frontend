@@ -19,7 +19,6 @@ import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin
 export const AudioToolbar = ({
   id,
   state,
-  autofocusRef,
   showSettingsModal,
   setShowSettingsModal,
 }: AudioProps & {
@@ -68,6 +67,7 @@ export const AudioToolbar = ({
 
               <div className="mx-side mb-3">
                 <EditorInput
+                  autoFocus
                   label={`${audioStrings.audioUrl}: `}
                   value={state.src.value}
                   onChange={(e) => {
@@ -77,7 +77,6 @@ export const AudioToolbar = ({
                   width="100%"
                   onKeyDown={handleInputEnter}
                   placeholder="voca.ro/audio-id"
-                  ref={autofocusRef}
                   className="block"
                 />
               </div>
