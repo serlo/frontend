@@ -621,10 +621,6 @@ export const loggedInData = {
           notSupported: "Lo sentimos, este plugin no es compatible:",
           explanation: "No será visible a los usuarios. Puede eliminarlo o pedir ayuda a los desarrolladores."
         },
-        error: {
-          title: 'Error',
-          convertionError: "Esta parte del documento no pudo ser convertida."
-        },
         equations: {
           title: "Términos y ecuaciones",
           description: "Escribe manipulaciones de términos y resuelve ecuaciones múltiples.",
@@ -938,10 +934,6 @@ export const loggedInData = {
         settings: "Configuración",
         extendedSettings: "Ajustes extendidos",
         close: "Cerrar",
-        notSupportedYet: "Este tipo de contenido aún no posible en el nuevo editor.",
-        editInOld: "Edita el contenido en el antiguo editor.",
-        conversionError: "Se produjo un error durante la conversión.",
-        notConverted: "Esta entidad aún no ha sido convertida al nuevo editor.",
         save: "Guardar",
         saveWithReview: "Guardar y obtener una revisión",
         cancel: "Cancelar",
