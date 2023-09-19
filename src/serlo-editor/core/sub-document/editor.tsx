@@ -34,7 +34,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     (e: React.FocusEvent) => {
       function dispatchFocusWithTimeout(id: string) {
         if (toFocusTimeout.timer !== null) {
-          console.log('focus canceled')
+          // console.log('focus canceled')
           clearTimeout(toFocusTimeout.timer)
         }
         toFocusTimeout.timer = setTimeout(() => {
@@ -43,7 +43,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         }, 100)
       }
 
-      console.log(id, 'sub document focus handler')
+      // console.log(id, 'sub document focus handler')
       // Find closest document
       const target = (e.target as HTMLDivElement).closest('[data-document]')
       if (!focused && target === containerRef.current) {

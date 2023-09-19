@@ -24,7 +24,6 @@ import { useTextConfig } from '../hooks/use-text-config'
 import { withEmptyLinesRestriction } from '../plugins'
 import { withCorrectVoidBehavior } from '../plugins/with-correct-void-behavior'
 import type { TextEditorConfig, TextEditorState } from '../types/config'
-// import { instanceStateStore } from '../utils/instance-state-store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { SlateHoverOverlay } from '@/serlo-editor/editor-ui/slate-hover-overlay'
@@ -35,12 +34,12 @@ export type TextEditorProps = EditorPluginProps<
   TextEditorConfig
 >
 
-export type TextEditorRenderingState =
-  | 'init'
-  | 'updateValue'
-  | 'focus'
-  | 'synchronized'
-  | 'resetCursor'
+export type TextEditorSyncState =
+  | 'START'
+  | 'VALUE'
+  | 'FOCUS'
+  | 'DONE'
+  | 'FAILURE'
 
 // Regular text editor - used as a standalone plugin
 export function TextEditor(props: TextEditorProps) {
@@ -49,14 +48,16 @@ export function TextEditor(props: TextEditorProps) {
   const textStrings = useEditorStrings().plugins.text
   const config = useTextConfig(props.config)
 
-  const textEditorRenderingState = useRef<TextEditorRenderingState>('init')
+  const textEditorSyncState = useRef<TextEditorSyncState>('START')
+  const needResetCursor = useRef(false)
+  const needSetCursorOnInit = useRef(true)
   const [, triggerRender] = useState(0)
 
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
   const { createTextEditor, toolbarControls } = textFormattingOptions
 
   const { editor, editorKey } = useMemo(() => {
-    textEditorRenderingState.current = 'init'
+    textEditorSyncState.current = 'START'
     return {
       editor: createTextEditor(
         withReact(
@@ -71,16 +72,150 @@ export function TextEditor(props: TextEditorProps) {
     }
   }, [createTextEditor])
 
-  checkRenderingState()
+  if (needSetCursorOnInit.current) {
+    needResetCursor.current = false
+  }
+
+  if (textEditorSyncState.current === 'DONE' && needSetCursorOnInit.current) {
+    needSetCursorOnInit.current = false
+    setTimeout(() => {
+      // Get the current text value of the editor
+      const text = Node.string(editor)
+
+      // If the editor is not focused, remove the suggestions search
+      // and exit the useEffect hook
+      if (focused === false) {
+        if (text.startsWith('/')) {
+          editor.deleteBackward('line')
+        }
+      } else {
+        // If the first child of the editor is not a paragraph, do nothing
+        const isFirstChildParagraph =
+          'type' in editor.children[0] && editor.children[0].type === 'p'
+        if (isFirstChildParagraph) {
+          if (text === '') {
+            // If the editor is empty, set the cursor at the start
+            Transforms.select(editor, { offset: 0, path: [0, 0] })
+            // instanceStateStore[id].selection = editor.selection
+          }
+
+          // If the editor only has a forward slash, set the cursor
+          // after it, so that the user can type to filter suggestions
+          if (text === '/') {
+            console.log('transform it')
+            Transforms.select(editor, { offset: 1, path: [0, 0] })
+            triggerRender((val) => val + 1)
+            // instanceStateStore[id].selection = editor.selection
+            // rerenderForSuggestions((val) => val + 1)
+          }
+        }
+      }
+    }, 150)
+  }
+
+  const valueSynchronized = editor.children === state.value.value
+  const focusSynchronized =
+    !focused || (focused && ReactEditor.isFocused(editor))
+
+  if (needResetCursor.current) {
+    console.log(id, 'reset cursor')
+    withoutNormalizing(editor, () => {
+      Transforms.deselect(editor)
+      Transforms.select(editor, Editor.start(editor, []))
+    })
+    textEditorSyncState.current === 'START'
+    needResetCursor.current = false
+  }
+
+  if (textEditorSyncState.current === 'START') {
+    if (!valueSynchronized) {
+      // start synchronizing value
+      textEditorSyncState.current = 'VALUE'
+    } else if (!focusSynchronized) {
+      // refocus
+      textEditorSyncState.current = 'FOCUS'
+      // focus will trigger next render
+    } else {
+      // there is no next rendering necessary
+      textEditorSyncState.current = 'DONE'
+    }
+  } else if (textEditorSyncState.current === 'VALUE') {
+    if (!valueSynchronized) {
+      // bad if this happens
+      textEditorSyncState.current = 'FAILURE'
+      console.warn('text editor failed to synchronize state')
+    } else if (!focusSynchronized) {
+      // refocus
+      textEditorSyncState.current = 'FOCUS'
+    } else {
+      // there is no next rendering necessary
+      textEditorSyncState.current = 'DONE'
+    }
+  } else if (textEditorSyncState.current === 'FOCUS') {
+    if (!valueSynchronized) {
+      // bad if this happens
+      textEditorSyncState.current = 'FAILURE'
+      console.warn('text editor failed to synchronize state')
+    } else if (!focusSynchronized) {
+      // bad if this happens
+      textEditorSyncState.current = 'FOCUS'
+      console.warn('text editor failed to synchronize focus - retry')
+    } else {
+      // there is no next rendering necessary
+      textEditorSyncState.current = 'DONE'
+    }
+  } else if (textEditorSyncState.current === 'DONE') {
+    if (!valueSynchronized) {
+      // resynchronize value
+      textEditorSyncState.current = 'VALUE'
+      // console.warn('text editor - resync value')
+    } else if (!focusSynchronized) {
+      // resynchornize focus
+      textEditorSyncState.current = 'FOCUS'
+    }
+  }
+
+  /*if (textEditorSyncState.current === 'resetCursor') {
+    withoutNormalizing(editor, () => {
+      Transforms.deselect(editor)
+      Transforms.select(editor, Editor.start(editor, []))
+    })
+    textEditorSyncState.current = 'updateValue'
+    triggerRender((val) => val + 1)
+    return
+  }*/
+
+  if (textEditorSyncState.current === 'VALUE') {
+    const { value, selection } = state.value
+
+    // copy state into editor
+    console.log(id, 'copy into editor')
+    editor.children = value
+    withoutNormalizing(editor, () => {
+      Transforms.deselect(editor)
+      Transforms.select(editor, selection ?? Editor.start(editor, []))
+    })
+    triggerRender((val) => val + 1)
+  }
+
+  // We keep track by sync state
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (textEditorSyncState.current === 'FOCUS') {
+      console.log(id, 'focus')
+      ReactEditor.focus(editor)
+      triggerRender((val) => val + 1)
+    }
+  })
+
   console.log(
     id,
     'render text editor',
-    textEditorRenderingState.current.toUpperCase(),
-    JSON.stringify(editor.selection)
+    textEditorSyncState.current.toUpperCase()
   )
 
   const handleEditorChange = (newValue: Descendant[]) => {
-    console.log(id, 'change', JSON.stringify(editor.operations))
+    // console.log(id, 'change', JSON.stringify(editor.operations))
     const isAstChange = editor.operations.some(
       ({ type }) => type !== 'set_selection'
     )
@@ -101,14 +236,6 @@ export function TextEditor(props: TextEditorProps) {
 
     // storeEntry.selection = editor.selection
   }
-
-  useEffect(() => {
-    if (textEditorRenderingState.current === 'focus') {
-      console.log(id, 'focus')
-      ReactEditor.focus(editor)
-      triggerRender((val) => val + 1)
-    }
-  })
 
   // const [, rerenderForSuggestions] = useState(0)
   const suggestions = useSuggestions({ editor, id, editable, focused })
@@ -131,47 +258,6 @@ export function TextEditor(props: TextEditorProps) {
     editor,
     id,
   })
-
-  // Workaround for setting selection when adding a new editor:
-  useEffect(() => {
-    if (textEditorRenderingState.current === 'synchronized') {
-      // Get the current text value of the editor
-      const text = Node.string(editor)
-
-      // If the editor is not focused, remove the suggestions search
-      // and exit the useEffect hook
-      if (focused === false) {
-        if (text.startsWith('/')) {
-          editor.deleteBackward('line')
-        }
-        return
-      }
-
-      // If the first child of the editor is not a paragraph, do nothing
-      const isFirstChildParagraph =
-        'type' in editor.children[0] && editor.children[0].type === 'p'
-      if (!isFirstChildParagraph) return
-
-      // If the editor is empty, set the cursor at the start
-      if (text === '') {
-        Transforms.select(editor, { offset: 0, path: [0, 0] })
-        // instanceStateStore[id].selection = editor.selection
-      }
-
-      // If the editor only has a forward slash, set the cursor
-      // after it, so that the user can type to filter suggestions
-      if (text === '/') {
-        setTimeout(() => {
-          Transforms.select(editor, { offset: 1, path: [0, 0] })
-          triggerRender((val) => val + 1)
-        })
-        // instanceStateStore[id].selection = editor.selection
-        // rerenderForSuggestions((val) => val + 1)
-      }
-    } else {
-      triggerRender((val) => val + 1)
-    }
-  }, [editor, focused, id])
 
   // Workaround for removing double empty lines on editor blur.
   // Normalization is forced on blur and handled in
@@ -265,14 +351,17 @@ export function TextEditor(props: TextEditorProps) {
         className="outline-none [&>[data-slate-node]]:mx-side"
         data-qa="plugin-text-editor"
         onClick={() => {
-          console.log(id, 'on click')
-          textEditorRenderingState.current = 'init'
-          triggerRender((val) => val + 1)
+          console.log(id, 'text editor - on click')
+          //textEditorSyncState.current = 'init'
+          //triggerRender((val) => val + 1)
+
+          needResetCursor.current = false
         }}
         onFocus={() => {
-          console.log(id, 'on focus')
+          console.log(id, 'text editor - on focus')
           //ReactEditor.focus(editor)
-          textEditorRenderingState.current = 'resetCursor'
+          needResetCursor.current = true
+          // triggerRender((val) => val + 1)
         }}
       />
 
@@ -287,41 +376,4 @@ export function TextEditor(props: TextEditorProps) {
       ) : null}
     </Slate>
   )
-
-  function checkRenderingState() {
-    if (textEditorRenderingState.current === 'resetCursor') {
-      withoutNormalizing(editor, () => {
-        Transforms.deselect(editor)
-        Transforms.select(editor, Editor.start(editor, []))
-      })
-      textEditorRenderingState.current = 'updateValue'
-      triggerRender((val) => val + 1)
-      return
-    }
-
-    if (editor.children !== state.value.value) {
-      const { value, selection } = state.value
-      textEditorRenderingState.current = 'updateValue'
-      triggerRender((val) => val + 1)
-
-      // copy state into editor
-      console.log(id, 'copy into editor')
-      editor.children = value
-      withoutNormalizing(editor, () => {
-        Transforms.deselect(editor)
-        Transforms.select(editor, selection ?? Editor.start(editor, []))
-      })
-      return
-    }
-
-    if (focused) {
-      if (ReactEditor.isFocused(editor)) {
-        textEditorRenderingState.current = 'synchronized'
-        return
-      } else {
-        textEditorRenderingState.current = 'focus'
-        return
-      }
-    }
-  }
 }
