@@ -9,6 +9,7 @@ import {
   pureRemoveDocument,
   pureReplaceDocument,
   runReplaceDocumentSaga,
+  insertAndFocusDocument,
 } from '.'
 import type { ReversibleAction } from '..'
 import {
@@ -196,7 +197,8 @@ interface ChannelAction {
 
 export function* handleRecursiveInserts(
   act: (helpers: StoreDeserializeHelpers) => unknown,
-  initialDocuments: { id: string; plugin: string; state?: unknown }[] = []
+  initialDocuments: { id: string; plugin: string; state?: unknown }[] = [],
+  shouldFocusInsertedDocument: boolean = false
 ) {
   const actions: ReversibleAction[] = []
   const pendingDocs: {
@@ -243,8 +245,11 @@ export function* handleRecursiveInserts(
         }),
       })
     } else {
+      const action = shouldFocusInsertedDocument
+        ? insertAndFocusDocument
+        : pureInsertDocument
       actions.push({
-        action: pureInsertDocument({
+        action: action({
           id: doc.id,
           plugin: doc.plugin,
           state,
