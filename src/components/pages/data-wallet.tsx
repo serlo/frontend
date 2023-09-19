@@ -96,8 +96,8 @@ export function DataWallet() {
                 ))}
             </li>
             <li>
-              Lege in deiner Bird Wallet App ein neues Profil an und füge Serlo als
-              Kontakt hinzu, indem du den QR-Code scannst.
+              Lege in deiner Bird Wallet App ein neues Profil an und füge Serlo
+              als Kontakt hinzu, indem du den QR-Code scannst.
             </li>
             <li>
               Sobald der Kontakt verifiziert wurde, erhälst du innerhalb weniger
