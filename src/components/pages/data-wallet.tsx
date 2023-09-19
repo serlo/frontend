@@ -73,7 +73,7 @@ export function DataWallet() {
               Lade dir die{' '}
               <a
                 className="serlo-link font-bold"
-                href="https://enmeshed.eu/use/basics"
+                href="https://enmeshed.de"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -96,7 +96,7 @@ export function DataWallet() {
                 ))}
             </li>
             <li>
-              Lege in deiner Enmeshed App ein neues Profil an und füge Serlo als
+              Lege in deiner Bird Wallet App ein neues Profil an und füge Serlo als
               Kontakt hinzu, indem du den QR-Code scannst.
             </li>
             <li>
