@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import {
   entity,
@@ -13,6 +13,7 @@ import {
   type EditorPluginProps,
   string,
 } from '@/serlo-editor/plugin'
+import { focus, useAppDispatch } from '@/serlo-editor/store'
 
 export const coursePageTypeState = entityType(
   {
@@ -39,11 +40,26 @@ function CoursePageTypeEditor(
   props: EditorPluginProps<CoursePageTypePluginState, { skipControls: boolean }>
 ) {
   const { title, content, icon } = props.state
+  const titleRef = useRef<HTMLInputElement>(null)
+
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     // setting not used any more, reset to explanation for now
     if (icon.value !== 'explanation') icon.set('explanation')
   })
+
+  useEffect(() => {
+    if (props.editable) {
+      // focus on title, remove focus from content
+      setTimeout(() => {
+        dispatch(focus(null))
+        titleRef.current?.focus()
+      })
+    }
+    // only after creating plugin
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const placeholder = useEditorStrings().templatePlugins.coursePage.title
 
@@ -53,6 +69,7 @@ function CoursePageTypeEditor(
         <h1 className="serlo-h1 mt-12">
           {props.editable ? (
             <input
+              ref={titleRef}
               autoFocus
               className={headerInputClasses}
               placeholder={placeholder}

@@ -25,6 +25,7 @@ export const AnchorEditor = (props: AnchorProps) => {
             <label className="serlo-tooltip-trigger">
               <EditorTooltip text={editorStrings.plugins.anchor.anchorId} />
               <input
+                autoFocus
                 placeholder={editorStrings.plugins.anchor.identifier}
                 value={state.value}
                 onChange={(e) => {
