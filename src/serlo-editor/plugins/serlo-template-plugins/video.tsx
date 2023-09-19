@@ -55,8 +55,6 @@ function VideoTypeEditor(props: EditorPluginProps<VideoTypePluginState>) {
             placeholder={editorStrings.plugins.video.titlePlaceholder}
             value={title.value}
             onChange={(e) => title.set(e.target.value)}
-            // hack to stop faulty autofocus
-            onMouseDown={(e) => e.stopPropagation()}
           />
         ) : (
           <span itemProp="name">{title.value}</span>

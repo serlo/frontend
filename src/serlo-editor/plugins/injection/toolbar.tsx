@@ -43,6 +43,7 @@ export const InjectionToolbar = ({
 
               <div className="mx-side mb-3">
                 <EditorInput
+                  autoFocus
                   label={`${injectionStrings.serloId}: `}
                   placeholder={injectionStrings.placeholder}
                   inputMode="numeric"

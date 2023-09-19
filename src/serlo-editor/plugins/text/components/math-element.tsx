@@ -63,7 +63,6 @@ export function MathElement({
     // See: https://docs.slatejs.org/api/nodes/element#rendering-void-elements
     <VoidWrapper {...attributes} tabIndex={-1} contentEditable={false}>
       <MathEditor
-        autofocus
         state={element.src}
         inline={element.inline}
         readOnly={false}

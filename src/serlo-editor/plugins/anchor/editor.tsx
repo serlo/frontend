@@ -30,11 +30,10 @@ export const AnchorEditor = (props: AnchorProps) => {
                 onChange={(e) => {
                   state.set(e.target.value)
                 }}
-                ref={props.autofocusRef}
                 className={tw`
-                mr-2 cursor-pointer rounded-md !border border-gray-500
-              bg-editor-primary-100 px-1 py-[1px] text-sm transition-all
-              hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
+                  mr-2 cursor-pointer rounded-md !border border-gray-500
+                bg-editor-primary-100 px-1 py-[1px] text-sm transition-all
+                hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
               `}
               />
             </label>

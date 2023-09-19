@@ -4,14 +4,17 @@ import { StateTypeReturnType, string } from '@/serlo-editor/plugin'
 export function SettingsTextarea({
   label,
   state,
+  autoFocus,
 }: {
   label: string
   state: StateTypeReturnType<ReturnType<typeof string>>
+  autoFocus?: boolean
 }) {
   return (
     <label className="font-bold">
       {label}
       <textarea
+        autoFocus={autoFocus}
         value={state.value}
         onChange={(e) => state.set(e.target.value)}
         className={tw`
