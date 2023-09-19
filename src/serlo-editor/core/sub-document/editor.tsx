@@ -17,6 +17,8 @@ import {
 import type { StateUpdater } from '../../types/internal__plugin-state'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
+const toFocusTimeout = { timer: null as NodeJS.Timeout | null }
+
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const dispatch = useAppDispatch()
   const document = useAppSelector((state) => selectDocument(state, id))
@@ -30,6 +32,17 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
   const handleFocus = useCallback(
     (e: React.FocusEvent) => {
+      function dispatchFocusWithTimeout(id: string) {
+        if (toFocusTimeout.timer !== null) {
+          console.log('focus canceled')
+          clearTimeout(toFocusTimeout.timer)
+        }
+        toFocusTimeout.timer = setTimeout(() => {
+          console.log('dispatched focus with timeout')
+          dispatch(focus(id))
+        }, 100)
+      }
+
       console.log(id, 'sub document focus handler')
       // Find closest document
       const target = (e.target as HTMLDivElement).closest('[data-document]')
@@ -37,16 +50,10 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         if (document?.plugin === 'rows') {
           const parent = selectChildTreeOfParent(store.getState(), id)
           if (parent) {
-            setTimeout(() => {
-              console.log(id, 'focus parent', parent.id)
-              dispatch(focus(parent.id))
-            }, 100)
+            dispatchFocusWithTimeout(parent.id)
           }
         } else {
-          setTimeout(() => {
-            console.log(id, 'focus me')
-            dispatch(focus(id))
-          }, 100)
+          dispatchFocusWithTimeout(id)
         }
       }
     },

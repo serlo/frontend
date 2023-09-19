@@ -163,10 +163,13 @@ export function TextEditor(props: TextEditorProps) {
       if (text === '/') {
         setTimeout(() => {
           Transforms.select(editor, { offset: 1, path: [0, 0] })
+          triggerRender((val) => val + 1)
         })
         // instanceStateStore[id].selection = editor.selection
         // rerenderForSuggestions((val) => val + 1)
       }
+    } else {
+      triggerRender((val) => val + 1)
     }
   }, [editor, focused, id])
 
@@ -264,8 +267,7 @@ export function TextEditor(props: TextEditorProps) {
         onClick={() => {
           console.log(id, 'on click')
           textEditorRenderingState.current = 'init'
-
-          // triggerRender((val) => val + 1)
+          triggerRender((val) => val + 1)
         }}
         onFocus={() => {
           console.log(id, 'on focus')
