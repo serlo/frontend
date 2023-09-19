@@ -59,9 +59,9 @@ export function DataWallet() {
           </h1>
           <p className="serlo-p">
             Wir gehen verantwortungsvoll mit deinen Daten um. Serlo ist dafür
-            Projektpartner des Bildungsraums Digital (BIRD). BIRD setzt eine
-            sogenannte „Data Wallet“ ein, die es dir ermöglicht, deine Daten
-            sicher und direkt mit uns zu teilen.
+            Projektpartner der Nationalen Bildungsplattform (NBP). NBP setzt
+            eine sogenannte „Data Wallet“ ein, die es dir ermöglicht, deine
+            Daten sicher und direkt mit uns zu teilen.
           </p>
           <p className="serlo-p">
             Die Data Wallet ist auf deinem Smartphone, dort sind deine Daten
@@ -77,7 +77,7 @@ export function DataWallet() {
                 target="_blank"
                 rel="noreferrer"
               >
-                Enmeshed App
+                BIRD Wallet App
               </a>{' '}
               auf dein Smartphone.
             </li>
