@@ -42,7 +42,7 @@ export function DataWallet() {
     <>
       <HeadTags data={{ title: 'Data Wallet – Serlo.org' }} />
       <header className="bg-brand-100 px-side pt-12 sm:text-center">
-        <div className="pb-6">
+        <div className="mr-40 pb-6">
           <Logo />
         </div>
       </header>
