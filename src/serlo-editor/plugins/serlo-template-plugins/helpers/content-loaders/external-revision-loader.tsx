@@ -3,7 +3,7 @@ import request from 'graphql-request'
 import NProgress from 'nprogress'
 import { useState } from 'react'
 
-import { graphqlEndpoint } from '@/api/endpoint'
+import { endpoint } from '@/api/endpoint'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
@@ -114,7 +114,7 @@ export function ExternalRevisionLoader<T>({
     void (async () => {
       try {
         const data = await request<MainUuidQuery, MainUuidQueryVariables>(
-          graphqlEndpoint,
+          endpoint,
           dataQuery,
           {
             id,

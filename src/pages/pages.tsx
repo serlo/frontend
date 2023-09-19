@@ -7,7 +7,7 @@ import {
 import request, { gql } from 'graphql-request'
 import { GetStaticProps } from 'next'
 
-import { graphqlEndpoint } from '@/api/endpoint'
+import { endpoint } from '@/api/endpoint'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
@@ -114,7 +114,7 @@ export const getStaticProps: GetStaticProps<PagesProps> = async (context) => {
   const instance = context.locale! as Instance
 
   const result = await request<PagesQuery, PagesQueryVariables>(
-    graphqlEndpoint,
+    endpoint,
     pagesQuery,
     { instance }
   )

@@ -1,8 +1,8 @@
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
-export const endpoint =
+export const endpointBaseUrl =
   process.env.NEXT_PUBLIC_ENV === 'local'
     ? 'http://localhost:3001'
     : `https://api.${serloDomain}`
 
-export const graphqlEndpoint = `${endpoint}/graphql`
+export const endpoint = `${endpointBaseUrl}/graphql`

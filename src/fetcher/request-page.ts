@@ -16,7 +16,7 @@ import {
   MainUuidQueryVariables,
 } from './graphql-types/operations'
 import { dataQuery } from './query'
-import { graphqlEndpoint } from '@/api/endpoint'
+import { endpoint } from '@/api/endpoint'
 import { RequestPageData, UuidRevType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { FrontendNodeType } from '@/frontend-node-types'
@@ -30,7 +30,7 @@ export async function requestPage(
   instance: Instance
 ): Promise<RequestPageData> {
   const response = await request<MainUuidQuery, MainUuidQueryVariables>(
-    graphqlEndpoint,
+    endpoint,
     dataQuery,
     {
       alias: { instance, path: alias },

@@ -4,11 +4,11 @@ import { useState } from 'react'
 import { HeadTags } from '../head-tags'
 import { PartnerList } from '../landing/rework/partner-list'
 import { Logo } from '../navigation/header/logo'
-import { endpoint } from '@/api/endpoint'
+import { endpointBaseUrl } from '@/api/endpoint'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
-export const endpointEnmeshed = `${endpoint}/enmeshed`
+export const endpointEnmeshed = `${endpointBaseUrl}/enmeshed`
 
 export function DataWallet() {
   const [qrCode, setQrCode] = useState('')

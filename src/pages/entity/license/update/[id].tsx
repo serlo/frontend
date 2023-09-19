@@ -2,7 +2,7 @@ import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useState } from 'react'
 
-import { graphqlEndpoint } from '@/api/endpoint'
+import { endpoint } from '@/api/endpoint'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
@@ -97,7 +97,7 @@ export const getStaticProps: GetStaticProps<UpdateLicenseProps> = async (
   const result = await request<
     LicensesForInstaceQuery,
     LicensesForInstaceQueryVariables
-  >(graphqlEndpoint, licensesQuery, {
+  >(endpoint, licensesQuery, {
     instance,
   })
 

@@ -1,7 +1,7 @@
 import { request } from 'graphql-request'
 
 import { idsQuery } from './query-ids'
-import { graphqlEndpoint } from '@/api/endpoint'
+import { endpoint } from '@/api/endpoint'
 import { RequestPageData } from '@/data-types'
 import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
@@ -105,7 +105,7 @@ export async function prettifyLinks(pageData: RequestPageData) {
             alias: string
             instance: string
           }
-        }>(graphqlEndpoint, idsQuery([...new Set(ids)]))
+        }>(endpoint, idsQuery([...new Set(ids)]))
 
   callbacks.forEach((x) => {
     if (prettyLinks === undefined) return

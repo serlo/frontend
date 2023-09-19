@@ -10,7 +10,7 @@ import {
   RevisionUuidQuery,
   RevisionUuidQueryVariables,
 } from '../graphql-types/operations'
-import { graphqlEndpoint } from '@/api/endpoint'
+import { endpoint } from '@/api/endpoint'
 import { PageNotFound, RevisionPage, UuidRevType, UuidType } from '@/data-types'
 
 export async function requestRevision(
@@ -22,7 +22,7 @@ export async function requestRevision(
   }
 
   const response = await request<RevisionUuidQuery, RevisionUuidQueryVariables>(
-    graphqlEndpoint,
+    endpoint,
     revisionQuery,
     variables
   )

@@ -4,7 +4,7 @@ import useSWR from 'swr'
 import type { FetcherResponse } from 'swr/_internal'
 
 import { GetCommentsQuery } from './graphql-types/operations'
-import { graphqlEndpoint } from '@/api/endpoint'
+import { endpoint } from '@/api/endpoint'
 
 const query = gql`
   query getComments($id: Int!) {
@@ -47,7 +47,7 @@ export type GetCommentsNode = Extract<
 >['threads']['nodes'][number]
 
 export function useCommentData(id: number) {
-  const client = new GraphQLClient(graphqlEndpoint)
+  const client = new GraphQLClient(endpoint)
   const fetcher = () =>
     client.request(query, { id }) as FetcherResponse<GetCommentsQuery>
   const resp = useSWR<GetCommentsQuery, object>(`comments::${id}`, fetcher, {
