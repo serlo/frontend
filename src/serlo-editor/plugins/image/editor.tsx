@@ -60,6 +60,12 @@ export function ImageEditor(props: ImageProps) {
         />
       ) : null}
 
+      {hasFocus && showInlineImageUrl ? (
+        <div className="absolute left-side top-side z-[3]">
+          <InlineSrcControls {...props} />
+        </div>
+      ) : null}
+
       <div
         className="relative z-[2] [&_img]:min-h-[4rem]"
         data-qa="plugin-image-editor"
@@ -75,12 +81,6 @@ export function ImageEditor(props: ImageProps) {
           placeholder={renderPlaceholder()}
           forceNewTab
         />
-
-        {hasFocus && showInlineImageUrl ? (
-          <div className="absolute left-side top-side">
-            <InlineSrcControls {...props} />
-          </div>
-        ) : null}
       </div>
     </>
   )
