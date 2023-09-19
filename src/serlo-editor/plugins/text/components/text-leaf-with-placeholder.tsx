@@ -34,7 +34,7 @@ export function TextLeafWithPlaceholder(
         {customPlaceholder ?? textStrings.placeholder}{' '}
         {onAdd ? (
           <button
-            className="serlo-button-editor-secondary serlo-tooltip-trigger pointer-events-auto z-20 h-8 w-8"
+            className="serlo-button-editor-secondary serlo-tooltip-trigger pointer-events-auto z-[22] h-8 w-8"
             onClick={onAdd}
           >
             <EditorTooltip
