@@ -53,6 +53,7 @@ function CoursePageTypeEditor(
         <h1 className="serlo-h1 mt-12">
           {props.editable ? (
             <input
+              autoFocus
               className={headerInputClasses}
               placeholder={placeholder}
               value={title.value}
