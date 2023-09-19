@@ -8,6 +8,7 @@ import { useAreImagesDisabledInTable } from './contexts/are-images-disabled-in-t
 import { SerloTableRenderer, TableType } from './renderer'
 import { SerloTableToolbar } from './toolbar'
 import { getTableType } from './utils/get-table-type'
+import { AllowedChildPlugins } from '../rows'
 import { TextEditorConfig } from '../text'
 import { instanceStateStore } from '../text/utils/instance-state-store'
 import { FaIcon } from '@/components/fa-icon'
@@ -127,22 +128,24 @@ export function SerloTableEditor(props: SerloTableProps) {
               )}
             >
               {renderInlineNav(rowIndex, colIndex)}
-              {cell.content.render({
-                config: {
-                  isInlineChildEditor: true,
-                  placeholder: '',
-                  formattingOptions: isHead
-                    ? headerTextFormattingOptions
-                    : cellTextFormattingOptions,
-                } as TextEditorConfig,
-              })}
-              {props.config.allowImageInTableCells && !areImagesDisabled ? (
-                <CellSwitchButton
-                  cell={cell}
-                  isHead={isHead}
-                  isClear={isClear}
-                />
-              ) : null}
+              <AllowedChildPlugins.Provider value={[]}>
+                {cell.content.render({
+                  config: {
+                    isInlineChildEditor: true,
+                    placeholder: '',
+                    formattingOptions: isHead
+                      ? headerTextFormattingOptions
+                      : cellTextFormattingOptions,
+                  } as TextEditorConfig,
+                })}
+                {props.config.allowImageInTableCells && !areImagesDisabled ? (
+                  <CellSwitchButton
+                    cell={cell}
+                    isHead={isHead}
+                    isClear={isClear}
+                  />
+                ) : null}
+              </AllowedChildPlugins.Provider>
             </div>
           )
         }),

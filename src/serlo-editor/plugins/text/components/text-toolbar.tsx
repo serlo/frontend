@@ -23,6 +23,7 @@ export function TextToolbar({
 }: TextToolbarProps) {
   const editor = useSlate()
 
+  // Text plugins where isInlineChildEditor === true do not have a toolbar displayed directly above them. Example: Table cell. So the toolbar controls are rendered into a parent plugin toolbar.
   if (config.isInlineChildEditor) {
     if (!containerRef || !containerRef.current) return null
     const target = containerRef.current

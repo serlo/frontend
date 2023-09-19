@@ -5,6 +5,7 @@ import type { ImageProps } from '.'
 import { InlineSrcControls } from './controls/inline-src-controls'
 import { ImageRenderer } from './renderer'
 import { ImageToolbar } from './toolbar'
+import { AllowedChildPlugins } from '../rows'
 import { TextEditorConfig } from '../text'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -103,12 +104,18 @@ export function ImageEditor(props: ImageProps) {
   function renderCaption() {
     if (!state.caption.defined) return null
 
-    return state.caption.render({
-      config: {
-        placeholder: imageStrings.captionPlaceholder,
-        formattingOptions: captionFormattingOptions,
-        isInlineChildEditor: true,
-      } as TextEditorConfig,
-    })
+    return (
+      <>
+        <AllowedChildPlugins.Provider value={[]}>
+          {state.caption.render({
+            config: {
+              placeholder: imageStrings.captionPlaceholder,
+              formattingOptions: captionFormattingOptions,
+              isInlineChildEditor: true,
+            } as TextEditorConfig,
+          })}
+        </AllowedChildPlugins.Provider>
+      </>
+    )
   }
 }

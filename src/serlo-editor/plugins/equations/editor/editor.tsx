@@ -12,6 +12,7 @@ import { useGridFocus } from './grid-focus'
 import { StepEditor } from './step-editor'
 import { StepSegment } from './step-segment'
 import type { EquationsProps } from '..'
+import { AllowedChildPlugins } from '../../rows'
 import {
   EquationsRenderer,
   type EquationsRendererStep,
@@ -215,73 +216,77 @@ export function EquationsEditor(props: EquationsProps) {
       : false
 
   return (
-    <div ref={pluginFocusWrapper} className="outline-none" tabIndex={-1}>
-      {props.focused || hasFocusWithin ? <EquationsToolbar {...props} /> : null}
-      <div className="mx-side py-2.5">
-        <table className="whitespace-nowrap">
-          {renderFirstExplanation()}
-          {state.steps.map((step, row) => {
-            return (
-              <tbody key={step.explanation.id}>
-                <tr>
-                  <StepEditor
-                    gridFocus={gridFocus}
-                    resetFocus={resetFocus}
-                    row={row}
-                    state={step}
-                    transformationTarget={transformationTarget}
-                  />
-                  <td>{renderButtons(row)}</td>
-                </tr>
-                {renderExplantionTr()}
-              </tbody>
-            )
-
-            function renderExplantionTr() {
-              if (row === state.steps.length - 1) return null
-
+    <AllowedChildPlugins.Provider value={[]}>
+      <div ref={pluginFocusWrapper} className="outline-none" tabIndex={-1}>
+        {props.focused || hasFocusWithin ? (
+          <EquationsToolbar {...props} />
+        ) : null}
+        <div className="mx-side py-2.5">
+          <table className="whitespace-nowrap">
+            {renderFirstExplanation()}
+            {state.steps.map((step, row) => {
               return (
-                <tr
-                  className="[&_div]:m-0"
-                  onFocus={() =>
-                    gridFocus.setFocus({
-                      row,
-                      column: StepSegment.Explanation,
-                    })
-                  }
-                >
-                  {transformationTarget === TransformationTarget.Equation && (
-                    <td />
-                  )}
-                  {!selectIsDocumentEmpty(
-                    store.getState(),
-                    step.explanation.id
-                  ) ? (
-                    renderDownArrow()
-                  ) : (
-                    <td />
-                  )}
-                  <td colSpan={2} className="min-w-[10rem]">
-                    {step.explanation.render({
-                      config: {
-                        isInlineChildEditor: true,
-                        placeholder:
-                          row === 0 &&
-                          transformationTarget === TransformationTarget.Term
-                            ? equationsStrings.combineLikeTerms
-                            : equationsStrings.explanation,
-                      },
-                    })}
-                  </td>
-                </tr>
+                <tbody key={step.explanation.id}>
+                  <tr>
+                    <StepEditor
+                      gridFocus={gridFocus}
+                      resetFocus={resetFocus}
+                      row={row}
+                      state={step}
+                      transformationTarget={transformationTarget}
+                    />
+                    <td>{renderButtons(row)}</td>
+                  </tr>
+                  {renderExplantionTr()}
+                </tbody>
               )
-            }
-          })}
-        </table>
 
-        {renderAddButton()}
+              function renderExplantionTr() {
+                if (row === state.steps.length - 1) return null
+
+                return (
+                  <tr
+                    className="[&_div]:m-0"
+                    onFocus={() =>
+                      gridFocus.setFocus({
+                        row,
+                        column: StepSegment.Explanation,
+                      })
+                    }
+                  >
+                    {transformationTarget === TransformationTarget.Equation && (
+                      <td />
+                    )}
+                    {!selectIsDocumentEmpty(
+                      store.getState(),
+                      step.explanation.id
+                    ) ? (
+                      renderDownArrow()
+                    ) : (
+                      <td />
+                    )}
+                    <td colSpan={2} className="min-w-[10rem]">
+                      {step.explanation.render({
+                        config: {
+                          isInlineChildEditor: true,
+                          placeholder:
+                            row === 0 &&
+                            transformationTarget === TransformationTarget.Term
+                              ? equationsStrings.combineLikeTerms
+                              : equationsStrings.explanation,
+                        },
+                      })}
+                    </td>
+                  </tr>
+                )
+              }
+            })}
+          </table>
+
+          {renderAddButton()}
+        </div>
       </div>
-    </div>
+    </AllowedChildPlugins.Provider>
   )
 
   function renderFirstExplanation() {

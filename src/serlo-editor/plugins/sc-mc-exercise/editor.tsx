@@ -10,6 +10,7 @@ import {
   selectIsDocumentEmpty,
   useAppSelector,
 } from '../../store'
+import { AllowedChildPlugins } from '../rows'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditableContext } from '@/serlo-editor/core/contexts'
 
@@ -75,7 +76,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
         {renderer}
       </PreviewOverlay>
       {editable && nestedFocus && !previewActive && (
-        <>
+        <AllowedChildPlugins.Provider value={[]}>
           {state.answers.map((answer, index) => {
             return (
               <InteractiveAnswer
@@ -99,7 +100,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
           <AddButton onClick={handleAddButtonClick}>
             {editorStrings.templatePlugins.scMcExercise.addAnswer}
           </AddButton>
-        </>
+        </AllowedChildPlugins.Provider>
       )}
     </div>
   )

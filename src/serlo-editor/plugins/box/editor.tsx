@@ -14,7 +14,10 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
-import { selectIsEmptyRows } from '@/serlo-editor/plugins/rows'
+import {
+  AllowedChildPlugins,
+  selectIsEmptyRows,
+} from '@/serlo-editor/plugins/rows'
 import { selectIsFocused, useAppSelector } from '@/serlo-editor/store'
 
 const titleFormattingOptions = [
@@ -82,13 +85,15 @@ export function BoxEditor(props: BoxProps) {
           boxType={typedValue}
           title={
             <div className="-ml-1 inline-block max-h-6 min-w-[15rem] font-bold">
-              {title.render({
-                config: {
-                  placeholder: editorStrings.plugins.box.titlePlaceholder,
-                  formattingOptions: titleFormattingOptions,
-                  isInlineChildEditor: true,
-                },
-              })}
+              <AllowedChildPlugins.Provider value={[]}>
+                {title.render({
+                  config: {
+                    placeholder: editorStrings.plugins.box.titlePlaceholder,
+                    formattingOptions: titleFormattingOptions,
+                    isInlineChildEditor: true,
+                  },
+                })}
+              </AllowedChildPlugins.Provider>
             </div>
           }
           anchorId={anchorId.value}

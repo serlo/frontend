@@ -10,6 +10,7 @@ import {
   store,
   useAppSelector,
 } from '../../store'
+import { AllowedChildPlugins } from '../rows'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function InputExerciseEditor(props: InputExerciseProps) {
@@ -51,32 +52,34 @@ export function InputExerciseEditor(props: InputExerciseProps) {
       </PreviewOverlay>
       {nestedFocus && !previewActive && (
         <>
-          {state.answers.map((answer, index: number) => {
-            return (
-              <InteractiveAnswer
-                key={answer.feedback.id}
-                answer={
-                  <input
-                    className="width-full border-none outline-none"
-                    value={answer.value.value}
-                    placeholder={inputExStrings.enterTheValue}
-                    type="text"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      answer.value.set(e.target.value)
-                    }}
-                  />
-                }
-                feedback={answer.feedback.render()}
-                feedbackID={answer.feedback.id}
-                isActive={answer.isCorrect.value}
-                handleChange={() =>
-                  answer.isCorrect.set(!answer.isCorrect.value)
-                }
-                remove={() => state.answers.remove(index)}
-                focusedElement={focusedElement || undefined}
-              />
-            )
-          })}
+          <AllowedChildPlugins.Provider value={[]}>
+            {state.answers.map((answer, index: number) => {
+              return (
+                <InteractiveAnswer
+                  key={answer.feedback.id}
+                  answer={
+                    <input
+                      className="width-full border-none outline-none"
+                      value={answer.value.value}
+                      placeholder={inputExStrings.enterTheValue}
+                      type="text"
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        answer.value.set(e.target.value)
+                      }}
+                    />
+                  }
+                  feedback={answer.feedback.render()}
+                  feedbackID={answer.feedback.id}
+                  isActive={answer.isCorrect.value}
+                  handleChange={() =>
+                    answer.isCorrect.set(!answer.isCorrect.value)
+                  }
+                  remove={() => state.answers.remove(index)}
+                  focusedElement={focusedElement || undefined}
+                />
+              )
+            })}
+          </AllowedChildPlugins.Provider>
           <AddButton onClick={() => state.answers.insert()}>
             {inputExStrings.addAnswer}
           </AddButton>
