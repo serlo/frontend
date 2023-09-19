@@ -1,7 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { findNextChildTreeNode, findPreviousChildTreeNode } from './helpers'
-import { type ChildTreeNode, isPureInsertDocumentAction } from '../documents'
+import {
+  type ChildTreeNode,
+  isInsertAndFocusDocumentAction,
+} from '../documents'
 import { State } from '../types'
 
 const initialState: State['focus'] = null as State['focus']
@@ -29,8 +32,10 @@ export const focusSlice = createSlice({
   extraReducers: (builder) => {
     builder.addMatcher(
       // Always focus the newly inserted document
-      isPureInsertDocumentAction,
-      (_state, action) => action.payload.id
+      isInsertAndFocusDocumentAction,
+      (_state, action) => {
+        return action.payload.id
+      }
     )
   },
 })
