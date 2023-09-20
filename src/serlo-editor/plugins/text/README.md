@@ -9,8 +9,7 @@
     - [Configuration](#configuration)
     - [Text formatting options](#text-formatting-options)
     - [Suggestions (`serlo-editor` plugins)](#suggestions-serlo-editor-plugins)
-    - [Saving state to `Redux` store](#saving-state-to-redux-store)
-  -[Challenges](#challenges)
+    - [Saving state to `Redux` store](#saving-state-to-redux-store) -[Challenges](#challenges)
 
 ## Structure
 
@@ -74,5 +73,4 @@ Simple selection changes are not saved to the store, because we don't want to un
 
 The interaction between focus, cursor, selection and state updates is strongly interlocked. There are a bunch of use cases that should be supported combined with many technical challenges as presented below.
 
-![grafik](https://github.com/serlo/frontend/assets/13507950/664634ec-b486-4fd2-8ff5-bb0674be0f54)
-
+![grafik](https://github.com/serlo/frontend/assets/13507950/8474c514-2983-450f-aa8b-d693cbaa1d87)
