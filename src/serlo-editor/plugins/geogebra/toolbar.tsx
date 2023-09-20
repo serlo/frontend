@@ -46,6 +46,7 @@ export const GeogebraToolbar = ({
 
               <div className="mx-side mb-3">
                 <EditorInput
+                  autoFocus
                   label={`${geogebraStrings.urlOrId}: `}
                   placeholder="z.B. N5ktHvtW"
                   value={state.value}

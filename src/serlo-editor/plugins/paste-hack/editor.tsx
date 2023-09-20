@@ -132,6 +132,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
           </a>
         </p>
         <textarea
+          autoFocus
           ref={textareaRef}
           className={tw`
             mb-7 mt-1 flex w-full items-center rounded-2xl

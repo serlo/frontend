@@ -1,16 +1,11 @@
 import isHotkey from 'is-hotkey'
 import { useCallback } from 'react'
-import {
-  Editor as SlateEditor,
-  Range,
-  Node,
-  Transforms,
-  BaseRange,
-} from 'slate'
+import { Editor as SlateEditor, Range, Node, Transforms } from 'slate'
 
 import { useTextConfig } from './use-text-config'
 import type { TextEditorProps } from '../components/text-editor'
 import { emptyDocumentFactory, mergePlugins } from '../utils/document'
+import { instanceStateStore } from '../utils/instance-state-store'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { isSelectionWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/list'
@@ -27,14 +22,13 @@ interface UseEditableKeydownHandlerArgs {
   editor: SlateEditor
   id: string
   showSuggestions: boolean
-  previousSelection: React.MutableRefObject<BaseRange | null>
   state: TextEditorProps['state']
 }
 
 export const useEditableKeydownHandler = (
   args: UseEditableKeydownHandlerArgs
 ) => {
-  const { showSuggestions, config, editor, id, state, previousSelection } = args
+  const { showSuggestions, config, editor, id, state } = args
 
   const dispatch = useAppDispatch()
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
@@ -130,7 +124,7 @@ export const useEditableKeydownHandler = (
           if (newValue) {
             state.set({ value: newValue, selection }, ({ value }) => ({
               value,
-              selection: previousSelection.current,
+              selection: instanceStateStore[id].selection,
             }))
           }
         }
@@ -162,7 +156,6 @@ export const useEditableKeydownHandler = (
       editor,
       id,
       showSuggestions,
-      previousSelection,
       state,
       textFormattingOptions,
     ]
