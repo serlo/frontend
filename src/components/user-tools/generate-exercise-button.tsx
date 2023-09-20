@@ -23,6 +23,10 @@ export const GenerateExerciseButton = ({
 }: GenerateExerciseButtonProps) => {
   const { strings } = useInstanceData()
 
+  const [title, setTitle] = useState(
+    'Erstelle eine Aufgabe automatisch mit Hilfe von KI'
+  )
+
   const [showExerciseGenerationModal, setShowExerciseGenerationModal] =
     useState(false)
 
@@ -38,8 +42,11 @@ export const GenerateExerciseButton = ({
       <ModalWithCloseButton
         onCloseClick={() => setShowExerciseGenerationModal(false)}
         isOpen={showExerciseGenerationModal}
+        title={title}
+        alignTitleAndCloseButton
+        className="min-h-[420px] pb-4"
       >
-        <ExerciseGenerationWizard data={data} />
+        <ExerciseGenerationWizard data={data} setTitle={setTitle} />
       </ModalWithCloseButton>
     </>
   )
