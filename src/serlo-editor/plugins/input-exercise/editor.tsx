@@ -10,19 +10,15 @@ import {
 } from '../../editor-ui'
 import {
   focus,
-  selectFocused,
   selectIsDocumentEmpty,
   store,
   useAppDispatch,
-  useAppSelector,
 } from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function InputExerciseEditor(props: InputExerciseProps) {
   const { editable, state, id } = props
   const inputExStrings = useEditorStrings().templatePlugins.inputExercise
-
-  const focusedElement = useAppSelector(selectFocused)
 
   const dispatch = useAppDispatch()
 
@@ -85,7 +81,6 @@ export function InputExerciseEditor(props: InputExerciseProps) {
                   answer.isCorrect.set(!answer.isCorrect.value)
                 }
                 remove={() => state.answers.remove(index)}
-                focusedElement={focusedElement || undefined}
               />
             )
           })}

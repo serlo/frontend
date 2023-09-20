@@ -893,9 +893,11 @@ export const loggedInData = {
         },
         inputExercise: {
           title: 'Input Exercise',
+          description: 'Solution can be text or math'
         },
         scMcExercise: {
-          title: 'SC/MC Exercise'
+          title: 'SC/MC Exercise',
+          description: 'Single Choice or Multiple Choice'
         }
       },
       templatePlugins: {
