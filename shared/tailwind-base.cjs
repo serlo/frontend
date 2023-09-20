@@ -46,6 +46,7 @@ module.exports = {
           muted: '#cfe097',
         },
         gray: colors.neutral,
+        lightgray: '#C1C1C1',
         berry: '#857189',
         lightblue: '#b8e7ff',
         newgreen: '#2fceb1',

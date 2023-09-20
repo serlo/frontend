@@ -24,7 +24,7 @@ export const GenerateExerciseButton = ({
   const { strings } = useInstanceData()
 
   const [title, setTitle] = useState(
-    'Erstelle eine Aufgabe automatisch mit Hilfe von KI'
+    strings.ai.exerciseGeneration.initialModalTitle
   )
 
   const [showExerciseGenerationModal, setShowExerciseGenerationModal] =
@@ -37,14 +37,19 @@ export const GenerateExerciseButton = ({
         onClick={() => setShowExerciseGenerationModal(true)}
       >
         <FaIcon icon={faStar} className="mr-2" />
-        {strings.ai.exerciseGeneration.title}
+        {strings.ai.exerciseGeneration.buttonTitle}
       </button>
       <ModalWithCloseButton
         onCloseClick={() => setShowExerciseGenerationModal(false)}
         isOpen={showExerciseGenerationModal}
         title={title}
         alignTitleAndCloseButton
-        className="min-h-[420px] pb-4"
+        confirmCloseDescription={
+          strings.ai.exerciseGeneration.confirmCloseDescription
+        }
+        // It will take the custom value (top-40%) of the ModalWithCloseButton
+        // without the important
+        className="!top-1/2 flex max-h-[80vh] min-h-[420px] flex-col pb-4"
       >
         <ExerciseGenerationWizard data={data} setTitle={setTitle} />
       </ModalWithCloseButton>

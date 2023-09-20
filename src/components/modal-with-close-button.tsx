@@ -1,6 +1,6 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import type { ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import BaseModal from 'react-modal'
 
 import { FaIcon } from './fa-icon'
@@ -23,6 +23,7 @@ interface ModalWithCloseButtonProps {
   children: ReactNode
   className?: string
   alignTitleAndCloseButton?: boolean
+  confirmCloseDescription?: string | undefined
 }
 
 export function ModalWithCloseButton({
@@ -32,8 +33,10 @@ export function ModalWithCloseButton({
   children,
   className,
   alignTitleAndCloseButton,
+  confirmCloseDescription,
 }: ModalWithCloseButtonProps) {
   const { strings } = useInstanceData()
+  const [showConfirmation, setShowConfirmation] = useState(false)
 
   return (
     <BaseModal
@@ -54,7 +57,11 @@ export function ModalWithCloseButton({
             </h2>
           )}
           <button
-            onClick={onCloseClick}
+            onClick={() =>
+              confirmCloseDescription
+                ? setShowConfirmation(true)
+                : onCloseClick()
+            }
             title={strings.share.close}
             className={tw`
               inline-block h-9 w-9
@@ -84,6 +91,28 @@ export function ModalWithCloseButton({
         </>
       )}
       {children}
+
+      {showConfirmation && (
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-75">
+          <div className="rounded bg-white p-4 shadow-lg">
+            <p>{confirmCloseDescription}</p>
+            <div className="mt-4 flex">
+              <button
+                className="rounded bg-blue-500 px-3 py-1 text-white"
+                onClick={() => setShowConfirmation(false)}
+              >
+                Stay
+              </button>
+              <button
+                className="mr-2 rounded bg-red-500 px-3 py-1 text-white"
+                onClick={onCloseClick}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </BaseModal>
   )
 }

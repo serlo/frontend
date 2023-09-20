@@ -1,9 +1,10 @@
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import React, { useEffect, useRef, useState } from 'react'
 
+import { MenuButton, MenuItem } from './menu-button'
 import { FaIcon } from '@/components/fa-icon'
 import { AuthorToolsData } from '@/components/user-tools/foldout-author-menus/author-tools'
-import { MenuButton, MenuItem } from './menu-button'
+import { useInstanceData } from '@/contexts/instance-context'
 
 export interface ExerciseGenerationWizardProps {
   // TODO only require the props that are actually needed!
@@ -31,6 +32,8 @@ const extractTopicFromTitle = (title: string | undefined): string | null => {
 export const ExerciseGenerationWizard: React.FC<
   ExerciseGenerationWizardProps
 > = ({ data, setTitle }) => {
+  const { strings } = useInstanceData()
+
   // TODO show limitation message before page one. We may need to handle this
   // one within the generate-exercise-button.tsx component and either render a
   // second modal or conditionally hide the close button as there is only one
@@ -50,15 +53,15 @@ export const ExerciseGenerationWizard: React.FC<
   const [canUpdateTitle, setCanUpdateTitle] = useState<boolean>(false)
 
   useEffect(() => {
-    // When page 3 is visited for the first time, we update the title
-    // immediately
+    // Page 3 needs to be visited once before we update the title. When going
+    // back to page 1 or 2, we are updating it live as the user is typing.
     if (currentPage === 3 && !canUpdateTitle) {
       setCanUpdateTitle(true)
     }
 
     if (canUpdateTitle) {
       const newTitle =
-        'Aufgabenerstellung mit KI: ' +
+        strings.ai.exerciseGeneration.modalTitleWithTaxonomy +
         subject.charAt(0).toUpperCase() +
         subject.slice(1) +
         ' - ' +
@@ -66,7 +69,7 @@ export const ExerciseGenerationWizard: React.FC<
 
       setTitle(newTitle)
     }
-  }, [topic, subject, setTitle, canUpdateTitle, currentPage])
+  }, [topic, subject, setTitle, canUpdateTitle, currentPage, strings])
 
   const [grade, setGrade] = useState<string>('5')
 
@@ -94,74 +97,82 @@ export const ExerciseGenerationWizard: React.FC<
 
   return (
     // Remove bottom padding as the modal itself already has decent spacing there
-    <div className="flex max-h-[80vh] flex-col gap-y-7 overflow-y-auto p-4 pb-0">
-      {isSummary && <h1 className="mt-4 text-left font-bold">Summary</h1>}
-      {(isSummary || currentPage === 1) && (
-        <Subject
-          onNext={handleNext}
-          isSummary={isSummary}
-          jumpToPage={setCurrentPage}
-          subject={subject}
-          setSubject={setSubject}
-          defaultSubject={defaultSubject}
-        />
+    <div className="flex h-full flex-grow flex-col overflow-y-auto p-4 pb-0">
+      {isSummary && (
+        <h1 className="mb-4 text-left font-bold">
+          {strings.ai.exerciseGeneration.summary}
+        </h1>
       )}
-      {(isSummary || currentPage === 2) && (
-        <Topic
-          onNext={handleNext}
-          jumpToPage={setCurrentPage}
-          isSummary={isSummary}
-          topic={topic}
-          setTopic={setTopic}
-          defaultTopic={defaultTopic}
-        />
-      )}
-      {(isSummary || currentPage === 3) && (
-        <Grade
-          grade={grade}
-          setGrade={setGrade}
-          onNext={handleNext}
-          isSummary={isSummary}
-        />
-      )}
-      {(isSummary || currentPage === 4) && (
-        <ExerciseType
-          exerciseType={exerciseType}
-          setExerciseType={setExerciseType}
-          numberOfSubtasks={numberOfSubtasks}
-          setNumberOfSubtasks={setNumberOfSubtasks}
-          onNext={handleNext}
-          isSummary={isSummary}
-        />
-      )}
-      {(isSummary || currentPage === 5) && (
-        <Difficulty
-          difficulty={difficulty}
-          setDifficulty={setDifficulty}
-          learningGoal={learningGoal}
-          setLearningGoal={setLearningGoal}
-          onNext={handleNext}
-          isSummary={isSummary}
-        />
-      )}
-      {(isSummary || currentPage === 6) && (
-        <PriorKnowledge
-          priorKnowledge={priorKnowledge}
-          setPriorKnowledge={setPriorKnowledge}
-          onNext={handleNext}
-          isSummary={isSummary}
-        />
-      )}
+      {/* Scrollable content */}
+      <div className="mb-7 flex flex-grow flex-col gap-y-7 overflow-y-auto">
+        {(isSummary || currentPage === 1) && (
+          <Subject
+            onNext={handleNext}
+            isSummary={isSummary}
+            jumpToPage={setCurrentPage}
+            subject={subject}
+            setSubject={setSubject}
+            defaultSubject={defaultSubject}
+          />
+        )}
+        {(isSummary || currentPage === 2) && (
+          <Topic
+            onNext={handleNext}
+            jumpToPage={setCurrentPage}
+            isSummary={isSummary}
+            topic={topic}
+            setTopic={setTopic}
+            defaultTopic={defaultTopic}
+          />
+        )}
+        {(isSummary || currentPage === 3) && (
+          <Grade
+            grade={grade}
+            setGrade={setGrade}
+            onNext={handleNext}
+            isSummary={isSummary}
+          />
+        )}
+        {(isSummary || currentPage === 4) && (
+          <ExerciseType
+            exerciseType={exerciseType}
+            setExerciseType={setExerciseType}
+            numberOfSubtasks={numberOfSubtasks}
+            setNumberOfSubtasks={setNumberOfSubtasks}
+            onNext={handleNext}
+            isSummary={isSummary}
+          />
+        )}
+        {(isSummary || currentPage === 5) && (
+          <Difficulty
+            difficulty={difficulty}
+            setDifficulty={setDifficulty}
+            learningGoal={learningGoal}
+            setLearningGoal={setLearningGoal}
+            onNext={handleNext}
+            isSummary={isSummary}
+          />
+        )}
+        {(isSummary || currentPage === 6) && (
+          <PriorKnowledge
+            priorKnowledge={priorKnowledge}
+            setPriorKnowledge={setPriorKnowledge}
+            onNext={handleNext}
+            isSummary={isSummary}
+          />
+        )}
+      </div>
 
       <NavigationFooter
         currentPage={currentPage}
+        generatesMultipleExercises={numberOfSubtasks > 0}
         onNext={handleNext}
         onPrev={handlePrev}
         onSubmit={async () => {
           console.log("Let's generate exercise", {
             subject,
             topic,
-            gradeOrAgeValue,
+            grade,
             exerciseType,
             numberOfSubtasks,
             difficulty,
@@ -174,7 +185,7 @@ export const ExerciseGenerationWizard: React.FC<
           const queryParams = new URLSearchParams({
             subject,
             topic,
-            gradeOrAgeValue,
+            grade,
             exerciseType: exerciseType || '',
             numberOfSubtasks: numberOfSubtasks.toString(),
             difficulty: difficulty || '',
@@ -204,27 +215,39 @@ export const ExerciseGenerationWizard: React.FC<
   )
 }
 
-const NavigationFooter: React.FC<{
+interface NavigationFooterProps {
   currentPage: number
   onNext: () => void
   onPrev: () => void
   onSubmit: () => void
-}> = ({ currentPage, onNext, onPrev, onSubmit }) => {
+  generatesMultipleExercises: boolean
+}
+
+const NavigationFooter: React.FC<NavigationFooterProps> = ({
+  generatesMultipleExercises,
+  currentPage,
+  onNext,
+  onPrev,
+  onSubmit,
+}) => {
+  const { strings } = useInstanceData()
   return (
-    <div className="relative mt-4 flex flex-col items-center justify-between">
+    <div className="relative mt-auto flex flex-col items-center justify-between">
       {currentPage === 7 ? (
         <button
           className="mb-2 self-end rounded bg-brand-700 px-4 py-2 text-white"
           onClick={onSubmit}
         >
-          Generate exercises
+          {generatesMultipleExercises
+            ? strings.ai.exerciseGeneration.generateExercisesButton
+            : strings.ai.exerciseGeneration.generateExerciseButton}
         </button>
       ) : (
         <button
           className="mb-2 self-end rounded bg-brand-700 px-4 py-2 text-white"
           onClick={onNext}
         >
-          Next
+          {strings.ai.exerciseGeneration.nextButton}
         </button>
       )}
 
@@ -254,14 +277,14 @@ const NavigationFooter: React.FC<{
   )
 }
 
-const Subject: React.FC<
-  WizardPageProps & {
-    jumpToPage: (page: number) => void
-    defaultSubject: string | null
-    subject: string
-    setSubject: (subject: string) => void
-  }
-> = ({
+interface SubjectProps extends WizardPageProps {
+  jumpToPage: (page: number) => void
+  defaultSubject: string | null
+  subject: string
+  setSubject: (subject: string) => void
+}
+
+const Subject: React.FC<SubjectProps> = ({
   isSummary,
   onNext,
   jumpToPage,
@@ -269,6 +292,7 @@ const Subject: React.FC<
   setSubject,
   defaultSubject,
 }) => {
+  const { strings } = useInstanceData()
   const [selectedRadio, setSelectedRadio] = useState<string>(
     defaultSubject
       ? defaultSubject === subject
@@ -288,7 +312,7 @@ const Subject: React.FC<
     return (
       <div className="flex items-center justify-start text-brand-700">
         <span onClick={() => jumpToPage(1)} className="mr-4 font-semibold">
-          Subject
+          {strings.ai.exerciseGeneration.subject.defaultLabel}
         </span>
         <button onClick={() => jumpToPage(1)} className="underline">
           {subject.charAt(0).toUpperCase() + subject.slice(1)}
@@ -299,7 +323,9 @@ const Subject: React.FC<
   return (
     <div className="flex flex-col">
       <p className="mb-4 text-xl">
-        Which <b>subject</b> would you like to create an exercise for?
+        {strings.ai.exerciseGeneration.subject.title}
+        {/* TODO how to replicate the <b> tag? */}
+        {/* Which <b>subject</b> would you like to create an exercise for? */}
       </p>
       {defaultSubject ? (
         <div className="flex items-center">
@@ -336,7 +362,7 @@ const Subject: React.FC<
           className="text-brand-700 focus:ring-lightblue"
         />
         <label htmlFor="customSubject" className="ml-2">
-          Other subject:
+          {strings.ai.exerciseGeneration.subject.otherSubjectLabel}
         </label>
         <input
           type="text"
@@ -349,7 +375,9 @@ const Subject: React.FC<
             }
           }}
           className="ml-2 rounded-md border border-lightblue p-2 pl-2 focus:border-lightblue focus:outline-brand-700"
-          placeholder="Enter custom subject"
+          placeholder={
+            strings.ai.exerciseGeneration.subject.customSubjectPlaceholder
+          }
           ref={focusRef}
         />
       </div>
@@ -357,15 +385,23 @@ const Subject: React.FC<
   )
 }
 
-const Topic: React.FC<
-  WizardPageProps & {
-    jumpToPage: (page: number) => void
-    isSummary: boolean
-    defaultTopic: string | null
-    topic: string
-    setTopic: (topic: string) => void
-  }
-> = ({ onNext, jumpToPage, isSummary, topic, setTopic, defaultTopic }) => {
+interface TopicProps extends WizardPageProps {
+  jumpToPage: (page: number) => void
+  isSummary: boolean
+  defaultTopic: string | null
+  topic: string
+  setTopic: (topic: string) => void
+}
+const Topic: React.FC<TopicProps> = ({
+  onNext,
+  jumpToPage,
+  isSummary,
+  topic,
+  setTopic,
+  defaultTopic,
+}) => {
+  const { strings } = useInstanceData()
+
   const [selectedRadio, setSelectedRadio] = useState<string>(
     defaultTopic ? (defaultTopic === topic ? defaultTopic : 'custom') : 'custom'
   )
@@ -381,7 +417,7 @@ const Topic: React.FC<
     return (
       <div className="flex items-center justify-start text-brand-700">
         <span onClick={() => jumpToPage(2)} className="mr-4 font-semibold">
-          Topic
+          {strings.ai.exerciseGeneration.topic.defaultLabel}
         </span>
         <button onClick={() => jumpToPage(2)} className="underline">
           {topic}
@@ -393,7 +429,7 @@ const Topic: React.FC<
   return (
     <div className="flex flex-col">
       <p className="mb-4 text-xl">
-        About which <b>topic</b> would you like to generate exercises?
+        {strings.ai.exerciseGeneration.topic.title}
       </p>
       {defaultTopic ? (
         <div className="flex items-center">
@@ -430,7 +466,7 @@ const Topic: React.FC<
           className="text-brand-700 focus:ring-lightblue"
         />
         <label htmlFor="customTopic" className="ml-2 ">
-          Other topic
+          {strings.ai.exerciseGeneration.topic.otherTopicLabel}
         </label>
         <input
           type="text"
@@ -443,7 +479,9 @@ const Topic: React.FC<
             }
           }}
           className="ml-2 rounded-md border border-lightblue p-2 pl-2 focus:border-lightblue focus:outline-brand-700"
-          placeholder="Enter custom topic"
+          placeholder={
+            strings.ai.exerciseGeneration.topic.customTopicPlaceholder
+          }
           ref={focusRef}
         />
       </div>
@@ -451,29 +489,41 @@ const Topic: React.FC<
   )
 }
 
-interface GradeProps {
+interface GradeProps extends WizardPageProps {
   grade: string
   setGrade: (grade: string) => void
 }
 
-const Grade: React.FC<WizardPageProps & GradeProps> = ({
+const Grade: React.FC<GradeProps> = ({
   grade: selectedGrade,
   setGrade,
   isSummary,
 }) => {
-  const grades = ['5', '6', '7', '8', '9', '10', '11', '12', '13', 'University']
+  const { strings } = useInstanceData()
+  const grades = [
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12',
+    '13',
+    strings.ai.exerciseGeneration.grade.university,
+  ]
 
   return (
     <div className={`flex ${isSummary ? 'flex-row' : 'flex-col'} `}>
       {!isSummary && (
         <p className="mb-4 text-xl">
-          Which <b>grade</b> are the students in?
+          {strings.ai.exerciseGeneration.grade.title}
         </p>
       )}
 
       <div className={`${isSummary ? '' : 'mb-8'} flex items-center`}>
         <label htmlFor="grade" className="font-semibold text-brand-700">
-          Grade
+          {strings.ai.exerciseGeneration.grade.label}
         </label>
 
         <MenuButton
@@ -495,14 +545,14 @@ const Grade: React.FC<WizardPageProps & GradeProps> = ({
   )
 }
 
-interface ExerciseTypeProps {
+interface ExerciseTypeProps extends WizardPageProps {
   exerciseType: string | null
   setExerciseType: (type: string | null) => void
   numberOfSubtasks: number
   setNumberOfSubtasks: (num: number) => void
 }
 
-const ExerciseType: React.FC<WizardPageProps & ExerciseTypeProps> = ({
+const ExerciseType: React.FC<ExerciseTypeProps> = ({
   exerciseType,
   setExerciseType,
   numberOfSubtasks,
@@ -510,6 +560,7 @@ const ExerciseType: React.FC<WizardPageProps & ExerciseTypeProps> = ({
   onNext,
   isSummary,
 }) => {
+  const { strings } = useInstanceData()
   const [hasSubtasks, setHasSubtasks] = useState<boolean>(
     numberOfSubtasks !== 0
   )
@@ -525,7 +576,7 @@ const ExerciseType: React.FC<WizardPageProps & ExerciseTypeProps> = ({
     <div className="flex flex-col">
       {!isSummary && (
         <p className="mb-4 text-xl">
-          What <b>exercise type</b> are you interested in?
+          {strings.ai.exerciseGeneration.exerciseType.title}
         </p>
       )}
 
@@ -534,7 +585,7 @@ const ExerciseType: React.FC<WizardPageProps & ExerciseTypeProps> = ({
           htmlFor="exerciseTypeDropdown"
           className="mr-2 font-semibold text-brand-700"
         >
-          Exercise type
+          {strings.ai.exerciseGeneration.exerciseType.label}
         </label>
         <select
           id="exerciseTypeDropdown"
@@ -545,23 +596,22 @@ const ExerciseType: React.FC<WizardPageProps & ExerciseTypeProps> = ({
           <option value="">Choose an option</option>
           <option value="Multiple Choice">Multiple Choice</option>
           <option value="Single Choice">Single Choice</option>
-          <option value="Solution with 1 word">Solution with 1 word</option>
           <option value="Solution with 1 number">Solution with 1 number</option>
         </select>
       </div>
 
-      <p
-        className={`${isSummary ? 'mt-7' : 'mb-4 mt-8'} text-lg text-brand-700`}
-      >
+      <p className="mb-4 mt-7 text-lg text-brand-700">
         {isSummary ? (
-          <span className="font-semibold">Subtasks</span>
+          <span className="text-base font-semibold">
+            {strings.ai.exerciseGeneration.exerciseType.subtasksTitleSummary}
+          </span>
         ) : (
           <span>
-            Should there be <b>subtasks</b>?
+            {strings.ai.exerciseGeneration.exerciseType.subtasksTitle}
           </span>
         )}
       </p>
-      <div className="mt-2 flex items-center">
+      <div className="flex items-center">
         <input
           type="radio"
           id="noSubtasks"
@@ -580,7 +630,7 @@ const ExerciseType: React.FC<WizardPageProps & ExerciseTypeProps> = ({
             !hasSubtasks ? 'font-semibold text-brand-700' : ''
           }`}
         >
-          No
+          {strings.ai.exerciseGeneration.exerciseType.noSubtasks}
         </label>
       </div>
 
@@ -600,7 +650,7 @@ const ExerciseType: React.FC<WizardPageProps & ExerciseTypeProps> = ({
             hasSubtasks ? 'font-semibold text-brand-700' : ''
           }`}
         >
-          Yes
+          {strings.ai.exerciseGeneration.exerciseType.yesSubtasks}
         </label>
         <input
           type="number"
@@ -613,7 +663,10 @@ const ExerciseType: React.FC<WizardPageProps & ExerciseTypeProps> = ({
             }
           }}
           className="ml-2 rounded-md border border-lightblue p-2 pl-2 focus:border-lightblue focus:outline-brand-700"
-          placeholder="Number of subtasks"
+          placeholder={
+            strings.ai.exerciseGeneration.exerciseType
+              .numberOfSubtasksPlaceholder
+          }
           ref={focusRef}
         />
       </div>
@@ -621,14 +674,14 @@ const ExerciseType: React.FC<WizardPageProps & ExerciseTypeProps> = ({
   )
 }
 
-interface DifficultyProps {
+interface DifficultyProps extends WizardPageProps {
   difficulty: string | null
   setDifficulty: (level: string | null) => void
   learningGoal: string
   setLearningGoal: (goal: string) => void
 }
 
-const Difficulty: React.FC<WizardPageProps & DifficultyProps> = ({
+const Difficulty: React.FC<DifficultyProps> = ({
   difficulty,
   setDifficulty,
   learningGoal,
@@ -636,11 +689,13 @@ const Difficulty: React.FC<WizardPageProps & DifficultyProps> = ({
   onNext,
   isSummary,
 }) => {
+  const { strings } = useInstanceData()
+
   return (
     <div className="flex flex-col">
       {!isSummary && (
         <p className="mb-4 text-xl">
-          What is the <b>difficulty level</b> of the exercise and learning goal?
+          {strings.ai.exerciseGeneration.difficulty.title}
         </p>
       )}
 
@@ -649,7 +704,7 @@ const Difficulty: React.FC<WizardPageProps & DifficultyProps> = ({
           htmlFor="difficultyDropdown"
           className="mr-2 font-semibold text-brand-700"
         >
-          Difficulty
+          {strings.ai.exerciseGeneration.difficulty.label}
         </label>
         <select
           id="difficultyDropdown"
@@ -657,65 +712,87 @@ const Difficulty: React.FC<WizardPageProps & DifficultyProps> = ({
           onChange={(e) => setDifficulty(e.target.value)}
           className="rounded-md border border-lightblue p-2 focus:border-lightblue focus:outline-brand-700"
         >
-          <option value="">Choose an option</option>
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
+          <option value="">
+            {strings.ai.exerciseGeneration.difficulty.chooseOption}
+          </option>
+          <option value="easy">
+            {strings.ai.exerciseGeneration.difficulty.easy}
+          </option>
+          <option value="medium">
+            {strings.ai.exerciseGeneration.difficulty.medium}
+          </option>
+          <option value="hard">
+            {strings.ai.exerciseGeneration.difficulty.hard}
+          </option>
         </select>
       </div>
 
       <label htmlFor="learningGoal" className="font-semibold text-brand-700">
-        Learning goal
+        {strings.ai.exerciseGeneration.difficulty.learningGoalLabel}
       </label>
+      {!isSummary && (
+        <p className="my-2 text-sm font-thin text-lightgray">
+          {strings.ai.exerciseGeneration.difficulty.learningGoalExample}
+        </p>
+      )}
       <textarea
         id="learningGoal"
         value={learningGoal}
         onChange={(e) => setLearningGoal(e.target.value)}
         onKeyDown={(e) => {
-          if (e.key === 'Enter') {
+          if (e.key === 'Enter' && !e.shiftKey) {
             onNext()
           }
         }}
-        className="resize-none rounded-md border border-lightblue p-2 pl-2 focus:border-lightblue focus:outline-brand-700"
-        placeholder="E.g., Understand the basics of division"
+        className="w-11/12 resize-none rounded-md border border-lightblue p-2 pl-2 focus:border-lightblue focus:outline-brand-700"
+        placeholder={
+          strings.ai.exerciseGeneration.difficulty.learningGoalPlaceholder
+        }
       />
     </div>
   )
 }
 
-interface PriorKnowledgeProps {
+interface PriorKnowledgeProps extends WizardPageProps {
   priorKnowledge: string
   setPriorKnowledge: (knowledge: string) => void
 }
 
-const PriorKnowledge: React.FC<WizardPageProps & PriorKnowledgeProps> = ({
+const PriorKnowledge: React.FC<PriorKnowledgeProps> = ({
   priorKnowledge,
   setPriorKnowledge,
   onNext,
   isSummary,
 }) => {
+  const { strings } = useInstanceData()
+
   return (
     <div className="flex flex-col">
       {!isSummary && (
         <p className="mb-4 text-xl">
-          What is the <b>prior knowledge</b> that the students should have?
+          {strings.ai.exerciseGeneration.priorKnowledge.title}
         </p>
       )}
 
       <label htmlFor="priorKnowledge" className="font-semibold text-brand-700">
-        Prior Knowledge
+        {strings.ai.exerciseGeneration.priorKnowledge.label}
       </label>
+      {!isSummary && (
+        <p className="my-2 text-sm font-thin text-lightgray">
+          {strings.ai.exerciseGeneration.priorKnowledge.example}
+        </p>
+      )}
       <textarea
         id="priorKnowledge"
         value={priorKnowledge}
         onChange={(e) => setPriorKnowledge(e.target.value)}
         onKeyDown={(e) => {
-          if (e.key === 'Enter') {
+          if (e.key === 'Enter' && !e.shiftKey) {
             onNext()
           }
         }}
-        className="resize-none rounded-md border border-lightblue p-2 pl-2 focus:border-lightblue focus:outline-brand-700"
-        placeholder="E.g., Basic arithmetic, fundamentals of algebra"
+        className="w-11/12 resize-none rounded-md border border-lightblue p-2 pl-2 focus:border-lightblue focus:outline-brand-700"
+        placeholder={strings.ai.exerciseGeneration.priorKnowledge.placeholder}
       />
     </div>
   )
