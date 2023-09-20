@@ -68,10 +68,7 @@ export const ExerciseGenerationWizard: React.FC<
     }
   }, [topic, subject, setTitle, canUpdateTitle, currentPage])
 
-  const [selectedGradeOrAge, setSelectedGradeOrAge] = useState<'grade' | 'age'>(
-    'grade'
-  )
-  const [gradeOrAgeValue, setGradeOrAgeValue] = useState<string>('5')
+  const [grade, setGrade] = useState<string>('5')
 
   const [exerciseType, setExerciseType] = useState<string | null>(null)
   const [numberOfSubtasks, setNumberOfSubtasks] = useState<number>(0)
@@ -120,11 +117,9 @@ export const ExerciseGenerationWizard: React.FC<
         />
       )}
       {(isSummary || currentPage === 3) && (
-        <GradeOrAverageAge
-          selected={selectedGradeOrAge}
-          setSelected={setSelectedGradeOrAge}
-          value={gradeOrAgeValue}
-          setValue={setGradeOrAgeValue}
+        <Grade
+          grade={grade}
+          setGrade={setGrade}
           onNext={handleNext}
           isSummary={isSummary}
         />
@@ -456,97 +451,46 @@ const Topic: React.FC<
   )
 }
 
-interface GradeOrAverageAgeProps {
-  selected: 'grade' | 'age'
-  setSelected: (value: 'grade' | 'age') => void
-  value: string
-  setValue: (value: string) => void
+interface GradeProps {
+  grade: string
+  setGrade: (grade: string) => void
 }
 
-const GradeOrAverageAge: React.FC<WizardPageProps & GradeOrAverageAgeProps> = ({
-  selected,
-  setSelected,
-  value,
-  setValue,
+const Grade: React.FC<WizardPageProps & GradeProps> = ({
+  grade: selectedGrade,
+  setGrade,
   isSummary,
-  // onNext,
 }) => {
-  const focusRef = useRef<HTMLInputElement>(null)
-  useEffect(() => {
-    if (selected === 'age' && focusRef.current) {
-      focusRef.current.focus()
-    }
-  }, [selected])
-
   const grades = ['5', '6', '7', '8', '9', '10', '11', '12', '13', 'University']
 
   return (
     <div className={`flex ${isSummary ? 'flex-row' : 'flex-col'} `}>
       {!isSummary && (
         <p className="mb-4 text-xl">
-          Which <b>grade</b> {/*or <b>average age</b>*/} do the students have?
+          Which <b>grade</b> are the students in?
         </p>
       )}
 
       <div className={`${isSummary ? '' : 'mb-8'} flex items-center`}>
-        <input
-          type="radio"
-          id="grade"
-          name="gradeOrAge"
-          value="grade"
-          checked={selected === 'grade'}
-          onChange={() => setSelected('grade')}
-          className="text-brand-700 focus:ring-lightblue"
-        />
-        <label htmlFor="grade" className="ml-2 font-semibold text-brand-700">
+        <label htmlFor="grade" className="font-semibold text-brand-700">
           Grade
         </label>
 
         <MenuButton
-          disabled={selected !== 'grade'}
-          value={value}
-          onChange={(event) => setValue(event.target.value)}
+          value={selectedGrade}
+          onChange={(event) => setGrade(event.target.value)}
         >
           {grades.map((grade) => (
-            <MenuItem key={grade} value={grade} isSelected={value === grade}>
+            <MenuItem
+              key={grade}
+              value={grade}
+              isSelected={selectedGrade === grade}
+            >
               {grade}
             </MenuItem>
           ))}
         </MenuButton>
       </div>
-
-      {/* We decided that we only want to ask their grade and not average age for now. */}
-      {/* <div className="mt-4 flex items-center">
-        <input
-          type="radio"
-          id="age"
-          name="gradeOrAge"
-          value="age"
-          checked={selected === 'age'}
-          onChange={() => {
-            setValue('')
-            setSelected('age')
-          }}
-          className="text-brand-700 focus:ring-lightblue"
-        />
-        <label htmlFor="age" className="ml-2 ">
-          Average age
-        </label>
-        <input
-          type="number"
-          disabled={selected !== 'age'}
-          value={selected === 'age' ? value : ''}
-          onChange={(e) => setValue(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              onNext()
-            }
-          }}
-          className="ml-2 rounded-md border border-lightblue p-2 pl-2 focus:border-lightblue focus:outline-brand-700"
-          placeholder="Enter average age"
-          ref={focusRef}
-        />
-      </div> */}
     </div>
   )
 }
