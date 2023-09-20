@@ -1,27 +1,33 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import type { InputExerciseProps } from '.'
 import { InputExerciseRenderer } from './renderer'
 import { InputExerciseToolbar } from './toolbar'
-import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'
 import {
+  AddButton,
+  InteractiveAnswer,
+  PreviewOverlaySimple,
+} from '../../editor-ui'
+import {
+  focus,
   selectFocused,
   selectIsDocumentEmpty,
   store,
+  useAppDispatch,
   useAppSelector,
 } from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function InputExerciseEditor(props: InputExerciseProps) {
-  const { editable, state, focused } = props
+  const { editable, state, id } = props
   const inputExStrings = useEditorStrings().templatePlugins.inputExercise
 
   const focusedElement = useAppSelector(selectFocused)
-  const nestedFocus =
-    focused ||
-    !!props.state.answers.find(({ feedback }) => feedback.id === focusedElement)
+
+  const dispatch = useAppDispatch()
 
   const [previewActive, setPreviewActive] = useState(false)
+  const newestAnswerRef = useRef<HTMLInputElement>(null)
 
   const renderer = (
     <InputExerciseRenderer
@@ -45,19 +51,25 @@ export function InputExerciseEditor(props: InputExerciseProps) {
 
   return (
     <div className="mb-12 mt-24 pt-4">
-      {nestedFocus ? <InputExerciseToolbar {...props} /> : null}
-      <PreviewOverlay focused={nestedFocus} onChange={setPreviewActive}>
+      <InputExerciseToolbar
+        {...props}
+        previewActive={previewActive}
+        setPreviewActive={setPreviewActive}
+      />
+      <PreviewOverlaySimple active={previewActive}>
         {renderer}
-      </PreviewOverlay>
-      {nestedFocus && !previewActive && (
+      </PreviewOverlaySimple>
+      {!previewActive && (
         <>
           {state.answers.map((answer, index: number) => {
+            const isLast = index === state.answers.length - 1
             return (
               <InteractiveAnswer
                 key={answer.feedback.id}
                 answer={
                   <input
-                    className="width-full border-none outline-none"
+                    ref={isLast ? newestAnswerRef : undefined}
+                    className="width-full ml-side border-none outline-none"
                     value={answer.value.value}
                     placeholder={inputExStrings.enterTheValue}
                     type="text"
@@ -77,7 +89,15 @@ export function InputExerciseEditor(props: InputExerciseProps) {
               />
             )
           })}
-          <AddButton onClick={() => state.answers.insert()}>
+          <AddButton
+            onClick={() => {
+              state.answers.insert()
+              setTimeout(() => {
+                dispatch(focus(id))
+                newestAnswerRef.current?.focus()
+              }, 10)
+            }}
+          >
             {inputExStrings.addAnswer}
           </AddButton>
         </>

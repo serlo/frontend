@@ -3,26 +3,18 @@ import { useState } from 'react'
 import type { ScMcExerciseProps } from '.'
 import { ScMcExerciseRenderer } from './renderer'
 import { ScMcExerciseToolbar } from './toolbar'
-import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'
 import {
-  store,
-  selectFocused,
-  selectIsDocumentEmpty,
-  useAppSelector,
-} from '../../store'
+  AddButton,
+  InteractiveAnswer,
+  PreviewOverlaySimple,
+} from '../../editor-ui'
+import { store, selectIsDocumentEmpty } from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditableContext } from '@/serlo-editor/core/contexts'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
-  const focusedElement = useAppSelector(selectFocused)
-
-  const { editable, focused, state } = props
+  const { editable, state } = props
   const editorStrings = useEditorStrings()
-
-  const children = props.state.answers.flatMap((answer) => [
-    answer.content.id,
-    answer.feedback.id,
-  ])
 
   const handleCheckboxChange = (index: number) => () => {
     state.answers[index].isCorrect.set((currentVal) => !currentVal)
@@ -37,8 +29,6 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   const handleAddButtonClick = () => props.state.answers.insert()
   const removeAnswer = (index: number) => () => state.answers.remove(index)
 
-  const nestedFocus =
-    focused || (focusedElement && children.includes(focusedElement))
   const [previewActive, setPreviewActive] = useState(false)
 
   const renderer = (
@@ -66,15 +56,15 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
 
   return (
     <div className="mb-12 mt-24 pt-4">
-      {nestedFocus ? <ScMcExerciseToolbar {...props} /> : null}
-      <PreviewOverlay
-        focused={nestedFocus || false}
-        onChange={setPreviewActive}
-        editable={previewActive}
-      >
+      <ScMcExerciseToolbar
+        {...props}
+        previewActive={previewActive}
+        setPreviewActive={setPreviewActive}
+      />
+      <PreviewOverlaySimple active={previewActive}>
         {renderer}
-      </PreviewOverlay>
-      {editable && nestedFocus && !previewActive && (
+      </PreviewOverlaySimple>
+      {editable && !previewActive && (
         <>
           {state.answers.map((answer, index) => {
             return (
@@ -84,7 +74,6 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
                 answerID={answer.content.id}
                 feedback={answer.feedback.render()}
                 feedbackID={answer.feedback.id}
-                focusedElement={focusedElement || undefined}
                 isRadio={state.isSingleChoice.value}
                 isActive={answer.isCorrect.value}
                 remove={removeAnswer(index)}
