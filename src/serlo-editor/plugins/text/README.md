@@ -10,6 +10,7 @@
     - [Text formatting options](#text-formatting-options)
     - [Suggestions (`serlo-editor` plugins)](#suggestions-serlo-editor-plugins)
     - [Saving state to `Redux` store](#saving-state-to-redux-store)
+  -[Challenges](#challenges)
 
 ## Structure
 
