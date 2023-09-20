@@ -39,10 +39,9 @@ export function createExercise(
       if (taskState.content) {
         taskState.content = convert(taskState.content)
         if (taskState.interactive?.plugin === EditorPluginType.ScMcExercise) {
-          taskState.interactive.state.answers.forEach((answer, i: number) => {
+          taskState.interactive.state.answers.forEach((answer) => {
             answer.feedback = convert(answer.feedback)
             answer.content = convert(answer.content)
-            answer.originalIndex = i
           })
           taskState.interactive.state.answers = shuffleArray(
             taskState.interactive.state.answers

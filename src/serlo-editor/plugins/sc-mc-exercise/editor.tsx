@@ -40,16 +40,13 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
         <ScMcExerciseRenderer
           isSingleChoice={isSingleChoice.value}
           idBase={`sc-mc-${id}`}
-          answers={answers
-            .slice(0)
-            .map(({ isCorrect, feedback, content }, index) => {
-              return {
-                isCorrect: isCorrect.value,
-                originalIndex: index, // let's see
-                feedback: isEmpty(feedback.id) ? null : feedback.render(),
-                content: isEmpty(content.id) ? null : content.render(),
-              }
-            })}
+          answers={answers.slice(0).map(({ isCorrect, feedback, content }) => {
+            return {
+              isCorrect: isCorrect.value,
+              feedback: isEmpty(feedback.id) ? null : feedback.render(),
+              content: isEmpty(content.id) ? null : content.render(),
+            }
+          })}
         />
       </div>
     </EditableContext.Provider>

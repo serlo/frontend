@@ -13,7 +13,6 @@ export interface ScMcExerciseRendererAnswer {
   isCorrect: boolean
   feedback: JSX.Element | null
   content: JSX.Element | null
-  originalIndex: number
 }
 
 export interface ScMcExerciseRendererProps {
