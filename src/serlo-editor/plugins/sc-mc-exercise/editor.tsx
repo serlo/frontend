@@ -13,21 +13,23 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditableContext } from '@/serlo-editor/core/contexts'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
-  const { editable, state } = props
+  const { editable, state, id } = props
+  const { answers, isSingleChoice } = state
+
   const editorStrings = useEditorStrings()
 
   const handleCheckboxChange = (index: number) => () => {
-    state.answers[index].isCorrect.set((currentVal) => !currentVal)
+    answers[index].isCorrect.set((currentVal) => !currentVal)
   }
 
   const handleRadioButtonChange = (rightanswerIndex: number) => () => {
-    state.answers.forEach((answer, index) => {
+    answers.forEach((answer, index) => {
       answer.isCorrect.set(index === rightanswerIndex)
     })
   }
 
-  const handleAddButtonClick = () => props.state.answers.insert()
-  const removeAnswer = (index: number) => () => state.answers.remove(index)
+  const handleAddButtonClick = () => answers.insert()
+  const removeAnswer = (index: number) => () => answers.remove(index)
 
   const [previewActive, setPreviewActive] = useState(false)
 
@@ -36,9 +38,9 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
       {/* //margin-hack */}
       <div className="[&_.ml-4.flex]:mb-block">
         <ScMcExerciseRenderer
-          isSingleChoice={state.isSingleChoice.value}
-          idBase="sc-mc"
-          answers={state.answers
+          isSingleChoice={isSingleChoice.value}
+          idBase={`sc-mc-${id}`}
+          answers={answers
             .slice(0)
             .map(({ isCorrect, feedback, content }, index) => {
               return {
@@ -66,7 +68,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
       </PreviewOverlaySimple>
       {editable && !previewActive && (
         <>
-          {state.answers.map((answer, index) => {
+          {answers.map((answer, index) => {
             return (
               <InteractiveAnswer
                 key={answer.content.id}
@@ -74,11 +76,11 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
                 answerID={answer.content.id}
                 feedback={answer.feedback.render()}
                 feedbackID={answer.feedback.id}
-                isRadio={state.isSingleChoice.value}
+                isRadio={isSingleChoice.value}
                 isActive={answer.isCorrect.value}
                 remove={removeAnswer(index)}
                 handleChange={
-                  state.isSingleChoice.value
+                  isSingleChoice.value
                     ? handleRadioButtonChange(index)
                     : handleCheckboxChange(index)
                 }

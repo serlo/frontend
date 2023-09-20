@@ -75,7 +75,7 @@ export function ScMcExerciseRenderer({
                   <label
                     className={clsx(
                       /* we override some styles in the answer content to show it inline */
-                      'flex cursor-pointer items-center [&_.slate-container]:mb-0 [&_.slate-p]:ml-2',
+                      'flex cursor-pointer items-center [&_.slate-container]:mb-0 [&_.slate-p]:ml-2'
                     )}
                     htmlFor={id}
                   >
@@ -101,7 +101,7 @@ export function ScMcExerciseRenderer({
           className={clsx(
             'serlo-button-blue mt-4',
             selected === undefined &&
-            'pointer-events-none bg-transparent text-gray-400 opacity-100'
+              'pointer-events-none bg-transparent text-gray-400 opacity-100'
           )}
           onClick={() => {
             setShowFeedback(true)
@@ -111,8 +111,8 @@ export function ScMcExerciseRenderer({
           {selected !== undefined
             ? exStrings.check
             : isPrintMode
-              ? exStrings.printModeChooseOption
-              : exStrings.chooseOption}
+            ? exStrings.printModeChooseOption
+            : exStrings.chooseOption}
         </button>
       </div>
     )
@@ -154,7 +154,7 @@ export function ScMcExerciseRenderer({
                   <label
                     className={clsx(
                       /* we override some styles in the answer content to show it inline */
-                      'flex cursor-pointer items-center [&_.slate-container]:mb-0 [&_.slate-p]:ml-2',
+                      'flex cursor-pointer items-center [&_.slate-container]:mb-0 [&_.slate-p]:ml-2'
                     )}
                     htmlFor={id}
                   >
