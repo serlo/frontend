@@ -15,7 +15,6 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 
 export interface MathEditorProps {
-  autofocus?: boolean
   state: string
   inline?: boolean
   readOnly?: boolean

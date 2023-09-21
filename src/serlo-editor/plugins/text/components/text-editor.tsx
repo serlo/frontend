@@ -58,8 +58,13 @@ export function TextEditor(props: TextEditorProps) {
       editorKey: v4(),
     }
   }, [createTextEditor])
-
-  const suggestions = useSuggestions({ editor, id, editable, focused })
+  const suggestions = useSuggestions({
+    editor,
+    id,
+    editable,
+    focused,
+    isInlineChildEditor: config.isInlineChildEditor,
+  })
   const { showSuggestions, suggestionsProps } = suggestions
 
   const { handleRenderElement, handleRenderLeaf } = useSlateRenderHandlers({

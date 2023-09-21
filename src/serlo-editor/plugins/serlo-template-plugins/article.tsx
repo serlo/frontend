@@ -87,6 +87,7 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
             <SettingsTextarea
               label={articleStrings.seoTitle}
               state={meta_title}
+              autoFocus
             />
             <SettingsTextarea
               label={articleStrings.seoDesc}

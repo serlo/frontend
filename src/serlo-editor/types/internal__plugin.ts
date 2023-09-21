@@ -121,11 +121,6 @@ export interface EditorPluginProps<
    */
   focused: boolean
 
-  /**
-   * Ref to use for an input element. The element will receive focus, when the plugin is focused.
-   */
-  autofocusRef: React.RefObject<HTMLInputElement & HTMLTextAreaElement>
-
   // Ref for the wrapping SubDocument div
   containerRef?: React.RefObject<HTMLDivElement>
 }

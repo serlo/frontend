@@ -37,7 +37,7 @@ export const H5pPlugin: EditorPlugin<H5pPluginState> = {
 }
 
 // Note: This plugin will not be translated for now, as i18n work is deprioritized
-function H5pEditor({ state, autofocusRef }: H5pProps) {
+function H5pEditor({ state }: H5pProps) {
   const hasState = !!state.value
 
   const [mode, setMode] = useState<'edit' | 'loading' | 'preview'>(
@@ -151,7 +151,6 @@ function H5pEditor({ state, autofocusRef }: H5pProps) {
             }}
             inputWidth="70%"
             width="100%"
-            ref={autofocusRef}
           />
           <button
             className="serlo-button ml-3 mt-2 bg-brandgreen-300 disabled:cursor-default disabled:bg-gray-300"

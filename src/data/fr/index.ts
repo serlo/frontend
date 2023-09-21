@@ -621,10 +621,6 @@ export const loggedInData = {
           notSupported: 'Sorry, this plugin is not supported:',
           explanation: 'It will not be displayed to users. You can either remove it or asks developers for support.'
         },
-        error: {
-          title: 'Error',
-          convertionError: "Cette partie du document n'a pas pu être convertie."
-        },
         equations: {
           title: 'Terms and equations',
           description: 'Write term manipulations and solve multiline equations.',
@@ -938,10 +934,6 @@ export const loggedInData = {
         settings: "Paramètres",
         extendedSettings: "Paramètres avancés",
         close: "Fermer",
-        notSupportedYet: "Ce type de contenu n'est pas encore pris en charge par le nouvel éditeur.",
-        editInOld: 'You can edit the content in the old editor',
-        conversionError: "Une erreur s'est produite lors de la conversion.",
-        notConverted: "Cette entité n'a pas encore été convertie pour le nouvel éditeur.",
         save: "Sauvegarder",
         saveWithReview: 'Save and get review',
         cancel: "Annuler",

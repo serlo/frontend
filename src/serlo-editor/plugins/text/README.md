@@ -9,7 +9,7 @@
     - [Configuration](#configuration)
     - [Text formatting options](#text-formatting-options)
     - [Suggestions (`serlo-editor` plugins)](#suggestions-serlo-editor-plugins)
-    - [Saving state to `Redux` store](#saving-state-to-redux-store)
+    - [Saving state to `Redux` store](#saving-state-to-redux-store) -[Challenges](#challenges)
 
 ## Structure
 
@@ -68,3 +68,9 @@ In order to enable global undo/redo behavior, any content changes are saved to t
 If a portion of the content is selected and then replaced with some text, undo will restore the replaced content and the selection. Slate `Editor`'s `value` prop is used only as an initial value and changing the bound value will not result in a rerender. Therefore, we have to manually assign the value to `editor.children` ([as recommended by the Slate team](https://github.com/ianstormtaylor/slate/releases/tag/slate-react%400.67.0)).
 
 Simple selection changes are not saved to the store, because we don't want to undo pure selection changes.
+
+## Challenges
+
+The interaction between focus, cursor, selection and state updates is strongly interlocked. There are a bunch of use cases that should be supported combined with many technical challenges as presented below.
+
+![grafik](https://github.com/serlo/frontend/assets/13507950/8474c514-2983-450f-aa8b-d693cbaa1d87)
