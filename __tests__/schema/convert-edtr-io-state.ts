@@ -26,7 +26,7 @@ describe('returns an empty array when unsupported values are given', () => {
   })
 })
 
-describe('edtr io plugins', () => {
+describe('serlo-editor plugins', () => {
   // plugin: files currently not supported in editor or frontend
   // plugin: inputExercise not handled in converter
   // plugin: scMcExercise not handled in converter

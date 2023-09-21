@@ -15,7 +15,6 @@ export const withEmptyLinesRestriction = (editor: Editor) => {
 
     if (shouldNodeBeRemoved(editor, node, path, isBlur)) {
       Transforms.removeNodes(editor, { at: path })
-      // TODO: Show warning?
       if (isBlur) ReactEditor.blur(editor)
       return
     }
