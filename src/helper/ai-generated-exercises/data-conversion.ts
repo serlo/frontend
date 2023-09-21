@@ -1,15 +1,25 @@
 import { either as E } from 'fp-ts'
 import { v4 as uuidv4 } from 'uuid'
+import * as t from 'io-ts'
 
-import { InputDecoder } from './decoders'
+import {
+  InputDecoder,
+  InputScMcDecoder,
+  InputShortAnswerDecoder,
+} from './decoders'
 import {
   InputExerciseState,
   ScMcExerciseState,
   Question,
   TypeTextExercise,
+  TypeTextExerciseGroup,
+  TypeTextExerciseState,
 } from './types'
 import { CustomText, MathElement, Paragraph } from '@/serlo-editor/plugins/text'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+
+type InputScMc = t.TypeOf<typeof InputScMcDecoder>
+type InputShortAnswer = t.TypeOf<typeof InputShortAnswerDecoder>
 
 export function convertAiGeneratedDataToEditorData(input: string) {
   try {
@@ -25,51 +35,62 @@ export function convertAiGeneratedDataToEditorData(input: string) {
 
     let exerciseState: InputExerciseState | ScMcExerciseState
 
-    // Define and return the output object for ScMcExercise
-    if (
-      inputContent.type === 'multiple_choice' ||
-      inputContent.type === 'single_choice'
-    ) {
-      exerciseState = {
-        content: createQuestion(inputContent.question),
-        interactive: {
-          plugin: EditorPluginType.ScMcExercise,
-          state: {
-            isSingleChoice: inputContent.type === 'single_choice',
-            answers: inputContent.options.map((option, index) => ({
-              content: {
-                plugin: EditorPluginType.Text,
-                state: convertStringToTextPluginParagraph(option),
-                id: uuidv4(),
-              },
-              isCorrect: inputContent.correct_options.includes(index),
-            })),
-          },
-        },
-      }
+    // Define and return the output object for TypeTextExerciseGroup
+    if (inputContent.subtasks.length > 1) {
+      const groupedTextExercise = inputContent.subtasks.map((subtask) => {
+        // Define and return the output object for InputExercise
+        if (isShortAnswerExercise(subtask)) {
+          exerciseState = createInputExerciseState(subtask)
+          return withTypeTextExerciseStateWrapper(exerciseState)
+        }
+        // Define and return the output object for ScMcExercise
+        exerciseState = createScMcExerciseState(subtask)
+        return withTypeTextExerciseStateWrapper(exerciseState)
+      })
 
-      return withTypeTextExerciseWrapper(exerciseState)
+      return withTypeTextExerciseGroupWrapper(
+        groupedTextExercise,
+        inputContent.heading
+      )
     }
 
-    // Define and return the output object for InputExercise
-    if (inputContent.type === 'short_answer') {
-      exerciseState = {
-        content: createQuestion(inputContent.question),
-        interactive: {
-          plugin: EditorPluginType.InputExercise,
-          state: {
-            type: 'input-string-normalized-match-challenge',
-            unit: '',
-            answers: [],
-          },
-          id: uuidv4(),
-        },
+    // Define and return the output object for TypeTextExercise
+    if (inputContent.subtasks.length == 1) {
+      const inputTask = inputContent.subtasks[0]
+      // Define and return the output object for ScMcExercise
+      if (
+        inputTask.type === 'multiple_choice' ||
+        inputTask.type === 'single_choice'
+      ) {
+        exerciseState = createScMcExerciseState(inputTask)
+        return {
+          plugin: 'type-text-exercise',
+          state: withTypeTextExerciseStateWrapper(exerciseState),
+        }
       }
 
-      return withTypeTextExerciseWrapper(exerciseState)
-    }
+      // Define and return the output object for InputExercise
+      if (inputTask.type === 'short_answer') {
+        exerciseState = {
+          content: createQuestion(inputTask.question),
+          interactive: {
+            plugin: EditorPluginType.InputExercise,
+            state: {
+              type: 'input-string-normalized-match-challenge',
+              unit: '',
+              answers: [],
+            },
+            id: uuidv4(),
+          },
+        }
 
-    return null
+        return {
+          plugin: 'type-text-exercise',
+          state: withTypeTextExerciseStateWrapper(exerciseState),
+        }
+      }
+      return null
+    }
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(
@@ -80,20 +101,35 @@ export function convertAiGeneratedDataToEditorData(input: string) {
   }
 }
 
-function withTypeTextExerciseWrapper(
+function withTypeTextExerciseStateWrapper(
   state: InputExerciseState | ScMcExerciseState
-): TypeTextExercise {
+): TypeTextExerciseState {
   return {
-    plugin: 'type-text-exercise',
+    changes: '',
+    content: {
+      plugin: 'exercise',
+      state,
+    },
+    id: 0,
+    revision: 0,
+    'text-solution': null,
+  }
+}
+
+function withTypeTextExerciseGroupWrapper(
+  states: Array<TypeTextExerciseState>,
+  content: string
+): TypeTextExerciseGroup {
+  return {
+    plugin: 'type-text-exercise-group',
     state: {
       changes: '',
       content: {
-        plugin: 'exercise',
-        state,
+        state: createQuestion(content),
       },
       id: 0,
       revision: 0,
-      'text-solution': null,
+      'grouped-text-exercise': states,
     },
   }
 }
@@ -110,6 +146,55 @@ function createQuestion(value: string): Question {
     ],
     id: uuidv4(),
   }
+}
+
+function createScMcExerciseState(subtask: InputScMc): ScMcExerciseState {
+  return {
+    content: createQuestion(subtask.question),
+    interactive: {
+      plugin: EditorPluginType.ScMcExercise,
+      state: {
+        isSingleChoice: subtask.type === 'single_choice',
+        answers: subtask.options.map((option: any, index: any) => ({
+          content: {
+            plugin: EditorPluginType.Text,
+            state: convertStringToTextPluginParagraph(option),
+            id: uuidv4(),
+          },
+          isCorrect: subtask.correct_options.includes(index),
+        })),
+      },
+    },
+  }
+}
+
+function createInputExerciseState(
+  subtask: InputShortAnswer
+): InputExerciseState {
+  return {
+    content: createQuestion(subtask.question),
+    interactive: {
+      plugin: EditorPluginType.InputExercise,
+      state: {
+        type: 'input-string-normalized-match-challenge',
+        unit: '',
+        answers: [
+          {
+            value: subtask.correct_answer,
+            isCorrect: true,
+          },
+        ],
+      },
+      id: uuidv4(),
+    },
+  }
+}
+
+// Type guard to differentiate between short_answer and single_choice/multiple_choice
+function isShortAnswerExercise(
+  input: InputScMc | InputShortAnswer
+): input is InputShortAnswer {
+  return input.type === 'short_answer'
 }
 
 function convertStringToTextPluginParagraph(content: string): [Paragraph] {

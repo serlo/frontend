@@ -13,6 +13,10 @@ export const InputScMcDecoder = t.strict({
 export const InputShortAnswerDecoder = t.strict({
   type: t.literal('short_answer'),
   question: t.string,
+  correct_answer: t.string,
 })
 
-export const InputDecoder = t.union([InputScMcDecoder, InputShortAnswerDecoder])
+export const InputDecoder = t.strict({
+  heading: t.string,
+  subtasks: t.array(t.union([InputScMcDecoder, InputShortAnswerDecoder])),
+})

@@ -68,3 +68,18 @@ export interface TypeTextExercise {
     'text-solution': null
   }
 }
+
+export type TypeTextExerciseState = TypeTextExercise['state']
+
+export interface TypeTextExerciseGroup {
+  plugin: 'type-text-exercise-group'
+  state: {
+    changes: ''
+    content: {
+      state: Question
+    }
+    id: 0
+    revision: 0
+    'grouped-text-exercise': Array<TypeTextExerciseState>
+  }
+}
