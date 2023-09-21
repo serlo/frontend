@@ -79,8 +79,8 @@ export function ProfileExperimental() {
       {features.edtrPasteHack && (
         <div>
           <h3 className="serlo-h3 mb-3">
-            {renderFeatureButton('edtrPasteHack')} Edtr: Einfügen von Edtr-State
-            JSON 🛠
+            {renderFeatureButton('edtrPasteHack')} Einfügen von Serlo
+            Editor-State JSON 🛠
           </h3>
           <p className="serlo-p">
             Experimentelles Feature: nur aktivieren wenn du weißt was du tust.

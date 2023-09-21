@@ -66,18 +66,16 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
   }
 
   function renderExerciseTask() {
-    if (node.task.legacy) {
-      return renderNested(node.task.legacy, 'task')
-    } else if (node.task.edtrState) {
-      return renderNested(node.task.edtrState.content, 'task')
+    if (node.task.content) {
+      return renderNested(node.task.content.content, 'task')
     }
     return null
   }
 
   function renderInteractive() {
-    if (!node.task.edtrState) return null
+    if (!node.task.content) return null
 
-    const state = node.task.edtrState
+    const state = node.task.content
 
     if (state.interactive) {
       if (state.interactive.plugin === EditorPluginType.ScMcExercise) {

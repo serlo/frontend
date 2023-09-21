@@ -1,6 +1,7 @@
 import { request } from 'graphql-request'
 
 import { licenseDetailsQuery } from './query'
+import { convertStateStringToFrontendNode } from '../convert-state-string-to-frontend-node'
 import {
   LicenseDetailsQuery,
   LicenseDetailsQueryVariables,
@@ -8,7 +9,6 @@ import {
 import { endpoint } from '@/api/endpoint'
 import { LicenseDetailPage, PageNotFound } from '@/data-types'
 import { FrontendContentNode } from '@/frontend-node-types'
-import { ConvertNode, convert } from '@/schema/convert-edtr-io-state'
 
 export async function requestLicensePage(
   id: number
@@ -24,7 +24,7 @@ export async function requestLicensePage(
 
   // hack to remove undefined pluginId value, can be removed when we move to app directory
   const content = JSON.parse(
-    JSON.stringify(convert(JSON.parse(license.content) as ConvertNode))
+    JSON.stringify(convertStateStringToFrontendNode(license.content))
   ) as FrontendContentNode[]
 
   return {
