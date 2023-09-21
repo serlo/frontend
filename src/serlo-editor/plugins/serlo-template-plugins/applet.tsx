@@ -75,6 +75,7 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
       <h1 className="serlo-h1 mt-20">
         {props.editable ? (
           <input
+            autoFocus
             className={headerInputClasses}
             placeholder={appletStrings.placeholder}
             value={title.value}

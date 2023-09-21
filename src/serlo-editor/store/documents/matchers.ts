@@ -1,10 +1,10 @@
 import { AnyAction } from '@reduxjs/toolkit'
 
-import { pureInsertDocument } from './slice'
-import type { PureInsertDocumentAction } from './types'
+import { insertAndFocusDocument } from './slice'
+import type { InsertAndFocusDocumentAction } from './types'
 
-export function isPureInsertDocumentAction(
+export function isInsertAndFocusDocumentAction(
   action: AnyAction
-): action is PureInsertDocumentAction {
-  return action.type === pureInsertDocument.type
+): action is InsertAndFocusDocumentAction {
+  return action.type === insertAndFocusDocument.type
 }

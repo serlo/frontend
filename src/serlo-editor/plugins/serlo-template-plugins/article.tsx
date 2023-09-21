@@ -64,6 +64,7 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
       <h1 className="serlo-h1 mt-20" itemProp="name">
         {props.editable ? (
           <input
+            autoFocus
             className={headerInputClasses}
             placeholder={articleStrings.title}
             value={title.value}
