@@ -528,7 +528,7 @@ const Grade: React.FC<GradeProps> = ({
 
         <MenuButton
           value={selectedGrade}
-          onChange={(event) => setGrade(event.target.value)}
+          onChange={(grade: string) => setGrade(grade)}
         >
           {grades.map((grade) => (
             <MenuItem
@@ -587,17 +587,24 @@ const ExerciseType: React.FC<ExerciseTypeProps> = ({
         >
           {strings.ai.exerciseGeneration.exerciseType.label}
         </label>
-        <select
-          id="exerciseTypeDropdown"
+        <MenuButton
           value={exerciseType || ''}
-          onChange={(e) => setExerciseType(e.target.value)}
-          className="rounded-md border border-lightblue p-2 focus:border-lightblue focus:outline-brand-700"
+          onChange={(newValue) => setExerciseType(newValue)}
+          defaultValue=""
         >
-          <option value="">Choose an option</option>
-          <option value="Multiple Choice">Multiple Choice</option>
-          <option value="Single Choice">Single Choice</option>
-          <option value="Solution with 1 number">Solution with 1 number</option>
-        </select>
+          <MenuItem value="">
+            {strings.ai.exerciseGeneration.exerciseType.chooseOption}
+          </MenuItem>
+          <MenuItem value="Multiple Choice">
+            {strings.ai.exerciseGeneration.exerciseType.multipleChoice}
+          </MenuItem>
+          <MenuItem value="Single Choice">
+            {strings.ai.exerciseGeneration.exerciseType.singleChoice}
+          </MenuItem>
+          <MenuItem value="Solution with 1 number">
+            {strings.ai.exerciseGeneration.exerciseType.solutionWithOneNumber}
+          </MenuItem>
+        </MenuButton>
       </div>
 
       <p className="mb-4 mt-7 text-lg text-brand-700">
@@ -706,25 +713,24 @@ const Difficulty: React.FC<DifficultyProps> = ({
         >
           {strings.ai.exerciseGeneration.difficulty.label}
         </label>
-        <select
-          id="difficultyDropdown"
+        <MenuButton
           value={difficulty || ''}
-          onChange={(e) => setDifficulty(e.target.value)}
-          className="rounded-md border border-lightblue p-2 focus:border-lightblue focus:outline-brand-700"
+          onChange={(newValue) => setDifficulty(newValue)}
+          defaultValue=""
         >
-          <option value="">
+          <MenuItem value="">
             {strings.ai.exerciseGeneration.difficulty.chooseOption}
-          </option>
-          <option value="easy">
+          </MenuItem>
+          <MenuItem value="easy">
             {strings.ai.exerciseGeneration.difficulty.easy}
-          </option>
-          <option value="medium">
+          </MenuItem>
+          <MenuItem value="medium">
             {strings.ai.exerciseGeneration.difficulty.medium}
-          </option>
-          <option value="hard">
+          </MenuItem>
+          <MenuItem value="hard">
             {strings.ai.exerciseGeneration.difficulty.hard}
-          </option>
-        </select>
+          </MenuItem>
+        </MenuButton>
       </div>
 
       <label htmlFor="learningGoal" className="font-semibold text-brand-700">

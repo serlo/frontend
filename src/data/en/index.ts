@@ -135,6 +135,10 @@ export const instanceData = {
           noSubtasks: 'No',
           yesSubtasks: 'Yes',
           numberOfSubtasksPlaceholder: 'Number of subtasks',
+          chooseOption: "Choose an option",
+          multipleChoice: "Multiple Choice",
+          singleChoice: "Single Choice",
+          solutionWithOneNumber: "Solution with 1 number"
         },
         difficulty: {
           title: 'What is the difficulty level of the exercise and learning goal?',
