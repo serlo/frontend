@@ -126,6 +126,7 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
         >
           <div className="mx-side mb-3 mt-12">
             <SettingsTextarea
+              autoFocus
               label={courseStrings.seoDesc}
               state={meta_description}
             />
@@ -143,6 +144,7 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
         title={
           props.editable ? (
             <input
+              autoFocus
               className={tw`
                 -ml-2 mt-1 min-w-[70%] rounded-xl border-2 border-transparent
                 bg-editor-primary-100 px-2 py-0 focus:border-editor-primary focus:outline-none

@@ -15,6 +15,7 @@ export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
     <>
       <OverlayInput
         label={imageStrings.imageUrl}
+        autoFocus
         placeholder={
           !isTemp
             ? imageStrings.placeholderEmpty

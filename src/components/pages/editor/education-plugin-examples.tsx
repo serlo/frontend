@@ -164,7 +164,7 @@ export const inputExample = (
       grouped: false,
       trashed: false,
       task: {
-        edtrState: {
+        content: {
           content: [
             {
               type: FrontendNodeType.SlateContainer,
@@ -285,7 +285,7 @@ export const inputExample = (
         },
       },
       solution: {
-        edtrState: {
+        content: {
           prerequisite: {
             id: 138148,
             title: 'Addition',
@@ -370,7 +370,7 @@ export const textExExample = (
       grouped: false,
       trashed: false,
       task: {
-        edtrState: {
+        content: {
           content: [
             {
               type: FrontendNodeType.Multimedia,
@@ -438,7 +438,7 @@ export const textExExample = (
         },
       },
       solution: {
-        edtrState: {
+        content: {
           prerequisite: {
             id: 228138,
             title: 'Sine, Cosine and Tangent',
@@ -602,7 +602,7 @@ export const SCExample = (
       grouped: false,
       trashed: false,
       task: {
-        edtrState: {
+        content: {
           content: [
             {
               type: FrontendNodeType.SlateContainer,
@@ -922,7 +922,7 @@ export const MCExample = (
       grouped: false,
       trashed: false,
       task: {
-        edtrState: {
+        content: {
           content: [
             {
               type: FrontendNodeType.SlateContainer,

@@ -8,14 +8,16 @@ export interface OverlayInputProps
     HTMLInputElement
   > {
   label: string
+  autoFocus?: boolean
 }
 
 export const OverlayInput = forwardRef<HTMLInputElement, OverlayInputProps>(
-  function OverlayInput({ label, ...props }, ref) {
+  function OverlayInput({ label, autoFocus, ...props }, ref) {
     return (
       <label className="mx-auto mb-0 mt-5 flex items-center justify-between text-almost-black">
         <span className="w-1/5">{label}</span>
         <input
+          autoFocus={autoFocus}
           {...props}
           ref={ref}
           className={tw`

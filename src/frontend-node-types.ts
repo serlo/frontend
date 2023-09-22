@@ -25,19 +25,16 @@ export enum FrontendNodeType {
   Anchor = EditorPluginType.Anchor,
   Article = EditorPluginType.Article,
   Audio = EditorPluginType.Audio,
-  Blockquote = EditorPluginType.Blockquote,
   Box = EditorPluginType.Box,
   Code = EditorPluginType.Highlight,
   Equations = EditorPluginType.Equations,
   Geogebra = EditorPluginType.Geogebra,
   Image = EditorPluginType.Image,
-  Important = EditorPluginType.Important,
   Injection = EditorPluginType.Injection,
   Multimedia = EditorPluginType.Multimedia,
   PageLayout = EditorPluginType.PageLayout,
   PagePartners = EditorPluginType.PagePartners,
   PageTeam = EditorPluginType.PageTeam,
-  Table = EditorPluginType.Table,
   Td = 'td',
   Th = 'th',
   Tr = 'tr',
@@ -201,16 +198,6 @@ export interface FrontendColNode {
   children?: FrontendContentNode[]
 }
 
-export interface FrontendImportantNode {
-  type: FrontendNodeType.Important
-  children?: FrontendContentNode[]
-}
-
-export interface FrontendBlockquoteNode {
-  type: FrontendNodeType.Blockquote
-  children?: FrontendContentNode[]
-}
-
 export interface FrontendBoxNode {
   type: FrontendNodeType.Box
   boxType: BoxType
@@ -242,11 +229,6 @@ export interface FrontendSerloTdNode {
   children?: FrontendContentNode[]
 }
 
-export interface FrontendTableNode {
-  type: FrontendNodeType.Table
-  children?: FrontendTrNode[]
-}
-
 export interface FrontendTrNode {
   type: FrontendNodeType.Tr
   children?: (FrontendThNode | FrontendTdNode)[]
@@ -274,9 +256,8 @@ export type FrontendInjectionNode = EditorInjectionPlugin & {
   pluginId?: string
 }
 
-interface BareSolution {
-  legacy?: FrontendContentNode[]
-  edtrState?: SolutionEditorState
+export interface BareSolution {
+  content?: SolutionEditorState
   license?: LicenseData
   trashed: boolean
 }
@@ -285,8 +266,7 @@ export interface FrontendExerciseNode {
   type: FrontendNodeType.Exercise
   trashed?: boolean
   task: {
-    legacy?: FrontendContentNode[]
-    edtrState?: TaskEditorState
+    content?: TaskEditorState
     license?: LicenseData
   }
   solution: BareSolution
@@ -318,7 +298,7 @@ export interface FrontendSolutionNode {
 }
 
 export interface TaskEditorState {
-  content: FrontendContentNode[] // edtr-io plugin "exercise"
+  content: FrontendContentNode[] // serlo-editor plugin "exercise"
   interactive?:
     | EditorPluginScMcExercise
     | EditorPluginInputExercise
@@ -459,8 +439,6 @@ export type FrontendElementNode =
   | FrontendSpoilerBodyNode
   | FrontendLiNode
   | FrontendColNode
-  | FrontendImportantNode
-  | FrontendBlockquoteNode
   | FrontendBoxNode
   | FrontendThNode
   | FrontendTdNode
@@ -471,7 +449,6 @@ export type FrontendElementNode =
 export type FrontendRestrictedElementNode =
   | FrontendArticleNode
   | FrontendSpoilerContainerNode
-  | FrontendTableNode
   | FrontendSerloTableNode
   | FrontendSerloTrNode
   | FrontendUlNode

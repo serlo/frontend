@@ -56,7 +56,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
     // eslint-disable-next-line no-console
     console.error(error)
     throw new Error(
-      'JSON input data is not a valid edtr-state or contains unsupported plugins'
+      'JSON input data is not a valid editor-state or contains unsupported plugins'
     )
   }
 
@@ -132,6 +132,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
           </a>
         </p>
         <textarea
+          autoFocus
           ref={textareaRef}
           className={tw`
             mb-7 mt-1 flex w-full items-center rounded-2xl

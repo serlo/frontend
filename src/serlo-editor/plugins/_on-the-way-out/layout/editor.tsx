@@ -9,7 +9,16 @@ import {
   useAppDispatch,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import { RowsPlugin } from '@/serlo-editor-integration/types/legacy-editor-to-editor-types'
+
+interface OtherPlugin {
+  plugin: string
+  state: unknown
+}
+
+interface RowsPlugin {
+  plugin: EditorPluginType.Rows
+  state: (OtherPlugin | RowsPlugin)[]
+}
 
 export const LayoutRenderer: React.FunctionComponent<
   EditorPluginProps<LayoutPluginState> & {

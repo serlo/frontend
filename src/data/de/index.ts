@@ -621,10 +621,6 @@ export const loggedInData = {
           notSupported: "Sorry, dieses Plugin wird nicht unterstützt:",
           explanation: "Es wird Usern nicht angezeigt. Du kannst es entweder entfernen oder unsere Entwickler*innen um Unterstützung bitten."
         },
-        error: {
-          title: "Fehler",
-          convertionError: "Dieser Teil des Dokuments konnte nicht automatisch konvertiert werden."
-        },
         equations: {
           title: "Terme und Gleichungen",
           description: "Erstelle Termumformungen und löse mehrzeilige Gleichungen.",
@@ -938,10 +934,6 @@ export const loggedInData = {
         settings: "Einstellungen",
         extendedSettings: "Erweiterte Einstellungen",
         close: "Schließen",
-        notSupportedYet: "Dieser Inhaltstyp wird vom neuen Editor noch nicht unterstützt.",
-        editInOld: "Du kannst den Inhalt im alten Editor bearbeiten",
-        conversionError: "Leider trat ein Fehler bei der Konvertierung auf.",
-        notConverted: "Dieser Inhalt wurde noch nicht im neuen Editor bearbeitet.",
         save: "Speichern",
         saveWithReview: "Speichern und reviewen lassen",
         cancel: "Abbrechen",

@@ -1,5 +1,5 @@
 import { faImages } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import type { ImageProps } from '.'
 import { InlineSrcControls } from './controls/inline-src-controls'
@@ -38,6 +38,8 @@ export function ImageEditor(props: ImageProps) {
   // eslint-disable-next-line @typescript-eslint/no-base-to-string
   const src = state.src.value.toString()
 
+  const urlInputRef = useRef<HTMLInputElement>(null)
+
   useEffect(() => {
     if (editable && !state.caption.defined) {
       state.caption.create({ plugin: EditorPluginType.Text })
@@ -49,6 +51,17 @@ export function ImageEditor(props: ImageProps) {
     // updatating when src changes could hide input while you are typing so:
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editable, focused])
+
+  useEffect(() => {
+    // manually set focus to url after creating plugin
+    if (editable && focused) {
+      setTimeout(() => {
+        urlInputRef.current?.focus()
+      })
+    }
+    // only on first mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
@@ -64,6 +77,12 @@ export function ImageEditor(props: ImageProps) {
         className="relative z-[2] [&_img]:min-h-[4rem]"
         data-qa="plugin-image-editor"
       >
+        {hasFocus && showInlineImageUrl ? (
+          <div className="absolute left-side top-side z-[3]">
+            <InlineSrcControls {...props} urlInputRef={urlInputRef} />
+          </div>
+        ) : null}
+
         <ImageRenderer
           image={{
             src,
@@ -75,12 +94,6 @@ export function ImageEditor(props: ImageProps) {
           placeholder={renderPlaceholder()}
           forceNewTab
         />
-
-        {hasFocus && showInlineImageUrl ? (
-          <div className="absolute left-side top-side">
-            <InlineSrcControls {...props} />
-          </div>
-        ) : null}
       </div>
     </>
   )

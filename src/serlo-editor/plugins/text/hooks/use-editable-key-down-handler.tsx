@@ -1,16 +1,11 @@
 import isHotkey from 'is-hotkey'
 import { useCallback } from 'react'
-import {
-  Editor as SlateEditor,
-  Range,
-  Node,
-  Transforms,
-  BaseRange,
-} from 'slate'
+import { Editor as SlateEditor, Range, Node, Transforms } from 'slate'
 
 import { useTextConfig } from './use-text-config'
 import type { TextEditorProps } from '../components/text-editor'
 import { emptyDocumentFactory, mergePlugins } from '../utils/document'
+import { instanceStateStore } from '../utils/instance-state-store'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { isSelectionWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/list'
@@ -27,14 +22,13 @@ interface UseEditableKeydownHandlerArgs {
   editor: SlateEditor
   id: string
   showSuggestions: boolean
-  previousSelection: React.MutableRefObject<BaseRange | null>
   state: TextEditorProps['state']
 }
 
 export const useEditableKeydownHandler = (
   args: UseEditableKeydownHandlerArgs
 ) => {
-  const { showSuggestions, config, editor, id, state, previousSelection } = args
+  const { showSuggestions, config, editor, id, state } = args
 
   const dispatch = useAppDispatch()
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
@@ -124,14 +118,20 @@ export const useEditableKeydownHandler = (
           const direction = isBackspaceAtStart ? 'previous' : 'next'
 
           // Merge plugins within Slate and get the merge value
-          const newValue = mergePlugins(direction, editor, id)
+          const newEditorState = mergePlugins(direction, editor, id)
 
           // Update Redux document state with the new value
-          if (newValue) {
-            state.set({ value: newValue, selection }, ({ value }) => ({
-              value,
-              selection: previousSelection.current,
-            }))
+          if (newEditorState) {
+            state.set(
+              {
+                value: newEditorState.value,
+                selection: newEditorState.selection,
+              },
+              ({ value }) => ({
+                value,
+                selection: instanceStateStore[id].selection,
+              })
+            )
           }
         }
 
@@ -162,7 +162,6 @@ export const useEditableKeydownHandler = (
       editor,
       id,
       showSuggestions,
-      previousSelection,
       state,
       textFormattingOptions,
     ]

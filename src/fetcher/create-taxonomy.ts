@@ -1,4 +1,4 @@
-import { convertState } from './convert-state'
+import { convertStateStringToFrontendNode } from './convert-state-string-to-frontend-node'
 import { createExercise, createExerciseGroup } from './create-exercises'
 import { MainUuidQuery, TaxonomyTermType } from './graphql-types/operations'
 import {
@@ -29,7 +29,9 @@ export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
   const children = uuid.children.nodes.filter(isActive)
 
   return {
-    description: uuid.description ? convertState(uuid.description) : undefined,
+    description: uuid.description
+      ? convertStateStringToFrontendNode(uuid.description)
+      : undefined,
     title: uuid.name,
     id: uuid.id,
     alias: uuid.alias,
@@ -138,7 +140,7 @@ function collectNestedTaxonomyTerms(
         title: child.name,
         url: getAlias(child),
         description: child.description
-          ? convertState(child.description)
+          ? convertStateStringToFrontendNode(child.description)
           : undefined,
         articles: collectType(subChildren, UuidType.Article),
         exercises: collectExerciseFolders(subChildren),

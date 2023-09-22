@@ -38,7 +38,7 @@ export function LicenseIcons({ title, isDefault }: LicenseIconsProps) {
       {renderIcon({ icon: faCreativeCommons, className: 'absolute' })}
       {renderIcon({
         icon: faSlash,
-        className: '-scale-x-[0.6] absolute -left-[4px] scale-y-[0.6]',
+        className: '-scale-x-[0.6] absolute left-4 scale-y-[0.6]',
       })}
     </span>
   )

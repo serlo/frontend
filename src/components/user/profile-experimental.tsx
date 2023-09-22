@@ -17,12 +17,6 @@ export const features = {
     activeInDev: true,
     hideInProduction: true,
   },
-  legacyDesign: {
-    cookieName: 'useFrontend',
-    isActive: false,
-    activeInDev: false,
-    hideInProduction: false,
-  },
 }
 
 const showExperimentsStorageKey = 'showExperiments'
@@ -85,8 +79,8 @@ export function ProfileExperimental() {
       {features.edtrPasteHack && (
         <div>
           <h3 className="serlo-h3 mb-3">
-            {renderFeatureButton('edtrPasteHack')} Edtr: Einfügen von Edtr-State
-            JSON 🛠
+            {renderFeatureButton('edtrPasteHack')} Einfügen von Serlo
+            Editor-State JSON 🛠
           </h3>
           <p className="serlo-p">
             Experimentelles Feature: nur aktivieren wenn du weißt was du tust.
@@ -105,19 +99,6 @@ export function ProfileExperimental() {
             Editor-Plugins in die Zwischenablage zu kopieren. Wichtig:
             Funktioniert nur, wenn der Inhalt ab Juli 2023 eine neue Revision
             erhalten hat.
-          </p>
-        </div>
-      )}
-      <hr className="mx-side -mt-2 mb-4" />
-      {features.legacyDesign && (
-        <div>
-          <h3 className="serlo-h3 mb-3">
-            {renderFeatureButton('legacyDesign', '/disable-frontend')} Frontend:
-            Altes Design 👻
-          </h3>
-          <p className="serlo-p">
-            Zurück ins alte Design, sollte nur noch bei akuten Problemen oder
-            zum Vergleichen mit den neuen Design benutzt werden.
           </p>
         </div>
       )}

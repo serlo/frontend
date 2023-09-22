@@ -50,6 +50,7 @@ function EventTypeEditor(props: EditorPluginProps<EventTypePluginState>) {
       <h1 className="serlo-h1 mt-20">
         {props.editable ? (
           <input
+            autoFocus
             className={headerInputClasses}
             placeholder={placeholder}
             value={title.value}

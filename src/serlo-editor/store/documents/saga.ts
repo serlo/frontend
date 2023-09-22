@@ -9,6 +9,7 @@ import {
   pureRemoveDocument,
   pureReplaceDocument,
   runReplaceDocumentSaga,
+  insertAndFocusDocument,
 } from '.'
 import type { ReversibleAction } from '..'
 import {
@@ -42,7 +43,9 @@ function* changeDocumentSaga(action: ReturnType<typeof runChangeDocumentSaga>) {
     handleRecursiveInserts,
     (helpers: StoreDeserializeHelpers) => {
       return stateHandler.initial(document.state, helpers)
-    }
+    },
+    [],
+    true // shouldFocusInsertedDocument
   )
 
   const createChange = (state: unknown): ReversibleAction => {
@@ -118,7 +121,9 @@ function* changeDocumentSaga(action: ReturnType<typeof runChangeDocumentSaga>) {
           handleRecursiveInserts,
           (helpers: StoreDeserializeHelpers) => {
             return updater(currentDocument.state, helpers)
-          }
+          },
+          [],
+          true // shouldFocusInsertedDocument
         )
       payload.callback(resolveActions, pureResolveState)
       if (payload.resolve || payload.reject) {
@@ -164,7 +169,8 @@ function* replaceDocumentSaga(
   const [actions]: [ReversibleAction[], unknown] = yield call(
     handleRecursiveInserts,
     () => {},
-    pendingDocs
+    pendingDocs,
+    true // shouldFocusInsertedDocument
   )
 
   const reversibleAction: ReversibleAction = {
@@ -191,7 +197,8 @@ interface ChannelAction {
 
 export function* handleRecursiveInserts(
   act: (helpers: StoreDeserializeHelpers) => unknown,
-  initialDocuments: { id: string; plugin: string; state?: unknown }[] = []
+  initialDocuments: { id: string; plugin: string; state?: unknown }[] = [],
+  shouldFocusInsertedDocument: boolean = false
 ) {
   const actions: ReversibleAction[] = []
   const pendingDocs: {
@@ -205,6 +212,7 @@ export function* handleRecursiveInserts(
     },
   }
   const result = act(helpers)
+
   for (let doc; (doc = pendingDocs.pop()); ) {
     const plugin = editorPlugins.getByType(doc.plugin)
     if (!plugin) {
@@ -212,12 +220,12 @@ export function* handleRecursiveInserts(
       console.warn(`Invalid plugin '${doc.plugin}'`)
       continue
     }
-    let state: unknown
-    if (doc.state === undefined) {
-      state = plugin.state.createInitialState(helpers)
-    } else {
-      state = plugin.state.deserialize(doc.state, helpers)
-    }
+
+    const state: unknown =
+      doc.state === undefined
+        ? plugin.state.createInitialState(helpers)
+        : plugin.state.deserialize(doc.state, helpers)
+
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const currentDocument: ReturnType<typeof selectDocument> = yield select(
       selectDocument,
@@ -237,8 +245,11 @@ export function* handleRecursiveInserts(
         }),
       })
     } else {
+      const action = shouldFocusInsertedDocument
+        ? insertAndFocusDocument
+        : pureInsertDocument
       actions.push({
-        action: pureInsertDocument({
+        action: action({
           id: doc.id,
           plugin: doc.plugin,
           state,
