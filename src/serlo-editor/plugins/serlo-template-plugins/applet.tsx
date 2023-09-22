@@ -75,6 +75,7 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
       <h1 className="serlo-h1 mt-20">
         {props.editable ? (
           <input
+            autoFocus
             className={headerInputClasses}
             placeholder={appletStrings.placeholder}
             value={title.value}
@@ -97,6 +98,7 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
         >
           <div className="mx-side mb-3 mt-12">
             <SettingsTextarea
+              autoFocus
               label={appletStrings.seoTitle}
               state={meta_title}
             />

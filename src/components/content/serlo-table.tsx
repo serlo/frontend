@@ -22,5 +22,9 @@ export function SerloTable({
   })
   if (!rows) return null
 
-  return <SerloTableRenderer rows={rows} tableType={tableType as TableType} />
+  return (
+    <div className="overflow-x-auto">
+      <SerloTableRenderer rows={rows} tableType={tableType as TableType} />
+    </div>
+  )
 }

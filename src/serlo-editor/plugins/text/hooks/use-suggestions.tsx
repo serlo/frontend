@@ -23,6 +23,7 @@ interface useSuggestionsArgs {
   id: string
   editable: boolean
   focused: boolean
+  isInlineChildEditor?: boolean
 }
 
 export interface SuggestionOption {
@@ -38,10 +39,11 @@ const hotkeyConfig = {
 }
 
 export const useSuggestions = (args: useSuggestionsArgs) => {
+  const { editor, id, editable, focused, isInlineChildEditor } = args
+
   const dispatch = useAppDispatch()
   const [selected, setSelected] = useState(0)
   const suggestionsRef = useRef<HTMLDivElement>(null)
-  const { editor, id, editable, focused } = args
   const pluginsStrings = useEditorStrings().plugins
 
   const { selection } = editor
@@ -66,7 +68,11 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     return filterPlugins(allOptions, text, id)
   }, [allOptions, id, text])
   const showSuggestions =
-    editable && focused && text.startsWith('/') && filteredOptions.length > 0
+    !isInlineChildEditor &&
+    editable &&
+    focused &&
+    text.startsWith('/') &&
+    filteredOptions.length > 0
 
   const { enableScope, disableScope } = useHotkeysContext()
 

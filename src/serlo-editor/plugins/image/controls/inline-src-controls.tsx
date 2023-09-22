@@ -1,9 +1,14 @@
+import { RefObject } from 'react'
+
 import type { ImageProps } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { isTempFile } from '@/serlo-editor/plugin'
 
-export function InlineSrcControls({ state }: ImageProps) {
+export function InlineSrcControls({
+  state,
+  urlInputRef,
+}: ImageProps & { urlInputRef: RefObject<HTMLInputElement> }) {
   const imageStrings = useEditorStrings().plugins.image
   const { src } = state
 
@@ -18,6 +23,7 @@ export function InlineSrcControls({ state }: ImageProps) {
       <label>
         <b>{imageStrings.imageUrl}</b>
         <input
+          ref={urlInputRef}
           placeholder={placeholder}
           value={!isTempFile(src.value) ? src.value : ''}
           disabled={isTempFile(src.value) && !src.value.failed}

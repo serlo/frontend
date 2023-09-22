@@ -87,6 +87,7 @@ module.exports = {
         '15vh': '15vh',
       },
       padding: {
+        block: '30px',
         '2/3': '66%',
         '6/5': '120%',
       },

@@ -1,21 +1,26 @@
-import { convertState } from './convert-state'
+import { convertStateStringToFrontendNode } from './convert-state-string-to-frontend-node'
 import { createInlineLicense } from './create-inline-license'
 import { RevisionUuidQuery } from './graphql-types/operations'
 import { MainUuidType } from './query-types'
 import { UuidType } from '@/data-types'
 import {
   FrontendExerciseNode,
-  FrontendContentNode,
   TaskEditorState,
-  SolutionEditorState,
   FrontendExerciseGroupNode,
   FrontendSolutionNode,
   FrontendNodeType,
+  EditorPluginInputExercise,
+  BareSolution,
 } from '@/frontend-node-types'
 import { hasVisibleContent } from '@/helper/has-visible-content'
 import { shuffleArray } from '@/helper/shuffle-array'
 import { convert, ConvertNode } from '@/schema/convert-edtr-io-state'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import {
+  EditorH5PPlugin,
+  EditorInputExercisePlugin,
+  EditorScMcExercisePlugin,
+} from '@/serlo-editor-integration/types/editor-plugins'
 
 type BareExercise = Omit<
   Extract<MainUuidType, { __typename: 'Exercise' | 'GroupedExercise' }>,
@@ -26,44 +31,6 @@ export function createExercise(
   uuid: BareExercise,
   index?: number
 ): FrontendExerciseNode {
-  let taskLegacy: FrontendContentNode[] | undefined = undefined
-  let taskEdtrState: TaskEditorState | undefined = undefined
-  const content = uuid.currentRevision?.content
-  if (content) {
-    if (content.startsWith('{')) {
-      // special case here: we know it's a edtr-io exercise
-      // and we use this knowledge to convert subentries
-      const taskState = (JSON.parse(content) as { state: TaskEditorState })
-        .state
-
-      if (taskState.content) {
-        taskState.content = convert(taskState.content)
-        if (taskState.interactive?.plugin === EditorPluginType.ScMcExercise) {
-          taskState.interactive.state.answers.forEach((answer, i: number) => {
-            answer.feedback = convert(answer.feedback)
-            answer.content = convert(answer.content)
-            answer.originalIndex = i
-          })
-          taskState.interactive.state.answers = shuffleArray(
-            taskState.interactive.state.answers
-          )
-        } else if (
-          taskState.interactive?.plugin === EditorPluginType.InputExercise
-        ) {
-          taskState.interactive.state.answers.forEach((answer) => {
-            answer.feedback = convert(answer.feedback)
-          })
-        }
-        taskEdtrState = taskState
-      } else {
-        // @ts-expect-error some weird edge cases where task has no content (e.g. 117384)
-        taskLegacy = convert(taskState)
-      }
-    } else {
-      taskLegacy = convertState(content)
-    }
-  }
-
   const exercise = {
     // This must be a bug in TypeScript but without this conversion, upon
     // returning the exercise it says: Type 'FrontendNodeType' is not assignable
@@ -73,8 +40,7 @@ export function createExercise(
     positionOnPage: index,
     trashed: uuid.trashed,
     task: {
-      legacy: taskLegacy,
-      edtrState: taskEdtrState,
+      content: createTaskData(uuid.currentRevision?.content),
       license: createInlineLicense(uuid.license),
     },
     solution: createSolutionData(uuid.solution),
@@ -91,36 +57,98 @@ export function createExercise(
   return exercise
 }
 
-function createSolutionData(solution: BareExercise['solution']) {
-  let solutionLegacy: FrontendContentNode[] | undefined = undefined
-  let solutionEdtrState: SolutionEditorState | undefined = undefined
-  const content = solution?.currentRevision?.content
-  if (content) {
-    if (content.startsWith('{')) {
-      const contentJson = JSON.parse(content) as
-        | { plugin: EditorPluginType.Rows }
-        | { plugin: ''; state: SolutionEditorState }
-      if (contentJson.plugin === EditorPluginType.Rows) {
-        // half converted, like 189579
-        solutionLegacy = convert(contentJson as ConvertNode)
-      } else {
-        // special case here: we know it's a edtr-io solution
-        const solutionState = contentJson.state
-        solutionState.strategy = convert(solutionState.strategy)
-        // compat: (probably quite fragile) if strategy is empty, we ignore it
-        if (!hasVisibleContent(solutionState.strategy)) {
-          solutionState.strategy = []
+export interface TaskEditorStateInput {
+  content: ConvertNode // serlo-editor plugin "exercise"
+  interactive?:
+    | EditorScMcExercisePlugin
+    | EditorInputExercisePlugin
+    | EditorH5PPlugin
+}
+
+function createTaskData(raw?: string): TaskEditorState | undefined {
+  if (!raw || !raw.startsWith('{')) return undefined
+
+  const taskState = (JSON.parse(raw) as { state: TaskEditorStateInput }).state
+
+  if (!taskState.content) return undefined
+
+  const content = convert(taskState.content)
+
+  if (taskState.interactive?.plugin === EditorPluginType.ScMcExercise) {
+    const answers = shuffleArray(
+      taskState.interactive.state.answers.map((answer, i) => {
+        return {
+          ...answer,
+          content: convert(answer.content),
+          feedback: convert(answer.feedback),
+          originalIndex: i,
         }
-        solutionState.steps = convert(solutionState.steps)
-        solutionEdtrState = solutionState
-      }
-    } else {
-      solutionLegacy = convertState(content)
+      })
+    )
+    return {
+      content,
+      interactive: {
+        plugin: EditorPluginType.ScMcExercise,
+        state: {
+          ...taskState.interactive.state,
+          answers,
+        },
+      },
     }
   }
+  if (taskState.interactive?.plugin === EditorPluginType.InputExercise) {
+    const answers = taskState.interactive.state.answers.map((answer) => {
+      return { ...answer, feedback: convert(answer.feedback) }
+    })
+    return {
+      content,
+      interactive: {
+        plugin: EditorPluginType.InputExercise,
+        state: {
+          ...taskState.interactive.state,
+          type: taskState.interactive.state
+            .type as EditorPluginInputExercise['state']['type'],
+          answers,
+        },
+      },
+    }
+  }
+  if (taskState.interactive?.plugin === EditorPluginType.H5p) {
+    return { content, interactive: taskState.interactive }
+  }
+  return { content }
+}
+
+export interface SolutionEditorStateInput {
+  prerequisite?: {
+    id?: number
+    href?: string
+    title: string
+  }
+  strategy: ConvertNode
+  steps: ConvertNode
+}
+
+function createSolutionData(
+  solution: BareExercise['solution'] | undefined
+): BareSolution {
+  const raw = solution?.currentRevision?.content
+
+  if (!raw || !raw.startsWith('{'))
+    return { content: { strategy: [], steps: [] }, trashed: true }
+  const solutionState = (
+    JSON.parse(raw) as { plugin: ''; state: SolutionEditorStateInput }
+  ).state
+
+  const strategy = convert(solutionState.strategy)
+
   return {
-    legacy: solutionLegacy,
-    edtrState: solutionEdtrState,
+    content: {
+      ...solutionState,
+      // compat: (probably quite fragile) if strategy is empty, we ignore it
+      strategy: hasVisibleContent(strategy) ? strategy : [],
+      steps: convert(solutionState.steps),
+    },
     trashed: solution?.trashed ? true : false,
     license: (solution && createInlineLicense(solution.license)) ?? undefined,
   }
@@ -145,7 +173,6 @@ export function createSolution(
       id: uuid.id,
     },
     href: uuid.repository.alias,
-    /* not part of the schema anymore, obsolete? unrevisedRevisions: uuid.unrevisedRevisions, */
   }
 }
 
@@ -174,7 +201,7 @@ export function createExerciseGroup(
 
   return {
     type: FrontendNodeType.ExerciseGroup,
-    content: convertState(uuid.currentRevision?.content),
+    content: convertStateStringToFrontendNode(uuid.currentRevision?.content),
     positionOnPage: pageIndex,
     license: createInlineLicense(uuid.license),
     children,
