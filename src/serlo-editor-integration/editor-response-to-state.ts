@@ -125,7 +125,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           changes: '',
           title,
           url: uuid.currentRevision?.url || '',
-          content: serializeEditorState(convertEditorState(content)),
+          content: serializeEditorState(parseSerializedState(content)),
           meta_title,
           meta_description,
         },
@@ -153,7 +153,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     }
 
     function getContent() {
-      const convertedContent = convertEditorState(content)
+      const convertedContent = parseSerializedState(content)
 
       if (convertedContent?.plugin === EditorPluginType.Article) {
         return serializeEditorState(convertedContent)
@@ -189,7 +189,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           revision,
           changes: '',
           title,
-          description: serializeEditorState(convertEditorState(content)),
+          description: serializeEditorState(parseSerializedState(content)),
           meta_description,
           'course-page': (uuid.pages || [])
             .filter((page) => page.currentRevision !== null)
@@ -228,7 +228,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           icon: 'explanation',
           title: uuid.currentRevision?.title || '',
           content: serializeEditorState(
-            convertEditorState(uuid.currentRevision?.content || '')
+            parseSerializedState(uuid.currentRevision?.content || '')
           ),
         },
       },
@@ -247,7 +247,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           revision,
           changes: '',
           title,
-          content: serializeEditorState(convertEditorState(content)),
+          content: serializeEditorState(parseSerializedState(content)),
           meta_title,
           meta_description,
         },
@@ -265,7 +265,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
         state: {
           ...entityFields,
           title,
-          content: serializeEditorState(convertEditorState(content)),
+          content: serializeEditorState(parseSerializedState(content)),
         },
       },
     }
@@ -287,7 +287,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
             name: uuid.name,
           },
           description: serializeEditorState(
-            convertEditorState(uuid.description ?? '')
+            parseSerializedState(uuid.description ?? '')
           ),
         },
       },
@@ -319,7 +319,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
               : '',
           content:
             serializeEditorState(
-              convertEditorState(uuid.currentRevision?.content)
+              parseSerializedState(uuid.currentRevision?.content)
             ) ?? '',
         },
       },
@@ -359,7 +359,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           ...entityFields,
           changes: '',
           revision,
-          content: serializeEditorState(convertEditorState(content)),
+          content: serializeEditorState(parseSerializedState(content)),
           cohesive: uuid.currentRevision?.cohesive ?? false,
           'grouped-text-exercise': exercises,
         },
@@ -387,7 +387,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     }
 
     function getContent() {
-      const convertdContent = convertEditorState(solutionContent)
+      const convertdContent = parseSerializedState(solutionContent)
       if (convertdContent !== undefined) {
         return serializeEditorState(convertdContent)
       }
@@ -420,7 +420,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           changes: '',
           title,
           revision,
-          description: serializeEditorState(convertEditorState(content)),
+          description: serializeEditorState(parseSerializedState(content)),
           content: uuid.currentRevision?.url ?? '',
         },
       },
@@ -434,7 +434,7 @@ export function convertUserByDescription(description?: string | null) {
       plugin: TemplatePluginType.User,
       state: {
         description: serializeEditorState(
-          convertEditorState(description ?? '')
+          parseSerializedState(description ?? '')
         ),
       },
     },
@@ -586,7 +586,9 @@ function serializeEditorState(content?: Edtr): string {
   )
 }
 
-function convertEditorState(content: SerializedEditorState): Edtr | undefined {
+function parseSerializedState(
+  content: SerializedEditorState
+): Edtr | undefined {
   if (!content) return undefined
   try {
     return JSON.parse(content) as Edtr
