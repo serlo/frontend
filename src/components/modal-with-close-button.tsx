@@ -42,7 +42,6 @@ export function ModalWithCloseButton({
     <BaseModal
       isOpen={isOpen}
       onRequestClose={onCloseClick}
-      shouldReturnFocusAfterClose={false}
       className={clsx(
         ModalClsx,
         'relative top-[40%] w-[500px] pb-10',
