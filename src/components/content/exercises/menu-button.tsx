@@ -32,14 +32,17 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
           <FaIcon icon={isOpen ? faChevronUp : faChevronDown} />
         </Select.Icon>
       </Select.Trigger>
+      {/* Portal would be rendered underneath the modal but I don't think it's needed */}
+      {/* <Select.Portal className="z-50"> */}
       <Select.Content
         className="rounded-md border border-lightblue bg-white"
         side="bottom"
         // align="end"
         position="popper"
       >
-        {children}
+        <Select.Viewport>{children}</Select.Viewport>
       </Select.Content>
+      {/* </Select.Portal> */}
     </Select.Root>
   )
 }
@@ -55,7 +58,7 @@ export const MenuItem: React.FC<MenuItemProps> = forwardRef(
     return (
       <Select.Item
         value={value}
-        className="mx-2 my-1 border border-transparent p-1 text-center hover:rounded-lg hover:border hover:border-brand-700 hover:bg-brand-700  hover:text-white"
+        className="mx-2 my-0.5 border border-transparent p-1 text-center hover:rounded-lg hover:border hover:border-brand-700 hover:bg-brand-700  hover:text-white"
         ref={ref as MutableRefObject<HTMLDivElement>}
       >
         <Select.ItemText>{children}</Select.ItemText>

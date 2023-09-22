@@ -773,7 +773,7 @@ const PriorKnowledge: React.FC<PriorKnowledgeProps> = ({
   const { strings } = useInstanceData()
 
   return (
-    <div className="flex flex-col">
+    <div className={`flex flex-col ${isSummary ? 'mb-4' : ''}`}>
       {!isSummary && (
         <p className="mb-4 text-xl">
           {strings.ai.exerciseGeneration.priorKnowledge.title}
