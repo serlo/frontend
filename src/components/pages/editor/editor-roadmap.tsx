@@ -4,20 +4,22 @@ const roadmapData = [
   {
     title: 'Latest Releases',
     steps: [
-      'Redesigned plugin selection, custom icons',
-      'Helpful tooltips that open directly on hover',
       'Integrate H5P exercises in Serlo Editor content',
-      'Feature to easily find and link Serlo content',
       'Simple Autosave',
+      'Differentiate between new paragraph and new lines',
+      'Slash command to add new plugin',
+      'Import existing Serlo content',
+      'Redesigned plugin toolbar',
     ],
   },
   {
     title: 'Next up',
     steps: [
-      'Redesigned plugin toolbar',
-      'Accessibility improvements for pictures using AI',
-      'Import existing Serlo content',
-      'Directly link to sections in Serlo content',
+      'Directly link to content sections  ',
+      'Exercise generation with AI',
+      'Improved focus management',
+      'Integrated help section',
+      'Audio plugin',
     ],
   },
   {
@@ -25,15 +27,14 @@ const roadmapData = [
     steps: [
       'Improve Image plugin, easier uploads',
       'Better keyboard navigation',
-      'Improved focus management',
       'Impact dashboard – supporting authors with usage data',
-      'Differentiate between new paragraph and new lines',
+      'Fill-in-the-gap exercise (new plugin)',
+      'Accessibility improvements for pictures using AI',
     ],
   },
   {
     title: 'Later',
     steps: [
-      'Fill-in-the-gap exercise (new plugin)',
       'Drag & Drop exercise (new plugin)',
       'Better support for LMS integrations',
       'Copy & Paste content across plugins',
