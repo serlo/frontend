@@ -118,14 +118,20 @@ export const useEditableKeydownHandler = (
           const direction = isBackspaceAtStart ? 'previous' : 'next'
 
           // Merge plugins within Slate and get the merge value
-          const newValue = mergePlugins(direction, editor, id)
+          const newEditorState = mergePlugins(direction, editor, id)
 
           // Update Redux document state with the new value
-          if (newValue) {
-            state.set({ value: newValue, selection }, ({ value }) => ({
-              value,
-              selection: instanceStateStore[id].selection,
-            }))
+          if (newEditorState) {
+            state.set(
+              {
+                value: newEditorState.value,
+                selection: newEditorState.selection,
+              },
+              ({ value }) => ({
+                value,
+                selection: instanceStateStore[id].selection,
+              })
+            )
           }
         }
 

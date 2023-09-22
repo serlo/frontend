@@ -3987,7 +3987,6 @@ __metadata:
     "@radix-ui/react-navigation-menu": ^1.1.3
     "@reduxjs/toolkit": ^1.9.5
     "@serlo/authorization": ^0.52.1
-    "@serlo/markdown": Entkenntnis/tmp-serlo-markdown
     "@svgr/webpack": ^8.0.1
     "@tippyjs/react": ^4.2.6
     "@types/algebra.js": ^0.2.2
@@ -4029,10 +4028,9 @@ __metadata:
     fast-xml-parser: ^4.2.7
     fp-ts: ^2.16.1
     graphiql: ^3.0.5
-    graphql: ^16.7.1
+    graphql: ^16.8.1
     graphql-request: ^6.1.0
     graphql-tag: 2.12.6
-    htmlparser2: ^8.0.2
     iframe-resizer: ^4.3.6
     iframe-resizer-react: ^1.1.0
     io-ts: ^2.2.20
@@ -4090,16 +4088,6 @@ __metadata:
     uuid: ^9.0.0
   languageName: unknown
   linkType: soft
-
-"@serlo/markdown@Entkenntnis/tmp-serlo-markdown":
-  version: 0.0.0
-  resolution: "@serlo/markdown@https://github.com/Entkenntnis/tmp-serlo-markdown.git#commit=72ab9f592b0d8ebfd497dc5e8d70e98aa4f931ff"
-  dependencies:
-    showdown: ^1.0.0
-    tslib: ^2.0.0
-  checksum: 26d79d1e9f525461f840e75e2d733a9bf930fca8717a8e7523ecd90e1d347d995570394599464596897384be1510f9e47a6b6d8bde87e380c47abf4b57150270
-  languageName: node
-  linkType: hard
 
 "@sinclair/typebox@npm:^0.27.8":
   version: 0.27.8
@@ -5123,13 +5111,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ansi-regex@npm:^4.1.0":
-  version: 4.1.1
-  resolution: "ansi-regex@npm:4.1.1"
-  checksum: b1a6ee44cb6ecdabaa770b2ed500542714d4395d71c7e5c25baa631f680fb2ad322eb9ba697548d498a6fd366949fc8b5bfcf48d49a32803611f648005b01888
-  languageName: node
-  linkType: hard
-
 "ansi-regex@npm:^5.0.1":
   version: 5.0.1
   resolution: "ansi-regex@npm:5.0.1"
@@ -5137,7 +5118,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ansi-styles@npm:^3.2.0, ansi-styles@npm:^3.2.1":
+"ansi-styles@npm:^3.2.1":
   version: 3.2.1
   resolution: "ansi-styles@npm:3.2.1"
   dependencies:
@@ -6149,17 +6130,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cliui@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "cliui@npm:5.0.0"
-  dependencies:
-    string-width: ^3.1.0
-    strip-ansi: ^5.2.0
-    wrap-ansi: ^5.1.0
-  checksum: 0bb8779efe299b8f3002a73619eaa8add4081eb8d1c17bc4fedc6240557fb4eacdc08fe87c39b002eacb6cfc117ce736b362dbfd8bf28d90da800e010ee97df4
-  languageName: node
-  linkType: hard
-
 "cliui@npm:^6.0.0":
   version: 6.0.0
   resolution: "cliui@npm:6.0.0"
@@ -6918,7 +6888,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"domhandler@npm:^5.0.1, domhandler@npm:^5.0.2, domhandler@npm:^5.0.3":
+"domhandler@npm:^5.0.1, domhandler@npm:^5.0.2":
   version: 5.0.3
   resolution: "domhandler@npm:5.0.3"
   dependencies:
@@ -6990,13 +6960,6 @@ __metadata:
   version: 0.8.1
   resolution: "emittery@npm:0.8.1"
   checksum: 2457e8c7b0688bb006126f2c025b2655abe682f66b184954122a8a065b5277f9813d49d627896a10b076b81c513ec5f491fd9c14fbd42c04b95ca3c9f3c365ee
-  languageName: node
-  linkType: hard
-
-"emoji-regex@npm:^7.0.1":
-  version: 7.0.3
-  resolution: "emoji-regex@npm:7.0.3"
-  checksum: 9159b2228b1511f2870ac5920f394c7e041715429a68459ebe531601555f11ea782a8e1718f969df2711d38c66268174407cbca57ce36485544f695c2dfdc96e
   languageName: node
   linkType: hard
 
@@ -7745,15 +7708,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"find-up@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "find-up@npm:3.0.0"
-  dependencies:
-    locate-path: ^3.0.0
-  checksum: 38eba3fe7a66e4bc7f0f5a1366dc25508b7cfc349f852640e3678d26ad9a6d7e2c43eff0a472287de4a9753ef58f066a0ea892a256fa3636ad51b3fe1e17fae9
-  languageName: node
-  linkType: hard
-
 "find-up@npm:^4.0.0, find-up@npm:^4.1.0":
   version: 4.1.0
   resolution: "find-up@npm:4.1.0"
@@ -8300,10 +8254,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql@npm:^15.0.0 || ^16.0.0, graphql@npm:^16.7.1":
+"graphql@npm:^15.0.0 || ^16.0.0":
   version: 16.7.1
   resolution: "graphql@npm:16.7.1"
   checksum: c924d8428daf0e96a5ea43e9bc3cd1b6802899907d284478ac8f705c8fd233a0a51eef915f7569fb5de8acb2e85b802ccc6c85c2b157ad805c1e9adba5a299bd
+  languageName: node
+  linkType: hard
+
+"graphql@npm:^16.8.1":
+  version: 16.8.1
+  resolution: "graphql@npm:16.8.1"
+  checksum: 8d304b7b6f708c8c5cc164b06e92467dfe36aff6d4f2cf31dd19c4c2905a0e7b89edac4b7e225871131fd24e21460836b369de0c06532644d15b461d55b1ccc0
   languageName: node
   linkType: hard
 
@@ -8482,18 +8443,6 @@ __metadata:
   version: 2.0.2
   resolution: "html-escaper@npm:2.0.2"
   checksum: d2df2da3ad40ca9ee3a39c5cc6475ef67c8f83c234475f24d8e9ce0dc80a2c82df8e1d6fa78ddd1e9022a586ea1bd247a615e80a5cd9273d90111ddda7d9e974
-  languageName: node
-  linkType: hard
-
-"htmlparser2@npm:^8.0.2":
-  version: 8.0.2
-  resolution: "htmlparser2@npm:8.0.2"
-  dependencies:
-    domelementtype: ^2.3.0
-    domhandler: ^5.0.3
-    domutils: ^3.0.1
-    entities: ^4.4.0
-  checksum: 29167a0f9282f181da8a6d0311b76820c8a59bc9e3c87009e21968264c2987d2723d6fde5a964d4b7b6cba663fca96ffb373c06d8223a85f52a6089ced942700
   languageName: node
   linkType: hard
 
@@ -8927,13 +8876,6 @@ __metadata:
   version: 2.1.1
   resolution: "is-extglob@npm:2.1.1"
   checksum: df033653d06d0eb567461e58a7a8c9f940bd8c22274b94bf7671ab36df5719791aae15eef6d83bbb5e23283967f2f984b8914559d4449efda578c775c4be6f85
-  languageName: node
-  linkType: hard
-
-"is-fullwidth-code-point@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "is-fullwidth-code-point@npm:2.0.0"
-  checksum: eef9c6e15f68085fec19ff6a978a6f1b8f48018fd1265035552078ee945573594933b09bbd6f562553e2a241561439f1ef5339276eba68d272001343084cfab8
   languageName: node
   linkType: hard
 
@@ -10254,16 +10196,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"locate-path@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "locate-path@npm:3.0.0"
-  dependencies:
-    p-locate: ^3.0.0
-    path-exists: ^3.0.0
-  checksum: 53db3996672f21f8b0bf2a2c645ae2c13ffdae1eeecfcd399a583bce8516c0b88dcb4222ca6efbbbeb6949df7e46860895be2c02e8d3219abd373ace3bfb4e11
-  languageName: node
-  linkType: hard
-
 "locate-path@npm:^5.0.0":
   version: 5.0.0
   resolution: "locate-path@npm:5.0.0"
@@ -11211,21 +11143,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"p-limit@npm:^2.0.0, p-limit@npm:^2.2.0":
+"p-limit@npm:^2.2.0":
   version: 2.3.0
   resolution: "p-limit@npm:2.3.0"
   dependencies:
     p-try: ^2.0.0
   checksum: 84ff17f1a38126c3314e91ecfe56aecbf36430940e2873dadaa773ffe072dc23b7af8e46d4b6485d302a11673fe94c6b67ca2cfbb60c989848b02100d0594ac1
-  languageName: node
-  linkType: hard
-
-"p-locate@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "p-locate@npm:3.0.0"
-  dependencies:
-    p-limit: ^2.0.0
-  checksum: 83991734a9854a05fe9dbb29f707ea8a0599391f52daac32b86f08e21415e857ffa60f0e120bfe7ce0cc4faf9274a50239c7895fc0d0579d08411e513b83a4ae
   languageName: node
   linkType: hard
 
@@ -11353,13 +11276,6 @@ __metadata:
     dot-case: ^3.0.4
     tslib: ^2.0.3
   checksum: 61de0526222629f65038a66f63330dd22d5b54014ded6636283e1d15364da38b3cf29e4433aa3f9d8b0dba407ae2b059c23b0104a34ee789944b1bc1c5c7e06d
-  languageName: node
-  linkType: hard
-
-"path-exists@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "path-exists@npm:3.0.0"
-  checksum: 96e92643aa34b4b28d0de1cd2eba52a1c5313a90c6542d03f62750d82480e20bfa62bc865d5cfc6165f5fcd5aeb0851043c40a39be5989646f223300021bae0a
   languageName: node
   linkType: hard
 
@@ -12786,17 +12702,6 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"showdown@npm:^1.0.0":
-  version: 1.9.1
-  resolution: "showdown@npm:1.9.1"
-  dependencies:
-    yargs: ^14.2
-  bin:
-    showdown: bin/showdown.js
-  checksum: d6aac199cb28c2b89bce804eddda928c816e5a2b0e0e6dfe66db8ced6968e237995bf1d547046c9970b804e5c3181b1a55740883e1332c837024668f9c031a01
-  languageName: node
-  linkType: hard
-
 "side-channel@npm:^1.0.4":
   version: 1.0.4
   resolution: "side-channel@npm:1.0.4"
@@ -13155,17 +13060,6 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"string-width@npm:^3.0.0, string-width@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "string-width@npm:3.1.0"
-  dependencies:
-    emoji-regex: ^7.0.1
-    is-fullwidth-code-point: ^2.0.0
-    strip-ansi: ^5.1.0
-  checksum: 57f7ca73d201682816d573dc68bd4bb8e1dff8dc9fcf10470fdfc3474135c97175fec12ea6a159e67339b41e86963112355b64529489af6e7e70f94a7caf08b2
-  languageName: node
-  linkType: hard
-
 "string.prototype.matchall@npm:^4.0.8":
   version: 4.0.8
   resolution: "string.prototype.matchall@npm:4.0.8"
@@ -13232,15 +13126,6 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   dependencies:
     safe-buffer: ~5.2.0
   checksum: 8417646695a66e73aefc4420eb3b84cc9ffd89572861fe004e6aeb13c7bc00e2f616247505d2dbbef24247c372f70268f594af7126f43548565c68c117bdeb56
-  languageName: node
-  linkType: hard
-
-"strip-ansi@npm:^5.0.0, strip-ansi@npm:^5.1.0, strip-ansi@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "strip-ansi@npm:5.2.0"
-  dependencies:
-    ansi-regex: ^4.1.0
-  checksum: bdb5f76ade97062bd88e7723aa019adbfacdcba42223b19ccb528ffb9fb0b89a5be442c663c4a3fb25268eaa3f6ea19c7c3fbae830bd1562d55adccae1fcec46
   languageName: node
   linkType: hard
 
@@ -14561,17 +14446,6 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"wrap-ansi@npm:^5.1.0":
-  version: 5.1.0
-  resolution: "wrap-ansi@npm:5.1.0"
-  dependencies:
-    ansi-styles: ^3.2.0
-    string-width: ^3.0.0
-    strip-ansi: ^5.0.0
-  checksum: 9b48c862220e541eb0daa22661b38b947973fc57054e91be5b0f2dcc77741a6875ccab4ebe970a394b4682c8dfc17e888266a105fb8b0a9b23c19245e781ceae
-  languageName: node
-  linkType: hard
-
 "wrap-ansi@npm:^6.2.0":
   version: 6.2.0
   resolution: "wrap-ansi@npm:6.2.0"
@@ -14723,16 +14597,6 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"yargs-parser@npm:^15.0.1":
-  version: 15.0.3
-  resolution: "yargs-parser@npm:15.0.3"
-  dependencies:
-    camelcase: ^5.0.0
-    decamelize: ^1.2.0
-  checksum: 06611c1893fa9f1c25ae79df3c6e2edbac7c8d75257a4b55b8432cbc87ee03eda86bea0537f65b4b8a0d9684c83fa6e9ef61ef720a1e5cc8a9aa6893b54ee4c3
-  languageName: node
-  linkType: hard
-
 "yargs-parser@npm:^18.1.2":
   version: 18.1.3
   resolution: "yargs-parser@npm:18.1.3"
@@ -14754,25 +14618,6 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   version: 21.0.0
   resolution: "yargs-parser@npm:21.0.0"
   checksum: 1e205fca1cb7a36a1585e2b94a64e641c12741b53627d338e12747f4dca3c3610cdd9bb235040621120548dd74c3ef03a8168d52a1eabfedccbe4a62462b6731
-  languageName: node
-  linkType: hard
-
-"yargs@npm:^14.2":
-  version: 14.2.3
-  resolution: "yargs@npm:14.2.3"
-  dependencies:
-    cliui: ^5.0.0
-    decamelize: ^1.2.0
-    find-up: ^3.0.0
-    get-caller-file: ^2.0.1
-    require-directory: ^2.1.1
-    require-main-filename: ^2.0.0
-    set-blocking: ^2.0.0
-    string-width: ^3.0.0
-    which-module: ^2.0.0
-    y18n: ^4.0.0
-    yargs-parser: ^15.0.1
-  checksum: 684fcb1896e6c873c31c09c5c16445d6253dfe505aa879cff56d49425f5bca44f2ab8d7a1c949f3b932ae8654128425e89770e5e2f2c3d816e5816b9eb6efb6f
   languageName: node
   linkType: hard
 

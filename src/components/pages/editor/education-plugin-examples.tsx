@@ -164,7 +164,7 @@ export const inputExample = (
       grouped: false,
       trashed: false,
       task: {
-        edtrState: {
+        content: {
           content: [
             {
               type: FrontendNodeType.SlateContainer,
@@ -285,7 +285,7 @@ export const inputExample = (
         },
       },
       solution: {
-        edtrState: {
+        content: {
           prerequisite: {
             id: 138148,
             title: 'Addition',
@@ -370,7 +370,7 @@ export const textExExample = (
       grouped: false,
       trashed: false,
       task: {
-        edtrState: {
+        content: {
           content: [
             {
               type: FrontendNodeType.Multimedia,
@@ -438,7 +438,7 @@ export const textExExample = (
         },
       },
       solution: {
-        edtrState: {
+        content: {
           prerequisite: {
             id: 228138,
             title: 'Sine, Cosine and Tangent',
@@ -602,7 +602,7 @@ export const SCExample = (
       grouped: false,
       trashed: false,
       task: {
-        edtrState: {
+        content: {
           content: [
             {
               type: FrontendNodeType.SlateContainer,
@@ -691,7 +691,6 @@ export const SCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 3,
                 },
                 {
                   content: [
@@ -742,7 +741,6 @@ export const SCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 1,
                 },
                 {
                   content: [
@@ -811,7 +809,6 @@ export const SCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 2,
                 },
                 {
                   content: [
@@ -874,7 +871,6 @@ export const SCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 0,
                 },
               ],
             },
@@ -922,7 +918,7 @@ export const MCExample = (
       grouped: false,
       trashed: false,
       task: {
-        edtrState: {
+        content: {
           content: [
             {
               type: FrontendNodeType.SlateContainer,
@@ -1003,7 +999,6 @@ export const MCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 2,
                 },
                 {
                   content: [
@@ -1037,7 +1032,6 @@ export const MCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 3,
                 },
                 {
                   content: [
@@ -1094,7 +1088,6 @@ export const MCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 1,
                 },
                 {
                   content: [
@@ -1128,7 +1121,6 @@ export const MCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 0,
                 },
               ],
             },

@@ -114,7 +114,7 @@ function handleError(
   }
 
   if (type === 'UNAUTHENTICATED') {
-    // while this makes sense it can also increases the chance of lost changes when using the edtr.
+    // while this makes sense it can also increases the chance of lost changes when using the serlo-editor.
     // let's try without for now
     // csrReload()
     triggerSentry({ message: 'API(mutation): unauthenticated' })

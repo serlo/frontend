@@ -16,7 +16,6 @@ interface InteractiveAnswerProps {
   feedbackID: string
   answer: HTMLInputElement | React.ReactNode
   feedback: React.ReactNode
-  focusedElement?: string
   remove: () => void
 }
 
@@ -63,7 +62,7 @@ export function InteractiveAnswer({
           <label className="ml-side block text-sm font-bold">
             {strings.content.exercises.feedback}
           </label>
-          {feedback}
+          <div className="ml-0.5">{feedback}</div>
         </div>
       </div>
     </div>
