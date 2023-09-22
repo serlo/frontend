@@ -30,7 +30,13 @@ export function StaticRenderer({
 
   const Renderer = editorRenderers.getByType(state.plugin)
 
-  if (!Renderer) return <mark>{state.plugin} </mark>
+  // only while developing
+  if (!Renderer)
+    return (
+      <div className="mx-side my-block pl-[14px]">
+        <mark>{state.plugin}</mark>
+      </div>
+    )
 
   return <Renderer {...state} />
 }

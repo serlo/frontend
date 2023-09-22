@@ -1,6 +1,5 @@
 import { EditorPluginType } from './types/editor-plugin-type'
 import { EditorAnchorPlugin } from './types/editor-plugins'
-import { ExtraRevisionViewInfo } from '@/schema/extra-revision-view-info'
 import type { PluginStaticRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { AnchorStaticRenderer } from '@/serlo-editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@/serlo-editor/plugins/article/static'
@@ -117,7 +116,7 @@ export function createRenderers(): PluginStaticRenderers {
     //     allowedPlugins: [EditorPluginType.Image],
     //   }),
     // },
-    // { type: EditorPluginType.Unsupported, renderer: unsupportedPlugin },
+    // { type: EditorPluginType.Unsupported, renderer: () => null },
     // { type: EditorPluginType.Exercise, renderer: exercisePlugin },
     // { type: EditorPluginType.Highlight, renderer: createHighlightPlugin() },
     // { type: EditorPluginType.H5p, renderer: H5pPlugin },
