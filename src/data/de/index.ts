@@ -814,6 +814,14 @@ export const loggedInData = {
           title: 'Audio',
           description: "Audioaufnahmen von Vocaroo einbinden",
           audioUrl: "Audio URL eingeben"
+        },
+        inputExercise: {
+          title: 'Input Exercise',
+          description: 'Solution can be text or math'
+        },
+        scMcExercise: {
+          title: 'SC/MC Exercise',
+          description: 'Single Choice or Multiple Choice'
         }
       },
       templatePlugins: {
@@ -901,7 +909,10 @@ export const loggedInData = {
           singleChoice: "Single Choice",
           multipleChoice: "Multiple Choice",
           chooseType: "Wähle den Antworttyp",
-          addAnswer: "Antwort hinzufügen"
+          addAnswer: "Antwort hinzufügen",
+          previewMode: 'Preview',
+          previewIsActiveHint: 'Preview mode is active',
+          previewIsDeactiveHint: 'Here you can edit'
         },
         solution: {
           optionalExplanation: "Beschreibe hier optional die Lösungsstrategie",
