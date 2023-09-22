@@ -6,7 +6,6 @@ const roadmapData = [
     steps: [
       'Integrate H5P exercises in Serlo Editor content',
       'Simple Autosave',
-      'Differentiate between new paragraph and new lines',
       'Slash command to add new plugin',
       'Import existing Serlo content',
       'Redesigned plugin toolbar',
@@ -15,8 +14,8 @@ const roadmapData = [
   {
     title: 'Next up',
     steps: [
-      'Directly link to content sections  ',
-      'Exercise generation with AI',
+      'Directly link to content sections',
+      'Exercise generation with AI ✨',
       'Improved focus management',
       'Integrated help section',
       'Audio plugin',
@@ -29,7 +28,6 @@ const roadmapData = [
       'Better keyboard navigation',
       'Impact dashboard – supporting authors with usage data',
       'Fill-in-the-gap exercise (new plugin)',
-      'Accessibility improvements for pictures using AI',
     ],
   },
   {
