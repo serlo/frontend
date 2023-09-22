@@ -816,12 +816,12 @@ export const loggedInData = {
           audioUrl: "Audio URL eingeben"
         },
         inputExercise: {
-          title: 'Input Exercise',
-          description: 'Solution can be text or math'
+          title: "Eingabefeld",
+          description: "Die Lösung kann Text oder eine Formel sein"
         },
         scMcExercise: {
-          title: 'SC/MC Exercise',
-          description: 'Single Choice or Multiple Choice'
+          title: "SC/MC Aufgabe",
+          description: "Single- oder Multiple Choice Aufgabe"
         }
       },
       templatePlugins: {
@@ -910,9 +910,9 @@ export const loggedInData = {
           multipleChoice: "Multiple Choice",
           chooseType: "Wähle den Antworttyp",
           addAnswer: "Antwort hinzufügen",
-          previewMode: 'Preview',
-          previewIsActiveHint: 'Preview mode is active',
-          previewIsDeactiveHint: 'Here you can edit'
+          previewMode: "Vorschau",
+          previewIsActiveHint: "Vorschaumodus ist aktiv",
+          previewIsDeactiveHint: "Hier kannst du bearbeiten"
         },
         solution: {
           optionalExplanation: "Beschreibe hier optional die Lösungsstrategie",
