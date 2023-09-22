@@ -91,7 +91,12 @@ export function InputExerciseEditor(props: InputExerciseProps) {
                   }
                   answer.isCorrect.set(!answer.isCorrect.value)
                 }}
-                remove={() => state.answers.remove(index)}
+                remove={() => {
+                  if (index === 0) {
+                    setFirstIsCorrectUnchanged(false)
+                  }
+                  state.answers.remove(index)
+                }}
               />
             )
           })}
