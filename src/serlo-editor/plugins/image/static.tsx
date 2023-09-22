@@ -6,9 +6,6 @@ import { EditorImagePlugin } from '@/serlo-editor-integration/types/editor-plugi
 // compats:
 // frontend version uses router atm.
 
-// // remove images without source
-//  if (!node.state.src) return []
-
 // if alt is not set construct plain string from caption
 // const alt = node.state.alt
 //   ? node.state.alt
@@ -28,6 +25,8 @@ export function ImageStaticRenderer({ state }: EditorImagePlugin) {
   //const router = useRouter()
   const { caption, src, link, alt, maxWidth: maxWidthNumber } = state
   const altFallback = useInstanceData().strings.content.imageAltFallback
+
+  if (!src) return null
 
   return (
     <ImageRenderer

@@ -4,9 +4,6 @@ import { ArticleNodeUuidLink } from '@/frontend-node-types'
 import { ArticleRenderer } from '@/serlo-editor/plugins/article/renderer'
 import { EditorArticlePlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
-// compat
-// do not display relatedContent section if there is no content
-
 export function ArticleStaticRenderer({ state }: EditorArticlePlugin) {
   const {
     introduction,
@@ -16,6 +13,7 @@ export function ArticleStaticRenderer({ state }: EditorArticlePlugin) {
     relatedContent,
     sources,
   } = state
+
   const hasMoreLink = exerciseFolder.id && exerciseFolder.title
   const hasExercises = exercises && exercises.length
 

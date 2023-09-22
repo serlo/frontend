@@ -10,7 +10,7 @@ import {
 
 export type AnyEditorPlugin = SupportedEditorPlugin | UnknownEditorPlugin
 interface StaticRendererProps {
-  state: AnyEditorPlugin | AnyEditorPlugin[]
+  state?: AnyEditorPlugin | AnyEditorPlugin[]
 }
 
 export function StaticRenderer({

@@ -1,5 +1,6 @@
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
+import { useInstanceData } from '@/contexts/instance-context'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
@@ -29,7 +30,11 @@ export default renderedPageNoHooks<EditorPageData>((props) => {
 
 function Content() {
   // simplest way to provide renderers to editor that can also easily be adapted by edusharing
-  editorRenderers.init(createRenderers())
+
+  const { lang } = useInstanceData()
+  editorRenderers.init(
+    createRenderers({ instance: lang, isRevisionView: false })
+  )
 
   return (
     <main id="content">

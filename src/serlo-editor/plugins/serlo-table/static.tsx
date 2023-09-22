@@ -16,7 +16,6 @@ export function SerloTableStaticRenderer({ state }: EditorSerloTablePlugin) {
       }) as JSX.Element[]) ?? <></>,
     }
   })
-  if (!rows) return null
 
   return (
     <div className="overflow-x-auto">
