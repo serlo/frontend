@@ -25,7 +25,7 @@ export function EquationsStaticRenderer({ state }: EditorEquationsPlugin) {
 
   function getSteps(): EquationsRendererStep[] {
     // @ts-expect-error maybe update root type
-    return steps.map((step, i) => {
+    return steps.map((step) => {
       // TODO: hasContent(step.explanation) ? (
       const explanation = <StaticRenderer state={step.explanation} />
       return {

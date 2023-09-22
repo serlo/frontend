@@ -6,13 +6,7 @@ import {
   AnyEditorPlugin,
   StaticRenderer,
 } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import {
-  EditorBoxPlugin,
-  EditorRowsPlugin,
-  EditorTextPlugin,
-  SupportedEditorPlugin,
-} from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorBoxPlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
 //compat
 
