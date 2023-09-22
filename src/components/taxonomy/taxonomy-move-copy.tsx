@@ -256,7 +256,7 @@ export function getPreviewStringFromExercise(
 
   const titleState =
     node.type === FrontendNodeType.Exercise
-      ? node.task.edtrState?.content
+      ? node.task.content?.content
       : node.content
 
   if (!titleState) return typeString

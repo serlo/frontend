@@ -16,7 +16,7 @@ import {
   UnknownEditorPlugin,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
-type CustomNode = CustomElement | CustomText
+type SlateElementOrText = CustomElement | CustomText
 
 function isSupportedEditorPlugin(
   node: ConvertData
@@ -29,12 +29,12 @@ function isSupportedEditorPlugin(
 export type ConvertData =
   | SupportedEditorPlugin
   | UnknownEditorPlugin
-  | FrontendContentNode
-  | CustomNode
+  // | FrontendContentNode
+  | SlateElementOrText
 
 export type ConvertNode = ConvertData | ConvertData[] | undefined
 
-export function isTextPluginState(node: ConvertData): node is CustomNode {
+function isTextPluginState(node: ConvertData): node is SlateElementOrText {
   return (
     (node as CustomElement).type !== undefined ||
     (node as CustomText).text !== undefined

@@ -4,6 +4,7 @@ import { RenderLeafProps } from 'slate-react'
 import { TextLeafRenderer } from './text-leaf-renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { tw } from '@/helper/tw'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 
 export function TextLeafWithPlaceholder(
@@ -34,7 +35,10 @@ export function TextLeafWithPlaceholder(
         {customPlaceholder ?? textStrings.placeholder}{' '}
         {onAdd ? (
           <button
-            className="serlo-button-editor-secondary serlo-tooltip-trigger pointer-events-auto z-20 h-8 w-8"
+            className={tw`
+              serlo-button-editor-secondary serlo-tooltip-trigger pointer-events-auto z-20
+              h-8 w-8 focus-within:z-[22] hover:z-[22]
+            `}
             onClick={onAdd}
           >
             <EditorTooltip

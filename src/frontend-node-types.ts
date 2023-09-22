@@ -256,9 +256,8 @@ export type FrontendInjectionNode = EditorInjectionPlugin & {
   pluginId?: string
 }
 
-interface BareSolution {
-  legacy?: FrontendContentNode[]
-  edtrState?: SolutionEditorState
+export interface BareSolution {
+  content?: SolutionEditorState
   license?: LicenseData
   trashed: boolean
 }
@@ -267,8 +266,7 @@ export interface FrontendExerciseNode {
   type: FrontendNodeType.Exercise
   trashed?: boolean
   task: {
-    legacy?: FrontendContentNode[]
-    edtrState?: TaskEditorState
+    content?: TaskEditorState
     license?: LicenseData
   }
   solution: BareSolution
@@ -300,7 +298,7 @@ export interface FrontendSolutionNode {
 }
 
 export interface TaskEditorState {
-  content: FrontendContentNode[] // edtr-io plugin "exercise"
+  content: FrontendContentNode[] // serlo-editor plugin "exercise"
   interactive?:
     | EditorPluginScMcExercise
     | EditorPluginInputExercise
