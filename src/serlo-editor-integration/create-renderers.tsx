@@ -1,3 +1,5 @@
+import dynamic from 'next/dynamic'
+
 import { EditorPluginType } from './types/editor-plugin-type'
 import {
   EditorAnchorPlugin,
@@ -16,7 +18,6 @@ import { BoxStaticRenderer } from '@/serlo-editor/plugins/box/static'
 import { EquationsStaticRenderer } from '@/serlo-editor/plugins/equations/static'
 import { parseId } from '@/serlo-editor/plugins/geogebra/renderer'
 import { GeogebraStaticRenderer } from '@/serlo-editor/plugins/geogebra/static'
-import { HighlightStaticRenderer } from '@/serlo-editor/plugins/highlight/static'
 import { ImageStaticRenderer } from '@/serlo-editor/plugins/image/static'
 import { InjectionStaticRenderer } from '@/serlo-editor/plugins/injection/static'
 import { MultimediaStaticRendererWithLightbox } from '@/serlo-editor/plugins/multimedia/static-with-dynamic-lightbox'
@@ -26,6 +27,12 @@ import { SpoilerStaticRenderer } from '@/serlo-editor/plugins/spoiler/static'
 import { TextStaticRenderer } from '@/serlo-editor/plugins/text/static'
 import { parseVideoUrl } from '@/serlo-editor/plugins/video/renderer'
 import { VideoStaticRenderer } from '@/serlo-editor/plugins/video/static'
+
+const HighlightStaticRenderer = dynamic<EditorHighlightPlugin>(() =>
+  import('@/serlo-editor/plugins/highlight/static').then(
+    (mod) => mod.HighlightStaticRenderer
+  )
+)
 
 export function createRenderers({
   instance,
