@@ -25,6 +25,9 @@ export function InputExerciseEditor(props: InputExerciseProps) {
   const [previewActive, setPreviewActive] = useState(false)
   const newestAnswerRef = useRef<HTMLInputElement>(null)
 
+  // Mark first answer as being correct by default
+  const [firstIsCorrectUnchanged, setFirstIsCorrectUnchanged] = useState(false)
+
   const renderer = (
     <InputExerciseRenderer
       type={state.type.value}
@@ -76,16 +79,27 @@ export function InputExerciseEditor(props: InputExerciseProps) {
                 }
                 feedback={answer.feedback.render()}
                 feedbackID={answer.feedback.id}
-                isActive={answer.isCorrect.value}
-                handleChange={() =>
-                  answer.isCorrect.set(!answer.isCorrect.value)
+                isActive={
+                  index === 0 && firstIsCorrectUnchanged
+                    ? true
+                    : answer.isCorrect.value
                 }
+                handleChange={() => {
+                  if (index === 0 && firstIsCorrectUnchanged) {
+                    setFirstIsCorrectUnchanged(false)
+                    return
+                  }
+                  answer.isCorrect.set(!answer.isCorrect.value)
+                }}
                 remove={() => state.answers.remove(index)}
               />
             )
           })}
           <AddButton
             onClick={() => {
+              if (state.answers.length === 0) {
+                setFirstIsCorrectUnchanged(true)
+              }
               state.answers.insert()
               setTimeout(() => {
                 dispatch(focus(id))
