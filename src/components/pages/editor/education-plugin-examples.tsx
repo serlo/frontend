@@ -691,7 +691,6 @@ export const SCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 3,
                 },
                 {
                   content: [
@@ -742,7 +741,6 @@ export const SCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 1,
                 },
                 {
                   content: [
@@ -811,7 +809,6 @@ export const SCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 2,
                 },
                 {
                   content: [
@@ -874,7 +871,6 @@ export const SCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 0,
                 },
               ],
             },
@@ -1003,7 +999,6 @@ export const MCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 2,
                 },
                 {
                   content: [
@@ -1037,7 +1032,6 @@ export const MCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 3,
                 },
                 {
                   content: [
@@ -1094,7 +1088,6 @@ export const MCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 1,
                 },
                 {
                   content: [
@@ -1128,7 +1121,6 @@ export const MCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 0,
                 },
               ],
             },

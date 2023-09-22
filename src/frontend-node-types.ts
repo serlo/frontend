@@ -323,7 +323,6 @@ export interface EditorPluginScMcExercise {
       isCorrect: boolean
       feedback: FrontendContentNode[]
       content: FrontendContentNode[]
-      originalIndex: number
     }[]
     isSingleChoice?: boolean
   }

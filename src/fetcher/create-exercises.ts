@@ -70,12 +70,11 @@ function createTaskData(raw?: string): TaskEditorState | undefined {
 
   if (taskState.interactive?.plugin === EditorPluginType.ScMcExercise) {
     const answers = shuffleArray(
-      taskState.interactive.state.answers.map((answer, i) => {
+      taskState.interactive.state.answers.map((answer) => {
         return {
           ...answer,
           content: convert(answer.content),
           feedback: convert(answer.feedback),
-          originalIndex: i,
         }
       })
     )

@@ -43,10 +43,9 @@ export function ScMcExercise({
       idBase={idBase}
       answers={state.answers
         .slice(0)
-        .map(({ isCorrect, feedback, content, originalIndex }) => {
+        .map(({ isCorrect, feedback, content }) => {
           return {
             isCorrect,
-            originalIndex,
             feedback: hasVisibleContent(feedback) ? (
               <>{renderNested(feedback)}</>
             ) : null,
