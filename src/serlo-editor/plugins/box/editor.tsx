@@ -36,6 +36,7 @@ export function BoxEditor(props: BoxProps) {
   const borderColorClass = Object.hasOwn(style, 'borderColorClass')
     ? style.borderColorClass
     : defaultStyle.borderColorClass
+
   const contentId = content.get()
   const isEmptyContent = useAppSelector((state) =>
     selectIsEmptyRows(state, contentId)
@@ -77,9 +78,11 @@ export function BoxEditor(props: BoxProps) {
         className={clsx(
           showToolbar && '[&>figure]:rounded-t-none',
           !focusWithin && editable && isEmptyContent ? 'opacity-30' : '',
+          // making space for first toolbar, not wysiwyg
+          '[&>figure>figcaption]:!mb-9',
+          // toolbar finetuning
           editable &&
             tw`
-            [&>figure>div]:!mt-8
             [&_.plugin-toolbar]:ml-[-2px]
             [&_.plugin-toolbar]:mr-[-16px]
             [&_.plugin-toolbar]:rounded-none
