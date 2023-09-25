@@ -76,7 +76,7 @@ export function BoxEditor(props: BoxProps) {
       <div
         className={clsx(
           showToolbar && '[&>figure]:rounded-t-none',
-          !focusWithin && editable && isEmptyContent ? 'opacity-50' : '',
+          !focusWithin && editable && isEmptyContent ? 'opacity-30' : '',
           editable &&
             tw`
             [&>figure>div]:!mt-8
@@ -104,8 +104,8 @@ export function BoxEditor(props: BoxProps) {
         >
           <div className="-ml-3 px-side">{content.render()}</div>
         </BoxRenderer>
+        {focusWithin ? renderWarning() : null}
       </div>
-      {focusWithin ? renderWarning() : null}
     </>
   )
 
@@ -136,8 +136,8 @@ export function BoxEditor(props: BoxProps) {
 
   function renderWarning() {
     return isEmptyContent && editable ? (
-      <div className="mt-1 text-right">
-        <span className="bg-editor-primary-100 p-0.5 text-sm">
+      <div className="text-side absolute left-10 -mt-[1.65rem]">
+        <span className="bg-editor-primary-100 px-1.5 py-0.5 text-sm">
           ⚠️ {editorStrings.plugins.box.emptyContentWarning}
         </span>
       </div>
