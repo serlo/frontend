@@ -80,7 +80,7 @@ export function BoxRenderer({ boxType, title, anchorId, children }: BoxProps) {
   function renderHeader() {
     return (
       <figcaption className="px-side pb-2 pt-2.5 text-lg">
-        <a className="!no-underline" id={anchorId}>
+        <a className="!no-underline">
           {isBlank ? null : (
             <>
               <span
