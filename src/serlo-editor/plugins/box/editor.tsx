@@ -15,11 +15,7 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { selectIsEmptyRows } from '@/serlo-editor/plugins/rows'
-import {
-  selectHasFocusedChild,
-  selectIsFocused,
-  useAppSelector,
-} from '@/serlo-editor/store'
+import { selectIsFocused, useAppSelector } from '@/serlo-editor/store'
 
 const titleFormattingOptions = [
   TextEditorFormattingOption.math,
@@ -47,12 +43,8 @@ export function BoxEditor(props: BoxProps) {
   const isTitleFocused = useAppSelector((state) =>
     selectIsFocused(state, title.id)
   )
-  const isContentFocused = useAppSelector((state) =>
-    selectHasFocusedChild(state, content.id)
-  )
 
   const showToolbar = focused || isTitleFocused
-  const focusWithin = focused || isContentFocused || isTitleFocused
 
   if (hasNoType) {
     return (
@@ -77,7 +69,7 @@ export function BoxEditor(props: BoxProps) {
       <div
         className={clsx(
           showToolbar && '[&>figure]:rounded-t-none',
-          !focusWithin && editable && isEmptyContent ? 'opacity-30' : '',
+          editable && isEmptyContent && 'opacity-30 focus-within:opacity-100 ',
           // making space for first toolbar, not wysiwyg
           '[&>figure>figcaption]:!mb-9',
           // toolbar finetuning
@@ -107,7 +99,7 @@ export function BoxEditor(props: BoxProps) {
         >
           <div className="-ml-3 px-side">{content.render()}</div>
         </BoxRenderer>
-        {focusWithin ? renderWarning() : null}
+        {renderWarning()}
       </div>
     </>
   )
@@ -139,7 +131,7 @@ export function BoxEditor(props: BoxProps) {
 
   function renderWarning() {
     return isEmptyContent && editable ? (
-      <div className="text-side absolute left-10 -mt-[1.65rem]">
+      <div className="box-warning text-side absolute left-10 -mt-[1.65rem]">
         <span className="bg-editor-primary-100 px-1.5 py-0.5 text-sm">
           ⚠️ {editorStrings.plugins.box.emptyContentWarning}
         </span>
