@@ -1,16 +1,15 @@
 import clsx from 'clsx'
 
 import type { BoxProps } from '.'
+import { EmptyWarning } from './components/empty-warning'
+import { TypeChooserBox } from './components/type-chooser-box'
 import {
   type BoxType,
   BoxRenderer,
   boxTypeStyle,
   defaultStyle,
-  types,
 } from './renderer'
 import { BoxToolbar } from './toolbar'
-import { FaIcon } from '@/components/fa-icon'
-import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
@@ -37,7 +36,7 @@ export function BoxEditor(props: BoxProps) {
   const isEmptyContent = useAppSelector((state) =>
     selectIsEmptyRows(state, contentId)
   )
-  const { strings } = useInstanceData()
+
   const editorStrings = useEditorStrings()
 
   const isTitleFocused = useAppSelector((state) =>
@@ -48,17 +47,7 @@ export function BoxEditor(props: BoxProps) {
 
   if (hasNoType) {
     return (
-      <>
-        <figure
-          className={clsx(
-            'relative mx-side rounded-xl border-3 p-4 pt-2',
-            borderColorClass
-          )}
-        >
-          <b className="block pb-3">{editorStrings.plugins.box.type}</b>
-          <ul className="unstyled-list">{renderSettingsListItems()}</ul>
-        </figure>
-      </>
+      <TypeChooserBox typeState={type} borderColorClass={borderColorClass} />
     )
   }
 
@@ -101,43 +90,8 @@ export function BoxEditor(props: BoxProps) {
         >
           <div className="-ml-3 px-side">{content.render()}</div>
         </BoxRenderer>
-        {renderWarning()}
+        {isEmptyContent && editable ? <EmptyWarning /> : null}
       </div>
     </>
   )
-
-  function renderSettingsListItems() {
-    return types.map((boxType) => {
-      const typedBoxType = boxType as BoxType
-      const listStyle = boxTypeStyle[typedBoxType]
-      const listIcon = Object.hasOwn(listStyle, 'icon')
-        ? listStyle.icon
-        : undefined
-
-      return (
-        <li key={typedBoxType} className="inline-block pb-3.5 pr-4">
-          <button
-            className="serlo-button-editor-secondary"
-            onClick={(event) => {
-              event.preventDefault()
-              type.set(typedBoxType)
-            }}
-          >
-            {listIcon ? <FaIcon className="mr-1" icon={listIcon} /> : null}
-            {strings.content.boxTypes[typedBoxType]}
-          </button>
-        </li>
-      )
-    })
-  }
-
-  function renderWarning() {
-    return isEmptyContent && editable ? (
-      <div className="box-warning text-side absolute left-10 -mt-[1.65rem]">
-        <span className="bg-editor-primary-100 px-1.5 py-0.5 text-sm">
-          ⚠️ {editorStrings.plugins.box.emptyContentWarning}
-        </span>
-      </div>
-    ) : null
-  }
 }
