@@ -28,7 +28,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   useEnableEditorHotkeys(id, plugin, focused)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const handleFocus = useCallback(
+  // main focus event
+  const handleMouseDown = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       // Find closest document
       const target = (e.target as HTMLDivElement).closest('[data-document]')
@@ -46,6 +47,31 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       }
     },
     [focused, id, dispatch, document]
+  )
+
+  // additional focus check to set focus when using tab navigation
+  const handleFocus = useCallback(
+    (e: React.FocusEvent) => {
+      // if after a short delay dom focus is not set inside focused plugin
+      // we overwrite it here (because it's probably because of tab navigation)
+      if (!document) return
+      if (['rows', 'exercise'].includes(document?.plugin)) return
+
+      const tabFocusTimeout = setTimeout(() => {
+        // fixes a bug in table plugin with disappearing buttons
+        if (e.target.nodeName?.toLowerCase() === 'button') return
+
+        // find closest document
+        const target = (e.target as HTMLDivElement).closest('[data-document]')
+
+        if (!focused && target === containerRef.current) {
+          dispatch(focus(id))
+        }
+      }, 10)
+
+      return () => clearTimeout(tabFocusTimeout)
+    },
+    [document, focused, dispatch, id]
   )
 
   return useMemo(() => {
@@ -106,7 +132,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
             ? ''
             : 'plugin-wrapper-container relative -ml-[7px] mb-6 min-h-[10px] pl-[5px]'
         )}
-        onMouseDown={handleFocus}
+        onMouseDown={handleMouseDown}
+        onFocus={handleFocus}
         ref={containerRef}
         data-document
         tabIndex={-1}
@@ -122,5 +149,14 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         />
       </div>
     )
-  }, [document, plugin, pluginProps, handleFocus, focused, id, dispatch])
+  }, [
+    document,
+    plugin,
+    pluginProps,
+    handleMouseDown,
+    handleFocus,
+    focused,
+    id,
+    dispatch,
+  ])
 }
