@@ -58,12 +58,12 @@ export function BoxEditor(props: BoxProps) {
       <>
         <figure
           className={clsx(
-            'relative rounded-xl border-3 p-4 pt-2',
+            'relative mx-side rounded-xl border-3 p-4 pt-2',
             borderColorClass
           )}
         >
-          <b className="block pb-4">{editorStrings.plugins.box.type}</b>
-          <ul className="unstyled-list pb-8">{renderSettingsListItems()}</ul>
+          <b className="block pb-3">{editorStrings.plugins.box.type}</b>
+          <ul className="unstyled-list">{renderSettingsListItems()}</ul>
         </figure>
       </>
     )
@@ -118,7 +118,7 @@ export function BoxEditor(props: BoxProps) {
         : undefined
 
       return (
-        <li key={typedBoxType} className="inline-block pb-4 pr-4">
+        <li key={typedBoxType} className="inline-block pb-3.5 pr-4">
           <button
             className="serlo-button-editor-secondary"
             onClick={(event) => {
