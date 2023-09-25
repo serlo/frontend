@@ -12,7 +12,6 @@ export default renderedPageNoHooks(() => {
     initialState: {
       plugin: TemplatePluginType.Page,
     },
-    converted: false,
     type: UuidType.Page,
     entityNeedsReview: false,
     errorType: 'none',

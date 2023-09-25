@@ -262,7 +262,7 @@ function ExerciseWrapper({
       (element.children && solved.includes(element.children[index].context.id)))
 
   if (element.type === FrontendNodeType.Exercise) {
-    element.task.edtrState!.content = element.task.edtrState!.content.filter(
+    element.task.content!.content = element.task.content!.content.filter(
       (x) => {
         if (x.children && x.children[0].type === FrontendNodeType.H) {
           return false

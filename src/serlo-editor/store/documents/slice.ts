@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import type {
+  InsertAndFocusDocumentAction,
   PureChangeDocumentAction,
   PureInsertDocumentAction,
   PureRemoveDocumentAction,
@@ -14,6 +15,16 @@ export const documentsSlice = createSlice({
   name: 'documents',
   initialState,
   reducers: {
+    // The insert action with a side effect:
+    // Focus the newly inserted document (see `focus` slice)
+    insertAndFocusDocument(state, action: InsertAndFocusDocumentAction) {
+      const { id, plugin: type, state: pluginState } = action.payload
+      state[id] = {
+        plugin: type,
+        state: pluginState,
+      }
+    },
+    // The pure insert action (no side effects)
     pureInsertDocument(state, action: PureInsertDocumentAction) {
       const { id, plugin: type, state: pluginState } = action.payload
       state[id] = {
@@ -40,6 +51,7 @@ export const documentsSlice = createSlice({
 })
 
 export const {
+  insertAndFocusDocument,
   pureInsertDocument,
   pureRemoveDocument,
   pureChangeDocument,

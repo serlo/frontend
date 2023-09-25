@@ -24,7 +24,6 @@ export function ArticleExercises({
       {exercises.map((exercise, index) => (
         <Fragment key={exercise.id}>
           <>
-            {/* TODO: actually pass something down to prevent toolbar showing instead of this hack */}
             <div className="[&_.plugin-toolbar]:!hidden">
               {editable ? (
                 <nav className="flex justify-end">

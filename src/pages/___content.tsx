@@ -39,7 +39,7 @@ const ContentPage: NextPage = () => {
         <ul>{renderLis(entities)}</ul>
         <h2>Review Types</h2>…<h2>Special Cases</h2>
         <ul>{renderLis(specialCases)}</ul>
-        <h2>Edtr Test</h2>
+        <h2>Editor Test</h2>
         <ul>{renderLis(entities, true)}</ul>
       </nav>
       <iframe name="show" />
@@ -47,12 +47,12 @@ const ContentPage: NextPage = () => {
     </>
   )
 
-  function renderLis(lis: typeof entities, edtr?: boolean) {
+  function renderLis(lis: typeof entities, editor?: boolean) {
     return lis.map(([name, id]) => (
       <li key={name}>
         <a
           href={
-            edtr
+            editor
               ? getEditUrl(
                   id as number,
                   undefined,

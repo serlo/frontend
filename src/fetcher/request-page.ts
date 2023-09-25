@@ -1,7 +1,7 @@
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
-import { convertState } from './convert-state'
+import { convertStateStringToFrontendNode } from './convert-state-string-to-frontend-node'
 import { createBreadcrumbs } from './create-breadcrumbs'
 import { createExercise, createExerciseGroup } from './create-exercises'
 import { createHorizon } from './create-horizon'
@@ -219,7 +219,9 @@ export async function requestPage(
     }
   }
 
-  const content = convertState(uuid.currentRevision?.content)
+  const content = convertStateStringToFrontendNode(
+    uuid.currentRevision?.content
+  )
 
   if (uuid.__typename === UuidType.Event) {
     return {
