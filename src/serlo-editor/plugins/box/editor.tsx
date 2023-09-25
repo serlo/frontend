@@ -15,7 +15,11 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { selectIsEmptyRows } from '@/serlo-editor/plugins/rows'
-import { selectIsFocused, useAppSelector } from '@/serlo-editor/store'
+import {
+  selectHasFocusedChild,
+  selectIsFocused,
+  useAppSelector,
+} from '@/serlo-editor/store'
 
 const titleFormattingOptions = [
   TextEditorFormattingOption.math,
@@ -33,7 +37,7 @@ export function BoxEditor(props: BoxProps) {
     ? style.borderColorClass
     : defaultStyle.borderColorClass
   const contentId = content.get()
-  const contentIsEmpty = useAppSelector((state) =>
+  const isEmptyContent = useAppSelector((state) =>
     selectIsEmptyRows(state, contentId)
   )
   const { strings } = useInstanceData()
@@ -42,8 +46,12 @@ export function BoxEditor(props: BoxProps) {
   const isTitleFocused = useAppSelector((state) =>
     selectIsFocused(state, title.id)
   )
+  const isContentFocused = useAppSelector((state) =>
+    selectHasFocusedChild(state, content.id)
+  )
 
-  const hasFocus = focused || isTitleFocused
+  const showToolbar = focused || isTitleFocused
+  const focusWithin = focused || isContentFocused || isTitleFocused
 
   if (hasNoType) {
     return (
@@ -63,11 +71,12 @@ export function BoxEditor(props: BoxProps) {
 
   return (
     <>
-      {hasFocus ? <BoxToolbar {...props} /> : null}
+      {showToolbar ? <BoxToolbar {...props} /> : null}
 
       <div
         className={clsx(
-          hasFocus && '[&>figure]:rounded-t-none',
+          showToolbar && '[&>figure]:rounded-t-none',
+          !focusWithin && editable && isEmptyContent ? 'opacity-50' : '',
           editable &&
             tw`
             [&>figure>div]:!mt-8
@@ -96,7 +105,7 @@ export function BoxEditor(props: BoxProps) {
           <div className="-ml-3 px-side">{content.render()}</div>
         </BoxRenderer>
       </div>
-      {renderWarning()}
+      {focusWithin ? renderWarning() : null}
     </>
   )
 
@@ -115,7 +124,6 @@ export function BoxEditor(props: BoxProps) {
             onClick={(event) => {
               event.preventDefault()
               type.set(typedBoxType)
-              if (anchorId.value === '') generateAnchorId()
             }}
           >
             {listIcon ? <FaIcon className="mr-1" icon={listIcon} /> : null}
@@ -126,12 +134,8 @@ export function BoxEditor(props: BoxProps) {
     })
   }
 
-  function generateAnchorId() {
-    anchorId.set(`box${Math.floor(10000 + Math.random() * 90000)}`)
-  }
-
   function renderWarning() {
-    return contentIsEmpty && props.editable ? (
+    return isEmptyContent && editable ? (
       <div className="mt-1 text-right">
         <span className="bg-editor-primary-100 p-0.5 text-sm">
           ⚠️ {editorStrings.plugins.box.emptyContentWarning}
