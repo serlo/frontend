@@ -69,7 +69,9 @@ export function BoxEditor(props: BoxProps) {
       <div
         className={clsx(
           showToolbar && '[&>figure]:rounded-t-none',
-          editable && isEmptyContent && 'opacity-30 focus-within:opacity-100 ',
+          'transition-opacity',
+          editable && isEmptyContent && 'opacity-30 focus-within:opacity-100',
+          showToolbar && '!opacity-100 ',
           // making space for first toolbar, not wysiwyg
           '[&>figure>figcaption]:!mb-9',
           // toolbar finetuning
