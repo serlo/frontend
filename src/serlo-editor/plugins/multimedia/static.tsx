@@ -24,8 +24,11 @@ export function MultimediaStaticRenderer({
       media={<StaticRenderer state={multimedia} />}
       explanation={<StaticRenderer state={explanation} />}
       mediaWidth={mediaWidth ?? 50}
-      onClick={setOpen ? () => setOpen(true) : undefined}
-      extraImageClass={setOpen ? 'mobile:cursor-zoom-in' : ''}
+      onClick={({ target }: React.MouseEvent<HTMLDivElement>) => {
+        if (!setOpen || (target as HTMLElement).tagName !== 'IMG') return
+        setOpen(true)
+      }}
+      extraImageClass={setOpen ? 'mobile:[&_img]:cursor-zoom-in' : ''}
     />
   )
 }
