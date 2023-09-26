@@ -1,6 +1,6 @@
 import {
-  isCustomTextEmpty,
-  isDescendantEmpty,
+  isEmptyCustomText,
+  isEmptyDescendant,
 } from '@/serlo-editor/plugins/text/utils/static-is-empty'
 
 const text = { text: 'abc123' }
@@ -20,22 +20,22 @@ const emptyMath = {
 
 describe('text-plugin: isCustomTextEmpty', () => {
   test('empty string', () => {
-    const result = isCustomTextEmpty(emptyText)
+    const result = isEmptyCustomText(emptyText)
     expect(result).toBe(true)
   })
 
   test('string "123', () => {
-    const result = isCustomTextEmpty(text)
+    const result = isEmptyCustomText(text)
     expect(result).toBe(false)
   })
 
   test('string only spaces', () => {
-    const result = isCustomTextEmpty({ text: '   ' })
+    const result = isEmptyCustomText({ text: '   ' })
     expect(result).toBe(true)
   })
 
   test('empty string but other fields', () => {
-    const result = isCustomTextEmpty({
+    const result = isEmptyCustomText({
       text: '',
       strong: true,
       color: 3,
@@ -46,27 +46,27 @@ describe('text-plugin: isCustomTextEmpty', () => {
 
 describe('text-plugin: isDescendantEmpty', () => {
   test('empty string', () => {
-    const result = isDescendantEmpty(emptyText)
+    const result = isEmptyDescendant(emptyText)
     expect(result).toBe(true)
   })
 
   test('string "123', () => {
-    const result = isDescendantEmpty(text)
+    const result = isEmptyDescendant(text)
     expect(result).toBe(false)
   })
 
   test('empty paragraph', () => {
-    const result = isDescendantEmpty({ type: 'p', children: [emptyText] })
+    const result = isEmptyDescendant({ type: 'p', children: [emptyText] })
     expect(result).toBe(true)
   })
 
   test('paragraph with content', () => {
-    const result = isDescendantEmpty({ type: 'p', children: [text] })
+    const result = isEmptyDescendant({ type: 'p', children: [text] })
     expect(result).toBe(false)
   })
 
   test('paragraph with one empty and one with content child', () => {
-    const result = isDescendantEmpty({
+    const result = isEmptyDescendant({
       type: 'p',
       children: [emptyText, text],
     })
@@ -74,22 +74,22 @@ describe('text-plugin: isDescendantEmpty', () => {
   })
 
   test('paragraph with math', () => {
-    const result = isDescendantEmpty({ type: 'p', children: [math] })
+    const result = isEmptyDescendant({ type: 'p', children: [math] })
     expect(result).toBe(false)
   })
 
   test('paragraph with empty math', () => {
-    const result = isDescendantEmpty({ type: 'p', children: [emptyMath] })
+    const result = isEmptyDescendant({ type: 'p', children: [emptyMath] })
     expect(result).toBe(true)
   })
 
   test('paragraph with empty math and text', () => {
-    const result = isDescendantEmpty({ type: 'p', children: [emptyMath, text] })
+    const result = isEmptyDescendant({ type: 'p', children: [emptyMath, text] })
     expect(result).toBe(false)
   })
 
   test('paragraph with empty header', () => {
-    const result = isDescendantEmpty({
+    const result = isEmptyDescendant({
       type: 'h',
       level: 2,
       children: [emptyText],

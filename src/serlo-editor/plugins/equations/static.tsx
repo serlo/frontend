@@ -1,4 +1,4 @@
-import { isTextPluginEmpty } from '../text/utils/static-is-empty'
+import { isEmptyTextPlugin } from '../text/utils/static-is-empty'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import {
   EquationsRenderer,
@@ -21,7 +21,7 @@ export function EquationsStaticRenderer({ state }: EditorEquationsPlugin) {
   )
 
   function getFirstExplanation() {
-    return isTextPluginEmpty(firstExplanation) ? null : (
+    return isEmptyTextPlugin(firstExplanation) ? null : (
       <StaticRenderer state={firstExplanation} />
     )
   }
@@ -29,7 +29,7 @@ export function EquationsStaticRenderer({ state }: EditorEquationsPlugin) {
   function getSteps(): EquationsRendererStep[] {
     // @ts-expect-error maybe update root type
     return steps.map((step) => {
-      const explanation = isTextPluginEmpty(step.explanation) ? null : (
+      const explanation = isEmptyTextPlugin(step.explanation) ? null : (
         <StaticRenderer state={step.explanation} />
       )
       return {

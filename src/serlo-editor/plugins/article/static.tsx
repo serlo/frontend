@@ -1,8 +1,12 @@
 import { StaticRenderer } from '../../static-renderer/static-renderer'
+import { isEmptyTextPlugin } from '../text/utils/static-is-empty'
 import { Link } from '@/components/content/link'
 import { ArticleNodeUuidLink } from '@/frontend-node-types'
 import { ArticleRenderer } from '@/serlo-editor/plugins/article/renderer'
-import { EditorArticlePlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import {
+  EditorArticlePlugin,
+  EditorMultimediaPlugin,
+} from '@/serlo-editor-integration/types/editor-plugins'
 
 export function ArticleStaticRenderer({ state }: EditorArticlePlugin) {
   const {
@@ -17,9 +21,15 @@ export function ArticleStaticRenderer({ state }: EditorArticlePlugin) {
   const hasMoreLink = exerciseFolder.id && exerciseFolder.title
   const hasExercises = exercises && exercises.length
 
+  const introductionOrNull = isEmptyTextPlugin(
+    (introduction as EditorMultimediaPlugin).state.explanation
+  ) ? null : (
+    <StaticRenderer state={{ ...introduction, plugin: 'multimedia' }} />
+  )
+
   return (
     <ArticleRenderer
-      introduction={<StaticRenderer state={introduction} />}
+      introduction={introductionOrNull}
       content={<StaticRenderer state={content} />}
       exercises={hasExercises ? <StaticRenderer state={exercises} /> : null}
       exercisesFolder={

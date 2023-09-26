@@ -20,13 +20,16 @@ import { EquationsStaticRenderer } from '@/serlo-editor/plugins/equations/static
 import { ExerciseStaticRenderer } from '@/serlo-editor/plugins/exercise/static'
 import { parseId } from '@/serlo-editor/plugins/geogebra/renderer'
 import { GeogebraStaticRenderer } from '@/serlo-editor/plugins/geogebra/static'
+import { H5pStaticRenderer } from '@/serlo-editor/plugins/h5p/static'
 import { ImageStaticRenderer } from '@/serlo-editor/plugins/image/static'
 import { InjectionStaticRenderer } from '@/serlo-editor/plugins/injection/static'
+import { InputExerciseStaticRenderer } from '@/serlo-editor/plugins/input-exercise/static'
 import { MultimediaStaticRendererWithLightbox } from '@/serlo-editor/plugins/multimedia/static-with-dynamic-lightbox'
 import { PageLayoutStaticRenderer } from '@/serlo-editor/plugins/page-layout/static'
 import { PagePartnersStaticRenderer } from '@/serlo-editor/plugins/page-partners/static'
 import { PageTeamStaticRenderer } from '@/serlo-editor/plugins/page-team/static'
 import { RowsStaticRenderer } from '@/serlo-editor/plugins/rows/static'
+import { ScMcExerciseStaticRenderer } from '@/serlo-editor/plugins/sc-mc-exercise/static'
 import { SerloTableStaticRenderer } from '@/serlo-editor/plugins/serlo-table/static'
 import { StaticSolutionRenderer } from '@/serlo-editor/plugins/solution/static'
 import { SpoilerStaticRenderer } from '@/serlo-editor/plugins/spoiler/static'
@@ -156,14 +159,6 @@ export function createRenderers({
           )
         },
       },
-      // ...(isProduction
-      //   ? []
-      //   : [
-      //       {
-      //         type: EditorPluginType.Audio,
-      //         renderer: audioPlugin,
-      //       } as PluginWithData,
-      //     ]),
       {
         type: EditorPluginType.Anchor,
         renderer: (state: EditorAnchorPlugin) => (
@@ -177,11 +172,6 @@ export function createRenderers({
           </>
         ),
       },
-      // {
-      //   type: EditorPluginType.PasteHack,
-      //   renderer: PasteHackStaticRenderer,
-      //   visibleInSuggestions: shouldUseFeature('edtrPasteHack'),
-      // },
 
       // only for pages
       {
@@ -196,18 +186,6 @@ export function createRenderers({
         type: EditorPluginType.PagePartners,
         renderer: PagePartnersStaticRenderer,
       },
-      // {
-      //   type: EditorPluginType.ArticleIntroduction,
-      //   renderer: ArticleIntroductionStaticRenderer{
-      //     explanation: {
-      //       renderer: EditorPluginType.Text,
-      //       config: {
-      //         placeholder: editorStrings.templatePlugins.article.writeShortIntro,
-      //       },
-      //     },
-      //     allowedPlugins: [EditorPluginType.Image],
-      //   }),
-      // },
       // { type: EditorPluginType.Unsupported, renderer: () => null },
       { type: EditorPluginType.Exercise, renderer: ExerciseStaticRenderer },
       {
@@ -221,14 +199,20 @@ export function createRenderers({
           )
         },
       },
-      // { type: EditorPluginType.H5p, renderer: H5pPlugin },
-      // {
-      //   type: EditorPluginType.InputExercise,
-      //   renderer: InputExerciseStaticRenderer,
-      // },
-      // { type: EditorPluginType.Layout, renderer: layoutPlugin },
+      { type: EditorPluginType.H5p, renderer: H5pStaticRenderer },
+      {
+        type: EditorPluginType.InputExercise,
+        renderer: InputExerciseStaticRenderer,
 
-      // { type: EditorPluginType.ScMcExercise, renderer: createScMcExercisePlugin() },
+        // TODO: add frontend stuff
+        // answers = { renderAnswers() }
+        // onEvaluate = { onEvaluate }
+        // { isRevisionView && renderRevisionExtra() }
+      },
+      {
+        type: EditorPluginType.ScMcExercise,
+        renderer: ScMcExerciseStaticRenderer,
+      },
       { type: EditorPluginType.Solution, renderer: StaticSolutionRenderer },
 
       // // Internal plugins for our content types
