@@ -23,6 +23,9 @@ import { GeogebraStaticRenderer } from '@/serlo-editor/plugins/geogebra/static'
 import { ImageStaticRenderer } from '@/serlo-editor/plugins/image/static'
 import { InjectionStaticRenderer } from '@/serlo-editor/plugins/injection/static'
 import { MultimediaStaticRendererWithLightbox } from '@/serlo-editor/plugins/multimedia/static-with-dynamic-lightbox'
+import { PageLayoutStaticRenderer } from '@/serlo-editor/plugins/page-layout/static'
+import { PagePartnersStaticRenderer } from '@/serlo-editor/plugins/page-partners/static'
+import { PageTeamStaticRenderer } from '@/serlo-editor/plugins/page-team/static'
 import { RowsStaticRenderer } from '@/serlo-editor/plugins/rows/static'
 import { SerloTableStaticRenderer } from '@/serlo-editor/plugins/serlo-table/static'
 import { StaticSolutionRenderer } from '@/serlo-editor/plugins/solution/static'
@@ -180,22 +183,19 @@ export function createRenderers({
       //   visibleInSuggestions: shouldUseFeature('edtrPasteHack'),
       // },
 
-      // only for plugins
-      // {
-      //   type: EditorPluginType.PageLayout,
-      //   renderer: PageLayoutStaticRenderer,
-      //   visibleInSuggestions: isPage,
-      // },
-      // {
-      //   type: EditorPluginType.PageTeam,
-      //   renderer: PageTeamStaticRenderer,
-      //   visibleInSuggestions: isPage,
-      // },
-      // {
-      //   type: EditorPluginType.PagePartners,
-      //   renderer: PagePartnersStaticRenderer,
-      //   visibleInSuggestions: isPage,
-      // },
+      // only for pages
+      {
+        type: EditorPluginType.PageLayout,
+        renderer: PageLayoutStaticRenderer,
+      },
+      {
+        type: EditorPluginType.PageTeam,
+        renderer: PageTeamStaticRenderer,
+      },
+      {
+        type: EditorPluginType.PagePartners,
+        renderer: PagePartnersStaticRenderer,
+      },
       // {
       //   type: EditorPluginType.ArticleIntroduction,
       //   renderer: ArticleIntroductionStaticRenderer{
