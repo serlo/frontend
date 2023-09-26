@@ -1,3 +1,4 @@
+import { checkIsAllowedNesting } from '../utils/check-is-allowed-nesting'
 import {
   store,
   selectAncestorDocumentIds,
@@ -7,7 +8,6 @@ import {
   selectChildTreeOfParent,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import { checkIsAllowedNesting } from '../utils/check-is-allowed-nesting'
 
 export function useCanDrop(
   id: string,

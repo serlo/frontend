@@ -27,8 +27,7 @@ import { RowsStaticRenderer } from '@/serlo-editor/plugins/rows/static'
 import { SerloTableStaticRenderer } from '@/serlo-editor/plugins/serlo-table/static'
 import { StaticSolutionRenderer } from '@/serlo-editor/plugins/solution/static'
 import { SpoilerStaticRenderer } from '@/serlo-editor/plugins/spoiler/static'
-import { MathElement } from '@/serlo-editor/plugins/text'
-import { StaticMath } from '@/serlo-editor/plugins/text/components/static-math'
+import type { MathElement } from '@/serlo-editor/plugins/text'
 import { TextStaticRenderer } from '@/serlo-editor/plugins/text/static'
 import { parseVideoUrl } from '@/serlo-editor/plugins/video/renderer'
 import { VideoStaticRenderer } from '@/serlo-editor/plugins/video/static'
@@ -36,6 +35,12 @@ import { VideoStaticRenderer } from '@/serlo-editor/plugins/video/static'
 const HighlightStaticRenderer = dynamic<EditorHighlightPlugin>(() =>
   import('@/serlo-editor/plugins/highlight/static').then(
     (mod) => mod.HighlightStaticRenderer
+  )
+)
+
+const StaticMath = dynamic<MathElement>(() =>
+  import('@/serlo-editor/plugins/text/components/static-math').then(
+    (mod) => mod.StaticMath
   )
 )
 

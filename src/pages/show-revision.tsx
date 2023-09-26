@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
@@ -7,18 +6,11 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
-import { MathElement } from '@/serlo-editor/plugins/text'
 import {
   AnyEditorPlugin,
   StaticRenderer,
 } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-
-const StaticMath = dynamic<MathElement>(() =>
-  import('@/serlo-editor/plugins/text/components/static-math').then(
-    (mod) => mod.StaticMath
-  )
-)
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
   return (

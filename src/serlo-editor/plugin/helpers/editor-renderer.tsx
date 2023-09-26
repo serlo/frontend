@@ -33,7 +33,7 @@ export const editorRenderers = (function () {
   }
 
   function getAll() {
-    if (!allRenderers) throw new Error('init editor plugins first')
+    if (!allRenderers) throw new Error('init static editor renderers first')
 
     return allRenderers
   }
@@ -50,7 +50,7 @@ export const editorRenderers = (function () {
   }
 
   function getMathRenderer() {
-    if (!mathRenderer) throw new Error('init editor plugins first')
+    if (!mathRenderer) throw new Error('init static editor renderers first')
     return mathRenderer
   }
 
