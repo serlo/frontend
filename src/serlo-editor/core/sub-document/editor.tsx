@@ -57,7 +57,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
       // if after a short delay dom focus is not set inside focused plugin
       // we overwrite it here (because it's probably because of tab navigation)
-      const tabFocusTimeout = setTimeout(() => {
+      setTimeout(() => {
         // fixes a bug in table plugin with disappearing buttons
         if (e.target.nodeName?.toLowerCase() === 'button') return
 
@@ -67,9 +67,9 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         if (!focused && target === containerRef.current) {
           dispatch(focus(id))
         }
+        // 10ms is an arbitrary value:
+        // as low as possible but after the other focus handler is done rerendering
       }, 10)
-
-      return () => clearTimeout(tabFocusTimeout)
     },
     [document, focused, dispatch, id]
   )
