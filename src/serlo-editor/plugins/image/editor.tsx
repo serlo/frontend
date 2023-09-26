@@ -73,10 +73,7 @@ export function ImageEditor(props: ImageProps) {
         />
       ) : null}
 
-      <div
-        className="relative z-[2] [&_img]:min-h-[4rem]"
-        data-qa="plugin-image-editor"
-      >
+      <div className="z-[2] [&_img]:min-h-[4rem]" data-qa="plugin-image-editor">
         {hasFocus && showInlineImageUrl ? (
           <div className="absolute left-side top-side z-[3]">
             <InlineSrcControls {...props} urlInputRef={urlInputRef} />
