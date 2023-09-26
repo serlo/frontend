@@ -1,19 +1,14 @@
 import { Element } from 'slate'
 
+import { isEmptyRowsPlugin } from '../rows/utils/static-is-empty'
 import { StaticSlate } from '../text/static-slate'
 import { BoxRenderer, BoxType } from '@/serlo-editor/plugins/box/renderer'
-import {
-  AnyEditorPlugin,
-  StaticRenderer,
-} from '@/serlo-editor/static-renderer/static-renderer'
+import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorBoxPlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
-//compat
+// Not sure if this is still needed:
 
-// TODO: return null if content is empty
-
-// TODO: check math / inline math in title
-// honestly I'm not sure what this does
+// get rid of wrapping p and inline math in title
 // const convertedTitle = convert(
 //   node.state.title as SupportedEditorPlugin
 // )[0] as FrontendTextNode | FrontendMathNode | undefined
@@ -25,44 +20,24 @@ import { EditorBoxPlugin } from '@/serlo-editor-integration/types/editor-plugins
 
 export function BoxStaticRenderer({ state }: EditorBoxPlugin) {
   const { type: boxType, title, anchorId, content } = state
-  if (!content || !boxType) return null
-
-  console.log(content)
-
-  isEmptyRowsPlugin(content)
+  if (!content || !boxType || isEmptyRowsPlugin(content)) return null
 
   // get rid of wrapping p
   const unwrappedTitle = (title.state as Element[])[0].children[0]
 
+  const boldTitle = unwrappedTitle ? (
+    <b>
+      <StaticSlate element={unwrappedTitle} />
+    </b>
+  ) : undefined
+
   return (
     <BoxRenderer
       boxType={boxType as BoxType}
-      title={
-        unwrappedTitle ? (
-          <b>
-            <StaticSlate element={unwrappedTitle} />
-          </b>
-        ) : undefined
-      }
+      title={boldTitle}
       anchorId={anchorId}
     >
       <StaticRenderer state={content} />
     </BoxRenderer>
   )
-}
-
-function isEmptyRowsPlugin(content: AnyEditorPlugin) {
-  const stringified = JSON.stringify(content)
-  console.log(stringified)
-
-  if (stringified.length > 300) return false
-
-  const regex = new RegExp('"text":".+"', 'g')
-
-  const hasText = regex.test(stringified)
-
-  console.log(hasText)
-  // if (stringified.includes('"text":""') && )
-  //   const test = '{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}],"id":"8b219220-b7b1-44e3-98a9-f63b68ab77d6"}],"id":"0b903c04-830d-4633-ab90-b87653757ad9"}
-  // '
 }

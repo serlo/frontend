@@ -1,6 +1,19 @@
 import { MultimediaRenderer } from './renderer'
+import { isEmptyRowsPlugin } from '../rows/utils/static-is-empty'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorMultimediaPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import {
+  EditorAudioPlugin,
+  EditorGeogebraPlugin,
+  EditorImagePlugin,
+  EditorMultimediaPlugin,
+  EditorVideoPlugin,
+} from '@/serlo-editor-integration/types/editor-plugins'
+
+type MultimediaChild =
+  | EditorImagePlugin
+  | EditorVideoPlugin
+  | EditorAudioPlugin
+  | EditorGeogebraPlugin
 
 export function MultimediaStaticRenderer({
   state,
@@ -8,16 +21,7 @@ export function MultimediaStaticRenderer({
 }: EditorMultimediaPlugin & { setOpen?: (arg: boolean) => void }) {
   const { explanation, multimedia, width: mediaWidth } = state
 
-  // TODO: hide empty plugins
-  const isEmpty = false
-  // const isEmpty =
-  //   !mediaChild &&
-  //   children.length === 1 &&
-  //   children[0] &&
-  //   children[0].children?.length === 1 &&
-  //   children[0].children?.[0].children?.length === 0
-
-  if (isEmpty) return null
+  if (isEmptyMedia() && isEmptyRowsPlugin(explanation)) return null
 
   return (
     <MultimediaRenderer
@@ -31,4 +35,12 @@ export function MultimediaStaticRenderer({
       extraImageClass={setOpen ? 'mobile:[&_img]:cursor-zoom-in' : ''}
     />
   )
+
+  function isEmptyMedia() {
+    const media = multimedia as MultimediaChild
+    const src = String(
+      media.plugin === 'geogebra' ? media.state : media.state?.src
+    )
+    return !src || src.length < 10
+  }
 }

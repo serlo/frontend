@@ -3,6 +3,7 @@ import { Descendant } from 'slate'
 
 import { TextLeafRenderer } from './components/text-leaf-renderer'
 import { ListElementType } from './types/text-editor'
+import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 
 export function StaticSlate({
   element,
@@ -67,16 +68,8 @@ export function StaticSlate({
       )
     }
     if (element.type === 'math') {
-      return (
-        <>MATH💙</>
-        // <MathElement
-        //   element={element}
-        //   attributes={attributes}
-        //   focused={false}
-        // >
-        //   {children}
-        // </MathElement>
-      )
+      const MathRenderer = editorRenderers.getMathRenderer()
+      return <MathRenderer {...element} />
     }
     return (
       <p className="slate-p serlo-p mb-0 min-h-[1.33em]">

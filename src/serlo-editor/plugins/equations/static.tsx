@@ -1,3 +1,5 @@
+import { isTextPluginEmpty } from '../text/utils/static-is-empty'
+import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import {
   EquationsRenderer,
   EquationsRendererStep,
@@ -5,11 +7,10 @@ import {
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorEquationsPlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
-// compats
-// sanitizeLatex
-
 export function EquationsStaticRenderer({ state }: EditorEquationsPlugin) {
   const { steps, firstExplanation, transformationTarget } = state
+  const MathRenderer = editorRenderers.getMathRenderer()
+
   return (
     <EquationsRenderer
       firstExplanation={getFirstExplanation()}
@@ -20,17 +21,17 @@ export function EquationsStaticRenderer({ state }: EditorEquationsPlugin) {
   )
 
   function getFirstExplanation() {
-    // return hasContent(firstExplanation) ? (
-    // TODO: check if has content
-    return <StaticRenderer state={firstExplanation} />
-    // ) : null
+    return isTextPluginEmpty(firstExplanation) ? null : (
+      <StaticRenderer state={firstExplanation} />
+    )
   }
 
   function getSteps(): EquationsRendererStep[] {
     // @ts-expect-error maybe update root type
     return steps.map((step) => {
-      // TODO: hasContent(step.explanation) ? (
-      const explanation = <StaticRenderer state={step.explanation} />
+      const explanation = isTextPluginEmpty(step.explanation) ? null : (
+        <StaticRenderer state={step.explanation} />
+      )
       return {
         ...step,
         explanation,
@@ -39,18 +40,14 @@ export function EquationsStaticRenderer({ state }: EditorEquationsPlugin) {
   }
 
   function formulaRenderer(formula: string) {
+    // eslint-disable-next-line react/no-children-prop
     return (
-      <>{formula}</>
-      // TODO: move renderSlate out of TextStaticRenderer
-      // <TextStaticRenderer state={[{ type: FrontendNodeType.InlineMath, formula }]} />
+      <MathRenderer
+        src={formula}
+        type="math"
+        inline
+        children={[{ text: '' }]}
+      />
     )
   }
-
-  // function hasContent(content: FrontendContentNode[]): boolean {
-  //   if (content[0]?.type === 'slate-container')
-  //     return hasContent(content[0].children ?? [])
-  //   return content.some(
-  //     (node) => node?.children?.length || node.type === 'math'
-  //   )
-  // }
 }

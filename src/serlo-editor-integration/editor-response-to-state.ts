@@ -158,7 +158,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
       if (convertedContent?.plugin === EditorPluginType.Article) {
         return serializeEditorState(convertedContent)
       }
-      // TODO: is this still needed?
+      // TODO: is this still needed? (check back with @kulla or @hugotiburtino if we actually migrated that)
       return serializeEditorState({
         plugin: EditorPluginType.Article,
         state: {
