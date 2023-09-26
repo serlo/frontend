@@ -52,11 +52,11 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   // additional focus check to set focus when using tab navigation
   const handleFocus = useCallback(
     (e: React.FocusEvent) => {
-      // if after a short delay dom focus is not set inside focused plugin
-      // we overwrite it here (because it's probably because of tab navigation)
       if (!document) return
       if (['rows', 'exercise'].includes(document?.plugin)) return
 
+      // if after a short delay dom focus is not set inside focused plugin
+      // we overwrite it here (because it's probably because of tab navigation)
       const tabFocusTimeout = setTimeout(() => {
         // fixes a bug in table plugin with disappearing buttons
         if (e.target.nodeName?.toLowerCase() === 'button') return
