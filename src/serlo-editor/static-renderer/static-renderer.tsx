@@ -5,8 +5,7 @@ import {
 } from '@/serlo-editor-integration/types/editor-plugins'
 
 // StaticRenderer expects serialzied plugin states and renders them
-// compared to editor this renderer should have a small bundle size and
-// be performance should be quite good
+// compared to editor this renderer should have a small bundle size
 
 export type AnyEditorPlugin = SupportedEditorPlugin | UnknownEditorPlugin
 interface StaticRendererProps {
@@ -31,12 +30,13 @@ export function StaticRenderer({
   const Renderer = editorRenderers.getByType(state.plugin)
 
   // only while developing
-  if (!Renderer)
+  if (!Renderer) {
     return (
       <div className="mx-side my-block pl-[14px]">
         <mark>{state.plugin}</mark>
       </div>
     )
+  }
 
   return <Renderer {...state} />
 }
