@@ -1,4 +1,5 @@
 import { InputExerciseEditor } from './editor'
+import { InputExerciseType } from './input-exercise-type'
 import {
   type ChildStateTypeConfig,
   type EditorPlugin,
@@ -21,7 +22,7 @@ function createInputExerciseState(
   })
 
   return object({
-    type: string('input-string-normalized-match-challenge'),
+    type: string(InputExerciseType.StringNormalized),
     unit: string(''),
     answers: list(answerObject),
   })
