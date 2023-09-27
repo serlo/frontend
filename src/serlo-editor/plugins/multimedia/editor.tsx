@@ -10,10 +10,12 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { AreImagesDisabledInTableContext } from '@/serlo-editor/plugins/serlo-table/contexts/are-images-disabled-in-table-context'
 import {
+  selectAncestorPluginTypes,
   selectHasFocusedDescendant,
   selectIsFocused,
   useAppSelector,
 } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function MultimediaEditor(props: MultimediaProps) {
   const [stateCache, setStateCache] = useState<Record<string, unknown>>({})
@@ -29,6 +31,20 @@ export function MultimediaEditor(props: MultimediaProps) {
     selectHasFocusedDescendant(state, multimedia.id)
   )
 
+  // inside of box plugin don't allow video and geogebra as multimedia children
+  const typesOfAncestors = useAppSelector((state) =>
+    selectAncestorPluginTypes(state, props.id)
+  )
+  const hasBoxAnchestor = typesOfAncestors?.includes(EditorPluginType.Box)
+  const filteredPlugins = hasBoxAnchestor
+    ? config.allowedPlugins.filter(
+        (plugin) =>
+          ![EditorPluginType.Video, EditorPluginType.Geogebra].includes(
+            plugin as EditorPluginType
+          )
+      )
+    : config.allowedPlugins
+
   const pluginToolbarAndStyleHacks = getStyleHacks(
     focused,
     isMediaChildFocused,
@@ -43,9 +59,9 @@ export function MultimediaEditor(props: MultimediaProps) {
             state={state.width}
             title={multimediaStrings.chooseSize}
           />
-          {config.allowedPlugins.length > 1 && (
+          {filteredPlugins.length > 1 && (
             <MultimediaTypeSelect
-              allowedPlugins={config.allowedPlugins}
+              allowedPlugins={filteredPlugins}
               state={state.multimedia}
               stateCache={stateCache}
               setStateCache={setStateCache}
