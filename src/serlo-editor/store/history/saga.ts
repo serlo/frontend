@@ -10,6 +10,7 @@ import {
   takeEvery,
 } from 'redux-saga/effects'
 
+// eslint-disable-next-line import/no-cycle
 import {
   runCommitActionToHistorySaga,
   pureCommitActionToHistory,
