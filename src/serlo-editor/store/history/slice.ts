@@ -8,6 +8,8 @@ import type {
 } from './types'
 import type { AppDispatch } from '../store'
 import type { State } from '../types'
+// eslint-disable-next-line import/no-cycle
+import { focus } from '@/serlo-editor/store'
 
 const initialState: State['history'] = {
   undoStack: [],
@@ -24,11 +26,16 @@ export const undo = createAsyncThunk<
   const toUndo = R.head(undoStack)
   if (!toUndo) return
   const actions = R.reverse(toUndo).map(
-    (reversibleAction) => reversibleAction.reverse
+    (reversibleAction) =>
+      reversibleAction.reverse as {
+        type: string
+        payload: { id: string; state: unknown }
+      }
   )
 
   actions.map((action) => {
     dispatch(action)
+    dispatch(focus(action.payload?.id))
   })
 })
 
@@ -40,10 +47,17 @@ export const redo = createAsyncThunk<
   const undoStack = selectRedoStack(getState())
   const toRedo = R.head(undoStack)
   if (!toRedo) return
-  const actions = toRedo.map((reversibleAction) => reversibleAction.action)
+  const actions = toRedo.map(
+    (reversibleAction) =>
+      reversibleAction.reverse as {
+        type: string
+        payload: { id: string; state: unknown }
+      }
+  )
 
   actions.map((action) => {
     dispatch(action)
+    dispatch(focus(action.payload?.id))
   })
 })
 
