@@ -4,6 +4,7 @@ import createSagaMiddleware from 'redux-saga'
 
 import { documentsSlice } from './documents'
 import { focusSlice } from './focus'
+// eslint-disable-next-line import/no-cycle
 import { historySlice } from './history'
 import { saga } from './saga'
 

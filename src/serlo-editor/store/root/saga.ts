@@ -4,6 +4,7 @@ import { runInitRootSaga } from '.'
 import { ROOT } from './constants'
 import type { ReversibleAction } from '..'
 import { selectDocuments } from '../documents'
+// eslint-disable-next-line import/no-cycle
 import { handleRecursiveInserts } from '../documents/saga'
 import { persistHistory } from '../history'
 

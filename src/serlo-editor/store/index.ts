@@ -1,5 +1,6 @@
 export * from './documents'
 export * from './focus'
+// eslint-disable-next-line import/no-cycle
 export * from './history'
 export * from './plugin'
 export * from './root'

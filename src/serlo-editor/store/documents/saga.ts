@@ -16,6 +16,7 @@ import {
   StateUpdater,
   StoreDeserializeHelpers,
 } from '../../types/internal__plugin-state'
+// eslint-disable-next-line import/no-cycle
 import {
   runCommitActionToHistorySaga,
   runCommitTemporaryActionToHistorySaga,
