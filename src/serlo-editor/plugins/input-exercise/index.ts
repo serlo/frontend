@@ -22,7 +22,7 @@ function createInputExerciseState(
   })
 
   return object({
-    type: string(InputExerciseType.StringNormalized),
+    type: string(InputExerciseType.NumberExact),
     unit: string(''),
     answers: list(answerObject),
   })
