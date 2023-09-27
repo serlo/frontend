@@ -61,6 +61,7 @@ export function BoxEditor(props: BoxProps) {
           'transition-opacity',
           editable && isEmptyContent && 'opacity-30 focus-within:opacity-100',
           showToolbar && '!opacity-100 ',
+          '[&:focus-within_.box-warning]:hidden',
           // making space for first toolbar, not wysiwyg
           '[&>figure>figcaption]:!mb-9',
           // toolbar finetuning
@@ -73,6 +74,7 @@ export function BoxEditor(props: BoxProps) {
           `
         )}
       >
+        {isEmptyContent && !showToolbar ? <EmptyWarning /> : null}
         <BoxRenderer
           boxType={typedValue}
           title={
@@ -90,7 +92,6 @@ export function BoxEditor(props: BoxProps) {
         >
           <div className="-ml-3 px-side">{content.render()}</div>
         </BoxRenderer>
-        {isEmptyContent && editable ? <EmptyWarning /> : null}
       </div>
     </>
   )
