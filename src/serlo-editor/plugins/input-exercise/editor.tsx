@@ -90,7 +90,7 @@ export function InputExerciseEditor(props: InputExerciseProps) {
               setTimeout(() => {
                 dispatch(focus(id))
                 newestAnswerRef.current?.focus()
-              }, 10)
+              }, 50)
             }}
           >
             {inputExStrings.addAnswer}
