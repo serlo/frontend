@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import type { MultimediaProps } from '.'
 import { MultimediaRenderer } from './renderer'
@@ -10,10 +10,13 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { AreImagesDisabledInTableContext } from '@/serlo-editor/plugins/serlo-table/contexts/are-images-disabled-in-table-context'
 import {
+  selectAncestorPluginTypes,
   selectHasFocusedDescendant,
   selectIsFocused,
+  store,
   useAppSelector,
 } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function MultimediaEditor(props: MultimediaProps) {
   const [stateCache, setStateCache] = useState<Record<string, unknown>>({})
@@ -22,12 +25,30 @@ export function MultimediaEditor(props: MultimediaProps) {
 
   const multimediaStrings = useEditorStrings().plugins.multimedia
 
-  const isMediaChildFocused = useAppSelector((state) =>
-    selectIsFocused(state, multimedia.id)
+  const isMediaChildFocused = useAppSelector((storeState) =>
+    selectIsFocused(storeState, multimedia.id)
   )
-  const isMediaChildFocusedWithin = useAppSelector((state) =>
-    selectHasFocusedDescendant(state, multimedia.id)
+  const isMediaChildFocusedWithin = useAppSelector((storeState) =>
+    selectHasFocusedDescendant(storeState, multimedia.id)
   )
+
+  // we memoize this so we don't need to calculate the ancestors on every render
+  // the values should only be calculated when we create it or move the plugin (and that also triggers a remount)
+  const allowedPlugins = useMemo(() => {
+    // inside of box plugin don't allow video and geogebra as multimedia children
+    const typesOfAncestors = selectAncestorPluginTypes(
+      store.getState(),
+      props.id
+    )
+    const forbiddenInBox = [EditorPluginType.Video, EditorPluginType.Geogebra]
+    const hasBoxAnchestor = typesOfAncestors?.includes(EditorPluginType.Box)
+    return hasBoxAnchestor
+      ? config.allowedPlugins.filter(
+          (plugin) => !forbiddenInBox.includes(plugin as EditorPluginType)
+        )
+      : config.allowedPlugins
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const pluginToolbarAndStyleHacks = getStyleHacks(
     focused,
@@ -43,9 +64,9 @@ export function MultimediaEditor(props: MultimediaProps) {
             state={state.width}
             title={multimediaStrings.chooseSize}
           />
-          {config.allowedPlugins.length > 1 && (
+          {allowedPlugins.length > 1 && (
             <MultimediaTypeSelect
-              allowedPlugins={config.allowedPlugins}
+              allowedPlugins={allowedPlugins}
               state={state.multimedia}
               stateCache={stateCache}
               setStateCache={setStateCache}

@@ -1,10 +1,12 @@
 import {
+  faBrain,
   faExclamationTriangle,
+  faFileCircleCheck,
   faHandPointRight,
   faLightbulb,
   faMapSigns,
   faQuoteRight,
-  faScroll,
+  faSplotch,
   faThumbtack,
 } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
@@ -15,10 +17,10 @@ import { tw } from '@/helper/tw'
 
 export const boxTypeStyle = {
   blank: {},
-  example: {},
+  example: { icon: faSplotch },
   quote: { icon: faQuoteRight },
   approach: { icon: faMapSigns },
-  remember: { icon: faScroll },
+  remember: { icon: faBrain },
   attention: {
     icon: faExclamationTriangle,
     borderColorClass: 'border-red-100',
@@ -27,7 +29,7 @@ export const boxTypeStyle = {
   note: { icon: faHandPointRight },
   definition: { icon: faThumbtack },
   theorem: { icon: faLightbulb },
-  proof: {},
+  proof: { icon: faFileCircleCheck },
 }
 
 export const defaultStyle = {
