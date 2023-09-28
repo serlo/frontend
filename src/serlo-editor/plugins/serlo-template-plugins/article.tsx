@@ -1,5 +1,5 @@
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import {
   editorContent,
@@ -19,6 +19,7 @@ import {
   type EditorPluginProps,
   string,
 } from '@/serlo-editor/plugin'
+import { useAppDispatch, focus } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const articleTypeState = entityType(
@@ -44,6 +45,21 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
   const { title, content, meta_title, meta_description } = props.state
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const articleStrings = useEditorStrings().templatePlugins.article
+  const titleRef = useRef<HTMLInputElement>(null)
+
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (props.editable) {
+      // focus on title, remove focus from content
+      setTimeout(() => {
+        dispatch(focus(null))
+        titleRef.current?.focus()
+      })
+    }
+    // only after creating plugin
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
@@ -64,7 +80,7 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
       <h1 className="serlo-h1 mt-20" itemProp="name">
         {props.editable ? (
           <input
-            autoFocus
+            ref={titleRef}
             className={headerInputClasses}
             placeholder={articleStrings.title}
             value={title.value}
