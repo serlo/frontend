@@ -61,6 +61,7 @@
     "js-cookie": "^3.0.5",
     "katex": "^0.16.8",
     "next": "^13.4.19",
+    "next-query-params": "^4.2.3",
     "nprogress": "^0.2.0",
     "postcss": "^8.4.27",
     "qrcode.react": "^3.1.0",
@@ -92,6 +93,7 @@
     "tippy.js": "^6.3.7",
     "ts-debounce": "^4.0.0",
     "ts-key-enum": "^2.0.12",
+    "use-query-params": "^2.2.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
