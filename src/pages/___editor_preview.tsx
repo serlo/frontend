@@ -111,7 +111,15 @@ function Content() {
   return (
     <main id="content" className="flex">
       <section className="min-h-screen w-[50vw] border-4 border-r-0 border-editor-primary">
-        <h2 className="mx-side font-bold text-editor-primary">Edit</h2>
+        <header className="mx-side flex justify-between align-middle font-bold">
+          <h2 className="text-editor-primary">Edit</h2>
+          <button
+            onClick={() => setPreviewState(emptyState)}
+            className="mt-0.5 text-sm"
+          >
+            reset
+          </button>
+        </header>
         <div className="controls-portal pointer-events-none sticky top-0 z-[90] bg-white md:bg-transparent" />
         <div className="serlo-editor-hacks mb-24 max-w-[816px] px-2">
           <MathSpan formula="" /> {/* preload formula plugin */}
