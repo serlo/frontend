@@ -1,4 +1,5 @@
 import { faImages } from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
 import { useEffect, useRef, useState } from 'react'
 
 import type { ImageProps } from '.'
@@ -74,7 +75,10 @@ export function ImageEditor(props: ImageProps) {
       ) : null}
 
       <div
-        className="relative z-[2] [&_img]:min-h-[4rem]"
+        className={clsx(
+          'z-[2] [&_img]:min-h-[4rem]',
+          hasFocus && showInlineImageUrl ? 'relative' : ''
+        )}
         data-qa="plugin-image-editor"
       >
         {hasFocus && showInlineImageUrl ? (

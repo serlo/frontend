@@ -90,7 +90,11 @@ export function InputExerciseEditor(props: InputExerciseProps) {
               setTimeout(() => {
                 dispatch(focus(id))
                 newestAnswerRef.current?.focus()
-              }, 10)
+                // this needs to wait for the editor focus to finish
+                // and then overwrite it. It's definitely a hack.
+                // 50 is arbitrary value that seems to work nicely.
+                // 10 was to low for firefox in my testing
+              }, 50)
             }}
           >
             {inputExStrings.addAnswer}

@@ -33,8 +33,12 @@ export function AnchorLinkCopyTool({
           pluginId.split('-')[0]
         }`
         void navigator.clipboard.writeText(url)
-        showToastNotice(strings.share.copySuccess, 'success')
-        showToastNotice('👉 ' + editorStrings.edtrIo.anchorLinkWarning)
+        showToastNotice(strings.share.copySuccess, 'success', 2000)
+        showToastNotice(
+          '👉 ' + editorStrings.edtrIo.anchorLinkWarning,
+          undefined,
+          5500
+        )
       }}
       label={editorStrings.plugins.rows.copyAnchorLink}
       icon={faHashtag}

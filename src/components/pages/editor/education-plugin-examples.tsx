@@ -9,6 +9,7 @@ import { renderNested } from '@/schema/article-renderer'
 import { Sign } from '@/serlo-editor/plugins/equations/sign'
 import { HighlightRenderer } from '@/serlo-editor/plugins/highlight/renderer'
 import { InjectionRenderer } from '@/serlo-editor/plugins/injection/renderer'
+import { InputExerciseType } from '@/serlo-editor/plugins/input-exercise/input-exercise-type'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const boxExample = (
@@ -196,7 +197,7 @@ export const inputExample = (
           interactive: {
             plugin: EditorPluginType.InputExercise,
             state: {
-              type: 'input-string-normalized-match-challenge',
+              type: InputExerciseType.StringNormalized,
               unit: '',
               answers: [
                 {
