@@ -3,8 +3,8 @@ import { useCallback, useContext } from 'react'
 
 import { AnchorLinkCopyTool } from './anchor-link-copy-tool'
 import { DropdownButton } from './dropdown-button'
-import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { UuidsContext } from '@/contexts/uuids-context'
 import {
   insertPluginChildAfter,
   removePluginChild,
@@ -25,7 +25,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
   const pluginStrings = useEditorStrings().plugins
 
   // using useContext directly so result can also be null for edusharing
-  const serloEntityId = useContext(EntityIdContext)
+  const serloEntityId = useContext(UuidsContext)?.entityId
 
   const handleDuplicatePlugin = useCallback(() => {
     const parent = selectChildTreeOfParent(store.getState(), pluginId)

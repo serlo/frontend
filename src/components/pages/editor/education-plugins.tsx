@@ -29,7 +29,7 @@ import {
 } from './education-plugin-examples'
 import { Geogebra } from '@/components/content/geogebra'
 import { FaIcon } from '@/components/fa-icon'
-import { EntityIdProvider } from '@/contexts/entity-id-context'
+import { UuidsProvider } from '@/contexts/uuids-context'
 import { tw } from '@/helper/tw'
 
 export const h2Class =
@@ -197,7 +197,7 @@ export function EducationPlugins() {
     return (
       <div className="m-3 mb-[3.2rem] mt-1 flex-1 text-left">
         <div className="w-full overflow-y-scroll p-8 shadow-menu md:h-[37rem]">
-          <EntityIdProvider value={1555}>
+          <UuidsProvider value={{ entityId: 1555 }}>
             <p className="mb-6 text-xl">{description}</p>
             {example ? (
               <>
@@ -223,7 +223,7 @@ export function EducationPlugins() {
                 />
               </>
             )}
-          </EntityIdProvider>
+          </UuidsProvider>
           <style jsx global>
             {`
               .lazyload-wrapper > .print:hidden,

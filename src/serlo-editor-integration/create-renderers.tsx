@@ -20,7 +20,7 @@ import { EquationsStaticRenderer } from '@/serlo-editor/plugins/equations/static
 import { ExerciseStaticRenderer } from '@/serlo-editor/plugins/exercise/static'
 import { parseId } from '@/serlo-editor/plugins/geogebra/renderer'
 import { GeogebraStaticRenderer } from '@/serlo-editor/plugins/geogebra/static'
-import { H5pStaticRenderer } from '@/serlo-editor/plugins/h5p/static'
+import { H5pSerloStaticRenderer } from '@/serlo-editor/plugins/h5p/serlo-static'
 import { ImageStaticRenderer } from '@/serlo-editor/plugins/image/static'
 import { InjectionStaticRenderer } from '@/serlo-editor/plugins/injection/static'
 import { InputExerciseStaticRenderer } from '@/serlo-editor/plugins/input-exercise/static'
@@ -199,7 +199,7 @@ export function createRenderers({
           )
         },
       },
-      { type: EditorPluginType.H5p, renderer: H5pStaticRenderer },
+      { type: EditorPluginType.H5p, renderer: H5pSerloStaticRenderer },
       {
         type: EditorPluginType.InputExercise,
         renderer: InputExerciseStaticRenderer,
