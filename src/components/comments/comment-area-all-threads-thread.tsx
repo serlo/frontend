@@ -7,8 +7,8 @@ import { CommentArea } from './comment-area'
 import { FaIcon } from '../fa-icon'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
-import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
+import { UuidsProvider } from '@/contexts/uuids-context'
 import { UuidType } from '@/data-types'
 import { CommentStatus } from '@/fetcher/graphql-types/operations'
 import { GetAllThreadsNode } from '@/fetcher/use-comment-data-all'
@@ -47,7 +47,7 @@ export function CommentAreaAllThreadsThread({
       thread.comments.nodes.some((obj) => obj.author.id === auth.id))
 
   return (
-    <EntityIdProvider key={thread.id} value={thread.object.id}>
+    <UuidsProvider key={thread.id} value={{ entityId: thread.object.id }}>
       <div className="mb-16">
         <div className="mx-side mb-5 mt-16 flex items-baseline justify-between border-b-2">
           <div>
@@ -102,6 +102,6 @@ export function CommentAreaAllThreadsThread({
           noScroll
         />
       </div>
-    </EntityIdProvider>
+    </UuidsProvider>
   )
 }
