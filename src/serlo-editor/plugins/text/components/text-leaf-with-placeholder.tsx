@@ -28,7 +28,7 @@ export function TextLeafWithPlaceholder(
   return (
     <>
       <span
-        className="pointer-events-none absolute -mt-[5px] block w-full text-gray-400 [user-select:none]"
+        className="pointer-events-none absolute -mt-1 block w-full text-gray-400 [user-select:none]"
         contentEditable={false}
         data-qa="plugin-text-leaf-element-with-placeholder"
       >
@@ -37,7 +37,7 @@ export function TextLeafWithPlaceholder(
           <button
             className={tw`
               serlo-button-editor-secondary serlo-tooltip-trigger pointer-events-auto z-20
-              h-8 w-8 focus-within:z-[22] hover:z-[22]
+              h-[1.8rem] w-[1.8rem] px-0 pt-[5px] focus-within:z-[22] hover:z-[22]
             `}
             onClick={onAdd}
           >
