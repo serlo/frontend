@@ -3,34 +3,30 @@ import { useEffect } from 'react'
 
 import { H5pStaticRenderer } from './static'
 import { useAB } from '@/contexts/ab'
-import { useEntityId } from '@/contexts/entity-id-context'
+import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import type { EditorH5PPlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
+// TODO: test if events are actually submitted when we call this inside [...slug]
+
 // Special version for serlo.org with exercise submission events
-export function H5pSerloStaticRenderer(
-  props: EditorH5PPlugin & {
-    context: {
-      revisionId: number
-    }
-  }
-) {
-  const { id, context } = props
+export function H5pSerloStaticRenderer(props: EditorH5PPlugin) {
   const { asPath } = useRouter()
   const ab = useAB()
   const entityId = useEntityId()
+  const revisionId = useRevisionId()
 
   useEffect(() => {
-    if (!entityId || entityId <= 0) return
+    if (!entityId || !revisionId) return
 
     const handleSubmissionEvent = (e: Event) => {
       const e_id = (e as CustomEvent).detail as string
-      if (e_id === id) {
+      if (e_id === props.id) {
         exerciseSubmission(
           {
             path: asPath,
             entityId: entityId,
-            revisionId: context.revisionId,
+            revisionId: revisionId,
             result: e.type === 'h5pExerciseCorrect' ? 'correct' : 'wrong',
             type: 'h5p',
           },
