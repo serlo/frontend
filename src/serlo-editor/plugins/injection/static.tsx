@@ -13,6 +13,8 @@ import { EditorInjectionPlugin } from '@/serlo-editor-integration/types/editor-p
 
 // Proof of concept for reworked injection plugin
 
+// TODO: Support other entities, probably at least ExerciseGroup, Applet (GeoGebra), Video, Event
+
 export function InjectionStaticRenderer({
   state: href,
 }: EditorInjectionPlugin) {

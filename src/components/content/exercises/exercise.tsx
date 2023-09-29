@@ -110,15 +110,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         )
       }
       if (state.interactive.plugin === EditorPluginType.H5p) {
-        return (
-          <H5pRenderer
-            url={state.interactive.state}
-            context={{
-              entityId: node.context.id,
-              revisionId: node.context.revisionId,
-            }}
-          />
-        )
+        return <H5pRenderer url={state.interactive.state} />
       }
     }
   }

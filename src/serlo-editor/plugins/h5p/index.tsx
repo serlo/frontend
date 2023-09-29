@@ -195,10 +195,7 @@ function H5pEditor({ state }: H5pProps) {
           </a>
         )}
       </p>
-      <H5pRenderer
-        url={state.value}
-        context={{ entityId: -1, revisionId: -1 }}
-      />
+      <H5pRenderer url={state.value} />
     </>
   )
 }
