@@ -15,5 +15,5 @@ export function extractStringFromTextPlugin(plugin?: AnyEditorPlugin) {
   const textState = (plugin as EditorTextPlugin).state
   if (textState.length === 0) return ''
 
-  return textState.map(extractDescendant).join(' ')
+  return textState.map(extractDescendant).join(' ').trim()
 }

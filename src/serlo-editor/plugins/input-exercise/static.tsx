@@ -10,7 +10,6 @@ export function InputExerciseStaticRenderer({
   onEvaluate?: (correct: boolean, val: string) => void
 }) {
   const answers = state.answers.map((answer) => {
-    //TODO: check if this works of if it need to check answer.feedback[0]
     const isEmpty = isEmptyTextPlugin(answer.feedback)
     return {
       ...answer,

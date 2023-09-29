@@ -16,10 +16,7 @@ import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { type LoggedInData, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
-import type {
-  PluginWithData,
-  PluginsWithData,
-} from '@/serlo-editor/plugin/helpers/editor-plugins'
+import type { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { layoutPlugin } from '@/serlo-editor/plugins/_on-the-way-out/layout'
 import { anchorPlugin } from '@/serlo-editor/plugins/anchor'
 import { articlePlugin } from '@/serlo-editor/plugins/article'
@@ -63,10 +60,12 @@ export function createPlugins({
   editorStrings,
   instance,
   parentType,
+  allowExercises,
 }: {
   editorStrings: LoggedInData['strings']['editor']
   instance: Instance
   parentType?: string
+  allowExercises?: boolean
 }): PluginsWithData {
   const isPage = parentType === UuidType.Page
 
@@ -145,9 +144,8 @@ export function createPlugins({
             plugin: audioPlugin,
             visibleInSuggestions: true,
             icon: <IconAudio />,
-          } as PluginWithData,
+          },
         ]),
-
     {
       type: EditorPluginType.Anchor,
       plugin: anchorPlugin,
@@ -173,7 +171,18 @@ export function createPlugins({
       plugin: pagePartnersPlugin,
       visibleInSuggestions: isPage,
     },
+    ...(allowExercises
+      ? [
+          {
+            type: EditorPluginType.Exercise,
+            plugin: exercisePlugin,
+            visibleInSuggestions: true,
+          },
+          // Group?
+        ]
+      : []),
 
+    // ===================================================
     // never visible in suggestions
     { type: EditorPluginType.Article, plugin: articlePlugin },
     {

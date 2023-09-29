@@ -23,8 +23,6 @@ export function ImageStaticRenderer({
     ? extractStringFromTextPlugin(caption)
     : altFallback
 
-  // TODO: test extractStringFromTextPlugin with some more complex examples
-
   return (
     <ImageRenderer
       image={{
