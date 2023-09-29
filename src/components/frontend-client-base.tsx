@@ -12,9 +12,9 @@ import { MaxWidthDiv } from './navigation/max-width-div'
 import { AuthProvider } from '@/auth/auth-provider'
 import { checkLoggedIn } from '@/auth/cookie/check-logged-in'
 import { PrintMode } from '@/components/print-mode'
-import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
+import { UuidsProvider } from '@/contexts/uuids-context'
 import { InstanceData, LoggedInData } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { triggerSentry } from '@/helper/trigger-sentry'
@@ -25,6 +25,7 @@ export type FrontendClientBaseProps = PropsWithChildren<{
   noContainers?: boolean
   showNav?: boolean
   entityId?: number
+  revisionId?: number
   authorization?: AuthorizationPayload
   loadLoggedInData?: boolean
 }>
@@ -55,6 +56,7 @@ export function FrontendClientBase({
   noContainers,
   showNav,
   entityId,
+  revisionId,
   authorization,
   loadLoggedInData,
 }: FrontendClientBaseProps) {
@@ -117,7 +119,7 @@ export function FrontendClientBase({
       <PrintMode />
       <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
         <LoggedInDataProvider value={loggedInData}>
-          <EntityIdProvider value={entityId}>
+          <UuidsProvider value={{ entityId, revisionId }}>
             <ConditionalWrap
               condition={!noHeaderFooter}
               wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
@@ -137,7 +139,7 @@ export function FrontendClientBase({
               </ConditionalWrap>
             </ConditionalWrap>
             <ToastNotice />
-          </EntityIdProvider>
+          </UuidsProvider>
         </LoggedInDataProvider>
       </AuthProvider>
     </InstanceDataProvider>
