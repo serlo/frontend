@@ -45,6 +45,11 @@ export interface EditorArticlePlugin {
   state: StateTypeSerializedType<ArticlePluginState>
   id?: string
 }
+export interface EditorArticleIntroductionPlugin {
+  plugin: EditorPluginType.ArticleIntroduction
+  state: StateTypeSerializedType<MultimediaPluginState>
+  id?: string
+}
 export interface EditorBoxPlugin {
   plugin: EditorPluginType.Box
   state: StateTypeSerializedType<BoxPluginState>
@@ -168,6 +173,7 @@ export interface EditorH5PPlugin {
 
 export type SupportedEditorPlugin =
   | EditorArticlePlugin
+  | EditorArticleIntroductionPlugin
   | EditorGeogebraPlugin
   | EditorAnchorPlugin
   | EditorVideoPlugin
@@ -183,6 +189,7 @@ export type SupportedEditorPlugin =
   | EditorTextPlugin
   | EditorRowsPlugin
   | EditorEquationsPlugin
+  | EditorExercisePlugin
   | EditorPageLayoutPlugin
   | EditorPageTeamPlugin
   | EditorPagePartnersPlugin

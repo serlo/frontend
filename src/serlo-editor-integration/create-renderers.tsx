@@ -145,15 +145,6 @@ export function createRenderers({
               >
                 <VideoStaticRenderer {...state} />
               </PrivacyWrapper>
-              {/* TODO: How to get license data here? 
-              Do inline Videos have licenses anyway?
-              On first glance we might only use them for template video
-            */}
-              {/* {license && !license.isDefault && (
-              <p className="serlo-p">
-                <LicenseNotice minimal data={license} type="video" />
-              </p>
-            )} */}
               <p className="serlo-p hidden print:block">[{src}]</p>
             </Lazy>
           )

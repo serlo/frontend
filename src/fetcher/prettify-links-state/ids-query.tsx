@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 
 export const idsQuery = (ids: number[]) => {
-  const map = ids.map(
+  const queries = ids.map(
     (id) => gql` 
     uuid${id}: uuid(id:${id}) {
         ... on AbstractEntity {
@@ -19,5 +19,5 @@ export const idsQuery = (ids: number[]) => {
       }
     `
   )
-  return `{${map.join()}}`
+  return `{${queries.join()}}`
 }
