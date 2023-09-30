@@ -33,10 +33,11 @@ export function StaticSlate({
       )
     }
     if (element.type === 'a') {
+      const LinkRenderer = editorRenderers.getLinkRenderer()
       return (
-        <a href={element.href} className="serlo-link cursor-pointer">
+        <LinkRenderer href={element.href}>
           <StaticSlate element={children} />
-        </a>
+        </LinkRenderer>
       )
     }
     if (element.type === ListElementType.UNORDERED_LIST) {

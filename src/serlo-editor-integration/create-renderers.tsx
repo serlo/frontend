@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic'
+import { ComponentProps } from 'react'
 
 import { EditorPluginType } from './types/editor-plugin-type'
 import {
@@ -10,9 +11,11 @@ import {
   EditorVideoPlugin,
 } from './types/editor-plugins'
 import { Lazy } from '@/components/content/lazy'
+import { Link } from '@/components/content/link'
 import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { ExternalProvider } from '@/helper/use-consent'
+import { LinkRenderer } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { AnchorStaticRenderer } from '@/serlo-editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@/serlo-editor/plugins/article/static'
 import { BoxStaticRenderer } from '@/serlo-editor/plugins/box/static'
@@ -231,5 +234,16 @@ export function createRenderers({
           <StaticMath {...element} />
         </Lazy>
       ),
+    linkRenderer: ({ href, children }: ComponentProps<LinkRenderer>) => {
+      // TODO: isOnProfile logic
+      const isOnProfile = false
+      return (
+        <Link href={href} unreviewed={isOnProfile}>
+          {children}
+        </Link>
+      )
+
+      // {isRevisionView && <ExtraRevisionViewInfo element={element} />}
+    },
   }
 }
