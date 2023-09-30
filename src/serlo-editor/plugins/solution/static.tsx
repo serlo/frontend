@@ -13,9 +13,9 @@ export function StaticSolutionRenderer({
   const { prerequisite, strategy, steps } = state
 
   const hasPrerequisite =
-    prerequisite && prerequisite.id.length && prerequisite.title.length
+    prerequisite && prerequisite.alias && prerequisite.title.length
   const prerequisiteElement = hasPrerequisite ? (
-    <Link href={`/${prerequisite.id}`}>{prerequisite.title}</Link>
+    <Link href={`/${prerequisite.alias}`}>{prerequisite.title}</Link>
   ) : null
 
   const strategyElement = isEmptyRowsPlugin(strategy) ? null : (
