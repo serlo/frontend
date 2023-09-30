@@ -7,7 +7,7 @@ export function RowsStaticRenderer({ state }: EditorRowsPlugin) {
   return (
     <>
       {state.map((row) => (
-        <div key={row.id} className="my-block pl-[14px]">
+        <div key={row.id} id={row.id} className="my-block">
           <StaticRenderer state={row} />
         </div>
       ))}

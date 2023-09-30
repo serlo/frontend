@@ -32,7 +32,7 @@ export function StaticRenderer({
   // only while developing
   if (!Renderer) {
     return (
-      <div className="mx-side my-block pl-[14px]">
+      <div className="my-block">
         <mark>{state.plugin}</mark>
       </div>
     )

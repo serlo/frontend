@@ -62,9 +62,9 @@ export function StaticSlate({
     }
     if (element.type === ListElementType.LIST_ITEM_TEXT) {
       return (
-        <div>
+        <p className="slate-p serlo-p mb-0 ml-0 min-h-[1.33em]">
           <StaticSlate element={children} />
-        </div>
+        </p>
       )
     }
     if (element.type === 'math') {

@@ -9,10 +9,14 @@ export function SerloTableStaticRenderer({ state }: EditorSerloTablePlugin) {
   const { rows, tableType } = state
   if (!rows || rows.length === 0) return null
 
-  const rowsData = rows.map((row) => {
+  const rowsData = rows.map((row, rowIndex) => {
     return {
-      cells: (row.columns?.map(({ content }) => {
-        return content ? <StaticRenderer state={content} /> : null
+      cells: (row.columns?.map(({ content }, colIndex) => {
+        return content ? (
+          <div key={`${rowIndex}:${colIndex}`}>
+            <StaticRenderer state={content} />
+          </div>
+        ) : null
       }) as JSX.Element[]) ?? <></>,
     }
   })

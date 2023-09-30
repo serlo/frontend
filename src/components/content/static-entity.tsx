@@ -41,8 +41,6 @@ export function StaticEntity({ data }: EntityProps) {
     createRenderers({ instance: lang, isRevisionView: false, routerAsPath })
   )
 
-  console.log(data.content)
-
   // courseNav: start opened when only some entries
   const [courseNavOpen, setCourseNavOpen] = useState(
     (data && data.courseData && data.courseData.pages.length < 4) ?? false
