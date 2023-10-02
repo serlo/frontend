@@ -5,6 +5,7 @@ import type { AnyEditorPlugin } from '@/serlo-editor/static-renderer/static-rend
 import type { EditorTextPlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
 export function isEmptyCustomText(customText: CustomText) {
+  if (!customText || !customText.text) return true
   return customText.text.trim().length === 0
 }
 

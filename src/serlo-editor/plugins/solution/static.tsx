@@ -1,5 +1,5 @@
 import { SolutionRenderer } from './renderer'
-import { isEmptyRowsPlugin } from '../rows/utils/static-is-empty'
+import { isEmptyTextPlugin } from '../text/utils/static-is-empty'
 import { Link } from '@/components/content/link'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorSolutionPlugin } from '@/serlo-editor-integration/types/editor-plugins'
@@ -13,12 +13,14 @@ export function StaticSolutionRenderer({
   const { prerequisite, strategy, steps } = state
 
   const hasPrerequisite =
-    prerequisite && prerequisite.alias && prerequisite.title.length
+    prerequisite && prerequisite.id && prerequisite.title.length
   const prerequisiteElement = hasPrerequisite ? (
-    <Link href={`/${prerequisite.alias}`}>{prerequisite.title}</Link>
+    <Link href={prerequisite.alias ?? `/${prerequisite.id}`}>
+      {prerequisite.title}
+    </Link>
   ) : null
 
-  const strategyElement = isEmptyRowsPlugin(strategy) ? null : (
+  const strategyElement = isEmptyTextPlugin(strategy) ? null : (
     <StaticRenderer state={strategy} />
   )
 
