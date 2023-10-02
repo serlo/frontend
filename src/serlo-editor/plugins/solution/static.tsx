@@ -9,7 +9,13 @@ import { EditorSolutionPlugin } from '@/serlo-editor-integration/types/editor-pl
 export function StaticSolutionRenderer({
   state,
   solutionVisibleOnInit,
-}: EditorSolutionPlugin & { solutionVisibleOnInit: boolean }) {
+  beforeSlot,
+  afterSlot,
+}: EditorSolutionPlugin & {
+  solutionVisibleOnInit: boolean
+  afterSlot?: JSX.Element | null
+  beforeSlot?: JSX.Element | null
+}) {
   const { prerequisite, strategy, steps } = state
 
   const hasPrerequisite =
@@ -26,17 +32,17 @@ export function StaticSolutionRenderer({
 
   return (
     <SolutionRenderer
-      prerequisite={prerequisiteElement}
+      prerequisite={
+        <>
+          {beforeSlot}
+          {prerequisiteElement}
+        </>
+      }
       strategy={strategyElement}
       steps={
         <>
           <StaticRenderer state={steps} />
-          {/* {license && <div className="px-side">{license}</div>} */}
-          {/* {node.context.solutionId && (
-            <Lazy>
-              <CommentAreaEntity entityId={node.context.solutionId} />
-            </Lazy>
-          )} */}
+          {afterSlot}
         </>
       }
       solutionVisibleOnInit={solutionVisibleOnInit}

@@ -71,6 +71,15 @@ export interface EditorExercisePlugin {
   plugin: EditorPluginType.Exercise
   state: Prettify<StateTypeSerializedType<ExercisePluginState>>
   id?: string
+
+  // additional data for serlo, not part of normal state
+  serloContext?: {
+    uuid?: number
+    revisionId?: number
+    trashed?: boolean
+    grouped?: boolean
+    unrevisedRevisions?: number
+  }
 }
 export interface EditorGeogebraPlugin {
   plugin: EditorPluginType.Geogebra
@@ -131,6 +140,14 @@ export interface EditorSolutionPlugin {
   plugin: EditorPluginType.Solution
   state: Prettify<StateTypeSerializedType<SolutionPluginState>>
   id?: string
+
+  // additional data for serlo, not part of normal state
+  serloContext?: {
+    uuid?: number
+    exerciseId?: number
+    trashed?: boolean
+    unrevisedRevisions?: number
+  }
 }
 export interface EditorSerloTablePlugin {
   plugin: EditorPluginType.SerloTable
@@ -185,6 +202,13 @@ export interface EditorTemplateGroupedExercise {
     )[]
   }
   id?: string
+
+  // additional data for serlo, not part of normal state
+  serloContext?: {
+    uuid?: number
+    trashed?: boolean
+    unrevisedRevisions?: number
+  }
 }
 
 export type SupportedEditorPlugin =

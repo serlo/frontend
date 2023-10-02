@@ -1,5 +1,4 @@
 import { MainUuidType } from './query-types'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   EditorExercisePlugin,
   EditorRowsPlugin,
@@ -17,40 +16,41 @@ export function staticCreateExercise(
   uuid: BareExercise
   // index?: number
 ): [] | [EditorExercisePlugin] | [EditorExercisePlugin, EditorSolutionPlugin] {
-  if (uuid.trashed) return [] // for now
-
   if (!uuid.currentRevision?.content) return []
-  // grouped: false,
-  // positionOnPage: index,
-  //license: createInlineLicense(uuid.license),
-  // content: createTaskData(uuid.currentRevision?.content),
 
   // compat: shuffle interactive answers with shuffleArray
 
-  //solution: createSolutionData(uuid.solution),
-  //  context: {
-  //     id: uuid.id,
-  //     solutionId: uuid.solution?.id,
-  //     revisionId: uuid.currentRevision?.id ?? -1,
-  //   },
+  // positionOnPage: index,
+  // license: createInlineLicense(uuid.license),
   // href: uuid.alias, ??
-  // unrevisedRevisions: uuid.revisions?.totalCount,
 
-  const exercise: EditorExercisePlugin = {
-    plugin: EditorPluginType.Exercise,
-    state: {
-      content: JSON.parse(uuid.currentRevision?.content) as EditorRowsPlugin,
-      interactive: undefined,
+  const exerciseWithContext = {
+    ...(JSON.parse(uuid.currentRevision?.content) as EditorExercisePlugin),
+    serloContext: {
+      uuid: uuid.id,
+      revisionId: uuid.currentRevision.id,
+      trashed: uuid.trashed,
+      grouped: false,
+      unrevisedRevisions: uuid.revisions?.totalCount,
     },
   }
-
-  const solution = uuid.solution?.currentRevision?.content
-    ? (JSON.parse(
-        uuid.solution?.currentRevision?.content
-      ) as EditorSolutionPlugin)
+  const solutionRaw = uuid.solution?.currentRevision?.content
+  const solution = solutionRaw
+    ? (JSON.parse(solutionRaw) as EditorSolutionPlugin)
     : undefined
 
-  return solution ? [exercise, solution] : [exercise]
+  const solutionContext = solution
+    ? {
+        uuid: uuid.solution?.id,
+        exerciseId: uuid.id,
+        trashed: uuid.solution?.trashed,
+        unrevisedRevisions: solution.serloContext?.unrevisedRevisions,
+      }
+    : undefined
+
+  return solution
+    ? [exerciseWithContext, { ...solution, serloContext: solutionContext }]
+    : [exerciseWithContext]
 }
 
 export function createStaticExerciseGroup(
@@ -76,36 +76,11 @@ export function createStaticExerciseGroup(
   //   })
   // }
 
-  // return {
-  //   type: FrontendNodeType.ExerciseGroup,
-  //   content: convertStateStringToFrontendNode(uuid.currentRevision?.content),
   //   positionOnPage: pageIndex,
   //   license: createInlineLicense(uuid.license),
-  //   children,
-  //   context: {
-  //     id: uuid.id,
-  //   },
   //   href: uuid.alias,
-  //   unrevisedRevisions: uuid.revisions?.totalCount,
-  // }
 
   if (!uuid.currentRevision?.content) return []
-
-  const exercisesWithSolutions = uuid.exercises.map((exercise) => {
-    if (!exercise.currentRevision) return []
-    const exerciseContent = JSON.parse(
-      exercise.currentRevision?.content
-    ) as EditorExercisePlugin
-    const solutionContent = exercise.solution?.currentRevision?.content
-      ? (JSON.parse(
-          exercise.solution?.currentRevision?.content
-        ) as EditorSolutionPlugin)
-      : undefined
-
-    return solutionContent
-      ? [exerciseContent, solutionContent]
-      : [exerciseContent]
-  })
 
   return [
     {
@@ -114,8 +89,12 @@ export function createStaticExerciseGroup(
         // @ts-expect-error not sure why string is expected here
         content: JSON.parse(uuid.currentRevision.content) as EditorRowsPlugin,
         // solutions are not really part of the state at this point, but cleaner this way
-        // @ts-expect-error investigate
-        exercisesWithSolutions: exercisesWithSolutions,
+        exercisesWithSolutions: uuid.exercises.map(staticCreateExercise),
+      },
+      serloContext: {
+        uuid: uuid.id,
+        trashed: uuid.trashed,
+        unrevisedRevisions: uuid.revisions.totalCount,
       },
     },
   ]
