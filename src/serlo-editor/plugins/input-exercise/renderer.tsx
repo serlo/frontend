@@ -2,6 +2,7 @@ import type A from 'algebra.js'
 import clsx from 'clsx'
 import { useState, useEffect } from 'react'
 
+import { InputExerciseType } from './input-exercise-type'
 import { Feedback } from '@/components/content/exercises/feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 import { tw } from '@/helper/tw'
@@ -112,11 +113,11 @@ export function InputExerciseRenderer({
   function normalize(value: string) {
     const _value = collapseWhitespace(value)
     switch (type) {
-      case 'input-number-exact-match-challenge':
+      case InputExerciseType.NumberExact:
         return normalizeNumber(_value).replace(/\s/g, '')
-      case 'input-expression-equal-match-challenge':
+      case InputExerciseType.ExpressionEqual:
         return A ? A.parse(normalizeNumber(_value)) : undefined
-      case 'input-string-normalized-match-challenge':
+      case InputExerciseType.StringNormalized:
         return _value.toUpperCase()
     }
   }

@@ -38,7 +38,7 @@ export default renderedPageNoHooks<EntityCreateProps>(
     const { id: taxonomyParentId } = taxonomyTerm
 
     const addRevisionProps = {
-      initialState: { plugin: AllowedPlugins[entityType] as unknown as string },
+      initialState: { plugin: AllowedPlugins[entityType] },
       type: UuidType[entityType],
       entityNeedsReview,
       taxonomyParentId,

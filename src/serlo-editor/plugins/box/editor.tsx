@@ -1,16 +1,15 @@
 import clsx from 'clsx'
 
 import type { BoxProps } from '.'
+import { EmptyWarning } from './components/empty-warning'
+import { TypeChooserBox } from './components/type-chooser-box'
 import {
   type BoxType,
   BoxRenderer,
   boxTypeStyle,
   defaultStyle,
-  types,
 } from './renderer'
 import { BoxToolbar } from './toolbar'
-import { FaIcon } from '@/components/fa-icon'
-import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
@@ -32,45 +31,42 @@ export function BoxEditor(props: BoxProps) {
   const borderColorClass = Object.hasOwn(style, 'borderColorClass')
     ? style.borderColorClass
     : defaultStyle.borderColorClass
+
   const contentId = content.get()
-  const contentIsEmpty = useAppSelector((state) =>
+  const isEmptyContent = useAppSelector((state) =>
     selectIsEmptyRows(state, contentId)
   )
-  const { strings } = useInstanceData()
+
   const editorStrings = useEditorStrings()
 
   const isTitleFocused = useAppSelector((state) =>
     selectIsFocused(state, title.id)
   )
 
-  const hasFocus = focused || isTitleFocused
+  const showToolbar = focused || isTitleFocused
 
   if (hasNoType) {
     return (
-      <>
-        <figure
-          className={clsx(
-            'relative rounded-xl border-3 p-4 pt-2',
-            borderColorClass
-          )}
-        >
-          <b className="block pb-4">{editorStrings.plugins.box.type}</b>
-          <ul className="unstyled-list pb-8">{renderSettingsListItems()}</ul>
-        </figure>
-      </>
+      <TypeChooserBox typeState={type} borderColorClass={borderColorClass} />
     )
   }
 
   return (
     <>
-      {hasFocus ? <BoxToolbar {...props} /> : null}
+      {showToolbar ? <BoxToolbar {...props} /> : null}
 
       <div
         className={clsx(
-          hasFocus && '[&>figure]:rounded-t-none',
+          showToolbar && '[&>figure]:rounded-t-none',
+          'transition-opacity',
+          editable && isEmptyContent && 'opacity-30 focus-within:opacity-100',
+          showToolbar && '!opacity-100 ',
+          '[&:focus-within_.box-warning]:hidden',
+          // making space for first toolbar, not wysiwyg
+          '[&>figure>figcaption]:!mb-9',
+          // toolbar finetuning
           editable &&
             tw`
-            [&>figure>div]:!mt-8
             [&_.plugin-toolbar]:ml-[-2px]
             [&_.plugin-toolbar]:mr-[-16px]
             [&_.plugin-toolbar]:rounded-none
@@ -78,6 +74,7 @@ export function BoxEditor(props: BoxProps) {
           `
         )}
       >
+        {isEmptyContent && !showToolbar ? <EmptyWarning /> : null}
         <BoxRenderer
           boxType={typedValue}
           title={
@@ -96,47 +93,6 @@ export function BoxEditor(props: BoxProps) {
           <div className="-ml-3 px-side">{content.render()}</div>
         </BoxRenderer>
       </div>
-      {renderWarning()}
     </>
   )
-
-  function renderSettingsListItems() {
-    return types.map((boxType) => {
-      const typedBoxType = boxType as BoxType
-      const listStyle = boxTypeStyle[typedBoxType]
-      const listIcon = Object.hasOwn(listStyle, 'icon')
-        ? listStyle.icon
-        : undefined
-
-      return (
-        <li key={typedBoxType} className="inline-block pb-4 pr-4">
-          <button
-            className="serlo-button-editor-secondary"
-            onClick={(event) => {
-              event.preventDefault()
-              type.set(typedBoxType)
-              if (anchorId.value === '') generateAnchorId()
-            }}
-          >
-            {listIcon ? <FaIcon className="mr-1" icon={listIcon} /> : null}
-            {strings.content.boxTypes[typedBoxType]}
-          </button>
-        </li>
-      )
-    })
-  }
-
-  function generateAnchorId() {
-    anchorId.set(`box${Math.floor(10000 + Math.random() * 90000)}`)
-  }
-
-  function renderWarning() {
-    return contentIsEmpty && props.editable ? (
-      <div className="mt-1 text-right">
-        <span className="bg-editor-primary-100 p-0.5 text-sm">
-          ⚠️ {editorStrings.plugins.box.emptyContentWarning}
-        </span>
-      </div>
-    ) : null
-  }
 }

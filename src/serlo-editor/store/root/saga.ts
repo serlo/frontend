@@ -18,7 +18,8 @@ function* initRootSaga(action: ReturnType<typeof runInitRootSaga>) {
   const [actions]: [ReversibleAction[], unknown] = yield call(
     handleRecursiveInserts,
     () => {},
-    [{ id: ROOT, ...(action.payload.initialState || {}) }]
+    [{ id: ROOT, ...(action.payload.initialState || {}) }],
+    false // shouldFocusInsertedDocument
   )
 
   yield all(actions.map((reversible) => put(reversible.action)))

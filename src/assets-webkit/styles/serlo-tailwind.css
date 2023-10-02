@@ -414,6 +414,9 @@
     header {
       background-color: white;
     }
+    header [data-qa='quickbar-input'] {
+      @apply hidden;
+    }
     .print\:block {
       @apply !block;
     }

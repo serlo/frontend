@@ -1,6 +1,7 @@
 import type { LicenseData } from './data-types'
 import type { BoxType } from './serlo-editor/plugins/box/renderer'
 import { Sign } from './serlo-editor/plugins/equations/sign'
+import { InputExerciseType } from './serlo-editor/plugins/input-exercise/input-exercise-type'
 import type { PageTeamRendererProps } from './serlo-editor/plugins/page-team/renderer'
 import { TableType } from './serlo-editor/plugins/serlo-table/renderer'
 import type { CustomText } from './serlo-editor/plugins/text'
@@ -331,10 +332,7 @@ export interface EditorPluginScMcExercise {
 export interface EditorPluginInputExercise {
   plugin: EditorPluginType.InputExercise // editor plugin
   state: {
-    type:
-      | 'input-number-exact-match-challenge'
-      | 'input-string-normalized-match-challenge'
-      | 'input-expression-equal-match-challenge'
+    type: InputExerciseType
     answers: {
       value: string
       isCorrect: boolean
