@@ -121,6 +121,12 @@ export function InjectionStaticRenderer({
             return
           }
 
+          if (uuid.__typename === 'Event') {
+            if (!uuid.currentRevision) throw new Error('no accepted revision')
+            setContent([JSON.parse(uuid.currentRevision.content)])
+            return
+          }
+
           throw new Error(`unsupported uuid: ${uuid.__typename}`)
         })
     } catch (e) {
@@ -166,6 +172,11 @@ const query = gql`
       ... on Applet {
         currentRevision {
           url
+          content
+        }
+      }
+      ... on Event {
+        currentRevision {
           content
         }
       }
