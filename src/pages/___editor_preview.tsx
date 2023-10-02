@@ -26,6 +26,7 @@ import {
 import { createPlugins } from '@/serlo-editor-integration/create-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { showToastNotice } from '@/helper/show-toast-notice'
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
   return (
@@ -113,12 +114,24 @@ function Content() {
       <section className="min-h-screen w-[50vw] border-4 border-r-0 border-editor-primary">
         <header className="mx-side flex justify-between align-middle font-bold">
           <h2 className="text-editor-primary">Edit</h2>
-          <button
-            onClick={() => setPreviewState(emptyState)}
-            className="mt-0.5 text-sm"
-          >
-            reset
-          </button>
+          <div>
+            <button
+              onClick={() => {
+                void navigator.clipboard.writeText(previewState)
+                showToastNotice('state copied to clipboard', 'success')
+              }}
+              className="mt-0.5 text-sm"
+            >
+              copy
+            </button>{' '}
+            |{' '}
+            <button
+              onClick={() => setPreviewState(emptyState)}
+              className="mt-0.5 text-sm"
+            >
+              reset
+            </button>
+          </div>
         </header>
         <div className="controls-portal pointer-events-none sticky top-0 z-[90] bg-white md:bg-transparent" />
         <div className="serlo-editor-hacks mb-24 max-w-[816px] px-2">
