@@ -216,7 +216,8 @@ export function StaticEntity({ data }: EntityProps) {
         </StaticInfoPanel>
       )
 
-    const hasContent = data.title || data.content?.length
+    // TODO: check with other content
+    const hasContent = data.title || data.content
     if (!hasContent)
       return (
         <StaticInfoPanel icon={faExclamationCircle} type="warning" doNotIndex>

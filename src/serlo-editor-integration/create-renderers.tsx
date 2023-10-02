@@ -224,11 +224,21 @@ export function createRenderers({
         type: TemplatePluginType.TextExerciseGroup,
         renderer: TextExerciseGroupTypeStaticRenderer,
       },
+      {
+        type: 'exercise-group',
+        renderer: TextExerciseGroupTypeStaticRenderer,
+      },
       // { type: TemplatePluginType.TextSolution, renderer: textSolutionTypePlugin },
       // { type: TemplatePluginType.User, renderer: userTypePlugin },
       // { type: TemplatePluginType.Video, renderer: videoTypePlugin },
 
-      { type: EditorPluginType.Unsupported, renderer: () => null },
+      {
+        type: EditorPluginType.Unsupported,
+        renderer: (state: unknown) => {
+          console.log('unsupported renderer: ', state)
+          return null
+        },
+      },
     ],
     mathRenderer: (element: MathElement) =>
       element.inline ? (

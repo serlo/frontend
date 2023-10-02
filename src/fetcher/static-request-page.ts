@@ -3,10 +3,9 @@ import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
 import { createBreadcrumbs } from './create-breadcrumbs'
-import { createExercise, createExerciseGroup } from './create-exercises'
 import { createHorizon } from './create-horizon'
 import { createInlineLicense } from './create-inline-license'
-import { getMetaImage, getMetaDescription } from './create-meta-data'
+import { getMetaImage } from './create-meta-data'
 import { createSecondaryMenu } from './create-secondary-menu'
 import { buildTaxonomyData } from './create-taxonomy'
 import { createTitle } from './create-title'
@@ -17,6 +16,10 @@ import {
 } from './graphql-types/operations'
 import { prettifyLinksInState } from './prettify-links-state/prettify-links-in-state'
 import { dataQuery } from './query'
+import {
+  createStaticExerciseGroup,
+  staticCreateExercise,
+} from './static-create-exercises'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData, UuidRevType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
@@ -25,6 +28,8 @@ import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import type { SupportedEditorPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+
+// TODO: add context (exercise id, solution id, …, in static request (probably staticCreateExercise)
 
 // ALWAYS start alias with slash
 export async function staticRequestPage(
@@ -156,7 +161,7 @@ export async function staticRequestPage(
     uuid.__typename === UuidType.Exercise ||
     uuid.__typename === UuidType.GroupedExercise
   ) {
-    const exercise = [createExercise(uuid)]
+    const exercise = staticCreateExercise(uuid)
     return {
       kind: 'single-entity',
       entityData: {
@@ -164,6 +169,7 @@ export async function staticRequestPage(
         alias: uuid.alias,
         typename: uuid.__typename as UuidType,
         trashed: uuid.trashed,
+        // @ts-expect-error static
         content: exercise,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
@@ -187,7 +193,7 @@ export async function staticRequestPage(
             ? 'text-exercise'
             : 'groupedexercise',
         metaImage,
-        metaDescription: getMetaDescription(exercise),
+        //TODO: metaDescription: getMetaDescription(exercise),
       },
       horizonData,
       cacheKey,
@@ -196,13 +202,14 @@ export async function staticRequestPage(
   }
 
   if (uuid.__typename === UuidType.ExerciseGroup) {
-    const exercise = [createExerciseGroup(uuid)]
+    const exercise = [createStaticExerciseGroup(uuid)]
     return {
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
         alias: uuid.alias,
         typename: UuidType.ExerciseGroup,
+        // @ts-expect-error static
         content: exercise,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
@@ -213,7 +220,7 @@ export async function staticRequestPage(
         title,
         contentType: 'exercisegroup',
         metaImage,
-        metaDescription: getMetaDescription(exercise),
+        // TODO: metaDescription: getMetaDescription(exercise),
       },
       horizonData,
       cacheKey,
@@ -343,7 +350,7 @@ export async function staticRequestPage(
             license: createInlineLicense(uuid.license),
           },
           //@ts-expect-error static
-          ...content,
+          ...(content ? [content] : []),
         ],
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
@@ -382,11 +389,8 @@ export async function staticRequestPage(
             state: uuid.currentRevision?.url ?? '',
           },
           //@ts-expect-error static
-          ...content,
+          ...(content ? [content] : []),
         ],
-        schemaData: {
-          wrapWithItemType: 'http://schema.org/VideoObject',
-        },
         licenseData,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
