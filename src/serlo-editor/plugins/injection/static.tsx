@@ -9,11 +9,15 @@ import {
   AnyEditorPlugin,
   StaticRenderer,
 } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorInjectionPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import {
+  EditorInjectionPlugin,
+  EditorRowsPlugin,
+} from '@/serlo-editor-integration/types/editor-plugins'
+import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
 // Proof of concept for reworked injection plugin
 
-// TODO: Support other entities, probably at least ExerciseGroup, Applet (GeoGebra), Video, Event
+// TODO: Support other entities, probably at least Applet (GeoGebra), Video, Event
 
 export function InjectionStaticRenderer({
   state: href,
@@ -25,6 +29,7 @@ export function InjectionStaticRenderer({
   const { strings } = useInstanceData()
 
   useEffect(() => {
+    if (!href) return
     const cleanedHref = href.startsWith('/') ? href : `/${href}`
 
     try {
@@ -45,18 +50,51 @@ export function InjectionStaticRenderer({
           if (!data?.uuid) throw new Error('not found')
           const uuid = data.uuid
           if (
-            uuid.__typename !== 'GroupedExercise' &&
-            uuid.__typename !== 'Exercise'
+            uuid.__typename === 'GroupedExercise' ||
+            uuid.__typename === 'Exercise'
           ) {
-            throw new Error('unsupported uuid')
-          }
-          if (!uuid.currentRevision) throw new Error('no accepted revision')
+            if (!uuid.currentRevision) throw new Error('no accepted revision')
 
-          const solutionContent = uuid.solution?.currentRevision?.content
-          setContent([
-            JSON.parse(uuid.currentRevision.content),
-            solutionContent ? JSON.parse(solutionContent) : null,
-          ])
+            const solutionContent = uuid.solution?.currentRevision?.content
+
+            setContent([
+              JSON.parse(uuid.currentRevision.content),
+              solutionContent ? JSON.parse(solutionContent) : null,
+            ])
+            return
+          }
+
+          if (uuid.__typename === 'ExerciseGroup') {
+            if (!uuid.currentRevision) throw new Error('no accepted revision')
+
+            const exercisesWithSolutions = uuid.exercises.map((exercise) => {
+              const solutionContent =
+                exercise.solution?.currentRevision?.content
+
+              return exercise.currentRevision
+                ? ([
+                    JSON.parse(exercise.currentRevision?.content),
+                    solutionContent ? JSON.parse(solutionContent) : null,
+                  ] as AnyEditorPlugin[])
+                : []
+            })
+
+            setContent([
+              {
+                plugin: TemplatePluginType.TextExerciseGroup,
+                id: undefined,
+                state: {
+                  content: JSON.parse(
+                    uuid.currentRevision.content
+                  ) as EditorRowsPlugin,
+                  // solutions are not really part of the state at this point, but cleaner this way
+                  exercisesWithSolutions,
+                },
+              },
+            ])
+            return
+          }
+          throw new Error(`unsupported uuid: ${uuid.__typename}`)
         })
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -78,25 +116,30 @@ const query = gql`
   query injectionOnlyContent($path: String!) {
     uuid(alias: { path: $path, instance: de }) {
       __typename
+      ... on Exercise {
+        ...injectionExercise
+      }
       ... on GroupedExercise {
+        ...injectionExercise
+      }
+      ... on ExerciseGroup {
         currentRevision {
           content
         }
-        solution {
-          currentRevision {
-            content
-          }
+        exercises {
+          ...injectionExercise
         }
       }
-      ... on Exercise {
-        currentRevision {
-          content
-        }
-        solution {
-          currentRevision {
-            content
-          }
-        }
+    }
+  }
+
+  fragment injectionExercise on AbstractExercise {
+    currentRevision {
+      content
+    }
+    solution {
+      currentRevision {
+        content
       }
     }
   }

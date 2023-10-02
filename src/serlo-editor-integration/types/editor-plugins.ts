@@ -1,4 +1,5 @@
 import { EditorPluginType } from './editor-plugin-type'
+import { TemplatePluginType } from './template-plugin-type'
 import type { LayoutPluginState } from '../../serlo-editor/plugins/_on-the-way-out/layout'
 import type { ArticlePluginState } from '../../serlo-editor/plugins/article'
 import type { ExercisePluginState } from '../../serlo-editor/plugins/exercise'
@@ -22,6 +23,7 @@ import { PageTeamPluginState } from '@/serlo-editor/plugins/page-team'
 import type { RowsPluginState } from '@/serlo-editor/plugins/rows'
 import type { ScMcExercisePluginState } from '@/serlo-editor/plugins/sc-mc-exercise'
 import { SerloTablePluginState } from '@/serlo-editor/plugins/serlo-table'
+import { TextExerciseGroupTypePluginState } from '@/serlo-editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
 import type { SpoilerPluginState } from '@/serlo-editor/plugins/spoiler'
 import type {
   TextEditorState,
@@ -168,6 +170,20 @@ export interface EditorPagePartnersPlugin {
 export interface EditorH5PPlugin {
   plugin: EditorPluginType.H5p
   state: StateTypeSerializedType<H5pPluginState>
+  id?: string
+}
+
+// Template Plugins
+export interface EditorTemplateGroupedExercise {
+  plugin: TemplatePluginType.TextExerciseGroup
+  state: StateTypeSerializedType<TextExerciseGroupTypePluginState> & {
+    // extra field that is not actually part of the state until we move solutions into exercises
+    exercisesWithSolutions: (
+      | []
+      | [EditorExercisePlugin, EditorSolutionPlugin]
+      | [EditorExercisePlugin]
+    )[]
+  }
   id?: string
 }
 

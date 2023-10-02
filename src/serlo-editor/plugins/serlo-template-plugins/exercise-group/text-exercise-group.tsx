@@ -1,18 +1,18 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
+import { TextExerciseGroupTypeRenderer } from './renderer'
 import {
   editorContent,
   entity,
   serializedChild,
   entityType,
-} from './common/common'
-import { ContentLoaders } from './helpers/content-loaders/content-loaders'
-import { TextExerciseTypePluginState } from './text-exercise'
-import { ToolbarMain } from './toolbar-main/toolbar-main'
+} from '../common/common'
+import { ContentLoaders } from '../helpers/content-loaders/content-loaders'
+import { TextExerciseTypePluginState } from '../text-exercise'
+import { ToolbarMain } from '../toolbar-main/toolbar-main'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
-import { tw } from '@/helper/tw'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import {
@@ -24,6 +24,8 @@ import {
 } from '@/serlo-editor/plugin'
 import { selectSerializedDocument, store } from '@/serlo-editor/store'
 import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
+
+// text-exercises also include interactive exercises, we keep the naming to avoid db-migration
 
 export const textExerciseGroupTypeState = entityType(
   {
@@ -60,7 +62,6 @@ function TextExerciseGroupTypeEditor(
   } = props.state
 
   const exGroupStrings = useEditorStrings().templatePlugins.textExerciseGroup
-  const contentRendered = content.render()
 
   const serializedState = selectSerializedDocument(store.getState(), props.id)
     ?.state as StateTypeSerializedType<TextExerciseGroupTypePluginState>
@@ -81,37 +82,36 @@ function TextExerciseGroupTypeEditor(
         />
       </div>
       <article className="exercisegroup mt-32">
-        <section className="row">{contentRendered}</section>
-        <ol className="mb-2.5 ml-2 bg-white pb-3.5 [counter-reset:exercises] sm:pl-12">
-          {children.map((child, index) => (
-            <li
-              key={child.id}
-              className={tw`
-                serlo-exercise-wrapper serlo-grouped-exercise-wrapper
-                mt-12 pt-2 [&>div]:border-none
-              `}
-            >
-              <nav className="flex justify-end">
-                <button
-                  className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
-                  onClick={() => children.remove(index)}
-                >
-                  <EditorTooltip text={exGroupStrings.removeExercise} />
-                  <FaIcon icon={faTrashAlt} />
-                </button>
-                <ContentLoaders
-                  id={serializedExercises[index].id}
-                  currentRevision={serializedExercises[index].revision}
-                  onSwitchRevision={(data) =>
-                    child.replace(TemplatePluginType.TextExercise, data)
-                  }
-                  entityType={UuidType.GroupedExercise}
-                />
-              </nav>
-              {child.render()}
-            </li>
-          ))}
-        </ol>
+        <TextExerciseGroupTypeRenderer
+          content={<>{content.render()}</>}
+          exercises={children.map((child, index) => {
+            return {
+              id: child.id,
+              element: (
+                <>
+                  <nav className="flex justify-end">
+                    <button
+                      className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
+                      onClick={() => children.remove(index)}
+                    >
+                      <EditorTooltip text={exGroupStrings.removeExercise} />
+                      <FaIcon icon={faTrashAlt} />
+                    </button>
+                    <ContentLoaders
+                      id={serializedExercises[index].id}
+                      currentRevision={serializedExercises[index].revision}
+                      onSwitchRevision={(data) =>
+                        child.replace(TemplatePluginType.TextExercise, data)
+                      }
+                      entityType={UuidType.GroupedExercise}
+                    />
+                  </nav>
+                  {child.render()}
+                </>
+              ),
+            }
+          })}
+        />
         <AddButton onClick={() => children.insert()}>
           {exGroupStrings.addExercise}
         </AddButton>

@@ -10,6 +10,7 @@ import {
   EditorInjectionPlugin,
   EditorVideoPlugin,
 } from './types/editor-plugins'
+import { TemplatePluginType } from './types/template-plugin-type'
 import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
 import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
@@ -34,6 +35,7 @@ import { PageTeamStaticRenderer } from '@/serlo-editor/plugins/page-team/static'
 import { RowsStaticRenderer } from '@/serlo-editor/plugins/rows/static'
 import { ScMcExerciseStaticRenderer } from '@/serlo-editor/plugins/sc-mc-exercise/static'
 import { SerloTableStaticRenderer } from '@/serlo-editor/plugins/serlo-table/static'
+import { TextExerciseGroupTypeStaticRenderer } from '@/serlo-editor/plugins/serlo-template-plugins/exercise-group/static'
 import { StaticSolutionRenderer } from '@/serlo-editor/plugins/solution/static'
 import { SpoilerStaticRenderer } from '@/serlo-editor/plugins/spoiler/static'
 import type { MathElement } from '@/serlo-editor/plugins/text'
@@ -69,10 +71,7 @@ export function createRenderers({
       // plugins
       { type: EditorPluginType.Article, renderer: ArticleStaticRenderer },
       { type: EditorPluginType.Rows, renderer: RowsStaticRenderer },
-      {
-        type: EditorPluginType.Text,
-        renderer: TextStaticRenderer,
-      },
+      { type: EditorPluginType.Text, renderer: TextStaticRenderer },
       {
         type: EditorPluginType.Image,
         renderer: (state: EditorImagePlugin) => {
@@ -85,18 +84,9 @@ export function createRenderers({
         // special renderer for frontend because it uses nextjs dynamic import
         renderer: MultimediaStaticRendererWithLightbox,
       },
-      {
-        type: EditorPluginType.Spoiler,
-        renderer: SpoilerStaticRenderer,
-      },
-      {
-        type: EditorPluginType.Box,
-        renderer: BoxStaticRenderer,
-      },
-      {
-        type: EditorPluginType.SerloTable,
-        renderer: SerloTableStaticRenderer,
-      },
+      { type: EditorPluginType.Spoiler, renderer: SpoilerStaticRenderer },
+      { type: EditorPluginType.Box, renderer: BoxStaticRenderer },
+      { type: EditorPluginType.SerloTable, renderer: SerloTableStaticRenderer },
       {
         type: EditorPluginType.Injection,
         renderer: (state: EditorInjectionPlugin) => {
@@ -108,10 +98,7 @@ export function createRenderers({
           )
         },
       },
-      {
-        type: EditorPluginType.Equations,
-        renderer: EquationsStaticRenderer,
-      },
+      { type: EditorPluginType.Equations, renderer: EquationsStaticRenderer },
       {
         type: EditorPluginType.Geogebra,
         renderer: (state: EditorGeogebraPlugin) => {
@@ -168,19 +155,12 @@ export function createRenderers({
       },
 
       // only for pages
-      {
-        type: EditorPluginType.PageLayout,
-        renderer: PageLayoutStaticRenderer,
-      },
-      {
-        type: EditorPluginType.PageTeam,
-        renderer: PageTeamStaticRenderer,
-      },
+      { type: EditorPluginType.PageLayout, renderer: PageLayoutStaticRenderer },
+      { type: EditorPluginType.PageTeam, renderer: PageTeamStaticRenderer },
       {
         type: EditorPluginType.PagePartners,
         renderer: PagePartnersStaticRenderer,
       },
-      // { type: EditorPluginType.Unsupported, renderer: () => null },
       { type: EditorPluginType.Exercise, renderer: ExerciseStaticRenderer },
       {
         type: EditorPluginType.Highlight,
@@ -197,7 +177,6 @@ export function createRenderers({
       {
         type: EditorPluginType.InputExercise,
         renderer: InputExerciseStaticRenderer,
-
         // TODO: add frontend stuff
         // answers = { renderAnswers() }
         // onEvaluate = { onEvaluate }
@@ -209,7 +188,7 @@ export function createRenderers({
       },
       { type: EditorPluginType.Solution, renderer: StaticSolutionRenderer },
 
-      // // Internal plugins for our content types
+      // // Internal template plugins for our content types
       // { type: TemplatePluginType.Applet, renderer: appletTypePlugin },
       // { type: TemplatePluginType.Article, renderer: articleTypePlugin },
       // { type: TemplatePluginType.Course, renderer: courseTypePlugin },
@@ -218,13 +197,16 @@ export function createRenderers({
       // { type: TemplatePluginType.Page, renderer: pageTypePlugin },
       // { type: TemplatePluginType.Taxonomy, renderer: taxonomyTypePlugin },
       // { type: TemplatePluginType.TextExercise, renderer: textExerciseTypePlugin },
-      // {
-      //   type: TemplatePluginType.TextExerciseGroup,
-      //   renderer: TextExerciseGroupStaticRenderer,
-      // },
+      {
+        type: TemplatePluginType.TextExerciseGroup,
+        renderer: TextExerciseGroupTypeStaticRenderer,
+      },
       // { type: TemplatePluginType.TextSolution, renderer: textSolutionTypePlugin },
       // { type: TemplatePluginType.User, renderer: userTypePlugin },
       // { type: TemplatePluginType.Video, renderer: videoTypePlugin },
+
+      // TODO: reactivate before merge
+      // { type: EditorPluginType.Unsupported, renderer: () => null },
     ],
     mathRenderer: (element: MathElement) =>
       element.inline ? (

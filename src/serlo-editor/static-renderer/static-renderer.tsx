@@ -1,3 +1,5 @@
+import { Fragment } from 'react'
+
 import { editorRenderers } from '../plugin/helpers/editor-renderer'
 import {
   SupportedEditorPlugin,
@@ -20,9 +22,14 @@ export function StaticRenderer({
   if (Array.isArray(state)) {
     return (
       <>
-        {state.map((item) => (
-          <StaticRenderer key={item.id} state={item} />
-        ))}
+        {state.map((item) => {
+          if (!item) return null
+          return (
+            <Fragment key={item.id}>
+              <StaticRenderer state={item} />
+            </Fragment>
+          )
+        })}
       </>
     )
   }
