@@ -9,6 +9,7 @@ import {
   AnyEditorPlugin,
   StaticRenderer,
 } from '@/serlo-editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   EditorInjectionPlugin,
   EditorRowsPlugin,
@@ -17,7 +18,7 @@ import { TemplatePluginType } from '@/serlo-editor-integration/types/template-pl
 
 // Proof of concept for reworked injection plugin
 
-// TODO: Support other entities, probably at least Applet (GeoGebra), Video, Event
+// TODO: Support other entities… wip
 
 export function InjectionStaticRenderer({
   state: href,
@@ -94,6 +95,32 @@ export function InjectionStaticRenderer({
             ])
             return
           }
+
+          if (uuid.__typename === 'Video') {
+            if (!uuid.currentRevision) throw new Error('no accepted revision')
+            const state = {
+              plugin: EditorPluginType.Video,
+              state: {
+                src: uuid.currentRevision.url,
+                alt: uuid.currentRevision.title ?? 'video',
+              },
+            }
+            setContent([state])
+            return
+          }
+
+          if (uuid.__typename === 'Applet') {
+            if (!uuid.currentRevision) throw new Error('no accepted revision')
+            setContent([
+              {
+                plugin: EditorPluginType.Geogebra,
+                state: uuid.currentRevision.url,
+              },
+              JSON.parse(uuid.currentRevision.content),
+            ])
+            return
+          }
+
           throw new Error(`unsupported uuid: ${uuid.__typename}`)
         })
     } catch (e) {
@@ -128,6 +155,18 @@ const query = gql`
         }
         exercises {
           ...injectionExercise
+        }
+      }
+      ... on Video {
+        currentRevision {
+          url
+          title
+        }
+      }
+      ... on Applet {
+        currentRevision {
+          url
+          content
         }
       }
     }
