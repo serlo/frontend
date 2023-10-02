@@ -22,10 +22,10 @@ export function StaticRenderer({
   if (Array.isArray(state)) {
     return (
       <>
-        {state.map((item) => {
+        {state.map((item, index) => {
           if (!item) return null
           return (
-            <Fragment key={item.id}>
+            <Fragment key={item.id ?? `${item.plugin}${index}`}>
               <StaticRenderer state={item} />
             </Fragment>
           )
@@ -36,14 +36,7 @@ export function StaticRenderer({
 
   const Renderer = editorRenderers.getByType(state.plugin)
 
-  // only while developing
-  if (!Renderer) {
-    return (
-      <div className="my-block">
-        <mark>{state.plugin}</mark>
-      </div>
-    )
-  }
+  if (!Renderer) return null
 
   return <Renderer {...state} />
 }

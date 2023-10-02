@@ -228,8 +228,7 @@ export function createRenderers({
       // { type: TemplatePluginType.User, renderer: userTypePlugin },
       // { type: TemplatePluginType.Video, renderer: videoTypePlugin },
 
-      // TODO: reactivate before merge
-      // { type: EditorPluginType.Unsupported, renderer: () => null },
+      { type: EditorPluginType.Unsupported, renderer: () => null },
     ],
     mathRenderer: (element: MathElement) =>
       element.inline ? (
