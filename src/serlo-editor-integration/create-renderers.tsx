@@ -8,9 +8,11 @@ import {
   EditorHighlightPlugin,
   EditorImagePlugin,
   EditorInjectionPlugin,
+  EditorSolutionPlugin,
   EditorVideoPlugin,
 } from './types/editor-plugins'
 import { TemplatePluginType } from './types/template-plugin-type'
+// import { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
 import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
 import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
@@ -54,6 +56,12 @@ const StaticMath = dynamic<MathElement>(() =>
     (mod) => mod.StaticMath
   )
 )
+
+// const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
+//   import('@/components/comments/comment-area-entity').then(
+//     (mod) => mod.CommentAreaEntity
+//   )
+// )
 
 export function createRenderers({
   instance,
@@ -186,7 +194,22 @@ export function createRenderers({
         type: EditorPluginType.ScMcExercise,
         renderer: ScMcExerciseStaticRenderer,
       },
-      { type: EditorPluginType.Solution, renderer: StaticSolutionRenderer },
+      {
+        type: EditorPluginType.Solution,
+        renderer: (state: EditorSolutionPlugin) => {
+          return (
+            <>
+              <StaticSolutionRenderer
+                solutionVisibleOnInit={false}
+                {...state}
+              />
+              {/* <Lazy>
+                <CommentAreaEntity entityId={node.context.solutionId} />
+              </Lazy> */}
+            </>
+          )
+        },
+      },
 
       // // Internal template plugins for our content types
       // { type: TemplatePluginType.Applet, renderer: appletTypePlugin },

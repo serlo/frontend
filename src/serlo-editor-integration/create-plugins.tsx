@@ -171,16 +171,6 @@ export function createPlugins({
       plugin: pagePartnersPlugin,
       visibleInSuggestions: isPage,
     },
-    ...(allowExercises
-      ? [
-          {
-            type: EditorPluginType.Exercise,
-            plugin: exercisePlugin,
-            visibleInSuggestions: true,
-          },
-          // Group?
-        ]
-      : []),
 
     // ===================================================
     // never visible in suggestions
@@ -198,7 +188,11 @@ export function createPlugins({
       }),
     },
     { type: EditorPluginType.Unsupported, plugin: unsupportedPlugin },
-    { type: EditorPluginType.Exercise, plugin: exercisePlugin },
+    {
+      type: EditorPluginType.Exercise,
+      plugin: exercisePlugin,
+      visibleInSuggestions: allowExercises,
+    },
     { type: EditorPluginType.Highlight, plugin: createHighlightPlugin() },
     { type: EditorPluginType.H5p, plugin: H5pPlugin },
     {
@@ -208,7 +202,11 @@ export function createPlugins({
     { type: EditorPluginType.Layout, plugin: layoutPlugin },
     { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
     { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
-    { type: EditorPluginType.Solution, plugin: solutionPlugin },
+    {
+      type: EditorPluginType.Solution,
+      plugin: solutionPlugin,
+      visibleInSuggestions: allowExercises,
+    },
 
     // Internal plugins for our content types
     { type: TemplatePluginType.Applet, plugin: appletTypePlugin },
