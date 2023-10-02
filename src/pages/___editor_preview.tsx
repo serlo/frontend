@@ -16,6 +16,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import { Editor } from '@/serlo-editor/core'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
@@ -26,7 +27,6 @@ import {
 import { createPlugins } from '@/serlo-editor-integration/create-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import { showToastNotice } from '@/helper/show-toast-notice'
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
   return (

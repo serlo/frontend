@@ -16,10 +16,6 @@ import {
 } from '@/serlo-editor-integration/types/editor-plugins'
 import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
-// Proof of concept for reworked injection plugin
-
-// TODO: Support other entities… wip
-
 export function InjectionStaticRenderer({
   state: href,
 }: EditorInjectionPlugin) {
@@ -127,7 +123,18 @@ export function InjectionStaticRenderer({
             return
           }
 
-          throw new Error(`unsupported uuid: ${uuid.__typename}`)
+          if (
+            uuid.__typename === 'Article' ||
+            uuid.__typename === 'TaxonomyTerm' ||
+            uuid.__typename === 'CoursePage' ||
+            uuid.__typename === 'Solution'
+          ) {
+            if (!uuid.alias) setContent([])
+            setContent([createFallbackBox(uuid.alias, uuid.title)])
+            return
+          }
+
+          setContent('error')
         })
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -140,7 +147,16 @@ export function InjectionStaticRenderer({
 
   if (content === 'loading') return <LoadingSpinner />
   if (content === 'error')
-    return <StaticInfoPanel>{strings.errors.defaultMessage}</StaticInfoPanel>
+    return (
+      <StaticInfoPanel>
+        {strings.errors.defaultMessage}{' '}
+        <small className="float-right mt-0.5">
+          <a className="serlo-link" href={href}>
+            Link
+          </a>
+        </small>
+      </StaticInfoPanel>
+    )
 
   return <StaticRenderer state={content} />
 }
@@ -180,6 +196,23 @@ const query = gql`
           content
         }
       }
+      ### fallbacks
+      ... on Article {
+        alias
+        title
+      }
+      ... on TaxonomyTerm {
+        alias
+        title
+      }
+      ... on CoursePage {
+        alias
+        title
+      }
+      ... on Solution {
+        alias
+        title
+      }
     }
   }
 
@@ -194,3 +227,39 @@ const query = gql`
     }
   }
 `
+
+function createFallbackBox(alias: string, title: string) {
+  return {
+    plugin: EditorPluginType.Rows,
+    state: [
+      {
+        plugin: EditorPluginType.Box,
+        state: {
+          type: 'blank',
+          title: { plugin: EditorPluginType.Text },
+          anchorId: '',
+          content: {
+            plugin: EditorPluginType.Rows,
+            state: [
+              {
+                plugin: EditorPluginType.Text,
+                state: [
+                  {
+                    type: 'p',
+                    children: [
+                      {
+                        type: 'a',
+                        href: alias,
+                        children: [{ text: title, strong: true }],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      },
+    ],
+  }
+}
