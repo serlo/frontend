@@ -195,16 +195,6 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
             ></div>
           </div>
         </div>
-        {entry.ivals.length > 0 && (
-          <div className="mb-3 ml-4">
-            Eingaben:{' '}
-            {JSON.stringify(
-              entry.ivals.map((val) =>
-                val.length < 8 ? val : val.substring(0, 7) + ' …'
-              )
-            )}
-          </div>
-        )}
       </>
     )
   }

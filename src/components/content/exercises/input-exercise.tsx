@@ -20,7 +20,6 @@ export interface InputExerciseProps {
 export function InputExercise({
   data,
   renderNested,
-  isRevisionView,
   context,
 }: InputExerciseProps) {
   const exStrings = useInstanceData().strings.content.exercises
@@ -34,8 +33,9 @@ export function InputExercise({
         unit={data.unit}
         answers={renderAnswers()}
         onEvaluate={onEvaluate}
+        id={context.entityId}
       />
-      {isRevisionView && renderRevisionExtra()}
+      {renderRevisionExtra()}
     </>
   )
 
@@ -85,7 +85,8 @@ export function InputExercise({
         <span className="mx-side text-sm font-bold">
           {exStrings.answer} {answer.isCorrect && `[${exStrings.correct}]`}:
         </span>
-        {answer.value}
+        {answer.value}{' '}
+        <span className="ml-4 inline-block text-gray-500">[{data.type}]</span>
         {renderNested(answer.feedback, `mcfeedbackrevision`)}
       </div>
     ))
