@@ -5,6 +5,7 @@ import type { EditorSolutionPlugin } from '../types/editor-plugins'
 import { useAuthentication } from '@/auth/use-authentication'
 import type { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
 import { Lazy } from '@/components/content/lazy'
+import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
 import { ExerciseInlineType } from '@/data-types'
 import { StaticSolutionRenderer } from '@/serlo-editor/plugins/solution/static'
@@ -26,8 +27,6 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionPlugin) {
   const [loaded, setLoaded] = useState(false)
   useEffect(() => setLoaded(true), [])
 
-  // TODO: License
-
   const context = props.serloContext
 
   return (
@@ -35,8 +34,13 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionPlugin) {
       {/* TODO: if (isRevisionView) don't show AuthorTools and Comments*/}
       <StaticSolutionRenderer
         beforeSlot={
-          loaded && auth && context?.uuid ? (
-            <Lazy>
+          <>
+            {context?.license ? (
+              <div className="absolute right-0 z-20">
+                <ExerciseLicenseNotice data={context.license} />
+              </div>
+            ) : null}
+            {loaded && auth && context?.uuid ? (
               <div className="absolute -right-8 top-0 z-20">
                 <AuthorToolsExercises
                   data={{
@@ -48,8 +52,8 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionPlugin) {
                   }}
                 />
               </div>
-            </Lazy>
-          ) : null
+            ) : null}
+          </>
         }
         // TODO: check how this was set before
         solutionVisibleOnInit={false}

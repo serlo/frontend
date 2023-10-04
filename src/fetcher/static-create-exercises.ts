@@ -21,7 +21,6 @@ export function staticCreateExercise(
   // compat: shuffle interactive answers with shuffleArray
 
   // positionOnPage: index,
-  // license: createInlineLicense(uuid.license),
   // href: uuid.alias, ??
 
   const exerciseWithContext = {
@@ -32,6 +31,7 @@ export function staticCreateExercise(
       trashed: uuid.trashed,
       grouped: false,
       unrevisedRevisions: uuid.revisions?.totalCount,
+      license: uuid.license && !uuid.license.default ? uuid.license : undefined,
     },
   }
   const solutionRaw = uuid.solution?.currentRevision?.content
@@ -45,6 +45,10 @@ export function staticCreateExercise(
         exerciseId: uuid.id,
         trashed: uuid.solution?.trashed,
         unrevisedRevisions: solution.serloContext?.unrevisedRevisions,
+        license:
+          uuid.solution?.license && !uuid.solution?.license.default
+            ? uuid.solution?.license
+            : undefined,
       }
     : undefined
 

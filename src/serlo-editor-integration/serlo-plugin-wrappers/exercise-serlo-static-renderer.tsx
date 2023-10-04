@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 import type { EditorExercisePlugin } from '../types/editor-plugins'
 import { useAuthentication } from '@/auth/use-authentication'
-import { Lazy } from '@/components/content/lazy'
+import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
 import { ExerciseInlineType } from '@/data-types'
 import { ExerciseStaticRenderer } from '@/serlo-editor/plugins/exercise/static'
@@ -22,26 +22,27 @@ export function ExerciseSerloStaticRenderer(props: EditorExercisePlugin) {
 
   //TODO: if (isRevisionView) don't show
 
-  // TODO: License
-
   const context = props.serloContext
 
   return (
     <div className="relative">
+      {context?.license ? (
+        <div className="absolute right-0 z-20">
+          <ExerciseLicenseNotice data={context.license} />
+        </div>
+      ) : null}
       {loaded && auth && context?.uuid ? (
-        <Lazy>
-          <div className="absolute -right-8 z-20">
-            <AuthorToolsExercises
-              data={{
-                type: ExerciseInlineType.Exercise,
-                id: context?.uuid,
-                trashed: context?.trashed,
-                grouped: context?.grouped,
-                unrevisedRevisions: context?.unrevisedRevisions,
-              }}
-            />
-          </div>
-        </Lazy>
+        <div className="absolute -right-8 z-20">
+          <AuthorToolsExercises
+            data={{
+              type: ExerciseInlineType.Exercise,
+              id: context?.uuid,
+              trashed: context?.trashed,
+              grouped: context?.grouped,
+              unrevisedRevisions: context?.unrevisedRevisions,
+            }}
+          />
+        </div>
       ) : null}
 
       <ExerciseStaticRenderer {...props} />

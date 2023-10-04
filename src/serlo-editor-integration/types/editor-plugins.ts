@@ -6,6 +6,7 @@ import type { ExercisePluginState } from '../../serlo-editor/plugins/exercise'
 import type { InjectionPluginState } from '../../serlo-editor/plugins/injection'
 import type { SolutionPluginState } from '../../serlo-editor/plugins/solution'
 import type { UnsupportedPluginState } from '../../serlo-editor/plugins/unsupported'
+import { License } from '@/fetcher/query-types'
 import type { StateTypeSerializedType } from '@/serlo-editor/plugin'
 import type { AnchorPluginState } from '@/serlo-editor/plugins/anchor'
 import { AudioPluginState } from '@/serlo-editor/plugins/audio'
@@ -79,6 +80,7 @@ export interface EditorExercisePlugin {
     trashed?: boolean
     grouped?: boolean
     unrevisedRevisions?: number
+    license?: License
   }
 }
 export interface EditorGeogebraPlugin {
@@ -147,6 +149,7 @@ export interface EditorSolutionPlugin {
     exerciseId?: number
     trashed?: boolean
     unrevisedRevisions?: number
+    license?: License
   }
 }
 export interface EditorSerloTablePlugin {

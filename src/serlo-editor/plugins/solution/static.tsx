@@ -4,7 +4,7 @@ import { Link } from '@/components/content/link'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorSolutionPlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
-// TODO: All frontend specific stuff…
+// TODO: Commented out frontend specific stuff…
 
 export function StaticSolutionRenderer({
   state,
@@ -32,12 +32,7 @@ export function StaticSolutionRenderer({
 
   return (
     <SolutionRenderer
-      prerequisite={
-        <>
-          {beforeSlot}
-          {prerequisiteElement}
-        </>
-      }
+      prerequisite={prerequisiteElement}
       strategy={strategyElement}
       steps={
         <>
@@ -46,29 +41,24 @@ export function StaticSolutionRenderer({
         </>
       }
       solutionVisibleOnInit={solutionVisibleOnInit}
-      // elementAfterToggle={renderLicense()}
-      // elementBeforePrerequisite={
-      //   authorTools ? (
-      //     <div className="-mt-2 text-right">{authorTools}</div>
-      //   ) : null
-      // }
-      // hideToggle={
-      //   !node.solution.content ||
-      //   node.solution.trashed ||
-      //   (isPrintMode && !printModeSolutionVisible)
-      // }
-      // onSolutionOpen={() =>
-      //   exerciseSubmission(
-      //     {
-      //       path: asPath,
-      //       entityId: node.context.id,
-      //       revisionId: node.context.revisionId,
-      //       type: 'text',
-      //       result: 'open',
-      //     },
-      //     ab
-      //   )
-      // }
+      elementBeforePrerequisite={beforeSlot}
+    // hideToggle={
+    //   !node.solution.content ||
+    //   node.solution.trashed ||
+    //   (isPrintMode && !printModeSolutionVisible)
+    // }
+    // onSolutionOpen={() =>
+    //   exerciseSubmission(
+    //     {
+    //       path: asPath,
+    //       entityId: node.context.id,
+    //       revisionId: node.context.revisionId,
+    //       type: 'text',
+    //       result: 'open',
+    //     },
+    //     ab
+    //   )
+    // }
     />
   )
 }
