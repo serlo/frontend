@@ -57,12 +57,6 @@ const StaticMath = dynamic<MathElement>(() =>
   )
 )
 
-// const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
-//   import('@/components/comments/comment-area-entity').then(
-//     (mod) => mod.CommentAreaEntity
-//   )
-// )
-
 export function createRenderers({
   instance,
   routerAsPath,
@@ -198,15 +192,7 @@ export function createRenderers({
         type: EditorPluginType.Solution,
         renderer: (state: EditorSolutionPlugin) => {
           return (
-            <>
-              <StaticSolutionRenderer
-                solutionVisibleOnInit={false}
-                {...state}
-              />
-              {/* <Lazy>
-                <CommentAreaEntity entityId={node.context.solutionId} />
-              </Lazy> */}
-            </>
+            <StaticSolutionRenderer solutionVisibleOnInit={false} {...state} />
           )
         },
       },

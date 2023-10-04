@@ -8,6 +8,9 @@ import {
   SupportedEditorPlugin,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
+/**
+ * special metaDescription for articles extracted from the introduction text
+ */
 export function getArticleMetaDescription(
   content?: SupportedEditorPlugin
 ): string | undefined {

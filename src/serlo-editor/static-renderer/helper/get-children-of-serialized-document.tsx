@@ -31,7 +31,6 @@ export function getChildrenOfSerializedDocument(
       document.plugin === EditorPluginType.Exercise
       ? [document.state.content, document.state.interactive]
       : //
-      // TODO: this does not seem to run, investigate
       // @ts-expect-error allow solutions
       document.plugin === EditorPluginType.Solution
       ? [
