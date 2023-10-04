@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic'
 import { ComponentProps } from 'react'
 
 import { ExerciseSerloStaticRenderer } from './serlo-plugin-wrappers/exercise-serlo-static-renderer'
+import { SerloScMcExerciseStaticRenderer } from './serlo-plugin-wrappers/sc-mc-serlo-static-renderer'
 import { SolutionSerloStaticRenderer } from './serlo-plugin-wrappers/solution-serlo-static-renderer'
 import { EditorPluginType } from './types/editor-plugin-type'
 import {
@@ -10,6 +11,7 @@ import {
   EditorHighlightPlugin,
   EditorImagePlugin,
   EditorInjectionPlugin,
+  EditorSpoilerPlugin,
   EditorVideoPlugin,
 } from './types/editor-plugins'
 import { TemplatePluginType } from './types/template-plugin-type'
@@ -17,6 +19,7 @@ import { TemplatePluginType } from './types/template-plugin-type'
 import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
 import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
+import { isPrintMode } from '@/components/print-mode'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { ExternalProvider } from '@/helper/use-consent'
 import { LinkRenderer } from '@/serlo-editor/plugin/helpers/editor-renderer'
@@ -34,7 +37,6 @@ import { PageLayoutStaticRenderer } from '@/serlo-editor/plugins/page-layout/sta
 import { PagePartnersStaticRenderer } from '@/serlo-editor/plugins/page-partners/static'
 import { PageTeamStaticRenderer } from '@/serlo-editor/plugins/page-team/static'
 import { RowsStaticRenderer } from '@/serlo-editor/plugins/rows/static'
-import { ScMcExerciseStaticRenderer } from '@/serlo-editor/plugins/sc-mc-exercise/static'
 import { SerloTableStaticRenderer } from '@/serlo-editor/plugins/serlo-table/static'
 import { TextExerciseGroupTypeStaticRenderer } from '@/serlo-editor/plugins/serlo-template-plugins/exercise-group/static'
 import { SpoilerStaticRenderer } from '@/serlo-editor/plugins/spoiler/static'
@@ -85,7 +87,14 @@ export function createRenderers({
         // special renderer for frontend because it uses nextjs dynamic import
         renderer: MultimediaStaticRendererWithLightbox,
       },
-      { type: EditorPluginType.Spoiler, renderer: SpoilerStaticRenderer },
+      {
+        type: EditorPluginType.Spoiler,
+        renderer: (state: EditorSpoilerPlugin) => {
+          return (
+            <SpoilerStaticRenderer {...state} openOverwrite={isPrintMode} />
+          )
+        },
+      },
       { type: EditorPluginType.Box, renderer: BoxStaticRenderer },
       { type: EditorPluginType.SerloTable, renderer: SerloTableStaticRenderer },
       {
@@ -188,7 +197,7 @@ export function createRenderers({
       },
       {
         type: EditorPluginType.ScMcExercise,
-        renderer: ScMcExerciseStaticRenderer,
+        renderer: SerloScMcExerciseStaticRenderer,
       },
       {
         type: EditorPluginType.Solution,

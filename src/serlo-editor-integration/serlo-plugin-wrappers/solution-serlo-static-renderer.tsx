@@ -1,13 +1,19 @@
 import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useContext, useEffect, useState } from 'react'
 
 import type { EditorSolutionPlugin } from '../types/editor-plugins'
 import { useAuthentication } from '@/auth/use-authentication'
 import type { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
 import { Lazy } from '@/components/content/lazy'
 import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
+import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
+import { useAB } from '@/contexts/ab'
+import { RevisionViewContext } from '@/contexts/revision-view-context'
+import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
 import { ExerciseInlineType } from '@/data-types'
+import { exerciseSubmission } from '@/helper/exercise-submission'
 import { StaticSolutionRenderer } from '@/serlo-editor/plugins/solution/static'
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
@@ -21,13 +27,29 @@ const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
   )
 )
 
+// TODO: check if empty solutions are hidden
+
 // Special version for serlo.org with author tools and license
 export function SolutionSerloStaticRenderer(props: EditorSolutionPlugin) {
   const auth = useAuthentication()
   const [loaded, setLoaded] = useState(false)
   useEffect(() => setLoaded(true), [])
-
+  const { asPath } = useRouter()
+  const ab = useAB()
+  const entityId = useEntityId()
+  const revisionId = useRevisionId()
+  const isRevisionView = useContext(RevisionViewContext)
   const context = props.serloContext
+
+  if (isPrintMode && !printModeSolutionVisible) return null
+
+  const solutionVisibleOnInit = isRevisionView
+    ? true
+    : isPrintMode
+    ? printModeSolutionVisible
+    : typeof window === 'undefined'
+    ? false
+    : window.location.href.includes('#comment-')
 
   return (
     <div className="relative">
@@ -56,7 +78,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionPlugin) {
           </>
         }
         // TODO: check how this was set before
-        solutionVisibleOnInit={false}
+        solutionVisibleOnInit={solutionVisibleOnInit}
         {...props}
         afterSlot={
           context?.uuid ? (
@@ -65,6 +87,19 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionPlugin) {
             </Lazy>
           ) : null
         }
+        onSolutionOpen={() => {
+          if (entityId && revisionId)
+            exerciseSubmission(
+              {
+                path: asPath,
+                entityId,
+                revisionId,
+                type: 'text',
+                result: 'open',
+              },
+              ab
+            )
+        }}
       />
     </div>
   )

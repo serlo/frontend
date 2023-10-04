@@ -11,10 +11,12 @@ export function StaticSolutionRenderer({
   solutionVisibleOnInit,
   beforeSlot,
   afterSlot,
+  onSolutionOpen,
 }: EditorSolutionPlugin & {
   solutionVisibleOnInit: boolean
   afterSlot?: JSX.Element | null
   beforeSlot?: JSX.Element | null
+  onSolutionOpen?: () => void
 }) {
   const { prerequisite, strategy, steps } = state
 
@@ -42,23 +44,7 @@ export function StaticSolutionRenderer({
       }
       solutionVisibleOnInit={solutionVisibleOnInit}
       elementBeforePrerequisite={beforeSlot}
-      // hideToggle={
-      //   !node.solution.content ||
-      //   node.solution.trashed ||
-      //   (isPrintMode && !printModeSolutionVisible)
-      // }
-      // onSolutionOpen={() =>
-      //   exerciseSubmission(
-      //     {
-      //       path: asPath,
-      //       entityId: node.context.id,
-      //       revisionId: node.context.revisionId,
-      //       type: 'text',
-      //       result: 'open',
-      //     },
-      //     ab
-      //   )
-      // }
+      onSolutionOpen={onSolutionOpen}
     />
   )
 }

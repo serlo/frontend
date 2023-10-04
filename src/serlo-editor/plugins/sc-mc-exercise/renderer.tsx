@@ -5,7 +5,6 @@ import { Fragment, useState } from 'react'
 
 import { Feedback } from '@/components/content/exercises/feedback'
 import { FaIcon } from '@/components/fa-icon'
-import { isPrintMode } from '@/components/print-mode'
 import { useInstanceData } from '@/contexts/instance-context'
 import { ExerciseSubmissionData } from '@/helper/exercise-submission'
 
@@ -24,6 +23,7 @@ export interface ScMcExerciseRendererProps {
     answer: ScMcExerciseRendererAnswer,
     hasFeedback: boolean
   ) => JSX.Element | null
+  isPrintMode?: boolean
 }
 
 export function ScMcExerciseRenderer({
@@ -32,6 +32,7 @@ export function ScMcExerciseRenderer({
   idBase,
   onEvaluate,
   renderExtraAnswerContent,
+  isPrintMode,
 }: ScMcExerciseRendererProps) {
   const [selected, setSelected] = useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = useState(false)

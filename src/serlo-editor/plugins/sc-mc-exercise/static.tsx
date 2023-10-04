@@ -1,11 +1,20 @@
-import { ScMcExerciseRenderer } from './renderer'
+import { ScMcExerciseRenderer, ScMcExerciseRendererProps } from './renderer'
 import { isEmptyTextPlugin } from '../text/utils/static-is-empty'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorScMcExercisePlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
 export function ScMcExerciseStaticRenderer({
   state,
-}: EditorScMcExercisePlugin & { idBase: string }) {
+  isPrintMode,
+  idBase,
+  onEvaluate,
+  renderExtraAnswerContent,
+}: EditorScMcExercisePlugin & {
+  idBase: string
+  isPrintMode?: boolean
+  onEvaluate: ScMcExerciseRendererProps['onEvaluate']
+  renderExtraAnswerContent: ScMcExerciseRendererProps['renderExtraAnswerContent']
+}) {
   const answers = state.answers
     .slice(0)
     .map(({ isCorrect, feedback, content }) => {
@@ -23,10 +32,11 @@ export function ScMcExerciseStaticRenderer({
   return (
     <ScMcExerciseRenderer
       isSingleChoice={!!state.isSingleChoice}
-      idBase="123" // TODO!
+      idBase={idBase}
       answers={answers}
-      // onEvaluate={onEvaluate} // TODO!
-      // renderExtraAnswerContent={renderRevisionExtra} // TODO!
+      isPrintMode={isPrintMode}
+      onEvaluate={onEvaluate}
+      renderExtraAnswerContent={renderExtraAnswerContent}
     />
   )
 }
