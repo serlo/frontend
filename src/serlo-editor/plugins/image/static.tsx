@@ -3,7 +3,10 @@ import { extractStringFromTextPlugin } from '../text/utils/static-extract-text'
 import { isEmptyTextPlugin } from '../text/utils/static-is-empty'
 import { useInstanceData } from '@/contexts/instance-context'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorImagePlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import {
+  EditorImagePlugin,
+  EditorTextPlugin,
+} from '@/serlo-editor-integration/types/editor-plugins'
 
 export function ImageStaticRenderer({
   state,
@@ -20,7 +23,7 @@ export function ImageStaticRenderer({
   const altOrFallbacks = alt
     ? alt
     : hasVisibleCaption
-    ? extractStringFromTextPlugin(caption)
+    ? extractStringFromTextPlugin(caption as EditorTextPlugin)
     : altFallback
 
   return (

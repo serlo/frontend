@@ -56,21 +56,15 @@ const StaticMath = dynamic<MathElement>(() =>
   )
 )
 
-// const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
-//   import('@/components/comments/comment-area-entity').then(
-//     (mod) => mod.CommentAreaEntity
-//   )
-// )
-
 export function createRenderers({
   instance,
   routerAsPath,
 }: // isRevisionView,
-{
-  instance: Instance
-  isRevisionView: boolean
-  routerAsPath: string
-}) {
+  {
+    instance: Instance
+    isRevisionView: boolean
+    routerAsPath: string
+  }) {
   // const isPage = parentType === UuidType.Page
 
   return {

@@ -172,8 +172,31 @@ export function createPlugins({
       visibleInSuggestions: isPage,
     },
 
+    // Exercises etc.
     // ===================================================
-    // never visible in suggestions
+
+    {
+      type: EditorPluginType.Exercise,
+      plugin: exercisePlugin,
+      visibleInSuggestions: allowExercises,
+    },
+    {
+      type: EditorPluginType.Solution,
+      plugin: solutionPlugin,
+      visibleInSuggestions: allowExercises,
+    },
+    { type: EditorPluginType.H5p, plugin: H5pPlugin },
+    {
+      type: EditorPluginType.InputExercise,
+      plugin: createInputExercisePlugin({}),
+    },
+    { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
+
+    // Special plugins, never visible in suggestions
+    // ===================================================
+    { type: EditorPluginType.Layout, plugin: layoutPlugin },
+    { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
+    { type: EditorPluginType.Unsupported, plugin: unsupportedPlugin },
     { type: EditorPluginType.Article, plugin: articlePlugin },
     {
       type: EditorPluginType.ArticleIntroduction,
@@ -187,28 +210,9 @@ export function createPlugins({
         allowedPlugins: [EditorPluginType.Image],
       }),
     },
-    { type: EditorPluginType.Unsupported, plugin: unsupportedPlugin },
-    {
-      type: EditorPluginType.Exercise,
-      plugin: exercisePlugin,
-      visibleInSuggestions: allowExercises,
-    },
-    { type: EditorPluginType.Highlight, plugin: createHighlightPlugin() },
-    { type: EditorPluginType.H5p, plugin: H5pPlugin },
-    {
-      type: EditorPluginType.InputExercise,
-      plugin: createInputExercisePlugin({}),
-    },
-    { type: EditorPluginType.Layout, plugin: layoutPlugin },
-    { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
-    { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
-    {
-      type: EditorPluginType.Solution,
-      plugin: solutionPlugin,
-      visibleInSuggestions: allowExercises,
-    },
 
     // Internal plugins for our content types
+    // ===================================================
     { type: TemplatePluginType.Applet, plugin: appletTypePlugin },
     { type: TemplatePluginType.Article, plugin: articleTypePlugin },
     { type: TemplatePluginType.Course, plugin: courseTypePlugin },

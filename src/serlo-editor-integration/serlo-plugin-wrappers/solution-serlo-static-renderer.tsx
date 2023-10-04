@@ -51,6 +51,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionPlugin) {
             </Lazy>
           ) : null
         }
+        // TODO: check how this was set before
         solutionVisibleOnInit={false}
         {...props}
         afterSlot={
