@@ -1,5 +1,5 @@
 import { ListsEditor } from '@prezly/slate-lists'
-import { BaseEditor } from 'slate'
+import type { BaseEditor } from 'slate'
 import { ReactEditor } from 'slate-react'
 
 export type CustomElement =
@@ -63,6 +63,7 @@ export interface CustomText {
   em?: true
   code?: true
   color?: number
+  showPlaceholder?: boolean
 }
 
 declare module 'slate' {

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import { StepSegment } from './editor'
 import { TransformationTarget } from './editor-renderer'
+import { StepSegment } from './step-segment'
 
 type GridFocusState =
   | {
@@ -9,6 +9,7 @@ type GridFocusState =
       column: number
     }
   | 'firstExplanation'
+  | null
 
 export interface GridFocus {
   focus: GridFocusState | null
@@ -44,7 +45,7 @@ export function useGridFocus({
 
     return (
       state !== 'firstExplanation' &&
-      focus.row === state.row &&
+      focus.row === state?.row &&
       focus.column === state.column
     )
   }

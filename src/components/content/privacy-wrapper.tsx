@@ -1,5 +1,6 @@
 import { faHeart, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
+import Image from 'next/image'
 import { useState, KeyboardEvent, useEffect } from 'react'
 
 import { FaIcon } from '../fa-icon'
@@ -7,7 +8,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { tw } from '@/helper/tw'
-import { serloDomain } from '@/helper/urls/serlo-domain'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
 // inspired by https://github.com/ibrahimcesar/react-lite-youtube-embed
@@ -17,7 +17,7 @@ interface PrivacyWrapperProps {
   children: JSX.Element
   className?: string
   placeholder?: JSX.Element
-  type: 'video' | 'applet' | 'twingle'
+  type: 'video' | 'applet' | 'twingle' | 'audio'
   provider: ExternalProvider
   embedUrl?: string
   twingleCallback?: () => void
@@ -63,6 +63,13 @@ export function PrivacyWrapper({
       confirmLoad()
     }
     setConsentGiven(consentGiven)
+
+    // If we already have the consent (in localstorage, we can show the iframe
+    // immediately)
+    if (consentGiven && provider === ExternalProvider.Vocaroo) {
+      setShowIframe(true)
+    }
+
     // only run on first load
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -88,24 +95,28 @@ export function PrivacyWrapper({
     const buttonLabel = replacePlaceholders(strings.embed[type], {
       provider: provider,
     })
+
+    if (showIframe && provider === ExternalProvider.Vocaroo) return null
     if (isTwingle && showIframe) return null
 
     const previewImageUrl = isTwingle
       ? '/_assets/img/donations-form.png'
-      : `https://embed.${serloDomain}/thumbnail?url=${encodeURIComponent(
+      : `https://embed.serlo.org/thumbnail?url=${encodeURIComponent(
           embedUrl || ''
         )}`
 
     return (
       <div className="text-center">
         <div className="relative rounded-xl bg-brand-100 pb-[56.2%]">
-          <img
+          <Image
+            src={previewImageUrl}
+            alt={`${strings.content.previewImage} ${provider}`}
+            fill
+            sizes="(max-width: 1023px) 100vw, 770px"
             className={clsx(
               'absolute left-0 h-full w-full rounded-xl object-cover',
               isTwingle ? 'opacity-50' : 'opacity-90'
             )}
-            src={previewImageUrl}
-            alt={`${strings.content.previewImage} ${provider}`}
           />
         </div>
         {!consentGiven && (

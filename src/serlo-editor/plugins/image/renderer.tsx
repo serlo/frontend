@@ -32,6 +32,7 @@ export function ImageRenderer({
       <div style={{ maxWidth }} className="mx-auto">
         {wrapWithLink(
           placeholder ?? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               className="serlo-img"
               src={src}
@@ -50,7 +51,12 @@ export function ImageRenderer({
     if (!href) return children
     if (forceNewTab)
       return (
-        <a href={href} target="_blank" rel="noreferrer">
+        <a
+          href={href}
+          target="_blank"
+          rel="noreferrer"
+          data-qa="plugin-image-link"
+        >
           {children}
         </a>
       )

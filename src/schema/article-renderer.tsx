@@ -1,13 +1,13 @@
 import clsx from 'clsx'
-import CSS from 'csstype'
 import dynamic from 'next/dynamic'
-import { ReactNode, Fragment, createElement } from 'react'
+import { CSSProperties, ReactNode, Fragment, createElement } from 'react'
 
 import { ExtraRevisionViewInfo } from './extra-revision-view-info'
 import { ExerciseGroup } from '../components/content/exercises/exercise-group'
 import { LicenseNotice } from '../components/content/license/license-notice'
 import { Link } from '../components/content/link'
 import { Article } from '@/components/content/article'
+import { Audio } from '@/components/content/audio'
 import { Box } from '@/components/content/box'
 import { EquationProps, Equations } from '@/components/content/equations'
 import { Exercise } from '@/components/content/exercises/exercise'
@@ -173,7 +173,7 @@ interface RenderLeafProps {
 }
 
 export function renderLeaf({ leaf, key, children }: RenderLeafProps) {
-  const styles: CSS.Properties = {}
+  const styles: CSSProperties = {}
 
   if (leaf.code) {
     return (
@@ -332,15 +332,6 @@ function renderElement({
   if (element.type === FrontendNodeType.Li) {
     return <li>{children}</li>
   }
-  if (element.type === FrontendNodeType.Table) {
-    return (
-      <div className="mb-block max-w-[100vw] overflow-auto">
-        <table className="serlo-table">
-          <tbody>{children}</tbody>
-        </table>
-      </div>
-    )
-  }
   if (element.type === FrontendNodeType.SerloTable) {
     return <SerloTable {...element} renderNested={nestedRenderer} />
   }
@@ -365,12 +356,6 @@ function renderElement({
         {children}
       </div>
     )
-  }
-  if (element.type === FrontendNodeType.Important) {
-    return <div className="serlo-important">{children}</div>
-  }
-  if (element.type === FrontendNodeType.Blockquote) {
-    return <blockquote className="serlo-blockquote">{children}</blockquote>
   }
   if (element.type === FrontendNodeType.Box) {
     return <Box {...element} renderNested={nestedRenderer} />
@@ -449,6 +434,13 @@ function renderElement({
     return (
       <Lazy noPrint>
         <Video src={element.state.src} license={element.license} />
+      </Lazy>
+    )
+  }
+  if (element.type === FrontendNodeType.Audio) {
+    return (
+      <Lazy noPrint>
+        <Audio src={element.state.src} />
       </Lazy>
     )
   }

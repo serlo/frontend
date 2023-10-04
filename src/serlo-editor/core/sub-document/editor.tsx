@@ -1,73 +1,47 @@
+import clsx from 'clsx'
 import * as R from 'ramda'
-import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
-import { createPortal } from 'react-dom'
+import { useRef, useMemo, useCallback } from 'react'
 
-import { SubDocumentProps } from '.'
+import type { SubDocumentProps } from '.'
 import { useEnableEditorHotkeys } from './use-enable-editor-hotkeys'
 import {
-  runChangeDocumentSaga,
   focus,
+  runChangeDocumentSaga,
+  selectChildTreeOfParent,
   selectDocument,
   selectIsFocused,
-  useAppSelector,
-  useAppDispatch,
-  selectParent,
   store,
+  useAppDispatch,
+  useAppSelector,
 } from '../../store'
-import { StateUpdater } from '../../types/internal__plugin-state'
-import { usePlugin, usePlugins } from '../contexts/plugins-context'
-import { SideToolbarAndWrapper } from '@/serlo-editor/editor-ui/side-toolbar-and-wrapper'
-import { EditorPlugin } from '@/serlo-editor/types/internal__plugin'
+import type { StateUpdater } from '../../types/internal__plugin-state'
+import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
-  const [hasSideToolbar, setHasSideToolbar] = useState(false)
   const dispatch = useAppDispatch()
   const document = useAppSelector((state) => selectDocument(state, id))
 
   const focused = useAppSelector((state) => selectIsFocused(state, id))
-  const plugins = usePlugins()
-  const plugin = usePlugin(document?.plugin)?.plugin as EditorPlugin
+
+  const plugin = editorPlugins.getByType(document?.plugin ?? '')
 
   useEnableEditorHotkeys(id, plugin, focused)
   const containerRef = useRef<HTMLDivElement>(null)
-  const sideToolbarRef = useRef<HTMLDivElement>(
-    window.document.createElement('div')
-  )
-  const autofocusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
 
-  useEffect(() => {
-    if (focused) {
-      setTimeout(() => {
-        if (autofocusRef.current) {
-          autofocusRef.current.focus()
-        }
-      })
-    }
-  }, [focused])
-
-  useEffect(() => {
-    if (
-      focused &&
-      containerRef.current &&
-      document &&
-      plugin &&
-      !plugin.state.getFocusableChildren(document.state).length
-    ) {
-      containerRef.current.focus()
-    }
-    // `document` should not be part of the dependencies because we only want to call this once when the document gets focused
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [focused, plugin])
-
-  const handleFocus = useCallback(
+  // main focus event
+  const handleMouseDown = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       // Find closest document
       const target = (e.target as HTMLDivElement).closest('[data-document]')
       if (!focused && target === containerRef.current) {
         if (document?.plugin === 'rows') {
-          const parent = selectParent(store.getState(), id)
+          const parent = selectChildTreeOfParent(store.getState(), id)
           if (parent) dispatch(focus(parent.id))
         } else {
+          // prevents parents from stealing focus of children
+          if (document?.plugin === 'exercise') return
+
+          // default focus dispatch
           dispatch(focus(id))
         }
       }
@@ -75,18 +49,29 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     [focused, id, dispatch, document]
   )
 
-  const renderIntoSideToolbar = useCallback(
-    (children: React.ReactNode) => {
-      return (
-        <RenderIntoSideToolbar
-          setHasSideToolbar={setHasSideToolbar}
-          sideToolbarRef={sideToolbarRef}
-        >
-          {children}
-        </RenderIntoSideToolbar>
-      )
+  // additional focus check to set focus when using tab navigation
+  const handleFocus = useCallback(
+    (e: React.FocusEvent) => {
+      if (!document) return
+      if (['rows', 'exercise'].includes(document?.plugin)) return
+
+      // if after a short delay dom focus is not set inside focused plugin
+      // we overwrite it here (because it's probably because of tab navigation)
+      setTimeout(() => {
+        // fixes a bug in table plugin with disappearing buttons
+        if (e.target.nodeName?.toLowerCase() === 'button') return
+
+        // find closest document
+        const target = (e.target as HTMLDivElement).closest('[data-document]')
+
+        if (!focused && target === containerRef.current) {
+          dispatch(focus(id))
+        }
+        // 10ms is an arbitrary value:
+        // as low as possible but after the other focus handler is done rerendering
+      }, 10)
     },
-    [sideToolbarRef]
+    [document, focused, dispatch, id]
   )
 
   return useMemo(() => {
@@ -119,7 +104,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       dispatch(
         runChangeDocumentSaga({
           id,
-          plugins,
           state: {
             initial,
             executor: additional.executor,
@@ -137,61 +121,42 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       Object.hasOwn(config, 'isInlineChildEditor') &&
       (config.isInlineChildEditor as boolean)
 
+    const isTemplatePlugin = document.plugin.startsWith('type-')
+
     return (
       <div
-        className="outline-none"
-        onMouseDown={handleFocus}
+        className={clsx(
+          `plugin-${document?.plugin}`,
+          'outline-none',
+          isInlineChildEditor || isTemplatePlugin
+            ? ''
+            : 'plugin-wrapper-container relative -ml-[7px] mb-6 min-h-[10px] pl-[5px]'
+        )}
+        onMouseDown={handleMouseDown}
+        onFocus={handleFocus}
         ref={containerRef}
         data-document
         tabIndex={-1}
       >
-        <SideToolbarAndWrapper
-          hasSideToolbar={hasSideToolbar}
+        <plugin.Component
+          containerRef={containerRef}
+          id={id}
+          editable
           focused={focused}
-          renderSideToolbar={pluginProps && pluginProps.renderSideToolbar}
-          isInlineChildEditor={isInlineChildEditor}
-          sideToolbarRef={sideToolbarRef}
-        >
-          <plugin.Component
-            renderIntoSideToolbar={renderIntoSideToolbar}
-            containerRef={containerRef}
-            id={id}
-            editable
-            focused={focused}
-            config={config}
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            state={state}
-            autofocusRef={autofocusRef}
-          />
-        </SideToolbarAndWrapper>
+          config={config}
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          state={state}
+        />
       </div>
     )
   }, [
     document,
-    plugins,
     plugin,
     pluginProps,
+    handleMouseDown,
     handleFocus,
-    hasSideToolbar,
     focused,
-    renderIntoSideToolbar,
     id,
     dispatch,
   ])
-}
-
-function RenderIntoSideToolbar({
-  children,
-  setHasSideToolbar,
-  sideToolbarRef,
-}: {
-  children: React.ReactNode
-  setHasSideToolbar: (value: boolean) => void
-  sideToolbarRef: React.MutableRefObject<HTMLDivElement>
-}) {
-  useEffect(() => {
-    setHasSideToolbar(true)
-  })
-  if (!sideToolbarRef.current) return null
-  return createPortal(children, sideToolbarRef.current)
 }

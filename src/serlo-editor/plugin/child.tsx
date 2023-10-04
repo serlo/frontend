@@ -1,7 +1,7 @@
 import { mergeDeepRight, omit } from 'ramda'
 import { v4 } from 'uuid'
 
-import {
+import type {
   StoreSerializeHelpers,
   StateType,
   PluginProps,

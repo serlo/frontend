@@ -42,7 +42,7 @@ const filters = [
 function Content() {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { data, error, loadMore } = useFetch()
-  const [showTypename, setShowTypename] = useState<typeof filters[number]>(
+  const [showTypename, setShowTypename] = useState<(typeof filters)[number]>(
     UuidType.Article
   )
 

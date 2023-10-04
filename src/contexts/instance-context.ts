@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react'
 
-import { InstanceData } from '@/data-types'
+import type { InstanceData } from '@/data-types'
 
 export const InstanceDataContext = createContext<InstanceData | null>(null)
 

@@ -9,6 +9,7 @@ import { renderNested } from '@/schema/article-renderer'
 import { Sign } from '@/serlo-editor/plugins/equations/sign'
 import { HighlightRenderer } from '@/serlo-editor/plugins/highlight/renderer'
 import { InjectionRenderer } from '@/serlo-editor/plugins/injection/renderer'
+import { InputExerciseType } from '@/serlo-editor/plugins/input-exercise/input-exercise-type'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const boxExample = (
@@ -164,7 +165,7 @@ export const inputExample = (
       grouped: false,
       trashed: false,
       task: {
-        edtrState: {
+        content: {
           content: [
             {
               type: FrontendNodeType.SlateContainer,
@@ -196,7 +197,7 @@ export const inputExample = (
           interactive: {
             plugin: EditorPluginType.InputExercise,
             state: {
-              type: 'input-string-normalized-match-challenge',
+              type: InputExerciseType.StringNormalized,
               unit: '',
               answers: [
                 {
@@ -285,7 +286,7 @@ export const inputExample = (
         },
       },
       solution: {
-        edtrState: {
+        content: {
           prerequisite: {
             id: 138148,
             title: 'Addition',
@@ -370,7 +371,7 @@ export const textExExample = (
       grouped: false,
       trashed: false,
       task: {
-        edtrState: {
+        content: {
           content: [
             {
               type: FrontendNodeType.Multimedia,
@@ -438,7 +439,7 @@ export const textExExample = (
         },
       },
       solution: {
-        edtrState: {
+        content: {
           prerequisite: {
             id: 228138,
             title: 'Sine, Cosine and Tangent',
@@ -602,7 +603,7 @@ export const SCExample = (
       grouped: false,
       trashed: false,
       task: {
-        edtrState: {
+        content: {
           content: [
             {
               type: FrontendNodeType.SlateContainer,
@@ -691,7 +692,6 @@ export const SCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 3,
                 },
                 {
                   content: [
@@ -742,7 +742,6 @@ export const SCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 1,
                 },
                 {
                   content: [
@@ -811,7 +810,6 @@ export const SCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 2,
                 },
                 {
                   content: [
@@ -874,7 +872,6 @@ export const SCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 0,
                 },
               ],
             },
@@ -922,7 +919,7 @@ export const MCExample = (
       grouped: false,
       trashed: false,
       task: {
-        edtrState: {
+        content: {
           content: [
             {
               type: FrontendNodeType.SlateContainer,
@@ -1003,7 +1000,6 @@ export const MCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 2,
                 },
                 {
                   content: [
@@ -1037,7 +1033,6 @@ export const MCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 3,
                 },
                 {
                   content: [
@@ -1094,7 +1089,6 @@ export const MCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 1,
                 },
                 {
                   content: [
@@ -1128,7 +1122,6 @@ export const MCExample = (
                       ],
                     },
                   ],
-                  originalIndex: 0,
                 },
               ],
             },

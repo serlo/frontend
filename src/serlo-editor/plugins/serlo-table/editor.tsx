@@ -1,49 +1,52 @@
-import {
-  faCirclePlus,
-  faImages,
-  faParagraph,
-  faTrashCan,
-} from '@fortawesome/free-solid-svg-icons'
+import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import { KeyboardEvent } from 'react'
+import { KeyboardEvent, useState } from 'react'
 
-import { SerloTableProps } from '.'
+import type { SerloTableProps } from '.'
+import { CellSwitchButton } from './cell-switch-button'
 import { useAreImagesDisabledInTable } from './contexts/are-images-disabled-in-table-context'
 import { SerloTableRenderer, TableType } from './renderer'
 import { SerloTableToolbar } from './toolbar'
+import { getTableType } from './utils/get-table-type'
 import { TextEditorConfig } from '../text'
+import { instanceStateStore } from '../text/utils/instance-state-store'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { ChildStateType, StateTypesReturnType } from '@/serlo-editor/plugin'
+import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
+import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import {
   store,
   selectFocused,
   selectIsDocumentEmpty,
   focus,
-  selectDocument,
-  focusNext,
-  focusPrevious,
   useAppSelector,
   useAppDispatch,
-  selectFocusTree,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-const headerTextFormattingOptions = ['code', 'katex', 'links', 'math']
+const headerTextFormattingOptions = [
+  TextEditorFormattingOption.code,
+  TextEditorFormattingOption.katex,
+  TextEditorFormattingOption.links,
+  TextEditorFormattingOption.math,
+]
 const cellTextFormattingOptions = [
-  'code',
-  'colors',
-  'katex',
-  'links',
-  'lists',
-  'math',
-  'richText',
+  TextEditorFormattingOption.code,
+  TextEditorFormattingOption.colors,
+  TextEditorFormattingOption.katex,
+  TextEditorFormattingOption.links,
+  TextEditorFormattingOption.lists,
+  TextEditorFormattingOption.math,
+  TextEditorFormattingOption.richTextBold,
+  TextEditorFormattingOption.richTextItalic,
 ]
 
 const newCell = { content: { plugin: EditorPluginType.Text } }
 
 export function SerloTableEditor(props: SerloTableProps) {
   const { rows } = props.state
+
+  const [, setUpdateHack] = useState(0)
 
   const dispatch = useAppDispatch()
   const focusedElement = useAppSelector(selectFocused)
@@ -61,53 +64,24 @@ export function SerloTableEditor(props: SerloTableProps) {
     tableType === TableType.OnlyColumnHeader ||
     tableType === TableType.ColumnAndRowHeader
 
-  return nestedFocus ? renderActiveTable() : renderInactiveTable()
+  const rowsJSX = renderActiveCellsIntoObject()
 
-  function renderInactiveTable() {
-    const rowsJSX = rows.map((row) => {
-      return {
-        cells: row.columns.map((cell) => (
-          <div className="min-h-[2rem] pr-2" key={cell.content.id}>
-            {!selectIsDocumentEmpty(store.getState(), cell.content.id) &&
-              cell.content.render()}
-          </div>
-        )),
-      }
-    })
-    return <SerloTableRenderer rows={rowsJSX} tableType={tableType} />
-  }
+  return (
+    <>
+      {props.focused || nestedFocus ? <SerloTableToolbar {...props} /> : null}
 
-  function renderActiveTable() {
-    const rowsJSX = renderActiveCellsIntoObject()
-
-    return (
-      <>
-        {props.focused || nestedFocus ? <SerloTableToolbar {...props} /> : null}
+      <div className="relative pt-[19px]">
         <div className="flex">
-          <div
-            className="flex flex-col"
-            onClick={(e) => {
-              // another hack to make focus ux at least ok
-              const target = e.target as HTMLDivElement
-              const hackDiv = target.querySelector('.hackdiv') as HTMLDivElement
-              hackDiv?.focus()
-            }}
-          >
-            <SerloTableRenderer isEdit rows={rowsJSX} tableType={tableType} />
-            {renderAddButton(true)}
+          <div className="flex flex-col">
+            <SerloTableRenderer rows={rowsJSX} tableType={tableType} />
+            {nestedFocus ? renderAddRowButton() : null}
           </div>
 
-          {renderAddButton(false)}
+          {nestedFocus ? renderAddColButton() : null}
         </div>
-      </>
-    )
-  }
-
-  function updateHack() {
-    const focusTree = selectFocusTree(store.getState())
-    dispatch(focusNext(focusTree))
-    dispatch(focusPrevious(focusTree))
-  }
+      </div>
+    </>
+  )
 
   function renderActiveCellsIntoObject() {
     return rows.map((row, rowIndex) => {
@@ -119,7 +93,6 @@ export function SerloTableEditor(props: SerloTableProps) {
           const isLast =
             rowIndex === rows.length - 1 &&
             colIndex === rows[0].columns.length - 1
-          const dispatchFocus = () => dispatch(focus(cell.content.id))
           const isClear = selectIsDocumentEmpty(
             store.getState(),
             cell.content.id
@@ -128,9 +101,9 @@ export function SerloTableEditor(props: SerloTableProps) {
           const onKeyUpHandler = (e: KeyboardEvent<HTMLDivElement>) => {
             // hack: redraw when isEmpty changes. (onKeyUp bc. keyDown is captured for some keys)
             if (e.key === 'Delete' || e.key === 'Backspace') {
-              if (!isClear) updateHack()
+              if (!isClear) setUpdateHack((count) => count + 1)
             } else {
-              if (isClear) updateHack()
+              if (isClear) setUpdateHack((count) => count + 1)
             }
           }
           const onKeyDownHandler = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -146,11 +119,12 @@ export function SerloTableEditor(props: SerloTableProps) {
           return (
             <div
               key={colIndex}
-              tabIndex={0} // capture tab
-              onFocus={dispatchFocus} // hack: focus slate directly on tab
               onKeyUp={onKeyUpHandler} // keyUp because some onKeyDown keys are not bubbling
               onKeyDown={onKeyDownHandler}
-              className="hackdiv min-h-[3.5rem] pb-6 pr-2"
+              className={clsx(
+                '[&>div>[data-slate-editor]]:pr-2',
+                '[&>div>[data-slate-editor]]:pb-block'
+              )}
             >
               {renderInlineNav(rowIndex, colIndex)}
               {cell.content.render({
@@ -162,57 +136,18 @@ export function SerloTableEditor(props: SerloTableProps) {
                     : cellTextFormattingOptions,
                 } as TextEditorConfig,
               })}
-              {props.config.allowImageInTableCells && !areImagesDisabled
-                ? renderSwitchButton(cell, isHead, isClear)
-                : null}
-              {/* hack: make sure we capture most clicks in cells */}
-              <style jsx global>{`
-                .serlo-td,
-                .serlo-th {
-                  height: 1rem;
-                  min-width: 4rem;
-                }
-                .hackdiv > div > div > div {
-                  margin-bottom: 0;
-                }
-              `}</style>
+              {props.config.allowImageInTableCells && !areImagesDisabled ? (
+                <CellSwitchButton
+                  cell={cell}
+                  isHead={isHead}
+                  isClear={isClear}
+                />
+              ) : null}
             </div>
           )
         }),
       }
     })
-  }
-
-  function renderSwitchButton(
-    cell: StateTypesReturnType<{
-      content: ChildStateType<string, unknown>
-    }>,
-    isHead: boolean,
-    isClear: boolean
-  ) {
-    const isFocused = cell.content.id === focusedElement
-    const isImage =
-      selectDocument(store.getState(), cell.content.id)?.plugin ===
-      EditorPluginType.Image
-
-    if (isHead || !isFocused || !isClear) return null
-
-    return (
-      <button
-        onMouseDown={(e) => e.stopPropagation()} // hack to stop editor from stealing events
-        onClick={() => {
-          cell.content.replace(
-            isImage ? EditorPluginType.Text : EditorPluginType.Image
-          )
-        }}
-        className="serlo-button-light absolute m-2 block py-0.5 text-sm"
-        title={
-          isImage ? tableStrings.convertToText : tableStrings.convertToImage
-        }
-      >
-        <FaIcon icon={isImage ? faParagraph : faImages} />
-      </button>
-    )
   }
 
   function renderInlineNav(rowIndex: number, colIndex: number) {
@@ -228,7 +163,7 @@ export function SerloTableEditor(props: SerloTableProps) {
 
     return (
       <>
-        <nav className="absolute -ml-10 -mt-2 flex flex-col">
+        <nav className="absolute -ml-7 -mt-2 flex flex-col">
           {showRowButtons ? (
             <>
               {renderInlineAddButton(true)}
@@ -236,7 +171,7 @@ export function SerloTableEditor(props: SerloTableProps) {
             </>
           ) : null}
         </nav>
-        <nav className="absolute -mt-12">
+        <nav className="absolute -top-2 z-20">
           {showColButtons ? (
             <>
               {renderInlineAddButton(false)}
@@ -255,11 +190,17 @@ export function SerloTableEditor(props: SerloTableProps) {
 
       return (
         <button
-          className="serlo-button-blue-transparent text-brand-400"
-          title={replaceWithType(tableStrings.addTypeBefore, isRow)}
+          className={clsx(
+            'serlo-tooltip-trigger text-gray-300 transition-colors hover:text-editor-primary focus:text-editor-primary',
+            isRow ? '' : 'mr-2'
+          )}
           onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
           onClick={onInlineAdd}
         >
+          <EditorTooltip
+            text={replaceWithType(tableStrings.addTypeBefore, isRow)}
+            className="top-6"
+          />
           <FaIcon icon={faCirclePlus} />
         </button>
       )
@@ -277,18 +218,52 @@ export function SerloTableEditor(props: SerloTableProps) {
       const onRemove = () => {
         const empty = isRow ? isEmptyRow(rowIndex) : isEmptyCol(colIndex)
 
-        if (!empty && !window.confirm(confirmString)) return
+        if (!empty && !window.confirm(confirmString)) {
+          // Regain focus after canceling popup
+          // We need this (slight) hack because the editor is not tracking the focus if
+          // an alert happens, to the text-plugin will not refocus itself
+          // More a proof of concept that such a patch is possible, but not a good
+          // general solution ...
+          const cellPluginState =
+            instanceStateStore[
+              rows[focusedRowIndex ?? 0].columns[focusedColIndex ?? 0].content
+                .id
+            ]
+          if (cellPluginState) cellPluginState.needRefocus++
+          setUpdateHack((count) => count + 1)
+          return
+        }
         if (isRow) removeRow(rowIndex)
         else removeCol(colIndex)
+
+        // dispatch focus
+        const rowToFocusAfter = isRow
+          ? rowIndex + 1 < rows.length
+            ? rowIndex + 1
+            : rowIndex - 1
+          : focusedRowIndex ?? 0
+
+        const colToFocusAfter = isRow
+          ? focusedColIndex ?? 0
+          : colIndex + 1 < rows[0].columns.length
+          ? colIndex + 1
+          : colIndex - 1
+
+        dispatch(
+          focus(rows[rowToFocusAfter].columns[colToFocusAfter].content.id)
+        )
       }
 
       return (
         <button
-          className="serlo-button-blue-transparent text-brand-400"
-          title={replaceWithType(tableStrings.deleteType, isRow)}
+          className="serlo-tooltip-trigger text-gray-300 transition-colors hover:text-editor-primary focus:text-editor-primary"
           onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
           onClick={onRemove}
         >
+          <EditorTooltip
+            text={replaceWithType(tableStrings.deleteType, isRow)}
+            className="top-6"
+          />
           <FaIcon icon={faTrashCan} />
         </button>
       )
@@ -332,27 +307,46 @@ export function SerloTableEditor(props: SerloTableProps) {
     rows.remove(rowIndex)
   }
 
-  function renderAddButton(isRow: boolean) {
+  function renderAddRowButton() {
+    return (
+      <div className="relative">
+        <button
+          className={clsx(
+            'serlo-button-editor-secondary serlo-tooltip-trigger',
+            'absolute -bottom-1.5 z-20 mx-side w-[calc(100%-1.9rem)]'
+          )}
+          onClick={() => insertRow()}
+        >
+          <EditorTooltip
+            text={replaceWithType(tableStrings.addType, true)}
+            className="-left-0.5 -top-9"
+          />
+          +
+        </button>
+      </div>
+    )
+  }
+
+  function renderAddColButton() {
     return (
       <button
         className={clsx(
-          'serlo-button-light',
-          isRow ? 'm-4 -mt-4 w-auto' : 'mb-16'
+          'serlo-button-editor-secondary serlo-tooltip-trigger -ml-1 mb-8 px-2.5'
         )}
-        title={replaceWithType(tableStrings.addType, isRow)}
-        onClick={() => {
-          if (isRow) insertRow()
-          else insertCol()
-        }}
+        onClick={() => insertCol()}
       >
+        <EditorTooltip
+          text={replaceWithType(tableStrings.addType, false)}
+          className="left-8 top-0"
+        />
         +
       </button>
     )
   }
 
   function findFocus() {
-    let focusedRowIndex = undefined
-    let focusedColIndex = undefined
+    let focusedRowIndex: number | undefined = undefined
+    let focusedColIndex: number | undefined = undefined
 
     rows.some((row, rowIndex) =>
       row.columns.some((cell, colIndex) => {
@@ -373,12 +367,4 @@ export function SerloTableEditor(props: SerloTableProps) {
   function replaceWithType(input: string, isRow: boolean) {
     return input.replace('%type%', tableStrings[isRow ? 'row' : 'column'])
   }
-}
-
-export function getTableType(text: string): TableType {
-  return isTableType(text) ? text : TableType.OnlyColumnHeader
-}
-
-function isTableType(text: string): text is TableType {
-  return Object.values<string>(TableType).includes(text)
 }

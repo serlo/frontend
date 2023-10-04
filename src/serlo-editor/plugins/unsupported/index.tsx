@@ -1,7 +1,7 @@
 import { UnsupportedEditor } from './editor'
 import {
-  EditorPlugin,
-  EditorPluginProps,
+  type EditorPlugin,
+  type EditorPluginProps,
   object,
   scalar,
   string,

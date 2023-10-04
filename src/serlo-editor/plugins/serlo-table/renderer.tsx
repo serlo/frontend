@@ -12,12 +12,12 @@ export interface SerloTableRendererProps {
   rows: {
     cells: JSX.Element[]
   }[]
-  isEdit?: boolean
 }
 
-export function SerloTableRenderer(props: SerloTableRendererProps) {
-  const { tableType, rows, isEdit } = props
-
+export function SerloTableRenderer({
+  tableType,
+  rows,
+}: SerloTableRendererProps) {
   const showRowHeader =
     tableType === TableType.OnlyRowHeader ||
     tableType === TableType.ColumnAndRowHeader
@@ -26,18 +26,16 @@ export function SerloTableRenderer(props: SerloTableRendererProps) {
     tableType === TableType.ColumnAndRowHeader
 
   return (
-    <div className={isEdit ? undefined : 'overflow-x-auto'}>
-      <table className="serlo-table mb-8">
-        {showColumnHeader ? (
-          <>
-            <thead>{renderRows([rows[0]])}</thead>
-            <tbody>{renderRows(rows.slice(1), 1)}</tbody>
-          </>
-        ) : (
-          <tbody>{renderRows(rows)}</tbody>
-        )}
-      </table>
-    </div>
+    <table className="serlo-table mb-8">
+      {showColumnHeader ? (
+        <>
+          <thead>{renderRows([rows[0]])}</thead>
+          <tbody>{renderRows(rows.slice(1), 1)}</tbody>
+        </>
+      ) : (
+        <tbody>{renderRows(rows)}</tbody>
+      )}
+    </table>
   )
 
   function renderRows(rows: SerloTableRendererProps['rows'], startIndex = 0) {

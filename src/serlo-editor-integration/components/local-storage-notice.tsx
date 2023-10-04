@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react'
 import { debounce } from 'ts-debounce'
 
-import { LooseEdtrData } from '../serlo-editor'
+import type { LooseEdtrData } from '../serlo-editor'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditorProps } from '@/serlo-editor/core'
 
@@ -21,7 +21,7 @@ export function LocalStorageNotice({
   if (!stored) return null
 
   return (
-    <div className="m-side mt-12 rounded-2xl bg-editor-primary-50 p-side">
+    <div className="m-side mt-12 rounded-2xl bg-editor-primary-50 p-side md:-mt-9">
       <>
         {storageStrings[useStored ? 'restoreInitial' : 'found']}
         <br />

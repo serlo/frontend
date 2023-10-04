@@ -1,4 +1,4 @@
-import type { TextEditorConfig } from '../types'
+import type { TextEditorConfig } from '../types/config'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 
 const defaultFormattingOptions: TextEditorFormattingOption[] = [
@@ -8,7 +8,8 @@ const defaultFormattingOptions: TextEditorFormattingOption[] = [
   TextEditorFormattingOption.links,
   TextEditorFormattingOption.lists,
   TextEditorFormattingOption.math,
-  TextEditorFormattingOption.richText,
+  TextEditorFormattingOption.richTextBold,
+  TextEditorFormattingOption.richTextItalic,
 ]
 
 export const useTextConfig = (config: TextEditorConfig) => ({

@@ -3,20 +3,15 @@ import { useHotkeys, useHotkeysContext } from 'react-hotkeys-hook'
 import { Editor as SlateEditor, Node } from 'slate'
 import { Key } from 'ts-key-enum'
 
+import { insertPlugin } from '../utils/insert-plugin'
 import {
   EditorStrings,
   useEditorStrings,
 } from '@/contexts/logged-in-data-context'
-import {
-  PluginsContext,
-  PluginsContextPlugins,
-  getPluginByType,
-  usePlugins,
-} from '@/serlo-editor/core/contexts/plugins-context'
+import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { AllowedChildPlugins } from '@/serlo-editor/plugins/rows'
 import { checkIsAllowedNesting } from '@/serlo-editor/plugins/rows/utils/check-is-allowed-nesting'
 import {
-  runReplaceDocumentSaga,
   selectAncestorPluginTypes,
   store,
   useAppDispatch,
@@ -28,6 +23,7 @@ interface useSuggestionsArgs {
   id: string
   editable: boolean
   focused: boolean
+  isInlineChildEditor?: boolean
 }
 
 export interface SuggestionOption {
@@ -43,23 +39,26 @@ const hotkeyConfig = {
 }
 
 export const useSuggestions = (args: useSuggestionsArgs) => {
+  const { editor, id, editable, focused, isInlineChildEditor } = args
+
   const dispatch = useAppDispatch()
   const [selected, setSelected] = useState(0)
   const suggestionsRef = useRef<HTMLDivElement>(null)
-  const { editor, id, editable, focused } = args
   const pluginsStrings = useEditorStrings().plugins
-  const text = Node.string(editor)
 
-  const plugins = usePlugins()
-  const allPlugins = useContext(PluginsContext)
-    .filter(({ visible }) => visible)
+  const { selection } = editor
+  const node = selection ? Node.get(editor, selection.focus.path) : undefined
+  const text = Node.string(node ?? editor)
+
+  const allPlugins = editorPlugins
+    .getAllWithData()
+    .filter(({ visibleInSuggestions }) => visibleInSuggestions)
     .map(({ type }) => type)
   const allowedPlugins = useContext(AllowedChildPlugins)
-  const pluginsData = usePlugins()
 
   const allOptions = useMemo(() => {
     return (allowedPlugins ?? allPlugins).map((type) => {
-      return createOption(type, pluginsStrings, pluginsData)
+      return createOption(type, pluginsStrings)
     })
     // Should only update when allowed plugins change
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,7 +68,11 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     return filterPlugins(allOptions, text, id)
   }, [allOptions, id, text])
   const showSuggestions =
-    editable && focused && text.startsWith('/') && filteredOptions.length > 0
+    !isInlineChildEditor &&
+    editable &&
+    focused &&
+    text.startsWith('/') &&
+    filteredOptions.length > 0
 
   const { enableScope, disableScope } = useHotkeysContext()
 
@@ -145,21 +148,26 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     if (!option) return
 
     setTimeout(() => {
-      insertPlugin(option.pluginType)
+      insertSelectedPlugin(option.pluginType)
     })
   }
 
-  function insertPlugin(pluginType: EditorPluginType | string) {
+  function insertSelectedPlugin(pluginType: EditorPluginType | string) {
+    editor.deleteBackward('line')
+
     // If the text plugin is selected from the suggestions list, clear the editor
     if (pluginType === EditorPluginType.Text) {
-      editor.deleteBackward('line')
       // In browsers other than chrome, the cursor is sometimes in front of the `/`
       editor.deleteForward('line')
       return
     }
 
-    // Otherwise, replace the text plugin with the selected plugin
-    dispatch(runReplaceDocumentSaga({ id, plugins, pluginType }))
+    editor.deleteBackward('block')
+
+    // split the text-plugin and insert selected new plugin
+    setTimeout(() => {
+      insertPlugin({ pluginType, editor, id, dispatch })
+    })
   }
 
   function handleSuggestionsMenuClose(event: KeyboardEvent) {
@@ -176,7 +184,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
       options,
       suggestionsRef,
       selected,
-      onMouseDown: insertPlugin,
+      onMouseDown: insertSelectedPlugin,
       onMouseMove: setSelected,
     },
   }
@@ -184,10 +192,11 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
 
 function createOption(
   pluginType: string,
-  allPluginStrings: EditorStrings['plugins'],
-  allPluginsData: PluginsContextPlugins
+  allPluginStrings: EditorStrings['plugins']
 ): SuggestionOption {
-  const pluginData = getPluginByType(allPluginsData, pluginType)
+  const pluginData = editorPlugins
+    .getAllWithData()
+    .find((plugin) => plugin.type === pluginType)
 
   if (!pluginData) return { pluginType, title: pluginType }
 
@@ -227,13 +236,24 @@ function filterPlugins(
   const search = text.replace('/', '').toLowerCase()
   if (!search.length) return plugins
 
-  const startingWithSearchString = plugins.filter(({ title }) => {
-    return title.toLowerCase()?.startsWith(search)
-  })
-  const containingSearchString = plugins.filter(({ title }) => {
-    const value = title?.toLowerCase()
-    return value?.includes(search) && !value?.startsWith(search)
+  const filterResults = new Set<SuggestionOption>()
+
+  // title or pluginType start with search string
+  plugins.forEach((entry) => {
+    if (
+      entry.title.toLowerCase().startsWith(search) ||
+      entry.pluginType.startsWith(search)
+    ) {
+      filterResults.add(entry)
+    }
   })
 
-  return [...startingWithSearchString, ...containingSearchString]
+  // title includes search string
+  plugins.forEach((entry) => {
+    if (entry.title.toLowerCase().includes(search)) {
+      filterResults.add(entry)
+    }
+  })
+
+  return [...filterResults]
 }

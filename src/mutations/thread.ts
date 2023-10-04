@@ -4,7 +4,7 @@ import { useSWRConfig } from 'swr'
 
 import { useMutationFetch } from './helper/use-mutation-fetch'
 import { useSWRCacheMutate } from './helper/use-swr-cache-mutate'
-import { useEntityId } from '@/contexts/entity-id-context'
+import { useEntityId } from '@/contexts/uuids-context'
 import {
   ThreadCreateCommentInput,
   ThreadCreateThreadInput,
@@ -12,6 +12,7 @@ import {
   ThreadSetCommentStateInput,
   ThreadSetThreadArchivedInput,
   ThreadSetThreadStateInput,
+  ThreadSetThreadStatusInput,
 } from '@/fetcher/graphql-types/operations'
 
 const threadCacheShouldMutate = (key: string) => {
@@ -184,5 +185,23 @@ export function useEditCommentMutation() {
       mutateSWRCache(threadCacheShouldMutate)
     }
     return success
+  }
+}
+
+const setThreadStatusMutation = gql`
+  mutation setThreadStatus($input: ThreadSetThreadStatusInput!) {
+    thread {
+      setThreadStatus(input: $input) {
+        success
+      }
+    }
+  }
+`
+
+export function useSetThreadStatusMutation() {
+  const mutationFetch = useMutationFetch()
+
+  return async function (input: ThreadSetThreadStatusInput) {
+    return await mutationFetch(setThreadStatusMutation, input)
   }
 }

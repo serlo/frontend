@@ -1,19 +1,21 @@
-import { Entity, UuidType } from '@serlo/authorization'
-import { createContext, ReactNode, useState } from 'react'
+import { Entity, type UuidType } from '@serlo/authorization'
+import { type ReactNode, useState } from 'react'
 
 import {
   debouncedStoreToLocalStorage,
   getStateFromLocalStorage,
   LocalStorageNotice,
 } from './components/local-storage-notice'
+import { SaveContext } from './context/save-context'
 import { createPlugins } from './create-plugins'
 import { useCanDo } from '@/auth/use-can-do'
 import { MathSpan } from '@/components/content/math-span'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
-import { Editor, EditorProps } from '@/serlo-editor/core'
+import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
+import { Editor, type EditorProps } from '@/serlo-editor/core'
+import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
 export interface SerloEditorProps {
   children?: ReactNode
@@ -30,16 +32,6 @@ export interface LooseEdtrData {
 export interface LooseEdtrDataDefined {
   [key: string]: EditorProps['initialState']
 }
-
-export const SaveContext = createContext<{
-  onSave: SerloEditorProps['onSave']
-  userCanSkipReview: boolean
-  entityNeedsReview: boolean
-}>({
-  onSave: () => Promise.reject(),
-  userCanSkipReview: false,
-  entityNeedsReview: true,
-})
 
 export function SerloEditor({
   onSave,
@@ -64,11 +56,15 @@ export function SerloEditor({
 
   const editorStrings = loggedInData.strings.editor
 
-  const plugins = createPlugins({
-    editorStrings,
-    instance: lang,
-    parentType: type,
-  })
+  // simplest way to provide plugins to editor that can also easily be adapted by edusharing
+  editorPlugins.init(
+    createPlugins({
+      editorStrings,
+      instance: lang,
+      parentType: type,
+    })
+  )
+
   return (
     <SaveContext.Provider
       value={{ onSave, userCanSkipReview, entityNeedsReview }}
@@ -76,7 +72,6 @@ export function SerloEditor({
       <LocalStorageNotice useStored={useStored} setUseStored={setUseStored} />
       <MathSpan formula="" /> {/* preload formula plugin */}
       <Editor
-        plugins={plugins}
         initialState={useStored ? getStateFromLocalStorage()! : initialState}
         editable
         onChange={({ changed, getDocument }) => {

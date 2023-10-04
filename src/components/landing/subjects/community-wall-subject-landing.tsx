@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 
 import { CommunityWallPersons } from '../rework/community-wall/community-wall-persons'
 import { Link } from '@/components/content/link'
-import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
+import type { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import {
   communityWallPersons,
-  CommunityWallPerson,
+  type CommunityWallPerson,
 } from '@/data/de/community-people'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import { shuffleArray } from '@/helper/shuffle-array'

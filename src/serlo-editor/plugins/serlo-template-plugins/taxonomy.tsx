@@ -2,8 +2,8 @@ import { editorContent, headerInputClasses, uuid } from './common/common'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import {
-  EditorPlugin,
-  EditorPluginProps,
+  type EditorPlugin,
+  type EditorPluginProps,
   object,
   string,
   number,
@@ -20,7 +20,7 @@ export const taxonomyTypeState = object({
   description: editorContent(),
 })
 
-type TaxonomyTypePluginState = typeof taxonomyTypeState
+export type TaxonomyTypePluginState = typeof taxonomyTypeState
 
 export const taxonomyTypePlugin: EditorPlugin<TaxonomyTypePluginState> = {
   Component: TaxonomyTypeEditor,
@@ -38,6 +38,7 @@ function TaxonomyTypeEditor(props: EditorPluginProps<TaxonomyTypePluginState>) {
         <h1 className="serlo-h1" itemProp="name">
           {props.editable ? (
             <input
+              autoFocus
               className={headerInputClasses}
               placeholder={editorStrings.taxonomy.title}
               value={term.name.value}

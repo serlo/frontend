@@ -1,6 +1,10 @@
 import { editorContent } from './common/common'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { EditorPlugin, EditorPluginProps, object } from '@/serlo-editor/plugin'
+import {
+  type EditorPlugin,
+  type EditorPluginProps,
+  object,
+} from '@/serlo-editor/plugin'
 
 export const userTypeState = object({ description: editorContent() })
 

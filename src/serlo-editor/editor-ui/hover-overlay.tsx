@@ -1,13 +1,15 @@
 import { createRef, useEffect, useState, ReactNode, RefObject } from 'react'
+import { BaseSelection } from 'slate'
 
 import { tw } from '@/helper/tw'
 
-type HoverPosition = 'above' | 'below'
+export type HoverPosition = 'above' | 'below'
 
-interface HoverOverlayProps {
+export interface HoverOverlayProps {
   children: ReactNode
   position: HoverPosition
   anchor?: RefObject<HTMLElement>
+  selection?: BaseSelection
 }
 
 export function HoverOverlay(props: HoverOverlayProps) {
@@ -16,22 +18,7 @@ export function HoverOverlay(props: HoverOverlayProps) {
 
   const windowSelection = window.getSelection()
 
-  const [nativeSelection, setNativeSelection] = useState({
-    anchorOffset: windowSelection?.anchorOffset,
-    focusNode: windowSelection?.focusNode,
-  })
-  const handleSelectionChange = () => {
-    setNativeSelection({
-      anchorOffset: windowSelection?.anchorOffset,
-      focusNode: windowSelection?.focusNode,
-    })
-  }
-  document.addEventListener('selectionchange', handleSelectionChange)
-  useEffect(() => () => {
-    document.removeEventListener('selectionchange', handleSelectionChange)
-  })
-
-  const { anchor, children } = props
+  const { anchor, children, selection } = props
 
   useEffect(() => {
     if (!overlay.current) return
@@ -68,14 +55,7 @@ export function HoverOverlay(props: HoverOverlayProps) {
       ),
       0
     )}px`
-  }, [
-    overlay,
-    anchor,
-    positionAbove,
-    nativeSelection.focusNode,
-    nativeSelection.anchorOffset,
-    windowSelection,
-  ])
+  }, [overlay, anchor, positionAbove, windowSelection, selection])
 
   return (
     <div

@@ -2,15 +2,14 @@ import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
 import { useRef } from 'react'
 
-import { PasteHackPluginProps } from '.'
+import type { PasteHackPluginProps } from '.'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { tw } from '@/helper/tw'
-import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import {
   store,
-  selectParent,
+  selectChildTreeOfParent,
   insertPluginChildBefore,
   selectSerializedDocument,
   removePluginChild,
@@ -28,6 +27,7 @@ const StateDecoder = t.strict({
         t.literal(EditorPluginType.Geogebra),
         t.literal(EditorPluginType.Anchor),
         t.literal(EditorPluginType.Video),
+        t.literal(EditorPluginType.Audio),
         t.literal(EditorPluginType.SerloTable),
         t.literal(EditorPluginType.Highlight),
         t.literal(EditorPluginType.Injection),
@@ -51,14 +51,12 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
   const dispatch = useAppDispatch()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
-  const plugins = usePlugins()
-
   function throwError(error?: unknown) {
     showToastNotice('⚠️ Sorry, something is wrong with the data.', 'warning')
     // eslint-disable-next-line no-console
     console.error(error)
     throw new Error(
-      'JSON input data is not a valid edtr-state or contains unsupported plugins'
+      'JSON input data is not a valid editor-state or contains unsupported plugins'
     )
   }
 
@@ -72,7 +70,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
 
       const content = decoded.right
 
-      const parentPlugin = selectParent(store.getState(), props.id)
+      const parentPlugin = selectChildTreeOfParent(store.getState(), props.id)
 
       if (
         parentPlugin === null ||
@@ -92,13 +90,10 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
             parent: parentPlugin.id,
             sibling: props.id,
             document,
-            plugins,
           })
         )
       }
-      dispatch(
-        removePluginChild({ parent: parentPlugin.id, child: props.id, plugins })
-      )
+      dispatch(removePluginChild({ parent: parentPlugin.id, child: props.id }))
     } catch (error) {
       throwError(error)
     }
@@ -137,6 +132,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
           </a>
         </p>
         <textarea
+          autoFocus
           ref={textareaRef}
           className={tw`
             mb-7 mt-1 flex w-full items-center rounded-2xl

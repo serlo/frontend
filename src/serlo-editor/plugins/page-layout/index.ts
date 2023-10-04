@@ -1,23 +1,21 @@
 import { PageLayoutEditor } from './editor'
 import {
-  EditorPlugin,
+  type EditorPlugin,
+  type EditorPluginProps,
   number,
   object,
   child,
-  EditorPluginProps,
 } from '@/serlo-editor/plugin'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const allowedPlugins = [
   EditorPluginType.Text,
-  EditorPluginType.Blockquote,
   EditorPluginType.Box,
   EditorPluginType.Geogebra,
   EditorPluginType.Highlight,
   EditorPluginType.Anchor,
   EditorPluginType.Equations,
   EditorPluginType.Image,
-  EditorPluginType.Important,
   EditorPluginType.Injection,
   EditorPluginType.Multimedia,
   EditorPluginType.Spoiler,

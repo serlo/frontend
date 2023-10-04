@@ -1,5 +1,5 @@
 import { FrontendBoxNode } from '@/frontend-node-types'
-import { RenderNestedFunction } from '@/schema/article-renderer'
+import type { RenderNestedFunction } from '@/schema/article-renderer'
 import { BoxRenderer } from '@/serlo-editor/plugins/box/renderer'
 
 type BoxProps = FrontendBoxNode & { renderNested: RenderNestedFunction }
@@ -14,7 +14,7 @@ export function Box({
   if (!children || !children.length || !boxType) return null
 
   const content = renderNested(children, 'children')
-  const unwrappedTitle = title?.[0].children
+  const unwrappedTitle = title?.[0]?.children
 
   return (
     <BoxRenderer

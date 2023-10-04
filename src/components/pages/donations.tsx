@@ -1,4 +1,5 @@
 import { faPaypal } from '@fortawesome/free-brands-svg-icons'
+import Image from 'next/image'
 
 import { TestimonialDonationsPage } from '../content/donations-banner-experiment/testimonial-donations-page'
 import { FaIcon } from '../fa-icon'
@@ -56,15 +57,20 @@ export function Donations() {
             </h1>
           </div>
           <aside className="sm:w-full">
-            <img
-              src="/_assets/img/donations-image.jpg"
-              alt="Kind beim Lernen mit Serlo"
-              className={tw`
-                block aspect-square max-w-[20rem] rounded-full
-                object-cover object-center p-side mobile:mx-auto
-                sm:mx-0 sm:ml-auto sm:h-[23rem] sm:w-[23rem] sm:max-w-none
+            <div className="w-[90vw]sm:mx-0 relative mx-auto mb-12 aspect-square h-80 sm:ml-auto sm:mr-side">
+              <Image
+                src="/_assets/img/donations-image.jpg"
+                alt="Kind beim Lernen mit Serlo"
+                fill
+                priority
+                sizes="23rem"
+                className={tw`
+                  block aspect-square !h-80 !w-80 rounded-full
+                  object-cover object-center mobile:mx-auto
+                  sm:mx-0 sm:ml-auto sm:!h-[23rem] sm:!w-[23rem] sm:max-w-none
               `}
-            />
+              />
+            </div>
           </aside>
         </section>
         <div
@@ -110,8 +116,10 @@ export function Donations() {
             </h3>
             <div className="mx-auto mobile:flex md:mx-auto md:block md:w-auto">
               <p className="mobile:min-w-[10rem]">
-                <img
-                  className="mx-auto -ml-1.5 mb-7 mt-3 h-40 w-40 rounded-full object-cover"
+                <Image
+                  width={160}
+                  height={160}
+                  className="mx-auto -ml-1.5 mb-7 mt-3 rounded-full object-cover"
                   src="/_assets/img/donations-contact.jpg"
                   alt="Ansprechpartner Wolfgang Schmid"
                 />
@@ -141,8 +149,10 @@ export function Donations() {
                 hier
               </a>
               .<br />
-              <img
-                className="serlo-img mx-0 my-5 block w-56"
+              <Image
+                width={224}
+                height={63}
+                className="serlo-img mx-0 my-5 block h-auto w-auto"
                 src="/_assets/img/donations-itz.png"
                 alt="Initiative Transparente Zivilgesellschaft"
               />

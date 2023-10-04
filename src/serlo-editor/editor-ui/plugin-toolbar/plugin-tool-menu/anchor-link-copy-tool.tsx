@@ -2,22 +2,23 @@ import { faHashtag } from '@fortawesome/free-solid-svg-icons'
 
 import { DropdownButton } from './dropdown-button'
 import { shouldUseFeature } from '@/components/user/profile-experimental'
-import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 interface AnchorLinkCopyToolProps {
+  serloEntityId: number
   pluginId: string
 }
 
-export function AnchorLinkCopyTool({ pluginId }: AnchorLinkCopyToolProps) {
-  const serloEntityId = useEntityId()
+export function AnchorLinkCopyTool({
+  pluginId,
+  serloEntityId,
+}: AnchorLinkCopyToolProps) {
   const editorStrings = useEditorStrings()
   const { strings } = useInstanceData()
 
   if (
-    !serloEntityId ||
     !navigator.clipboard ||
     !window.location.href.includes('add-revision') ||
     !shouldUseFeature('editorAnchorLinkCopyTool')
@@ -32,12 +33,17 @@ export function AnchorLinkCopyTool({ pluginId }: AnchorLinkCopyToolProps) {
           pluginId.split('-')[0]
         }`
         void navigator.clipboard.writeText(url)
-        showToastNotice(strings.share.copySuccess, 'success')
-        showToastNotice('👉 ' + editorStrings.edtrIo.anchorLinkWarning)
+        showToastNotice(strings.share.copySuccess, 'success', 2000)
+        showToastNotice(
+          '👉 ' + editorStrings.edtrIo.anchorLinkWarning,
+          undefined,
+          5500
+        )
       }}
       label={editorStrings.plugins.rows.copyAnchorLink}
       icon={faHashtag}
       className="mt-2.5 border-t pt-2.5"
+      dataQa="copy-anchor-link-button"
     />
   )
 }

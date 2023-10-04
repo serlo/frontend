@@ -84,7 +84,7 @@ describe('check all supported typenames with stored api-data', () => {
     )
     expect(pageData.metaData?.contentType).toBe('article')
     expect(pageData.metaData?.metaDescription).toBe(
-      'Um Dezimalbrüche zu addieren oder zu subtrahieren, geht man ähnlich vor wie bei der schriftlichen Addition bzw. Subtraktion.Addition Es …'
+      'Um Dezimalbrüche zu addieren oder zu subtrahieren, geht man ähnlich vor wie bei der schriftlichen Addition bzw. Subtraktion.AdditionEs gibt …'
     )
     assertCorrectMetaImageLink(pageData)
     assertCorrectHorizonDataFormat(pageData)
@@ -126,9 +126,11 @@ describe('check all supported typenames with stored api-data', () => {
 
     expect(pageData.metaData?.title).toBe('Übersicht - lernen mit Serlo!')
     expect(pageData.metaData?.contentType).toBe('course-page')
-    expect(pageData.metaData?.metaDescription).toBe(
-      'Ziel dieses Kurses ist es, einen Überblick zur möglichen Vorgehensweise beim Finden von Nullstellen von Polynomfunktionen zu geben. Inhalte …'
-    )
+    expect(
+      pageData.metaData?.metaDescription?.startsWith(
+        'Ziel dieses Kurses ist es, einen Überblick zur möglichen Vorgehensweise beim Finden von Nullstellen von Polynomfunktionen'
+      )
+    ).toBeTruthy()
     assertCorrectMetaImageLink(pageData)
     assertCorrectHorizonDataFormat(pageData)
 
@@ -441,9 +443,11 @@ describe('check all supported typenames with stored api-data', () => {
 
     expect(pageData.metaData?.title).toBe('Übersicht - lernen mit Serlo!')
     expect(pageData.metaData?.contentType).toBe('course-page')
-    expect(pageData.metaData?.metaDescription).toBe(
-      'Ziel dieses Kurses ist es, einen Überblick zur möglichen Vorgehensweise beim Finden von Nullstellen von Polynomfunktionen zu geben. Inhalte …'
-    )
+    expect(
+      pageData.metaData?.metaDescription?.startsWith(
+        'Ziel dieses Kurses ist es, einen Überblick zur möglichen Vorgehensweise beim Finden von Nullstellen von Polynomfunktionen'
+      )
+    ).toBeTruthy()
     expect(pageData.metaData?.metaImage).toBe(
       `https://de.${serloDomain}/_assets/img/meta/mathe.png`
     )

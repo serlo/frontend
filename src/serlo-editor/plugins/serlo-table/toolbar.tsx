@@ -1,6 +1,6 @@
-import { SerloTableProps } from '.'
-import { getTableType } from './editor'
+import type { SerloTableProps } from '.'
 import { TableType } from './renderer'
+import { getTableType } from './utils/get-table-type'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'

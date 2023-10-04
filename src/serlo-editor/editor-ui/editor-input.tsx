@@ -10,10 +10,11 @@ interface EditorInputProps
   label?: string
   inputWidth?: string
   width?: string
+  autoFocus?: boolean
 }
 
 export const EditorInput = forwardRef<HTMLInputElement, EditorInputProps>(
-  function EditorInput({ label, ...props }, ref) {
+  function EditorInput({ label, autoFocus, ...props }, ref) {
     const inputProps = { ...props }
     delete inputProps.inputWidth
 
@@ -21,6 +22,7 @@ export const EditorInput = forwardRef<HTMLInputElement, EditorInputProps>(
       <label className="text-almost-black" style={{ width: props.width }}>
         {label ?? ''}
         <input
+          autoFocus={autoFocus}
           {...inputProps}
           ref={ref}
           className={tw`

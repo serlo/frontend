@@ -61,6 +61,7 @@ export function useRevisionDecideMutation() {
         sessionStorage.getItem('previousPathname') || '/entity/unrevised',
       delay: 100,
       stopNProgress: true,
+      useHardRedirect: true, // soft redirect is not refreshing page
     })
   }
 }

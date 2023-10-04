@@ -37,7 +37,6 @@ export function ModalWithCloseButton({
     <BaseModal
       isOpen={isOpen}
       onRequestClose={onCloseClick}
-      shouldReturnFocusAfterClose={false}
       className={clsx(ModalClsx, 'top-[40%] w-[500px] pb-10', className)}
     >
       {title && <h2 className="serlo-h2">{title}</h2>}
@@ -50,6 +49,7 @@ export function ModalWithCloseButton({
           cursor-pointer rounded-full border-none bg-transparent text-center
           leading-tight text-almost-black hover:bg-brand hover:text-white
         `}
+        data-qa="modal-close-button"
       >
         <FaIcon icon={faXmark} className="h-5" />
       </button>

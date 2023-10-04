@@ -1,12 +1,14 @@
-import { LicenseData } from './data-types'
-import { BoxType } from './serlo-editor/plugins/box/renderer'
+import type { LicenseData } from './data-types'
+import type { BoxType } from './serlo-editor/plugins/box/renderer'
 import { Sign } from './serlo-editor/plugins/equations/sign'
-import { PageTeamRendererProps } from './serlo-editor/plugins/page-team/renderer'
+import { InputExerciseType } from './serlo-editor/plugins/input-exercise/input-exercise-type'
+import type { PageTeamRendererProps } from './serlo-editor/plugins/page-team/renderer'
 import { TableType } from './serlo-editor/plugins/serlo-table/renderer'
-import { CustomText } from './serlo-editor/plugins/text'
+import type { CustomText } from './serlo-editor/plugins/text'
 import { EditorPluginType } from './serlo-editor-integration/types/editor-plugin-type'
-import {
+import type {
   EditorAnchorPlugin,
+  EditorAudioPlugin,
   EditorGeogebraPlugin,
   EditorH5PPlugin,
   EditorHighlightPlugin,
@@ -23,19 +25,17 @@ import {
 export enum FrontendNodeType {
   Anchor = EditorPluginType.Anchor,
   Article = EditorPluginType.Article,
-  Blockquote = EditorPluginType.Blockquote,
+  Audio = EditorPluginType.Audio,
   Box = EditorPluginType.Box,
   Code = EditorPluginType.Highlight,
   Equations = EditorPluginType.Equations,
   Geogebra = EditorPluginType.Geogebra,
   Image = EditorPluginType.Image,
-  Important = EditorPluginType.Important,
   Injection = EditorPluginType.Injection,
   Multimedia = EditorPluginType.Multimedia,
   PageLayout = EditorPluginType.PageLayout,
   PagePartners = EditorPluginType.PagePartners,
   PageTeam = EditorPluginType.PageTeam,
-  Table = EditorPluginType.Table,
   Td = 'td',
   Th = 'th',
   Tr = 'tr',
@@ -199,16 +199,6 @@ export interface FrontendColNode {
   children?: FrontendContentNode[]
 }
 
-export interface FrontendImportantNode {
-  type: FrontendNodeType.Important
-  children?: FrontendContentNode[]
-}
-
-export interface FrontendBlockquoteNode {
-  type: FrontendNodeType.Blockquote
-  children?: FrontendContentNode[]
-}
-
 export interface FrontendBoxNode {
   type: FrontendNodeType.Box
   boxType: BoxType
@@ -240,11 +230,6 @@ export interface FrontendSerloTdNode {
   children?: FrontendContentNode[]
 }
 
-export interface FrontendTableNode {
-  type: FrontendNodeType.Table
-  children?: FrontendTrNode[]
-}
-
 export interface FrontendTrNode {
   type: FrontendNodeType.Tr
   children?: (FrontendThNode | FrontendTdNode)[]
@@ -272,9 +257,8 @@ export type FrontendInjectionNode = EditorInjectionPlugin & {
   pluginId?: string
 }
 
-interface BareSolution {
-  legacy?: FrontendContentNode[]
-  edtrState?: SolutionEditorState
+export interface BareSolution {
+  content?: SolutionEditorState
   license?: LicenseData
   trashed: boolean
 }
@@ -283,8 +267,7 @@ export interface FrontendExerciseNode {
   type: FrontendNodeType.Exercise
   trashed?: boolean
   task: {
-    legacy?: FrontendContentNode[]
-    edtrState?: TaskEditorState
+    content?: TaskEditorState
     license?: LicenseData
   }
   solution: BareSolution
@@ -316,7 +299,7 @@ export interface FrontendSolutionNode {
 }
 
 export interface TaskEditorState {
-  content: FrontendContentNode[] // edtr-io plugin "exercise"
+  content: FrontendContentNode[] // serlo-editor plugin "exercise"
   interactive?:
     | EditorPluginScMcExercise
     | EditorPluginInputExercise
@@ -341,7 +324,6 @@ export interface EditorPluginScMcExercise {
       isCorrect: boolean
       feedback: FrontendContentNode[]
       content: FrontendContentNode[]
-      originalIndex: number
     }[]
     isSingleChoice?: boolean
   }
@@ -350,10 +332,7 @@ export interface EditorPluginScMcExercise {
 export interface EditorPluginInputExercise {
   plugin: EditorPluginType.InputExercise // editor plugin
   state: {
-    type:
-      | 'input-number-exact-match-challenge'
-      | 'input-string-normalized-match-challenge'
-      | 'input-expression-equal-match-challenge'
+    type: InputExerciseType
     answers: {
       value: string
       isCorrect: boolean
@@ -381,6 +360,13 @@ export type FrontendVideoNode = EditorVideoPlugin & {
   type: FrontendNodeType.Video
   children?: undefined
   pluginId?: string
+}
+
+export type FrontendAudioNode = EditorAudioPlugin & {
+  type: FrontendNodeType.Audio
+  children?: undefined
+  pluginId?: string
+  src: string
 }
 
 export type FrontendCodeNode = EditorHighlightPlugin & {
@@ -438,6 +424,7 @@ export type FrontendVoidNode =
   | FrontendExerciseNode
   | FrontendSolutionNode
   | FrontendVideoNode
+  | FrontendAudioNode
   | FrontendCodeNode
   | FrontendEquationsNode
 
@@ -449,8 +436,6 @@ export type FrontendElementNode =
   | FrontendSpoilerBodyNode
   | FrontendLiNode
   | FrontendColNode
-  | FrontendImportantNode
-  | FrontendBlockquoteNode
   | FrontendBoxNode
   | FrontendThNode
   | FrontendTdNode
@@ -461,10 +446,8 @@ export type FrontendElementNode =
 export type FrontendRestrictedElementNode =
   | FrontendArticleNode
   | FrontendSpoilerContainerNode
-  | FrontendTableNode
   | FrontendSerloTableNode
   | FrontendSerloTrNode
-  | FrontendSpoilerContainerNode
   | FrontendUlNode
   | FrontendOlNode
   | FrontendRowNode

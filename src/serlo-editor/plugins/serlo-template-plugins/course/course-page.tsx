@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import {
   entity,
@@ -6,11 +6,14 @@ import {
   entityType,
   headerInputClasses,
 } from '../common/common'
-import { ContentLoaders } from '../helpers/content-loaders/content-loaders'
 import { ToolbarMain } from '../toolbar-main/toolbar-main'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { UuidType } from '@/data-types'
-import { EditorPlugin, EditorPluginProps, string } from '@/serlo-editor/plugin'
+import {
+  type EditorPlugin,
+  type EditorPluginProps,
+  string,
+} from '@/serlo-editor/plugin'
+import { focus, useAppDispatch } from '@/serlo-editor/store'
 
 export const coursePageTypeState = entityType(
   {
@@ -37,42 +40,53 @@ function CoursePageTypeEditor(
   props: EditorPluginProps<CoursePageTypePluginState, { skipControls: boolean }>
 ) {
   const { title, content, icon } = props.state
+  const titleRef = useRef<HTMLInputElement>(null)
+
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     // setting not used any more, reset to explanation for now
     if (icon.value !== 'explanation') icon.set('explanation')
   })
 
+  useEffect(() => {
+    if (props.editable) {
+      // focus on title, remove focus from content
+      setTimeout(() => {
+        dispatch(focus(null))
+        titleRef.current?.focus()
+      })
+    }
+    // only after creating plugin
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const placeholder = useEditorStrings().templatePlugins.coursePage.title
 
   return (
-    <article>
-      <h1 className="serlo-h1">
-        {props.editable ? (
-          <input
-            className={headerInputClasses}
-            placeholder={placeholder}
-            value={title.value}
-            onChange={(e) => title.set(e.target.value)}
-          />
-        ) : (
-          <span itemProp="name">{title.value}</span>
+    <>
+      <article>
+        <h1 className="serlo-h1 mt-12">
+          {props.editable ? (
+            <input
+              ref={titleRef}
+              autoFocus
+              className={headerInputClasses}
+              placeholder={placeholder}
+              value={title.value}
+              onChange={(e) => title.set(e.target.value)}
+            />
+          ) : (
+            <span itemProp="name">{title.value}</span>
+          )}
+        </h1>
+
+        {content.render()}
+
+        {props.config.skipControls ? null : (
+          <ToolbarMain showSubscriptionOptions {...props.state} />
         )}
-      </h1>
-
-      {content.render()}
-
-      {props.config.skipControls ? null : (
-        <ToolbarMain showSubscriptionOptions {...props.state} />
-      )}
-      {props.renderIntoSideToolbar(
-        <ContentLoaders
-          id={props.state.id.value}
-          currentRevision={props.state.revision.value}
-          onSwitchRevision={props.state.replaceOwnState}
-          entityType={UuidType.CoursePage}
-        />
-      )}
-    </article>
+      </article>
+    </>
   )
 }

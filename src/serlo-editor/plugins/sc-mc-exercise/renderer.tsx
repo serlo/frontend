@@ -13,7 +13,6 @@ export interface ScMcExerciseRendererAnswer {
   isCorrect: boolean
   feedback: JSX.Element | null
   content: JSX.Element | null
-  originalIndex: number
 }
 
 export interface ScMcExerciseRendererProps {
@@ -36,7 +35,6 @@ export function ScMcExerciseRenderer({
 }: ScMcExerciseRendererProps) {
   const [selected, setSelected] = useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = useState(false)
-  const [focused, setFocused] = useState<number | undefined>(undefined)
   const [selectedArray, setSelectedArray] = useState(answers.map(() => false))
   const exStrings = useInstanceData().strings.content.exercises
 
@@ -69,16 +67,14 @@ export function ScMcExerciseRenderer({
                       setShowFeedback(false)
                       setSelected(i)
                     }}
-                    onFocus={() => setFocused(i)}
-                    onBlur={() => setFocused(undefined)}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') setShowFeedback(true)
                     }}
                   />
                   <label
                     className={clsx(
-                      'serlo-spacing-fix flex cursor-pointer items-center [&>div>*]:ml-2',
-                      focused === i && 'outline-gray'
+                      /* we override some styles in the answer content to show it inline */
+                      'flex cursor-pointer items-center [&_.slate-container]:mb-0 [&_.slate-p]:ml-2'
                     )}
                     htmlFor={id}
                   >
@@ -153,13 +149,11 @@ export function ScMcExerciseRenderer({
                       newArr[i] = !newArr[i]
                       setSelectedArray(newArr)
                     }}
-                    onFocus={() => setFocused(i)}
-                    onBlur={() => setFocused(undefined)}
                   />
                   <label
                     className={clsx(
-                      'serlo-spacing-fix flex cursor-pointer items-center [&>div>*]:ml-2',
-                      focused === i && 'outline-gray'
+                      /* we override some styles in the answer content to show it inline */
+                      'flex cursor-pointer items-center [&_.slate-container]:mb-0 [&_.slate-p]:ml-2'
                     )}
                     htmlFor={id}
                   >

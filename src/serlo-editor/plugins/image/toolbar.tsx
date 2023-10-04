@@ -1,7 +1,7 @@
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { Dispatch, SetStateAction } from 'react'
 
-import { ImageProps } from '.'
+import type { ImageProps } from '.'
 import { SettingsModalControls } from './controls/settings-modal-controls'
 import { UploadButton } from './controls/upload-button'
 import { FaIcon } from '@/components/fa-icon'
@@ -29,6 +29,7 @@ export const ImageToolbar = (
           <button
             onClick={() => setShowSettingsModal(true)}
             className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+            data-qa="plugin-image-settings"
           >
             {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
           </button>

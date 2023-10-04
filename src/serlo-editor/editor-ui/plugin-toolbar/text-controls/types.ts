@@ -9,7 +9,8 @@ export enum TextEditorFormattingOption {
   lists = 'lists',
   math = 'math',
   paragraphs = 'paragraphs',
-  richText = 'richText',
+  richTextBold = 'richTextBold',
+  richTextItalic = 'richTextItalic',
 }
 
 export type ControlButton = ActionControlButton | NestedControlButton
@@ -25,7 +26,7 @@ interface ActionControlButton {
 export interface NestedControlButton {
   title: string
   closeMenuTitle: string
-  children: ActionControlButton[]
+  subMenuButtons: ActionControlButton[]
   isActive(editor: SlateEditor): boolean
   renderIcon(editor: SlateEditor): React.ReactNode
   renderCloseMenuIcon(): React.ReactNode

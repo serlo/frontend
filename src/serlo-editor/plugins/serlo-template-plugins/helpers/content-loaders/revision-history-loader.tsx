@@ -9,16 +9,16 @@ import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { RevisionHistory as SerloRevisionHistory } from '@/components/pages/revision-history'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import {
+import type {
   RevisionUuidQuery,
   RevisionUuidQueryVariables,
 } from '@/fetcher/graphql-types/operations'
-import { Revisions } from '@/fetcher/query-types'
+import type { Revisions } from '@/fetcher/query-types'
 import { revisionQuery } from '@/fetcher/revision/query'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { revisionHistoryQuery } from '@/pages/entity/repository/history/[id]'
-import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
+import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import {
   editorResponseToState,
   isError,
@@ -60,11 +60,13 @@ export function RevisionHistoryLoader<T>({
           if (revisions.length) setShowRevisions(true)
         }}
       >
-        <PluginToolbarButton
-          icon={<FaIcon icon={faHistory} className="text-xl" />}
-          label={editorStrings.edtrIo.switchRevision}
-          className="pr-0.5 pt-1"
-        />
+        <button className="serlo-button-editor-secondary serlo-tooltip-trigger">
+          <EditorTooltip
+            text={editorStrings.edtrIo.switchRevision}
+            className="-left-40"
+          />
+          <FaIcon icon={faHistory} className="text-md" />
+        </button>
       </span>
 
       <ModalWithCloseButton

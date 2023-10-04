@@ -1,15 +1,13 @@
 import * as R from 'ramda'
-import { useRef } from 'react'
 
-import { SubDocumentProps } from '.'
+import type { SubDocumentProps } from '.'
 import { selectDocument, useAppSelector } from '../../store'
-import { usePlugin } from '../contexts/plugins-context'
-import { EditorPlugin } from '@/serlo-editor/types/internal__plugin'
+import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
 export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {
   const document = useAppSelector((state) => selectDocument(state, id))
-  const plugin = usePlugin(document?.plugin)?.plugin as EditorPlugin
-  const focusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
+  const plugin = editorPlugins.getByType(document?.plugin ?? '')
+
   if (!document) return null
   if (!plugin) {
     // eslint-disable-next-line no-console
@@ -34,8 +32,6 @@ export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {
       id={id}
       editable={false}
       focused={false}
-      autofocusRef={focusRef}
-      renderIntoSideToolbar={() => null}
     />
   )
 }

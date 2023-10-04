@@ -1,11 +1,11 @@
 import { InputExerciseEditor } from './editor'
 import { InputExerciseType } from './input-exercise-type'
 import {
+  type ChildStateTypeConfig,
+  type EditorPlugin,
+  type EditorPluginProps,
   boolean,
   child,
-  ChildStateTypeConfig,
-  EditorPlugin,
-  EditorPluginProps,
   list,
   object,
   string,
@@ -22,7 +22,7 @@ function createInputExerciseState(
   })
 
   return object({
-    type: string('input-string-normalized-match-challenge'),
+    type: string(InputExerciseType.NumberExact),
     unit: string(''),
     answers: list(answerObject),
   })
@@ -35,8 +35,6 @@ export type InputExercisePluginState = ReturnType<
 export interface InputExerciseConfig {
   feedback?: ChildStateTypeConfig
 }
-
-export { InputExerciseType }
 
 export type InputExerciseProps = EditorPluginProps<
   InputExercisePluginState,

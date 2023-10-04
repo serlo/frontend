@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { GeogebraProps } from '.'
+import type { GeogebraProps } from '.'
 import { GeogebraRenderer, parseId } from './renderer'
 import { GeogebraToolbar } from './toolbar'
 import { FaIcon } from '@/components/fa-icon'
@@ -35,6 +35,7 @@ export function GeogebraEditor(props: GeogebraProps) {
       ) : (
         <div
           className="mx-side cursor-pointer rounded-lg bg-editor-primary-50 py-32 text-center"
+          data-qa="plugin-geogebra-placeholder"
           onClick={() => setShowSettingsModal(true)}
         >
           <FaIcon

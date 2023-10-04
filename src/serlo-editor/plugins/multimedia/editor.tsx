@@ -1,7 +1,8 @@
-import clsx from 'clsx'
+import { useMemo, useState } from 'react'
 
-import { MultimediaProps } from '.'
+import type { MultimediaProps } from '.'
 import { MultimediaRenderer } from './renderer'
+import { getStyleHacks } from './style-hacks'
 import { MultimediaSizeSelect } from './toolbar/size-select'
 import { MultimediaToolbar } from './toolbar/toolbar'
 import { MultimediaTypeSelect } from './toolbar/type-select'
@@ -9,75 +10,66 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { AreImagesDisabledInTableContext } from '@/serlo-editor/plugins/serlo-table/contexts/are-images-disabled-in-table-context'
 import {
+  selectAncestorPluginTypes,
   selectHasFocusedDescendant,
   selectIsFocused,
+  store,
   useAppSelector,
 } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function MultimediaEditor(props: MultimediaProps) {
+  const [stateCache, setStateCache] = useState<Record<string, unknown>>({})
   const { config, state, editable, focused } = props
   const { explanation, multimedia, width } = state
 
   const multimediaStrings = useEditorStrings().plugins.multimedia
 
-  const isMediaChildFocused = useAppSelector((state) =>
-    selectIsFocused(state, multimedia.id)
+  const isMediaChildFocused = useAppSelector((storeState) =>
+    selectIsFocused(storeState, multimedia.id)
   )
-  const isMediaChildFocusedWithin = useAppSelector((state) =>
-    selectHasFocusedDescendant(state, multimedia.id)
+  const isMediaChildFocusedWithin = useAppSelector((storeState) =>
+    selectHasFocusedDescendant(storeState, multimedia.id)
   )
 
-  const pluginToolbarAndStyleHacks = clsx(
-    focused && '[&>div]:border-editor-primary-100 [&>div]:rounded-t-none',
+  // we memoize this so we don't need to calculate the ancestors on every render
+  // the values should only be calculated when we create it or move the plugin (and that also triggers a remount)
+  const allowedPlugins = useMemo(() => {
+    // inside of box plugin don't allow video and geogebra as multimedia children
+    const typesOfAncestors = selectAncestorPluginTypes(
+      store.getState(),
+      props.id
+    )
+    const forbiddenInBox = [EditorPluginType.Video, EditorPluginType.Geogebra]
+    const hasBoxAnchestor = typesOfAncestors?.includes(EditorPluginType.Box)
+    return hasBoxAnchestor
+      ? config.allowedPlugins.filter(
+          (plugin) => !forbiddenInBox.includes(plugin as EditorPluginType)
+        )
+      : config.allowedPlugins
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-    // fix add button position
-    '[&_.add-trigger]:relative [&_.add-trigger]:-left-1/4',
-
-    // Improve toolbars for multimedia children.
-    // hacky but this way the complexity is contained in the parent plugin
-
-    '[&_.explanation-wrapper]:mt-4',
-    '[&_.media-wrapper]:mt-4',
-
-    '[&_.explanation-wrapper_.plugin-toolbar]:ml-[1px]',
-
-    // make media-child's toolbar full width of multimedia plugin
-    // also media-wrapper needs to be relative to be clickable (is float:right)
-    // but needs to be static to not restrict toolbar width
-    (isMediaChildFocused || isMediaChildFocusedWithin) &&
-      '[&_.media-wrapper_.plugin-wrapper-container]:!static [&_.media-wrapper]:!static',
-
-    // margin and size improvement
-    tw`
-    [&_.media-wrapper_.plugin-toolbar]:!left-auto [&_.media-wrapper_.plugin-toolbar]:!top-0
-    [&_.media-wrapper_.plugin-toolbar]:mx-side [&_.media-wrapper_.plugin-toolbar]:w-[calc(100%-37px)]
-    `,
-
-    // first explanation toolbar: small position tweak
-    tw`
-    [&_.explanation-wrapper_.rows-child.first_.plugin-toolbar]:!-top-[44px]
-    [&_.explanation-wrapper_.rows-child.first_.plugin-toolbar]:w-[calc(100%+2px)]
-    `,
-
-    // in case there is no rows plugin (article introduction)
-    tw`
-    [&_.explanation-wrapper>div>div>.plugin-wrapper-container_.plugin-toolbar]:!-top-[35px]
-    [&_.explanation-wrapper>div>div>.plugin-wrapper-container_.plugin-toolbar]:w-[calc(100%+2px)]
-    `
+  const pluginToolbarAndStyleHacks = getStyleHacks(
+    focused,
+    isMediaChildFocused,
+    isMediaChildFocusedWithin
   )
 
   return (
-    <div className="group/multimedia">
+    <div className="group/multimedia" data-qa="plugin-multimedia-wrapper">
       {editable && focused ? (
         <MultimediaToolbar id={props.id}>
           <MultimediaSizeSelect
             state={state.width}
             title={multimediaStrings.chooseSize}
           />
-          {config.allowedPlugins.length > 1 && (
+          {allowedPlugins.length > 1 && (
             <MultimediaTypeSelect
-              allowedPlugins={config.allowedPlugins}
+              allowedPlugins={allowedPlugins}
               state={state.multimedia}
+              stateCache={stateCache}
+              setStateCache={setStateCache}
             />
           )}
         </MultimediaToolbar>
@@ -85,10 +77,11 @@ export function MultimediaEditor(props: MultimediaProps) {
       {editable && !focused ? (
         <button
           className={tw`
-            absolute -top-6 right-8 z-50 hidden h-6 rounded-t-md bg-gray-100
+            absolute right-side top-[-56px] z-[22] hidden h-6 rounded-t-md bg-gray-100
             px-2 pt-0.5 text-sm font-bold
             hover:bg-editor-primary-100 group-focus-within/multimedia:block
           `}
+          data-qa="plugin-multimedia-parent-button"
         >
           {multimediaStrings.title}
         </button>

@@ -2,7 +2,7 @@ import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
 import { revisionQuery } from './query'
-import { convertState } from '../convert-state'
+import { convertStateStringToFrontendNode } from '../convert-state-string-to-frontend-node'
 import { createExercise, createSolution } from '../create-exercises'
 import { createTitle } from '../create-title'
 import {
@@ -173,7 +173,10 @@ export async function requestRevision(
           metaDescription: Object.hasOwn(uuid, 'metaDescription')
             ? uuid.metaDescription
             : undefined,
-          content: thisExercise || thisSolution || convertState(uuid.content),
+          content:
+            thisExercise ||
+            thisSolution ||
+            convertStateStringToFrontendNode(uuid.content),
           url: Object.hasOwn(uuid, 'url') ? uuid.url : undefined,
         },
         currentRevision: {
@@ -193,7 +196,9 @@ export async function requestRevision(
           content:
             currentExercise ||
             currentSolution ||
-            convertState(uuid.repository.currentRevision?.content),
+            convertStateStringToFrontendNode(
+              uuid.repository.currentRevision?.content
+            ),
           url:
             currentRevision && Object.hasOwn(currentRevision, 'url')
               ? currentRevision.url

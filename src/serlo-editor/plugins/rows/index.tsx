@@ -1,11 +1,12 @@
 import { RowsEditor } from './editor'
 import {
+  type ChildStateTypeConfig,
+  type EditorPlugin,
+  type EditorPluginProps,
   child,
-  ChildStateTypeConfig,
-  EditorPlugin,
-  EditorPluginProps,
   list,
 } from '../../plugin'
+import { ROOT } from '@/serlo-editor/store/root/constants'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 function createRowsState(content: ChildStateTypeConfig) {
@@ -14,7 +15,7 @@ function createRowsState(content: ChildStateTypeConfig) {
 
 const defaultConfig = {
   content: { plugin: EditorPluginType.Text },
-  parentType: 'root',
+  parentType: ROOT,
 }
 
 export function createRowsPlugin(

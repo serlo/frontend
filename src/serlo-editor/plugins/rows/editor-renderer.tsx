@@ -1,20 +1,22 @@
+import clsx from 'clsx'
 import * as R from 'ramda'
 import React, { useRef, useState, useMemo } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
 
-import { RowsPluginConfig, RowsPluginState } from '.'
+import type { RowsPluginConfig, RowsPluginState } from '.'
+import { RowDragButton } from './components/row-drag-button'
 import { useCanDrop } from './components/use-can-drop'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { PluginsContextPlugins } from '@/serlo-editor/core/contexts/plugins-context'
-import { edtrDragHandle, EdtrIcon } from '@/serlo-editor/editor-ui'
+import { tw } from '@/helper/tw'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
-import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
+import { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import {
   DocumentState,
+  selectDocumentPluginType,
   selectSerializedDocument,
   store,
 } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface RowDragObject {
   id: string
@@ -23,6 +25,16 @@ interface RowDragObject {
 }
 
 const validFileTypes = [NativeTypes.FILE, NativeTypes.URL]
+
+const pluginsWithOwnBorder = [
+  EditorPluginType.Box,
+  EditorPluginType.Geogebra,
+  EditorPluginType.Highlight,
+  EditorPluginType.Multimedia,
+  EditorPluginType.SerloTable,
+  EditorPluginType.Spoiler,
+  EditorPluginType.Video,
+]
 
 export function EditorRowRenderer({
   config,
@@ -36,11 +48,9 @@ export function EditorRowRenderer({
   row: StateTypeReturnType<RowsPluginState>[0]
   rows: StateTypeReturnType<RowsPluginState>
   index: number
-  plugins: PluginsContextPlugins
+  plugins: PluginsWithData
   dropContainer: React.RefObject<HTMLDivElement>
 }) {
-  const editorStrings = useEditorStrings()
-
   const container = useRef<HTMLDivElement>(null)
   const [draggingAbove, setDraggingAbove] = useState(true)
 
@@ -56,10 +66,17 @@ export function EditorRowRenderer({
         id: row.id,
         serialized: selectSerializedDocument(store.getState(), row.id),
         onDrop() {
+          // Remove the dragged plugin from its original rows plugin
           rows.set((list) => {
             const index = list.findIndex((id) => id === row.id)
             return R.remove(index, 1, list)
           })
+
+          // If the dragged plugin was the only plugin in the current rows plugin,
+          // add an empty text plugin to replace it
+          if (rows.length <= 1) {
+            rows.insert(0, { plugin: EditorPluginType.Text })
+          }
         },
       }
     },
@@ -104,12 +121,12 @@ export function EditorRowRenderer({
         if (!canDrop(item.id)) return
 
         const draggingAbove = isDraggingAbove(monitor)
+        item.onDrop()
         rows.set((list, deserializer) => {
           const index =
             list.findIndex((id) => id === row.id) + (draggingAbove ? 0 : 1)
           return R.insert(index, deserializer(item.serialized), list)
         })
-        item.onDrop()
         return
       }
 
@@ -162,24 +179,6 @@ export function EditorRowRenderer({
     },
   })
 
-  const pluginProps = React.useMemo(() => {
-    return {
-      renderSideToolbar(children: React.ReactNode) {
-        return (
-          <>
-            <PluginToolbarButton
-              ref={drag}
-              icon={<EdtrIcon icon={edtrDragHandle} />}
-              label={editorStrings.plugins.rows.dragElement}
-              className="-mt-[3px] mb-1.5 cursor-grab select-none active:cursor-grabbing"
-            />
-            {children}
-          </>
-        )
-      },
-    }
-  }, [editorStrings, drag])
-
   setTimeout(() => {
     dragPreview(drop(dropContainer))
   })
@@ -189,14 +188,38 @@ export function EditorRowRenderer({
       <hr className="m-0 border-2 border-editor-primary p-0" />
     ) : null
 
+  const rowPluginType = selectDocumentPluginType(store.getState(), row.id)
+  const shouldShowBorder = !pluginsWithOwnBorder.includes(rowPluginType)
+
   return (
     <>
       {draggingAbove ? dropPreview : null}
-      <div ref={container}>
+      <div
+        ref={container}
+        className={clsx(
+          'rows-editor-renderer-container',
+          'border-l-2 border-transparent',
+          shouldShowBorder &&
+            tw`
+            transition-colors
+            focus-within:border-gray-400
+            hover:!border-gray-200
+            hover:focus-within:!border-gray-400
+            [&:has(.rows-editor-renderer-container:focus-within)]:border-transparent
+            [&:hover:has(.rows-editor-renderer-container:focus-within)]:!border-gray-200
+            `,
+          tw`
+          [&:focus-within>.rows-tools]:opacity-100
+          [&:has(.rows-editor-renderer-container:focus-within)>.rows-tools]:opacity-0
+          [&:hover>.rows-tools]:!opacity-100
+          `
+        )}
+      >
+        <RowDragButton drag={drag} />
         <div
           className={collectedDragProps.isDragging ? 'opacity-30' : undefined}
         >
-          {row.render(pluginProps)}
+          {row.render()}
         </div>
       </div>
       {!draggingAbove ? dropPreview : null}

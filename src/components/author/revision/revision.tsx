@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react'
 
+import { DisplayModes } from './display-modes'
 import { RevisionHeader } from './revision-header'
 import {
   RevisionPreviewBoxes,
-  RevisionPreviewBoxesProps,
+  type RevisionPreviewBoxesProps,
 } from './revision-preview-boxes'
 import { Link } from '@/components/content/link'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
-import { RevisionData, UuidRevType } from '@/data-types'
+import { type RevisionData, UuidRevType } from '@/data-types'
 import { removeHash } from '@/helper/remove-hash'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
@@ -18,12 +19,6 @@ import { InjectionRenderer } from '@/serlo-editor/plugins/injection/renderer'
 
 export interface RevisionProps {
   data: RevisionData
-}
-
-export enum DisplayModes {
-  This = 'this',
-  SideBySide = 'sidebyside',
-  Diff = 'diff',
 }
 
 export function Revision({ data }: RevisionProps) {

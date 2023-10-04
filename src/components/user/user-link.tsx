@@ -3,7 +3,7 @@ import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
 import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
-import { FrontendUserData } from '@/data-types'
+import type { FrontendUserData } from '@/data-types'
 
 export interface UserLinkProps {
   user: FrontendUserData
@@ -24,6 +24,7 @@ export function UserLink({
     <>
       <Link href={`/user/${user.id}/${user.username}`} className={className}>
         {withIcon && (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             className="mr-2 w-9 rounded-full align-middle"
             src={getAvatarUrl(user.username)}

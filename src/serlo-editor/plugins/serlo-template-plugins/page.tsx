@@ -37,6 +37,7 @@ function PageTypeEditor(props: EditorPluginProps<PageTypePluginState>) {
       <h1 className="serlo-h1" itemProp="name">
         {props.editable ? (
           <input
+            autoFocus
             className={headerInputClasses}
             placeholder={placeholder}
             value={title.value}

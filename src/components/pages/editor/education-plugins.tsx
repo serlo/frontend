@@ -18,7 +18,6 @@ import {
 import clsx from 'clsx'
 import { useRef, useState } from 'react'
 
-import { h2Class } from './editor-presentation'
 import {
   boxExample,
   highlighExample,
@@ -30,8 +29,11 @@ import {
 } from './education-plugin-examples'
 import { Geogebra } from '@/components/content/geogebra'
 import { FaIcon } from '@/components/fa-icon'
-import { EntityIdProvider } from '@/contexts/entity-id-context'
+import { UuidsProvider } from '@/contexts/uuids-context'
 import { tw } from '@/helper/tw'
+
+export const h2Class =
+  'text-center text-4xl leading-cozy tracking-tight font-extrabold'
 
 const categories = ['educational', 'basic'] as const
 
@@ -167,7 +169,7 @@ const pluginData = [
 export function EducationPlugins() {
   const [selectedTitle, setSelectedTitle] = useState(pluginData[0].title)
   const [selectedCategory, setSelectedCategory] = useState<
-    typeof categories[number] | undefined
+    (typeof categories)[number] | undefined
   >(categories[0])
 
   const categoryRefs = [
@@ -195,7 +197,7 @@ export function EducationPlugins() {
     return (
       <div className="m-3 mb-[3.2rem] mt-1 flex-1 text-left">
         <div className="w-full overflow-y-scroll p-8 shadow-menu md:h-[37rem]">
-          <EntityIdProvider value={1555}>
+          <UuidsProvider value={{ entityId: 1555 }}>
             <p className="mb-6 text-xl">{description}</p>
             {example ? (
               <>
@@ -211,6 +213,7 @@ export function EducationPlugins() {
                 <div className="mb-6 border-b-2 border-brand-100 font-bold">
                   Screenshot
                 </div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   key={image}
                   className="
@@ -220,7 +223,7 @@ export function EducationPlugins() {
                 />
               </>
             )}
-          </EntityIdProvider>
+          </UuidsProvider>
           <style jsx global>
             {`
               .lazyload-wrapper > .print:hidden,
@@ -294,7 +297,7 @@ export function EducationPlugins() {
     )
   }
 
-  function renderPluginMenuEntry({ title, icon }: typeof pluginData[0]) {
+  function renderPluginMenuEntry({ title, icon }: (typeof pluginData)[0]) {
     return (
       <li
         key={title}

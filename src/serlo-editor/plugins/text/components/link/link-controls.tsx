@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import { Editor as SlateEditor, Range, Transforms } from 'slate'
-import { ReactEditor } from 'slate-react'
+import { Range, Transforms } from 'slate'
+import { ReactEditor, useSlate } from 'slate-react'
 
 import { LinkOverlayEditMode } from './edit-mode/link-overlay-edit-mode'
 import { LinkOverlay } from './link-overlay'
 import { LinkOverlayWithHref } from './link-overlay-with-href'
-import type { Link } from '../../types'
+import type { Link } from '../../types/text-editor'
 import {
   QuickbarData,
   fetchQuickbarData,
@@ -16,21 +16,16 @@ import {
 } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/link'
 
 interface LinkControlsProps {
-  isSelectionChanged: number
-  editor: SlateEditor
   serloLinkSearch: boolean
 }
 
-export function LinkControls({
-  isSelectionChanged,
-  editor,
-  serloLinkSearch,
-}: LinkControlsProps) {
+export function LinkControls({ serloLinkSearch }: LinkControlsProps) {
   const [element, setElement] = useState<Link | null>(null)
   const [value, setValue] = useState('')
   const [isEditMode, setIsEditMode] = useState(value.length === 0)
   const [quickbarData, setQuickbarData] = useState<QuickbarData | null>(null)
 
+  const editor = useSlate()
   const { selection } = editor
 
   useEffect(() => {
@@ -45,7 +40,7 @@ export function LinkControls({
     } else {
       setElement(null)
     }
-  }, [isSelectionChanged, selection, editor])
+  }, [selection, editor])
 
   useEffect(() => {
     if (!serloLinkSearch) return

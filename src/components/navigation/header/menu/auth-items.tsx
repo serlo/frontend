@@ -1,4 +1,5 @@
 import { faBell } from '@fortawesome/free-solid-svg-icons'
+import Image from 'next/image'
 
 import { Item } from './item'
 import { NoAuthItem } from './no-auth-item'
@@ -38,9 +39,12 @@ export function AuthItems() {
       <Item
         link={updatedSubData}
         elementAsIcon={
-          <img
-            className="inline h-6 w-6 rounded-full"
+          <Image
             src={getAvatarUrl(username)}
+            alt="Avatar"
+            width={24}
+            height={24}
+            className="inline rounded-full"
             title={`${updatedSubData.title} ${username}`}
           />
         }

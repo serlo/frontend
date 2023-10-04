@@ -3,9 +3,9 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { SerloAddButton } from '../../../plugin/helpers/serlo-editor-button'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { FaIcon } from '@/components/fa-icon'
-import { useEntityId } from '@/contexts/entity-id-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { UuidType, UuidWithRevType } from '@/data-types'
+import { useEntityId } from '@/contexts/uuids-context'
+import { UuidType, type UuidWithRevType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
 interface ArticleRelatedMagicInputProps {

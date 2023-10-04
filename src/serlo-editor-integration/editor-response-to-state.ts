@@ -1,37 +1,39 @@
 import { EditorPluginType } from './types/editor-plugin-type'
-import {
-  isEdtr,
-  Edtr,
-  Legacy,
-  RowsPlugin,
-  OtherPlugin,
-  Splish,
-} from './types/legacy-editor-to-editor-types'
 import { TemplatePluginType } from './types/template-plugin-type'
-import { appletTypeState } from '../serlo-editor/plugins/serlo-template-plugins/applet'
-import { articleTypeState } from '../serlo-editor/plugins/serlo-template-plugins/article'
+import type { AppletTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/applet'
+import type { ArticleTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/article'
 import {
-  Entity,
-  License,
-  Uuid,
+  type Entity,
+  type License,
+  type Uuid,
 } from '../serlo-editor/plugins/serlo-template-plugins/common/common'
-import { courseTypeState } from '../serlo-editor/plugins/serlo-template-plugins/course/course'
-import { coursePageTypeState } from '../serlo-editor/plugins/serlo-template-plugins/course/course-page'
-import { eventTypeState } from '../serlo-editor/plugins/serlo-template-plugins/event'
-import { pageTypeState } from '../serlo-editor/plugins/serlo-template-plugins/page'
-import { taxonomyTypeState } from '../serlo-editor/plugins/serlo-template-plugins/taxonomy'
-import { textExerciseTypeState } from '../serlo-editor/plugins/serlo-template-plugins/text-exercise'
-import { textExerciseGroupTypeState } from '../serlo-editor/plugins/serlo-template-plugins/text-exercise-group'
-import { textSolutionTypeState } from '../serlo-editor/plugins/serlo-template-plugins/text-solution'
-import { userTypeState } from '../serlo-editor/plugins/serlo-template-plugins/user'
-import { videoTypeState } from '../serlo-editor/plugins/serlo-template-plugins/video'
+import type { CourseTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/course/course'
+import type { CoursePageTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/course/course-page'
+import type { EventTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/event'
+import type { PageTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/page'
+import type { TaxonomyTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/taxonomy'
+import type { TextExerciseTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/text-exercise'
+import type { TextExerciseGroupTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/text-exercise-group'
+import type { TextSolutionTypeState } from '../serlo-editor/plugins/serlo-template-plugins/text-solution'
+import type { UserTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/user'
+import type { VideoTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/video'
 import { UuidType, UuidRevType } from '@/data-types'
-import { User, MainUuidType } from '@/fetcher/query-types'
+import type { User, MainUuidType } from '@/fetcher/query-types'
 import { FrontendNodeType } from '@/frontend-node-types'
 import { triggerSentry } from '@/helper/trigger-sentry'
-import { StateType, StateTypeSerializedType } from '@/serlo-editor/plugin'
+import type { StateType, StateTypeSerializedType } from '@/serlo-editor/plugin'
 
-const empty: RowsPlugin = { plugin: EditorPluginType.Rows, state: [] }
+interface OtherPlugin {
+  plugin: string
+  state: unknown
+}
+
+interface RowsPlugin {
+  plugin: EditorPluginType.Rows
+  state: (OtherPlugin | RowsPlugin)[]
+}
+
+type Edtr = RowsPlugin | OtherPlugin
 
 // converts query response to deserialized editor state
 export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
@@ -112,7 +114,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
 
   function convertApplet(
     uuid: Extract<MainUuidType, { __typename: 'Applet' }>
-  ): DeserializedState<typeof appletTypeState> {
+  ): DeserializedState<AppletTypePluginState> {
     stack.push({ id: uuid.id, type: 'applet' })
     return {
       initialState: {
@@ -123,18 +125,17 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           changes: '',
           title,
           url: uuid.currentRevision?.url || '',
-          content: serializeEditorState(toEdtr(convertEditorState(content))),
+          content: serializeEditorState(parseSerializedState(content)),
           meta_title,
           meta_description,
         },
       },
-      converted: false, // no legacy any more
     }
   }
 
   function convertArticle(
     uuid: Extract<MainUuidType, { __typename: 'Article' }>
-  ): DeserializedState<typeof articleTypeState> {
+  ): DeserializedState<ArticleTypePluginState> {
     stack.push({ id: uuid.id, type: 'article' })
     return {
       initialState: {
@@ -149,24 +150,15 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           meta_description,
         },
       },
-      converted: !isEdtr(convertEditorState(content) || empty),
     }
 
     function getContent() {
-      const convertdContent = convertEditorState(content)
+      const convertedContent = parseSerializedState(content)
 
-      const convertedContent = toEdtr(convertdContent) as
-        | RowsPlugin
-        | OtherPlugin
-
-      if (
-        convertdContent !== undefined &&
-        isEdtr(convertdContent) &&
-        convertedContent.plugin === EditorPluginType.Article
-      ) {
+      if (convertedContent?.plugin === EditorPluginType.Article) {
         return serializeEditorState(convertedContent)
       }
-
+      // TODO: is this still needed?
       return serializeEditorState({
         plugin: EditorPluginType.Article,
         state: {
@@ -187,7 +179,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
 
   function convertCourse(
     uuid: Extract<MainUuidType, { __typename: 'Course' }>
-  ): DeserializedState<typeof courseTypeState> {
+  ): DeserializedState<CourseTypePluginState> {
     stack.push({ id: uuid.id, type: 'course' })
     return {
       initialState: {
@@ -197,9 +189,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           revision,
           changes: '',
           title,
-          description: serializeEditorState(
-            toEdtr(convertEditorState(content))
-          ),
+          description: serializeEditorState(parseSerializedState(content)),
           meta_description,
           'course-page': (uuid.pages || [])
             .filter((page) => page.currentRevision !== null)
@@ -217,7 +207,6 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
             }),
         },
       },
-      converted: !isEdtr(convertEditorState(content ?? '') || empty),
     }
   }
 
@@ -226,7 +215,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
       Extract<MainUuidType, { __typename: 'CoursePage' }>,
       'id' | 'currentRevision'
     >
-  ): DeserializedState<typeof coursePageTypeState> {
+  ): DeserializedState<CoursePageTypePluginState> {
     stack.push({ id: uuid.id, type: 'course-page' })
     return {
       initialState: {
@@ -239,19 +228,16 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           icon: 'explanation',
           title: uuid.currentRevision?.title || '',
           content: serializeEditorState(
-            toEdtr(convertEditorState(uuid.currentRevision?.content || ''))
+            parseSerializedState(uuid.currentRevision?.content || '')
           ),
         },
       },
-      converted: !isEdtr(
-        convertEditorState(uuid.currentRevision?.content || '') || empty
-      ),
     }
   }
 
   function convertEvent(
     uuid: Extract<MainUuidType, { __typename: 'Event' }>
-  ): DeserializedState<typeof eventTypeState> {
+  ): DeserializedState<EventTypePluginState> {
     stack.push({ id: uuid.id, type: 'event' })
     return {
       initialState: {
@@ -261,18 +247,17 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           revision,
           changes: '',
           title,
-          content: serializeEditorState(toEdtr(convertEditorState(content))),
+          content: serializeEditorState(parseSerializedState(content)),
           meta_title,
           meta_description,
         },
       },
-      converted: false, // no legacy any more
     }
   }
 
   function convertPage(
     uuid: Extract<MainUuidType, { __typename: 'Page' }>
-  ): DeserializedState<typeof pageTypeState> {
+  ): DeserializedState<PageTypePluginState> {
     stack.push({ id: uuid.id, type: 'page' })
     return {
       initialState: {
@@ -280,16 +265,15 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
         state: {
           ...entityFields,
           title,
-          content: serializeEditorState(toEdtr(convertEditorState(content))),
+          content: serializeEditorState(parseSerializedState(content)),
         },
       },
-      converted: !isEdtr(convertEditorState(content) || empty),
     }
   }
 
   function convertTaxonomy(
     uuid: Extract<MainUuidType, { __typename: 'TaxonomyTerm' }>
-  ): DeserializedState<typeof taxonomyTypeState> {
+  ): DeserializedState<TaxonomyTypePluginState> {
     stack.push({ id: uuid.id, type: 'taxonomy' })
     return {
       initialState: {
@@ -303,19 +287,17 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
             name: uuid.name,
           },
           description: serializeEditorState(
-            toEdtr(convertEditorState(uuid.description ?? ''))
+            parseSerializedState(uuid.description ?? '')
           ),
         },
       },
-      converted: false, // no legacy editor for taxonomies
     }
   }
 
   function convertTextExercise(
     uuid: Extract<MainUuidType, { __typename: 'Exercise' }>
-  ): DeserializedState<typeof textExerciseTypeState> {
+  ): DeserializedState<TextExerciseTypePluginState> {
     stack.push({ id: uuid.id, type: 'text-exercise' })
-    const convertd = convertEditorState(content)
 
     return {
       initialState: {
@@ -335,38 +317,18 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
                   exercise: uuid,
                 }).initialState.state
               : '',
-          content: getContent(),
+          content:
+            serializeEditorState(
+              parseSerializedState(uuid.currentRevision?.content)
+            ) ?? '',
         },
       },
-      converted: !isEdtr(convertd || empty),
-    }
-
-    function getContent() {
-      const convertdContent = convertEditorState(
-        uuid.currentRevision?.content ?? ''
-      )
-      if (convertdContent !== undefined && isEdtr(convertdContent)) {
-        return serializeEditorState(toEdtr(convertdContent))
-      }
-
-      const convertedContent = toEdtr(convertdContent) // RowsPlugin
-
-      return serializeEditorState({
-        plugin: EditorPluginType.Exercise,
-        state: {
-          content: {
-            plugin: EditorPluginType.Rows,
-            state: convertedContent.state,
-          },
-          interactive: undefined,
-        },
-      })
     }
   }
 
   function convertTextExerciseGroup(
     uuid: Extract<MainUuidType, { __typename: 'ExerciseGroup' }>
-  ): DeserializedState<typeof textExerciseGroupTypeState> {
+  ): DeserializedState<TextExerciseGroupTypePluginState> {
     stack.push({ id: uuid.id, type: 'text-exercise-group' })
 
     const exercises = uuid.exercises
@@ -397,18 +359,17 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           ...entityFields,
           changes: '',
           revision,
-          content: serializeEditorState(toEdtr(convertEditorState(content))),
+          content: serializeEditorState(parseSerializedState(content)),
           cohesive: uuid.currentRevision?.cohesive ?? false,
           'grouped-text-exercise': exercises,
         },
       },
-      converted: !isEdtr(convertEditorState(content) || empty),
     }
   }
 
   function convertTextSolution(
     uuid: Extract<MainUuidType, { __typename: 'Solution' }>
-  ): DeserializedState<typeof textSolutionTypeState> {
+  ): DeserializedState<TextSolutionTypeState> {
     stack.push({ id: uuid.id, type: 'text-solution' })
 
     const solutionContent = uuid.currentRevision?.content ?? ''
@@ -423,36 +384,33 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           content: getContent(),
         },
       },
-      converted: !isEdtr(convertEditorState(solutionContent) || empty),
     }
 
     function getContent() {
-      const convertdContent = convertEditorState(solutionContent)
-      if (convertdContent !== undefined && isEdtr(convertdContent)) {
-        return serializeEditorState(toEdtr(convertdContent))
+      const convertdContent = parseSerializedState(solutionContent)
+      if (convertdContent !== undefined) {
+        return serializeEditorState(convertdContent)
       }
-
-      const convertedContent = toEdtr(convertdContent) // RowsPlugin
 
       return serializeEditorState({
         plugin: EditorPluginType.Solution,
         state: {
           prerequisite: undefined,
           strategy: { plugin: EditorPluginType.Text },
-          steps: convertedContent,
+          steps: convertdContent,
         },
       })
     }
   }
 
-  function convertUser(uuid: User): DeserializedState<typeof userTypeState> {
+  function convertUser(uuid: User): DeserializedState<UserTypePluginState> {
     stack.push({ id: uuid.id, type: 'user' })
     return convertUserByDescription(uuid.description)
   }
 
   function convertVideo(
     uuid: Extract<MainUuidType, { __typename: 'Video' }>
-  ): DeserializedState<typeof videoTypeState> {
+  ): DeserializedState<VideoTypePluginState> {
     stack.push({ id: uuid.id, type: FrontendNodeType.Video })
     return {
       initialState: {
@@ -462,13 +420,10 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           changes: '',
           title,
           revision,
-          description: serializeEditorState(
-            toEdtr(convertEditorState(content))
-          ),
+          description: serializeEditorState(parseSerializedState(content)),
           content: uuid.currentRevision?.url ?? '',
         },
       },
-      converted: false, // no legacy videos any more
     }
   }
 }
@@ -479,11 +434,10 @@ export function convertUserByDescription(description?: string | null) {
       plugin: TemplatePluginType.User,
       state: {
         description: serializeEditorState(
-          toEdtr(convertEditorState(description ?? ''))
+          parseSerializedState(description ?? '')
         ),
       },
     },
-    converted: false, // no legacy-editor for users
   }
 }
 
@@ -553,17 +507,17 @@ export interface TextExerciseSerializedState extends Entity {
   content: SerializedEditorState
   'text-solution'?: TextSolutionSerializedState
   'single-choice-right-answer'?: {
-    content: SerializedLegacyEditorState
-    feedback: SerializedLegacyEditorState
+    content: SerializedEditorState
+    feedback: SerializedEditorState
   }
   'single-choice-wrong-answer'?: {
-    content: SerializedLegacyEditorState
-    feedback: SerializedLegacyEditorState
+    content: SerializedEditorState
+    feedback: SerializedEditorState
   }[]
-  'multiple-choice-right-answer'?: { content: SerializedLegacyEditorState }[]
+  'multiple-choice-right-answer'?: { content: SerializedEditorState }[]
   'multiple-choice-wrong-answer'?: {
-    content: SerializedLegacyEditorState
-    feedback: SerializedLegacyEditorState
+    content: SerializedEditorState
+    feedback: SerializedEditorState
   }[]
   'input-expression-equal-match-challenge'?: InputType
   'input-number-exact-match-challenge'?: InputType
@@ -572,7 +526,7 @@ export interface TextExerciseSerializedState extends Entity {
 
 interface InputType {
   solution: string
-  feedback: SerializedLegacyEditorState
+  feedback: SerializedEditorState
   'input-expression-equal-match-challenge'?: InputType[]
   'input-number-exact-match-challenge'?: InputType[]
   'input-string-normalized-match-challenge'?: InputType[]
@@ -609,83 +563,37 @@ export interface DeserializedState<T extends StateType> {
     state?: StateTypeSerializedType<T>
     id?: string
   }
-  converted: boolean
 }
 
 export function isError(result: DeserializeResult): result is DeserializeError {
   return !!(result as DeserializeError).error
 }
 
-export type DeserializeResult = DeserializeSuccess | DeserializeError
-export type DeserializeSuccess = DeserializedState<StateType<unknown>>
+type SerializedEditorState = string | undefined
+type DeserializeResult = DeserializeSuccess | DeserializeError
+type DeserializeSuccess = DeserializedState<StateType<unknown>>
 export type DeserializeError =
   | { error: 'type-unsupported' }
   | { error: 'failure' }
 
-function toEdtr(content: EditorState): Edtr {
-  if (!content)
-    return {
+function serializeEditorState(content?: Edtr): string {
+  if (typeof content === 'string') return content
+  return JSON.stringify(
+    content ?? {
       plugin: EditorPluginType.Rows,
       state: [{ plugin: EditorPluginType.Text, state: undefined }],
     }
-  if (isEdtr(content)) return content
-
-  return {
-    plugin: EditorPluginType.Rows,
-    state: [
-      {
-        plugin: EditorPluginType.Text,
-        state: [
-          {
-            type: 'p',
-            children: [
-              {
-                text: 'Diese Revision liegt in einem alten Format vor und ist nicht konvertiert.',
-              },
-            ],
-          },
-          {
-            type: 'p',
-            children: [
-              {
-                text: 'Dieser Inhalt wird nicht mehr unterstützt.',
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  }
+  )
 }
 
-function serializeEditorState(content: Legacy): SerializedLegacyEditorState
-function serializeEditorState(content: EditorState): SerializedEditorState
-function serializeEditorState(
-  content: EditorState
-): SerializedEditorState | SerializedLegacyEditorState | string | undefined {
-  if (typeof content === 'string') return content as SerializedLegacyEditorState
-  return content ? JSON.stringify(content) : undefined
-}
-
-function convertEditorState(content: SerializedLegacyEditorState): Legacy
-function convertEditorState(content: SerializedEditorState): EditorState
-function convertEditorState(
-  content: SerializedLegacyEditorState | SerializedEditorState
-): EditorState | string | undefined {
+function parseSerializedState(
+  content: SerializedEditorState
+): Edtr | undefined {
+  if (!content) return undefined
   try {
-    return content ? (JSON.parse(content) as EditorState) : undefined
+    return JSON.parse(content) as Edtr
   } catch {
-    // No valid JSON, so this is interpreted as Markdown
-    return content as Legacy
+    // No valid JSON, so we return nothing
+    return undefined
   }
-}
-
-type EditorState = Legacy | Splish | Edtr | undefined
-
-// Fake `__type` property is just here to let TypeScript distinguish between the types
-type SerializedEditorState = (string | undefined) & {
-  __type?: 'serialized-editor-state'
-}
-type SerializedLegacyEditorState = (string | undefined) & {
-  __type?: 'serialized-legacy-editor-state'
 }

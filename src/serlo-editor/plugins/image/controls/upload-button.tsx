@@ -1,6 +1,6 @@
 import { faCircleArrowUp, faRedoAlt } from '@fortawesome/free-solid-svg-icons'
 
-import { ImageProps } from '..'
+import type { ImageProps } from '..'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
@@ -31,6 +31,7 @@ export function UploadButton({ config, state }: ImageProps) {
               void src.upload(target.files[0], config.upload)
             }
           }}
+          data-qa="plugin-image-upload"
         />
       </label>
       {isFailed ? (
@@ -39,6 +40,7 @@ export function UploadButton({ config, state }: ImageProps) {
           onClick={() =>
             src.upload((src.value as TempFile).failed!, config.upload)
           }
+          data-qa="plugin-image-retry"
         >
           <EditorTooltip text={imageStrings.retry} className="top-10" />
           <FaIcon icon={faRedoAlt} />

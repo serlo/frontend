@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router'
 
+import { useAB } from '@/contexts/ab'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EditorPluginInputExercise } from '@/frontend-node-types'
 import { exerciseSubmission } from '@/helper/exercise-submission'
-import { RenderNestedFunction } from '@/schema/article-renderer'
+import type { RenderNestedFunction } from '@/schema/article-renderer'
 import { InputExerciseRenderer } from '@/serlo-editor/plugins/input-exercise/renderer'
 
 export interface InputExerciseProps {
@@ -24,6 +25,7 @@ export function InputExercise({
 }: InputExerciseProps) {
   const exStrings = useInstanceData().strings.content.exercises
   const { asPath } = useRouter()
+  const ab = useAB()
 
   return (
     <>
@@ -38,20 +40,26 @@ export function InputExercise({
   )
 
   function onEvaluate(correct: boolean, val: string) {
-    exerciseSubmission({
-      path: asPath,
-      entityId: context.entityId,
-      revisionId: context.revisionId,
-      result: correct ? 'correct' : 'wrong',
-      type: 'input',
-    })
-    exerciseSubmission({
-      path: asPath,
-      entityId: context.entityId,
-      revisionId: context.revisionId,
-      result: val.length < 8 ? val : val.substring(0, 7) + '.',
-      type: 'ival',
-    })
+    exerciseSubmission(
+      {
+        path: asPath,
+        entityId: context.entityId,
+        revisionId: context.revisionId,
+        result: correct ? 'correct' : 'wrong',
+        type: 'input',
+      },
+      ab
+    )
+    exerciseSubmission(
+      {
+        path: asPath,
+        entityId: context.entityId,
+        revisionId: context.revisionId,
+        result: val.length < 8 ? val : val.substring(0, 7) + '.',
+        type: 'ival',
+      },
+      ab
+    )
   }
 
   function renderAnswers() {

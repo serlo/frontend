@@ -1,15 +1,10 @@
-import { useMemo, useEffect, ReactNode, useRef } from 'react'
+import { useMemo, useEffect, ReactNode, useRef, useState } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { HotkeysProvider, useHotkeys } from 'react-hotkeys-hook'
 import { Provider } from 'react-redux'
 
 import { EditableContext, PreferenceContextProvider } from './contexts'
-import {
-  PluginsContext,
-  PluginsContextPlugins,
-  usePlugins,
-} from './contexts/plugins-context'
 import { useBlurOnOutsideClick } from './hooks/use-blur-on-outside-click'
 import { SubDocument } from './sub-document'
 import {
@@ -17,44 +12,39 @@ import {
   undo,
   redo,
   selectPendingChanges,
-  selectRoot,
   selectHasPendingChanges,
-  selectSerializedRootDocument,
   store,
   useAppDispatch,
-  useAppSelector,
   DocumentState,
+  selectSerializedDocument,
 } from '../store'
+import { ROOT } from '../store/root/constants'
 
 /**
  * Renders a single editor for an Serlo Editor document
  */
 export function Editor(props: EditorProps) {
-  const { plugins, ...propsWithoutPlugins } = props
   return (
     <Provider store={store}>
       <DndProvider backend={HTML5Backend}>
         <HotkeysProvider
           initiallyActiveScopes={['global', 'root-up-down-enter']}
         >
-          <PluginsContext.Provider value={plugins}>
-            <InnerDocument {...propsWithoutPlugins} />
-          </PluginsContext.Provider>
+          <InnerDocument {...props} />
         </HotkeysProvider>
       </DndProvider>
     </Provider>
   )
 }
 
-export function InnerDocument({
+function InnerDocument({
   children,
   editable = true,
   onChange,
   ...props
-}: Omit<EditorProps, 'plugins'>) {
-  const id = useAppSelector(selectRoot)
+}: EditorProps) {
+  const [isInitialized, setIsInitialized] = useState(false)
   const dispatch = useAppDispatch()
-  const plugins = usePlugins()
 
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   useBlurOnOutsideClick(wrapperRef)
@@ -67,23 +57,17 @@ export function InnerDocument({
       if (currentPendingChanges !== pendingChanges) {
         onChange({
           changed: selectHasPendingChanges(store.getState()),
-          getDocument: () => selectSerializedRootDocument(store.getState()),
+          getDocument: () => selectSerializedDocument(store.getState(), ROOT),
         })
         pendingChanges = currentPendingChanges
       }
     })
   }, [onChange])
 
-  const strippedPlugins = plugins
-
   useEffect(() => {
-    dispatch(
-      runInitRootSaga({
-        initialState: props.initialState,
-        plugins: strippedPlugins,
-      })
-    )
-  }, [props.initialState, strippedPlugins, dispatch])
+    dispatch(runInitRootSaga({ initialState: props.initialState }))
+    setIsInitialized(true)
+  }, [props.initialState, dispatch])
   const editableContextValue = useMemo(() => editable, [editable])
 
   useHotkeys(
@@ -145,13 +129,13 @@ export function InnerDocument({
     }
   )
 
-  if (!id) return null
+  if (!isInitialized) return null
 
   return (
     <div className="relative" ref={wrapperRef}>
       <PreferenceContextProvider>
         <EditableContext.Provider value={editableContextValue}>
-          {renderChildren(id)}
+          {renderChildren(ROOT)}
         </EditableContext.Provider>
       </PreferenceContextProvider>
     </div>
@@ -175,7 +159,6 @@ export function InnerDocument({
 
 export interface EditorProps {
   children?: ReactNode | ((document: ReactNode) => ReactNode)
-  plugins: PluginsContextPlugins
   initialState: {
     plugin: string
     state?: unknown

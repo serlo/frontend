@@ -1,10 +1,11 @@
-import { RecoveryFlow, UpdateRecoveryFlowBody } from '@ory/client'
+import type { RecoveryFlow, UpdateRecoveryFlowBody } from '@ory/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { kratos } from '@/auth/kratos'
 import { useCheckInstance } from '@/auth/use-check-instance'
-import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
+import { Flow, handleFlowError } from '@/components/auth/flow'
+import { FlowType } from '@/components/auth/flow-type'
 import { PageTitle } from '@/components/content/page-title'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'

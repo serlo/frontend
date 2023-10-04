@@ -13,7 +13,7 @@ import { ProfileRoles } from '@/components/user/profile-roles'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UserPage } from '@/data-types'
-import { convertState } from '@/fetcher/convert-state'
+import { convertStateStringToFrontendNode } from '@/fetcher/convert-state-string-to-frontend-node'
 import { PotentialSpamUsersQuery } from '@/fetcher/graphql-types/operations'
 import { sharedUserFragments } from '@/fetcher/user/query'
 import { isMac } from '@/helper/client-detection'
@@ -126,6 +126,7 @@ const BotHunt = () => {
 
         return (
           <li key={id}>
+            {/*eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={imageUrl}
               alt={`Profile image of ${username}`}
@@ -282,7 +283,7 @@ const BotHunt = () => {
 
   function renderDescription(stringDescription?: string | null) {
     if (!stringDescription || stringDescription === 'NULL') return null
-    const desc = convertState(stringDescription)
+    const desc = convertStateStringToFrontendNode(stringDescription)
 
     return renderArticle(desc)
   }

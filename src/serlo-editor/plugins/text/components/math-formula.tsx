@@ -1,7 +1,7 @@
 import KaTeX from 'katex'
 import { memo } from 'react'
 
-import type { MathElement } from '../types'
+import type { MathElement } from '../types/text-editor'
 
 export const MathFormula = memo(function MathFormula({
   element,
@@ -19,7 +19,7 @@ export const MathFormula = memo(function MathFormula({
   return (
     <span
       dangerouslySetInnerHTML={{ __html: html }}
-      className={element.inline ? undefined : 'mx-0 my-4 block text-center'}
+      className={element.inline ? undefined : 'mx-0 block text-center'}
     />
   )
 })

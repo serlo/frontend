@@ -4,18 +4,12 @@
 
 - [Text plugin (`TextEditor`)](#text-plugin-texteditor)
   - [Table of contents](#table-of-contents)
-  - [Usage](#usage)
   - [Structure](#structure)
   - [Technical decisions](#technical-decisions)
     - [Configuration](#configuration)
     - [Text formatting options](#text-formatting-options)
     - [Suggestions (`serlo-editor` plugins)](#suggestions-serlo-editor-plugins)
-    - [Saving state to `Redux` store](#saving-state-to-redux-store)
-      - [`LinkControls` workaround](#linkcontrols-workaround)
-
-## Usage
-
-An example of how to use the Text plugin can be found in `./__fixtures__/index.ts`.
+    - [Saving state to `Redux` store](#saving-state-to-redux-store) -[Challenges](#challenges)
 
 ## Structure
 
@@ -35,7 +29,7 @@ Additionally, there are:
 
 A `config` argument (of `TextEditorConfig` type) is passed to `createTextPlugin` factory, when creating a new Text plugin instance.
 
-This argument is then passed to the `useTextConfig` hook, where it's merged with the default settings, as well as enriched with `i18n` and theming.
+This argument is then passed to the `useTextConfig` hook, where it's merged with the default settings.
 
 The `config` object received from the `useTextConfig` hook is then used as the source of truth for configuration across that instance of the Text plugin.
 
@@ -43,14 +37,14 @@ The `config` object received from the `useTextConfig` hook is then used as the s
 
 Currently used Slate version only allows Slate plugins to modify the `editor` object. To allow for the same functionality of plugins from the earlier version of `serlo-editor`, a hook approach was used ([as recommended by the creator of Slate](https://github.com/ianstormtaylor/slate/issues/3222#issuecomment-573331151)).
 
-The `useFormattingOptions` hook receives the `config` object and exposes these properties:
+The `useFormattingOptions` (`@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options.tsx`) hook receives a list of formatting options object and exposes:
 
 1. `createTextEditor` - a function that receives a Slate editor instance and wraps it in all the configured Slate plugins
-2. `toolbarControls` - the configuration for Text plugin's toolbar, including what tools should be available
-3. `handleHotkeys` - a function that handles keyboard shortcut (like 'ctrl+b') for configured formatting options
-4. `handleMarkdownShortcuts` - a function that handles markdown shortcuts (like '#') entered by the user and transforms them into formatting if allowed in this context
-
-This approach allows to simply pass an array of desired formatting options (as `formattingOptions` property of the `config` argument) when creating a Text plugin instance, thus making the formatting options easily configurable for the user of Text plugin.
+2. `toolbarControls` - the configuration for `PluginToolbar`'s text content controls
+3. `textColors` - available text colors for `PluginToolbar`'s text content controls
+4. `handleHotkeys` - handler for keyboard shortcut (like 'ctrl+b') for configured formatting options
+5. `handleMarkdownShortcuts` - handler for markdown shortcuts (like '#') for configured formatting options
+6. `handleListsShortcuts` - handler for lists shortcuts (like '-' and then 'Space'), if lists formatting is allowed
 
 ### Suggestions (`serlo-editor` plugins)
 
@@ -58,28 +52,25 @@ In order to easily transform a Text plugin into another `serlo-editor` plugin, t
 
 The `useSuggestions` hook receives:
 
-- current `text` content of the Text plugin
+- the `editor` object (Slate instance)
 - the `id` of the Text plugin
-- `focused` and `editable` states of the Text plugin
+- `focused` and `editable` flags of the Text plugin
 
 and exposes:
 
 1. `showSuggestions` - a flag controlling if the suggestions box should be shown
 2. `suggestionsProps` - props for the `Suggestions` component
-3. `hotKeysProps` - props for the `HotKeys` component
-4. `handleHotkeys` - keyboard shortcut handlers for configured controls
 
 ### Saving state to `Redux` store
 
-In order to enable global undo/redo behavior (TODO: and maybe other things?), any content changes are saved to the store, and previous values of `Editor`'s `value` and `selection` are saved as refs withing the instance of Text plugin component.
+In order to enable global undo/redo behavior, any content changes are saved to the store, and previous values of `Editor`'s `value` and `selection` are saved as refs withing the instance of Text plugin component.
 
 If a portion of the content is selected and then replaced with some text, undo will restore the replaced content and the selection. Slate `Editor`'s `value` prop is used only as an initial value and changing the bound value will not result in a rerender. Therefore, we have to manually assign the value to `editor.children` ([as recommended by the Slate team](https://github.com/ianstormtaylor/slate/releases/tag/slate-react%400.67.0)).
 
 Simple selection changes are not saved to the store, because we don't want to undo pure selection changes.
 
-#### `LinkControls` workaround
+## Challenges
 
-The `LinkControls` component should only be shown if the selection is currently on a link inline. But, since we don't save pure selection changes to the store, `LinkControls` doesn't rerender on selection changes. To work around this problem, a simple `useState` hook is used:
+The interaction between focus, cursor, selection and state updates is strongly interlocked. There are a bunch of use cases that should be supported combined with many technical challenges as presented below.
 
-1. `hasSelectionChanged` is passed to `LinkControls`, where it's used a dependency in a `useEffect` hook which takes care of showing `LinkControls`
-2. `setHasSelectionChanged` is called whenever selection changes, which increments `hasSelectionChanged` and makes sure `LinkControls` visibility will be updated
+![grafik](https://github.com/serlo/frontend/assets/13507950/8474c514-2983-450f-aa8b-d693cbaa1d87)

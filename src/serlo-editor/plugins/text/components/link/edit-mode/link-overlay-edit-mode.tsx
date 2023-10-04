@@ -1,8 +1,10 @@
 import clsx from 'clsx'
 import { useEffect, useState, KeyboardEvent } from 'react'
+import { useHotkeysContext } from 'react-hotkeys-hook'
 
 import { EditModeInput } from './edit-mode-input'
 import { EditModeResultEntry } from './edit-mode-result-entry'
+import { getCleanUrl } from '../../../utils/link'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { QuickbarData, findResults } from '@/components/navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -36,12 +38,18 @@ export function LinkOverlayEditMode({
     setQuery(value)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
+  const { enableScope, disableScope } = useHotkeysContext()
 
   useEffect(() => {
     if (serloLinkSearch) setSelectedIndex(0)
   }, [query, quickbarData, value, serloLinkSearch])
 
   const results = quickbarData ? findResults(quickbarData, query) : []
+  useEffect(() => {
+    disableScope('root-up-down-enter')
+
+    return () => enableScope('root-up-down-enter')
+  }, [enableScope, disableScope])
 
   function chooseEntry(index?: number) {
     const activeIndex = index ?? selectedIndex
@@ -101,7 +109,7 @@ export function LinkOverlayEditMode({
         />
       </div>
       {query ? (
-        <div className="group mt-4">
+        <div className="group mt-4" role="listbox">
           {isLoading ? <LoadingSpinner /> : null}
           {results.map(({ entry }, index) => (
             <EditModeResultEntry
@@ -143,21 +151,4 @@ export function LinkOverlayEditMode({
       <br />
     </>
   )
-}
-
-export function getCleanUrl(inputUrl: string, instance: string) {
-  const testId = parseInt(inputUrl.match(/[1-9]?[0-9]+/)?.[0] ?? 'NaN')
-
-  const hashPart = inputUrl.split('#')[1]
-  const hash = hashPart ? `#${hashPart}` : ''
-
-  if (!isNaN(testId) && inputUrl.includes('serlo.org/'))
-    return `/${testId}${hash}`
-
-  const cleanedUrl = inputUrl
-    .replace('https://serlo.org/', '')
-    .replace(`https://${instance}.serlo.org/`, '')
-    .replace(/^serlo\.org\//, '')
-
-  return inputUrl !== cleanedUrl ? `/${cleanedUrl}${hash}` : inputUrl
 }

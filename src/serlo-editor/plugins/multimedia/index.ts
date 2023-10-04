@@ -1,10 +1,10 @@
 import { MultimediaEditor } from './editor'
 import {
+  type ChildStateTypeConfig,
+  type EditorPlugin,
+  type EditorPluginProps,
   boolean,
   child,
-  ChildStateTypeConfig,
-  EditorPlugin,
-  EditorPluginProps,
   number,
   object,
 } from '../../plugin'
@@ -14,6 +14,7 @@ const defaultConfig: MultimediaConfig = {
   allowedPlugins: [
     EditorPluginType.Image,
     EditorPluginType.Video,
+    EditorPluginType.Audio,
     EditorPluginType.Geogebra,
   ],
   explanation: {
@@ -23,6 +24,7 @@ const defaultConfig: MultimediaConfig = {
         EditorPluginType.Text,
         EditorPluginType.Highlight,
         EditorPluginType.Anchor,
+        EditorPluginType.Audio,
         EditorPluginType.Equations,
         EditorPluginType.Image,
         EditorPluginType.SerloTable,

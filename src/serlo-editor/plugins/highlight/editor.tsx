@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-import { HighlightProps } from '.'
+import type { HighlightProps } from '.'
 import { HighlightToolbar } from './toolbar'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { tw } from '@/helper/tw'
 
 export function HighlightEditor(props: HighlightProps) {
   const { config, state, focused, editable } = props
@@ -10,8 +11,17 @@ export function HighlightEditor(props: HighlightProps) {
 
   const edit = focused && editable
   const [throttledEdit, setEditThrottled] = useState(edit)
+  const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
   const editorStrings = useEditorStrings()
+
+  useEffect(() => {
+    if (edit) {
+      setTimeout(() => {
+        textAreaRef.current?.focus()
+      })
+    }
+  }, [edit])
 
   if (edit !== throttledEdit) {
     if (edit) {
@@ -23,8 +33,18 @@ export function HighlightEditor(props: HighlightProps) {
 
   const numberOflines = state.code.value.split(/\r\n|\r|\n/).length
 
-  return throttledEdit || edit ? (
-    <>
+  if (!throttledEdit && !edit) {
+    return (
+      <Renderer
+        language={state.language.value}
+        showLineNumbers={state.showLineNumbers.value}
+        code={state.code.value}
+      />
+    )
+  }
+
+  return (
+    <div className="mx-side">
       {focused && <HighlightToolbar {...props} />}
       <textarea
         value={state.code.value}
@@ -34,19 +54,18 @@ export function HighlightEditor(props: HighlightProps) {
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
           state.code.set(e.target.value)
         }}
+        ref={textAreaRef}
         // make sure editor does not create new plugin on enter etc
         onKeyDown={(e) => e.stopPropagation()}
-        className="m-auto h-32 w-full border-none p-side font-mono shadow-menu"
-        style={{ height: `${40 + numberOflines * 24}px` }} // simple autogrow
+        className={tw`
+            m-auto w-full items-center rounded-xl border-3 border-editor-primary-200 p-side
+            pt-6 font-mono
+            focus-within:border-editor-primary-200 focus-within:outline-none
+          `}
+        style={{ height: `${50 + numberOflines * 26}px` }} // simple autogrow
       >
         {state.code.value}
       </textarea>
-    </>
-  ) : (
-    <Renderer
-      language={state.language.value}
-      showLineNumbers={state.showLineNumbers.value}
-      code={state.code.value}
-    />
+    </div>
   )
 }

@@ -29,10 +29,10 @@ interface QuickbarProps {
 export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
   const [data, setData] = useState<QuickbarData | null>(null)
   const [query, setQuery] = useState('')
-  const [open, setOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
-  const [sel, setSel] = useState(-1)
+  const [selection, setSelection] = useState(-1)
 
   const wrapper = useRef<HTMLDivElement>(null)
   const overlayWrapper = useRef<HTMLDivElement>(null)
@@ -53,8 +53,8 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
   }, [subject])
 
   useEffect(() => {
-    setSel(0)
-    setOpen(!!(query && data))
+    setSelection(0)
+    setIsOpen(!!(query && data))
     setOverlayPosition()
   }, [query, data])
 
@@ -72,7 +72,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
 
   const close = () =>
     setTimeout(() => {
-      setOpen(false)
+      setIsOpen(false)
     }, 200)
 
   const goToSearch = () => {
@@ -101,16 +101,16 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
         setQuery('')
       }
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter') {
-        if (e.key === 'ArrowDown' && sel < results.length) {
-          setSel(sel + 1)
+        if (e.key === 'ArrowDown' && selection < results.length) {
+          setSelection(selection + 1)
         }
-        if (e.key === 'ArrowUp' && sel >= 0) {
-          setSel(sel - 1)
+        if (e.key === 'ArrowUp' && selection >= 0) {
+          setSelection(selection - 1)
         }
         if (e.key === 'Enter') {
-          if (sel === results.length) goToSearch()
-          if (sel >= 0 && sel < results.length) {
-            goToResult(results[sel].entry.id, e)
+          if (selection === results.length) goToSearch()
+          if (selection >= 0 && selection < results.length) {
+            goToResult(results[selection].entry.id, e)
           }
         }
         e.preventDefault()
@@ -138,11 +138,23 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
         onChange={(value) => setQuery(value.target.value)}
         placeholder={placeholder ?? '... heute lerne ich'}
         ref={inputRef}
+        role="combobox"
+        aria-haspopup="listbox"
+        // aria-owns and aria-controls may not be needed as our DOM hierarchy is
+        // structured quite well. Would need to check with some screen-readers
+        // to make sure that they make the association automatically.
+        aria-owns="quickbar-listbox"
+        aria-controls="quickbar-listbox"
+        aria-expanded={isOpen}
+        aria-activedescendant={
+          selection !== -1 ? `quickbar-option-${selection}` : undefined
+        }
         onBlur={close}
         onFocus={() => {
-          if (query && data) setOpen(true)
+          if (query && data) setIsOpen(true)
         }}
         onKeyDown={onKeyDown}
+        data-qa="quickbar-input"
       />
     )
   }
@@ -154,7 +166,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
           setQuery('')
           setTimeout(() => {
             inputRef.current?.focus()
-          }, 0)
+          })
         }}
       >
         <FaIcon icon={faXmark} />
@@ -165,24 +177,38 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
     return (
       <div
         ref={overlayWrapper}
+        role="listbox"
+        id="quickbar-listbox"
+        data-qa="quickbar-combobox-overlay"
         className={clsx(
           tw`
             absolute left-side right-side z-[100] ml-2 mt-2
             max-w-2xl rounded-xl border bg-white px-5 pb-2 shadow
           `,
-          open ? '' : 'hidden'
+          isOpen ? '' : 'hidden'
         )}
       >
-        {open && (
+        {isOpen && (
           <>
-            {results.map((x, i) => (
+            {results.map((x, index) => (
               <a
-                key={i}
+                key={index}
+                role="option"
+                id={`quickbar-option-${index}`}
+                // Ensures that the item can't be tapped which causes the input
+                // field to lose focus and the modal to get closed immediately
+                tabIndex={-1}
+                aria-selected={index === selection}
                 className="group serlo-link cursor-pointer hover:no-underline"
                 onClick={(e) => goToResult(x.entry.id, e)}
                 href={`/${x.entry.id}`}
+                data-qa={`quickbar-option-${index}`}
               >
-                <p className={clsx('my-2', { 'bg-brand-50': i === sel })}>
+                <p
+                  className={clsx('my-2', {
+                    'bg-brand-50': index === selection,
+                  })}
+                >
                   <span className="text-sm text-gray-700">
                     {x.entry.path.join(' > ')}
                     {x.entry.path.length > 0 ? ' > ' : ''}
@@ -200,7 +226,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
             ))}
             <p
               className={clsx('mt-2 text-lg text-gray-800', {
-                'bg-brand-50': sel === results.length,
+                'bg-brand-50': selection === results.length,
               })}
             >
               <a

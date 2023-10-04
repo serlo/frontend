@@ -159,7 +159,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
   }
 
   function renderCategory(
-    category: typeof allCategories[number],
+    category: (typeof allCategories)[number],
     links: TaxonomyLink[]
   ) {
     if (
@@ -174,7 +174,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
         onDragEnd={(result) => {
           const { source, destination } = result
           if (!destination) return
-          const category = source.droppableId as typeof allCategories[number]
+          const category = source.droppableId as (typeof allCategories)[number]
 
           setTaxonomyData({
             ...taxonomyData,

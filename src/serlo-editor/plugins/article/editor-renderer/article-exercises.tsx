@@ -1,7 +1,7 @@
 import { faArrowCircleUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { Fragment } from 'react'
 
-import { ArticleProps } from '..'
+import type { ArticleProps } from '..'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
@@ -23,35 +23,33 @@ export function ArticleExercises({
     <>
       {exercises.map((exercise, index) => (
         <Fragment key={exercise.id}>
-          {exercise.render({
-            renderSideToolbar: editable
-              ? () => renderSideToolbar(index)
-              : undefined,
-          })}
+          <>
+            <div className="[&_.plugin-toolbar]:!hidden">
+              {editable ? (
+                <nav className="flex justify-end">
+                  {index === 0 ? null : (
+                    <button
+                      onClick={() => exercises.move(index, index - 1)}
+                      className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
+                    >
+                      <EditorTooltip text={articleStrings.moveUpLabel} />
+                      <FaIcon icon={faArrowCircleUp} />
+                    </button>
+                  )}
+                  <button
+                    className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
+                    onClick={() => exercises.remove(index)}
+                  >
+                    <EditorTooltip text={articleStrings.removeLabel} />
+                    <FaIcon icon={faTrashAlt} />
+                  </button>
+                </nav>
+              ) : null}
+              {exercise.render()}
+            </div>
+          </>
         </Fragment>
       ))}
     </>
   )
-
-  function renderSideToolbar(index: number) {
-    const buttonClass = 'serlo-button-editor-secondary mb-2 mr-2 w-8'
-    return (
-      <>
-        {index === 0 ? null : (
-          <button
-            onClick={() => exercises.move(index, index - 1)}
-            className={buttonClass}
-          >
-            <EditorTooltip text={articleStrings.moveUpLabel} />
-            <FaIcon icon={faArrowCircleUp} />
-          </button>
-        )}
-
-        <button className={buttonClass} onClick={() => exercises.remove(index)}>
-          <EditorTooltip text={articleStrings.removeLabel} />
-          <FaIcon icon={faTrashAlt} />
-        </button>
-      </>
-    )
-  }
 }

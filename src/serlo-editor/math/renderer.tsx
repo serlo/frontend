@@ -1,7 +1,8 @@
+import clsx from 'clsx'
 import KaTeX from 'katex'
 import React, { forwardRef } from 'react'
 
-import { MathEditorProps } from './editor'
+import type { MathEditorProps } from './editor'
 
 type MathRendererProps = Pick<
   MathEditorProps,
@@ -22,16 +23,9 @@ export const MathRenderer = React.memo(
       <span
         ref={ref}
         dangerouslySetInnerHTML={{ __html: html }}
-        style={
-          inline
-            ? undefined
-            : {
-                display: 'block',
-                margin: '1em 0',
-                textAlign: 'center',
-              }
-        }
+        className={clsx(inline ? '' : 'my-6 block text-center')}
         {...additionalContainerProps}
+        data-qa="plugin-math-renderer"
       />
     )
 

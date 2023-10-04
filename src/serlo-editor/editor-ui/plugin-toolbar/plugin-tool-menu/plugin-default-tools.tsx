@@ -1,14 +1,14 @@
 import { faClone, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { useCallback } from 'react'
+import { useCallback, useContext } from 'react'
 
 import { AnchorLinkCopyTool } from './anchor-link-copy-tool'
 import { DropdownButton } from './dropdown-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
+import { UuidsContext } from '@/contexts/uuids-context'
 import {
   insertPluginChildAfter,
   removePluginChild,
-  selectParent,
+  selectChildTreeOfParent,
   selectSerializedDocumentWithoutIds,
   store,
   useAppDispatch,
@@ -23,10 +23,12 @@ interface PluginDefaultToolsProps {
 export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
   const dispatch = useAppDispatch()
   const pluginStrings = useEditorStrings().plugins
-  const plugins = usePlugins()
+
+  // using useContext directly so result can also be null for edusharing
+  const serloEntityId = useContext(UuidsContext)?.entityId
 
   const handleDuplicatePlugin = useCallback(() => {
-    const parent = selectParent(store.getState(), pluginId)
+    const parent = selectChildTreeOfParent(store.getState(), pluginId)
     if (!parent) return
 
     const document = selectSerializedDocumentWithoutIds(
@@ -40,13 +42,12 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
         parent: parent.id,
         sibling: pluginId,
         document,
-        plugins,
       })
     )
-  }, [dispatch, pluginId, plugins])
+  }, [dispatch, pluginId])
 
   const handleRemovePlugin = useCallback(() => {
-    const parent = selectParent(store.getState(), pluginId)
+    const parent = selectChildTreeOfParent(store.getState(), pluginId)
     if (!parent || !parent.children?.length) return
 
     const isOnlyChild = parent.children?.length === 1
@@ -58,7 +59,6 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
           parent: parent.id,
           sibling: pluginId,
           document: { plugin: EditorPluginType.Text },
-          plugins,
         })
       )
     }
@@ -67,10 +67,9 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
       removePluginChild({
         parent: parent.id,
         child: pluginId,
-        plugins,
       })
     )
-  }, [dispatch, pluginId, plugins])
+  }, [dispatch, pluginId])
 
   return (
     <>
@@ -78,13 +77,17 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
         onClick={handleDuplicatePlugin}
         label={pluginStrings.rows.duplicate}
         icon={faClone}
+        dataQa="duplicate-plugin-button"
       />
       <DropdownButton
         onClick={handleRemovePlugin}
         label={pluginStrings.rows.remove}
         icon={faTrashAlt}
+        dataQa="remove-plugin-button"
       />
-      <AnchorLinkCopyTool pluginId={pluginId} />
+      {serloEntityId ? (
+        <AnchorLinkCopyTool serloEntityId={serloEntityId} pluginId={pluginId} />
+      ) : null}
     </>
   )
 }

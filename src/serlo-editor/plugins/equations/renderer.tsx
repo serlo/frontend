@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { Fragment, ReactNode } from 'react'
+import { Fragment, type ReactNode } from 'react'
 
 import { Sign, renderSignToString } from './sign'
 

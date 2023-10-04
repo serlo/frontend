@@ -1,10 +1,7 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
 import { FaIcon } from '@/components/fa-icon'
-import {
-  HoverOverlayOld,
-  HoverPosition,
-} from '@/serlo-editor/editor-ui/hover-overlay-old'
+import { HoverOverlay, HoverPosition } from '@/serlo-editor/editor-ui'
 
 export function InlineSettings({
   position = 'below',
@@ -16,7 +13,7 @@ export function InlineSettings({
   anchor?: React.RefObject<HTMLElement>
 }) {
   return (
-    <HoverOverlayOld position={position} anchor={props.anchor}>
+    <HoverOverlay position={position} anchor={props.anchor}>
       <span className="px-2">{props.children}</span>
       {props.onDelete ? (
         <div
@@ -26,6 +23,6 @@ export function InlineSettings({
           <FaIcon icon={faTrashAlt} />
         </div>
       ) : null}
-    </HoverOverlayOld>
+    </HoverOverlay>
   )
 }

@@ -161,7 +161,8 @@ export const instanceData = {
         theorem: "Satz",
         proof: "Beweis"
       },
-      loadingVideoFailed: "Etwas ist schiefgelaufen"
+      loadingVideoFailed: "Etwas ist schiefgelaufen",
+      loadingAudioFailed: "Etwas ist schiefgelaufen"
     },
     consent: {
       title: "Einwilligungen für externe Inhalte",
@@ -176,6 +177,7 @@ export const instanceData = {
       video: "Video abspielen von %provider%",
       applet: "Applet laden von %provider%",
       twingle: "Spendenformular laden",
+      audio: "Audio abspielen von %provider%",
       general: "Aktivieren"
     },
     comments: {
@@ -619,10 +621,6 @@ export const loggedInData = {
           notSupported: "Sorry, dieses Plugin wird nicht unterstützt:",
           explanation: "Es wird Usern nicht angezeigt. Du kannst es entweder entfernen oder unsere Entwickler*innen um Unterstützung bitten."
         },
-        error: {
-          title: "Fehler",
-          convertionError: "Dieser Teil des Dokuments konnte nicht automatisch konvertiert werden."
-        },
         equations: {
           title: "Terme und Gleichungen",
           description: "Erstelle Termumformungen und löse mehrzeilige Gleichungen.",
@@ -751,7 +749,8 @@ export const loggedInData = {
         text: {
           title: 'Text',
           description: "Schreibe Text und Matheformeln, und formatiere sie.",
-          placeholder: "Schreib etwas oder füge mit ⊕ Elemente ein.",
+          placeholder: "Schreib etwas oder füge Elemente ein:",
+          addButtonExplanation: "Klicke, um ein neues Element einzufügen",
           quote: "Zitat",
           setColor: "Einfärben",
           resetColor: "Farbe zurücksetzen",
@@ -798,7 +797,8 @@ export const loggedInData = {
             mathSymbols: "Mathematische Symbole",
             eG: "z.B.",
             functions: "Funktionen",
-            displayAsBlock: "eigene Zeile"
+            displayAsBlock: "eigene Zeile",
+            closeMathFormulaEditor: "Mathe-Formel Editor schließen"
           }
         },
         video: {
@@ -809,6 +809,19 @@ export const loggedInData = {
           titlePlaceholder: "Titel",
           url: 'URL',
           seoTitle: "Titel für Suchmaschinen"
+        },
+        audio: {
+          title: 'Audio',
+          description: "Audioaufnahmen von Vocaroo einbinden",
+          audioUrl: "Audio URL eingeben"
+        },
+        inputExercise: {
+          title: "Eingabefeld",
+          description: "Die Lösung kann Text oder eine Formel sein"
+        },
+        scMcExercise: {
+          title: "SC/MC Aufgabe",
+          description: "Single- oder Multiple Choice Aufgabe"
         }
       },
       templatePlugins: {
@@ -896,7 +909,10 @@ export const loggedInData = {
           singleChoice: "Single Choice",
           multipleChoice: "Multiple Choice",
           chooseType: "Wähle den Antworttyp",
-          addAnswer: "Antwort hinzufügen"
+          addAnswer: "Antwort hinzufügen",
+          previewMode: "Vorschau",
+          previewIsActiveHint: "Vorschaumodus ist aktiv",
+          previewIsDeactiveHint: "Hier kannst du bearbeiten"
         },
         solution: {
           optionalExplanation: "Beschreibe hier optional die Lösungsstrategie",
@@ -929,10 +945,6 @@ export const loggedInData = {
         settings: "Einstellungen",
         extendedSettings: "Erweiterte Einstellungen",
         close: "Schließen",
-        notSupportedYet: "Dieser Inhaltstyp wird vom neuen Editor noch nicht unterstützt.",
-        editInOld: "Du kannst den Inhalt im alten Editor bearbeiten",
-        conversionError: "Leider trat ein Fehler bei der Konvertierung auf.",
-        notConverted: "Dieser Inhalt wurde noch nicht im neuen Editor bearbeitet.",
         save: "Speichern",
         saveWithReview: "Speichern und reviewen lassen",
         cancel: "Abbrechen",

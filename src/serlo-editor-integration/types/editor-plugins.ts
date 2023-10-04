@@ -1,5 +1,4 @@
 import { EditorPluginType } from './editor-plugin-type'
-import type { ImportantPluginState } from '../../serlo-editor/plugins/_on-the-way-out/important/important'
 import type { LayoutPluginState } from '../../serlo-editor/plugins/_on-the-way-out/layout'
 import type { ArticlePluginState } from '../../serlo-editor/plugins/article'
 import type { ExercisePluginState } from '../../serlo-editor/plugins/exercise'
@@ -7,9 +6,8 @@ import type { InjectionPluginState } from '../../serlo-editor/plugins/injection'
 import type { SolutionPluginState } from '../../serlo-editor/plugins/solution'
 import type { UnsupportedPluginState } from '../../serlo-editor/plugins/unsupported'
 import type { StateTypeSerializedType } from '@/serlo-editor/plugin'
-import type { BlockquotePluginState } from '@/serlo-editor/plugins/_on-the-way-out/blockquote'
-import type { TablePluginState } from '@/serlo-editor/plugins/_on-the-way-out/table'
 import type { AnchorPluginState } from '@/serlo-editor/plugins/anchor'
+import { AudioPluginState } from '@/serlo-editor/plugins/audio'
 import { BoxPluginState } from '@/serlo-editor/plugins/box'
 import { EquationsPluginState } from '@/serlo-editor/plugins/equations'
 import type { GeogebraPluginState } from '@/serlo-editor/plugins/geogebra'
@@ -47,11 +45,6 @@ export interface EditorArticlePlugin {
   state: StateTypeSerializedType<ArticlePluginState>
   id?: string
 }
-export interface EditorBlockquotePlugin {
-  plugin: EditorPluginType.Blockquote
-  state: StateTypeSerializedType<BlockquotePluginState>
-  id?: string
-}
 export interface EditorBoxPlugin {
   plugin: EditorPluginType.Box
   state: StateTypeSerializedType<BoxPluginState>
@@ -85,11 +78,6 @@ export interface EditorHighlightPlugin {
 export interface EditorImagePlugin {
   plugin: EditorPluginType.Image
   state: StateTypeSerializedType<ImagePluginState>
-  id?: string
-}
-export interface EditorImportantPlugin {
-  plugin: EditorPluginType.Important
-  state: StateTypeSerializedType<ImportantPluginState>
   id?: string
 }
 export interface EditorInjectionPlugin {
@@ -137,11 +125,6 @@ export interface EditorSolutionPlugin {
   state: StateTypeSerializedType<SolutionPluginState>
   id?: string
 }
-export interface EditorTablePlugin {
-  plugin: EditorPluginType.Table
-  state: StateTypeSerializedType<TablePluginState>
-  id?: string
-}
 export interface EditorSerloTablePlugin {
   plugin: EditorPluginType.SerloTable
   state: StateTypeSerializedType<SerloTablePluginState>
@@ -155,6 +138,11 @@ export interface EditorTextPlugin {
 export interface EditorVideoPlugin {
   plugin: EditorPluginType.Video
   state: StateTypeSerializedType<VideoPluginState>
+  id?: string
+}
+export interface EditorAudioPlugin {
+  plugin: EditorPluginType.Audio
+  state: StateTypeSerializedType<AudioPluginState>
   id?: string
 }
 export interface EditorPageLayoutPlugin {
@@ -183,15 +171,13 @@ export type SupportedEditorPlugin =
   | EditorGeogebraPlugin
   | EditorAnchorPlugin
   | EditorVideoPlugin
-  | EditorTablePlugin
+  | EditorAudioPlugin
   | EditorSerloTablePlugin
   | EditorHighlightPlugin
   | EditorSerloInjectionPlugin
   | EditorLayoutPlugin
   | EditorMultimediaPlugin
   | EditorSpoilerPlugin
-  | EditorImportantPlugin
-  | EditorBlockquotePlugin
   | EditorBoxPlugin
   | EditorImagePlugin
   | EditorTextPlugin

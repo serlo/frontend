@@ -1,7 +1,7 @@
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import { Dispatch, SetStateAction } from 'react'
+import { type Dispatch, type SetStateAction } from 'react'
 
-import { GeogebraProps } from '.'
+import type { GeogebraProps } from '.'
 import { EditorInput } from '../../editor-ui'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
@@ -46,6 +46,7 @@ export const GeogebraToolbar = ({
 
               <div className="mx-side mb-3">
                 <EditorInput
+                  autoFocus
                   label={`${geogebraStrings.urlOrId}: `}
                   placeholder="z.B. N5ktHvtW"
                   value={state.value}

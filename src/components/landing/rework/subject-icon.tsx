@@ -7,8 +7,8 @@ import InformaticsSVG from '@/assets-webkit/img/landing/subjects-informatics.svg
 import MathSVG from '@/assets-webkit/img/landing/subjects-math.svg'
 import NewSVG from '@/assets-webkit/img/landing/subjects-new.svg'
 import SustainabilitySVG from '@/assets-webkit/img/landing/subjects-sustainability.svg'
-import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
-import { LandingSubjectIcon } from '@/data-types'
+import type { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
+import type { LandingSubjectIcon } from '@/data-types'
 
 export function SubjectIcon({
   subject,

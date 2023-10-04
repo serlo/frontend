@@ -1,12 +1,13 @@
 import clsx from 'clsx'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
 
 import { MaxWidthDiv } from '../../navigation/max-width-div'
 import { SubTopic } from '../../taxonomy/sub-topic'
-import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
+import type { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
-import { TaxonomySubTerm } from '@/data-types'
+import type { TaxonomySubTerm } from '@/data-types'
 import { FrontendNodeType } from '@/frontend-node-types'
 import { isPartiallyInView } from '@/helper/is-partially-in-view'
 import { tw } from '@/helper/tw'
@@ -110,7 +111,21 @@ export function SubjectLandingTopicOverview({
               }
             >
               {src ? (
-                <img src={src} className="mr-2 h-12 w-12 object-cover" />
+                <div className="relative h-12 w-12">
+                  {src.startsWith('https://assets.serlo.org') ? (
+                    <Image
+                      src={src}
+                      fill
+                      sizes="3rem"
+                      className="object-cover pr-2"
+                      aria-hidden
+                      alt={`Illustration: ${term.title}`}
+                    />
+                  ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={src} className="h-12 w-12 object-cover pr-2" />
+                  )}
+                </div>
               ) : null}
               {term.title.replace(' und ', ' & ')}
             </button>

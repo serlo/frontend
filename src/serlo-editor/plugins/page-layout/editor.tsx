@@ -1,11 +1,9 @@
 import { useState } from 'react'
 
-import { PageLayoutPluginProps } from '.'
+import type { PageLayoutPluginProps } from '.'
 import { PageLayoutRenderer } from './renderer'
 import { LayoutChooser } from './toolbar/layout-chooser'
 import { PageLayoutToolbar } from './toolbar/toolbar'
-
-export const firstColumsSizes = [50, 66, 33]
 
 export const PageLayoutEditor: React.FunctionComponent<
   PageLayoutPluginProps

@@ -7,7 +7,7 @@ import {
 // A Serlo Editor plugin
 export interface EditorPlugin<
   S extends StateType = StateType,
-  Config extends {} = {}
+  Config extends object = object
 > {
   /**
    * React component that will be used to render the plugin. It accepts [[PluginEditorProps]] and `Props`.
@@ -121,14 +121,6 @@ export interface EditorPluginProps<
    */
   focused: boolean
 
-  /**
-   * Ref to use for an input element. The element will receive focus, when the plugin is focused.
-   */
-  autofocusRef: React.RefObject<HTMLInputElement & HTMLTextAreaElement>
-
   // Ref for the wrapping SubDocument div
   containerRef?: React.RefObject<HTMLDivElement>
-
-  // Allows the plugin to render buttons into the side toolbar (where the drag is)
-  renderIntoSideToolbar(children: React.ReactNode): React.ReactNode
 }

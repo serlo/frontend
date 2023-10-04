@@ -1,6 +1,3 @@
-import { converter } from '@serlo/markdown'
-
-import { convertLegacyState } from './convert-legacy-state'
 import { convertTextPluginState } from './convert-text-plugin-state'
 import { sanitizeLatex } from './sanitize-latex'
 import {
@@ -19,7 +16,7 @@ import {
   UnknownEditorPlugin,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
-type CustomNode = CustomElement | CustomText
+type SlateElementOrText = CustomElement | CustomText
 
 function isSupportedEditorPlugin(
   node: ConvertData
@@ -32,12 +29,12 @@ function isSupportedEditorPlugin(
 export type ConvertData =
   | SupportedEditorPlugin
   | UnknownEditorPlugin
-  | FrontendContentNode
-  | CustomNode
+  // | FrontendContentNode
+  | SlateElementOrText
 
 export type ConvertNode = ConvertData | ConvertData[] | undefined
 
-export function isTextPluginState(node: ConvertData): node is CustomNode {
+function isTextPluginState(node: ConvertData): node is SlateElementOrText {
   return (
     (node as CustomElement).type !== undefined ||
     (node as CustomText).text !== undefined
@@ -143,17 +140,6 @@ function convertPlugin(
       },
     ]
   }
-  if (node.plugin === EditorPluginType.Important) {
-    return [{ type: FrontendNodeType.Important, children: convert(node.state) }]
-  }
-  if (node.plugin === EditorPluginType.Blockquote) {
-    return [
-      {
-        type: FrontendNodeType.Blockquote,
-        children: convert(node.state as SupportedEditorPlugin),
-      },
-    ]
-  }
   if (node.plugin === EditorPluginType.Box) {
     // get rid of wrapping p and inline math in title
     const convertedTitle = convert(
@@ -234,14 +220,6 @@ function convertPlugin(
   if (node.plugin === EditorPluginType.Highlight) {
     if (Object.keys(node.state).length === 0) return [] // ignore empty highlight plugin
     return [{ ...node, type: FrontendNodeType.Code, pluginId: node.id }]
-  }
-  if (node.plugin === EditorPluginType.Table) {
-    const html = converter.makeHtml(node.state)
-    // compat: the markdown converter could return all types of content, only use table nodes.
-    const children = convertLegacyState(html).children.filter(
-      (child) => child.type === 'table'
-    )
-    return children
   }
   if (node.plugin === EditorPluginType.SerloTable) {
     const children = node.state.rows.map((row) => {
@@ -340,6 +318,24 @@ function convertPlugin(
   }
   if (node.plugin === EditorPluginType.PagePartners) {
     return [{ type: FrontendNodeType.PagePartners, pluginId: node.id }]
+  }
+
+  if (node.plugin === EditorPluginType.Audio) {
+    if (!node.state.src) {
+      // eslint-disable-next-line no-console
+      console.warn('No src for audio plugin found. Remove it!')
+      return []
+    }
+
+    return [
+      {
+        type: FrontendNodeType.Audio,
+        src: node.state.src,
+        pluginId: node.id,
+        plugin: EditorPluginType.Audio,
+        state: node.state,
+      },
+    ]
   }
 
   return []

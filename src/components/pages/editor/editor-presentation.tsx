@@ -107,9 +107,9 @@ export function EditorPresentation() {
               Educational resources have been created with the Serlo Editor
             </div>
             <div className="mt-5 flex-1">
-              <b className="font-handwritten text-4xl text-brand">1 Mio+</b>
+              <b className="font-handwritten text-4xl text-brand">~1 Mio</b>
               <br />
-              Users per month learn with Serlo Editor content
+              Students and teachers per month use Serlo Editor content
             </div>
             <div className="mt-5 flex-1">
               <b className="font-handwritten text-4xl text-brand">500+</b>
@@ -279,6 +279,7 @@ export function EditorPresentation() {
     }
     return (
       <div className="hidden sm:absolute sm:right-8 sm:top-5 sm:block sm:w-32">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="sm:ml-auto"
           style={{
@@ -288,6 +289,7 @@ export function EditorPresentation() {
           src={logo}
           alt={`Logo von ${name}`}
         />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="sm:-mt-8 sm:ml-auto"
           style={{

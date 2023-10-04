@@ -4,6 +4,7 @@ import {
   faFilePen as exerciseIcon,
 } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
+import Image from 'next/image'
 
 import { EditorContact } from '../editor/editor-contact'
 import { teamDataKulla } from '../editor/editor-team'
@@ -51,8 +52,10 @@ export const MetadataApiPresentation = () => {
               <CallToAction />
             </div>
             <div className="-mx-side mt-8 overflow-hidden rounded-lg px-4 sm:max-w-[32rem] sm:flex-1">
-              <img
+              <Image
                 src="/_assets/img/metadata/metadata.png"
+                width={1024}
+                height={1024}
                 alt="A bird flying over a stack of documents"
               />
             </div>
@@ -67,9 +70,9 @@ export const MetadataApiPresentation = () => {
               <Link href="https://serlo.org/editor">Serlo Editor</Link>
             </div>
             <div className="mx-4 flex-1 pb-4 pt-4">
-              <b className="font-handwritten text-4xl text-brand">1 Mio+</b>
+              <b className="font-handwritten text-4xl text-brand">~1 Mio</b>
               <br />
-              Users per month are already learning with the materials
+              Students and teachers are using the materials every month
             </div>
           </div>
         </section>

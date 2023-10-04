@@ -1,14 +1,16 @@
-import { StepSegment } from './editor'
 import { TransformationTarget } from './editor-renderer'
-import { GridFocus } from './grid-focus'
+import type { GridFocus } from './grid-focus'
 import { InlineMath } from './inline-math'
-import { stepProps } from '..'
+import { StepSegment } from './step-segment'
+import type { stepProps } from '..'
 import { renderSignToString, Sign } from '../sign'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { StateTypeReturnType } from '@/serlo-editor/plugin'
+import type { StateTypeReturnType } from '@/serlo-editor/plugin'
 
 export interface StepEditorProps {
   gridFocus: GridFocus
+
+  resetFocus: () => void
   row: number
   state: StateTypeReturnType<typeof stepProps>
   transformationTarget: TransformationTarget
@@ -16,7 +18,7 @@ export interface StepEditorProps {
 
 export function StepEditor(props: StepEditorProps) {
   const equationsStrings = useEditorStrings().plugins.equations
-  const { gridFocus, row, state, transformationTarget } = props
+  const { gridFocus, resetFocus, row, state, transformationTarget } = props
 
   return (
     <>
@@ -34,6 +36,7 @@ export function StepEditor(props: StepEditorProps) {
             onChange={(src) => state.left.set(src)}
             onFocusNext={() => gridFocus.moveRight()}
             onFocusPrevious={() => gridFocus.moveLeft()}
+            closeMathEditorOverlay={resetFocus}
           />
         </td>
       )}
@@ -74,6 +77,7 @@ export function StepEditor(props: StepEditorProps) {
           onChange={(src) => state.right.set(src)}
           onFocusNext={() => gridFocus.moveRight()}
           onFocusPrevious={() => gridFocus.moveLeft()}
+          closeMathEditorOverlay={resetFocus}
         />
       </td>
       {transformationTarget === TransformationTarget.Equation && (
@@ -98,6 +102,7 @@ export function StepEditor(props: StepEditorProps) {
             onChange={(src) => state.transform.set(src)}
             onFocusNext={() => gridFocus.moveRight()}
             onFocusPrevious={() => gridFocus.moveLeft()}
+            closeMathEditorOverlay={resetFocus}
           />
         </td>
       )}

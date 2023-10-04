@@ -8,6 +8,7 @@ import { CommentAreaEntityProps } from '@/components/comments/comment-area-entit
 import { Lazy } from '@/components/content/lazy'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
+import { useAB } from '@/contexts/ab'
 import { useExerciseFolderStats } from '@/contexts/exercise-folder-stats-context'
 import { ExerciseInlineType } from '@/data-types'
 import {
@@ -15,7 +16,7 @@ import {
   FrontendSolutionNode,
 } from '@/frontend-node-types'
 import { exerciseSubmission } from '@/helper/exercise-submission'
-import { RenderNestedFunction } from '@/schema/article-renderer'
+import type { RenderNestedFunction } from '@/schema/article-renderer'
 import { SolutionRenderer } from '@/serlo-editor/plugins/solution/renderer'
 
 const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
@@ -48,6 +49,7 @@ export function Solution({
   const entry = exerciseData?.data[node.context.id]
 
   const count = entry?.solutionOpen
+  const ab = useAB()
 
   const solutionVisibleOnInit = forceVisible
     ? true
@@ -108,18 +110,21 @@ export function Solution({
           ) : null
         }
         hideToggle={
-          (!node.solution.edtrState && !node.solution.legacy) ||
+          !node.solution.content ||
           node.solution.trashed ||
           (isPrintMode && !printModeSolutionVisible)
         }
         onSolutionOpen={() =>
-          exerciseSubmission({
-            path: asPath,
-            entityId: node.context.id,
-            revisionId: node.context.revisionId,
-            type: 'text',
-            result: 'open',
-          })
+          exerciseSubmission(
+            {
+              path: asPath,
+              entityId: node.context.id,
+              revisionId: node.context.revisionId,
+              type: 'text',
+              result: 'open',
+            },
+            ab
+          )
         }
         count={count}
       />
@@ -134,11 +139,9 @@ export function Solution({
 
 // simplify after migration
 function getSolutionContent(node: FrontendSolutionNode['solution']) {
-  if (node.legacy)
-    return { steps: node.legacy, strategy: [], prerequisite: undefined }
-  if (!node.edtrState) return null
+  if (!node.content) return null
 
-  const state = node.edtrState
+  const state = node.content
 
   const prerequisite =
     state.prerequisite && state.prerequisite.id

@@ -3,8 +3,8 @@ import { useContext, useEffect } from 'react'
 import { Link } from '../../content/link'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { loginUrl, registrationUrl } from '@/components/pages/auth/utils'
-import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
+import { UuidsContext } from '@/contexts/uuids-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { submitEvent } from '@/helper/submit-event'
 
@@ -17,7 +17,7 @@ export interface InviteModalProps {
 export function InviteModal({ isOpen, onClose, type }: InviteModalProps) {
   const { lang, strings, footerData } = useInstanceData()
   const modalStrings = strings.editOrAdd.inviteModal
-  const id = useContext(EntityIdContext)
+  const id = useContext(UuidsContext)
 
   useEffect(() => {
     if (isOpen) submitEvent('invite2edit-open-modal-' + type)
@@ -39,15 +39,12 @@ export function InviteModal({ isOpen, onClose, type }: InviteModalProps) {
       <p className="serlo-p mb-0 mt-24 border-t-[1px] pt-8 text-base">
         {replacePlaceholders(modalStrings.psText, {
           link: (
-            <a onClick={onClose}>
-              <Link
-                href={
-                  lang === 'de' ? '/community' : footerData.participationHref
-                }
-              >
-                {modalStrings.psLinkText}
-              </Link>
-            </a>
+            <Link
+              href={lang === 'de' ? '/community' : footerData.participationHref}
+              onClick={onClose}
+            >
+              {modalStrings.psLinkText}
+            </Link>
           ),
         })}
       </p>
@@ -57,27 +54,26 @@ export function InviteModal({ isOpen, onClose, type }: InviteModalProps) {
   function renderButtons() {
     return (
       <>
-        {' '}
-        <a
+        <Link
+          className="serlo-button-blue"
+          href={loginUrl}
           onClick={() => {
             submitEvent('invite2edit-click-login-' + type)
             onClose()
           }}
         >
-          <Link className="serlo-button-blue" href={loginUrl}>
-            {modalStrings.loginButton}
-          </Link>
-        </a>
-        <a
+          {modalStrings.loginButton}
+        </Link>
+        <Link
+          className="serlo-button-green ml-4"
+          href={registrationUrl}
           onClick={() => {
             submitEvent('invite2edit-click-register-' + type)
             onClose()
           }}
         >
-          <Link className="serlo-button-green ml-4" href={registrationUrl}>
-            {modalStrings.registerButton}
-          </Link>
-        </a>
+          {modalStrings.registerButton}
+        </Link>
       </>
     )
   }

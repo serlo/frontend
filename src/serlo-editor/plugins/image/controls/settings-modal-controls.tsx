@@ -1,8 +1,8 @@
-import { ImageProps } from '..'
+import { OverlayInput } from './overlay-input'
+import type { ImageProps } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { isTempFile } from '@/serlo-editor/plugin'
-import { OverlayInput } from '@/serlo-editor/plugin/plugin-toolbar'
 
 export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
   const { link, alt, src, maxWidth } = state
@@ -15,6 +15,7 @@ export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
     <>
       <OverlayInput
         label={imageStrings.imageUrl}
+        autoFocus
         placeholder={
           !isTemp
             ? imageStrings.placeholderEmpty
@@ -22,6 +23,7 @@ export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
             ? imageStrings.placeholderFailed
             : imageStrings.placeholderUploading
         }
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         value={isTemp ? '' : src.value.toString()}
         disabled={isTemp && !isFailed}
         onChange={(e) => src.set(e.target.value)}

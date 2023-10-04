@@ -1,8 +1,8 @@
 import { BoxEditor } from './editor'
 import {
+  type EditorPlugin,
+  type EditorPluginProps,
   child,
-  EditorPlugin,
-  EditorPluginProps,
   object,
   string,
 } from '@/serlo-editor/plugin'
@@ -14,10 +14,10 @@ function createBoxState(allowedPlugins: (EditorPluginType | string)[]) {
     title: child({
       plugin: EditorPluginType.Text,
       config: {
-        formattingOptions: ['code', 'katex', 'math'],
         noLinebreaks: true,
       },
     }),
+    // we don't generate new id's any more but keep the old ones for now
     anchorId: string(''),
     content: child({
       plugin: EditorPluginType.Rows,

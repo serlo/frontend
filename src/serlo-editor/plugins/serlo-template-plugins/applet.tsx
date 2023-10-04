@@ -15,7 +15,11 @@ import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
-import { EditorPlugin, EditorPluginProps, string } from '@/serlo-editor/plugin'
+import {
+  type EditorPlugin,
+  type EditorPluginProps,
+  string,
+} from '@/serlo-editor/plugin'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const appletTypeState = entityType(
@@ -54,15 +58,24 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
 
   return (
     <>
-      <button
-        onClick={() => setShowSettingsModal(true)}
-        className="serlo-button-editor-secondary absolute right-0 -mt-10 mr-side text-base"
-      >
-        Metadata <FaIcon icon={faPencilAlt} />
-      </button>
+      <div className="absolute right-0 -mt-10 mr-side flex">
+        <button
+          onClick={() => setShowSettingsModal(true)}
+          className="serlo-button-editor-secondary mr-2 text-base"
+        >
+          Metadata <FaIcon icon={faPencilAlt} />
+        </button>
+        <ContentLoaders
+          id={id.value}
+          currentRevision={revision.value}
+          onSwitchRevision={replaceOwnState}
+          entityType={UuidType.Applet}
+        />
+      </div>
       <h1 className="serlo-h1 mt-20">
         {props.editable ? (
           <input
+            autoFocus
             className={headerInputClasses}
             placeholder={appletStrings.placeholder}
             value={title.value}
@@ -77,14 +90,6 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
       {content.render()}
 
       <ToolbarMain showSubscriptionOptions {...props.state} />
-      {props.renderIntoSideToolbar(
-        <ContentLoaders
-          id={id.value}
-          currentRevision={revision.value}
-          onSwitchRevision={replaceOwnState}
-          entityType={UuidType.Applet}
-        />
-      )}
       {showSettingsModal ? (
         <ModalWithCloseButton
           isOpen={showSettingsModal}
@@ -93,6 +98,7 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
         >
           <div className="mx-side mb-3 mt-12">
             <SettingsTextarea
+              autoFocus
               label={appletStrings.seoTitle}
               state={meta_title}
             />

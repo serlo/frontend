@@ -1,7 +1,7 @@
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { Dispatch, SetStateAction } from 'react'
 
-import { InjectionProps } from '.'
+import type { InjectionProps } from '.'
 import { EditorInput } from '../../editor-ui'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
@@ -43,6 +43,7 @@ export const InjectionToolbar = ({
 
               <div className="mx-side mb-3">
                 <EditorInput
+                  autoFocus
                   label={`${injectionStrings.serloId}: `}
                   placeholder={injectionStrings.placeholder}
                   inputMode="numeric"

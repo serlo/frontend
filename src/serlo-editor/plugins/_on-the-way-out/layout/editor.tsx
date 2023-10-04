@@ -1,6 +1,5 @@
-import { LayoutPluginState } from '.'
+import type { LayoutPluginState } from '.'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { EditorPluginProps, StateTypeReturnType } from '@/serlo-editor/plugin'
 import {
   store,
@@ -10,7 +9,16 @@ import {
   useAppDispatch,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import { RowsPlugin } from '@/serlo-editor-integration/types/legacy-editor-to-editor-types'
+
+interface OtherPlugin {
+  plugin: string
+  state: unknown
+}
+
+interface RowsPlugin {
+  plugin: EditorPluginType.Rows
+  state: (OtherPlugin | RowsPlugin)[]
+}
 
 export const LayoutRenderer: React.FunctionComponent<
   EditorPluginProps<LayoutPluginState> & {
@@ -21,8 +29,6 @@ export const LayoutRenderer: React.FunctionComponent<
   const dispatch = useAppDispatch()
 
   const editorStrings = useEditorStrings()
-
-  const plugins = usePlugins()
 
   return (
     <>
@@ -82,7 +88,6 @@ export const LayoutRenderer: React.FunctionComponent<
     dispatch(
       runReplaceDocumentSaga({
         id: props.id,
-        plugins,
         pluginType: EditorPluginType.Rows,
         state: documents,
       })
@@ -131,7 +136,6 @@ export const LayoutRenderer: React.FunctionComponent<
       dispatch(
         runReplaceDocumentSaga({
           id: props.id,
-          plugins,
           pluginType: EditorPluginType.Multimedia,
           state: {
             explanation,

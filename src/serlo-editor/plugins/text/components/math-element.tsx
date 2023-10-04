@@ -8,7 +8,10 @@ import {
 } from 'slate-react'
 
 import { MathFormula } from './math-formula'
-import type { MathElement as MathElementType, Paragraph } from '../types'
+import type {
+  MathElement as MathElementType,
+  Paragraph,
+} from '../types/text-editor'
 import { PreferenceContext } from '@/serlo-editor/core'
 import { isElementWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { MathEditor } from '@/serlo-editor/math'
@@ -31,6 +34,7 @@ export function MathElement({
   const editor = useSlate()
   const selected = useSelected()
   const preferences = useContext(PreferenceContext)
+  const isVisualMode = !!preferences.getKey(visualEditorPreferenceKey)
 
   const isInsideListElement = useMemo(() => {
     return isElementWithinList(element, editor)
@@ -53,7 +57,37 @@ export function MathElement({
     )
   }
 
-  const isVisualMode = !!preferences.getKey(visualEditorPreferenceKey)
+  const VoidWrapper = element.inline ? 'span' : 'div'
+  return (
+    // Slate void elements need to set attributes and contentEditable={false}
+    // See: https://docs.slatejs.org/api/nodes/element#rendering-void-elements
+    <VoidWrapper {...attributes} tabIndex={-1} contentEditable={false}>
+      <MathEditor
+        state={element.src}
+        inline={element.inline}
+        readOnly={false}
+        visual={isVisualMode}
+        disableBlock={isInsideListElement}
+        onInlineChange={handleInlineChange}
+        onChange={(src) => updateElement({ src })}
+        closeMathEditorOverlay={transformOutOfElement}
+        onMoveOutRight={transformOutOfElement}
+        onMoveOutLeft={() => {
+          transformOutOfElement({ reverse: true })
+        }}
+        onDeleteOutRight={() => {
+          transformOutOfElement({ shouldDelete: true })
+        }}
+        onDeleteOutLeft={() => {
+          transformOutOfElement({ shouldDelete: true, reverse: true })
+        }}
+        onEditorChange={(visual) =>
+          preferences.setKey(visualEditorPreferenceKey, visual)
+        }
+      />
+      {children}
+    </VoidWrapper>
+  )
 
   function updateElement(update: Partial<MathElementType>) {
     const path = ReactEditor.findPath(editor, element)
@@ -156,43 +190,10 @@ export function MathElement({
     const unit = 'character'
 
     Transforms.move(editor, { unit, reverse })
-
     if (shouldDelete) {
       Transforms.delete(editor, { unit, reverse })
     }
 
     ReactEditor.focus(editor)
   }
-
-  const VoidWrapper = element.inline ? 'span' : 'div'
-  return (
-    // Slate void elements need to set attributes and contentEditable={false}
-    // See: https://docs.slatejs.org/api/nodes/element#rendering-void-elements
-    <VoidWrapper {...attributes} tabIndex={-1} contentEditable={false}>
-      <MathEditor
-        autofocus
-        state={element.src}
-        inline={element.inline}
-        readOnly={false}
-        visual={isVisualMode}
-        disableBlock={isInsideListElement}
-        onInlineChange={handleInlineChange}
-        onChange={(src) => updateElement({ src })}
-        onMoveOutRight={transformOutOfElement}
-        onMoveOutLeft={() => {
-          transformOutOfElement({ reverse: true })
-        }}
-        onDeleteOutRight={() => {
-          transformOutOfElement({ shouldDelete: true })
-        }}
-        onDeleteOutLeft={() => {
-          transformOutOfElement({ shouldDelete: true, reverse: true })
-        }}
-        onEditorChange={(visual) =>
-          preferences.setKey(visualEditorPreferenceKey, visual)
-        }
-      />
-      {children}
-    </VoidWrapper>
-  )
 }

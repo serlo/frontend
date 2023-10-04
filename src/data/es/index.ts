@@ -161,7 +161,8 @@ export const instanceData = {
         theorem: "Teorema",
         proof: "Prueba"
       },
-      loadingVideoFailed: "Algo ha fallado"
+      loadingVideoFailed: "Algo ha fallado",
+      loadingAudioFailed: 'Something went wrong'
     },
     consent: {
       title: "Consentimiento para contenido externo",
@@ -176,6 +177,7 @@ export const instanceData = {
       video: "Reproducir vídeo de %provider%",
       applet: "Cargar Applet de %provider%",
       twingle: "Cargar formulario de donación",
+      audio: 'Play audio from %provider%',
       general: "Activar"
     },
     comments: {
@@ -619,10 +621,6 @@ export const loggedInData = {
           notSupported: "Lo sentimos, este plugin no es compatible:",
           explanation: "No será visible a los usuarios. Puede eliminarlo o pedir ayuda a los desarrolladores."
         },
-        error: {
-          title: 'Error',
-          convertionError: "Esta parte del documento no pudo ser convertida."
-        },
         equations: {
           title: "Términos y ecuaciones",
           description: "Escribe manipulaciones de términos y resuelve ecuaciones múltiples.",
@@ -751,7 +749,8 @@ export const loggedInData = {
         text: {
           title: "Texto",
           description: "Redacta el contenido usando texto enriquecido y fórmulas matemáticas.",
-          placeholder: 'Write something or add elements with ⊕.',
+          placeholder: 'Write something or add element:',
+          addButtonExplanation: 'Click to insert new element',
           quote: "Cita",
           setColor: "Elegir color",
           resetColor: "Restablecer color",
@@ -798,7 +797,8 @@ export const loggedInData = {
             mathSymbols: "Símbolos matemáticos",
             eG: "por ejemplo,",
             functions: "Funciones",
-            displayAsBlock: "Mostrar en bloque"
+            displayAsBlock: "Mostrar en bloque",
+            closeMathFormulaEditor: "Close math formula editor"
           }
         },
         video: {
@@ -809,6 +809,19 @@ export const loggedInData = {
           titlePlaceholder: "Título",
           url: 'URL',
           seoTitle: "Título para motores de búsqueda"
+        },
+        audio: {
+          title: 'Audio',
+          description: 'Link to audio files on Vocaroo',
+          audioUrl: 'Enter Audio URL'
+        },
+        inputExercise: {
+          title: 'Input Exercise',
+          description: 'Solution can be text or math'
+        },
+        scMcExercise: {
+          title: 'SC/MC Exercise',
+          description: 'Single Choice or Multiple Choice'
         }
       },
       templatePlugins: {
@@ -896,7 +909,10 @@ export const loggedInData = {
           singleChoice: "Elección única",
           multipleChoice: "Múltiple elección",
           chooseType: "Elige el tipo de ejercicio",
-          addAnswer: "Añadir respuesta"
+          addAnswer: "Añadir respuesta",
+          previewMode: 'Preview',
+          previewIsActiveHint: 'Preview mode is active',
+          previewIsDeactiveHint: 'Here you can edit'
         },
         solution: {
           optionalExplanation: "Tienes la opción de explicar la estrategia de solución aquí",
@@ -929,10 +945,6 @@ export const loggedInData = {
         settings: "Configuración",
         extendedSettings: "Ajustes extendidos",
         close: "Cerrar",
-        notSupportedYet: "Este tipo de contenido aún no posible en el nuevo editor.",
-        editInOld: "Edita el contenido en el antiguo editor.",
-        conversionError: "Se produjo un error durante la conversión.",
-        notConverted: "Esta entidad aún no ha sido convertida al nuevo editor.",
         save: "Guardar",
         saveWithReview: "Guardar y obtener una revisión",
         cancel: "Cancelar",

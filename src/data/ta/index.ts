@@ -161,7 +161,8 @@ export const instanceData = {
         theorem: 'Theorem',
         proof: 'Proof'
       },
-      loadingVideoFailed: 'Something went wrong'
+      loadingVideoFailed: 'Something went wrong',
+      loadingAudioFailed: 'Something went wrong'
     },
     consent: {
       title: 'Consent for external Content',
@@ -176,6 +177,7 @@ export const instanceData = {
       video: 'Play Video from %provider%',
       applet: 'Load Applet from %provider%',
       twingle: 'Load Donation Form',
+      audio: 'Play audio from %provider%',
       general: 'Activate'
     },
     comments: {
@@ -619,10 +621,6 @@ export const loggedInData = {
           notSupported: 'Sorry, this plugin is not supported:',
           explanation: 'It will not be displayed to users. You can either remove it or asks developers for support.'
         },
-        error: {
-          title: 'Error',
-          convertionError: 'This part of the document could not be converted.'
-        },
         equations: {
           title: 'Terms and equations',
           description: 'Write term manipulations and solve multiline equations.',
@@ -751,7 +749,8 @@ export const loggedInData = {
         text: {
           title: 'Text',
           description: 'Compose content using rich text and math formulas.',
-          placeholder: 'Write something or add elements with ⊕.',
+          placeholder: 'Write something or add element:',
+          addButtonExplanation: 'Click to insert new element',
           quote: 'Quote',
           setColor: 'Set color',
           resetColor: 'Reset color',
@@ -798,7 +797,8 @@ export const loggedInData = {
             mathSymbols: 'Math symbols',
             eG: 'e.g.',
             functions: "செயல்பாடுகள்",
-            displayAsBlock: 'Display as block'
+            displayAsBlock: 'Display as block',
+            closeMathFormulaEditor: "Close math formula editor"
           }
         },
         video: {
@@ -809,6 +809,19 @@ export const loggedInData = {
           titlePlaceholder: "தலைப்பு",
           url: 'URL',
           seoTitle: 'Title for search engines'
+        },
+        audio: {
+          title: 'Audio',
+          description: 'Link to audio files on Vocaroo',
+          audioUrl: 'Enter Audio URL'
+        },
+        inputExercise: {
+          title: 'Input Exercise',
+          description: 'Solution can be text or math'
+        },
+        scMcExercise: {
+          title: 'SC/MC Exercise',
+          description: 'Single Choice or Multiple Choice'
         }
       },
       templatePlugins: {
@@ -896,7 +909,10 @@ export const loggedInData = {
           singleChoice: 'Single-choice',
           multipleChoice: 'Multiple-choice',
           chooseType: 'Choose the exercise type',
-          addAnswer: 'Add answer'
+          addAnswer: 'Add answer',
+          previewMode: 'Preview',
+          previewIsActiveHint: 'Preview mode is active',
+          previewIsDeactiveHint: 'Here you can edit'
         },
         solution: {
           optionalExplanation: 'Optionally explain the solution strategy here',
@@ -929,10 +945,6 @@ export const loggedInData = {
         settings: 'Settings',
         extendedSettings: 'Extended Settings',
         close: "மூடுக",
-        notSupportedYet: "This content type isn't supported by the new editor, yet.",
-        editInOld: 'You can edit the content in the old editor',
-        conversionError: 'An error occurred during the conversion.',
-        notConverted: "This entity hasn't been converted to the new editor, yet.",
         save: 'Save',
         saveWithReview: 'Save and get review',
         cancel: 'Cancel',

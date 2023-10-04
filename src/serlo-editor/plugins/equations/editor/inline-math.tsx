@@ -5,7 +5,10 @@ import {
   setDefaultPreference,
 } from '@/serlo-editor/core/contexts'
 import { MathEditor } from '@/serlo-editor/math'
-import { StateTypeReturnType, StringStateType } from '@/serlo-editor/plugin'
+import type {
+  StateTypeReturnType,
+  StringStateType,
+} from '@/serlo-editor/plugin'
 
 interface InlineMathProps {
   state: StateTypeReturnType<StringStateType>
@@ -13,6 +16,7 @@ interface InlineMathProps {
   onChange: (state: string) => void
   onFocusNext: () => void
   onFocusPrevious: () => void
+  closeMathEditorOverlay?: () => void
   focused?: boolean
   prefix?: string
   suffix?: string
@@ -27,6 +31,7 @@ export function InlineMath(props: InlineMathProps) {
     focused,
     onFocusNext,
     onFocusPrevious,
+    closeMathEditorOverlay,
     onChange,
     state,
     prefix = '',
@@ -49,6 +54,9 @@ export function InlineMath(props: InlineMathProps) {
       onChange={onChange}
       onMoveOutRight={onFocusNext}
       onMoveOutLeft={onFocusPrevious}
+      // When the math editor is rendered within the equations plugin, we simply
+      // close the mathEditorOverlay without focusing the next plugin
+      closeMathEditorOverlay={closeMathEditorOverlay || onFocusNext}
     />
   )
 }

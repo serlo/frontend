@@ -67,6 +67,7 @@ export function PartnerList({ inContent }: { inContent?: boolean }) {
     padding: number
   }) {
     return (
+      // eslint-disable-next-line @next/next/no-img-element
       <img
         key={name}
         className={clsx(

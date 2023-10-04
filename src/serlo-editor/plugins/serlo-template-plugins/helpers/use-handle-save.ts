@@ -1,10 +1,11 @@
 import { has } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
 
-import { SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
-import { store, selectSerializedRootDocument } from '@/serlo-editor/store'
+import type { SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
+import { store, selectSerializedDocument } from '@/serlo-editor/store'
+import { ROOT } from '@/serlo-editor/store/root/constants'
 import { storeStateToLocalStorage } from '@/serlo-editor-integration/components/local-storage-notice'
-import { SaveContext } from '@/serlo-editor-integration/serlo-editor'
+import { SaveContext } from '@/serlo-editor-integration/context/save-context'
 import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
 export function useHandleSave(
@@ -23,7 +24,7 @@ export function useHandleSave(
     }
   }, [visible])
 
-  const serializedRoot = selectSerializedRootDocument(store.getState())
+  const serializedRoot = selectSerializedDocument(store.getState(), ROOT)
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const serialized = has('state', serializedRoot) ? serializedRoot.state : null
 

@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 
-import { MultimediaProps } from '..'
+import type { MultimediaProps } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { getPluginTitle } from '@/serlo-editor/plugin/helpers/get-plugin-title'
@@ -14,13 +14,16 @@ import {
 interface MultimediaTypeSelectProps {
   allowedPlugins: MultimediaProps['config']['allowedPlugins']
   state: MultimediaProps['state']['multimedia']
+  stateCache: Record<string, unknown>
+  setStateCache: Dispatch<SetStateAction<Record<string, unknown>>>
 }
 
 export const MultimediaTypeSelect = ({
   allowedPlugins,
   state,
+  stateCache,
+  setStateCache,
 }: MultimediaTypeSelectProps) => {
-  const [stateCache, setStateCache] = useState<Record<string, unknown>>({})
   const pluginStrings = useEditorStrings().plugins
   const currentPluginType = useAppSelector((storeState) =>
     selectDocument(storeState, state.id)
@@ -38,6 +41,7 @@ export const MultimediaTypeSelect = ({
         bg-editor-primary-100 px-1 py-[1px] text-sm transition-all
         hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
         `}
+        data-qa="plugin-multimedia-type-select"
       >
         {allowedPlugins.map((type) => (
           <option key={type} value={type}>

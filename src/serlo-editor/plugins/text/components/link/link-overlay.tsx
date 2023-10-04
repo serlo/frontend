@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { ReactEditor, useSlate } from 'slate-react'
 
-import { Link } from '../../types'
+import type { Link } from '../../types/text-editor'
 
 const wrapperWidth = 460
 
@@ -24,7 +24,7 @@ export function LinkOverlay({
     )?.getBoundingClientRect()
 
     const parentRect = wrapper.current
-      .closest('.default-plugin-wrapper-container')
+      .closest('.rows-editor-renderer-container')
       ?.getBoundingClientRect()
 
     const offsetRect = wrapper.current.offsetParent?.getBoundingClientRect()

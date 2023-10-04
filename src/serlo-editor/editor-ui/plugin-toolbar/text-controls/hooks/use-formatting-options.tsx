@@ -1,4 +1,10 @@
-import { faCode } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCode,
+  faListOl,
+  faListUl,
+  faSquareRootVariable,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons'
 import { onKeyDown as slateListsOnKeyDown } from '@prezly/slate-lists'
 import isHotkey from 'is-hotkey'
 import React, { useCallback, useMemo } from 'react'
@@ -37,18 +43,14 @@ import {
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { LoggedInData } from '@/data-types'
+import type { LoggedInData } from '@/data-types'
 import { isMac } from '@/helper/client-detection'
 import {
-  edtrBold,
-  edtrClose,
-  edtrFormula,
-  EdtrIcon,
-  edtrItalic,
-  edtrLink,
-  edtrListBullets,
-  edtrListNumbered,
-  edtrText,
+  editorBold,
+  EditorSvgIcon,
+  editorItalic,
+  editorLink,
+  editorText,
 } from '@/serlo-editor/editor-ui'
 import {
   withLinks,
@@ -71,12 +73,12 @@ const isRegisteredTextPlugin = (
 const registeredHotkeys = [
   {
     hotkey: 'mod+b',
-    option: TextEditorFormattingOption.richText,
+    option: TextEditorFormattingOption.richTextBold,
     handler: toggleBoldMark,
   },
   {
     hotkey: 'mod+i',
-    option: TextEditorFormattingOption.richText,
+    option: TextEditorFormattingOption.richTextItalic,
     handler: toggleItalicMark,
   },
   {
@@ -219,19 +221,19 @@ function createToolbarControls(
   const allFormattingOptions = [
     // Bold
     {
-      name: TextEditorFormattingOption.richText,
+      name: TextEditorFormattingOption.richTextBold,
       title: textStrings.bold,
       isActive: isBoldActive,
       onClick: toggleBoldMark,
-      renderIcon: () => <EdtrIcon icon={edtrBold} />,
+      renderIcon: () => <EditorSvgIcon pathData={editorBold} />,
     },
     // Italic
     {
-      name: TextEditorFormattingOption.richText,
+      name: TextEditorFormattingOption.richTextItalic,
       title: textStrings.italic,
       isActive: isItalicActive,
       onClick: toggleItalicMark,
-      renderIcon: () => <EdtrIcon icon={edtrItalic} />,
+      renderIcon: () => <EditorSvgIcon pathData={editorItalic} />,
     },
     // Link
     {
@@ -239,7 +241,7 @@ function createToolbarControls(
       title: textStrings.link,
       isActive: isLinkActive,
       onClick: toggleLink,
-      renderIcon: () => <EdtrIcon icon={edtrLink} />,
+      renderIcon: () => <EditorSvgIcon pathData={editorLink} />,
     },
     // Headings
     {
@@ -247,14 +249,16 @@ function createToolbarControls(
       title: textStrings.headings,
       closeMenuTitle: textStrings.closeSubMenu,
       isActive: isAnyHeadingActive,
-      renderIcon: () => <EdtrIcon icon={edtrText} />,
-      renderCloseMenuIcon: () => <EdtrIcon icon={edtrClose} />,
-      children: ([1, 2, 3] as const).map((level) => ({
+      renderIcon: () => <EditorSvgIcon pathData={editorText} />,
+      renderCloseMenuIcon: () => <FaIcon icon={faXmark} />,
+      subMenuButtons: ([1, 2, 3] as const).map((level) => ({
         name: TextEditorFormattingOption.headings,
         title: `${textStrings.heading} ${level}`,
         isActive: isHeadingActive(level),
         onClick: toggleHeading(level),
-        renderIcon: () => <span>H{level}</span>,
+        renderIcon: () => (
+          <span data-qa={`plugin-toolbar-heading-${level}`}>H{level}</span>
+        ),
       })),
     },
     // Colors
@@ -268,8 +272,8 @@ function createToolbarControls(
         const color = colorIndex ? textColors[colorIndex].value : 'black'
         return <ColorTextIcon color={color} />
       },
-      renderCloseMenuIcon: () => <EdtrIcon icon={edtrClose} />,
-      children: [
+      renderCloseMenuIcon: () => <FaIcon icon={faXmark} />,
+      subMenuButtons: [
         {
           name: TextEditorFormattingOption.colors,
           title: textStrings.resetColor,
@@ -303,7 +307,7 @@ function createToolbarControls(
       title: textStrings.orderedList,
       isActive: isSelectionWithinOrderedList,
       onClick: toggleOrderedList,
-      renderIcon: () => <EdtrIcon icon={edtrListNumbered} />,
+      renderIcon: () => <FaIcon className="h-[15px]" icon={faListOl} />,
     },
     // Unordered list
     {
@@ -311,7 +315,7 @@ function createToolbarControls(
       title: textStrings.unorderedList,
       isActive: isSelectionWithinUnorderedList,
       onClick: toggleUnorderedList,
-      renderIcon: () => <EdtrIcon icon={edtrListBullets} />,
+      renderIcon: () => <FaIcon className="h-[15px]" icon={faListUl} />,
     },
     // Math
     {
@@ -319,7 +323,9 @@ function createToolbarControls(
       title: textStrings.mathFormula,
       isActive: isMathActive,
       onClick: toggleMath,
-      renderIcon: () => <EdtrIcon icon={edtrFormula} />,
+      renderIcon: () => (
+        <FaIcon className="h-[15px]" icon={faSquareRootVariable} />
+      ),
     },
     // Code
     {
@@ -327,7 +333,7 @@ function createToolbarControls(
       title: textStrings.code,
       isActive: isCodeActive,
       onClick: toggleCode,
-      renderIcon: () => <FaIcon icon={faCode} />,
+      renderIcon: () => <FaIcon className="h-[15px]" icon={faCode} />,
     },
   ].map((option) => {
     return {

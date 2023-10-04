@@ -4,10 +4,10 @@ import { gql } from 'graphql-request'
 import { SerloAddButton } from '../../../plugin/helpers/serlo-editor-button'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { FaIcon } from '@/components/fa-icon'
-import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { UuidType, UuidWithRevType } from '@/data-types'
+import { useEntityId } from '@/contexts/uuids-context'
+import { UuidType, type UuidWithRevType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { getTranslatedType } from '@/helper/get-translated-type'
@@ -33,7 +33,7 @@ export function ArticleRelatedTaxonomy({
   const dataAndTerm = getCategorisedDataAndTerm(data, error)
   if (!dataAndTerm || !entityId) {
     const isNew =
-      typeof window !== undefined &&
+      typeof window !== 'undefined' &&
       window.location.pathname.startsWith('/entity/create')
     return (
       <p className="mt-4 border-t-2 pt-4 italic text-gray-400">

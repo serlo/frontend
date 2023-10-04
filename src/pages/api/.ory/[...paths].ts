@@ -1,7 +1,19 @@
-import { COOKIE_DOMAIN } from '@/auth/cookie/cookie-domain'
 import { createApiHandler, config } from '@ory/integrations/next-edge'
 
 export { config }
+
+const COOKIE_DOMAINS = {
+  production: process.env.NEXT_PUBLIC_SERLO_DOMAIN_PRODUCTION,
+  staging: process.env.NEXT_PUBLIC_SERLO_DOMAIN_STAGING,
+  local: 'localhost',
+}
+
+export const COOKIE_DOMAIN =
+  process.env.NEXT_PUBLIC_ENV === 'production'
+    ? COOKIE_DOMAINS['production']
+    : process.env.NEXT_PUBLIC_VERCEL_URL
+    ? COOKIE_DOMAINS['staging']
+    : COOKIE_DOMAINS['local']
 
 const KRATOS_HOSTS = {
   production: process.env.KRATOS_HOST_PRODUCTION,
