@@ -1,5 +1,4 @@
 import dynamic from 'next/dynamic'
-import { ComponentProps } from 'react'
 
 import { EditorPluginType } from './types/editor-plugin-type'
 import {
@@ -14,11 +13,9 @@ import {
 import { TemplatePluginType } from './types/template-plugin-type'
 // import { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
 import { Lazy } from '@/components/content/lazy'
-import { Link } from '@/components/content/link'
 import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { ExternalProvider } from '@/helper/use-consent'
-import { LinkRenderer } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { AnchorStaticRenderer } from '@/serlo-editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@/serlo-editor/plugins/article/static'
 import { BoxStaticRenderer } from '@/serlo-editor/plugins/box/static'
@@ -44,6 +41,7 @@ import type { MathElement } from '@/serlo-editor/plugins/text'
 import { TextStaticRenderer } from '@/serlo-editor/plugins/text/static'
 import { parseVideoUrl } from '@/serlo-editor/plugins/video/renderer'
 import { VideoStaticRenderer } from '@/serlo-editor/plugins/video/static'
+import { LinkRenderer } from '@/serlo-editor/plugins/text/link-renderer'
 
 const HighlightStaticRenderer = dynamic<EditorHighlightPlugin>(() =>
   import('@/serlo-editor/plugins/highlight/static').then(
@@ -248,16 +246,6 @@ export function createRenderers({
           <StaticMath {...element} />
         </Lazy>
       ),
-    linkRenderer: ({ href, children }: ComponentProps<LinkRenderer>) => {
-      // TODO: isOnProfile logic
-      const isOnProfile = false
-      return (
-        <Link href={href} unreviewed={isOnProfile}>
-          {children}
-        </Link>
-      )
-
-      // {isRevisionView && <ExtraRevisionViewInfo element={element} />}
-    },
+    linkRenderer: LinkRenderer
   }
 }
