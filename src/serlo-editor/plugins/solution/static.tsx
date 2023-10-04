@@ -42,23 +42,23 @@ export function StaticSolutionRenderer({
       }
       solutionVisibleOnInit={solutionVisibleOnInit}
       elementBeforePrerequisite={beforeSlot}
-    // hideToggle={
-    //   !node.solution.content ||
-    //   node.solution.trashed ||
-    //   (isPrintMode && !printModeSolutionVisible)
-    // }
-    // onSolutionOpen={() =>
-    //   exerciseSubmission(
-    //     {
-    //       path: asPath,
-    //       entityId: node.context.id,
-    //       revisionId: node.context.revisionId,
-    //       type: 'text',
-    //       result: 'open',
-    //     },
-    //     ab
-    //   )
-    // }
+      // hideToggle={
+      //   !node.solution.content ||
+      //   node.solution.trashed ||
+      //   (isPrintMode && !printModeSolutionVisible)
+      // }
+      // onSolutionOpen={() =>
+      //   exerciseSubmission(
+      //     {
+      //       path: asPath,
+      //       entityId: node.context.id,
+      //       revisionId: node.context.revisionId,
+      //       type: 'text',
+      //       result: 'open',
+      //     },
+      //     ab
+      //   )
+      // }
     />
   )
 }

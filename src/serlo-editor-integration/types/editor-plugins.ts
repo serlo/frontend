@@ -38,6 +38,8 @@ export type SlateTextElement = CustomText
 
 // All supported editor plugins in their serialized versions
 
+// TODO: after static renderer PR is merged rename all …Plugin to …Document
+
 export interface EditorAnchorPlugin {
   plugin: EditorPluginType.Anchor
   state: Prettify<StateTypeSerializedType<AnchorPluginState>>
@@ -243,6 +245,9 @@ export interface UnknownEditorPlugin {
   id?: string
 }
 
+export type AnyEditorPlugin = SupportedEditorPlugin | UnknownEditorPlugin
+
+// dark ts magic ✨
 type Prettify<T> = {
   [K in keyof T]: T[K]
 } & unknown

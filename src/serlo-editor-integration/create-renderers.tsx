@@ -60,11 +60,11 @@ export function createRenderers({
   instance,
   routerAsPath,
 }: // isRevisionView,
-  {
-    instance: Instance
-    isRevisionView: boolean
-    routerAsPath: string
-  }) {
+{
+  instance: Instance
+  isRevisionView: boolean
+  routerAsPath: string
+}) {
   // const isPage = parentType === UuidType.Page
 
   return {

@@ -17,7 +17,7 @@ export function ExerciseLicenseNotice({
   data,
   type,
 }: ExerciseLicenseNoticeProps) {
-  const { title: explanation, default: isDefault, url, id, shortTitle } = data
+  const { title: explanation, default: isDefault, id, shortTitle } = data
   const { strings } = useInstanceData()
 
   if (isDefault) return null

@@ -7,12 +7,12 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { prettifyLinksInState } from '@/fetcher/prettify-links-state/prettify-links-in-state'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import {
   AnyEditorPlugin,
-  StaticRenderer,
-} from '@/serlo-editor/static-renderer/static-renderer'
-import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { SupportedEditorPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+  SupportedEditorPlugin,
+} from '@/serlo-editor-integration/types/editor-plugins'
 
 interface TmpProps {
   editorState: AnyEditorPlugin

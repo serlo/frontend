@@ -5,11 +5,12 @@ import { idsQuery } from './ids-query'
 import { endpoint } from '@/api/endpoint'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 import { getChildrenOfSerializedDocument } from '@/serlo-editor/static-renderer/helper/get-children-of-serialized-document'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { AnyEditorPlugin } from '@/serlo-editor-integration/types/editor-plugins'
 import {
-  EditorSolutionPlugin,
-  SupportedEditorPlugin,
-} from '@/serlo-editor-integration/types/editor-plugins'
+  isImageDocument,
+  isSolutionDocument,
+  isTextDocument,
+} from '@/serlo-editor-integration/types/plugin-type-guards'
 
 interface IdsQueryReturn {
   [key: string]: {
@@ -18,24 +19,21 @@ interface IdsQueryReturn {
   }
 }
 
-export async function prettifyLinksInState(
-  rootDocument?: SupportedEditorPlugin
-) {
+export async function prettifyLinksInState(rootDocument?: AnyEditorPlugin) {
   if (!rootDocument) return undefined
   const ids: number[] = []
   const callbacks: { id: number; callback: (alias: string) => void }[] = []
 
   walk(rootDocument)
 
-  function walk(document?: SupportedEditorPlugin) {
+  function walk(document?: AnyEditorPlugin) {
     if (!document) return
 
     getChildrenOfSerializedDocument(document).forEach(walk)
 
     // TODO: this does not seem to run, investigate
-    // @ts-expect-error allow solutions
-    if (document.plugin === EditorPluginType.Solution) {
-      const prereq = (document as EditorSolutionPlugin).state.prerequisite
+    if (isSolutionDocument(document)) {
+      const prereq = document.state.prerequisite
 
       if (prereq && prereq.id) {
         const id = getId(prereq.id)
@@ -52,10 +50,10 @@ export async function prettifyLinksInState(
         }
       }
     }
-    if (document.plugin === EditorPluginType.Text) {
+    if (isTextDocument(document)) {
       document.state.forEach(walkSlateDescendant)
     }
-    if (document.plugin === EditorPluginType.Image) {
+    if (isImageDocument(document)) {
       const href = document.state.link?.href
       const id = getId(href)
       if (id) {

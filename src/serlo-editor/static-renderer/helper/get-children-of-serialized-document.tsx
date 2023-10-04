@@ -1,44 +1,49 @@
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
-  EditorSolutionPlugin,
+  AnyEditorPlugin,
   SupportedEditorPlugin,
 } from '@/serlo-editor-integration/types/editor-plugins'
+import {
+  isArticleIntroductionDocument,
+  isArticleDocument,
+  isExerciseDocument,
+  isImageDocument,
+  isMultimediaDocument,
+  isPageLayoutDocument,
+  isRowsDocument,
+  isSolutionDocument,
+} from '@/serlo-editor-integration/types/plugin-type-guards'
 
 /**
  * Helper for static renderer that returns the direct children of the supplied document.
  * Run this recursively if you need the nested children as well
  */
 export function getChildrenOfSerializedDocument(
-  document?: SupportedEditorPlugin,
-  ignore?: EditorPluginType[]
-): SupportedEditorPlugin[] {
+  document?: AnyEditorPlugin,
+  ignore?: string[]
+): AnyEditorPlugin[] {
   if (!document || ignore?.includes(document.plugin)) return []
 
   const children =
-    document.plugin === EditorPluginType.Rows
+    //
+    isRowsDocument(document)
       ? document.state
       : //
-      document.plugin === EditorPluginType.Article
+      isArticleDocument(document)
       ? [document.state.introduction, document.state.content]
       : //
-      document.plugin === EditorPluginType.Multimedia ||
-        document.plugin === EditorPluginType.ArticleIntroduction
+      isMultimediaDocument(document) || isArticleIntroductionDocument(document)
       ? [document.state.explanation, document.state.multimedia]
       : //
-      document.plugin === EditorPluginType.PageLayout
+      isPageLayoutDocument(document)
       ? [document.state.column1, document.state.column2]
       : //
-      document.plugin === EditorPluginType.Exercise
+      isExerciseDocument(document)
       ? [document.state.content, document.state.interactive]
       : //
-      // @ts-expect-error allow solutions
-      document.plugin === EditorPluginType.Solution
-      ? [
-          (document as EditorSolutionPlugin).state.steps,
-          (document as EditorSolutionPlugin).state.strategy,
-        ]
+      isSolutionDocument(document)
+      ? [document.state.steps, document.state.strategy]
       : //
-      document.plugin === EditorPluginType.Image
+      isImageDocument(document)
       ? [document.state.caption]
       : //
         []

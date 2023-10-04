@@ -1,12 +1,8 @@
 import { Fragment } from 'react'
 
 import { editorRenderers } from '../plugin/helpers/editor-renderer'
-import {
-  SupportedEditorPlugin,
-  UnknownEditorPlugin,
-} from '@/serlo-editor-integration/types/editor-plugins'
+import { AnyEditorPlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
-export type AnyEditorPlugin = SupportedEditorPlugin | UnknownEditorPlugin
 interface StaticRendererProps {
   state?: AnyEditorPlugin | AnyEditorPlugin[]
 }

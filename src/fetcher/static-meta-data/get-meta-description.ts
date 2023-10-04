@@ -1,52 +1,51 @@
 import { extractStringFromTextPlugin } from '@/serlo-editor/plugins/text/utils/static-extract-text'
 import { isEmptyTextPlugin } from '@/serlo-editor/plugins/text/utils/static-is-empty'
 import { getChildrenOfSerializedDocument } from '@/serlo-editor/static-renderer/helper/get-children-of-serialized-document'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { AnyEditorPlugin } from '@/serlo-editor-integration/types/editor-plugins'
 import {
-  EditorMultimediaPlugin,
-  EditorTextPlugin,
-  SupportedEditorPlugin,
-} from '@/serlo-editor-integration/types/editor-plugins'
+  isArticleIntroductionDocument,
+  isArticleDocument,
+  isRowsDocument,
+  isTextDocument,
+} from '@/serlo-editor-integration/types/plugin-type-guards'
 
 /**
  * special metaDescription for articles extracted from the introduction text
  */
 export function getArticleMetaDescription(
-  content?: SupportedEditorPlugin
+  content?: AnyEditorPlugin
 ): string | undefined {
   if (
     !content ||
-    content.plugin !== EditorPluginType.Article ||
+    !isArticleDocument(content) ||
     !content.state.introduction ||
-    content.state.introduction.plugin !==
-      EditorPluginType.ArticleIntroduction ||
+    !isArticleIntroductionDocument(content.state.introduction) ||
     !content.state.introduction.state
   ) {
     return undefined
   }
 
-  const explanation = (content.state.introduction as EditorMultimediaPlugin)
-    .state.explanation as EditorTextPlugin
+  const explanation = content.state.introduction.state.explanation
 
   if (isEmptyTextPlugin(explanation)) return undefined
   return extractStringFromTextPlugin(explanation) ?? undefined
 }
 
 export function getMetaDescription(
-  content?: SupportedEditorPlugin
+  content?: AnyEditorPlugin
 ): string | undefined {
   if (!content) return undefined
 
   let extracted = ''
 
-  if (content.plugin === EditorPluginType.Text) {
+  if (isTextDocument(content)) {
     extracted = extractStringFromTextPlugin(content) ?? undefined
   }
 
-  if (content.plugin === EditorPluginType.Rows) {
+  if (isRowsDocument(content)) {
     // run row by row so we don't have to go through the whole content
     content.state.every((row) => {
-      extracted += extractTextFromDocument(row as SupportedEditorPlugin)
+      extracted += extractTextFromDocument(row)
       // continue if extract is shorter than 150
       return extracted.length < 150
     })
@@ -59,10 +58,16 @@ export function getMetaDescription(
   return extracted.substring(0, cutoff) + (extracted.length > 135 ? ' …' : '')
 }
 
-function extractTextFromDocument(document?: SupportedEditorPlugin): string {
-  if (!document) return ''
+// TODO: test more
+function extractTextFromDocument(
+  document?: AnyEditorPlugin,
+  collected: string = ''
+): string {
+  if (!document || !isTextDocument(document)) return ''
   // call on children recursively
-  getChildrenOfSerializedDocument(document).forEach(extractTextFromDocument)
+  collected += getChildrenOfSerializedDocument(document).forEach((child) =>
+    extractTextFromDocument(child, collected)
+  )
 
-  return extractStringFromTextPlugin(document)
+  return collected + ' ' + extractStringFromTextPlugin(document)
 }
