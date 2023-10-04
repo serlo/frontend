@@ -85,7 +85,7 @@ export function InputExerciseRenderer({
       )}
       {entry && entry.ivals.length > 0 && (
         <div className="-mt-4 mb-3">
-          {prettyPrintSolutionEntries(entry.ivals)}
+          {prettyPrintSolutionEntries(entry.ivals.map((x) => x.trim()))}
         </div>
       )}
     </div>
