@@ -6,8 +6,7 @@ import { BoxRenderer, BoxType } from '@/serlo-editor/plugins/box/renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorBoxPlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
-// Not sure if this is still needed:
-
+// TODO: check if we still need this:
 // get rid of wrapping p and inline math in title
 // const convertedTitle = convert(
 //   node.state.title as SupportedEditorPlugin
