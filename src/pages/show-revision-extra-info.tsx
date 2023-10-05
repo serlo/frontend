@@ -8,12 +8,12 @@ import { prettifyLinksInState } from '@/fetcher/prettify-links-state/prettify-li
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { IsRevisionViewContext } from '@/serlo-editor-integration/context/is-revision-view'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import {
   AnyEditorDocument,
   SupportedEditorPlugin,
 } from '@/serlo-editor-integration/types/editor-plugins'
+import { RevisionViewProvider } from '@/contexts/revision-view-context'
 
 interface TmpProps {
   editorState: AnyEditorDocument
@@ -48,9 +48,9 @@ function Content({ editorState }: { editorState: AnyEditorDocument }) {
     <main id="content">
       <section itemProp="articleBody">
         <div className="serlo-content-with-spacing-fixes">
-          <IsRevisionViewContext.Provider value>
+          <RevisionViewProvider value>
             <StaticRenderer document={editorState} />
-          </IsRevisionViewContext.Provider>
+          </RevisionViewProvider>
         </div>
       </section>
     </main>

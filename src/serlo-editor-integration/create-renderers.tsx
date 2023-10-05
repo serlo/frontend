@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 
+import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-static-renderer'
 import { LinkSerloRenderer } from './serlo-plugin-wrappers/link-renderer'
 import { EditorPluginType } from './types/editor-plugin-type'
 import type {
@@ -8,7 +9,6 @@ import type {
   EditorGeogebraPlugin,
   EditorH5PPlugin,
   EditorHighlightPlugin,
-  EditorImagePlugin,
   EditorInjectionPlugin,
   EditorInputExercisePlugin,
   EditorScMcExercisePlugin,
@@ -30,7 +30,6 @@ import { BoxStaticRenderer } from '@/serlo-editor/plugins/box/static'
 import { EquationsStaticRenderer } from '@/serlo-editor/plugins/equations/static'
 import { parseId } from '@/serlo-editor/plugins/geogebra/renderer'
 import { GeogebraStaticRenderer } from '@/serlo-editor/plugins/geogebra/static'
-import { ImageStaticRenderer } from '@/serlo-editor/plugins/image/static'
 import { InjectionStaticRenderer } from '@/serlo-editor/plugins/injection/static'
 import { MultimediaStaticRendererWithLightbox } from '@/serlo-editor/plugins/multimedia/static-with-dynamic-lightbox'
 import { PageLayoutStaticRenderer } from '@/serlo-editor/plugins/page-layout/static'
@@ -54,15 +53,15 @@ const H5pSerloStaticRenderer = dynamic<EditorH5PPlugin>(() =>
     '@/serlo-editor-integration/serlo-plugin-wrappers/h5p-serlo-static'
   ).then((mod) => mod.H5pSerloStaticRenderer)
 )
-const InputExerciseStaticRenderer = dynamic<EditorInputExercisePlugin>(() =>
-  import('@/serlo-editor/plugins/input-exercise/static').then(
-    (mod) => mod.InputExerciseStaticRenderer
-  )
+const InputSerloStaticRenderer = dynamic<EditorInputExercisePlugin>(() =>
+  import(
+    '@/serlo-editor-integration/serlo-plugin-wrappers/input-serlo-static-renderer'
+  ).then((mod) => mod.InputSerloStaticRenderer)
 )
 const SerloScMcExerciseStaticRenderer = dynamic<EditorScMcExercisePlugin>(() =>
   import(
     '@/serlo-editor-integration/serlo-plugin-wrappers/sc-mc-serlo-static-renderer'
-  ).then((mod) => mod.SerloScMcExerciseStaticRenderer)
+  ).then((mod) => mod.ScMcSerloStaticRenderer)
 )
 const SolutionSerloStaticRenderer = dynamic<EditorSolutionPlugin>(() =>
   import(
@@ -93,11 +92,9 @@ const PrivacyWrapper = dynamic<PrivacyWrapperProps>(() =>
 
 export function createRenderers({
   instance,
-  routerAsPath, // TODO: move out of create function
 }: {
   instance: Instance
   isRevisionView?: boolean
-  routerAsPath: string
 }): InitRenderersArgs {
   // TODO: only allow page plugin on pages…
   // const isPage = parentType === UuidType.Page
@@ -108,13 +105,7 @@ export function createRenderers({
       { type: EditorPluginType.Article, renderer: ArticleStaticRenderer },
       { type: EditorPluginType.Rows, renderer: RowsStaticRenderer },
       { type: EditorPluginType.Text, renderer: TextStaticRenderer },
-      {
-        type: EditorPluginType.Image,
-        renderer: (state: EditorImagePlugin) => {
-          const pathNameBase = routerAsPath.split('/').pop()
-          return <ImageStaticRenderer {...state} pathNameBase={pathNameBase} />
-        },
-      },
+      { type: EditorPluginType.Image, renderer: ImageSerloStaticRenderer },
       {
         type: EditorPluginType.Multimedia,
         // special renderer for frontend because it uses nextjs dynamic import
@@ -215,11 +206,7 @@ export function createRenderers({
       { type: EditorPluginType.H5p, renderer: H5pSerloStaticRenderer },
       {
         type: EditorPluginType.InputExercise,
-        renderer: InputExerciseStaticRenderer,
-        // TODO: add frontend stuff
-        // answers = { renderAnswers() }
-        // onEvaluate = { onEvaluate }
-        // { isRevisionView && renderRevisionExtra() }
+        renderer: InputSerloStaticRenderer,
       },
       {
         type: EditorPluginType.ScMcExercise,

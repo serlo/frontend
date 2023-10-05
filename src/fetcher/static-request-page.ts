@@ -171,6 +171,7 @@ export async function staticRequestPage(
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
+        revisionId: uuid.currentRevision?.id,
         alias: uuid.alias,
         typename: uuid.__typename as UuidType,
         trashed: uuid.trashed,
@@ -212,6 +213,7 @@ export async function staticRequestPage(
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
+        revisionId: uuid.currentRevision?.id,
         alias: uuid.alias,
         typename: UuidType.ExerciseGroup,
         // @ts-expect-error static
@@ -246,6 +248,7 @@ export async function staticRequestPage(
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
+        revisionId: uuid.currentRevision?.id,
         alias: uuid.alias,
         trashed: uuid.trashed,
         typename: UuidType.Event,
@@ -272,10 +275,10 @@ export async function staticRequestPage(
       newsletterPopup: true,
       entityData: {
         id: uuid.id,
+        revisionId: uuid.currentRevision?.id,
         alias: uuid.alias,
         trashed: uuid.trashed,
         typename: UuidType.Page,
-        revisionId: uuid.currentRevision?.id,
         title: uuid.currentRevision?.title ?? '',
         //@ts-expect-error static
         content,
@@ -303,6 +306,7 @@ export async function staticRequestPage(
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        revisionId: uuid.currentRevision?.id,
         alias: uuid.alias,
         trashed: uuid.trashed,
         typename: UuidType.Article,
@@ -341,6 +345,7 @@ export async function staticRequestPage(
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        revisionId: uuid.currentRevision?.id,
         alias: uuid.alias,
         trashed: uuid.trashed,
         typename: UuidType.Video,
@@ -384,6 +389,7 @@ export async function staticRequestPage(
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        revisionId: uuid.currentRevision?.id,
         alias: uuid.alias,
         trashed: uuid.trashed,
         typename: UuidType.Applet,
@@ -447,6 +453,7 @@ export async function staticRequestPage(
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
+        revisionId: uuid.currentRevision?.id,
         alias: uuid.alias,
         trashed: uuid.trashed,
         typename: UuidType.CoursePage,

@@ -7,8 +7,6 @@ import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import type { EditorH5PPlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
-// TODO: test if events are actually submitted when we call this inside [...slug]
-
 // Special version for serlo.org with exercise submission events
 export function H5pSerloStaticRenderer(props: EditorH5PPlugin) {
   const { asPath } = useRouter()

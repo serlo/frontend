@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import NextAdapterPages from 'next-query-params/pages'
 import { useMemo } from 'react'
 import { debounce } from 'ts-debounce'
@@ -62,7 +61,6 @@ function Content() {
   const isNotEmpty = previewState !== emptyState
 
   const { lang } = useInstanceData()
-  const routerAsPath = useRouter().asPath
 
   const debouncedSetState = debounce(
     (state?: string | null) => setPreviewState(state ?? emptyState),
@@ -103,9 +101,7 @@ function Content() {
   )
 
   // simplest way to provide renderers to editor that can also easily be adapted by edusharing
-  editorRenderers.init(
-    createRenderers({ instance: lang, isRevisionView: false, routerAsPath })
-  )
+  editorRenderers.init(createRenderers({ instance: lang }))
 
   return (
     <main id="content" className="flex">

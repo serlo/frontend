@@ -2,15 +2,15 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { Revision } from '@/components/author/revision/revision'
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import { RevisionViewProvider } from '@/contexts/revision-view-context'
 import { RevisionProps, RevisionPage } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestRevision } from '@/fetcher/revision/request'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
-import { IsRevisionViewContext } from '@/serlo-editor-integration/context/is-revision-view'
 
 export default renderedPageNoHooks<RevisionProps>(({ pageData }) => (
   // TODO: Does not do anything yet. Just to show where the context could be provided.
-  <IsRevisionViewContext.Provider value>
+  <RevisionViewProvider value>
     <FrontendClientBase
       entityId={pageData.revisionData.thisRevision.id}
       authorization={pageData.authorization}
@@ -18,7 +18,7 @@ export default renderedPageNoHooks<RevisionProps>(({ pageData }) => (
     >
       <Revision data={pageData.revisionData} />
     </FrontendClientBase>
-  </IsRevisionViewContext.Provider>
+  </RevisionViewProvider>
 ))
 
 export const getStaticProps: GetStaticProps<RevisionProps> = async (
