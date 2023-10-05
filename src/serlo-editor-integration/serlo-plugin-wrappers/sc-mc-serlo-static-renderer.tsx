@@ -14,9 +14,7 @@ import { ScMcExerciseRendererAnswer } from '@/serlo-editor/plugins/sc-mc-exercis
 import { ScMcExerciseStaticRenderer } from '@/serlo-editor/plugins/sc-mc-exercise/static'
 import { EditorScMcExercisePlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
-export function SerloScMcExerciseStaticRenderer(
-  props: EditorScMcExercisePlugin
-) {
+export function ScMcSerloStaticRenderer(props: EditorScMcExercisePlugin) {
   const { asPath } = useRouter()
   const ab = useAB()
   const entityId = useEntityId()

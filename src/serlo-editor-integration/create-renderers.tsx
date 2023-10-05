@@ -58,15 +58,15 @@ const H5pSerloStaticRenderer = dynamic<EditorH5PPlugin>(() =>
     '@/serlo-editor-integration/serlo-plugin-wrappers/h5p-serlo-static'
   ).then((mod) => mod.H5pSerloStaticRenderer)
 )
-const InputExerciseStaticRenderer = dynamic<EditorInputExercisePlugin>(() =>
-  import('@/serlo-editor/plugins/input-exercise/static').then(
-    (mod) => mod.InputExerciseStaticRenderer
-  )
+const InputSerloStaticRenderer = dynamic<EditorInputExercisePlugin>(() =>
+  import(
+    '@/serlo-editor-integration/serlo-plugin-wrappers/input-serlo-static-renderer'
+  ).then((mod) => mod.InputSerloStaticRenderer)
 )
 const SerloScMcExerciseStaticRenderer = dynamic<EditorScMcExercisePlugin>(() =>
   import(
     '@/serlo-editor-integration/serlo-plugin-wrappers/sc-mc-serlo-static-renderer'
-  ).then((mod) => mod.SerloScMcExerciseStaticRenderer)
+  ).then((mod) => mod.ScMcSerloStaticRenderer)
 )
 const SolutionSerloStaticRenderer = dynamic<EditorSolutionPlugin>(() =>
   import(
@@ -226,11 +226,7 @@ export function createRenderers({
       { type: EditorPluginType.H5p, renderer: H5pSerloStaticRenderer },
       {
         type: EditorPluginType.InputExercise,
-        renderer: InputExerciseStaticRenderer,
-        // TODO: add frontend stuff
-        // answers = { renderAnswers() }
-        // onEvaluate = { onEvaluate }
-        // { isRevisionView && renderRevisionExtra() }
+        renderer: InputSerloStaticRenderer,
       },
       {
         type: EditorPluginType.ScMcExercise,
