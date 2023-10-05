@@ -1,7 +1,6 @@
 import dynamic from 'next/dynamic'
 
 import { ExerciseSerloStaticRenderer } from './serlo-plugin-wrappers/exercise-serlo-static-renderer'
-import { HighlightSerloStaticRenderer } from './serlo-plugin-wrappers/highlight-serlo-static-renderer'
 import { SerloScMcExerciseStaticRenderer } from './serlo-plugin-wrappers/sc-mc-serlo-static-renderer'
 import { SolutionSerloStaticRenderer } from './serlo-plugin-wrappers/solution-serlo-static-renderer'
 import { EditorPluginType } from './types/editor-plugin-type'
@@ -45,10 +44,10 @@ import { VideoStaticRenderer } from '@/serlo-editor/plugins/video/static'
 import { H5pSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/h5p-serlo-static'
 import { LinkRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/link-renderer'
 
-const HighlightStaticRenderer = dynamic<EditorHighlightPlugin>(() =>
-  import('@/serlo-editor/plugins/highlight/static').then(
-    (mod) => mod.HighlightStaticRenderer
-  )
+const HighlightSerloStaticRenderer = dynamic<EditorHighlightPlugin>(() =>
+  import(
+    '@/serlo-editor-integration/serlo-plugin-wrappers/highlight-serlo-static-renderer'
+  ).then((mod) => mod.HighlightSerloStaticRenderer)
 )
 
 const StaticMath = dynamic<MathElement>(() =>
