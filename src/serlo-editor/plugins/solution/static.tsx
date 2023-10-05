@@ -1,4 +1,5 @@
 import { SolutionRenderer } from './renderer'
+import { isEmptyRowsDocument } from '../rows/utils/static-is-empty'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 import { Link } from '@/components/content/link'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
@@ -31,6 +32,9 @@ export function StaticSolutionRenderer({
   const strategyElement = isEmptyTextDocument(strategy) ? null : (
     <StaticRenderer document={strategy} />
   )
+
+  // don't show empty solutions
+  if (isEmptyRowsDocument(steps) && !strategyElement) return null
 
   return (
     <SolutionRenderer

@@ -1,5 +1,5 @@
 import { MultimediaRenderer } from './renderer'
-import { isEmptyRowsPlugin } from '../rows/utils/static-is-empty'
+import { isEmptyRowsDocument } from '../rows/utils/static-is-empty'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import {
   EditorAudioPlugin,
@@ -21,7 +21,7 @@ export function MultimediaStaticRenderer({
 }: EditorMultimediaPlugin & { setOpen?: (arg: boolean) => void }) {
   const { explanation, multimedia, width: mediaWidth } = state
 
-  if (isEmptyMedia() && isEmptyRowsPlugin(explanation)) return null
+  if (isEmptyMedia() && isEmptyRowsDocument(explanation)) return null
 
   return (
     <MultimediaRenderer
