@@ -8,7 +8,7 @@ export function RowsStaticRenderer({ state }: EditorRowsPlugin) {
     <>
       {state.map((row) => (
         <div key={row.id} id={row.id?.split('-')[0]} className="my-block">
-          <StaticRenderer state={row} />
+          <StaticRenderer document={row} />
         </div>
       ))}
     </>

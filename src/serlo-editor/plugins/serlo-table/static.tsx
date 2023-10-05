@@ -14,7 +14,7 @@ export function SerloTableStaticRenderer({ state }: EditorSerloTablePlugin) {
       cells: (row.columns?.map(({ content }, colIndex) => {
         return content ? (
           <div key={`${rowIndex}:${colIndex}`}>
-            <StaticRenderer state={content} />
+            <StaticRenderer document={content} />
           </div>
         ) : null
       }) as JSX.Element[]) ?? <></>,

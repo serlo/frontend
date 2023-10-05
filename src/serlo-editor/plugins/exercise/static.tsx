@@ -7,8 +7,8 @@ export function ExerciseStaticRenderer({ state }: EditorExercisePlugin) {
 
   return (
     <>
-      <StaticRenderer state={content} />
-      <StaticRenderer state={interactive} />
+      <StaticRenderer document={content} />
+      <StaticRenderer document={interactive} />
     </>
   )
 }

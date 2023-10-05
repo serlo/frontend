@@ -1,29 +1,29 @@
 import { Fragment } from 'react'
 
 import { editorRenderers } from '../plugin/helpers/editor-renderer'
-import { AnyEditorPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 interface StaticRendererProps {
-  state?: AnyEditorPlugin | AnyEditorPlugin[]
+  document?: AnyEditorDocument | AnyEditorDocument[]
 }
 
 /**
- * StaticRenderer expects serialzied plugin states and renders them.
+ * StaticRenderer expects a serialzied document and renders it.
  * Compared to the edit mode this renderer should have a small bundle size
  */
 export function StaticRenderer({
-  state,
+  document,
 }: StaticRendererProps): JSX.Element | null {
-  if (!state) return null
+  if (!document) return null
 
-  if (Array.isArray(state)) {
+  if (Array.isArray(document)) {
     return (
       <>
-        {state.map((item, index) => {
+        {document.map((item, index) => {
           if (!item) return null
           return (
             <Fragment key={item.id ?? `${item.plugin}${index}`}>
-              <StaticRenderer state={item} />
+              <StaticRenderer document={item} />
             </Fragment>
           )
         })}
@@ -31,9 +31,7 @@ export function StaticRenderer({
     )
   }
 
-  const Renderer = editorRenderers.getByType(state.plugin)
+  const Renderer = editorRenderers.getByType(document.plugin)
 
-  if (!Renderer) return null
-
-  return <Renderer {...state} />
+  return Renderer ? <Renderer {...document} /> : null
 }

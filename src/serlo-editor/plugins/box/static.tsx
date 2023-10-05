@@ -36,7 +36,7 @@ export function BoxStaticRenderer({ state }: EditorBoxPlugin) {
       title={boldTitle}
       anchorId={anchorId}
     >
-      <StaticRenderer state={content} />
+      <StaticRenderer document={content} />
     </BoxRenderer>
   )
 }

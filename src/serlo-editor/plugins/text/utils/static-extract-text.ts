@@ -1,6 +1,6 @@
 import type { Descendant } from 'slate'
 
-import { AnyEditorPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 import { isTextDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
 
 export function extractDescendant(node: Descendant): string {
@@ -10,7 +10,7 @@ export function extractDescendant(node: Descendant): string {
   return node.text
 }
 
-export function extractStringFromTextPlugin(document?: AnyEditorPlugin) {
+export function extractStringFromTextDocument(document?: AnyEditorDocument) {
   if (document && isTextDocument(document) && document.state.length > 0) {
     return document.state.map(extractDescendant).join(' ').trim()
   }

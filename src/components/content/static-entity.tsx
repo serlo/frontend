@@ -141,7 +141,7 @@ export function StaticEntity({ data }: EntityProps) {
   function renderContent(value: FrontendContentNode[]) {
     // const content = renderArticle(value, `entity${data.id}`)
     const content = (
-      <StaticRenderer state={value as unknown as SupportedEditorPlugin} />
+      <StaticRenderer document={value as unknown as SupportedEditorPlugin} />
     )
     if (data.schemaData?.setContentAsSection) {
       return <section itemProp="articleBody">{content}</section>

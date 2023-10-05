@@ -1,5 +1,5 @@
 import {
-  AnyEditorPlugin,
+  AnyEditorDocument,
   SupportedEditorPlugin,
 } from '@/serlo-editor-integration/types/editor-plugins'
 import {
@@ -18,9 +18,9 @@ import {
  * Run this recursively if you need the nested children as well
  */
 export function getChildrenOfSerializedDocument(
-  document?: AnyEditorPlugin,
+  document?: AnyEditorDocument,
   ignore?: string[]
-): AnyEditorPlugin[] {
+): AnyEditorDocument[] {
   if (!document || ignore?.includes(document.plugin)) return []
 
   const children =

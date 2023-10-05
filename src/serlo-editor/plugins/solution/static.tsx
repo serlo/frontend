@@ -1,5 +1,5 @@
 import { SolutionRenderer } from './renderer'
-import { isEmptyTextPlugin } from '../text/utils/static-is-empty'
+import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 import { Link } from '@/components/content/link'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorSolutionPlugin } from '@/serlo-editor-integration/types/editor-plugins'
@@ -28,8 +28,8 @@ export function StaticSolutionRenderer({
     </Link>
   ) : null
 
-  const strategyElement = isEmptyTextPlugin(strategy) ? null : (
-    <StaticRenderer state={strategy} />
+  const strategyElement = isEmptyTextDocument(strategy) ? null : (
+    <StaticRenderer document={strategy} />
   )
 
   return (
@@ -38,7 +38,7 @@ export function StaticSolutionRenderer({
       strategy={strategyElement}
       steps={
         <>
-          <StaticRenderer state={steps} />
+          <StaticRenderer document={steps} />
           {afterSlot}
         </>
       }

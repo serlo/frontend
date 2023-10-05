@@ -8,7 +8,7 @@ import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
-  AnyEditorPlugin,
+  AnyEditorDocument,
   EditorInjectionPlugin,
   EditorRowsPlugin,
 } from '@/serlo-editor-integration/types/editor-plugins'
@@ -18,7 +18,7 @@ export function InjectionStaticRenderer({
   state: href,
 }: EditorInjectionPlugin) {
   const [content, setContent] = useState<
-    AnyEditorPlugin[] | 'loading' | 'error'
+    AnyEditorDocument[] | 'loading' | 'error'
   >('loading')
 
   const { strings } = useInstanceData()
@@ -70,7 +70,7 @@ export function InjectionStaticRenderer({
                 ? ([
                     JSON.parse(exercise.currentRevision?.content),
                     solutionContent ? JSON.parse(solutionContent) : null,
-                  ] as AnyEditorPlugin[])
+                  ] as AnyEditorDocument[])
                 : []
             })
 
@@ -156,7 +156,7 @@ export function InjectionStaticRenderer({
       </StaticInfoPanel>
     )
 
-  return <StaticRenderer state={content} />
+  return <StaticRenderer document={content} />
 }
 
 const query = gql`

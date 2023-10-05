@@ -14,8 +14,8 @@ export const PageLayoutStaticRenderer = ({ state }: EditorPageLayoutPlugin) => {
   return (
     <PageLayoutRenderer
       widthPercent={widthPercent}
-      column1={<StaticRenderer state={column1} />}
-      column2={<StaticRenderer state={column2} />}
+      column1={<StaticRenderer document={column1} />}
+      column2={<StaticRenderer document={column2} />}
     />
   )
 }

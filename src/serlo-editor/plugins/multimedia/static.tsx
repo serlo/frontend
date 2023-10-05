@@ -25,10 +25,10 @@ export function MultimediaStaticRenderer({
 
   return (
     <MultimediaRenderer
-      media={<StaticRenderer state={multimedia} />}
+      media={<StaticRenderer document={multimedia} />}
       explanation={
         <div className="-mt-block pb-block">
-          <StaticRenderer state={explanation} />
+          <StaticRenderer document={explanation} />
         </div>
       }
       mediaWidth={mediaWidth ?? 50}

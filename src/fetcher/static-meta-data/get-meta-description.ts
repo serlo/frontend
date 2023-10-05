@@ -1,7 +1,7 @@
-import { extractStringFromTextPlugin } from '@/serlo-editor/plugins/text/utils/static-extract-text'
-import { isEmptyTextPlugin } from '@/serlo-editor/plugins/text/utils/static-is-empty'
+import { extractStringFromTextDocument } from '@/serlo-editor/plugins/text/utils/static-extract-text'
+import { isEmptyTextDocument } from '@/serlo-editor/plugins/text/utils/static-is-empty'
 import { getChildrenOfSerializedDocument } from '@/serlo-editor/static-renderer/helper/get-children-of-serialized-document'
-import { AnyEditorPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 import {
   isArticleIntroductionDocument,
   isArticleDocument,
@@ -13,7 +13,7 @@ import {
  * special metaDescription for articles extracted from the introduction text
  */
 export function getArticleMetaDescription(
-  content?: AnyEditorPlugin
+  content?: AnyEditorDocument
 ): string | undefined {
   if (
     !content ||
@@ -27,19 +27,19 @@ export function getArticleMetaDescription(
 
   const explanation = content.state.introduction.state.explanation
 
-  if (isEmptyTextPlugin(explanation)) return undefined
-  return extractStringFromTextPlugin(explanation) ?? undefined
+  if (isEmptyTextDocument(explanation)) return undefined
+  return extractStringFromTextDocument(explanation) ?? undefined
 }
 
 export function getMetaDescription(
-  content?: AnyEditorPlugin
+  content?: AnyEditorDocument
 ): string | undefined {
   if (!content) return undefined
 
   let extracted = ''
 
   if (isTextDocument(content)) {
-    extracted = extractStringFromTextPlugin(content) ?? undefined
+    extracted = extractStringFromTextDocument(content) ?? undefined
   }
 
   if (isRowsDocument(content)) {
@@ -60,7 +60,7 @@ export function getMetaDescription(
 
 // TODO: test more
 function extractTextFromDocument(
-  document?: AnyEditorPlugin,
+  document?: AnyEditorDocument,
   collected: string = ''
 ): string {
   if (!document || !isTextDocument(document)) return ''
@@ -69,5 +69,5 @@ function extractTextFromDocument(
     extractTextFromDocument(child, collected)
   )
 
-  return collected + ' ' + extractStringFromTextPlugin(document)
+  return collected + ' ' + extractStringFromTextDocument(document)
 }

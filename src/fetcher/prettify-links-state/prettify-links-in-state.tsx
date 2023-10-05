@@ -5,7 +5,7 @@ import { idsQuery } from './ids-query'
 import { endpoint } from '@/api/endpoint'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 import { getChildrenOfSerializedDocument } from '@/serlo-editor/static-renderer/helper/get-children-of-serialized-document'
-import { AnyEditorPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 import {
   isImageDocument,
   isSolutionDocument,
@@ -19,14 +19,14 @@ interface IdsQueryReturn {
   }
 }
 
-export async function prettifyLinksInState(rootDocument?: AnyEditorPlugin) {
+export async function prettifyLinksInState(rootDocument?: AnyEditorDocument) {
   if (!rootDocument) return undefined
   const ids: number[] = []
   const callbacks: { id: number; callback: (alias: string) => void }[] = []
 
   walk(rootDocument)
 
-  function walk(document?: AnyEditorPlugin) {
+  function walk(document?: AnyEditorDocument) {
     if (!document) return
 
     getChildrenOfSerializedDocument(document).forEach(walk)
