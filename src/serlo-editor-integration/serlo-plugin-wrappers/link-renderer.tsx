@@ -1,9 +1,9 @@
 import { ComponentProps, useContext } from 'react'
 
 import { Link } from '@/components/content/link'
-import { IsRevisionViewContext } from '@/contexts/is-revision-view'
 import { LinkRenderer } from '@/serlo-editor/plugin/helpers/editor-renderer'
-import { RevisionViewExtraInfo } from '@/serlo-editor/static-renderer/revision-view-extra-info'
+import { IsRevisionViewContext } from '@/serlo-editor-integration/context/is-revision-view'
+import { RevisionViewExtraInfo } from '@/serlo-editor-integration/revision-view-extra-info'
 
 export function LinkRenderer({ href, children }: ComponentProps<LinkRenderer>) {
   const isRevisionView = useContext(IsRevisionViewContext)

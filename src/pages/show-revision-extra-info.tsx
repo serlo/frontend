@@ -4,16 +4,15 @@ import type { GetStaticProps } from 'next/types'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { useInstanceData } from '@/contexts/instance-context'
-import { IsRevisionViewContext } from '@/contexts/is-revision-view'
 import { prettifyLinksInState } from '@/fetcher/prettify-links-state/prettify-links-in-state'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import {
-  AnyEditorPlugin,
   StaticRenderer,
 } from '@/serlo-editor/static-renderer/static-renderer'
+import { IsRevisionViewContext } from '@/serlo-editor-integration/context/is-revision-view'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { SupportedEditorPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import { AnyEditorPlugin, SupportedEditorPlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
 interface TmpProps {
   editorState: AnyEditorPlugin

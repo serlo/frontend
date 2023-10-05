@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic'
 
 import { ExerciseSerloStaticRenderer } from './serlo-plugin-wrappers/exercise-serlo-static-renderer'
+import { HighlightSerloStaticRenderer } from './serlo-plugin-wrappers/highlight-serlo-static-renderer'
 import { SerloScMcExerciseStaticRenderer } from './serlo-plugin-wrappers/sc-mc-serlo-static-renderer'
 import { SolutionSerloStaticRenderer } from './serlo-plugin-wrappers/solution-serlo-static-renderer'
 import { EditorPluginType } from './types/editor-plugin-type'
@@ -38,11 +39,11 @@ import { SerloTableStaticRenderer } from '@/serlo-editor/plugins/serlo-table/sta
 import { TextExerciseGroupTypeStaticRenderer } from '@/serlo-editor/plugins/serlo-template-plugins/exercise-group/static'
 import { SpoilerStaticRenderer } from '@/serlo-editor/plugins/spoiler/static'
 import type { MathElement } from '@/serlo-editor/plugins/text'
-import { LinkRenderer } from '@/serlo-editor/plugins/text/link-renderer'
 import { TextStaticRenderer } from '@/serlo-editor/plugins/text/static'
 import { parseVideoUrl } from '@/serlo-editor/plugins/video/renderer'
 import { VideoStaticRenderer } from '@/serlo-editor/plugins/video/static'
 import { H5pSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/h5p-serlo-static'
+import { LinkRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/link-renderer'
 
 const HighlightStaticRenderer = dynamic<EditorHighlightPlugin>(() =>
   import('@/serlo-editor/plugins/highlight/static').then(
@@ -175,14 +176,7 @@ export function createRenderers({
       },
       {
         type: EditorPluginType.Highlight,
-        renderer: (state: EditorHighlightPlugin) => {
-          return (
-            <>
-              <HighlightStaticRenderer {...state} />
-              {/* {isRevisionView && <ExtraRevisionViewInfo element={element} />} */}
-            </>
-          )
-        },
+        renderer: HighlightSerloStaticRenderer,
       },
       { type: EditorPluginType.H5p, renderer: H5pSerloStaticRenderer },
       {
@@ -239,6 +233,6 @@ export function createRenderers({
           <StaticMath {...element} />
         </Lazy>
       ),
-    linkRenderer: LinkRenderer
+    linkRenderer: LinkRenderer,
   }
 }
