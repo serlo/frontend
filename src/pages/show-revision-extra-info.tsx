@@ -1,9 +1,9 @@
-import { useRouter } from 'next/router'
 import type { GetStaticProps } from 'next/types'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { useInstanceData } from '@/contexts/instance-context'
+import { RevisionViewProvider } from '@/contexts/revision-view-context'
 import { prettifyLinksInState } from '@/fetcher/prettify-links-state/prettify-links-in-state'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
@@ -13,7 +13,6 @@ import {
   AnyEditorDocument,
   SupportedEditorPlugin,
 } from '@/serlo-editor-integration/types/editor-plugins'
-import { RevisionViewProvider } from '@/contexts/revision-view-context'
 
 interface TmpProps {
   editorState: AnyEditorDocument
@@ -39,10 +38,9 @@ export default renderedPageNoHooks<TmpProps>((props) => {
 
 function Content({ editorState }: { editorState: AnyEditorDocument }) {
   const { lang } = useInstanceData()
-  const routerAsPath = useRouter().asPath
 
   // simplest way to provide renderers to editor that can also easily be adapted by edusharing
-  editorRenderers.init(createRenderers({ instance: lang, routerAsPath }))
+  editorRenderers.init(createRenderers({ instance: lang }))
 
   return (
     <main id="content">
