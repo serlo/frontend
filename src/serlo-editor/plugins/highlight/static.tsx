@@ -4,9 +4,5 @@ import { EditorHighlightPlugin } from '@/serlo-editor-integration/types/editor-p
 export function HighlightStaticRenderer({ state }: EditorHighlightPlugin) {
   if (!state.code.trim().length) return null
 
-  return (
-    <>
-      <HighlightRenderer {...state} />
-    </>
-  )
+  return <HighlightRenderer {...state} />
 }
