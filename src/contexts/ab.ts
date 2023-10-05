@@ -25,7 +25,7 @@ export const experiments: {
     experiment: 'dreisatz_new_design',
     ids: [66809],
     start: -1,
-    end: new Date('2033-09-30T00:00:00+0200').getTime(),
+    end: -1, // only available through url params
   },
   {
     experiment: 'reorder_trig',
