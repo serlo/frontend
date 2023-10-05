@@ -53,21 +53,27 @@ export function getMetaDescription(
 
   if (extracted.length < 50) return undefined
 
-  const softLimit = 135
+  const softLimit = 145
   const cutoff = softLimit + extracted.substring(softLimit).indexOf(' ')
-  return extracted.substring(0, cutoff) + (extracted.length > 135 ? ' …' : '')
+
+  return (
+    extracted.substring(0, cutoff) + (extracted.length > softLimit ? ' …' : '')
+  )
 }
 
-// TODO: test more
 function extractTextFromDocument(
   document?: AnyEditorDocument,
   collected: string = ''
 ): string {
-  if (!document || !isTextDocument(document)) return ''
-  // call on children recursively
-  collected += getChildrenOfSerializedDocument(document).forEach((child) =>
-    extractTextFromDocument(child, collected)
-  )
+  if (!document) return ''
 
-  return collected + ' ' + extractStringFromTextDocument(document)
+  // call on children recursively
+  collected += getChildrenOfSerializedDocument(document)
+    .map((child) => extractTextFromDocument(child, collected))
+    .join()
+
+  if (!isTextDocument(document)) return collected
+  const documentText = extractStringFromTextDocument(document)
+
+  return collected ? `${collected} ${documentText}` : documentText
 }
