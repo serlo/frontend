@@ -13,9 +13,7 @@ export function LinkSerloRenderer({
 
   return (
     <>
-      <Link href={href}>
-        {children}
-      </Link>
+      <Link href={href}>{children}</Link>
       {isRevisionView ? (
         <RevisionViewExtraInfo>{href}</RevisionViewExtraInfo>
       ) : null}
