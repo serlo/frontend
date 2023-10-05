@@ -4,7 +4,7 @@ import type { MathElement } from '@/serlo-editor/plugins/text'
 
 export interface PluginStaticRenderer {
   type: string
-  renderer: React.FunctionComponent<any>
+  renderer: ComponentType<any>
 }
 
 export type MathRenderer = ComponentType<MathElement>
@@ -13,12 +13,16 @@ export type LinkRenderer = React.FunctionComponent<{
   children: JSX.Element | null
 }>
 
-export type PluginStaticRenderers = PluginStaticRenderer[]
+export interface InitRenderersArgs {
+  pluginRenderers: PluginStaticRenderer[]
+  mathRenderer: MathRenderer
+  linkRenderer: LinkRenderer
+}
 
 const errorMsg = 'init static editor renderers first'
 
 export const editorRenderers = (function () {
-  let allRenderers: PluginStaticRenderers | null = null
+  let allRenderers: PluginStaticRenderer[] | null = null
   let mathRenderer: MathRenderer | null = null
   let linkRenderer: LinkRenderer | null = null
 
@@ -26,11 +30,7 @@ export const editorRenderers = (function () {
     pluginRenderers,
     mathRenderer: mathRendererIn,
     linkRenderer: linkRendererIn,
-  }: {
-    pluginRenderers: PluginStaticRenderers
-    mathRenderer: MathRenderer
-    linkRenderer: LinkRenderer
-  }) {
+  }: InitRenderersArgs) {
     if (allRenderers) return // only initialize once
 
     allRenderers = pluginRenderers

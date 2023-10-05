@@ -41,9 +41,7 @@ function Content({ editorState }: { editorState: AnyEditorDocument }) {
   const routerAsPath = useRouter().asPath
 
   // simplest way to provide renderers to editor that can also easily be adapted by edusharing
-  editorRenderers.init(
-    createRenderers({ instance: lang, isRevisionView: false, routerAsPath })
-  )
+  editorRenderers.init(createRenderers({ instance: lang, routerAsPath }))
 
   return (
     <main id="content">

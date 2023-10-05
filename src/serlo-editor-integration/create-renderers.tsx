@@ -1,28 +1,33 @@
 import dynamic from 'next/dynamic'
 import { ComponentProps } from 'react'
 
-import { ExerciseSerloStaticRenderer } from './serlo-plugin-wrappers/exercise-serlo-static-renderer'
-import { SerloScMcExerciseStaticRenderer } from './serlo-plugin-wrappers/sc-mc-serlo-static-renderer'
-import { SolutionSerloStaticRenderer } from './serlo-plugin-wrappers/solution-serlo-static-renderer'
 import { EditorPluginType } from './types/editor-plugin-type'
-import {
+import type {
   EditorAnchorPlugin,
+  EditorExercisePlugin,
   EditorGeogebraPlugin,
+  EditorH5PPlugin,
   EditorHighlightPlugin,
   EditorImagePlugin,
   EditorInjectionPlugin,
+  EditorInputExercisePlugin,
+  EditorScMcExercisePlugin,
+  EditorSolutionPlugin,
   EditorSpoilerPlugin,
+  EditorTemplateGroupedExercise,
   EditorVideoPlugin,
 } from './types/editor-plugins'
 import { TemplatePluginType } from './types/template-plugin-type'
-// import { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
 import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
-import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
+import type { PrivacyWrapperProps } from '@/components/content/privacy-wrapper'
 import { isPrintMode } from '@/components/print-mode'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { ExternalProvider } from '@/helper/use-consent'
-import { LinkRenderer } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import {
+  InitRenderersArgs,
+  LinkRenderer,
+} from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { AnchorStaticRenderer } from '@/serlo-editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@/serlo-editor/plugins/article/static'
 import { BoxStaticRenderer } from '@/serlo-editor/plugins/box/static'
@@ -31,42 +36,74 @@ import { parseId } from '@/serlo-editor/plugins/geogebra/renderer'
 import { GeogebraStaticRenderer } from '@/serlo-editor/plugins/geogebra/static'
 import { ImageStaticRenderer } from '@/serlo-editor/plugins/image/static'
 import { InjectionStaticRenderer } from '@/serlo-editor/plugins/injection/static'
-import { InputExerciseStaticRenderer } from '@/serlo-editor/plugins/input-exercise/static'
 import { MultimediaStaticRendererWithLightbox } from '@/serlo-editor/plugins/multimedia/static-with-dynamic-lightbox'
 import { PageLayoutStaticRenderer } from '@/serlo-editor/plugins/page-layout/static'
 import { PagePartnersStaticRenderer } from '@/serlo-editor/plugins/page-partners/static'
 import { PageTeamStaticRenderer } from '@/serlo-editor/plugins/page-team/static'
 import { RowsStaticRenderer } from '@/serlo-editor/plugins/rows/static'
 import { SerloTableStaticRenderer } from '@/serlo-editor/plugins/serlo-table/static'
-import { TextExerciseGroupTypeStaticRenderer } from '@/serlo-editor/plugins/serlo-template-plugins/exercise-group/static'
 import { SpoilerStaticRenderer } from '@/serlo-editor/plugins/spoiler/static'
 import type { MathElement } from '@/serlo-editor/plugins/text'
 import { TextStaticRenderer } from '@/serlo-editor/plugins/text/static'
 import { parseVideoUrl } from '@/serlo-editor/plugins/video/renderer'
 import { VideoStaticRenderer } from '@/serlo-editor/plugins/video/static'
-import { H5pSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/h5p-serlo-static'
 
+const ExerciseSerloStaticRenderer = dynamic<EditorExercisePlugin>(() =>
+  import(
+    '@/serlo-editor-integration/serlo-plugin-wrappers/exercise-serlo-static-renderer'
+  ).then((mod) => mod.ExerciseSerloStaticRenderer)
+)
+const H5pSerloStaticRenderer = dynamic<EditorH5PPlugin>(() =>
+  import(
+    '@/serlo-editor-integration/serlo-plugin-wrappers/h5p-serlo-static'
+  ).then((mod) => mod.H5pSerloStaticRenderer)
+)
+const InputExerciseStaticRenderer = dynamic<EditorInputExercisePlugin>(() =>
+  import('@/serlo-editor/plugins/input-exercise/static').then(
+    (mod) => mod.InputExerciseStaticRenderer
+  )
+)
+const SerloScMcExerciseStaticRenderer = dynamic<EditorScMcExercisePlugin>(() =>
+  import(
+    '@/serlo-editor-integration/serlo-plugin-wrappers/sc-mc-serlo-static-renderer'
+  ).then((mod) => mod.SerloScMcExerciseStaticRenderer)
+)
+const SolutionSerloStaticRenderer = dynamic<EditorSolutionPlugin>(() =>
+  import(
+    '@/serlo-editor-integration/serlo-plugin-wrappers/solution-serlo-static-renderer'
+  ).then((mod) => mod.SolutionSerloStaticRenderer)
+)
+const TextExerciseGroupTypeStaticRenderer =
+  dynamic<EditorTemplateGroupedExercise>(() =>
+    import(
+      '@/serlo-editor/plugins/serlo-template-plugins/exercise-group/static'
+    ).then((mod) => mod.TextExerciseGroupTypeStaticRenderer)
+  )
 const HighlightStaticRenderer = dynamic<EditorHighlightPlugin>(() =>
   import('@/serlo-editor/plugins/highlight/static').then(
     (mod) => mod.HighlightStaticRenderer
   )
 )
-
 const StaticMath = dynamic<MathElement>(() =>
   import('@/serlo-editor/plugins/text/components/static-math').then(
     (mod) => mod.StaticMath
   )
 )
+const PrivacyWrapper = dynamic<PrivacyWrapperProps>(() =>
+  import('@/components/content/privacy-wrapper').then(
+    (mod) => mod.PrivacyWrapper
+  )
+)
 
 export function createRenderers({
   instance,
-  routerAsPath,
-}: // isRevisionView,
-{
+  routerAsPath, // TODO: move out of create function
+}: {
   instance: Instance
-  isRevisionView: boolean
+  isRevisionView?: boolean
   routerAsPath: string
-}) {
+}): InitRenderersArgs {
+  // TODO: only allow page plugin on pages…
   // const isPage = parentType === UuidType.Page
 
   return {
