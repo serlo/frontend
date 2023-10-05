@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import type { GetStaticProps } from 'next/types'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
@@ -38,10 +37,9 @@ export default renderedPageNoHooks<TmpProps>((props) => {
 
 function Content({ editorState }: { editorState: AnyEditorDocument }) {
   const { lang } = useInstanceData()
-  const routerAsPath = useRouter().asPath
 
   // simplest way to provide renderers to editor that can also easily be adapted by edusharing
-  editorRenderers.init(createRenderers({ instance: lang, routerAsPath }))
+  editorRenderers.init(createRenderers({ instance: lang }))
 
   return (
     <main id="content">

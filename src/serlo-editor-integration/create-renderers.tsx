@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic'
 import { ComponentProps } from 'react'
 
+import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-static-renderer'
 import { EditorPluginType } from './types/editor-plugin-type'
 import type {
   EditorAnchorPlugin,
@@ -8,7 +9,6 @@ import type {
   EditorGeogebraPlugin,
   EditorH5PPlugin,
   EditorHighlightPlugin,
-  EditorImagePlugin,
   EditorInjectionPlugin,
   EditorInputExercisePlugin,
   EditorScMcExercisePlugin,
@@ -34,7 +34,6 @@ import { BoxStaticRenderer } from '@/serlo-editor/plugins/box/static'
 import { EquationsStaticRenderer } from '@/serlo-editor/plugins/equations/static'
 import { parseId } from '@/serlo-editor/plugins/geogebra/renderer'
 import { GeogebraStaticRenderer } from '@/serlo-editor/plugins/geogebra/static'
-import { ImageStaticRenderer } from '@/serlo-editor/plugins/image/static'
 import { InjectionStaticRenderer } from '@/serlo-editor/plugins/injection/static'
 import { MultimediaStaticRendererWithLightbox } from '@/serlo-editor/plugins/multimedia/static-with-dynamic-lightbox'
 import { PageLayoutStaticRenderer } from '@/serlo-editor/plugins/page-layout/static'
@@ -97,11 +96,9 @@ const PrivacyWrapper = dynamic<PrivacyWrapperProps>(() =>
 
 export function createRenderers({
   instance,
-  routerAsPath, // TODO: move out of create function
 }: {
   instance: Instance
   isRevisionView?: boolean
-  routerAsPath: string
 }): InitRenderersArgs {
   // TODO: only allow page plugin on pages…
   // const isPage = parentType === UuidType.Page
@@ -112,13 +109,7 @@ export function createRenderers({
       { type: EditorPluginType.Article, renderer: ArticleStaticRenderer },
       { type: EditorPluginType.Rows, renderer: RowsStaticRenderer },
       { type: EditorPluginType.Text, renderer: TextStaticRenderer },
-      {
-        type: EditorPluginType.Image,
-        renderer: (state: EditorImagePlugin) => {
-          const pathNameBase = routerAsPath.split('/').pop()
-          return <ImageStaticRenderer {...state} pathNameBase={pathNameBase} />
-        },
-      },
+      { type: EditorPluginType.Image, renderer: ImageSerloStaticRenderer },
       {
         type: EditorPluginType.Multimedia,
         // special renderer for frontend because it uses nextjs dynamic import

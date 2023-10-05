@@ -4,7 +4,7 @@ import {
   faTools,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
-import { Router, useRouter } from 'next/router'
+import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
 
 import { HSpace } from './h-space'
@@ -34,12 +34,9 @@ export interface EntityProps {
 
 export function StaticEntity({ data }: EntityProps) {
   const { lang } = useInstanceData()
-  const routerAsPath = useRouter().asPath
 
   // simplest way to provide renderers to editor that can also easily be adapted by edusharing
-  editorRenderers.init(
-    createRenderers({ instance: lang, isRevisionView: false, routerAsPath })
-  )
+  editorRenderers.init(createRenderers({ instance: lang }))
 
   // courseNav: start opened when only some entries
   const [courseNavOpen, setCourseNavOpen] = useState(
