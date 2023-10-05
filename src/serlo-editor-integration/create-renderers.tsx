@@ -228,7 +228,8 @@ export function createRenderers({
       {
         type: EditorPluginType.Unsupported,
         renderer: (state: unknown) => {
-          console.log('unsupported renderer: ', state)
+          // eslint-disable-next-line no-console
+          console.warn('unsupported renderer: ', state)
           return null
         },
       },
@@ -242,15 +243,12 @@ export function createRenderers({
         </Lazy>
       ),
     linkRenderer: ({ href, children }: ComponentProps<LinkRenderer>) => {
-      // TODO: isOnProfile logic
-      const isOnProfile = false
       return (
-        <Link href={href} unreviewed={isOnProfile}>
-          {children}
-        </Link>
+        <>
+          <Link href={href}>{children}</Link>
+          {/* {isRevisionView && <ExtraRevisionViewInfo element={element} />} */}
+        </>
       )
-
-      // {isRevisionView && <ExtraRevisionViewInfo element={element} />}
     },
   }
 }
