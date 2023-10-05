@@ -4,12 +4,20 @@ import { Link } from '@/components/content/link'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorSolutionPlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
-// TODO: All frontend specific stuff…
+// TODO: Commented out frontend specific stuff…
 
 export function StaticSolutionRenderer({
   state,
   solutionVisibleOnInit,
-}: EditorSolutionPlugin & { solutionVisibleOnInit: boolean }) {
+  beforeSlot,
+  afterSlot,
+  onSolutionOpen,
+}: EditorSolutionPlugin & {
+  solutionVisibleOnInit: boolean
+  afterSlot?: JSX.Element | null
+  beforeSlot?: JSX.Element | null
+  onSolutionOpen?: () => void
+}) {
   const { prerequisite, strategy, steps } = state
 
   const hasPrerequisite =
@@ -31,38 +39,12 @@ export function StaticSolutionRenderer({
       steps={
         <>
           <StaticRenderer state={steps} />
-          {/* {license && <div className="px-side">{license}</div>} */}
-          {/* {node.context.solutionId && (
-            <Lazy>
-              <CommentAreaEntity entityId={node.context.solutionId} />
-            </Lazy>
-          )} */}
+          {afterSlot}
         </>
       }
       solutionVisibleOnInit={solutionVisibleOnInit}
-      // elementAfterToggle={renderLicense()}
-      // elementBeforePrerequisite={
-      //   authorTools ? (
-      //     <div className="-mt-2 text-right">{authorTools}</div>
-      //   ) : null
-      // }
-      // hideToggle={
-      //   !node.solution.content ||
-      //   node.solution.trashed ||
-      //   (isPrintMode && !printModeSolutionVisible)
-      // }
-      // onSolutionOpen={() =>
-      //   exerciseSubmission(
-      //     {
-      //       path: asPath,
-      //       entityId: node.context.id,
-      //       revisionId: node.context.revisionId,
-      //       type: 'text',
-      //       result: 'open',
-      //     },
-      //     ab
-      //   )
-      // }
+      elementBeforePrerequisite={beforeSlot}
+      onSolutionOpen={onSolutionOpen}
     />
   )
 }

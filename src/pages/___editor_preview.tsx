@@ -20,13 +20,11 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 import { Editor } from '@/serlo-editor/core'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
-import {
-  AnyEditorPlugin,
-  StaticRenderer,
-} from '@/serlo-editor/static-renderer/static-renderer'
+import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createPlugins } from '@/serlo-editor-integration/create-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { AnyEditorPlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
   return (

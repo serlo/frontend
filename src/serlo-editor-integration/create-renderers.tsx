@@ -1,5 +1,8 @@
 import dynamic from 'next/dynamic'
 
+import { ExerciseSerloStaticRenderer } from './serlo-plugin-wrappers/exercise-serlo-static-renderer'
+import { SerloScMcExerciseStaticRenderer } from './serlo-plugin-wrappers/sc-mc-serlo-static-renderer'
+import { SolutionSerloStaticRenderer } from './serlo-plugin-wrappers/solution-serlo-static-renderer'
 import { EditorPluginType } from './types/editor-plugin-type'
 import {
   EditorAnchorPlugin,
@@ -7,23 +10,22 @@ import {
   EditorHighlightPlugin,
   EditorImagePlugin,
   EditorInjectionPlugin,
-  EditorSolutionPlugin,
+  EditorSpoilerPlugin,
   EditorVideoPlugin,
 } from './types/editor-plugins'
 import { TemplatePluginType } from './types/template-plugin-type'
 // import { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
 import { Lazy } from '@/components/content/lazy'
 import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
+import { isPrintMode } from '@/components/print-mode'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { ExternalProvider } from '@/helper/use-consent'
 import { AnchorStaticRenderer } from '@/serlo-editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@/serlo-editor/plugins/article/static'
 import { BoxStaticRenderer } from '@/serlo-editor/plugins/box/static'
 import { EquationsStaticRenderer } from '@/serlo-editor/plugins/equations/static'
-import { ExerciseStaticRenderer } from '@/serlo-editor/plugins/exercise/static'
 import { parseId } from '@/serlo-editor/plugins/geogebra/renderer'
 import { GeogebraStaticRenderer } from '@/serlo-editor/plugins/geogebra/static'
-import { H5pSerloStaticRenderer } from '@/serlo-editor/plugins/h5p/serlo-static'
 import { ImageStaticRenderer } from '@/serlo-editor/plugins/image/static'
 import { InjectionStaticRenderer } from '@/serlo-editor/plugins/injection/static'
 import { InputExerciseStaticRenderer } from '@/serlo-editor/plugins/input-exercise/static'
@@ -32,16 +34,15 @@ import { PageLayoutStaticRenderer } from '@/serlo-editor/plugins/page-layout/sta
 import { PagePartnersStaticRenderer } from '@/serlo-editor/plugins/page-partners/static'
 import { PageTeamStaticRenderer } from '@/serlo-editor/plugins/page-team/static'
 import { RowsStaticRenderer } from '@/serlo-editor/plugins/rows/static'
-import { ScMcExerciseStaticRenderer } from '@/serlo-editor/plugins/sc-mc-exercise/static'
 import { SerloTableStaticRenderer } from '@/serlo-editor/plugins/serlo-table/static'
 import { TextExerciseGroupTypeStaticRenderer } from '@/serlo-editor/plugins/serlo-template-plugins/exercise-group/static'
-import { StaticSolutionRenderer } from '@/serlo-editor/plugins/solution/static'
 import { SpoilerStaticRenderer } from '@/serlo-editor/plugins/spoiler/static'
 import type { MathElement } from '@/serlo-editor/plugins/text'
+import { LinkRenderer } from '@/serlo-editor/plugins/text/link-renderer'
 import { TextStaticRenderer } from '@/serlo-editor/plugins/text/static'
 import { parseVideoUrl } from '@/serlo-editor/plugins/video/renderer'
 import { VideoStaticRenderer } from '@/serlo-editor/plugins/video/static'
-import { LinkRenderer } from '@/serlo-editor/plugins/text/link-renderer'
+import { H5pSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/h5p-serlo-static'
 
 const HighlightStaticRenderer = dynamic<EditorHighlightPlugin>(() =>
   import('@/serlo-editor/plugins/highlight/static').then(
@@ -54,12 +55,6 @@ const StaticMath = dynamic<MathElement>(() =>
     (mod) => mod.StaticMath
   )
 )
-
-// const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
-//   import('@/components/comments/comment-area-entity').then(
-//     (mod) => mod.CommentAreaEntity
-//   )
-// )
 
 export function createRenderers({
   instance,
@@ -90,7 +85,14 @@ export function createRenderers({
         // special renderer for frontend because it uses nextjs dynamic import
         renderer: MultimediaStaticRendererWithLightbox,
       },
-      { type: EditorPluginType.Spoiler, renderer: SpoilerStaticRenderer },
+      {
+        type: EditorPluginType.Spoiler,
+        renderer: (state: EditorSpoilerPlugin) => {
+          return (
+            <SpoilerStaticRenderer {...state} openOverwrite={isPrintMode} />
+          )
+        },
+      },
       { type: EditorPluginType.Box, renderer: BoxStaticRenderer },
       { type: EditorPluginType.SerloTable, renderer: SerloTableStaticRenderer },
       {
@@ -167,7 +169,10 @@ export function createRenderers({
         type: EditorPluginType.PagePartners,
         renderer: PagePartnersStaticRenderer,
       },
-      { type: EditorPluginType.Exercise, renderer: ExerciseStaticRenderer },
+      {
+        type: EditorPluginType.Exercise,
+        renderer: ExerciseSerloStaticRenderer,
+      },
       {
         type: EditorPluginType.Highlight,
         renderer: (state: EditorHighlightPlugin) => {
@@ -190,23 +195,11 @@ export function createRenderers({
       },
       {
         type: EditorPluginType.ScMcExercise,
-        renderer: ScMcExerciseStaticRenderer,
+        renderer: SerloScMcExerciseStaticRenderer,
       },
       {
         type: EditorPluginType.Solution,
-        renderer: (state: EditorSolutionPlugin) => {
-          return (
-            <>
-              <StaticSolutionRenderer
-                solutionVisibleOnInit={false}
-                {...state}
-              />
-              {/* <Lazy>
-                <CommentAreaEntity entityId={node.context.solutionId} />
-              </Lazy> */}
-            </>
-          )
-        },
+        renderer: SolutionSerloStaticRenderer,
       },
 
       // // Internal template plugins for our content types

@@ -4,11 +4,13 @@ import { Descendant } from 'slate'
 import { idsQuery } from './ids-query'
 import { endpoint } from '@/api/endpoint'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { getChildrenOfSerializedDocument } from '@/serlo-editor/static-renderer/helper/get-children-of-serialized-document'
+import { AnyEditorPlugin } from '@/serlo-editor-integration/types/editor-plugins'
 import {
-  EditorSolutionPlugin,
-  SupportedEditorPlugin,
-} from '@/serlo-editor-integration/types/editor-plugins'
+  isImageDocument,
+  isSolutionDocument,
+  isTextDocument,
+} from '@/serlo-editor-integration/types/plugin-type-guards'
 
 interface IdsQueryReturn {
   [key: string]: {
@@ -17,47 +19,21 @@ interface IdsQueryReturn {
   }
 }
 
-export async function prettifyLinksInState(rootDoc?: SupportedEditorPlugin) {
-  if (!rootDoc) return undefined
+export async function prettifyLinksInState(rootDocument?: AnyEditorPlugin) {
+  if (!rootDocument) return undefined
   const ids: number[] = []
   const callbacks: { id: number; callback: (alias: string) => void }[] = []
 
-  walk(rootDoc)
+  walk(rootDocument)
 
-  function walk(doc?: SupportedEditorPlugin) {
-    if (!doc) return
+  function walk(document?: AnyEditorPlugin) {
+    if (!document) return
 
-    if (typeof doc.state === 'object' && Object.hasOwn(doc.state, 'content')) {
-      walk(doc.state.content as SupportedEditorPlugin)
-    }
-    if (doc.plugin === EditorPluginType.Article) {
-      walk(doc.state.introduction as SupportedEditorPlugin)
-    }
-    if (
-      doc.plugin === EditorPluginType.Multimedia ||
-      doc.plugin === EditorPluginType.ArticleIntroduction
-    ) {
-      walk(doc.state.explanation as SupportedEditorPlugin)
-      walk(doc.state.multimedia as SupportedEditorPlugin)
-    }
-    if (doc.plugin === EditorPluginType.PageLayout) {
-      walk(doc.state.column1 as SupportedEditorPlugin)
-      walk(doc.state.column2 as SupportedEditorPlugin)
-    }
-    if (doc.plugin === EditorPluginType.Rows) {
-      doc.state.forEach((row) => walk(row as SupportedEditorPlugin))
-    }
-    if (doc.plugin === EditorPluginType.Exercise) {
-      walk(doc.state.interactive as unknown as SupportedEditorPlugin)
-    }
+    getChildrenOfSerializedDocument(document).forEach(walk)
+
     // TODO: this does not seem to run, investigate
-    // @ts-expect-error allow solutions
-    if (doc.plugin === EditorPluginType.Solution) {
-      walk((doc as EditorSolutionPlugin).state.steps as SupportedEditorPlugin)
-      walk(
-        (doc as EditorSolutionPlugin).state.strategy as SupportedEditorPlugin
-      )
-      const prereq = (doc as EditorSolutionPlugin).state.prerequisite
+    if (isSolutionDocument(document)) {
+      const prereq = document.state.prerequisite
 
       if (prereq && prereq.id) {
         const id = getId(prereq.id)
@@ -74,28 +50,22 @@ export async function prettifyLinksInState(rootDoc?: SupportedEditorPlugin) {
         }
       }
     }
-    if (doc.plugin === EditorPluginType.Text) {
-      doc.state.forEach(walkSlateDescendant)
+    if (isTextDocument(document)) {
+      document.state.forEach(walkSlateDescendant)
     }
-    if (doc.plugin === EditorPluginType.Image) {
-      const href = doc.state.link?.href
+    if (isImageDocument(document)) {
+      const href = document.state.link?.href
       const id = getId(href)
       if (id) {
         ids.push(id)
         callbacks.push({
           id,
           callback: (alias) => {
-            doc.state.link!.href = alias
+            document.state.link!.href = alias
           },
         })
       }
     }
-
-    // ignoring for now
-    // Equations
-    // SerloTable
-    // ScMcExercise
-    // InputExercise
   }
 
   function walkSlateDescendant(node: Descendant) {
@@ -118,7 +88,7 @@ export async function prettifyLinksInState(rootDoc?: SupportedEditorPlugin) {
     }
   }
 
-  if (!ids.length) return rootDoc
+  if (!ids.length) return rootDocument
 
   const uniqueIds = [...new Set(ids)]
 
@@ -127,7 +97,7 @@ export async function prettifyLinksInState(rootDoc?: SupportedEditorPlugin) {
     idsQuery(uniqueIds)
   )
 
-  if (!prettyLinks) return rootDoc
+  if (!prettyLinks) return rootDocument
 
   callbacks.forEach(({ id, callback }) => {
     const prettyAlias = prettyLinks[`uuid${id}`]?.alias
@@ -135,7 +105,7 @@ export async function prettifyLinksInState(rootDoc?: SupportedEditorPlugin) {
     if (prettyAlias && !hasSpecialUrlChars(prettyAlias)) callback(prettyAlias)
   })
 
-  return rootDoc
+  return rootDocument
 }
 
 function getId(href?: string): number | undefined {

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
-import { H5pStaticRenderer } from './static'
+import { H5pStaticRenderer } from '../../serlo-editor/plugins/h5p/static'
 import { useAB } from '@/contexts/ab'
 import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'

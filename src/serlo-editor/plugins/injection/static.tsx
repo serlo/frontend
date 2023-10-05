@@ -5,12 +5,10 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
 import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
-import {
-  AnyEditorPlugin,
-  StaticRenderer,
-} from '@/serlo-editor/static-renderer/static-renderer'
+import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
+  AnyEditorPlugin,
   EditorInjectionPlugin,
   EditorRowsPlugin,
 } from '@/serlo-editor-integration/types/editor-plugins'

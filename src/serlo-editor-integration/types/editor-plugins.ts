@@ -6,6 +6,7 @@ import type { ExercisePluginState } from '../../serlo-editor/plugins/exercise'
 import type { InjectionPluginState } from '../../serlo-editor/plugins/injection'
 import type { SolutionPluginState } from '../../serlo-editor/plugins/solution'
 import type { UnsupportedPluginState } from '../../serlo-editor/plugins/unsupported'
+import { License } from '@/fetcher/query-types'
 import type { StateTypeSerializedType } from '@/serlo-editor/plugin'
 import type { AnchorPluginState } from '@/serlo-editor/plugins/anchor'
 import { AudioPluginState } from '@/serlo-editor/plugins/audio'
@@ -36,6 +37,8 @@ export type SlateBlockElement = CustomElement
 export type SlateTextElement = CustomText
 
 // All supported editor plugins in their serialized versions
+
+// TODO: after static renderer PR is merged rename all …Plugin to …Document
 
 export interface EditorAnchorPlugin {
   plugin: EditorPluginType.Anchor
@@ -71,6 +74,16 @@ export interface EditorExercisePlugin {
   plugin: EditorPluginType.Exercise
   state: Prettify<StateTypeSerializedType<ExercisePluginState>>
   id?: string
+
+  // additional data for serlo, not part of normal state
+  serloContext?: {
+    uuid?: number
+    revisionId?: number
+    trashed?: boolean
+    grouped?: boolean
+    unrevisedRevisions?: number
+    license?: License
+  }
 }
 export interface EditorGeogebraPlugin {
   plugin: EditorPluginType.Geogebra
@@ -131,6 +144,15 @@ export interface EditorSolutionPlugin {
   plugin: EditorPluginType.Solution
   state: Prettify<StateTypeSerializedType<SolutionPluginState>>
   id?: string
+
+  // additional data for serlo, not part of normal state
+  serloContext?: {
+    uuid?: number
+    exerciseId?: number
+    trashed?: boolean
+    unrevisedRevisions?: number
+    license?: License
+  }
 }
 export interface EditorSerloTablePlugin {
   plugin: EditorPluginType.SerloTable
@@ -185,6 +207,13 @@ export interface EditorTemplateGroupedExercise {
     )[]
   }
   id?: string
+
+  // additional data for serlo, not part of normal state
+  serloContext?: {
+    uuid?: number
+    trashed?: boolean
+    unrevisedRevisions?: number
+  }
 }
 
 export type SupportedEditorPlugin =
@@ -216,6 +245,9 @@ export interface UnknownEditorPlugin {
   id?: string
 }
 
+export type AnyEditorPlugin = SupportedEditorPlugin | UnknownEditorPlugin
+
+// dark ts magic ✨
 type Prettify<T> = {
   [K in keyof T]: T[K]
 } & unknown

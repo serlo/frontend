@@ -20,6 +20,10 @@ import {
   createStaticExerciseGroup,
   staticCreateExercise,
 } from './static-create-exercises'
+import {
+  getArticleMetaDescription,
+  getMetaDescription,
+} from './static-meta-data/get-meta-description'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData, UuidRevType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
@@ -28,8 +32,6 @@ import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import type { SupportedEditorPlugin } from '@/serlo-editor-integration/types/editor-plugins'
-
-// TODO: add context (exercise id, solution id, …, in static request (probably staticCreateExercise)
 
 // ALWAYS start alias with slash
 export async function staticRequestPage(
@@ -193,7 +195,6 @@ export async function staticRequestPage(
             ? 'text-exercise'
             : 'groupedexercise',
         metaImage,
-        //TODO: metaDescription: getMetaDescription(exercise),
       },
       horizonData,
       cacheKey,
@@ -202,7 +203,8 @@ export async function staticRequestPage(
   }
 
   if (uuid.__typename === UuidType.ExerciseGroup) {
-    const exercise = [createStaticExerciseGroup(uuid)]
+    const exercise = createStaticExerciseGroup(uuid)
+
     return {
       kind: 'single-entity',
       entityData: {
@@ -220,7 +222,9 @@ export async function staticRequestPage(
         title,
         contentType: 'exercisegroup',
         metaImage,
-        // TODO: metaDescription: getMetaDescription(exercise),
+        metaDescription: getMetaDescription(
+          exercise[0]?.state.content as unknown as SupportedEditorPlugin
+        ),
       },
       horizonData,
       cacheKey,
@@ -317,8 +321,7 @@ export async function staticRequestPage(
         metaImage,
         metaDescription: uuid.currentRevision?.metaDescription
           ? uuid.currentRevision?.metaDescription
-          : undefined,
-        // : getMetaDescription(content),
+          : getArticleMetaDescription(content),
         dateCreated: uuid.date,
         dateModified: uuid.currentRevision?.date,
       },
@@ -363,7 +366,7 @@ export async function staticRequestPage(
         title,
         contentType: 'video',
         metaImage,
-        // metaDescription: getMetaDescription(content),
+        metaDescription: getMetaDescription(content),
       },
       horizonData,
       cacheKey,
@@ -401,8 +404,7 @@ export async function staticRequestPage(
         metaImage,
         metaDescription: uuid.currentRevision?.metaDescription
           ? uuid.currentRevision?.metaDescription
-          : undefined,
-        // : getMetaDescription(content),
+          : getMetaDescription(content),
       },
       horizonData,
       cacheKey,
@@ -468,7 +470,7 @@ export async function staticRequestPage(
         title,
         contentType: 'course-page',
         metaImage,
-        // metaDescription: getMetaDescription(content),
+        metaDescription: getMetaDescription(content),
       },
       horizonData,
       cacheKey,
