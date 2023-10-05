@@ -3,8 +3,8 @@ import { faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState } from 'react'
 
+import { Feedback } from './feedback'
 import type { ScMcExerciseRendererProps } from './renderer'
-import { Feedback } from '@/components/content/exercises/feedback'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 
@@ -35,7 +35,7 @@ export function McRenderer({
         {answers.map((answer, i) => {
           const id = `${idBase}${i}`
           return (
-            <li key={id} className="mb-block">
+            <li key={id}>
               <div className="flex">
                 <input
                   className="w-0.25 opacity-0"
@@ -63,7 +63,13 @@ export function McRenderer({
                   {answer.content}
                 </label>
               </div>
-              {showFeedback && selectedArray[i] ? answer.feedback : null}
+              <i className="block min-h-8 text-gray-600">
+                {showFeedback && selectedArray[i] ? (
+                  <span className="animate-in slide-in-from-top">
+                    {answer.feedback}
+                  </span>
+                ) : null}
+              </i>
               {renderExtraAnswerContent
                 ? renderExtraAnswerContent(answer, !!answer.feedback)
                 : null}
@@ -71,9 +77,9 @@ export function McRenderer({
           )
         })}
       </ul>
-      <div className="mt-5 flex">
+      <div className="mt-2 flex">
         <button
-          className="serlo-button-blue mb-5 mr-3"
+          className="serlo-button-blue mr-3 h-8"
           onClick={() => {
             setShowFeedback(true)
             if (onEvaluate) onEvaluate(allCorrect, 'mc')

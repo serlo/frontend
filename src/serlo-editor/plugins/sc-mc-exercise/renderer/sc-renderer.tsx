@@ -3,8 +3,8 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState } from 'react'
 
+import { Feedback } from './feedback'
 import type { ScMcExerciseRendererProps } from './renderer'
-import { Feedback } from '@/components/content/exercises/feedback'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 
@@ -65,7 +65,7 @@ export function ScRenderer({
       <div className="mt-5 flex">
         <button
           className={clsx(
-            'serlo-button-blue mb-5 mr-3',
+            'serlo-button-blue mb-5 mr-3 h-8',
             selected === undefined &&
               'pointer-events-none bg-transparent text-gray-400 opacity-100'
           )}
@@ -80,12 +80,10 @@ export function ScRenderer({
             ? exStrings.printModeChooseOption
             : exStrings.chooseOption}
         </button>
-        {showFeedback && selected && answers[selected] ? (
-          <div className="mt-block">
-            <Feedback correct={answers[selected].isCorrect}>
-              {answers[selected].feedback}
-            </Feedback>
-          </div>
+        {showFeedback && selected !== undefined && answers[selected] ? (
+          <Feedback correct={answers[selected].isCorrect}>
+            {answers[selected].feedback}
+          </Feedback>
         ) : null}
       </div>
     </div>
