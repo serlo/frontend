@@ -6,23 +6,12 @@ import { BoxRenderer, BoxType } from '@/serlo-editor/plugins/box/renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorBoxPlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
-// TODO: check if we still need this:
-// get rid of wrapping p and inline math in title
-// const convertedTitle = convert(
-//   node.state.title as SupportedEditorPlugin
-// )[0] as FrontendTextNode | FrontendMathNode | undefined
-// const title = convertedTitle
-//   ? ((convertedTitle.type === FrontendNodeType.Math
-//     ? [{ ...convertedTitle, type: FrontendNodeType.InlineMath }]
-//     : convertedTitle.children) as unknown as FrontendContentNode[])
-//   : ([{ type: FrontendNodeType.Text, text: '' }] as FrontendTextNode[])
-
 export function BoxStaticRenderer({ state }: EditorBoxPlugin) {
   const { type: boxType, title, anchorId, content } = state
   if (!content || !boxType || isEmptyRowsDocument(content)) return null
 
   // get rid of wrapping p
-  const unwrappedTitle = (title.state as Element[])?.[0].children[0]
+  const unwrappedTitle = (title.state as Element[])?.[0].children
 
   const boldTitle = unwrappedTitle ? (
     <b>

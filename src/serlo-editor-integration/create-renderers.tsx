@@ -100,9 +100,6 @@ export function createRenderers({
   instance: Instance
   isRevisionView?: boolean
 }): InitRenderersArgs {
-  // TODO: only allow page plugin on pages…
-  // const isPage = parentType === UuidType.Page
-
   return {
     pluginRenderers: [
       // plugins
@@ -199,6 +196,8 @@ export function createRenderers({
         type: EditorPluginType.PagePartners,
         renderer: PagePartnersStaticRenderer,
       },
+
+      // exercises
       {
         type: EditorPluginType.Exercise,
         renderer: ExerciseSerloStaticRenderer,
