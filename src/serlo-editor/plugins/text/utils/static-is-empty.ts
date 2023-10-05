@@ -1,7 +1,7 @@
 import type { Descendant } from 'slate'
 
 import type { CustomText, MathElement } from '../types/text-editor'
-import type { AnyEditorPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import type { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 import { isTextDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
 
 export function isEmptyCustomText(customText: CustomText) {
@@ -24,7 +24,7 @@ export function isEmptyDescendant(node: Descendant): boolean {
   return isEmptyCustomText(node)
 }
 
-export function isEmptyTextPlugin(document?: AnyEditorPlugin) {
+export function isEmptyTextDocument(document?: AnyEditorDocument) {
   if (!document) return true
   if (!isTextDocument(document)) return false
 

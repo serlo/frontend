@@ -40,7 +40,7 @@ export function MultimediaStaticRendererWithLightbox(
       <LightBox
         onClose={() => setOpen(false)}
         alt={imageState.alt}
-        label={<StaticRenderer state={imageState.caption} />}
+        label={<StaticRenderer document={imageState.caption} />}
         src={String(imageState.src)}
       />
     )

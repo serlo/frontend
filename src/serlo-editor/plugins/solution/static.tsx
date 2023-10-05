@@ -1,10 +1,9 @@
 import { SolutionRenderer } from './renderer'
-import { isEmptyTextPlugin } from '../text/utils/static-is-empty'
-import { Link } from '@/components/content/link'
+import { isEmptyRowsDocument } from '../rows/utils/static-is-empty'
+import { isEmptyTextDocument } from '../text/utils/static-is-empty'
+import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorSolutionPlugin } from '@/serlo-editor-integration/types/editor-plugins'
-
-// TODO: Commented out frontend specific stuff…
+import type { EditorSolutionPlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
 export function StaticSolutionRenderer({
   state,
@@ -20,30 +19,36 @@ export function StaticSolutionRenderer({
 }) {
   const { prerequisite, strategy, steps } = state
 
+  const strategyElement = isEmptyTextDocument(strategy) ? null : (
+    <StaticRenderer document={strategy} />
+  )
+
+  // don't show empty solutions
+  if (isEmptyRowsDocument(steps) && !strategyElement) return null
+
   const hasPrerequisite =
     prerequisite && prerequisite.id && prerequisite.title.length
-  const prerequisiteElement = hasPrerequisite ? (
-    <Link href={prerequisite.alias ?? `/${prerequisite.id}`}>
-      {prerequisite.title}
-    </Link>
-  ) : null
 
-  const strategyElement = isEmptyTextPlugin(strategy) ? null : (
-    <StaticRenderer state={strategy} />
-  )
+  const LinkRenderer = editorRenderers.getLinkRenderer()
+
+  const prerequisiteElement = hasPrerequisite ? (
+    <LinkRenderer href={prerequisite.alias ?? `/${prerequisite.id}`}>
+      <>{prerequisite.title}</>
+    </LinkRenderer>
+  ) : null
 
   return (
     <SolutionRenderer
       prerequisite={prerequisiteElement}
       strategy={strategyElement}
+      elementBeforePrerequisite={beforeSlot}
       steps={
         <>
-          <StaticRenderer state={steps} />
+          <StaticRenderer document={steps} />
           {afterSlot}
         </>
       }
       solutionVisibleOnInit={solutionVisibleOnInit}
-      elementBeforePrerequisite={beforeSlot}
       onSolutionOpen={onSolutionOpen}
     />
   )

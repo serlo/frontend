@@ -1,7 +1,7 @@
-import { extractStringFromTextPlugin } from '@/serlo-editor/plugins/text/utils/static-extract-text'
-import { isEmptyTextPlugin } from '@/serlo-editor/plugins/text/utils/static-is-empty'
+import { extractStringFromTextDocument } from '@/serlo-editor/plugins/text/utils/static-extract-text'
+import { isEmptyTextDocument } from '@/serlo-editor/plugins/text/utils/static-is-empty'
 import { getChildrenOfSerializedDocument } from '@/serlo-editor/static-renderer/helper/get-children-of-serialized-document'
-import { AnyEditorPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 import {
   isArticleIntroductionDocument,
   isArticleDocument,
@@ -13,7 +13,7 @@ import {
  * special metaDescription for articles extracted from the introduction text
  */
 export function getArticleMetaDescription(
-  content?: AnyEditorPlugin
+  content?: AnyEditorDocument
 ): string | undefined {
   if (
     !content ||
@@ -27,19 +27,19 @@ export function getArticleMetaDescription(
 
   const explanation = content.state.introduction.state.explanation
 
-  if (isEmptyTextPlugin(explanation)) return undefined
-  return extractStringFromTextPlugin(explanation) ?? undefined
+  if (isEmptyTextDocument(explanation)) return undefined
+  return extractStringFromTextDocument(explanation) ?? undefined
 }
 
 export function getMetaDescription(
-  content?: AnyEditorPlugin
+  content?: AnyEditorDocument
 ): string | undefined {
   if (!content) return undefined
 
   let extracted = ''
 
   if (isTextDocument(content)) {
-    extracted = extractStringFromTextPlugin(content) ?? undefined
+    extracted = extractStringFromTextDocument(content) ?? undefined
   }
 
   if (isRowsDocument(content)) {
@@ -53,21 +53,27 @@ export function getMetaDescription(
 
   if (extracted.length < 50) return undefined
 
-  const softLimit = 135
+  const softLimit = 145
   const cutoff = softLimit + extracted.substring(softLimit).indexOf(' ')
-  return extracted.substring(0, cutoff) + (extracted.length > 135 ? ' …' : '')
+
+  return (
+    extracted.substring(0, cutoff) + (extracted.length > softLimit ? ' …' : '')
+  )
 }
 
-// TODO: test more
 function extractTextFromDocument(
-  document?: AnyEditorPlugin,
+  document?: AnyEditorDocument,
   collected: string = ''
 ): string {
-  if (!document || !isTextDocument(document)) return ''
-  // call on children recursively
-  collected += getChildrenOfSerializedDocument(document).forEach((child) =>
-    extractTextFromDocument(child, collected)
-  )
+  if (!document) return ''
 
-  return collected + ' ' + extractStringFromTextPlugin(document)
+  // call on children recursively
+  collected += getChildrenOfSerializedDocument(document)
+    .map((child) => extractTextFromDocument(child, collected))
+    .join()
+
+  if (!isTextDocument(document)) return collected
+  const documentText = extractStringFromTextDocument(document)
+
+  return collected ? `${collected} ${documentText}` : documentText
 }

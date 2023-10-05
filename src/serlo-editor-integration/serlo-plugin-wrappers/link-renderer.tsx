@@ -5,7 +5,10 @@ import { LinkRenderer } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { IsRevisionViewContext } from '@/serlo-editor-integration/context/is-revision-view'
 import { RevisionViewExtraInfo } from '@/serlo-editor-integration/revision-view-extra-info'
 
-export function LinkRenderer({ href, children }: ComponentProps<LinkRenderer>) {
+export function LinkSerloRenderer({
+  href,
+  children,
+}: ComponentProps<LinkRenderer>) {
   const isRevisionView = useContext(IsRevisionViewContext)
   // TODO: isOnProfile logic
   const isOnProfile = false

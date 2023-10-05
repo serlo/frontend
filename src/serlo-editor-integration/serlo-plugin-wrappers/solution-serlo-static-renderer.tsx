@@ -27,8 +27,6 @@ const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
   )
 )
 
-// TODO: check if empty solutions are hidden
-
 // Special version for serlo.org with author tools and license
 export function SolutionSerloStaticRenderer(props: EditorSolutionPlugin) {
   const auth = useAuthentication()
@@ -51,55 +49,60 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionPlugin) {
     ? false
     : window.location.href.includes('#comment-')
 
+  const beforeSlot = (
+    <>
+      {context?.license ? (
+        <div className="absolute right-0 z-20">
+          <ExerciseLicenseNotice data={context.license} />
+        </div>
+      ) : null}
+      {loaded && auth && context?.uuid && !isRevisionView ? (
+        <div className="absolute -right-8 top-0 z-20">
+          <AuthorToolsExercises
+            data={{
+              type: ExerciseInlineType.Solution,
+              id: context?.uuid,
+              parentId: context?.exerciseId,
+              trashed: context?.trashed,
+              unrevisedRevisions: context?.unrevisedRevisions,
+            }}
+          />
+        </div>
+      ) : null}
+    </>
+  )
+
+  const afterSlot =
+    context?.uuid && !isRevisionView ? (
+      <Lazy>
+        <CommentAreaEntity entityId={context.uuid} />
+      </Lazy>
+    ) : null
+
+  function onSolutionOpen() {
+    {
+      if (entityId && revisionId && !isRevisionView)
+        exerciseSubmission(
+          {
+            path: asPath,
+            entityId,
+            revisionId,
+            type: 'text',
+            result: 'open',
+          },
+          ab
+        )
+    }
+  }
+
   return (
     <div className="relative">
-      {/* TODO: if (isRevisionView) don't show AuthorTools and Comments*/}
       <StaticSolutionRenderer
-        beforeSlot={
-          <>
-            {context?.license ? (
-              <div className="absolute right-0 z-20">
-                <ExerciseLicenseNotice data={context.license} />
-              </div>
-            ) : null}
-            {loaded && auth && context?.uuid ? (
-              <div className="absolute -right-8 top-0 z-20">
-                <AuthorToolsExercises
-                  data={{
-                    type: ExerciseInlineType.Solution,
-                    id: context?.uuid,
-                    parentId: context?.exerciseId,
-                    trashed: context?.trashed,
-                    unrevisedRevisions: context?.unrevisedRevisions,
-                  }}
-                />
-              </div>
-            ) : null}
-          </>
-        }
-        // TODO: check how this was set before
-        solutionVisibleOnInit={solutionVisibleOnInit}
         {...props}
-        afterSlot={
-          context?.uuid ? (
-            <Lazy>
-              <CommentAreaEntity entityId={context.uuid} />
-            </Lazy>
-          ) : null
-        }
-        onSolutionOpen={() => {
-          if (entityId && revisionId)
-            exerciseSubmission(
-              {
-                path: asPath,
-                entityId,
-                revisionId,
-                type: 'text',
-                result: 'open',
-              },
-              ab
-            )
-        }}
+        beforeSlot={beforeSlot}
+        solutionVisibleOnInit={solutionVisibleOnInit}
+        afterSlot={afterSlot}
+        onSolutionOpen={onSolutionOpen}
       />
     </div>
   )

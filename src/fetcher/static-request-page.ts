@@ -48,7 +48,11 @@ export async function staticRequestPage(
   const uuid = response.uuid
   const authorization = response.authorization as AuthorizationPayload
   if (!uuid) return { kind: 'not-found' }
-  // Can be deleted if CFWorker redirects those for us
+
+  if (uuid.__typename === UuidType.Comment) return { kind: 'not-found' } // no content for comments
+
+  // redirect revisions
+  // (can maybe be deleted if CFWorker redirects those for us)
   if (
     uuid.__typename === UuidRevType.Article ||
     uuid.__typename === UuidRevType.Page ||
@@ -71,8 +75,7 @@ export async function staticRequestPage(
     }
   }
 
-  if (uuid.__typename === UuidType.Comment) return { kind: 'not-found' } // no content for comments
-
+  // for solutions just request whole exercise
   if (uuid.__typename === UuidType.Solution) {
     return await staticRequestPage(`/${uuid.exercise.id}`, instance)
   }
@@ -256,7 +259,7 @@ export async function staticRequestPage(
         title,
         contentType: 'event',
         metaImage,
-        // metaDescription: getMetaDescription(content),
+        metaDescription: getMetaDescription(content),
       },
       cacheKey,
       authorization,
@@ -282,7 +285,7 @@ export async function staticRequestPage(
         title,
         contentType: 'page',
         metaImage,
-        // metaDescription: getMetaDescription(content),
+        metaDescription: getMetaDescription(content),
       },
       horizonData,
       cacheKey,

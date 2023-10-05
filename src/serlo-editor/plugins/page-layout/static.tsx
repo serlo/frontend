@@ -1,6 +1,6 @@
 import { PageLayoutRenderer } from './renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorPageLayoutPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import type { EditorPageLayoutPlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
 export interface PageLayoutRendererProps {
   widthPercent: number // for first column
@@ -14,8 +14,8 @@ export const PageLayoutStaticRenderer = ({ state }: EditorPageLayoutPlugin) => {
   return (
     <PageLayoutRenderer
       widthPercent={widthPercent}
-      column1={<StaticRenderer state={column1} />}
-      column2={<StaticRenderer state={column2} />}
+      column1={<StaticRenderer document={column1} />}
+      column2={<StaticRenderer document={column2} />}
     />
   )
 }

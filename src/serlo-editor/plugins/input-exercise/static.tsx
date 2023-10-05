@@ -1,5 +1,5 @@
 import { InputExerciseRenderer } from './renderer'
-import { isEmptyTextPlugin } from '../text/utils/static-is-empty'
+import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorInputExercisePlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
@@ -10,10 +10,10 @@ export function InputExerciseStaticRenderer({
   onEvaluate?: (correct: boolean, val: string) => void
 }) {
   const answers = state.answers.map((answer) => {
-    const isEmpty = isEmptyTextPlugin(answer.feedback)
+    const isEmpty = isEmptyTextDocument(answer.feedback)
     return {
       ...answer,
-      feedback: isEmpty ? null : <StaticRenderer state={answer.feedback} />,
+      feedback: isEmpty ? null : <StaticRenderer document={answer.feedback} />,
     }
   })
 

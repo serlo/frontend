@@ -1,10 +1,11 @@
 import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import type { EditorExercisePlugin } from '../types/editor-plugins'
 import { useAuthentication } from '@/auth/use-authentication'
 import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
+import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { ExerciseInlineType } from '@/data-types'
 import { ExerciseStaticRenderer } from '@/serlo-editor/plugins/exercise/static'
 
@@ -20,7 +21,7 @@ export function ExerciseSerloStaticRenderer(props: EditorExercisePlugin) {
   const [loaded, setLoaded] = useState(false)
   useEffect(() => setLoaded(true), [])
 
-  //TODO: if (isRevisionView) don't show
+  const isRevisionView = useContext(RevisionViewContext)
 
   const context = props.serloContext
 
@@ -31,7 +32,7 @@ export function ExerciseSerloStaticRenderer(props: EditorExercisePlugin) {
           <ExerciseLicenseNotice data={context.license} />
         </div>
       ) : null}
-      {loaded && auth && context?.uuid ? (
+      {loaded && auth && context?.uuid && !isRevisionView ? (
         <div className="absolute -right-8 z-20">
           <AuthorToolsExercises
             data={{

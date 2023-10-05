@@ -245,7 +245,7 @@ export interface UnknownEditorPlugin {
   id?: string
 }
 
-export type AnyEditorPlugin = SupportedEditorPlugin | UnknownEditorPlugin
+export type AnyEditorDocument = SupportedEditorPlugin | UnknownEditorPlugin
 
 // dark ts magic ✨
 type Prettify<T> = {

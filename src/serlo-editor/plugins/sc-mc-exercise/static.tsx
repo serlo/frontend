@@ -1,5 +1,5 @@
 import { ScMcExerciseRenderer, ScMcExerciseRendererProps } from './renderer'
-import { isEmptyTextPlugin } from '../text/utils/static-is-empty'
+import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorScMcExercisePlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
@@ -20,11 +20,11 @@ export function ScMcExerciseStaticRenderer({
     .map(({ isCorrect, feedback, content }) => {
       return {
         isCorrect,
-        feedback: isEmptyTextPlugin(feedback) ? null : (
-          <StaticRenderer state={feedback} />
+        feedback: isEmptyTextDocument(feedback) ? null : (
+          <StaticRenderer document={feedback} />
         ),
-        content: isEmptyTextPlugin(content) ? null : (
-          <StaticRenderer state={content} />
+        content: isEmptyTextDocument(content) ? null : (
+          <StaticRenderer document={content} />
         ),
       }
     })

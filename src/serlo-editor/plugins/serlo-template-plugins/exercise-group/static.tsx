@@ -39,8 +39,8 @@ export function TextExerciseGroupTypeStaticRenderer(
       id: exercise.id,
       element: (
         <Fragment key={exercise.id}>
-          <StaticRenderer state={exercise} />
-          {solution ? <StaticRenderer state={solution} /> : null}
+          <StaticRenderer document={exercise} />
+          {solution ? <StaticRenderer document={solution} /> : null}
         </Fragment>
       ),
     }
@@ -62,7 +62,7 @@ export function TextExerciseGroupTypeStaticRenderer(
       ) : null}
       <TextExerciseGroupTypeRenderer
         content={
-          <StaticRenderer state={content as unknown as EditorRowsPlugin} />
+          <StaticRenderer document={content as unknown as EditorRowsPlugin} />
         }
         exercises={rendered}
       />
