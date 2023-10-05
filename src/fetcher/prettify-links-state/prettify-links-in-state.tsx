@@ -31,7 +31,8 @@ export async function prettifyLinksInState(rootDocument?: AnyEditorDocument) {
 
     getChildrenOfSerializedDocument(document).forEach(walk)
 
-    // TODO: this does not seem to run, investigate
+    if (isTextDocument(document)) document.state.forEach(walkSlateDescendant)
+
     if (isSolutionDocument(document)) {
       const prereq = document.state.prerequisite
 
@@ -49,9 +50,6 @@ export async function prettifyLinksInState(rootDocument?: AnyEditorDocument) {
           })
         }
       }
-    }
-    if (isTextDocument(document)) {
-      document.state.forEach(walkSlateDescendant)
     }
     if (isImageDocument(document)) {
       const href = document.state.link?.href
