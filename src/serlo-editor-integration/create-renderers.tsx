@@ -92,7 +92,6 @@ export function createRenderers({
   instance,
 }: {
   instance: Instance
-  isRevisionView?: boolean
 }): InitRenderersArgs {
   return {
     pluginRenderers: [
