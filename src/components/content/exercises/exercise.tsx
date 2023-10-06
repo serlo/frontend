@@ -153,7 +153,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
     if (!entry) return null
 
-    if (!node.task.content) return null
+    if (!node.task.content?.interactive) return null
 
     return (
       <>
