@@ -1,11 +1,11 @@
 import dynamic from 'next/dynamic'
 
+import { AnchorSerloStaticRenderer } from './serlo-plugin-wrappers/anchor-serlo-static-renderer'
 import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-static-renderer'
 import { InjectionSerloStaticRenderer } from './serlo-plugin-wrappers/injection-serlo-static-renderer'
 import { LinkSerloRenderer } from './serlo-plugin-wrappers/link-renderer'
 import { EditorPluginType } from './types/editor-plugin-type'
 import type {
-  EditorAnchorPlugin,
   EditorExercisePlugin,
   EditorGeogebraPlugin,
   EditorH5PPlugin,
@@ -24,7 +24,6 @@ import { isPrintMode } from '@/components/print-mode'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { ExternalProvider } from '@/helper/use-consent'
 import { InitRenderersArgs } from '@/serlo-editor/plugin/helpers/editor-renderer'
-import { AnchorStaticRenderer } from '@/serlo-editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@/serlo-editor/plugins/article/static'
 import { BoxStaticRenderer } from '@/serlo-editor/plugins/box/static'
 import { EquationsStaticRenderer } from '@/serlo-editor/plugins/equations/static'
@@ -165,16 +164,7 @@ export function createRenderers({
       },
       {
         type: EditorPluginType.Anchor,
-        renderer: (state: EditorAnchorPlugin) => (
-          <>
-            <AnchorStaticRenderer {...state} />
-            {/* {isRevisionView && (
-            <span className="break-all bg-editor-primary-100 px-1 text-sm">
-              {state.state}
-            </span>
-          )} */}
-          </>
-        ),
+        renderer: AnchorSerloStaticRenderer,
       },
 
       // only for pages
