@@ -1,5 +1,13 @@
-import { ScMcExerciseRenderer, ScMcExerciseRendererProps } from './renderer'
+import { useEffect, useState } from 'react'
+import type { Element } from 'slate'
+
+import {
+  ScMcExerciseRenderer,
+  ScMcExerciseRendererProps,
+} from './renderer/renderer'
+import { StaticSlate } from '../text/static-slate'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
+import { shuffleArray } from '@/helper/shuffle-array'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorScMcExercisePlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
@@ -15,14 +23,23 @@ export function ScMcExerciseStaticRenderer({
   onEvaluate: ScMcExerciseRendererProps['onEvaluate']
   renderExtraAnswerContent: ScMcExerciseRendererProps['renderExtraAnswerContent']
 }) {
-  const answers = state.answers
+  const [shuffledAnswers, setShuffledAnswers] = useState(state.answers)
+
+  useEffect(() => {
+    setShuffledAnswers(shuffleArray(state.answers))
+  }, [state.answers])
+
+  const answers = shuffledAnswers
     .slice(0)
     .map(({ isCorrect, feedback, content }) => {
+      const hasFeedback = !isEmptyTextDocument(feedback)
+      const unwrappedFeedback = (feedback.state as Element[])?.[0].children
+
       return {
         isCorrect,
-        feedback: isEmptyTextDocument(feedback) ? null : (
-          <StaticRenderer document={feedback} />
-        ),
+        feedback: hasFeedback ? (
+          <StaticSlate element={unwrappedFeedback} />
+        ) : null,
         content: isEmptyTextDocument(content) ? null : (
           <StaticRenderer document={content} />
         ),
