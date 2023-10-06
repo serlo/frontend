@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic'
 
 import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-static-renderer'
+import { InjectionSerloStaticRenderer } from './serlo-plugin-wrappers/injection-serlo-static-renderer'
 import { LinkSerloRenderer } from './serlo-plugin-wrappers/link-renderer'
 import { EditorPluginType } from './types/editor-plugin-type'
 import type {
@@ -9,7 +10,6 @@ import type {
   EditorGeogebraPlugin,
   EditorH5PPlugin,
   EditorHighlightPlugin,
-  EditorInjectionPlugin,
   EditorInputExercisePlugin,
   EditorScMcExercisePlugin,
   EditorSolutionPlugin,
@@ -30,7 +30,6 @@ import { BoxStaticRenderer } from '@/serlo-editor/plugins/box/static'
 import { EquationsStaticRenderer } from '@/serlo-editor/plugins/equations/static'
 import { parseId } from '@/serlo-editor/plugins/geogebra/renderer'
 import { GeogebraStaticRenderer } from '@/serlo-editor/plugins/geogebra/static'
-import { InjectionStaticRenderer } from '@/serlo-editor/plugins/injection/static'
 import { MultimediaStaticRendererWithLightbox } from '@/serlo-editor/plugins/multimedia/static-with-dynamic-lightbox'
 import { PageLayoutStaticRenderer } from '@/serlo-editor/plugins/page-layout/static'
 import { PagePartnersStaticRenderer } from '@/serlo-editor/plugins/page-partners/static'
@@ -120,14 +119,7 @@ export function createRenderers({
       { type: EditorPluginType.SerloTable, renderer: SerloTableStaticRenderer },
       {
         type: EditorPluginType.Injection,
-        renderer: (state: EditorInjectionPlugin) => {
-          return (
-            <>
-              <InjectionStaticRenderer {...state} />
-              {/* {isRevisionView && <ExtraRevisionViewInfo element={element} />} */}
-            </>
-          )
-        },
+        renderer: InjectionSerloStaticRenderer,
       },
       { type: EditorPluginType.Equations, renderer: EquationsStaticRenderer },
       {
