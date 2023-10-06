@@ -1,5 +1,5 @@
 import { createElement } from 'react'
-import { Descendant } from 'slate'
+import { Descendant, Element } from 'slate'
 
 import { TextLeafRenderer } from './components/text-leaf-renderer'
 import { ListElementType } from './types/text-editor'
@@ -62,9 +62,20 @@ export function StaticSlate({
       )
     }
     if (element.type === ListElementType.LIST_ITEM_TEXT) {
+      // "list-item-child"
+
+      // TODO: maybe write migration or formatter for this?
+      // compat: unwrap old content where a list item is wrapped inside another p in state
+      const elementChild =
+        children.length === 1 && Object.hasOwn(children[0], 'type')
+          ? (children[0] as unknown as Element)
+          : undefined
+      const unwrapped =
+        elementChild?.type === 'p' ? elementChild.children : children
+
       return (
         <p className="slate-p serlo-p mb-0 ml-0 min-h-[1.33em]">
-          <StaticSlate element={children} />
+          <StaticSlate element={unwrapped} />
         </p>
       )
     }
