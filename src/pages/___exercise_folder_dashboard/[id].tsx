@@ -2,11 +2,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import jsonDiff from 'json-diff'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+
+import { FaIcon } from '@/components/fa-icon'
 
 interface FolderData {
   id: number
@@ -19,6 +22,10 @@ interface FolderData {
     visits?: number
     solvedByEntity: { [key: number]: number }
   }[]
+}
+
+interface ChangesRevisions {
+  [key: string]: 'added' | 'removed' | 'changed'
 }
 
 export default function Page() {
@@ -42,20 +49,45 @@ export default function Page() {
   if (!data) {
     return <p>Lade Daten für Ordner {router.query.id}</p>
   } else {
+    const diff = jsonDiff.diffString(
+      data.versions[start].content,
+      data.versions[end].content,
+      {
+        color: false,
+      }
+    )
+    const changedRevisions: ChangesRevisions = {}
+    diff.split('\n').forEach((line) => {
+      if (line.includes('current_revision_id')) {
+        const lastSpace = line.lastIndexOf(' ')
+        const id = parseInt(line.substring(lastSpace).trim())
+        if (!changedRevisions[id]) {
+          if (line.startsWith('+')) {
+            changedRevisions[id] = 'added'
+          } else {
+            changedRevisions[id] = 'removed'
+          }
+        } else {
+          changedRevisions[id] = 'changed'
+        }
+      }
+    })
     return (
       <>
         <Head>
           <title>Daten-Auswertung für {decodeURIComponent(data.title)}</title>
         </Head>
         <div className="bg-gray-50 py-4 pl-8 text-3xl">
-          {decodeURIComponent(data.title)}
+          <a href={data.title} target="_blank" rel="noreferrer">
+            {decodeURIComponent(data.title)}
+          </a>
         </div>
         <div className="mx-12 my-8 flex flex-wrap">
           {data.versions.map((change, i) => {
             return (
               <div
                 className={clsx(
-                  'm-4 h-36 w-56 rounded-xl p-2',
+                  'relative m-4 h-36 w-56 rounded-xl p-2',
                   i === start || i === end
                     ? 'bg-green-200'
                     : i >= start && i < end
@@ -64,6 +96,18 @@ export default function Page() {
                 )}
                 key={i}
               >
+                {i === data.versions.length - 1 && (
+                  <div className="absolute right-3 top-2">
+                    <a
+                      href={`https://frontend-git-2321-prototyping-dashboard-serlo.vercel.app/___exercise_dashboard/details/${change.start}to${change.end}/${data.id}`}
+                      target="_blank"
+                      className="serlo-link"
+                      rel="noreferrer"
+                    >
+                      <FaIcon icon={faMagnifyingGlass} />
+                    </a>
+                  </div>
+                )}
                 <p>Version {i + 1}</p>
                 <p>Start: {change.start}</p>
                 <p className="mb-2">Ende: {change.end}</p>
@@ -126,37 +170,33 @@ export default function Page() {
             })}
           </select>
         </div>
+        <div className="ml-8">
+          Lösungsraten berechnen sich aus Anzahl korrekte Lösungen / Anzahl
+          Aufrufe.
+        </div>
         <div className="m-4 flex">
           <div className="flex-1 border p-4">
             <p>
               <strong>Version {start + 1}</strong>
             </p>
-            {renderVersion(start)}
+            {renderVersion(start, changedRevisions)}
           </div>
           <div className="flex-1 border p-4">
             <p>Änderungen</p>
-            <pre className="mt-4 bg-yellow-100">
-              {jsonDiff.diffString(
-                data.versions[start].content,
-                data.versions[end].content,
-                {
-                  color: false,
-                }
-              )}
-            </pre>
+            <pre className="mt-4 bg-yellow-100">{diff}</pre>
           </div>
           <div className="flex-1 border p-4">
             <p>
               <strong>Version {end + 1}</strong>
             </p>
-            {renderVersion(end)}
+            {renderVersion(end, changedRevisions)}
           </div>
         </div>
       </>
     )
   }
 
-  function renderVersion(i: number) {
+  function renderVersion(i: number, cr: ChangesRevisions) {
     if (!data) return null
     const content = data.versions[i].content
     return (
@@ -165,7 +205,24 @@ export default function Page() {
           if (entry.__typename === 'text-exercise') {
             return (
               <p key={entry.__id} className="my-2">
-                Aufgabe {entry.__id} ({entry.current_revision_id}){' '}
+                Aufgabe {entry.__id} (
+                <a
+                  href={`/${entry.current_revision_id}`}
+                  target="_blank"
+                  className={clsx(
+                    'hover:underline',
+                    cr[entry.current_revision_id] === 'added' &&
+                      'text-green-600',
+                    cr[entry.current_revision_id] === 'removed' &&
+                      'text-red-600',
+                    cr[entry.current_revision_id] === 'changed' &&
+                      'text-yellow-600'
+                  )}
+                  rel="noreferrer"
+                >
+                  {entry.current_revision_id}
+                </a>
+                ){' '}
                 {renderSolved(
                   entry.__id,
                   data.versions[i].start,
@@ -179,13 +236,47 @@ export default function Page() {
               <div key={entry.__id} className="my-2">
                 <p className="my-2">
                   {' '}
-                  Gruppe {entry.__id} ({entry.current_revision_id})
+                  Gruppe {entry.__id} (
+                  <a
+                    href={`/${entry.current_revision_id}`}
+                    target="_blank"
+                    className={clsx(
+                      'hover:underline',
+                      cr[entry.current_revision_id] === 'added' &&
+                        'text-green-600',
+                      cr[entry.current_revision_id] === 'removed' &&
+                        'text-red-600',
+                      cr[entry.current_revision_id] === 'changed' &&
+                        'text-yellow-600'
+                    )}
+                    rel="noreferrer"
+                  >
+                    {entry.current_revision_id}
+                  </a>
+                  )
                 </p>
                 {entry.children
                   ? entry.children.map((child: any) => {
                       return (
                         <p key={child.__id} className="my-2 ml-5">
-                          Teilaufgabe {child.__id} ({child.current_revision_id}){' '}
+                          Teilaufgabe {child.__id} (
+                          <a
+                            href={`/${child.current_revision_id}`}
+                            target="_blank"
+                            className={clsx(
+                              'hover:underline',
+                              cr[child.current_revision_id] === 'added' &&
+                                'text-green-600',
+                              cr[child.current_revision_id] === 'removed' &&
+                                'text-red-600',
+                              cr[child.current_revision_id] === 'changed' &&
+                                'text-yellow-600'
+                            )}
+                            rel="noreferrer"
+                          >
+                            {child.current_revision_id}
+                          </a>
+                          ){' '}
                           {renderSolved(
                             child.__id,
                             data.versions[i].start,
