@@ -43,7 +43,12 @@ export default function Page() {
         `https://serlo.github.io/data-pipeline-interactive-exercises/folderData/${id}.json`
       )
         .then((res) => res.json())
-        .then((data) => setData(data as FolderData))
+        .then((data) => {
+          setData(data as FolderData)
+          if ((data as FolderData).versions.length <= 1) {
+            setEnd(0)
+          }
+        })
     }
   }, [id])
   if (!data) {
@@ -77,9 +82,22 @@ export default function Page() {
         <Head>
           <title>Daten-Auswertung für {decodeURIComponent(data.title)}</title>
         </Head>
-        <div className="bg-gray-50 py-4 pl-8 text-3xl">
-          <a href={data.title} target="_blank" rel="noreferrer">
+        <div className="flex items-baseline justify-between bg-gray-50 py-4 pl-8">
+          <a
+            href={data.title}
+            target="_blank"
+            rel="noreferrer"
+            className="text-3xl"
+          >
             {decodeURIComponent(data.title)}
+          </a>
+          <a
+            href="/___exercise_folder_dashboard/overview"
+            target="_blank"
+            rel="noreferrer"
+            className="serlo-link mr-4 inline-block"
+          >
+            Aufgabenordner Übersicht
           </a>
         </div>
         <div className="mx-12 my-8 flex flex-wrap">
