@@ -45,8 +45,6 @@ export enum FrontendNodeType {
   SpoilerBody = 'spoiler-body',
   SpoilerContainer = 'spoiler-container',
   SpoilerTitle = 'spoiler-title',
-  Row = 'row', // children of dep. layout plugin
-  Col = 'col', // children of dep. layout plugin
   Video = EditorPluginType.Video,
   Exercise = EditorPluginType.Exercise,
   ExerciseGroup = 'exercise-group',
