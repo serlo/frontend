@@ -234,6 +234,12 @@ export default function Page() {
             )}
           </div>
         </div>
+        <iframe
+          src={`https://serlo.github.io/visits-dashboard/visits_${data.id}`}
+          className="mx-auto mt-6"
+          height={1000}
+          width={1400}
+        ></iframe>
       </>
     )
   }
