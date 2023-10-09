@@ -347,16 +347,6 @@ function renderElement({
   if (element.type === FrontendNodeType.Multimedia) {
     return <Multimedia {...element} renderNested={nestedRenderer} />
   }
-  if (element.type === FrontendNodeType.Row) {
-    return <div className="flex flex-col mobile:flex-row">{children}</div>
-  }
-  if (element.type === FrontendNodeType.Col) {
-    return (
-      <div style={{ flexGrow: element.size, flexBasis: 0, flexShrink: 1 }}>
-        {children}
-      </div>
-    )
-  }
   if (element.type === FrontendNodeType.Box) {
     return <Box {...element} renderNested={nestedRenderer} />
   }

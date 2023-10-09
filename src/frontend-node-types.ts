@@ -187,18 +187,6 @@ export interface FrontendMultiMediaNode {
   pluginId?: string
 }
 
-export interface FrontendRowNode {
-  type: FrontendNodeType.Row
-  children?: FrontendColNode[]
-}
-
-export interface FrontendColNode {
-  type: FrontendNodeType.Col
-  size: number
-  float?: 'left' | 'right'
-  children?: FrontendContentNode[]
-}
-
 export interface FrontendBoxNode {
   type: FrontendNodeType.Box
   boxType: BoxType
@@ -435,7 +423,6 @@ export type FrontendElementNode =
   | FrontendSpoilerTitleNode
   | FrontendSpoilerBodyNode
   | FrontendLiNode
-  | FrontendColNode
   | FrontendBoxNode
   | FrontendThNode
   | FrontendTdNode
@@ -450,7 +437,6 @@ export type FrontendRestrictedElementNode =
   | FrontendSerloTrNode
   | FrontendUlNode
   | FrontendOlNode
-  | FrontendRowNode
   | FrontendMultiMediaNode
   | FrontendTrNode
   | FrontendExerciseGroupNode

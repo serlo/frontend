@@ -10,7 +10,6 @@ export enum EditorPluginType {
   Highlight = 'highlight',
   Image = 'image',
   Injection = 'injection',
-  Layout = 'layout',
   Multimedia = 'multimedia',
 
   PageLayout = 'pageLayout',
