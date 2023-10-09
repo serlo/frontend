@@ -60,7 +60,7 @@
     "is-hotkey": "^0.2.0",
     "js-cookie": "^3.0.5",
     "katex": "^0.16.8",
-    "next": "^13.4.19",
+    "next": "^13.5.4",
     "nprogress": "^0.2.0",
     "postcss": "^8.4.31",
     "qrcode.react": "^3.1.0",
