@@ -15,6 +15,8 @@ import {
   useAppDispatch,
 } from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { boolean } from '@/serlo-editor/plugin/scalar'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function InputExerciseEditor(props: InputExerciseProps) {
   const { editable, state, id } = props
@@ -86,7 +88,12 @@ export function InputExerciseEditor(props: InputExerciseProps) {
           })}
           <AddButton
             onClick={() => {
-              state.answers.insert()
+              const wrongAnswer = {
+                value: '',
+                isCorrect: false,
+                feedback: { plugin: EditorPluginType.Text },
+              }
+              state.answers.insert(undefined, wrongAnswer)
               setTimeout(() => {
                 dispatch(focus(id))
                 newestAnswerRef.current?.focus()
