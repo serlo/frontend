@@ -9,23 +9,13 @@ export enum Sign {
   NotEqualTo = 'not-equal-to',
 }
 
-export function renderSignToString(sign: Sign): string {
-  switch (sign) {
-    case Sign.AlmostEqualTo:
-      return '≈'
-    case Sign.Equals:
-      return '='
-    case Sign.Estimates:
-      return '≙'
-    case Sign.GreaterThan:
-      return '>'
-    case Sign.GreaterThanOrEqual:
-      return '≥'
-    case Sign.LessThan:
-      return '<'
-    case Sign.LessThanOrEqual:
-      return '≤'
-    case Sign.NotEqualTo:
-      return '≠'
-  }
+export const signStrings: Record<Sign, string> = {
+  [Sign.AlmostEqualTo]: '≈',
+  [Sign.Equals]: '=',
+  [Sign.Estimates]: '≙',
+  [Sign.GreaterThan]: '>',
+  [Sign.GreaterThanOrEqual]: '≥',
+  [Sign.LessThan]: '<',
+  [Sign.LessThanOrEqual]: '≤',
+  [Sign.NotEqualTo]: '≠',
 }

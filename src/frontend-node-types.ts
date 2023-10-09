@@ -45,8 +45,6 @@ export enum FrontendNodeType {
   SpoilerBody = 'spoiler-body',
   SpoilerContainer = 'spoiler-container',
   SpoilerTitle = 'spoiler-title',
-  Row = 'row', // children of dep. layout plugin
-  Col = 'col', // children of dep. layout plugin
   Video = EditorPluginType.Video,
   Exercise = EditorPluginType.Exercise,
   ExerciseGroup = 'exercise-group',
@@ -185,18 +183,6 @@ export interface FrontendMultiMediaNode {
   media: FrontendContentNode[]
   children: FrontendContentNode[]
   pluginId?: string
-}
-
-export interface FrontendRowNode {
-  type: FrontendNodeType.Row
-  children?: FrontendColNode[]
-}
-
-export interface FrontendColNode {
-  type: FrontendNodeType.Col
-  size: number
-  float?: 'left' | 'right'
-  children?: FrontendContentNode[]
 }
 
 export interface FrontendBoxNode {
@@ -435,7 +421,6 @@ export type FrontendElementNode =
   | FrontendSpoilerTitleNode
   | FrontendSpoilerBodyNode
   | FrontendLiNode
-  | FrontendColNode
   | FrontendBoxNode
   | FrontendThNode
   | FrontendTdNode
@@ -450,7 +435,6 @@ export type FrontendRestrictedElementNode =
   | FrontendSerloTrNode
   | FrontendUlNode
   | FrontendOlNode
-  | FrontendRowNode
   | FrontendMultiMediaNode
   | FrontendTrNode
   | FrontendExerciseGroupNode

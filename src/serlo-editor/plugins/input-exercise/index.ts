@@ -17,14 +17,14 @@ function createInputExerciseState(
 ) {
   const answerObject = object({
     value: string(''),
-    isCorrect: boolean(),
+    isCorrect: boolean(true),
     feedback: child(feedback),
   })
 
   return object({
     type: string(InputExerciseType.NumberExact),
     unit: string(''),
-    answers: list(answerObject),
+    answers: list(answerObject, 1),
   })
 }
 
