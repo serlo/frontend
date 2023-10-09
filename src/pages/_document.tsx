@@ -17,7 +17,19 @@ const sentryLoader = `
       environment: "${process.env.NEXT_PUBLIC_ENV}",
       release: "frontend@${
         process.env.NEXT_PUBLIC_COMMIT_SHA?.substring(0, 7) ?? ''
-      }"
+      }",
+      beforeSend(event, hint) {
+        // ignore safari warning in JsonLd component
+        const error = hint.originalException;
+        if (
+          error &&
+          error.message &&
+          error.message.startsWith('r["@context"].toLowerCase')
+        ) {
+          return null
+        }
+        return event;
+      },
     });
     window.Sentry.forceLoad();
   }
