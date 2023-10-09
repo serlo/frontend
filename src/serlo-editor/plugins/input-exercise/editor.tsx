@@ -15,7 +15,6 @@ import {
   useAppDispatch,
 } from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { boolean } from '@/serlo-editor/plugin/scalar'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function InputExerciseEditor(props: InputExerciseProps) {
