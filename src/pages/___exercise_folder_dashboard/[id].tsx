@@ -222,10 +222,16 @@ export default function Page() {
             <pre className="mt-4 bg-yellow-100">{diff}</pre>
           </div>
           <div className="flex-1 border p-4">
-            <p>
-              <strong>Version {end + 1}</strong>
-            </p>
-            {renderVersion(end, changedRevisions)}
+            {start === end ? (
+              <p>keine weitere Version</p>
+            ) : (
+              <>
+                <p>
+                  <strong>Version {end + 1}</strong>
+                </p>
+                {renderVersion(end, changedRevisions)}
+              </>
+            )}
           </div>
         </div>
       </>
