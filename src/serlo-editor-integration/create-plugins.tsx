@@ -20,7 +20,6 @@ import type {
   PluginWithData,
   PluginsWithData,
 } from '@/serlo-editor/plugin/helpers/editor-plugins'
-import { layoutPlugin } from '@/serlo-editor/plugins/_on-the-way-out/layout'
 import { anchorPlugin } from '@/serlo-editor/plugins/anchor'
 import { articlePlugin } from '@/serlo-editor/plugins/article'
 import { audioPlugin } from '@/serlo-editor/plugins/audio'
@@ -196,7 +195,6 @@ export function createPlugins({
       type: EditorPluginType.InputExercise,
       plugin: createInputExercisePlugin({}),
     },
-    { type: EditorPluginType.Layout, plugin: layoutPlugin },
     { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
     { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
     { type: EditorPluginType.Solution, plugin: solutionPlugin },
