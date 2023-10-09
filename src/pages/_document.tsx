@@ -19,7 +19,7 @@ const sentryLoader = `
         process.env.NEXT_PUBLIC_COMMIT_SHA?.substring(0, 7) ?? ''
       }",
       beforeSend(event, hint) {
-        // ignore safari warning in JsonLd component
+        /* ignore safari warning in JsonLd component */
         const error = hint.originalException;
         if (
           error &&
@@ -125,7 +125,7 @@ export default class MyDocument extends Document {
             process.env.NEXT_PUBLIC_COMMIT_SHA !== undefined && (
               <script
                 dangerouslySetInnerHTML={{
-                  __html: sentryLoader.replace(/[\s]/g, ''),
+                  __html: sentryLoader,
                 }}
               />
             )}
