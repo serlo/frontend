@@ -25,9 +25,11 @@ export function AddRowButtonFloating({
           <button
             className={clsx(
               tw`
-                add-trigger z-20 h-7 rounded-full py-2 text-gray-600 transition-all
-                hover:cursor-pointer hover:text-editor-primary hover:opacity-100
-                group-hover:opacity-60
+                add-trigger z-20 h-7 w-7
+                rounded-full pt-1 text-center
+                text-gray-600 transition-all hover:cursor-pointer
+                hover:text-editor-primary hover:opacity-100
+                focus-visible:text-editor-primary group-hover:opacity-60
               `,
               focused ? 'opacity-60' : 'opacity-0'
             )}

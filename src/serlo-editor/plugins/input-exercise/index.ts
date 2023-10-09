@@ -1,4 +1,5 @@
 import { InputExerciseEditor } from './editor'
+import { InputExerciseType } from './input-exercise-type'
 import {
   type ChildStateTypeConfig,
   type EditorPlugin,
@@ -16,14 +17,14 @@ function createInputExerciseState(
 ) {
   const answerObject = object({
     value: string(''),
-    isCorrect: boolean(),
+    isCorrect: boolean(true),
     feedback: child(feedback),
   })
 
   return object({
-    type: string('input-string-normalized-match-challenge'),
+    type: string(InputExerciseType.NumberExact),
     unit: string(''),
-    answers: list(answerObject),
+    answers: list(answerObject, 1),
   })
 }
 

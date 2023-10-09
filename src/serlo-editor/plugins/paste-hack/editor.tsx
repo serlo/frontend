@@ -31,7 +31,6 @@ const StateDecoder = t.strict({
         t.literal(EditorPluginType.SerloTable),
         t.literal(EditorPluginType.Highlight),
         t.literal(EditorPluginType.Injection),
-        t.literal(EditorPluginType.Layout),
         t.literal(EditorPluginType.Multimedia),
         t.literal(EditorPluginType.Spoiler),
         t.literal(EditorPluginType.Box),

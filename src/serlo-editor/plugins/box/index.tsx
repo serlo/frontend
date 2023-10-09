@@ -17,6 +17,7 @@ function createBoxState(allowedPlugins: (EditorPluginType | string)[]) {
         noLinebreaks: true,
       },
     }),
+    // we don't generate new id's any more but keep the old ones for now
     anchorId: string(''),
     content: child({
       plugin: EditorPluginType.Rows,

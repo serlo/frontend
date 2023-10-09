@@ -10,12 +10,12 @@ import {
   faEnvelope,
 } from '@fortawesome/free-solid-svg-icons'
 import QRCode from 'qrcode.react'
-import { MouseEvent, useRef, useContext } from 'react'
+import { MouseEvent, useRef } from 'react'
 
 import { FaIcon, FaIconProps } from '../../fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useEntityId } from '@/contexts/uuids-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { colors } from '@/helper/colors'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -44,7 +44,7 @@ export function ShareModal({
 }: ShareModalProps) {
   const shareInputRef = useRef<HTMLInputElement>(null)
   const { strings, lang } = useInstanceData()
-  const id = useContext(EntityIdContext)
+  const id = useEntityId()
   const pathOrId = path ?? id
 
   if (!isOpen || !pathOrId) return null

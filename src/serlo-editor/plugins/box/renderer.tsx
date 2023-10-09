@@ -1,10 +1,12 @@
 import {
+  faBrain,
   faExclamationTriangle,
+  faFileCircleCheck,
   faHandPointRight,
   faLightbulb,
   faMapSigns,
   faQuoteRight,
-  faScroll,
+  faSplotch,
   faThumbtack,
 } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
@@ -13,31 +15,21 @@ import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { tw } from '@/helper/tw'
 
-export const boxTypeStyle = {
-  blank: {},
-  example: {},
-  quote: { icon: faQuoteRight },
-  approach: { icon: faMapSigns },
-  remember: { icon: faScroll },
-  attention: {
-    icon: faExclamationTriangle,
-    borderColorClass: 'border-red-100',
-    colorClass: 'text-orange',
-  },
-  note: { icon: faHandPointRight },
-  definition: { icon: faThumbtack },
-  theorem: { icon: faLightbulb },
-  proof: {},
-}
+export const boxTypeIcons = {
+  blank: undefined,
+  example: faSplotch,
+  quote: faQuoteRight,
+  approach: faMapSigns,
+  attention: faExclamationTriangle,
+  remember: faBrain,
+  note: faHandPointRight,
+  definition: faThumbtack,
+  theorem: faLightbulb,
+  proof: faFileCircleCheck,
+} as const
 
-export const defaultStyle = {
-  icon: undefined,
-  borderColorClass: 'border-brand-300',
-  colorClass: 'text-brand',
-}
-
-export const types = Object.keys(boxTypeStyle)
-export type BoxType = keyof typeof boxTypeStyle
+export type BoxType = keyof typeof boxTypeIcons
+export const types = Object.keys(boxTypeIcons) as BoxType[]
 
 interface BoxProps {
   boxType: BoxType
@@ -51,15 +43,11 @@ export function BoxRenderer({ boxType, title, anchorId, children }: BoxProps) {
   if (!children || !boxType) return null
 
   const isBlank = boxType === 'blank'
+  const isAttention = boxType === 'attention'
 
-  const style = boxTypeStyle[boxType]
-  const borderColorClass = Object.hasOwn(style, 'borderColorClass')
-    ? style.borderColorClass
-    : defaultStyle.borderColorClass
-  const colorClass = Object.hasOwn(style, 'colorClass')
-    ? style.colorClass
-    : defaultStyle.colorClass
-  const icon = Object.hasOwn(style, 'icon') ? style.icon : undefined
+  const icon = boxTypeIcons[boxType] ? (
+    <FaIcon className="mr-1" icon={boxTypeIcons[boxType]!} />
+  ) : null
 
   return (
     <figure
@@ -69,31 +57,27 @@ export function BoxRenderer({ boxType, title, anchorId, children }: BoxProps) {
           serlo-box relative mx-side mb-6 
           rounded-xl border-3 pb-side pt-[2px]
         `,
-        borderColorClass
+        isAttention ? 'border-red-100' : 'border-brand-300'
       )}
     >
-      {renderHeader()}
-      {boxType === 'quote' ? <blockquote>{children}</blockquote> : children}
-    </figure>
-  )
-
-  function renderHeader() {
-    return (
       <figcaption className="px-side pb-2 pt-2.5 text-lg">
-        <a className="!no-underline" id={anchorId}>
+        <a className="!no-underline">
           {isBlank ? null : (
-            <>
-              <span
-                className={clsx(title && !isBlank ? 'mr-1.5' : '', colorClass)}
-              >
-                {icon ? <FaIcon className="mr-1" icon={icon} /> : null}
-                {strings.content.boxTypes[boxType]}
-              </span>
-            </>
+            <span
+              className={clsx(
+                title && !isBlank ? 'mr-1.5' : '',
+                isAttention ? 'text-orange' : 'text-brand'
+              )}
+            >
+              {icon}
+              {strings.content.boxTypes[boxType]}
+            </span>
           )}
           {title}
         </a>
       </figcaption>
-    )
-  }
+
+      {boxType === 'quote' ? <blockquote>{children}</blockquote> : children}
+    </figure>
+  )
 }
