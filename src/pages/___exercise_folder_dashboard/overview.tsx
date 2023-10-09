@@ -9,10 +9,10 @@ type OverviewData = {
   solvedCount: number
 }[]
 
+type Sorts = 'most-edited' | 'most-viewed' | 'most-solved'
+
 export default function Overview() {
-  const [sort, setSort] = useState<
-    'most-edited' | 'most-viewed' | 'most-solved'
-  >('most-edited')
+  const [sort, setSort] = useState<Sorts | null>(null)
 
   const [sortedData, setData] = useState<OverviewData | null>(null)
 
@@ -21,10 +21,38 @@ export default function Overview() {
       `https://serlo.github.io/data-pipeline-interactive-exercises/folderData/overview.json`
     )
       .then((res) => res.json())
-      .then((data) => setData(data as OverviewData))
+      .then((data) => {
+        setData(data as OverviewData)
+        setSort(
+          (sessionStorage.getItem(
+            '___exercise_folder_dashboard__sort'
+          ) as Sorts) || 'most-solved'
+        )
+      })
   }, [])
 
-  if (!sortedData) return <p>wird geladen ...</p>
+  useEffect(() => {
+    sessionStorage.setItem('___exercise_folder_dashboard__sort', sort ?? '')
+    if (sortedData) {
+      if (sort === 'most-edited') {
+        const newData = sortedData.slice()
+        newData.sort((a, b) => b.changesCount - a.changesCount)
+        setData(newData)
+      }
+      if (sort === 'most-viewed') {
+        const newData = sortedData.slice()
+        newData.sort((a, b) => b.visitCount - a.visitCount)
+        setData(newData)
+      }
+      if (sort === 'most-solved') {
+        const newData = sortedData.slice()
+        newData.sort((a, b) => b.solvedCount - a.solvedCount)
+        setData(newData)
+      }
+    }
+  }, [sortedData, sort])
+
+  if (!sortedData || !sort) return <p>wird geladen ...</p>
 
   return (
     <div className="mx-auto max-w-[800px] pt-16">

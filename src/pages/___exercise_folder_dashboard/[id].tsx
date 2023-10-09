@@ -9,6 +9,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
 
 interface FolderData {
@@ -43,10 +44,29 @@ export default function Page() {
         `https://serlo.github.io/data-pipeline-interactive-exercises/folderData/${id}.json`
       )
         .then((res) => res.json())
-        .then((data) => {
-          setData(data as FolderData)
-          if ((data as FolderData).versions.length <= 1) {
+        .then((d) => {
+          const data = d as FolderData
+          setData(data)
+          // calculate start and end.
+          const last = data.versions.findLastIndex((x) => x.visits)
+          if (
+            data.versions.length <= 1 ||
+            !data.versions.some((x) => x.visits) ||
+            last <= 0
+          ) {
+            setStart(0)
             setEnd(0)
+          } else {
+            let previous = last - 1
+            while (previous > 0) {
+              if (data.versions[previous].visits) {
+                break
+              } else {
+                previous--
+              }
+            }
+            setStart(previous)
+            setEnd(last)
           }
         })
     }
@@ -91,14 +111,12 @@ export default function Page() {
           >
             {decodeURIComponent(data.title)}
           </a>
-          <a
+          <Link
             href="/___exercise_folder_dashboard/overview"
-            target="_blank"
-            rel="noreferrer"
-            className="serlo-link mr-4 inline-block"
+            className="mr-4 inline-block"
           >
             Aufgabenordner Übersicht
-          </a>
+          </Link>
         </div>
         <div className="mx-12 my-8 flex flex-wrap">
           {data.versions.map((change, i) => {
@@ -118,8 +136,8 @@ export default function Page() {
                   <div className="absolute right-3 top-2">
                     <a
                       href={`https://frontend-git-2321-prototyping-dashboard-serlo.vercel.app/___exercise_dashboard/details/${change.start}to${change.end}/${data.id}`}
-                      target="_blank"
                       className="serlo-link"
+                      target="_blank"
                       rel="noreferrer"
                     >
                       <FaIcon icon={faMagnifyingGlass} />
@@ -323,9 +341,7 @@ export default function Page() {
     const solved = data.versions[version].solvedByEntity[entityId]
     if (!solved) return null
     return (
-      <span>
-        {' '}
-        -{' '}
+      <span className="ml-4 inline-block">
         <strong>
           {((solved / (data.versions[version].visits ?? 0)) * 100).toFixed(2)}%
         </strong>{' '}
