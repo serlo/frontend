@@ -45,7 +45,7 @@ export function EquationsRenderer({
               'text-right'
             )}
           {transformationTarget !== 'term' || i !== 0 ? (
-            (renderTD(formulaRenderer(signStrings[step.sign])), 'text-center')
+            renderTD(formulaRenderer(signStrings[step.sign]), 'text-center')
           ) : (
             <td />
           )}
