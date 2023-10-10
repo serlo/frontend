@@ -169,5 +169,13 @@
   },
   "svgr": {
     "svgo": false
+  },
+  "postcss": {
+    "plugins": {
+      "tailwindcss/nesting": {},
+      "tailwindcss": {},
+      "postcss-flexbugs-fixes": {},
+      "autoprefixer": {}
+    }
   }
 }
