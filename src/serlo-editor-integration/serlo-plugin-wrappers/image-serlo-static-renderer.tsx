@@ -1,27 +1,22 @@
 import { useRouter } from 'next/router'
-import { useContext } from 'react'
 
-import { RevisionViewExtraInfo } from '../revision-view-extra-info'
+import { ExtraInfoIfRevisionView } from '../extra-info-if-revision-view'
 import { EditorImagePlugin } from '../types/editor-plugins'
-import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { ImageStaticRenderer } from '@/serlo-editor/plugins/image/static'
 
 export function ImageSerloStaticRenderer(props: EditorImagePlugin) {
-  const isRevisionView = useContext(RevisionViewContext)
   const pathNameBase = useRouter().asPath.split('/').pop()
   return (
     <>
       <ImageStaticRenderer {...props} pathNameBase={pathNameBase} />
-      {isRevisionView ? (
-        <>
-          {props.state.alt ? (
-            <RevisionViewExtraInfo>{`Alt: ${props.state.alt}`}</RevisionViewExtraInfo>
-          ) : null}
-          {props.state.link?.href ? (
-            <RevisionViewExtraInfo>{`Link: ${props.state.link?.href}`}</RevisionViewExtraInfo>
-          ) : null}
-        </>
-      ) : null}
+      <ExtraInfoIfRevisionView>
+        {props.state.alt ? `Alt: ${props.state.alt}` : `Alt: (kein alt text)`}
+      </ExtraInfoIfRevisionView>
+      <ExtraInfoIfRevisionView>
+        {props.state.link?.href
+          ? `Link: ${props.state.link.href}`
+          : `Link: (kein Link)`}
+      </ExtraInfoIfRevisionView>
     </>
   )
 }
