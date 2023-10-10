@@ -1,3 +1,4 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   presets: [require('./shared/tailwind-base.cjs')],
   mode: 'jit',
