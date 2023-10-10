@@ -4,7 +4,7 @@ import { StaticEntity } from '@/components/content/static-entity'
 import { EntityBase } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { Topic } from '@/components/taxonomy/topic'
+import { StaticTaxonomy } from '@/components/taxonomy/static-taxonomy'
 import { SlugProps } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { staticRequestPage } from '@/fetcher/static-request-page'
@@ -24,12 +24,11 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
       </FrontendClientBase>
     )
   }
-
   const page =
     pageData.kind === 'single-entity' ? (
       <StaticEntity data={pageData.entityData} />
     ) : (
-      <Topic data={pageData.taxonomyData} />
+      <StaticTaxonomy data={pageData.taxonomyData} />
     )
   const entityId =
     pageData.kind === 'single-entity'
