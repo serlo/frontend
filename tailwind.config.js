@@ -1,6 +1,7 @@
+import sharedTailwindBase from './shared/tailwind-base.js'
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  presets: [require('./shared/tailwind-base.cjs')],
-  mode: 'jit',
+export default {
+  presets: [sharedTailwindBase],
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
 }
