@@ -7,6 +7,7 @@ import { RatingProps } from 'react-simple-star-rating'
 import { NewFolderPrototypeProps } from './new-folder-prototype'
 import { StaticSubTaxonomy } from './static-sub-taxonomy'
 import { TopicCategories } from './topic-categories'
+import { ExerciseNumbering } from '../content/exercises/exercise-numbering'
 import { FaIcon } from '../fa-icon'
 import { StaticInfoPanel } from '../static-info-panel'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
@@ -20,7 +21,11 @@ import { abSubmission } from '@/helper/ab-submission'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { SupportedEditorPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import {
+  EditorExercisePlugin,
+  EditorSolutionPlugin,
+  SupportedEditorPlugin,
+} from '@/serlo-editor-integration/types/editor-plugins'
 
 export interface TopicProps {
   data: TaxonomyData
@@ -139,6 +144,8 @@ export function StaticTaxonomy({ data }: TopicProps) {
   function renderExercises() {
     if (ab?.experiment === 'dreisatz_new_design') {
       // here is the place for new exercise view
+
+      // no static view for now
       return (
         <>
           <NewFolderPrototype data={data} />
@@ -146,18 +153,27 @@ export function StaticTaxonomy({ data }: TopicProps) {
         </>
       )
     }
+
+    if (!hasExercises || !data.exercisesContent) return null
     return (
-      hasExercises &&
-      data.exercisesContent &&
-      data.exercisesContent.map((exercise, i) => {
-        return (
-          <Fragment key={i}>
-            {/* @ts-expect-error static */}
-            <StaticRenderer document={exercise} />
-            {i === 1 && renderSurvey()}
-          </Fragment>
-        )
-      })
+      <ol className="mt-12">
+        {data.exercisesContent.map((inExercise, i) => {
+          // for static
+          const exerciseArray = inExercise as unknown as
+            | [EditorExercisePlugin]
+            | [EditorExercisePlugin, EditorSolutionPlugin]
+
+          const exerciseUuid = exerciseArray[0].serloContext?.uuid
+
+          return (
+            <li key={exerciseArray[0].id ?? exerciseUuid}>
+              <ExerciseNumbering href={`/${exerciseUuid}`} index={i} />
+              <StaticRenderer document={exerciseArray} />
+              {i === 1 && renderSurvey()}
+            </li>
+          )
+        })}
+      </ol>
     )
   }
 

@@ -1,5 +1,9 @@
 import { MainUuidQuery, TaxonomyTermType } from './graphql-types/operations'
 import {
+  createStaticExerciseGroup,
+  staticCreateExercise,
+} from './static-create-exercises'
+import {
   TaxonomyData,
   TaxonomyLink,
   TaxonomySubTerm,
@@ -9,6 +13,7 @@ import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 import {
   EditorExercisePlugin,
   EditorSolutionPlugin,
+  EditorTemplateGroupedExercise,
   SupportedEditorPlugin,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
@@ -30,8 +35,6 @@ export function staticBuildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
   const description = uuid.description
     ? (JSON.parse(uuid.description) as SupportedEditorPlugin)
     : undefined
-
-  console.log(collectNestedTaxonomyTerms(children))
 
   return {
     // @ts-expect-error static
@@ -66,26 +69,24 @@ function isActive_for_subchildren(child: TaxonomyTermChildrenLevel2) {
 function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
   // let index = 0
   const result: (
+    | []
     | [EditorExercisePlugin]
     | [EditorExercisePlugin, EditorSolutionPlugin]
+    | [EditorTemplateGroupedExercise]
   )[] = []
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _todo = children
-  // TODO: adapt to new types
-  // console.log(children)
-  // children.forEach((child) => {
-  //   if (child.__typename === UuidType.Exercise && child.currentRevision) {
-  //     const exercise = staticCreateExercise({
-  //       ...child,
-  //       revisions: { totalCount: 0 },
-  //     })
-  //     if(!exercise.length) result.push(exercise)
-  //   }
-  //   if (child.__typename === UuidType.ExerciseGroup && child.currentRevision) {
-  //     if (children.length === 1) result.push(createStaticExerciseGroup(child))
-  //     else result.push(createStaticExerciseGroup(child, index++))
-  //   }
-  // })
+  children.forEach((child) => {
+    if (child.__typename === UuidType.Exercise && child.currentRevision) {
+      const exercise = staticCreateExercise({
+        ...child,
+        revisions: { totalCount: 0 },
+      })
+      result.push(exercise)
+    }
+    if (child.__typename === UuidType.ExerciseGroup && child.currentRevision) {
+      result.push(createStaticExerciseGroup(child))
+    }
+  })
+
   return result
 }
 
