@@ -1,4 +1,10 @@
-import { Entity, Subscription, TaxonomyTerm, Uuid } from '@serlo/authorization'
+import {
+  Entity,
+  Subscription,
+  TaxonomyTerm,
+  Uuid,
+  UuidType as AuthUuidType,
+} from '@serlo/authorization'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
@@ -328,8 +334,9 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 }
 
-function typeToAuthorizationType(type: string) {
-  if ([UuidType.Page, UuidRevType.Page].includes(type as UuidType)) return type
+function typeToAuthorizationType(type: AuthorToolsData['type']): AuthUuidType {
+  if (type === UuidType.Page) return 'Page'
+  if (type === UuidRevType.Page) return 'PageRevision'
   if (type.includes('Revision')) return 'EntityRevision'
   return 'Entity'
 }
