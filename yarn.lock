@@ -4288,7 +4288,7 @@ __metadata:
     tippy.js: ^6.3.7
     ts-debounce: ^4.0.0
     ts-key-enum: ^2.0.12
-    ts-unused-exports: ^9.0.5
+    ts-unused-exports: ^10.0.1
     typescript: ^5.2.2
     uuid: ^9.0.1
   languageName: unknown
@@ -14386,9 +14386,9 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"ts-unused-exports@npm:^9.0.5":
-  version: 9.0.5
-  resolution: "ts-unused-exports@npm:9.0.5"
+"ts-unused-exports@npm:^10.0.1":
+  version: 10.0.1
+  resolution: "ts-unused-exports@npm:10.0.1"
   dependencies:
     chalk: ^4.0.0
     tsconfig-paths: ^3.9.0
@@ -14399,7 +14399,7 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
       optional: false
   bin:
     ts-unused-exports: bin/ts-unused-exports
-  checksum: 67aefd95c14082189e591ee656cb89d9339cd7ee07ea1c56f3aa080b6434fa79ff1750d0e292fa62dffd197acfd0f8a46974647f91eb1a3f7b9a5cfd5acf6c19
+  checksum: d5248b4c1c3b970b594db4955582dbdc1c56852a61f69fd18e680e87bad4df879a052c84c0ca6e1d1ea4f63eab39c1a9beff23e8e38e4fcdefc5c03e83487256
   languageName: node
   linkType: hard
 

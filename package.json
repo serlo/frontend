@@ -151,7 +151,7 @@
     "styled-jsx-plugin-postcss": "^4.0.1",
     "tailwindcss": "^3.3.3",
     "tailwindcss-animate": "^1.0.7",
-    "ts-unused-exports": "^9.0.5",
+    "ts-unused-exports": "^10.0.1",
     "typescript": "^5.2.2"
   },
   "packageManager": "yarn@3.6.1",
