@@ -162,11 +162,21 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       url: `/${data.id}`,
       canDo: true,
     },
-    analyticsLink: {
-      title: loggedInStrings.authorMenu.analyticsLink,
-      url: `https://simpleanalytics.com/${lang}.serlo.org${data.alias ?? ''}`,
-      canDo: canDo(Uuid.delete('Page')) && data.alias,
-    },
+    analyticsLink:
+      data.taxonomyType === TaxonomyTermType.ExerciseFolder &&
+      lang === Instance.De
+        ? {
+            title: 'Daten-Dashboard für Ordner anzeigen',
+            url: `/___exercise_folder_dashboard/${data.id}`,
+            canDo: canDo(Uuid.create('Entity')),
+          }
+        : {
+            title: loggedInStrings.authorMenu.analyticsLink,
+            url: `https://simpleanalytics.com/${lang}.serlo.org${
+              data.alias ?? ''
+            }`,
+            canDo: canDo(Uuid.delete('Page')) && data.alias,
+          },
   } as ToolsConfig
 
   return (

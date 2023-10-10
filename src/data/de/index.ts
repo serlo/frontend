@@ -682,12 +682,6 @@ export const loggedInData = {
           serloId: 'Serlo ID',
           placeholder: "Serlo ID (z.B. 1565)"
         },
-        layout: {
-          title: 'Layout',
-          toDragConvert: "Um die Inhalte zu verschieben, konvertiere sie für den neuen Editor:",
-          oneColumnLayout: "Einspaltiges Layout",
-          multimediaTitle: "Erklärung mit Multimedia-Inhalt"
-        },
         multimedia: {
           title: "Erklärung mit Multimedia-Inhalt",
           description: "Erstelle einen veranschaulichenden oder erklärenden Multimedia-Inhalt mit zugehöriger Erklärung.",
