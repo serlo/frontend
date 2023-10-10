@@ -1,4 +1,4 @@
-import { Entity, type UuidType } from '@serlo/authorization'
+import { Entity } from '@serlo/authorization'
 import { type ReactNode, useState } from 'react'
 
 import {
@@ -13,6 +13,7 @@ import { MathSpan } from '@/components/content/math-span'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidWithRevType } from '@/data-types'
 import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 import { Editor, type EditorProps } from '@/serlo-editor/core'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
@@ -22,7 +23,7 @@ export interface SerloEditorProps {
   entityNeedsReview: boolean
   onSave: (data: SetEntityMutationData) => Promise<void>
   initialState: EditorProps['initialState']
-  type: UuidType
+  type: UuidWithRevType | 'User'
 }
 
 export interface LooseEdtrData {

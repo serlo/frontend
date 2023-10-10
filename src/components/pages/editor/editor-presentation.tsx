@@ -236,7 +236,9 @@ export function EditorPresentation() {
             padding-top: 11rem;
             padding-bottom: 9rem;
             background-position: 20% 19%;
-            background-size: 82%, 100vw 100%;
+            background-size:
+              82%,
+              100vw 100%;
           }
         }
         :global(body) {
