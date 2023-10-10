@@ -83,6 +83,17 @@ export function StaticSlate({
       const MathRenderer = editorRenderers.getMathRenderer()
       return <MathRenderer {...element} />
     }
+
+    // unwrap block level math elements
+    if (
+      element.children.length === 1 &&
+      Object.hasOwn(element.children[0], 'type') &&
+      element.children[0].type === 'math' &&
+      element.children[0].inline === false
+    ) {
+      return <StaticSlate element={children} />
+    }
+
     return (
       <p className="slate-p serlo-p mb-0 min-h-[1.33em]">
         <StaticSlate element={children} />
