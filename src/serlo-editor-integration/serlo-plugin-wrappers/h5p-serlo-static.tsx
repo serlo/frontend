@@ -32,23 +32,18 @@ export function H5pSerloStaticRenderer(props: EditorH5PPlugin) {
         )
       }
     }
-
-    window.document.body.addEventListener(
-      'h5pExerciseCorrect',
-      handleSubmissionEvent
-    )
-    window.document.body.addEventListener(
-      'h5pExerciseWrong',
-      handleSubmissionEvent
-    )
+    const { body } = window.document
+    body.addEventListener('h5pExerciseCorrect', handleSubmissionEvent)
+    body.addEventListener('h5pExerciseWrong', handleSubmissionEvent)
 
     return () => {
       // Unbind the event listener on clean up
-      document.removeEventListener('h5pExerciseCorrect', handleSubmissionEvent)
-      document.removeEventListener('h5pExerciseWrong', handleSubmissionEvent)
+      body.removeEventListener('h5pExerciseCorrect', handleSubmissionEvent)
+      body.removeEventListener('h5pExerciseWrong', handleSubmissionEvent)
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
   return <H5pStaticRenderer {...props} />
 }

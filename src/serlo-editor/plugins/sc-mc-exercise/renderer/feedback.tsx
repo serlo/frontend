@@ -18,7 +18,7 @@ export function Feedback({ children, correct, missedSome }: FeedbackProps) {
       <span className="-mt-1 mr-0.5 text-2xl motion-safe:animate-in motion-safe:zoom-in">
         {correct ? '🎉' : '✋'}
       </span>{' '}
-      <p className="serlo-p mb-0 ml-1">
+      <div className="serlo-p mb-0 ml-1">
         {children ? (
           <>
             {missedSome && exStrings.missedSome} {children}
@@ -26,7 +26,7 @@ export function Feedback({ children, correct, missedSome }: FeedbackProps) {
         ) : (
           fallbackString
         )}
-      </p>
+      </div>
     </div>
   )
 }

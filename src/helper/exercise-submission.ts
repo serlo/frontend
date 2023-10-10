@@ -49,15 +49,17 @@ export function exerciseSubmission(data: ExerciseSubmissionData, ab: ABValue) {
     }
   }
 
-  if (!isProduction) return // don't submit outside of production
+  if (!isProduction) {
+    // eslint-disable-next-line no-console
+    console.log(data)
+    return // don't submit outside of production
+  }
 
   if (!sessionStorage.getItem(sesionStorageKey)) {
     // set new session id
     sessionStorage.setItem(sesionStorageKey, uuidv4())
   }
   const sessionId = sessionStorage.getItem(sesionStorageKey)
-
-  // console.log(data)
 
   void (async () => {
     await fetch('/api/frontend/exercise-submission', {
