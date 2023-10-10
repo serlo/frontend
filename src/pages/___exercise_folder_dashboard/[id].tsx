@@ -140,7 +140,7 @@ export default function Page() {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <FaIcon icon={faMagnifyingGlass} />
+                      <FaIcon icon={faMagnifyingGlass} /> Details
                     </a>
                   </div>
                 )}
@@ -214,6 +214,17 @@ export default function Page() {
           <div className="flex-1 border p-4">
             <p>
               <strong>Version {start + 1}</strong>
+              {data.versions[start].visits && data.versions[start].solved && (
+                <span className="ml-4 text-sm text-gray-500">
+                  Gesamtquote:{' '}
+                  {(
+                    (data.versions[start].solved! /
+                      data.versions[start].visits!) *
+                    100
+                  ).toFixed(2)}
+                  %
+                </span>
+              )}
             </p>
             {renderVersion(start, changedRevisions)}
           </div>
@@ -228,6 +239,17 @@ export default function Page() {
               <>
                 <p>
                   <strong>Version {end + 1}</strong>
+                  {data.versions[end].visits && data.versions[end].solved && (
+                    <span className="ml-4 text-sm text-gray-500">
+                      Gesamtquote:{' '}
+                      {(
+                        (data.versions[end].solved! /
+                          data.versions[end].visits!) *
+                        100
+                      ).toFixed(2)}
+                      %
+                    </span>
+                  )}
                 </p>
                 {renderVersion(end, changedRevisions)}
               </>
