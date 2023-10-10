@@ -1,7 +1,8 @@
 import dynamic from 'next/dynamic'
+import { ComponentProps } from 'react'
 
+import { ExtraInfoIfRevisionView } from './extra-info-if-revision-view'
 import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-static-renderer'
-import { LinkSerloRenderer } from './serlo-plugin-wrappers/link-renderer'
 import { EditorPluginType } from './types/editor-plugin-type'
 import type {
   EditorAnchorPlugin,
@@ -19,11 +20,15 @@ import type {
 } from './types/editor-plugins'
 import { TemplatePluginType } from './types/template-plugin-type'
 import { Lazy } from '@/components/content/lazy'
+import { Link } from '@/components/content/link'
 import type { PrivacyWrapperProps } from '@/components/content/privacy-wrapper'
 import { isPrintMode } from '@/components/print-mode'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { ExternalProvider } from '@/helper/use-consent'
-import { InitRenderersArgs } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import {
+  InitRenderersArgs,
+  LinkRenderer,
+} from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { AnchorStaticRenderer } from '@/serlo-editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@/serlo-editor/plugins/article/static'
 import { BoxStaticRenderer } from '@/serlo-editor/plugins/box/static'
@@ -74,10 +79,10 @@ const TextExerciseGroupTypeStaticRenderer =
       '@/serlo-editor/plugins/serlo-template-plugins/exercise-group/static'
     ).then((mod) => mod.TextExerciseGroupTypeStaticRenderer)
   )
-const HighlightSerloStaticRenderer = dynamic<EditorHighlightPlugin>(() =>
-  import(
-    '@/serlo-editor-integration/serlo-plugin-wrappers/highlight-serlo-static-renderer'
-  ).then((mod) => mod.HighlightSerloStaticRenderer)
+const HighlightStaticRenderer = dynamic<EditorHighlightPlugin>(() =>
+  import('@/serlo-editor/plugins/highlight/static').then(
+    (mod) => mod.HighlightStaticRenderer
+  )
 )
 const StaticMath = dynamic<MathElement>(() =>
   import('@/serlo-editor/plugins/text/components/static-math').then(
@@ -94,7 +99,6 @@ export function createRenderers({
   instance,
 }: {
   instance: Instance
-  isRevisionView?: boolean
 }): InitRenderersArgs {
   return {
     pluginRenderers: [
@@ -120,11 +124,11 @@ export function createRenderers({
       { type: EditorPluginType.SerloTable, renderer: SerloTableStaticRenderer },
       {
         type: EditorPluginType.Injection,
-        renderer: (state: EditorInjectionPlugin) => {
+        renderer: (props: EditorInjectionPlugin) => {
           return (
             <>
-              <InjectionStaticRenderer {...state} />
-              {/* {isRevisionView && <ExtraRevisionViewInfo element={element} />} */}
+              <InjectionStaticRenderer {...props} />
+              <ExtraInfoIfRevisionView>{props.state}</ExtraInfoIfRevisionView>
             </>
           )
         },
@@ -173,16 +177,14 @@ export function createRenderers({
       },
       {
         type: EditorPluginType.Anchor,
-        renderer: (state: EditorAnchorPlugin) => (
-          <>
-            <AnchorStaticRenderer {...state} />
-            {/* {isRevisionView && (
-            <span className="break-all bg-editor-primary-100 px-1 text-sm">
-              {state.state}
-            </span>
-          )} */}
-          </>
-        ),
+        renderer: (props: EditorAnchorPlugin) => {
+          return (
+            <>
+              <AnchorStaticRenderer {...props} />
+              <ExtraInfoIfRevisionView>{props.state}</ExtraInfoIfRevisionView>
+            </>
+          )
+        },
       },
 
       // only for pages
@@ -200,7 +202,16 @@ export function createRenderers({
       },
       {
         type: EditorPluginType.Highlight,
-        renderer: HighlightSerloStaticRenderer,
+        renderer: (props: EditorHighlightPlugin) => {
+          return (
+            <>
+              <HighlightStaticRenderer {...props} />
+              <ExtraInfoIfRevisionView>
+                {props.state.language ?? '(keine Sprache)'}
+              </ExtraInfoIfRevisionView>
+            </>
+          )
+        },
       },
       { type: EditorPluginType.H5p, renderer: H5pSerloStaticRenderer },
       {
@@ -254,6 +265,13 @@ export function createRenderers({
           <StaticMath {...element} />
         </Lazy>
       ),
-    linkRenderer: LinkSerloRenderer,
+    linkRenderer: ({ href, children }: ComponentProps<LinkRenderer>) => {
+      return (
+        <>
+          <Link href={href}>{children}</Link>
+          <ExtraInfoIfRevisionView>{href}</ExtraInfoIfRevisionView>
+        </>
+      )
+    },
   }
 }
