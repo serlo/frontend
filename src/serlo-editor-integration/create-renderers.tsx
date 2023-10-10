@@ -36,7 +36,6 @@ import { EquationsStaticRenderer } from '@/serlo-editor/plugins/equations/static
 import { parseId } from '@/serlo-editor/plugins/geogebra/renderer'
 import { GeogebraStaticRenderer } from '@/serlo-editor/plugins/geogebra/static'
 import { InjectionStaticRenderer } from '@/serlo-editor/plugins/injection/static'
-import { MultimediaStaticRendererWithLightbox } from '@/serlo-editor/plugins/multimedia/static-with-dynamic-lightbox'
 import { PageLayoutStaticRenderer } from '@/serlo-editor/plugins/page-layout/static'
 import { PagePartnersStaticRenderer } from '@/serlo-editor/plugins/page-partners/static'
 import { PageTeamStaticRenderer } from '@/serlo-editor/plugins/page-team/static'
@@ -47,6 +46,7 @@ import type { MathElement } from '@/serlo-editor/plugins/text'
 import { TextStaticRenderer } from '@/serlo-editor/plugins/text/static'
 import { parseVideoUrl } from '@/serlo-editor/plugins/video/renderer'
 import { VideoStaticRenderer } from '@/serlo-editor/plugins/video/static'
+import { MultimediaSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/multimedia-serlo-static-renderer'
 
 const ExerciseSerloStaticRenderer = dynamic<EditorExercisePlugin>(() =>
   import(
@@ -110,7 +110,7 @@ export function createRenderers({
       {
         type: EditorPluginType.Multimedia,
         // special renderer for frontend because it uses nextjs dynamic import
-        renderer: MultimediaStaticRendererWithLightbox,
+        renderer: MultimediaSerloStaticRenderer,
       },
       {
         type: EditorPluginType.Spoiler,

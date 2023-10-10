@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
-import { MultimediaStaticRenderer } from './static'
+import { MultimediaStaticRenderer } from '../../serlo-editor/plugins/multimedia/static'
 import { LightBoxProps } from '@/components/content/light-box'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
@@ -14,9 +14,8 @@ const LightBox = dynamic<LightBoxProps>(() =>
   import('@/components/content/light-box').then((mod) => mod.LightBox)
 )
 
-export function MultimediaStaticRendererWithLightbox(
-  state: EditorMultimediaPlugin
-) {
+// adds a dynamically loaded lightbox component to multimedia image elements
+export function MultimediaSerloStaticRenderer(state: EditorMultimediaPlugin) {
   const { multimedia } = state.state
   const [open, setOpen] = useState(false)
 
