@@ -27,7 +27,7 @@ export function exerciseSubmission(data: ExerciseSubmissionData, ab: ABValue) {
     })
   }
 
-  if (ab?.experiment === 'dreisatzv0') {
+  if (ab?.experiment === 'dreisatz_new_design') {
     if (data.result === 'correct') {
       const solved = JSON.parse(
         sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
@@ -39,8 +39,13 @@ export function exerciseSubmission(data: ExerciseSubmissionData, ab: ABValue) {
         '___serlo_solved_in_session___',
         JSON.stringify(solved)
       )
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-      ;(window as any)?.__triggerRender()
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      const trigger = (window as any)?.__triggerRender
+      if (typeof trigger === 'function') {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        trigger()
+      }
     }
   }
 

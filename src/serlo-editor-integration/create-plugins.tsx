@@ -17,7 +17,6 @@ import { type LoggedInData, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
 import type { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
-import { layoutPlugin } from '@/serlo-editor/plugins/_on-the-way-out/layout'
 import { anchorPlugin } from '@/serlo-editor/plugins/anchor'
 import { articlePlugin } from '@/serlo-editor/plugins/article'
 import { audioPlugin } from '@/serlo-editor/plugins/audio'
@@ -194,7 +193,6 @@ export function createPlugins({
 
     // Special plugins, never visible in suggestions
     // ===================================================
-    { type: EditorPluginType.Layout, plugin: layoutPlugin },
     { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
     { type: EditorPluginType.Unsupported, plugin: unsupportedPlugin },
     { type: EditorPluginType.Article, plugin: articlePlugin },

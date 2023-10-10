@@ -1,6 +1,5 @@
 import { EditorPluginType } from './editor-plugin-type'
 import { TemplatePluginType } from './template-plugin-type'
-import type { LayoutPluginState } from '../../serlo-editor/plugins/_on-the-way-out/layout'
 import type { ArticlePluginState } from '../../serlo-editor/plugins/article'
 import type { ExercisePluginState } from '../../serlo-editor/plugins/exercise'
 import type { InjectionPluginState } from '../../serlo-editor/plugins/injection'
@@ -108,11 +107,6 @@ export interface EditorInjectionPlugin {
 export interface EditorInputExercisePlugin {
   plugin: EditorPluginType.InputExercise
   state: Prettify<StateTypeSerializedType<InputExercisePluginState>>
-  id?: string
-}
-export interface EditorLayoutPlugin {
-  plugin: EditorPluginType.Layout
-  state: Prettify<StateTypeSerializedType<LayoutPluginState>>
   id?: string
 }
 export interface EditorMultimediaPlugin {
@@ -226,7 +220,6 @@ export type SupportedEditorPlugin =
   | EditorSerloTablePlugin
   | EditorHighlightPlugin
   | EditorSerloInjectionPlugin
-  | EditorLayoutPlugin
   | EditorMultimediaPlugin
   | EditorSpoilerPlugin
   | EditorBoxPlugin

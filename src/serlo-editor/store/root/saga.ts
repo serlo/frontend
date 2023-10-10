@@ -24,8 +24,7 @@ function* initRootSaga(action: ReturnType<typeof runInitRootSaga>) {
 
   yield all(actions.map((reversible) => put(reversible.action)))
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const documents: ReturnType<typeof selectDocuments> = yield select(
-    selectDocuments
-  )
+  const documents: ReturnType<typeof selectDocuments> =
+    yield select(selectDocuments)
   yield put(persistHistory(documents))
 }

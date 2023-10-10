@@ -17,18 +17,10 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { abSubmission } from '@/helper/ab-submission'
-import { isProduction } from '@/helper/is-production'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface TopicProps {
   data: TaxonomyData
-}
-
-const headingsDataTemp: { [key: number]: string } = {
-  29637: 'Baumdiagramm zeichnen',
-  29581: 'Abzählen mit Baumdiagramm',
-  5011: 'Passende Zahlen bauen',
-  5007: 'Kombinationen finden',
 }
 
 const DonationsBanner = dynamic<DonationsBannerProps>(() =>
@@ -138,28 +130,14 @@ export function Topic({ data }: TopicProps) {
   }
 
   function renderExercises() {
-    if (
-      ab?.experiment === 'dreisatzv0' &&
-      (!isProduction || ab.group === 'b')
-    ) {
+    if (ab?.experiment === 'dreisatz_new_design') {
       // here is the place for new exercise view
       return (
         <>
           <NewFolderPrototype data={data} />
           <div className="h-24"></div>
-          {renderSurvey()}
         </>
       )
-    }
-    if (ab?.experiment === 'reorder_trig' && ab.group === 'b') {
-      const a1 = data.exercisesContent[0]
-      const a2 = data.exercisesContent[1]
-      if (a1.context.id === 57741 && a2.context.id === 52806) {
-        a1.positionOnPage = 1
-        a2.positionOnPage = 0
-        data.exercisesContent[0] = a2
-        data.exercisesContent[1] = a1
-      }
     }
     return (
       hasExercises &&
@@ -167,19 +145,12 @@ export function Topic({ data }: TopicProps) {
       data.exercisesContent.map((exercise, i) => {
         return (
           <Fragment key={i}>
-            {ab?.experiment === 'headings' &&
-              ab.group === 'b' &&
-              headingsDataTemp[exercise.context.id] && (
-                <div className="mx-side -mb-10 mt-16 text-xl font-bold">
-                  {headingsDataTemp[exercise.context.id]}
-                </div>
-              )}
             {renderArticle(
               [exercise],
               `tax${data.id}`,
               `ex${exercise.context.id}`
             )}
-            {i === (ab?.experiment === 'headings' ? 3 : 1) && renderSurvey()}
+            {i === 1 && renderSurvey()}
           </Fragment>
         )
       })

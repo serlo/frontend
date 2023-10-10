@@ -279,6 +279,16 @@ export interface AddRevisionResponse {
   success: Scalars['Boolean']['output'];
 }
 
+export interface AiQuery {
+  __typename?: 'AiQuery';
+  executePrompt: ExecutePromptResponse;
+}
+
+
+export interface AiQueryExecutePromptArgs {
+  prompt: Scalars['String']['input'];
+}
+
 export interface AliasInput {
   instance: Instance;
   path: Scalars['String']['input'];
@@ -1156,6 +1166,12 @@ export interface EventRevisionCursor {
   node: EventRevision;
 }
 
+export interface ExecutePromptResponse {
+  __typename?: 'ExecutePromptResponse';
+  record: Scalars['String']['output'];
+  success: Scalars['Boolean']['output'];
+}
+
 export interface Exercise extends AbstractEntity, AbstractExercise, AbstractRepository, AbstractTaxonomyTermChild, AbstractUuid, InstanceAware, ThreadAware {
   __typename?: 'Exercise';
   alias: Scalars['String']['output'];
@@ -1845,6 +1861,7 @@ export interface Query {
   activeAuthors: UserConnection;
   activeDonors: UserConnection;
   activeReviewers: UserConnection;
+  ai: AiQuery;
   authorization: Scalars['JSON']['output'];
   entity?: Maybe<EntityQuery>;
   events: AbstractNotificationEventConnection;

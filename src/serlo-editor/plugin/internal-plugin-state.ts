@@ -7,7 +7,7 @@ export type StateExecutor<T> = InternalPluginState.StateExecutor<T>
 export type StateType<
   S = any,
   T = any,
-  R = any
+  R = any,
 > = InternalPluginState.StateType<S, T, R>
 export type StateTypeReturnType<D extends StateType> =
   InternalPluginState.StateTypeReturnType<D>
@@ -24,10 +24,10 @@ export type StateTypesValueType<Ds extends Record<string, StateType>> =
 export type StateUpdater<T> = InternalPluginState.StateUpdater<T>
 export type StoreDeserializeHelpers<
   K extends string = string,
-  S = unknown
+  S = unknown,
 > = InternalPluginState.StoreDeserializeHelpers<K, S>
 export type StoreSerializeHelpers<
   K extends string = string,
-  S = unknown
+  S = unknown,
 > = InternalPluginState.StoreSerializeHelpers<K, S>
 /* eslint-enable @typescript-eslint/no-explicit-any */

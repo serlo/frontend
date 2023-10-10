@@ -22,6 +22,12 @@ export const experiments: {
     end: new Date('2023-09-30T00:00:00+0200').getTime(),
   },
   {
+    experiment: 'dreisatz_new_design',
+    ids: [66809],
+    start: -1,
+    end: -1, // only available through url params
+  },
+  {
     experiment: 'reorder_trig',
     ids: [30680],
     start: -1,
@@ -60,12 +66,14 @@ export function useABValue(entityId: number) {
   useEffect(() => {
     // check which experiment is currently active
     // check group and set group if appropriate
-    const experiment = experiments.find(
-      (exp) =>
-        exp.ids.includes(entityId) &&
-        exp.start <= Date.now() &&
-        exp.end > Date.now()
-    )?.experiment
+    const urlSearchParams = new URLSearchParams(window.location.search)
+    const experiment =
+      experiments.find(
+        (exp) =>
+          exp.ids.includes(entityId) &&
+          exp.start <= Date.now() &&
+          exp.end > Date.now()
+      )?.experiment ?? urlSearchParams.get('experiment')
     if (!experiment) {
       return // no experiments active
     }
