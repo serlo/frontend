@@ -136,7 +136,6 @@ export function StaticEntity({ data }: EntityProps) {
   }
 
   function renderContent(value: FrontendContentNode[]) {
-    // const content = renderArticle(value, `entity${data.id}`)
     const content = (
       <StaticRenderer document={value as unknown as SupportedEditorPlugin} />
     )

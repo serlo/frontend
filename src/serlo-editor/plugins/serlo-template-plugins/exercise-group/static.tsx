@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import { Fragment, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { TextExerciseGroupTypeRenderer } from './renderer'
 import { useAuthentication } from '@/auth/use-authentication'
@@ -29,19 +29,24 @@ export function TextExerciseGroupTypeStaticRenderer(
 
   const { content, exercisesWithSolutions } = state
 
-  const rendered = exercisesWithSolutions.map((exerciseWithSolution) => {
+  const rendered = exercisesWithSolutions.map((exerciseWithSolution, index) => {
     if (exerciseWithSolution.length === 0) return null
-
     const exercise = exerciseWithSolution[0]
     const solution = exerciseWithSolution[1]
 
+    const id = String(
+      exercise.id ?? Object.hasOwn(exercise, 'serloContext')
+        ? exercise.serloContext?.uuid
+        : index
+    )
+
     return {
-      id: exercise.id,
+      id,
       element: (
-        <Fragment key={exercise.id}>
+        <>
           <StaticRenderer document={exercise} />
           {solution ? <StaticRenderer document={solution} /> : null}
-        </Fragment>
+        </>
       ),
     }
   })
