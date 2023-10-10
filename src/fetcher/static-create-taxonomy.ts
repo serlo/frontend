@@ -67,7 +67,6 @@ function isActive_for_subchildren(child: TaxonomyTermChildrenLevel2) {
 }
 
 function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
-  // let index = 0
   const result: (
     | []
     | [EditorExercisePlugin]
