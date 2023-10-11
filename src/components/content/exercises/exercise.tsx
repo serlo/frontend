@@ -9,7 +9,6 @@ import { Solution } from './solution'
 import { useAuthentication } from '@/auth/use-authentication'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
 import { useAB } from '@/contexts/ab'
-import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
 import { ExerciseInlineType } from '@/data-types'
 import type { FrontendExerciseNode } from '@/frontend-node-types'
 import { exerciseSubmission } from '@/helper/exercise-submission'
@@ -34,8 +33,6 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
   const [loaded, setLoaded] = useState(false)
   const { asPath } = useRouter()
   const ab = useAB()
-  const entityId = useEntityId()
-  const revisionId = useRevisionId()
 
   useEffect(() => {
     if (!node.task.content) return
@@ -50,8 +47,8 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         exerciseSubmission(
           {
             path: asPath,
-            entityId: entityId ?? -1,
-            revisionId: revisionId ?? -1,
+            entityId: node.context.id,
+            revisionId: node.context.revisionId,
             result: e.type === 'h5pExerciseCorrect' ? 'correct' : 'wrong',
             type: 'h5p',
           },
