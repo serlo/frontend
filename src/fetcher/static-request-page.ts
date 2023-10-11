@@ -157,7 +157,7 @@ export async function staticRequestPage(
       },
       cacheKey,
       breadcrumbsData,
-      secondaryMenuData: secondaryMenuData,
+      secondaryMenuData,
       authorization,
     }
   }
@@ -292,7 +292,7 @@ export async function staticRequestPage(
       },
       horizonData,
       cacheKey,
-      secondaryMenuData: secondaryMenuData,
+      secondaryMenuData,
       breadcrumbsData: secondaryMenuData ? undefined : breadcrumbsData,
       authorization,
     }
