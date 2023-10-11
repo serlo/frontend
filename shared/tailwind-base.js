@@ -1,7 +1,11 @@
-// This tailwind preset is only used in https://github.com/serlo/serlo-editor-for-edusharing
+// This tailwind preset is also used in https://github.com/serlo/serlo-editor-for-edusharing.
+// Using a tailwind preset like this allows sharing the configuration between multiple repos.
 
-const colors = require('tailwindcss/colors')
-const plugin = require('tailwindcss/plugin')
+import colors from 'tailwindcss/colors'
+import plugin from 'tailwindcss/plugin'
+import tailwindAnimate from 'tailwindcss-animate'
+import * as fs from 'fs'
+import * as path from 'path'
 
 // base colors
 const brand = '#007ec1'
@@ -15,7 +19,7 @@ const sunflowerColors = {
   50: '#fff9f0',
 }
 
-module.exports = {
+export default {
   theme: {
     extend: {
       colors: {
@@ -163,7 +167,7 @@ module.exports = {
     },
   },
   plugins: [
-    require('tailwindcss-animate'),
+    tailwindAnimate,
     plugin(function ({ addUtilities, addComponents }) {
       // add classes of serlo-components to autocomplete
       addComponents(extractCSSClasses())
@@ -173,11 +177,8 @@ module.exports = {
 
 function extractCSSClasses() {
   try {
-    const css = require('fs').readFileSync(
-      require('path').join(
-        __dirname,
-        '/../src/assets-webkit/styles/serlo-tailwind.css'
-      ),
+    const css = fs.readFileSync(
+      path.join(__dirname, '/../src/assets-webkit/styles/serlo-tailwind.css'),
       'utf-8'
     )
 
