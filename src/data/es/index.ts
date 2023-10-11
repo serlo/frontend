@@ -889,6 +889,7 @@ export const loggedInData = {
           unit: "Unidad",
           addAnswer: "Añadir respuesta",
           enterTheValue: "Introduzca el valor",
+          feedbackPlaceholder: 'Add a feedback message for this answer',
           yourSolution: "Tu solución",
           types: {
             'input-string-normalized-match-challenge': "Text (exact, e.g. 'tiger')",
