@@ -6,6 +6,7 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
 import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
+import { sharedLicenseFragments } from '@/fetcher/query-fragments'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
@@ -45,17 +46,36 @@ export function InjectionStaticRenderer({
         .then((data: { data: InjectionOnlyContentQuery }) => {
           if (!data.data?.uuid) throw new Error('not found')
           const uuid = data.data.uuid
+
           if (
             uuid.__typename === 'GroupedExercise' ||
             uuid.__typename === 'Exercise'
           ) {
             if (!uuid.currentRevision) throw new Error('no accepted revision')
 
+            const exerciseContext = {
+              serloContext: {
+                license:
+                  uuid.license && !uuid.license.default
+                    ? uuid.license
+                    : undefined,
+              },
+            }
             const solutionContent = uuid.solution?.currentRevision?.content
+            const solutionContext = {
+              serloContext: {
+                license:
+                  uuid.solution?.license && !uuid.solution?.license.default
+                    ? uuid.solution?.license
+                    : undefined,
+              },
+            }
 
             setContent([
-              JSON.parse(uuid.currentRevision.content),
-              solutionContent ? JSON.parse(solutionContent) : null,
+              { ...JSON.parse(uuid.currentRevision.content), exerciseContext },
+              solutionContent
+                ? { ...JSON.parse(solutionContent), solutionContext }
+                : null,
             ])
             return
           }
@@ -64,14 +84,36 @@ export function InjectionStaticRenderer({
             if (!uuid.currentRevision) throw new Error('no accepted revision')
 
             const exercisesWithSolutions = uuid.exercises.map((exercise) => {
-              const solutionContent =
-                exercise.solution?.currentRevision?.content
+              if (!exercise.currentRevision?.content) return []
+
+              const exerciseContentAndContext = {
+                ...JSON.parse(exercise.currentRevision?.content),
+                serloContext: {
+                  license:
+                    uuid.license && !uuid.license.default
+                      ? uuid.license
+                      : undefined,
+                },
+              } as AnyEditorDocument
+
+              const solutionContentAndContext = exercise.solution
+                ?.currentRevision?.content
+                ? {
+                    ...(JSON.parse(
+                      exercise.solution?.currentRevision?.content
+                    ) as AnyEditorDocument),
+                    serloContext: {
+                      license:
+                        exercise.solution?.license &&
+                        !exercise.solution?.license.default
+                          ? exercise.solution?.license
+                          : undefined,
+                    },
+                  }
+                : null
 
               return exercise.currentRevision
-                ? ([
-                    JSON.parse(exercise.currentRevision?.content),
-                    solutionContent ? JSON.parse(solutionContent) : null,
-                  ] as AnyEditorDocument[])
+                ? [exerciseContentAndContext, solutionContentAndContext]
                 : []
             })
 
@@ -175,6 +217,7 @@ const query = gql`
         ...injectionExercise
       }
       ... on ExerciseGroup {
+        ...license
         currentRevision {
           content
         }
@@ -220,15 +263,19 @@ const query = gql`
   }
 
   fragment injectionExercise on AbstractExercise {
+    ...license
     currentRevision {
       content
     }
     solution {
+      ...license
       currentRevision {
         content
       }
     }
   }
+
+  ${sharedLicenseFragments}
 `
 
 function createFallbackBox(alias: string, title: string) {
