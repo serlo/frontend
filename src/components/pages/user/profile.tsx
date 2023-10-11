@@ -1,9 +1,11 @@
 import { faInfoCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { Entity } from '@serlo/authorization'
 import { NextPage } from 'next'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
 import { useAuthentication } from '@/auth/use-authentication'
+import { useCanDo } from '@/auth/use-can-do'
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
 import { StaticInfoPanel } from '@/components/static-info-panel'
@@ -18,6 +20,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
+import { isProduction } from '@/helper/is-production'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface ProfileProps {
@@ -27,6 +30,7 @@ export interface ProfileProps {
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const { strings, lang } = useInstanceData()
   const auth = useAuthentication()
+  const canDo = useCanDo()
 
   const {
     id,
@@ -168,15 +172,17 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   }
 
   function renderRoles() {
+    const showLastLogin = !isProduction || canDo(Entity.checkoutRevision)
+
     return (
       <aside className="mx-side mt-20 text-sm text-gray-500">
         <ProfileRoles roles={userData.roles} />
-        {userData.lastLogin && (
+        {showLastLogin && userData.lastLogin ? (
           <p>
             {strings.profiles.lastLogin}:{' '}
             <TimeAgo className="pl-2 font-bold" datetime={userData.lastLogin} />
           </p>
-        )}
+        ) : null}
       </aside>
     )
   }
