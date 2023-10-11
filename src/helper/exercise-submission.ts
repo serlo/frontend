@@ -6,8 +6,8 @@ import { ABValue } from '@/contexts/ab'
 
 export interface ExerciseSubmissionData {
   path: string
-  entityId: number
-  revisionId: number
+  entityId?: number
+  revisionId?: number
   type: 'sc' | 'mc' | 'input' | 'h5p' | 'text' | 'ival'
   result: 'correct' | 'wrong' | 'open' | string
 }
@@ -15,10 +15,12 @@ export interface ExerciseSubmissionData {
 const sesionStorageKey = 'frontend_exercise_submission_session_id'
 
 export function exerciseSubmission(data: ExerciseSubmissionData, ab: ABValue) {
+  const entityId = data.entityId ?? -1
+
   // check for ab testing
   if (ab) {
     abSubmission({
-      entityId: data.entityId,
+      entityId,
       topicId: ab.topicId,
       experiment: ab.experiment,
       group: ab.group,
@@ -32,8 +34,8 @@ export function exerciseSubmission(data: ExerciseSubmissionData, ab: ABValue) {
       const solved = JSON.parse(
         sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
       ) as number[]
-      if (!solved.includes(data.entityId)) {
-        solved.push(data.entityId)
+      if (!solved.includes(entityId)) {
+        solved.push(entityId)
       }
       sessionStorage.setItem(
         '___serlo_solved_in_session___',

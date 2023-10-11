@@ -11,7 +11,6 @@ import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
 import { useAB } from '@/contexts/ab'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
-import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
 import { ExerciseInlineType } from '@/data-types'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { StaticSolutionRenderer } from '@/serlo-editor/plugins/solution/static'
@@ -34,8 +33,6 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionPlugin) {
   useEffect(() => setLoaded(true), [])
   const { asPath } = useRouter()
   const ab = useAB()
-  const entityId = useEntityId()
-  const revisionId = useRevisionId()
   const isRevisionView = useContext(RevisionViewContext)
   const context = props.serloContext
 
@@ -81,17 +78,15 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionPlugin) {
 
   function onSolutionOpen() {
     {
-      if (entityId && revisionId && !isRevisionView)
-        exerciseSubmission(
-          {
-            path: asPath,
-            entityId,
-            revisionId,
-            type: 'text',
-            result: 'open',
-          },
-          ab
-        )
+      exerciseSubmission(
+        {
+          path: asPath,
+          entityId: context?.exerciseId,
+          type: 'text',
+          result: 'open',
+        },
+        ab
+      )
     }
   }
 

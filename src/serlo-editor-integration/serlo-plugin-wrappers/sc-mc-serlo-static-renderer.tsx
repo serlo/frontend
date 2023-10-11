@@ -39,18 +39,16 @@ export function ScMcSerloStaticRenderer(props: EditorScMcExercisePlugin) {
   )
 
   function onEvaluate(correct: boolean, type: ExerciseSubmissionData['type']) {
-    if (entityId && revisionId) {
-      exerciseSubmission(
-        {
-          path: asPath,
-          entityId,
-          revisionId,
-          result: correct ? 'correct' : 'wrong',
-          type,
-        },
-        ab
-      )
-    }
+    exerciseSubmission(
+      {
+        path: asPath,
+        entityId,
+        revisionId,
+        result: correct ? 'correct' : 'wrong',
+        type,
+      },
+      ab
+    )
   }
 
   function renderRevisionExtra(

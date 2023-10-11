@@ -6,6 +6,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
+import { UuidsProvider } from '@/contexts/uuids-context'
 import { ExerciseInlineType } from '@/data-types'
 import { ExerciseStaticRenderer } from '@/serlo-editor/plugins/exercise/static'
 
@@ -45,8 +46,12 @@ export function ExerciseSerloStaticRenderer(props: EditorExercisePlugin) {
           />
         </div>
       ) : null}
-
-      <ExerciseStaticRenderer {...props} />
+      {/* Provide uuids for interactive exercises */}
+      <UuidsProvider
+        value={{ entityId: context?.uuid, revisionId: context?.revisionId }}
+      >
+        <ExerciseStaticRenderer {...props} />
+      </UuidsProvider>
     </div>
   )
 }

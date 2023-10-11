@@ -26,7 +26,6 @@ export function InputSerloStaticRenderer(props: EditorInputExercisePlugin) {
   )
 
   function onEvaluate(correct: boolean, val: string) {
-    if (!entityId || !revisionId) return
     exerciseSubmission(
       {
         path: asPath,

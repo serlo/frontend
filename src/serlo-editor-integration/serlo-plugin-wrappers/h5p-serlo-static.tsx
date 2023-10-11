@@ -5,6 +5,7 @@ import { H5pStaticRenderer } from '../../serlo-editor/plugins/h5p/static'
 import { useAB } from '@/contexts/ab'
 import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
+import { parseH5pUrl } from '@/serlo-editor/plugins/h5p/renderer'
 import type { EditorH5PPlugin } from '@/serlo-editor-integration/types/editor-plugins'
 
 // Special version for serlo.org with exercise submission events
@@ -15,16 +16,16 @@ export function H5pSerloStaticRenderer(props: EditorH5PPlugin) {
   const revisionId = useRevisionId()
 
   useEffect(() => {
-    if (!entityId || !revisionId) return
-
     const handleSubmissionEvent = (e: Event) => {
       const e_id = (e as CustomEvent).detail as string
-      if (e_id === props.id) {
+      const id = parseH5pUrl(props.state)
+
+      if (e_id === id) {
         exerciseSubmission(
           {
             path: asPath,
-            entityId: entityId,
-            revisionId: revisionId,
+            entityId,
+            revisionId,
             result: e.type === 'h5pExerciseCorrect' ? 'correct' : 'wrong',
             type: 'h5p',
           },
