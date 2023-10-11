@@ -28,13 +28,13 @@ export function ExerciseSerloStaticRenderer(props: EditorExercisePlugin) {
 
   return (
     <div className="relative">
-      {context?.license ? (
-        <div className="absolute right-0 z-20">
-          <ExerciseLicenseNotice data={context.license} />
-        </div>
-      ) : null}
-      {loaded && auth && context?.uuid && !isRevisionView ? (
-        <div className="absolute -right-8 z-20">
+      <div className="absolute -right-8 -mt-1">
+        {context?.license ? (
+          <div className="ml-1">
+            <ExerciseLicenseNotice data={context.license} />
+          </div>
+        ) : null}
+        {loaded && auth && context?.uuid && !isRevisionView ? (
           <AuthorToolsExercises
             data={{
               type: ExerciseInlineType.Exercise,
@@ -44,13 +44,15 @@ export function ExerciseSerloStaticRenderer(props: EditorExercisePlugin) {
               unrevisedRevisions: context?.unrevisedRevisions,
             }}
           />
-        </div>
-      ) : null}
+        ) : null}
+      </div>
       {/* Provide uuids for interactive exercises */}
       <UuidsProvider
         value={{ entityId: context?.uuid, revisionId: context?.revisionId }}
       >
-        <ExerciseStaticRenderer {...props} />
+        <div className="-mt-block">
+          <ExerciseStaticRenderer {...props} />
+        </div>
       </UuidsProvider>
     </div>
   )

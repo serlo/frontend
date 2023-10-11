@@ -116,7 +116,10 @@ export function createRenderers({
         type: EditorPluginType.Spoiler,
         renderer: (state: EditorSpoilerPlugin) => {
           return (
-            <SpoilerStaticRenderer {...state} openOverwrite={isPrintMode} />
+            <SpoilerStaticRenderer
+              {...state}
+              openOverwrite={isPrintMode ? true : undefined}
+            />
           )
         },
       },
