@@ -7,6 +7,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
 import { StaticInfoPanel } from '@/components/static-info-panel'
+import { TimeAgo } from '@/components/time-ago'
 import { Events } from '@/components/user/events'
 import { ProfileActivityGraphs } from '@/components/user/profile-activity-graphs'
 import { ProfileBadges } from '@/components/user/profile-badges'
@@ -170,13 +171,12 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     return (
       <aside className="mx-side mt-20 text-sm text-gray-500">
         <ProfileRoles roles={userData.roles} />
-        {/* Temporarily hidden:
-        {lastLoginDate && (
+        {userData.lastLogin && (
           <p>
             {strings.profiles.lastLogin}:{' '}
-            <TimeAgo className="pl-2 font-bold" datetime={lastLoginDate} />
+            <TimeAgo className="pl-2 font-bold" datetime={userData.lastLogin} />
           </p>
-        )} */}
+        )}
       </aside>
     )
   }

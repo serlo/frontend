@@ -5,6 +5,7 @@
   "bugs": {
     "url": "https://github.com/serlo/frontend/issues"
   },
+  "type": "module",
   "repository": "serlo/frontend",
   "license": "Apache-2.0",
   "author": "Serlo Education e.V.",
@@ -167,5 +168,16 @@
     "budgetPercentIncreaseRed": 20,
     "minimumChangeThreshold": 0,
     "showDetails": true
+  },
+  "svgr": {
+    "svgo": false
+  },
+  "postcss": {
+    "plugins": {
+      "tailwindcss/nesting": {},
+      "tailwindcss": {},
+      "postcss-flexbugs-fixes": {},
+      "autoprefixer": {}
+    }
   }
 }
