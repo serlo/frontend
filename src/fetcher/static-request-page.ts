@@ -13,6 +13,7 @@ import {
   MainUuidQuery,
   MainUuidQueryVariables,
 } from './graphql-types/operations'
+import { prettifyLinksInSecondaryMenu } from './prettify-links-state/prettify-links-in-secondary-menu'
 import { prettifyLinksInState } from './prettify-links-state/prettify-links-in-state'
 import { dataQuery } from './query'
 import {
@@ -80,7 +81,9 @@ export async function staticRequestPage(
     return await staticRequestPage(`/${uuid.exercise.id}`, instance)
   }
 
-  const secondaryMenuData = createSecondaryMenu(uuid, instance)
+  const secondaryMenuData = await prettifyLinksInSecondaryMenu(
+    createSecondaryMenu(uuid, instance)
+  )
   const breadcrumbsData = createBreadcrumbs(uuid, instance)
   const horizonData = instance === Instance.De ? createHorizon() : undefined
   const cacheKey = `/${instance}${alias}`

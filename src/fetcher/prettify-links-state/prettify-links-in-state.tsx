@@ -12,7 +12,7 @@ import {
   isTextDocument,
 } from '@/serlo-editor-integration/types/plugin-type-guards'
 
-interface IdsQueryReturn {
+export interface IdsQueryReturn {
   [key: string]: {
     alias: string
     instance: string
