@@ -28,7 +28,7 @@ export function Feedback({ children, correct, missedSome }: FeedbackProps) {
   )
 
   return (
-    <div className="ml-4 flex">
+    <div className="ml-4 flex animate-in fade-in ">
       <span
         className={clsx(
           'my-0 mr-1',

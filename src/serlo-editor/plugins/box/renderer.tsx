@@ -55,12 +55,12 @@ export function BoxRenderer({ boxType, title, anchorId, children }: BoxProps) {
       className={clsx(
         tw`
           serlo-box relative mx-side mb-6 
-          rounded-xl border-3 pb-side pt-[2px]
+          rounded-xl border-3 pb-2 pt-[2px]
         `,
         isAttention ? 'border-red-100' : 'border-brand-300'
       )}
     >
-      <figcaption className="px-side pb-2 pt-2.5 text-lg">
+      <figcaption className="px-side pt-2.5 text-lg">
         <a className="!no-underline">
           {isBlank ? null : (
             <span

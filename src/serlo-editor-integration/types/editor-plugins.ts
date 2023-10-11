@@ -1,9 +1,11 @@
 import { EditorPluginType } from './editor-plugin-type'
+import { TemplatePluginType } from './template-plugin-type'
 import type { ArticlePluginState } from '../../serlo-editor/plugins/article'
 import type { ExercisePluginState } from '../../serlo-editor/plugins/exercise'
 import type { InjectionPluginState } from '../../serlo-editor/plugins/injection'
 import type { SolutionPluginState } from '../../serlo-editor/plugins/solution'
 import type { UnsupportedPluginState } from '../../serlo-editor/plugins/unsupported'
+import { License } from '@/fetcher/query-types'
 import type { StateTypeSerializedType } from '@/serlo-editor/plugin'
 import type { AnchorPluginState } from '@/serlo-editor/plugins/anchor'
 import { AudioPluginState } from '@/serlo-editor/plugins/audio'
@@ -21,6 +23,7 @@ import { PageTeamPluginState } from '@/serlo-editor/plugins/page-team'
 import type { RowsPluginState } from '@/serlo-editor/plugins/rows'
 import type { ScMcExercisePluginState } from '@/serlo-editor/plugins/sc-mc-exercise'
 import { SerloTablePluginState } from '@/serlo-editor/plugins/serlo-table'
+import { TextExerciseGroupTypePluginState } from '@/serlo-editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
 import type { SpoilerPluginState } from '@/serlo-editor/plugins/spoiler'
 import type {
   TextEditorState,
@@ -34,109 +37,135 @@ export type SlateTextElement = CustomText
 
 // All supported editor plugins in their serialized versions
 
+// TODO: after static renderer PR is merged rename all …Plugin to …Document
+
 export interface EditorAnchorPlugin {
   plugin: EditorPluginType.Anchor
-  state: StateTypeSerializedType<AnchorPluginState>
+  state: Prettify<StateTypeSerializedType<AnchorPluginState>>
   id?: string
 }
 export interface EditorArticlePlugin {
   plugin: EditorPluginType.Article
-  state: StateTypeSerializedType<ArticlePluginState>
+  state: Prettify<StateTypeSerializedType<ArticlePluginState>>
+  id?: string
+}
+export interface EditorArticleIntroductionPlugin {
+  plugin: EditorPluginType.ArticleIntroduction
+  state: Prettify<StateTypeSerializedType<MultimediaPluginState>>
   id?: string
 }
 export interface EditorBoxPlugin {
   plugin: EditorPluginType.Box
-  state: StateTypeSerializedType<BoxPluginState>
+  state: Prettify<StateTypeSerializedType<BoxPluginState>>
   id?: string
 }
 export interface EditorUnsupportedPlugin {
   plugin: EditorPluginType.Unsupported
-  state: StateTypeSerializedType<UnsupportedPluginState>
+  state: Prettify<StateTypeSerializedType<UnsupportedPluginState>>
   id?: string
 }
 export interface EditorEquationsPlugin {
   plugin: EditorPluginType.Equations
-  state: StateTypeSerializedType<EquationsPluginState>
+  state: Prettify<StateTypeSerializedType<EquationsPluginState>>
   id?: string
 }
 export interface EditorExercisePlugin {
   plugin: EditorPluginType.Exercise
-  state: StateTypeSerializedType<ExercisePluginState>
+  state: Prettify<StateTypeSerializedType<ExercisePluginState>>
   id?: string
+
+  // additional data for serlo, not part of normal state
+  serloContext?: {
+    uuid?: number
+    revisionId?: number
+    trashed?: boolean
+    grouped?: boolean
+    unrevisedRevisions?: number
+    license?: License
+  }
 }
 export interface EditorGeogebraPlugin {
   plugin: EditorPluginType.Geogebra
-  state: StateTypeSerializedType<GeogebraPluginState>
+  state: Prettify<StateTypeSerializedType<GeogebraPluginState>>
   id?: string
 }
 export interface EditorHighlightPlugin {
   plugin: EditorPluginType.Highlight
-  state: StateTypeSerializedType<HighlightPluginState>
+  state: Prettify<StateTypeSerializedType<HighlightPluginState>>
   id?: string
 }
 export interface EditorImagePlugin {
   plugin: EditorPluginType.Image
-  state: StateTypeSerializedType<ImagePluginState>
+  state: Prettify<StateTypeSerializedType<ImagePluginState>>
   id?: string
 }
 export interface EditorInjectionPlugin {
   plugin: EditorPluginType.Injection
-  state: StateTypeSerializedType<InjectionPluginState>
+  state: Prettify<StateTypeSerializedType<InjectionPluginState>>
   id?: string
 }
 export interface EditorInputExercisePlugin {
   plugin: EditorPluginType.InputExercise
-  state: StateTypeSerializedType<InputExercisePluginState>
+  state: Prettify<StateTypeSerializedType<InputExercisePluginState>>
   id?: string
 }
 export interface EditorMultimediaPlugin {
   plugin: EditorPluginType.Multimedia
-  state: StateTypeSerializedType<MultimediaPluginState>
+  state: Prettify<StateTypeSerializedType<MultimediaPluginState>>
   id?: string
 }
 export interface EditorRowsPlugin {
   plugin: EditorPluginType.Rows
-  state: StateTypeSerializedType<RowsPluginState>
+  state: Prettify<StateTypeSerializedType<RowsPluginState>>
   id?: string
 }
 export interface EditorScMcExercisePlugin {
   plugin: EditorPluginType.ScMcExercise
-  state: StateTypeSerializedType<ScMcExercisePluginState>
+  state: Prettify<StateTypeSerializedType<ScMcExercisePluginState>>
   id?: string
 }
 export interface EditorSpoilerPlugin {
   plugin: EditorPluginType.Spoiler
-  state: StateTypeSerializedType<SpoilerPluginState>
+  state: Prettify<StateTypeSerializedType<SpoilerPluginState>>
   id?: string
 }
 export interface EditorSerloInjectionPlugin {
   plugin: EditorPluginType.Injection
-  state: StateTypeSerializedType<InjectionPluginState>
+  state: Prettify<StateTypeSerializedType<InjectionPluginState>>
   id?: string
 }
 export interface EditorSolutionPlugin {
   plugin: EditorPluginType.Solution
-  state: StateTypeSerializedType<SolutionPluginState>
+  state: Prettify<StateTypeSerializedType<SolutionPluginState>>
   id?: string
+
+  // additional data for serlo, not part of normal state
+  serloContext?: {
+    uuid?: number
+    exerciseId?: number
+    trashed?: boolean
+    unrevisedRevisions?: number
+    license?: License
+  }
 }
 export interface EditorSerloTablePlugin {
   plugin: EditorPluginType.SerloTable
-  state: StateTypeSerializedType<SerloTablePluginState>
+  state: Prettify<StateTypeSerializedType<SerloTablePluginState>>
   id?: string
 }
 export interface EditorTextPlugin {
   plugin: EditorPluginType.Text
-  state: StateTypeSerializedType<TextEditorState>
+  state: Prettify<StateTypeSerializedType<TextEditorState>>
   id?: string
 }
 export interface EditorVideoPlugin {
   plugin: EditorPluginType.Video
-  state: StateTypeSerializedType<VideoPluginState>
+  state: Prettify<StateTypeSerializedType<VideoPluginState>>
   id?: string
 }
 export interface EditorAudioPlugin {
   plugin: EditorPluginType.Audio
-  state: StateTypeSerializedType<AudioPluginState>
+  state: Prettify<StateTypeSerializedType<AudioPluginState>>
   id?: string
 }
 export interface EditorPageLayoutPlugin {
@@ -146,22 +175,44 @@ export interface EditorPageLayoutPlugin {
 }
 export interface EditorPageTeamPlugin {
   plugin: EditorPluginType.PageTeam
-  state: StateTypeSerializedType<PageTeamPluginState>
+  state: Prettify<StateTypeSerializedType<PageTeamPluginState>>
   id?: string
 }
 export interface EditorPagePartnersPlugin {
   plugin: EditorPluginType.PagePartners
-  state: StateTypeSerializedType<PagePartnersPluginState>
+  state: Prettify<StateTypeSerializedType<PagePartnersPluginState>>
   id?: string
 }
 export interface EditorH5PPlugin {
   plugin: EditorPluginType.H5p
-  state: StateTypeSerializedType<H5pPluginState>
+  state: Prettify<StateTypeSerializedType<H5pPluginState>>
   id?: string
+}
+
+// Template Plugins
+export interface EditorTemplateGroupedExercise {
+  plugin: TemplatePluginType.TextExerciseGroup
+  state: Prettify<StateTypeSerializedType<TextExerciseGroupTypePluginState>> & {
+    // extra field that is not actually part of the state until we move solutions into exercises
+    exercisesWithSolutions: (
+      | []
+      | [EditorExercisePlugin, EditorSolutionPlugin]
+      | [EditorExercisePlugin]
+    )[]
+  }
+  id?: string
+
+  // additional data for serlo, not part of normal state
+  serloContext?: {
+    uuid?: number
+    trashed?: boolean
+    unrevisedRevisions?: number
+  }
 }
 
 export type SupportedEditorPlugin =
   | EditorArticlePlugin
+  | EditorArticleIntroductionPlugin
   | EditorGeogebraPlugin
   | EditorAnchorPlugin
   | EditorVideoPlugin
@@ -176,6 +227,7 @@ export type SupportedEditorPlugin =
   | EditorTextPlugin
   | EditorRowsPlugin
   | EditorEquationsPlugin
+  | EditorExercisePlugin
   | EditorPageLayoutPlugin
   | EditorPageTeamPlugin
   | EditorPagePartnersPlugin
@@ -185,3 +237,10 @@ export interface UnknownEditorPlugin {
   state?: unknown
   id?: string
 }
+
+export type AnyEditorDocument = SupportedEditorPlugin | UnknownEditorPlugin
+
+// dark ts magic ✨
+type Prettify<T> = {
+  [K in keyof T]: T[K]
+} & unknown

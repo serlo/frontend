@@ -4256,6 +4256,7 @@ __metadata:
     katex: ^0.16.9
     msw: ^0.47.4
     next: ^13.5.4
+    next-query-params: ^4.2.3
     npm-run-all: ^4.1.5
     nprogress: ^0.2.0
     postcss: ^8.4.31
@@ -4301,6 +4302,7 @@ __metadata:
     ts-key-enum: ^2.0.12
     ts-unused-exports: ^10.0.1
     typescript: ^5.2.2
+    use-query-params: ^2.2.1
     uuid: ^9.0.1
   languageName: unknown
   linkType: soft
@@ -11307,6 +11309,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"next-query-params@npm:^4.2.3":
+  version: 4.2.3
+  resolution: "next-query-params@npm:4.2.3"
+  dependencies:
+    tslib: ^2.0.3
+  peerDependencies:
+    next: ^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    use-query-params: ^2.0.0
+  checksum: 19495b4cac190f8dc3b43e241930e82af7bc2aa88a47fbcf78b5ec654954ddcd14994dff6362734b619d0385ddbaa8309ccc60b6e2f13ea897c2f119f239cc27
+  languageName: node
+  linkType: hard
+
 "next@npm:>=12.0.10":
   version: 13.4.19
   resolution: "next@npm:13.4.19"
@@ -13353,6 +13368,13 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
+"serialize-query-params@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "serialize-query-params@npm:2.0.2"
+  checksum: 6dccdbd68cbec44c99599c4f77968e8685a74cc597f473ed93b15a8d03c3a67f50c958af9af3d186e64aabd7f98b59d674a05aa4e69d997ed86a5478cf133b27
+  languageName: node
+  linkType: hard
+
 "set-blocking@npm:^2.0.0":
   version: 2.0.0
   resolution: "set-blocking@npm:2.0.0"
@@ -14876,6 +14898,25 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0
   checksum: 71f4598ce422b64a971dc93f45dc245158977f8882f56be82d4629c21577c22244959ac3aa99bd9559d64007b632d58aa43b256981afe56603c77ce3fdee165f
+  languageName: node
+  linkType: hard
+
+"use-query-params@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "use-query-params@npm:2.2.1"
+  dependencies:
+    serialize-query-params: ^2.0.2
+  peerDependencies:
+    "@reach/router": ^1.2.1
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+    react-router-dom: ">=5"
+  peerDependenciesMeta:
+    "@reach/router":
+      optional: true
+    react-router-dom:
+      optional: true
+  checksum: 5bf16511a561cf09902c3526950c6c88999767a1990619a322685448abbd09f5d71a17289d0f727bb3e68d5baced36b3fc0bbf855664b3dd5046d5d553204d28
   languageName: node
   linkType: hard
 

@@ -63,6 +63,7 @@
     "json-diff": "^1.0.6",
     "katex": "^0.16.9",
     "next": "^13.5.4",
+    "next-query-params": "^4.2.3",
     "nprogress": "^0.2.0",
     "postcss": "^8.4.31",
     "qrcode.react": "^3.1.0",
@@ -94,6 +95,7 @@
     "tippy.js": "^6.3.7",
     "ts-debounce": "^4.0.0",
     "ts-key-enum": "^2.0.12",
+    "use-query-params": "^2.2.1",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

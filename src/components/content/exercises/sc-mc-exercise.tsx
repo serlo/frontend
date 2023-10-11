@@ -12,7 +12,7 @@ import type { RenderNestedFunction } from '@/schema/article-renderer'
 import {
   ScMcExerciseRenderer,
   ScMcExerciseRendererAnswer,
-} from '@/serlo-editor/plugins/sc-mc-exercise/renderer'
+} from '@/serlo-editor/plugins/sc-mc-exercise/renderer/renderer'
 
 export interface ScMcExerciseProps {
   state: EditorPluginScMcExercise['state']

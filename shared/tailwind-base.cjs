@@ -81,7 +81,7 @@ module.exports = {
         cozy: '1.33',
       },
       margin: {
-        block: '30px',
+        block: '28px',
         '15vh': '15vh',
       },
       padding: {
