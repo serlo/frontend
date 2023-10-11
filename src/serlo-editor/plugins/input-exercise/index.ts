@@ -10,7 +10,6 @@ import {
   object,
   string,
 } from '../../plugin'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 function createInputExerciseState(
   feedback: ChildStateTypeConfig<string, unknown>
@@ -33,7 +32,7 @@ export type InputExercisePluginState = ReturnType<
 >
 
 export interface InputExerciseConfig {
-  feedback?: ChildStateTypeConfig
+  feedback: ChildStateTypeConfig
 }
 
 export type InputExerciseProps = EditorPluginProps<
@@ -41,14 +40,12 @@ export type InputExerciseProps = EditorPluginProps<
   InputExerciseConfig
 >
 
-const defaultFeedback = { plugin: EditorPluginType.Text }
-
-export function createInputExercisePlugin({
-  feedback = defaultFeedback,
-}): EditorPlugin<InputExercisePluginState, InputExerciseConfig> {
+export function createInputExercisePlugin(
+  config: InputExerciseConfig
+): EditorPlugin<InputExercisePluginState, InputExerciseConfig> {
   return {
     Component: InputExerciseEditor,
-    config: { feedback },
-    state: createInputExerciseState(feedback),
+    config: config,
+    state: createInputExerciseState(config.feedback),
   }
 }

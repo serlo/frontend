@@ -194,7 +194,15 @@ export function createPlugins({
     { type: EditorPluginType.H5p, plugin: H5pPlugin },
     {
       type: EditorPluginType.InputExercise,
-      plugin: createInputExercisePlugin({}),
+      plugin: createInputExercisePlugin({
+        feedback: {
+          plugin: EditorPluginType.Text,
+          config: {
+            placeholder:
+              editorStrings.templatePlugins.inputExercise.feedbackPlaceholder,
+          },
+        },
+      }),
     },
     { type: EditorPluginType.Layout, plugin: layoutPlugin },
     { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
