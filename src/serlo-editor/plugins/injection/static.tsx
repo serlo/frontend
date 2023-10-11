@@ -1,6 +1,7 @@
 import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
 
+import { endpoint } from '@/api/endpoint'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -28,7 +29,7 @@ export function InjectionStaticRenderer({
     const cleanedHref = href.startsWith('/') ? href : `/${href}`
 
     try {
-      void fetch('/api/frontend/localhost-graphql-fetch', {
+      void fetch(endpoint, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
@@ -41,9 +42,9 @@ export function InjectionStaticRenderer({
         }),
       })
         .then((res) => res.json())
-        .then((data: InjectionOnlyContentQuery) => {
-          if (!data?.uuid) throw new Error('not found')
-          const uuid = data.uuid
+        .then((data: { data: InjectionOnlyContentQuery }) => {
+          if (!data.data?.uuid) throw new Error('not found')
+          const uuid = data.data.uuid
           if (
             uuid.__typename === 'GroupedExercise' ||
             uuid.__typename === 'Exercise'
@@ -156,7 +157,11 @@ export function InjectionStaticRenderer({
       </StaticInfoPanel>
     )
 
-  return <StaticRenderer document={content} />
+  return (
+    <div className="mb-4 border-b-4 border-brand-300 text-gray-900">
+      <StaticRenderer document={content} />
+    </div>
+  )
 }
 
 const query = gql`
