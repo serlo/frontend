@@ -68,21 +68,25 @@ function isActive_for_subchildren(child: TaxonomyTermChildrenLevel2) {
 
 function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
   const result: (
-    | []
-    | [EditorExerciseDocument]
-    | [EditorExerciseDocument, EditorSolutionDocument]
-    | [EditorTemplateGroupedExerciseDocument]
+    | EditorExerciseDocument
+    | EditorSolutionDocument
+    | EditorTemplateGroupedExerciseDocument
   )[] = []
   children.forEach((child) => {
     if (child.__typename === UuidType.Exercise && child.currentRevision) {
-      const exercise = staticCreateExerciseAndSolution({
+      const exerciseWithSolution = staticCreateExerciseAndSolution({
         ...child,
         revisions: { totalCount: 0 },
       })
-      result.push(exercise)
+      if (exerciseWithSolution) {
+        result.push(exerciseWithSolution.exercise)
+        if (exerciseWithSolution.solution)
+          result.push(exerciseWithSolution.solution)
+      }
     }
     if (child.__typename === UuidType.ExerciseGroup && child.currentRevision) {
-      result.push(createStaticExerciseGroup(child))
+      const group = createStaticExerciseGroup(child)
+      if (group) result.push(group)
     }
   })
 

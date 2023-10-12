@@ -29,27 +29,20 @@ export function TextExerciseGroupTypeStaticRenderer(
 
   const { content, exercisesWithSolutions } = state
 
-  const rendered = exercisesWithSolutions.map((exerciseWithSolution, index) => {
-    if (exerciseWithSolution.length === 0) return null
-    const exercise = exerciseWithSolution[0]
-    const solution = exerciseWithSolution[1]
-
-    const id = String(
-      exercise.id ?? Object.hasOwn(exercise, 'serloContext')
-        ? exercise.serloContext?.uuid
-        : index
-    )
-
-    return {
-      id,
-      element: (
-        <>
-          <StaticRenderer document={exercise} />
-          {solution ? <StaticRenderer document={solution} /> : null}
-        </>
-      ),
+  const rendered = exercisesWithSolutions.map(
+    ({ exercise, solution }, index) => {
+      const id = `${exercise.id ?? exercise.serloContext?.uuid ?? index}`
+      return {
+        id,
+        element: (
+          <>
+            <StaticRenderer document={exercise} />
+            {solution ? <StaticRenderer document={solution} /> : null}
+          </>
+        ),
+      }
     }
-  })
+  )
 
   return (
     <div className="relative">

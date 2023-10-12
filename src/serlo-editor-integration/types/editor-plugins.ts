@@ -187,16 +187,18 @@ export interface EditorH5PDocument {
   id?: string
 }
 
+// helper type until they actually are merged
+export interface ExerciseWithSolution {
+  exercise: EditorExerciseDocument
+  solution?: EditorSolutionDocument
+}
+
 // Template Plugins
 export interface EditorTemplateGroupedExerciseDocument {
   plugin: TemplatePluginType.TextExerciseGroup
   state: Prettify<StateTypeSerializedType<TextExerciseGroupTypePluginState>> & {
     // extra field that is not actually part of the state until we move solutions into exercises
-    exercisesWithSolutions: (
-      | []
-      | [EditorExerciseDocument, EditorSolutionDocument]
-      | [EditorExerciseDocument]
-    )[]
+    exercisesWithSolutions: ExerciseWithSolution[]
   }
   id?: string
 

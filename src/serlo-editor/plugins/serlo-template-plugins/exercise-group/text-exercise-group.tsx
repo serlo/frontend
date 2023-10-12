@@ -45,11 +45,11 @@ export const textExerciseGroupTypeState = entityType(
 export type TextExerciseGroupTypePluginState = typeof textExerciseGroupTypeState
 
 export const textExerciseGroupTypePlugin: EditorPlugin<TextExerciseGroupTypePluginState> =
-{
-  Component: TextExerciseGroupTypeEditor,
-  state: textExerciseGroupTypeState,
-  config: {},
-}
+  {
+    Component: TextExerciseGroupTypeEditor,
+    state: textExerciseGroupTypeState,
+    config: {},
+  }
 
 function TextExerciseGroupTypeEditor(
   props: EditorPluginProps<TextExerciseGroupTypePluginState>

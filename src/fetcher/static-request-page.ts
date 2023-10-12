@@ -210,8 +210,7 @@ export async function staticRequestPage(
   }
 
   if (uuid.__typename === UuidType.ExerciseGroup) {
-    const exercise = createStaticExerciseGroup(uuid)
-
+    const exerciseGroup = createStaticExerciseGroup(uuid)
     return {
       kind: 'single-entity',
       entityData: {
@@ -220,7 +219,7 @@ export async function staticRequestPage(
         alias: uuid.alias,
         typename: UuidType.ExerciseGroup,
         // @ts-expect-error static
-        content: exercise,
+        content: exerciseGroup,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -230,9 +229,11 @@ export async function staticRequestPage(
         title,
         contentType: 'exercisegroup',
         metaImage,
-        metaDescription: getMetaDescription(
-          exercise[0]?.state.content as unknown as EditorRowsDocument
-        ),
+        metaDescription: exerciseGroup?.state.content
+          ? getMetaDescription(
+              exerciseGroup?.state.content as unknown as EditorRowsDocument
+            )
+          : undefined,
       },
       horizonData,
       cacheKey,
