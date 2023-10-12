@@ -31,6 +31,7 @@ import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { FrontendNodeType } from '@/frontend-node-types'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
+import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import type { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
@@ -243,7 +244,7 @@ export async function staticRequestPage(
 
   const content = await prettifyLinksInState(
     uuid.currentRevision?.content
-      ? (JSON.parse(uuid.currentRevision?.content) as EditorRowsDocument)
+      ? parseDocumentString(uuid.currentRevision?.content)
       : undefined
   )
 

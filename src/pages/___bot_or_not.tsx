@@ -19,9 +19,9 @@ import { isMac } from '@/helper/client-detection'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useMutationFetch } from '@/mutations/helper/use-mutation-fetch'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 const ContentPage: NextPage = () => {
   return (
@@ -286,7 +286,7 @@ const BotHunt = () => {
 
   function renderDescription(stringDescription?: string | null) {
     if (!stringDescription || stringDescription === 'NULL') return null
-    const desc = JSON.parse(stringDescription) as EditorRowsDocument
+    const desc = parseDocumentString(stringDescription)
 
     return <StaticRenderer document={desc} />
   }

@@ -10,6 +10,7 @@ import {
   UuidType,
 } from '@/data-types'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
+import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import {
   EditorExerciseDocument,
   EditorRowsDocument,
@@ -33,7 +34,7 @@ export function staticBuildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
   const children = uuid.children.nodes.filter(isActive)
 
   const description = uuid.description
-    ? (JSON.parse(uuid.description) as EditorRowsDocument)
+    ? (parseDocumentString(uuid.description) as EditorRowsDocument)
     : undefined
 
   return {
@@ -157,7 +158,7 @@ function collectNestedTaxonomyTerms(
         title: child.name,
         url: getAlias(child),
         description: child.description
-          ? (JSON.parse(child.description) as EditorRowsDocument)
+          ? (parseDocumentString(child.description) as EditorRowsDocument)
           : undefined,
         articles: collectType(subChildren, UuidType.Article),
         exercises: collectExerciseFolders(subChildren),

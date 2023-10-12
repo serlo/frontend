@@ -6,6 +6,7 @@ import { User } from '../query-types'
 import { endpoint } from '@/api/endpoint'
 import { PageNotFound, UserPage, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
+import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export async function requestUser(
@@ -27,7 +28,7 @@ export async function requestUser(
   const description =
     !uuid.description || uuid.description === 'NULL'
       ? undefined
-      : (JSON.parse(uuid.description) as EditorRowsDocument)
+      : (parseDocumentString(uuid.description) as EditorRowsDocument)
 
   return {
     kind: 'user/profile',

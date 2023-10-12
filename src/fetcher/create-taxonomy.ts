@@ -11,6 +11,7 @@ import {
   FrontendExerciseGroupNode,
 } from '@/frontend-node-types'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
+import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 type TaxonomyTerm = Extract<
@@ -29,7 +30,7 @@ export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
   const children = uuid.children.nodes.filter(isActive)
   return {
     description: uuid.description
-      ? (JSON.parse(uuid.description) as EditorRowsDocument)
+      ? (parseDocumentString(uuid.description) as EditorRowsDocument)
       : undefined,
     title: uuid.name,
     id: uuid.id,
@@ -139,7 +140,7 @@ function collectNestedTaxonomyTerms(
         title: child.name,
         url: getAlias(child),
         description: child.description
-          ? (JSON.parse(child.description) as EditorRowsDocument)
+          ? (parseDocumentString(child.description) as EditorRowsDocument)
           : undefined,
         articles: collectType(subChildren, UuidType.Article),
         exercises: collectExerciseFolders(subChildren),
