@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { useState } from 'react'
 
+import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
 import { PartnerList } from '../landing/rework/partner-list'
 import { Logo } from '../navigation/header/logo'
@@ -92,6 +93,7 @@ export function DataWallet() {
               .
               {qrCode &&
                 ((qrCode === 'loading' && <LoadingSpinner noText />) || (
+                  // eslint-disable-next-line @next/next/no-img-element
                   <img src={qrCode} />
                 ))}
             </li>
@@ -106,12 +108,12 @@ export function DataWallet() {
           </ol>
           <p className="serlo-p mt-16">
             Sollten dabei Probleme auftauchen,{' '}
-            <a
+            <Link
               className="serlo-link font-bold"
               href="/kontakt#technischersupport"
             >
               kontaktiere
-            </a>{' '}
+            </Link>{' '}
             uns gern.
           </p>
           <noscript>Bitte Javascript aktivieren</noscript>

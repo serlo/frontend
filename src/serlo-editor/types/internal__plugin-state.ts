@@ -143,7 +143,7 @@ export type StateTypesReturnType<Ds extends Record<string, StateType>> = {
  */
 export interface StoreDeserializeHelpers<
   K extends string = string,
-  S = unknown
+  S = unknown,
 > {
   /**
    * Inserts a document into the store

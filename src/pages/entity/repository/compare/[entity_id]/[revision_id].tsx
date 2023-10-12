@@ -2,19 +2,23 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { Revision } from '@/components/author/revision/revision'
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import { RevisionViewProvider } from '@/contexts/revision-view-context'
 import { RevisionProps, RevisionPage } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestRevision } from '@/fetcher/revision/request'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<RevisionProps>(({ pageData }) => (
-  <FrontendClientBase
-    entityId={pageData.revisionData.thisRevision.id}
-    authorization={pageData.authorization}
-    noContainers
-  >
-    <Revision data={pageData.revisionData} />
-  </FrontendClientBase>
+  // TODO: Does not do anything yet. Just to show where the context could be provided.
+  <RevisionViewProvider value>
+    <FrontendClientBase
+      entityId={pageData.revisionData.thisRevision.id}
+      authorization={pageData.authorization}
+      noContainers
+    >
+      <Revision data={pageData.revisionData} />
+    </FrontendClientBase>
+  </RevisionViewProvider>
 ))
 
 export const getStaticProps: GetStaticProps<RevisionProps> = async (

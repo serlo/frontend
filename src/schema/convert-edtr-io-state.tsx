@@ -199,21 +199,6 @@ function convertPlugin(
       },
     ]
   }
-  if (node.plugin === EditorPluginType.Layout) {
-    return [
-      {
-        type: FrontendNodeType.Row,
-        children: node.state.map((child) => {
-          const children = convert(child.child)
-          return {
-            type: FrontendNodeType.Col,
-            size: child.width,
-            children,
-          }
-        }),
-      },
-    ]
-  }
   if (node.plugin === EditorPluginType.Injection) {
     return [{ ...node, type: FrontendNodeType.Injection, pluginId: node.id }]
   }

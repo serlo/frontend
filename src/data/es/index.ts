@@ -682,12 +682,6 @@ export const loggedInData = {
           serloId: 'Serlo ID',
           placeholder: "Serlo ID (p.ej. 1565)"
         },
-        layout: {
-          title: "Diseño",
-          toDragConvert: "Para que el contenido sea arrastrable, conviértalo para el nuevo editor:",
-          oneColumnLayout: "Diseño con una columna",
-          multimediaTitle: "Contenido multimedia asociado con el texto"
-        },
         multimedia: {
           title: "Contenido multimedia asociado con el texto",
           description: "Crear una ilustración o explicación de contenido multimedia asociado con el texto.",
@@ -895,6 +889,7 @@ export const loggedInData = {
           unit: "Unidad",
           addAnswer: "Añadir respuesta",
           enterTheValue: "Introduzca el valor",
+          feedbackPlaceholder: 'Add a feedback message for this answer',
           yourSolution: "Tu solución",
           types: {
             'input-string-normalized-match-challenge': "Text (exact, e.g. 'tiger')",

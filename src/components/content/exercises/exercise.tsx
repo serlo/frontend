@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 
 import { ExerciseNumbering } from './exercise-numbering'
@@ -7,10 +8,12 @@ import { ScMcExercise } from './sc-mc-exercise'
 import { Solution } from './solution'
 import { useAuthentication } from '@/auth/use-authentication'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
+import { useAB } from '@/contexts/ab'
 import { ExerciseInlineType } from '@/data-types'
 import type { FrontendExerciseNode } from '@/frontend-node-types'
+import { exerciseSubmission } from '@/helper/exercise-submission'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
-import { H5pRenderer } from '@/serlo-editor/plugins/h5p/renderer'
+import { H5pRenderer, parseH5pUrl } from '@/serlo-editor/plugins/h5p/renderer'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export interface ExerciseProps {
@@ -28,6 +31,45 @@ const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
 export function Exercise({ node, renderNested, path }: ExerciseProps) {
   const auth = useAuthentication()
   const [loaded, setLoaded] = useState(false)
+  const { asPath } = useRouter()
+  const ab = useAB()
+
+  useEffect(() => {
+    if (!node.task.content) return
+    const interactive = node.task.content.interactive
+    if (!interactive || interactive.plugin !== EditorPluginType.H5p) return
+
+    const id = parseH5pUrl(interactive.state)
+    const handleSubmissionEvent = (e: Event) => {
+      const e_id = (e as CustomEvent).detail as string
+
+      if (e_id === id) {
+        exerciseSubmission(
+          {
+            path: asPath,
+            entityId: node.context.id,
+            revisionId: node.context.revisionId,
+            result: e.type === 'h5pExerciseCorrect' ? 'correct' : 'wrong',
+            type: 'h5p',
+          },
+          ab
+        )
+      }
+    }
+
+    const { body } = window.document
+    body.addEventListener('h5pExerciseCorrect', handleSubmissionEvent)
+    body.addEventListener('h5pExerciseWrong', handleSubmissionEvent)
+
+    return () => {
+      // Unbind the event listener on clean up
+      body.removeEventListener('h5pExerciseCorrect', handleSubmissionEvent)
+      body.removeEventListener('h5pExerciseWrong', handleSubmissionEvent)
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   useEffect(() => setLoaded(true), [])
 
   const isRevisionView =
@@ -110,15 +152,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         )
       }
       if (state.interactive.plugin === EditorPluginType.H5p) {
-        return (
-          <H5pRenderer
-            url={state.interactive.state}
-            context={{
-              entityId: node.context.id,
-              revisionId: node.context.revisionId,
-            }}
-          />
-        )
+        return <H5pRenderer url={state.interactive.state} />
       }
     }
   }
