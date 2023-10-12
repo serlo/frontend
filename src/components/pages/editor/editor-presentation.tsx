@@ -10,14 +10,19 @@ import { Link } from '@/components/content/link'
 import { Video } from '@/components/content/video'
 import { HeadTags } from '@/components/head-tags'
 import { Logo } from '@/components/navigation/header/logo'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { tw } from '@/helper/tw'
+import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 export const h2Class =
   'text-center text-4xl leading-cozy tracking-tight font-extrabold'
 const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
 
 export function EditorPresentation() {
+  editorRenderers.init(createRenderers({ instance: Instance.En }))
+
   return (
     <>
       <HeadTags
