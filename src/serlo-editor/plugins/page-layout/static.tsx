@@ -8,7 +8,9 @@ export interface PageLayoutRendererProps {
   column2: JSX.Element
 }
 
-export const PageLayoutStaticRenderer = ({ state }: EditorPageLayoutDocument) => {
+export const PageLayoutStaticRenderer = ({
+  state,
+}: EditorPageLayoutDocument) => {
   const { widthPercent, column1, column2 } = state
 
   return (

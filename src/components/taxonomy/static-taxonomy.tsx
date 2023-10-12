@@ -23,8 +23,8 @@ import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import {
   EditorExerciseDocument,
+  EditorRowsDocument,
   EditorSolutionDocument,
-  SupportedEditorDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
 export interface TopicProps {
@@ -69,7 +69,7 @@ export function StaticTaxonomy({ data }: TopicProps) {
       <div className="min-h-1/2">
         <div className="mt-6 sm:mb-5">
           <StaticRenderer
-            document={data.description as unknown as SupportedEditorDocument}
+            document={data.description as unknown as EditorRowsDocument}
           />
         </div>
 

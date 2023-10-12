@@ -99,17 +99,17 @@ export function InjectionStaticRenderer({
               const solutionContentAndContext = exercise.solution
                 ?.currentRevision?.content
                 ? {
-                  ...(JSON.parse(
-                    exercise.solution?.currentRevision?.content
-                  ) as AnyEditorDocument),
-                  serloContext: {
-                    license:
-                      exercise.solution?.license &&
+                    ...(JSON.parse(
+                      exercise.solution?.currentRevision?.content
+                    ) as AnyEditorDocument),
+                    serloContext: {
+                      license:
+                        exercise.solution?.license &&
                         !exercise.solution?.license.default
-                        ? exercise.solution?.license
-                        : undefined,
-                  },
-                }
+                          ? exercise.solution?.license
+                          : undefined,
+                    },
+                  }
                 : null
 
               return exercise.currentRevision

@@ -12,13 +12,14 @@ import { Sign } from '@/serlo-editor/plugins/equations/sign'
 import { CustomElement, CustomText } from '@/serlo-editor/plugins/text'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
+  AnyEditorDocument,
   SupportedEditorDocument,
   UnknownEditorDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
 type SlateElementOrText = CustomElement | CustomText
 
-function isSupportedEditorPlugin(
+function isSupportedEditorDocument(
   node: ConvertData
 ): node is SupportedEditorDocument {
   return Object.values(EditorPluginType).includes(
@@ -27,9 +28,8 @@ function isSupportedEditorPlugin(
 }
 
 export type ConvertData =
-  | SupportedEditorDocument
+  | AnyEditorDocument
   | UnknownEditorDocument
-  // | FrontendContentNode
   | SlateElementOrText
 
 export type ConvertNode = ConvertData | ConvertData[] | undefined
@@ -46,7 +46,7 @@ export function convert(node?: ConvertNode): FrontendContentNode[] {
   if (!node || Object.keys(node).length === 0) return []
 
   if (Array.isArray(node)) return node.flatMap(convert)
-  if (isSupportedEditorPlugin(node)) return convertPlugin(node)
+  if (isSupportedEditorDocument(node)) return convertPlugin(node)
   if (isTextPluginState(node)) return convertTextPluginState(node)
 
   return []
@@ -55,7 +55,7 @@ export function convert(node?: ConvertNode): FrontendContentNode[] {
 function convertPlugin(
   node: SupportedEditorDocument | UnknownEditorDocument
 ): FrontendContentNode[] {
-  if (!isSupportedEditorPlugin(node)) return []
+  if (!isSupportedEditorDocument(node)) return []
 
   if (node.plugin === EditorPluginType.Article) {
     const {
@@ -117,16 +117,16 @@ function convertPlugin(
     const alt = node.state.alt
       ? node.state.alt
       : caption
-        ? captionTexts && captionTexts.length > 0
-          ? captionTexts
+      ? captionTexts && captionTexts.length > 0
+        ? captionTexts
             .map((textPlugin) => {
               return textPlugin.type === FrontendNodeType.Text
                 ? textPlugin.text
                 : ''
             })
             .join('')
-          : ''
         : ''
+      : ''
 
     return [
       {
@@ -147,8 +147,8 @@ function convertPlugin(
     )[0] as FrontendTextNode | FrontendMathNode | undefined
     const title = convertedTitle
       ? ((convertedTitle.type === FrontendNodeType.Math
-        ? [{ ...convertedTitle, type: FrontendNodeType.InlineMath }]
-        : convertedTitle.children) as unknown as FrontendContentNode[])
+          ? [{ ...convertedTitle, type: FrontendNodeType.InlineMath }]
+          : convertedTitle.children) as unknown as FrontendContentNode[])
       : ([{ type: FrontendNodeType.Text, text: '' }] as FrontendTextNode[])
 
     return [

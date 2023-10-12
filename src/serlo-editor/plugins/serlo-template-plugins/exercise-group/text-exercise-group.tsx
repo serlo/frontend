@@ -23,6 +23,7 @@ import {
   StateTypeSerializedType,
 } from '@/serlo-editor/plugin'
 import { selectSerializedDocument, store } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
 // text-exercises also include interactive exercises, we keep the naming to avoid db-migration
@@ -30,7 +31,7 @@ import { TemplatePluginType } from '@/serlo-editor-integration/types/template-pl
 export const textExerciseGroupTypeState = entityType(
   {
     ...entity,
-    content: editorContent(),
+    content: editorContent(EditorPluginType.Rows),
     cohesive: boolean(false),
     /* cohesive field would indicate whether the children of a grouped exercise are cohesive
     this field might be used in the future, but currently it has no effect and can not be changed
@@ -44,11 +45,11 @@ export const textExerciseGroupTypeState = entityType(
 export type TextExerciseGroupTypePluginState = typeof textExerciseGroupTypeState
 
 export const textExerciseGroupTypePlugin: EditorPlugin<TextExerciseGroupTypePluginState> =
-  {
-    Component: TextExerciseGroupTypeEditor,
-    state: textExerciseGroupTypeState,
-    config: {},
-  }
+{
+  Component: TextExerciseGroupTypeEditor,
+  state: textExerciseGroupTypeState,
+  config: {},
+}
 
 function TextExerciseGroupTypeEditor(
   props: EditorPluginProps<TextExerciseGroupTypePluginState>

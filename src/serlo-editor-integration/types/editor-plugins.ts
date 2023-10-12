@@ -168,7 +168,7 @@ export interface EditorAudioDocument {
 }
 export interface EditorPageLayoutDocument {
   plugin: EditorPluginType.PageLayout
-  state: StateTypeSerializedType<PageLayoutPluginState>
+  state: Prettify<StateTypeSerializedType<PageLayoutPluginState>>
   id?: string
 }
 export interface EditorPageTeamDocument {

@@ -18,7 +18,7 @@ import { prettifyLinksInState } from './prettify-links-state/prettify-links-in-s
 import { dataQuery } from './query'
 import {
   createStaticExerciseGroup,
-  staticCreateExercise,
+  staticCreateExerciseAndSolution,
 } from './static-create-exercises'
 import { staticBuildTaxonomyData } from './static-create-taxonomy'
 import {
@@ -32,7 +32,7 @@ import { FrontendNodeType } from '@/frontend-node-types'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import type { SupportedEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import type { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 // ALWAYS start alias with slash
 export async function staticRequestPage(
@@ -169,7 +169,7 @@ export async function staticRequestPage(
     uuid.__typename === UuidType.Exercise ||
     uuid.__typename === UuidType.GroupedExercise
   ) {
-    const exercise = staticCreateExercise(uuid)
+    const exercise = staticCreateExerciseAndSolution(uuid)
     return {
       kind: 'single-entity',
       entityData: {
@@ -231,7 +231,7 @@ export async function staticRequestPage(
         contentType: 'exercisegroup',
         metaImage,
         metaDescription: getMetaDescription(
-          exercise[0]?.state.content as unknown as SupportedEditorDocument
+          exercise[0]?.state.content as unknown as EditorRowsDocument
         ),
       },
       horizonData,
@@ -242,7 +242,7 @@ export async function staticRequestPage(
 
   const content = await prettifyLinksInState(
     uuid.currentRevision?.content
-      ? (JSON.parse(uuid.currentRevision?.content) as SupportedEditorDocument)
+      ? (JSON.parse(uuid.currentRevision?.content) as EditorRowsDocument)
       : undefined
   )
 

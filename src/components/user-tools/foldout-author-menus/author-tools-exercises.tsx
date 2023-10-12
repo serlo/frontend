@@ -29,10 +29,10 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
     data.type === ExerciseInlineType.Exercise
       ? UuidType.Exercise
       : data.type === ExerciseInlineType.ExerciseGroup
-      ? UuidType.ExerciseGroup
-      : data.type === ExerciseInlineType.Solution
-      ? UuidType.Solution
-      : UuidType.Exercise
+        ? UuidType.ExerciseGroup
+        : data.type === ExerciseInlineType.Solution
+          ? UuidType.Solution
+          : UuidType.Exercise
   )
 
   return (

@@ -63,10 +63,11 @@ const InputSerloStaticRenderer = dynamic<EditorInputExerciseDocument>(() =>
     '@/serlo-editor-integration/serlo-plugin-wrappers/input-serlo-static-renderer'
   ).then((mod) => mod.InputSerloStaticRenderer)
 )
-const SerloScMcExerciseStaticRenderer = dynamic<EditorScMcExerciseDocument>(() =>
-  import(
-    '@/serlo-editor-integration/serlo-plugin-wrappers/sc-mc-serlo-static-renderer'
-  ).then((mod) => mod.ScMcSerloStaticRenderer)
+const SerloScMcExerciseStaticRenderer = dynamic<EditorScMcExerciseDocument>(
+  () =>
+    import(
+      '@/serlo-editor-integration/serlo-plugin-wrappers/sc-mc-serlo-static-renderer'
+    ).then((mod) => mod.ScMcSerloStaticRenderer)
 )
 const SolutionSerloStaticRenderer = dynamic<EditorSolutionDocument>(() =>
   import(

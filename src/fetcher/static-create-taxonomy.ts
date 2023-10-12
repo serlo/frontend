@@ -1,7 +1,7 @@
 import { MainUuidQuery, TaxonomyTermType } from './graphql-types/operations'
 import {
   createStaticExerciseGroup,
-  staticCreateExercise,
+  staticCreateExerciseAndSolution,
 } from './static-create-exercises'
 import {
   TaxonomyData,
@@ -12,9 +12,9 @@ import {
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 import {
   EditorExerciseDocument,
+  EditorRowsDocument,
   EditorSolutionDocument,
   EditorTemplateGroupedExerciseDocument,
-  SupportedEditorDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
 type TaxonomyTerm = Extract<
@@ -33,7 +33,7 @@ export function staticBuildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
   const children = uuid.children.nodes.filter(isActive)
 
   const description = uuid.description
-    ? (JSON.parse(uuid.description) as SupportedEditorDocument)
+    ? (JSON.parse(uuid.description) as EditorRowsDocument)
     : undefined
 
   return {
@@ -75,7 +75,7 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
   )[] = []
   children.forEach((child) => {
     if (child.__typename === UuidType.Exercise && child.currentRevision) {
-      const exercise = staticCreateExercise({
+      const exercise = staticCreateExerciseAndSolution({
         ...child,
         revisions: { totalCount: 0 },
       })
@@ -155,7 +155,7 @@ function collectNestedTaxonomyTerms(
         url: getAlias(child),
         //@ts-expect-error static
         description: child.description
-          ? (JSON.parse(child.description) as SupportedEditorDocument)
+          ? (JSON.parse(child.description) as EditorRowsDocument)
           : undefined,
         articles: collectType(subChildren, UuidType.Article),
         exercises: collectExerciseFolders(subChildren),
