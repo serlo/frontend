@@ -18,6 +18,9 @@ import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { abSubmission } from '@/helper/ab-submission'
 import { renderArticle } from '@/schema/article-renderer'
+import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 export interface TopicProps {
   data: TaxonomyData
@@ -38,9 +41,9 @@ const NewFolderPrototype = dynamic<NewFolderPrototypeProps>(() =>
 )
 
 export function Topic({ data }: TopicProps) {
-  const { strings } = useInstanceData()
-
+  const { strings, lang } = useInstanceData()
   const ab = useAB()
+  editorRenderers.init(createRenderers({ instance: lang }))
 
   const [hasFeedback, setHasFeedback] = useState(false)
 
@@ -57,8 +60,7 @@ export function Topic({ data }: TopicProps) {
       {renderUserTools({ aboveContent: true })}
       <div className="min-h-1/2">
         <div className="mt-6 sm:mb-5">
-          {data.description &&
-            renderArticle(data.description, `taxdesc${data.id}`)}
+          <StaticRenderer document={data.description} />
         </div>
 
         {renderSubterms()}

@@ -477,8 +477,7 @@ export interface TaxonomyTermBase {
   applets: TaxonomyLink[]
   exercises: TaxonomyLink[]
   events: TaxonomyLink[]
-  // TODO: should be EditorRowsDocument after
-  description?: FrontendContentNode[]
+  description?: EditorRowsDocument
 }
 
 export interface TaxonomyLink {
