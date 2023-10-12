@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router'
 
 import { ExtraInfoIfRevisionView } from '../extra-info-if-revision-view'
-import { EditorImagePlugin } from '../types/editor-plugins'
+import { EditorImageDocument } from '../types/editor-plugins'
 import { ImageStaticRenderer } from '@/serlo-editor/plugins/image/static'
 
-export function ImageSerloStaticRenderer(props: EditorImagePlugin) {
+export function ImageSerloStaticRenderer(props: EditorImageDocument) {
   const pathNameBase = useRouter().asPath.split('/').pop()
   return (
     <>

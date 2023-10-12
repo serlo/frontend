@@ -12,7 +12,7 @@ import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import {
   AnyEditorDocument,
-  SupportedEditorPlugin,
+  SupportedEditorDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
 interface TmpProps {
@@ -71,7 +71,7 @@ export const getStaticProps: GetStaticProps<TmpProps> = async () => {
   ) as AnyEditorDocument
 
   const contentWithPrettyLinks = await prettifyLinksInState(
-    solutionMockState as SupportedEditorPlugin
+    solutionMockState as SupportedEditorDocument
   )
 
   if (!contentWithPrettyLinks) return { notFound: true }

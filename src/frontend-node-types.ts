@@ -7,13 +7,13 @@ import { TableType } from './serlo-editor/plugins/serlo-table/renderer'
 import type { CustomText } from './serlo-editor/plugins/text'
 import { EditorPluginType } from './serlo-editor-integration/types/editor-plugin-type'
 import type {
-  EditorAnchorPlugin,
-  EditorAudioPlugin,
-  EditorGeogebraPlugin,
-  EditorH5PPlugin,
-  EditorHighlightPlugin,
-  EditorInjectionPlugin,
-  EditorVideoPlugin,
+  EditorAnchorDocument,
+  EditorAudioDocument,
+  EditorGeogebraDocument,
+  EditorH5PDocument,
+  EditorHighlightDocument,
+  EditorInjectionDocument,
+  EditorVideoDocument,
 } from './serlo-editor-integration/types/editor-plugins'
 
 // The actual content of the page.
@@ -194,7 +194,7 @@ export interface FrontendBoxNode {
   pluginId?: string
 }
 
-export type FrontendAnchorNode = EditorAnchorPlugin & {
+export type FrontendAnchorNode = EditorAnchorDocument & {
   type: FrontendNodeType.Anchor
   children?: undefined
 }
@@ -231,13 +231,13 @@ export interface FrontendTdNode {
   children?: FrontendContentNode[]
 }
 
-export type FrontendGeogebraNode = EditorGeogebraPlugin & {
+export type FrontendGeogebraNode = EditorGeogebraDocument & {
   type: FrontendNodeType.Geogebra
   children?: undefined
   pluginId?: string
 }
 
-export type FrontendInjectionNode = EditorInjectionPlugin & {
+export type FrontendInjectionNode = EditorInjectionDocument & {
   type: FrontendNodeType.Injection
   children?: undefined
   pluginId?: string
@@ -289,7 +289,7 @@ export interface TaskEditorState {
   interactive?:
     | EditorPluginScMcExercise
     | EditorPluginInputExercise
-    | EditorH5PPlugin
+    | EditorH5PDocument
 }
 
 export interface SolutionEditorState {
@@ -341,21 +341,21 @@ export interface FrontendExerciseGroupNode {
   unrevisedRevisions?: number
 }
 
-export type FrontendVideoNode = EditorVideoPlugin & {
+export type FrontendVideoNode = EditorVideoDocument & {
   license?: LicenseData
   type: FrontendNodeType.Video
   children?: undefined
   pluginId?: string
 }
 
-export type FrontendAudioNode = EditorAudioPlugin & {
+export type FrontendAudioNode = EditorAudioDocument & {
   type: FrontendNodeType.Audio
   children?: undefined
   pluginId?: string
   src: string
 }
 
-export type FrontendCodeNode = EditorHighlightPlugin & {
+export type FrontendCodeNode = EditorHighlightDocument & {
   type: FrontendNodeType.Code
   children?: undefined
   pluginId?: string

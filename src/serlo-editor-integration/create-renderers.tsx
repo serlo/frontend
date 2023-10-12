@@ -5,18 +5,18 @@ import { ExtraInfoIfRevisionView } from './extra-info-if-revision-view'
 import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-static-renderer'
 import { EditorPluginType } from './types/editor-plugin-type'
 import type {
-  EditorAnchorPlugin,
-  EditorExercisePlugin,
-  EditorGeogebraPlugin,
-  EditorH5PPlugin,
-  EditorHighlightPlugin,
-  EditorInjectionPlugin,
-  EditorInputExercisePlugin,
-  EditorScMcExercisePlugin,
-  EditorSolutionPlugin,
-  EditorSpoilerPlugin,
-  EditorTemplateGroupedExercise,
-  EditorVideoPlugin,
+  EditorAnchorDocument,
+  EditorExerciseDocument,
+  EditorGeogebraDocument,
+  EditorH5PDocument,
+  EditorHighlightDocument,
+  EditorInjectionDocument,
+  EditorInputExerciseDocument,
+  EditorScMcExerciseDocument,
+  EditorSolutionDocument,
+  EditorSpoilerDocument,
+  EditorTemplateGroupedExerciseDocument,
+  EditorVideoDocument,
 } from './types/editor-plugins'
 import { TemplatePluginType } from './types/template-plugin-type'
 import { Lazy } from '@/components/content/lazy'
@@ -48,38 +48,38 @@ import { parseVideoUrl } from '@/serlo-editor/plugins/video/renderer'
 import { VideoStaticRenderer } from '@/serlo-editor/plugins/video/static'
 import { MultimediaSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/multimedia-serlo-static-renderer'
 
-const ExerciseSerloStaticRenderer = dynamic<EditorExercisePlugin>(() =>
+const ExerciseSerloStaticRenderer = dynamic<EditorExerciseDocument>(() =>
   import(
     '@/serlo-editor-integration/serlo-plugin-wrappers/exercise-serlo-static-renderer'
   ).then((mod) => mod.ExerciseSerloStaticRenderer)
 )
-const H5pSerloStaticRenderer = dynamic<EditorH5PPlugin>(() =>
+const H5pSerloStaticRenderer = dynamic<EditorH5PDocument>(() =>
   import(
     '@/serlo-editor-integration/serlo-plugin-wrappers/h5p-serlo-static'
   ).then((mod) => mod.H5pSerloStaticRenderer)
 )
-const InputSerloStaticRenderer = dynamic<EditorInputExercisePlugin>(() =>
+const InputSerloStaticRenderer = dynamic<EditorInputExerciseDocument>(() =>
   import(
     '@/serlo-editor-integration/serlo-plugin-wrappers/input-serlo-static-renderer'
   ).then((mod) => mod.InputSerloStaticRenderer)
 )
-const SerloScMcExerciseStaticRenderer = dynamic<EditorScMcExercisePlugin>(() =>
+const SerloScMcExerciseStaticRenderer = dynamic<EditorScMcExerciseDocument>(() =>
   import(
     '@/serlo-editor-integration/serlo-plugin-wrappers/sc-mc-serlo-static-renderer'
   ).then((mod) => mod.ScMcSerloStaticRenderer)
 )
-const SolutionSerloStaticRenderer = dynamic<EditorSolutionPlugin>(() =>
+const SolutionSerloStaticRenderer = dynamic<EditorSolutionDocument>(() =>
   import(
     '@/serlo-editor-integration/serlo-plugin-wrappers/solution-serlo-static-renderer'
   ).then((mod) => mod.SolutionSerloStaticRenderer)
 )
 const TextExerciseGroupTypeStaticRenderer =
-  dynamic<EditorTemplateGroupedExercise>(() =>
+  dynamic<EditorTemplateGroupedExerciseDocument>(() =>
     import(
       '@/serlo-editor/plugins/serlo-template-plugins/exercise-group/static'
     ).then((mod) => mod.TextExerciseGroupTypeStaticRenderer)
   )
-const HighlightStaticRenderer = dynamic<EditorHighlightPlugin>(() =>
+const HighlightStaticRenderer = dynamic<EditorHighlightDocument>(() =>
   import('@/serlo-editor/plugins/highlight/static').then(
     (mod) => mod.HighlightStaticRenderer
   )
@@ -114,7 +114,7 @@ export function createRenderers({
       },
       {
         type: EditorPluginType.Spoiler,
-        renderer: (state: EditorSpoilerPlugin) => {
+        renderer: (state: EditorSpoilerDocument) => {
           return (
             <SpoilerStaticRenderer
               {...state}
@@ -127,7 +127,7 @@ export function createRenderers({
       { type: EditorPluginType.SerloTable, renderer: SerloTableStaticRenderer },
       {
         type: EditorPluginType.Injection,
-        renderer: (props: EditorInjectionPlugin) => {
+        renderer: (props: EditorInjectionDocument) => {
           return (
             <>
               <InjectionStaticRenderer {...props} />
@@ -139,7 +139,7 @@ export function createRenderers({
       { type: EditorPluginType.Equations, renderer: EquationsStaticRenderer },
       {
         type: EditorPluginType.Geogebra,
-        renderer: (state: EditorGeogebraPlugin) => {
+        renderer: (state: EditorGeogebraDocument) => {
           if (!state.state) return null
           const { url } = parseId(state.state)
           return (
@@ -159,7 +159,7 @@ export function createRenderers({
       },
       {
         type: EditorPluginType.Video,
-        renderer: (state: EditorVideoPlugin) => {
+        renderer: (state: EditorVideoDocument) => {
           const { src } = state.state
           if (!src) return null
           const [iframeSrc, type] = parseVideoUrl(src, instance)
@@ -180,7 +180,7 @@ export function createRenderers({
       },
       {
         type: EditorPluginType.Anchor,
-        renderer: (props: EditorAnchorPlugin) => {
+        renderer: (props: EditorAnchorDocument) => {
           return (
             <>
               <AnchorStaticRenderer {...props} />
@@ -205,7 +205,7 @@ export function createRenderers({
       },
       {
         type: EditorPluginType.Highlight,
-        renderer: (props: EditorHighlightPlugin) => {
+        renderer: (props: EditorHighlightDocument) => {
           return (
             <>
               <HighlightStaticRenderer {...props} />

@@ -9,7 +9,6 @@ import { requestRevision } from '@/fetcher/revision/request'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<RevisionProps>(({ pageData }) => (
-  // TODO: Does not do anything yet. Just to show where the context could be provided.
   <RevisionViewProvider value>
     <FrontendClientBase
       entityId={pageData.revisionData.thisRevision.id}

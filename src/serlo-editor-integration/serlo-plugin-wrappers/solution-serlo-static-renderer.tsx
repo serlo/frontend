@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 
-import type { EditorSolutionPlugin } from '../types/editor-plugins'
+import type { EditorSolutionDocument } from '../types/editor-plugins'
 import { useAuthentication } from '@/auth/use-authentication'
 import type { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
 import { Lazy } from '@/components/content/lazy'
@@ -27,7 +27,7 @@ const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
 )
 
 // Special version for serlo.org with author tools and license
-export function SolutionSerloStaticRenderer(props: EditorSolutionPlugin) {
+export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const auth = useAuthentication()
   const [loaded, setLoaded] = useState(false)
   useEffect(() => setLoaded(true), [])
@@ -41,10 +41,10 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionPlugin) {
   const solutionVisibleOnInit = isRevisionView
     ? true
     : isPrintMode
-    ? printModeSolutionVisible
-    : typeof window === 'undefined'
-    ? false
-    : window.location.href.includes('#comment-')
+      ? printModeSolutionVisible
+      : typeof window === 'undefined'
+        ? false
+        : window.location.href.includes('#comment-')
 
   const beforeSlot = (
     <>

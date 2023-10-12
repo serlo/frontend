@@ -1,6 +1,6 @@
 import {
   AnyEditorDocument,
-  SupportedEditorPlugin,
+  SupportedEditorDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 import {
   isArticleIntroductionDocument,
@@ -29,26 +29,26 @@ export function getChildrenOfSerializedDocument(
       ? document.state
       : //
       isArticleDocument(document)
-      ? [document.state.introduction, document.state.content]
-      : //
-      isMultimediaDocument(document) || isArticleIntroductionDocument(document)
-      ? [document.state.explanation, document.state.multimedia]
-      : //
-      isPageLayoutDocument(document)
-      ? [document.state.column1, document.state.column2]
-      : //
-      isExerciseDocument(document)
-      ? [document.state.content, document.state.interactive]
-      : //
-      isSolutionDocument(document)
-      ? [document.state.steps, document.state.strategy]
-      : //
-      isImageDocument(document)
-      ? [document.state.caption]
-      : //
-        []
+        ? [document.state.introduction, document.state.content]
+        : //
+        isMultimediaDocument(document) || isArticleIntroductionDocument(document)
+          ? [document.state.explanation, document.state.multimedia]
+          : //
+          isPageLayoutDocument(document)
+            ? [document.state.column1, document.state.column2]
+            : //
+            isExerciseDocument(document)
+              ? [document.state.content, document.state.interactive]
+              : //
+              isSolutionDocument(document)
+                ? [document.state.steps, document.state.strategy]
+                : //
+                isImageDocument(document)
+                  ? [document.state.caption]
+                  : //
+                  []
 
-  return children as SupportedEditorPlugin[]
+  return children as SupportedEditorDocument[]
 
   // ignoring for now
   // Equations

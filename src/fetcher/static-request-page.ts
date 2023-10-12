@@ -32,7 +32,7 @@ import { FrontendNodeType } from '@/frontend-node-types'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import type { SupportedEditorPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import type { SupportedEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 // ALWAYS start alias with slash
 export async function staticRequestPage(
@@ -231,7 +231,7 @@ export async function staticRequestPage(
         contentType: 'exercisegroup',
         metaImage,
         metaDescription: getMetaDescription(
-          exercise[0]?.state.content as unknown as SupportedEditorPlugin
+          exercise[0]?.state.content as unknown as SupportedEditorDocument
         ),
       },
       horizonData,
@@ -242,7 +242,7 @@ export async function staticRequestPage(
 
   const content = await prettifyLinksInState(
     uuid.currentRevision?.content
-      ? (JSON.parse(uuid.currentRevision?.content) as SupportedEditorPlugin)
+      ? (JSON.parse(uuid.currentRevision?.content) as SupportedEditorDocument)
       : undefined
   )
 

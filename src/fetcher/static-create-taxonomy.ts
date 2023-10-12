@@ -11,10 +11,10 @@ import {
 } from '@/data-types'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 import {
-  EditorExercisePlugin,
-  EditorSolutionPlugin,
-  EditorTemplateGroupedExercise,
-  SupportedEditorPlugin,
+  EditorExerciseDocument,
+  EditorSolutionDocument,
+  EditorTemplateGroupedExerciseDocument,
+  SupportedEditorDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
 type TaxonomyTerm = Extract<
@@ -33,7 +33,7 @@ export function staticBuildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
   const children = uuid.children.nodes.filter(isActive)
 
   const description = uuid.description
-    ? (JSON.parse(uuid.description) as SupportedEditorPlugin)
+    ? (JSON.parse(uuid.description) as SupportedEditorDocument)
     : undefined
 
   return {
@@ -69,9 +69,9 @@ function isActive_for_subchildren(child: TaxonomyTermChildrenLevel2) {
 function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
   const result: (
     | []
-    | [EditorExercisePlugin]
-    | [EditorExercisePlugin, EditorSolutionPlugin]
-    | [EditorTemplateGroupedExercise]
+    | [EditorExerciseDocument]
+    | [EditorExerciseDocument, EditorSolutionDocument]
+    | [EditorTemplateGroupedExerciseDocument]
   )[] = []
   children.forEach((child) => {
     if (child.__typename === UuidType.Exercise && child.currentRevision) {
@@ -155,7 +155,7 @@ function collectNestedTaxonomyTerms(
         url: getAlias(child),
         //@ts-expect-error static
         description: child.description
-          ? (JSON.parse(child.description) as SupportedEditorPlugin)
+          ? (JSON.parse(child.description) as SupportedEditorDocument)
           : undefined,
         articles: collectType(subChildren, UuidType.Article),
         exercises: collectExerciseFolders(subChildren),

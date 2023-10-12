@@ -5,23 +5,23 @@ import { isEmptyRowsDocument } from '../rows/utils/static-is-empty'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
-  EditorAudioPlugin,
-  EditorGeogebraPlugin,
-  EditorImagePlugin,
-  EditorMultimediaPlugin,
-  EditorVideoPlugin,
+  EditorAudioDocument,
+  EditorGeogebraDocument,
+  EditorImageDocument,
+  EditorMultimediaDocument,
+  EditorVideoDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
 type MultimediaChild =
-  | EditorImagePlugin
-  | EditorVideoPlugin
-  | EditorAudioPlugin
-  | EditorGeogebraPlugin
+  | EditorImageDocument
+  | EditorVideoDocument
+  | EditorAudioDocument
+  | EditorGeogebraDocument
 
 export function MultimediaStaticRenderer({
   state,
   setOpen,
-}: EditorMultimediaPlugin & { setOpen?: (arg: boolean) => void }) {
+}: EditorMultimediaDocument & { setOpen?: (arg: boolean) => void }) {
   const { explanation, multimedia, width: mediaWidth } = state
 
   if (isEmptyMedia() && isEmptyRowsDocument(explanation)) return null

@@ -22,9 +22,9 @@ import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import {
-  EditorExercisePlugin,
-  EditorSolutionPlugin,
-  SupportedEditorPlugin,
+  EditorExerciseDocument,
+  EditorSolutionDocument,
+  SupportedEditorDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
 export interface TopicProps {
@@ -69,7 +69,7 @@ export function StaticTaxonomy({ data }: TopicProps) {
       <div className="min-h-1/2">
         <div className="mt-6 sm:mb-5">
           <StaticRenderer
-            document={data.description as unknown as SupportedEditorPlugin}
+            document={data.description as unknown as SupportedEditorDocument}
           />
         </div>
 
@@ -160,8 +160,8 @@ export function StaticTaxonomy({ data }: TopicProps) {
         {data.exercisesContent.map((inExercise, i) => {
           // for static
           const exerciseArray = inExercise as unknown as
-            | [EditorExercisePlugin]
-            | [EditorExercisePlugin, EditorSolutionPlugin]
+            | [EditorExerciseDocument]
+            | [EditorExerciseDocument, EditorSolutionDocument]
 
           const exerciseUuid = exerciseArray[0].serloContext?.uuid
 

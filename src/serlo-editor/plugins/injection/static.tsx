@@ -11,14 +11,14 @@ import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   AnyEditorDocument,
-  EditorInjectionPlugin,
-  EditorRowsPlugin,
+  EditorInjectionDocument,
+  EditorRowsDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
 export function InjectionStaticRenderer({
   state: href,
-}: EditorInjectionPlugin) {
+}: EditorInjectionDocument) {
   const [content, setContent] = useState<
     AnyEditorDocument[] | 'loading' | 'error'
   >('loading')
@@ -99,17 +99,17 @@ export function InjectionStaticRenderer({
               const solutionContentAndContext = exercise.solution
                 ?.currentRevision?.content
                 ? {
-                    ...(JSON.parse(
-                      exercise.solution?.currentRevision?.content
-                    ) as AnyEditorDocument),
-                    serloContext: {
-                      license:
-                        exercise.solution?.license &&
+                  ...(JSON.parse(
+                    exercise.solution?.currentRevision?.content
+                  ) as AnyEditorDocument),
+                  serloContext: {
+                    license:
+                      exercise.solution?.license &&
                         !exercise.solution?.license.default
-                          ? exercise.solution?.license
-                          : undefined,
-                    },
-                  }
+                        ? exercise.solution?.license
+                        : undefined,
+                  },
+                }
                 : null
 
               return exercise.currentRevision
@@ -124,7 +124,7 @@ export function InjectionStaticRenderer({
                 state: {
                   content: JSON.parse(
                     uuid.currentRevision.content
-                  ) as EditorRowsPlugin,
+                  ) as EditorRowsDocument,
                   // solutions are not really part of the state at this point, but cleaner this way
                   exercisesWithSolutions,
                 },

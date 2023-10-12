@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import { useContext, useEffect, useState } from 'react'
 
-import type { EditorExercisePlugin } from '../types/editor-plugins'
+import type { EditorExerciseDocument } from '../types/editor-plugins'
 import { useAuthentication } from '@/auth/use-authentication'
 import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
@@ -17,7 +17,7 @@ const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
 )
 
 // Special version for serlo.org with author tools and license
-export function ExerciseSerloStaticRenderer(props: EditorExercisePlugin) {
+export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
   const auth = useAuthentication()
   const [loaded, setLoaded] = useState(false)
   useEffect(() => setLoaded(true), [])

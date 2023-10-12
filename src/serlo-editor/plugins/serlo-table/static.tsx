@@ -3,9 +3,9 @@ import {
   TableType,
 } from '@/serlo-editor/plugins/serlo-table/renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorSerloTablePlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorSerloTableDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
-export function SerloTableStaticRenderer({ state }: EditorSerloTablePlugin) {
+export function SerloTableStaticRenderer({ state }: EditorSerloTableDocument) {
   const { rows, tableType } = state
   if (!rows || rows.length === 0) return null
 

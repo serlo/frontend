@@ -1,9 +1,9 @@
 import { MainUuidType } from './query-types'
 import {
-  EditorExercisePlugin,
-  EditorRowsPlugin,
-  EditorSolutionPlugin,
-  EditorTemplateGroupedExercise,
+  EditorExerciseDocument,
+  EditorRowsDocument,
+  EditorSolutionDocument,
+  EditorTemplateGroupedExerciseDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
@@ -15,7 +15,10 @@ type BareExercise = Omit<
 export function staticCreateExercise(
   uuid: BareExercise
   // index?: number
-): [] | [EditorExercisePlugin] | [EditorExercisePlugin, EditorSolutionPlugin] {
+):
+  | []
+  | [EditorExerciseDocument]
+  | [EditorExerciseDocument, EditorSolutionDocument] {
   if (!uuid.currentRevision?.content) return []
 
   // compat: shuffle interactive answers with shuffleArray
@@ -24,7 +27,7 @@ export function staticCreateExercise(
   // href: uuid.alias, ??
 
   const exerciseWithContext = {
-    ...(JSON.parse(uuid.currentRevision?.content) as EditorExercisePlugin),
+    ...(JSON.parse(uuid.currentRevision?.content) as EditorExerciseDocument),
     serloContext: {
       uuid: uuid.id,
       revisionId: uuid.currentRevision.id,
@@ -36,7 +39,7 @@ export function staticCreateExercise(
   }
   const solutionRaw = uuid.solution?.currentRevision?.content
   const solution = solutionRaw
-    ? (JSON.parse(solutionRaw) as EditorSolutionPlugin)
+    ? (JSON.parse(solutionRaw) as EditorSolutionDocument)
     : undefined
 
   const solutionContext = solution
@@ -63,7 +66,7 @@ export function createStaticExerciseGroup(
     'date' | 'taxonomyTerms'
   >
   // pageIndex?: number
-): [EditorTemplateGroupedExercise] | [] {
+): [EditorTemplateGroupedExerciseDocument] | [] {
   // const children: FrontendExerciseNode[] = []
   // let groupIndex = 0
   // if (uuid.exercises?.length > 0) {
@@ -91,7 +94,7 @@ export function createStaticExerciseGroup(
       plugin: TemplatePluginType.TextExerciseGroup,
       state: {
         // @ts-expect-error not sure why string is expected here
-        content: JSON.parse(uuid.currentRevision.content) as EditorRowsPlugin,
+        content: JSON.parse(uuid.currentRevision.content) as EditorRowsDocument,
         // solutions are not really part of the state at this point, but cleaner this way
         exercisesWithSolutions: uuid.exercises.map(staticCreateExercise),
       },

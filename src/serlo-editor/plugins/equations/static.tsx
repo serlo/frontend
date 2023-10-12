@@ -5,9 +5,9 @@ import {
   EquationsRendererStep,
 } from '@/serlo-editor/plugins/equations/renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorEquationsPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorEquationsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
-export function EquationsStaticRenderer({ state }: EditorEquationsPlugin) {
+export function EquationsStaticRenderer({ state }: EditorEquationsDocument) {
   const { steps, firstExplanation, transformationTarget } = state
   const MathRenderer = editorRenderers.getMathRenderer()
 

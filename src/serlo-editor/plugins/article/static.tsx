@@ -4,11 +4,11 @@ import { Link } from '@/components/content/link'
 import { ArticleNodeUuidLink } from '@/frontend-node-types'
 import { ArticleRenderer } from '@/serlo-editor/plugins/article/renderer'
 import {
-  EditorArticlePlugin,
-  EditorMultimediaPlugin,
+  EditorArticleDocument,
+  EditorMultimediaDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
-export function ArticleStaticRenderer({ state }: EditorArticlePlugin) {
+export function ArticleStaticRenderer({ state }: EditorArticleDocument) {
   const {
     introduction,
     content,
@@ -22,7 +22,7 @@ export function ArticleStaticRenderer({ state }: EditorArticlePlugin) {
   const hasExercises = exercises && exercises.length
 
   const introductionOrNull = isEmptyTextDocument(
-    (introduction as EditorMultimediaPlugin).state.explanation
+    (introduction as EditorMultimediaDocument).state.explanation
   ) ? null : (
     <StaticRenderer document={{ ...introduction, plugin: 'multimedia' }} />
   )

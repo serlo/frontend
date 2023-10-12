@@ -6,10 +6,10 @@ import { useAB } from '@/contexts/ab'
 import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { parseH5pUrl } from '@/serlo-editor/plugins/h5p/renderer'
-import type { EditorH5PPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import type { EditorH5PDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 // Special version for serlo.org with exercise submission events
-export function H5pSerloStaticRenderer(props: EditorH5PPlugin) {
+export function H5pSerloStaticRenderer(props: EditorH5PDocument) {
   const { asPath } = useRouter()
   const ab = useAB()
   const entityId = useEntityId()

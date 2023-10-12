@@ -3,9 +3,9 @@ import {
   parseVideoUrl,
   VideoRenderer,
 } from '@/serlo-editor/plugins/video/renderer'
-import { EditorVideoPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorVideoDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
-export function VideoStaticRenderer({ state: { src } }: EditorVideoPlugin) {
+export function VideoStaticRenderer({ state: { src } }: EditorVideoDocument) {
   const { lang } = useInstanceData()
 
   const [iframeSrc, type] = parseVideoUrl(src, lang)
