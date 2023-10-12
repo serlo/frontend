@@ -11,6 +11,7 @@ import type {
   FrontendExerciseGroupNode,
   FrontendExerciseNode,
 } from './frontend-node-types'
+import type { EditorRowsDocument } from './serlo-editor-integration/types/editor-plugins'
 import type { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 import { Role, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
@@ -447,7 +448,7 @@ export interface UserPage extends EntityPageBase {
     imageUrl: string
     chatUrl?: string
     motivation?: string
-    description?: FrontendContentNode[] | null
+    description?: EditorRowsDocument | null
     lastLogin?: string | null
     date: string
     roles: { role: Role; instance: Instance | null }[]

@@ -21,7 +21,9 @@ import { UserPage, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { isProduction } from '@/helper/is-production'
-import { renderArticle } from '@/schema/article-renderer'
+import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 export interface ProfileProps {
   userData: UserPage['userData']
@@ -31,6 +33,8 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const { strings, lang } = useInstanceData()
   const auth = useAuthentication()
   const canDo = useCanDo()
+
+  editorRenderers.init(createRenderers({ instance: lang }))
 
   const {
     id,
@@ -147,7 +151,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
             {strings.profiles.lockedDescriptionText}
           </StaticInfoPanel>
         ) : (
-          renderArticle(description, `profile${id}`)
+          <StaticRenderer document={description} />
         )}
       </section>
     )
