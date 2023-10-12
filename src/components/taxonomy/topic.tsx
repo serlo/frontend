@@ -8,7 +8,7 @@ import { NewFolderPrototypeProps } from './new-folder-prototype'
 import { SubTopic } from './sub-topic'
 import { TopicCategories } from './topic-categories'
 import { FaIcon } from '../fa-icon'
-import { StaticInfoPanel } from '../static-info-panel'
+import { InfoPanel } from '../info-panel'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
@@ -97,9 +97,9 @@ export function Topic({ data }: TopicProps) {
 
   function renderTrashedNotice() {
     return (
-      <StaticInfoPanel icon={faTrash} doNotIndex>
+      <InfoPanel icon={faTrash} doNotIndex>
         {strings.content.trashedNotice}
-      </StaticInfoPanel>
+      </InfoPanel>
     )
   }
 

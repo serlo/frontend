@@ -2,8 +2,8 @@ import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
+import { InfoPanel } from '@/components/info-panel'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
 import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
 import { sharedLicenseFragments } from '@/fetcher/query-fragments'
@@ -190,14 +190,14 @@ export function InjectionStaticRenderer({
   if (content === 'loading') return <LoadingSpinner />
   if (content === 'error')
     return (
-      <StaticInfoPanel>
+      <InfoPanel>
         {strings.errors.defaultMessage}{' '}
         <small className="float-right mt-0.5">
           <a className="serlo-link" href={href}>
             Link
           </a>
         </small>
-      </StaticInfoPanel>
+      </InfoPanel>
     )
 
   return (

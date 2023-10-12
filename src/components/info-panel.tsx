@@ -19,7 +19,7 @@ interface StaticInfoPanelProps {
   doNotIndex?: boolean
 }
 
-export function StaticInfoPanel({
+export function InfoPanel({
   icon,
   children,
   type = 'gray',

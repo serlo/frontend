@@ -9,7 +9,7 @@ import { useState, MouseEvent } from 'react'
 import { HSpace } from './h-space'
 import { Link } from './link'
 import { FaIcon } from '../fa-icon'
-import { StaticInfoPanel } from '../static-info-panel'
+import { InfoPanel } from '../info-panel'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
 import { UserTools } from '@/components/user-tools/user-tools'
@@ -176,9 +176,9 @@ export function Entity({ data }: EntityProps) {
     if (validPages.length > 0) return null
     return (
       <>
-        <StaticInfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
+        <InfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
           {strings.course.noPagesWarning}
-        </StaticInfoPanel>
+        </InfoPanel>
       </>
     )
   }
@@ -198,17 +198,17 @@ export function Entity({ data }: EntityProps) {
   function renderNotices() {
     if (data.trashed)
       return (
-        <StaticInfoPanel icon={faTrash} doNotIndex>
+        <InfoPanel icon={faTrash} doNotIndex>
           {strings.content.trashedNotice}
-        </StaticInfoPanel>
+        </InfoPanel>
       )
 
     const hasContent = data.title || data.content?.length
     if (!hasContent)
       return (
-        <StaticInfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
+        <InfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
           {strings.content.emptyNotice}
-        </StaticInfoPanel>
+        </InfoPanel>
       )
 
     if (data.isUnrevised) {
@@ -218,11 +218,11 @@ export function Entity({ data }: EntityProps) {
         </Link>
       )
       return (
-        <StaticInfoPanel icon={faTools} type="warning">
+        <InfoPanel icon={faTools} type="warning">
           {replacePlaceholders(strings.content.unrevisedNotice, {
             link,
           })}
-        </StaticInfoPanel>
+        </InfoPanel>
       )
     }
   }

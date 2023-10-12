@@ -12,8 +12,8 @@ import { Flow, handleFlowError } from '@/components/auth/flow'
 import { FlowType } from '@/components/auth/flow-type'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
+import { InfoPanel } from '@/components/info-panel'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
@@ -121,7 +121,7 @@ export function Registration() {
         👍
       </p>
       {isSuccessfullySubmitted ? (
-        <StaticInfoPanel key={1} type="info">
+        <InfoPanel key={1} type="info">
           🎉 {strings.auth.messages.code1080001} <br />
           <br />
           <span className="font-normal">
@@ -133,7 +133,7 @@ export function Registration() {
               {strings.auth.verificationLinkText}
             </Link>
           </span>
-        </StaticInfoPanel>
+        </InfoPanel>
       ) : null}
 
       {flow ? (

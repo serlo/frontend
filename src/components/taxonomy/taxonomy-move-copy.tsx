@@ -9,8 +9,8 @@ import { useEffect, useState } from 'react'
 import { UuidUrlInput } from '../author/uuid-url-input'
 import { PageTitle } from '../content/page-title'
 import { FaIcon } from '../fa-icon'
+import { InfoPanel } from '../info-panel'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
-import { StaticInfoPanel } from '../static-info-panel'
 import { PleaseLogIn } from '../user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -238,12 +238,12 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
   function renderFolderNotice() {
     if (!taxonomyData.exercises.length) return null
     return (
-      <StaticInfoPanel type="info" icon={faInfoCircle}>
+      <InfoPanel type="info" icon={faInfoCircle}>
         {replacePlaceholders(loggedInStrings.exerciseFolderNotice, {
           break: <br />,
           exerciseFolder: strings.entities.exerciseFolder,
         })}
-      </StaticInfoPanel>
+      </InfoPanel>
     )
   }
 }
