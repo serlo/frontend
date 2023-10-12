@@ -193,7 +193,7 @@ export interface LicenseDetailPage {
 export interface LicenseDetailData {
   id: number
   title: string
-  content: FrontendContentNode[]
+  content: EditorRowsDocument
   isDefault: boolean
 }
 
