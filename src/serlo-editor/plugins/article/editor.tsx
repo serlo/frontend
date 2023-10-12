@@ -26,7 +26,7 @@ export function ArticleEditor({ editable, state }: ArticleProps) {
     <>
       <ArticleRenderer
         introduction={introduction.render()}
-        content={content.render()}
+        content={<div data-qa="plugin-article-content">{content.render()}</div>}
         exercises={
           <>
             <ArticleExercises exercises={exercises} editable={editable} />

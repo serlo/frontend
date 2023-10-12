@@ -47,12 +47,14 @@ export function BoxEditor(props: BoxProps) {
 
   if (hasNoType) {
     return (
-      <TypeChooserBox typeState={type} borderColorClass={borderColorClass} />
+      <div data-qa="plugin-box">
+        <TypeChooserBox typeState={type} borderColorClass={borderColorClass} />
+      </div>
     )
   }
 
   return (
-    <>
+    <div data-qa="plugin-box">
       {showToolbar ? <BoxToolbar {...props} /> : null}
 
       <div
@@ -78,7 +80,10 @@ export function BoxEditor(props: BoxProps) {
         <BoxRenderer
           boxType={typedValue}
           title={
-            <div className="-ml-1 inline-block max-h-6 min-w-[15rem] font-bold">
+            <div
+              className="-ml-1 inline-block max-h-6 min-w-[15rem] font-bold"
+              data-qa="plugin-box-title"
+            >
               {title.render({
                 config: {
                   placeholder: editorStrings.plugins.box.titlePlaceholder,
@@ -90,9 +95,11 @@ export function BoxEditor(props: BoxProps) {
           }
           anchorId={anchorId.value}
         >
-          <div className="-ml-3 px-side">{content.render()}</div>
+          <div className="-ml-3 px-side" data-qa="plugin-box-content">
+            {content.render()}
+          </div>
         </BoxRenderer>
       </div>
-    </>
+    </div>
   )
 }

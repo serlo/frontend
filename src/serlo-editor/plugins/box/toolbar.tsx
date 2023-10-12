@@ -29,10 +29,15 @@ export const BoxToolbar = ({ id, state }: BoxProps) => {
                 text-sm transition-all hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
               `}
               value={state.type.value}
+              data-qa="plugin-box-type-chooser"
             >
               {types.map((type) => {
                 return (
-                  <option key={type} value={type}>
+                  <option
+                    key={type}
+                    value={type}
+                    data-qa={`plugin-box-type-chooser-option-${type}`}
+                  >
                     {strings.content.boxTypes[type as BoxType]}
                   </option>
                 )

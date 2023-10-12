@@ -22,6 +22,7 @@ export function TypeChooserBox({
         'relative mx-side rounded-xl border-3 p-4 pt-2',
         borderColorClass
       )}
+      data-qa="plugin-box-initial-type-chooser"
     >
       <b className="block pb-3">{editorStrings.plugins.box.type}</b>
       <ul className="unstyled-list">{renderSettingsListItems()}</ul>
@@ -44,6 +45,7 @@ export function TypeChooserBox({
               event.preventDefault()
               typeState.set(typedBoxType)
             }}
+            data-qa={`plugin-box-initial-type-chooser-option-${typedBoxType}`}
           >
             {listIcon ? <FaIcon className="mr-1" icon={listIcon} /> : null}
             {strings.content.boxTypes[typedBoxType]}
