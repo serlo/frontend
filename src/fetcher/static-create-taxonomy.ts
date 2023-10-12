@@ -37,7 +37,6 @@ export function staticBuildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
     : undefined
 
   return {
-    // @ts-expect-error static
     description,
     title: uuid.name,
     id: uuid.id,
@@ -157,7 +156,6 @@ function collectNestedTaxonomyTerms(
         id: child.id,
         title: child.name,
         url: getAlias(child),
-        //@ts-expect-error static
         description: child.description
           ? (JSON.parse(child.description) as EditorRowsDocument)
           : undefined,
