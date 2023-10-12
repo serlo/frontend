@@ -97,9 +97,9 @@ const PrivacyWrapper = dynamic<PrivacyWrapperProps>(() =>
 )
 
 export function createRenderers({
-  instance,
+  instance = Instance.En,
 }: {
-  instance: Instance
+  instance?: Instance
 }): InitRenderersArgs {
   return {
     pluginRenderers: [
