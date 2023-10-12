@@ -14,7 +14,7 @@ export async function prettifyLinksInSecondaryMenu(
   if (!data) return undefined
 
   const ids = data.filter(({ url, id }) => id && !url).map(({ id }) => id!)
-
+  if (!ids.length) return data
   const prettyLinks = await request<IdsQueryReturn>(endpoint, idsQuery(ids))
   if (!prettyLinks) return data
 
