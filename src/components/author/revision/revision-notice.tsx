@@ -4,7 +4,7 @@ import {
   faCheck,
 } from '@fortawesome/free-solid-svg-icons'
 
-import { StaticInfoPanel } from '@/components/static-info-panel'
+import { InfoPanel } from '@/components/info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export interface RevisionNoticeProps {
@@ -22,19 +22,19 @@ export function RevisionNotice({
 
   if (!hasCurrentRevision) {
     return (
-      <StaticInfoPanel type="info" icon={faInfoCircle}>
+      <InfoPanel type="info" icon={faInfoCircle}>
         {strings.revisions.noCurrentNotice}
-      </StaticInfoPanel>
+      </InfoPanel>
     )
   }
   if (!isRejected && !isCurrentRevision) return null
 
   const type = isCurrentRevision ? 'success' : 'failure'
   return (
-    <StaticInfoPanel type={type} icon={isRejected ? faXmark : faCheck}>
+    <InfoPanel type={type} icon={isRejected ? faXmark : faCheck}>
       {isRejected
         ? strings.revisions.rejectedNotice
         : strings.revisions.currentNotice}
-    </StaticInfoPanel>
+    </InfoPanel>
   )
 }

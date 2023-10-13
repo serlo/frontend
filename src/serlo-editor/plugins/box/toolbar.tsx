@@ -14,7 +14,11 @@ export const BoxToolbar = ({ id, state }: BoxProps) => {
 
   const typeOptions = types.map((type) => {
     return (
-      <option key={type} value={type}>
+      <option
+        key={type}
+        value={type}
+        data-qa={`plugin-box-type-chooser-option-${type}`}
+      >
         {strings.content.boxTypes[type]}
       </option>
     )
@@ -38,6 +42,7 @@ export const BoxToolbar = ({ id, state }: BoxProps) => {
               hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
               `}
               value={state.type.value}
+              data-qa="plugin-box-type-chooser"
             >
               {typeOptions}
             </select>

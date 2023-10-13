@@ -1,10 +1,10 @@
 import { faGripLines, faTools } from '@fortawesome/free-solid-svg-icons'
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
 import { arrayMoveImmutable } from 'array-move'
 import clsx from 'clsx'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
