@@ -35,7 +35,13 @@ export function BoxEditor(props: BoxProps) {
 
   const showToolbar = focused || isTitleFocused
 
-  if (hasNoType) return <TypeChooserBox typeState={type} />
+  if (hasNoType) {
+    return (
+      <div data-qa="plugin-box">
+        <TypeChooserBox typeState={type} />
+      </div>
+    )
+  }
 
   const titleConfig = {
     config: {
@@ -46,7 +52,7 @@ export function BoxEditor(props: BoxProps) {
   }
 
   return (
-    <>
+    <div data-qa="plugin-box">
       {showToolbar ? <BoxToolbar {...props} /> : null}
 
       <div
@@ -73,15 +79,20 @@ export function BoxEditor(props: BoxProps) {
         <BoxRenderer
           boxType={typedValue}
           title={
-            <div className="-ml-1 inline-block max-h-6 min-w-[15rem] font-bold">
+            <div
+              className="-ml-1 inline-block max-h-6 min-w-[15rem] font-bold"
+              data-qa="plugin-box-title"
+            >
               {title.render(titleConfig)}
             </div>
           }
           anchorId={anchorId.value}
         >
-          <div className="-ml-3 px-side">{content.render()}</div>
+          <div className="-ml-3 px-side" data-qa="plugin-box-content">
+            {content.render()}
+          </div>
         </BoxRenderer>
       </div>
-    </>
+    </div>
   )
 }
