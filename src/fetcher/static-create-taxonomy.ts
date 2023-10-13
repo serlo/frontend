@@ -15,7 +15,7 @@ import {
   EditorExerciseDocument,
   EditorRowsDocument,
   EditorSolutionDocument,
-  EditorTemplateGroupedExerciseDocument,
+  EditorTemplateExerciseGroupDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
 type TaxonomyTerm = Extract<
@@ -70,7 +70,7 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
   const result: (
     | EditorExerciseDocument
     | EditorSolutionDocument
-    | EditorTemplateGroupedExerciseDocument
+    | EditorTemplateExerciseGroupDocument
   )[] = []
   children.forEach((child) => {
     if (child.__typename === UuidType.Exercise && child.currentRevision) {

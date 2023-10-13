@@ -8,7 +8,7 @@ import { ExerciseInlineType } from '@/data-types'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import {
   EditorRowsDocument,
-  EditorTemplateGroupedExerciseDocument,
+  EditorTemplateExerciseGroupDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
@@ -18,7 +18,7 @@ const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
 )
 
 export function TextExerciseGroupTypeStaticRenderer(
-  props: EditorTemplateGroupedExerciseDocument
+  props: EditorTemplateExerciseGroupDocument
 ) {
   const { state, serloContext: context } = props
   const [loaded, setLoaded] = useState(false)

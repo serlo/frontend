@@ -20,7 +20,7 @@ import type {
   EditorSerloTableDocument,
   EditorSolutionDocument,
   EditorSpoilerDocument,
-  EditorTemplateGroupedExerciseDocument,
+  EditorTemplateExerciseGroupDocument,
   EditorVideoDocument,
 } from './types/editor-plugins'
 import { TemplatePluginType } from './types/template-plugin-type'
@@ -105,7 +105,7 @@ const SerloTableStaticRenderer = dynamic<EditorSerloTableDocument>(() =>
   )
 )
 const TextExerciseGroupTypeStaticRenderer =
-  dynamic<EditorTemplateGroupedExerciseDocument>(() =>
+  dynamic<EditorTemplateExerciseGroupDocument>(() =>
     import(
       '@/serlo-editor/plugins/serlo-template-plugins/exercise-group/static'
     ).then((mod) => mod.TextExerciseGroupTypeStaticRenderer)

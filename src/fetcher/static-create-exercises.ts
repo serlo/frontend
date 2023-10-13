@@ -3,7 +3,7 @@ import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse
 import {
   EditorExerciseDocument,
   EditorSolutionDocument,
-  EditorTemplateGroupedExerciseDocument,
+  EditorTemplateExerciseGroupDocument,
   ExerciseWithSolution,
 } from '@/serlo-editor-integration/types/editor-plugins'
 import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
@@ -59,7 +59,7 @@ export function createStaticExerciseGroup(
     Extract<MainUuidType, { __typename: 'ExerciseGroup' }>,
     'date' | 'taxonomyTerms'
   >
-): EditorTemplateGroupedExerciseDocument | undefined {
+): EditorTemplateExerciseGroupDocument | undefined {
   if (!uuid.currentRevision?.content) return undefined
 
   const exercisesWithSolutions = uuid.exercises

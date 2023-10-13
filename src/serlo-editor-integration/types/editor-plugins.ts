@@ -194,7 +194,7 @@ export interface ExerciseWithSolution {
 }
 
 // Template Plugins
-export interface EditorTemplateGroupedExerciseDocument {
+export interface EditorTemplateExerciseGroupDocument {
   plugin: TemplatePluginType.TextExerciseGroup
   state: Prettify<StateTypeSerializedType<TextExerciseGroupTypePluginState>> & {
     // extra field that is not actually part of the state until we move solutions into exercises
