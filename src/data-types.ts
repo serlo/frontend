@@ -12,6 +12,7 @@ import type {
   FrontendExerciseNode,
 } from './frontend-node-types'
 import type {
+  AnyEditorDocument,
   EditorRowsDocument,
   EditorTemplateExerciseGroupDocument,
   ExerciseWithSolution,
@@ -288,6 +289,8 @@ export interface EntityData {
   title?: string
   schemaData?: SchemaData
   content?: FrontendContentNode[]
+  // temporary
+  staticContent?: AnyEditorDocument | AnyEditorDocument[] | ExerciseWithSolution
   licenseData?: LicenseData
   courseData?: CourseData
   unrevisedRevisions?: number

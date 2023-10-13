@@ -6,7 +6,7 @@ import { createBreadcrumbs } from './create-breadcrumbs'
 import { createExercise, createExerciseGroup } from './create-exercises'
 import { createHorizon } from './create-horizon'
 import { createInlineLicense } from './create-inline-license'
-import { getMetaImage, getMetaDescription } from './create-meta-data'
+import { getMetaImage } from './create-meta-data'
 import { createSecondaryMenu } from './create-secondary-menu'
 import { buildTaxonomyData } from './create-taxonomy'
 import { createTitle } from './create-title'
@@ -15,14 +15,26 @@ import {
   MainUuidQuery,
   MainUuidQueryVariables,
 } from './graphql-types/operations'
+import { prettifyLinksInSecondaryMenu } from './prettify-links-state/prettify-links-in-secondary-menu'
+import { prettifyLinksInState } from './prettify-links-state/prettify-links-in-state'
 import { dataQuery } from './query'
+import {
+  createStaticExerciseGroup,
+  staticCreateExerciseAndSolution,
+} from './static-create-exercises'
+import {
+  getArticleMetaDescription,
+  getMetaDescription,
+} from './static-meta-data/get-meta-description'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData, UuidRevType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { FrontendNodeType } from '@/frontend-node-types'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
+import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 // ALWAYS start alias with slash
 export async function requestPage(
@@ -39,7 +51,11 @@ export async function requestPage(
   const uuid = response.uuid
   const authorization = response.authorization as AuthorizationPayload
   if (!uuid) return { kind: 'not-found' }
-  // Can be deleted if CFWorker redirects those for us
+
+  if (uuid.__typename === UuidType.Comment) return { kind: 'not-found' } // no content for comments
+
+  // redirect revisions
+  // (can maybe be deleted if CFWorker redirects those for us)
   if (
     uuid.__typename === UuidRevType.Article ||
     uuid.__typename === UuidRevType.Page ||
@@ -62,13 +78,14 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename === UuidType.Comment) return { kind: 'not-found' } // no content for comments
-
+  // for solutions just request whole exercise
   if (uuid.__typename === UuidType.Solution) {
     return await requestPage(`/${uuid.exercise.id}`, instance)
   }
 
-  const secondaryMenuData = createSecondaryMenu(uuid, instance)
+  const secondaryMenuData = await prettifyLinksInSecondaryMenu(
+    createSecondaryMenu(uuid, instance)
+  )
   const breadcrumbsData = createBreadcrumbs(uuid, instance)
   const horizonData = instance === Instance.De ? createHorizon() : undefined
   const cacheKey = `/${instance}${alias}`
@@ -155,6 +172,7 @@ export async function requestPage(
     uuid.__typename === UuidType.GroupedExercise
   ) {
     const exercise = [createExercise(uuid)]
+    const staticExercise = staticCreateExerciseAndSolution(uuid)
     return {
       kind: 'single-entity',
       entityData: {
@@ -163,6 +181,7 @@ export async function requestPage(
         typename: uuid.__typename as UuidType,
         trashed: uuid.trashed,
         content: exercise,
+        staticContent: staticExercise,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -185,7 +204,7 @@ export async function requestPage(
             ? 'text-exercise'
             : 'groupedexercise',
         metaImage,
-        metaDescription: getMetaDescription(exercise),
+        metaDescription: getMetaDescription(staticExercise?.exercise),
       },
       horizonData,
       cacheKey,
@@ -195,6 +214,7 @@ export async function requestPage(
 
   if (uuid.__typename === UuidType.ExerciseGroup) {
     const exercise = [createExerciseGroup(uuid)]
+    const staticExerciseGroup = createStaticExerciseGroup(uuid)
     return {
       kind: 'single-entity',
       entityData: {
@@ -202,6 +222,7 @@ export async function requestPage(
         alias: uuid.alias,
         typename: UuidType.ExerciseGroup,
         content: exercise,
+        staticContent: staticExerciseGroup,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -211,13 +232,19 @@ export async function requestPage(
         title,
         contentType: 'exercisegroup',
         metaImage,
-        metaDescription: getMetaDescription(exercise),
+        metaDescription: getMetaDescription(staticExerciseGroup),
       },
       horizonData,
       cacheKey,
       authorization,
     }
   }
+
+  const staticContent = (await prettifyLinksInState(
+    uuid.currentRevision?.content
+      ? parseDocumentString(uuid.currentRevision?.content)
+      : undefined
+  )) as EditorRowsDocument
 
   const content = convertStateStringToFrontendNode(
     uuid.currentRevision?.content
@@ -232,6 +259,7 @@ export async function requestPage(
         trashed: uuid.trashed,
         typename: UuidType.Event,
         content,
+        staticContent,
         isUnrevised: false,
       },
       newsletterPopup: false,
@@ -240,7 +268,7 @@ export async function requestPage(
         title,
         contentType: 'event',
         metaImage,
-        metaDescription: getMetaDescription(content),
+        metaDescription: getMetaDescription(staticContent),
       },
       cacheKey,
       authorization,
@@ -259,13 +287,14 @@ export async function requestPage(
         revisionId: uuid.currentRevision?.id,
         title: uuid.currentRevision?.title ?? '',
         content,
+        staticContent,
         isUnrevised: !uuid.currentRevision,
       },
       metaData: {
         title,
         contentType: 'page',
         metaImage,
-        metaDescription: getMetaDescription(content),
+        metaDescription: getMetaDescription(staticContent),
       },
       horizonData,
       cacheKey,
@@ -288,6 +317,7 @@ export async function requestPage(
         typename: UuidType.Article,
         title: uuid.currentRevision?.title ?? uuid.revisions?.nodes[0]?.title,
         content,
+        staticContent,
         licenseData,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
@@ -303,7 +333,7 @@ export async function requestPage(
         metaImage,
         metaDescription: uuid.currentRevision?.metaDescription
           ? uuid.currentRevision?.metaDescription
-          : getMetaDescription(content),
+          : getArticleMetaDescription(staticContent),
         dateCreated: uuid.date,
         dateModified: uuid.currentRevision?.date,
       },
@@ -336,6 +366,20 @@ export async function requestPage(
           },
           ...content,
         ],
+        staticContent: [
+          {
+            plugin: EditorPluginType.Video,
+            state: {
+              src: uuid.currentRevision?.url ?? '',
+              alt: uuid.currentRevision?.title ?? '',
+            },
+            // TODO: maybe add
+            // serloContext: {
+            //   license: createInlineLicense(uuid.license),
+            // }
+          },
+          ...(staticContent ? [staticContent] : []),
+        ],
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
@@ -347,7 +391,7 @@ export async function requestPage(
         title,
         contentType: 'video',
         metaImage,
-        metaDescription: getMetaDescription(content),
+        metaDescription: getMetaDescription(staticContent),
       },
       horizonData,
       cacheKey,
@@ -374,6 +418,13 @@ export async function requestPage(
           },
           ...content,
         ],
+        staticContent: [
+          {
+            plugin: EditorPluginType.Geogebra,
+            state: uuid.currentRevision?.url ?? '',
+          },
+          ...(staticContent ? [staticContent] : []),
+        ],
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
@@ -387,7 +438,7 @@ export async function requestPage(
         metaImage,
         metaDescription: uuid.currentRevision?.metaDescription
           ? uuid.currentRevision?.metaDescription
-          : getMetaDescription(content),
+          : getMetaDescription(staticContent),
       },
       horizonData,
       cacheKey,
@@ -432,6 +483,7 @@ export async function requestPage(
         typename: UuidType.CoursePage,
         title: uuid.currentRevision?.title ?? '',
         content,
+        staticContent,
         licenseData,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
@@ -452,7 +504,7 @@ export async function requestPage(
         title,
         contentType: 'course-page',
         metaImage,
-        metaDescription: getMetaDescription(content),
+        metaDescription: getMetaDescription(staticContent),
       },
       horizonData,
       cacheKey,

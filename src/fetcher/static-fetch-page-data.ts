@@ -1,5 +1,5 @@
 import { prettifyLinks } from './prettify-links'
-import { staticRequestPage } from './static-request-page'
+import { requestPage } from './request-page'
 import { RequestPageData } from '@/data-types'
 import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 
@@ -8,7 +8,7 @@ export async function staticFetchPageData(
 ): Promise<RequestPageData> {
   const { alias, instance } = parseLanguageSubfolder(raw_alias)
 
-  const pageData = await staticRequestPage(alias, instance)
+  const pageData = await requestPage(alias, instance)
   await prettifyLinks(pageData)
   return pageData
 }

@@ -16,7 +16,6 @@ import { CourseFooter } from '@/components/navigation/course-footer'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, UuidType } from '@/data-types'
-import { FrontendContentNode } from '@/frontend-node-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -26,7 +25,6 @@ import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { CourseNavigation } from '@/serlo-editor/plugins/serlo-template-plugins/course/course-navigation'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export interface EntityProps {
   data: EntityData
@@ -62,7 +60,7 @@ export function StaticEntity({ data }: EntityProps) {
       {renderStyledH1()}
       {renderUserTools({ aboveContent: true })}
       <div className="min-h-1/4" key={data.id}>
-        {data.content && renderContent(data.content)}
+        {data.staticContent && renderContent(data.staticContent)}
       </div>
       {renderCourseFooter()}
       <HSpace amount={20} />
@@ -135,10 +133,9 @@ export function StaticEntity({ data }: EntityProps) {
     return comp
   }
 
-  function renderContent(value: FrontendContentNode[]) {
-    const content = (
-      <StaticRenderer document={value as unknown as AnyEditorDocument} />
-    )
+  function renderContent(document: EntityData['staticContent']) {
+    const content = <StaticRenderer document={document} />
+
     if (data.schemaData?.setContentAsSection) {
       return <section itemProp="articleBody">{content}</section>
     }
