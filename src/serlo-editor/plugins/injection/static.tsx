@@ -1,4 +1,3 @@
-import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
@@ -207,7 +206,8 @@ export function InjectionStaticRenderer({
   )
 }
 
-const query = gql`
+// only use gql while developing const query = gql`
+const query = `
   query injectionOnlyContent($path: String!) {
     uuid(alias: { path: $path, instance: de }) {
       __typename

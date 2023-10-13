@@ -6,13 +6,18 @@ import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-st
 import { EditorPluginType } from './types/editor-plugin-type'
 import type {
   EditorAnchorDocument,
+  EditorEquationsDocument,
   EditorExerciseDocument,
   EditorGeogebraDocument,
   EditorH5PDocument,
   EditorHighlightDocument,
   EditorInjectionDocument,
   EditorInputExerciseDocument,
+  EditorPageLayoutDocument,
+  EditorPagePartnersDocument,
+  EditorPageTeamDocument,
   EditorScMcExerciseDocument,
+  EditorSerloTableDocument,
   EditorSolutionDocument,
   EditorSpoilerDocument,
   EditorTemplateGroupedExerciseDocument,
@@ -32,15 +37,9 @@ import {
 import { AnchorStaticRenderer } from '@/serlo-editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@/serlo-editor/plugins/article/static'
 import { BoxStaticRenderer } from '@/serlo-editor/plugins/box/static'
-import { EquationsStaticRenderer } from '@/serlo-editor/plugins/equations/static'
 import { parseId } from '@/serlo-editor/plugins/geogebra/renderer'
 import { GeogebraStaticRenderer } from '@/serlo-editor/plugins/geogebra/static'
-import { InjectionStaticRenderer } from '@/serlo-editor/plugins/injection/static'
-import { PageLayoutStaticRenderer } from '@/serlo-editor/plugins/page-layout/static'
-import { PagePartnersStaticRenderer } from '@/serlo-editor/plugins/page-partners/static'
-import { PageTeamStaticRenderer } from '@/serlo-editor/plugins/page-team/static'
 import { RowsStaticRenderer } from '@/serlo-editor/plugins/rows/static'
-import { SerloTableStaticRenderer } from '@/serlo-editor/plugins/serlo-table/static'
 import { SpoilerStaticRenderer } from '@/serlo-editor/plugins/spoiler/static'
 import type { MathElement } from '@/serlo-editor/plugins/text'
 import { TextStaticRenderer } from '@/serlo-editor/plugins/text/static'
@@ -48,6 +47,11 @@ import { parseVideoUrl } from '@/serlo-editor/plugins/video/renderer'
 import { VideoStaticRenderer } from '@/serlo-editor/plugins/video/static'
 import { MultimediaSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/multimedia-serlo-static-renderer'
 
+const EquationsStaticRenderer = dynamic<EditorEquationsDocument>(() =>
+  import('@/serlo-editor/plugins/equations/static').then(
+    (mod) => mod.EquationsStaticRenderer
+  )
+)
 const ExerciseSerloStaticRenderer = dynamic<EditorExerciseDocument>(() =>
   import(
     '@/serlo-editor-integration/serlo-plugin-wrappers/exercise-serlo-static-renderer'
@@ -63,6 +67,27 @@ const InputSerloStaticRenderer = dynamic<EditorInputExerciseDocument>(() =>
     '@/serlo-editor-integration/serlo-plugin-wrappers/input-serlo-static-renderer'
   ).then((mod) => mod.InputSerloStaticRenderer)
 )
+const InjectionStaticRenderer = dynamic<EditorInjectionDocument>(() =>
+  import('@/serlo-editor/plugins/injection/static').then(
+    (mod) => mod.InjectionStaticRenderer
+  )
+)
+
+const PageLayoutStaticRenderer = dynamic<EditorPageLayoutDocument>(() =>
+  import('@/serlo-editor/plugins/page-layout/static').then(
+    (mod) => mod.PageLayoutStaticRenderer
+  )
+)
+const PageTeamStaticRenderer = dynamic<EditorPageTeamDocument>(() =>
+  import('@/serlo-editor/plugins/page-team/static').then(
+    (mod) => mod.PageTeamStaticRenderer
+  )
+)
+const PagePartnersStaticRenderer = dynamic<EditorPagePartnersDocument>(() =>
+  import('@/serlo-editor/plugins/page-partners/static').then(
+    (mod) => mod.PagePartnersStaticRenderer
+  )
+)
 const SerloScMcExerciseStaticRenderer = dynamic<EditorScMcExerciseDocument>(
   () =>
     import(
@@ -73,6 +98,11 @@ const SolutionSerloStaticRenderer = dynamic<EditorSolutionDocument>(() =>
   import(
     '@/serlo-editor-integration/serlo-plugin-wrappers/solution-serlo-static-renderer'
   ).then((mod) => mod.SolutionSerloStaticRenderer)
+)
+const SerloTableStaticRenderer = dynamic<EditorSerloTableDocument>(() =>
+  import('@/serlo-editor/plugins/serlo-table/static').then(
+    (mod) => mod.SerloTableStaticRenderer
+  )
 )
 const TextExerciseGroupTypeStaticRenderer =
   dynamic<EditorTemplateGroupedExerciseDocument>(() =>
