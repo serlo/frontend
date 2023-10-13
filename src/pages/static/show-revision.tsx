@@ -10,10 +10,7 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import {
-  AnyEditorDocument,
-  SupportedEditorPlugin,
-} from '@/serlo-editor-integration/types/editor-plugins'
+import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 interface TmpProps {
   editorState: AnyEditorDocument
@@ -70,16 +67,12 @@ export const getStaticProps: GetStaticProps<TmpProps> = async () => {
     '{"plugin":"rows","state":[{"plugin":"solution","state":{"prerequisite":{"id":"1555","title":"Test"},"strategy":{"plugin":"text","state":[{"type":"p","children":[{"text":"Test "},{"type":"a","href":"/43458","children":[{"text":"Toller"}]},{"text":" testlink"}]}],"id":"619943ae-93c8-4fc0-a1dd-20dc2a4a52e3"},"steps":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Steps "},{"type":"a","href":"/1555","children":[{"text":"Link"}]},{"text":" 123  "}]}],"id":"496ca820-21f6-4ec5-83bf-5fc16f25607a"}],"id":"845d8c6e-b2ff-4630-9df3-bc2145e37310"}},"id":"6208fbe2-a007-46dd-80ec-cc4e28484c53"}]}'
   ) as AnyEditorDocument
 
-  const contentWithPrettyLinks = await prettifyLinksInState(
-    solutionMockState as SupportedEditorPlugin
-  )
+  const contentWithPrettyLinks = await prettifyLinksInState(solutionMockState)
 
   if (!contentWithPrettyLinks) return { notFound: true }
 
   return {
-    props: {
-      editorState: contentWithPrettyLinks,
-    },
+    props: { editorState: contentWithPrettyLinks },
     revalidate: 60 * 2, // 2 min,
   }
 }

@@ -1,7 +1,7 @@
 import { MainUuidQuery, TaxonomyTermType } from './graphql-types/operations'
 import {
   createStaticExerciseGroup,
-  staticCreateExercise,
+  staticCreateExerciseAndSolution,
 } from './static-create-exercises'
 import {
   TaxonomyData,
@@ -11,10 +11,10 @@ import {
 } from '@/data-types'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 import {
-  EditorExercisePlugin,
-  EditorSolutionPlugin,
-  EditorTemplateGroupedExercise,
-  SupportedEditorPlugin,
+  EditorExerciseDocument,
+  EditorRowsDocument,
+  EditorSolutionDocument,
+  EditorTemplateGroupedExerciseDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
 type TaxonomyTerm = Extract<
@@ -33,7 +33,7 @@ export function staticBuildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
   const children = uuid.children.nodes.filter(isActive)
 
   const description = uuid.description
-    ? (JSON.parse(uuid.description) as SupportedEditorPlugin)
+    ? (JSON.parse(uuid.description) as EditorRowsDocument)
     : undefined
 
   return {
@@ -68,21 +68,25 @@ function isActive_for_subchildren(child: TaxonomyTermChildrenLevel2) {
 
 function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
   const result: (
-    | []
-    | [EditorExercisePlugin]
-    | [EditorExercisePlugin, EditorSolutionPlugin]
-    | [EditorTemplateGroupedExercise]
+    | EditorExerciseDocument
+    | EditorSolutionDocument
+    | EditorTemplateGroupedExerciseDocument
   )[] = []
   children.forEach((child) => {
     if (child.__typename === UuidType.Exercise && child.currentRevision) {
-      const exercise = staticCreateExercise({
+      const exerciseWithSolution = staticCreateExerciseAndSolution({
         ...child,
         revisions: { totalCount: 0 },
       })
-      result.push(exercise)
+      if (exerciseWithSolution) {
+        result.push(exerciseWithSolution.exercise)
+        if (exerciseWithSolution.solution)
+          result.push(exerciseWithSolution.solution)
+      }
     }
     if (child.__typename === UuidType.ExerciseGroup && child.currentRevision) {
-      result.push(createStaticExerciseGroup(child))
+      const group = createStaticExerciseGroup(child)
+      if (group) result.push(group)
     }
   })
 
@@ -155,7 +159,7 @@ function collectNestedTaxonomyTerms(
         url: getAlias(child),
         //@ts-expect-error static
         description: child.description
-          ? (JSON.parse(child.description) as SupportedEditorPlugin)
+          ? (JSON.parse(child.description) as EditorRowsDocument)
           : undefined,
         articles: collectType(subChildren, UuidType.Article),
         exercises: collectExerciseFolders(subChildren),

@@ -7,8 +7,8 @@ import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-autho
 import { ExerciseInlineType } from '@/data-types'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import {
-  EditorRowsPlugin,
-  EditorTemplateGroupedExercise,
+  EditorRowsDocument,
+  EditorTemplateGroupedExerciseDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
@@ -18,7 +18,7 @@ const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
 )
 
 export function TextExerciseGroupTypeStaticRenderer(
-  props: EditorTemplateGroupedExercise
+  props: EditorTemplateGroupedExerciseDocument
 ) {
   const { state, serloContext: context } = props
   const [loaded, setLoaded] = useState(false)
@@ -29,27 +29,20 @@ export function TextExerciseGroupTypeStaticRenderer(
 
   const { content, exercisesWithSolutions } = state
 
-  const rendered = exercisesWithSolutions.map((exerciseWithSolution, index) => {
-    if (exerciseWithSolution.length === 0) return null
-    const exercise = exerciseWithSolution[0]
-    const solution = exerciseWithSolution[1]
-
-    const id = String(
-      exercise.id ?? Object.hasOwn(exercise, 'serloContext')
-        ? exercise.serloContext?.uuid
-        : index
-    )
-
-    return {
-      id,
-      element: (
-        <>
-          <StaticRenderer document={exercise} />
-          {solution ? <StaticRenderer document={solution} /> : null}
-        </>
-      ),
+  const rendered = exercisesWithSolutions.map(
+    ({ exercise, solution }, index) => {
+      const id = `${exercise.id ?? exercise.serloContext?.uuid ?? index}`
+      return {
+        id,
+        element: (
+          <>
+            <StaticRenderer document={exercise} />
+            {solution ? <StaticRenderer document={solution} /> : null}
+          </>
+        ),
+      }
     }
-  })
+  )
 
   return (
     <div className="relative">
@@ -67,7 +60,7 @@ export function TextExerciseGroupTypeStaticRenderer(
       ) : null}
       <TextExerciseGroupTypeRenderer
         content={
-          <StaticRenderer document={content as unknown as EditorRowsPlugin} />
+          <StaticRenderer document={content as unknown as EditorRowsDocument} />
         }
         exercises={rendered}
       />

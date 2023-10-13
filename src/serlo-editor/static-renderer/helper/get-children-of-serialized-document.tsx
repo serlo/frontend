@@ -1,7 +1,4 @@
-import {
-  AnyEditorDocument,
-  SupportedEditorPlugin,
-} from '@/serlo-editor-integration/types/editor-plugins'
+import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 import {
   isArticleIntroductionDocument,
   isArticleDocument,
@@ -48,7 +45,7 @@ export function getChildrenOfSerializedDocument(
       : //
         []
 
-  return children as SupportedEditorPlugin[]
+  return children as AnyEditorDocument[]
 
   // ignoring for now
   // Equations

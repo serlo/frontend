@@ -2,7 +2,7 @@ import { TopicCategories } from './topic-categories'
 import { Link } from '@/components/content/link'
 import { TaxonomySubTerm } from '@/data-types'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { SupportedEditorPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export interface SubTopicProps {
   data: TaxonomySubTerm
@@ -25,7 +25,7 @@ export function StaticSubTaxonomy({ data, subid, hideTitle }: SubTopicProps) {
           {' '}
           <div className="mt-6 sm:mb-5">
             <StaticRenderer
-              document={data.description as unknown as SupportedEditorPlugin}
+              document={data.description as unknown as EditorRowsDocument}
             />
           </div>
         </div>

@@ -3,7 +3,7 @@ import { isEmptyRowsDocument } from '../rows/utils/static-is-empty'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import type { EditorSolutionPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import type { EditorSolutionDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export function StaticSolutionRenderer({
   state,
@@ -11,7 +11,7 @@ export function StaticSolutionRenderer({
   beforeSlot,
   afterSlot,
   onSolutionOpen,
-}: EditorSolutionPlugin & {
+}: EditorSolutionDocument & {
   solutionVisibleOnInit: boolean
   afterSlot?: JSX.Element | null
   beforeSlot?: JSX.Element | null

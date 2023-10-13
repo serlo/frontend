@@ -1,7 +1,7 @@
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import type { EditorRowsPlugin } from '@/serlo-editor-integration/types/editor-plugins'
+import type { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
-export function RowsStaticRenderer({ state }: EditorRowsPlugin) {
+export function RowsStaticRenderer({ state }: EditorRowsDocument) {
   return (
     <>
       {state.map((row, index) => {
