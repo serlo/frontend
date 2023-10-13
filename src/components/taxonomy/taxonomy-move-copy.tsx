@@ -188,7 +188,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
     const buttonClass = clsx(
       'text-base serlo-button-light mr-3',
       !buttonsActive &&
-      'bg-gray-100 text-gray-400 cursor-not-allowed hover:bg-gray-100 hover:text-gray-400'
+        'bg-gray-100 text-gray-400 cursor-not-allowed hover:bg-gray-100 hover:text-gray-400'
     )
 
     const buttonText = (isMove: boolean) => {
@@ -206,9 +206,9 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
       const removeSuccess = isMove
         ? createSuccess
           ? await deleteEntityLink({
-            entityIds,
-            taxonomyTermId: taxonomyData.id,
-          })
+              entityIds,
+              taxonomyTermId: taxonomyData.id,
+            })
           : false
         : true
 
@@ -273,6 +273,7 @@ export function getPreviewStringFromExercise(
 
   if (!titleString || titleString.trim().length < 3) return typeString
 
-  return `${typeString}: "${titleString.length < 60 ? titleString : titleString.substring(0, 50) + '…'
-    }"`
+  return `${typeString}: "${
+    titleString.length < 60 ? titleString : titleString.substring(0, 50) + '…'
+  }"`
 }

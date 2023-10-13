@@ -140,26 +140,26 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                 >
                   {isCourse
                     ? coursePages.map((page, i) =>
-                      renderLink(
-                        {
-                          url: page.url,
-                          title: page.title,
-                          id: page.id,
-                        },
-                        i
+                        renderLink(
+                          {
+                            url: page.url,
+                            title: page.title,
+                            id: page.id,
+                          },
+                          i
+                        )
                       )
-                    )
                     : exercises.map((ex, i) =>
-                      renderLink(
-                        {
-                          // TODO: Check if ex.href is important here
-                          url: `/${ex.serloContext?.uuid}`,
-                          title: getPreviewStringFromExercise(ex, strings),
-                          id: ex.serloContext?.uuid ?? 0,
-                        },
-                        i
-                      )
-                    )}
+                        renderLink(
+                          {
+                            // TODO: Check if ex.href is important here
+                            url: `/${ex.serloContext?.uuid}`,
+                            title: getPreviewStringFromExercise(ex, strings),
+                            id: ex.serloContext?.uuid ?? 0,
+                          },
+                          i
+                        )
+                      )}
                   {provided.placeholder}
                 </ul>
               </>
@@ -237,7 +237,9 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
   }
 }
 
-export const getStaticProps: GetStaticProps<StaticSlugProps> = async (context) => {
+export const getStaticProps: GetStaticProps<StaticSlugProps> = async (
+  context
+) => {
   if (!context.params || Array.isArray(context.params.id) || !context.params.id)
     return { notFound: true }
 

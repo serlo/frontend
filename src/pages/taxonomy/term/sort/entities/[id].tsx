@@ -163,8 +163,8 @@ function Content({ pageData }: { pageData: StaticTaxonomyPage }) {
               category === 'subterms'
                 ? 'folders'
                 : category === 'exercisesContent'
-                  ? 'exercises'
-                  : category
+                ? 'exercises'
+                : category
 
             return (
               <ul
