@@ -210,14 +210,7 @@ export function StaticTaxonomy({ data }: TopicProps) {
   // … interesting hack
   function getDefaultLicense() {
     for (let i = 0; i < data.staticExercisesContent.length; i++) {
-      const content = data.staticExercisesContent[i]
-
-      // TODO: check if we actually need licenses for group tasks (probably…)
-      const license =
-        content.serloContext && Object.hasOwn(content.serloContext, 'license')
-          ? content.serloContext.license
-          : undefined
-
+      const license = data.staticExercisesContent[i].serloContext?.license
       if (license) return { ...license, isDefault: true }
     }
     //no part of collection has default license so don't show default notice.

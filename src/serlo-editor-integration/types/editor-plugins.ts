@@ -204,6 +204,7 @@ export interface EditorTemplateExerciseGroupDocument {
     uuid?: number
     trashed?: boolean
     unrevisedRevisions?: number
+    license?: License
   }
 }
 

@@ -6,7 +6,6 @@ import { createBreadcrumbs } from './create-breadcrumbs'
 import { createExercise, createExerciseGroup } from './create-exercises'
 import { createHorizon } from './create-horizon'
 import { createInlineLicense } from './create-inline-license'
-import { getMetaImage } from './create-meta-data'
 import { createSecondaryMenu } from './create-secondary-menu'
 import { buildTaxonomyData } from './create-taxonomy'
 import { createTitle } from './create-title'
@@ -15,6 +14,9 @@ import {
   MainUuidQuery,
   MainUuidQueryVariables,
 } from './graphql-types/operations'
+import { getArticleMetaDescription } from './meta-data/get-article-meta-description'
+import { getMetaDescription } from './meta-data/get-meta-description'
+import { getMetaImage } from './meta-data/get-meta-image'
 import { prettifyLinksInSecondaryMenu } from './prettify-links-state/prettify-links-in-secondary-menu'
 import { prettifyLinksInState } from './prettify-links-state/prettify-links-in-state'
 import { dataQuery } from './query'
@@ -22,10 +24,6 @@ import {
   createStaticExerciseGroup,
   staticCreateExerciseAndSolution,
 } from './static-create-exercises'
-import {
-  getArticleMetaDescription,
-  getMetaDescription,
-} from './static-meta-data/get-meta-description'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData, UuidRevType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
@@ -375,10 +373,6 @@ export async function requestPage(
               src: uuid.currentRevision?.url ?? '',
               alt: uuid.currentRevision?.title ?? '',
             },
-            // TODO: maybe add
-            // serloContext: {
-            //   license: createInlineLicense(uuid.license),
-            // }
           },
           ...(staticContent ? [staticContent] : []),
         ],

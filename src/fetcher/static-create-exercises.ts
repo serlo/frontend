@@ -17,9 +17,6 @@ export function staticCreateExerciseAndSolution(
 ): EditorExerciseDocument | undefined {
   if (!uuid.currentRevision?.content) return undefined
 
-  // TODO: Check:
-  // compat: shuffle interactive answers with shuffleArray
-
   const exercise = {
     ...(parseDocumentString(
       uuid.currentRevision.content
@@ -75,6 +72,7 @@ export function createStaticExerciseGroup(
       uuid: uuid.id,
       trashed: uuid.trashed,
       unrevisedRevisions: uuid.revisions.totalCount,
+      license: uuid.license,
     },
   }
 }

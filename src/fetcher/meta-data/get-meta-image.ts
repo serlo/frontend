@@ -1,4 +1,3 @@
-import { FrontendContentNode } from '@/frontend-node-types'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
 const rootsWithImage = [
@@ -35,24 +34,4 @@ export function getMetaImage(alias: string) {
     ? 'landing'
     : 'serlo' // fallback, i18n in the future
   return `https://de.${serloDomain}/_assets/img/meta/${imageFileName}.png`
-}
-
-export function getMetaDescription(content: FrontendContentNode[]): string {
-  const slice = content.slice(0, 10)
-  const stringified = JSON.stringify(slice)
-  const regexp = /"text":"(.)*?"/g
-  const matches = stringified.match(regexp)
-  const longFallback = matches
-    ? matches.map((str) => str.substring(8, str.length - 1)).join('')
-    : ''
-  if (longFallback.length < 50) return ''
-
-  const softCutoff = 135
-  const fallback =
-    longFallback.substring(
-      0,
-      softCutoff + longFallback.substring(softCutoff).indexOf(' ')
-    ) + ' …'
-  const description = fallback
-  return description
 }
