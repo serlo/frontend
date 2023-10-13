@@ -1,13 +1,10 @@
 import { Fragment } from 'react'
 
 import { editorRenderers } from '../plugin/helpers/editor-renderer'
-import {
-  AnyEditorDocument,
-  ExerciseWithSolution,
-} from '@/serlo-editor-integration/types/editor-plugins'
+import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 interface StaticRendererProps {
-  document?: AnyEditorDocument | AnyEditorDocument[] | ExerciseWithSolution
+  document?: AnyEditorDocument | AnyEditorDocument[]
 }
 
 /**
@@ -30,15 +27,6 @@ export function StaticRenderer({
             </Fragment>
           )
         })}
-      </>
-    )
-  }
-
-  if (!Object.hasOwn(document, 'plugin')) {
-    return (
-      <>
-        <StaticRenderer document={document.exercise} />
-        <StaticRenderer document={document.solution} />
       </>
     )
   }

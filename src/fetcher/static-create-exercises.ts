@@ -4,7 +4,6 @@ import {
   EditorExerciseDocument,
   EditorSolutionDocument,
   EditorTemplateExerciseGroupDocument,
-  ExerciseWithSolution,
 } from '@/serlo-editor-integration/types/editor-plugins'
 import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
@@ -15,7 +14,7 @@ type BareExercise = Omit<
 
 export function staticCreateExerciseAndSolution(
   uuid: BareExercise
-): undefined | ExerciseWithSolution {
+): EditorExerciseDocument | undefined {
   if (!uuid.currentRevision?.content) return undefined
 
   // TODO: Check:
@@ -35,12 +34,11 @@ export function staticCreateExerciseAndSolution(
     },
   }
 
-  if (!uuid.solution?.currentRevision?.content) return { exercise }
-
-  const solutionRaw = uuid.solution?.currentRevision?.content
+  if (!uuid.solution?.currentRevision?.content) return exercise
+  const solutionString = uuid.solution?.currentRevision?.content
 
   const solution = {
-    ...(parseDocumentString(solutionRaw) as EditorSolutionDocument),
+    ...(parseDocumentString(solutionString) as EditorSolutionDocument),
     serloContext: {
       uuid: uuid.solution?.id,
       exerciseId: uuid.id,
@@ -51,7 +49,7 @@ export function staticCreateExerciseAndSolution(
           : undefined,
     },
   }
-  return { exercise, solution }
+  return { ...exercise, solution }
 }
 
 export function createStaticExerciseGroup(
@@ -62,17 +60,16 @@ export function createStaticExerciseGroup(
 ): EditorTemplateExerciseGroupDocument | undefined {
   if (!uuid.currentRevision?.content) return undefined
 
-  const exercisesWithSolutions = uuid.exercises
+  const exercises = uuid.exercises
     .map(staticCreateExerciseAndSolution)
-    .filter(Boolean) as ExerciseWithSolution[]
+    .filter(Boolean) as EditorExerciseDocument[]
 
   return {
     plugin: TemplatePluginType.TextExerciseGroup,
     state: {
       // @ts-expect-error not sure why string is expected here
       content: parseDocumentString(uuid.currentRevision.content),
-      // solutions are not really part of the state at this point, but cleaner this way
-      exercisesWithSolutions,
+      exercises,
     },
     serloContext: {
       uuid: uuid.id,

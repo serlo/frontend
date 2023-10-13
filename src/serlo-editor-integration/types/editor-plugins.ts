@@ -81,6 +81,9 @@ export interface EditorExerciseDocument {
     unrevisedRevisions?: number
     license?: License
   }
+
+  // until we actually move solution into exercise we add it here
+  solution?: EditorSolutionDocument
 }
 export interface EditorGeogebraDocument {
   plugin: EditorPluginType.Geogebra
@@ -187,18 +190,12 @@ export interface EditorH5PDocument {
   id?: string
 }
 
-// helper type until they actually are merged
-export interface ExerciseWithSolution {
-  exercise: EditorExerciseDocument
-  solution?: EditorSolutionDocument
-}
-
 // Template Plugins
 export interface EditorTemplateExerciseGroupDocument {
   plugin: TemplatePluginType.TextExerciseGroup
   state: Prettify<StateTypeSerializedType<TextExerciseGroupTypePluginState>> & {
     // extra field that is not actually part of the state until we move solutions into exercises
-    exercisesWithSolutions: ExerciseWithSolution[]
+    exercises: EditorExerciseDocument[]
   }
   id?: string
 

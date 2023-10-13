@@ -27,22 +27,15 @@ export function TextExerciseGroupTypeStaticRenderer(
     setLoaded(true)
   }, [])
 
-  const { content, exercisesWithSolutions } = state
+  const { content, exercises: exercisesWithSolutions } = state
 
-  const rendered = exercisesWithSolutions.map(
-    ({ exercise, solution }, index) => {
-      const id = `${exercise.id ?? exercise.serloContext?.uuid ?? index}`
-      return {
-        id,
-        element: (
-          <>
-            <StaticRenderer document={exercise} />
-            {solution ? <StaticRenderer document={solution} /> : null}
-          </>
-        ),
-      }
+  const rendered = exercisesWithSolutions.map((exercise, index) => {
+    const id = `${exercise.id ?? exercise.serloContext?.uuid ?? index}`
+    return {
+      id,
+      element: <StaticRenderer document={exercise} />,
     }
-  )
+  })
 
   return (
     <div className="relative">

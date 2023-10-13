@@ -154,20 +154,12 @@ export function StaticTaxonomy({ data }: TopicProps) {
     return (
       <ol className="mt-12">
         {data.staticExercisesContent.map((exerciseOrGroup, i) => {
-          const exercise = Object.hasOwn(exerciseOrGroup, 'plugin')
-            ? exerciseOrGroup
-            : exerciseOrGroup.exercise
-
-          const exerciseUuid = exercise.serloContext?.uuid
-          const solution = Object.hasOwn(exerciseOrGroup, 'plugin')
-            ? undefined
-            : exerciseOrGroup.solution
+          const exerciseUuid = exerciseOrGroup.serloContext?.uuid
 
           return (
-            <li key={exercise.id ?? exerciseUuid} className="pb-10">
+            <li key={exerciseOrGroup.id ?? exerciseUuid} className="pb-10">
               <ExerciseNumbering href={`/${exerciseUuid}`} index={i} />
-              <StaticRenderer document={exercise} />
-              <StaticRenderer document={solution} />
+              <StaticRenderer document={exerciseOrGroup} />
               {i === 1 && renderSurvey()}
             </li>
           )
@@ -221,13 +213,11 @@ export function StaticTaxonomy({ data }: TopicProps) {
       const content = data.staticExercisesContent[i]
 
       // TODO: check if we actually need licenses for group tasks (probably…)
-      const license = Object.hasOwn(content, 'plugin')
-        ? undefined // return content.serloContext?.license
-        : content.exercise.serloContext?.license?.default
-        ? content.exercise.serloContext?.license
-        : content.solution?.serloContext?.license?.default
-        ? content.solution.serloContext?.license
-        : undefined
+      const license =
+        content.serloContext && Object.hasOwn(content.serloContext, 'license')
+          ? content.serloContext.license
+          : undefined
+
       if (license) return { ...license, isDefault: true }
     }
     //no part of collection has default license so don't show default notice.
