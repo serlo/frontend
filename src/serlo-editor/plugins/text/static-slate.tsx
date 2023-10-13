@@ -23,7 +23,12 @@ export function StaticSlate({
     const { children } = element
 
     if (element.type === 'h') {
-      const classNames = ['serlo-h1', 'serlo-h2', 'serlo-h3']
+      const classNames = [
+        'serlo-h1',
+        'serlo-h2',
+        'serlo-h3',
+        'serlo-p font-bold mb-0 mt-4', // h4 fallback
+      ]
       return createElement(
         `h${element.level}`,
         { className: classNames[element.level - 1] },

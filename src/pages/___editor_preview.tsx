@@ -19,11 +19,11 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 import { Editor } from '@/serlo-editor/core'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createPlugins } from '@/serlo-editor-integration/create-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
   return (
@@ -69,7 +69,7 @@ function Content() {
   const editor = useMemo(
     () => (
       <Editor
-        initialState={JSON.parse(previewState) as AnyEditorDocument}
+        initialState={parseDocumentString(previewState)}
         editable
         onChange={({ changed, getDocument }) => {
           if (!changed) return
@@ -136,9 +136,7 @@ function Content() {
       <section className="min-h-screen w-[50vw] border-4 border-editor-primary">
         <h2 className="mx-side font-bold text-editor-primary">Preview</h2>
         <div className="serlo-content-with-spacing-fixes mt-[3rem]">
-          <StaticRenderer
-            document={JSON.parse(previewState) as AnyEditorDocument}
-          />
+          <StaticRenderer document={parseDocumentString(previewState)} />
         </div>
       </section>
     </main>

@@ -40,8 +40,9 @@ export function ImageStaticRenderer({
       /[^\w+]/g,
       ''
     )
-    return semanticName && semanticName.length > 3
-      ? src.replace(/\/[0-9]+\./, `/${semanticName}.`)
-      : src
+    if (!semanticName || semanticName.length < 4) return src
+
+    const dot = src.lastIndexOf('.')
+    return `${src.substring(0, dot)}/${semanticName}${src.substring(dot)}`
   }
 }

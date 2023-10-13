@@ -1,4 +1,3 @@
-import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
@@ -7,6 +6,7 @@ import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
 import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
 import { sharedLicenseFragments } from '@/fetcher/query-fragments'
+import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
@@ -87,21 +87,21 @@ export function InjectionStaticRenderer({
               if (!exercise.currentRevision?.content) return []
 
               const exerciseContentAndContext = {
-                ...JSON.parse(exercise.currentRevision?.content),
+                ...parseDocumentString(exercise.currentRevision?.content),
                 serloContext: {
                   license:
                     uuid.license && !uuid.license.default
                       ? uuid.license
                       : undefined,
                 },
-              } as AnyEditorDocument
+              }
 
               const solutionContentAndContext = exercise.solution
                 ?.currentRevision?.content
                 ? {
-                    ...(JSON.parse(
+                    ...parseDocumentString(
                       exercise.solution?.currentRevision?.content
-                    ) as AnyEditorDocument),
+                    ),
                     serloContext: {
                       license:
                         exercise.solution?.license &&
@@ -122,7 +122,7 @@ export function InjectionStaticRenderer({
                 plugin: TemplatePluginType.TextExerciseGroup,
                 id: undefined,
                 state: {
-                  content: JSON.parse(
+                  content: parseDocumentString(
                     uuid.currentRevision.content
                   ) as EditorRowsDocument,
                   // solutions are not really part of the state at this point, but cleaner this way
@@ -153,14 +153,14 @@ export function InjectionStaticRenderer({
                 plugin: EditorPluginType.Geogebra,
                 state: uuid.currentRevision.url,
               },
-              JSON.parse(uuid.currentRevision.content),
+              parseDocumentString(uuid.currentRevision.content),
             ])
             return
           }
 
           if (uuid.__typename === 'Event') {
             if (!uuid.currentRevision) throw new Error('no accepted revision')
-            setContent([JSON.parse(uuid.currentRevision.content)])
+            setContent([parseDocumentString(uuid.currentRevision.content)])
             return
           }
 
@@ -206,7 +206,8 @@ export function InjectionStaticRenderer({
   )
 }
 
-const query = gql`
+// only use gql while developing const query = gql`
+const query = `
   query injectionOnlyContent($path: String!) {
     uuid(alias: { path: $path, instance: de }) {
       __typename

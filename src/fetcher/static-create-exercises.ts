@@ -1,7 +1,7 @@
 import { MainUuidType } from './query-types'
+import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import {
   EditorExerciseDocument,
-  EditorRowsDocument,
   EditorSolutionDocument,
   EditorTemplateGroupedExerciseDocument,
   ExerciseWithSolution,
@@ -22,7 +22,9 @@ export function staticCreateExerciseAndSolution(
   // compat: shuffle interactive answers with shuffleArray
 
   const exercise = {
-    ...(JSON.parse(uuid.currentRevision.content) as EditorExerciseDocument),
+    ...(parseDocumentString(
+      uuid.currentRevision.content
+    ) as EditorExerciseDocument),
     serloContext: {
       uuid: uuid.id,
       revisionId: uuid.currentRevision.id,
@@ -38,7 +40,7 @@ export function staticCreateExerciseAndSolution(
   const solutionRaw = uuid.solution?.currentRevision?.content
 
   const solution = {
-    ...(JSON.parse(solutionRaw) as EditorSolutionDocument),
+    ...(parseDocumentString(solutionRaw) as EditorSolutionDocument),
     serloContext: {
       uuid: uuid.solution?.id,
       exerciseId: uuid.id,
@@ -68,7 +70,7 @@ export function createStaticExerciseGroup(
     plugin: TemplatePluginType.TextExerciseGroup,
     state: {
       // @ts-expect-error not sure why string is expected here
-      content: JSON.parse(uuid.currentRevision.content) as EditorRowsDocument,
+      content: parseDocumentString(uuid.currentRevision.content),
       // solutions are not really part of the state at this point, but cleaner this way
       exercisesWithSolutions,
     },
