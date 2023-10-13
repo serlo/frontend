@@ -9,14 +9,17 @@ export function getTranslatedType(
     typename.charAt(0).toLowerCase() + typename.slice(1)
   ).replace(/-./g, (x) => x[1].toUpperCase())
 
+  const replacedType =
+    camelCase === 'typeTextExerciseGroup' ? 'exerciseGroup' : camelCase
+
   const { entities, categories } = strings
 
-  if (Object.hasOwn(entities, camelCase as keyof typeof entities)) {
-    return entities[camelCase as keyof typeof entities]
+  if (Object.hasOwn(entities, replacedType as keyof typeof entities)) {
+    return entities[replacedType as keyof typeof entities]
   }
 
-  if (Object.hasOwn(categories, camelCase as keyof typeof categories)) {
-    return categories[camelCase as keyof typeof categories]
+  if (Object.hasOwn(categories, replacedType as keyof typeof categories)) {
+    return categories[replacedType as keyof typeof categories]
   }
 
   return strings.entities['content']

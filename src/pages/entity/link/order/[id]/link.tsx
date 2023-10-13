@@ -16,19 +16,24 @@ import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
-  SlugProps,
   TaxonomyLink,
-  TaxonomyPage,
   SingleEntityPage,
   CoursePageEntry,
   UuidType,
+  StaticSlugProps,
+  StaticTaxonomyPage,
 } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import { requestPage } from '@/fetcher/request-page'
-import type { FrontendExerciseNode } from '@/frontend-node-types'
+import { staticRequestPage } from '@/fetcher/static-request-page'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useEntitySortMutation } from '@/mutations/use-entity-sort-mutation'
+import {
+  AnyEditorDocument,
+  EditorExerciseDocument,
+  EditorTemplateGroupedExerciseDocument,
+} from '@/serlo-editor-integration/types/editor-plugins'
+import { isTemplateExerciseGroupDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
 
 // this duplicates some code from /taxonomy/term/sort… but since this feature here is only temporary I'm okay with that
 
@@ -53,10 +58,25 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
   )
 
   const getExes = () => {
-    const group = entityData.content?.[0]
-    return group && group.type === 'exercise-group' ? group.children ?? [] : []
+    // TODO: temporary static hack
+    if (
+      !entityData.content ||
+      !isTemplateExerciseGroupDocument(
+        entityData.content as unknown as AnyEditorDocument
+      )
+    )
+      return []
+    return (
+      entityData.content as unknown as EditorTemplateGroupedExerciseDocument
+    ).state.exercisesWithSolutions.map(({ exercise }) => exercise)
+    // const content = isExerciseDocument entityData.content as unknown as EditorTemplateGroupedExerciseDocument
+    // content.state.exercisesWithSolutions
+    // const group = entityData.content?.[0]
+    // return group && group.type === 'exercise-group' ? group.children ?? [] : []
   }
-  const [exercises, setExercises] = useState<FrontendExerciseNode[]>(getExes())
+  const [exercises, setExercises] = useState<EditorExerciseDocument[]>(
+    getExes()
+  )
 
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -66,7 +86,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
   const onSave = async () => {
     const childrenIds = isCourse
       ? coursePages.map((page) => page.id)
-      : exercises.map((ex) => ex.context.id)
+      : exercises.map((exercise) => exercise.serloContext?.uuid ?? 0)
 
     const success = await sort({
       childrenIds,
@@ -120,25 +140,26 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                 >
                   {isCourse
                     ? coursePages.map((page, i) =>
-                        renderLink(
-                          {
-                            url: page.url,
-                            title: page.title,
-                            id: page.id,
-                          },
-                          i
-                        )
+                      renderLink(
+                        {
+                          url: page.url,
+                          title: page.title,
+                          id: page.id,
+                        },
+                        i
                       )
+                    )
                     : exercises.map((ex, i) =>
-                        renderLink(
-                          {
-                            url: ex.href ?? `/${ex.context.id}`,
-                            title: getPreviewStringFromExercise(ex, strings),
-                            id: ex.context.id,
-                          },
-                          i
-                        )
-                      )}
+                      renderLink(
+                        {
+                          // TODO: Check if ex.href is important here
+                          url: `/${ex.serloContext?.uuid}`,
+                          title: getPreviewStringFromExercise(ex, strings),
+                          id: ex.serloContext?.uuid ?? 0,
+                        },
+                        i
+                      )
+                    )}
                   {provided.placeholder}
                 </ul>
               </>
@@ -216,11 +237,11 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
   }
 }
 
-export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
+export const getStaticProps: GetStaticProps<StaticSlugProps> = async (context) => {
   if (!context.params || Array.isArray(context.params.id) || !context.params.id)
     return { notFound: true }
 
-  const pageData = await requestPage(
+  const pageData = await staticRequestPage(
     '/' + context.params.id,
     context.locale! as Instance
   )
@@ -229,7 +250,7 @@ export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
 
   return {
     props: {
-      pageData: JSON.parse(JSON.stringify(pageData)) as TaxonomyPage, // remove undefined values
+      pageData: JSON.parse(JSON.stringify(pageData)) as StaticTaxonomyPage, // remove undefined values
     },
     revalidate: 60 * 2, // 2 min,
   }

@@ -22,13 +22,7 @@ import {
   UuidWithRevType,
 } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
-import {
-  FrontendExerciseGroupNode,
-  FrontendExerciseNode,
-  FrontendNodeType,
-} from '@/frontend-node-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
-import { extractText } from '@/helper/has-visible-content'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -36,6 +30,14 @@ import {
   useCreateEntityLinkMutation,
   useDeleteEntityLinkMutation,
 } from '@/mutations/taxonomyTerm'
+import { extractStringFromTextDocument } from '@/serlo-editor/plugins/text/utils/static-extract-text'
+import {
+  AnyEditorDocument,
+  EditorExerciseDocument,
+  EditorRowsDocument,
+  EditorTemplateGroupedExerciseDocument,
+} from '@/serlo-editor-integration/types/editor-plugins'
+import { isSolutionDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
 
 interface TaxonomyMoveCopyProps {
   taxonomyData: TaxonomyData
@@ -93,18 +95,27 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
           )}
         </p>
         <p className="mt-4">
-          {taxonomyData.exercisesContent.map((node) => {
-            const title = getPreviewStringFromExercise(node, strings)
-
-            return renderLi(
-              {
-                id: node.context.id,
-                title,
-                url: node.href ?? `/${node.context.id}`,
-              },
-              UuidType.Exercise
+          {taxonomyData.exercisesContent
+            .filter(
+              (node) =>
+                !isSolutionDocument(node as unknown as AnyEditorDocument)
             )
-          })}
+            .map((node) => {
+              // TODO: cleanup after static is used everywhere
+              const title = getPreviewStringFromExercise(
+                node as unknown as EditorExerciseDocument,
+                strings
+              )
+
+              return renderLi(
+                {
+                  id: node.context.id,
+                  title,
+                  url: node.href ?? `/${node.context.id}`,
+                },
+                UuidType.Exercise
+              )
+            })}
         </p>
         <p className="mt-4">
           {taxonomyData.videos.map((node) => renderLi(node, UuidType.Video))}
@@ -177,7 +188,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
     const buttonClass = clsx(
       'text-base serlo-button-light mr-3',
       !buttonsActive &&
-        'bg-gray-100 text-gray-400 cursor-not-allowed hover:bg-gray-100 hover:text-gray-400'
+      'bg-gray-100 text-gray-400 cursor-not-allowed hover:bg-gray-100 hover:text-gray-400'
     )
 
     const buttonText = (isMove: boolean) => {
@@ -195,9 +206,9 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
       const removeSuccess = isMove
         ? createSuccess
           ? await deleteEntityLink({
-              entityIds,
-              taxonomyTermId: taxonomyData.id,
-            })
+            entityIds,
+            taxonomyTermId: taxonomyData.id,
+          })
           : false
         : true
 
@@ -249,24 +260,19 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
 }
 
 export function getPreviewStringFromExercise(
-  node: FrontendExerciseNode | FrontendExerciseGroupNode,
+  document: EditorExerciseDocument | EditorTemplateGroupedExerciseDocument,
   strings: InstanceData['strings']
 ) {
-  const typeString = getTranslatedType(strings, node.type)
+  const typeString = getTranslatedType(strings, document.plugin)
 
-  const titleState =
-    node.type === FrontendNodeType.Exercise
-      ? node.task.content?.content
-      : node.content
+  // if (!isExerciseDocument(document)) return typeString
 
-  if (!titleState) return typeString
+  const rows = document.state.content as EditorRowsDocument
 
-  const titleString = extractText(titleState)
+  const titleString = rows?.state.map(extractStringFromTextDocument).join(' ')
 
-  if (!titleString) return typeString
+  if (!titleString || titleString.trim().length < 3) return typeString
 
-  const title = `${typeString}: "${
-    titleString.length < 60 ? titleString : titleString.substring(0, 50) + '…'
-  }"`
-  return title
+  return `${typeString}: "${titleString.length < 60 ? titleString : titleString.substring(0, 50) + '…'
+    }"`
 }

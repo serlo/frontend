@@ -16,77 +16,91 @@ import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
-  SlugProps,
   TaxonomyLink,
-  TaxonomyPage,
-  TaxonomyData,
   TopicCategoryType,
   TopicCategoryCustomType,
-  TaxonomySubTerm,
+  StaticTaxonomyPage,
+  StaticSlugProps,
 } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import { requestPage } from '@/fetcher/request-page'
-import {
-  FrontendExerciseGroupNode,
-  FrontendExerciseNode,
-  FrontendNodeType,
-} from '@/frontend-node-types'
+import { staticRequestPage } from '@/fetcher/static-request-page'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useTaxonomyTermSortMutation } from '@/mutations/taxonomyTerm'
+import { isSolutionDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
 
 export const allCategories = [
-  TopicCategoryType.applets,
   TopicCategoryType.articles,
+  TopicCategoryType.videos,
+  TopicCategoryType.applets,
   TopicCategoryType.courses,
   TopicCategoryType.events,
   TopicCategoryType.exercises,
-  TopicCategoryType.videos,
   TopicCategoryCustomType.exercisesContent,
   TopicCategoryCustomType.subterms,
   // we exclude folders because they are nested and don't appear on top level
 ] as const
+type Category = (typeof allCategories)[number]
 
-export default renderedPageNoHooks<{ pageData: TaxonomyPage }>((props) => {
-  return (
-    <FrontendClientBase>
-      <Content {...props} />
-    </FrontendClientBase>
-  )
-})
+export default renderedPageNoHooks<{ pageData: StaticTaxonomyPage }>(
+  (props) => {
+    return (
+      <FrontendClientBase>
+        <Content {...props} />
+      </FrontendClientBase>
+    )
+  }
+)
 
-function Content({ pageData }: { pageData: TaxonomyPage }) {
+function Content({ pageData }: { pageData: StaticTaxonomyPage }) {
   const sortTerm = useTaxonomyTermSortMutation()
   const router = useRouter()
-  const [taxonomyData, setTaxonomyData] = useState(pageData.taxonomyData)
-  const taxUrl = `/${taxonomyData.id}`
-
   const { strings } = useInstanceData()
+
+  const data = pageData.taxonomyData
+  const [itemsByCategory, setItemsByCategory] = useState<
+    Record<Category, TaxonomyLink[]>
+  >({
+    [TopicCategoryType.articles]: data.articles,
+    [TopicCategoryType.videos]: data.videos,
+    [TopicCategoryType.applets]: data.applets,
+    [TopicCategoryType.courses]: data.courses,
+    [TopicCategoryType.events]: data.events,
+    [TopicCategoryType.exercises]: data.exercises,
+    [TopicCategoryCustomType.exercisesContent]: exercisesContentToTaxonomyLinks(
+      data.exercisesContent
+    ),
+    [TopicCategoryCustomType.subterms]: data.subterms,
+  })
+
+  function exercisesContentToTaxonomyLinks(
+    exercisesContent: StaticTaxonomyPage['taxonomyData']['exercisesContent']
+  ): TaxonomyLink[] {
+    return exercisesContent
+      .map((exercise) => {
+        if (isSolutionDocument(exercise)) return null
+        const url = `/${exercise.serloContext?.uuid ?? 0}`
+        const title = `${getPreviewStringFromExercise(exercise, strings)}`
+        return { title, url, id: exercise.serloContext?.uuid ?? 0 }
+      })
+      .filter(Boolean) as TaxonomyLink[]
+  }
+
+  const taxUrl = `/${data.id}`
+
   const loggedInData = useLoggedInData()
   if (!loggedInData) return <PleaseLogIn />
   const loggedInStrings = loggedInData.strings.taxonomyTermTools.sort
 
   const onSave = async () => {
-    const childrenIds = allCategories.reduce<number[]>((idArray, category) => {
-      if (!taxonomyData[category] || !taxonomyData[category].length)
-        return idArray
-
-      return [
-        ...idArray,
-        ...taxonomyData[category].map((entity) => {
-          if (Object.hasOwn(entity, 'id')) {
-            return entity.id
-          }
-
-          return entity.context.id
-        }),
-      ]
-    }, [])
+    const childrenIds = allCategories.flatMap((category) =>
+      itemsByCategory[category].map(({ id }) => id)
+    )
 
     const success = await sortTerm({
       childrenIds,
-      taxonomyTermId: taxonomyData.id,
+      taxonomyTermId: data.id,
     })
     if (success) {
       showToastNotice(loggedInData.strings.mutations.success.generic, 'success')
@@ -102,71 +116,28 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
       <PageTitle title={loggedInStrings.title} />
       <div className="mx-side">
         {renderCategories()}
-        {renderUpdateButton()}
+        <button className="serlo-button-blue mt-12" onClick={onSave}>
+          {loggedInStrings.saveButtonText}
+        </button>
       </div>
     </>
   )
 
   function renderBackButton() {
-    return (
-      <Breadcrumbs
-        data={[
-          {
-            label: strings.revisions.toContent,
-            url: taxUrl,
-          },
-        ]}
-        asBackButton
-      />
-    )
+    const data = [{ label: strings.revisions.toContent, url: taxUrl }]
+    return <Breadcrumbs data={data} asBackButton />
   }
 
   function renderCategories() {
-    return [...allCategories].map((category) => {
-      if (!(category in taxonomyData)) return null
-      const links = taxonomyData[category]
-      if (!links || !links.length || typeof links === 'boolean') return null
-
-      return renderCategory(category, exToTaxonomyLinks(links))
+    return allCategories.map((category) => {
+      const links = itemsByCategory[category]
+      if (!links || !Array.isArray(links) || !links.length) return null
+      return renderCategory(category, links as unknown as TaxonomyLink[])
     })
   }
 
-  function exToTaxonomyLinks(
-    links:
-      | TaxonomyLink[]
-      | TaxonomySubTerm[]
-      | (FrontendExerciseNode | FrontendExerciseGroupNode)[]
-  ): TaxonomyLink[] {
-    if (
-      Object.hasOwn(links[0], 'type') &&
-      (links[0].type === FrontendNodeType.ExerciseGroup ||
-        links[0].type === FrontendNodeType.Exercise)
-    ) {
-      return (links as unknown as TaxonomyData['exercisesContent']).map(
-        (exNode) => {
-          const url = exNode.href ?? `/${exNode.context.id}`
-          const pos =
-            exNode.positionOnPage !== undefined ? exNode.positionOnPage + 1 : ''
-          const title = `(${pos}) ${getPreviewStringFromExercise(
-            exNode,
-            strings
-          )}`
-          return { title, url, id: exNode.context.id }
-        }
-      )
-    }
-    return links as unknown as TaxonomyLink[]
-  }
-
-  function renderCategory(
-    category: (typeof allCategories)[number],
-    links: TaxonomyLink[]
-  ) {
-    if (
-      links.length === 0 ||
-      links.filter((link) => !link.unrevised).length === 0
-    )
-      return null
+  function renderCategory(category: Category, links: TaxonomyLink[]) {
+    if (!links.filter((link) => !link.unrevised).length) return null
 
     return (
       <DragDropContext
@@ -176,10 +147,10 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
           if (!destination) return
           const category = source.droppableId as (typeof allCategories)[number]
 
-          setTaxonomyData({
-            ...taxonomyData,
+          setItemsByCategory({
+            ...itemsByCategory,
             [category]: arrayMoveImmutable(
-              exToTaxonomyLinks(taxonomyData[category]),
+              itemsByCategory[category],
               source.index,
               destination.index
             ),
@@ -192,8 +163,8 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
               category === 'subterms'
                 ? 'folders'
                 : category === 'exercisesContent'
-                ? 'exercises'
-                : category
+                  ? 'exercises'
+                  : category
 
             return (
               <ul
@@ -260,21 +231,15 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
       </Draggable>
     )
   }
-
-  function renderUpdateButton() {
-    return (
-      <button className="serlo-button-blue mt-12" onClick={onSave}>
-        {loggedInStrings.saveButtonText}
-      </button>
-    )
-  }
 }
 
-export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
+export const getStaticProps: GetStaticProps<StaticSlugProps> = async (
+  context
+) => {
   if (!context.params || Array.isArray(context.params.id) || !context.params.id)
     return { notFound: true }
 
-  const pageData = await requestPage(
+  const pageData = await staticRequestPage(
     '/' + context.params.id,
     context.locale! as Instance
   )
@@ -283,7 +248,7 @@ export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
 
   return {
     props: {
-      pageData: JSON.parse(JSON.stringify(pageData)) as TaxonomyPage, // remove undefined values
+      pageData: JSON.parse(JSON.stringify(pageData)) as StaticTaxonomyPage, // remove undefined values
     },
     revalidate: 60 * 2, // 2 min,
   }

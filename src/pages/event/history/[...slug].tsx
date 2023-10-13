@@ -10,7 +10,7 @@ import { UserUnrevisedRevisions } from '@/components/user/user-unrevised-revisio
 import { useInstanceData } from '@/contexts/instance-context'
 import { EventHistoryProps } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import { requestPage } from '@/fetcher/request-page'
+import { staticRequestPage } from '@/fetcher/static-request-page'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<EventHistoryProps>(({ pageData }) => {
@@ -88,7 +88,10 @@ export const getStaticProps: GetStaticProps<EventHistoryProps> = async (
 ) => {
   const alias = (context.params?.slug as string[]).join('/')
 
-  const pageData = await requestPage('/' + alias, context.locale! as Instance)
+  const pageData = await staticRequestPage(
+    '/' + alias,
+    context.locale! as Instance
+  )
 
   if (
     pageData.kind === 'single-entity' ||

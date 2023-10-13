@@ -11,13 +11,22 @@ import type {
   FrontendExerciseGroupNode,
   FrontendExerciseNode,
 } from './frontend-node-types'
-import type { EditorRowsDocument } from './serlo-editor-integration/types/editor-plugins'
+import type {
+  EditorExerciseDocument,
+  EditorRowsDocument,
+  EditorSolutionDocument,
+  EditorTemplateGroupedExerciseDocument,
+} from './serlo-editor-integration/types/editor-plugins'
 import type { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 import { Role, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
 // exact props of /[...slug] page
 export interface SlugProps {
   pageData: Redirect | SingleEntityPage | TaxonomyPage
+}
+
+export interface StaticSlugProps {
+  pageData: Redirect | SingleEntityPage | StaticTaxonomyPage
 }
 
 export interface RevisionProps {
@@ -440,6 +449,11 @@ export interface TaxonomyPage extends EntityPageBase {
   taxonomyData: TaxonomyData
 }
 
+export interface StaticTaxonomyPage extends EntityPageBase {
+  kind: 'taxonomy'
+  taxonomyData: StaticTaxonomyData
+}
+
 export interface UserPage extends EntityPageBase {
   kind: 'user/profile'
   userData: {
@@ -504,6 +518,21 @@ export interface TaxonomyData extends TaxonomyTermBase {
   taxonomyType: TaxonomyTermType
   subterms: TaxonomySubTerm[]
   exercisesContent: (FrontendExerciseNode | FrontendExerciseGroupNode)[]
+  licenseData?: LicenseData
+}
+
+export interface StaticTaxonomyData extends TaxonomyTermBase {
+  id: number
+  alias: string
+  title: string
+  trashed: boolean
+  taxonomyType: TaxonomyTermType
+  subterms: TaxonomySubTerm[]
+  exercisesContent: (
+    | EditorExerciseDocument
+    | EditorSolutionDocument
+    | EditorTemplateGroupedExerciseDocument
+  )[]
   licenseData?: LicenseData
 }
 

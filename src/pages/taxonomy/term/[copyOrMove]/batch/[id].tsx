@@ -5,7 +5,7 @@ import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { TaxonomyMoveCopy } from '@/components/taxonomy/taxonomy-move-copy'
 import { SlugProps, TaxonomyPage } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import { requestPage } from '@/fetcher/request-page'
+import { staticRequestPage } from '@/fetcher/static-request-page'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<{ pageData: TaxonomyPage }>(
@@ -29,7 +29,7 @@ export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
   if (!context.params || Array.isArray(context.params.id) || !context.params.id)
     return { notFound: true }
 
-  const pageData = await requestPage(
+  const pageData = await staticRequestPage(
     '/' + context.params.id,
     context.locale! as Instance
   )
