@@ -8,7 +8,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
-import { StaticInfoPanel } from '@/components/static-info-panel'
+import { InfoPanel } from '@/components/info-panel'
 import { TimeAgo } from '@/components/time-ago'
 import { Events } from '@/components/user/events'
 import { ProfileActivityGraphs } from '@/components/user/profile-activity-graphs'
@@ -145,11 +145,11 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       <section>
         <h2 className="serlo-h2">{strings.profiles.aboutMe}</h2>
         {isUserWithoutActivities && isOwnProfile ? (
-          <StaticInfoPanel icon={faInfoCircle}>
+          <InfoPanel icon={faInfoCircle}>
             {strings.profiles.lockedDescriptionTitle}
             <br />
             {strings.profiles.lockedDescriptionText}
-          </StaticInfoPanel>
+          </InfoPanel>
         ) : (
           <StaticRenderer document={description} />
         )}

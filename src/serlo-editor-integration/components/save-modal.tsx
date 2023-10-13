@@ -8,8 +8,8 @@ import { entity } from '../../serlo-editor/plugins/serlo-template-plugins/common
 import { useHandleSave } from '../../serlo-editor/plugins/serlo-template-plugins/helpers/use-handle-save'
 import { SaveContext } from '../context/save-context'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
+import { InfoPanel } from '@/components/info-panel'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import type { DefaultLicenseAgreementQuery } from '@/fetcher/graphql-types/operations'
@@ -164,12 +164,12 @@ export function SaveModal({
   function renderAlert() {
     if (!hasError) return null
     return (
-      <StaticInfoPanel type="warning" icon={faExclamationCircle}>
+      <InfoPanel type="warning" icon={faExclamationCircle}>
         {editorStrings.errorSaving}
         <br />
         {editorStrings.saveLocallyAndRefresh}
         <LocalStorageButton open={open} />
-      </StaticInfoPanel>
+      </InfoPanel>
     )
   }
 
