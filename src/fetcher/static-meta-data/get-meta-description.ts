@@ -35,7 +35,6 @@ export function getMetaDescription(
   content?: AnyEditorDocument
 ): string | undefined {
   if (!content) return undefined
-
   let extracted = ''
 
   if (isTextDocument(content)) {

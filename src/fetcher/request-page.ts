@@ -204,7 +204,7 @@ export async function requestPage(
             ? 'text-exercise'
             : 'groupedexercise',
         metaImage,
-        metaDescription: getMetaDescription(staticExercise),
+        metaDescription: getMetaDescription(staticExercise?.state.content),
       },
       horizonData,
       cacheKey,
@@ -232,7 +232,9 @@ export async function requestPage(
         title,
         contentType: 'exercisegroup',
         metaImage,
-        metaDescription: getMetaDescription(staticExerciseGroup),
+        metaDescription: getMetaDescription(
+          staticExerciseGroup?.state.content as unknown as EditorRowsDocument
+        ),
       },
       horizonData,
       cacheKey,

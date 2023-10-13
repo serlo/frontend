@@ -50,7 +50,7 @@ describe('check all supported typenames with stored api-data', () => {
 
     expect(pageData.metaData?.contentType).toBe('page')
     expect(pageData.metaData?.metaDescription).toBe(
-      'Serlo.org bietet einfache Erklärungen, Kurse, Lernvideos, Übungen und Musterlösungen mit denen Schüler*innen und Studierende nach ihrem …'
+      'Serlo.org bietet einfache Erklärungen, Kurse, Lernvideos, Übungen und Musterlösungen mit denen Schüler*innen und Studierende nach ihrem eigenen Bedarf …'
     )
     expect(pageData.metaData?.metaImage).toBe(
       `https://de.${serloDomain}/_assets/img/meta/meta.png`
@@ -84,7 +84,7 @@ describe('check all supported typenames with stored api-data', () => {
     )
     expect(pageData.metaData?.contentType).toBe('article')
     expect(pageData.metaData?.metaDescription).toBe(
-      'Um Dezimalbrüche zu addieren oder zu subtrahieren, geht man ähnlich vor wie bei der schriftlichen Addition bzw. Subtraktion.AdditionEs gibt …'
+      'Um Dezimalbrüche zu addieren oder zu subtrahieren , geht man ähnlich vor wie bei der schriftlichen Addition bzw. Subtraktion .'
     )
     assertCorrectMetaImageLink(pageData)
     assertCorrectHorizonDataFormat(pageData)
@@ -168,7 +168,7 @@ describe('check all supported typenames with stored api-data', () => {
     )
     expect(pageData.metaData?.contentType).toBe('video')
     expect(pageData.metaData?.metaDescription).toBe(
-      'Inhalt:Konstruktion der Winkel  und .Konstruktion der Winkel  und  mit detailliertem Konstruktionsplan.Konstruktion der Winkelhalbierenden …'
+      'Inhalt: Konstruktion der Winkel 360^\\circ und 180^\\circ . Konstruktion der Winkel 90^\\circ und 60^\\circ mit detailliertem Konstruktionsplan. Konstruktion …'
     )
     assertCorrectMetaImageLink(pageData)
     assertCorrectHorizonDataFormat(pageData)
@@ -211,7 +211,7 @@ describe('check all supported typenames with stored api-data', () => {
     )
     expect(pageData.metaData?.contentType).toBe('applet')
     expect(pageData.metaData?.metaDescription).toBe(
-      'Stelle mit den Schiebereglern die Brüche ein, die du multiplizieren möchtest. Die Bruchteile werden dann in den Rechtecken farbig markiert. …'
+      'Stelle mit den Schiebereglern die Brüche ein, die du multiplizieren möchtest. Die Bruchteile werden dann in den Rechtecken farbig markiert. Mit dem …'
     )
 
     assertCorrectMetaImageLink(pageData)
@@ -347,7 +347,7 @@ describe('check all supported typenames with stored api-data', () => {
 
     expect(pageData.metaData?.contentType).toBe('exercisegroup')
     expect(pageData.metaData?.metaDescription).toBe(
-      'Finde die passenden Gleichungen zu den Funktionsgraphen:Die Ruhelage der Funktion liegt auf der -Achse.Der Graph schneidet das Koordinatensystem …'
+      'Finde die passenden Gleichungen zu den Funktionsgraphen:'
     )
 
     assertCorrectMetaImageLink(pageData)
@@ -367,9 +367,7 @@ describe('check all supported typenames with stored api-data', () => {
 
     expect(pageData.metaData?.title).toBe('Teilaufgabe - lernen mit Serlo!')
     expect(pageData.metaData?.contentType).toBe('groupedexercise')
-    expect(pageData.metaData?.metaDescription).toBe(
-      'Die Ruhelage der Funktion liegt auf der -Achse.Der Graph schneidet das Koordinatensystem im Nullpunkt, also handelt es sich um eine Sinusfunktion …'
-    )
+    expect(pageData.metaData?.metaDescription).toBe(undefined)
     assertCorrectMetaImageLink(pageData)
     assertCorrectHorizonDataFormat(pageData)
 
@@ -471,7 +469,7 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.metaData?.title).toBe('Serlo')
     expect(pageData.metaData?.contentType).toBe('event')
     expect(pageData.metaData?.metaDescription).toBe(
-      '31.08.20 - 25.09.2020, Mo-Fr Digital Learning Academy in MünchenonlineGemeinsame Arbeit an Lerninhalten, Workshops zu verschiedenen Themen …'
+      '31.08.20 - 25.09.2020, Mo-Fr Digital Learning Academy in München online  Gemeinsame Arbeit an Lerninhalten, Workshops zu verschiedenen Themen und …'
     )
 
     expect(pageData.metaData?.metaImage).toBe(
