@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import { useState, type ReactNode } from 'react'
 import BaseModal from 'react-modal'
 
+import { CloseButton } from './close-button'
 import { FaIcon } from './fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { tw } from '@/helper/tw'
@@ -42,11 +43,7 @@ export function ModalWithCloseButton({
     <BaseModal
       isOpen={isOpen}
       onRequestClose={onCloseClick}
-      className={clsx(
-        ModalClsx,
-        'relative top-[40%] w-[500px] pb-10',
-        className
-      )}
+      className={clsx(ModalClsx, 'top-[40%] w-[500px] pb-10', className)}
     >
       {alignTitleAndCloseButton ? (
         <div className="flex items-center justify-between py-4">
@@ -55,22 +52,15 @@ export function ModalWithCloseButton({
               {title}
             </h2>
           )}
-          <button
+          <CloseButton
             onClick={() =>
               confirmCloseDescription
                 ? setShowConfirmation(true)
                 : onCloseClick()
             }
             title={strings.share.close}
-            className={tw`
-              inline-block h-9 w-9
-              cursor-pointer rounded-full border-none bg-transparent text-center
-              leading-tight text-almost-black hover:bg-brand hover:text-white
-            `}
-            data-qa="modal-close-button"
-          >
-            <FaIcon icon={faXmark} className="h-5" />
-          </button>
+            dataQa="modal-close-button"
+          />
         </div>
       ) : (
         <>

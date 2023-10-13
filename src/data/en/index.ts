@@ -108,27 +108,32 @@ export const instanceData = {
         confirmCloseDescription: 'Do you want to cancel the exercise generation? Your data will be lost.',
         summary: 'Summary',
         nextButton: 'Next',
+        previousButton: 'Previous',
         generateExerciseButton: 'Generate exercise',
         generateExercisesButton: 'Generate exercises',
         subject: {
-          title: 'Which subject would you like to create an exercise for?',
+          title: 'Which %subject% would you like to create an exercise for?',
+          subject: 'subject',
           defaultLabel: 'Subject',
           otherSubjectLabel: 'Other subject',
           customSubjectPlaceholder: 'Enter custom subject'
         },
         topic: {
-          title: 'About which topic would you like to generate exercises?',
+          title: 'About which %topic% would you like to generate exercises?',
+          topic: 'topic',
           defaultLabel: 'Topic',
           otherTopicLabel: 'Other topic',
           customTopicPlaceholder: 'Enter custom topic'
         },
         grade: {
-          title: 'Which grade are the students in?',
+          title: 'Which %grade% are the students in?',
+          grade: 'grade',
           label: 'Grade',
           university: 'University',
         },
         exerciseType: {
-          title: 'What exercise type are you interested in?',
+          title: 'What %exerciseType% are you interested in?',
+          exerciseType: 'exercise type',
           label: 'Exercise type',
           subtasksTitleSummary: 'Subtasks',
           subtasksTitle: 'Should there be subtasks?',
@@ -141,7 +146,8 @@ export const instanceData = {
           solutionWithOneNumber: "Solution with 1 number"
         },
         difficulty: {
-          title: 'What is the difficulty level of the exercise and learning goal?',
+          title: 'What is the %difficulty% level of the exercise and learning goal?',
+          difficulty: 'difficulty',
           label: 'Difficulty',
           learningGoalLabel: 'Learning goal',
           learningGoalExample: 'Example: Students understand the basics of algebra.',
@@ -152,10 +158,18 @@ export const instanceData = {
           hard: 'Hard',
         },
         priorKnowledge: {
-          title: 'What is the prior knowledge that the students should have?',
+          title: 'What is the %priorKnowledge% that the students should have?',
+          priorKnowledge: 'prior knowledge',
           label: 'Prior Knowledge',
           example: 'Example: The students know how basic algebra works and already solved some exercises on the topic.',
           placeholder: 'E.g., Basic arithmetic, fundamentals of algebra'
+        },
+        preview: {
+          closePreviewTitle: 'Close and delete exercises',
+          loadingHeading: 'Exercise is being generated...',
+          publishExercise: 'Publish exercise',
+          editExerciseInEditor: 'Edit exercise in editor',
+          regenerate: 'Regenerate exercise',
         }
       },
     },
