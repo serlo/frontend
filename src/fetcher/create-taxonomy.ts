@@ -1,6 +1,10 @@
 import { createExercise, createExerciseGroup } from './create-exercises'
 import { MainUuidQuery, TaxonomyTermType } from './graphql-types/operations'
 import {
+  createStaticExerciseGroup,
+  staticCreateExerciseAndSolution,
+} from './static-create-exercises'
+import {
   TaxonomyData,
   TaxonomyLink,
   TaxonomySubTerm,
@@ -46,6 +50,7 @@ export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
     events: collectType(children, UuidType.Event),
 
     exercisesContent: collectExercises(children),
+    staticExercisesContent: staticCollectExercises(children),
     subterms: collectNestedTaxonomyTerms(children), // nested taxonomy terms
   }
 }
@@ -72,6 +77,25 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
       else result.push(createExerciseGroup(child, index++))
     }
   })
+  return result
+}
+
+export function staticCollectExercises(children: TaxonomyTermChildrenLevel1[]) {
+  const result: TaxonomyData['staticExercisesContent'] = []
+  children.forEach((child) => {
+    if (child.__typename === UuidType.Exercise && child.currentRevision) {
+      const exerciseWithSolution = staticCreateExerciseAndSolution({
+        ...child,
+        revisions: { totalCount: 0 },
+      })
+      if (exerciseWithSolution) result.push(exerciseWithSolution)
+    }
+    if (child.__typename === UuidType.ExerciseGroup && child.currentRevision) {
+      const group = createStaticExerciseGroup(child)
+      if (group) result.push(group)
+    }
+  })
+
   return result
 }
 

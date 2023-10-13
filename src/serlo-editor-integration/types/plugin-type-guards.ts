@@ -27,7 +27,9 @@ import type {
   EditorTextDocument,
   EditorUnsupportedDocument,
   EditorVideoDocument,
+  EditorTemplateExerciseGroupDocument,
 } from './editor-plugins'
+import { TemplatePluginType } from './template-plugin-type'
 
 export function isAnchorDocument(
   document: AnyEditorDocument
@@ -158,4 +160,9 @@ export function isH5PDocument(
   document: AnyEditorDocument
 ): document is EditorH5PDocument {
   return document.plugin === EditorPluginType.H5p
+}
+export function isTemplateExerciseGroupDocument(
+  document: AnyEditorDocument
+): document is EditorTemplateExerciseGroupDocument {
+  return document.plugin === TemplatePluginType.TextExerciseGroup
 }

@@ -7,6 +7,7 @@ import { createHorizon } from './create-horizon'
 import { createInlineLicense } from './create-inline-license'
 import { getMetaImage } from './create-meta-data'
 import { createSecondaryMenu } from './create-secondary-menu'
+import { buildTaxonomyData } from './create-taxonomy'
 import { createTitle } from './create-title'
 import {
   Instance,
@@ -20,7 +21,6 @@ import {
   createStaticExerciseGroup,
   staticCreateExerciseAndSolution,
 } from './static-create-exercises'
-import { staticBuildTaxonomyData } from './static-create-taxonomy'
 import {
   getArticleMetaDescription,
   getMetaDescription,
@@ -149,7 +149,7 @@ export async function staticRequestPage(
   if (uuid.__typename === UuidType.TaxonomyTerm) {
     return {
       kind: 'taxonomy',
-      taxonomyData: staticBuildTaxonomyData(uuid),
+      taxonomyData: buildTaxonomyData(uuid),
       newsletterPopup: false,
       metaData: {
         title,

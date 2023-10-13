@@ -21,11 +21,7 @@ import { abSubmission } from '@/helper/ab-submission'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import {
-  EditorExerciseDocument,
-  EditorRowsDocument,
-  EditorSolutionDocument,
-} from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export interface TopicProps {
   data: TaxonomyData
@@ -55,7 +51,7 @@ export function StaticTaxonomy({ data }: TopicProps) {
   const isExerciseFolder = data.taxonomyType === TaxonomyTermType.ExerciseFolder
   const isTopic = data.taxonomyType === TaxonomyTermType.Topic
 
-  const hasExercises = data.exercisesContent.length > 0
+  const hasExercises = data.staticExercisesContent.length > 0
   const defaultLicense = hasExercises ? getDefaultLicense() : undefined
 
   // simplest way to provide renderers to editor that can also easily be adapted by edusharing
@@ -154,21 +150,24 @@ export function StaticTaxonomy({ data }: TopicProps) {
       )
     }
 
-    if (!hasExercises || !data.exercisesContent) return null
+    if (!hasExercises || !data.staticExercisesContent) return null
     return (
       <ol className="mt-12">
-        {data.exercisesContent.map((inExercise, i) => {
-          // for static
-          const exerciseArray = inExercise as unknown as
-            | [EditorExerciseDocument]
-            | [EditorExerciseDocument, EditorSolutionDocument]
+        {data.staticExercisesContent.map((exerciseOrGroup, i) => {
+          const exercise = Object.hasOwn(exerciseOrGroup, 'plugin')
+            ? exerciseOrGroup
+            : exerciseOrGroup.exercise
 
-          const exerciseUuid = exerciseArray[0].serloContext?.uuid
+          const exerciseUuid = exercise.serloContext?.uuid
+          const solution = Object.hasOwn(exerciseOrGroup, 'plugin')
+            ? undefined
+            : exerciseOrGroup.solution
 
           return (
-            <li key={exerciseArray[0].id ?? exerciseUuid}>
+            <li key={exercise.id ?? exerciseUuid} className="pb-10">
               <ExerciseNumbering href={`/${exerciseUuid}`} index={i} />
-              <StaticRenderer document={exerciseArray} />
+              <StaticRenderer document={exercise} />
+              <StaticRenderer document={solution} />
               {i === 1 && renderSurvey()}
             </li>
           )
@@ -216,17 +215,20 @@ export function StaticTaxonomy({ data }: TopicProps) {
     )
   }
 
+  // … interesting hack
   function getDefaultLicense() {
-    for (let i = 0; i < data.exercisesContent.length; i++) {
-      const content = data.exercisesContent[i]
+    for (let i = 0; i < data.staticExercisesContent.length; i++) {
+      const content = data.staticExercisesContent[i]
 
-      if (content.type === 'exercise-group') {
-        if (content.license?.isDefault) return content.license
-      } else {
-        if (content.task?.license?.isDefault) return content.task.license
-        if (content.solution?.license?.isDefault)
-          return content.solution.license
-      }
+      // TODO: check if we actually need licenses for group tasks (probably…)
+      const license = Object.hasOwn(content, 'plugin')
+        ? undefined // return content.serloContext?.license
+        : content.exercise.serloContext?.license?.default
+        ? content.exercise.serloContext?.license
+        : content.solution?.serloContext?.license?.default
+        ? content.solution.serloContext?.license
+        : undefined
+      if (license) return { ...license, isDefault: true }
     }
     //no part of collection has default license so don't show default notice.
     return undefined
