@@ -158,8 +158,8 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
               category === 'subterms'
                 ? 'folders'
                 : category === 'exercisesContent'
-                  ? 'exercises'
-                  : category
+                ? 'exercises'
+                : category
 
             return (
               <ul
