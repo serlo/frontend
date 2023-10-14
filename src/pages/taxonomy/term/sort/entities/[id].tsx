@@ -131,33 +131,6 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
     })
   }
 
-  // function exToTaxonomyLinks(
-  //   links:
-  //     | TaxonomyLink[]
-  //     | TaxonomySubTerm[]
-  //     | (FrontendExerciseNode | FrontendExerciseGroupNode)[]
-  // ): TaxonomyLink[] {
-  //   if (
-  //     Object.hasOwn(links[0], 'type') &&
-  //     (links[0].type === FrontendNodeType.ExerciseGroup ||
-  //       links[0].type === FrontendNodeType.Exercise)
-  //   ) {
-  //     return (links as unknown as TaxonomyData['exercisesContent']).map(
-  //       (exNode) => {
-  //         const url = exNode.href ?? `/${exNode.context.id}`
-  //         const pos =
-  //           exNode.positionOnPage !== undefined ? exNode.positionOnPage + 1 : ''
-  //         const title = `(${pos}) ${getPreviewStringFromExercise(
-  //           exNode,
-  //           strings
-  //         )}`
-  //         return { title, url, id: exNode.context.id }
-  //       }
-  //     )
-  //   }
-  //   return links as unknown as TaxonomyLink[]
-  // }
-
   function renderCategory(category: Category, links: TaxonomyLink[]) {
     if (!links.filter((link) => !link.unrevised).length) return null
 
@@ -185,8 +158,8 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
               category === 'subterms'
                 ? 'folders'
                 : category === 'exercisesContent'
-                ? 'exercises'
-                : category
+                  ? 'exercises'
+                  : category
 
             return (
               <ul
