@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
-import { TaxonomyMoveCopy } from '@/components/taxonomy/taxonomy-move-copy'
+import { TaxonomyMoveCopy } from '@/components/taxonomy/taxonomy-move-copy/taxonomy-move-copy'
 import { SlugProps, TaxonomyPage } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestPage } from '@/fetcher/request-page'
