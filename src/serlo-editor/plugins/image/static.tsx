@@ -40,9 +40,16 @@ export function ImageStaticRenderer({
       /[^\w+]/g,
       ''
     )
-    if (!semanticName || semanticName.length < 4) return src
+    if (
+      !semanticName ||
+      semanticName.length < 4 ||
+      semanticName.match(/^[0-9]+$/)
+    )
+      return src
 
     const dot = src.lastIndexOf('.')
-    return `${src.substring(0, dot)}/${semanticName}${src.substring(dot)}`
+    return `${src.substring(0, dot)}/${semanticName}${src.substring(
+      dot
+    )}`.replace('/image/', '')
   }
 }
