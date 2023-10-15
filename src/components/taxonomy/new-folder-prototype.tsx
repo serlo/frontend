@@ -137,16 +137,16 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
         const solved =
           typeof window !== 'undefined'
             ? (JSON.parse(
-              sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
-            ) as number[])
+                sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
+              ) as number[])
             : undefined
 
         const solvedPercentage = isTemplateExerciseGroupDocument(exercise)
           ? exercise.state.exercises.filter(
-            (exercise) =>
-              exercise.serloContext?.uuid &&
-              solved?.includes(exercise.serloContext.uuid)
-          ).length
+              (exercise) =>
+                exercise.serloContext?.uuid &&
+                solved?.includes(exercise.serloContext.uuid)
+            ).length
           : -1
 
         const isSolved =
@@ -262,10 +262,10 @@ function ExerciseWrapper({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [val, triggerRender] = useState(1)
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    ; (window as any).__triggerRender = () => {
-      triggerRender((x) => x + 1)
-    }
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  ;(window as any).__triggerRender = () => {
+    triggerRender((x) => x + 1)
+  }
 
   const isSolvedInThisSession =
     val > 1 &&

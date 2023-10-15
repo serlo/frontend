@@ -53,7 +53,7 @@ function isActive_for_subchildren(child: TaxonomyTermChildrenLevel2) {
   return child.trashed === false // && child.__typename !== 'UnsupportedUuid' <---- this has no effect
 }
 
-export function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
+function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
   const result: TaxonomyData['exercisesContent'] = []
   children.forEach((child) => {
     if (child.__typename === UuidType.Exercise && child.currentRevision) {
