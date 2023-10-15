@@ -139,8 +139,6 @@ export function Topic({ data }: TopicProps) {
   function renderExercises() {
     if (ab?.experiment === 'dreisatz_new_design') {
       // here is the place for new exercise view
-
-      // no static view for now
       return (
         <>
           <NewFolderPrototype data={data} />
