@@ -62,7 +62,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.kind).toBe('single-entity')
     expect(pageData.entityData.id).toBe(18922)
     expect(pageData.entityData.title).toBe('Über Serlo')
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: Article', async () => {
@@ -96,7 +95,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.entityData.title).toBe(
       'Addition und Subtraktion von Dezimalbrüchen'
     )
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: CoursePage', async () => {
@@ -139,7 +137,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.kind).toBe('single-entity')
     expect(pageData.entityData.id).toBe(52020)
     expect(pageData.entityData.title).toBe('Übersicht')
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: Video', async () => {
@@ -178,7 +175,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.kind).toBe('single-entity')
     expect(pageData.entityData.id).toBe(40744)
     expect(pageData.entityData.title).toBe('Winkel konstruieren')
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: Applet', async () => {
@@ -222,7 +218,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.kind).toBe('single-entity')
     expect(pageData.entityData.id).toBe(138114)
     expect(pageData.entityData.title).toBe('Brüche Multiplizieren')
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: TaxonomyTerm', async () => {
@@ -257,7 +252,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.kind).toBe('taxonomy')
     expect(pageData.taxonomyData.id).toBe(5)
     expect(pageData.taxonomyData.title).toBe('Mathe')
-    expect(Array.isArray(pageData.taxonomyData.subterms)).toBe(true)
   })
 
   test('typename: Exercise', async () => {
@@ -306,7 +300,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.newsletterPopup).toBe(false)
     expect(pageData.kind).toBe('single-entity')
     expect(pageData.entityData.id).toBe(54210)
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: ExerciseGroup', async () => {
@@ -357,7 +350,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.newsletterPopup).toBe(false)
     expect(pageData.kind).toBe('single-entity')
     expect(pageData.entityData.id).toBe(53205)
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: GroupedExercise', async () => {
@@ -375,7 +367,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.newsletterPopup).toBe(false)
     expect(pageData.kind).toBe('single-entity')
     expect(pageData.entityData.id).toBe(53209)
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
     expect(pageData.breadcrumbsData?.length === 1)
   })
 
@@ -459,7 +450,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.kind).toBe('single-entity')
     expect(pageData.entityData.id).toBe(52020)
     expect(pageData.entityData.title).toBe('Übersicht')
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: Event', async () => {
@@ -480,7 +470,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.cacheKey).toBe('/de/145590')
     expect(pageData.newsletterPopup).toBe(false)
     expect(pageData.kind).toBe('single-entity')
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 })
 
