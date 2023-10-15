@@ -11,9 +11,8 @@ import {
 } from '../graphql-types/operations'
 import { endpoint } from '@/api/endpoint'
 import { PageNotFound, RevisionPage, UuidRevType, UuidType } from '@/data-types'
+import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import { EditorExerciseDocument } from '@/serlo-editor-integration/types/editor-plugins'
-
-// TODO: this is WIP
 
 export async function requestRevision(
   revisionId: number,
@@ -85,22 +84,6 @@ export async function requestRevision(
             }),
           ]
         : null
-
-    // TODO: check solution
-    // const thisSolution =
-    //   uuid.__typename === UuidRevType.Solution
-    //     ? [
-    //         createSolution({
-    //           ...uuid,
-    //           repository: {
-    //             ...uuid.repository,
-    //             currentRevision: { content: uuid.content, id: uuid.id },
-    //           },
-    //         }),
-    //       ]
-    //     : null
-    // const currentSolution =
-    //   uuid.__typename === UuidRevType.Solution ? [createSolution(uuid)] : null
 
     const getParentId = () => {
       if (uuid.__typename === UuidRevType.GroupedExercise)
@@ -178,9 +161,7 @@ export async function requestRevision(
             : undefined,
           content: thisExercise
             ? (thisExercise as unknown as EditorExerciseDocument)
-            : undefined,
-          // thisSolution ||
-          // uuid.content,
+            : parseDocumentString(uuid.content),
           url: Object.hasOwn(uuid, 'url') ? uuid.url : undefined,
         },
         currentRevision: {
@@ -197,12 +178,9 @@ export async function requestRevision(
             currentRevision && Object.hasOwn(currentRevision, 'metaDescription')
               ? currentRevision.metaDescription
               : undefined,
-          content: currentExercise as unknown as EditorExerciseDocument,
-          //||
-          // currentSolution ||
-          // convertStateStringToFrontendNode(
-          //   uuid.repository.currentRevision?.content
-          // ),
+          content: currentExercise
+            ? (currentExercise as unknown as EditorExerciseDocument)
+            : parseDocumentString(uuid.repository.currentRevision?.content),
           url:
             currentRevision && Object.hasOwn(currentRevision, 'url')
               ? currentRevision.url

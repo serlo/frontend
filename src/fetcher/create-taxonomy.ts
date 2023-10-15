@@ -57,18 +57,17 @@ export function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
   const result: TaxonomyData['exercisesContent'] = []
   children.forEach((child) => {
     if (child.__typename === UuidType.Exercise && child.currentRevision) {
-      const exerciseWithSolution = createExercise({
+      const exercise = createExercise({
         ...child,
         revisions: { totalCount: 0 },
       })
-      if (exerciseWithSolution) result.push(exerciseWithSolution)
+      if (exercise) result.push(exercise)
     }
     if (child.__typename === UuidType.ExerciseGroup && child.currentRevision) {
       const group = createExerciseGroup(child)
       if (group) result.push(group)
     }
   })
-
   return result
 }
 

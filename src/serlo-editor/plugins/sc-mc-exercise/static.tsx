@@ -26,8 +26,10 @@ export function ScMcExerciseStaticRenderer({
   const [shuffledAnswers, setShuffledAnswers] = useState(state.answers)
 
   useEffect(() => {
-    setShuffledAnswers(shuffleArray(state.answers))
-  }, [state.answers])
+    if (!renderExtraAnswerContent) {
+      setShuffledAnswers(shuffleArray(state.answers))
+    }
+  }, [state.answers, renderExtraAnswerContent])
 
   const answers = shuffledAnswers
     .slice(0)

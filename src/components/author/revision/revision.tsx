@@ -171,7 +171,7 @@ export function Revision({ data }: RevisionProps) {
           )}
           <InjectionStaticRenderer
             plugin={EditorPluginType.Injection}
-            state={`/${parentId}`}
+            state={parentId.toString()}
           />
         </div>
       </>
