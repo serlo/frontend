@@ -20,7 +20,7 @@ export const h2Class =
 const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
 
 export function EditorPresentation() {
-  editorRenderers.init(createRenderers({}))
+  editorRenderers.init(createRenderers())
 
   return (
     <>

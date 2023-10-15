@@ -26,6 +26,7 @@ export const editorRenderers = (function () {
   let mathRenderer: MathRenderer | null = null
   let linkRenderer: LinkRenderer | null = null
 
+  // simplest way to provide renderers to editor that can also easily be adapted by edusharing
   function init({
     pluginRenderers,
     mathRenderer: mathRendererIn,

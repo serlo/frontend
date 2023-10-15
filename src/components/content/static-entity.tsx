@@ -31,10 +31,7 @@ export interface EntityProps {
 }
 
 export function StaticEntity({ data }: EntityProps) {
-  const { lang } = useInstanceData()
-
-  // simplest way to provide renderers to editor that can also easily be adapted by edusharing
-  editorRenderers.init(createRenderers({ instance: lang }))
+  editorRenderers.init(createRenderers())
 
   // courseNav: start opened when only some entries
   const [courseNavOpen, setCourseNavOpen] = useState(

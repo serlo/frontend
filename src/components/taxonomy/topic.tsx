@@ -41,9 +41,9 @@ const NewFolderPrototype = dynamic<NewFolderPrototypeProps>(() =>
 )
 
 export function Topic({ data }: TopicProps) {
-  const { strings, lang } = useInstanceData()
+  const { strings } = useInstanceData()
   const ab = useAB()
-  editorRenderers.init(createRenderers({ instance: lang }))
+  editorRenderers.init(createRenderers())
 
   const [hasFeedback, setHasFeedback] = useState(false)
 

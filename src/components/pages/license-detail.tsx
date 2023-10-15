@@ -11,8 +11,8 @@ export function LicenseDetail({
   content,
   isDefault,
 }: LicenseDetailData) {
-  const { strings, lang } = useInstanceData()
-  editorRenderers.init(createRenderers({ instance: lang }))
+  const { strings } = useInstanceData()
+  editorRenderers.init(createRenderers())
 
   return (
     <>
