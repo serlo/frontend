@@ -7,11 +7,12 @@ import {
   RevisionDiffViewer,
   type RevisionDiffViewerProps,
 } from './revision-diff-viewer'
-import { Geogebra } from '@/components/content/geogebra'
-import { Video } from '@/components/content/video'
 import { useInstanceData } from '@/contexts/instance-context'
 import { type RevisionData, UuidRevType } from '@/data-types'
+import { GeogebraStaticRenderer } from '@/serlo-editor/plugins/geogebra/static'
+import { VideoStaticRenderer } from '@/serlo-editor/plugins/video/static'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export interface RevisionPreviewBoxesProps {
   dataSet: RevisionData['thisRevision'] | RevisionData['currentRevision']
@@ -87,7 +88,17 @@ export function RevisionPreviewBoxes({
         diffMode={DiffViewerMode.url}
         changes={dataSet.url !== data.currentRevision.url}
       >
-        {isVideo ? <Video src={dataSet.url} /> : <Geogebra id={dataSet.url} />}
+        {isVideo ? (
+          <VideoStaticRenderer
+            plugin={EditorPluginType.Video}
+            state={{ src: dataSet.url, alt: dataSet.title ?? 'Video' }}
+          />
+        ) : (
+          <GeogebraStaticRenderer
+            plugin={EditorPluginType.Geogebra}
+            state={dataSet.url}
+          />
+        )}
         <span className="bg-editor-primary-100 px-1 text-sm">
           <b>url:</b> {dataSet.url}
         </span>

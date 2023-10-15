@@ -7,13 +7,14 @@ import { EditorRoadmap } from './editor-roadmap'
 import { EditorTeam, teamDataSimon } from './editor-team'
 import { EducationPlugins } from './education-plugins'
 import { Link } from '@/components/content/link'
-import { Video } from '@/components/content/video'
 import { HeadTags } from '@/components/head-tags'
 import { Logo } from '@/components/navigation/header/logo'
 import { breakpoints } from '@/helper/breakpoints'
 import { tw } from '@/helper/tw'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { VideoStaticRenderer } from '@/serlo-editor/plugins/video/static'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const h2Class =
   'text-center text-4xl leading-cozy tracking-tight font-extrabold'
@@ -86,7 +87,13 @@ export function EditorPresentation() {
               </p>
             </div>
             <div className="-mx-side mt-8 pl-2 sm:max-w-[32rem] sm:flex-1">
-              <Video src="https://www.youtube.com/watch?v=wjaPgGdw23w" />
+              <VideoStaticRenderer
+                plugin={EditorPluginType.Video}
+                state={{
+                  src: 'https://www.youtube.com/watch?v=wjaPgGdw23w',
+                  alt: 'Video introducing the Serlo Editor',
+                }}
+              />
             </div>
           </div>
         </section>
