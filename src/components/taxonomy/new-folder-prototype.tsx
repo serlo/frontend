@@ -9,13 +9,13 @@ import { useHotkeys } from 'react-hotkeys-hook'
 
 import { FaIcon } from '../fa-icon'
 import { TaxonomyData } from '@/data-types'
-import {
-  FrontendExerciseGroupNode,
-  FrontendExerciseNode,
-  FrontendNodeType,
-} from '@/frontend-node-types'
 import { tw } from '@/helper/tw'
-import { renderArticle } from '@/schema/article-renderer'
+import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import {
+  EditorExerciseDocument,
+  EditorTemplateExerciseGroupDocument,
+} from '@/serlo-editor-integration/types/editor-plugins'
 
 export interface NewFolderPrototypeProps {
   data: TaxonomyData
@@ -79,7 +79,6 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
 
   if (showInModal >= 0) {
     const element = data.exercisesContent[showInModal]
-    element.positionOnPage = undefined
 
     //const isSolved = solved.includes(element.context.id)
     return (
@@ -136,14 +135,19 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
         const solved = JSON.parse(
           sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
         ) as number[]
-        const solvedPercentage = exercise.children
-          ? exercise.children.filter((child) =>
-              solved.includes(child.context.id)
-            ).length / exercise.children.length
-          : -1
+
+        // TODO: rewrite using editor state
+        // const solvedPercentage = exercise.children
+        //   ? exercise.children.filter((child) =>
+        //       solved.includes(child.context.id)
+        //     ).length / exercise.children.length
+        //   : -1
+        const solvedPercentage = 1
 
         const isSolved =
-          solved.includes(exercise.context.id) || solvedPercentage === 1
+          (exercise.serloContext?.uuid &&
+            solved.includes(exercise.serloContext?.uuid)) ||
+          solvedPercentage === 1
 
         return (
           <Fragment key={i}>
@@ -239,16 +243,18 @@ function ExerciseWrapper({
   title,
   close,
 }: {
-  element: FrontendExerciseGroupNode | FrontendExerciseNode
+  element: EditorExerciseDocument | EditorTemplateExerciseGroupDocument
   title: string
   close: () => void
 }) {
   const [index, setIndex] = useState(0)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const solved = JSON.parse(
     sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
   ) as number[]
   // element.children![index].positionInGroup = undefined
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [val, triggerRender] = useState(1)
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -256,20 +262,23 @@ function ExerciseWrapper({
     triggerRender((x) => x + 1)
   }
 
-  const isSolvedInThisSession =
-    val > 1 &&
-    (solved.includes(element.context.id) ||
-      (element.children && solved.includes(element.children[index].context.id)))
+  // TODO: rewrite using editor state
+  const isSolvedInThisSession = true
+  // const isSolvedInThisSession =
+  //   val > 1 &&
+  //   (solved.includes(element.context.id) ||
+  //     (element.children && solved.includes(element.children[index].context.id)))
 
-  if (element.type === FrontendNodeType.Exercise) {
-    element.task.content!.content = element.task.content!.content.filter(
-      (x) => {
-        if (x.children && x.children[0].type === FrontendNodeType.H) {
-          return false
-        }
-        return true
-      }
-    )
+  if (element.plugin === EditorPluginType.Exercise) {
+    // TODO: rewrite using editor state
+    // element.task.content!.content = element.task.content!.content.filter(
+    //   (x) => {
+    //     if (x.children && x.children[0].type === FrontendNodeType.H) {
+    //       return false
+    //     }
+    //     return true
+    //   }
+    // )
     return (
       <>
         <div className="flex-1" />
@@ -284,7 +293,9 @@ function ExerciseWrapper({
               <h2 className="mx-side mt-6 hyphens-manual text-xl font-bold">
                 {title}
               </h2>
-              <div key={index}>{renderArticle([element])}</div>
+              <div key={index}>
+                <StaticRenderer document={element} />
+              </div>
             </div>
           </div>
           <div
@@ -323,8 +334,12 @@ function ExerciseWrapper({
               {title}
             </h2>
 
-            <div className="mt-6">{renderArticle(element.content)}</div>
-            <div>{renderArticle([element.children![index]])}</div>
+            {/* TODO: check if this works or if we need to split it up again */}
+            <div className="mt-6">
+              <StaticRenderer document={element} />
+            </div>
+            {/* <div className="mt-6"><StaticRenderer document={element.state.content} /></div> */}
+            {/* <div><StaticRenderer document={element} />{renderArticle([element.children![index]])}</div> */}
           </div>
         </div>
         <div className="mt-2.5 flex justify-between">
@@ -341,7 +356,7 @@ function ExerciseWrapper({
           ) : (
             <div />
           )}
-          {index + 1 < element.children!.length ? (
+          {index + 1 < element.state.exercises.length ? (
             <button
               className={clsx(
                 'pointer-events-auto rounded-xl  px-8 py-4 font-bold  transition-colors',

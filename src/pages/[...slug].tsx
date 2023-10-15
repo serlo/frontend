@@ -7,7 +7,6 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Topic } from '@/components/taxonomy/topic'
 import { SlugProps } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import { prettifyLinks } from '@/fetcher/prettify-links'
 import { requestPage } from '@/fetcher/request-page'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
@@ -68,8 +67,6 @@ export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
   ) {
     return { notFound: true }
   }
-
-  await prettifyLinks(pageData)
 
   return {
     props: {

@@ -45,7 +45,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
   const sort = useEntitySortMutation()
   const router = useRouter()
   const { entityData } = pageData
-  const { typename, courseData, staticContent } = entityData
+  const { typename, courseData, content } = entityData
   const isCourse =
     typename === UuidType.Course || typename === UuidType.CoursePage
   const entityId = courseData?.id ?? entityData.id
@@ -54,10 +54,10 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
   )
 
   const childrenOfExerciseGroup =
-    staticContent &&
-    !Array.isArray(staticContent) &&
-    isTemplateExerciseGroupDocument(staticContent)
-      ? staticContent.state.exercises
+    content &&
+    !Array.isArray(content) &&
+    isTemplateExerciseGroupDocument(content)
+      ? content.state.exercises
       : []
 
   const [exercises, setExercises] = useState<EditorExerciseDocument[]>(

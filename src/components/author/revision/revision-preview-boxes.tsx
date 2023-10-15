@@ -11,7 +11,7 @@ import { Geogebra } from '@/components/content/geogebra'
 import { Video } from '@/components/content/video'
 import { useInstanceData } from '@/contexts/instance-context'
 import { type RevisionData, UuidRevType } from '@/data-types'
-import { renderArticle } from '@/schema/article-renderer'
+import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 
 export interface RevisionPreviewBoxesProps {
   dataSet: RevisionData['thisRevision'] | RevisionData['currentRevision']
@@ -51,10 +51,7 @@ export function RevisionPreviewBoxes({
           diffMode={DiffViewerMode.content}
           changes={dataSet.content !== data.currentRevision.content}
         >
-          {renderArticle(
-            dataSet.content || [],
-            `revision${dataSet.id || 'empty'}`
-          )}
+          <StaticRenderer document={dataSet.content} />
         </PreviewBox>
       )}
       {renderVideoOrAppletBox(dataSet)}

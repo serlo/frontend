@@ -1,19 +1,11 @@
 import { createExercise, createExerciseGroup } from './create-exercises'
 import { MainUuidQuery, TaxonomyTermType } from './graphql-types/operations'
 import {
-  createStaticExerciseGroup,
-  staticCreateExerciseAndSolution,
-} from './static-create-exercises'
-import {
   TaxonomyData,
   TaxonomyLink,
   TaxonomySubTerm,
   UuidType,
 } from '@/data-types'
-import {
-  FrontendExerciseNode,
-  FrontendExerciseGroupNode,
-} from '@/frontend-node-types'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
@@ -48,9 +40,7 @@ export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
     applets: collectType(children, UuidType.Applet),
     courses: collectType(children, UuidType.Course),
     events: collectType(children, UuidType.Event),
-
     exercisesContent: collectExercises(children),
-    staticExercisesContent: staticCollectExercises(children),
     subterms: collectNestedTaxonomyTerms(children), // nested taxonomy terms
   }
 }
@@ -63,35 +53,18 @@ function isActive_for_subchildren(child: TaxonomyTermChildrenLevel2) {
   return child.trashed === false // && child.__typename !== 'UnsupportedUuid' <---- this has no effect
 }
 
-function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
-  let index = 0
-  const result: (FrontendExerciseNode | FrontendExerciseGroupNode)[] = []
+export function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
+  const result: TaxonomyData['exercisesContent'] = []
   children.forEach((child) => {
     if (child.__typename === UuidType.Exercise && child.currentRevision) {
-      result.push(
-        createExercise({ ...child, revisions: { totalCount: 0 } }, index++)
-      )
-    }
-    if (child.__typename === UuidType.ExerciseGroup && child.currentRevision) {
-      if (children.length === 1) result.push(createExerciseGroup(child))
-      else result.push(createExerciseGroup(child, index++))
-    }
-  })
-  return result
-}
-
-export function staticCollectExercises(children: TaxonomyTermChildrenLevel1[]) {
-  const result: TaxonomyData['staticExercisesContent'] = []
-  children.forEach((child) => {
-    if (child.__typename === UuidType.Exercise && child.currentRevision) {
-      const exerciseWithSolution = staticCreateExerciseAndSolution({
+      const exerciseWithSolution = createExercise({
         ...child,
         revisions: { totalCount: 0 },
       })
       if (exerciseWithSolution) result.push(exerciseWithSolution)
     }
     if (child.__typename === UuidType.ExerciseGroup && child.currentRevision) {
-      const group = createStaticExerciseGroup(child)
+      const group = createExerciseGroup(child)
       if (group) result.push(group)
     }
   })

@@ -19,7 +19,6 @@ import type { UserTypePluginState } from '../serlo-editor/plugins/serlo-template
 import type { VideoTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/video'
 import { UuidType, UuidRevType } from '@/data-types'
 import type { User, MainUuidType } from '@/fetcher/query-types'
-import { FrontendNodeType } from '@/frontend-node-types'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import type { StateType, StateTypeSerializedType } from '@/serlo-editor/plugin'
 
@@ -411,7 +410,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
   function convertVideo(
     uuid: Extract<MainUuidType, { __typename: 'Video' }>
   ): DeserializedState<VideoTypePluginState> {
-    stack.push({ id: uuid.id, type: FrontendNodeType.Video })
+    stack.push({ id: uuid.id, type: EditorPluginType.Video })
     return {
       initialState: {
         plugin: TemplatePluginType.Video,

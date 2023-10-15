@@ -1,12 +1,16 @@
 import { StaticRenderer } from '../../static-renderer/static-renderer'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 import { Link } from '@/components/content/link'
-import { ArticleNodeUuidLink } from '@/frontend-node-types'
 import { ArticleRenderer } from '@/serlo-editor/plugins/article/renderer'
 import {
   EditorArticleDocument,
   EditorMultimediaDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
+
+interface ArticleNodeUuidLink {
+  id: string
+  title: string
+}
 
 export function ArticleStaticRenderer({ state }: EditorArticleDocument) {
   const {

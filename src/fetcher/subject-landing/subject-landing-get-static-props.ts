@@ -1,4 +1,4 @@
-import { staticFetchPageData } from '../static-fetch-page-data'
+import { fetchPageData } from '../fetch-page-data'
 import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import { TaxonomyPage } from '@/data-types'
@@ -7,7 +7,7 @@ export async function subjectLandingGetStaticProps(
   locale: string,
   subject: deSubjectLandingSubjects
 ) {
-  const pageData = await staticFetchPageData(
+  const pageData = await fetchPageData(
     `/${locale}/${deSubjectLandingData[subject].allTopicsTaxonomyId}`
   )
   return {

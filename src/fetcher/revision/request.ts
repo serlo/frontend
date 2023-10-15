@@ -2,8 +2,7 @@ import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
 import { revisionQuery } from './query'
-import { convertStateStringToFrontendNode } from '../convert-state-string-to-frontend-node'
-import { createExercise, createSolution } from '../create-exercises'
+import { createExercise } from '../create-exercises'
 import { createTitle } from '../create-title'
 import {
   Instance,
@@ -12,6 +11,9 @@ import {
 } from '../graphql-types/operations'
 import { endpoint } from '@/api/endpoint'
 import { PageNotFound, RevisionPage, UuidRevType, UuidType } from '@/data-types'
+import { EditorExerciseDocument } from '@/serlo-editor-integration/types/editor-plugins'
+
+// TODO: this is WIP
 
 export async function requestRevision(
   revisionId: number,
@@ -70,7 +72,7 @@ export async function requestRevision(
             revisions: { totalCount: 0 },
           }),
         ]
-      : null
+      : undefined
 
     const currentExercise =
       isExercise && uuid.repository.currentRevision
@@ -84,20 +86,21 @@ export async function requestRevision(
           ]
         : null
 
-    const thisSolution =
-      uuid.__typename === UuidRevType.Solution
-        ? [
-            createSolution({
-              ...uuid,
-              repository: {
-                ...uuid.repository,
-                currentRevision: { content: uuid.content, id: uuid.id },
-              },
-            }),
-          ]
-        : null
-    const currentSolution =
-      uuid.__typename === UuidRevType.Solution ? [createSolution(uuid)] : null
+    // TODO: check solution
+    // const thisSolution =
+    //   uuid.__typename === UuidRevType.Solution
+    //     ? [
+    //         createSolution({
+    //           ...uuid,
+    //           repository: {
+    //             ...uuid.repository,
+    //             currentRevision: { content: uuid.content, id: uuid.id },
+    //           },
+    //         }),
+    //       ]
+    //     : null
+    // const currentSolution =
+    //   uuid.__typename === UuidRevType.Solution ? [createSolution(uuid)] : null
 
     const getParentId = () => {
       if (uuid.__typename === UuidRevType.GroupedExercise)
@@ -173,10 +176,11 @@ export async function requestRevision(
           metaDescription: Object.hasOwn(uuid, 'metaDescription')
             ? uuid.metaDescription
             : undefined,
-          content:
-            thisExercise ||
-            thisSolution ||
-            convertStateStringToFrontendNode(uuid.content),
+          content: thisExercise
+            ? (thisExercise as unknown as EditorExerciseDocument)
+            : undefined,
+          // thisSolution ||
+          // uuid.content,
           url: Object.hasOwn(uuid, 'url') ? uuid.url : undefined,
         },
         currentRevision: {
@@ -193,12 +197,12 @@ export async function requestRevision(
             currentRevision && Object.hasOwn(currentRevision, 'metaDescription')
               ? currentRevision.metaDescription
               : undefined,
-          content:
-            currentExercise ||
-            currentSolution ||
-            convertStateStringToFrontendNode(
-              uuid.repository.currentRevision?.content
-            ),
+          content: currentExercise as unknown as EditorExerciseDocument,
+          //||
+          // currentSolution ||
+          // convertStateStringToFrontendNode(
+          //   uuid.repository.currentRevision?.content
+          // ),
           url:
             currentRevision && Object.hasOwn(currentRevision, 'url')
               ? currentRevision.url

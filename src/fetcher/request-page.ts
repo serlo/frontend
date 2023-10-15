@@ -1,11 +1,9 @@
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
-import { convertStateStringToFrontendNode } from './convert-state-string-to-frontend-node'
 import { createBreadcrumbs } from './create-breadcrumbs'
-import { createExercise, createExerciseGroup } from './create-exercises'
+import { createExerciseGroup, createExercise } from './create-exercises'
 import { createHorizon } from './create-horizon'
-import { createInlineLicense } from './create-inline-license'
 import { createSecondaryMenu } from './create-secondary-menu'
 import { buildTaxonomyData } from './create-taxonomy'
 import { createTitle } from './create-title'
@@ -20,14 +18,9 @@ import { getMetaImage } from './meta-data/get-meta-image'
 import { prettifyLinksInSecondaryMenu } from './prettify-links-state/prettify-links-in-secondary-menu'
 import { prettifyLinksInState } from './prettify-links-state/prettify-links-in-state'
 import { dataQuery } from './query'
-import {
-  createStaticExerciseGroup,
-  staticCreateExerciseAndSolution,
-} from './static-create-exercises'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData, UuidRevType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
-import { FrontendNodeType } from '@/frontend-node-types'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
@@ -169,8 +162,7 @@ export async function requestPage(
     uuid.__typename === UuidType.Exercise ||
     uuid.__typename === UuidType.GroupedExercise
   ) {
-    const exercise = [createExercise(uuid)]
-    const staticExercise = staticCreateExerciseAndSolution(uuid)
+    const exercise = createExercise(uuid)
     return {
       kind: 'single-entity',
       entityData: {
@@ -179,7 +171,6 @@ export async function requestPage(
         typename: uuid.__typename as UuidType,
         trashed: uuid.trashed,
         content: exercise,
-        staticContent: staticExercise,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -202,7 +193,7 @@ export async function requestPage(
             ? 'text-exercise'
             : 'groupedexercise',
         metaImage,
-        metaDescription: getMetaDescription(staticExercise?.state.content),
+        metaDescription: getMetaDescription(exercise?.state.content),
       },
       horizonData,
       cacheKey,
@@ -211,16 +202,14 @@ export async function requestPage(
   }
 
   if (uuid.__typename === UuidType.ExerciseGroup) {
-    const exercise = [createExerciseGroup(uuid)]
-    const staticExerciseGroup = createStaticExerciseGroup(uuid)
+    const exerciseGroup = createExerciseGroup(uuid)
     return {
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
         alias: uuid.alias,
         typename: UuidType.ExerciseGroup,
-        content: exercise,
-        staticContent: staticExerciseGroup,
+        content: exerciseGroup,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -231,7 +220,7 @@ export async function requestPage(
         contentType: 'exercisegroup',
         metaImage,
         metaDescription: getMetaDescription(
-          staticExerciseGroup?.state.content as unknown as EditorRowsDocument
+          exerciseGroup?.state.content as unknown as EditorRowsDocument
         ),
       },
       horizonData,
@@ -240,15 +229,11 @@ export async function requestPage(
     }
   }
 
-  const staticContent = (await prettifyLinksInState(
+  const content = (await prettifyLinksInState(
     uuid.currentRevision?.content
       ? parseDocumentString(uuid.currentRevision?.content)
       : undefined
   )) as EditorRowsDocument
-
-  const content = convertStateStringToFrontendNode(
-    uuid.currentRevision?.content
-  )
 
   if (uuid.__typename === UuidType.Event) {
     return {
@@ -259,7 +244,6 @@ export async function requestPage(
         trashed: uuid.trashed,
         typename: UuidType.Event,
         content,
-        staticContent,
         isUnrevised: false,
       },
       newsletterPopup: false,
@@ -268,7 +252,7 @@ export async function requestPage(
         title,
         contentType: 'event',
         metaImage,
-        metaDescription: getMetaDescription(staticContent),
+        metaDescription: getMetaDescription(content),
       },
       cacheKey,
       authorization,
@@ -287,14 +271,13 @@ export async function requestPage(
         revisionId: uuid.currentRevision?.id,
         title: uuid.currentRevision?.title ?? '',
         content,
-        staticContent,
         isUnrevised: !uuid.currentRevision,
       },
       metaData: {
         title,
         contentType: 'page',
         metaImage,
-        metaDescription: getMetaDescription(staticContent),
+        metaDescription: getMetaDescription(content),
       },
       horizonData,
       cacheKey,
@@ -317,7 +300,6 @@ export async function requestPage(
         typename: UuidType.Article,
         title: uuid.currentRevision?.title ?? uuid.revisions?.nodes[0]?.title,
         content,
-        staticContent,
         licenseData,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
@@ -333,7 +315,7 @@ export async function requestPage(
         metaImage,
         metaDescription: uuid.currentRevision?.metaDescription
           ? uuid.currentRevision?.metaDescription
-          : getArticleMetaDescription(staticContent),
+          : getArticleMetaDescription(content),
         dateCreated: uuid.date,
         dateModified: uuid.currentRevision?.date,
       },
@@ -357,24 +339,12 @@ export async function requestPage(
         content: [
           {
             plugin: EditorPluginType.Video,
-            type: FrontendNodeType.Video,
-            state: {
-              src: uuid.currentRevision?.url ?? '',
-              alt: uuid.currentRevision?.title ?? '',
-            },
-            license: createInlineLicense(uuid.license),
-          },
-          ...content,
-        ],
-        staticContent: [
-          {
-            plugin: EditorPluginType.Video,
             state: {
               src: uuid.currentRevision?.url ?? '',
               alt: uuid.currentRevision?.title ?? '',
             },
           },
-          ...(staticContent ? [staticContent] : []),
+          ...(content ? [content] : []),
         ],
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
@@ -387,7 +357,7 @@ export async function requestPage(
         title,
         contentType: 'video',
         metaImage,
-        metaDescription: getMetaDescription(staticContent),
+        metaDescription: getMetaDescription(content),
       },
       horizonData,
       cacheKey,
@@ -409,17 +379,9 @@ export async function requestPage(
         content: [
           {
             plugin: EditorPluginType.Geogebra,
-            type: FrontendNodeType.Geogebra,
             state: uuid.currentRevision?.url ?? '',
           },
-          ...content,
-        ],
-        staticContent: [
-          {
-            plugin: EditorPluginType.Geogebra,
-            state: uuid.currentRevision?.url ?? '',
-          },
-          ...(staticContent ? [staticContent] : []),
+          ...(content ? [content] : []),
         ],
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
@@ -434,7 +396,7 @@ export async function requestPage(
         metaImage,
         metaDescription: uuid.currentRevision?.metaDescription
           ? uuid.currentRevision?.metaDescription
-          : getMetaDescription(staticContent),
+          : getMetaDescription(content),
       },
       horizonData,
       cacheKey,
@@ -479,7 +441,6 @@ export async function requestPage(
         typename: UuidType.CoursePage,
         title: uuid.currentRevision?.title ?? '',
         content,
-        staticContent,
         licenseData,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
@@ -500,7 +461,7 @@ export async function requestPage(
         title,
         contentType: 'course-page',
         metaImage,
-        metaDescription: getMetaDescription(staticContent),
+        metaDescription: getMetaDescription(content),
       },
       horizonData,
       cacheKey,

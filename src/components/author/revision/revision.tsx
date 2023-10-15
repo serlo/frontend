@@ -14,15 +14,16 @@ import { type RevisionData, UuidRevType } from '@/data-types'
 import { removeHash } from '@/helper/remove-hash'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
-import { renderNested } from '@/schema/article-renderer'
-import { InjectionRenderer } from '@/serlo-editor/plugins/injection/renderer'
+import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { InjectionStaticRenderer } from '@/serlo-editor/plugins/injection/static'
+import { createRenderers } from '@/serlo-editor-integration/create-renderers'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export interface RevisionProps {
   data: RevisionData
 }
 
 export function Revision({ data }: RevisionProps) {
-  // const auth = useAuthentication()
   const { strings } = useInstanceData()
   const isCurrentRevision = data.thisRevision.id === data.currentRevision.id
   const hasCurrentRevision = data.currentRevision.id !== undefined
@@ -30,6 +31,7 @@ export function Revision({ data }: RevisionProps) {
   const [displayMode, setDisplayMode] = useState<DisplayModes>(
     DisplayModes.This
   )
+  editorRenderers.init(createRenderers())
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -167,9 +169,9 @@ export function Revision({ data }: RevisionProps) {
               })}{' '}
             </span>
           )}
-          <InjectionRenderer
-            href={`/${parentId}`}
-            renderNested={(value, ...prefix) => renderNested(value, [], prefix)}
+          <InjectionStaticRenderer
+            plugin={EditorPluginType.Injection}
+            state={`/${parentId}`}
           />
         </div>
       </>
