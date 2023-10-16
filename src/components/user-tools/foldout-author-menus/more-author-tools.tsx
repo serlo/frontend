@@ -94,8 +94,7 @@ export function MoreAuthorTools({
               Tool.Log,
               Tool.AnalyticsLink,
               Tool.SortEntities,
-              Tool.CopyItems,
-              Tool.MoveItems,
+              Tool.MoveOrCopyItems,
               Tool.Trash,
             ]
     }

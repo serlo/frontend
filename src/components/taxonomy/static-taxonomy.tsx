@@ -21,11 +21,7 @@ import { abSubmission } from '@/helper/ab-submission'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import {
-  EditorExerciseDocument,
-  EditorRowsDocument,
-  EditorSolutionDocument,
-} from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export interface TopicProps {
   data: TaxonomyData
@@ -46,7 +42,7 @@ const NewFolderPrototype = dynamic<NewFolderPrototypeProps>(() =>
 )
 
 export function StaticTaxonomy({ data }: TopicProps) {
-  const { strings, lang } = useInstanceData()
+  const { strings } = useInstanceData()
 
   const ab = useAB()
 
@@ -55,11 +51,10 @@ export function StaticTaxonomy({ data }: TopicProps) {
   const isExerciseFolder = data.taxonomyType === TaxonomyTermType.ExerciseFolder
   const isTopic = data.taxonomyType === TaxonomyTermType.Topic
 
-  const hasExercises = data.exercisesContent.length > 0
+  const hasExercises = data.staticExercisesContent.length > 0
   const defaultLicense = hasExercises ? getDefaultLicense() : undefined
 
-  // simplest way to provide renderers to editor that can also easily be adapted by edusharing
-  editorRenderers.init(createRenderers({ instance: lang }))
+  editorRenderers.init(createRenderers())
 
   return (
     <>
@@ -154,21 +149,16 @@ export function StaticTaxonomy({ data }: TopicProps) {
       )
     }
 
-    if (!hasExercises || !data.exercisesContent) return null
+    if (!hasExercises || !data.staticExercisesContent) return null
     return (
       <ol className="mt-12">
-        {data.exercisesContent.map((inExercise, i) => {
-          // for static
-          const exerciseArray = inExercise as unknown as
-            | [EditorExerciseDocument]
-            | [EditorExerciseDocument, EditorSolutionDocument]
-
-          const exerciseUuid = exerciseArray[0].serloContext?.uuid
+        {data.staticExercisesContent.map((exerciseOrGroup, i) => {
+          const exerciseUuid = exerciseOrGroup.serloContext?.uuid
 
           return (
-            <li key={exerciseArray[0].id ?? exerciseUuid}>
+            <li key={exerciseOrGroup.id ?? exerciseUuid} className="pb-10">
               <ExerciseNumbering href={`/${exerciseUuid}`} index={i} />
-              <StaticRenderer document={exerciseArray} />
+              <StaticRenderer document={exerciseOrGroup} />
               {i === 1 && renderSurvey()}
             </li>
           )
@@ -216,17 +206,11 @@ export function StaticTaxonomy({ data }: TopicProps) {
     )
   }
 
+  // … interesting hack
   function getDefaultLicense() {
-    for (let i = 0; i < data.exercisesContent.length; i++) {
-      const content = data.exercisesContent[i]
-
-      if (content.type === 'exercise-group') {
-        if (content.license?.isDefault) return content.license
-      } else {
-        if (content.task?.license?.isDefault) return content.task.license
-        if (content.solution?.license?.isDefault)
-          return content.solution.license
-      }
+    for (let i = 0; i < data.staticExercisesContent.length; i++) {
+      const license = data.staticExercisesContent[i].serloContext?.license
+      if (license) return { ...license, isDefault: true }
     }
     //no part of collection has default license so don't show default notice.
     return undefined

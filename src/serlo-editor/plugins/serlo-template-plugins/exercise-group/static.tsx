@@ -8,7 +8,7 @@ import { ExerciseInlineType } from '@/data-types'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import {
   EditorRowsDocument,
-  EditorTemplateGroupedExerciseDocument,
+  EditorTemplateExerciseGroupDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
@@ -18,7 +18,7 @@ const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
 )
 
 export function TextExerciseGroupTypeStaticRenderer(
-  props: EditorTemplateGroupedExerciseDocument
+  props: EditorTemplateExerciseGroupDocument
 ) {
   const { state, serloContext: context } = props
   const [loaded, setLoaded] = useState(false)
@@ -27,22 +27,15 @@ export function TextExerciseGroupTypeStaticRenderer(
     setLoaded(true)
   }, [])
 
-  const { content, exercisesWithSolutions } = state
+  const { content, exercises: exercisesWithSolutions } = state
 
-  const rendered = exercisesWithSolutions.map(
-    ({ exercise, solution }, index) => {
-      const id = `${exercise.id ?? exercise.serloContext?.uuid ?? index}`
-      return {
-        id,
-        element: (
-          <>
-            <StaticRenderer document={exercise} />
-            {solution ? <StaticRenderer document={solution} /> : null}
-          </>
-        ),
-      }
+  const rendered = exercisesWithSolutions.map((exercise, index) => {
+    const id = `${exercise.id ?? exercise.serloContext?.uuid ?? index}`
+    return {
+      id,
+      element: <StaticRenderer document={exercise} />,
     }
-  )
+  })
 
   return (
     <div className="relative">

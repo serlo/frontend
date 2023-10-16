@@ -7,7 +7,7 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { StaticTaxonomy } from '@/components/taxonomy/static-taxonomy'
 import { SlugProps } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import { staticRequestPage } from '@/fetcher/static-request-page'
+import { requestPage } from '@/fetcher/request-page'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
@@ -56,10 +56,7 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
 
 export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
   const alias = (context.params?.slug as string[]).join('/')
-  const pageData = await staticRequestPage(
-    '/' + alias,
-    context.locale! as Instance
-  )
+  const pageData = await requestPage('/' + alias, context.locale! as Instance)
 
   // we only support theses three kinds - 404 for everything else
   if (

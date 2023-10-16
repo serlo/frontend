@@ -11,7 +11,12 @@ import type {
   FrontendExerciseGroupNode,
   FrontendExerciseNode,
 } from './frontend-node-types'
-import type { EditorRowsDocument } from './serlo-editor-integration/types/editor-plugins'
+import type {
+  AnyEditorDocument,
+  EditorExerciseDocument,
+  EditorRowsDocument,
+  EditorTemplateExerciseGroupDocument,
+} from './serlo-editor-integration/types/editor-plugins'
 import type { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 import { Role, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
@@ -284,6 +289,8 @@ export interface EntityData {
   title?: string
   schemaData?: SchemaData
   content?: FrontendContentNode[]
+  // temporary
+  staticContent?: AnyEditorDocument | AnyEditorDocument[]
   licenseData?: LicenseData
   courseData?: CourseData
   unrevisedRevisions?: number
@@ -504,6 +511,11 @@ export interface TaxonomyData extends TaxonomyTermBase {
   taxonomyType: TaxonomyTermType
   subterms: TaxonomySubTerm[]
   exercisesContent: (FrontendExerciseNode | FrontendExerciseGroupNode)[]
+  //temporary
+  staticExercisesContent: (
+    | EditorExerciseDocument
+    | EditorTemplateExerciseGroupDocument
+  )[]
   licenseData?: LicenseData
 }
 

@@ -1,41 +1,15 @@
 import { extractStringFromTextDocument } from '@/serlo-editor/plugins/text/utils/static-extract-text'
-import { isEmptyTextDocument } from '@/serlo-editor/plugins/text/utils/static-is-empty'
 import { getChildrenOfSerializedDocument } from '@/serlo-editor/static-renderer/helper/get-children-of-serialized-document'
 import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 import {
-  isArticleIntroductionDocument,
-  isArticleDocument,
   isRowsDocument,
   isTextDocument,
 } from '@/serlo-editor-integration/types/plugin-type-guards'
-
-/**
- * special metaDescription for articles extracted from the introduction text
- */
-export function getArticleMetaDescription(
-  content?: AnyEditorDocument
-): string | undefined {
-  if (
-    !content ||
-    !isArticleDocument(content) ||
-    !content.state.introduction ||
-    !isArticleIntroductionDocument(content.state.introduction) ||
-    !content.state.introduction.state
-  ) {
-    return undefined
-  }
-
-  const explanation = content.state.introduction.state.explanation
-
-  if (isEmptyTextDocument(explanation)) return undefined
-  return extractStringFromTextDocument(explanation) ?? undefined
-}
 
 export function getMetaDescription(
   content?: AnyEditorDocument
 ): string | undefined {
   if (!content) return undefined
-
   let extracted = ''
 
   if (isTextDocument(content)) {

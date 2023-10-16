@@ -8,7 +8,6 @@ import { SubTopic } from '../../taxonomy/sub-topic'
 import type { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import type { TaxonomySubTerm } from '@/data-types'
-import { Instance } from '@/fetcher/graphql-types/operations'
 import { isPartiallyInView } from '@/helper/is-partially-in-view'
 import { tw } from '@/helper/tw'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
@@ -28,7 +27,7 @@ export function SubjectLandingTopicOverview({
   const topicContainer = useRef<HTMLDivElement>(null)
   const router = useRouter()
 
-  editorRenderers.init(createRenderers({ instance: Instance.De }))
+  editorRenderers.init(createRenderers())
 
   const { extraTerms, allTopicsTaxonomyId } = deSubjectLandingData[subject]
 

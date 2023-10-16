@@ -7,7 +7,7 @@ export function extractDescendant(node: Descendant): string {
   if (Object.hasOwn(node, 'type') && Object.hasOwn(node, 'children')) {
     return node.children.map(extractDescendant).join(' ')
   }
-  return node.text
+  return node.text ? node.text.trim() : ''
 }
 
 export function extractStringFromTextDocument(document?: AnyEditorDocument) {

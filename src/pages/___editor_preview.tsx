@@ -100,8 +100,7 @@ function Content() {
     })
   )
 
-  // simplest way to provide renderers to editor that can also easily be adapted by edusharing
-  editorRenderers.init(createRenderers({ instance: lang }))
+  editorRenderers.init(createRenderers())
 
   return (
     <main id="content" className="flex">

@@ -34,7 +34,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const auth = useAuthentication()
   const canDo = useCanDo()
 
-  editorRenderers.init(createRenderers({ instance: lang }))
+  editorRenderers.init(createRenderers())
 
   const {
     id,

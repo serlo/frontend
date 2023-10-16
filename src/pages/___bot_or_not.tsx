@@ -54,7 +54,7 @@ const BotHunt = () => {
   const mutationFetch = useMutationFetch()
   const [removedIds, setRemovedIds] = useState<number[]>([])
   const manualInputRef = useRef<HTMLInputElement>(null)
-  editorRenderers.init(createRenderers({}))
+  editorRenderers.init(createRenderers())
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { data, error, loadMore } = usePotentialSpamUsersFetch()
