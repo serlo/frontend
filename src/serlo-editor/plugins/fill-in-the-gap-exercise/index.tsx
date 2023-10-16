@@ -61,31 +61,35 @@ export function FillInTheGapExerciseEditor(props: FillInTheGapExerciseProps) {
 
   return (
     <>
-      {/* {focused ? <FillInTheGapExerciseToolbar /> : null} */}
+      <div className="hidden">
+        {focused ? <FillInTheGapExerciseToolbar /> : null}
+      </div>
       <DragDropContext onDragEnd={() => {}}>
         {props.state.text.render()}
-        {/* <Droppable droppableId="gap-solutions">
-          {(provided) => (
-            <div {...provided.droppableProps}>
-              {gapSolutions.map((gapSolution, i) => {
-                return (
-                  <Draggable draggableId={i.toString()} index={i} key={i}>
-                    {(provided) => (
-                      <span
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className="rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2"
-                      >
-                        {gapSolution}
-                      </span>
-                    )}
-                  </Draggable>
-                )
-              })}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable> */}
+        <div className="hidden">
+          <Droppable droppableId="gap-solutions">
+            {(provided) => (
+              <div {...provided.droppableProps}>
+                {gapSolutions.map((gapSolution, i) => {
+                  return (
+                    <Draggable draggableId={i.toString()} index={i} key={i}>
+                      {(provided) => (
+                        <span
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          className="rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2"
+                        >
+                          {gapSolution}
+                        </span>
+                      )}
+                    </Draggable>
+                  )
+                })}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </div>
         <div className="hidden">{JSON.stringify(textState)}</div>
       </DragDropContext>
     </>
