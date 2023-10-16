@@ -814,6 +814,14 @@ export const loggedInData = {
           title: 'Audio',
           description: 'Link to audio files on Vocaroo',
           audioUrl: 'Enter Audio URL'
+        },
+        inputExercise: {
+          title: 'Input Exercise',
+          description: 'Solution can be text or math'
+        },
+        scMcExercise: {
+          title: 'SC/MC Exercise',
+          description: 'Single Choice or Multiple Choice'
         }
       },
       templatePlugins: {
@@ -901,7 +909,10 @@ export const loggedInData = {
           singleChoice: 'Single-choice',
           multipleChoice: 'Multiple-choice',
           chooseType: 'Choose the exercise type',
-          addAnswer: 'Add answer'
+          addAnswer: 'Add answer',
+          previewMode: 'Preview',
+          previewIsActiveHint: 'Preview mode is active',
+          previewIsDeactiveHint: 'Here you can edit'
         },
         solution: {
           optionalExplanation: 'Optionally explain the solution strategy here',
