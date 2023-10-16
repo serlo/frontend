@@ -51,7 +51,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
 
-  const courseChildren =
+  const courseLinks =
     courseData?.pages.map(({ url, title, id }) => {
       return { url, title, id }
     }) ?? []
@@ -63,7 +63,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
       ? staticContent.state.exercises
       : []
 
-  const exerciseChildren = exercises.map((exercise, index) => {
+  const exerciseLinks = exercises.map((exercise, index) => {
     return {
       url: `/${exercise.serloContext?.uuid}`,
       title:
@@ -73,7 +73,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
   })
 
   const [children, setChildren] = useState<TaxonomyLink[]>(
-    isCourse ? courseChildren : exerciseChildren
+    isCourse ? courseLinks : exerciseLinks
   )
 
   if (!loggedInData) return <PleaseLogIn />
