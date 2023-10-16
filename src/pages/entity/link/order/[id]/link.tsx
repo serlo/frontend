@@ -20,7 +20,6 @@ import {
   TaxonomyLink,
   TaxonomyPage,
   SingleEntityPage,
-  CoursePageEntry,
   UuidType,
 } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
@@ -28,7 +27,6 @@ import { requestPage } from '@/fetcher/request-page'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useEntitySortMutation } from '@/mutations/use-entity-sort-mutation'
-import { EditorExerciseDocument } from '@/serlo-editor-integration/types/editor-plugins'
 import { isTemplateExerciseGroupDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
 
 // this duplicates some code from /taxonomy/term/sort… but since this feature here is only temporary I'm okay with that
@@ -49,35 +47,42 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
   const isCourse =
     typename === UuidType.Course || typename === UuidType.CoursePage
   const entityId = courseData?.id ?? entityData.id
-  const [coursePages, setCoursePages] = useState<CoursePageEntry[]>(
-    courseData?.pages ?? []
-  )
 
-  const childrenOfExerciseGroup =
+  const { strings } = useInstanceData()
+  const loggedInData = useLoggedInData()
+
+  const courseLinks =
+    courseData?.pages.map(({ url, title, id }) => {
+      return { url, title, id }
+    }) ?? []
+
+  const exercises =
     content &&
     !Array.isArray(content) &&
     isTemplateExerciseGroupDocument(content)
       ? content.state.exercises
       : []
 
-  const [exercises, setExercises] = useState<EditorExerciseDocument[]>(
-    childrenOfExerciseGroup
+  const exerciseLinks = exercises.map((exercise, index) => {
+    return {
+      url: `/${exercise.serloContext?.uuid}`,
+      title:
+        `(${index + 1}) ` + getPreviewStringFromExercise(exercise, strings),
+      id: exercise.serloContext?.uuid ?? 0,
+    }
+  })
+
+  const [children, setChildren] = useState<TaxonomyLink[]>(
+    isCourse ? courseLinks : exerciseLinks
   )
 
-  const { strings } = useInstanceData()
-  const loggedInData = useLoggedInData()
   if (!loggedInData) return <PleaseLogIn />
   const loggedInStrings = loggedInData.strings.taxonomyTermTools.sort
 
   const onSave = async () => {
-    const childrenIds = isCourse
-      ? coursePages.map((page) => page.id)
-      : exercises.map((exercise) => exercise.serloContext?.uuid ?? 0)
+    const childrenIds = children.map(({ id }) => id)
 
-    const success = await sort({
-      childrenIds,
-      entityId: entityId,
-    })
+    const success = await sort({ childrenIds, entityId })
 
     if (success) {
       showToastNotice(loggedInData.strings.mutations.success.generic, 'success')
@@ -87,9 +92,13 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
     }
   }
 
+  const backButtonData = [
+    { label: strings.revisions.toContent, url: entityData.alias },
+  ]
+
   return (
     <>
-      {renderBackButton()}
+      <Breadcrumbs data={backButtonData} asBackButton />
       <PageTitle title={loggedInStrings.title} />
       <div className="mx-side">
         {renderList()}
@@ -104,68 +113,26 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
         onDragEnd={(result) => {
           const { source, destination } = result
           if (!destination) return
-          if (isCourse) {
-            setCoursePages(
-              arrayMoveImmutable(coursePages, source.index, destination.index)
-            )
-          } else {
-            setExercises(
-              arrayMoveImmutable(exercises, source.index, destination.index)
-            )
-          }
+          setChildren(
+            arrayMoveImmutable(children, source.index, destination.index)
+          )
         }}
       >
         <Droppable droppableId="children">
           {(provided) => {
             return (
-              <>
-                <ul
-                  className="mb-6 mt-0 first:mt-0 mobile:mt-2"
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                >
-                  {isCourse
-                    ? coursePages.map((page, i) =>
-                        renderLink(
-                          {
-                            url: page.url,
-                            title: page.title,
-                            id: page.id,
-                          },
-                          i
-                        )
-                      )
-                    : exercises.map((ex, i) =>
-                        renderLink(
-                          {
-                            url: `/${ex.serloContext?.uuid}`,
-                            title: getPreviewStringFromExercise(ex, strings),
-                            id: ex.serloContext?.uuid ?? 0,
-                          },
-                          i
-                        )
-                      )}
-                  {provided.placeholder}
-                </ul>
-              </>
+              <ul
+                className="mb-6 mt-0 first:mt-0 mobile:mt-2"
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                {children.map(renderLink)}
+                {provided.placeholder}
+              </ul>
             )
           }}
         </Droppable>
       </DragDropContext>
-    )
-  }
-
-  function renderBackButton() {
-    return (
-      <Breadcrumbs
-        data={[
-          {
-            label: strings.revisions.toContent,
-            url: entityData.alias,
-          },
-        ]}
-        asBackButton
-      />
     )
   }
 
@@ -177,19 +144,20 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
         draggableId={link.id.toString()}
         index={index}
       >
-        {(provided) => {
+        {(provided, snapshot) => {
           return (
             <li
               ref={provided.innerRef}
+              className={clsx(
+                'mb-1 block w-max rounded-sm p-1 leading-cozy',
+                snapshot.isDragging && 'bg-brand-100'
+              )}
               {...provided.draggableProps}
-              className="mb-3 block leading-cozy"
+              {...provided.dragHandleProps}
             >
-              <button
-                className="serlo-button-blue-transparent"
-                {...provided.dragHandleProps}
-              >
+              <span className="serlo-button-blue-transparent">
                 <FaIcon icon={faGripLines} />
-              </button>{' '}
+              </span>{' '}
               <Link
                 className={clsx(
                   link.unrevised ? 'opacity-60' : undefined,
