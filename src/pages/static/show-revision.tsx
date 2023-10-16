@@ -3,7 +3,6 @@ import type { GetStaticProps } from 'next/types'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
-import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewProvider } from '@/contexts/revision-view-context'
 import { prettifyLinksInState } from '@/fetcher/prettify-links-state/prettify-links-in-state'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
@@ -37,10 +36,8 @@ export default renderedPageNoHooks<TmpProps>((props) => {
 
 function Content({ editorState }: { editorState: AnyEditorDocument }) {
   const isRevisionView = useRouter().query.revision !== undefined
-  const { lang } = useInstanceData()
 
-  // simplest way to provide renderers to editor that can also easily be adapted by edusharing
-  editorRenderers.init(createRenderers({ instance: lang }))
+  editorRenderers.init(createRenderers())
 
   return (
     <main id="content">

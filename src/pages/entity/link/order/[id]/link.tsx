@@ -11,7 +11,7 @@ import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
-import { getPreviewStringFromExercise } from '@/components/taxonomy/taxonomy-move-copy'
+import { getPreviewStringFromExercise } from '@/components/taxonomy/taxonomy-move-copy/get-preview-string-from-exercise'
 import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -25,10 +25,11 @@ import {
 } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestPage } from '@/fetcher/request-page'
-import type { FrontendExerciseNode } from '@/frontend-node-types'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useEntitySortMutation } from '@/mutations/use-entity-sort-mutation'
+import { EditorExerciseDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { isTemplateExerciseGroupDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
 
 // this duplicates some code from /taxonomy/term/sort… but since this feature here is only temporary I'm okay with that
 
@@ -44,19 +45,24 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
   const sort = useEntitySortMutation()
   const router = useRouter()
   const { entityData } = pageData
+  const { typename, courseData, staticContent } = entityData
   const isCourse =
-    entityData.typename === UuidType.Course ||
-    entityData.typename === UuidType.CoursePage
-  const entityId = entityData.courseData?.id ?? entityData.id
+    typename === UuidType.Course || typename === UuidType.CoursePage
+  const entityId = courseData?.id ?? entityData.id
   const [coursePages, setCoursePages] = useState<CoursePageEntry[]>(
-    entityData.courseData?.pages ?? []
+    courseData?.pages ?? []
   )
 
-  const getExes = () => {
-    const group = entityData.content?.[0]
-    return group && group.type === 'exercise-group' ? group.children ?? [] : []
-  }
-  const [exercises, setExercises] = useState<FrontendExerciseNode[]>(getExes())
+  const childrenOfExerciseGroup =
+    staticContent &&
+    !Array.isArray(staticContent) &&
+    isTemplateExerciseGroupDocument(staticContent)
+      ? staticContent.state.exercises
+      : []
+
+  const [exercises, setExercises] = useState<EditorExerciseDocument[]>(
+    childrenOfExerciseGroup
+  )
 
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -66,7 +72,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
   const onSave = async () => {
     const childrenIds = isCourse
       ? coursePages.map((page) => page.id)
-      : exercises.map((ex) => ex.context.id)
+      : exercises.map((exercise) => exercise.serloContext?.uuid ?? 0)
 
     const success = await sort({
       childrenIds,
@@ -132,9 +138,9 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                     : exercises.map((ex, i) =>
                         renderLink(
                           {
-                            url: ex.href ?? `/${ex.context.id}`,
+                            url: `/${ex.serloContext?.uuid}`,
                             title: getPreviewStringFromExercise(ex, strings),
-                            id: ex.context.id,
+                            id: ex.serloContext?.uuid ?? 0,
                           },
                           i
                         )
@@ -155,7 +161,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
         data={[
           {
             label: strings.revisions.toContent,
-            url: pageData.entityData.alias,
+            url: entityData.alias,
           },
         ]}
         asBackButton

@@ -42,7 +42,7 @@ const NewFolderPrototype = dynamic<NewFolderPrototypeProps>(() =>
 )
 
 export function StaticTaxonomy({ data }: TopicProps) {
-  const { strings, lang } = useInstanceData()
+  const { strings } = useInstanceData()
 
   const ab = useAB()
 
@@ -54,8 +54,7 @@ export function StaticTaxonomy({ data }: TopicProps) {
   const hasExercises = data.staticExercisesContent.length > 0
   const defaultLicense = hasExercises ? getDefaultLicense() : undefined
 
-  // simplest way to provide renderers to editor that can also easily be adapted by edusharing
-  editorRenderers.init(createRenderers({ instance: lang }))
+  editorRenderers.init(createRenderers())
 
   return (
     <>

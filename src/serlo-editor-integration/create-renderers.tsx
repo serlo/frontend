@@ -28,7 +28,6 @@ import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
 import type { PrivacyWrapperProps } from '@/components/content/privacy-wrapper'
 import { isPrintMode } from '@/components/print-mode'
-import { Instance } from '@/fetcher/graphql-types/operations'
 import { ExternalProvider } from '@/helper/use-consent'
 import {
   InitRenderersArgs,
@@ -126,11 +125,7 @@ const PrivacyWrapper = dynamic<PrivacyWrapperProps>(() =>
   )
 )
 
-export function createRenderers({
-  instance = Instance.En,
-}: {
-  instance?: Instance
-}): InitRenderersArgs {
+export function createRenderers(): InitRenderersArgs {
   return {
     pluginRenderers: [
       // plugins
@@ -193,7 +188,7 @@ export function createRenderers({
         renderer: (state: EditorVideoDocument) => {
           const { src } = state.state
           if (!src) return null
-          const [iframeSrc, type] = parseVideoUrl(src, instance)
+          const [iframeSrc, type] = parseVideoUrl(src)
           return (
             <Lazy noPrint>
               <PrivacyWrapper

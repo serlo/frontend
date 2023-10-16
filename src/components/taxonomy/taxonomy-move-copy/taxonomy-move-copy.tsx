@@ -3,32 +3,28 @@ import {
   faCopy,
   faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons'
+import { TaxonomyTerm } from '@serlo/authorization'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
-import { UuidUrlInput } from '../author/uuid-url-input'
-import { PageTitle } from '../content/page-title'
-import { FaIcon } from '../fa-icon'
-import { InfoPanel } from '../info-panel'
-import { Breadcrumbs } from '../navigation/breadcrumbs'
-import { PleaseLogIn } from '../user/please-log-in'
+import { getPreviewStringFromExercise } from './get-preview-string-from-exercise'
+import { UuidUrlInput } from '../../author/uuid-url-input'
+import { PageTitle } from '../../content/page-title'
+import { FaIcon } from '../../fa-icon'
+import { InfoPanel } from '../../info-panel'
+import { Breadcrumbs } from '../../navigation/breadcrumbs'
+import { PleaseLogIn } from '../../user/please-log-in'
+import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
-  InstanceData,
   TaxonomyData,
   TaxonomyLink,
   UuidType,
   UuidWithRevType,
 } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
-import {
-  FrontendExerciseGroupNode,
-  FrontendExerciseNode,
-  FrontendNodeType,
-} from '@/frontend-node-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
-import { extractText } from '@/helper/has-visible-content'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -55,12 +51,31 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
 
   const createEntityLink = useCreateEntityLinkMutation()
   const deleteEntityLink = useDeleteEntityLinkMutation()
+  const canDo = useCanDo()
+
+  const canMove = canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild)
 
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
 
   if (!loggedInData) return <PleaseLogIn />
   const loggedInStrings = loggedInData.strings.taxonomyTermTools.copyMove
+
+  const exercisesData = taxonomyData.staticExercisesContent.map((exercise) => ({
+    id: exercise.serloContext?.uuid ?? 0,
+    title: getPreviewStringFromExercise(exercise, strings),
+    url: `/${exercise.serloContext?.uuid}`,
+  }))
+
+  const categories = [
+    { links: taxonomyData.articles, type: UuidType.Article },
+    { links: taxonomyData.videos, type: UuidType.Video },
+    { links: taxonomyData.applets, type: UuidType.Applet },
+    { links: taxonomyData.courses, type: UuidType.Course },
+    { links: taxonomyData.events, type: UuidType.Event },
+    { links: taxonomyData.events, type: UuidType.Event },
+    { links: exercisesData, type: UuidType.Exercise },
+  ]
 
   return (
     <>
@@ -77,57 +92,36 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
 
       <div className="mx-side">
         <h2 className="font-bold">{loggedInStrings.select}</h2>
-        {renderList()}
+
+        {categories.map(({ links, type }) => {
+          return (
+            <ul className="mt-4 list-none" key={type}>
+              {links.map((node) => renderLi(node, type))}
+            </ul>
+          )
+        })}
+
         <h2 className="mb-3 mt-6 font-bold">{loggedInStrings.target}</h2>
-        {renderInput()}
+
+        <UuidUrlInput
+          supportedEntityTypes={[UuidType.TaxonomyTerm]}
+          supportedTaxonomyTypes={[
+            TaxonomyTermType.Topic,
+            TaxonomyTermType.ExerciseFolder,
+          ]}
+          unsupportedIds={[taxonomyData.id]}
+          renderButtons={renderButtons}
+        />
       </div>
+      {renderFolderNotice()}
     </>
   )
-
-  function renderList() {
-    return (
-      <>
-        <p className="mt-4">
-          {taxonomyData.articles.map((node) =>
-            renderLi(node, UuidType.Article)
-          )}
-        </p>
-        <p className="mt-4">
-          {taxonomyData.exercisesContent.map((node) => {
-            const title = getPreviewStringFromExercise(node, strings)
-
-            return renderLi(
-              {
-                id: node.context.id,
-                title,
-                url: node.href ?? `/${node.context.id}`,
-              },
-              UuidType.Exercise
-            )
-          })}
-        </p>
-        <p className="mt-4">
-          {taxonomyData.videos.map((node) => renderLi(node, UuidType.Video))}
-        </p>
-        <p className="mt-4">
-          {taxonomyData.applets.map((node) => renderLi(node, UuidType.Applet))}
-        </p>
-        <p className="mt-4">
-          {taxonomyData.courses.map((node) => renderLi(node, UuidType.Course))}
-        </p>
-        <p className="mt-4">
-          {taxonomyData.events.map((node) => renderLi(node, UuidType.Event))}
-        </p>
-        {renderFolderNotice()}
-      </>
-    )
-  }
 
   function renderLi(node: TaxonomyLink, typename: UuidType) {
     if (removedEntityIds.includes(node.id)) return null
     const isChecked = entityIds.includes(node.id)
     return (
-      <div>
+      <li>
         <label className="cursor-pointer">
           <input
             type="checkbox"
@@ -150,21 +144,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
           {loggedInStrings.link}
         </a>{' '}
         )
-      </div>
-    )
-  }
-
-  function renderInput() {
-    return (
-      <UuidUrlInput
-        supportedEntityTypes={[UuidType.TaxonomyTerm]}
-        supportedTaxonomyTypes={[
-          TaxonomyTermType.Topic,
-          TaxonomyTermType.ExerciseFolder,
-        ]}
-        unsupportedIds={[taxonomyData.id]}
-        renderButtons={renderButtons}
-      />
+      </li>
     )
   }
 
@@ -216,8 +196,8 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
 
     return (
       <div className="mt-4">
-        {renderButton('move')}
         {renderButton('copy')}
+        {canMove ? renderButton('move') : null}
       </div>
     )
 
@@ -236,6 +216,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
   }
 
   function renderFolderNotice() {
+    // only show if there are exercise folders
     if (!taxonomyData.exercises.length) return null
     return (
       <InfoPanel type="info" icon={faInfoCircle}>
@@ -246,27 +227,4 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
       </InfoPanel>
     )
   }
-}
-
-export function getPreviewStringFromExercise(
-  node: FrontendExerciseNode | FrontendExerciseGroupNode,
-  strings: InstanceData['strings']
-) {
-  const typeString = getTranslatedType(strings, node.type)
-
-  const titleState =
-    node.type === FrontendNodeType.Exercise
-      ? node.task.content?.content
-      : node.content
-
-  if (!titleState) return typeString
-
-  const titleString = extractText(titleState)
-
-  if (!titleString) return typeString
-
-  const title = `${typeString}: "${
-    titleString.length < 60 ? titleString : titleString.substring(0, 50) + '…'
-  }"`
-  return title
 }
