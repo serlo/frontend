@@ -522,7 +522,7 @@ export const loggedInData = {
       thisCoursePage: "Diese Kursseite",
       addCoursePage: "Kursseite hinzufügen",
       wholeCourse: "Gesamter Kurs",
-      moveOrCopyItems: 'Move or copy items',
+      moveOrCopyItems: "Elemente verschieben oder kopieren",
       addGroupedTextExercise: "Textaufgabe mit Teilaufgaben hinzufügen",
       changeLicense: "Lizenz auswählen",
       subscribe: "Abonnieren",
