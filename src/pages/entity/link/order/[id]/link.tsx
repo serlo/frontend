@@ -144,19 +144,20 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
         draggableId={link.id.toString()}
         index={index}
       >
-        {(provided) => {
+        {(provided, snapshot) => {
           return (
             <li
               ref={provided.innerRef}
+              className={clsx(
+                'mb-1 block w-max rounded-sm p-1 leading-cozy',
+                snapshot.isDragging && 'bg-brand-100'
+              )}
               {...provided.draggableProps}
-              className="mb-3 block leading-cozy"
+              {...provided.dragHandleProps}
             >
-              <button
-                className="serlo-button-blue-transparent"
-                {...provided.dragHandleProps}
-              >
+              <span className="serlo-button-blue-transparent">
                 <FaIcon icon={faGripLines} />
-              </button>{' '}
+              </span>{' '}
               <Link
                 className={clsx(
                   link.unrevised ? 'opacity-60' : undefined,
