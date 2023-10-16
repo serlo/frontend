@@ -58,17 +58,23 @@ export function Node({
         return (
           <input
             type={attributes.type}
-            name={attributes.name}
+            id={attributes.name}
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             value={attributes.value ?? 'true'}
           />
         )
 
+      // maybe helpful: https://github.com/ory/elements/blob/main/src/react-components/checkbox.tsx#L23
       case 'checkbox': {
-        triggerSentry({
-          message: `kratos: tried to render input node which is not supported atm: ${attributes.type}`,
-        })
-        return null
+        return (
+          <>
+            <input type="checkbox" id={attributes.name} name={attributes.name} value={1} />
+            <label htmlFor={attributes.name}>
+              {/* For now we use checkbox only for newsletter subscription */}
+              <span>{strings.auth.register.newsletterSubscription}</span>
+            </label>
+          </>
+        )
       }
       // provider - NBP button
       case 'button': {
