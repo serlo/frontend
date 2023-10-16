@@ -84,10 +84,13 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
     exercisesContent: TaxonomyPage['taxonomyData']['staticExercisesContent']
   ): TaxonomyLink[] {
     return exercisesContent
-      .map((exercise) => {
+      .map((exercise, index) => {
         if (isSolutionDocument(exercise)) return null
         const url = `/${exercise.serloContext?.uuid ?? 0}`
-        const title = `${getPreviewStringFromExercise(exercise, strings)}`
+        const title = `(${index + 1}) ${getPreviewStringFromExercise(
+          exercise,
+          strings
+        )}`
         return { title, url, id: exercise.serloContext?.uuid ?? 0 }
       })
       .filter(Boolean) as TaxonomyLink[]
