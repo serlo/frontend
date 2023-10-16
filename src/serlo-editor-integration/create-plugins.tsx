@@ -16,6 +16,7 @@ import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { type LoggedInData, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
+import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import type {
   PluginWithData,
   PluginsWithData,
@@ -27,6 +28,7 @@ import { audioPlugin } from '@/serlo-editor/plugins/audio'
 import { createBoxPlugin } from '@/serlo-editor/plugins/box'
 import { equationsPlugin } from '@/serlo-editor/plugins/equations'
 import { exercisePlugin } from '@/serlo-editor/plugins/exercise'
+import { fillInTheGapExercise } from '@/serlo-editor/plugins/fill-in-the-gap-exercise'
 import { geoGebraPlugin } from '@/serlo-editor/plugins/geogebra'
 import { H5pPlugin } from '@/serlo-editor/plugins/h5p'
 import { createHighlightPlugin } from '@/serlo-editor/plugins/highlight'
@@ -73,7 +75,21 @@ export function createPlugins({
   return [
     {
       type: EditorPluginType.Text,
-      plugin: createTextPlugin({ serloLinkSearch: instance === Instance.De }),
+      plugin: createTextPlugin({
+        serloLinkSearch: instance === Instance.De,
+        formattingOptions: [
+          TextEditorFormattingOption.code,
+          TextEditorFormattingOption.colors,
+          TextEditorFormattingOption.headings,
+          TextEditorFormattingOption.katex,
+          TextEditorFormattingOption.links,
+          TextEditorFormattingOption.lists,
+          TextEditorFormattingOption.math,
+          TextEditorFormattingOption.paragraphs,
+          TextEditorFormattingOption.richTextBold,
+          TextEditorFormattingOption.richTextItalic,
+        ],
+      }),
       visibleInSuggestions: true,
       icon: <IconText />,
     },
@@ -199,6 +215,10 @@ export function createPlugins({
     { type: EditorPluginType.Layout, plugin: layoutPlugin },
     { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
     { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
+    {
+      type: 'fillInTheGapExercise',
+      plugin: fillInTheGapExercise,
+    },
     { type: EditorPluginType.Solution, plugin: solutionPlugin },
 
     // Internal plugins for our content types

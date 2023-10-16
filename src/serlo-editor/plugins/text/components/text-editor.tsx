@@ -197,7 +197,11 @@ export function TextEditor(props: TextEditorProps) {
 
       <Editable
         readOnly={!editable}
-        onKeyDown={handleEditableKeyDown}
+        onKeyDown={(event) => {
+          const result = handleEditableKeyDown(event)
+          console.dir(editor.children) // @@@ Temp for debugging
+          return result
+        }}
         onPaste={handleEditablePaste}
         renderElement={handleRenderElement}
         renderLeaf={handleRenderLeaf}

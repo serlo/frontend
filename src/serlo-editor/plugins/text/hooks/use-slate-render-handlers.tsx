@@ -80,6 +80,34 @@ export const useSlateRenderHandlers = ({
           </MathElement>
         )
       }
+      if (element.type === 'gap') {
+        const isReadOnly = ReactEditor.isReadOnly(editor)
+        return (
+          <>
+            {isReadOnly ? (
+              <span {...attributes}>
+                <input
+                  className="h-full resize-none rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2"
+                  size={20}
+                  spellCheck={false}
+                  autoCorrect="off"
+                  placeholder=""
+                  type="text"
+                />
+                {/* Even though we only want to render an empty input field, {children} needs to be rendered here to prevent slate error. Hidden to make it invisible. Maybe use this for feedback correct/incorrect */}
+                <span className="hidden">{children}</span>
+              </span>
+            ) : (
+              <span
+                {...attributes}
+                className="rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2"
+              >
+                {children}
+              </span>
+            )}
+          </>
+        )
+      }
       return <div {...attributes}>{children}</div>
     },
     [focused]

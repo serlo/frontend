@@ -13,12 +13,16 @@ const interactiveExerciseTypes = [
   EditorPluginType.ScMcExercise,
   EditorPluginType.InputExercise,
   EditorPluginType.H5p,
+  EditorPluginType.FillInTheGapExercise,
 ] as const
 
 export function ExerciseEditor({ editable, state }: ExerciseProps) {
   const { content, interactive } = state
 
-  const exStrings = useEditorStrings().templatePlugins.exercise
+  const exStrings = {
+    ...useEditorStrings().templatePlugins.exercise,
+    fillInTheGapExercise: 'Lückentext',
+  } // @@@ Move this to correct place
   return (
     <>
       {content.render()}

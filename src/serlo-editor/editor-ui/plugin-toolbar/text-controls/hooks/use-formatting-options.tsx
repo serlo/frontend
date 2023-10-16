@@ -20,6 +20,7 @@ import {
   resetColor,
   toggleColor,
 } from '../utils/color'
+import { isGapActive, toggleGap } from '../utils/gap'
 import { isLinkActive, toggleLink } from '../utils/link'
 import {
   isSelectionWithinList,
@@ -56,12 +57,14 @@ import {
   withLinks,
   withLists,
   withMath,
+  withGaps,
 } from '@/serlo-editor/plugins/text/plugins'
 
 const textPluginsMapper = {
   [TextEditorFormattingOption.math]: withMath,
   [TextEditorFormattingOption.links]: withLinks,
   [TextEditorFormattingOption.lists]: withLists,
+  [TextEditorFormattingOption.gap]: withGaps,
 }
 
 const isRegisteredTextPlugin = (
@@ -90,6 +93,11 @@ const registeredHotkeys = [
     hotkey: 'mod+m',
     option: TextEditorFormattingOption.math,
     handler: toggleMath,
+  },
+  {
+    hotkey: 'mod+ü', // @@@ Temporary shortcut
+    option: TextEditorFormattingOption.gap,
+    handler: toggleGap,
   },
 ]
 
@@ -122,6 +130,7 @@ export const useFormattingOptions = (
   const { strings } = useInstanceData()
   const textStrings = useEditorStrings().plugins.text
 
+  // @@@ Rename to initialize formatting options
   const createTextEditor = useCallback(
     (baseEditor: SlateEditor) =>
       formattingOptions.reduce((currentEditor, currentOption) => {
@@ -334,6 +343,18 @@ function createToolbarControls(
       isActive: isCodeActive,
       onClick: toggleCode,
       renderIcon: () => <FaIcon className="h-[15px]" icon={faCode} />,
+    },
+    // Gap
+    {
+      name: TextEditorFormattingOption.gap,
+      title: 'Gap', // @@@
+      isActive: isGapActive,
+      onClick: toggleGap,
+      renderIcon: () => (
+        <span className="h-[15px] rounded-full border border-editor-primary-300 p-1">
+          Lücke
+        </span>
+      ), // @@@
     },
   ].map((option) => {
     return {

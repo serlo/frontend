@@ -4,7 +4,7 @@ import { TextEditor, type TextEditorProps } from './components/text-editor'
 import type { TextEditorConfig, TextEditorState } from './types/config'
 import type {
   CustomElement,
-  CustomText,
+  TextWithFormatting,
   Paragraph,
   List,
   ListItem,
@@ -12,17 +12,14 @@ import type {
   Heading,
   Link,
   MathElement,
+  Gap,
 } from './types/text-editor'
 import { emptyDocumentFactory } from './utils/document'
 import { isEmptyObject } from './utils/object'
 import { type EditorPlugin, serializedScalar } from '@/serlo-editor/plugin'
 
-const createTextPlugin = (
-  config: TextEditorConfig
-): EditorPlugin<TextEditorState, TextEditorConfig> => ({
-  Component: TextEditor,
-  config,
-  state: serializedScalar(emptyDocumentFactory(), {
+export function createTextEditorState() {
+  return serializedScalar(emptyDocumentFactory(), {
     serialize({ value }) {
       return value
     },
@@ -41,7 +38,15 @@ const createTextPlugin = (
 
       return { value, selection: null }
     },
-  }),
+  })
+}
+
+const createTextPlugin = (
+  config: TextEditorConfig
+): EditorPlugin<TextEditorState, TextEditorConfig> => ({
+  Component: TextEditor,
+  config,
+  state: createTextEditorState(),
   onKeyDown() {
     return false
   },
@@ -79,8 +84,9 @@ export type {
   Heading,
   Link,
   MathElement,
-  CustomText,
+  TextWithFormatting as CustomText, // @@@ Rename in files importing this
   TextEditorConfig,
   TextEditorState,
   TextEditorProps,
+  Gap,
 }
