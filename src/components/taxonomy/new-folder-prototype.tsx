@@ -146,7 +146,7 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
               (exercise) =>
                 exercise.serloContext?.uuid &&
                 solved?.includes(exercise.serloContext.uuid)
-            ).length
+            ).length / exercise.state.exercises.length
           : -1
 
         const isSolved =
@@ -337,7 +337,7 @@ function ExerciseWrapper({
             </h2>
 
             <div className="mt-6">
-              <StaticRenderer document={element} />
+              <StaticRenderer document={element.state.exercises[index]} />
             </div>
           </div>
         </div>
