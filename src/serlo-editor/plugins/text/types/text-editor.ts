@@ -14,24 +14,24 @@ export type CustomElement =
 
 export interface Gap {
   type: 'gap'
-  children: Text[]
+  children: CustomText[] // @@@ Make only Text[]
 }
 
 export interface Heading {
   type: 'h'
   level: 1 | 2 | 3
-  children: TextWithFormatting[]
+  children: CustomText[]
 }
 
 export interface Paragraph {
   type: 'p'
-  children: (TextWithFormatting | MathElement)[] // TODO Restrict this to only inline MathElement
+  children: (CustomText | MathElement)[] // TODO Restrict this to only inline MathElement
 }
 
 export interface Link {
   type: 'a'
   href: string
-  children: TextWithFormatting[]
+  children: CustomText[]
 }
 
 export enum ListElementType {
@@ -53,17 +53,17 @@ export interface ListItem {
 
 export interface ListItemText {
   type: ListElementType.LIST_ITEM_TEXT
-  children: TextWithFormatting[]
+  children: CustomText[]
 }
 
 export interface MathElement {
   type: 'math'
   src: string
   inline: boolean
-  children: TextWithFormatting[] // @@@ Maybe also only Text here?
+  children: CustomText[] // @@@ Maybe also only Text here?
 }
 
-export interface TextWithFormatting {
+export interface CustomText {
   text: string
   strong?: true
   em?: true
@@ -76,7 +76,8 @@ export interface Text {
   text: string
 }
 
-export type CustomText = Text | TextWithFormatting
+// @@@ Use this
+// export type CustomText = Text | TextWithFormatting
 
 // Adds type info for custom elements to slate
 // See: https://docs.slatejs.org/concepts/12-typescript

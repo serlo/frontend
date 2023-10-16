@@ -4,7 +4,7 @@ import { TextEditor, type TextEditorProps } from './components/text-editor'
 import type { TextEditorConfig, TextEditorState } from './types/config'
 import type {
   CustomElement,
-  TextWithFormatting,
+  CustomText,
   Paragraph,
   List,
   ListItem,
@@ -84,7 +84,7 @@ export type {
   Heading,
   Link,
   MathElement,
-  TextWithFormatting as CustomText, // @@@ Rename in files importing this
+  CustomText,
   TextEditorConfig,
   TextEditorState,
   TextEditorProps,

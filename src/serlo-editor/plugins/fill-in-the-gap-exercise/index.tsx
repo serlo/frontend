@@ -61,10 +61,10 @@ export function FillInTheGapExerciseEditor(props: FillInTheGapExerciseProps) {
 
   return (
     <>
-      {focused ? <FillInTheGapExerciseToolbar /> : null}
+      {/* {focused ? <FillInTheGapExerciseToolbar /> : null} */}
       <DragDropContext onDragEnd={() => {}}>
         {props.state.text.render()}
-        <Droppable droppableId="gap-solutions">
+        {/* <Droppable droppableId="gap-solutions">
           {(provided) => (
             <div {...provided.droppableProps}>
               {gapSolutions.map((gapSolution, i) => {
@@ -85,8 +85,8 @@ export function FillInTheGapExerciseEditor(props: FillInTheGapExerciseProps) {
               {provided.placeholder}
             </div>
           )}
-        </Droppable>
-        {/* <div>{JSON.stringify(textState)}</div> */}
+        </Droppable> */}
+        <div className="hidden">{JSON.stringify(textState)}</div>
       </DragDropContext>
     </>
   )
