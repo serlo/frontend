@@ -68,7 +68,12 @@ export function Node({
       case 'checkbox': {
         return (
           <>
-            <input type="checkbox" id={attributes.name} name={attributes.name} value={1} />
+            <input
+              type="checkbox"
+              id={attributes.name}
+              name={attributes.name}
+              value={1}
+            />
             <label htmlFor={attributes.name}>
               {/* For now we use checkbox only for newsletter subscription */}
               <span>{strings.auth.register.newsletterSubscription}</span>
