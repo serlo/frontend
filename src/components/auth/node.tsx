@@ -77,6 +77,7 @@ export function Node({
               onChange={(e) => {
                 onChange(e.target.checked)
               }}
+              className="my-6 mr-2 h-4 w-4 min-w-[14px] scale-125 accent-brand"
             />
             <label htmlFor={attributes.name}>
               {/* For now we use checkbox only for newsletter subscription */}
