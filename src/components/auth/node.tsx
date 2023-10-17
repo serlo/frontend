@@ -73,6 +73,10 @@ export function Node({
               id={attributes.name}
               name={attributes.name}
               value={1}
+              checked={!!value}
+              onChange={(e) => {
+                onChange(e.target.checked)
+              }}
             />
             <label htmlFor={attributes.name}>
               {/* For now we use checkbox only for newsletter subscription */}
