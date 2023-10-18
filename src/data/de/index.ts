@@ -522,8 +522,7 @@ export const loggedInData = {
       thisCoursePage: "Diese Kursseite",
       addCoursePage: "Kursseite hinzufügen",
       wholeCourse: "Gesamter Kurs",
-      copyItems: "Element kopieren",
-      moveItems: "Elemente verschieben",
+      moveOrCopyItems: "Elemente verschieben oder kopieren",
       addGroupedTextExercise: "Textaufgabe mit Teilaufgaben hinzufügen",
       changeLicense: "Lizenz auswählen",
       subscribe: "Abonnieren",
@@ -681,12 +680,6 @@ export const loggedInData = {
           serloEntitySrc: "Serlo Inhalt {{src}}",
           serloId: 'Serlo ID',
           placeholder: "Serlo ID (z.B. 1565)"
-        },
-        layout: {
-          title: 'Layout',
-          toDragConvert: "Um die Inhalte zu verschieben, konvertiere sie für den neuen Editor:",
-          oneColumnLayout: "Einspaltiges Layout",
-          multimediaTitle: "Erklärung mit Multimedia-Inhalt"
         },
         multimedia: {
           title: "Erklärung mit Multimedia-Inhalt",
@@ -895,6 +888,7 @@ export const loggedInData = {
           unit: "Einheit (optional)",
           addAnswer: "Antwort hinzufügen",
           enterTheValue: "Gib hier die Antwort ein",
+          feedbackPlaceholder: "Schreibe ein Feedback für diese Antwort",
           yourSolution: "Deine Lösung",
           types: {
             'input-string-normalized-match-challenge': "Text (genau, z.B. 'Tiger')",

@@ -1,17 +1,17 @@
 import { faGripLines, faTools } from '@fortawesome/free-solid-svg-icons'
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
 import { arrayMoveImmutable } from 'array-move'
 import clsx from 'clsx'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
-import { getPreviewStringFromExercise } from '@/components/taxonomy/taxonomy-move-copy'
+import { getPreviewStringFromExercise } from '@/components/taxonomy/taxonomy-move-copy/get-preview-string-from-exercise'
 import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -19,34 +19,30 @@ import {
   SlugProps,
   TaxonomyLink,
   TaxonomyPage,
-  TaxonomyData,
   TopicCategoryType,
   TopicCategoryCustomType,
-  TaxonomySubTerm,
 } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestPage } from '@/fetcher/request-page'
-import {
-  FrontendExerciseGroupNode,
-  FrontendExerciseNode,
-  FrontendNodeType,
-} from '@/frontend-node-types'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useTaxonomyTermSortMutation } from '@/mutations/taxonomyTerm'
+import { isSolutionDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
 
 export const allCategories = [
-  TopicCategoryType.applets,
   TopicCategoryType.articles,
+  TopicCategoryType.videos,
+  TopicCategoryType.applets,
   TopicCategoryType.courses,
   TopicCategoryType.events,
   TopicCategoryType.exercises,
-  TopicCategoryType.videos,
   TopicCategoryCustomType.exercisesContent,
   TopicCategoryCustomType.subterms,
   // we exclude folders because they are nested and don't appear on top level
 ] as const
+
+type Category = (typeof allCategories)[number]
 
 export default renderedPageNoHooks<{ pageData: TaxonomyPage }>((props) => {
   return (
@@ -59,35 +55,54 @@ export default renderedPageNoHooks<{ pageData: TaxonomyPage }>((props) => {
 function Content({ pageData }: { pageData: TaxonomyPage }) {
   const sortTerm = useTaxonomyTermSortMutation()
   const router = useRouter()
-  const [taxonomyData, setTaxonomyData] = useState(pageData.taxonomyData)
-  const taxUrl = `/${taxonomyData.id}`
+
+  const data = pageData.taxonomyData
+  const taxUrl = `/${data.id}`
 
   const { strings } = useInstanceData()
+
+  const [itemsByCategory, setItemsByCategory] = useState<
+    Record<Category, TaxonomyLink[]>
+  >({
+    [TopicCategoryType.articles]: data.articles,
+    [TopicCategoryType.videos]: data.videos,
+    [TopicCategoryType.applets]: data.applets,
+    [TopicCategoryType.courses]: data.courses,
+    [TopicCategoryType.events]: data.events,
+    [TopicCategoryType.exercises]: data.exercises,
+    [TopicCategoryCustomType.exercisesContent]: exercisesContentToTaxonomyLinks(
+      data.exercisesContent
+    ),
+    [TopicCategoryCustomType.subterms]: data.subterms,
+  })
+
   const loggedInData = useLoggedInData()
   if (!loggedInData) return <PleaseLogIn />
   const loggedInStrings = loggedInData.strings.taxonomyTermTools.sort
 
+  function exercisesContentToTaxonomyLinks(
+    exercisesContent: TaxonomyPage['taxonomyData']['exercisesContent']
+  ): TaxonomyLink[] {
+    return exercisesContent
+      .map((exercise, index) => {
+        if (isSolutionDocument(exercise)) return null
+        const url = `/${exercise.serloContext?.uuid ?? 0}`
+        const title = `(${index + 1}) ${getPreviewStringFromExercise(
+          exercise,
+          strings
+        )}`
+        return { title, url, id: exercise.serloContext?.uuid ?? 0 }
+      })
+      .filter(Boolean) as TaxonomyLink[]
+  }
+
   const onSave = async () => {
-    const childrenIds = allCategories.reduce<number[]>((idArray, category) => {
-      if (!taxonomyData[category] || !taxonomyData[category].length)
-        return idArray
+    const childrenIds = allCategories.flatMap((category) =>
+      itemsByCategory[category].map(({ id }) => id)
+    )
 
-      return [
-        ...idArray,
-        ...taxonomyData[category].map((entity) => {
-          if (Object.hasOwn(entity, 'id')) {
-            return entity.id
-          }
+    const success = await sortTerm({ childrenIds, taxonomyTermId: data.id })
 
-          return entity.context.id
-        }),
-      ]
-    }, [])
-
-    const success = await sortTerm({
-      childrenIds,
-      taxonomyTermId: taxonomyData.id,
-    })
     if (success) {
       showToastNotice(loggedInData.strings.mutations.success.generic, 'success')
       setTimeout(() => {
@@ -96,77 +111,31 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
     }
   }
 
+  const backButtonData = [{ label: strings.revisions.toContent, url: taxUrl }]
+
   return (
     <>
-      {renderBackButton()}
+      <Breadcrumbs data={backButtonData} asBackButton />
       <PageTitle title={loggedInStrings.title} />
       <div className="mx-side">
         {renderCategories()}
-        {renderUpdateButton()}
+        <button className="serlo-button-blue mt-12" onClick={onSave}>
+          {loggedInStrings.saveButtonText}
+        </button>
       </div>
     </>
   )
 
-  function renderBackButton() {
-    return (
-      <Breadcrumbs
-        data={[
-          {
-            label: strings.revisions.toContent,
-            url: taxUrl,
-          },
-        ]}
-        asBackButton
-      />
-    )
-  }
-
   function renderCategories() {
-    return [...allCategories].map((category) => {
-      if (!(category in taxonomyData)) return null
-      const links = taxonomyData[category]
-      if (!links || !links.length || typeof links === 'boolean') return null
-
-      return renderCategory(category, exToTaxonomyLinks(links))
+    return allCategories.map((category) => {
+      const links = itemsByCategory[category]
+      if (!links || !Array.isArray(links) || !links.length) return null
+      return renderCategory(category, links as unknown as TaxonomyLink[])
     })
   }
 
-  function exToTaxonomyLinks(
-    links:
-      | TaxonomyLink[]
-      | TaxonomySubTerm[]
-      | (FrontendExerciseNode | FrontendExerciseGroupNode)[]
-  ): TaxonomyLink[] {
-    if (
-      Object.hasOwn(links[0], 'type') &&
-      (links[0].type === FrontendNodeType.ExerciseGroup ||
-        links[0].type === FrontendNodeType.Exercise)
-    ) {
-      return (links as unknown as TaxonomyData['exercisesContent']).map(
-        (exNode) => {
-          const url = exNode.href ?? `/${exNode.context.id}`
-          const pos =
-            exNode.positionOnPage !== undefined ? exNode.positionOnPage + 1 : ''
-          const title = `(${pos}) ${getPreviewStringFromExercise(
-            exNode,
-            strings
-          )}`
-          return { title, url, id: exNode.context.id }
-        }
-      )
-    }
-    return links as unknown as TaxonomyLink[]
-  }
-
-  function renderCategory(
-    category: (typeof allCategories)[number],
-    links: TaxonomyLink[]
-  ) {
-    if (
-      links.length === 0 ||
-      links.filter((link) => !link.unrevised).length === 0
-    )
-      return null
+  function renderCategory(category: Category, links: TaxonomyLink[]) {
+    if (!links.filter((link) => !link.unrevised).length) return null
 
     return (
       <DragDropContext
@@ -176,10 +145,10 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
           if (!destination) return
           const category = source.droppableId as (typeof allCategories)[number]
 
-          setTaxonomyData({
-            ...taxonomyData,
+          setItemsByCategory({
+            ...itemsByCategory,
             [category]: arrayMoveImmutable(
-              exToTaxonomyLinks(taxonomyData[category]),
+              itemsByCategory[category],
               source.index,
               destination.index
             ),
@@ -225,19 +194,20 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
         draggableId={link.id.toString()}
         index={index}
       >
-        {(provided) => {
+        {(provided, snapshot) => {
           return (
             <li
               ref={provided.innerRef}
               {...provided.draggableProps}
-              className="mb-3 block leading-cozy"
+              {...provided.dragHandleProps}
+              className={clsx(
+                'mb-1 block w-max rounded-sm p-1 leading-cozy',
+                snapshot.isDragging && 'bg-brand-100'
+              )}
             >
-              <button
-                className="serlo-button-blue-transparent"
-                {...provided.dragHandleProps}
-              >
+              <span className="serlo-button-blue-transparent">
                 <FaIcon icon={faGripLines} />
-              </button>{' '}
+              </span>{' '}
               <Link
                 className={clsx(
                   link.unrevised ? 'opacity-60' : undefined,
@@ -258,14 +228,6 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
           )
         }}
       </Draggable>
-    )
-  }
-
-  function renderUpdateButton() {
-    return (
-      <button className="serlo-button-blue mt-12" onClick={onSave}>
-        {loggedInStrings.saveButtonText}
-      </button>
     )
   }
 }

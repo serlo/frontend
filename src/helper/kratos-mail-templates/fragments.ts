@@ -37,7 +37,10 @@ ${string}
   )
 }
 
-function createLangTemplatesSelector(invalid: boolean, subject: boolean) {
+export function createLangTemplatesSelector(
+  invalid: boolean,
+  subject: boolean
+) {
   if (invalid) {
     if (subject)
       return `{{ template "en_template" . }} | {{ template "de_template" . }}`

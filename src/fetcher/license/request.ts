@@ -1,14 +1,14 @@
 import { request } from 'graphql-request'
 
 import { licenseDetailsQuery } from './query'
-import { convertStateStringToFrontendNode } from '../convert-state-string-to-frontend-node'
 import {
   LicenseDetailsQuery,
   LicenseDetailsQueryVariables,
 } from '../graphql-types/operations'
 import { endpoint } from '@/api/endpoint'
 import { LicenseDetailPage, PageNotFound } from '@/data-types'
-import { FrontendContentNode } from '@/frontend-node-types'
+import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
+import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export async function requestLicensePage(
   id: number
@@ -23,9 +23,7 @@ export async function requestLicensePage(
   if (!license) return { kind: 'not-found' }
 
   // hack to remove undefined pluginId value, can be removed when we move to app directory
-  const content = JSON.parse(
-    JSON.stringify(convertStateStringToFrontendNode(license.content))
-  ) as FrontendContentNode[]
+  const content = parseDocumentString(license.content) as EditorRowsDocument
 
   return {
     kind: 'license-detail',

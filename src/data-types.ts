@@ -7,10 +7,11 @@ import {
 } from './fetcher/graphql-types/operations'
 import type { User } from './fetcher/query-types'
 import type {
-  FrontendContentNode,
-  FrontendExerciseGroupNode,
-  FrontendExerciseNode,
-} from './frontend-node-types'
+  AnyEditorDocument,
+  EditorExerciseDocument,
+  EditorRowsDocument,
+  EditorTemplateExerciseGroupDocument,
+} from './serlo-editor-integration/types/editor-plugins'
 import type { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 import { Role, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
@@ -192,7 +193,7 @@ export interface LicenseDetailPage {
 export interface LicenseDetailData {
   id: number
   title: string
-  content: FrontendContentNode[]
+  content: EditorRowsDocument
   isDefault: boolean
 }
 
@@ -282,7 +283,7 @@ export interface EntityData {
   revisionId?: number
   title?: string
   schemaData?: SchemaData
-  content?: FrontendContentNode[]
+  content?: AnyEditorDocument | AnyEditorDocument[]
   licenseData?: LicenseData
   courseData?: CourseData
   unrevisedRevisions?: number
@@ -312,7 +313,7 @@ export interface RevisionData {
     title?: string
     metaTitle?: string
     metaDescription?: string
-    content?: FrontendContentNode[]
+    content?: AnyEditorDocument | AnyEditorDocument[]
     url?: string
   }
   currentRevision: {
@@ -320,7 +321,7 @@ export interface RevisionData {
     title?: string
     metaTitle?: string
     metaDescription?: string
-    content?: FrontendContentNode[]
+    content?: AnyEditorDocument | AnyEditorDocument[]
     url?: string
   }
   changes?: string
@@ -447,7 +448,7 @@ export interface UserPage extends EntityPageBase {
     imageUrl: string
     chatUrl?: string
     motivation?: string
-    description?: FrontendContentNode[] | null
+    description?: EditorRowsDocument | null
     lastLogin?: string | null
     date: string
     roles: { role: Role; instance: Instance | null }[]
@@ -476,7 +477,7 @@ export interface TaxonomyTermBase {
   applets: TaxonomyLink[]
   exercises: TaxonomyLink[]
   events: TaxonomyLink[]
-  description?: FrontendContentNode[]
+  description?: EditorRowsDocument
 }
 
 export interface TaxonomyLink {
@@ -502,7 +503,10 @@ export interface TaxonomyData extends TaxonomyTermBase {
   trashed: boolean
   taxonomyType: TaxonomyTermType
   subterms: TaxonomySubTerm[]
-  exercisesContent: (FrontendExerciseNode | FrontendExerciseGroupNode)[]
+  exercisesContent: (
+    | EditorExerciseDocument
+    | EditorTemplateExerciseGroupDocument
+  )[]
   licenseData?: LicenseData
 }
 

@@ -13,13 +13,15 @@ import { ProfileRoles } from '@/components/user/profile-roles'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UserPage } from '@/data-types'
-import { convertStateStringToFrontendNode } from '@/fetcher/convert-state-string-to-frontend-node'
 import { PotentialSpamUsersQuery } from '@/fetcher/graphql-types/operations'
 import { sharedUserFragments } from '@/fetcher/user/query'
 import { isMac } from '@/helper/client-detection'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useMutationFetch } from '@/mutations/helper/use-mutation-fetch'
-import { renderArticle } from '@/schema/article-renderer'
+import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
+import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 const ContentPage: NextPage = () => {
   return (
@@ -52,6 +54,7 @@ const BotHunt = () => {
   const mutationFetch = useMutationFetch()
   const [removedIds, setRemovedIds] = useState<number[]>([])
   const manualInputRef = useRef<HTMLInputElement>(null)
+  editorRenderers.init(createRenderers())
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { data, error, loadMore } = usePotentialSpamUsersFetch()
@@ -283,9 +286,9 @@ const BotHunt = () => {
 
   function renderDescription(stringDescription?: string | null) {
     if (!stringDescription || stringDescription === 'NULL') return null
-    const desc = convertStateStringToFrontendNode(stringDescription)
+    const desc = parseDocumentString(stringDescription)
 
-    return renderArticle(desc)
+    return <StaticRenderer document={desc} />
   }
 
   function renderLoadMore() {

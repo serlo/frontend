@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import type { ScMcExerciseProps } from '.'
-import { ScMcExerciseRenderer } from './renderer'
+import { ScMcExerciseRenderer } from './renderer/renderer'
 import { ScMcExerciseToolbar } from './toolbar'
 import {
   AddButton,

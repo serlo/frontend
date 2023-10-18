@@ -1,5 +1,5 @@
 import type { BoxProps } from '.'
-import { type BoxType, types } from './renderer'
+import { types } from './renderer'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
@@ -11,6 +11,18 @@ import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin
 export const BoxToolbar = ({ id, state }: BoxProps) => {
   const boxStrings = useEditorStrings().plugins.box
   const { strings } = useInstanceData()
+
+  const typeOptions = types.map((type) => {
+    return (
+      <option
+        key={type}
+        value={type}
+        data-qa={`plugin-box-type-chooser-option-${type}`}
+      >
+        {strings.content.boxTypes[type]}
+      </option>
+    )
+  })
 
   return (
     <PluginToolbar
@@ -25,18 +37,14 @@ export const BoxToolbar = ({ id, state }: BoxProps) => {
             <select
               onChange={(e) => state.type.set(e.target.value)}
               className={tw`
-                mr-2 cursor-pointer rounded-md !border border-gray-500 bg-editor-primary-100 px-1 py-[1px]
-                text-sm transition-all hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
+                mr-2 cursor-pointer rounded-md !border border-gray-500
+              bg-editor-primary-100 px-1 py-[1px] text-sm transition-all
+              hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
               `}
               value={state.type.value}
+              data-qa="plugin-box-type-chooser"
             >
-              {types.map((type) => {
-                return (
-                  <option key={type} value={type}>
-                    {strings.content.boxTypes[type as BoxType]}
-                  </option>
-                )
-              })}
+              {typeOptions}
             </select>
           </div>
         </>

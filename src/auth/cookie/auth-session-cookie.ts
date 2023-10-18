@@ -42,6 +42,8 @@ interface Traits {
 
 function stripSession(session: Session): Session {
   const { id, identity, authentication_methods } = session
+  if (!identity) return session
+
   const { id: identityId, schema_id, schema_url } = identity
   const { username, email } = identity.traits as Traits
   const metaDataPublic = identity.metadata_public as Record<string, unknown>

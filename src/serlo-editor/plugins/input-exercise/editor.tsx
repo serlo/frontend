@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import type { InputExerciseProps } from '.'
 import { InputExerciseRenderer } from './renderer'
@@ -15,6 +15,7 @@ import {
   useAppDispatch,
 } from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function InputExerciseEditor(props: InputExerciseProps) {
   const { editable, state, id } = props
@@ -24,6 +25,19 @@ export function InputExerciseEditor(props: InputExerciseProps) {
 
   const [previewActive, setPreviewActive] = useState(false)
   const newestAnswerRef = useRef<HTMLInputElement>(null)
+
+  function overwriteFocus(force?: boolean) {
+    setTimeout(() => {
+      if (force) dispatch(focus(id))
+      newestAnswerRef.current?.focus()
+      // Needs to wait for the editor focus to finish and then overwrite it. It's definitely a hack, but it works so far.
+      // 50 is arbitrary value that seems to work nicely (10 was to low for firefox in my testing)
+    }, 50)
+  }
+
+  // overwrite focus on first render
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => overwriteFocus, [])
 
   const renderer = (
     <InputExerciseRenderer
@@ -86,15 +100,13 @@ export function InputExerciseEditor(props: InputExerciseProps) {
           })}
           <AddButton
             onClick={() => {
-              state.answers.insert()
-              setTimeout(() => {
-                dispatch(focus(id))
-                newestAnswerRef.current?.focus()
-                // this needs to wait for the editor focus to finish
-                // and then overwrite it. It's definitely a hack.
-                // 50 is arbitrary value that seems to work nicely.
-                // 10 was to low for firefox in my testing
-              }, 50)
+              const wrongAnswer = {
+                value: '',
+                isCorrect: false,
+                feedback: { plugin: EditorPluginType.Text },
+              }
+              state.answers.insert(undefined, wrongAnswer)
+              overwriteFocus(true)
             }}
           >
             {inputExStrings.addAnswer}
