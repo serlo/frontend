@@ -64,23 +64,28 @@ export function FillInTheGapExerciseEditor(props: FillInTheGapExerciseProps) {
       <div className="hidden">
         {focused ? <FillInTheGapExerciseToolbar /> : null}
       </div>
-      <DragDropContext onDragEnd={() => {}}>
+      <DragDropContext onDragEnd={(result) => {
+        // @@@ How to get the new info to the gap component?
+        // Option A: Modify text component state in store.
+        // Option: setState in Gap component. But I need to get a reference somehow? 
+      }}>
         {props.state.text.render()}
-        <div className="hidden">
+        <div className="">
           <Droppable droppableId="gap-solutions">
             {(provided) => (
-              <div {...provided.droppableProps}>
+              <div {...provided.droppableProps} ref={provided.innerRef}>
                 {gapSolutions.map((gapSolution, i) => {
                   return (
                     <Draggable draggableId={i.toString()} index={i} key={i}>
                       {(provided) => (
-                        <span
+                        <div
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
+                          ref={provided.innerRef}
                           className="rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2"
                         >
                           {gapSolution}
-                        </span>
+                        </div>
                       )}
                     </Draggable>
                   )

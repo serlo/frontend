@@ -29,6 +29,8 @@ export function toggleGap(editor: SlateEditor) {
     Transforms.insertNodes(editor, {
       type: 'gap',
       children: [{ text: ' ' }],
+      alternativeSolutions: ['Banana'],
+      userEntry: 'Apple',
     })
     return
   }
@@ -39,6 +41,8 @@ export function toggleGap(editor: SlateEditor) {
     {
       type: 'gap',
       children: [{ text: '' }],
+      alternativeSolutions: ['Banana'],
+      userEntry: 'Apple',
     },
     { split: true }
   )

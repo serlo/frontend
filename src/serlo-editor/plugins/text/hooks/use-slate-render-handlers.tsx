@@ -6,6 +6,8 @@ import { MathElement } from '../components/math-element'
 import { TextLeafWithPlaceholder } from '../components/text-leaf-with-placeholder'
 import { ListElementType } from '../types/text-editor'
 import { selectMayManipulateSiblings, store } from '@/serlo-editor/store'
+import { Droppable } from 'react-beautiful-dnd'
+import clsx from 'clsx'
 
 interface UseSlateRenderHandlersArgs {
   focused: boolean
@@ -82,20 +84,48 @@ export const useSlateRenderHandlers = ({
       }
       if (element.type === 'gap') {
         const isReadOnly = ReactEditor.isReadOnly(editor)
+        const dragAndDropMode = false
+
+        // @@@ If drag&drop mode -> Render droppable and no input field
         return (
           <>
             {isReadOnly ? (
               <span {...attributes}>
-                <input
-                  className="h-full resize-none rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2"
-                  size={20}
-                  spellCheck={false}
-                  autoCorrect="off"
-                  placeholder=""
-                  type="text"
-                />
+                {dragAndDropMode ? (
+                  <Droppable droppableId={Math.random().toString()}>
+                    {(provided, snapshot) => (
+                      <span
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                        className={clsx(
+                          'h-full resize-none rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2',
+                          snapshot.isDraggingOver ?? 'bg-editor-primary-500'
+                        )}
+                      >
+                        {element.userEntry}
+                        {provided.placeholder}
+                      </span>
+                    )}
+                  </Droppable>
+                ) : (
+                  <input
+                    className="h-full resize-none rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2"
+                    size={20}
+                    spellCheck={false}
+                    autoCorrect="off"
+                    placeholder=""
+                    type="text"
+                  />
+                )}
                 {/* Even though we only want to render an empty input field, {children} needs to be rendered here to prevent slate error. Hidden to make it invisible. Maybe use this for feedback correct/incorrect */}
                 <span className="hidden">{children}</span>
+                {element.alternativeSolutions.map(
+                  (alternativeSolution, index) => (
+                    <span className="hidden" key={index}>
+                      {alternativeSolution}
+                    </span>
+                  )
+                )}
               </span>
             ) : (
               <span
@@ -103,6 +133,13 @@ export const useSlateRenderHandlers = ({
                 className="rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2"
               >
                 {children}
+                {element.alternativeSolutions.map(
+                  (alternativeSolution, index) => (
+                    <span className="hidden" key={index}>
+                      {alternativeSolution}
+                    </span>
+                  )
+                )}
               </span>
             )}
           </>

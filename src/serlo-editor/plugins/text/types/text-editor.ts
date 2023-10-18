@@ -15,6 +15,8 @@ export type CustomElement =
 export interface Gap {
   type: 'gap'
   children: CustomText[] // @@@ Make only Text[]
+  alternativeSolutions: string[]
+  userEntry: string // @@@ Idea: Set this when user drops draggable. This causes rerender of gap (enable/disable drop, show dropped item, ...). A little bit confusing because this is never saved, userEntry="" for every entry in database. But void elements also save an empty text node. 
 }
 
 export interface Heading {
