@@ -200,7 +200,7 @@ export function InjectionStaticRenderer({
     )
 
   return (
-    <div className="mb-4 border-b-4 border-brand-300 text-gray-900">
+    <div className="border-b-4 border-brand-300 pb-4 text-gray-900">
       <StaticRenderer document={content} />
     </div>
   )
