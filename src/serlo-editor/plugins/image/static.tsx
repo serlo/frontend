@@ -36,6 +36,8 @@ export function ImageStaticRenderer({
   )
 
   function getSemanticSource() {
+    if (!src.startsWith('https://assets.serlo.org/')) return src
+
     const semanticName = (alt && alt.length > 3 ? alt : pathNameBase)?.replace(
       /[^\w+]/g,
       ''
