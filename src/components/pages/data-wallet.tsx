@@ -71,16 +71,7 @@ export function DataWallet() {
           </p>
           <ol className="serlo-ol mb-4 text-lg">
             <li>
-              Lade dir die{' '}
-              <a
-                className="serlo-link font-bold"
-                href="https://enmeshed.de"
-                target="_blank"
-                rel="noreferrer"
-              >
-                BIRD Wallet App
-              </a>{' '}
-              auf dein Smartphone.
+              Lade dir die Mein Bildungsraum Wallet App auf dein Smartphone.
             </li>
             <li>
               Erstelle einen{' '}
@@ -98,7 +89,7 @@ export function DataWallet() {
                 ))}
             </li>
             <li>
-              Lege in deiner Bird Wallet App ein neues Profil an und füge Serlo
+              Lege in deiner Wallet App ein neues Profil an und füge Serlo
               als Kontakt hinzu, indem du den QR-Code scannst.
             </li>
             <li>
