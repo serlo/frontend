@@ -77,7 +77,7 @@ export const GenerateExerciseButton = ({
       </ModalWithCloseButton>
       {activePage === ActivePage.ExercisePreviewPage && (
         <ExercisePreviewPage
-          generateExercisePromise={generateExercisePromise}
+          generateExercisePromise={generateExercisePromise!}
           closePage={() => setActivePage(ActivePage.None)}
         />
       )}
