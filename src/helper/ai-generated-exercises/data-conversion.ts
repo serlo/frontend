@@ -1,4 +1,6 @@
-import { either as E } from 'fp-ts'
+// This file needs a rewrite using serlo editor state directly
+
+/*import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -11,8 +13,6 @@ import {
 import {
   InputExerciseState,
   ScMcExerciseState,
-  Question,
-  TypeTextExercise,
   TypeTextExerciseGroup,
   TypeTextExerciseState,
 } from './types'
@@ -23,21 +23,17 @@ import {
   FrontendExerciseNode,
   FrontendInlineMathNode,
   FrontendNodeType,
-  FrontendPNode,
   FrontendSlatePNode,
   FrontendTextNode,
   TaskEditorState,
 } from '@/frontend-node-types'
-import { CustomText, MathElement, Paragraph } from '@/serlo-editor/plugins/text'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 type InputSingleChoice = t.TypeOf<typeof InputSingleChoiceDecoder>
 type InputMultipleChoice = t.TypeOf<typeof InputMultipleChoiceDecoder>
 type InputShortAnswer = t.TypeOf<typeof InputShortAnswerDecoder>
 
-export function convertAiGeneratedDataToEditorData(
-  input: string
-): FrontendExerciseNode[] {
+export function convertAiGeneratedDataToEditorData(input: string): any {
   try {
     const parsed = JSON.parse(input) as unknown
 
@@ -501,3 +497,4 @@ function createMathElement(value: string): FrontendInlineMathNode {
     // children: [{ text: '' }],
   }
 }
+*/
