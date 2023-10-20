@@ -66,7 +66,7 @@ export const Difficulty: React.FC<DifficultyProps> = ({
         {strings.ai.exerciseGeneration.difficulty.learningGoalLabel}
       </label>
       {!isSummary && (
-        <p className="my-2 text-sm font-thin text-lightgray">
+        <p className="text-lightgray my-2 text-sm font-thin">
           {strings.ai.exerciseGeneration.difficulty.learningGoalExample}
         </p>
       )}
@@ -79,7 +79,7 @@ export const Difficulty: React.FC<DifficultyProps> = ({
             onNext()
           }
         }}
-        className="w-11/12 resize-none rounded-md border border-lightblue p-2 pl-2 focus:border-lightblue focus:outline-brand-700"
+        className="border-lightblue focus:border-lightblue w-11/12 resize-none rounded-md border p-2 pl-2 focus:outline-brand-700"
         placeholder={
           strings.ai.exerciseGeneration.difficulty.learningGoalPlaceholder
         }

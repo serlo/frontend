@@ -82,7 +82,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
   }, [generateExercise])
 
   return (
-    <div className="fixed left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center bg-background-gray">
+    <div className="bg-background-gray fixed left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center">
       <CloseButton
         onClick={closePage}
         title={strings.ai.exerciseGeneration.preview.closePreviewTitle}

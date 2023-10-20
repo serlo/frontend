@@ -66,7 +66,7 @@ export const Subject: React.FC<SubjectProps> = ({
               setSelectedRadio(defaultSubject)
               setSubject(defaultSubject)
             }}
-            className="text-brand-700 focus:ring-lightblue"
+            className="focus:ring-lightblue text-brand-700"
           />
           <label htmlFor="defaultSubject" className="ml-2">
             {defaultSubject.charAt(0).toUpperCase() + defaultSubject.slice(1)}
@@ -86,7 +86,7 @@ export const Subject: React.FC<SubjectProps> = ({
             setSubject('')
             setSelectedRadio('custom')
           }}
-          className="text-brand-700 focus:ring-lightblue"
+          className="focus:ring-lightblue text-brand-700"
         />
         <label htmlFor="customSubject" className="ml-2">
           {strings.ai.exerciseGeneration.subject.otherSubjectLabel}
@@ -101,7 +101,7 @@ export const Subject: React.FC<SubjectProps> = ({
               onNext()
             }
           }}
-          className="ml-2 rounded-md border border-lightblue p-2 pl-2 focus:border-lightblue focus:outline-brand-700"
+          className="border-lightblue focus:border-lightblue ml-2 rounded-md border p-2 pl-2 focus:outline-brand-700"
           placeholder={
             strings.ai.exerciseGeneration.subject.customSubjectPlaceholder
           }
