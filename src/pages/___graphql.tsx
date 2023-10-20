@@ -44,16 +44,9 @@ function GraphiQLWithCustomFetcher() {
   }
 
   return (
-    <>
+    <div className="[&_.graphiql-container]:h-screen">
       <GraphiQL fetcher={fetcher} />
-      <style jsx global>
-        {`
-          .graphiql-container {
-            height: 100vh;
-          }
-        `}
-      </style>
-    </>
+    </div>
   )
 }
 
