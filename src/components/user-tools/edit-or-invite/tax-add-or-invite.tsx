@@ -1,8 +1,4 @@
-import {
-  faPencilAlt,
-  faPlusCircle,
-  faStar,
-} from '@fortawesome/free-solid-svg-icons'
+import { faPencilAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { TaxonomyTerm } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
@@ -10,6 +6,7 @@ import { useState } from 'react'
 import type { InviteModalProps } from './invite-modal'
 import { AuthorToolsData } from '../foldout-author-menus/author-tools'
 import type { MoreAuthorToolsProps } from '../foldout-author-menus/more-author-tools'
+import { GenerateExerciseButton } from '../generate-exercise-button'
 import { UserToolsItem } from '../user-tools-item'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
@@ -17,7 +14,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
-import { GenerateExerciseButton } from '../generate-exercise-button'
 
 const InviteModal = dynamic<InviteModalProps>(() =>
   import('@/components/user-tools/edit-or-invite/invite-modal').then(
