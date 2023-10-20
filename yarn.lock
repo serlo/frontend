@@ -3926,19 +3926,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@serlo/api@npm:^0.52.1":
-  version: 0.52.1
-  resolution: "@serlo/api@npm:0.52.1"
-  checksum: 5b883f779436c827c74c238acf07167b94032a9735396698b935c51924b6f7cfe3ba9af82544ac6c9d307f877c8d272324a72c4fe3bad5f8ea079d185e08566c
+"@serlo/api@npm:^0.57.3":
+  version: 0.57.3
+  resolution: "@serlo/api@npm:0.57.3"
+  checksum: d8369f335a2b0ffaf0309a39d7115f7efad9fd8d91bac609a7c4152ccd735eee532eca1216b89a1496211f30eae29ce1f7a7c4309bdacf930055d4db1f296a69
   languageName: node
   linkType: hard
 
-"@serlo/authorization@npm:^0.52.1":
-  version: 0.52.1
-  resolution: "@serlo/authorization@npm:0.52.1"
+"@serlo/authorization@npm:^0.57.3":
+  version: 0.57.3
+  resolution: "@serlo/authorization@npm:0.57.3"
   dependencies:
-    "@serlo/api": ^0.52.1
-  checksum: df31b452ff5aa97091c055c43c507ce50b623d395d113a65fdde30ffdf2bc02c2840fd8cdb83a20b825f5059d02d98b49c3820ac9e2c7f4f5f5a6408bcfc2525
+    "@serlo/api": ^0.57.3
+  checksum: 96f6d57c8402e094075861e7652d0017c0fda3337d6061021adba26f69ae04b804a72034255579b2e1a5478389290a1dab23acfc6742536ab18ca13509f64fc1
   languageName: node
   linkType: hard
 
@@ -3967,7 +3967,7 @@ __metadata:
     "@radix-ui/react-navigation-menu": ^1.1.3
     "@radix-ui/react-select": ^1.2.2
     "@reduxjs/toolkit": ^1.9.5
-    "@serlo/authorization": ^0.52.1
+    "@serlo/authorization": ^0.57.3
     "@svgr/webpack": ^8.1.0
     "@tippyjs/react": ^4.2.6
     "@types/algebra.js": ^0.2.2
