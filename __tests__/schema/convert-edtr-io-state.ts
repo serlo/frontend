@@ -70,42 +70,6 @@ describe('serlo-editor plugins', () => {
     })
   })
 
-  describe('plugin: layout', () => {
-    test('default', () => {
-      const result = convert({
-        plugin: EditorPluginType.Layout,
-        state: [
-          {
-            child: {
-              plugin: EditorPluginType.Rows,
-              state: [
-                {
-                  plugin: EditorPluginType.Text,
-                  state: [],
-                },
-              ],
-            },
-            width: 6,
-          },
-        ],
-      })
-      expect(result).toEqual([
-        {
-          type: FrontendNodeType.Row,
-          children: [
-            {
-              type: FrontendNodeType.Col,
-              size: 6,
-              children: [
-                { type: FrontendNodeType.SlateContainer, children: [] },
-              ],
-            },
-          ],
-        },
-      ])
-    })
-  })
-
   describe('plugin: geogebra', () => {
     test('default', () => {
       const result = convert({

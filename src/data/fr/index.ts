@@ -522,8 +522,7 @@ export const loggedInData = {
       thisCoursePage: "Cette page de cours",
       addCoursePage: "Ajouter une page de cours",
       wholeCourse: "Tout le cours",
-      copyItems: "Copier des éléments",
-      moveItems: "Déplacer des éléments",
+      moveOrCopyItems: 'Move or copy items',
       addGroupedTextExercise: "Ajouter un exercice de texte groupé",
       changeLicense: "Modifier la licence",
       subscribe: "S'abonner",
@@ -682,12 +681,6 @@ export const loggedInData = {
           serloId: 'Serlo ID',
           placeholder: 'Serlo ID (e.g. 1565)'
         },
-        layout: {
-          title: 'Layout',
-          toDragConvert: "Pour rendre le contenu glissable, converte-le pour le nouvel éditeur :",
-          oneColumnLayout: "Mise en page en une colonne",
-          multimediaTitle: "Contenu multimédia avec un texte"
-        },
         multimedia: {
           title: "Contenu multimédia avec un texte",
           description: "Ajouter du contenu multimédia illustrant ou explicatif associé a un texte.",
@@ -814,6 +807,14 @@ export const loggedInData = {
           title: 'Audio',
           description: 'Link to audio files on Vocaroo',
           audioUrl: 'Enter Audio URL'
+        },
+        inputExercise: {
+          title: 'Input Exercise',
+          description: 'Solution can be text or math'
+        },
+        scMcExercise: {
+          title: 'SC/MC Exercise',
+          description: 'Single Choice or Multiple Choice'
         }
       },
       templatePlugins: {
@@ -887,6 +888,7 @@ export const loggedInData = {
           unit: "Unité",
           addAnswer: "Ajouter une réponse",
           enterTheValue: "Saisir la réponse",
+          feedbackPlaceholder: 'Add a feedback message for this answer',
           yourSolution: "Ta solution",
           types: {
             'input-string-normalized-match-challenge': "Text (exact, e.g. 'tiger')",
@@ -901,7 +903,10 @@ export const loggedInData = {
           singleChoice: "Choix unique",
           multipleChoice: "Choix multiple",
           chooseType: "Choisissez le type d'exercice",
-          addAnswer: "Ajouter une réponse"
+          addAnswer: "Ajouter une réponse",
+          previewMode: 'Preview',
+          previewIsActiveHint: 'Preview mode is active',
+          previewIsDeactiveHint: 'Here you can edit'
         },
         solution: {
           optionalExplanation: "Explication de la stratégie de solution (facultatif)",

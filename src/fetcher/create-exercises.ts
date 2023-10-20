@@ -17,9 +17,9 @@ import { shuffleArray } from '@/helper/shuffle-array'
 import { convert, ConvertNode } from '@/schema/convert-edtr-io-state'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
-  EditorH5PPlugin,
-  EditorInputExercisePlugin,
-  EditorScMcExercisePlugin,
+  EditorH5PDocument,
+  EditorInputExerciseDocument,
+  EditorScMcExerciseDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
 type BareExercise = Omit<
@@ -60,9 +60,9 @@ export function createExercise(
 export interface TaskEditorStateInput {
   content: ConvertNode // serlo-editor plugin "exercise"
   interactive?:
-    | EditorScMcExercisePlugin
-    | EditorInputExercisePlugin
-    | EditorH5PPlugin
+    | EditorScMcExerciseDocument
+    | EditorInputExerciseDocument
+    | EditorH5PDocument
 }
 
 function createTaskData(raw?: string): TaskEditorState | undefined {
@@ -76,12 +76,11 @@ function createTaskData(raw?: string): TaskEditorState | undefined {
 
   if (taskState.interactive?.plugin === EditorPluginType.ScMcExercise) {
     const answers = shuffleArray(
-      taskState.interactive.state.answers.map((answer, i) => {
+      taskState.interactive.state.answers.map((answer) => {
         return {
           ...answer,
           content: convert(answer.content),
           feedback: convert(answer.feedback),
-          originalIndex: i,
         }
       })
     )

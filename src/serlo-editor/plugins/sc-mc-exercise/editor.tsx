@@ -1,44 +1,36 @@
 import { useState } from 'react'
 
 import type { ScMcExerciseProps } from '.'
-import { ScMcExerciseRenderer } from './renderer'
+import { ScMcExerciseRenderer } from './renderer/renderer'
 import { ScMcExerciseToolbar } from './toolbar'
-import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'
 import {
-  store,
-  selectFocused,
-  selectIsDocumentEmpty,
-  useAppSelector,
-} from '../../store'
+  AddButton,
+  InteractiveAnswer,
+  PreviewOverlaySimple,
+} from '../../editor-ui'
+import { store, selectIsDocumentEmpty } from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditableContext } from '@/serlo-editor/core/contexts'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
-  const focusedElement = useAppSelector(selectFocused)
+  const { editable, state, id } = props
+  const { answers, isSingleChoice } = state
 
-  const { editable, focused, state } = props
   const editorStrings = useEditorStrings()
 
-  const children = props.state.answers.flatMap((answer) => [
-    answer.content.id,
-    answer.feedback.id,
-  ])
-
   const handleCheckboxChange = (index: number) => () => {
-    state.answers[index].isCorrect.set((currentVal) => !currentVal)
+    answers[index].isCorrect.set((currentVal) => !currentVal)
   }
 
   const handleRadioButtonChange = (rightanswerIndex: number) => () => {
-    state.answers.forEach((answer, index) => {
+    answers.forEach((answer, index) => {
       answer.isCorrect.set(index === rightanswerIndex)
     })
   }
 
-  const handleAddButtonClick = () => props.state.answers.insert()
-  const removeAnswer = (index: number) => () => state.answers.remove(index)
+  const handleAddButtonClick = () => answers.insert()
+  const removeAnswer = (index: number) => () => answers.remove(index)
 
-  const nestedFocus =
-    focused || (focusedElement && children.includes(focusedElement))
   const [previewActive, setPreviewActive] = useState(false)
 
   const renderer = (
@@ -46,18 +38,15 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
       {/* //margin-hack */}
       <div className="[&_.ml-4.flex]:mb-block">
         <ScMcExerciseRenderer
-          isSingleChoice={state.isSingleChoice.value}
-          idBase="sc-mc"
-          answers={state.answers
-            .slice(0)
-            .map(({ isCorrect, feedback, content }, index) => {
-              return {
-                isCorrect: isCorrect.value,
-                originalIndex: index, // let's see
-                feedback: isEmpty(feedback.id) ? null : feedback.render(),
-                content: isEmpty(content.id) ? null : content.render(),
-              }
-            })}
+          isSingleChoice={isSingleChoice.value}
+          idBase={`sc-mc-${id}`}
+          answers={answers.slice(0).map(({ isCorrect, feedback, content }) => {
+            return {
+              isCorrect: isCorrect.value,
+              feedback: isEmpty(feedback.id) ? null : feedback.render(),
+              content: isEmpty(content.id) ? null : content.render(),
+            }
+          })}
         />
       </div>
     </EditableContext.Provider>
@@ -66,17 +55,17 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
 
   return (
     <div className="mb-12 mt-24 pt-4">
-      {nestedFocus ? <ScMcExerciseToolbar {...props} /> : null}
-      <PreviewOverlay
-        focused={nestedFocus || false}
-        onChange={setPreviewActive}
-        editable={previewActive}
-      >
+      <ScMcExerciseToolbar
+        {...props}
+        previewActive={previewActive}
+        setPreviewActive={setPreviewActive}
+      />
+      <PreviewOverlaySimple active={previewActive}>
         {renderer}
-      </PreviewOverlay>
-      {editable && nestedFocus && !previewActive && (
+      </PreviewOverlaySimple>
+      {editable && !previewActive && (
         <>
-          {state.answers.map((answer, index) => {
+          {answers.map((answer, index) => {
             return (
               <InteractiveAnswer
                 key={answer.content.id}
@@ -84,12 +73,11 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
                 answerID={answer.content.id}
                 feedback={answer.feedback.render()}
                 feedbackID={answer.feedback.id}
-                focusedElement={focusedElement || undefined}
-                isRadio={state.isSingleChoice.value}
+                isRadio={isSingleChoice.value}
                 isActive={answer.isCorrect.value}
                 remove={removeAnswer(index)}
                 handleChange={
-                  state.isSingleChoice.value
+                  isSingleChoice.value
                     ? handleRadioButtonChange(index)
                     : handleCheckboxChange(index)
                 }

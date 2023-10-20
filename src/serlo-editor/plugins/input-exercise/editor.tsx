@@ -1,27 +1,43 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import type { InputExerciseProps } from '.'
 import { InputExerciseRenderer } from './renderer'
 import { InputExerciseToolbar } from './toolbar'
-import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'
 import {
-  selectFocused,
+  AddButton,
+  InteractiveAnswer,
+  PreviewOverlaySimple,
+} from '../../editor-ui'
+import {
+  focus,
   selectIsDocumentEmpty,
   store,
-  useAppSelector,
+  useAppDispatch,
 } from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function InputExerciseEditor(props: InputExerciseProps) {
-  const { editable, state, focused } = props
+  const { editable, state, id } = props
   const inputExStrings = useEditorStrings().templatePlugins.inputExercise
 
-  const focusedElement = useAppSelector(selectFocused)
-  const nestedFocus =
-    focused ||
-    !!props.state.answers.find(({ feedback }) => feedback.id === focusedElement)
+  const dispatch = useAppDispatch()
 
   const [previewActive, setPreviewActive] = useState(false)
+  const newestAnswerRef = useRef<HTMLInputElement>(null)
+
+  function overwriteFocus(force?: boolean) {
+    setTimeout(() => {
+      if (force) dispatch(focus(id))
+      newestAnswerRef.current?.focus()
+      // Needs to wait for the editor focus to finish and then overwrite it. It's definitely a hack, but it works so far.
+      // 50 is arbitrary value that seems to work nicely (10 was to low for firefox in my testing)
+    }, 50)
+  }
+
+  // overwrite focus on first render
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => overwriteFocus, [])
 
   const renderer = (
     <InputExerciseRenderer
@@ -45,19 +61,25 @@ export function InputExerciseEditor(props: InputExerciseProps) {
 
   return (
     <div className="mb-12 mt-24 pt-4">
-      {nestedFocus ? <InputExerciseToolbar {...props} /> : null}
-      <PreviewOverlay focused={nestedFocus} onChange={setPreviewActive}>
+      <InputExerciseToolbar
+        {...props}
+        previewActive={previewActive}
+        setPreviewActive={setPreviewActive}
+      />
+      <PreviewOverlaySimple active={previewActive}>
         {renderer}
-      </PreviewOverlay>
-      {nestedFocus && !previewActive && (
+      </PreviewOverlaySimple>
+      {!previewActive && (
         <>
           {state.answers.map((answer, index: number) => {
+            const isLast = index === state.answers.length - 1
             return (
               <InteractiveAnswer
                 key={answer.feedback.id}
                 answer={
                   <input
-                    className="width-full border-none outline-none"
+                    ref={isLast ? newestAnswerRef : undefined}
+                    className="width-full ml-side border-none outline-none"
                     value={answer.value.value}
                     placeholder={inputExStrings.enterTheValue}
                     type="text"
@@ -73,11 +95,20 @@ export function InputExerciseEditor(props: InputExerciseProps) {
                   answer.isCorrect.set(!answer.isCorrect.value)
                 }
                 remove={() => state.answers.remove(index)}
-                focusedElement={focusedElement || undefined}
               />
             )
           })}
-          <AddButton onClick={() => state.answers.insert()}>
+          <AddButton
+            onClick={() => {
+              const wrongAnswer = {
+                value: '',
+                isCorrect: false,
+                feedback: { plugin: EditorPluginType.Text },
+              }
+              state.answers.insert(undefined, wrongAnswer)
+              overwriteFocus(true)
+            }}
+          >
             {inputExStrings.addAnswer}
           </AddButton>
         </>

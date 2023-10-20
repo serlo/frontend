@@ -27,10 +27,11 @@ import {
   spoilerExample,
   textExExample,
 } from './education-plugin-examples'
-import { Geogebra } from '@/components/content/geogebra'
 import { FaIcon } from '@/components/fa-icon'
-import { EntityIdProvider } from '@/contexts/entity-id-context'
+import { UuidsProvider } from '@/contexts/uuids-context'
 import { tw } from '@/helper/tw'
+import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const h2Class =
   'text-center text-4xl leading-cozy tracking-tight font-extrabold'
@@ -93,7 +94,11 @@ const pluginData = [
     icon: faCubes,
     description:
       'With the GeoGebra applet, moving or interactive graphics can be integrated into the content. You can create your own applet or choose from the huge free public applet collection on geogebra.org.',
-    example: <Geogebra id="d4eNMF5R" />,
+    example: (
+      <StaticRenderer
+        document={{ plugin: EditorPluginType.Geogebra, state: 'd4eNMF5R' }}
+      />
+    ),
     category: 'educational',
   },
   {
@@ -197,7 +202,7 @@ export function EducationPlugins() {
     return (
       <div className="m-3 mb-[3.2rem] mt-1 flex-1 text-left">
         <div className="w-full overflow-y-scroll p-8 shadow-menu md:h-[37rem]">
-          <EntityIdProvider value={1555}>
+          <UuidsProvider value={{ entityId: 1555 }}>
             <p className="mb-6 text-xl">{description}</p>
             {example ? (
               <>
@@ -223,7 +228,7 @@ export function EducationPlugins() {
                 />
               </>
             )}
-          </EntityIdProvider>
+          </UuidsProvider>
           <style jsx global>
             {`
               .lazyload-wrapper > .print:hidden,

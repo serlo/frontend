@@ -22,6 +22,7 @@ const solutionState = object({
     object({
       id: string(),
       title: string(),
+      alias: optional(string()),
     })
   ),
   strategy: child({
@@ -97,6 +98,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
                   prerequisite.create({
                     id: newValue,
                     title: '',
+                    alias: undefined,
                   })
                 }
               }}
@@ -119,7 +121,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
               if (prerequisite.defined) {
                 prerequisite.title.set(value)
               } else {
-                prerequisite.create({ id: '', title: value })
+                prerequisite.create({ id: '', title: value, alias: undefined })
               }
             }}
             placeholder={solutionStrings.linkTitle}

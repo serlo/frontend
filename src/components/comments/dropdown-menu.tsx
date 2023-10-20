@@ -8,8 +8,8 @@ import { Thread } from '@serlo/authorization'
 
 import { FaIcon } from '../fa-icon'
 import { useCanDo } from '@/auth/use-can-do'
-import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useEntityId } from '@/contexts/uuids-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { tw } from '@/helper/tw'
 import {

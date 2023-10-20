@@ -2,7 +2,8 @@
   font-family: 'Karmilla';
   font-style: normal;
   font-weight: 400;
-  src: url('/_assets/fonts/karmilla/karmilla-regular.woff2') format('woff2'),
+  src:
+    url('/_assets/fonts/karmilla/karmilla-regular.woff2') format('woff2'),
     url('/_assets/fonts/karmilla/karmilla-regular.woff') format('woff');
   font-display: swap;
 }
@@ -11,7 +12,8 @@
   font-family: 'Karmilla';
   font-style: normal;
   font-weight: 700;
-  src: url('/_assets/fonts/karmilla/karmilla-bold.woff2') format('woff2'),
+  src:
+    url('/_assets/fonts/karmilla/karmilla-bold.woff2') format('woff2'),
     url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
   font-display: swap;
 }
@@ -20,7 +22,8 @@
   font-family: 'Karmilla';
   font-style: normal;
   font-weight: 800;
-  src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2') format('woff2'),
+  src:
+    url('/_assets/fonts/karmilla/karmilla-bolder.woff2') format('woff2'),
     url('/_assets/fonts/karmilla/karmilla-bolder.woff') format('woff');
   font-display: swap;
 }
@@ -29,7 +32,8 @@
   font-family: 'Caveat';
   font-style: bold;
   font-weight: 700;
-  src: url('/_assets/fonts/caveat/caveat-bold.woff2') format('woff2'),
+  src:
+    url('/_assets/fonts/caveat/caveat-bold.woff2') format('woff2'),
     url('/_assets/fonts/caveat/caveat-bold.woff') format('woff');
   font-display: swap;
 }

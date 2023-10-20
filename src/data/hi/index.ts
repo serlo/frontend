@@ -522,8 +522,7 @@ export const loggedInData = {
       thisCoursePage: "यह कोर्स पृष्ठ",
       addCoursePage: "कोर्स पृष्ठ जोड़ें",
       wholeCourse: "पूरे कोर्स",
-      copyItems: "आइटम कॉपी करें",
-      moveItems: "आइटम ले जाएं",
+      moveOrCopyItems: 'Move or copy items',
       addGroupedTextExercise: "समूहीकृत-पाठ-व्यायाम",
       changeLicense: "लायसेंस परिवर्तित करें",
       subscribe: "सदस्य बनें",
@@ -682,12 +681,6 @@ export const loggedInData = {
           serloId: 'Serlo ID',
           placeholder: 'Serlo ID (e.g. 1565)'
         },
-        layout: {
-          title: 'Layout',
-          toDragConvert: 'To make the content draggable, convert them for the new editor:',
-          oneColumnLayout: 'One-column layout',
-          multimediaTitle: 'Multimedia content associated with text'
-        },
         multimedia: {
           title: 'Multimedia content associated with text',
           description: 'Create an illustrating or explaining multimedia content associated with text.',
@@ -814,6 +807,14 @@ export const loggedInData = {
           title: 'Audio',
           description: 'Link to audio files on Vocaroo',
           audioUrl: 'Enter Audio URL'
+        },
+        inputExercise: {
+          title: 'Input Exercise',
+          description: 'Solution can be text or math'
+        },
+        scMcExercise: {
+          title: 'SC/MC Exercise',
+          description: 'Single Choice or Multiple Choice'
         }
       },
       templatePlugins: {
@@ -887,6 +888,7 @@ export const loggedInData = {
           unit: 'Unit',
           addAnswer: 'Add answer',
           enterTheValue: 'Enter the value',
+          feedbackPlaceholder: 'Add a feedback message for this answer',
           yourSolution: 'Your solution',
           types: {
             'input-string-normalized-match-challenge': "Text (exact, e.g. 'tiger')",
@@ -901,7 +903,10 @@ export const loggedInData = {
           singleChoice: 'Single-choice',
           multipleChoice: 'Multiple-choice',
           chooseType: 'Choose the exercise type',
-          addAnswer: 'Add answer'
+          addAnswer: 'Add answer',
+          previewMode: 'Preview',
+          previewIsActiveHint: 'Preview mode is active',
+          previewIsDeactiveHint: 'Here you can edit'
         },
         solution: {
           optionalExplanation: 'Optionally explain the solution strategy here',

@@ -13,10 +13,8 @@ export const UnsupportedEditor: React.FunctionComponent<
 > = (props) => {
   const unsupportedStrings = useEditorStrings().plugins.unsupported
 
-  const unsupportedType = selectSerializedDocument(
-    store.getState(),
-    props.id
-  )?.plugin
+  const unsupportedType = selectSerializedDocument(store.getState(), props.id)
+    ?.plugin
   const { focused, id, editable } = props
 
   return (

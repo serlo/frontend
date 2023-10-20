@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { useState } from 'react'
 
+import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
 import { PartnerList } from '../landing/rework/partner-list'
 import { Logo } from '../navigation/header/logo'
@@ -70,16 +71,7 @@ export function DataWallet() {
           </p>
           <ol className="serlo-ol mb-4 text-lg">
             <li>
-              Lade dir die{' '}
-              <a
-                className="serlo-link font-bold"
-                href="https://enmeshed.de"
-                target="_blank"
-                rel="noreferrer"
-              >
-                BIRD Wallet App
-              </a>{' '}
-              auf dein Smartphone.
+              Lade dir die Mein Bildungsraum Wallet App auf dein Smartphone.
             </li>
             <li>
               Erstelle einen{' '}
@@ -92,26 +84,27 @@ export function DataWallet() {
               .
               {qrCode &&
                 ((qrCode === 'loading' && <LoadingSpinner noText />) || (
+                  // eslint-disable-next-line @next/next/no-img-element
                   <img src={qrCode} />
                 ))}
             </li>
             <li>
-              Lege in deiner Bird Wallet App ein neues Profil an und füge Serlo
-              als Kontakt hinzu, indem du den QR-Code scannst.
+              Lege in deiner Wallet App ein neues Profil an und füge Serlo als
+              Kontakt hinzu, indem du den QR-Code scannst.
             </li>
             <li>
               Sobald der Kontakt verifiziert wurde, erhälst du innerhalb weniger
-              Minuten eine Benachrichtigung in deiner BIRD Wallet App.
+              Minuten eine Benachrichtigung in deiner Wallet App.
             </li>
           </ol>
           <p className="serlo-p mt-16">
             Sollten dabei Probleme auftauchen,{' '}
-            <a
+            <Link
               className="serlo-link font-bold"
               href="/kontakt#technischersupport"
             >
               kontaktiere
-            </a>{' '}
+            </Link>{' '}
             uns gern.
           </p>
           <noscript>Bitte Javascript aktivieren</noscript>

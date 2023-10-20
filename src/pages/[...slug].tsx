@@ -37,10 +37,16 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
       ? pageData.entityData.id
       : pageData.taxonomyData.id
 
+  const revisionId =
+    pageData.kind === 'single-entity'
+      ? pageData.entityData.revisionId
+      : undefined
+
   return (
     <FrontendClientBase
       noContainers
       entityId={entityId}
+      revisionId={revisionId}
       authorization={pageData.authorization}
     >
       <EntityBase page={pageData} entityId={entityId}>
@@ -52,7 +58,6 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
 
 export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
   const alias = (context.params?.slug as string[]).join('/')
-  // quite stupid to use fetchPageData here, why not calling requestPage directly?
   const pageData = await requestPage('/' + alias, context.locale! as Instance)
 
   // we only support theses three kinds - 404 for everything else

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
+import { InfoPanel } from '@/components/info-panel'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
 import { SlugProps } from '@/data-types'
 import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
@@ -37,6 +37,7 @@ export function InjectionRenderer({
       window.location.hostname === 'localhost'
         ? `${window.location.protocol}//${window.location.host}/api/frontend/${encodedHref}`
         : `${window.location.protocol}//${window.location.host}/_next/data/${buildId}/${lang}${encodedHref}.json`
+
     try {
       void fetch(fetchUrl)
         .then((res) => res.json())
@@ -61,7 +62,7 @@ export function InjectionRenderer({
   if (content && content.length === 0) return <LoadingSpinner />
 
   if (content === false)
-    return <StaticInfoPanel>{strings.errors.defaultMessage}</StaticInfoPanel>
+    return <InfoPanel>{strings.errors.defaultMessage}</InfoPanel>
 
   //Show only video without description when injecting
   const unwrappedContent =

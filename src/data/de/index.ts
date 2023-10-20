@@ -522,8 +522,7 @@ export const loggedInData = {
       thisCoursePage: "Diese Kursseite",
       addCoursePage: "Kursseite hinzufügen",
       wholeCourse: "Gesamter Kurs",
-      copyItems: "Element kopieren",
-      moveItems: "Elemente verschieben",
+      moveOrCopyItems: "Elemente verschieben oder kopieren",
       addGroupedTextExercise: "Textaufgabe mit Teilaufgaben hinzufügen",
       changeLicense: "Lizenz auswählen",
       subscribe: "Abonnieren",
@@ -682,12 +681,6 @@ export const loggedInData = {
           serloId: 'Serlo ID',
           placeholder: "Serlo ID (z.B. 1565)"
         },
-        layout: {
-          title: 'Layout',
-          toDragConvert: "Um die Inhalte zu verschieben, konvertiere sie für den neuen Editor:",
-          oneColumnLayout: "Einspaltiges Layout",
-          multimediaTitle: "Erklärung mit Multimedia-Inhalt"
-        },
         multimedia: {
           title: "Erklärung mit Multimedia-Inhalt",
           description: "Erstelle einen veranschaulichenden oder erklärenden Multimedia-Inhalt mit zugehöriger Erklärung.",
@@ -814,6 +807,14 @@ export const loggedInData = {
           title: 'Audio',
           description: "Audioaufnahmen von Vocaroo einbinden",
           audioUrl: "Audio URL eingeben"
+        },
+        inputExercise: {
+          title: "Eingabefeld",
+          description: "Die Lösung kann Text oder eine Formel sein"
+        },
+        scMcExercise: {
+          title: "SC/MC Aufgabe",
+          description: "Single- oder Multiple Choice Aufgabe"
         }
       },
       templatePlugins: {
@@ -887,6 +888,7 @@ export const loggedInData = {
           unit: "Einheit (optional)",
           addAnswer: "Antwort hinzufügen",
           enterTheValue: "Gib hier die Antwort ein",
+          feedbackPlaceholder: "Schreibe ein Feedback für diese Antwort",
           yourSolution: "Deine Lösung",
           types: {
             'input-string-normalized-match-challenge': "Text (genau, z.B. 'Tiger')",
@@ -901,7 +903,10 @@ export const loggedInData = {
           singleChoice: "Single Choice",
           multipleChoice: "Multiple Choice",
           chooseType: "Wähle den Antworttyp",
-          addAnswer: "Antwort hinzufügen"
+          addAnswer: "Antwort hinzufügen",
+          previewMode: "Vorschau",
+          previewIsActiveHint: "Vorschaumodus ist aktiv",
+          previewIsDeactiveHint: "Hier kannst du bearbeiten"
         },
         solution: {
           optionalExplanation: "Beschreibe hier optional die Lösungsstrategie",

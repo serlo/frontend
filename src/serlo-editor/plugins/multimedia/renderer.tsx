@@ -4,7 +4,7 @@ export interface MultimediaRendererProps {
   mediaWidth: number // 25 | 50 | 75 | 100 Percent
   media: JSX.Element
   explanation: JSX.Element
-  onClick?: () => void
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void
   extraImageClass?: string
 }
 

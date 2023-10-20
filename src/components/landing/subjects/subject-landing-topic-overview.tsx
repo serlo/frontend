@@ -8,9 +8,11 @@ import { SubTopic } from '../../taxonomy/sub-topic'
 import type { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import type { TaxonomySubTerm } from '@/data-types'
-import { FrontendNodeType } from '@/frontend-node-types'
 import { isPartiallyInView } from '@/helper/is-partially-in-view'
 import { tw } from '@/helper/tw'
+import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { createRenderers } from '@/serlo-editor-integration/create-renderers'
+import { isImageDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
 
 interface SubjectLandingTopicOverviewProps {
   subterms: TaxonomySubTerm[]
@@ -23,8 +25,9 @@ export function SubjectLandingTopicOverview({
 }: SubjectLandingTopicOverviewProps) {
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const topicContainer = useRef<HTMLDivElement>(null)
-
   const router = useRouter()
+
+  editorRenderers.init(createRenderers())
 
   const { extraTerms, allTopicsTaxonomyId } = deSubjectLandingData[subject]
 
@@ -85,12 +88,13 @@ export function SubjectLandingTopicOverview({
       <div className="grid grid-cols-[repeat(auto-fit,_minmax(12rem,_20rem))] justify-center [&_img]:mix-blend-multiply">
         {[...subterms, ...extraTerms, allTopicsEntry].map((term, index) => {
           const isActive = index === selectedIndex
+
+          const firstRow = term.description?.state[0]
           const src =
-            term.description &&
-            term.description[0] &&
-            term.description?.[0].type === FrontendNodeType.Image
-              ? term.description?.[0].src
+            firstRow && isImageDocument(firstRow)
+              ? String(firstRow.state.src)
               : undefined
+
           const isExtraTerm = Object.hasOwn(term, 'href')
 
           return (

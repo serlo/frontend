@@ -3,7 +3,7 @@ import type { GridFocus } from './grid-focus'
 import { InlineMath } from './inline-math'
 import { StepSegment } from './step-segment'
 import type { stepProps } from '..'
-import { renderSignToString, Sign } from '../sign'
+import { Sign, signStrings } from '../sign'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import type { StateTypeReturnType } from '@/serlo-editor/plugin'
 
@@ -53,7 +53,7 @@ export function StepEditor(props: StepEditorProps) {
             {Object.values(Sign).map((sign) => {
               return (
                 <option key={sign} value={sign}>
-                  {renderSignToString(sign)}
+                  {signStrings[sign]}
                 </option>
               )
             })}

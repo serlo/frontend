@@ -166,7 +166,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
           setQuery('')
           setTimeout(() => {
             inputRef.current?.focus()
-          }, 0)
+          })
         }}
       >
         <FaIcon icon={faXmark} />
