@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react'
 
 import type { InstanceData } from '@/data-types'
 
-export const InstanceDataContext = createContext<InstanceData | null>(null)
+const InstanceDataContext = createContext<InstanceData | null>(null)
 
 export const InstanceDataProvider = InstanceDataContext.Provider
 

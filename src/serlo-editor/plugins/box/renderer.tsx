@@ -56,6 +56,8 @@ export function BoxRenderer({ boxType, title, anchorId, children }: BoxProps) {
         tw`
           serlo-box relative mx-side mb-6 
           rounded-xl border-3 pb-2 pt-[2px]
+          [&>div.my-block]:first:mt-3.5
+          [&>div.my-block]:last:mb-3.5
         `,
         isAttention ? 'border-red-100' : 'border-brand-300'
       )}

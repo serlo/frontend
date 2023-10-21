@@ -1,10 +1,10 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 
-import { StaticEntity } from '@/components/content/static-entity'
+import { Entity } from '@/components/content/entity'
 import { EntityBase } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { StaticTaxonomy } from '@/components/taxonomy/static-taxonomy'
+import { Topic } from '@/components/taxonomy/topic'
 import { SlugProps } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestPage } from '@/fetcher/request-page'
@@ -26,9 +26,9 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
   }
   const page =
     pageData.kind === 'single-entity' ? (
-      <StaticEntity data={pageData.entityData} />
+      <Entity data={pageData.entityData} />
     ) : (
-      <StaticTaxonomy data={pageData.taxonomyData} />
+      <Topic data={pageData.taxonomyData} />
     )
   const entityId =
     pageData.kind === 'single-entity'

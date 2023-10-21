@@ -7,11 +7,6 @@ import {
 } from './fetcher/graphql-types/operations'
 import type { User } from './fetcher/query-types'
 import type {
-  FrontendContentNode,
-  FrontendExerciseGroupNode,
-  FrontendExerciseNode,
-} from './frontend-node-types'
-import type {
   AnyEditorDocument,
   EditorExerciseDocument,
   EditorRowsDocument,
@@ -288,9 +283,7 @@ export interface EntityData {
   revisionId?: number
   title?: string
   schemaData?: SchemaData
-  content?: FrontendContentNode[]
-  // temporary
-  staticContent?: AnyEditorDocument | AnyEditorDocument[]
+  content?: AnyEditorDocument | AnyEditorDocument[]
   licenseData?: LicenseData
   courseData?: CourseData
   unrevisedRevisions?: number
@@ -320,7 +313,7 @@ export interface RevisionData {
     title?: string
     metaTitle?: string
     metaDescription?: string
-    content?: FrontendContentNode[]
+    content?: AnyEditorDocument | AnyEditorDocument[]
     url?: string
   }
   currentRevision: {
@@ -328,7 +321,7 @@ export interface RevisionData {
     title?: string
     metaTitle?: string
     metaDescription?: string
-    content?: FrontendContentNode[]
+    content?: AnyEditorDocument | AnyEditorDocument[]
     url?: string
   }
   changes?: string
@@ -510,9 +503,7 @@ export interface TaxonomyData extends TaxonomyTermBase {
   trashed: boolean
   taxonomyType: TaxonomyTermType
   subterms: TaxonomySubTerm[]
-  exercisesContent: (FrontendExerciseNode | FrontendExerciseGroupNode)[]
-  //temporary
-  staticExercisesContent: (
+  exercisesContent: (
     | EditorExerciseDocument
     | EditorTemplateExerciseGroupDocument
   )[]
