@@ -7,8 +7,9 @@ import { RatingProps } from 'react-simple-star-rating'
 import { NewFolderPrototypeProps } from './new-folder-prototype'
 import { SubTopic } from './sub-topic'
 import { TopicCategories } from './topic-categories'
+import { ExerciseNumbering } from '../content/exercises/exercise-numbering'
 import { FaIcon } from '../fa-icon'
-import { StaticInfoPanel } from '../static-info-panel'
+import { InfoPanel } from '../info-panel'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
@@ -17,7 +18,10 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { abSubmission } from '@/helper/ab-submission'
-import { renderArticle } from '@/schema/article-renderer'
+import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { createRenderers } from '@/serlo-editor-integration/create-renderers'
+import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export interface TopicProps {
   data: TaxonomyData
@@ -50,6 +54,8 @@ export function Topic({ data }: TopicProps) {
   const hasExercises = data.exercisesContent.length > 0
   const defaultLicense = hasExercises ? getDefaultLicense() : undefined
 
+  editorRenderers.init(createRenderers())
+
   return (
     <>
       {data.trashed && renderTrashedNotice()}
@@ -57,8 +63,9 @@ export function Topic({ data }: TopicProps) {
       {renderUserTools({ aboveContent: true })}
       <div className="min-h-1/2">
         <div className="mt-6 sm:mb-5">
-          {data.description &&
-            renderArticle(data.description, `taxdesc${data.id}`)}
+          <StaticRenderer
+            document={data.description as unknown as EditorRowsDocument}
+          />
         </div>
 
         {renderSubterms()}
@@ -95,9 +102,9 @@ export function Topic({ data }: TopicProps) {
 
   function renderTrashedNotice() {
     return (
-      <StaticInfoPanel icon={faTrash} doNotIndex>
+      <InfoPanel icon={faTrash} doNotIndex>
         {strings.content.trashedNotice}
-      </StaticInfoPanel>
+      </InfoPanel>
     )
   }
 
@@ -139,21 +146,22 @@ export function Topic({ data }: TopicProps) {
         </>
       )
     }
+
+    if (!hasExercises || !data.exercisesContent) return null
     return (
-      hasExercises &&
-      data.exercisesContent &&
-      data.exercisesContent.map((exercise, i) => {
-        return (
-          <Fragment key={i}>
-            {renderArticle(
-              [exercise],
-              `tax${data.id}`,
-              `ex${exercise.context.id}`
-            )}
-            {i === 1 && renderSurvey()}
-          </Fragment>
-        )
-      })
+      <ol className="mt-12">
+        {data.exercisesContent.map((exerciseOrGroup, i) => {
+          const exerciseUuid = exerciseOrGroup.serloContext?.uuid
+
+          return (
+            <li key={exerciseOrGroup.id ?? exerciseUuid} className="pb-10">
+              <ExerciseNumbering href={`/${exerciseUuid}`} index={i} />
+              <StaticRenderer document={exerciseOrGroup} />
+              {i === 1 && renderSurvey()}
+            </li>
+          )
+        })}
+      </ol>
     )
   }
 
@@ -196,17 +204,11 @@ export function Topic({ data }: TopicProps) {
     )
   }
 
+  // … interesting hack
   function getDefaultLicense() {
     for (let i = 0; i < data.exercisesContent.length; i++) {
-      const content = data.exercisesContent[i]
-
-      if (content.type === 'exercise-group') {
-        if (content.license?.isDefault) return content.license
-      } else {
-        if (content.task?.license?.isDefault) return content.task.license
-        if (content.solution?.license?.isDefault)
-          return content.solution.license
-      }
+      const license = data.exercisesContent[i].serloContext?.license
+      if (license) return { ...license, isDefault: true }
     }
     //no part of collection has default license so don't show default notice.
     return undefined

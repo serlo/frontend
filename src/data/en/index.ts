@@ -587,8 +587,7 @@ export const loggedInData = {
       thisCoursePage: 'This course-page',
       addCoursePage: 'Add course-page',
       wholeCourse: 'Whole course',
-      copyItems: 'Copy items',
-      moveItems: 'Move items',
+      moveOrCopyItems: 'Move or copy items',
       addGroupedTextExercise: 'Add grouped-text-exercise',
       changeLicense: 'Change License',
       subscribe: 'Subscribe',
@@ -966,6 +965,7 @@ export const loggedInData = {
           unit: 'Unit',
           addAnswer: 'Add answer',
           enterTheValue: 'Enter the value',
+          feedbackPlaceholder: 'Add a feedback message for this answer',
           yourSolution: 'Your solution',
           types: {
             'input-string-normalized-match-challenge': "Text (exact, e.g. 'tiger')",

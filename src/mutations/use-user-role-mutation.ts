@@ -47,7 +47,7 @@ export function useUserAddOrRemoveRoleMutation() {
   }
 }
 
-function resetUserRolesCache(cache: Cache<any>, mutate: ScopedMutator<any>) {
+function resetUserRolesCache(cache: Cache<any>, mutate: ScopedMutator) {
   if (!(cache instanceof Map)) {
     throw new Error(
       'matchMutate requires the cache provider to be a Map instance'

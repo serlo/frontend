@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react'
 
 import { loginUrl } from './auth/utils'
 import { Link } from '../content/link'
+import { InfoPanel } from '../info-panel'
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
-import { StaticInfoPanel } from '../static-info-panel'
 import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -68,7 +68,7 @@ export function AddRevision({
   if (userReady === undefined) return <LoadingSpinner noText />
   if (userReady === false)
     return (
-      <StaticInfoPanel icon={faWarning} type="failure">
+      <InfoPanel icon={faWarning} type="failure">
         Sorry, Something is wrong!
         <br />
         Please: Logout and Login again and try to edit again.
@@ -76,7 +76,7 @@ export function AddRevision({
         <br /> If that does not work head to{' '}
         <Link href={loginUrl}>{loginUrl}</Link> and make sure you are logged in
         there.
-      </StaticInfoPanel>
+      </InfoPanel>
     )
 
   // types needs refactoring here. splitting controls and data would probably make sense

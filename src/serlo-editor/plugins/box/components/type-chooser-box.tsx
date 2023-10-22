@@ -13,7 +13,10 @@ export function TypeChooserBox({ typeState }: TypeChooserProps) {
   const editorStrings = useEditorStrings()
 
   return (
-    <figure className="relative mx-side rounded-xl border-3 p-4 pt-2">
+    <figure
+      className="relative mx-side rounded-xl border-3 p-4 pt-2"
+      data-qa="plugin-box-initial-type-chooser"
+    >
       <b className="block pb-3">{editorStrings.plugins.box.type}</b>
 
       <ul className="unstyled-list">
@@ -27,6 +30,7 @@ export function TypeChooserBox({ typeState }: TypeChooserProps) {
                   event.preventDefault()
                   typeState.set(type)
                 }}
+                data-qa={`plugin-box-initial-type-chooser-option-${type}`}
               >
                 {listIcon ? <FaIcon className="mr-1" icon={listIcon} /> : null}
                 {strings.content.boxTypes[type]}

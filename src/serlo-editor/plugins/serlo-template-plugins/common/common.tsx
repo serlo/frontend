@@ -47,7 +47,7 @@ export type Entity = Uuid & License & { revision: number; changes?: string }
 
 export function entityType<
   Ds extends Record<string, StateType>,
-  Childs extends Record<string, StateType>
+  Childs extends Record<string, StateType>,
 >(
   ownTypes: Ds,
   children: Childs

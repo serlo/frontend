@@ -10,16 +10,15 @@ import {
 import type { CourseTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/course/course'
 import type { CoursePageTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/course/course-page'
 import type { EventTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/event'
+import type { TextExerciseGroupTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
 import type { PageTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/page'
 import type { TaxonomyTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/taxonomy'
 import type { TextExerciseTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/text-exercise'
-import type { TextExerciseGroupTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/text-exercise-group'
 import type { TextSolutionTypeState } from '../serlo-editor/plugins/serlo-template-plugins/text-solution'
 import type { UserTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/user'
 import type { VideoTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/video'
 import { UuidType, UuidRevType } from '@/data-types'
 import type { User, MainUuidType } from '@/fetcher/query-types'
-import { FrontendNodeType } from '@/frontend-node-types'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import type { StateType, StateTypeSerializedType } from '@/serlo-editor/plugin'
 
@@ -158,7 +157,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
       if (convertedContent?.plugin === EditorPluginType.Article) {
         return serializeEditorState(convertedContent)
       }
-      // TODO: is this still needed?
+      // currently still needed. See https://serlo.slack.com/archives/CEB781NCU/p1695977868948869
       return serializeEditorState({
         plugin: EditorPluginType.Article,
         state: {
@@ -411,7 +410,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
   function convertVideo(
     uuid: Extract<MainUuidType, { __typename: 'Video' }>
   ): DeserializedState<VideoTypePluginState> {
-    stack.push({ id: uuid.id, type: FrontendNodeType.Video })
+    stack.push({ id: uuid.id, type: EditorPluginType.Video })
     return {
       initialState: {
         plugin: TemplatePluginType.Video,

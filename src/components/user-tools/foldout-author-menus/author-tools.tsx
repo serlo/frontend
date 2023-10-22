@@ -1,4 +1,10 @@
-import { Entity, Subscription, TaxonomyTerm, Uuid } from '@serlo/authorization'
+import {
+  Entity,
+  Subscription,
+  TaxonomyTerm,
+  Uuid,
+  UuidType as AuthUuidType,
+} from '@serlo/authorization'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
@@ -23,14 +29,13 @@ import { useSubscriptionSetMutation } from '@/mutations/use-subscription-set-mut
 export enum Tool {
   Abo = 'abo',
   ChangeLicense = 'changeLicense',
-  CopyItems = 'copyItems',
+  MoveOrCopyItems = 'moveOrCopyItems',
   Curriculum = 'curriculum',
   Edit = 'edit',
   EditTax = 'editTax',
   UnrevisedEdit = 'unrevisedEdit',
   History = 'history',
   Log = 'log',
-  MoveItems = 'moveItems',
   NewEntitySubmenu = 'newEntitySubmenu',
   Separator = 'separator',
   SortCoursePages = 'sortCoursePages',
@@ -145,17 +150,13 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       url: `/taxonomy/term/sort/entities/${data.id}`,
       canDo: canDo(Entity.orderChildren),
     },
-    copyItems: {
+    moveOrCopyItems: {
       url: `/taxonomy/term/copy/batch/${data.id}`,
       canDo: canDo(TaxonomyTerm.change),
     },
     changeLicense: {
       url: `/entity/license/update/${data.id}`,
       canDo: canDo(Entity.updateLicense),
-    },
-    moveItems: {
-      url: `/taxonomy/term/move/batch/${data.id}`,
-      canDo: canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild),
     },
     directLink: {
       title: loggedInStrings.authorMenu.directLink,
@@ -338,8 +339,9 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 }
 
-function typeToAuthorizationType(type: string) {
-  if ([UuidType.Page, UuidRevType.Page].includes(type as UuidType)) return type
+function typeToAuthorizationType(type: AuthorToolsData['type']): AuthUuidType {
+  if (type === UuidType.Page) return 'Page'
+  if (type === UuidRevType.Page) return 'PageRevision'
   if (type.includes('Revision')) return 'EntityRevision'
   return 'Entity'
 }

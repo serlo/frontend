@@ -16,10 +16,7 @@ import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { type LoggedInData, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
-import type {
-  PluginWithData,
-  PluginsWithData,
-} from '@/serlo-editor/plugin/helpers/editor-plugins'
+import type { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { anchorPlugin } from '@/serlo-editor/plugins/anchor'
 import { articlePlugin } from '@/serlo-editor/plugins/article'
 import { audioPlugin } from '@/serlo-editor/plugins/audio'
@@ -45,10 +42,10 @@ import { articleTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins
 import { courseTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/course/course'
 import { coursePageTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/course/course-page'
 import { eventTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/event'
+import { textExerciseGroupTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
 import { pageTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/page'
 import { taxonomyTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/taxonomy'
 import { textExerciseTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/text-exercise'
-import { textExerciseGroupTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/text-exercise-group'
 import { textSolutionTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/text-solution'
 import { userTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/user'
 import { videoTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/video'
@@ -62,10 +59,12 @@ export function createPlugins({
   editorStrings,
   instance,
   parentType,
+  allowExercises,
 }: {
   editorStrings: LoggedInData['strings']['editor']
   instance: Instance
   parentType?: string
+  allowExercises?: boolean
 }): PluginsWithData {
   const isPage = parentType === UuidType.Page
 
@@ -144,9 +143,8 @@ export function createPlugins({
             plugin: audioPlugin,
             visibleInSuggestions: true,
             icon: <IconAudio />,
-          } as PluginWithData,
+          },
         ]),
-
     {
       type: EditorPluginType.Anchor,
       plugin: anchorPlugin,
@@ -173,7 +171,38 @@ export function createPlugins({
       visibleInSuggestions: isPage,
     },
 
-    // never visible in suggestions
+    // Exercises etc.
+    // ===================================================
+
+    {
+      type: EditorPluginType.Exercise,
+      plugin: exercisePlugin,
+      visibleInSuggestions: allowExercises,
+    },
+    {
+      type: EditorPluginType.Solution,
+      plugin: solutionPlugin,
+      visibleInSuggestions: allowExercises,
+    },
+    { type: EditorPluginType.H5p, plugin: H5pPlugin },
+    {
+      type: EditorPluginType.InputExercise,
+      plugin: createInputExercisePlugin({
+        feedback: {
+          plugin: EditorPluginType.Text,
+          config: {
+            placeholder:
+              editorStrings.templatePlugins.inputExercise.feedbackPlaceholder,
+          },
+        },
+      }),
+    },
+    { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
+
+    // Special plugins, never visible in suggestions
+    // ===================================================
+    { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
+    { type: EditorPluginType.Unsupported, plugin: unsupportedPlugin },
     { type: EditorPluginType.Article, plugin: articlePlugin },
     {
       type: EditorPluginType.ArticleIntroduction,
@@ -187,19 +216,9 @@ export function createPlugins({
         allowedPlugins: [EditorPluginType.Image],
       }),
     },
-    { type: EditorPluginType.Unsupported, plugin: unsupportedPlugin },
-    { type: EditorPluginType.Exercise, plugin: exercisePlugin },
-    { type: EditorPluginType.Highlight, plugin: createHighlightPlugin() },
-    { type: EditorPluginType.H5p, plugin: H5pPlugin },
-    {
-      type: EditorPluginType.InputExercise,
-      plugin: createInputExercisePlugin({}),
-    },
-    { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
-    { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
-    { type: EditorPluginType.Solution, plugin: solutionPlugin },
 
     // Internal plugins for our content types
+    // ===================================================
     { type: TemplatePluginType.Applet, plugin: appletTypePlugin },
     { type: TemplatePluginType.Article, plugin: articleTypePlugin },
     { type: TemplatePluginType.Course, plugin: courseTypePlugin },

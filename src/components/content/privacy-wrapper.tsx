@@ -13,7 +13,7 @@ import { ExternalProvider, useConsent } from '@/helper/use-consent'
 // inspired by https://github.com/ibrahimcesar/react-lite-youtube-embed
 // also borrowed some code
 
-interface PrivacyWrapperProps {
+export interface PrivacyWrapperProps {
   children: JSX.Element
   className?: string
   placeholder?: JSX.Element

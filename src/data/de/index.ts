@@ -522,8 +522,7 @@ export const loggedInData = {
       thisCoursePage: "Diese Kursseite",
       addCoursePage: "Kursseite hinzufügen",
       wholeCourse: "Gesamter Kurs",
-      copyItems: "Element kopieren",
-      moveItems: "Elemente verschieben",
+      moveOrCopyItems: "Elemente verschieben oder kopieren",
       addGroupedTextExercise: "Textaufgabe mit Teilaufgaben hinzufügen",
       changeLicense: "Lizenz auswählen",
       subscribe: "Abonnieren",
@@ -889,6 +888,7 @@ export const loggedInData = {
           unit: "Einheit (optional)",
           addAnswer: "Antwort hinzufügen",
           enterTheValue: "Gib hier die Antwort ein",
+          feedbackPlaceholder: "Schreibe ein Feedback für diese Antwort",
           yourSolution: "Deine Lösung",
           types: {
             'input-string-normalized-match-challenge': "Text (genau, z.B. 'Tiger')",

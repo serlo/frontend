@@ -7,7 +7,7 @@ import {
 // A Serlo Editor plugin
 export interface EditorPlugin<
   S extends StateType = StateType,
-  Config extends object = object
+  Config extends object = object,
 > {
   /**
    * React component that will be used to render the plugin. It accepts [[PluginEditorProps]] and `Props`.
@@ -94,7 +94,7 @@ export interface EditorPlugin<
 export interface EditorPluginProps<
   S extends StateType = StateType,
   // eslint-disable-next-line @typescript-eslint/ban-types
-  Config extends {} = {}
+  Config extends {} = {},
 > {
   /**
    * Plugin configuration

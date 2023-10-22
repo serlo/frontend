@@ -6,7 +6,7 @@ import {
   TopicCategoryType,
 } from '@/data-types'
 
-export const allCategories = [
+const allCategories = [
   ...Object.values(TopicCategoryType),
   TopicCategoryCustomType.unrevised,
 ] as const

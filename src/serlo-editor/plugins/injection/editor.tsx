@@ -2,11 +2,11 @@ import { faSquarePlus } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
 
 import type { InjectionProps } from '.'
-import { InjectionRenderer } from './renderer'
+import { InjectionStaticRenderer } from './static'
 import { InjectionToolbar } from './toolbar'
 import { FaIcon } from '@/components/fa-icon'
-import { renderArticle } from '@/schema/article-renderer'
 import { PreviewOverlay } from '@/serlo-editor/editor-ui'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function InjectionEditor(props: InjectionProps) {
   const { focused, state, editable } = props
@@ -20,7 +20,12 @@ export function InjectionEditor(props: InjectionProps) {
   }, [focused, state.value])
 
   if (!editable) {
-    return <InjectionRenderer href={state.value} renderNested={renderArticle} />
+    return (
+      <InjectionStaticRenderer
+        plugin={EditorPluginType.Injection}
+        state={state.value}
+      />
+    )
   }
 
   return (
@@ -39,7 +44,10 @@ export function InjectionEditor(props: InjectionProps) {
             if (nextActive) setCache(state.value)
           }}
         >
-          <InjectionRenderer href={cache} renderNested={renderArticle} />
+          <InjectionStaticRenderer
+            plugin={EditorPluginType.Injection}
+            state={cache}
+          />
         </PreviewOverlay>
       ) : (
         <div
