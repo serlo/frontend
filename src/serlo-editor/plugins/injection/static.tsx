@@ -179,6 +179,8 @@ export function InjectionStaticRenderer({
         })
     } catch (e) {
       // eslint-disable-next-line no-console
+      console.log(`failed injection: ${href}`)
+      // eslint-disable-next-line no-console
       console.error(e)
       setContent('error')
     }
