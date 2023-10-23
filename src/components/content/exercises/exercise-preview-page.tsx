@@ -98,9 +98,10 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
         {status === Status.Success && (
           <div>
             <ErrorBoundary>
-              {editorData &&
-                editorData[currentExerciseIndex] &&
-                null /*<Exercise
+              {
+                editorData &&
+                  editorData[currentExerciseIndex] &&
+                  null /*<Exercise
                   node={editorData[currentExerciseIndex]}
                   renderNested={(value, ...prefix) =>
                     renderNested(value, [], prefix)
@@ -109,7 +110,8 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
                   // If we don't add a key here and force reconciliation, the
                   // solution upon clicking "next" will be selected!
                   key={currentExerciseIndex}
-                />*/}
+                />*/
+              }
             </ErrorBoundary>
           </div>
         )}
