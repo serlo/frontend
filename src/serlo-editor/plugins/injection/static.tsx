@@ -49,12 +49,27 @@ export function InjectionStaticRenderer({
           const uuid = data.data.uuid
 
           if (
+            uuid.__typename === 'Article' ||
+            uuid.__typename === 'TaxonomyTerm' ||
+            uuid.__typename === 'CoursePage' ||
+            uuid.__typename === 'Solution'
+          ) {
+            if (!uuid.alias) setContent([])
+            setContent([createFallbackBox(uuid.alias, uuid.title)])
+            return
+          }
+
+          if (
+            !Object.hasOwn(uuid, 'currentRevision') ||
+            !uuid.currentRevision
+          ) {
+            throw new Error('no accepted revision')
+          }
+
+          if (
             uuid.__typename === 'GroupedExercise' ||
             uuid.__typename === 'Exercise'
           ) {
-            if (!uuid.currentRevision)
-              throw new Error('no accepted revision: ${href}')
-
             const exerciseContext = {
               serloContext: {
                 license:
@@ -83,8 +98,6 @@ export function InjectionStaticRenderer({
           }
 
           if (uuid.__typename === 'ExerciseGroup') {
-            if (!uuid.currentRevision) throw new Error('no accepted revision')
-
             const exercises = uuid.exercises.map((exercise) => {
               if (!exercise.currentRevision?.content) return []
 
@@ -136,7 +149,6 @@ export function InjectionStaticRenderer({
           }
 
           if (uuid.__typename === 'Video') {
-            if (!uuid.currentRevision) throw new Error('no accepted revision')
             const state = {
               plugin: EditorPluginType.Video,
               state: {
@@ -149,7 +161,6 @@ export function InjectionStaticRenderer({
           }
 
           if (uuid.__typename === 'Applet') {
-            if (!uuid.currentRevision) throw new Error('no accepted revision')
             setContent([
               {
                 plugin: EditorPluginType.Geogebra,
@@ -161,30 +172,17 @@ export function InjectionStaticRenderer({
           }
 
           if (uuid.__typename === 'Event') {
-            if (!uuid.currentRevision) throw new Error('no accepted revision')
             setContent([parseDocumentString(uuid.currentRevision.content)])
-            return
-          }
-
-          if (
-            uuid.__typename === 'Article' ||
-            uuid.__typename === 'TaxonomyTerm' ||
-            uuid.__typename === 'CoursePage' ||
-            uuid.__typename === 'Solution'
-          ) {
-            if (!uuid.alias) setContent([])
-            setContent([createFallbackBox(uuid.alias, uuid.title)])
             return
           }
 
           throw new Error('unknown entity type')
         })
-        .catch((e: string) => {
-          triggerSentry({ message: e, data: { href } })
+        .catch((e) => {
+          triggerSentry({ message: String(e), data: { href } })
           setContent('error')
         })
     } catch (e) {
-      // eslint-disable-next-line no-console
       triggerSentry({ message: String(e), data: { href } })
       setContent('error')
     }
