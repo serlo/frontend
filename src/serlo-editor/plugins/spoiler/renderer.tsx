@@ -21,6 +21,7 @@ export function SpoilerRenderer({
     <div
       className={clsx(
         'mb-block flex flex-col rounded-xl border-3 mobile:mx-side',
+        '[&>div.my-block:first-of-type]:mt-5',
         isOpen ? 'border-brand-200' : 'border-brand-100'
       )}
     >

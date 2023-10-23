@@ -71,7 +71,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
     [TopicCategoryType.events]: data.events,
     [TopicCategoryType.exercises]: data.exercises,
     [TopicCategoryCustomType.exercisesContent]: exercisesContentToTaxonomyLinks(
-      data.staticExercisesContent
+      data.exercisesContent
     ),
     [TopicCategoryCustomType.subterms]: data.subterms,
   })
@@ -81,7 +81,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
   const loggedInStrings = loggedInData.strings.taxonomyTermTools.sort
 
   function exercisesContentToTaxonomyLinks(
-    exercisesContent: TaxonomyPage['taxonomyData']['staticExercisesContent']
+    exercisesContent: TaxonomyPage['taxonomyData']['exercisesContent']
   ): TaxonomyLink[] {
     return exercisesContent
       .map((exercise, index) => {

@@ -29,6 +29,6 @@ export function isEmptyTextDocument(document?: AnyEditorDocument) {
   if (!isTextDocument(document)) return false
 
   const textState = document.state
-  if (!textState.length) return true
+  if (!textState || !textState.length) return true
   return textState.every(isEmptyDescendant)
 }

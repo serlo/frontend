@@ -24,7 +24,6 @@ export function LicenseDetail({
       <figure className="mx-side mb-10 text-center">
         <LicenseIcons title={title} isDefault={isDefault} />
       </figure>
-      <HSpace amount={20} />
       <StaticRenderer document={content} />
     </>
   )

@@ -18,7 +18,7 @@ export function MultimediaRenderer({
   const widthClass = getWidthClass()
 
   return (
-    <div className="mx-side mb-8 mt-8 flex flex-col-reverse rounded-xl border-3 border-brand-50 pt-4 mobile:block">
+    <div className="mx-side mb-8 mt-8 flex flex-col-reverse rounded-xl border-3 border-brand-50 mobile:block">
       <div
         onClick={onClick}
         className={clsx(
@@ -30,7 +30,9 @@ export function MultimediaRenderer({
         {media}
       </div>
       {/* 1px margin fixes mistery bug in firefox */}
-      <div className="explanation-wrapper ml-[1px]">{explanation}</div>
+      <div className="explanation-wrapper ml-[1px] [&_div.my-block:last-child]:mb-5 [&_div.my-block]:mt-0">
+        {explanation}
+      </div>
       <div className="clear-both" />
     </div>
   )
