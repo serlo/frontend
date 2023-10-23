@@ -1,6 +1,9 @@
-import { convertStateStringToFrontendNode } from './convert-state-string-to-frontend-node'
 import { createExercise, createExerciseGroup } from './create-exercises'
 import { MainUuidQuery, TaxonomyTermType } from './graphql-types/operations'
+import {
+  createStaticExerciseGroup,
+  staticCreateExerciseAndSolution,
+} from './static-create-exercises'
 import {
   TaxonomyData,
   TaxonomyLink,
@@ -12,6 +15,8 @@ import {
   FrontendExerciseGroupNode,
 } from '@/frontend-node-types'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
+import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
+import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 type TaxonomyTerm = Extract<
   MainUuidQuery['uuid'],
@@ -27,10 +32,9 @@ type TaxonomyTermChildrenLevel2 = Extract<
 
 export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
   const children = uuid.children.nodes.filter(isActive)
-
   return {
     description: uuid.description
-      ? convertStateStringToFrontendNode(uuid.description)
+      ? (parseDocumentString(uuid.description) as EditorRowsDocument)
       : undefined,
     title: uuid.name,
     id: uuid.id,
@@ -46,6 +50,7 @@ export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
     events: collectType(children, UuidType.Event),
 
     exercisesContent: collectExercises(children),
+    staticExercisesContent: staticCollectExercises(children),
     subterms: collectNestedTaxonomyTerms(children), // nested taxonomy terms
   }
 }
@@ -72,6 +77,25 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
       else result.push(createExerciseGroup(child, index++))
     }
   })
+  return result
+}
+
+export function staticCollectExercises(children: TaxonomyTermChildrenLevel1[]) {
+  const result: TaxonomyData['staticExercisesContent'] = []
+  children.forEach((child) => {
+    if (child.__typename === UuidType.Exercise && child.currentRevision) {
+      const exerciseWithSolution = staticCreateExerciseAndSolution({
+        ...child,
+        revisions: { totalCount: 0 },
+      })
+      if (exerciseWithSolution) result.push(exerciseWithSolution)
+    }
+    if (child.__typename === UuidType.ExerciseGroup && child.currentRevision) {
+      const group = createStaticExerciseGroup(child)
+      if (group) result.push(group)
+    }
+  })
+
   return result
 }
 
@@ -140,7 +164,7 @@ function collectNestedTaxonomyTerms(
         title: child.name,
         url: getAlias(child),
         description: child.description
-          ? convertStateStringToFrontendNode(child.description)
+          ? (parseDocumentString(child.description) as EditorRowsDocument)
           : undefined,
         articles: collectType(subChildren, UuidType.Article),
         exercises: collectExerciseFolders(subChildren),

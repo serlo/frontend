@@ -2,7 +2,8 @@ import type A from 'algebra.js'
 import clsx from 'clsx'
 import { useState, useEffect } from 'react'
 
-import { Feedback } from '@/components/content/exercises/feedback'
+import { InputExerciseType } from './input-exercise-type'
+import { Feedback } from '../sc-mc-exercise/renderer/feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 import { tw } from '@/helper/tw'
 
@@ -22,6 +23,8 @@ interface FeedbackData {
   message: JSX.Element
 }
 
+type AlgebraJSImport = typeof import('algebra.js')
+
 export function InputExerciseRenderer({
   type,
   unit,
@@ -30,10 +33,10 @@ export function InputExerciseRenderer({
 }: InputExersiseRendererProps) {
   const [feedback, setFeedback] = useState<FeedbackData | null>(null)
   const [value, setValue] = useState('')
-  const [A, setA] = useState<typeof import('algebra.js') | null>(null)
+  const [AlgebraJs, setAlgebraJs] = useState<AlgebraJSImport | null>(null)
   const exStrings = useInstanceData().strings.content.exercises
 
-  useEffect(() => void import('algebra.js').then((value) => setA(value)), [])
+  useEffect(() => void import('algebra.js').then((A) => setAlgebraJs(A)), [])
 
   function evaluate() {
     const feedbackData = checkAnswer()
@@ -53,7 +56,10 @@ export function InputExerciseRenderer({
           `}
         type="text"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => {
+          setValue(e.target.value)
+          setFeedback(null)
+        }}
         onKeyDown={(e) => {
           if (e.key === 'Enter') evaluate()
         }}
@@ -61,20 +67,22 @@ export function InputExerciseRenderer({
       />{' '}
       {unit}
       <br />
-      {feedback && (
-        <Feedback correct={feedback.correct}>{feedback.message}</Feedback>
-      )}
-      {A && (
-        <a
-          className={clsx(
-            'serlo-button-blue mt-4 !text-white',
-            value === '' && 'pointer-events-none opacity-0'
-          )}
-          onClick={evaluate}
-        >
-          {exStrings.check}
-        </a>
-      )}
+      <div className="mt-4 flex">
+        {AlgebraJs ? (
+          <button
+            className={clsx(
+              'serlo-button-blue h-8',
+              value === '' && 'pointer-events-none opacity-0'
+            )}
+            onClick={evaluate}
+          >
+            {exStrings.check}
+          </button>
+        ) : null}
+        {feedback && value ? (
+          <Feedback correct={feedback.correct}>{feedback.message}</Feedback>
+        ) : null}
+      </div>
     </div>
   )
 
@@ -112,11 +120,11 @@ export function InputExerciseRenderer({
   function normalize(value: string) {
     const _value = collapseWhitespace(value)
     switch (type) {
-      case 'input-number-exact-match-challenge':
+      case InputExerciseType.NumberExact:
         return normalizeNumber(_value).replace(/\s/g, '')
-      case 'input-expression-equal-match-challenge':
-        return A ? A.parse(normalizeNumber(_value)) : undefined
-      case 'input-string-normalized-match-challenge':
+      case InputExerciseType.ExpressionEqual:
+        return AlgebraJs ? AlgebraJs.parse(normalizeNumber(_value)) : undefined
+      case InputExerciseType.StringNormalized:
         return _value.toUpperCase()
     }
   }

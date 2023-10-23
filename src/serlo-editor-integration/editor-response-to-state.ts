@@ -10,10 +10,10 @@ import {
 import type { CourseTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/course/course'
 import type { CoursePageTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/course/course-page'
 import type { EventTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/event'
+import type { TextExerciseGroupTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
 import type { PageTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/page'
 import type { TaxonomyTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/taxonomy'
 import type { TextExerciseTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/text-exercise'
-import type { TextExerciseGroupTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/text-exercise-group'
 import type { TextSolutionTypeState } from '../serlo-editor/plugins/serlo-template-plugins/text-solution'
 import type { UserTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/user'
 import type { VideoTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/video'
@@ -125,7 +125,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           changes: '',
           title,
           url: uuid.currentRevision?.url || '',
-          content: serializeEditorState(convertEditorState(content)),
+          content: serializeEditorState(parseSerializedState(content)),
           meta_title,
           meta_description,
         },
@@ -153,12 +153,12 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     }
 
     function getContent() {
-      const convertedContent = convertEditorState(content)
+      const convertedContent = parseSerializedState(content)
 
       if (convertedContent?.plugin === EditorPluginType.Article) {
         return serializeEditorState(convertedContent)
       }
-      // TODO: is this still needed?
+      // currently still needed. See https://serlo.slack.com/archives/CEB781NCU/p1695977868948869
       return serializeEditorState({
         plugin: EditorPluginType.Article,
         state: {
@@ -189,7 +189,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           revision,
           changes: '',
           title,
-          description: serializeEditorState(convertEditorState(content)),
+          description: serializeEditorState(parseSerializedState(content)),
           meta_description,
           'course-page': (uuid.pages || [])
             .filter((page) => page.currentRevision !== null)
@@ -228,7 +228,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           icon: 'explanation',
           title: uuid.currentRevision?.title || '',
           content: serializeEditorState(
-            convertEditorState(uuid.currentRevision?.content || '')
+            parseSerializedState(uuid.currentRevision?.content || '')
           ),
         },
       },
@@ -247,7 +247,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           revision,
           changes: '',
           title,
-          content: serializeEditorState(convertEditorState(content)),
+          content: serializeEditorState(parseSerializedState(content)),
           meta_title,
           meta_description,
         },
@@ -265,7 +265,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
         state: {
           ...entityFields,
           title,
-          content: serializeEditorState(convertEditorState(content)),
+          content: serializeEditorState(parseSerializedState(content)),
         },
       },
     }
@@ -287,7 +287,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
             name: uuid.name,
           },
           description: serializeEditorState(
-            convertEditorState(uuid.description ?? '')
+            parseSerializedState(uuid.description ?? '')
           ),
         },
       },
@@ -319,7 +319,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
               : '',
           content:
             serializeEditorState(
-              convertEditorState(uuid.currentRevision?.content)
+              parseSerializedState(uuid.currentRevision?.content)
             ) ?? '',
         },
       },
@@ -359,7 +359,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           ...entityFields,
           changes: '',
           revision,
-          content: serializeEditorState(convertEditorState(content)),
+          content: serializeEditorState(parseSerializedState(content)),
           cohesive: uuid.currentRevision?.cohesive ?? false,
           'grouped-text-exercise': exercises,
         },
@@ -387,7 +387,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     }
 
     function getContent() {
-      const convertdContent = convertEditorState(solutionContent)
+      const convertdContent = parseSerializedState(solutionContent)
       if (convertdContent !== undefined) {
         return serializeEditorState(convertdContent)
       }
@@ -420,7 +420,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           changes: '',
           title,
           revision,
-          description: serializeEditorState(convertEditorState(content)),
+          description: serializeEditorState(parseSerializedState(content)),
           content: uuid.currentRevision?.url ?? '',
         },
       },
@@ -434,7 +434,7 @@ export function convertUserByDescription(description?: string | null) {
       plugin: TemplatePluginType.User,
       state: {
         description: serializeEditorState(
-          convertEditorState(description ?? '')
+          parseSerializedState(description ?? '')
         ),
       },
     },
@@ -586,7 +586,9 @@ function serializeEditorState(content?: Edtr): string {
   )
 }
 
-function convertEditorState(content: SerializedEditorState): Edtr | undefined {
+function parseSerializedState(
+  content: SerializedEditorState
+): Edtr | undefined {
   if (!content) return undefined
   try {
     return JSON.parse(content) as Edtr

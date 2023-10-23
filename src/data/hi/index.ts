@@ -522,8 +522,7 @@ export const loggedInData = {
       thisCoursePage: "यह कोर्स पृष्ठ",
       addCoursePage: "कोर्स पृष्ठ जोड़ें",
       wholeCourse: "पूरे कोर्स",
-      copyItems: "आइटम कॉपी करें",
-      moveItems: "आइटम ले जाएं",
+      moveOrCopyItems: 'Move or copy items',
       addGroupedTextExercise: "समूहीकृत-पाठ-व्यायाम",
       changeLicense: "लायसेंस परिवर्तित करें",
       subscribe: "सदस्य बनें",
@@ -681,12 +680,6 @@ export const loggedInData = {
           serloEntitySrc: 'Serlo entity {{src}}',
           serloId: 'Serlo ID',
           placeholder: 'Serlo ID (e.g. 1565)'
-        },
-        layout: {
-          title: 'Layout',
-          toDragConvert: 'To make the content draggable, convert them for the new editor:',
-          oneColumnLayout: 'One-column layout',
-          multimediaTitle: 'Multimedia content associated with text'
         },
         multimedia: {
           title: 'Multimedia content associated with text',
@@ -895,6 +888,7 @@ export const loggedInData = {
           unit: 'Unit',
           addAnswer: 'Add answer',
           enterTheValue: 'Enter the value',
+          feedbackPlaceholder: 'Add a feedback message for this answer',
           yourSolution: 'Your solution',
           types: {
             'input-string-normalized-match-challenge': "Text (exact, e.g. 'tiger')",

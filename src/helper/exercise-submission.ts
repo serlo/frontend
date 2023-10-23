@@ -6,8 +6,8 @@ import { ABValue } from '@/contexts/ab'
 
 export interface ExerciseSubmissionData {
   path: string
-  entityId: number
-  revisionId: number
+  entityId?: number
+  revisionId?: number
   type: 'sc' | 'mc' | 'input' | 'h5p' | 'text' | 'ival'
   result: 'correct' | 'wrong' | 'open' | string
 }
@@ -15,10 +15,12 @@ export interface ExerciseSubmissionData {
 const sesionStorageKey = 'frontend_exercise_submission_session_id'
 
 export function exerciseSubmission(data: ExerciseSubmissionData, ab: ABValue) {
+  const entityId = data.entityId ?? -1
+
   // check for ab testing
   if (ab) {
     abSubmission({
-      entityId: data.entityId,
+      entityId,
       topicId: ab.topicId,
       experiment: ab.experiment,
       group: ab.group,
@@ -27,36 +29,39 @@ export function exerciseSubmission(data: ExerciseSubmissionData, ab: ABValue) {
     })
   }
 
-  if (ab?.experiment === 'dreisatzv0') {
+  if (ab?.experiment === 'dreisatz_new_design') {
     if (data.result === 'correct') {
       const solved = JSON.parse(
         sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
       ) as number[]
-      if (!solved.includes(data.entityId)) {
-        solved.push(data.entityId)
+      if (!solved.includes(entityId)) {
+        solved.push(entityId)
       }
       sessionStorage.setItem(
         '___serlo_solved_in_session___',
         JSON.stringify(solved)
       )
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-      if (typeof (window as any)?.__triggerRender === 'function') {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        ;(window as any).__triggerRender()
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      const trigger = (window as any)?.__triggerRender
+      if (typeof trigger === 'function') {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        trigger()
       }
     }
   }
 
-  if (!isProduction) return // don't submit outside of production
+  if (!isProduction) {
+    // eslint-disable-next-line no-console
+    console.log(data)
+    return // don't submit outside of production
+  }
 
   if (!sessionStorage.getItem(sesionStorageKey)) {
     // set new session id
     sessionStorage.setItem(sesionStorageKey, uuidv4())
   }
   const sessionId = sessionStorage.getItem(sesionStorageKey)
-
-  // console.log(data)
 
   void (async () => {
     await fetch('/api/frontend/exercise-submission', {

@@ -12,24 +12,24 @@ import { Sign } from '@/serlo-editor/plugins/equations/sign'
 import { CustomElement, CustomText } from '@/serlo-editor/plugins/text'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
-  SupportedEditorPlugin,
-  UnknownEditorPlugin,
+  AnyEditorDocument,
+  SupportedEditorDocument,
+  UnknownEditorDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
 type SlateElementOrText = CustomElement | CustomText
 
-function isSupportedEditorPlugin(
+function isSupportedEditorDocument(
   node: ConvertData
-): node is SupportedEditorPlugin {
+): node is SupportedEditorDocument {
   return Object.values(EditorPluginType).includes(
-    (node as SupportedEditorPlugin).plugin
+    (node as SupportedEditorDocument).plugin
   )
 }
 
 export type ConvertData =
-  | SupportedEditorPlugin
-  | UnknownEditorPlugin
-  // | FrontendContentNode
+  | AnyEditorDocument
+  | UnknownEditorDocument
   | SlateElementOrText
 
 export type ConvertNode = ConvertData | ConvertData[] | undefined
@@ -46,16 +46,16 @@ export function convert(node?: ConvertNode): FrontendContentNode[] {
   if (!node || Object.keys(node).length === 0) return []
 
   if (Array.isArray(node)) return node.flatMap(convert)
-  if (isSupportedEditorPlugin(node)) return convertPlugin(node)
+  if (isSupportedEditorDocument(node)) return convertPlugin(node)
   if (isTextPluginState(node)) return convertTextPluginState(node)
 
   return []
 }
 
 function convertPlugin(
-  node: SupportedEditorPlugin | UnknownEditorPlugin
+  node: SupportedEditorDocument | UnknownEditorDocument
 ): FrontendContentNode[] {
-  if (!isSupportedEditorPlugin(node)) return []
+  if (!isSupportedEditorDocument(node)) return []
 
   if (node.plugin === EditorPluginType.Article) {
     const {
@@ -108,7 +108,7 @@ function convertPlugin(
     const { caption, maxWidth, link, src } = node.state
 
     const convertedCaption = caption
-      ? convert(caption as SupportedEditorPlugin)
+      ? convert(caption as SupportedEditorDocument)
       : undefined
 
     const captionTexts = convertedCaption?.[0]?.children?.[0]?.children
@@ -143,7 +143,7 @@ function convertPlugin(
   if (node.plugin === EditorPluginType.Box) {
     // get rid of wrapping p and inline math in title
     const convertedTitle = convert(
-      node.state.title as SupportedEditorPlugin
+      node.state.title as SupportedEditorDocument
     )[0] as FrontendTextNode | FrontendMathNode | undefined
     const title = convertedTitle
       ? ((convertedTitle.type === FrontendNodeType.Math
@@ -157,7 +157,7 @@ function convertPlugin(
         boxType: node.state.type as BoxType,
         anchorId: node.state.anchorId,
         title,
-        children: convert(node.state.content.state as SupportedEditorPlugin),
+        children: convert(node.state.content.state as SupportedEditorDocument),
         pluginId: node.id,
       },
     ]
@@ -180,7 +180,7 @@ function convertPlugin(
           },
           {
             type: FrontendNodeType.SpoilerBody,
-            children: convert(node.state.content as SupportedEditorPlugin),
+            children: convert(node.state.content as SupportedEditorDocument),
           },
         ],
         pluginId: node.id,
@@ -193,24 +193,9 @@ function convertPlugin(
       {
         type: FrontendNodeType.Multimedia,
         mediaWidth: width,
-        media: convert(node.state.multimedia as SupportedEditorPlugin),
-        children: convert(node.state.explanation as SupportedEditorPlugin),
+        media: convert(node.state.multimedia as SupportedEditorDocument),
+        children: convert(node.state.explanation as SupportedEditorDocument),
         pluginId: node.id,
-      },
-    ]
-  }
-  if (node.plugin === EditorPluginType.Layout) {
-    return [
-      {
-        type: FrontendNodeType.Row,
-        children: node.state.map((child) => {
-          const children = convert(child.child)
-          return {
-            type: FrontendNodeType.Col,
-            size: child.width,
-            children,
-          }
-        }),
       },
     ]
   }
@@ -228,7 +213,7 @@ function convertPlugin(
         children: row.columns.map((cell) => {
           return {
             type: FrontendNodeType.SerloTd,
-            children: convert(cell.content as SupportedEditorPlugin),
+            children: convert(cell.content as SupportedEditorDocument),
           }
         }),
       }
@@ -300,8 +285,8 @@ function convertPlugin(
     return [
       {
         type: FrontendNodeType.PageLayout,
-        column1: convert(node.state.column1 as SupportedEditorPlugin),
-        column2: convert(node.state.column2 as SupportedEditorPlugin),
+        column1: convert(node.state.column1 as SupportedEditorDocument),
+        column2: convert(node.state.column2 as SupportedEditorDocument),
         widthPercent: node.state.widthPercent,
         pluginId: node.id,
       },

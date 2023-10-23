@@ -522,8 +522,7 @@ export const loggedInData = {
       thisCoursePage: 'This course-page',
       addCoursePage: 'Add course-page',
       wholeCourse: 'Whole course',
-      copyItems: 'Copy items',
-      moveItems: 'Move items',
+      moveOrCopyItems: 'Move or copy items',
       addGroupedTextExercise: 'Add grouped-text-exercise',
       changeLicense: 'Change License',
       subscribe: "சந்தா",
@@ -681,12 +680,6 @@ export const loggedInData = {
           serloEntitySrc: 'Serlo entity {{src}}',
           serloId: 'Serlo ID',
           placeholder: 'Serlo ID (e.g. 1565)'
-        },
-        layout: {
-          title: 'Layout',
-          toDragConvert: 'To make the content draggable, convert them for the new editor:',
-          oneColumnLayout: 'One-column layout',
-          multimediaTitle: 'Multimedia content associated with text'
         },
         multimedia: {
           title: 'Multimedia content associated with text',
@@ -895,6 +888,7 @@ export const loggedInData = {
           unit: 'Unit',
           addAnswer: 'Add answer',
           enterTheValue: 'Enter the value',
+          feedbackPlaceholder: 'Add a feedback message for this answer',
           yourSolution: 'Your solution',
           types: {
             'input-string-normalized-match-challenge': "Text (exact, e.g. 'tiger')",

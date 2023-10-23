@@ -6,8 +6,6 @@ import { Exercise } from './exercise'
 import { CloseButton } from '@/components/close-button'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { FrontendExerciseNode } from '@/frontend-node-types'
-import { convertAiGeneratedDataToEditorData } from '@/helper/ai-generated-exercises/data-conversion'
 import { ErrorBoundary } from '@/helper/error-boundary'
 import { renderNested } from '@/schema/article-renderer'
 
@@ -25,8 +23,8 @@ enum Status {
 // TODO remove this before production
 const isTestingLocally = false
 
-const exerciseTestData =
-  '{\n  "heading": "Dreisatz",\n  "subtasks": [\n    {\n      "type": "single_choice",\n      "question": "Ein Auto fährt mit einer Geschwindigkeit von 60 km/h. Wie weit kommt das Auto in 3 Stunden?",\n      "options": [\n        "120 km",\n        "180 km",\n        "240 km",\n        "300 km"\n      ],\n      "correct_option": 2\n    },\n    {\n      "type": "single_choice",\n      "question": "Ein Kind isst 4 Schokoriegel in 2 Tagen. Wie viele Schokoriegel isst das Kind in 5 Tagen?",\n      "options": [\n        "8 Schokoriegel",\n        "10 Schokoriegel",\n        "12 Schokoriegel",\n        "14 Schokoriegel"\n      ],\n      "correct_option": 3\n    }\n  ]\n}'
+// const exerciseTestData =
+// '{\n  "heading": "Dreisatz",\n  "subtasks": [\n    {\n      "type": "single_choice",\n      "question": "Ein Auto fährt mit einer Geschwindigkeit von 60 km/h. Wie weit kommt das Auto in 3 Stunden?",\n      "options": [\n        "120 km",\n        "180 km",\n        "240 km",\n        "300 km"\n      ],\n      "correct_option": 2\n    },\n    {\n      "type": "single_choice",\n      "question": "Ein Kind isst 4 Schokoriegel in 2 Tagen. Wie viele Schokoriegel isst das Kind in 5 Tagen?",\n      "options": [\n        "8 Schokoriegel",\n        "10 Schokoriegel",\n        "12 Schokoriegel",\n        "14 Schokoriegel"\n      ],\n      "correct_option": 3\n    }\n  ]\n}'
 
 export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
   generateExercisePromise,
@@ -38,13 +36,13 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
   )
   const { strings } = useInstanceData()
 
-  const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0)
+  const [currentExerciseIndex /*setCurrentExerciseIndex*/] = useState(0)
 
   // TODO change it to null before prod
   // const [exerciseData, setExerciseData] = useState(exerciseTestData)
-  const [exerciseData, setExerciseData] = useState('')
-  const editorData = useMemo<FrontendExerciseNode[]>(
-    () => convertAiGeneratedDataToEditorData(exerciseData),
+  const [exerciseData /*setExerciseData*/] = useState('')
+  const editorData = useMemo<null>(
+    () => /*convertAiGeneratedDataToEditorData(exerciseData)*/ null,
     [exerciseData]
   )
 
@@ -62,9 +60,9 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
     //   setStatus(Status.Success)
     // }, 3500)
     generateExercisePromise
-      .then((data) => {
-        console.log('returned data: ', { data })
-        setExerciseData(data)
+      .then(() => {
+        //console.log('returned data: ', { data })
+        //setExerciseData(data)
         setStatus(Status.Success)
       })
       .catch((error) => {
@@ -82,7 +80,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
   }, [generateExercise])
 
   return (
-    <div className="fixed left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center bg-background-gray">
+    <div className="bg-background-gray fixed left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center">
       <CloseButton
         onClick={closePage}
         title={strings.ai.exerciseGeneration.preview.closePreviewTitle}
@@ -120,7 +118,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
         {status === Status.Error && <div>Failed to load data.</div>}
       </div>
 
-      {editorData?.length > 1 && (
+      {/*editorData?.length > 1 && (
         <div className="mt-4 flex w-1/2 justify-between">
           {currentExerciseIndex > 0 && (
             <button
@@ -144,9 +142,9 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
             >
               {strings.ai.exerciseGeneration.nextButton}
             </button>
-          )}
+            )}
         </div>
-      )}
+            )*/}
 
       <div className="mt-8 flex w-1/2 flex-col items-end space-y-2">
         <button className="self-end rounded bg-brand-700 px-6 py-2 text-white">

@@ -96,7 +96,7 @@ export const ExerciseType: React.FC<ExerciseTypeProps> = ({
             setHasSubtasks(false)
             setNumberOfSubtasks(0)
           }}
-          className="text-brand-700 focus:ring-lightblue"
+          className="focus:ring-lightblue text-brand-700"
         />
         <label
           htmlFor="noSubtasks"
@@ -116,7 +116,7 @@ export const ExerciseType: React.FC<ExerciseTypeProps> = ({
           value="yes"
           checked={hasSubtasks}
           onChange={() => setHasSubtasks(true)}
-          className="text-brand-700 focus:ring-lightblue"
+          className="focus:ring-lightblue text-brand-700"
         />
         <label
           htmlFor="hasSubtasks"
@@ -136,7 +136,7 @@ export const ExerciseType: React.FC<ExerciseTypeProps> = ({
               onNext()
             }
           }}
-          className="ml-2 rounded-md border border-lightblue p-2 pl-2 focus:border-lightblue focus:outline-brand-700"
+          className="border-lightblue focus:border-lightblue ml-2 rounded-md border p-2 pl-2 focus:outline-brand-700"
           placeholder={
             strings.ai.exerciseGeneration.exerciseType
               .numberOfSubtasksPlaceholder

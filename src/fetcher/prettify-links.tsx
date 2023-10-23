@@ -1,6 +1,6 @@
 import { request } from 'graphql-request'
 
-import { idsQuery } from './query-ids'
+import { idsQuery } from './prettify-links-state/ids-query'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData } from '@/data-types'
 import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'

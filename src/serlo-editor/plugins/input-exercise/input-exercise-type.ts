@@ -1,5 +1,5 @@
 export enum InputExerciseType {
-  InputStringNormalizedMatchChallenge = 'input-string-normalized-match-challenge',
-  InputNumberExactMatchChallenge = 'input-number-exact-match-challenge',
-  InputExpressionEqualMatchChallenge = 'input-expression-equal-match-challenge',
+  NumberExact = 'input-number-exact-match-challenge',
+  ExpressionEqual = 'input-expression-equal-match-challenge',
+  StringNormalized = 'input-string-normalized-match-challenge',
 }

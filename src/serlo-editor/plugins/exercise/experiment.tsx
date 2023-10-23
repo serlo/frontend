@@ -1,13 +1,13 @@
 import { useState } from 'react'
 
-import { convertAiGeneratedDataToEditorData } from '@/helper/ai-generated-exercises/data-conversion'
+// import { convertAiGeneratedDataToEditorData } from '@/helper/ai-generated-exercises/data-conversion'
 import { AddButton } from '@/serlo-editor/editor-ui'
 
 export function Experiment() {
   const [openAiApiOutputJson, setOpenAiApiOutputJson] = useState<string>('')
 
   const clickHandler = () => {
-    console.log(convertAiGeneratedDataToEditorData(openAiApiOutputJson))
+    //console.log(convertAiGeneratedDataToEditorData(openAiApiOutputJson))
   }
 
   return (

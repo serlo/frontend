@@ -49,7 +49,7 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
             <FaIcon icon={faTools} />
           </Trigger>
           <Content>
-            <List className="absolute right-0 top-0 z-50 w-56 pt-2">
+            <List className="absolute right-0 top-0 z-30 w-56 pt-2">
               <div className="serlo-sub-list-hover">
                 <li className="ml-2 font-bold">{type}</li>
                 <AuthorTools

@@ -65,7 +65,7 @@ export const Topic: React.FC<TopicProps> = ({
               setSelectedRadio(defaultTopic)
               setTopic(defaultTopic)
             }}
-            className="text-brand-700 focus:ring-lightblue"
+            className="focus:ring-lightblue text-brand-700"
           />
           <label htmlFor="defaultTopic" className="ml-2">
             {defaultTopic.charAt(0).toUpperCase() + defaultTopic.slice(1)}
@@ -85,7 +85,7 @@ export const Topic: React.FC<TopicProps> = ({
             setTopic('')
             setSelectedRadio('custom')
           }}
-          className="text-brand-700 focus:ring-lightblue"
+          className="focus:ring-lightblue text-brand-700"
         />
         <label htmlFor="customTopic" className="ml-2 ">
           {strings.ai.exerciseGeneration.topic.otherTopicLabel}
@@ -100,7 +100,7 @@ export const Topic: React.FC<TopicProps> = ({
               onNext()
             }
           }}
-          className="ml-2 rounded-md border border-lightblue p-2 pl-2 focus:border-lightblue focus:outline-brand-700"
+          className="border-lightblue focus:border-lightblue ml-2 rounded-md border p-2 pl-2 focus:outline-brand-700"
           placeholder={
             strings.ai.exerciseGeneration.topic.customTopicPlaceholder
           }
