@@ -108,7 +108,8 @@ export const instanceData = {
         confirmCloseDescription: 'Do you want to cancel the exercise generation? Your data will be lost.',
         summary: 'Summary',
         nextButton: 'Next',
-        previousButton: 'Previous',
+        nextExerciseButton: 'Next exercise',
+        previousButton: 'Previous exercise',
         generateExerciseButton: 'Generate exercise',
         generateExercisesButton: 'Generate exercises',
         subject: {
