@@ -6,6 +6,7 @@ import { InfoPanel } from '@/components/info-panel'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
+import { triggerSentry } from '@/helper/trigger-sentry'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
@@ -24,10 +25,10 @@ export function InjectionStaticRenderer({
   >('loading')
 
   const { strings } = useInstanceData()
+  const cleanedHref = href?.startsWith('/') ? href : `/${href}`
 
   useEffect(() => {
-    if (!href) return
-    const cleanedHref = href.startsWith('/') ? href : `/${href}`
+    if (!cleanedHref) return
 
     try {
       void fetch(endpoint, {
@@ -48,12 +49,27 @@ export function InjectionStaticRenderer({
           const uuid = data.data.uuid
 
           if (
+            uuid.__typename === 'Article' ||
+            uuid.__typename === 'TaxonomyTerm' ||
+            uuid.__typename === 'CoursePage' ||
+            uuid.__typename === 'Solution'
+          ) {
+            if (!uuid.alias) setContent([])
+            setContent([createFallbackBox(uuid.alias, uuid.title)])
+            return
+          }
+
+          if (
+            !Object.hasOwn(uuid, 'currentRevision') ||
+            !uuid.currentRevision
+          ) {
+            throw new Error('no accepted revision')
+          }
+
+          if (
             uuid.__typename === 'GroupedExercise' ||
             uuid.__typename === 'Exercise'
           ) {
-            if (!uuid.currentRevision)
-              throw new Error('no accepted revision: ${href}')
-
             const exerciseContext = {
               serloContext: {
                 license:
@@ -82,8 +98,6 @@ export function InjectionStaticRenderer({
           }
 
           if (uuid.__typename === 'ExerciseGroup') {
-            if (!uuid.currentRevision) throw new Error('no accepted revision')
-
             const exercises = uuid.exercises.map((exercise) => {
               if (!exercise.currentRevision?.content) return []
 
@@ -135,7 +149,6 @@ export function InjectionStaticRenderer({
           }
 
           if (uuid.__typename === 'Video') {
-            if (!uuid.currentRevision) throw new Error('no accepted revision')
             const state = {
               plugin: EditorPluginType.Video,
               state: {
@@ -148,7 +161,6 @@ export function InjectionStaticRenderer({
           }
 
           if (uuid.__typename === 'Applet') {
-            if (!uuid.currentRevision) throw new Error('no accepted revision')
             setContent([
               {
                 plugin: EditorPluginType.Geogebra,
@@ -160,53 +172,40 @@ export function InjectionStaticRenderer({
           }
 
           if (uuid.__typename === 'Event') {
-            if (!uuid.currentRevision) throw new Error('no accepted revision')
             setContent([parseDocumentString(uuid.currentRevision.content)])
-            return
-          }
-
-          if (
-            uuid.__typename === 'Article' ||
-            uuid.__typename === 'TaxonomyTerm' ||
-            uuid.__typename === 'CoursePage' ||
-            uuid.__typename === 'Solution'
-          ) {
-            if (!uuid.alias) setContent([])
-            setContent([createFallbackBox(uuid.alias, uuid.title)])
             return
           }
 
           throw new Error('unknown entity type')
         })
         .catch((e) => {
-          // eslint-disable-next-line no-console
-          console.error(e, href)
+          triggerSentry({ message: String(e), data: { href } })
           setContent('error')
         })
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e, href)
+      triggerSentry({ message: String(e), data: { href } })
       setContent('error')
     }
-  }, [href])
+  }, [cleanedHref, href])
 
   if (!href) return null
 
   if (content === 'loading') return <LoadingSpinner />
-  if (content === 'error')
+  if (content === 'error') {
     return (
       <InfoPanel>
         {strings.errors.defaultMessage}{' '}
         <small className="float-right mt-0.5">
-          <a className="serlo-link" href={href}>
+          <a className="serlo-link" href={cleanedHref}>
             Link
           </a>
         </small>
       </InfoPanel>
     )
+  }
 
   return (
-    <div className="border-b-4 border-brand-300 pb-4 text-gray-900">
+    <div className="border-b-3 border-brand-200 pb-4 text-gray-900">
       <StaticRenderer document={content} />
     </div>
   )
