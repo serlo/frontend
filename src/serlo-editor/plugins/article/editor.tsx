@@ -25,7 +25,7 @@ export function ArticleEditor({ editable, state }: ArticleProps) {
   return (
     <>
       <ArticleRenderer
-        introduction={introduction.render()}
+        introduction={<div>{introduction.render()}</div>}
         content={<div data-qa="plugin-article-content">{content.render()}</div>}
         exercises={
           <>
@@ -71,8 +71,6 @@ export function ArticleEditor({ editable, state }: ArticleProps) {
         relatedContentExtra={renderButton(modalStrings.buttonContent)}
         sources={<ArticleSources editable={editable} sources={sources} />}
       />
-
-      {/*  ?? {renderButton(modalStrings.buttonContent)} */}
 
       {editable && (
         <ArticleAddModal

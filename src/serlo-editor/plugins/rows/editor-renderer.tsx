@@ -30,7 +30,6 @@ const pluginsWithOwnBorder = [
   EditorPluginType.Box,
   EditorPluginType.Geogebra,
   EditorPluginType.Highlight,
-  EditorPluginType.Multimedia,
   EditorPluginType.SerloTable,
   EditorPluginType.Spoiler,
   EditorPluginType.Video,
@@ -191,6 +190,8 @@ export function EditorRowRenderer({
   const rowPluginType = selectDocumentPluginType(store.getState(), row.id)
   const shouldShowBorder = !pluginsWithOwnBorder.includes(rowPluginType)
 
+  const isMultimediaPlugin = rowPluginType === EditorPluginType.Multimedia
+
   return (
     <>
       {draggingAbove ? dropPreview : null}
@@ -212,7 +213,9 @@ export function EditorRowRenderer({
           [&:focus-within>.rows-tools]:opacity-100
           [&:has(.rows-editor-renderer-container:focus-within)>.rows-tools]:opacity-0
           [&:hover>.rows-tools]:!opacity-100
-          `
+          `,
+          isMultimediaPlugin &&
+            '[&>.rows-tools]:!-left-1 [&>.rows-tools]:!-top-9'
         )}
       >
         <RowDragButton drag={drag} />
