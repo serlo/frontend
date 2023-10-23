@@ -24,10 +24,10 @@ export function InjectionStaticRenderer({
   >('loading')
 
   const { strings } = useInstanceData()
+  const cleanedHref = href?.startsWith('/') ? href : `/${href}`
 
   useEffect(() => {
-    if (!href) return
-    const cleanedHref = href.startsWith('/') ? href : `/${href}`
+    if (!cleanedHref) return
 
     try {
       void fetch(endpoint, {
@@ -188,22 +188,23 @@ export function InjectionStaticRenderer({
       console.error(e, href)
       setContent('error')
     }
-  }, [href])
+  }, [cleanedHref, href])
 
   if (!href) return null
 
   if (content === 'loading') return <LoadingSpinner />
-  if (content === 'error')
+  if (content === 'error') {
     return (
       <InfoPanel>
         {strings.errors.defaultMessage}{' '}
         <small className="float-right mt-0.5">
-          <a className="serlo-link" href={href}>
+          <a className="serlo-link" href={cleanedHref}>
             Link
           </a>
         </small>
       </InfoPanel>
     )
+  }
 
   return (
     <div className="border-b-4 border-brand-300 pb-4 text-gray-900">
