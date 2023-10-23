@@ -1,3 +1,5 @@
+import { serloDomain } from '@/helper/urls/serlo-domain'
+
 export type ExerciseGenerationDifficulty = 'low' | 'medium' | 'high'
 
 interface ExerciseParams {
@@ -64,4 +66,41 @@ export const generateExercisePrompt = (params: ExerciseParams): string => {
   return `Du bist eine kreative Lehrkraft, die spannende Aufgaben für Schüler des ${grade}. Jahrgangs im Fach ${subject} entwickelt. Erstelle zum Thema "${topic}" eine Aufgabe${subtasks} ${exerciseText}. Füge eine sinnvolle Überschrift hinzu, aus der das Thema der Aufgabe hervorgeht. Die Schüler haben folgendes Vorwissen: ${priorKnowledge}
 Nach Bearbeiten der Aufgabe beherrschen die Schüler folgendes besser: ${learningGoal}
 Verwende leichte Sprache. Das Anforderungsniveau soll ${difficultyText} sein. Beachte folgende Charakterisierung der Schüler: ${difficultyDescription}. Stelle die notierte Aufgabe zum Hochladen auf eine Lernplattform in einem unnamed JSON Objekt dar ${keyDescription}. Formatiere alle mathematischen Symbole in LateX.`
+}
+
+export async function promptApi(prompt: string): Promise<string> {
+  const query = `
+  query ($prompt: String!) {
+    ai {
+      executePrompt(prompt: $prompt) {
+        success
+        record
+      }
+    }
+  }
+`
+
+  const variables = {
+    prompt,
+  }
+
+  return fetch(`${serloDomain}/graphql`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      // I think we need some authentication headers here so that the API knows
+      // we're dealing with a user (that is a reviewer)
+    },
+    body: JSON.stringify({ query, variables }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+      return data as string
+    })
+    .catch((error) => {
+      console.error(error)
+      throw error
+    })
 }

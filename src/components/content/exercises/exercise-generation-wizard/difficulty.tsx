@@ -1,5 +1,5 @@
+import { ExerciseGenerationDifficulty } from './generate-prompt'
 import { WizardPageProps } from './wizard-page-props'
-import { ExerciseGenerationDifficulty } from '../generate-prompt'
 import { MenuButton, MenuItem } from '../menu-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'

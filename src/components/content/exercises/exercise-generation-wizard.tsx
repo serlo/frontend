@@ -3,15 +3,15 @@ import React, { useEffect, useRef, useState } from 'react'
 
 import { Difficulty } from './exercise-generation-wizard/difficulty'
 import { ExerciseType } from './exercise-generation-wizard/exercise-type'
+import {
+  ExerciseGenerationDifficulty,
+  generateExercisePrompt,
+} from './exercise-generation-wizard/generate-prompt'
 import { Grade } from './exercise-generation-wizard/grade'
 import { PriorKnowledge } from './exercise-generation-wizard/prior-knowledge'
 import { Prompt } from './exercise-generation-wizard/prompt'
 import { Subject } from './exercise-generation-wizard/subject'
 import { Topic } from './exercise-generation-wizard/topic'
-import {
-  ExerciseGenerationDifficulty,
-  generateExercisePrompt,
-} from './generate-prompt'
 import { FaIcon } from '@/components/fa-icon'
 import { AuthorToolsData } from '@/components/user-tools/foldout-author-menus/author-tools'
 import { useInstanceData } from '@/contexts/instance-context'
