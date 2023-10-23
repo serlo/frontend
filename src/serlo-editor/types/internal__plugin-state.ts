@@ -27,25 +27,25 @@ export interface StateType<S = any, T = any, R = any> {
    * @param helpers - helpers (e.g. to insert a document in the store)
    * @returns initial state
    */
-  createInitialState(helpers: StoreDeserializeHelpers): T
+  createInitialState(helpers: StoreToStoreHelpers): T
 
   /**
-   * Deserializes a static document
+   * Converts a static document into a store document
    *
-   * @param staticDocument - static state to deserialize
+   * @param staticDocument - static state to convert
    * @param helpers - helpers (e.g. to insert an document in the store)
-   * @returns deserialized state
+   * @returns store document state
    */
-  deserialize(staticDocument: S, helpers: StoreDeserializeHelpers): T
+  toStoreDocument(staticDocument: S, helpers: StoreToStoreHelpers): T
 
   /**
    * Converts a store document to a static document
    *
-   * @param deserialized - document to convert
+   * @param storeDocument - document to convert
    * @param helpers - helpers (e.g. to convert an document)
    * @returns static document
    */
-  toStatic(deserialized: T, helpers: StoreToStaticHelpers): S
+  toStaticDocument(storeDocument: T, helpers: StoreToStaticHelpers): S
 
   /**
    * Gives the editor information about the children of the plugin (e.g. to build the document tree)
@@ -65,7 +65,7 @@ export interface StateType<S = any, T = any, R = any> {
  */
 export type StateUpdater<T> = (
   previousState: T,
-  helpers: StoreDeserializeHelpers
+  helpers: StoreToStoreHelpers
 ) => T
 
 /**
@@ -106,7 +106,7 @@ export type StateTypesStaticType<Ds extends Record<string, StateType>> = {
 }
 
 /**
- * Maps a [[StateType]] to the type of its deserialized state
+ * Maps a [[StateType]] to the type of its store state
  *
  */
 export type StateTypeValueType<D extends StateType> = D extends StateType<
@@ -141,10 +141,7 @@ export type StateTypesReturnType<Ds extends Record<string, StateType>> = {
  * Helpers to be used by a [[StateType]] when working with a static state
  *
  */
-export interface StoreDeserializeHelpers<
-  K extends string = string,
-  S = unknown,
-> {
+export interface StoreToStoreHelpers<K extends string = string, S = unknown> {
   /**
    * Inserts a document into the store
    *
@@ -154,7 +151,7 @@ export interface StoreDeserializeHelpers<
 }
 
 /**
- * Helpers to be used by a [[StateType]] when working with a deserialized state
+ * Helpers to be used by a [[StateType]] when working with a store state
  *
  */
 export interface StoreToStaticHelpers<K extends string = string, S = unknown> {

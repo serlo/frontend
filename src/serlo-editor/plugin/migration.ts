@@ -1,6 +1,6 @@
 import {
   StateType,
-  StoreDeserializeHelpers,
+  StoreToStoreHelpers,
   StoreSerializeHelpers,
 } from './internal-plugin-state'
 
@@ -30,23 +30,23 @@ function migrate<InitialS, AllS, S, S1, T1, R1>(
 ): MigratableStateType<InitialS, AllS | S1, S1, T1, R1> {
   return {
     ...nextType,
-    deserialize(
+    toStoreDocument(
       serialized: InitialS | Versionized<AllS | S1>,
-      helpers: StoreDeserializeHelpers
+      helpers: StoreToStoreHelpers
     ) {
       if (isVersionized<S1>(serialized, nextVersion)) {
-        return nextType.deserialize(serialized.value, helpers)
+        return nextType.toStoreDocument(serialized.value, helpers)
       }
       const s = serialized as InitialS | Versionized<AllS>
-      return nextType.deserialize(f(recursiveMigrate(s)), helpers)
+      return nextType.toStoreDocument(f(recursiveMigrate(s)), helpers)
     },
-    toStatic(
-      deserialized: T1,
+    toStaticDocument(
+      storeState: T1,
       helpers: StoreSerializeHelpers
     ): Versionized<S1> {
       return {
         __version__: nextVersion,
-        value: nextType.toStatic(deserialized, helpers),
+        value: nextType.toStaticDocument(storeState, helpers),
       }
     },
     migrate<S2, T2, R2>(

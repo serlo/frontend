@@ -29,10 +29,10 @@ export type StringStateType = ScalarStateType<string>
  */
 export function scalar<S>(initialState: S): ScalarStateType<S> {
   return serializedScalar<S, S>(initialState, {
-    deserialize(state) {
+    toStoreDocument(state) {
       return state
     },
-    toStatic(state) {
+    toStaticDocument(state) {
       return state
     },
   })
@@ -101,8 +101,8 @@ export type SerializedScalarStateType<S, T> = StateType<
   }
 >
 export interface ToStaticConverter<S, T> {
-  deserialize(serialized: S): T
-  toStatic(deserialized: T): S
+  toStoreDocument(staticDocument: S): T
+  toStaticDocument(storeDocument: T): S
 }
 
 /**
@@ -171,14 +171,14 @@ export function asyncScalar<T, Temp>(
     getFocusableChildren() {
       return []
     },
-    deserialize(staticDocument) {
+    toStoreDocument(staticDocument) {
       return staticDocument
     },
-    toStatic(deserialized) {
-      if (isTemporary(deserialized)) {
+    toStaticDocument(storeDocument) {
+      if (isTemporary(storeDocument)) {
         return initial
       }
-      return deserialized
+      return storeDocument
     },
   }
 }

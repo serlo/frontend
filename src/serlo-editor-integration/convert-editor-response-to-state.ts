@@ -114,7 +114,7 @@ export function convertEditorResponseToState(
         changes: '',
         title,
         url: uuid.currentRevision?.url || '',
-        content: serializeEditorState(parseSerializedStatic(content)),
+        content: serializeStaticDocument(parseStaticString(content)),
         meta_title,
         meta_description,
       },
@@ -139,13 +139,13 @@ export function convertEditorResponseToState(
     }
 
     function getContent() {
-      const convertedContent = parseSerializedStatic(content)
+      const convertedContent = parseStaticString(content)
 
       if (convertedContent?.plugin === EditorPluginType.Article) {
-        return serializeEditorState(convertedContent)
+        return serializeStaticDocument(convertedContent)
       }
       // currently still needed. See https://serlo.slack.com/archives/CEB781NCU/p1695977868948869
-      return serializeEditorState({
+      return serializeStaticDocument({
         plugin: EditorPluginType.Article,
         state: {
           introduction: { plugin: EditorPluginType.ArticleIntroduction },
@@ -174,7 +174,7 @@ export function convertEditorResponseToState(
         revision,
         changes: '',
         title,
-        description: serializeEditorState(parseSerializedStatic(content)),
+        description: serializeStaticDocument(parseStaticString(content)),
         meta_description,
         'course-page': (uuid.pages || [])
           .filter((page) => page.currentRevision !== null)
@@ -210,8 +210,8 @@ export function convertEditorResponseToState(
         changes: '',
         icon: 'explanation',
         title: uuid.currentRevision?.title || '',
-        content: serializeEditorState(
-          parseSerializedStatic(uuid.currentRevision?.content || '')
+        content: serializeStaticDocument(
+          parseStaticString(uuid.currentRevision?.content || '')
         ),
       },
     }
@@ -228,7 +228,7 @@ export function convertEditorResponseToState(
         revision,
         changes: '',
         title,
-        content: serializeEditorState(parseSerializedStatic(content)),
+        content: serializeStaticDocument(parseStaticString(content)),
         meta_title,
         meta_description,
       },
@@ -244,7 +244,7 @@ export function convertEditorResponseToState(
       state: {
         ...entityFields,
         title,
-        content: serializeEditorState(parseSerializedStatic(content)),
+        content: serializeStaticDocument(parseStaticString(content)),
       },
     }
   }
@@ -263,8 +263,8 @@ export function convertEditorResponseToState(
         term: {
           name: uuid.name,
         },
-        description: serializeEditorState(
-          parseSerializedStatic(uuid.description ?? '')
+        description: serializeStaticDocument(
+          parseStaticString(uuid.description ?? '')
         ),
       },
     }
@@ -293,8 +293,8 @@ export function convertEditorResponseToState(
               }).state
             : '',
         content:
-          serializeEditorState(
-            parseSerializedStatic(uuid.currentRevision?.content)
+          serializeStaticDocument(
+            parseStaticString(uuid.currentRevision?.content)
           ) ?? '',
       },
     }
@@ -332,7 +332,7 @@ export function convertEditorResponseToState(
         ...entityFields,
         changes: '',
         revision,
-        content: serializeEditorState(parseSerializedStatic(content)),
+        content: serializeStaticDocument(parseStaticString(content)),
         cohesive: uuid.currentRevision?.cohesive ?? false,
         'grouped-text-exercise': exercises,
       },
@@ -357,12 +357,12 @@ export function convertEditorResponseToState(
     }
 
     function getContent() {
-      const convertdContent = parseSerializedStatic(solutionContent)
+      const convertdContent = parseStaticString(solutionContent)
       if (convertdContent !== undefined) {
-        return serializeEditorState(convertdContent)
+        return serializeStaticDocument(convertdContent)
       }
 
-      return serializeEditorState({
+      return serializeStaticDocument({
         plugin: EditorPluginType.Solution,
         state: {
           prerequisite: undefined,
@@ -389,7 +389,7 @@ export function convertEditorResponseToState(
         changes: '',
         title,
         revision,
-        description: serializeEditorState(parseSerializedStatic(content)),
+        description: serializeStaticDocument(parseStaticString(content)),
         content: uuid.currentRevision?.url ?? '',
       },
     }
@@ -400,8 +400,8 @@ export function convertUserByDescription(description?: string | null) {
   return {
     plugin: TemplatePluginType.User,
     state: {
-      description: serializeEditorState(
-        parseSerializedStatic(description ?? '')
+      description: serializeStaticDocument(
+        parseStaticString(description ?? '')
       ),
     },
   }
@@ -544,7 +544,7 @@ export function isError(
   return !!(result as ConvertResponseError).error
 }
 
-function serializeEditorState(content?: AnyEditorDocument): string {
+function serializeStaticDocument(content?: AnyEditorDocument): string {
   if (typeof content === 'string') return content
   return JSON.stringify(
     content ?? {
@@ -554,7 +554,7 @@ function serializeEditorState(content?: AnyEditorDocument): string {
   )
 }
 
-function parseSerializedStatic(
+function parseStaticString(
   content: SerializedStaticState
 ): AnyEditorDocument | undefined {
   if (!content) return undefined

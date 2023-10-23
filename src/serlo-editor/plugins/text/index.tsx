@@ -23,10 +23,10 @@ const createTextPlugin = (
   Component: TextEditor,
   config,
   state: serializedScalar(emptyDocumentFactory(), {
-    toStatic({ value }) {
+    toStaticDocument({ value }) {
       return value
     },
-    deserialize(value) {
+    toStoreDocument(value) {
       if (value.length === 0) {
         return emptyDocumentFactory()
       }

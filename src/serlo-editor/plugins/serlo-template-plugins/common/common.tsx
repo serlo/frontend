@@ -70,7 +70,7 @@ export function entityType<
             return mapObjIndexed((_value, key) => {
               if (key in ownTypes) {
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                return ownTypes[key].deserialize(newValue[key], helpers)
+                return ownTypes[key].toStoreDocument(newValue[key], helpers)
               } else {
                 return previousState[key]
               }
@@ -85,15 +85,15 @@ export function entityType<
 export function serialized<S extends StateType>(type: S) {
   return {
     ...type,
-    serialize(...args: Parameters<typeof type.toStatic>) {
-      return JSON.stringify(type.toStatic(...args))
+    serialize(...args: Parameters<typeof type.toStaticDocument>) {
+      return JSON.stringify(type.toStaticDocument(...args))
     },
     deserialize(
       serialized: string,
-      helpers: Parameters<typeof type.deserialize>[1]
+      helpers: Parameters<typeof type.toStoreDocument>[1]
     ) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return type.deserialize(JSON.parse(serialized), helpers)
+      return type.toStoreDocument(JSON.parse(serialized), helpers)
     },
   }
 }
@@ -108,15 +108,17 @@ export function editorContent(
   const originalChild = child<string>({ plugin })
   return {
     ...originalChild,
-    toStatic(...args: Parameters<typeof originalChild.toStatic>) {
-      return JSON.stringify(originalChild.toStatic(...args))
+    toStaticDocument(
+      ...args: Parameters<typeof originalChild.toStaticDocument>
+    ) {
+      return JSON.stringify(originalChild.toStaticDocument(...args))
     },
-    deserialize(
+    toStoreDocument(
       serialized: string,
-      helpers: Parameters<typeof originalChild.deserialize>[1]
+      helpers: Parameters<typeof originalChild.toStoreDocument>[1]
     ) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      return originalChild.deserialize(JSON.parse(serialized), helpers)
+      return originalChild.toStoreDocument(JSON.parse(serialized), helpers)
     },
   }
 }
@@ -131,14 +133,16 @@ export function serializedChild(
   const originalChild = child({ plugin, config: { skipControls: true } })
   return {
     ...originalChild,
-    toStatic(...args: Parameters<typeof originalChild.toStatic>) {
-      return originalChild.toStatic(...args).state
-    },
-    deserialize(
-      serialized: string,
-      helpers: Parameters<typeof originalChild.deserialize>[1]
+    toStaticDocument(
+      ...args: Parameters<typeof originalChild.toStaticDocument>
     ) {
-      return originalChild.deserialize(
+      return originalChild.toStaticDocument(...args).state
+    },
+    toStoreDocument(
+      serialized: string,
+      helpers: Parameters<typeof originalChild.toStoreDocument>[1]
+    ) {
+      return originalChild.toStoreDocument(
         {
           plugin,
           state: serialized,
@@ -173,7 +177,7 @@ export function optionalSerializedChild(plugin: string): StateType<
         create(state?: unknown) {
           onChange((_oldId, helpers) => {
             if (typeof state !== 'undefined') {
-              return child.deserialize(state, helpers)
+              return child.toStoreDocument(state, helpers)
             }
             return child.createInitialState(helpers)
           })
@@ -183,19 +187,19 @@ export function optionalSerializedChild(plugin: string): StateType<
         },
       }
     },
-    toStatic(
-      deserialized: string | null,
-      helpers: Parameters<typeof child.toStatic>[1]
+    toStaticDocument(
+      storeDocument: string | null,
+      helpers: Parameters<typeof child.toStaticDocument>[1]
     ) {
-      if (!deserialized) return null
-      return child.toStatic(deserialized, helpers)
+      if (!storeDocument) return null
+      return child.toStaticDocument(storeDocument, helpers)
     },
-    deserialize(
-      serialized: string | null,
-      helpers: Parameters<typeof child.deserialize>[1]
+    toStoreDocument(
+      staticDocument: string | null,
+      helpers: Parameters<typeof child.toStoreDocument>[1]
     ) {
-      if (!serialized) return null
-      return child.deserialize(serialized, helpers)
+      if (!staticDocument) return null
+      return child.toStoreDocument(staticDocument, helpers)
     },
     createInitialState() {
       return null

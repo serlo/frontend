@@ -22,10 +22,10 @@ export type StateTypeValueType<D extends StateType> =
 export type StateTypesValueType<Ds extends Record<string, StateType>> =
   InternalPluginState.StateTypesValueType<Ds>
 export type StateUpdater<T> = InternalPluginState.StateUpdater<T>
-export type StoreDeserializeHelpers<
+export type StoreToStoreHelpers<
   K extends string = string,
   S = unknown,
-> = InternalPluginState.StoreDeserializeHelpers<K, S>
+> = InternalPluginState.StoreToStoreHelpers<K, S>
 export type StoreSerializeHelpers<
   K extends string = string,
   S = unknown,

@@ -40,12 +40,12 @@ export function child<K extends string, S = unknown>(
       createDocument({ id, plugin, state: initialState })
       return id
     },
-    deserialize(serialized, { createDocument }) {
+    toStoreDocument(serialized, { createDocument }) {
       const id = serialized.id ?? v4()
       createDocument({ id, ...serialized })
       return id
     },
-    toStatic(id, { getDocument, omitId }: StoreSerializeHelpers<K, S>) {
+    toStaticDocument(id, { getDocument, omitId }: StoreSerializeHelpers<K, S>) {
       const document = getDocument(id)
       if (document === null) {
         throw new Error('No document with this id exists')

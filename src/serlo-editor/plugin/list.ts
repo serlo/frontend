@@ -8,7 +8,7 @@ import {
   StateTypeStaticType,
   StateTypeValueType,
   StateUpdater,
-  StoreDeserializeHelpers,
+  StoreToStoreHelpers,
 } from './internal-plugin-state'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -46,7 +46,7 @@ export function list<D extends StateType>(
               wrap,
               updater(unwrapped, (options) =>
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                type.deserialize(options, helpers)
+                type.toStoreDocument(options, helpers)
               )
             )
           })
@@ -55,7 +55,7 @@ export function list<D extends StateType>(
           onChange((items, helpers) => {
             const wrappedSubState = wrap(
               options
-                ? (type.deserialize(options, helpers) as T)
+                ? (type.toStoreDocument(options, helpers) as T)
                 : (type.createInitialState(helpers) as T)
             )
             return R.insert(
@@ -100,10 +100,7 @@ export function list<D extends StateType>(
           function wrapUpdater(
             initial: StateUpdater<T>
           ): StateUpdater<WrappedValue[]> {
-            return (
-              oldItems: WrappedValue[],
-              helpers: StoreDeserializeHelpers
-            ) => {
+            return (oldItems: WrappedValue[], helpers: StoreToStoreHelpers) => {
               const index = oldItems.findIndex((item) => item.id === id)
               return R.update(
                 index,
@@ -131,17 +128,17 @@ export function list<D extends StateType>(
         return wrap(type.createInitialState(helpers) as T)
       }, initialCount)
     },
-    deserialize(serialized, helpers) {
+    toStoreDocument(serialized, helpers) {
       return R.map((s) => {
-        return wrap(type.deserialize(s, helpers) as T)
+        return wrap(type.toStoreDocument(s, helpers) as T)
       }, serialized)
     },
-    toStatic(deserialized, helpers) {
+    toStaticDocument(storeState, helpers) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return R.map(({ value }) => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return type.toStatic(value, helpers)
-      }, deserialized)
+        return type.toStaticDocument(value, helpers)
+      }, storeState)
     },
     getFocusableChildren(items) {
       return R.flatten(
