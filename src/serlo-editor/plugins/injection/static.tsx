@@ -6,6 +6,7 @@ import { InfoPanel } from '@/components/info-panel'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
+import { triggerSentry } from '@/helper/trigger-sentry'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
@@ -178,14 +179,13 @@ export function InjectionStaticRenderer({
 
           throw new Error('unknown entity type')
         })
-        .catch((e) => {
-          // eslint-disable-next-line no-console
-          console.error(e, href)
+        .catch((e: string) => {
+          triggerSentry({ message: e, data: { href } })
           setContent('error')
         })
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e, href)
+      triggerSentry({ message: String(e), data: { href } })
       setContent('error')
     }
   }, [cleanedHref, href])
