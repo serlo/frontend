@@ -59,7 +59,7 @@ export function BoxRenderer({ boxType, title, anchorId, children }: BoxProps) {
           [&>div.my-block]:first:mt-3.5
           [&>div.my-block]:last:mb-3.5
         `,
-        isAttention ? 'border-red-100' : 'border-brand-300'
+        isAttention ? 'border-red-100' : 'border-brand-200'
       )}
     >
       <figcaption className="px-side pt-2.5 text-lg">
