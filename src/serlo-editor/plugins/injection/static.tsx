@@ -51,7 +51,8 @@ export function InjectionStaticRenderer({
             uuid.__typename === 'GroupedExercise' ||
             uuid.__typename === 'Exercise'
           ) {
-            if (!uuid.currentRevision) throw new Error('no accepted revision')
+            if (!uuid.currentRevision)
+              throw new Error('no accepted revision: ${href}')
 
             const exerciseContext = {
               serloContext: {
@@ -175,13 +176,16 @@ export function InjectionStaticRenderer({
             return
           }
 
+          throw new Error('unknown entity type')
+        })
+        .catch((e) => {
+          // eslint-disable-next-line no-console
+          console.error(e, href)
           setContent('error')
         })
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.log(`failed injection: ${href}`)
-      // eslint-disable-next-line no-console
-      console.error(e)
+      console.error(e, href)
       setContent('error')
     }
   }, [href])
