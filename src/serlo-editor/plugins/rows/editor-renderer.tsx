@@ -13,7 +13,7 @@ import { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import {
   DocumentState,
   selectDocumentPluginType,
-  selectSerializedDocument,
+  selectStaticDocument,
   store,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
@@ -64,7 +64,7 @@ export function EditorRowRenderer({
     item: () => {
       return {
         id: row.id,
-        serialized: selectSerializedDocument(store.getState(), row.id),
+        serialized: selectStaticDocument(store.getState(), row.id),
         onDrop() {
           // Remove the dragged plugin from its original rows plugin
           rows.set((list) => {

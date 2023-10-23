@@ -1,5 +1,5 @@
 import { extractStringFromTextDocument } from '@/serlo-editor/plugins/text/utils/static-extract-text'
-import { getChildrenOfSerializedDocument } from '@/serlo-editor/static-renderer/helper/get-children-of-serialized-document'
+import { getChildrenOfStaticDocument } from '@/serlo-editor/static-renderer/helper/get-children-of-serialized-document'
 import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 import {
   isRowsDocument,
@@ -42,7 +42,7 @@ function extractTextFromDocument(
   if (!document) return ''
 
   // call on children recursively
-  collected += getChildrenOfSerializedDocument(document)
+  collected += getChildrenOfStaticDocument(document)
     .map((child) => extractTextFromDocument(child, collected))
     .join()
 

@@ -23,11 +23,11 @@ import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import {
   type EditorPlugin,
   type EditorPluginProps,
-  type StateTypeSerializedType,
+  type StateTypeStaticType,
   list,
   string,
 } from '@/serlo-editor/plugin'
-import { selectSerializedDocument, store } from '@/serlo-editor/store'
+import { selectStaticDocument, store } from '@/serlo-editor/store'
 import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
 export const courseTypeState = entityType(
@@ -57,13 +57,13 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
   const [courseNavOpen, setCourseNavOpen] = useState(true)
   const [showSettingsModal, setShowSettingsModal] = useState(false)
 
-  const serializedState = selectSerializedDocument(store.getState(), props.id)
-    ?.state as StateTypeSerializedType<CourseTypePluginState>
+  const staticState = selectStaticDocument(store.getState(), props.id)
+    ?.state as StateTypeStaticType<CourseTypePluginState>
 
-  if (!serializedState) return null
-  const serializedPages = serializedState[
+  if (!staticState) return null
+  const staticPages = staticState[
     'course-page'
-  ] as StateTypeSerializedType<CoursePageTypePluginState>[]
+  ] as StateTypeStaticType<CoursePageTypePluginState>[]
 
   return (
     <>
@@ -83,7 +83,7 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
       <article className="mt-20">
         {renderCourseNavigation()}
         {children.map((child, index) => {
-          const uniqueId = `page-${serializedPages[index].id}`
+          const uniqueId = `page-${staticPages[index].id}`
           return (
             <div
               key={uniqueId}
@@ -99,8 +99,8 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
                   <FaIcon icon={faTrashAlt} />
                 </button>
                 <ContentLoaders
-                  id={serializedPages[index].id}
-                  currentRevision={serializedPages[index].revision}
+                  id={staticPages[index].id}
+                  currentRevision={staticPages[index].revision}
                   onSwitchRevision={(data) =>
                     child.replace(TemplatePluginType.CoursePage, data)
                   }
@@ -157,7 +157,7 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
             title.value
           )
         }
-        pages={serializedPages.map((coursePage) => {
+        pages={staticPages.map((coursePage) => {
           return {
             title: coursePage.title,
             url: `#page-${coursePage.id}`,

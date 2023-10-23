@@ -13,10 +13,10 @@ export type StateTypeReturnType<D extends StateType> =
   InternalPluginState.StateTypeReturnType<D>
 export type StateTypesReturnType<Ds extends Record<string, StateType>> =
   InternalPluginState.StateTypesReturnType<Ds>
-export type StateTypeSerializedType<D extends StateType> =
-  InternalPluginState.StateTypeSerializedType<D>
-export type StateTypesSerializedType<Ds extends Record<string, StateType>> =
-  InternalPluginState.StateTypesSerializedType<Ds>
+export type StateTypeStaticType<D extends StateType> =
+  InternalPluginState.StateTypeStaticType<D>
+export type StateTypesStaticType<Ds extends Record<string, StateType>> =
+  InternalPluginState.StateTypesStaticType<Ds>
 export type StateTypeValueType<D extends StateType> =
   InternalPluginState.StateTypeValueType<D>
 export type StateTypesValueType<Ds extends Record<string, StateType>> =
@@ -29,5 +29,5 @@ export type StoreDeserializeHelpers<
 export type StoreSerializeHelpers<
   K extends string = string,
   S = unknown,
-> = InternalPluginState.StoreSerializeHelpers<K, S>
+> = InternalPluginState.StoreToStaticHelpers<K, S>
 /* eslint-enable @typescript-eslint/no-explicit-any */

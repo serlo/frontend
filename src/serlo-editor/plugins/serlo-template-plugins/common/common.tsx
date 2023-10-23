@@ -3,8 +3,8 @@ import { mapObjIndexed } from 'ramda'
 import { tw } from '@/helper/tw'
 import {
   StateType,
-  StateTypesSerializedType,
-  StateTypeSerializedType,
+  StateTypesStaticType,
+  StateTypeStaticType,
   StateTypesValueType,
   StateTypeValueType,
   StateTypesReturnType,
@@ -41,8 +41,8 @@ export const entity = {
   changes: string(),
 }
 
-export type Uuid = StateTypesSerializedType<typeof uuid>
-export type License = StateTypesSerializedType<typeof license>
+export type Uuid = StateTypesStaticType<typeof uuid>
+export type License = StateTypesStaticType<typeof license>
 export type Entity = Uuid & License & { revision: number; changes?: string }
 
 export function entityType<
@@ -52,10 +52,10 @@ export function entityType<
   ownTypes: Ds,
   children: Childs
 ): StateType<
-  StateTypesSerializedType<Ds & Childs>,
+  StateTypesStaticType<Ds & Childs>,
   StateTypesValueType<Ds & Childs>,
   StateTypesReturnType<Ds & Childs> & {
-    replaceOwnState: (newValue: StateTypesSerializedType<Ds>) => void
+    replaceOwnState: (newValue: StateTypesStaticType<Ds>) => void
   }
 > {
   const objectType = object<Ds & Childs>({ ...ownTypes, ...children })
@@ -85,8 +85,8 @@ export function entityType<
 export function serialized<S extends StateType>(type: S) {
   return {
     ...type,
-    serialize(...args: Parameters<typeof type.serialize>) {
-      return JSON.stringify(type.serialize(...args))
+    serialize(...args: Parameters<typeof type.toStatic>) {
+      return JSON.stringify(type.toStatic(...args))
     },
     deserialize(
       serialized: string,
@@ -108,8 +108,8 @@ export function editorContent(
   const originalChild = child<string>({ plugin })
   return {
     ...originalChild,
-    serialize(...args: Parameters<typeof originalChild.serialize>) {
-      return JSON.stringify(originalChild.serialize(...args))
+    toStatic(...args: Parameters<typeof originalChild.toStatic>) {
+      return JSON.stringify(originalChild.toStatic(...args))
     },
     deserialize(
       serialized: string,
@@ -131,8 +131,8 @@ export function serializedChild(
   const originalChild = child({ plugin, config: { skipControls: true } })
   return {
     ...originalChild,
-    serialize(...args: Parameters<typeof originalChild.serialize>) {
-      return originalChild.serialize(...args).state
+    toStatic(...args: Parameters<typeof originalChild.toStatic>) {
+      return originalChild.toStatic(...args).state
     },
     deserialize(
       serialized: string,
@@ -150,7 +150,7 @@ export function serializedChild(
 }
 
 export function optionalSerializedChild(plugin: string): StateType<
-  StateTypeSerializedType<ReturnType<typeof serializedChild>> | null,
+  StateTypeStaticType<ReturnType<typeof serializedChild>> | null,
   StateTypeValueType<ReturnType<typeof serializedChild>> | null,
   StateTypeReturnType<ReturnType<typeof serializedChild>> & {
     create: (state?: unknown) => void
@@ -183,12 +183,12 @@ export function optionalSerializedChild(plugin: string): StateType<
         },
       }
     },
-    serialize(
+    toStatic(
       deserialized: string | null,
-      helpers: Parameters<typeof child.serialize>[1]
+      helpers: Parameters<typeof child.toStatic>[1]
     ) {
       if (!deserialized) return null
-      return child.serialize(deserialized, helpers)
+      return child.toStatic(deserialized, helpers)
     },
     deserialize(
       serialized: string | null,

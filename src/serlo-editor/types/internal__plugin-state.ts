@@ -30,22 +30,22 @@ export interface StateType<S = any, T = any, R = any> {
   createInitialState(helpers: StoreDeserializeHelpers): T
 
   /**
-   * Deserializes a serialized state
+   * Deserializes a static document
    *
-   * @param serialized - serialized state to deserialize
+   * @param staticDocument - static state to deserialize
    * @param helpers - helpers (e.g. to insert an document in the store)
    * @returns deserialized state
    */
-  deserialize(serialized: S, helpers: StoreDeserializeHelpers): T
+  deserialize(staticDocument: S, helpers: StoreDeserializeHelpers): T
 
   /**
-   * Serializes a state
+   * Converts a store document to a static document
    *
-   * @param deserialized - state to serialize
-   * @param helpers - helpers (e.g. to serialize an document)
-   * @returns serialized state
+   * @param deserialized - document to convert
+   * @param helpers - helpers (e.g. to convert an document)
+   * @returns static document
    */
-  serialize(deserialized: T, helpers: StoreSerializeHelpers): S
+  toStatic(deserialized: T, helpers: StoreToStaticHelpers): S
 
   /**
    * Gives the editor information about the children of the plugin (e.g. to build the document tree)
@@ -92,17 +92,17 @@ export interface FocusableChild {
 }
 
 /**
- * Maps a [[StateType]] to the type of its serialized state
+ * Maps a [[StateType]] to the type of its static state
  *
  */
-export type StateTypeSerializedType<D extends StateType> = D extends StateType<
+export type StateTypeStaticType<D extends StateType> = D extends StateType<
   infer S
 >
   ? S
   : never
 
-export type StateTypesSerializedType<Ds extends Record<string, StateType>> = {
-  [K in keyof Ds]: StateTypeSerializedType<Ds[K]>
+export type StateTypesStaticType<Ds extends Record<string, StateType>> = {
+  [K in keyof Ds]: StateTypeStaticType<Ds[K]>
 }
 
 /**
@@ -138,7 +138,7 @@ export type StateTypesReturnType<Ds extends Record<string, StateType>> = {
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
 /**
- * Helpers to be used by a [[StateType]] when working with a serialized state
+ * Helpers to be used by a [[StateType]] when working with a static state
  *
  */
 export interface StoreDeserializeHelpers<
@@ -157,7 +157,7 @@ export interface StoreDeserializeHelpers<
  * Helpers to be used by a [[StateType]] when working with a deserialized state
  *
  */
-export interface StoreSerializeHelpers<K extends string = string, S = unknown> {
+export interface StoreToStaticHelpers<K extends string = string, S = unknown> {
   /**
    * Retrieves a document from the store
    *

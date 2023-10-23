@@ -5,7 +5,7 @@ import {
   StateExecutor,
   StateType,
   StateTypeReturnType,
-  StateTypeSerializedType,
+  StateTypeStaticType,
   StateTypeValueType,
   StateUpdater,
   StoreDeserializeHelpers,
@@ -20,7 +20,7 @@ export function list<D extends StateType>(
   type: D,
   initialCount = 0
 ): ListStateType<D> {
-  type S = StateTypeSerializedType<D>
+  type S = StateTypeStaticType<D>
   type T = StateTypeValueType<D>
 
   interface WrappedValue {
@@ -136,11 +136,11 @@ export function list<D extends StateType>(
         return wrap(type.deserialize(s, helpers) as T)
       }, serialized)
     },
-    serialize(deserialized, helpers) {
+    toStatic(deserialized, helpers) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return R.map(({ value }) => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return type.serialize(value, helpers)
+        return type.toStatic(value, helpers)
       }, deserialized)
     },
     getFocusableChildren(items) {
@@ -161,7 +161,7 @@ export function list<D extends StateType>(
 }
 
 export type ListStateType<D extends StateType> = StateType<
-  StateTypeSerializedType<D>[],
+  StateTypeStaticType<D>[],
   {
     id: string
     value: StateTypeValueType<D>
@@ -171,11 +171,11 @@ export type ListStateType<D extends StateType> = StateType<
       updater: (
         currentList: StateTypeValueType<D>[],
         deserialize: (
-          serialized: StateTypeSerializedType<D>
+          serialized: StateTypeStaticType<D>
         ) => StateTypeValueType<D>
       ) => StateTypeValueType<D>[]
     ): void
-    insert(index?: number, options?: StateTypeSerializedType<D>): void
+    insert(index?: number, options?: StateTypeStaticType<D>): void
     remove(index: number): void
     move(from: number, to: number): void
   }

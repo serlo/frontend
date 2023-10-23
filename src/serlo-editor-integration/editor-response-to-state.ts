@@ -1,4 +1,5 @@
 import { EditorPluginType } from './types/editor-plugin-type'
+import type { AnyEditorDocument } from './types/editor-plugins'
 import { TemplatePluginType } from './types/template-plugin-type'
 import type { AppletTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/applet'
 import type { ArticleTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/article'
@@ -20,21 +21,9 @@ import type { VideoTypePluginState } from '../serlo-editor/plugins/serlo-templat
 import { UuidType, UuidRevType } from '@/data-types'
 import type { User, MainUuidType } from '@/fetcher/query-types'
 import { triggerSentry } from '@/helper/trigger-sentry'
-import type { StateType, StateTypeSerializedType } from '@/serlo-editor/plugin'
+import type { StateType, StateTypeStaticType } from '@/serlo-editor/plugin'
 
-interface OtherPlugin {
-  plugin: string
-  state: unknown
-}
-
-interface RowsPlugin {
-  plugin: EditorPluginType.Rows
-  state: (OtherPlugin | RowsPlugin)[]
-}
-
-type Edtr = RowsPlugin | OtherPlugin
-
-// converts query response to deserialized editor state
+/** Converts graphql query response to deserialized editor state **/
 export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
   const stack: { id: number; type: string }[] = []
 
@@ -124,7 +113,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           changes: '',
           title,
           url: uuid.currentRevision?.url || '',
-          content: serializeEditorState(parseSerializedState(content)),
+          content: serializeEditorState(parseSerializedStatic(content)),
           meta_title,
           meta_description,
         },
@@ -152,7 +141,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     }
 
     function getContent() {
-      const convertedContent = parseSerializedState(content)
+      const convertedContent = parseSerializedStatic(content)
 
       if (convertedContent?.plugin === EditorPluginType.Article) {
         return serializeEditorState(convertedContent)
@@ -188,7 +177,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           revision,
           changes: '',
           title,
-          description: serializeEditorState(parseSerializedState(content)),
+          description: serializeEditorState(parseSerializedStatic(content)),
           meta_description,
           'course-page': (uuid.pages || [])
             .filter((page) => page.currentRevision !== null)
@@ -227,7 +216,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           icon: 'explanation',
           title: uuid.currentRevision?.title || '',
           content: serializeEditorState(
-            parseSerializedState(uuid.currentRevision?.content || '')
+            parseSerializedStatic(uuid.currentRevision?.content || '')
           ),
         },
       },
@@ -246,7 +235,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           revision,
           changes: '',
           title,
-          content: serializeEditorState(parseSerializedState(content)),
+          content: serializeEditorState(parseSerializedStatic(content)),
           meta_title,
           meta_description,
         },
@@ -264,7 +253,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
         state: {
           ...entityFields,
           title,
-          content: serializeEditorState(parseSerializedState(content)),
+          content: serializeEditorState(parseSerializedStatic(content)),
         },
       },
     }
@@ -286,7 +275,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
             name: uuid.name,
           },
           description: serializeEditorState(
-            parseSerializedState(uuid.description ?? '')
+            parseSerializedStatic(uuid.description ?? '')
           ),
         },
       },
@@ -318,7 +307,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
               : '',
           content:
             serializeEditorState(
-              parseSerializedState(uuid.currentRevision?.content)
+              parseSerializedStatic(uuid.currentRevision?.content)
             ) ?? '',
         },
       },
@@ -358,7 +347,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           ...entityFields,
           changes: '',
           revision,
-          content: serializeEditorState(parseSerializedState(content)),
+          content: serializeEditorState(parseSerializedStatic(content)),
           cohesive: uuid.currentRevision?.cohesive ?? false,
           'grouped-text-exercise': exercises,
         },
@@ -386,7 +375,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     }
 
     function getContent() {
-      const convertdContent = parseSerializedState(solutionContent)
+      const convertdContent = parseSerializedStatic(solutionContent)
       if (convertdContent !== undefined) {
         return serializeEditorState(convertdContent)
       }
@@ -419,7 +408,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           changes: '',
           title,
           revision,
-          description: serializeEditorState(parseSerializedState(content)),
+          description: serializeEditorState(parseSerializedStatic(content)),
           content: uuid.currentRevision?.url ?? '',
         },
       },
@@ -433,7 +422,7 @@ export function convertUserByDescription(description?: string | null) {
       plugin: TemplatePluginType.User,
       state: {
         description: serializeEditorState(
-          parseSerializedState(description ?? '')
+          parseSerializedStatic(description ?? '')
         ),
       },
     },
@@ -444,8 +433,8 @@ export interface AppletSerializedState extends Entity {
   __typename?: UuidType.Applet
   title?: string
   url?: string
-  content: SerializedEditorState
-  reasoning?: SerializedEditorState
+  content: SerializedStaticState
+  reasoning?: SerializedStaticState
   meta_title?: string
   meta_description?: string
 }
@@ -453,8 +442,8 @@ export interface AppletSerializedState extends Entity {
 export interface ArticleSerializedState extends Entity {
   __typename?: UuidType.Article
   title?: string
-  content: SerializedEditorState
-  reasoning?: SerializedEditorState
+  content: SerializedStaticState
+  reasoning?: SerializedStaticState
   meta_title?: string
   meta_description?: string
 }
@@ -462,9 +451,9 @@ export interface ArticleSerializedState extends Entity {
 export interface CourseSerializedState extends Entity {
   __typename?: UuidType.Course
   title?: string
-  description: SerializedEditorState
-  content?: SerializedEditorState // just to simplify types, will not be set
-  reasoning?: SerializedEditorState
+  description: SerializedStaticState
+  content?: SerializedStaticState // just to simplify types, will not be set
+  reasoning?: SerializedStaticState
   meta_description?: string
   'course-page'?: CoursePageSerializedState[]
 }
@@ -473,13 +462,13 @@ export interface CoursePageSerializedState extends Entity {
   __typename?: UuidType.CoursePage
   title?: string
   icon?: 'explanation' | 'play' | 'question'
-  content: SerializedEditorState
+  content: SerializedStaticState
 }
 
 export interface EventSerializedState extends Entity {
   __typename?: UuidType.Event
   title?: string
-  content: SerializedEditorState
+  content: SerializedStaticState
   meta_title?: string
   meta_description?: string
 }
@@ -487,7 +476,7 @@ export interface EventSerializedState extends Entity {
 export interface PageSerializedState extends Uuid, License {
   __typename?: UuidType.Page
   title?: string
-  content: SerializedEditorState
+  content: SerializedStaticState
 }
 
 export interface TaxonomySerializedState extends Uuid {
@@ -495,7 +484,7 @@ export interface TaxonomySerializedState extends Uuid {
   term: {
     name: string
   }
-  description: SerializedEditorState
+  description: SerializedStaticState
   taxonomy: number
   parent: number
   position: number
@@ -503,20 +492,20 @@ export interface TaxonomySerializedState extends Uuid {
 
 export interface TextExerciseSerializedState extends Entity {
   __typename?: UuidType.Exercise
-  content: SerializedEditorState
+  content: SerializedStaticState
   'text-solution'?: TextSolutionSerializedState
   'single-choice-right-answer'?: {
-    content: SerializedEditorState
-    feedback: SerializedEditorState
+    content: SerializedStaticState
+    feedback: SerializedStaticState
   }
   'single-choice-wrong-answer'?: {
-    content: SerializedEditorState
-    feedback: SerializedEditorState
+    content: SerializedStaticState
+    feedback: SerializedStaticState
   }[]
-  'multiple-choice-right-answer'?: { content: SerializedEditorState }[]
+  'multiple-choice-right-answer'?: { content: SerializedStaticState }[]
   'multiple-choice-wrong-answer'?: {
-    content: SerializedEditorState
-    feedback: SerializedEditorState
+    content: SerializedStaticState
+    feedback: SerializedStaticState
   }[]
   'input-expression-equal-match-challenge'?: InputType
   'input-number-exact-match-challenge'?: InputType
@@ -525,7 +514,7 @@ export interface TextExerciseSerializedState extends Entity {
 
 interface InputType {
   solution: string
-  feedback: SerializedEditorState
+  feedback: SerializedStaticState
   'input-expression-equal-match-challenge'?: InputType[]
   'input-number-exact-match-challenge'?: InputType[]
   'input-string-normalized-match-challenge'?: InputType[]
@@ -534,32 +523,32 @@ interface InputType {
 export interface TextExerciseGroupSerializedState extends Entity {
   __typename?: UuidType.ExerciseGroup
   cohesive?: string
-  content: SerializedEditorState
+  content: SerializedStaticState
   'grouped-text-exercise'?: TextExerciseSerializedState[]
 }
 
 export interface TextSolutionSerializedState extends Entity {
   __typename?: UuidType.Solution
-  content: SerializedEditorState
+  content: SerializedStaticState
 }
 
 export interface UserSerializedState extends Uuid {
   __typename?: UuidType.User
-  description: SerializedEditorState
+  description: SerializedStaticState
 }
 
 export interface VideoSerializedState extends Entity {
   __typename?: UuidType.Video
   title?: string
-  description: SerializedEditorState
+  description: SerializedStaticState
   content?: string
-  reasoning?: SerializedEditorState
+  reasoning?: SerializedStaticState
 }
 
 export interface DeserializedState<T extends StateType> {
   initialState: {
     plugin: string
-    state?: StateTypeSerializedType<T>
+    state?: StateTypeStaticType<T>
     id?: string
   }
 }
@@ -568,14 +557,15 @@ export function isError(result: DeserializeResult): result is DeserializeError {
   return !!(result as DeserializeError).error
 }
 
-type SerializedEditorState = string | undefined
+/** actually serialized editor state */
+type SerializedStaticState = string | undefined
 type DeserializeResult = DeserializeSuccess | DeserializeError
 type DeserializeSuccess = DeserializedState<StateType<unknown>>
 export type DeserializeError =
   | { error: 'type-unsupported' }
   | { error: 'failure' }
 
-function serializeEditorState(content?: Edtr): string {
+function serializeEditorState(content?: AnyEditorDocument): string {
   if (typeof content === 'string') return content
   return JSON.stringify(
     content ?? {
@@ -585,12 +575,12 @@ function serializeEditorState(content?: Edtr): string {
   )
 }
 
-function parseSerializedState(
-  content: SerializedEditorState
-): Edtr | undefined {
+function parseSerializedStatic(
+  content: SerializedStaticState
+): AnyEditorDocument | undefined {
   if (!content) return undefined
   try {
-    return JSON.parse(content) as Edtr
+    return JSON.parse(content) as AnyEditorDocument
   } catch {
     // No valid JSON, so we return nothing
     return undefined

@@ -2,7 +2,7 @@ import * as R from 'ramda'
 
 import {
   StateType,
-  StateTypesSerializedType,
+  StateTypesStaticType,
   StateTypesValueType,
   StateTypesReturnType,
   StateTypeReturnType,
@@ -18,7 +18,7 @@ import {
 export function object<Ds extends Record<string, StateType>>(
   types: Ds
 ): ObjectStateType<Ds> {
-  type S = StateTypesSerializedType<Ds>
+  type S = StateTypesStaticType<Ds>
   type T = StateTypesValueType<Ds>
   type U = StateTypesReturnType<Ds>
 
@@ -95,10 +95,10 @@ export function object<Ds extends Record<string, StateType>>(
         return type.deserialize(serialized[key], helpers)
       }, types) as T
     },
-    serialize(deserialized, helpers) {
+    toStatic(deserialized, helpers) {
       return R.mapObjIndexed((type, key) => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return type.serialize(deserialized[key], helpers)
+        return type.toStatic(deserialized[key], helpers)
       }, types) as S
     },
     getFocusableChildren(state) {
@@ -111,7 +111,7 @@ export function object<Ds extends Record<string, StateType>>(
 }
 
 export type ObjectStateType<Ds extends Record<string, StateType>> = StateType<
-  StateTypesSerializedType<Ds>,
+  StateTypesStaticType<Ds>,
   StateTypesValueType<Ds>,
   StateTypesReturnType<Ds>
 >

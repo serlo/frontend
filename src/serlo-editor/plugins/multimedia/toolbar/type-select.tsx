@@ -6,7 +6,7 @@ import { tw } from '@/helper/tw'
 import { getPluginTitle } from '@/serlo-editor/plugin/helpers/get-plugin-title'
 import {
   selectDocument,
-  selectSerializedDocument,
+  selectStaticDocument,
   store,
   useAppSelector,
 } from '@/serlo-editor/store'
@@ -55,15 +55,11 @@ export const MultimediaTypeSelect = ({
   function handlePluginTypeChange(newPluginType: string) {
     // store old multimedia state before replacing
     setStateCache((current) => {
-      const oldDocumentSerialized = selectSerializedDocument(
-        store.getState(),
-        state.id
-      )
-      return oldDocumentSerialized
+      const oldStaticDocument = selectStaticDocument(store.getState(), state.id)
+      return oldStaticDocument
         ? {
             ...current,
-            [oldDocumentSerialized.plugin]:
-              oldDocumentSerialized.state as unknown,
+            [oldStaticDocument.plugin]: oldStaticDocument.state as unknown,
           }
         : current
     })

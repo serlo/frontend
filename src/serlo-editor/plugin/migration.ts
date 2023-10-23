@@ -40,13 +40,13 @@ function migrate<InitialS, AllS, S, S1, T1, R1>(
       const s = serialized as InitialS | Versionized<AllS>
       return nextType.deserialize(f(recursiveMigrate(s)), helpers)
     },
-    serialize(
+    toStatic(
       deserialized: T1,
       helpers: StoreSerializeHelpers
     ): Versionized<S1> {
       return {
         __version__: nextVersion,
-        value: nextType.serialize(deserialized, helpers),
+        value: nextType.toStatic(deserialized, helpers),
       }
     },
     migrate<S2, T2, R2>(

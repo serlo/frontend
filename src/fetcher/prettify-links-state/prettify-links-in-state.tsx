@@ -4,7 +4,7 @@ import { Descendant } from 'slate'
 import { idsQuery } from './ids-query'
 import { endpoint } from '@/api/endpoint'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
-import { getChildrenOfSerializedDocument } from '@/serlo-editor/static-renderer/helper/get-children-of-serialized-document'
+import { getChildrenOfStaticDocument } from '@/serlo-editor/static-renderer/helper/get-children-of-serialized-document'
 import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 import {
   isImageDocument,
@@ -29,7 +29,7 @@ export async function prettifyLinksInState(rootDocument?: AnyEditorDocument) {
   function walk(document?: AnyEditorDocument) {
     if (!document) return
 
-    getChildrenOfSerializedDocument(document).forEach(walk)
+    getChildrenOfStaticDocument(document).forEach(walk)
 
     if (isTextDocument(document)) document.state.forEach(walkSlateDescendant)
 

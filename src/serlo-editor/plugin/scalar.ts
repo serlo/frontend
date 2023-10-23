@@ -32,7 +32,7 @@ export function scalar<S>(initialState: S): ScalarStateType<S> {
     deserialize(state) {
       return state
     },
-    serialize(state) {
+    toStatic(state) {
       return state
     },
   })
@@ -41,11 +41,11 @@ export type ScalarStateType<S> = SerializedScalarStateType<S, S>
 
 /**
  * @param initialState - The initial state
- * @param serializer - The {@link Serializer | serializer}
+ * @param serializer - The {@link ToStaticConverter | serializer}
  */
 export function serializedScalar<S, T>(
   initialState: T,
-  serializer: Serializer<S, T>
+  serializer: ToStaticConverter<S, T>
 ): SerializedScalarStateType<S, T> {
   return {
     init(state, onChange) {
@@ -100,9 +100,9 @@ export type SerializedScalarStateType<S, T> = StateType<
     ): void
   }
 >
-export interface Serializer<S, T> {
+export interface ToStaticConverter<S, T> {
   deserialize(serialized: S): T
-  serialize(deserialized: T): S
+  toStatic(deserialized: T): S
 }
 
 /**
@@ -171,10 +171,10 @@ export function asyncScalar<T, Temp>(
     getFocusableChildren() {
       return []
     },
-    deserialize(serialized) {
-      return serialized
+    deserialize(staticDocument) {
+      return staticDocument
     },
-    serialize(deserialized) {
+    toStatic(deserialized) {
       if (isTemporary(deserialized)) {
         return initial
       }

@@ -16,7 +16,7 @@ import {
   store,
   useAppDispatch,
   DocumentState,
-  selectSerializedDocument,
+  selectStaticDocument,
 } from '../store'
 import { ROOT } from '../store/root/constants'
 
@@ -57,7 +57,7 @@ function InnerDocument({
       if (currentPendingChanges !== pendingChanges) {
         onChange({
           changed: selectHasPendingChanges(store.getState()),
-          getDocument: () => selectSerializedDocument(store.getState(), ROOT),
+          getDocument: () => selectStaticDocument(store.getState(), ROOT),
         })
         pendingChanges = currentPendingChanges
       }

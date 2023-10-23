@@ -2,7 +2,7 @@ import {
   StateExecutor,
   StateType,
   StateTypeReturnType,
-  StateTypeSerializedType,
+  StateTypeStaticType,
   StateTypeValueType,
   StateUpdater,
 } from './internal-plugin-state'
@@ -122,10 +122,10 @@ export function optional<D extends StateType>(
         value: type.deserialize(serialized, helpers),
       }
     },
-    serialize(deserialized, helpers) {
+    toStatic(deserialized, helpers) {
       if (deserialized.defined) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return type.serialize(deserialized.value, helpers)
+        return type.toStatic(deserialized.value, helpers)
       }
       return undefined
     },
@@ -137,9 +137,9 @@ export function optional<D extends StateType>(
 }
 
 export type OptionalStateType<D extends StateType> = StateType<
-  StateTypeSerializedType<D> | undefined,
+  StateTypeStaticType<D> | undefined,
   Optional<StateTypeValueType<D>>,
-  | { defined: false; create(value?: StateTypeSerializedType<D>): void }
+  | { defined: false; create(value?: StateTypeStaticType<D>): void }
   | (StateTypeReturnType<D> & { defined: true; remove(): void })
 >
 
