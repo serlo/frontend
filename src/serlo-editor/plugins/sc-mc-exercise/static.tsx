@@ -26,14 +26,18 @@ export function ScMcExerciseStaticRenderer({
   const [shuffledAnswers, setShuffledAnswers] = useState(state.answers)
 
   useEffect(() => {
-    setShuffledAnswers(shuffleArray(state.answers))
-  }, [state.answers])
+    if (!renderExtraAnswerContent) {
+      setShuffledAnswers(shuffleArray(state.answers))
+    }
+  }, [state.answers, renderExtraAnswerContent])
 
   const answers = shuffledAnswers
     .slice(0)
     .map(({ isCorrect, feedback, content }) => {
       const hasFeedback = !isEmptyTextDocument(feedback)
-      const unwrappedFeedback = (feedback.state as Element[])?.[0].children
+      const unwrappedFeedback = hasFeedback
+        ? (feedback.state as Element[])?.[0].children
+        : []
 
       return {
         isCorrect,

@@ -1,3 +1,4 @@
+import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
@@ -5,7 +6,6 @@ import { InfoPanel } from '@/components/info-panel'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
-import { sharedLicenseFragments } from '@/fetcher/query-fragments'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
@@ -51,7 +51,8 @@ export function InjectionStaticRenderer({
             uuid.__typename === 'GroupedExercise' ||
             uuid.__typename === 'Exercise'
           ) {
-            if (!uuid.currentRevision) throw new Error('no accepted revision')
+            if (!uuid.currentRevision)
+              throw new Error('no accepted revision: ${href}')
 
             const exerciseContext = {
               serloContext: {
@@ -83,7 +84,7 @@ export function InjectionStaticRenderer({
           if (uuid.__typename === 'ExerciseGroup') {
             if (!uuid.currentRevision) throw new Error('no accepted revision')
 
-            const exercisesWithSolutions = uuid.exercises.map((exercise) => {
+            const exercises = uuid.exercises.map((exercise) => {
               if (!exercise.currentRevision?.content) return []
 
               const exerciseContentAndContext = {
@@ -126,7 +127,7 @@ export function InjectionStaticRenderer({
                     uuid.currentRevision.content
                   ) as EditorRowsDocument,
                   // solutions are not really part of the state at this point, but cleaner this way
-                  exercisesWithSolutions,
+                  exercises,
                 },
               },
             ])
@@ -175,11 +176,16 @@ export function InjectionStaticRenderer({
             return
           }
 
+          throw new Error('unknown entity type')
+        })
+        .catch((e) => {
+          // eslint-disable-next-line no-console
+          console.error(e, href)
           setContent('error')
         })
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e)
+      console.error(e, href)
       setContent('error')
     }
   }, [href])
@@ -200,14 +206,13 @@ export function InjectionStaticRenderer({
     )
 
   return (
-    <div className="mb-4 border-b-4 border-brand-300 text-gray-900">
+    <div className="border-b-4 border-brand-300 pb-4 text-gray-900">
       <StaticRenderer document={content} />
     </div>
   )
 }
 
-// only use gql while developing const query = gql`
-const query = `
+const query = gql`
   query injectionOnlyContent($path: String!) {
     uuid(alias: { path: $path, instance: de }) {
       __typename
@@ -276,7 +281,16 @@ const query = `
     }
   }
 
-  ${sharedLicenseFragments}
+  fragment license on AbstractRepository {
+    license {
+      id
+      url
+      title
+      shortTitle
+      default
+      agreement
+    }
+  }
 `
 
 function createFallbackBox(alias: string, title: string) {

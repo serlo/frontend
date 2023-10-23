@@ -226,7 +226,7 @@ const BotHunt = () => {
     return (
       <>
         <a
-          className="cursor-pointer"
+          className="cursor-pointer underline hover:text-[#f00] hover:no-underline"
           onClick={(e: MouseEvent) => {
             if (!e.metaKey && !e.ctrlKey) return false
             const manualId = parseInt(manualInputRef.current?.value ?? '')
@@ -239,15 +239,6 @@ const BotHunt = () => {
         </a>
         <br />
         {isMac ? '⌘' : 'CTRL'} + click
-        <style jsx>{`
-          a {
-            text-decoration: underline;
-          }
-          a:hover {
-            text-decoration: none;
-            color: #f00;
-          }
-        `}</style>
       </>
     )
   }

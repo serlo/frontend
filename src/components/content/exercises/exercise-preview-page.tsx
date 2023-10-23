@@ -7,13 +7,11 @@ import {
 import ExerciseGenerationLoadingSparkles from 'public/_assets/img/exercise/exercise-generation-loading-sparkles.svg'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { Exercise } from './exercise'
 import { CloseButton } from '@/components/close-button'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { convertAiGeneratedDataToEditorData } from '@/helper/ai-generated-exercises/data-conversion'
 import { ErrorBoundary } from '@/helper/error-boundary'
-import { renderNested } from '@/schema/article-renderer'
 
 interface ExercisePreviewPageProps {
   generateExercisePromise: Promise<any>
@@ -106,8 +104,10 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
         {status === Status.Success && (
           <div>
             <ErrorBoundary>
-              {editorData && editorData[currentExerciseIndex] && (
-                <Exercise
+              {
+                editorData &&
+                  editorData[currentExerciseIndex] &&
+                  null /*<Exercise
                   node={editorData[currentExerciseIndex]}
                   renderNested={(value, ...prefix) =>
                     renderNested(value, [], prefix)
@@ -116,8 +116,8 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
                   // If we don't add a key here and force reconciliation, the
                   // solution upon clicking "next" will be selected!
                   key={currentExerciseIndex}
-                />
-              )}
+                />*/
+              }
             </ErrorBoundary>
           </div>
         )}

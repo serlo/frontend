@@ -33,7 +33,7 @@ import { tw } from '@/helper/tw'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-export const h2Class =
+const h2Class =
   'text-center text-4xl leading-cozy tracking-tight font-extrabold'
 
 const categories = ['educational', 'basic'] as const
