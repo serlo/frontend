@@ -5,13 +5,18 @@ import {
   faCaretRight,
 } from '@fortawesome/free-solid-svg-icons'
 import ExerciseGenerationLoadingSparkles from 'public/_assets/img/exercise/exercise-generation-loading-sparkles.svg'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import { CloseButton } from '@/components/close-button'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { convertAiGeneratedDataToEditorData } from '@/helper/ai-generated-exercises/data-conversion'
+// import { convertAiGeneratedDataToEditorData } from '@/helper/ai-generated-exercises/data-conversion'
+import { useEntityId } from '@/contexts/uuids-context'
 import { ErrorBoundary } from '@/helper/error-boundary'
+import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { createRenderers } from '@/serlo-editor-integration/create-renderers'
+import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 interface ExercisePreviewPageProps {
   generateExercisePromise: Promise<any>
@@ -25,15 +30,17 @@ enum Status {
 }
 
 // TODO remove this before production
-const isTestingLocally = false
+const isTestingLocally = true
 
 const exerciseTestData =
   '{\n  "heading": "Dreisatz",\n  "subtasks": [\n    {\n      "type": "single_choice",\n      "question": "Ein Auto fährt mit einer Geschwindigkeit von 60 km/h. Wie weit kommt das Auto in 3 Stunden?",\n      "options": [\n        "120 km",\n        "180 km",\n        "240 km",\n        "300 km"\n      ],\n      "correct_option": 2\n    },\n    {\n      "type": "single_choice",\n      "question": "Ein Kind isst 4 Schokoriegel in 2 Tagen. Wie viele Schokoriegel isst das Kind in 5 Tagen?",\n      "options": [\n        "8 Schokoriegel",\n        "10 Schokoriegel",\n        "12 Schokoriegel",\n        "14 Schokoriegel"\n      ],\n      "correct_option": 3\n    }\n  ]\n}'
 
 export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
-  generateExercisePromise,
   closePage,
 }) => {
+  const entityId = useEntityId()
+  editorRenderers.init(createRenderers())
+
   // TODO change initial state back to loading
   const [status, setStatus] = useState(
     isTestingLocally ? Status.Success : Status.Loading
@@ -43,16 +50,19 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0)
 
   // TODO change it to null before prod
-  const [exerciseData, setExerciseData] = useState(exerciseTestData)
+  const [, setExerciseData] = useState(exerciseTestData)
   // const [exerciseData, setExerciseData] = useState('')
-  const editorData = useMemo<any[]>(
-    () => convertAiGeneratedDataToEditorData(exerciseData),
-    [exerciseData]
-  )
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const editorData: object[] = [
+    JSON.parse(
+      '{"plugin":"exercise","state":{"content":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Wie viele gerade zweistellige Zahlen lassen sich aus den Ziffern 0, 1, 2, 3 bilden?"}]}],"id":"442d1e23-619d-4d5c-8efd-853037e105cf"}],"id":"da67d397-1c88-4bd8-a6e2-718fd6adc7d3"},"interactive":{"plugin":"inputExercise","state":{"type":"input-number-exact-match-challenge","unit":"","answers":[{"value":"6","isCorrect":true,"feedback":{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}],"id":"bb7bbc4b-4035-4291-8f15-963866d4a092"}}]},"id":"5cc12c83-b8a3-4de2-a238-95e9e0c02941"}},"id":"2651276f-1068-4a99-acd8-1fde48ddfa26"}'
+    ),
+  ]
 
   console.log('EditorData: ', editorData)
 
   const generateExercise = useCallback(() => {
+    return
     if (isTestingLocally) {
       return
     }
@@ -73,7 +83,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
     //     console.error('Failed to load exercise data:', error)
     //     setStatus(Status.Error)
     //   })
-  }, [generateExercisePromise])
+  }, [])
 
   useEffect(() => {
     if (isTestingLocally) {
@@ -104,20 +114,9 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
         {status === Status.Success && (
           <div>
             <ErrorBoundary>
-              {
-                editorData &&
-                  editorData[currentExerciseIndex] &&
-                  null /*<Exercise
-                  node={editorData[currentExerciseIndex]}
-                  renderNested={(value, ...prefix) =>
-                    renderNested(value, [], prefix)
-                  }
-                  path={[]}
-                  // If we don't add a key here and force reconciliation, the
-                  // solution upon clicking "next" will be selected!
-                  key={currentExerciseIndex}
-                />*/
-              }
+              {editorData && editorData[currentExerciseIndex] && (
+                <StaticRenderer document={editorData[0] as AnyEditorDocument} />
+              )}
             </ErrorBoundary>
           </div>
         )}
@@ -159,7 +158,22 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
         <button className="self-end rounded bg-brand-700 px-6 py-2 text-white">
           {strings.ai.exerciseGeneration.preview.publishExercise}
         </button>
-        <button className="flex items-center text-brand-700">
+        <button
+          className="flex items-center text-brand-700"
+          onClick={() => {
+            const id = `temp_ai_generated_exercise_${new Date().getTime()}`
+            sessionStorage.setItem(
+              id,
+              JSON.stringify({
+                plugin: 'type-text-exercise',
+                state: {
+                  content: JSON.stringify(editorData[0]),
+                },
+              })
+            )
+            window.location.href = `/entity/create/Exercise/${entityId}?loadFromSession=${id}`
+          }}
+        >
           <FaIcon icon={faPencilAlt} className="mr-2" />
 
           {strings.ai.exerciseGeneration.preview.editExerciseInEditor}
