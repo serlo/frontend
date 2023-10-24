@@ -60,7 +60,10 @@ export function Topic({ data }: TopicProps) {
 
   const [aiWizard, setAiWizard] = useState(false)
 
-  const showWizard = useCallback(() => setAiWizard(true), [])
+  const showWizard = useCallback(() => {
+    // hack
+    setAiWizard(false), setTimeout(() => setAiWizard(true), 50)
+  }, [])
 
   return (
     <>
