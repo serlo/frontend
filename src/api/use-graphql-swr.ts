@@ -89,7 +89,7 @@ export function useGraphqlSwrPaginationWithAuth<T>(
     getKey,
     noAuth
       ? createGraphqlFetch()
-      : createAuthAwareGraphqlFetch(overrideAuth ?? auth),
+      : createAuthAwareGraphqlFetch<any>(overrideAuth ?? auth),
     config
   )
 
