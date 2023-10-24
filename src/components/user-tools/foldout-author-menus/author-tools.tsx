@@ -1,3 +1,4 @@
+import { faWandSparkles } from '@fortawesome/free-solid-svg-icons'
 import {
   Entity,
   Subscription,
@@ -10,7 +11,7 @@ import { Fragment } from 'react'
 
 import { SubItem } from './sub-item'
 import { useCanDo } from '@/auth/use-can-do'
-import { useAiWizard } from '@/contexts/ai-wizard-contex'
+import { useAiWizard } from '@/contexts/ai-wizard-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
@@ -21,6 +22,7 @@ import {
 } from '@/data-types'
 import { Instance, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
+import { isProduction } from '@/helper/is-production'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
@@ -304,12 +306,18 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       (lang !== Instance.De && router.asPath.startsWith('/community'))
 
     const entries = allowedTypes[data.taxonomyType].map((entityType) => {
-      if (entityType === 'AI') {
+      // For now, we don't allow the AI feature to make it into production until
+      // the testing is done
+      if (entityType === 'AI' && !isProduction) {
         return (
           <SubItem
             key="ai"
-            title={strings.ai.exerciseGeneration.buttonTitle}
-            onClick={showWizard}
+            title={loggedInStrings.ai.exerciseGeneration.buttonTitle}
+            onClick={() => {
+              console.log('Calling show Wizard called')
+              showWizard()
+            }}
+            icon={faWandSparkles}
           />
         )
       }

@@ -2,11 +2,12 @@ import { createContext, useContext } from 'react'
 
 export const AiWizardContext = createContext<{
   showWizard: () => void
+  closeWizard: () => void
 } | null>(null)
 
 export const AiWizardProvider = AiWizardContext.Provider
 
-const errorMessage = 'attempted to use ai wizward context outside of provider!'
+const errorMessage = 'attempted to use ai wizard context outside of provider!'
 
 export function useAiWizard() {
   const data = useContext(AiWizardContext)

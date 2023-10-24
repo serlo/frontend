@@ -5,6 +5,7 @@ import { AuthorToolsData } from './foldout-author-menus/author-tools'
 import { ExercisePreviewPage } from '../content/exercises/exercise-preview-page'
 import { ModalWithCloseButton } from '../modal-with-close-button'
 import { ExerciseGenerationWizardProps } from '@/components/content/exercises/exercise-generation-wizard'
+import { useAiWizard } from '@/contexts/ai-wizard-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
 import { submitEvent } from '@/helper/submit-event'
@@ -15,19 +16,18 @@ const ExerciseGenerationWizard = dynamic<ExerciseGenerationWizardProps>(() =>
   )
 )
 
-interface GenerateExerciseButtonProps {
+interface ExerciseGenerationWrapperProps {
   data: AuthorToolsData
 }
 
 enum ActivePage {
-  None = 'none',
   ExerciseGenerationWizard = 'exerciseGenerationWizard',
   ExercisePreviewPage = 'exercisePreviewPage',
 }
 
-export const GenerateExerciseButton = ({
+export const ExerciseGenerationWrapper = ({
   data,
-}: GenerateExerciseButtonProps) => {
+}: ExerciseGenerationWrapperProps) => {
   const { strings } = useLoggedInData() as LoggedInData
 
   const [title, setTitle] = useState(
@@ -36,8 +36,11 @@ export const GenerateExerciseButton = ({
 
   // TODO change this, only for testing.
   // const [activePage, setActivePage] = useState(ActivePage.ExercisePreviewPage)
-  const [activePage, setActivePage] = useState(ActivePage.None)
+  const [activePage, setActivePage] = useState(
+    ActivePage.ExerciseGenerationWizard
+  )
   const [prompt, setPrompt] = useState('')
+  const { closeWizard } = useAiWizard()
 
   const handleTransitionToExercisePage = () => {
     setActivePage(ActivePage.ExercisePreviewPage)
@@ -46,7 +49,10 @@ export const GenerateExerciseButton = ({
   return (
     <>
       <ModalWithCloseButton
-        onCloseClick={() => setActivePage(ActivePage.None)}
+        onCloseClick={() => {
+          submitEvent('exercise-generation-wizard-prompt-generation-closed')
+          closeWizard()
+        }}
         isOpen={activePage === ActivePage.ExerciseGenerationWizard}
         title={title}
         alignTitleAndCloseButton
@@ -69,8 +75,8 @@ export const GenerateExerciseButton = ({
         <ExercisePreviewPage
           prompt={prompt}
           closePage={() => {
-            submitEvent('exercise-generation-wizard-prompt-generation-closed')
-            setActivePage(ActivePage.None)
+            submitEvent('exercise-generation-wizard-exercise-preview-closed')
+            closeWizard()
           }}
         />
       )}

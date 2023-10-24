@@ -10,12 +10,12 @@ import { TopicCategories } from './topic-categories'
 import { ExerciseNumbering } from '../content/exercises/exercise-numbering'
 import { FaIcon } from '../fa-icon'
 import { InfoPanel } from '../info-panel'
-import { GenerateExerciseButton } from '../user-tools/generate-exercise-button'
+import { ExerciseGenerationWrapper } from '../user-tools/exercise-generation-wrapper'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useAB } from '@/contexts/ab'
-import { AiWizardProvider } from '@/contexts/ai-wizard-contex'
+import { AiWizardProvider } from '@/contexts/ai-wizard-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
@@ -61,58 +61,61 @@ export function Topic({ data }: TopicProps) {
   const [aiWizard, setAiWizard] = useState(false)
 
   const showWizard = useCallback(() => {
-    // hack
-    setAiWizard(false), setTimeout(() => setAiWizard(true), 50)
+    setAiWizard(true)
+  }, [])
+
+  const closeWizard = useCallback(() => {
+    setAiWizard(false)
   }, [])
 
   return (
     <>
-      {data.trashed && renderTrashedNotice()}
-      {renderHeader()}
-      {renderUserTools({ aboveContent: true })}
-      <div className="min-h-1/2">
-        <div className="mt-6 sm:mb-5">
-          <StaticRenderer
-            document={data.description as unknown as EditorRowsDocument}
-          />
+      <AiWizardProvider value={{ showWizard, closeWizard }}>
+        {data.trashed && renderTrashedNotice()}
+        {renderHeader()}
+        {renderUserTools({ aboveContent: true })}
+        <div className="min-h-1/2">
+          <div className="mt-6 sm:mb-5">
+            <StaticRenderer
+              document={data.description as unknown as EditorRowsDocument}
+            />
+          </div>
+
+          {renderSubterms()}
+
+          {renderExercises()}
+
+          {isTopic && <TopicCategories data={data} full />}
+
+          {isExerciseFolder && data.events && (
+            <TopicCategories
+              data={data}
+              categories={[TopicCategoryType.events]}
+              full
+            />
+          )}
         </div>
+        {defaultLicense && <LicenseNotice data={defaultLicense} />}
 
-        {renderSubterms()}
+        {/* Temporary donations banner trial */}
+        {isExerciseFolder ? (
+          <DonationsBanner
+            id={data.id}
+            entityData={{
+              ...data,
+              typename: UuidType.TaxonomyTerm,
+              isUnrevised: false,
+            }}
+          />
+        ) : null}
 
-        {renderExercises()}
-
-        {isTopic && <TopicCategories data={data} full />}
-
-        {isExerciseFolder && data.events && (
-          <TopicCategories
-            data={data}
-            categories={[TopicCategoryType.events]}
-            full
+        {renderUserTools()}
+        {aiWizard && (
+          <ExerciseGenerationWrapper
+            data={{ type: UuidType.TaxonomyTerm, ...data }}
           />
         )}
-      </div>
-      {defaultLicense && <LicenseNotice data={defaultLicense} />}
-
-      {/* Temporary donations banner trial */}
-      {isExerciseFolder ? (
-        <DonationsBanner
-          id={data.id}
-          entityData={{
-            ...data,
-            typename: UuidType.TaxonomyTerm,
-            isUnrevised: false,
-          }}
-        />
-      ) : null}
-
-      <AiWizardProvider value={{ showWizard }}>
-        {renderUserTools()}
       </AiWizardProvider>
-      {aiWizard && (
-        <GenerateExerciseButton
-          data={{ type: UuidType.TaxonomyTerm, ...data }}
-        />
-      )}
     </>
   )
 
