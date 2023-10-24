@@ -35,16 +35,9 @@ export function getStyleHacks(
 
     // put top child toolbars in position of multimedia toolbar (for article intro, first rows child, media child)
     tw`
-    [&_.explanation-wrapper>.plugin-wrapper-container_.plugin-toolbar]:!-top-[50px]
-    [&_.explanation-wrapper_.rows-child:first-child_.plugin-toolbar]:!-top-[74px]
-    [&_.media-wrapper_.plugin-toolbar]:!top-[-32px]
-    `,
-
-    // adapt to borders of parent
-    tw`
-    [&_.explanation-wrapper_.plugin-toolbar]:ml-[-2px]
-    [&_.explanation-wrapper_.plugin-toolbar]:mr-[-3px]
-    [&_.explanation-wrapper_.plugin-toolbar]:mt-[-1px]
+    [&_.explanation-wrapper>.plugin-wrapper-container_.plugin-toolbar]:!-top-[12]
+    [&_.explanation-wrapper_.rows-child:first-child_.plugin-toolbar]:!-top-[12]
+    [&_.media-wrapper_.plugin-toolbar]:!-top-[12]
     `,
 
     // adapt to borders of parent
@@ -59,12 +52,6 @@ export function getStyleHacks(
     // but needs to be static to not restrict toolbar width
     (isMediaChildFocused || isMediaChildFocusedWithin) &&
       '[&_.media-wrapper_.plugin-wrapper-container]:!static [&_.media-wrapper]:!static',
-
-    // margin and size improvement
-    tw`
-    [&_.media-wrapper_.plugin-toolbar]:!left-auto
-    [&_.media-wrapper_.plugin-toolbar]:mx-side [&_.media-wrapper_.plugin-toolbar]:w-[calc(100%-37px)]
-    `,
 
     // top toolbars border radius right (for article intro, first rows child, media child)
     tw`
