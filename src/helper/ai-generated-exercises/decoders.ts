@@ -11,10 +11,12 @@ import * as t from 'io-ts'
 // })
 
 export const InputSingleChoiceDecoder = t.strict({
+  heading: t.string,
   type: t.literal('single_choice'),
   question: t.string,
   options: t.array(t.string),
   correct_option: t.number,
+  steps: t.array(t.string),
 })
 
 export const InputMultipleChoiceDecoder = t.strict({

@@ -5,7 +5,7 @@ import {
   faCaretRight,
 } from '@fortawesome/free-solid-svg-icons'
 import ExerciseGenerationLoadingSparkles from 'public/_assets/img/exercise/exercise-generation-loading-sparkles.svg'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { useAuthentication } from '@/auth/use-authentication'
@@ -14,13 +14,15 @@ import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { useEntityId } from '@/contexts/uuids-context'
 import { LoggedInData } from '@/data-types'
-// import { convertAiGeneratedDataToEditorData } from '@/helper/ai-generated-exercises/data-conversion'
+import {
+  /* convertAiGeneratedDataToEditorData */ convertAiGeneratedScExerciseToEditorDocument,
+} from '@/helper/ai-generated-exercises/data-conversion'
 import { ErrorBoundary } from '@/helper/error-boundary'
 import { submitEvent } from '@/helper/submit-event'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorExerciseDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 interface ExercisePreviewPageProps {
   prompt: string
@@ -43,8 +45,7 @@ interface GraphQLResponse {
   ai: {
     executePrompt: {
       success: boolean
-      // TODO should probably make this a generic too!
-      record: any
+      record: string
     }
   }
 }
@@ -62,7 +63,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
   )
   // TODO change it to null before prod
   // const [exerciseData, setExerciseData] = useState(exerciseTestData)
-  const [, /*exerciseData*/ setExerciseData] = useState('')
+  const [exerciseData, setExerciseData] = useState('')
 
   const auth = useAuthentication()
 
@@ -99,7 +100,8 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
       const response = await graphQlFetch(JSON.stringify({ query, variables }))
       console.log('Response: ', { response })
       if (response?.ai?.executePrompt?.success) {
-        setExerciseData(response?.ai.executePrompt.record as string)
+        console.log('Exercise: ', response?.ai.executePrompt.record)
+        setExerciseData(response?.ai.executePrompt.record)
         setStatus(Status.Success)
         submitEvent('exercise-generation-wizard-prompt-success')
       } else {
@@ -123,11 +125,14 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
   const { strings } = useLoggedInData() as LoggedInData
 
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0)
-  // const editorData = useMemo<any[]>(
-  //   () => convertAiGeneratedDataToEditorData(exerciseData),
-  //   [exerciseData]
-  // )
-  const editorData: any[] = []
+
+  const editorData = useMemo<EditorExerciseDocument[]>(
+    () =>
+      exerciseData
+        ? convertAiGeneratedScExerciseToEditorDocument(exerciseData)
+        : [],
+    [exerciseData]
+  )
 
   console.log('EditorData: ', editorData)
 
@@ -153,7 +158,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
           <div>
             <ErrorBoundary>
               {editorData && editorData[currentExerciseIndex] && (
-                <StaticRenderer document={editorData[0] as AnyEditorDocument} />
+                <StaticRenderer document={editorData[currentExerciseIndex]} />
               )}
             </ErrorBoundary>
           </div>

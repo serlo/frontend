@@ -27,7 +27,7 @@ const exerciseTypeToPromptTexts: Record<
   },
   'single choice': {
     exerciseText: `vom Typ Single Choice, bei der aus verschiedenen Antwortmöglichkeiten genau 1 korrekte Antwort ausgewählt werden muss`,
-    keyDescription: `type: "single_choice", question, options und correct_options. Der Key options soll als Value eine Liste von Antwortmöglichkeiten haben, der Key correct_options den Index der korrekten Antwort`,
+    keyDescription: `type: "single_choice", question, options und correct_option. Der Key options soll als Value eine Liste von Antwortmöglichkeiten haben. Der Key correct_option repräsentiert den Index (als Ganzzahl, niemals als Text!) der korrekten Antwort aus dem options array!`,
   },
   'single word solution': {
     exerciseText: `, deren Lösung aus einem Wort besteht`,
