@@ -1197,7 +1197,7 @@ export const loggedInData = {
           closePreviewTitle: 'Close and delete exercises',
           loadingHeading: 'Exercise is being generated...',
           publishExercise: 'Publish exercise',
-          editExerciseInEditor: 'Edit exercise in editor',
+          openExerciseInEditor: 'Open in editor',
           regenerate: 'Regenerate exercise',
         }
       },

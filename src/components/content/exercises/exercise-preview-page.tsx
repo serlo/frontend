@@ -193,9 +193,10 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
       )}
 
       <div className="mt-8 flex w-1/2 flex-col items-end space-y-2">
-        <button className="self-end rounded bg-brand-700 px-6 py-2 text-white">
+        {/* Not supported for now */}
+        {/* <button className="self-end rounded bg-brand-700 px-6 py-2 text-white">
           {strings.ai.exerciseGeneration.preview.publishExercise}
-        </button>
+        </button> */}
         <button
           className="flex items-center text-brand-700"
           onClick={() => {
@@ -214,7 +215,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
         >
           <FaIcon icon={faPencilAlt} className="mr-2" />
 
-          {strings.ai.exerciseGeneration.preview.editExerciseInEditor}
+          {strings.ai.exerciseGeneration.preview.openExerciseInEditor}
         </button>
         <button
           className="flex items-center text-brand-700"
