@@ -10,6 +10,7 @@ import { Fragment } from 'react'
 
 import { SubItem } from './sub-item'
 import { useCanDo } from '@/auth/use-can-do'
+import { useAiWizard } from '@/contexts/ai-wizard-contex'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
@@ -92,6 +93,8 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
   const router = useRouter()
   const canDo = useCanDo()
+
+  const { showWizard } = useAiWizard()
 
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings
@@ -279,7 +282,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
     const allowedTypes: Record<
       TaxonomyTermType,
-      (UuidType | TaxonomyTermType)[]
+      (UuidType | TaxonomyTermType | 'AI')[]
     > = {
       topic: [
         UuidType.Article,
@@ -290,7 +293,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         TaxonomyTermType.Topic,
         TaxonomyTermType.ExerciseFolder,
       ],
-      exerciseFolder: [UuidType.Exercise, UuidType.ExerciseGroup],
+      exerciseFolder: [UuidType.Exercise, UuidType.ExerciseGroup, 'AI'],
       subject: [TaxonomyTermType.Topic],
       root: [TaxonomyTermType.Subject],
     }
@@ -301,6 +304,15 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       (lang !== Instance.De && router.asPath.startsWith('/community'))
 
     const entries = allowedTypes[data.taxonomyType].map((entityType) => {
+      if (entityType === 'AI') {
+        return (
+          <SubItem
+            key="ai"
+            title={strings.ai.exerciseGeneration.buttonTitle}
+            onClick={showWizard}
+          />
+        )
+      }
       if (entityType === UuidType.Event && !shouldRenderEvents) return null
 
       const title = getTranslatedType(strings, entityType)
