@@ -1,5 +1,6 @@
 import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { useEffect, useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
 import { FrontendClientBase } from '@/components/frontend-client-base'
@@ -33,37 +34,65 @@ interface EntityCreateProps {
   entityNeedsReview: boolean
 }
 
-export default renderedPageNoHooks<EntityCreateProps>(
-  ({ taxonomyTerm, entityType, entityNeedsReview }) => {
-    const { id: taxonomyParentId } = taxonomyTerm
+export default renderedPageNoHooks<EntityCreateProps>((props) => {
+  return (
+    <Content
+      taxonomyTerm={props.taxonomyTerm}
+      entityType={props.entityType}
+      entityNeedsReview={props.entityNeedsReview}
+    />
+  )
+})
 
-    const addRevisionProps = {
-      initialState: { plugin: AllowedPlugins[entityType] },
-      type: UuidType[entityType],
-      entityNeedsReview,
-      taxonomyParentId,
-      errorType: 'none',
-    } as const
+function Content({
+  taxonomyTerm,
+  entityType,
+  entityNeedsReview,
+}: EntityCreateProps) {
+  const [initialState, setInitialState] = useState({
+    plugin: AllowedPlugins[entityType],
+  })
 
-    return (
-      <FrontendClientBase
-        noContainers
-        loadLoggedInData={!isProduction} // warn: enables preview editor without login
-        entityId={taxonomyParentId}
-      >
-        <div className="relative">
-          <MaxWidthDiv>
-            <main>
-              <Guard needsAuth={isProduction ? true : undefined} data>
-                <AddRevision {...addRevisionProps} />
-              </Guard>
-            </main>
-          </MaxWidthDiv>{' '}
-        </div>
-      </FrontendClientBase>
-    )
-  }
-)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('loadFromSession')) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      const data = sessionStorage.getItem(params.get('loadFromSession') ?? '')
+      if (data) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        setInitialState(JSON.parse(data))
+      }
+    }
+  }, [])
+
+  const { id: taxonomyParentId } = taxonomyTerm
+
+  const addRevisionProps = {
+    initialState,
+    type: UuidType[entityType],
+    entityNeedsReview,
+    taxonomyParentId,
+    errorType: 'none',
+  } as const
+
+  return (
+    <FrontendClientBase
+      noContainers
+      loadLoggedInData={!isProduction} // warn: enables preview editor without login
+      entityId={taxonomyParentId}
+    >
+      <div className="relative">
+        <MaxWidthDiv>
+          <main>
+            <Guard needsAuth={isProduction ? true : undefined} data>
+              <AddRevision {...addRevisionProps} />
+            </Guard>
+          </main>
+        </MaxWidthDiv>{' '}
+      </div>
+    </FrontendClientBase>
+  )
+}
 
 export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
   context
