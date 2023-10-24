@@ -36,6 +36,7 @@ import {
 import { AnchorStaticRenderer } from '@/serlo-editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@/serlo-editor/plugins/article/static'
 import { BoxStaticRenderer } from '@/serlo-editor/plugins/box/static'
+import { FillInTheGapStaticRenderer } from '@/serlo-editor/plugins/fill-in-the-gap-exercise/static'
 import { parseId } from '@/serlo-editor/plugins/geogebra/renderer'
 import { GeogebraStaticRenderer } from '@/serlo-editor/plugins/geogebra/static'
 import { RowsStaticRenderer } from '@/serlo-editor/plugins/rows/static'
@@ -250,6 +251,10 @@ export function createRenderers(): InitRenderersArgs {
       {
         type: EditorPluginType.ScMcExercise,
         renderer: SerloScMcExerciseStaticRenderer,
+      },
+      {
+        type: EditorPluginType.FillInTheGapExercise,
+        renderer: FillInTheGapStaticRenderer,
       },
       {
         type: EditorPluginType.Solution,

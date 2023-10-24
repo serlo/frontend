@@ -1,8 +1,10 @@
-import { createElement } from 'react'
+import { createElement, useContext } from 'react'
 import { Descendant, Element } from 'slate'
 
 import { TextLeafRenderer } from './components/text-leaf-renderer'
 import { ListElementType } from './types/text-editor'
+import { GapModeContext } from '../fill-in-the-gap-exercise/context/gap-mode'
+import { GapRenderer } from '../fill-in-the-gap-exercise/gap-renderer'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 
 export function StaticSlate({
@@ -10,6 +12,8 @@ export function StaticSlate({
 }: {
   element: Descendant | Descendant[]
 }): JSX.Element | null {
+  const gapMode = useContext(GapModeContext)
+
   if (Array.isArray(element))
     return (
       <>
@@ -87,6 +91,15 @@ export function StaticSlate({
     if (element.type === 'math') {
       const MathRenderer = editorRenderers.getMathRenderer()
       return <MathRenderer {...element} />
+    }
+    if (element.type === 'gap') {
+      return (
+        <GapRenderer
+          mode={gapMode ? gapMode : 'fill-in-the-gap'}
+          correctAnswer={element.correctAnswer}
+          id={element.id}
+        />
+      )
     }
 
     // unwrap block level math elements

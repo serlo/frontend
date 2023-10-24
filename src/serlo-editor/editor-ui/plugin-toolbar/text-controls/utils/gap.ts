@@ -1,4 +1,12 @@
-import { Editor as SlateEditor, Element, Node, Range, Transforms } from 'slate'
+import {
+  Editor as SlateEditor,
+  Element,
+  Node,
+  Range,
+  Transforms,
+  Editor,
+} from 'slate'
+import { v4 } from 'uuid'
 
 import { selectionHasElement, trimSelection } from './selection'
 import type { Gap } from '@/serlo-editor/plugins/text'
@@ -29,6 +37,8 @@ export function toggleGap(editor: SlateEditor) {
     Transforms.insertNodes(editor, {
       type: 'gap',
       children: [{ text: ' ' }],
+      id: v4(),
+      correctAnswer: '',
       alternativeSolutions: ['Banana'],
       userEntry: 'Apple',
     })
@@ -36,11 +46,17 @@ export function toggleGap(editor: SlateEditor) {
   }
 
   trimSelection(editor)
+
+  const selectedText = editor.selection
+    ? Editor.string(editor, editor.selection)
+    : ''
   Transforms.wrapNodes(
     editor,
     {
       type: 'gap',
       children: [{ text: '' }],
+      id: v4(),
+      correctAnswer: selectedText,
       alternativeSolutions: ['Banana'],
       userEntry: 'Apple',
     },

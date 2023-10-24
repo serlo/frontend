@@ -1,4 +1,4 @@
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+import { useMemo } from 'react'
 
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
@@ -42,7 +42,8 @@ function createFillInTheGapExerciseState() {
         ],
       },
     }),
-    mode: string('drag-n-drop'),
+    // mode: string('drag-and-drop'),
+    mode: string('fill-in-the-gap'),
   })
 }
 
@@ -50,53 +51,41 @@ export type FillInTheGapExerciseProps =
   EditorPluginProps<FillInTheGapExerciseState>
 
 export function FillInTheGapExerciseEditor(props: FillInTheGapExerciseProps) {
-  const { focused } = props
+  const { focused, state } = props
+  const { mode } = state
   // Get state of text component and rerender when it changes.
   const textState = useAppSelector((state) => {
     return selectDocument(state, props.state.text.id)
   })
 
-  // @@@ Hardcoded for now. Should get gap content from textState.
-  const gapSolutions = ['Solution A', 'Solution B']
+  const gapSolutions: string[] = useMemo(() => {
+    const matches = JSON.stringify(textState).matchAll(
+      /"correctAnswer":"(\w*)"/gi
+    )
+    if (!matches) return []
+    const result = []
+    for (const match of matches) {
+      result.push(match[match.length - 1])
+    }
+    return result
+  }, [textState])
 
   return (
     <>
       <div className="hidden">
         {focused ? <FillInTheGapExerciseToolbar /> : null}
       </div>
-      <DragDropContext onDragEnd={(result) => {
-        // @@@ How to get the new info to the gap component?
-        // Option A: Modify text component state in store.
-        // Option: setState in Gap component. But I need to get a reference somehow? 
-      }}>
-        {props.state.text.render()}
+      {props.state.text.render()}
+
+      {mode.value === 'drag-and-drop' && gapSolutions ? (
         <div className="">
-          <Droppable droppableId="gap-solutions">
-            {(provided) => (
-              <div {...provided.droppableProps} ref={provided.innerRef}>
-                {gapSolutions.map((gapSolution, i) => {
-                  return (
-                    <Draggable draggableId={i.toString()} index={i} key={i}>
-                      {(provided) => (
-                        <div
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          ref={provided.innerRef}
-                          className="rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2"
-                        >
-                          {gapSolution}
-                        </div>
-                      )}
-                    </Draggable>
-                  )
-                })}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
+          {gapSolutions.map((gapSolution, index) => (
+            <span className="mx-2" key={index}>
+              {gapSolution}
+            </span>
+          ))}
         </div>
-        <div className="hidden">{JSON.stringify(textState)}</div>
-      </DragDropContext>
+      ) : null}
     </>
   )
 }

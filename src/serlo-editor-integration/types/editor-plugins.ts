@@ -11,6 +11,7 @@ import type { AnchorPluginState } from '@/serlo-editor/plugins/anchor'
 import { AudioPluginState } from '@/serlo-editor/plugins/audio'
 import { BoxPluginState } from '@/serlo-editor/plugins/box'
 import { EquationsPluginState } from '@/serlo-editor/plugins/equations'
+import { FillInTheGapExerciseState } from '@/serlo-editor/plugins/fill-in-the-gap-exercise'
 import type { GeogebraPluginState } from '@/serlo-editor/plugins/geogebra'
 import { H5pPluginState } from '@/serlo-editor/plugins/h5p'
 import type { HighlightPluginState } from '@/serlo-editor/plugins/highlight'
@@ -123,6 +124,11 @@ export interface EditorRowsDocument {
 export interface EditorScMcExerciseDocument {
   plugin: EditorPluginType.ScMcExercise
   state: Prettify<StateTypeSerializedType<ScMcExercisePluginState>>
+  id?: string
+}
+export interface EditorFillInTheGapExerciseDocument {
+  plugin: EditorPluginType.FillInTheGapExercise
+  state: Prettify<StateTypeSerializedType<FillInTheGapExerciseState>>
   id?: string
 }
 export interface EditorSpoilerDocument {
