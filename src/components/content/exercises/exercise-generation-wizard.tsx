@@ -14,8 +14,10 @@ import { Subject } from './exercise-generation-wizard/subject'
 import { Topic } from './exercise-generation-wizard/topic'
 import { FaIcon } from '@/components/fa-icon'
 import { AuthorToolsData } from '@/components/user-tools/foldout-author-menus/author-tools'
-import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { LoggedInData } from '@/data-types'
 import { isProduction } from '@/helper/is-production'
+import { submitEvent } from '@/helper/submit-event'
 
 export interface ExerciseGenerationWizardProps {
   // TODO only require the props that are actually needed!
@@ -23,7 +25,9 @@ export interface ExerciseGenerationWizardProps {
 
   setTitle: (title: string) => void
 
-  handleTransitionToExercisePage: (promise: Promise<any | null>) => void
+  handleTransitionToExercisePage: () => void
+  prompt: string
+  setPrompt: (newPrompt: string) => void
 }
 
 // Extracts topic from title. E.g Aufgaben zum Dreisatz => Dreisatz
@@ -41,7 +45,6 @@ function useScrollToTopOfSummaryWhenInView(currentPage: number) {
 
   useEffect(() => {
     if (topOfSummaryRef && topOfSummaryRef.current && currentPage === 7) {
-      console.log('Scroll now: ', topOfSummaryRef.current)
       topOfSummaryRef.current.scrollTo(0, 0)
     }
   }, [currentPage])
@@ -51,9 +54,12 @@ function useScrollToTopOfSummaryWhenInView(currentPage: number) {
 
 export const ExerciseGenerationWizard: React.FC<
   ExerciseGenerationWizardProps
-> = ({ data, setTitle, handleTransitionToExercisePage }) => {
-  const { strings } = useInstanceData()
-  const [prompt, setPrompt] = useState('')
+> = (props) => {
+  const { data, setTitle, handleTransitionToExercisePage, setPrompt, prompt } =
+    props
+
+  // Only logged in users can see this
+  const { strings } = useLoggedInData() as LoggedInData
 
   // TODO show limitation message before page one. We may need to handle this
   // one within the generate-exercise-button.tsx component and either render a
@@ -116,7 +122,6 @@ export const ExerciseGenerationWizard: React.FC<
       difficulty: difficulty || 'low',
       priorKnowledge,
     })
-    console.log('newPrompt', { newPrompt })
     setPrompt(newPrompt)
   }, [
     subject,
@@ -127,6 +132,7 @@ export const ExerciseGenerationWizard: React.FC<
     learningGoal,
     difficulty,
     priorKnowledge,
+    setPrompt,
   ])
 
   const handleNext = () => {
@@ -235,32 +241,8 @@ export const ExerciseGenerationWizard: React.FC<
             learningGoal,
             priorKnowledge,
           })
-          const generateExercisePromise = new Promise((resolve, reject) => {
-            const baseUrl = 'http://localhost:8082/exercises'
 
-            const queryParams = new URLSearchParams({
-              prompt,
-            })
-
-            const urlWithParams = `${baseUrl}?${queryParams.toString()}`
-
-            console.log('Fetching now!')
-            return fetch(urlWithParams)
-              .then((response) => {
-                if (!response.ok) {
-                  reject(`HTTP error! Status: ${response.status}`)
-                }
-                return response.json()
-              })
-              .then((data) => {
-                resolve(data)
-              })
-              .catch((error) => {
-                reject(`Error while fetching: ${error}`)
-              })
-          })
-
-          handleTransitionToExercisePage(generateExercisePromise)
+          handleTransitionToExercisePage()
         }}
       />
     </div>
@@ -282,7 +264,12 @@ const NavigationFooter: React.FC<NavigationFooterProps> = ({
   onPrev,
   onSubmit,
 }) => {
-  const { strings } = useInstanceData()
+  const { strings } = useLoggedInData() as LoggedInData
+
+  useEffect(() => {
+    submitEvent('exercise-generation-wizard-page: ' + currentPage)
+  }, [currentPage])
+
   return (
     <div className="relative mt-auto flex flex-col items-center justify-between">
       {currentPage === 7 ? (

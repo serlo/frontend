@@ -1,7 +1,8 @@
 import { ExerciseGenerationDifficulty } from './generate-prompt'
 import { WizardPageProps } from './wizard-page-props'
 import { MenuButton, MenuItem } from '../menu-button'
-import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { LoggedInData } from '@/data-types'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface DifficultyProps extends WizardPageProps {
@@ -19,7 +20,7 @@ export const Difficulty: React.FC<DifficultyProps> = ({
   onNext,
   isSummary,
 }) => {
-  const { strings } = useInstanceData()
+  const { strings } = useLoggedInData() as LoggedInData
 
   return (
     <div className="flex flex-col">

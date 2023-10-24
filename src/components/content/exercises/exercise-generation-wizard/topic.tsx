@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 
 import { WizardPageProps } from './wizard-page-props'
-import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { LoggedInData } from '@/data-types'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface TopicProps extends WizardPageProps {
@@ -20,7 +21,7 @@ export const Topic: React.FC<TopicProps> = ({
   setTopic,
   defaultTopic,
 }) => {
-  const { strings } = useInstanceData()
+  const { strings } = useLoggedInData() as LoggedInData
 
   const [selectedRadio, setSelectedRadio] = useState<string>(
     defaultTopic ? (defaultTopic === topic ? defaultTopic : 'custom') : 'custom'

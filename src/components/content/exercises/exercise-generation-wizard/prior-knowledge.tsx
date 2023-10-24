@@ -1,5 +1,6 @@
 import { WizardPageProps } from './wizard-page-props'
-import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { LoggedInData } from '@/data-types'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface PriorKnowledgeProps extends WizardPageProps {
@@ -13,7 +14,7 @@ export const PriorKnowledge: React.FC<PriorKnowledgeProps> = ({
   onNext,
   isSummary,
 }) => {
-  const { strings } = useInstanceData()
+  const { strings } = useLoggedInData() as LoggedInData
 
   return (
     <div className={`flex flex-col ${isSummary ? 'mb-4' : ''}`}>

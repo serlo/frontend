@@ -7,19 +7,23 @@ import {
 import ExerciseGenerationLoadingSparkles from 'public/_assets/img/exercise/exercise-generation-loading-sparkles.svg'
 import React, { useCallback, useEffect, useState } from 'react'
 
+import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
+import { useAuthentication } from '@/auth/use-authentication'
 import { CloseButton } from '@/components/close-button'
 import { FaIcon } from '@/components/fa-icon'
-import { useInstanceData } from '@/contexts/instance-context'
-// import { convertAiGeneratedDataToEditorData } from '@/helper/ai-generated-exercises/data-conversion'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { useEntityId } from '@/contexts/uuids-context'
+import { LoggedInData } from '@/data-types'
+// import { convertAiGeneratedDataToEditorData } from '@/helper/ai-generated-exercises/data-conversion'
 import { ErrorBoundary } from '@/helper/error-boundary'
+import { submitEvent } from '@/helper/submit-event'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 interface ExercisePreviewPageProps {
-  generateExercisePromise: Promise<any>
+  prompt: string
   closePage: () => void
 }
 
@@ -35,7 +39,18 @@ const isTestingLocally = true
 const exerciseTestData =
   '{\n  "heading": "Dreisatz",\n  "subtasks": [\n    {\n      "type": "single_choice",\n      "question": "Ein Auto fährt mit einer Geschwindigkeit von 60 km/h. Wie weit kommt das Auto in 3 Stunden?",\n      "options": [\n        "120 km",\n        "180 km",\n        "240 km",\n        "300 km"\n      ],\n      "correct_option": 2\n    },\n    {\n      "type": "single_choice",\n      "question": "Ein Kind isst 4 Schokoriegel in 2 Tagen. Wie viele Schokoriegel isst das Kind in 5 Tagen?",\n      "options": [\n        "8 Schokoriegel",\n        "10 Schokoriegel",\n        "12 Schokoriegel",\n        "14 Schokoriegel"\n      ],\n      "correct_option": 3\n    }\n  ]\n}'
 
+interface GraphQLResponse {
+  ai: {
+    executePrompt: {
+      success: boolean
+      // TODO should probably make this a generic too!
+      record: any
+    }
+  }
+}
+
 export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
+  prompt,
   closePage,
 }) => {
   const entityId = useEntityId()
@@ -45,53 +60,76 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
   const [status, setStatus] = useState(
     isTestingLocally ? Status.Success : Status.Loading
   )
-  const { strings } = useInstanceData()
-
-  const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0)
-
   // TODO change it to null before prod
-  const [, setExerciseData] = useState(exerciseTestData)
-  // const [exerciseData, setExerciseData] = useState('')
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const editorData: object[] = [
-    JSON.parse(
-      '{"plugin":"exercise","state":{"content":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Wie viele gerade zweistellige Zahlen lassen sich aus den Ziffern 0, 1, 2, 3 bilden?"}]}],"id":"442d1e23-619d-4d5c-8efd-853037e105cf"}],"id":"da67d397-1c88-4bd8-a6e2-718fd6adc7d3"},"interactive":{"plugin":"inputExercise","state":{"type":"input-number-exact-match-challenge","unit":"","answers":[{"value":"6","isCorrect":true,"feedback":{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}],"id":"bb7bbc4b-4035-4291-8f15-963866d4a092"}}]},"id":"5cc12c83-b8a3-4de2-a238-95e9e0c02941"}},"id":"2651276f-1068-4a99-acd8-1fde48ddfa26"}'
-    ),
-  ]
+  // const [exerciseData, setExerciseData] = useState(exerciseTestData)
+  const [exerciseData, setExerciseData] = useState('')
 
-  console.log('EditorData: ', editorData)
+  const auth = useAuthentication()
 
-  const generateExercise = useCallback(() => {
-    return
-    if (isTestingLocally) {
-      return
+  // TODO move all this code to the generic execute-ai-prompt file
+  const generateExercise = useCallback(async () => {
+    console.log('Asking GPT to generate an exercise with prompt', {
+      prompt,
+      auth,
+    })
+    try {
+      setStatus(Status.Loading)
+
+      // setTimeout(() => {
+      //   setExerciseData(exerciseTestData)
+      //   setStatus(Status.Success)
+      // }, 3500)
+
+      const graphQlFetch = createAuthAwareGraphqlFetch<GraphQLResponse>(auth)
+
+      const query = `
+        query ($prompt: String!) {
+          ai {
+            executePrompt(prompt: $prompt) {
+              success
+              record
+            }
+          }
+        }
+      `
+      const variables = { prompt }
+
+      console.log('Fetching response now!')
+      submitEvent('exercise-generation-wizard-prompt-generation')
+      const response = await graphQlFetch(JSON.stringify({ query, variables }))
+      console.log('Response: ', { response })
+      if (response?.ai?.executePrompt?.success) {
+        setExerciseData(response?.ai.executePrompt.record as string)
+        setStatus(Status.Success)
+        submitEvent('exercise-generation-wizard-prompt-success')
+      } else {
+        setStatus(Status.Error)
+        submitEvent('exercise-generation-wizard-prompt-failure')
+      }
+    } catch (error) {
+      console.error('Failed to generate exercise:', error)
+      submitEvent('exercise-generation-wizard-prompt-failure')
+      setStatus(Status.Error)
     }
-
-    setStatus(Status.Loading)
-
-    setTimeout(() => {
-      setExerciseData(exerciseTestData)
-      setStatus(Status.Success)
-    }, 3500)
-    // generateExercisePromise
-    //   .then(() => {
-    //     //console.log('returned data: ', { data })
-    //     //setExerciseData(data)
-    //     setStatus(Status.Success)
-    //   })
-    //   .catch((error) => {
-    //     console.error('Failed to load exercise data:', error)
-    //     setStatus(Status.Error)
-    //   })
-  }, [])
+  }, [prompt, auth])
 
   useEffect(() => {
-    if (isTestingLocally) {
-      return
-    }
-
+    // Already handling the error in the generateExercise function
     generateExercise()
+      .then(() => void null)
+      .catch(() => void null)
   }, [generateExercise])
+
+  const { strings } = useLoggedInData() as LoggedInData
+
+  const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0)
+  // const editorData = useMemo<any[]>(
+  //   () => convertAiGeneratedDataToEditorData(exerciseData),
+  //   [exerciseData]
+  // )
+  const editorData: any[] = []
+
+  console.log('EditorData: ', editorData)
 
   return (
     <div className="bg-background-gray fixed left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center backdrop-blur">

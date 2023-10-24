@@ -3,7 +3,9 @@ interface PromptProps {
   setPrompt: (prompt: string) => void
 }
 
-export const Prompt = ({ prompt, setPrompt }: PromptProps) => {
+// No i18n needed here as this won't make it to production. Most likely only for
+// authors during testing
+export function Prompt({ prompt, setPrompt }: PromptProps) {
   return (
     <div className="flex flex-col">
       <label className="mb-1 font-semibold text-brand-700">Prompt</label>
