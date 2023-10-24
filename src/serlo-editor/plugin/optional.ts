@@ -47,7 +47,7 @@ export function optional<D extends StateType>(
               value:
                 value === undefined
                   ? type.createInitialState(helpers)
-                  : type.toStoreDocument(value, helpers),
+                  : type.toStoreState(value, helpers),
             }
           })
         },
@@ -108,8 +108,8 @@ export function optional<D extends StateType>(
         value: null,
       }
     },
-    toStoreDocument(serialized, helpers) {
-      if (serialized === undefined) {
+    toStoreState(staticState, helpers) {
+      if (staticState === undefined) {
         return {
           defined: false,
           value: null,
@@ -119,13 +119,13 @@ export function optional<D extends StateType>(
       return {
         defined: true,
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        value: type.toStoreDocument(serialized, helpers),
+        value: type.toStoreState(staticState, helpers),
       }
     },
-    toStaticDocument(optionalStoreState, helpers) {
+    toStaticState(optionalStoreState, helpers) {
       if (optionalStoreState.defined) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return type.toStaticDocument(optionalStoreState.value, helpers)
+        return type.toStaticState(optionalStoreState.value, helpers)
       }
       return undefined
     },

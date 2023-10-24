@@ -23,7 +23,7 @@ import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import {
   type EditorPlugin,
   type EditorPluginProps,
-  type StateTypeStaticType,
+  type PrettyStaticState,
   list,
   string,
 } from '@/serlo-editor/plugin'
@@ -38,6 +38,7 @@ export const courseTypeState = entityType(
     meta_description: string(),
   },
   {
+    // I think this is not correct because it meant for strings?
     'course-page': list(serializedChild('type-course-page')),
   }
 )
@@ -58,12 +59,12 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
 
   const staticState = selectStaticDocument(store.getState(), props.id)
-    ?.state as StateTypeStaticType<CourseTypePluginState>
+    ?.state as PrettyStaticState<CourseTypePluginState>
 
   if (!staticState) return null
   const staticPages = staticState[
     'course-page'
-  ] as StateTypeStaticType<CoursePageTypePluginState>[]
+  ] as PrettyStaticState<CoursePageTypePluginState>[]
 
   return (
     <>

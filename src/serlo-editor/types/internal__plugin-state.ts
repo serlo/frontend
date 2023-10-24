@@ -27,25 +27,25 @@ export interface StateType<S = any, T = any, R = any> {
    * @param helpers - helpers (e.g. to insert a document in the store)
    * @returns initial state
    */
-  createInitialState(helpers: StoreToStoreHelpers): T
+  createInitialState(helpers: ToStoreHelpers): T
 
   /**
-   * Converts a static document into a store document
+   * Converts a static state into a store state
    *
-   * @param staticDocument - static state to convert
+   * @param staticState - static state or document to convert
    * @param helpers - helpers (e.g. to insert an document in the store)
-   * @returns store document state
+   * @returns store state
    */
-  toStoreDocument(staticDocument: S, helpers: StoreToStoreHelpers): T
+  toStoreState(staticState: S, helpers: ToStoreHelpers): T
 
   /**
-   * Converts a store document to a static document
+   * Converts a store state to a static state
    *
-   * @param storeDocument - document to convert
-   * @param helpers - helpers (e.g. to convert an document)
-   * @returns static document
+   * @param storeState - state to convert
+   * @param helpers - helpers (e.g. to convert a state)
+   * @returns static state
    */
-  toStaticDocument(storeDocument: T, helpers: StoreToStaticHelpers): S
+  toStaticState(storeState: T, helpers: ToStaticHelpers): S
 
   /**
    * Gives the editor information about the children of the plugin (e.g. to build the document tree)
@@ -63,10 +63,7 @@ export interface StateType<S = any, T = any, R = any> {
  * @param helpers - helpers (e.g. to insert an document in the store)
  * @returns new state
  */
-export type StateUpdater<T> = (
-  previousState: T,
-  helpers: StoreToStoreHelpers
-) => T
+export type StateUpdater<T> = (previousState: T, helpers: ToStoreHelpers) => T
 
 /**
  * Describes an asynchronous state update
@@ -141,7 +138,7 @@ export type StateTypesReturnType<Ds extends Record<string, StateType>> = {
  * Helpers to be used by a [[StateType]] when working with a static state
  *
  */
-export interface StoreToStoreHelpers<K extends string = string, S = unknown> {
+export interface ToStoreHelpers<K extends string = string, S = unknown> {
   /**
    * Inserts a document into the store
    *
@@ -154,14 +151,14 @@ export interface StoreToStoreHelpers<K extends string = string, S = unknown> {
  * Helpers to be used by a [[StateType]] when working with a store state
  *
  */
-export interface StoreToStaticHelpers<K extends string = string, S = unknown> {
+export interface ToStaticHelpers<K extends string = string, S = unknown> {
   /**
    * Retrieves a document from the store
    *
    * @param id - id of the document
    * @returns the document if it exists, `null` otherwise
    */
-  getDocument(id: string): { plugin: K; state?: S } | null
+  getStoreDocument(id: string): { plugin: K; state?: S } | null
   omitId?: boolean
 }
 

@@ -89,16 +89,16 @@ export function object<Ds extends Record<string, StateType>>(
         return type.createInitialState(helpers)
       }, types) as T
     },
-    toStoreDocument(serialized, helpers) {
+    toStoreState(staticState, helpers) {
       return R.mapObjIndexed((type, key) => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return type.toStoreDocument(serialized[key], helpers)
+        return type.toStoreState(staticState[key], helpers)
       }, types) as T
     },
-    toStaticDocument(storeState, helpers) {
+    toStaticState(storeState, helpers) {
       return R.mapObjIndexed((type, key) => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return type.toStaticDocument(storeState[key], helpers)
+        return type.toStaticState(storeState[key], helpers)
       }, types) as S
     },
     getFocusableChildren(state) {

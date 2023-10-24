@@ -6,7 +6,7 @@ import type { InjectionPluginState } from '../../serlo-editor/plugins/injection'
 import type { SolutionPluginState } from '../../serlo-editor/plugins/solution'
 import type { UnsupportedPluginState } from '../../serlo-editor/plugins/unsupported'
 import { License } from '@/fetcher/query-types'
-import type { StateTypeStaticType } from '@/serlo-editor/plugin'
+import type { PrettyStaticState } from '@/serlo-editor/plugin'
 import type { AnchorPluginState } from '@/serlo-editor/plugins/anchor'
 import { AudioPluginState } from '@/serlo-editor/plugins/audio'
 import { BoxPluginState } from '@/serlo-editor/plugins/box'
@@ -39,37 +39,37 @@ export type SlateTextElement = CustomText
 
 export interface EditorAnchorDocument {
   plugin: EditorPluginType.Anchor
-  state: StateTypeStaticType<AnchorPluginState>
+  state: PrettyStaticState<AnchorPluginState>
   id?: string
 }
 export interface EditorArticleDocument {
   plugin: EditorPluginType.Article
-  state: StateTypeStaticType<ArticlePluginState>
+  state: PrettyStaticState<ArticlePluginState>
   id?: string
 }
 export interface EditorArticleIntroductionDocument {
   plugin: EditorPluginType.ArticleIntroduction
-  state: StateTypeStaticType<MultimediaPluginState>
+  state: PrettyStaticState<MultimediaPluginState>
   id?: string
 }
 export interface EditorBoxDocument {
   plugin: EditorPluginType.Box
-  state: StateTypeStaticType<BoxPluginState>
+  state: PrettyStaticState<BoxPluginState>
   id?: string
 }
 export interface EditorUnsupportedDocument {
   plugin: EditorPluginType.Unsupported
-  state: StateTypeStaticType<UnsupportedPluginState>
+  state: PrettyStaticState<UnsupportedPluginState>
   id?: string
 }
 export interface EditorEquationsDocument {
   plugin: EditorPluginType.Equations
-  state: StateTypeStaticType<EquationsPluginState>
+  state: PrettyStaticState<EquationsPluginState>
   id?: string
 }
 export interface EditorExerciseDocument {
   plugin: EditorPluginType.Exercise
-  state: StateTypeStaticType<ExercisePluginState>
+  state: PrettyStaticState<ExercisePluginState>
   id?: string
 
   // additional data for serlo, not part of normal state
@@ -87,57 +87,57 @@ export interface EditorExerciseDocument {
 }
 export interface EditorGeogebraDocument {
   plugin: EditorPluginType.Geogebra
-  state: StateTypeStaticType<GeogebraPluginState>
+  state: PrettyStaticState<GeogebraPluginState>
   id?: string
 }
 export interface EditorHighlightDocument {
   plugin: EditorPluginType.Highlight
-  state: StateTypeStaticType<HighlightPluginState>
+  state: PrettyStaticState<HighlightPluginState>
   id?: string
 }
 export interface EditorImageDocument {
   plugin: EditorPluginType.Image
-  state: StateTypeStaticType<ImagePluginState>
+  state: PrettyStaticState<ImagePluginState>
   id?: string
 }
 export interface EditorInjectionDocument {
   plugin: EditorPluginType.Injection
-  state: StateTypeStaticType<InjectionPluginState>
+  state: PrettyStaticState<InjectionPluginState>
   id?: string
 }
 export interface EditorInputExerciseDocument {
   plugin: EditorPluginType.InputExercise
-  state: StateTypeStaticType<InputExercisePluginState>
+  state: PrettyStaticState<InputExercisePluginState>
   id?: string
 }
 export interface EditorMultimediaDocument {
   plugin: EditorPluginType.Multimedia
-  state: StateTypeStaticType<MultimediaPluginState>
+  state: PrettyStaticState<MultimediaPluginState>
   id?: string
 }
 export interface EditorRowsDocument {
   plugin: EditorPluginType.Rows
-  state: StateTypeStaticType<RowsPluginState>
+  state: PrettyStaticState<RowsPluginState>
   id?: string
 }
 export interface EditorScMcExerciseDocument {
   plugin: EditorPluginType.ScMcExercise
-  state: StateTypeStaticType<ScMcExercisePluginState>
+  state: PrettyStaticState<ScMcExercisePluginState>
   id?: string
 }
 export interface EditorSpoilerDocument {
   plugin: EditorPluginType.Spoiler
-  state: StateTypeStaticType<SpoilerPluginState>
+  state: PrettyStaticState<SpoilerPluginState>
   id?: string
 }
 export interface EditorSerloInjectionDocument {
   plugin: EditorPluginType.Injection
-  state: StateTypeStaticType<InjectionPluginState>
+  state: PrettyStaticState<InjectionPluginState>
   id?: string
 }
 export interface EditorSolutionDocument {
   plugin: EditorPluginType.Solution
-  state: StateTypeStaticType<SolutionPluginState>
+  state: PrettyStaticState<SolutionPluginState>
   id?: string
 
   // additional data for serlo, not part of normal state
@@ -151,49 +151,49 @@ export interface EditorSolutionDocument {
 }
 export interface EditorSerloTableDocument {
   plugin: EditorPluginType.SerloTable
-  state: StateTypeStaticType<SerloTablePluginState>
+  state: PrettyStaticState<SerloTablePluginState>
   id?: string
 }
 export interface EditorTextDocument {
   plugin: EditorPluginType.Text
-  state: StateTypeStaticType<TextEditorState>
+  state: PrettyStaticState<TextEditorState>
   id?: string
 }
 export interface EditorVideoDocument {
   plugin: EditorPluginType.Video
-  state: StateTypeStaticType<VideoPluginState>
+  state: PrettyStaticState<VideoPluginState>
   id?: string
 }
 export interface EditorAudioDocument {
   plugin: EditorPluginType.Audio
-  state: StateTypeStaticType<AudioPluginState>
+  state: PrettyStaticState<AudioPluginState>
   id?: string
 }
 export interface EditorPageLayoutDocument {
   plugin: EditorPluginType.PageLayout
-  state: StateTypeStaticType<PageLayoutPluginState>
+  state: PrettyStaticState<PageLayoutPluginState>
   id?: string
 }
 export interface EditorPageTeamDocument {
   plugin: EditorPluginType.PageTeam
-  state: StateTypeStaticType<PageTeamPluginState>
+  state: PrettyStaticState<PageTeamPluginState>
   id?: string
 }
 export interface EditorPagePartnersDocument {
   plugin: EditorPluginType.PagePartners
-  state: StateTypeStaticType<PagePartnersPluginState>
+  state: PrettyStaticState<PagePartnersPluginState>
   id?: string
 }
 export interface EditorH5PDocument {
   plugin: EditorPluginType.H5p
-  state: StateTypeStaticType<H5pPluginState>
+  state: PrettyStaticState<H5pPluginState>
   id?: string
 }
 
 // Template Plugins
 export interface EditorTemplateExerciseGroupDocument {
   plugin: TemplatePluginType.TextExerciseGroup
-  state: StateTypeStaticType<TextExerciseGroupTypePluginState> & {
+  state: PrettyStaticState<TextExerciseGroupTypePluginState> & {
     // extra field that is not actually part of the state until we move solutions into exercises
     exercises: EditorExerciseDocument[]
   }

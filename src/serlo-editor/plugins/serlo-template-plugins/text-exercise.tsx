@@ -18,7 +18,7 @@ import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import {
   type EditorPlugin,
   type EditorPluginProps,
-  type StateTypeStaticType,
+  type PrettyStaticState,
 } from '@/serlo-editor/plugin'
 import { selectStaticDocument, store } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
@@ -30,6 +30,7 @@ export const textExerciseTypeState = entityType(
     content: editorContent(EditorPluginType.Exercise),
   },
   {
+    // I think this is not correct because it meant for strings?
     'text-solution': optionalSerializedChild('type-text-solution'),
   }
 )
@@ -51,15 +52,16 @@ function TextExerciseTypeEditor({
   id,
 }: EditorPluginProps<TextExerciseTypePluginState, { skipControls: boolean }>) {
   const { content, 'text-solution': textSolution } = state
+
   const textExStrings = useEditorStrings().templatePlugins.textExercise
 
-  const serializedState = selectStaticDocument(store.getState(), id)
-    ?.state as StateTypeStaticType<TextExerciseTypePluginState>
-  if (!serializedState) return null
+  const staticDocument = selectStaticDocument(store.getState(), id)
+    ?.state as PrettyStaticState<TextExerciseTypePluginState>
+  if (!staticDocument) return null
 
-  const serializedSolution = serializedState[
+  const staticSolution = staticDocument[
     'text-solution'
-  ] as StateTypeStaticType<TextSolutionTypeState>
+  ] as PrettyStaticState<TextSolutionTypeState>
 
   return (
     <>
@@ -91,8 +93,8 @@ function TextExerciseTypeEditor({
                 <FaIcon icon={faTrashAlt} />
               </button>
               <ContentLoaders
-                id={serializedSolution.id}
-                currentRevision={serializedSolution.revision}
+                id={staticSolution.id}
+                currentRevision={staticSolution.revision}
                 onSwitchRevision={(data) =>
                   textSolution.replace(TemplatePluginType.TextSolution, data)
                 }

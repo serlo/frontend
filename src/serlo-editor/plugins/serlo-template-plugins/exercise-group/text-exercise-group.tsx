@@ -20,7 +20,7 @@ import {
   type EditorPlugin,
   type EditorPluginProps,
   list,
-  StateTypeStaticType,
+  PrettyStaticState,
 } from '@/serlo-editor/plugin'
 import { selectStaticDocument, store } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
@@ -38,6 +38,7 @@ export const textExerciseGroupTypeState = entityType(
     */
   },
   {
+    // I think this is not correct because it meant for strings?
     'grouped-text-exercise': list(serializedChild('type-text-exercise')),
   }
 )
@@ -65,12 +66,12 @@ function TextExerciseGroupTypeEditor(
   const exGroupStrings = useEditorStrings().templatePlugins.textExerciseGroup
 
   const staticState = selectStaticDocument(store.getState(), props.id)
-    ?.state as StateTypeStaticType<TextExerciseGroupTypePluginState>
+    ?.state as PrettyStaticState<TextExerciseGroupTypePluginState>
 
   if (!staticState) return null
   const staticExercises = staticState[
     'grouped-text-exercise'
-  ] as StateTypeStaticType<TextExerciseTypePluginState>[]
+  ] as PrettyStaticState<TextExerciseTypePluginState>[]
 
   return (
     <>

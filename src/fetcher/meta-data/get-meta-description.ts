@@ -1,5 +1,5 @@
 import { extractStringFromTextDocument } from '@/serlo-editor/plugins/text/utils/static-extract-text'
-import { getChildrenOfStaticDocument } from '@/serlo-editor/static-renderer/helper/get-children-of-serialized-document'
+import { getChildrenOfStaticDocument } from '@/serlo-editor/static-renderer/helper/get-children-of-static-document'
 import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 import {
   isRowsDocument,
