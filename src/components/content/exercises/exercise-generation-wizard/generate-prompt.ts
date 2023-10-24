@@ -61,7 +61,12 @@ export const generateExercisePrompt = (params: ExerciseParams): string => {
       ? ''
       : ` mit ${numberOfSubtasks} voneinander unabhängigen Teilaufgaben`
 
-  return `Du bist eine kreative Lehrkraft, die spannende Aufgaben für Schüler des ${grade}. Jahrgangs im Fach ${subject} entwickelt. Erstelle zum Thema "${topic}" eine Aufgabe${subtasks} ${exerciseText}. Füge eine sinnvolle Überschrift hinzu, aus der das Thema der Aufgabe hervorgeht. Die Schüler haben folgendes Vorwissen: ${priorKnowledge}
+  const priorKnowledgeString = priorKnowledge
+    ? `Die Schüler haben folgendes Vorwissen: ${priorKnowledge}`
+    : 'Die Schüler haben keine Vorkenntnisse.'
+
+  return `Du bist eine kreative Lehrkraft, die spannende Aufgaben für Schüler des ${grade}. Jahrgangs im Fach ${subject} entwickelt. Erstelle zum Thema "${topic}" eine Aufgabe${subtasks} ${exerciseText}. ${priorKnowledgeString}
 Nach Bearbeiten der Aufgabe beherrschen die Schüler folgendes besser: ${learningGoal}
-Verwende leichte Sprache. Das Anforderungsniveau soll ${difficultyText} sein. Beachte folgende Charakterisierung der Schüler: ${difficultyDescription}. Stelle die notierte Aufgabe zum Hochladen auf eine Lernplattform in einem unnamed JSON Objekt dar ${keyDescription}. Formatiere alle mathematischen Symbole in LateX.`
+Verwende leichte Sprache. Das Anforderungsniveau soll ${difficultyText} sein. Beachte folgende Charakterisierung der Schüler: ${difficultyDescription}.
+Stelle die Aufgabe zum Hochladen auf eine Lernplattform in einem unnamed JSON Objekt dar. Gebe zunächst den vollständigen und korrekten Rechenweg innerhalb eines Array als value vom key "steps" aus. Füge eine sinnvolle Überschrift als value zu dem key "heading" hinzu, aus der das Thema der Aufgabe hervorgeht. Anschließend, vervollständige das JSON um folgendes: ${keyDescription}. Gebe KEINEN normalen Text aus, der GESAMTE output MUSS sich innerhalb von einem einzigen JSON Objekt befinden. Formatiere alle mathematischen Symbole in LateX.`
 }

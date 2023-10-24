@@ -12,7 +12,7 @@ export function Prompt({ prompt, setPrompt }: PromptProps) {
       <textarea
         placeholder="Enter your prompt!"
         value={prompt}
-        className="min-h-4 border-lightblue focus:border-lightblue my-2 resize-none rounded-md border-2 p-2 pl-2 focus:outline-brand-700"
+        className="border-lightblue focus:border-lightblue my-2 min-h-[150px] resize-none rounded-md border-2 p-2 pl-2 focus:outline-brand-700"
         onChange={(event) => setPrompt(event.target.value)}
       />
     </div>
