@@ -6,7 +6,6 @@ import { useState } from 'react'
 import type { InviteModalProps } from './invite-modal'
 import { AuthorToolsData } from '../foldout-author-menus/author-tools'
 import type { MoreAuthorToolsProps } from '../foldout-author-menus/more-author-tools'
-import { GenerateExerciseButton } from '../generate-exercise-button'
 import { UserToolsItem } from '../user-tools-item'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
@@ -80,16 +79,12 @@ export function TaxAddOrInvite({ data, aboveContent }: TaxAddOrInviteProps) {
           ) : null}
         </>
       ) : (
-        <>
-          {isExerciseFolder && <GenerateExerciseButton data={data} />}
-
-          <MoreAuthorTools
-            data={data}
-            aboveContent={aboveContent}
-            taxNewItems
-            title={title}
-          />
-        </>
+        <MoreAuthorTools
+          data={data}
+          aboveContent={aboveContent}
+          taxNewItems
+          title={title}
+        />
       )}
     </>
   )

@@ -1,4 +1,3 @@
-import { faStar } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
@@ -6,7 +5,6 @@ import { AuthorToolsData } from './foldout-author-menus/author-tools'
 import { ExercisePreviewPage } from '../content/exercises/exercise-preview-page'
 import { ModalWithCloseButton } from '../modal-with-close-button'
 import { ExerciseGenerationWizardProps } from '@/components/content/exercises/exercise-generation-wizard'
-import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
 import { submitEvent } from '@/helper/submit-event'
@@ -47,14 +45,6 @@ export const GenerateExerciseButton = ({
 
   return (
     <>
-      <button
-        className="serlo-button-green m-0.5 ml-1 text-sm leading-browser"
-        onClick={() => setActivePage(ActivePage.ExerciseGenerationWizard)}
-      >
-        <FaIcon icon={faStar} className="mr-2" />
-        {strings.ai.exerciseGeneration.buttonTitle}
-      </button>
-
       <ModalWithCloseButton
         onCloseClick={() => setActivePage(ActivePage.None)}
         isOpen={activePage === ActivePage.ExerciseGenerationWizard}

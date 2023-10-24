@@ -1,7 +1,7 @@
 import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import dynamic from 'next/dynamic'
-import { Fragment, useState } from 'react'
+import { Fragment, useCallback, useState } from 'react'
 import { RatingProps } from 'react-simple-star-rating'
 
 import { NewFolderPrototypeProps } from './new-folder-prototype'
@@ -10,10 +10,12 @@ import { TopicCategories } from './topic-categories'
 import { ExerciseNumbering } from '../content/exercises/exercise-numbering'
 import { FaIcon } from '../fa-icon'
 import { InfoPanel } from '../info-panel'
+import { GenerateExerciseButton } from '../user-tools/generate-exercise-button'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useAB } from '@/contexts/ab'
+import { AiWizardProvider } from '@/contexts/ai-wizard-contex'
 import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
@@ -56,6 +58,13 @@ export function Topic({ data }: TopicProps) {
 
   editorRenderers.init(createRenderers())
 
+  const [aiWizard, setAiWizard] = useState(false)
+
+  const showWizard = useCallback(() => {
+    // hack
+    setAiWizard(false), setTimeout(() => setAiWizard(true), 50)
+  }, [])
+
   return (
     <>
       {data.trashed && renderTrashedNotice()}
@@ -96,7 +105,14 @@ export function Topic({ data }: TopicProps) {
         />
       ) : null}
 
-      {renderUserTools()}
+      <AiWizardProvider value={{ showWizard }}>
+        {renderUserTools()}
+      </AiWizardProvider>
+      {aiWizard && (
+        <GenerateExerciseButton
+          data={{ type: UuidType.TaxonomyTerm, ...data }}
+        />
+      )}
     </>
   )
 
