@@ -1,6 +1,7 @@
 import { WizardPageProps } from './wizard-page-props'
 import { MenuButton, MenuItem } from '../menu-button'
-import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { LoggedInData } from '@/data-types'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface GradeProps extends WizardPageProps {
@@ -13,7 +14,7 @@ export const Grade: React.FC<GradeProps> = ({
   setGrade,
   isSummary,
 }) => {
-  const { strings } = useInstanceData()
+  const { strings } = useLoggedInData() as LoggedInData
   const grades = [
     '5',
     '6',

@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 
 import { WizardPageProps } from './wizard-page-props'
-import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { LoggedInData } from '@/data-types'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface SubjectProps extends WizardPageProps {
@@ -19,7 +20,7 @@ export const Subject: React.FC<SubjectProps> = ({
   setSubject,
   defaultSubject,
 }) => {
-  const { strings } = useInstanceData()
+  const { strings } = useLoggedInData() as LoggedInData
   const [selectedRadio, setSelectedRadio] = useState<string>(
     defaultSubject
       ? defaultSubject === subject

@@ -2,7 +2,8 @@ import { useState, useRef, useEffect } from 'react'
 
 import { WizardPageProps } from './wizard-page-props'
 import { MenuButton, MenuItem } from '../menu-button'
-import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { LoggedInData } from '@/data-types'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface ExerciseTypeProps extends WizardPageProps {
@@ -20,7 +21,7 @@ export const ExerciseType: React.FC<ExerciseTypeProps> = ({
   onNext,
   isSummary,
 }) => {
-  const { strings } = useInstanceData()
+  const { strings } = useLoggedInData() as LoggedInData
   const [hasSubtasks, setHasSubtasks] = useState<boolean>(
     numberOfSubtasks !== 0
   )

@@ -7,14 +7,18 @@ import {
 import ExerciseGenerationLoadingSparkles from 'public/_assets/img/exercise/exercise-generation-loading-sparkles.svg'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
+import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
+import { useAuthentication } from '@/auth/use-authentication'
 import { CloseButton } from '@/components/close-button'
 import { FaIcon } from '@/components/fa-icon'
-import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { LoggedInData } from '@/data-types'
 import { convertAiGeneratedDataToEditorData } from '@/helper/ai-generated-exercises/data-conversion'
 import { ErrorBoundary } from '@/helper/error-boundary'
+import { submitEvent } from '@/helper/submit-event'
 
 interface ExercisePreviewPageProps {
-  generateExercisePromise: Promise<any>
+  prompt: string
   closePage: () => void
 }
 
@@ -30,58 +34,93 @@ const isTestingLocally = false
 const exerciseTestData =
   '{\n  "heading": "Dreisatz",\n  "subtasks": [\n    {\n      "type": "single_choice",\n      "question": "Ein Auto fährt mit einer Geschwindigkeit von 60 km/h. Wie weit kommt das Auto in 3 Stunden?",\n      "options": [\n        "120 km",\n        "180 km",\n        "240 km",\n        "300 km"\n      ],\n      "correct_option": 2\n    },\n    {\n      "type": "single_choice",\n      "question": "Ein Kind isst 4 Schokoriegel in 2 Tagen. Wie viele Schokoriegel isst das Kind in 5 Tagen?",\n      "options": [\n        "8 Schokoriegel",\n        "10 Schokoriegel",\n        "12 Schokoriegel",\n        "14 Schokoriegel"\n      ],\n      "correct_option": 3\n    }\n  ]\n}'
 
+interface GraphQLResponse {
+  ai: {
+    executePrompt: {
+      success: boolean
+      // TODO should probably make this a generic too!
+      record: any
+    }
+  }
+}
+
 export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
-  generateExercisePromise,
+  prompt,
   closePage,
 }) => {
   // TODO change initial state back to loading
   const [status, setStatus] = useState(
     isTestingLocally ? Status.Success : Status.Loading
   )
-  const { strings } = useInstanceData()
+  // TODO change it to null before prod
+  // const [exerciseData, setExerciseData] = useState(exerciseTestData)
+  const [exerciseData, setExerciseData] = useState('')
+
+  const auth = useAuthentication()
+
+  // TODO move all this code to the generic execute-ai-prompt file
+  const generateExercise = useCallback(async () => {
+    console.log('Asking GPT to generate an exercise with prompt', {
+      prompt,
+      auth,
+    })
+    try {
+      setStatus(Status.Loading)
+
+      // setTimeout(() => {
+      //   setExerciseData(exerciseTestData)
+      //   setStatus(Status.Success)
+      // }, 3500)
+
+      const graphQlFetch = createAuthAwareGraphqlFetch<GraphQLResponse>(auth)
+
+      const query = `
+        query ($prompt: String!) {
+          ai {
+            executePrompt(prompt: $prompt) {
+              success
+              record
+            }
+          }
+        }
+      `
+      const variables = { prompt }
+
+      console.log('Fetching response now!')
+      submitEvent('exercise-generation-wizard-prompt-generation')
+      const response = await graphQlFetch(JSON.stringify({ query, variables }))
+      console.log('Response: ', { response })
+      if (response?.ai?.executePrompt?.success) {
+        setExerciseData(response?.ai.executePrompt.record as string)
+        setStatus(Status.Success)
+        submitEvent('exercise-generation-wizard-prompt-success')
+      } else {
+        setStatus(Status.Error)
+        submitEvent('exercise-generation-wizard-prompt-failure')
+      }
+    } catch (error) {
+      console.error('Failed to generate exercise:', error)
+      submitEvent('exercise-generation-wizard-prompt-failure')
+      setStatus(Status.Error)
+    }
+  }, [prompt, auth])
+
+  useEffect(() => {
+    // Already handling the error in the generateExercise function
+    generateExercise()
+      .then(() => void null)
+      .catch(() => void null)
+  }, [generateExercise])
+
+  const { strings } = useLoggedInData() as LoggedInData
 
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0)
-
-  // TODO change it to null before prod
-  const [exerciseData, setExerciseData] = useState(exerciseTestData)
-  // const [exerciseData, setExerciseData] = useState('')
   const editorData = useMemo<any[]>(
     () => convertAiGeneratedDataToEditorData(exerciseData),
     [exerciseData]
   )
 
   console.log('EditorData: ', editorData)
-
-  const generateExercise = useCallback(() => {
-    if (isTestingLocally) {
-      return
-    }
-
-    setStatus(Status.Loading)
-
-    setTimeout(() => {
-      setExerciseData(exerciseTestData)
-      setStatus(Status.Success)
-    }, 3500)
-    // generateExercisePromise
-    //   .then(() => {
-    //     //console.log('returned data: ', { data })
-    //     //setExerciseData(data)
-    //     setStatus(Status.Success)
-    //   })
-    //   .catch((error) => {
-    //     console.error('Failed to load exercise data:', error)
-    //     setStatus(Status.Error)
-    //   })
-  }, [generateExercisePromise])
-
-  useEffect(() => {
-    if (isTestingLocally) {
-      return
-    }
-
-    generateExercise()
-  }, [generateExercise])
 
   return (
     <div className="bg-background-gray fixed left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center backdrop-blur">

@@ -83,20 +83,20 @@ export function ModalWithCloseButton({
 
       {showConfirmation && (
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-75">
-          <div className="rounded bg-white p-4 shadow-lg">
-            <p>{confirmCloseDescription}</p>
-            <div className="mt-4 flex">
+          <div className="bg-editor-primary-400 rounded p-6 shadow-lg ">
+            <p className="px-4">{confirmCloseDescription}</p>
+            <div className="mt-4 flex space-x-4">
               <button
-                className="rounded bg-blue-500 px-3 py-1 text-white"
-                onClick={() => setShowConfirmation(false)}
-              >
-                Stay
-              </button>
-              <button
-                className="mr-2 rounded bg-red-500 px-3 py-1 text-white"
+                className="mr-4 rounded bg-transparent px-4 py-2 text-blue-500 hover:bg-white"
                 onClick={onCloseClick}
               >
-                Close
+                {strings.modal.leaveNow}
+              </button>
+              <button
+                className="serlo-button-blue rounded bg-blue-500 px-4 py-2 text-white"
+                onClick={() => setShowConfirmation(false)}
+              >
+                {strings.modal.noStay}
               </button>
             </div>
           </div>

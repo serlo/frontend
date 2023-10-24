@@ -7,7 +7,9 @@ import { ExercisePreviewPage } from '../content/exercises/exercise-preview-page'
 import { ModalWithCloseButton } from '../modal-with-close-button'
 import { ExerciseGenerationWizardProps } from '@/components/content/exercises/exercise-generation-wizard'
 import { FaIcon } from '@/components/fa-icon'
-import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { LoggedInData } from '@/data-types'
+import { submitEvent } from '@/helper/submit-event'
 
 const ExerciseGenerationWizard = dynamic<ExerciseGenerationWizardProps>(() =>
   import('@/components/content/exercises/exercise-generation-wizard').then(
@@ -28,7 +30,7 @@ enum ActivePage {
 export const GenerateExerciseButton = ({
   data,
 }: GenerateExerciseButtonProps) => {
-  const { strings } = useInstanceData()
+  const { strings } = useLoggedInData() as LoggedInData
 
   const [title, setTitle] = useState(
     strings.ai.exerciseGeneration.initialModalTitle
@@ -37,13 +39,9 @@ export const GenerateExerciseButton = ({
   // TODO change this, only for testing.
   // const [activePage, setActivePage] = useState(ActivePage.ExercisePreviewPage)
   const [activePage, setActivePage] = useState(ActivePage.None)
-  const [generateExercisePromise, setGenerateExercisePromise] =
-    useState<Promise<any> | null>(null)
+  const [prompt, setPrompt] = useState('')
 
-  const handleTransitionToExercisePage = (promise: Promise<any | null>) => {
-    console.log('Promise: ', { promise })
-    setGenerateExercisePromise(promise)
-
+  const handleTransitionToExercisePage = () => {
     setActivePage(ActivePage.ExercisePreviewPage)
   }
 
@@ -73,12 +71,17 @@ export const GenerateExerciseButton = ({
           data={data}
           setTitle={setTitle}
           handleTransitionToExercisePage={handleTransitionToExercisePage}
+          prompt={prompt}
+          setPrompt={setPrompt}
         />
       </ModalWithCloseButton>
       {activePage === ActivePage.ExercisePreviewPage && (
         <ExercisePreviewPage
-          generateExercisePromise={generateExercisePromise!}
-          closePage={() => setActivePage(ActivePage.None)}
+          prompt={prompt}
+          closePage={() => {
+            submitEvent('exercise-generation-wizard-prompt-generation-closed')
+            setActivePage(ActivePage.None)
+          }}
         />
       )}
     </>
