@@ -8,7 +8,7 @@ import { isSelectionWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/t
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import {
   selectDocument,
-  // selectMayManipulateSiblings,
+  selectMayManipulateSiblings,
   useAppDispatch,
   store,
 } from '@/serlo-editor/store'
@@ -34,9 +34,8 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       // Exit if unable to select document data or if not allowed to manipulate siblings
       const storeState = store.getState()
       const document = selectDocument(storeState, id)
-      // TODO: investigate / memo
+      const mayManipulateSiblings = selectMayManipulateSiblings(storeState, id)
 
-      const mayManipulateSiblings = false //selectMayManipulateSiblings(storeState, id)
       if (!document || !mayManipulateSiblings) return
 
       // Iterate through all plugins and try to process clipboard data
