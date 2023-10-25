@@ -11,7 +11,7 @@ import { tw } from '@/helper/tw'
 import { AreImagesDisabledInTableContext } from '@/serlo-editor/plugins/serlo-table/contexts/are-images-disabled-in-table-context'
 import {
   selectAncestorPluginTypes,
-  selectHasFocusedDescendant,
+  // selectHasFocusedDescendant,
   selectIsFocused,
   store,
   useAppSelector,
@@ -28,9 +28,12 @@ export function MultimediaEditor(props: MultimediaProps) {
   const isMediaChildFocused = useAppSelector((storeState) =>
     selectIsFocused(storeState, multimedia.id)
   )
-  const isMediaChildFocusedWithin = useAppSelector((storeState) =>
-    selectHasFocusedDescendant(storeState, multimedia.id)
-  )
+
+  // TODO: investigate / memo
+  const isMediaChildFocusedWithin = false
+  // const isMediaChildFocusedWithin = useAppSelector((storeState) =>
+  //   selectHasFocusedDescendant(storeState, multimedia.id)
+  // )
 
   // we memoize this so we don't need to calculate the ancestors on every render
   // the values should only be calculated when we create it or move the plugin (and that also triggers a remount)

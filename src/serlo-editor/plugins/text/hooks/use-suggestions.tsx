@@ -12,8 +12,8 @@ import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { AllowedChildPlugins } from '@/serlo-editor/plugins/rows'
 import { checkIsAllowedNesting } from '@/serlo-editor/plugins/rows/utils/check-is-allowed-nesting'
 import {
-  selectAncestorPluginTypes,
-  store,
+  // selectAncestorPluginTypes,
+  // store,
   useAppDispatch,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
@@ -220,10 +220,11 @@ function createOption(
 function filterPlugins(
   allPlugins: SuggestionOption[],
   text: string,
-  id: string
+  _id: string
 ) {
   // Filter out plugins which can't be nested inside of the current plugin
-  const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
+  const typesOfAncestors = ['']
+  // const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
   let plugins = []
   if (typesOfAncestors === null) {
     plugins = allPlugins

@@ -11,7 +11,7 @@ import {
   selectChildTree,
   useAppDispatch,
   store,
-  selectMayManipulateSiblings,
+  // selectMayManipulateSiblings,
   useAppSelector,
   selectIsDocumentEmpty,
 } from '../../store'
@@ -26,9 +26,11 @@ export const useEnableEditorHotkeys = (
   const isDocumentEmpty = useAppSelector((state) =>
     selectIsDocumentEmpty(state, id)
   )
-  const mayManipulateSiblings = useAppSelector((state) =>
-    selectMayManipulateSiblings(state, id)
-  )
+  // TODO: investigate / memo
+  const mayManipulateSiblings = false
+  // useAppSelector((state) =>
+  //   selectMayManipulateSiblings(state, id)
+  // )
 
   const { enableScope } = useHotkeysContext()
   useEffect(() => {

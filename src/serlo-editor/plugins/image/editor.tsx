@@ -11,7 +11,7 @@ import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { isTempFile, usePendingFileUploader } from '@/serlo-editor/plugin'
-import { selectHasFocusedChild, useAppSelector } from '@/serlo-editor/store'
+// import { selectHasFocusedChild, useAppSelector } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const captionFormattingOptions = [
@@ -30,9 +30,11 @@ export function ImageEditor(props: ImageProps) {
 
   usePendingFileUploader(state.src, config.upload)
 
-  const isCaptionFocused = useAppSelector((storeState) =>
-    selectHasFocusedChild(storeState, props.id)
-  )
+  // TODO: investigate / memo
+  const isCaptionFocused = false
+  // useAppSelector((storeState) =>
+  //   selectHasFocusedChild(storeState, props.id)
+  // )
   const hasFocus = focused || isCaptionFocused
   const isLoading = isTempFile(state.src.value) && !state.src.value.loaded
 
