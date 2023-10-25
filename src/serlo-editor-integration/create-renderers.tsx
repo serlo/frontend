@@ -3,6 +3,7 @@ import { ComponentProps } from 'react'
 
 import { ExtraInfoIfRevisionView } from './extra-info-if-revision-view'
 import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-static-renderer'
+import { VideoSerloStaticRenderer } from './serlo-plugin-wrappers/video-serlo-static-renderer'
 import { EditorPluginType } from './types/editor-plugin-type'
 import type {
   EditorAnchorDocument,
@@ -21,7 +22,6 @@ import type {
   EditorSolutionDocument,
   EditorSpoilerDocument,
   EditorTemplateExerciseGroupDocument,
-  EditorVideoDocument,
 } from './types/editor-plugins'
 import { TemplatePluginType } from './types/template-plugin-type'
 import { Lazy } from '@/components/content/lazy'
@@ -42,8 +42,6 @@ import { RowsStaticRenderer } from '@/serlo-editor/plugins/rows/static'
 import { SpoilerStaticRenderer } from '@/serlo-editor/plugins/spoiler/static'
 import type { MathElement } from '@/serlo-editor/plugins/text'
 import { TextStaticRenderer } from '@/serlo-editor/plugins/text/static'
-import { parseVideoUrl } from '@/serlo-editor/plugins/video/renderer'
-import { VideoStaticRenderer } from '@/serlo-editor/plugins/video/static'
 import { MultimediaSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/multimedia-serlo-static-renderer'
 
 const EquationsStaticRenderer = dynamic<EditorEquationsDocument>(() =>
@@ -185,24 +183,7 @@ export function createRenderers(): InitRenderersArgs {
       },
       {
         type: EditorPluginType.Video,
-        renderer: (state: EditorVideoDocument) => {
-          const { src } = state.state
-          if (!src) return null
-          const [iframeSrc, type] = parseVideoUrl(src)
-          return (
-            <Lazy noPrint>
-              <PrivacyWrapper
-                type="video"
-                provider={type as unknown as ExternalProvider}
-                embedUrl={iframeSrc}
-                className="print:hidden"
-              >
-                <VideoStaticRenderer {...state} />
-              </PrivacyWrapper>
-              <p className="serlo-p hidden print:block">[{src}]</p>
-            </Lazy>
-          )
-        },
+        renderer: VideoSerloStaticRenderer,
       },
       {
         type: EditorPluginType.Anchor,
