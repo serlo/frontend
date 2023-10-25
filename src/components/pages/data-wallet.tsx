@@ -149,7 +149,7 @@ export function DataWallet() {
             .partner {
               background: url('/_assets/img/landing/about-container.svg')
                 no-repeat;
-              border-bottom: 2rem solid #ffefda;
+              border-bottom: 2rem solid #fff1db;
             }
           `}
         </style>
