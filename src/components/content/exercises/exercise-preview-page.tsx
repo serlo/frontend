@@ -225,7 +225,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
         </div>
       )}
 
-      <div className="ml-auto mr-4 mt-8 flex w-1/2 flex-col items-end space-y-2">
+      <div className="mt-8 flex w-1/2 flex-col items-end space-y-2">
         {/* Not supported for now */}
         {/* <button className="self-end rounded bg-brand-700 px-6 py-2 text-white">
           {strings.ai.exerciseGeneration.preview.publishExercise}
