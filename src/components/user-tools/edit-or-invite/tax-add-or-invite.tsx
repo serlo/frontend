@@ -46,8 +46,6 @@ export function TaxAddOrInvite({ data, aboveContent }: TaxAddOrInviteProps) {
   const href = getEditHref()
   const showEditAction = href || isInvite
 
-  console.log('AuthorToolsData: ', data)
-
   const title = isExerciseFolder
     ? strings.editOrAdd.addNewExercises
     : strings.editOrAdd.addNewEntities
