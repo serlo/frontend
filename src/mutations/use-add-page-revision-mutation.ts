@@ -7,7 +7,7 @@ import { showToastNotice } from '../helper/show-toast-notice'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { PageSerializedState } from '@/serlo-editor-integration/editor-response-to-state'
+import { PageSerializedState } from '@/serlo-editor-integration/convert-editor-response-to-state'
 
 const addMutation = gql`
   mutation addPageRevision($input: PageAddRevisionInput!) {

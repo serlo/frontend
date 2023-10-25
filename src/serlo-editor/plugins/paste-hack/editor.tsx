@@ -11,7 +11,7 @@ import {
   store,
   selectChildTreeOfParent,
   insertPluginChildBefore,
-  selectSerializedDocument,
+  selectStaticDocument,
   removePluginChild,
   useAppDispatch,
 } from '@/serlo-editor/store'
@@ -73,7 +73,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
 
       if (
         parentPlugin === null ||
-        selectSerializedDocument(store.getState(), parentPlugin.id)?.plugin !==
+        selectStaticDocument(store.getState(), parentPlugin.id)?.plugin !==
           EditorPluginType.Rows
       ) {
         const msg = 'Paste plugin can only be used inside a rows plugin!'

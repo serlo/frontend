@@ -23,7 +23,7 @@ import {
 } from '@/mutations/use-set-entity-mutation/types'
 import { useSetEntityMutation } from '@/mutations/use-set-entity-mutation/use-set-entity-mutation'
 import { useTaxonomyCreateOrUpdateMutation } from '@/mutations/use-taxonomy-create-or-update-mutation'
-import { PageSerializedState } from '@/serlo-editor-integration/editor-response-to-state'
+import type { PageSerializedState } from '@/serlo-editor-integration/convert-editor-response-to-state'
 import { SerloEditor } from '@/serlo-editor-integration/serlo-editor'
 
 export function AddRevision({
