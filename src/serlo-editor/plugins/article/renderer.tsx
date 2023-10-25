@@ -27,7 +27,9 @@ export function ArticleRenderer({
 
   return (
     <>
-      {introduction}
+      <div className="[&>div]:mx-side [&>div]:rounded-xl [&>div]:border-3 [&>div]:border-brand-50 [&>div]:py-5 ">
+        {introduction}
+      </div>
       {content}
       {exercises || exercisesFolder ? (
         <>
@@ -43,9 +45,7 @@ export function ArticleRenderer({
           ) : null}
         </>
       ) : null}
-
       {renderRelatedContent()}
-
       {sources ? (
         <>
           <h2 className="serlo-h2">{strings.content.sourcesTitle}</h2>

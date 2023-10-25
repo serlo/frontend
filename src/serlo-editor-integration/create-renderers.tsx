@@ -2,13 +2,14 @@ import dynamic from 'next/dynamic'
 import { ComponentProps } from 'react'
 
 import { ExtraInfoIfRevisionView } from './extra-info-if-revision-view'
+import { GeogebraSerloStaticRenderer } from './serlo-plugin-wrappers/geogebra-serlo-static-renderer'
 import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-static-renderer'
+import { VideoSerloStaticRenderer } from './serlo-plugin-wrappers/video-serlo-static-renderer'
 import { EditorPluginType } from './types/editor-plugin-type'
 import type {
   EditorAnchorDocument,
   EditorEquationsDocument,
   EditorExerciseDocument,
-  EditorGeogebraDocument,
   EditorH5PDocument,
   EditorHighlightDocument,
   EditorInjectionDocument,
@@ -21,14 +22,11 @@ import type {
   EditorSolutionDocument,
   EditorSpoilerDocument,
   EditorTemplateExerciseGroupDocument,
-  EditorVideoDocument,
 } from './types/editor-plugins'
 import { TemplatePluginType } from './types/template-plugin-type'
 import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
-import type { PrivacyWrapperProps } from '@/components/content/privacy-wrapper'
 import { isPrintMode } from '@/components/print-mode'
-import { ExternalProvider } from '@/helper/use-consent'
 import {
   InitRenderersArgs,
   LinkRenderer,
@@ -36,14 +34,10 @@ import {
 import { AnchorStaticRenderer } from '@/serlo-editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@/serlo-editor/plugins/article/static'
 import { BoxStaticRenderer } from '@/serlo-editor/plugins/box/static'
-import { parseId } from '@/serlo-editor/plugins/geogebra/renderer'
-import { GeogebraStaticRenderer } from '@/serlo-editor/plugins/geogebra/static'
 import { RowsStaticRenderer } from '@/serlo-editor/plugins/rows/static'
 import { SpoilerStaticRenderer } from '@/serlo-editor/plugins/spoiler/static'
 import type { MathElement } from '@/serlo-editor/plugins/text'
 import { TextStaticRenderer } from '@/serlo-editor/plugins/text/static'
-import { parseVideoUrl } from '@/serlo-editor/plugins/video/renderer'
-import { VideoStaticRenderer } from '@/serlo-editor/plugins/video/static'
 import { MultimediaSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/multimedia-serlo-static-renderer'
 
 const EquationsStaticRenderer = dynamic<EditorEquationsDocument>(() =>
@@ -119,11 +113,6 @@ const StaticMath = dynamic<MathElement>(() =>
     (mod) => mod.StaticMath
   )
 )
-const PrivacyWrapper = dynamic<PrivacyWrapperProps>(() =>
-  import('@/components/content/privacy-wrapper').then(
-    (mod) => mod.PrivacyWrapper
-  )
-)
 
 export function createRenderers(): InitRenderersArgs {
   return {
@@ -165,44 +154,11 @@ export function createRenderers(): InitRenderersArgs {
       { type: EditorPluginType.Equations, renderer: EquationsStaticRenderer },
       {
         type: EditorPluginType.Geogebra,
-        renderer: (state: EditorGeogebraDocument) => {
-          if (!state.state) return null
-          const { url } = parseId(state.state)
-          return (
-            <Lazy noPrint>
-              <PrivacyWrapper
-                type="applet"
-                provider={ExternalProvider.GeoGebra}
-                embedUrl={url}
-                className="print:hidden"
-              >
-                <GeogebraStaticRenderer {...state} />
-              </PrivacyWrapper>
-              <p className="serlo-p hidden print:block">[{url}]</p>
-            </Lazy>
-          )
-        },
+        renderer: GeogebraSerloStaticRenderer,
       },
       {
         type: EditorPluginType.Video,
-        renderer: (state: EditorVideoDocument) => {
-          const { src } = state.state
-          if (!src) return null
-          const [iframeSrc, type] = parseVideoUrl(src)
-          return (
-            <Lazy noPrint>
-              <PrivacyWrapper
-                type="video"
-                provider={type as unknown as ExternalProvider}
-                embedUrl={iframeSrc}
-                className="print:hidden"
-              >
-                <VideoStaticRenderer {...state} />
-              </PrivacyWrapper>
-              <p className="serlo-p hidden print:block">[{src}]</p>
-            </Lazy>
-          )
-        },
+        renderer: VideoSerloStaticRenderer,
       },
       {
         type: EditorPluginType.Anchor,
