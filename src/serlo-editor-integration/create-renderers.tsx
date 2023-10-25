@@ -143,11 +143,12 @@ export function createRenderers(): InitRenderersArgs {
       {
         type: EditorPluginType.Injection,
         renderer: (props: EditorInjectionDocument) => {
+          if (!props.state) return null
           return (
-            <>
+            <Lazy>
               <InjectionStaticRenderer {...props} />
               <ExtraInfoIfRevisionView>{props.state}</ExtraInfoIfRevisionView>
-            </>
+            </Lazy>
           )
         },
       },
