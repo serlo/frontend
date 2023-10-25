@@ -12,8 +12,8 @@ import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { AllowedChildPlugins } from '@/serlo-editor/plugins/rows'
 import { checkIsAllowedNesting } from '@/serlo-editor/plugins/rows/utils/check-is-allowed-nesting'
 import {
-  // selectAncestorPluginTypes,
-  // store,
+  selectAncestorPluginTypes,
+  store,
   useAppDispatch,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
@@ -50,23 +50,32 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const node = selection ? Node.get(editor, selection.focus.path) : undefined
   const text = Node.string(node ?? editor)
 
-  const allPlugins = editorPlugins
-    .getAllWithData()
-    .filter(({ visibleInSuggestions }) => visibleInSuggestions)
-    .map(({ type }) => type)
-  const allowedPlugins = useContext(AllowedChildPlugins)
+  const allowedContextPlugins = useContext(AllowedChildPlugins)
 
-  const allOptions = useMemo(() => {
-    return (allowedPlugins ?? allPlugins).map((type) => {
-      return createOption(type, pluginsStrings)
-    })
-    // Should only update when allowed plugins change
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allowedPlugins])
+  const allowedPlugins = useMemo(() => {
+    const allVisible = editorPlugins
+      .getAllWithData()
+      .filter(({ visibleInSuggestions }) => visibleInSuggestions)
+      .map(({ type }) => type)
+
+    const allowedByContext = allowedContextPlugins ?? allVisible
+
+    // Filter out plugins which can't be nested inside of the current plugin or ancestor plugins
+    const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
+    return typesOfAncestors
+      ? allowedByContext.filter((plugin) =>
+          checkIsAllowedNesting(plugin, typesOfAncestors)
+        )
+      : allowedByContext
+  }, [allowedContextPlugins, id])
 
   const filteredOptions = useMemo(() => {
-    return filterPlugins(allOptions, text, id)
-  }, [allOptions, id, text])
+    const allOptions = allowedPlugins.map((type) => {
+      return createOption(type, pluginsStrings)
+    })
+    return filterOptions(allOptions, text)
+  }, [allowedPlugins, pluginsStrings, text])
+
   const showSuggestions =
     !isInlineChildEditor &&
     editable &&
@@ -217,30 +226,14 @@ function createOption(
   return { pluginType, title, description, icon }
 }
 
-function filterPlugins(
-  allPlugins: SuggestionOption[],
-  text: string,
-  _id: string
-) {
-  // Filter out plugins which can't be nested inside of the current plugin
-  const typesOfAncestors = ['']
-  // const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
-  let plugins = []
-  if (typesOfAncestors === null) {
-    plugins = allPlugins
-  } else {
-    plugins = allPlugins.filter((plugin) =>
-      checkIsAllowedNesting(plugin.pluginType, typesOfAncestors)
-    )
-  }
-
+function filterOptions(option: SuggestionOption[], text: string) {
   const search = text.replace('/', '').toLowerCase()
-  if (!search.length) return plugins
+  if (!search.length) return option
 
   const filterResults = new Set<SuggestionOption>()
 
   // title or pluginType start with search string
-  plugins.forEach((entry) => {
+  option.forEach((entry) => {
     if (
       entry.title.toLowerCase().startsWith(search) ||
       entry.pluginType.startsWith(search)
@@ -250,7 +243,7 @@ function filterPlugins(
   })
 
   // title includes search string
-  plugins.forEach((entry) => {
+  option.forEach((entry) => {
     if (entry.title.toLowerCase().includes(search)) {
       filterResults.add(entry)
     }

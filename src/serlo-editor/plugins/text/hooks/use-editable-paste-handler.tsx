@@ -35,7 +35,6 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       const storeState = store.getState()
       const document = selectDocument(storeState, id)
       const mayManipulateSiblings = selectMayManipulateSiblings(storeState, id)
-
       if (!document || !mayManipulateSiblings) return
 
       // Iterate through all plugins and try to process clipboard data
