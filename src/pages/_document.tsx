@@ -85,21 +85,7 @@ export default class MyDocument extends Document {
           />
           <link
             rel="preload"
-            href="/_assets/fonts/karla/karla-400.woff2"
-            as="font"
-            type="font/woff2"
-            crossOrigin=""
-          />
-          <link
-            rel="preload"
-            href="/_assets/fonts/karla/karla-700.woff2"
-            as="font"
-            type="font/woff2"
-            crossOrigin=""
-          />
-          <link
-            rel="preload"
-            href="/_assets/fonts/karla/karla-800.woff2"
+            href="/_assets/fonts/karla/karla-variable.woff2"
             as="font"
             type="font/woff2"
             crossOrigin=""
