@@ -6,7 +6,7 @@ import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { htmlEscapeStringForJson } from '@/helper/html-escape'
 
 const bodyStyles = {
-  fontFamily: 'Karmilla, sans-serif',
+  fontFamily: 'Karla, sans-serif',
   backgroundColor: '#fff',
 }
 
@@ -85,28 +85,28 @@ export default class MyDocument extends Document {
           />
           <link
             rel="preload"
-            href="/_assets/fonts/karmilla/karmilla-regular.woff2"
+            href="/_assets/fonts/karla/karla-400.woff2"
             as="font"
             type="font/woff2"
             crossOrigin=""
           />
           <link
             rel="preload"
-            href="/_assets/fonts/karmilla/karmilla-bold.woff2"
+            href="/_assets/fonts/karla/karla-700.woff2"
             as="font"
             type="font/woff2"
             crossOrigin=""
           />
           <link
             rel="preload"
-            href="/_assets/fonts/karmilla/karmilla-bolder.woff2"
+            href="/_assets/fonts/karla/karla-800.woff2"
             as="font"
             type="font/woff2"
             crossOrigin=""
           />
           <link
             rel="preload"
-            href="/_assets/fonts/caveat/caveat-bold.woff2"
+            href="/_assets/fonts/caveat/caveat-700.woff2"
             as="font"
             type="font/woff2"
             crossOrigin=""

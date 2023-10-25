@@ -108,7 +108,7 @@ module.exports = {
         input: `0 0 4px 0 ${brand}`,
       },
       fontFamily: {
-        serlo: 'Karmilla, sans-serif',
+        serlo: 'Karla, sans-serif',
         handwritten: 'Caveat, sans-serif',
       },
       backgroundImage: {

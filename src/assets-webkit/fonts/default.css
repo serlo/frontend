@@ -1,39 +1,35 @@
+/* generated with https://gwfh.mranftl.com/fonts/karla?subsets=latin */
+/* using "latin" and widths 400, 600, 800 */
+
 @font-face {
-  font-family: 'Karmilla';
+  font-family: 'Karla';
+  font-display: swap;
   font-style: normal;
   font-weight: 400;
-  src:
-    url('/_assets/fonts/karmilla/karmilla-regular.woff2') format('woff2'),
-    url('/_assets/fonts/karmilla/karmilla-regular.woff') format('woff');
-  font-display: swap;
+  src: url('/_assets/fonts/karla/karla-400.woff2') format('woff2');
 }
-
 @font-face {
-  font-family: 'Karmilla';
+  font-family: 'Karla';
+  font-display: swap;
   font-style: normal;
   font-weight: 700;
-  src:
-    url('/_assets/fonts/karmilla/karmilla-bold.woff2') format('woff2'),
-    url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
-  font-display: swap;
+  src: url('/_assets/fonts/karla/karla-700.woff2') format('woff2');
 }
-
 @font-face {
-  font-family: 'Karmilla';
+  font-family: 'Karla';
+  font-display: swap;
   font-style: normal;
   font-weight: 800;
-  src:
-    url('/_assets/fonts/karmilla/karmilla-bolder.woff2') format('woff2'),
-    url('/_assets/fonts/karmilla/karmilla-bolder.woff') format('woff');
-  font-display: swap;
+  src: url('/_assets/fonts/karla/karla-800.woff2') format('woff2');
 }
+
+/* manually optimized */
+/* width 700 */
 
 @font-face {
   font-family: 'Caveat';
+  font-display: swap;
   font-style: bold;
   font-weight: 700;
-  src:
-    url('/_assets/fonts/caveat/caveat-bold.woff2') format('woff2'),
-    url('/_assets/fonts/caveat/caveat-bold.woff') format('woff');
-  font-display: swap;
+  src: url('/_assets/fonts/caveat/caveat-700.woff2') format('woff2');
 }

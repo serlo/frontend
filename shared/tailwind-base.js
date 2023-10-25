@@ -1,11 +1,11 @@
 // This tailwind preset is also used in https://github.com/serlo/serlo-editor-for-edusharing.
 // Using a tailwind preset like this allows sharing the configuration between multiple repos.
 
+import * as fs from 'fs'
+import * as path from 'path'
 import colors from 'tailwindcss/colors'
 import plugin from 'tailwindcss/plugin'
 import tailwindAnimate from 'tailwindcss-animate'
-import * as fs from 'fs'
-import * as path from 'path'
 
 // base colors
 const brand = '#007ec1'
@@ -112,7 +112,7 @@ export default {
         input: `0 0 4px 0 ${brand}`,
       },
       fontFamily: {
-        serlo: 'Karmilla, sans-serif',
+        serlo: 'Karla, sans-serif',
         handwritten: 'Caveat, sans-serif',
       },
       backgroundImage: {
