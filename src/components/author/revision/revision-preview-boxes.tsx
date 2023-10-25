@@ -9,8 +9,8 @@ import {
 } from './revision-diff-viewer'
 import { useInstanceData } from '@/contexts/instance-context'
 import { type RevisionData, UuidRevType } from '@/data-types'
-import { GeogebraStaticRenderer } from '@/serlo-editor/plugins/geogebra/static'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { GeogebraSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/geogebra-serlo-static-renderer'
 import { VideoSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/video-serlo-static-renderer'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
@@ -94,7 +94,7 @@ export function RevisionPreviewBoxes({
             state={{ src: dataSet.url, alt: dataSet.title ?? 'Video' }}
           />
         ) : (
-          <GeogebraStaticRenderer
+          <GeogebraSerloStaticRenderer
             plugin={EditorPluginType.Geogebra}
             state={dataSet.url}
           />
