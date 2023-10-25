@@ -1,9 +1,10 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
 import type { ExerciseProps } from '.'
-// import { Experiment } from './experiment'
+import { Experiment } from './experiment'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { isProduction } from '@/helper/is-production'
 import { tw } from '@/helper/tw'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
@@ -48,7 +49,7 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
               )
             })}
           </div>
-          {/*<Experiment />*/}
+          {!isProduction && <Experiment />}
         </>
       ) : null}
     </>
