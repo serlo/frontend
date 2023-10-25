@@ -212,6 +212,9 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
                 plugin: 'type-text-exercise',
                 state: {
                   content: JSON.stringify(editorData[0]),
+                  'text-solution': {
+                    content: JSON.stringify(editorData[0].solution),
+                  },
                 },
               })
             )
