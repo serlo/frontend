@@ -20,10 +20,10 @@ import { triggerSentry } from '@/helper/trigger-sentry'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { SerloAddButton } from '@/serlo-editor/plugin/helpers/serlo-editor-button'
 import {
-  type DeserializeError,
-  editorResponseToState,
+  type ConvertResponseError,
+  convertEditorResponseToState,
   isError,
-} from '@/serlo-editor-integration/editor-response-to-state'
+} from '@/serlo-editor-integration/convert-editor-response-to-state'
 
 export function ExternalRevisionLoader<T>({
   entityType,
@@ -121,11 +121,11 @@ export function ExternalRevisionLoader<T>({
           }
         )
         const { uuid } = data
-        const converted = editorResponseToState(uuid!)
+        const converted = convertEditorResponseToState(uuid!)
         if (isError(converted) || !uuid) {
           handleError(
             `editor: revision conversion | ${
-              (converted as DeserializeError).error
+              (converted as ConvertResponseError).error
             }`
           )
         } else {
@@ -137,7 +137,7 @@ export function ExternalRevisionLoader<T>({
               : uuid.id
 
           onSwitchRevision({
-            ...(converted.initialState.state as T),
+            ...(converted.state as T),
             revision: 0,
             id: 0,
             meta_title: '',

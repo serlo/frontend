@@ -15,11 +15,11 @@ import { LoggedInData, UuidType } from '@/data-types'
 import { SetGenericEntityInput } from '@/fetcher/graphql-types/operations'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { successHash } from '@/helper/use-leave-confirm'
-import {
+import type {
   CourseSerializedState,
   TextExerciseGroupSerializedState,
   TextExerciseSerializedState,
-} from '@/serlo-editor-integration/editor-response-to-state'
+} from '@/serlo-editor-integration/convert-editor-response-to-state'
 
 const equalsWithEmptyStringIsNull = eqBy(
   mapObjIndexed((v) => (v === '' || v === undefined ? null : v))

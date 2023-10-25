@@ -33,12 +33,12 @@ export function ArticleRenderer({
       {content}
       {exercises || exercisesFolder ? (
         <>
-          <h2 className="serlo-h2">{strings.content.exercisesTitle}</h2>
+          <h2 className="serlo-h2 mb-16">{strings.content.exercisesTitle}</h2>
 
           {exercises}
 
           {exercisesFolder ? (
-            <p className="serlo-p">
+            <p className="serlo-p mt-8">
               {strings.content.moreExercises}:<br />
               {exercisesFolder}
             </p>
