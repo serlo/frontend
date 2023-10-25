@@ -35,33 +35,31 @@ interface EntityCreateProps {
 }
 
 export default renderedPageNoHooks<EntityCreateProps>((props) => {
-  return (
-    <Content
-      taxonomyTerm={props.taxonomyTerm}
-      entityType={props.entityType}
-      entityNeedsReview={props.entityNeedsReview}
-    />
-  )
+  return <Content props={props} />
 })
 
 function Content({
-  taxonomyTerm,
-  entityType,
-  entityNeedsReview,
-}: EntityCreateProps) {
+  props: { taxonomyTerm, entityType, entityNeedsReview },
+}: {
+  props: EntityCreateProps
+}) {
   const [initialState, setInitialState] = useState({
     plugin: AllowedPlugins[entityType],
   })
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    if (params.get('loadFromSession')) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const data = sessionStorage.getItem(params.get('loadFromSession') ?? '')
-      if (data) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        setInitialState(JSON.parse(data))
+    try {
+      // you can pass a session storage key with `&loadFormSession=mykey` to
+      // let the editor load custom inital state
+      const params = new URLSearchParams(window.location.search)
+      const sessionKey = params.get('loadFromSession') ?? ''
+      const sessionValue = sessionStorage.getItem(sessionKey) ?? ''
+      if (sessionKey && sessionValue) {
+        // we pray that this works, otherwise editor will through error message
+        setInitialState(JSON.parse(sessionValue) as typeof initialState)
       }
+    } catch (e) {
+      //
     }
   }, [])
 

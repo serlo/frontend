@@ -10,7 +10,7 @@ import { TopicCategories } from './topic-categories'
 import { ExerciseNumbering } from '../content/exercises/exercise-numbering'
 import { FaIcon } from '../fa-icon'
 import { InfoPanel } from '../info-panel'
-import { ExerciseGenerationWrapper } from '../user-tools/exercise-generation-wrapper'
+import { ExerciseGenerationWrapperProps } from '../user-tools/exercise-generation-wrapper'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
@@ -41,6 +41,12 @@ const Rating = dynamic<RatingProps>(() =>
 
 const NewFolderPrototype = dynamic<NewFolderPrototypeProps>(() =>
   import('./new-folder-prototype').then((mod) => mod.NewFolderPrototype)
+)
+
+const ExerciseGenerationWrapper = dynamic<ExerciseGenerationWrapperProps>(() =>
+  import('../user-tools/exercise-generation-wrapper').then(
+    (mod) => mod.ExerciseGenerationWrapper
+  )
 )
 
 export function Topic({ data }: TopicProps) {

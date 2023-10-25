@@ -1,22 +1,15 @@
-import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
 import { AuthorToolsData } from './foldout-author-menus/author-tools'
+import { ExerciseGenerationWizard } from '../content/exercises/exercise-generation-wizard'
 import { ExercisePreviewPage } from '../content/exercises/exercise-preview-page'
 import { ModalWithCloseButton } from '../modal-with-close-button'
-import { ExerciseGenerationWizardProps } from '@/components/content/exercises/exercise-generation-wizard'
 import { useAiWizard } from '@/contexts/ai-wizard-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
 import { submitEvent } from '@/helper/submit-event'
 
-const ExerciseGenerationWizard = dynamic<ExerciseGenerationWizardProps>(() =>
-  import('@/components/content/exercises/exercise-generation-wizard').then(
-    (mod) => mod.ExerciseGenerationWizard
-  )
-)
-
-interface ExerciseGenerationWrapperProps {
+export interface ExerciseGenerationWrapperProps {
   data: AuthorToolsData
 }
 
