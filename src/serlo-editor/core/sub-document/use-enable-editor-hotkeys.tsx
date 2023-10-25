@@ -11,7 +11,7 @@ import {
   selectChildTree,
   useAppDispatch,
   store,
-  // selectMayManipulateSiblings,
+  selectMayManipulateSiblings,
   useAppSelector,
   selectIsDocumentEmpty,
 } from '../../store'
@@ -26,11 +26,6 @@ export const useEnableEditorHotkeys = (
   const isDocumentEmpty = useAppSelector((state) =>
     selectIsDocumentEmpty(state, id)
   )
-  // TODO: investigate / memo
-  const mayManipulateSiblings = false
-  // useAppSelector((state) =>
-  //   selectMayManipulateSiblings(state, id)
-  // )
 
   const { enableScope } = useHotkeysContext()
   useEffect(() => {
@@ -107,17 +102,22 @@ export const useEnableEditorHotkeys = (
     if (isDocumentEmpty) {
       handleKeyDown(e, () => {
         if (!e) return
-        if (mayManipulateSiblings) {
-          const parent = selectChildTreeOfParent(store.getState(), id)
-          if (!parent) return
 
-          if (e.key === 'Backspace') {
-            dispatch(focusPrevious(selectChildTree(store.getState())))
-          } else if (e.key === 'Delete') {
-            dispatch(focusNext(selectChildTree(store.getState())))
-          }
-          dispatch(removePluginChild({ parent: parent.id, child: id }))
+        const mayManipulateSiblings = selectMayManipulateSiblings(
+          store.getState(),
+          id
+        )
+        if (!mayManipulateSiblings) return
+
+        const parent = selectChildTreeOfParent(store.getState(), id)
+        if (!parent) return
+
+        if (e.key === 'Backspace') {
+          dispatch(focusPrevious(selectChildTree(store.getState())))
+        } else if (e.key === 'Delete') {
+          dispatch(focusNext(selectChildTree(store.getState())))
         }
+        dispatch(removePluginChild({ parent: parent.id, child: id }))
       })
     }
   }),
