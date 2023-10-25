@@ -78,7 +78,6 @@ export function ArticleRelatedExercises({
 
     return (
       <div key={id} className="my-5 border-t-2 border-black py-5">
-        {/* TODO: Test if this works */}
         <InjectionStaticRenderer
           plugin={EditorPluginType.Injection}
           state={`/${id}`}

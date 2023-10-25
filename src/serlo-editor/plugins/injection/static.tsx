@@ -23,12 +23,11 @@ export function InjectionStaticRenderer({
   const [content, setContent] = useState<
     AnyEditorDocument[] | 'loading' | 'error'
   >('loading')
-
   const { strings } = useInstanceData()
   const cleanedHref = href?.startsWith('/') ? href : `/${href}`
 
   useEffect(() => {
-    if (!cleanedHref) return
+    if (!href) return
 
     try {
       void fetch(endpoint, {
