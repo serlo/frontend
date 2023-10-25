@@ -13,6 +13,7 @@ const interactiveExerciseTypes = [
   EditorPluginType.ScMcExercise,
   EditorPluginType.InputExercise,
   EditorPluginType.H5p,
+  EditorPluginType.TextArea,
 ] as const
 
 export function ExerciseEditor({ editable, state }: ExerciseProps) {

@@ -52,6 +52,7 @@ import { videoTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/v
 import { solutionPlugin } from '@/serlo-editor/plugins/solution'
 import { createSpoilerPlugin } from '@/serlo-editor/plugins/spoiler'
 import { createTextPlugin } from '@/serlo-editor/plugins/text'
+import { createTextAreaPlugin } from '@/serlo-editor/plugins/text-area-exercise'
 import { unsupportedPlugin } from '@/serlo-editor/plugins/unsupported'
 import { videoPlugin } from '@/serlo-editor/plugins/video'
 
@@ -198,6 +199,7 @@ export function createPlugins({
       }),
     },
     { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
+    { type: EditorPluginType.TextArea, plugin: createTextAreaPlugin() },
 
     // Special plugins, never visible in suggestions
     // ===================================================

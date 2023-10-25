@@ -22,6 +22,7 @@ import type {
   EditorSolutionDocument,
   EditorSpoilerDocument,
   EditorTemplateExerciseGroupDocument,
+  EditorTextAreaExerciseDocument,
 } from './types/editor-plugins'
 import { TemplatePluginType } from './types/template-plugin-type'
 import { Lazy } from '@/components/content/lazy'
@@ -38,6 +39,7 @@ import { RowsStaticRenderer } from '@/serlo-editor/plugins/rows/static'
 import { SpoilerStaticRenderer } from '@/serlo-editor/plugins/spoiler/static'
 import type { MathElement } from '@/serlo-editor/plugins/text'
 import { TextStaticRenderer } from '@/serlo-editor/plugins/text/static'
+import { TextAreaExerciseStaticRenderer } from '@/serlo-editor/plugins/text-area-exercise/static'
 import { MultimediaSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/multimedia-serlo-static-renderer'
 
 const EquationsStaticRenderer = dynamic<EditorEquationsDocument>(() =>
@@ -206,6 +208,12 @@ export function createRenderers(): InitRenderersArgs {
       {
         type: EditorPluginType.ScMcExercise,
         renderer: SerloScMcExerciseStaticRenderer,
+      },
+      {
+        type: EditorPluginType.TextArea,
+        renderer: (_: EditorTextAreaExerciseDocument) => {
+          return <TextAreaExerciseStaticRenderer />
+        },
       },
       {
         type: EditorPluginType.Solution,

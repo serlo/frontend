@@ -951,6 +951,7 @@ export const loggedInData = {
           scMcExercise: 'Choice exercise',
           inputExercise: 'Input exercise',
           h5p: 'H5p exercise',
+          textArea: 'Text area', // TODO: Better name? 
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
           removeInteractive: 'Remove interactive element',

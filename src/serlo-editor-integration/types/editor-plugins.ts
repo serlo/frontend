@@ -30,6 +30,7 @@ import type {
   CustomElement,
   CustomText,
 } from '@/serlo-editor/plugins/text'
+import { TextAreaState } from '@/serlo-editor/plugins/text-area-exercise'
 import type { VideoPluginState } from '@/serlo-editor/plugins/video'
 
 export type SlateBlockElement = CustomElement
@@ -123,6 +124,11 @@ export interface EditorRowsDocument {
 export interface EditorScMcExerciseDocument {
   plugin: EditorPluginType.ScMcExercise
   state: Prettify<StateTypeSerializedType<ScMcExercisePluginState>>
+  id?: string
+}
+export interface EditorTextAreaExerciseDocument {
+  plugin: EditorPluginType.TextArea
+  state: Prettify<StateTypeSerializedType<TextAreaState>>
   id?: string
 }
 export interface EditorSpoilerDocument {
