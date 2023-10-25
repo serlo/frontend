@@ -73,7 +73,7 @@ export function ProfileExperimental() {
 
   function shouldBeVisible(key: FeatureKey) {
     if (!Object.hasOwn(features, key)) return false
-    if (isProduction && !features[key].hideInProduction) return false
+    if (isProduction && features[key].hideInProduction) return false
     return true
   }
 
