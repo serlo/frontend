@@ -80,7 +80,7 @@ export const Difficulty: React.FC<DifficultyProps> = ({
             onNext()
           }
         }}
-        className="border-lightblue focus:border-lightblue w-11/12 resize-none rounded-md border p-2 pl-2 focus:outline-brand-700"
+        className="w-11/12 resize-none rounded-md border border-lightblue p-2 pl-2 focus:border-lightblue focus:outline-brand-700"
         placeholder={
           strings.ai.exerciseGeneration.difficulty.learningGoalPlaceholder
         }
