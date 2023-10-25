@@ -9,8 +9,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { useAuthentication } from '@/auth/use-authentication'
-import { CloseButton } from '@/components/close-button'
 import { FaIcon } from '@/components/fa-icon'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { useEntityId } from '@/contexts/uuids-context'
 import { LoggedInData } from '@/data-types'
@@ -37,6 +37,32 @@ enum Status {
 
 // TODO remove this before production
 const isTestingLocally = true
+
+// From GPT-4 with Wolfram Alpha 😍
+// const exerciseTestData = `{
+//   "heading": "Dreisatz: Wie weit fährt ein Auto?",
+//   "type": "single_choice",
+//   "steps":
+//   [
+//       "Ein Auto fährt 120 Meilen in 2 Stunden. Du möchtest wissen, wie weit das Auto in 5 Stunden fahren würde.",
+//       "Zuerst schreibst du die gegebenen Informationen auf: Das Auto fährt 120 Meilen in 2 Stunden.",
+//       "Um die Geschwindigkeit des Autos zu finden, teilst du die zurückgelegte Entfernung durch die Zeit.",
+//       "[ text{Geschwindigkeit} = frac{120 text{ Meilen}}{2 text{ Stunden}} = 60 text{ mph} ]",
+//       "Jetzt weißt du, dass das Auto mit einer Geschwindigkeit von 60 mph fährt.",
+//       "Um die Entfernung in 5 Stunden zu finden, multiplizierst du die Geschwindigkeit mit der Zeit.",
+//       "[ text{Entfernung} = 60 text{ mph} times 5 text{ Stunden} = 300 text{ Meilen} ]",
+//       "Das Auto würde also 300 Meilen in 5 Stunden fahren."
+//   ],
+//   "question": "Wenn ein Auto 120 Meilen in 2 Stunden fährt, wie weit würde es in 5 Stunden fahren?",
+//   "options":
+//   [
+//       "200 Meilen",
+//       "250 Meilen",
+//       "300 Meilen",
+//       "350 Meilen"
+//   ],
+//   "correct_option": 2
+// }`
 
 // const exerciseTestData =
 //   '{\n  "heading": "Dreisatz",\n  "subtasks": [\n    {\n      "type": "single_choice",\n      "question": "Ein Auto fährt mit einer Geschwindigkeit von 60 km/h. Wie weit kommt das Auto in 3 Stunden?",\n      "options": [\n        "120 km",\n        "180 km",\n        "240 km",\n        "300 km"\n      ],\n      "correct_option": 2\n    },\n    {\n      "type": "single_choice",\n      "question": "Ein Kind isst 4 Schokoriegel in 2 Tagen. Wie viele Schokoriegel isst das Kind in 5 Tagen?",\n      "options": [\n        "8 Schokoriegel",\n        "10 Schokoriegel",\n        "12 Schokoriegel",\n        "14 Schokoriegel"\n      ],\n      "correct_option": 3\n    }\n  ]\n}'
@@ -137,13 +163,15 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
   console.log('EditorData: ', editorData)
 
   return (
-    <div className="bg-background-gray fixed left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center backdrop-blur">
-      <CloseButton
-        onClick={closePage}
-        title={strings.ai.exerciseGeneration.preview.closePreviewTitle}
-        className="absolute right-2 top-2"
-      />
-
+    <ModalWithCloseButton
+      isOpen
+      // title="Erstellte Aufgabe im Fach Mathe (Dreisatz): Eiskugeln Preise"
+      onCloseClick={closePage}
+      confirmCloseDescription="Are you sure you want to close the preview? All data will be lost!"
+      overwriteClassNameCompletely
+      className="bg-background-gray fixed left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center"
+      closeButtonClassName="!bg-lightskyblue absolute right-2 top-2 text-black"
+    >
       {status === Status.Loading && (
         <div className="mb-6 flex items-center justify-center">
           <h1 className="font-semibold text-black">
@@ -197,7 +225,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
         </div>
       )}
 
-      <div className="mt-8 flex w-1/2 flex-col items-end space-y-2">
+      <div className="ml-auto mr-4 mt-8 flex w-1/2 flex-col items-end space-y-2">
         {/* Not supported for now */}
         {/* <button className="self-end rounded bg-brand-700 px-6 py-2 text-white">
           {strings.ai.exerciseGeneration.preview.publishExercise}
@@ -233,13 +261,13 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
           {strings.ai.exerciseGeneration.preview.regenerate}
         </button>
       </div>
-    </div>
+    </ModalWithCloseButton>
   )
 }
 
 const Skeleton = () => {
   return (
-    <div className="relative h-full">
+    <div className="relative h-full w-full">
       <div className="flex animate-pulse flex-col space-y-4">
         <div className="h-4 w-3/4 rounded bg-gray-300"></div>
         <div className="h-4 w-3/4 rounded bg-gray-300"></div>

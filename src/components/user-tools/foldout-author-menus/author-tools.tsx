@@ -96,7 +96,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   const router = useRouter()
   const canDo = useCanDo()
 
-  const { showWizard } = useAiWizard()
+  const { showWizard, canUseAiFeatures } = useAiWizard()
 
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings
@@ -306,21 +306,23 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       (lang !== Instance.De && router.asPath.startsWith('/community'))
 
     const entries = allowedTypes[data.taxonomyType].map((entityType) => {
-      // For now, we don't allow the AI feature to make it into production until
-      // the testing is done
-      if (entityType === 'AI' && !isProduction) {
+      if (entityType === 'AI') {
+        // For now, we don't allow the AI feature to make it into production until
+        // the testing is done
+        if (!canUseAiFeatures || isProduction) {
+          return null
+        }
+
         return (
           <SubItem
             key="ai"
             title={loggedInStrings.ai.exerciseGeneration.buttonTitle}
-            onClick={() => {
-              console.log('Calling show Wizard called')
-              showWizard()
-            }}
+            onClick={showWizard}
             icon={faWandSparkles}
           />
         )
       }
+
       if (entityType === UuidType.Event && !shouldRenderEvents) return null
 
       const title = getTranslatedType(strings, entityType)

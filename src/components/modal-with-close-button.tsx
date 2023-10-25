@@ -1,10 +1,8 @@
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import { useState, type ReactNode } from 'react'
+import { useState, type ReactNode, useCallback } from 'react'
 import BaseModal from 'react-modal'
 
 import { CloseButton } from './close-button'
-import { FaIcon } from './fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { tw } from '@/helper/tw'
 
@@ -25,6 +23,8 @@ interface ModalWithCloseButtonProps {
   className?: string
   alignTitleAndCloseButton?: boolean
   confirmCloseDescription?: string | undefined
+  overwriteClassNameCompletely?: boolean
+  closeButtonClassName?: string
 }
 
 export function ModalWithCloseButton({
@@ -35,48 +35,51 @@ export function ModalWithCloseButton({
   className,
   alignTitleAndCloseButton,
   confirmCloseDescription,
+  overwriteClassNameCompletely,
+  closeButtonClassName,
 }: ModalWithCloseButtonProps) {
   const { strings } = useInstanceData()
   const [showConfirmation, setShowConfirmation] = useState(false)
 
+  const onRequestClose = useCallback(
+    () =>
+      confirmCloseDescription ? setShowConfirmation(true) : onCloseClick(),
+    [confirmCloseDescription, onCloseClick]
+  )
+
   return (
     <BaseModal
       isOpen={isOpen}
-      onRequestClose={onCloseClick}
-      className={clsx(ModalClsx, 'top-[40%] w-[500px] pb-10', className)}
+      onRequestClose={onRequestClose}
+      className={
+        overwriteClassNameCompletely
+          ? className
+          : clsx(ModalClsx, 'top-[40%] w-[500px] pb-10', className)
+      }
     >
       {alignTitleAndCloseButton ? (
-        <div className="flex items-center justify-between py-4">
+        <div className="flex w-full items-center justify-between py-4">
           {title && (
             <h2 className="serlo-h2 my-0 flex-grow border-none py-0 text-center text-sm font-normal">
               {title}
             </h2>
           )}
           <CloseButton
-            onClick={() =>
-              confirmCloseDescription
-                ? setShowConfirmation(true)
-                : onCloseClick()
-            }
+            onClick={onRequestClose}
             title={strings.share.close}
             dataQa="modal-close-button"
+            className={closeButtonClassName}
           />
         </div>
       ) : (
         <>
           {title && <h2 className="serlo-h2">{title}</h2>}
-          <button
-            onClick={onCloseClick}
+          <CloseButton
+            onClick={onRequestClose}
             title={strings.share.close}
-            className={tw`
-              absolute right-3.5 top-3.5 inline-block h-9 w-9
-              cursor-pointer rounded-full border-none bg-transparent text-center
-              leading-tight text-almost-black hover:bg-brand hover:text-white
-            `}
-            data-qa="modal-close-button"
-          >
-            <FaIcon icon={faXmark} className="h-5" />
-          </button>
+            dataQa="modal-close-button"
+            className={closeButtonClassName}
+          />
         </>
       )}
       {children}

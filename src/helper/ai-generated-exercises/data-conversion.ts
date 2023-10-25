@@ -127,10 +127,12 @@ export function convertAiGeneratedScExerciseToEditorDocument(
           state: [
             {
               plugin: EditorPluginType.Text,
+              // ! This needs to be rendered semantically as h1, however we want the
+              // size of h3
               state: [
                 {
                   type: 'h',
-                  level: 1,
+                  level: 3,
                   children: [{ text: inputContent.heading }],
                 },
               ],

@@ -1,7 +1,7 @@
 import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import dynamic from 'next/dynamic'
-import { Fragment, useCallback, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { RatingProps } from 'react-simple-star-rating'
 
 import { NewFolderPrototypeProps } from './new-folder-prototype'
@@ -15,7 +15,7 @@ import type { DonationsBannerProps } from '@/components/content/donations-banner
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useAB } from '@/contexts/ab'
-import { AiWizardProvider } from '@/contexts/ai-wizard-context'
+import { AiWizardService, useAiWizard } from '@/contexts/ai-wizard-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
@@ -64,19 +64,9 @@ export function Topic({ data }: TopicProps) {
 
   editorRenderers.init(createRenderers())
 
-  const [aiWizard, setAiWizard] = useState(false)
-
-  const showWizard = useCallback(() => {
-    setAiWizard(true)
-  }, [])
-
-  const closeWizard = useCallback(() => {
-    setAiWizard(false)
-  }, [])
-
   return (
-    <>
-      <AiWizardProvider value={{ showWizard, closeWizard }}>
+    <AiWizardService>
+      <>
         {data.trashed && renderTrashedNotice()}
         {renderHeader()}
         {renderUserTools({ aboveContent: true })}
@@ -116,13 +106,9 @@ export function Topic({ data }: TopicProps) {
         ) : null}
 
         {renderUserTools()}
-        {aiWizard && (
-          <ExerciseGenerationWrapper
-            data={{ type: UuidType.TaxonomyTerm, ...data }}
-          />
-        )}
-      </AiWizardProvider>
-    </>
+        <ExerciseGenerationOrNull data={data} />
+      </>
+    </AiWizardService>
   )
 
   function renderTrashedNotice() {
@@ -238,4 +224,20 @@ export function Topic({ data }: TopicProps) {
     //no part of collection has default license so don't show default notice.
     return undefined
   }
+}
+
+interface ExerciseGenerationOrNullProps {
+  data: TopicProps['data']
+}
+
+function ExerciseGenerationOrNull({ data }: ExerciseGenerationOrNullProps) {
+  const { isShowingAiWizard } = useAiWizard()
+
+  if (!isShowingAiWizard) return null
+
+  return (
+    <ExerciseGenerationWrapper
+      data={{ type: UuidType.TaxonomyTerm, ...data }}
+    />
+  )
 }

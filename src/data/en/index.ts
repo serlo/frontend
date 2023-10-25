@@ -1194,7 +1194,6 @@ export const loggedInData = {
           placeholder: 'E.g., Basic arithmetic, fundamentals of algebra'
         },
         preview: {
-          closePreviewTitle: 'Close and delete exercises',
           loadingHeading: 'Exercise is being generated...',
           publishExercise: 'Publish exercise',
           openExerciseInEditor: 'Open in editor',

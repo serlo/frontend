@@ -51,6 +51,7 @@ module.exports = {
         'background-gray': '#f2f2f2',
         berry: '#857189',
         lightblue: '#b8e7ff',
+        lightskyblue: '#93c5fd',
         newgreen: '#2fceb1',
         'editor-primary': sunflowerColors,
         'almost-black': '#404040',
