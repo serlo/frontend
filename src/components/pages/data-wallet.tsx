@@ -26,7 +26,7 @@ export function DataWallet() {
       .then((res) => {
         const urlCreator = window.URL || window.webkitURL
         setQrCode(urlCreator.createObjectURL(res))
-        //TODO: When the workflow has been defined in the future we should revoke the object URL when done with:
+        // When the workflow has been defined in the future we should revoke the object URL when done with:
         // urlCreator.revokeObjectUrl(qrCode)
       })
       .catch((e) => {
