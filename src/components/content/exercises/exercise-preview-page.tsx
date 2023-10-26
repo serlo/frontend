@@ -90,6 +90,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
   // TODO change it to null before prod
   // const [exerciseData, setExerciseData] = useState(exerciseTestData)
   const [exerciseData, setExerciseData] = useState('')
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const auth = useAuthentication()
 
@@ -132,10 +133,12 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
         submitEvent('exercise-generation-wizard-prompt-success')
       } else {
         setStatus(Status.Error)
+        setErrorMessage('Unknown failure when generating exercise!')
         submitEvent('exercise-generation-wizard-prompt-failure')
       }
     } catch (error) {
       console.error('Failed to generate exercise:', error)
+      setErrorMessage(error instanceof Error ? error.message : 'Unknown error!')
       submitEvent('exercise-generation-wizard-prompt-failure')
       setStatus(Status.Error)
     }
@@ -152,13 +155,22 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
 
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0)
 
-  const editorData = useMemo<EditorExerciseDocument[]>(
-    () =>
-      exerciseData
-        ? convertAiGeneratedScExerciseToEditorDocument(exerciseData)
-        : [],
-    [exerciseData]
-  )
+  const editorData = useMemo<EditorExerciseDocument[]>(() => {
+    if (!exerciseData) {
+      return []
+    }
+
+    try {
+      return convertAiGeneratedScExerciseToEditorDocument(exerciseData)
+    } catch (error) {
+      console.error('Error while parsing exercise data: ', error)
+      setStatus(Status.Error)
+      setErrorMessage(
+        error instanceof Error ? error.message : 'Unknown error while parsing!'
+      )
+      return []
+    }
+  }, [exerciseData])
 
   console.log('EditorData: ', editorData)
 
@@ -169,7 +181,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
       onCloseClick={closePage}
       confirmCloseDescription="Are you sure you want to close the preview? All data will be lost!"
       overwriteClassNameCompletely
-      className="fixed left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center bg-background-gray"
+      className="bg-background-gray fixed left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center"
       closeButtonClassName="!bg-lightskyblue absolute right-2 top-2 text-black"
     >
       {status === Status.Loading && (
@@ -191,7 +203,14 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
             </ErrorBoundary>
           </div>
         )}
-        {status === Status.Error && <div>Failed to load data.</div>}
+        {status === Status.Error && (
+          <>
+            <h1 className="text-xl text-red-600">
+              Error while generating exercise!
+            </h1>
+            <pre>{errorMessage ? errorMessage : 'Unexpected error!'}</pre>
+          </>
+        )}
       </div>
 
       {editorData?.length > 1 && (

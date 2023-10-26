@@ -1,4 +1,6 @@
 import { either as E } from 'fp-ts'
+import { PathReporter } from 'io-ts/lib/PathReporter'
+
 // import * as t from 'io-ts'
 // import { v4 as uuidv4 } from 'uuid'
 
@@ -7,6 +9,7 @@ import {
   // InputMultipleChoiceDecoder,
   // InputShortAnswerDecoder,
   InputSingleChoiceDecoder,
+  humanReadableSingleChoiceExample,
 } from './decoders'
 // import {
 //   InputExerciseState,
@@ -32,135 +35,136 @@ export function convertAiGeneratedScExerciseToEditorDocument(
     return []
   }
 
-  try {
-    const parsed = JSON.parse(input) as unknown
+  const parsed = JSON.parse(input) as unknown
 
-    console.log('Parsed: ', { parsed })
-    const decoded = InputSingleChoiceDecoder.decode(parsed)
-    console.log('decoded: ', { decoded })
+  console.log('Parsed: ', { parsed })
+  const decoded = InputSingleChoiceDecoder.decode(parsed)
+  console.log('decoded: ', { decoded })
 
-    if (E.isLeft(decoded)) {
-      throw new TypeError(
-        'The data from the API has an invalid structure or is not a single choice exercise.'
-      )
-    }
+  if (E.isLeft(decoded)) {
+    const errors = PathReporter.report(decoded)
+    console.error('Decoding failed', errors)
+    throw new TypeError(
+      `The data from the API has an invalid structure or is not a single choice exercise.\n\n${errors
+        .map((error) => `${error.split('|}/')[1]} was not provided correctly`)
+        .join('\n')} \n\nReceived: \n${JSON.stringify(
+        parsed,
+        null,
+        2
+      )}\n\nExpected format: \n${JSON.stringify(
+        humanReadableSingleChoiceExample,
+        null,
+        2
+      )}`
+    )
+  }
 
-    const inputContent = decoded.right
+  const inputContent = decoded.right
 
-    console.log('InputContent: ', { inputContent })
+  console.log('InputContent: ', { inputContent })
 
-    // ! I think this type assertion doesn't properly work with the
-    // discriminatory type of ScMcExercise. I think the child() function is to
-    // blame but I haven't found an easy solution without complicating things
-    // with type arguments.
-    const interactive: EditorExerciseDocument['state']['interactive'] = {
-      plugin: EditorPluginType.ScMcExercise,
-      state: {
-        isSingleChoice: inputContent.type === 'single_choice',
-        answers: inputContent.options.map((option, index) => ({
-          content: {
-            plugin: EditorPluginType.Text,
-            state: [
-              {
-                type: 'p',
-                children: [{ text: option }],
-              },
-            ],
-          },
-          isCorrect: index === inputContent.correct_option,
-          feedback: {
-            plugin: EditorPluginType.Text,
-            state: [
-              {
-                type: 'p',
-                children: [
-                  {
-                    text:
-                      index === inputContent.correct_option
-                        ? 'Sehr gut!'
-                        : 'Leider falsch!',
-                  },
-                ],
-              },
-            ],
-          },
-        })),
-      },
-    }
-
-    const solution: EditorSolutionDocument = {
-      plugin: EditorPluginType.Solution,
-      state: {
-        prerequisite: undefined,
-        strategy: {
+  // ! I think this type assertion doesn't properly work with the
+  // discriminatory type of ScMcExercise. I think the child() function is to
+  // blame but I haven't found an easy solution without complicating things
+  // with type arguments.
+  const interactive: EditorExerciseDocument['state']['interactive'] = {
+    plugin: EditorPluginType.ScMcExercise,
+    state: {
+      isSingleChoice: inputContent.type === 'single_choice',
+      answers: inputContent.options.map((option, index) => ({
+        content: {
           plugin: EditorPluginType.Text,
           state: [
             {
               type: 'p',
-              // ? Should we add the 'strategy' to the prompt too?
-              children: [{ text: '-' }],
+              children: [{ text: option }],
             },
           ],
         },
-        steps: {
-          plugin: EditorPluginType.Rows,
-          state: inputContent.steps.map((step) => ({
-            plugin: EditorPluginType.Text,
-            state: [
-              {
-                type: 'p',
-                children: [{ text: step }],
-              },
-            ],
-          })),
-        },
-      },
-      // doesn't have an id yet
-      id: undefined,
-    } as EditorSolutionDocument
-
-    const exerciseDocument: EditorExerciseDocument = {
-      plugin: EditorPluginType.Exercise,
-      state: {
-        content: {
-          plugin: EditorPluginType.Rows,
+        isCorrect: index === inputContent.correct_option,
+        feedback: {
+          plugin: EditorPluginType.Text,
           state: [
             {
-              plugin: EditorPluginType.Text,
-              // ! This needs to be rendered semantically as h1, however we want the
-              // size of h3
-              state: [
+              type: 'p',
+              children: [
                 {
-                  type: 'h',
-                  level: 3,
-                  children: [{ text: inputContent.heading }],
+                  text:
+                    index === inputContent.correct_option
+                      ? 'Sehr gut!'
+                      : 'Leider falsch!',
                 },
               ],
             },
-            {
-              plugin: EditorPluginType.Text,
-              state: [
-                { type: 'p', children: [{ text: inputContent.question }] },
-              ],
-            },
           ],
         },
-        interactive,
-      },
-      // doesn't have an id yet
-      id: undefined,
-      solution,
-    }
-
-    return [exerciseDocument]
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(
-      'An error occured while converting AI generated exercise data to editor data: ',
-      error
-    )
-    return []
+      })),
+    },
   }
+
+  const solution: EditorSolutionDocument = {
+    plugin: EditorPluginType.Solution,
+    state: {
+      prerequisite: undefined,
+      strategy: {
+        plugin: EditorPluginType.Text,
+        state: [
+          {
+            type: 'p',
+            // ? Should we add the 'strategy' to the prompt too?
+            children: [{ text: '-' }],
+          },
+        ],
+      },
+      steps: {
+        plugin: EditorPluginType.Rows,
+        state: inputContent.steps.map((step) => ({
+          plugin: EditorPluginType.Text,
+          state: [
+            {
+              type: 'p',
+              children: [{ text: step }],
+            },
+          ],
+        })),
+      },
+    },
+    // doesn't have an id yet
+    id: undefined,
+  } as EditorSolutionDocument
+
+  const exerciseDocument: EditorExerciseDocument = {
+    plugin: EditorPluginType.Exercise,
+    state: {
+      content: {
+        plugin: EditorPluginType.Rows,
+        state: [
+          {
+            plugin: EditorPluginType.Text,
+            // ! This needs to be rendered semantically as h1, however we want the
+            // size of h3
+            state: [
+              {
+                type: 'h',
+                level: 3,
+                children: [{ text: inputContent.heading }],
+              },
+            ],
+          },
+          {
+            plugin: EditorPluginType.Text,
+            state: [{ type: 'p', children: [{ text: inputContent.question }] }],
+          },
+        ],
+      },
+      interactive,
+    },
+    // doesn't have an id yet
+    id: undefined,
+    solution,
+  }
+
+  return [exerciseDocument]
 }
 
 // export function convertAiGeneratedDataToEditorData(

@@ -19,6 +19,17 @@ export const InputSingleChoiceDecoder = t.strict({
   steps: t.array(t.string),
 })
 
+type ExpectedSingleChoiceType = t.TypeOf<typeof InputSingleChoiceDecoder>
+
+export const humanReadableSingleChoiceExample: ExpectedSingleChoiceType = {
+  heading: 'Exercise heading',
+  steps: ['First of possibly many steps'],
+  type: 'single_choice',
+  question: 'Question of the exercise',
+  options: ['The first of a few options', 'The second option'],
+  correct_option: 0,
+}
+
 export const InputMultipleChoiceDecoder = t.strict({
   type: t.literal('multiple_choice'),
   question: t.string,
