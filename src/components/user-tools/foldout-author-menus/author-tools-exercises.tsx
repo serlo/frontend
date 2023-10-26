@@ -24,6 +24,7 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
   const hasUnrevised =
     data.unrevisedRevisions !== undefined && data.unrevisedRevisions > 0
 
+  // TODO: try to understand why we use solution types here
   const type = getTranslatedType(
     strings,
     data.type === ExerciseInlineType.Exercise
