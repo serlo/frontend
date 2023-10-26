@@ -19,7 +19,7 @@ export interface Heading {
 
 export interface Paragraph {
   type: 'p'
-  children: (CustomText | MathElement)[] // TODO Restrict this to only inline MathElement
+  children: (CustomText | MathElement)[] // TODO: Restrict this to only inline MathElement
 }
 
 export interface Link {
