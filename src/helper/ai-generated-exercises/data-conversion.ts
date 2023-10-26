@@ -5,6 +5,9 @@ import { PathReporter } from 'io-ts/lib/PathReporter'
 // import { v4 as uuidv4 } from 'uuid'
 
 import {
+  ExpectedMultipleChoiceType,
+  ExpectedSingleChoiceType,
+  InputMultipleChoiceDecoder,
   // InputDecoder,
   // InputMultipleChoiceDecoder,
   // InputShortAnswerDecoder,
@@ -35,17 +38,25 @@ export function convertAiGeneratedScExerciseToEditorDocument(
     return []
   }
 
+  // Better option would be to use the generic InputParser with the union type Sc | Mc |
+  // We assume there is only SC or MC now!
+  const doWeExpectSingleChoice = input.includes('"type": "single_choice"')
+
   const parsed = JSON.parse(input) as unknown
 
+  // [ { type: 'single_choice }, {type: 'multiple_choice' }, { type: 'fill_in_the_gap' }]
+
   console.log('Parsed: ', { parsed })
-  const decoded = InputSingleChoiceDecoder.decode(parsed)
+  const decoded = doWeExpectSingleChoice
+    ? InputSingleChoiceDecoder.decode(parsed)
+    : InputMultipleChoiceDecoder.decode(parsed)
   console.log('decoded: ', { decoded })
 
   if (E.isLeft(decoded)) {
     const errors = PathReporter.report(decoded)
     console.error('Decoding failed', errors)
     throw new TypeError(
-      `The data from the API has an invalid structure or is not a single choice exercise.\n\n${errors
+      `The data from the API seems to have an invalid structure.\n\n${errors
         .map((error) => `${error.split('|}/')[1]} was not provided correctly`)
         .join('\n')} \n\nReceived: \n${JSON.stringify(
         parsed,
@@ -60,8 +71,9 @@ export function convertAiGeneratedScExerciseToEditorDocument(
   }
 
   const inputContent = decoded.right
-
   console.log('InputContent: ', { inputContent })
+
+  const isSingleChoice = isSingleChoiceGuard(inputContent)
 
   // ! I think this type assertion doesn't properly work with the
   // discriminatory type of ScMcExercise. I think the child() function is to
@@ -81,7 +93,9 @@ export function convertAiGeneratedScExerciseToEditorDocument(
             },
           ],
         },
-        isCorrect: index === inputContent.correct_option,
+        isCorrect: isSingleChoice
+          ? index === inputContent.correct_option
+          : inputContent.correct_options.includes(index),
         feedback: {
           plugin: EditorPluginType.Text,
           state: [
@@ -89,10 +103,13 @@ export function convertAiGeneratedScExerciseToEditorDocument(
               type: 'p',
               children: [
                 {
-                  text:
-                    index === inputContent.correct_option
-                      ? 'Sehr gut!'
-                      : 'Leider falsch!',
+                  text: (
+                    isSingleChoice
+                      ? index === inputContent.correct_option
+                      : inputContent.correct_options.includes(index)
+                  )
+                    ? 'Sehr gut!'
+                    : 'Leider falsch!',
                 },
               ],
             },
@@ -165,6 +182,12 @@ export function convertAiGeneratedScExerciseToEditorDocument(
   }
 
   return [exerciseDocument]
+}
+
+function isSingleChoiceGuard(
+  input: ExpectedSingleChoiceType | ExpectedMultipleChoiceType
+): input is ExpectedSingleChoiceType {
+  return input.type === 'single_choice'
 }
 
 // export function convertAiGeneratedDataToEditorData(
