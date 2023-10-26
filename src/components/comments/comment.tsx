@@ -6,13 +6,13 @@ import type { CommentsData } from './comment-area'
 import { CommentForm } from './comment-form'
 import { MetaBar } from './meta-bar'
 import { Link } from '../content/link'
-import type { MathSpanProps } from '../content/math-span'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
 import { scrollIfNeeded } from '@/helper/scroll'
 import { tw } from '@/helper/tw'
 import { useEditCommentMutation } from '@/mutations/thread'
+import type { StaticMathProps } from '@/serlo-editor/plugins/text/static-components/static-math'
 
 interface CommentProps {
   threadId: string
@@ -23,8 +23,10 @@ interface CommentProps {
   noScroll?: boolean
 }
 
-const MathSpan = dynamic<MathSpanProps>(() =>
-  import('@/components/content/math-span').then((mod) => mod.MathSpan)
+const StaticMath = dynamic<StaticMathProps>(() =>
+  import('@/serlo-editor/plugins/text/static-components/static-math').then(
+    (mod) => mod.StaticMath
+  )
 )
 
 export function Comment({
@@ -51,8 +53,8 @@ export function Comment({
     !data.trashed
 
   // Step 1: Replace formulas
-  const r1 = replaceWithJSX([content], /%%(.+?)%%/g, (str, i) => (
-    <MathSpan key={`math-${i}`} formula={str} />
+  const r1 = replaceWithJSX([content], /%%(.+?)%%/g, (formula, i) => (
+    <StaticMath key={`math-${i}`} type="math" src={formula} inline />
   ))
 
   // Step 2: Replace urls in remaining strings

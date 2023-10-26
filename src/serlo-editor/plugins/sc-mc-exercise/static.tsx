@@ -5,7 +5,7 @@ import {
   ScMcExerciseRenderer,
   ScMcExerciseRendererProps,
 } from './renderer/renderer'
-import { StaticSlate } from '../text/static-slate'
+import { StaticSlate } from '../text/static-components/static-slate'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 import { shuffleArray } from '@/helper/shuffle-array'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
