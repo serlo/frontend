@@ -66,10 +66,8 @@ export function StaticSlate({
         </li>
       )
     }
+    // "list-item-child"
     if (element.type === ListElementType.LIST_ITEM_TEXT) {
-      // "list-item-child"
-
-      // TODO: maybe write migration or formatter for this?
       // compat: unwrap old content where a list item is wrapped inside another p in state
       const elementChild =
         children.length === 1 && Object.hasOwn(children[0], 'type')
