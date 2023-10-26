@@ -1,8 +1,8 @@
 import { createElement } from 'react'
 import { Descendant, Element } from 'slate'
 
-import { TextLeafRenderer } from './components/text-leaf-renderer'
-import { ListElementType } from './types/text-editor'
+import { TextLeafRenderer } from '../components/text-leaf-renderer'
+import { ListElementType } from '../types/text-editor'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 
 export function StaticSlate({
