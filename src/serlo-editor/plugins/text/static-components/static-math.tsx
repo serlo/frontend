@@ -9,7 +9,8 @@ import { sanitizeLatex } from '@/schema/sanitize-latex'
 
 export type StaticMathProps = Omit<MathElement, 'children'>
 
-/** this is quite big 🐘, if you can load it dynamically  */
+/** 🐘 This component is quite big. 🐘
+ *  Load it dynamically if you can. */
 export function StaticMath({ src, inline }: StaticMathProps) {
   if (!src) return null
 
