@@ -70,7 +70,6 @@ export const selectChildTree: (
 ) => ChildTreeNode | null = createJsonStringifySelector(
   [selectSelf, (_state, id?: string) => id],
   (documents, id) => {
-    console.log('selectChildTree')
     return getChildTree(documents, id)
   }
 )
@@ -78,7 +77,6 @@ export const selectChildTree: (
 export const selectChildTreeOfParent = createSelector(
   [selectSelf, (_state, id: string) => id],
   (documents, id) => {
-    console.log('selectChildTreeOfParent')
     const tree = getChildTree(documents)
     return findChildTreeNodeParentById(tree, id)
   }
@@ -87,7 +85,6 @@ export const selectChildTreeOfParent = createSelector(
 export const selectParentPluginType = createSelector(
   [selectSelf, (_state, id: string) => id],
   (documents, id) => {
-    console.log('selectParentPluginType')
     const tree = getChildTree(documents)
     const parentNode = findChildTreeNodeParentById(tree, id)
     return parentNode && documents[parentNode.id].plugin
@@ -97,7 +94,6 @@ export const selectParentPluginType = createSelector(
 export const selectAncestorDocumentIds = createDeepEqualSelector(
   [selectSelf, (_state, id: string) => id],
   (documents, id) => {
-    console.log('selectAncestorDocumentIds')
     const root = getChildTree(documents)
     let current = id
     let path: string[] = [id]
@@ -116,7 +112,6 @@ export const selectAncestorDocumentIds = createDeepEqualSelector(
 export const selectAncestorPluginTypes = createDeepEqualSelector(
   [selectSelf, (_state, id: string) => id],
   (documents, id) => {
-    console.log('selectAncestorPluginTypes')
     const rootNode = getChildTree(documents)
     let currentId = id
     let pluginTypes: string[] = []
@@ -136,7 +131,6 @@ export const selectAncestorPluginTypes = createDeepEqualSelector(
 export const selectMayManipulateSiblings = createSelector(
   [selectSelf, (_state, id: string) => id],
   (documents, id: string) => {
-    console.log('selectMayManipulateSiblings')
     const root = getChildTree(documents)
 
     const parentNode = findChildTreeNodeParentById(root, id)
