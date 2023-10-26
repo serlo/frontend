@@ -954,6 +954,8 @@ export const loggedInData = {
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
           removeInteractive: 'Remove interactive element',
+          createSolution: 'Create solution',
+          removeSolution: 'Remove solution',
         },
         event: {
           seoTitle: 'Title for search engines',
@@ -999,11 +1001,7 @@ export const loggedInData = {
           kindOfExerciseGroup: 'Kind of exercise group',
           notCohesive: 'not cohesive',
           cohesive: 'cohesive',
-        },
-        textExercise: {
-          removeSolution: 'Remove solution',
-          createSolution: 'Create solution',
-        },
+        }
       },
       edtrIo: {
         localStorage: {

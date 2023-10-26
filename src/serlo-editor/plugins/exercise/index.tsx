@@ -19,6 +19,7 @@ const exerciseState = object({
       plugin: EditorPluginType.ScMcExercise,
     })
   ),
+  solution: optional(child({ plugin: EditorPluginType.Solution })),
 })
 
 export type ExercisePluginState = typeof exerciseState
