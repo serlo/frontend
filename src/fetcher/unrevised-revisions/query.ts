@@ -156,21 +156,6 @@ export const unrevisedEntitiesFragment = gql`
           }
         }
       }
-      ... on Solution {
-        currentRevision {
-          id
-        }
-        solutionRevisions: revisions(unrevised: true) {
-          nodes {
-            id
-            author {
-              ...basicUserData
-            }
-            changes
-            date
-          }
-        }
-      }
     }
     totalCount
     pageInfo {

@@ -259,10 +259,6 @@ const query = gql`
         alias
         title
       }
-      ... on Solution {
-        alias
-        title
-      }
     }
   }
 
@@ -270,12 +266,6 @@ const query = gql`
     ...license
     currentRevision {
       content
-    }
-    solution {
-      ...license
-      currentRevision {
-        content
-      }
     }
   }
 

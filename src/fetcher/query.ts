@@ -147,18 +147,6 @@ export const dataQuery = gql`
         }
       }
 
-      ... on Solution {
-        ...solution
-        exercise {
-          ... on Exercise {
-            id
-          }
-          ... on GroupedExercise {
-            id
-          }
-        }
-      }
-
       ... on Event {
         currentRevision {
           ...eventRevision
