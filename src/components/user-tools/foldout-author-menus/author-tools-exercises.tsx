@@ -24,15 +24,12 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
   const hasUnrevised =
     data.unrevisedRevisions !== undefined && data.unrevisedRevisions > 0
 
-  // TODO: try to understand why we use solution types here
   const type = getTranslatedType(
     strings,
     data.type === ExerciseInlineType.Exercise
       ? UuidType.Exercise
       : data.type === ExerciseInlineType.ExerciseGroup
       ? UuidType.ExerciseGroup
-      : data.type === ExerciseInlineType.Solution
-      ? UuidType.Solution
       : UuidType.Exercise
   )
 
@@ -68,16 +65,15 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
 
   function getToolsArray() {
     if (!data) return []
-    const noSolution = data.type !== ExerciseInlineType.Solution
     return [
       Tool.Abo,
       ...(hasUnrevised ? [Tool.UnrevisedEdit] : [Tool.Edit, Tool.History]),
-      ...(noSolution ? [Tool.SortGroupedExercises] : []),
-      ...(ExerciseInlineType.Solution ? [] : [Tool.Curriculum]),
+      Tool.SortGroupedExercises,
+      Tool.Curriculum,
       Tool.ChangeLicense,
       Tool.Log,
       Tool.Trash,
-      ...(noSolution ? [Tool.DirectLink] : []),
+      Tool.DirectLink,
     ]
   }
 }
