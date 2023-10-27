@@ -125,6 +125,7 @@ function OldComments() {
             }
           )
           if (result.uuid && Object.hasOwn(result.uuid, 'threads')) {
+            // eslint-disable-next-line no-console
             console.log(result.uuid.threads.nodes)
             comments.push(result.uuid.threads.nodes)
           } else {

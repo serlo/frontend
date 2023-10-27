@@ -109,7 +109,7 @@ const HighlightStaticRenderer = dynamic<EditorHighlightDocument>(() =>
   )
 )
 const StaticMath = dynamic<MathElement>(() =>
-  import('@/serlo-editor/plugins/text/components/static-math').then(
+  import('@/serlo-editor/plugins/text/static-components/static-math').then(
     (mod) => mod.StaticMath
   )
 )

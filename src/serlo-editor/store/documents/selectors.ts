@@ -69,7 +69,9 @@ export const selectChildTree: (
   id?: string
 ) => ChildTreeNode | null = createJsonStringifySelector(
   [selectSelf, (_state, id?: string) => id],
-  (documents, id) => getChildTree(documents, id)
+  (documents, id) => {
+    return getChildTree(documents, id)
+  }
 )
 
 export const selectChildTreeOfParent = createSelector(

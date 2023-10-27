@@ -10,7 +10,6 @@ import { SaveContext } from './context/save-context'
 import { createPlugins } from './create-plugins'
 import { createRenderers } from './create-renderers'
 import { useCanDo } from '@/auth/use-can-do'
-import { MathSpan } from '@/components/content/math-span'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -75,7 +74,6 @@ export function SerloEditor({
       value={{ onSave, userCanSkipReview, entityNeedsReview }}
     >
       <LocalStorageNotice useStored={useStored} setUseStored={setUseStored} />
-      <MathSpan formula="" /> {/* preload formula plugin */}
       <Editor
         initialState={useStored ? getStateFromLocalStorage()! : initialState}
         editable
