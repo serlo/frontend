@@ -53,7 +53,7 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
         <div className="-ml-side mt-block">
           <nav className="flex justify-end">
             <button
-              className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
+              className="serlo-button-editor-secondary serlo-tooltip-trigger relative top-7 z-20 mr-side"
               onClick={() => solution.remove()}
             >
               <EditorTooltip text={exStrings.removeSolution} />

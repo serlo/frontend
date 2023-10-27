@@ -994,6 +994,7 @@ export const loggedInData = {
           linkTitle: 'Title of the link',
           showSolution: 'Show solution',
           hideSolution: 'Hide solution',
+          changeLicense: 'Change license',
         },
         textExerciseGroup: {
           removeExercise: 'Remove exercise',

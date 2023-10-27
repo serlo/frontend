@@ -178,11 +178,7 @@ export function createPlugins({
       plugin: exercisePlugin,
       visibleInSuggestions: allowExercises,
     },
-    {
-      type: EditorPluginType.Solution,
-      plugin: solutionPlugin,
-      visibleInSuggestions: allowExercises,
-    },
+    { type: EditorPluginType.Solution, plugin: solutionPlugin },
     { type: EditorPluginType.H5p, plugin: H5pPlugin },
     {
       type: EditorPluginType.InputExercise,
