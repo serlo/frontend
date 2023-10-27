@@ -216,7 +216,12 @@ export function createPlugins({
     { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
     ...(isProduction
       ? []
-      : [{ type: EditorPluginType.FillInTheGapExercise, plugin: fillInTheGapExercise }]),
+      : [
+          {
+            type: EditorPluginType.FillInTheGapExercise,
+            plugin: fillInTheGapExercise,
+          },
+        ]),
 
     // Special plugins, never visible in suggestions
     // ===================================================

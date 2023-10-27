@@ -75,10 +75,6 @@ export interface CustomText {
   showPlaceholder?: boolean
 }
 
-export interface Text {
-  text: string
-}
-
 // Adds type info for custom elements to slate
 // See: https://docs.slatejs.org/concepts/12-typescript
 declare module 'slate' {

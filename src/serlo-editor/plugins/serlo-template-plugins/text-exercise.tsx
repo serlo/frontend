@@ -83,7 +83,7 @@ function TextExerciseTypeEditor({
         {content.render()}
         {textSolution.id ? (
           <>
-            <nav className="flex justify-end">
+            <nav className="-mt-block flex justify-end">
               <button
                 className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
                 onClick={textSolution.remove}

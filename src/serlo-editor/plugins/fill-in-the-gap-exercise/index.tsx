@@ -68,6 +68,8 @@ export function FillInTheGapExerciseEditor(props: FillInTheGapExerciseProps) {
         textPluginState={textPluginState}
         mode={props.state.mode.value}
       />
+
+      {/* Only debug views from here on */}
       <div className="hidden">{JSON.stringify(textPluginState)}</div>
     </>
   )

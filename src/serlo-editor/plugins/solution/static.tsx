@@ -27,7 +27,7 @@ export function StaticSolutionRenderer({
   if (isEmptyRowsDocument(steps) && !strategyElement) return null
 
   const hasPrerequisite =
-    prerequisite && prerequisite.id && prerequisite.title.length
+    prerequisite && prerequisite.id && prerequisite.title?.length
 
   const LinkRenderer = editorRenderers.getLinkRenderer()
 

@@ -7,37 +7,23 @@ import { GapStatesContext } from './context/gap-context'
 import { GapDragAndDropSolutions } from './renderer'
 
 export function GapRenderer(props: { correctAnswer: string; gapId: string }) {
-  const gapSolutionList = useContext(GapDragAndDropSolutions)
+  const dragAndDropSolutions = useContext(GapDragAndDropSolutions)
   const gapStates = useContext(GapStatesContext)
   if (gapStates === null) {
+    // gapStates was not provided by FillInTheGapRenderer -> cannot continue
     return null
   }
   const gapAnswerCorrectList = gapStates.gapFeedback
   const mode = gapStates.mode
 
-  const draggableElementInGap = GetDraggableElementInGap()
-  function GetDraggableElementInGap() {
-    if (!gapSolutionList) return null
-    const entry = gapSolutionList.find(
-      (entry) => entry.inDroppableId === props.gapId
-    )
-    if (!entry) return null
-    return entry
-  }
+  const draggableElementInGap = dragAndDropSolutions?.find(
+    (entry) => entry.inDroppableId === props.gapId
+  )
 
   const isAnswerCorrect = gapAnswerCorrectList.get(props.gapId)?.isCorrect
 
-  const textInInput = gapStates.textUserTypedIntoGap.value.get(props.gapId)
-    ? (gapStates.textUserTypedIntoGap.value.get(props.gapId)?.text as string)
-    : ''
-
-  // if (
-  //   !gapContext.textUserTypedIntoGap.value.find(
-  //     (entry) => entry.gapId === props.gapId
-  //   )
-  // ) {
-  //   setTextUserTypedIntoGap('', props.gapId, gapContext.textUserTypedIntoGap)
-  // }
+  const textInInput =
+    gapStates.textUserTypedIntoGap.value.get(props.gapId)?.text ?? ''
 
   return (
     <>
@@ -72,13 +58,15 @@ export function GapRenderer(props: { correctAnswer: string; gapId: string }) {
   )
 
   function setTextUserTypedIntoGap(newText: string) {
+    // Copy Map object
     const newTextUserTypedIntoGapList = new Map<string, { text: string }>(
       gapStates?.textUserTypedIntoGap.value
     )
 
+    // Set new text
     newTextUserTypedIntoGapList.set(props.gapId, { text: newText })
 
-    // Set state
+    // Update state
     gapStates?.textUserTypedIntoGap.set(newTextUserTypedIntoGapList)
   }
 }

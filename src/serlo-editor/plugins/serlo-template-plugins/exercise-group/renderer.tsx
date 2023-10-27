@@ -24,7 +24,7 @@ export function TextExerciseGroupTypeRenderer({
               key={id ?? index}
               className={tw`
                 serlo-exercise-wrapper serlo-grouped-exercise-wrapper
-                mt-12 pt-2 [&>div]:border-none
+                mt-6 pt-2 [&>div]:border-none
               `}
             >
               {element}

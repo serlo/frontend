@@ -35,7 +35,9 @@ export function ScMcExerciseStaticRenderer({
     .slice(0)
     .map(({ isCorrect, feedback, content }) => {
       const hasFeedback = !isEmptyTextDocument(feedback)
-      const unwrappedFeedback = (feedback.state as Element[])?.[0].children
+      const unwrappedFeedback = hasFeedback
+        ? (feedback.state as Element[])?.[0].children
+        : []
 
       return {
         isCorrect,

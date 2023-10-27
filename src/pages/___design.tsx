@@ -15,12 +15,7 @@ const ContentPage: NextPage = () => {
       <Head>
         <meta name="robots" content="noindex" />
       </Head>
-      <DesignGuideSVG className="design-guide mx-auto h-auto max-w-5xl" />
-      <style jsx global>{`
-        .design-guide text {
-          white-space: normal !important;
-        }
-      `}</style>
+      <DesignGuideSVG className="design-guide mx-auto h-auto max-w-5xl [&_text]:!whitespace-normal" />
     </FrontendClientBase>
   )
 }

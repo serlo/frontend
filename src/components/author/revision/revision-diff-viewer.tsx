@@ -20,21 +20,8 @@ export function RevisionDiffViewer({ data, mode }: RevisionDiffViewerProps) {
   const { strings } = useInstanceData()
   return (
     <>
-      <style jsx>{`
-        .wrapper-split :global(td) {
-          max-width: 45vw;
-          overflow: scroll;
-        }
-        .wrapper-split :global(pre) {
-          font-size: 0.9rem;
-        }
-
-        .wrapper-single :global(pre) {
-          font-size: 1.125rem !important;
-        }
-      `}</style>
       {mode === DiffViewerMode.content ? (
-        <div className="wrapper-split">
+        <div className="[&_pre]:text-sm [&_td]:max-w-[45vw] [&_td]:overflow-scroll">
           <ReactDiffViewer
             leftTitle={strings.revisions.currentVersion}
             rightTitle={strings.revisions.thisVersion}
@@ -46,7 +33,7 @@ export function RevisionDiffViewer({ data, mode }: RevisionDiffViewerProps) {
           />{' '}
         </div>
       ) : (
-        <div className="wrapper-single [&_pre]:font-serlo">
+        <div className="[&_pre]:!font-serlo [&_pre]:!text-lg">
           <ReactDiffViewer
             oldValue={data.currentRevision[mode]}
             newValue={data.thisRevision[mode]}

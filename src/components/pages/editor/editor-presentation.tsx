@@ -12,8 +12,8 @@ import { Logo } from '@/components/navigation/header/logo'
 import { breakpoints } from '@/helper/breakpoints'
 import { tw } from '@/helper/tw'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
-import { VideoStaticRenderer } from '@/serlo-editor/plugins/video/static'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
+import { VideoSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/video-serlo-static-renderer'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const h2Class =
@@ -87,7 +87,7 @@ export function EditorPresentation() {
               </p>
             </div>
             <div className="-mx-side mt-8 pl-2 sm:max-w-[32rem] sm:flex-1">
-              <VideoStaticRenderer
+              <VideoSerloStaticRenderer
                 plugin={EditorPluginType.Video}
                 state={{
                   src: 'https://www.youtube.com/watch?v=wjaPgGdw23w',

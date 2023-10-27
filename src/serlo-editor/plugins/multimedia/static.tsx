@@ -1,9 +1,6 @@
-import clsx from 'clsx'
-
 import { MultimediaRenderer } from './renderer'
 import { isEmptyRowsDocument } from '../rows/utils/static-is-empty'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   EditorAudioDocument,
   EditorGeogebraDocument,
@@ -26,16 +23,10 @@ export function MultimediaStaticRenderer({
 
   if (isEmptyMedia() && isEmptyRowsDocument(explanation)) return null
 
-  const isArticleIntro = explanation.plugin === EditorPluginType.Text
-
   return (
     <MultimediaRenderer
       media={<StaticRenderer document={multimedia} />}
-      explanation={
-        <div className={clsx('pb-block', isArticleIntro ? '' : '-mt-block')}>
-          <StaticRenderer document={explanation} />
-        </div>
-      }
+      explanation={<StaticRenderer document={explanation} />}
       mediaWidth={mediaWidth ?? 50}
       onClick={({ target }: React.MouseEvent<HTMLDivElement>) => {
         if (!setOpen || (target as HTMLElement).tagName !== 'IMG') return

@@ -1,6 +1,6 @@
 import { DndContext, UniqueIdentifier } from '@dnd-kit/core'
 import * as t from 'io-ts'
-import { createContext, useMemo, useState } from 'react'
+import { ReactNode, createContext, useMemo, useState } from 'react'
 
 import { GapSolution } from './components/gap-solution'
 import { GapSolutionsArea } from './components/gap-solution-area'
@@ -37,7 +37,7 @@ const GapState = t.type({
 type GapId = string
 
 export function FillInTheGapRenderer(props: {
-  text: JSX.Element
+  text: ReactNode
   textPluginState: {
     plugin: string
     state?: unknown

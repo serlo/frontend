@@ -1,6 +1,7 @@
 import { useDroppable } from '@dnd-kit/core'
+import { ReactNode } from 'react'
 
-export function GapSolutionsArea(props: { children: JSX.Element }) {
+export function GapSolutionsArea(props: { children: ReactNode }) {
   const { setNodeRef } = useDroppable({
     id: 'gap-solutions-area',
   })
