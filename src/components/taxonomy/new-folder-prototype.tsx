@@ -22,8 +22,6 @@ export interface NewFolderPrototypeProps {
   data: TaxonomyData
 }
 
-//TODO: fix solved-stuff
-
 const hardcodedDataforDreisatz = [
   {
     title: 'Eiskugeln Preise',

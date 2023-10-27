@@ -14,7 +14,7 @@ import {
 import type { ReversibleAction } from '..'
 import {
   StateUpdater,
-  StoreDeserializeHelpers,
+  ToStoreHelpers,
 } from '../../types/internal__plugin-state'
 import {
   runCommitActionToHistorySaga,
@@ -41,7 +41,7 @@ function* changeDocumentSaga(action: ReturnType<typeof runChangeDocumentSaga>) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [actions, state]: [ReversibleAction[], unknown] = yield call(
     handleRecursiveInserts,
-    (helpers: StoreDeserializeHelpers) => {
+    (helpers: ToStoreHelpers) => {
       return stateHandler.initial(document.state, helpers)
     },
     [],
@@ -119,7 +119,7 @@ function* changeDocumentSaga(action: ReturnType<typeof runChangeDocumentSaga>) {
       const [resolveActions, pureResolveState]: [ReversibleAction[], unknown] =
         yield call(
           handleRecursiveInserts,
-          (helpers: StoreDeserializeHelpers) => {
+          (helpers: ToStoreHelpers) => {
             return updater(currentDocument.state, helpers)
           },
           [],
@@ -154,7 +154,7 @@ function* replaceDocumentSaga(
     plugin: string
     state?: unknown
   }[] = []
-  const helpers: StoreDeserializeHelpers = {
+  const helpers: ToStoreHelpers = {
     createDocument(doc) {
       pendingDocs.push(doc)
     },
@@ -163,7 +163,7 @@ function* replaceDocumentSaga(
   if (action.payload.state === undefined) {
     pluginState = plugin.state.createInitialState(helpers)
   } else {
-    pluginState = plugin.state.deserialize(action.payload.state, helpers)
+    pluginState = plugin.state.toStoreState(action.payload.state, helpers)
   }
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [actions]: [ReversibleAction[], unknown] = yield call(
@@ -196,7 +196,7 @@ interface ChannelAction {
 }
 
 export function* handleRecursiveInserts(
-  act: (helpers: StoreDeserializeHelpers) => unknown,
+  act: (helpers: ToStoreHelpers) => unknown,
   initialDocuments: { id: string; plugin: string; state?: unknown }[] = [],
   shouldFocusInsertedDocument: boolean = false
 ) {
@@ -206,7 +206,7 @@ export function* handleRecursiveInserts(
     plugin: string
     state?: unknown
   }[] = initialDocuments
-  const helpers: StoreDeserializeHelpers = {
+  const helpers: ToStoreHelpers = {
     createDocument(doc) {
       pendingDocs.push(doc)
     },
@@ -224,7 +224,7 @@ export function* handleRecursiveInserts(
     const state: unknown =
       doc.state === undefined
         ? plugin.state.createInitialState(helpers)
-        : plugin.state.deserialize(doc.state, helpers)
+        : plugin.state.toStoreState(doc.state, helpers)
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const currentDocument: ReturnType<typeof selectDocument> = yield select(

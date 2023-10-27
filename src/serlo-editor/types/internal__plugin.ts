@@ -1,7 +1,7 @@
 import {
   StateType,
   StateTypeReturnType,
-  StateTypeSerializedType,
+  StateTypeStaticType,
 } from './internal__plugin-state'
 
 // A Serlo Editor plugin
@@ -30,7 +30,7 @@ export interface EditorPlugin<
    *
    * @param text - The pasted text
    */
-  onText?(text: string): void | { state?: StateTypeSerializedType<S> }
+  onText?(text: string): void | { state?: StateTypeStaticType<S> }
 
   /**
    * May be provided to let the plugin respond to file [`paste` events](https://developer.mozilla.org/docs/Web/API/Element/paste_event)
@@ -38,7 +38,7 @@ export interface EditorPlugin<
    *
    * @param files - The [FileList](https://developer.mozilla.org/en-US/docs/Web/API/FileList)
    */
-  onFiles?(files: File[]): void | { state?: StateTypeSerializedType<S> }
+  onFiles?(files: File[]): void | { state?: StateTypeStaticType<S> }
 
   /**
    * May be provided to prevent the default Serlo Editor keyboard shortcuts

@@ -27,6 +27,7 @@ import { TemplatePluginType } from './types/template-plugin-type'
 import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
 import { isPrintMode } from '@/components/print-mode'
+import { isProduction } from '@/helper/is-production'
 import {
   InitRenderersArgs,
   LinkRenderer,
@@ -40,7 +41,6 @@ import { SpoilerStaticRenderer } from '@/serlo-editor/plugins/spoiler/static'
 import type { MathElement } from '@/serlo-editor/plugins/text'
 import { TextStaticRenderer } from '@/serlo-editor/plugins/text/static'
 import { MultimediaSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/multimedia-serlo-static-renderer'
-import { isProduction } from '@/helper/is-production'
 
 const EquationsStaticRenderer = dynamic<EditorEquationsDocument>(() =>
   import('@/serlo-editor/plugins/equations/static').then(
@@ -111,7 +111,7 @@ const HighlightStaticRenderer = dynamic<EditorHighlightDocument>(() =>
   )
 )
 const StaticMath = dynamic<MathElement>(() =>
-  import('@/serlo-editor/plugins/text/components/static-math').then(
+  import('@/serlo-editor/plugins/text/static-components/static-math').then(
     (mod) => mod.StaticMath
   )
 )
@@ -145,11 +145,12 @@ export function createRenderers(): InitRenderersArgs {
       {
         type: EditorPluginType.Injection,
         renderer: (props: EditorInjectionDocument) => {
+          if (!props.state) return null
           return (
-            <>
+            <Lazy>
               <InjectionStaticRenderer {...props} />
               <ExtraInfoIfRevisionView>{props.state}</ExtraInfoIfRevisionView>
-            </>
+            </Lazy>
           )
         },
       },

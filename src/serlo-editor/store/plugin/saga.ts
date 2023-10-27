@@ -14,7 +14,7 @@ import {
 } from '../documents'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
-// TODO: Move all plugin sagas to documents slice and remove plugin slice
+// Consider moving all plugin sagas to documents slice and remove plugin slice
 
 export function* pluginSaga() {
   yield all([

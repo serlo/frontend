@@ -18,35 +18,31 @@ import { emptyDocumentFactory } from './utils/document'
 import { isEmptyObject } from './utils/object'
 import { type EditorPlugin, serializedScalar } from '@/serlo-editor/plugin'
 
-export function createTextEditorState() {
-  return serializedScalar(emptyDocumentFactory(), {
-    serialize({ value }) {
-      return value
+const createTextPlugin = (
+  config: TextEditorConfig
+): EditorPlugin<TextEditorState, TextEditorConfig> => ({
+  Component: TextEditor,
+  config,
+  state: serializedScalar(emptyDocumentFactory(), {
+    toStaticState({ value }) {
+      return value //slate
     },
-    deserialize(value) {
-      if (value.length === 0) {
+    toStoreState(descendants) {
+      if (descendants.length === 0) {
         return emptyDocumentFactory()
       }
 
       // If the first child of the Element is an empty object,
       // replace it with an empty document.
       // https://docs.slatejs.org/concepts/11-normalizing#built-in-constraints
-      const firstChild = (value[0] as CustomElement).children[0]
+      const firstChild = (descendants[0] as CustomElement).children[0]
       if (isEmptyObject(firstChild)) {
         return emptyDocumentFactory()
       }
 
-      return { value, selection: null }
+      return { value: descendants, selection: null }
     },
-  })
-}
-
-const createTextPlugin = (
-  config: TextEditorConfig
-): EditorPlugin<TextEditorState, TextEditorConfig> => ({
-  Component: TextEditor,
-  config,
-  state: createTextEditorState(),
+  }),
   onKeyDown() {
     return false
   },
@@ -83,10 +79,10 @@ export type {
   ListItemText,
   Heading,
   Link,
+  Gap,
   MathElement,
   CustomText,
   TextEditorConfig,
   TextEditorState,
   TextEditorProps,
-  Gap,
 }

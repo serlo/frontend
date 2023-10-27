@@ -1,9 +1,9 @@
 import { faBellSlash, faCheck } from '@fortawesome/free-solid-svg-icons'
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
+import dynamic from 'next/dynamic'
 
 import { UserLink } from './user-link'
-import { MathSpan } from '../content/math-span'
 import { FaIcon } from '../fa-icon'
 import { useAuthentication } from '@/auth/use-authentication'
 import { Link } from '@/components/content/link'
@@ -14,6 +14,7 @@ import { GetNotificationsQuery } from '@/fetcher/graphql-types/operations'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
+import type { StaticMathProps } from '@/serlo-editor/plugins/text/static-components/static-math'
 
 type Event = GetNotificationsQuery['notifications']['nodes'][number]['event']
 
@@ -33,6 +34,12 @@ interface EventProps {
   slim?: boolean
   noPrivateContent?: boolean
 }
+
+const StaticMath = dynamic<StaticMathProps>(() =>
+  import('@/serlo-editor/plugins/text/static-components/static-math').then(
+    (mod) => mod.StaticMath
+  )
+)
 
 export function Event({
   event,
@@ -246,8 +253,8 @@ export function Event({
       content.length > maxLength
         ? content.substring(0, maxLength) + '…'
         : content
-    const withMath = replaceWithJSX([shortened], /%%(.+?)%%/g, (str, i) => (
-      <MathSpan key={`math-${i}`} formula={str} />
+    const withMath = replaceWithJSX([shortened], /%%(.+?)%%/g, (formula, i) => (
+      <StaticMath key={`math-${i}`} type="math" src={formula} inline />
     ))
     return <div className="text-gray-500">{withMath}</div>
   }

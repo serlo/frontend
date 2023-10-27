@@ -6,6 +6,7 @@ import {
   RevisionPreviewBoxes,
   type RevisionPreviewBoxesProps,
 } from './revision-preview-boxes'
+import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { UserTools } from '@/components/user-tools/user-tools'
@@ -169,10 +170,12 @@ export function Revision({ data }: RevisionProps) {
               })}{' '}
             </span>
           )}
-          <InjectionStaticRenderer
-            plugin={EditorPluginType.Injection}
-            state={parentId.toString()}
-          />
+          <Lazy>
+            <InjectionStaticRenderer
+              plugin={EditorPluginType.Injection}
+              state={parentId.toString()}
+            />
+          </Lazy>
         </div>
       </>
     )
