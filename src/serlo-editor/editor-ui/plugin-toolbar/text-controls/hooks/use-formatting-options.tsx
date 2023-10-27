@@ -94,11 +94,6 @@ const registeredHotkeys = [
     option: TextEditorFormattingOption.math,
     handler: toggleMath,
   },
-  {
-    hotkey: 'mod+ü', // @@@ Temporary shortcut
-    option: TextEditorFormattingOption.gap,
-    handler: toggleGap,
-  },
 ]
 
 const registeredMarkdownShortcuts = [
@@ -130,7 +125,6 @@ export const useFormattingOptions = (
   const { strings } = useInstanceData()
   const textStrings = useEditorStrings().plugins.text
 
-  // @@@ Rename to initialize formatting options
   const createTextEditor = useCallback(
     (baseEditor: SlateEditor) =>
       formattingOptions.reduce((currentEditor, currentOption) => {
@@ -347,14 +341,14 @@ function createToolbarControls(
     // Gap
     {
       name: TextEditorFormattingOption.gap,
-      title: 'Gap', // @@@
+      title: textStrings.gap,
       isActive: isGapActive,
       onClick: toggleGap,
       renderIcon: () => (
         <span className="h-[15px] rounded-full border border-editor-primary-300 p-1">
           Lücke
         </span>
-      ), // @@@
+      ), // TODO: Icon and styling
     },
   ].map((option) => {
     return {

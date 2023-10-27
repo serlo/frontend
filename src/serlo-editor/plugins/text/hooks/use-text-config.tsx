@@ -10,7 +10,7 @@ const defaultFormattingOptions: TextEditorFormattingOption[] = [
   TextEditorFormattingOption.math,
   TextEditorFormattingOption.richTextBold,
   TextEditorFormattingOption.richTextItalic,
-  TextEditorFormattingOption.gap, // @@@ This should be passed instead, not default
+  TextEditorFormattingOption.gap,
 ]
 
 export const useTextConfig = (config: TextEditorConfig) => ({

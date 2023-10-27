@@ -214,7 +214,9 @@ export function createPlugins({
       }),
     },
     { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
-    { type: 'fillInTheGapExercise', plugin: fillInTheGapExercise },
+    ...(isProduction
+      ? []
+      : [{ type: EditorPluginType.FillInTheGapExercise, plugin: fillInTheGapExercise }]),
 
     // Special plugins, never visible in suggestions
     // ===================================================

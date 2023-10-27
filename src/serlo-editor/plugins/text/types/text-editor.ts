@@ -14,11 +14,10 @@ export type CustomElement =
 
 export interface Gap {
   type: 'gap'
-  children: CustomText[] // @@@ Make only Text[]
-  id: string // @@@ Used to uniquely identify a gap
+  children: CustomText[]
+  gapId: string // Used to uniquely identify a gap
   correctAnswer: string
   alternativeSolutions: string[]
-  userEntry: string // @@@ Idea: Set this when user drops draggable. This causes rerender of gap (enable/disable drop, show dropped item, ...). A little bit confusing because this is never saved, userEntry="" for every entry in database. But void elements also save an empty text node.
 }
 
 export interface Heading {
@@ -64,7 +63,7 @@ export interface MathElement {
   type: 'math'
   src: string
   inline: boolean
-  children: CustomText[] // @@@ Maybe also only Text here?
+  children: CustomText[]
 }
 
 export interface CustomText {
@@ -79,9 +78,6 @@ export interface CustomText {
 export interface Text {
   text: string
 }
-
-// @@@ Use this
-// export type CustomText = Text | TextWithFormatting
 
 // Adds type info for custom elements to slate
 // See: https://docs.slatejs.org/concepts/12-typescript

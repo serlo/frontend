@@ -842,6 +842,7 @@ export const loggedInData = {
           lists: 'Lists',
           mathFormula: 'Math formula (%ctrlOrCmd% + M)',
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
+          gap: 'Gap',
           bold: 'Bold (%ctrlOrCmd% + B)',
           italic: 'Italic (%ctrlOrCmd% + I)',
           noItemsFound: 'No items found',
@@ -890,6 +891,10 @@ export const loggedInData = {
         scMcExercise: {
           title: 'SC/MC Exercise',
           description: 'Single Choice or Multiple Choice'
+        },
+        fillInTheGap: {
+          title: 'Fill-In-The-Gap Exercise',
+          description: 'Text with gaps'
         }
       },
       templatePlugins: {
@@ -951,6 +956,7 @@ export const loggedInData = {
           scMcExercise: 'Choice exercise',
           inputExercise: 'Input exercise',
           h5p: 'H5p exercise',
+          fillInTheGapExercise: 'Fill-in-the-gap exercise',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
           removeInteractive: 'Remove interactive element',

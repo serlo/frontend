@@ -1,5 +1,5 @@
 import { createElement, useCallback, useMemo } from 'react'
-import { Editor as SlateEditor } from 'slate'
+import { Editor as SlateEditor, Transforms } from 'slate'
 import { ReactEditor, RenderElementProps, RenderLeafProps } from 'slate-react'
 
 import { MathElement } from '../components/math-element'
@@ -81,74 +81,28 @@ export const useSlateRenderHandlers = ({
         )
       }
       if (element.type === 'gap') {
+        // TODO: Render <GapRenderer> here instead
+        // <GapRenderer> needs to ...
+        // - always show input fields
+        // - accept callback onChange that is passed to input element to update correctAnswer
         return (
-          <>
-            <span
-              {...attributes}
-              className="rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2"
-            >
-              {children}
-              {/* {element.alternativeSolutions.map(
-                (alternativeSolution, index) => (
-                  <span className="hidden" key={index}>
-                    {alternativeSolution}
-                  </span>
+          <span {...attributes} contentEditable={false}>
+            <input
+              value={element.correctAnswer}
+              size={element.correctAnswer.length}
+              className="rounded-full border border-brand bg-brand-50 px-2"
+              onChange={(evt) => {
+                const path = ReactEditor.findPath(editor, element)
+                Transforms.setNodes(
+                  editor,
+                  { correctAnswer: evt.target.value },
+                  { at: path }
                 )
-              )} */}
-            </span>
-            {/* {isReadOnly ? (
-              <span {...attributes}>
-                {dragAndDropMode ? (
-                  <Droppable droppableId={Math.random().toString()}>
-                    {(provided, snapshot) => (
-                      <span
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                        className={clsx(
-                          'h-full resize-none rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2',
-                          snapshot.isDraggingOver ?? 'bg-editor-primary-500'
-                        )}
-                      >
-                        {element.userEntry}
-                        {provided.placeholder}
-                      </span>
-                    )}
-                  </Droppable>
-                ) : (
-                  <input
-                    className="h-full resize-none rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2"
-                    size={20}
-                    spellCheck={false}
-                    autoCorrect="off"
-                    placeholder=""
-                    type="text"
-                  />
-                )}
-                <span className="hidden">{children}</span>
-                {element.alternativeSolutions.map(
-                  (alternativeSolution, index) => (
-                    <span className="hidden" key={index}>
-                      {alternativeSolution}
-                    </span>
-                  )
-                )}
-              </span>
-            ) : (
-              <span
-                {...attributes}
-                className="rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2"
-              >
-                {children}
-                {element.alternativeSolutions.map(
-                  (alternativeSolution, index) => (
-                    <span className="hidden" key={index}>
-                      {alternativeSolution}
-                    </span>
-                  )
-                )}
-              </span>
-            )} */}
-          </>
+              }}
+            />
+            {/* children is always an empty text but slate will complain if this is not included here */}
+            {children}
+          </span>
         )
       }
       return <div {...attributes}>{children}</div>

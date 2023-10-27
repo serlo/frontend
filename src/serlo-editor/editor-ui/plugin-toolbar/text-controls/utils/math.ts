@@ -42,7 +42,7 @@ export function toggleMath(editor: SlateEditor) {
         type: 'math',
         src: SlateEditor.string(editor, trimmedSelection as Location) || '',
         inline: true,
-        children: [],
+        children: [{ text: '' }],
       },
     ],
     { at: trimmedSelection as Location }

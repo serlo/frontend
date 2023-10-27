@@ -7,9 +7,9 @@ export const withGaps = (editor: Editor) => {
     return element.type === 'gap' ? true : isInline(element)
   }
 
-  //   editor.isVoid = (element) => {
-  //     return element.type === 'gap' ? true : isInline(element)
-  //   }
+  editor.isVoid = (element) => {
+    return element.type === 'gap' ? true : isInline(element)
+  }
 
   return editor
 }

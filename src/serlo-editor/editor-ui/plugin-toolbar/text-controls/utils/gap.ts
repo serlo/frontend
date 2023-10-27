@@ -4,9 +4,9 @@ import {
   Node,
   Range,
   Transforms,
-  Editor,
+  Location,
 } from 'slate'
-import { v4 } from 'uuid'
+import { v4 as uuid_v4 } from 'uuid'
 
 import { selectionHasElement, trimSelection } from './selection'
 import type { Gap } from '@/serlo-editor/plugins/text'
@@ -26,7 +26,10 @@ export function getGapElement(editor: SlateEditor): Gap | undefined {
 
 export function toggleGap(editor: SlateEditor) {
   if (isGapActive(editor)) {
-    Transforms.unwrapNodes(editor, { match: matchGaps })
+    Transforms.removeNodes(editor, {
+      match: (n) => Element.isElement(n) && n.type === 'gap',
+    })
+    // TODO: Gap and also its content disappear. Instead gap content should be added back as text element (also not working in toggleMath)
     return
   }
 
@@ -36,31 +39,27 @@ export function toggleGap(editor: SlateEditor) {
   if (isCollapsed) {
     Transforms.insertNodes(editor, {
       type: 'gap',
-      children: [{ text: ' ' }],
-      id: v4(),
+      gapId: uuid_v4(),
       correctAnswer: '',
-      alternativeSolutions: ['Banana'],
-      userEntry: 'Apple',
+      alternativeSolutions: [],
+      children: [{ text: '' }],
     })
     return
   }
 
-  trimSelection(editor)
-
-  const selectedText = editor.selection
-    ? Editor.string(editor, editor.selection)
-    : ''
-  Transforms.wrapNodes(
+  const trimmedSelection = trimSelection(editor)
+  Transforms.insertNodes(
     editor,
-    {
-      type: 'gap',
-      children: [{ text: '' }],
-      id: v4(),
-      correctAnswer: selectedText,
-      alternativeSolutions: ['Banana'],
-      userEntry: 'Apple',
-    },
-    { split: true }
+    [
+      {
+        type: 'gap',
+        gapId: uuid_v4(),
+        correctAnswer:
+          SlateEditor.string(editor, trimmedSelection as Location) || '',
+        alternativeSolutions: [],
+        children: [{ text: '' }],
+      },
+    ],
+    { at: trimmedSelection as Location }
   )
-  Transforms.collapse(editor, { edge: 'end' })
 }

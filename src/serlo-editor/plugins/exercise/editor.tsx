@@ -3,26 +3,30 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import type { ExerciseProps } from '.'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { isProduction } from '@/helper/is-production'
 import { tw } from '@/helper/tw'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { store, selectDocument } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-const interactiveExerciseTypes = [
-  EditorPluginType.ScMcExercise,
-  EditorPluginType.InputExercise,
-  EditorPluginType.H5p,
-  EditorPluginType.FillInTheGapExercise,
-] as const
+const interactiveExerciseTypes = isProduction
+  ? ([
+      EditorPluginType.ScMcExercise,
+      EditorPluginType.InputExercise,
+      EditorPluginType.H5p,
+    ] as const)
+  : ([
+      EditorPluginType.ScMcExercise,
+      EditorPluginType.InputExercise,
+      EditorPluginType.H5p,
+      EditorPluginType.FillInTheGapExercise,
+    ] as const)
 
 export function ExerciseEditor({ editable, state }: ExerciseProps) {
   const { content, interactive } = state
 
-  const exStrings = {
-    ...useEditorStrings().templatePlugins.exercise,
-    fillInTheGapExercise: 'Lückentext',
-  } // @@@ Move this to correct place
+  const exStrings = useEditorStrings().templatePlugins.exercise
   return (
     <>
       {content.render()}

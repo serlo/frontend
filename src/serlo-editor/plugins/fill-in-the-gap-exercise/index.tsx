@@ -1,5 +1,4 @@
-import { useMemo } from 'react'
-
+import { FillInTheGapRenderer } from './renderer'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import {
@@ -42,8 +41,8 @@ function createFillInTheGapExerciseState() {
         ],
       },
     }),
-    // mode: string('drag-and-drop'),
     mode: string('fill-in-the-gap'),
+    // mode: string('drag-and-drop'),
   })
 }
 
@@ -51,45 +50,31 @@ export type FillInTheGapExerciseProps =
   EditorPluginProps<FillInTheGapExerciseState>
 
 export function FillInTheGapExerciseEditor(props: FillInTheGapExerciseProps) {
-  const { focused, state } = props
-  const { mode } = state
-  // Get state of text component and rerender when it changes.
-  const textState = useAppSelector((state) => {
+  const { focused } = props
+  // Only for debug view
+  const textPluginState = useAppSelector((state) => {
     return selectDocument(state, props.state.text.id)
   })
 
-  const gapSolutions: string[] = useMemo(() => {
-    const matches = JSON.stringify(textState).matchAll(
-      /"correctAnswer":"(\w*)"/gi
-    )
-    if (!matches) return []
-    const result = []
-    for (const match of matches) {
-      result.push(match[match.length - 1])
-    }
-    return result
-  }, [textState])
+  if (!textPluginState) return null
 
   return (
     <>
       <div className="hidden">
         {focused ? <FillInTheGapExerciseToolbar /> : null}
       </div>
-      {props.state.text.render()}
-
-      {mode.value === 'drag-and-drop' && gapSolutions ? (
-        <div className="">
-          {gapSolutions.map((gapSolution, index) => (
-            <span className="mx-2" key={index}>
-              {gapSolution}
-            </span>
-          ))}
-        </div>
-      ) : null}
+      <FillInTheGapRenderer
+        text={props.state.text.render()}
+        textPluginState={textPluginState}
+        mode={props.state.mode.value}
+      />
+      <div className="hidden">{JSON.stringify(textPluginState)}</div>
     </>
   )
 }
 
+// TODO: Add button to toggle between fill-in-the-gap and drag-and-drop
+// TODO: Make toolbars nested like in multimedia
 function FillInTheGapExerciseToolbar() {
   return (
     <PluginToolbar

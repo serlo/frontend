@@ -1,84 +1,120 @@
-import {
-  DndContext,
-  UniqueIdentifier,
-  useDraggable,
-  useDroppable,
-} from '@dnd-kit/core'
-import { createContext, useState } from 'react'
+import { DndContext, UniqueIdentifier } from '@dnd-kit/core'
+import * as t from 'io-ts'
+import { createContext, useMemo, useState } from 'react'
 
-import { GapModeContext } from './context/gap-mode'
+import { GapSolution } from './components/gap-solution'
+import { GapSolutionsArea } from './components/gap-solution-area'
+import { GapStatesContext } from './context/gap-context'
 import { Feedback } from '../sc-mc-exercise/renderer/feedback'
 import { useInstanceData } from '@/contexts/instance-context'
-import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 
-export interface GapSolution {
+// TODO: Use Map container here as well
+export interface GapDragAndDropSolution {
   draggableId: UniqueIdentifier
   text: string
   inDroppableId: UniqueIdentifier
 }
-
-const initialGapSolutionList: GapSolution[] = [
+// Hardcoded draggable element
+const initialDragAndDropSolutions: GapDragAndDropSolution[] = [
   {
     draggableId: 'draggable-1',
     text: 'draggable-1',
     inDroppableId: 'gap-solutions-area',
   },
 ]
+export const GapDragAndDropSolutions = createContext<
+  GapDragAndDropSolution[] | null
+>(null)
 
-export const GapSolutionList = createContext<GapSolution[] | null>(null)
+// TODO: Copy of type in /home/lars/frontend/src/serlo-editor/plugins/text/types/text-editor.ts
+const GapState = t.type({
+  type: t.literal('gap'),
+  gapId: t.string,
+  correctAnswer: t.string,
+  alternativeSolutions: t.array(t.string),
+})
+
+type GapId = string
 
 export function FillInTheGapRenderer(props: {
-  text: {
+  text: JSX.Element
+  textPluginState: {
     plugin: string
     state?: unknown
     id?: string | undefined
   }
   mode: string
 }) {
-  const { text, mode } = props
-  // Get gap solutions from text state and initialize content.solutionArea
-  const [gapSolutionList, setGapSolutionList] = useState<GapSolution[]>(
-    initialGapSolutionList
-  )
-  const [showFeedback, setShowFeedback] = useState<boolean>(false)
+  const { text, textPluginState, mode } = props
+
   const exStrings = useInstanceData().strings.content.exercises
+
+  // Used to show feedback when user clicked "Stimmts?" button
+  const [showFeedback, setShowFeedback] = useState<boolean>(false)
+
+  // Maps gapId to the learner feedback after clicking "Stimmts?" button
+  // isCorrect === undefined -> no feedback
+  const [gapFeedback, setGapFeedback] = useState<
+    Map<GapId, { isCorrect: boolean | undefined }>
+  >(new Map<GapId, { isCorrect: boolean | undefined }>())
+
+  // Maps gapId to the text entered by the user
+  const [textUserTypedIntoGap, setTextUserTypedIntoGap] = useState<
+    Map<GapId, { text: string }>
+  >(new Map<GapId, { text: string }>())
+
+  // List of gap elements found in text editor state
+  const gapStateList: t.TypeOf<typeof GapState>[] = useMemo(() => {
+    // TODO: Remove entries in textUserTypedIntoGap where gapId no longer exists.
+    return getGapsWithinObject(textPluginState)
+  }, [textPluginState])
+
+  // Drag & drop stuff
+  // TODO: Should get gap solutions from text state
+  const [gapDragAndDropSolutions, setGapDragAndDropSolutions] = useState<
+    GapDragAndDropSolution[]
+  >(initialDragAndDropSolutions)
 
   return (
     <DndContext
       onDragEnd={(evt) => {
-        setGapSolutionList((draggableList) => {
-          // Change nothing
-          if (!evt.over) return draggableList
-          const index = draggableList.findIndex(
+        setGapDragAndDropSolutions((gapDragAndDropSolutions) => {
+          // Draggable not dropped over droppable -> Do not change state
+          if (!evt.over) return gapDragAndDropSolutions
+          const index = gapDragAndDropSolutions.findIndex(
             (draggable) => draggable.draggableId === evt.active.id
           )
-          if (index === -1) return draggableList
-          draggableList[index].inDroppableId = evt.over.id
-          return [...draggableList]
+          if (index === -1) return gapDragAndDropSolutions
+          // Change where this draggable is
+          gapDragAndDropSolutions[index].inDroppableId = evt.over.id
+          return [...gapDragAndDropSolutions]
         })
       }}
-      onDragStart={(evt) => {
-        evt.active.id
-      }}
     >
-      <GapModeContext.Provider value={mode}>
-        <GapSolutionList.Provider value={gapSolutionList}>
-          <StaticRenderer document={text} />
-        </GapSolutionList.Provider>
-      </GapModeContext.Provider>
+      <GapDragAndDropSolutions.Provider value={gapDragAndDropSolutions}>
+        <GapStatesContext.Provider
+          value={{
+            mode: mode,
+            gapFeedback: gapFeedback,
+            textUserTypedIntoGap: {
+              value: textUserTypedIntoGap,
+              set: setTextUserTypedIntoGap,
+            },
+          }}
+        >
+          {text}
+        </GapStatesContext.Provider>
+      </GapDragAndDropSolutions.Provider>
       {mode === 'drag-and-drop' ? (
         <GapSolutionsArea>
           <>
-            {gapSolutionList
-              .filter(
-                (gapSolution) =>
-                  gapSolution.inDroppableId === 'gap-solutions-area'
-              )
-              .map((gapSolution, index) => (
+            {gapDragAndDropSolutions
+              .filter((entry) => entry.inDroppableId === 'gap-solutions-area')
+              .map((dragAndDropSolution, index) => (
                 <GapSolution
                   key={index}
-                  text={gapSolution.text}
-                  draggableId={gapSolution.draggableId}
+                  text={dragAndDropSolution.text}
+                  draggableId={dragAndDropSolution.draggableId}
                 />
               ))}
           </>
@@ -89,51 +125,91 @@ export function FillInTheGapRenderer(props: {
         <button
           className="serlo-button-blue mr-3 h-8"
           onClick={() => {
+            checkAnswers()
             setShowFeedback(true)
           }}
         >
           {exStrings.check}
         </button>
-        {showFeedback && <Feedback correct />}
+        {showFeedback && (
+          <Feedback
+            correct={[...gapFeedback].every((entry) => entry[1].isCorrect)}
+          />
+        )}
+      </div>
+
+      {/* Only debug output from here on */}
+      <div className="hidden">
+        Gaps state:
+        {gapStateList.map((gap, index) => (
+          <div key={index}>{JSON.stringify(gap)}</div>
+        ))}
+      </div>
+      <div className="hidden">
+        <div>State textUserTypedIntoGap:</div>
+        {[...textUserTypedIntoGap].map((entry, index) => {
+          const gapId = entry[0]
+          const text = entry[1].text
+          return (
+            <div
+              className="ml-5"
+              key={index}
+            >{`Text: ${text} | GapId: ${gapId}`}</div>
+          )
+        })}
+      </div>
+      <div className="hidden">
+        {gapDragAndDropSolutions.map((entry, index) => (
+          <div
+            key={index}
+          >{`DraggableId: ${entry.draggableId} | in droppableId: ${entry.inDroppableId} | containing text: ${entry.text}`}</div>
+        ))}
       </div>
     </DndContext>
   )
-}
 
-export function GapSolution(props: {
-  text: string
-  draggableId: UniqueIdentifier
-}) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: props.draggableId,
-  })
-  const style = transform
-    ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+  function checkAnswers() {
+    if (mode === 'fill-in-the-gap') {
+      const newGapAnswersCorrectList = new Map<
+        GapId,
+        { isCorrect: boolean | undefined }
+      >()
+      gapStateList.forEach((gapState) => {
+        const textUserTypedIntoThisGap =
+          textUserTypedIntoGap.get(gapState.gapId)?.text ?? ''
+        const answerCorrect =
+          textUserTypedIntoThisGap === gapState.correctAnswer ||
+          textUserTypedIntoThisGap ===
+            gapState.alternativeSolutions.find(
+              (alternativeSolution) =>
+                textUserTypedIntoThisGap === alternativeSolution
+            )
+        newGapAnswersCorrectList.set(gapState.gapId, {
+          isCorrect: answerCorrect,
+        })
+      })
+
+      setGapFeedback(newGapAnswersCorrectList)
+    } else if (mode === 'drag-and-drop') {
+      // TODO: Check answers in drag-and-drop mode
+    }
+  }
+
+  // Searches for gap objects in text plugin state. They can be at varying depths.
+  function getGapsWithinObject(obj: object) {
+    if (GapState.is(obj)) {
+      return [obj]
+    }
+
+    // Recursively search this objects values for gap objects
+    let objList: t.TypeOf<typeof GapState>[] = []
+    Object.values(obj).forEach((_value) => {
+      const value: unknown = _value
+      if (typeof value === 'object' && value !== null) {
+        objList = [...objList, ...getGapsWithinObject(value)]
       }
-    : undefined
+    })
 
-  return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      {...listeners}
-      {...attributes}
-      className="inline-block h-full rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2"
-    >
-      {props.text}
-    </div>
-  )
-}
-
-function GapSolutionsArea(props: { children: JSX.Element }) {
-  const { setNodeRef } = useDroppable({
-    id: 'gap-solutions-area',
-  })
-
-  return (
-    <div className="min-h-8 w-full rounded-full bg-slate-100" ref={setNodeRef}>
-      {props.children}
-    </div>
-  )
+    return objList
+  }
 }
