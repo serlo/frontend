@@ -13,11 +13,14 @@ import {
   object,
   string,
   optional,
+  number,
 } from '@/serlo-editor/plugin'
 import { selectIsDocumentEmpty, useAppSelector } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const solutionState = object({
+  strategy: child({ plugin: EditorPluginType.Text }),
+  steps: child({ plugin: EditorPluginType.Rows }),
   prerequisite: optional(
     object({
       id: string(),
@@ -25,10 +28,7 @@ const solutionState = object({
       alias: optional(string()),
     })
   ),
-  strategy: child({
-    plugin: EditorPluginType.Text,
-  }),
-  steps: child({ plugin: EditorPluginType.Rows }),
+  licenseId: optional(number()),
 })
 
 export type SolutionPluginState = typeof solutionState

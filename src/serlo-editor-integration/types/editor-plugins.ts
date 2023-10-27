@@ -81,9 +81,6 @@ export interface EditorExerciseDocument {
     unrevisedRevisions?: number
     license?: License
   }
-
-  // until we actually move solution into exercise we add it here
-  solution?: EditorSolutionDocument
 }
 export interface EditorGeogebraDocument {
   plugin: EditorPluginType.Geogebra
