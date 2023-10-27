@@ -13,14 +13,14 @@ import { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import {
   DocumentState,
   selectDocumentPluginType,
-  selectSerializedDocument,
+  selectStaticDocument,
   store,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface RowDragObject {
   id: string
-  serialized: DocumentState
+  static: DocumentState
   onDrop(): void
 }
 
@@ -30,7 +30,6 @@ const pluginsWithOwnBorder = [
   EditorPluginType.Box,
   EditorPluginType.Geogebra,
   EditorPluginType.Highlight,
-  EditorPluginType.Multimedia,
   EditorPluginType.SerloTable,
   EditorPluginType.Spoiler,
   EditorPluginType.Video,
@@ -64,7 +63,7 @@ export function EditorRowRenderer({
     item: () => {
       return {
         id: row.id,
-        serialized: selectSerializedDocument(store.getState(), row.id),
+        static: selectStaticDocument(store.getState(), row.id),
         onDrop() {
           // Remove the dragged plugin from its original rows plugin
           rows.set((list) => {
@@ -122,10 +121,10 @@ export function EditorRowRenderer({
 
         const draggingAbove = isDraggingAbove(monitor)
         item.onDrop()
-        rows.set((list, deserializer) => {
+        rows.set((list, staticToStore) => {
           const index =
             list.findIndex((id) => id === row.id) + (draggingAbove ? 0 : 1)
-          return R.insert(index, deserializer(item.serialized), list)
+          return R.insert(index, staticToStore(item.static), list)
         })
         return
       }
@@ -191,6 +190,8 @@ export function EditorRowRenderer({
   const rowPluginType = selectDocumentPluginType(store.getState(), row.id)
   const shouldShowBorder = !pluginsWithOwnBorder.includes(rowPluginType)
 
+  const isMultimediaPlugin = rowPluginType === EditorPluginType.Multimedia
+
   return (
     <>
       {draggingAbove ? dropPreview : null}
@@ -212,7 +213,9 @@ export function EditorRowRenderer({
           [&:focus-within>.rows-tools]:opacity-100
           [&:has(.rows-editor-renderer-container:focus-within)>.rows-tools]:opacity-0
           [&:hover>.rows-tools]:!opacity-100
-          `
+          `,
+          isMultimediaPlugin &&
+            '[&>.rows-tools]:!-left-1 [&>.rows-tools]:!-top-9'
         )}
       >
         <RowDragButton drag={drag} />

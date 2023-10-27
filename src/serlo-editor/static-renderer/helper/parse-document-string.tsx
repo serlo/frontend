@@ -3,8 +3,8 @@ import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugi
 
 const fallback = { plugin: EditorPluginType.Rows }
 /**
- * Parses a serialized editor document (e.g. from the database)
- * into object with the type `AnyEditorDocument`
+ * Parses a serialized static editor document (e.g. from the database)
+ * into an static document (`AnyEditorDocument`)
  */
 export function parseDocumentString(input?: string): AnyEditorDocument {
   if (!input || !input.startsWith('{')) return fallback

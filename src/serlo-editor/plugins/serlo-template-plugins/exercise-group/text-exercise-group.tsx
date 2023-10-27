@@ -20,9 +20,9 @@ import {
   type EditorPlugin,
   type EditorPluginProps,
   list,
-  StateTypeSerializedType,
+  PrettyStaticState,
 } from '@/serlo-editor/plugin'
-import { selectSerializedDocument, store } from '@/serlo-editor/store'
+import { selectStaticDocument, store } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
@@ -38,6 +38,7 @@ export const textExerciseGroupTypeState = entityType(
     */
   },
   {
+    // I think this is not correct because it meant for strings?
     'grouped-text-exercise': list(serializedChild('type-text-exercise')),
   }
 )
@@ -64,13 +65,13 @@ function TextExerciseGroupTypeEditor(
 
   const exGroupStrings = useEditorStrings().templatePlugins.textExerciseGroup
 
-  const serializedState = selectSerializedDocument(store.getState(), props.id)
-    ?.state as StateTypeSerializedType<TextExerciseGroupTypePluginState>
+  const staticState = selectStaticDocument(store.getState(), props.id)
+    ?.state as PrettyStaticState<TextExerciseGroupTypePluginState>
 
-  if (!serializedState) return null
-  const serializedExercises = serializedState[
+  if (!staticState) return null
+  const staticExercises = staticState[
     'grouped-text-exercise'
-  ] as StateTypeSerializedType<TextExerciseTypePluginState>[]
+  ] as PrettyStaticState<TextExerciseTypePluginState>[]
 
   return (
     <>
@@ -99,8 +100,8 @@ function TextExerciseGroupTypeEditor(
                       <FaIcon icon={faTrashAlt} />
                     </button>
                     <ContentLoaders
-                      id={serializedExercises[index].id}
-                      currentRevision={serializedExercises[index].revision}
+                      id={staticExercises[index].id}
+                      currentRevision={staticExercises[index].revision}
                       onSwitchRevision={(data) =>
                         child.replace(TemplatePluginType.TextExercise, data)
                       }

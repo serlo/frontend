@@ -26,11 +26,7 @@ export function MultimediaStaticRenderer({
   return (
     <MultimediaRenderer
       media={<StaticRenderer document={multimedia} />}
-      explanation={
-        <div className="pt-5">
-          <StaticRenderer document={explanation} />
-        </div>
-      }
+      explanation={<StaticRenderer document={explanation} />}
       mediaWidth={mediaWidth ?? 50}
       onClick={({ target }: React.MouseEvent<HTMLDivElement>) => {
         if (!setOpen || (target as HTMLElement).tagName !== 'IMG') return

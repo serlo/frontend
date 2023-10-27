@@ -46,7 +46,6 @@ export const MultimediaToolbar = ({ id, children }: MultimediaToolbarProps) => {
         </>
       }
       pluginControls={<PluginDefaultTools pluginId={id} />}
-      className="!left-[21px] -top-[32px] w-[calc(100%-37px)]"
     />
   )
 }

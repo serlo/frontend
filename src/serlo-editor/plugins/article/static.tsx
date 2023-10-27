@@ -22,8 +22,10 @@ export function ArticleStaticRenderer({ state }: EditorArticleDocument) {
     sources,
   } = state
 
+  const filteredExercises = exercises?.filter(({ state }) => !!state)
+
   const hasMoreLink = exerciseFolder.id && exerciseFolder.title
-  const hasExercises = exercises && exercises.length
+  const hasExercises = filteredExercises && filteredExercises.length
 
   const introductionOrNull = isEmptyTextDocument(
     (introduction as EditorMultimediaDocument).state.explanation
@@ -35,7 +37,9 @@ export function ArticleStaticRenderer({ state }: EditorArticleDocument) {
     <ArticleRenderer
       introduction={introductionOrNull}
       content={<StaticRenderer document={content} />}
-      exercises={hasExercises ? <StaticRenderer document={exercises} /> : null}
+      exercises={
+        hasExercises ? <StaticRenderer document={filteredExercises} /> : null
+      }
       exercisesFolder={
         hasMoreLink ? (
           <Link className="font-bold" href={`/${exerciseFolder.id}`}>

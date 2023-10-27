@@ -1,12 +1,20 @@
-import { MathSpan } from '@/components/content/math-span'
+import dynamic from 'next/dynamic'
+
 import type { BoxType } from '@/serlo-editor/plugins/box/renderer'
 import { BoxStaticRenderer } from '@/serlo-editor/plugins/box/static'
 import { HighlightRenderer } from '@/serlo-editor/plugins/highlight/renderer'
 import { SpoilerRenderer } from '@/serlo-editor/plugins/spoiler/renderer'
+import type { StaticMathProps } from '@/serlo-editor/plugins/text/static-components/static-math'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import type { EditorBoxDocument } from '@/serlo-editor-integration/types/editor-plugins'
+
+const StaticMath = dynamic<StaticMathProps>(() =>
+  import('@/serlo-editor/plugins/text/static-components/static-math').then(
+    (mod) => mod.StaticMath
+  )
+)
 
 function createBoxExample(title: string, content: string, type: BoxType) {
   return {
@@ -129,7 +137,11 @@ export const spoilerExample = (
   <>
     <div className="slate-container mb-block">
       <h4 className="serlo-h4">
-        <MathSpan formula="23+19= 23 +(17+2)=(23+17)+2=40+2=42" />
+        <StaticMath
+          type="math"
+          src="23+19= 23 +(17+2)=(23+17)+2=40+2=42"
+          inline
+        />
       </h4>
     </div>
     <SpoilerRenderer
@@ -138,7 +150,11 @@ export const spoilerExample = (
         <div className="serlo-spoiler-body motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-8">
           <div className="slate-container mb-block">
             <p className="slate-p serlo-p mb-0 min-h-[1.33em]">
-              <MathSpan formula="23+19=(21+2)+19=(21+19)+2=40+2=42" />
+              <StaticMath
+                type="math"
+                src="23+19=(21+2)+19=(21+19)+2=40+2=42"
+                inline
+              />
             </p>
           </div>
         </div>

@@ -14,7 +14,7 @@ import {
  * Helper for static renderer that returns the direct children of the supplied document.
  * Run this recursively if you need the nested children as well
  */
-export function getChildrenOfSerializedDocument(
+export function getChildrenOfStaticDocument(
   document?: AnyEditorDocument,
   ignore?: string[]
 ): AnyEditorDocument[] {
