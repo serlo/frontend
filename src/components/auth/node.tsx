@@ -64,11 +64,30 @@ export function Node({
           />
         )
 
+      // maybe helpful: https://github.com/ory/elements/blob/main/src/react-components/checkbox.tsx#L23
       case 'checkbox': {
-        triggerSentry({
-          message: `kratos: tried to render input node which is not supported atm: ${attributes.type}`,
-        })
-        return null
+        return (
+          <>
+            <label className="flex items-start">
+              <input
+                type="checkbox"
+                id={attributes.name}
+                name={attributes.name}
+                value={1}
+                checked={!!value}
+                onChange={(e) => {
+                  onChange(e.target.checked)
+                }}
+                className="mr-2 mt-0.5 h-4 w-4 min-w-[14px] scale-125 accent-brand"
+              />
+
+              {/* For now we use checkbox only for newsletter subscription */}
+              <span className="inline-block">
+                {strings.auth.register.newsletterSubscription}
+              </span>
+            </label>
+          </>
+        )
       }
       // provider - NBP button
       case 'button': {
