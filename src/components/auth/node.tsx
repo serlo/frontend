@@ -58,7 +58,7 @@ export function Node({
         return (
           <input
             type={attributes.type}
-            id={attributes.name}
+            name={attributes.name}
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             value={attributes.value ?? 'true'}
           />
@@ -68,7 +68,7 @@ export function Node({
       case 'checkbox': {
         return (
           <>
-            <label htmlFor={attributes.name} className="flex items-start">
+            <label className="flex items-start">
               <input
                 type="checkbox"
                 id={attributes.name}
