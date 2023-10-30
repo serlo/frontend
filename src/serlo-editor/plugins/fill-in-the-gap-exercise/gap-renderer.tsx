@@ -34,7 +34,7 @@ export function GapRenderer(props: { correctAnswer: string; gapId: string }) {
             isAnswerCorrect && 'border-green-500',
             isAnswerCorrect === false && 'border-red-500'
           )}
-          size={textInInput.length}
+          size={textInInput.length === 0 ? 1 : textInInput.length}
           spellCheck={false}
           autoCorrect="off"
           placeholder=""
