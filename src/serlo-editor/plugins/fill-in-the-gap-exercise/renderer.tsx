@@ -1,30 +1,30 @@
-import { DndContext, UniqueIdentifier } from '@dnd-kit/core'
+// import { DndContext, UniqueIdentifier } from '@dnd-kit/core'
 import * as t from 'io-ts'
-import { ReactNode, createContext, useMemo, useState } from 'react'
+import { ReactNode, useMemo, useState } from 'react'
 
-import { GapSolution } from './components/gap-solution'
-import { GapSolutionsArea } from './components/gap-solution-area'
+// import { GapSolution } from './components/gap-solution'
+// import { GapSolutionsArea } from './components/gap-solution-area'
 import { GapStatesContext } from './context/gap-context'
 import { Feedback } from '../sc-mc-exercise/renderer/feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 
+// --- Drag and drop stuff
 // TODO: Use Map container here as well
-export interface GapDragAndDropSolution {
-  draggableId: UniqueIdentifier
-  text: string
-  inDroppableId: UniqueIdentifier
-}
-// Hardcoded draggable element
-const initialDragAndDropSolutions: GapDragAndDropSolution[] = [
-  {
-    draggableId: 'draggable-1',
-    text: 'draggable-1',
-    inDroppableId: 'gap-solutions-area',
-  },
-]
-export const GapDragAndDropSolutions = createContext<
-  GapDragAndDropSolution[] | null
->(null)
+// export interface GapDragAndDropSolution {
+//   draggableId: UniqueIdentifier
+//   text: string
+//   inDroppableId: UniqueIdentifier
+// }
+// const initialDragAndDropSolutions: GapDragAndDropSolution[] = [
+//   {
+//     draggableId: 'draggable-1',
+//     text: 'draggable-1',
+//     inDroppableId: 'gap-solutions-area',
+//   },
+// ]
+// export const GapDragAndDropSolutions = createContext<
+//   GapDragAndDropSolution[] | null
+// >(null)
 
 // TODO: Copy of type in /home/lars/frontend/src/serlo-editor/plugins/text/types/text-editor.ts
 const GapState = t.type({
@@ -69,43 +69,43 @@ export function FillInTheGapRenderer(props: {
     return getGapsWithinObject(textPluginState)
   }, [textPluginState])
 
-  // Drag & drop stuff
+  // --- Drag & drop stuff
   // TODO: Should get gap solutions from text state
-  const [gapDragAndDropSolutions, setGapDragAndDropSolutions] = useState<
-    GapDragAndDropSolution[]
-  >(initialDragAndDropSolutions)
+  // const [gapDragAndDropSolutions, setGapDragAndDropSolutions] = useState<
+  //   GapDragAndDropSolution[]
+  // >(initialDragAndDropSolutions)
 
   return (
-    <DndContext
-      onDragEnd={(evt) => {
-        setGapDragAndDropSolutions((gapDragAndDropSolutions) => {
-          // Draggable not dropped over droppable -> Do not change state
-          if (!evt.over) return gapDragAndDropSolutions
-          const index = gapDragAndDropSolutions.findIndex(
-            (draggable) => draggable.draggableId === evt.active.id
-          )
-          if (index === -1) return gapDragAndDropSolutions
-          // Change where this draggable is
-          gapDragAndDropSolutions[index].inDroppableId = evt.over.id
-          return [...gapDragAndDropSolutions]
-        })
-      }}
-    >
-      <GapDragAndDropSolutions.Provider value={gapDragAndDropSolutions}>
-        <GapStatesContext.Provider
-          value={{
-            mode: mode,
-            gapFeedback: gapFeedback,
-            textUserTypedIntoGap: {
-              value: textUserTypedIntoGap,
-              set: setTextUserTypedIntoGap,
-            },
-          }}
-        >
-          {text}
-        </GapStatesContext.Provider>
-      </GapDragAndDropSolutions.Provider>
-      {mode === 'drag-and-drop' ? (
+    // <DndContext
+    //   onDragEnd={(evt) => {
+    //     setGapDragAndDropSolutions((gapDragAndDropSolutions) => {
+    //       // Draggable not dropped over droppable -> Do not change state
+    //       if (!evt.over) return gapDragAndDropSolutions
+    //       const index = gapDragAndDropSolutions.findIndex(
+    //         (draggable) => draggable.draggableId === evt.active.id
+    //       )
+    //       if (index === -1) return gapDragAndDropSolutions
+    //       // Change where this draggable is
+    //       gapDragAndDropSolutions[index].inDroppableId = evt.over.id
+    //       return [...gapDragAndDropSolutions]
+    //     })
+    //   }}
+    // >
+    <>
+      {/* <GapDragAndDropSolutions.Provider value={gapDragAndDropSolutions}> */}
+      <GapStatesContext.Provider
+        value={{
+          mode: mode,
+          gapFeedback: gapFeedback,
+          textUserTypedIntoGap: {
+            value: textUserTypedIntoGap,
+            set: setTextUserTypedIntoGap,
+          },
+        }}
+      >
+        {text}
+      </GapStatesContext.Provider>
+      {/* {mode === 'drag-and-drop' ? (
         <GapSolutionsArea>
           <>
             {gapDragAndDropSolutions
@@ -119,7 +119,8 @@ export function FillInTheGapRenderer(props: {
               ))}
           </>
         </GapSolutionsArea>
-      ) : null}
+      ) : null} */}
+
       {/* Copied from mc-renderer.tsx */}
       <div className="mt-2 flex">
         <button
@@ -158,14 +159,14 @@ export function FillInTheGapRenderer(props: {
           )
         })}
       </div>
-      <div className="hidden">
+      {/* <div className="hidden">
         {gapDragAndDropSolutions.map((entry, index) => (
           <div
             key={index}
           >{`DraggableId: ${entry.draggableId} | in droppableId: ${entry.inDroppableId} | containing text: ${entry.text}`}</div>
         ))}
-      </div>
-    </DndContext>
+      </div> */}
+    </>
   )
 
   function checkAnswers() {

@@ -1,13 +1,17 @@
-import { useDroppable } from '@dnd-kit/core'
+// import { useDroppable } from '@dnd-kit/core'
 import clsx from 'clsx'
 import { useContext } from 'react'
 
-import { GapSolution } from './components/gap-solution'
+// import { GapSolution } from './components/gap-solution'
+// import { GapDragAndDropSolutions } from './renderer'
 import { GapStatesContext } from './context/gap-context'
-import { GapDragAndDropSolutions } from './renderer'
 
 export function GapRenderer(props: { correctAnswer: string; gapId: string }) {
-  const dragAndDropSolutions = useContext(GapDragAndDropSolutions)
+  // const dragAndDropSolutions = useContext(GapDragAndDropSolutions)
+  // const draggableElementInGap = dragAndDropSolutions?.find(
+  //   (entry) => entry.inDroppableId === props.gapId
+  // )
+
   const gapStates = useContext(GapStatesContext)
   if (gapStates === null) {
     // gapStates was not provided by FillInTheGapRenderer -> cannot continue
@@ -15,10 +19,6 @@ export function GapRenderer(props: { correctAnswer: string; gapId: string }) {
   }
   const gapAnswerCorrectList = gapStates.gapFeedback
   const mode = gapStates.mode
-
-  const draggableElementInGap = dragAndDropSolutions?.find(
-    (entry) => entry.inDroppableId === props.gapId
-  )
 
   const isAnswerCorrect = gapAnswerCorrectList.get(props.gapId)?.isCorrect
 
@@ -44,14 +44,14 @@ export function GapRenderer(props: { correctAnswer: string; gapId: string }) {
         />
       ) : (
         <>
-          {draggableElementInGap ? (
+          {/* {draggableElementInGap ? (
             <GapSolution
               text={draggableElementInGap.text}
               draggableId={draggableElementInGap.draggableId}
             />
           ) : (
             <EmptyGapWithDropZone id={props.gapId} />
-          )}
+          )} */}
         </>
       )}
     </>
@@ -71,18 +71,18 @@ export function GapRenderer(props: { correctAnswer: string; gapId: string }) {
   }
 }
 
-function EmptyGapWithDropZone(props: { id: string }) {
-  const { setNodeRef, isOver } = useDroppable({
-    id: props.id,
-  })
+// function EmptyGapWithDropZone(props: { id: string }) {
+//   const { setNodeRef, isOver } = useDroppable({
+//     id: props.id,
+//   })
 
-  return (
-    <span
-      className={clsx(
-        'rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2',
-        isOver && 'bg-slate-400'
-      )}
-      ref={setNodeRef}
-    ></span>
-  )
-}
+//   return (
+//     <span
+//       className={clsx(
+//         'rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2',
+//         isOver && 'bg-slate-400'
+//       )}
+//       ref={setNodeRef}
+//     ></span>
+//   )
+// }
