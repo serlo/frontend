@@ -68,20 +68,23 @@ export function Node({
       case 'checkbox': {
         return (
           <>
-            <input
-              type="checkbox"
-              id={attributes.name}
-              name={attributes.name}
-              value={1}
-              checked={!!value}
-              onChange={(e) => {
-                onChange(e.target.checked)
-              }}
-              className="my-6 mr-2 h-4 w-4 min-w-[14px] scale-125 accent-brand"
-            />
-            <label htmlFor={attributes.name}>
+            <label htmlFor={attributes.name} className="flex items-start">
+              <input
+                type="checkbox"
+                id={attributes.name}
+                name={attributes.name}
+                value={1}
+                checked={!!value}
+                onChange={(e) => {
+                  onChange(e.target.checked)
+                }}
+                className="mr-2 mt-0.5 h-4 w-4 min-w-[14px] scale-125 accent-brand"
+              />
+
               {/* For now we use checkbox only for newsletter subscription */}
-              <span>{strings.auth.register.newsletterSubscription}</span>
+              <span className="inline-block">
+                {strings.auth.register.newsletterSubscription}
+              </span>
             </label>
           </>
         )
