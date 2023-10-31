@@ -37,7 +37,7 @@ export const PriorKnowledge: React.FC<PriorKnowledgeProps> = ({
         {strings.ai.exerciseGeneration.priorKnowledge.label}
       </label>
       {!isSummary && (
-        <p className="text-lightgray my-2 text-sm font-thin">
+        <p className="my-2 text-sm font-thin text-lightgray">
           {strings.ai.exerciseGeneration.priorKnowledge.example}
         </p>
       )}
