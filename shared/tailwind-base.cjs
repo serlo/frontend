@@ -47,7 +47,7 @@ module.exports = {
           muted: '#cfe097',
         },
         gray: colors.neutral,
-        lightgray: '#c1c1c1',
+        lightgray: '#a3a3a3',
         'background-gray': '#f2f2f2',
         berry: '#857189',
         lightblue: '#b8e7ff',

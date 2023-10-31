@@ -181,7 +181,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
       onCloseClick={closePage}
       confirmCloseDescription="Are you sure you want to close the preview? All data will be lost!"
       overwriteClassNameCompletely
-      className="fixed left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center bg-background-gray"
+      className="bg-background-gray fixed left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center"
       closeButtonClassName="!bg-lightskyblue absolute right-2 top-2 text-black"
     >
       {status === Status.Loading && (
@@ -192,7 +192,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
         </div>
       )}
 
-      <div className="relative h-1/2 w-1/2 overflow-y-auto rounded-xl bg-white p-8">
+      <div className="relative h-2/3 w-2/5 overflow-y-auto rounded-xl bg-white p-8">
         {status === Status.Loading && <Skeleton />}
         {status === Status.Success && (
           <div>
@@ -214,7 +214,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
       </div>
 
       {editorData?.length > 1 && (
-        <div className="mt-4 flex w-1/2 justify-between">
+        <div className="mt-4 flex w-2/5 justify-between">
           {currentExerciseIndex > 0 && (
             <button
               className="mb-2 self-end rounded bg-transparent px-2 py-1 text-brand-700"
@@ -244,7 +244,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
         </div>
       )}
 
-      <div className="mt-8 flex w-1/2 flex-col items-end space-y-2">
+      <div className="mt-8 flex w-2/5 flex-col items-end space-y-2">
         {/* Not supported for now */}
         {/* <button className="self-end rounded bg-brand-700 px-6 py-2 text-white">
           {strings.ai.exerciseGeneration.preview.publishExercise}
@@ -288,13 +288,14 @@ const Skeleton = () => {
   return (
     <div className="relative h-full w-full">
       <div className="flex animate-pulse flex-col space-y-4">
-        <div className="h-4 w-3/4 rounded bg-gray-300"></div>
+        <div className="h-4 w-2/4 rounded bg-gray-300"></div>
+        <div className="mt-6 h-4 w-3/4 rounded bg-gray-300"></div>
         <div className="h-4 w-3/4 rounded bg-gray-300"></div>
         <div className="mt-6 h-4 w-1/2 rounded bg-gray-300"></div>
         <div className="h-4 w-1/2 rounded bg-gray-300"></div>
         <div className="h-4 w-1/2 rounded bg-gray-300"></div>
+        <div className="h-4 w-1/2 rounded bg-gray-300"></div>
         <div className="mt-6 h-4 w-1/4 rounded bg-gray-300"></div>
-        <div className="h-4 w-1/4 rounded bg-gray-300"></div>
         <div className="h-4 w-1/4 rounded bg-gray-300"></div>
       </div>
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
