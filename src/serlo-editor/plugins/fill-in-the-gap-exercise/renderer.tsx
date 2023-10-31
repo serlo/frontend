@@ -91,8 +91,8 @@ export function FillInTheGapRenderer(props: {
     //     })
     //   }}
     // >
-    <>
-      {/* <GapDragAndDropSolutions.Provider value={gapDragAndDropSolutions}> */}
+    // <GapDragAndDropSolutions.Provider value={gapDragAndDropSolutions}>
+    <div className='mx-side mb-block'>
       <GapStatesContext.Provider
         value={{
           mode: mode,
@@ -166,7 +166,7 @@ export function FillInTheGapRenderer(props: {
           >{`DraggableId: ${entry.draggableId} | in droppableId: ${entry.inDroppableId} | containing text: ${entry.text}`}</div>
         ))}
       </div> */}
-    </>
+    </div>
   )
 
   function checkAnswers() {
