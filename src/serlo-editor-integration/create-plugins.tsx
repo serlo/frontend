@@ -73,21 +73,7 @@ export function createPlugins({
   return [
     {
       type: EditorPluginType.Text,
-      plugin: createTextPlugin({
-        serloLinkSearch: instance === Instance.De,
-        formattingOptions: [
-          TextEditorFormattingOption.code,
-          TextEditorFormattingOption.colors,
-          TextEditorFormattingOption.headings,
-          TextEditorFormattingOption.katex,
-          TextEditorFormattingOption.links,
-          TextEditorFormattingOption.lists,
-          TextEditorFormattingOption.math,
-          TextEditorFormattingOption.paragraphs,
-          TextEditorFormattingOption.richTextBold,
-          TextEditorFormattingOption.richTextItalic,
-        ],
-      }),
+      plugin: createTextPlugin({serloLinkSearch: instance === Instance.De}),
       visibleInSuggestions: true,
       icon: <IconText />,
     },
