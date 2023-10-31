@@ -19,6 +19,7 @@ const allInteractiveExerciseTypes = [
 export function ExerciseEditor({ editable, state }: ExerciseProps) {
   const { content, interactive } = state
 
+  // only show supported interactive exercise types
   const interactiveExerciseTypes = allInteractiveExerciseTypes.filter(
     (type) => !!editorPlugins.getByTypeOrUndefined(type)
   )
