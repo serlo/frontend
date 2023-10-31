@@ -36,7 +36,7 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
           {interactive.render()}
         </>
       ) : editable ? (
-        <>
+        <div className="mx-side">
           <p className="mb-2 text-gray-400">
             {exStrings.addOptionalInteractiveEx}
           </p>
@@ -53,7 +53,7 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
               )
             })}
           </div>
-        </>
+        </div>
       ) : null}
     </>
   )
