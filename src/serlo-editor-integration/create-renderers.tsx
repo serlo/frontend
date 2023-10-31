@@ -7,7 +7,7 @@ import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-st
 import { VideoSerloStaticRenderer } from './serlo-plugin-wrappers/video-serlo-static-renderer'
 import { EditorPluginType } from './types/editor-plugin-type'
 import {
-  EditorFillInTheGapExerciseDocument,
+  type EditorFillInTheGapExerciseDocument,
   type EditorAnchorDocument,
   type EditorEquationsDocument,
   type EditorExerciseDocument,

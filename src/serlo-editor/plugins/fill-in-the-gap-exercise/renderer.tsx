@@ -55,8 +55,8 @@ export function FillInTheGapRenderer(props: {
   // Maps gapId to the learner feedback after clicking "Stimmts?" button
   // isCorrect === undefined -> no feedback
   const [gapFeedback, setGapFeedback] = useState<
-    Map<GapId, { isCorrect: boolean | undefined }>
-  >(new Map<GapId, { isCorrect: boolean | undefined }>())
+    Map<GapId, { isCorrect?: boolean }>
+  >(new Map<GapId, { isCorrect?: boolean }>())
 
   // Maps gapId to the text entered by the user
   const [textUserTypedIntoGap, setTextUserTypedIntoGap] = useState<
@@ -77,16 +77,16 @@ export function FillInTheGapRenderer(props: {
 
   return (
     // <DndContext
-    //   onDragEnd={(evt) => {
+    //   onDragEnd={(e) => {
     //     setGapDragAndDropSolutions((gapDragAndDropSolutions) => {
     //       // Draggable not dropped over droppable -> Do not change state
-    //       if (!evt.over) return gapDragAndDropSolutions
+    //       if (!e.over) return gapDragAndDropSolutions
     //       const index = gapDragAndDropSolutions.findIndex(
-    //         (draggable) => draggable.draggableId === evt.active.id
+    //         (draggable) => draggable.draggableId === e.active.id
     //       )
     //       if (index === -1) return gapDragAndDropSolutions
     //       // Change where this draggable is
-    //       gapDragAndDropSolutions[index].inDroppableId = evt.over.id
+    //       gapDragAndDropSolutions[index].inDroppableId = e.over.id
     //       return [...gapDragAndDropSolutions]
     //     })
     //   }}
@@ -178,7 +178,7 @@ export function FillInTheGapRenderer(props: {
       gapStateList.forEach((gapState) => {
         const textUserTypedIntoThisGap =
           textUserTypedIntoGap.get(gapState.gapId)?.text ?? ''
-        const answerCorrect =
+        const isCorrect =
           textUserTypedIntoThisGap === gapState.correctAnswer ||
           textUserTypedIntoThisGap ===
             gapState.alternativeSolutions.find(
@@ -186,7 +186,7 @@ export function FillInTheGapRenderer(props: {
                 textUserTypedIntoThisGap === alternativeSolution
             )
         newGapAnswersCorrectList.set(gapState.gapId, {
-          isCorrect: answerCorrect,
+          isCorrect: isCorrect,
         })
       })
 
@@ -197,20 +197,20 @@ export function FillInTheGapRenderer(props: {
   }
 
   // Searches for gap objects in text plugin state. They can be at varying depths.
-  function getGapsWithinObject(obj: object) {
+  function getGapsWithinObject(obj: object): t.TypeOf<typeof GapState>[] {
     if (GapState.is(obj)) {
       return [obj]
     }
 
-    // Recursively search this objects values for gap objects
-    let objList: t.TypeOf<typeof GapState>[] = []
-    Object.values(obj).forEach((_value) => {
-      const value: unknown = _value
-      if (typeof value === 'object' && value !== null) {
-        objList = [...objList, ...getGapsWithinObject(value)]
-      }
-    })
-
-    return objList
+    // Recursively search this object's values for gap objects
+    return Object.values(obj).reduce(
+      (gaps: t.TypeOf<typeof GapState>[], value: unknown) => {
+        if (typeof value === 'object' && value !== null) {
+          return [...gaps, ...getGapsWithinObject(value)]
+        }
+        return gaps
+      },
+      []
+    )
   }
 }

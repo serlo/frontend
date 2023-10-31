@@ -91,11 +91,11 @@ export const useSlateRenderHandlers = ({
               value={element.correctAnswer}
               size={element.correctAnswer.length}
               className="rounded-full border border-brand bg-brand-50 px-2"
-              onChange={(evt) => {
+              onChange={(e) => {
                 const path = ReactEditor.findPath(editor, element)
                 Transforms.setNodes(
                   editor,
-                  { correctAnswer: evt.target.value },
+                  { correctAnswer: e.target.value },
                   { at: path }
                 )
               }}
