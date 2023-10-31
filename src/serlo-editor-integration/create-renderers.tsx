@@ -6,22 +6,23 @@ import { GeogebraSerloStaticRenderer } from './serlo-plugin-wrappers/geogebra-se
 import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-static-renderer'
 import { VideoSerloStaticRenderer } from './serlo-plugin-wrappers/video-serlo-static-renderer'
 import { EditorPluginType } from './types/editor-plugin-type'
-import type {
-  EditorAnchorDocument,
-  EditorEquationsDocument,
-  EditorExerciseDocument,
-  EditorH5PDocument,
-  EditorHighlightDocument,
-  EditorInjectionDocument,
-  EditorInputExerciseDocument,
-  EditorPageLayoutDocument,
-  EditorPagePartnersDocument,
-  EditorPageTeamDocument,
-  EditorScMcExerciseDocument,
-  EditorSerloTableDocument,
-  EditorSolutionDocument,
-  EditorSpoilerDocument,
-  EditorTemplateExerciseGroupDocument,
+import {
+  EditorFillInTheGapExerciseDocument,
+  type EditorAnchorDocument,
+  type EditorEquationsDocument,
+  type EditorExerciseDocument,
+  type EditorH5PDocument,
+  type EditorHighlightDocument,
+  type EditorInjectionDocument,
+  type EditorInputExerciseDocument,
+  type EditorPageLayoutDocument,
+  type EditorPagePartnersDocument,
+  type EditorPageTeamDocument,
+  type EditorScMcExerciseDocument,
+  type EditorSerloTableDocument,
+  type EditorSolutionDocument,
+  type EditorSpoilerDocument,
+  type EditorTemplateExerciseGroupDocument,
 } from './types/editor-plugins'
 import { TemplatePluginType } from './types/template-plugin-type'
 import { Lazy } from '@/components/content/lazy'
@@ -35,7 +36,6 @@ import {
 import { AnchorStaticRenderer } from '@/serlo-editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@/serlo-editor/plugins/article/static'
 import { BoxStaticRenderer } from '@/serlo-editor/plugins/box/static'
-import { FillInTheGapStaticRenderer } from '@/serlo-editor/plugins/fill-in-the-gap-exercise/static'
 import { RowsStaticRenderer } from '@/serlo-editor/plugins/rows/static'
 import { SpoilerStaticRenderer } from '@/serlo-editor/plugins/spoiler/static'
 import type { MathElement } from '@/serlo-editor/plugins/text'
@@ -61,6 +61,12 @@ const InputSerloStaticRenderer = dynamic<EditorInputExerciseDocument>(() =>
   import(
     '@/serlo-editor-integration/serlo-plugin-wrappers/input-serlo-static-renderer'
   ).then((mod) => mod.InputSerloStaticRenderer)
+)
+const FillInTheGapStaticRenderer = dynamic<EditorFillInTheGapExerciseDocument>(
+  () =>
+    import('@/serlo-editor/plugins/fill-in-the-gap-exercise/static').then(
+      (mod) => mod.FillInTheGapStaticRenderer
+    )
 )
 const InjectionStaticRenderer = dynamic<EditorInjectionDocument>(() =>
   import('@/serlo-editor/plugins/injection/static').then(
