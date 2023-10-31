@@ -336,7 +336,8 @@ export const instanceData = {
       register: {
         registerTitle: 'Register your Serlo Account',
         passwordRequirements: 'At least 8 characters, longer is better.',
-        registerIntro: 'You do not need an account for studying on serlo.org. %break% If you want to comment, or work on content you came to the right place'
+        registerIntro: 'You do not need an account for studying on serlo.org. %break% If you want to comment, or work on content you came to the right place',
+        newsletterSubscription: 'Receive concise updates on our current activities in our newsletter. We use your information for sending purposes and for personal greetings. Look forward to relevant information and our annual fundraising campaign once a year. (optional)'
       },
       recoverTitle: 'Recover your account',
       recoveryInstructions: 'Insert and submit your email address. %break% We will then send you an email with a reset link.',
