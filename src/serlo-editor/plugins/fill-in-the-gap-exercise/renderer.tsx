@@ -92,7 +92,7 @@ export function FillInTheGapRenderer(props: {
     //   }}
     // >
     // <GapDragAndDropSolutions.Provider value={gapDragAndDropSolutions}>
-    <div className='mx-side mb-block'>
+    <div className="mx-side mb-block">
       <GapStatesContext.Provider
         value={{
           mode: mode,

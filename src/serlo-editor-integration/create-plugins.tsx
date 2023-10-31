@@ -16,7 +16,6 @@ import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { type LoggedInData, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
-import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import type { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { anchorPlugin } from '@/serlo-editor/plugins/anchor'
 import { articlePlugin } from '@/serlo-editor/plugins/article'
@@ -73,7 +72,7 @@ export function createPlugins({
   return [
     {
       type: EditorPluginType.Text,
-      plugin: createTextPlugin({serloLinkSearch: instance === Instance.De}),
+      plugin: createTextPlugin({ serloLinkSearch: instance === Instance.De }),
       visibleInSuggestions: true,
       icon: <IconText />,
     },
