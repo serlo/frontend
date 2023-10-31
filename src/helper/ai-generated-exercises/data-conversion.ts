@@ -5,13 +5,17 @@ import { PathReporter } from 'io-ts/lib/PathReporter'
 // import { v4 as uuidv4 } from 'uuid'
 
 import {
+  ExpectedExerciseTypes,
   ExpectedMultipleChoiceType,
   ExpectedSingleChoiceType,
   InputMultipleChoiceDecoder,
+  InputShortAnswerDecoder,
   // InputDecoder,
   // InputMultipleChoiceDecoder,
   // InputShortAnswerDecoder,
   InputSingleChoiceDecoder,
+  humanReadableMultipleChoiceExample,
+  humanReadableShortAnswerExample,
   humanReadableSingleChoiceExample,
 } from './decoders'
 // import {
@@ -21,105 +25,147 @@ import {
 //   TypeTextExerciseState,
 // } from './types'
 // import { LicenseData } from '@/data-types'
+import { InputExerciseType } from '@/serlo-editor/plugins/input-exercise/input-exercise-type'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   EditorExerciseDocument,
   EditorSolutionDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 
-// type InputSingleChoice = t.TypeOf<typeof InputSingleChoiceDecoder>
-// type InputMultipleChoice = t.TypeOf<typeof InputMultipleChoiceDecoder>
-// type InputShortAnswer = t.TypeOf<typeof InputShortAnswerDecoder>
+function decodeAiGeneratedExercise(exercise: ExpectedExerciseTypes) {
+  const exerciseType = exercise?.type ?? null
 
-export function convertAiGeneratedScExerciseToEditorDocument(
-  input: string
-): EditorExerciseDocument[] {
-  if (!input) {
-    return []
+  switch (exerciseType) {
+    case 'single_choice': {
+      const decoded = InputSingleChoiceDecoder.decode(exercise)
+      return { decoded, humanReadableExample: humanReadableSingleChoiceExample }
+    }
+    case 'multiple_choice': {
+      const decoded = InputMultipleChoiceDecoder.decode(exercise)
+
+      return {
+        decoded,
+        humanReadableExample: humanReadableMultipleChoiceExample,
+      }
+    }
+    case 'short_answer': {
+      const decoded = InputShortAnswerDecoder.decode(exercise)
+      return { decoded, humanReadableExample: humanReadableShortAnswerExample }
+    }
+    default: {
+      const unexpectedType = (exercise as unknown as { type: unknown }).type as
+        | string
+        | null
+
+      throw new Error(`Unsupported exercise type: ${unexpectedType}`)
+    }
   }
+}
 
-  // Better option would be to use the generic InputParser with the union type Sc | Mc |
-  // We assume there is only SC or MC now!
-  const doWeExpectSingleChoice = input.includes('"type": "single_choice"')
+type Interactive = EditorExerciseDocument['state']['interactive']
 
-  const parsed = JSON.parse(input) as unknown
-
-  // [ { type: 'single_choice }, {type: 'multiple_choice' }, { type: 'fill_in_the_gap' }]
-
-  console.log('Parsed: ', { parsed })
-  const decoded = doWeExpectSingleChoice
-    ? InputSingleChoiceDecoder.decode(parsed)
-    : InputMultipleChoiceDecoder.decode(parsed)
-  console.log('decoded: ', { decoded })
-
-  if (E.isLeft(decoded)) {
-    const errors = PathReporter.report(decoded)
-    console.error('Decoding failed', errors)
-    throw new TypeError(
-      `The data from the API seems to have an invalid structure.\n\n${errors
-        .map((error) => `${error.split('|}/')[1]} was not provided correctly`)
-        .join('\n')} \n\nReceived: \n${JSON.stringify(
-        parsed,
-        null,
-        2
-      )}\n\nExpected format: \n${JSON.stringify(
-        humanReadableSingleChoiceExample,
-        null,
-        2
-      )}`
-    )
-  }
-
-  const inputContent = decoded.right
-  console.log('InputContent: ', { inputContent })
-
-  const isSingleChoice = isSingleChoiceGuard(inputContent)
-
+function createInteractive(exercise: ExpectedExerciseTypes): Interactive {
   // ! I think this type assertion doesn't properly work with the
   // discriminatory type of ScMcExercise. I think the child() function is to
   // blame but I haven't found an easy solution without complicating things
   // with type arguments.
-  const interactive: EditorExerciseDocument['state']['interactive'] = {
-    plugin: EditorPluginType.ScMcExercise,
-    state: {
-      isSingleChoice: inputContent.type === 'single_choice',
-      answers: inputContent.options.map((option, index) => ({
-        content: {
-          plugin: EditorPluginType.Text,
-          state: [
-            {
-              type: 'p',
-              children: [{ text: option }],
-            },
-          ],
-        },
-        isCorrect: isSingleChoice
-          ? index === inputContent.correct_option
-          : inputContent.correct_options.includes(index),
-        feedback: {
-          plugin: EditorPluginType.Text,
-          state: [
-            {
-              type: 'p',
-              children: [
+  switch (exercise.type) {
+    case 'single_choice':
+    case 'multiple_choice': {
+      const isSingleChoice = isSingleChoiceGuard(exercise)
+      const interactive: Interactive = {
+        plugin: EditorPluginType.ScMcExercise,
+        state: {
+          isSingleChoice: exercise.type === 'single_choice',
+          answers: exercise.options.map((option, index) => ({
+            content: {
+              plugin: EditorPluginType.Text,
+              state: [
                 {
-                  text: (
-                    isSingleChoice
-                      ? index === inputContent.correct_option
-                      : inputContent.correct_options.includes(index)
-                  )
-                    ? 'Sehr gut!'
-                    : 'Leider falsch!',
+                  type: 'p',
+                  children: [{ text: option }],
                 },
               ],
             },
+            isCorrect: isSingleChoice
+              ? index === exercise.correct_option
+              : exercise.correct_options.includes(index),
+            feedback: {
+              plugin: EditorPluginType.Text,
+              state: [
+                {
+                  type: 'p',
+                  children: [
+                    {
+                      text: (
+                        isSingleChoice
+                          ? index === exercise.correct_option
+                          : exercise.correct_options.includes(index)
+                      )
+                        ? 'Sehr gut!'
+                        : 'Leider falsch!',
+                    },
+                  ],
+                },
+              ],
+            },
+          })),
+        },
+      }
+      return interactive
+    }
+
+    case 'short_answer': {
+      const interactive: Interactive = {
+        plugin: EditorPluginType.InputExercise,
+        state: {
+          // ? How can we differentiate between NumberExact and
+          // ExpressionEqual? Do we need to include it in the prompt?
+          type: InputExerciseType.NumberExact,
+          unit: '',
+          answers: [
+            {
+              value: exercise.correct_answer,
+              isCorrect: true,
+              feedback: {
+                plugin: EditorPluginType.Text,
+                state: [
+                  {
+                    type: 'p',
+                    children: [
+                      {
+                        text: 'Sehr gut!',
+                      },
+                    ],
+                  },
+                ],
+              },
+            },
+            // ? Should we add feedback for a wrong but similar answer? We'd
+            // have to include wrong answers in the prompt.
           ],
         },
-      })),
-    },
-  }
+      }
 
-  const solution: EditorSolutionDocument = {
+      return interactive
+    }
+
+    // default: {
+    //   // TypeScript thinks this can only be "never" type because all options are
+    //   // exhausted
+    //   const unexpectedType = (exercise as unknown as { type: unknown }).type as
+    //     | string
+    //     | null
+
+    //   throw new Error(`Unsupported exercise type: ${unexpectedType}`)
+    // }
+  }
+}
+
+function createSolution(
+  exercise: ExpectedExerciseTypes
+): EditorSolutionDocument {
+  return {
     plugin: EditorPluginType.Solution,
     state: {
       prerequisite: undefined,
@@ -129,13 +175,13 @@ export function convertAiGeneratedScExerciseToEditorDocument(
           {
             type: 'p',
             // ? Should we add the 'strategy' to the prompt too?
-            children: [{ text: '-' }],
+            children: [{ text: '' }],
           },
         ],
       },
       steps: {
         plugin: EditorPluginType.Rows,
-        state: inputContent.steps.map((step) => ({
+        state: exercise.steps.map((step) => ({
           plugin: EditorPluginType.Text,
           state: [
             {
@@ -148,7 +194,39 @@ export function convertAiGeneratedScExerciseToEditorDocument(
     },
     // doesn't have an id yet
     id: undefined,
-  } as EditorSolutionDocument
+  }
+}
+
+export function convertAiGeneratedScExerciseToEditorDocument(
+  input: string
+): EditorExerciseDocument[] {
+  if (!input) {
+    return []
+  }
+
+  const parsed = JSON.parse(input) as ExpectedExerciseTypes
+  const { decoded, humanReadableExample } = decodeAiGeneratedExercise(parsed)
+  console.log('decoded: ', { decoded })
+
+  if (E.isLeft(decoded)) {
+    const errors = PathReporter.report(decoded)
+    console.error('Decoding failed', errors)
+    throw new TypeError(
+      `The data from the API seems to have an invalid structure.\n\n${errors
+        .map((error) => `${error.split('|}/')[1]} was not provided correctly`)
+        .join('\n')} \n\nReceived: \n${JSON.stringify(
+        parsed,
+        null,
+        2
+      )}\n\nExpected format: \n${JSON.stringify(humanReadableExample, null, 2)}`
+    )
+  }
+
+  const inputContent: ExpectedExerciseTypes = decoded.right
+  console.log('InputContent: ', { inputContent })
+
+  const interactive = createInteractive(inputContent)
+  const solution = createSolution(inputContent)
 
   const exerciseDocument: EditorExerciseDocument = {
     plugin: EditorPluginType.Exercise,
