@@ -177,13 +177,13 @@ export function FillInTheGapRenderer(props: {
       >()
       gapStateList.forEach((gapState) => {
         const textUserTypedIntoThisGap =
-          textUserTypedIntoGap.get(gapState.gapId)?.text ?? ''
+          textUserTypedIntoGap.get(gapState.gapId)?.text.trim() ?? ''
         const isCorrect =
-          textUserTypedIntoThisGap === gapState.correctAnswer ||
+          textUserTypedIntoThisGap === gapState.correctAnswer.trim() ||
           textUserTypedIntoThisGap ===
             gapState.alternativeSolutions.find(
               (alternativeSolution) =>
-                textUserTypedIntoThisGap === alternativeSolution
+                textUserTypedIntoThisGap === alternativeSolution.trim()
             )
         newGapAnswersCorrectList.set(gapState.gapId, {
           isCorrect: isCorrect,
