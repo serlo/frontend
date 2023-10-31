@@ -6,10 +6,11 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
+import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { store, selectDocument } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-const interactiveExerciseTypes = [
+const allInteractiveExerciseTypes = [
   EditorPluginType.ScMcExercise,
   EditorPluginType.InputExercise,
   EditorPluginType.H5p,
@@ -17,6 +18,10 @@ const interactiveExerciseTypes = [
 
 export function ExerciseEditor({ editable, state }: ExerciseProps) {
   const { content, interactive } = state
+
+  const interactiveExerciseTypes = allInteractiveExerciseTypes.filter(
+    (type) => !!editorPlugins.getByTypeOrUndefined(type)
+  )
 
   const exStrings = useEditorStrings().templatePlugins.exercise
   return (
