@@ -37,7 +37,7 @@ export function Logout({ oauth }: { oauth?: boolean }) {
       : false
 
     const redirection = isSSO
-      ? 'https://aai-test.nbpdev.de/realms/nbp-aai/protocol/openid-connect/logout'
+      ? 'https://aai.demo.meinbildungsraum.de/realms/nbp-aai/protocol/openid-connect/logout'
       : filterUnwantedRedirection({
           desiredPath: sessionStorage.getItem('previousPathname'),
           unwantedPaths: [settingsUrl, loginUrl, registrationUrl],
