@@ -20,8 +20,8 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
   const { content, interactive } = state
 
   // only show supported interactive exercise types
-  const interactiveExerciseTypes = allInteractiveExerciseTypes.filter(
-    (type) => !!editorPlugins.getByTypeOrUndefined(type)
+  const interactiveExerciseTypes = allInteractiveExerciseTypes.filter((type) =>
+    editorPlugins.getAllWithData().some((plugin) => plugin.type === type)
   )
 
   const exStrings = useEditorStrings().templatePlugins.exercise
