@@ -74,7 +74,7 @@ export function DataWallet() {
           </p>
           <ol className="serlo-ol mb-4 text-lg">
             <li>
-              Lade dir die „Mein Bildungsraum Wallet App“ auf dein Smartphone.
+              Lade dir die App „Mein Bildungsraum: Wallet“ auf dein Smartphone.
             </li>
             <li>
               Erstelle einen{' '}
