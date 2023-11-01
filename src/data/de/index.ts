@@ -379,10 +379,10 @@ export const instanceData = {
       messages: {
         code1010003: "Zur Sicherheit überprüfen wir hier noch mal, ob das dein Account ist.",
         code1010001: "Anmelden",
-        code1010002: "Mit NBP Account anmelden",
+        code1010002: "Über „Mein Bildungsraum“ anmelden",
         code1010013: "Weiter mit SSO",
         code1040001: "Account anlegen",
-        code1040002: "Mit NBP Account registrieren",
+        code1040002: "Über „Mein Bildungsraum“ Account registrieren",
         code1040003: "Weiter",
         code1050001: "Deine Änderungen wurden gespeichert! 🎉",
         code1060001: "Du hast deinen Account wiederhergestellt. Bitte ändere dein Passwort in den nächsten Minuten.",

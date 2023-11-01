@@ -379,10 +379,10 @@ export const instanceData = {
       messages: {
         code1010003: "Por favor, confirma esta acción al verificar que eres tú.",
         code1010001: "Iniciar sesión",
-        code1010002: "Iniciar sesión con mi Cuenta de NBP",
+        code1010002: 'Sign in via „Mein Bildungsraum“',
         code1010013: "Continuar con SSO",
         code1040001: "Registrarse",
-        code1040002: "Registrarse con una Cuenta NBP",
+        code1040002: 'Register via „Mein Bildungsraum“',
         code1040003: "Continuar",
         code1050001: "Tus cambios han sido guardados! 🎉",
         code1060001: "Has recuperado tu cuenta con éxito. Por favor, cambia tu contraseña en los próximos minutos.",
