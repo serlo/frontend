@@ -843,7 +843,7 @@ export const loggedInData = {
           lists: 'Lists',
           mathFormula: 'Math formula (%ctrlOrCmd% + M)',
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
-          blank: 'Blank',
+          blank: 'Blank (%ctrlOrCmd% + ⇧ + B)',
           bold: 'Bold (%ctrlOrCmd% + B)',
           italic: 'Italic (%ctrlOrCmd% + I)',
           noItemsFound: 'No items found',
@@ -894,7 +894,7 @@ export const loggedInData = {
           description: 'Single Choice or Multiple Choice'
         },
         fillInTheBlanks: {
-          title: 'Fill-In-The-Blanks Exercise',
+          title: 'Fill In The Blanks Exercise',
           description: 'Text with blanks'
         }
       },
@@ -954,10 +954,10 @@ export const loggedInData = {
           title: 'Title',
         },
         exercise: {
-          scMcExercise: 'Choice exercise',
-          inputExercise: 'Input exercise',
-          h5p: 'H5p exercise',
-          fillInTheBlanksExercise: 'Fill-in-the-blanks exercise',
+          scMcExercise: 'Choice Exercise',
+          inputExercise: 'Input Exercise',
+          h5p: 'H5p Exercise',
+          fillInTheBlanksExercise: 'Fill In The Blanks',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
           removeInteractive: 'Remove interactive element',

@@ -1,4 +1,5 @@
 import { FillInTheBlanksRenderer } from './renderer'
+import { defaultFormattingOptions } from '../text/hooks/use-text-config'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import {
@@ -28,16 +29,7 @@ function createFillInTheBlanksExerciseState() {
       plugin: EditorPluginType.Text,
       config: {
         formattingOptions: [
-          TextEditorFormattingOption.code,
-          TextEditorFormattingOption.colors,
-          TextEditorFormattingOption.headings,
-          TextEditorFormattingOption.katex,
-          TextEditorFormattingOption.links,
-          TextEditorFormattingOption.lists,
-          TextEditorFormattingOption.math,
-          TextEditorFormattingOption.paragraphs,
-          TextEditorFormattingOption.richTextBold,
-          TextEditorFormattingOption.richTextItalic,
+          ...defaultFormattingOptions,
           TextEditorFormattingOption.blank,
         ],
       },
@@ -62,9 +54,17 @@ export function FillInTheBlanksExerciseEditor(
   if (!textPluginState) return null
 
   return (
-    <>
+    <div className="mb-12 mt-10 pt-4">
+      {/* while developing */}
       <div className="hidden">
-        {focused ? <FillInTheBlanksExerciseToolbar /> : null}
+        {focused ? (
+          // TODO: Add button to toggle between fill-in-the-blanks and drag-and-drop
+          // TODO: Make toolbars nested like in multimedia
+          <PluginToolbar
+            pluginType={EditorPluginType.FillInTheBlanksExercise}
+            className="!left-[21px] top-[-33px] w-[calc(100%-37px)]"
+          />
+        ) : null}
       </div>
       <FillInTheBlanksRenderer
         text={props.state.text.render()}
@@ -74,17 +74,6 @@ export function FillInTheBlanksExerciseEditor(
 
       {/* Only debug views from here on */}
       <div className="hidden">{JSON.stringify(textPluginState)}</div>
-    </>
-  )
-}
-
-// TODO: Add button to toggle between fill-in-the-blanks and drag-and-drop
-// TODO: Make toolbars nested like in multimedia
-function FillInTheBlanksExerciseToolbar() {
-  return (
-    <PluginToolbar
-      pluginType={EditorPluginType.FillInTheBlanksExercise}
-      className="!left-[21px] top-[-33px] w-[calc(100%-37px)]"
-    />
+    </div>
   )
 }

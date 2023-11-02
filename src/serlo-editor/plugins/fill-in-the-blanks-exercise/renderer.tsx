@@ -26,7 +26,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 //   BlankDragAndDropSolution[] | null
 // >(null)
 
-// TODO: Copy of type in /home/lars/frontend/src/serlo-editor/plugins/text/types/text-editor.ts
+// TODO: Copy of type in /src/serlo-editor/plugins/text/types/text-editor.ts
 const BlankState = t.type({
   type: t.literal('blank'),
   blankId: t.string,
@@ -34,9 +34,11 @@ const BlankState = t.type({
   alternativeSolutions: t.array(t.string),
 })
 
+type BlankStates = t.TypeOf<typeof BlankState>[]
+
 type BlankId = string
 
-export function FillInTheBlanksRenderer(props: {
+interface FillInTheBlanksRendererProps {
   text: ReactNode
   textPluginState: {
     plugin: string
@@ -44,7 +46,9 @@ export function FillInTheBlanksRenderer(props: {
     id?: string | undefined
   }
   mode: string
-}) {
+}
+
+export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
   const { text, textPluginState, mode } = props
 
   const exStrings = useInstanceData().strings.content.exercises
@@ -54,17 +58,17 @@ export function FillInTheBlanksRenderer(props: {
 
   // Maps blankId to the learner feedback after clicking "Stimmts?" button
   // isCorrect === undefined -> no feedback
-  const [blanksFeedback, setBlanksFeedback] = useState<
-    Map<BlankId, { isCorrect?: boolean }>
-  >(new Map<BlankId, { isCorrect?: boolean }>())
+  const [blanksFeedback, setBlanksFeedback] = useState(
+    new Map<BlankId, { isCorrect?: boolean }>()
+  )
 
   // Maps blankId to the text entered by the user
-  const [textUserTypedIntoBlank, setTextUserTypedIntoBlank] = useState<
-    Map<BlankId, { text: string }>
-  >(new Map<BlankId, { text: string }>())
+  const [textUserTypedIntoBlank, setTextUserTypedIntoBlank] = useState(
+    new Map<BlankId, { text: string }>()
+  )
 
   // List of blank elements found in text editor state
-  const blankStateList: t.TypeOf<typeof BlankState>[] = useMemo(() => {
+  const blankStateList: BlankStates = useMemo(() => {
     // TODO: Remove entries in textUserTypedIntoBlank where blankId no longer exists.
     return getBlanksWithinObject(textPluginState)
   }, [textPluginState])
@@ -197,20 +201,17 @@ export function FillInTheBlanksRenderer(props: {
   }
 
   // Searches for blank objects in text plugin state. They can be at varying depths.
-  function getBlanksWithinObject(obj: object): t.TypeOf<typeof BlankState>[] {
+  function getBlanksWithinObject(obj: object): BlankStates {
     if (BlankState.is(obj)) {
       return [obj]
     }
 
     // Recursively search this object's values for blank objects
-    return Object.values(obj).reduce(
-      (blanks: t.TypeOf<typeof BlankState>[], value: unknown) => {
-        if (typeof value === 'object' && value !== null) {
-          return [...blanks, ...getBlanksWithinObject(value)]
-        }
-        return blanks
-      },
-      []
-    )
+    return Object.values(obj).reduce((blanks: BlankStates, value: unknown) => {
+      if (typeof value === 'object' && value !== null) {
+        return [...blanks, ...getBlanksWithinObject(value)]
+      }
+      return blanks
+    }, [])
   }
 }
