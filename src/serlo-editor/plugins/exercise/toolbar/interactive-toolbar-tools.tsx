@@ -5,6 +5,7 @@ import type { ExerciseProps } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { DropdownButton } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/dropdown-button'
 import {
+  focus,
   runChangeDocumentSaga,
   selectChildTreeOfParent,
   store,
@@ -31,6 +32,7 @@ export const InteractiveToolbarTools = ({ id }: { id: string }) => {
         },
       })
     )
+    dispatch(focus(parent.id))
   }, [dispatch, id])
 
   return (

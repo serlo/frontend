@@ -1,5 +1,4 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 
 import type { ExerciseProps } from '.'
 import { ExerciseToolbar } from './toolbar/toolbar'
@@ -9,7 +8,6 @@ import { tw } from '@/helper/tw'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
-import { store, selectDocument } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const allInteractiveExerciseTypes = [
@@ -17,6 +15,9 @@ const allInteractiveExerciseTypes = [
   EditorPluginType.InputExercise,
   EditorPluginType.H5p,
 ] as const
+
+export type InteractiveExerciseType =
+  (typeof allInteractiveExerciseTypes)[number]
 
 export function ExerciseEditor(props: ExerciseProps) {
   const { editable, state, focused } = props
@@ -33,13 +34,13 @@ export function ExerciseEditor(props: ExerciseProps) {
   return (
     <div
       data-qa="plugin-exercise"
-      className={clsx(
-        'group/exercise rounded-b-xl border-3 border-gray-100 pb-6'
-        // focused && '[&>div.plugin-toolbar]:flex'
-      )}
+      className="group/exercise rounded-b-xl border-3 border-gray-100 pb-6"
     >
       {focused ? (
-        <ExerciseToolbar {...props} />
+        <ExerciseToolbar
+          {...props}
+          interactiveExerciseTypes={interactiveExerciseTypes}
+        />
       ) : (
         <button
           className={tw`
@@ -56,12 +57,7 @@ export function ExerciseEditor(props: ExerciseProps) {
       {content.render()}
       <div className="mx-side">
         {interactive.defined ? (
-          <>
-            <nav className="relative flex justify-end">
-              {editable ? renderChildTools() : null}
-            </nav>
-            {interactive.render()}
-          </>
+          interactive.render()
         ) : editable ? (
           <>
             <p className="mb-2 text-gray-400">
@@ -105,41 +101,4 @@ export function ExerciseEditor(props: ExerciseProps) {
       </div>
     </div>
   )
-
-  function renderChildTools() {
-    return (
-      <>
-        <label className="serlo-tooltip-trigger mr-2">
-          <EditorTooltip text={exTemplateStrings.changeInteractive} />
-          <select
-            onChange={({ target }) => {
-              if (interactive.defined)
-                interactive.replace(
-                  target.value as (typeof interactiveExerciseTypes)[number]
-                )
-            }}
-            className={tw`
-                    mr-2 cursor-pointer rounded-md !border border-gray-500 bg-editor-primary-100 px-1 py-[1px] text-sm transition-all
-                  hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
-                  `}
-            value={getCurrentInteractivePlugin() ?? ''}
-          >
-            {interactiveExerciseTypes.map((type) => {
-              return (
-                <option key={type} value={type}>
-                  {exTemplateStrings[type]}
-                </option>
-              )
-            })}
-          </select>
-        </label>
-      </>
-    )
-  }
-
-  function getCurrentInteractivePlugin() {
-    if (!interactive.defined) return null
-    const doc = selectDocument(store.getState(), interactive.id)
-    return doc && doc.plugin
-  }
 }
