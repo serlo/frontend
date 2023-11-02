@@ -29,53 +29,55 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
   return (
     <>
       {content.render()}
-      {interactive.defined ? (
-        <>
-          <nav className="relative flex justify-end">
-            {editable ? renderChildTools() : null}
-          </nav>
-          {interactive.render()}
-        </>
-      ) : editable ? (
-        <div className="mx-side">
-          <p className="mb-2 text-gray-400">
-            {exStrings.addOptionalInteractiveEx}
-          </p>
-          <div className="-ml-1.5 flex">
-            {interactiveExerciseTypes.map((type) => {
-              return (
-                <AddButton
-                  key={type}
-                  onClick={() => interactive.create({ plugin: type })}
-                  secondary
-                >
-                  {exStrings[type]}
-                </AddButton>
-              )
-            })}
+      <div className="mx-side">
+        {interactive.defined ? (
+          <>
+            <nav className="relative flex justify-end">
+              {editable ? renderChildTools() : null}
+            </nav>
+            {interactive.render()}
+          </>
+        ) : editable ? (
+          <>
+            <p className="mb-2 text-gray-400">
+              {exStrings.addOptionalInteractiveEx}
+            </p>
+            <div className="-ml-1.5 flex">
+              {interactiveExerciseTypes.map((type) => {
+                return (
+                  <AddButton
+                    key={type}
+                    onClick={() => interactive.create({ plugin: type })}
+                    secondary
+                  >
+                    {exStrings[type]}
+                  </AddButton>
+                )
+              })}
+            </div>
+          </>
+        ) : null}
+        {solution.defined ? (
+          <div className="-ml-side mt-block">
+            <nav className="flex justify-end">
+              <button
+                className="serlo-button-editor-secondary serlo-tooltip-trigger relative top-7 z-20 mr-side"
+                onClick={() => solution.remove()}
+              >
+                <EditorTooltip text={exStrings.removeSolution} />
+                <FaIcon icon={faTrashAlt} />
+              </button>
+            </nav>
+            {solution.render()}
           </div>
-        </div>
-      ) : null}
-      {solution.defined ? (
-        <div className="-ml-side mt-block">
-          <nav className="flex justify-end">
-            <button
-              className="serlo-button-editor-secondary serlo-tooltip-trigger relative top-7 z-20 mr-side"
-              onClick={() => solution.remove()}
-            >
-              <EditorTooltip text={exStrings.removeSolution} />
-              <FaIcon icon={faTrashAlt} />
-            </button>
-          </nav>
-          {solution.render()}
-        </div>
-      ) : (
-        <div className="-ml-1.5 mt-12 max-w-[50%]">
-          <AddButton onClick={() => solution.create()}>
-            {exStrings.createSolution}
-          </AddButton>
-        </div>
-      )}
+        ) : (
+          <div className="mt-20 max-w-[50%]">
+            <AddButton onClick={() => solution.create()}>
+              {exStrings.createSolution}
+            </AddButton>
+          </div>
+        )}
+      </div>
     </>
   )
 
