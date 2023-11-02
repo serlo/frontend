@@ -95,7 +95,6 @@ function Content() {
       editorStrings,
       instance: lang,
       parentType: 'Article',
-      allowExercises: true,
     })
   )
 

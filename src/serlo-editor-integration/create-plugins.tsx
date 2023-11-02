@@ -58,12 +58,10 @@ export function createPlugins({
   editorStrings,
   instance,
   parentType,
-  allowExercises,
 }: {
   editorStrings: LoggedInData['strings']['editor']
   instance: Instance
   parentType?: string
-  allowExercises?: boolean
 }): PluginsWithData {
   const isPage = parentType === UuidType.Page
 
@@ -176,7 +174,7 @@ export function createPlugins({
     {
       type: EditorPluginType.Exercise,
       plugin: exercisePlugin,
-      visibleInSuggestions: allowExercises,
+      visibleInSuggestions: !isProduction,
     },
     { type: EditorPluginType.Solution, plugin: solutionPlugin },
     { type: EditorPluginType.H5p, plugin: H5pPlugin },
