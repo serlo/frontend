@@ -2,7 +2,7 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 
 import type { ExerciseProps } from '.'
-import { ExerciseToolbar } from './toolbar'
+import { ExerciseToolbar } from './toolbar/toolbar'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
@@ -133,15 +133,6 @@ export function ExerciseEditor(props: ExerciseProps) {
             })}
           </select>
         </label>
-        <button
-          className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
-          onClick={() => {
-            if (interactive.defined) interactive.remove()
-          }}
-        >
-          <EditorTooltip text={exTemplateStrings.removeInteractive} />
-          <FaIcon icon={faTrashAlt} />
-        </button>
       </>
     )
   }
