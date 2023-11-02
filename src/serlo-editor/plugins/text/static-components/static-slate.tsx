@@ -1,7 +1,7 @@
 import { createElement } from 'react'
 import { Descendant, Element } from 'slate'
 
-import { GapRenderer } from '../../fill-in-the-gap-exercise/gap-renderer'
+import { BlankRenderer } from '../../fill-in-the-blanks-exercise/blank-renderer'
 import { TextLeafRenderer } from '../components/text-leaf-renderer'
 import { ListElementType } from '../types/text-editor'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
@@ -87,11 +87,11 @@ export function StaticSlate({
       const MathRenderer = editorRenderers.getMathRenderer()
       return <MathRenderer {...element} />
     }
-    if (element.type === 'gap') {
+    if (element.type === 'blank') {
       return (
-        <GapRenderer
+        <BlankRenderer
           correctAnswer={element.correctAnswer}
-          gapId={element.gapId}
+          blankId={element.blankId}
         />
       )
     }

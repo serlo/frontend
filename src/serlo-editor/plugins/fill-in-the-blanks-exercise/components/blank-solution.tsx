@@ -1,6 +1,6 @@
 // import { UniqueIdentifier, useDraggable } from '@dnd-kit/core'
 
-// export function GapSolution(props: {
+// export function BlankSolution(props: {
 //   text: string
 //   draggableId: UniqueIdentifier
 // }) {

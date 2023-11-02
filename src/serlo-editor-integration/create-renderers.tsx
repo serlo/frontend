@@ -7,7 +7,7 @@ import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-st
 import { VideoSerloStaticRenderer } from './serlo-plugin-wrappers/video-serlo-static-renderer'
 import { EditorPluginType } from './types/editor-plugin-type'
 import {
-  type EditorFillInTheGapExerciseDocument,
+  type EditorFillInTheBlanksExerciseDocument,
   type EditorAnchorDocument,
   type EditorEquationsDocument,
   type EditorExerciseDocument,
@@ -62,12 +62,12 @@ const InputSerloStaticRenderer = dynamic<EditorInputExerciseDocument>(() =>
     '@/serlo-editor-integration/serlo-plugin-wrappers/input-serlo-static-renderer'
   ).then((mod) => mod.InputSerloStaticRenderer)
 )
-const FillInTheGapStaticRenderer = dynamic<EditorFillInTheGapExerciseDocument>(
-  () =>
-    import('@/serlo-editor/plugins/fill-in-the-gap-exercise/static').then(
-      (mod) => mod.FillInTheGapStaticRenderer
+const FillInTheBlanksStaticRenderer =
+  dynamic<EditorFillInTheBlanksExerciseDocument>(() =>
+    import('@/serlo-editor/plugins/fill-in-the-blanks-exercise/static').then(
+      (mod) => mod.FillInTheBlanksStaticRenderer
     )
-)
+  )
 const InjectionStaticRenderer = dynamic<EditorInjectionDocument>(() =>
   import('@/serlo-editor/plugins/injection/static').then(
     (mod) => mod.InjectionStaticRenderer
@@ -220,8 +220,8 @@ export function createRenderers(): InitRenderersArgs {
         ? []
         : [
             {
-              type: EditorPluginType.FillInTheGapExercise,
-              renderer: FillInTheGapStaticRenderer,
+              type: EditorPluginType.FillInTheBlanksExercise,
+              renderer: FillInTheBlanksStaticRenderer,
             },
           ]),
       {

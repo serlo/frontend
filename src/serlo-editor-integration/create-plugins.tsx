@@ -23,7 +23,7 @@ import { audioPlugin } from '@/serlo-editor/plugins/audio'
 import { createBoxPlugin } from '@/serlo-editor/plugins/box'
 import { equationsPlugin } from '@/serlo-editor/plugins/equations'
 import { exercisePlugin } from '@/serlo-editor/plugins/exercise'
-import { fillInTheGapExercise } from '@/serlo-editor/plugins/fill-in-the-gap-exercise'
+import { fillInTheBlanksExercise } from '@/serlo-editor/plugins/fill-in-the-blanks-exercise'
 import { geoGebraPlugin } from '@/serlo-editor/plugins/geogebra'
 import { H5pPlugin } from '@/serlo-editor/plugins/h5p'
 import { createHighlightPlugin } from '@/serlo-editor/plugins/highlight'
@@ -203,8 +203,8 @@ export function createPlugins({
       ? []
       : [
           {
-            type: EditorPluginType.FillInTheGapExercise,
-            plugin: fillInTheGapExercise,
+            type: EditorPluginType.FillInTheBlanksExercise,
+            plugin: fillInTheBlanksExercise,
           },
         ]),
 

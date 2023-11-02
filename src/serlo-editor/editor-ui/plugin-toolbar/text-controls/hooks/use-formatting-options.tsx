@@ -13,6 +13,7 @@ import { Node, Editor as SlateEditor } from 'slate'
 import { ColorTextIcon } from '../color-text-icon'
 import { textColors } from '../const'
 import { TextEditorFormattingOption, ControlButton } from '../types'
+import { isBlankActive, toggleBlank } from '../utils/blank'
 import {
   getColorIndex,
   isAnyColorActive,
@@ -20,7 +21,6 @@ import {
   resetColor,
   toggleColor,
 } from '../utils/color'
-import { isGapActive, toggleGap } from '../utils/gap'
 import { isLinkActive, toggleLink } from '../utils/link'
 import {
   isSelectionWithinList,
@@ -57,14 +57,14 @@ import {
   withLinks,
   withLists,
   withMath,
-  withGaps,
+  withBlanks,
 } from '@/serlo-editor/plugins/text/plugins'
 
 const textPluginsMapper = {
   [TextEditorFormattingOption.math]: withMath,
   [TextEditorFormattingOption.links]: withLinks,
   [TextEditorFormattingOption.lists]: withLists,
-  [TextEditorFormattingOption.gap]: withGaps,
+  [TextEditorFormattingOption.blank]: withBlanks,
 }
 
 const isRegisteredTextPlugin = (
@@ -338,12 +338,12 @@ function createToolbarControls(
       onClick: toggleCode,
       renderIcon: () => <FaIcon className="h-[15px]" icon={faCode} />,
     },
-    // Gap
+    // Blank
     {
-      name: TextEditorFormattingOption.gap,
-      title: textStrings.gap,
-      isActive: isGapActive,
-      onClick: toggleGap,
+      name: TextEditorFormattingOption.blank,
+      title: textStrings.blank,
+      isActive: isBlankActive,
+      onClick: toggleBlank,
       renderIcon: () => (
         <span className="h-[15px] rounded-full border border-editor-primary-300 p-1">
           Lücke

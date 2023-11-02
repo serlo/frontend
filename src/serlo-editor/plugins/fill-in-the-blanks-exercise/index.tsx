@@ -1,4 +1,4 @@
-import { FillInTheGapRenderer } from './renderer'
+import { FillInTheBlanksRenderer } from './renderer'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import {
@@ -11,17 +11,18 @@ import {
 import { selectDocument, useAppSelector } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-export const fillInTheGapExercise: EditorPlugin<FillInTheGapExerciseState> = {
-  Component: FillInTheGapExerciseEditor,
-  config: {},
-  state: createFillInTheGapExerciseState(),
-}
+export const fillInTheBlanksExercise: EditorPlugin<FillInTheBlanksExerciseState> =
+  {
+    Component: FillInTheBlanksExerciseEditor,
+    config: {},
+    state: createFillInTheBlanksExerciseState(),
+  }
 
-export type FillInTheGapExerciseState = ReturnType<
-  typeof createFillInTheGapExerciseState
+export type FillInTheBlanksExerciseState = ReturnType<
+  typeof createFillInTheBlanksExerciseState
 >
 
-function createFillInTheGapExerciseState() {
+function createFillInTheBlanksExerciseState() {
   return object({
     text: child({
       plugin: EditorPluginType.Text,
@@ -37,19 +38,21 @@ function createFillInTheGapExerciseState() {
           TextEditorFormattingOption.paragraphs,
           TextEditorFormattingOption.richTextBold,
           TextEditorFormattingOption.richTextItalic,
-          TextEditorFormattingOption.gap,
+          TextEditorFormattingOption.blank,
         ],
       },
     }),
-    mode: string('fill-in-the-gap'),
+    mode: string('fill-in-the-blanks'),
     // mode: string('drag-and-drop'),
   })
 }
 
-export type FillInTheGapExerciseProps =
-  EditorPluginProps<FillInTheGapExerciseState>
+export type FillInTheBlanksExerciseProps =
+  EditorPluginProps<FillInTheBlanksExerciseState>
 
-export function FillInTheGapExerciseEditor(props: FillInTheGapExerciseProps) {
+export function FillInTheBlanksExerciseEditor(
+  props: FillInTheBlanksExerciseProps
+) {
   const { focused } = props
   // Only for debug view
   const textPluginState = useAppSelector((state) => {
@@ -61,9 +64,9 @@ export function FillInTheGapExerciseEditor(props: FillInTheGapExerciseProps) {
   return (
     <>
       <div className="hidden">
-        {focused ? <FillInTheGapExerciseToolbar /> : null}
+        {focused ? <FillInTheBlanksExerciseToolbar /> : null}
       </div>
-      <FillInTheGapRenderer
+      <FillInTheBlanksRenderer
         text={props.state.text.render()}
         textPluginState={textPluginState}
         mode={props.state.mode.value}
@@ -75,12 +78,12 @@ export function FillInTheGapExerciseEditor(props: FillInTheGapExerciseProps) {
   )
 }
 
-// TODO: Add button to toggle between fill-in-the-gap and drag-and-drop
+// TODO: Add button to toggle between fill-in-the-blanks and drag-and-drop
 // TODO: Make toolbars nested like in multimedia
-function FillInTheGapExerciseToolbar() {
+function FillInTheBlanksExerciseToolbar() {
   return (
     <PluginToolbar
-      pluginType={EditorPluginType.FillInTheGapExercise}
+      pluginType={EditorPluginType.FillInTheBlanksExercise}
       className="!left-[21px] top-[-33px] w-[calc(100%-37px)]"
     />
   )

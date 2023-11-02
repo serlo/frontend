@@ -10,12 +10,12 @@ export type CustomElement =
   | Heading
   | Link
   | MathElement
-  | Gap
+  | Blank
 
-export interface Gap {
-  type: 'gap'
+export interface Blank {
+  type: 'blank'
   children: CustomText[]
-  gapId: string // Used to uniquely identify a gap
+  blankId: string // Used to uniquely identify a blank
   correctAnswer: string
   alternativeSolutions: string[]
 }

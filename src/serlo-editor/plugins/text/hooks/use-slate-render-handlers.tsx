@@ -80,9 +80,9 @@ export const useSlateRenderHandlers = ({
           </MathElement>
         )
       }
-      if (element.type === 'gap') {
-        // TODO: Render <GapRenderer> here instead
-        // <GapRenderer> needs to ...
+      if (element.type === 'blank') {
+        // TODO: Render <BlankRenderer> here instead
+        // <BlankRenderer> needs to ...
         // - always show input fields
         // - accept callback onChange that is passed to input element to update correctAnswer
         return (

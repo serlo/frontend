@@ -20,7 +20,7 @@ const interactiveExerciseTypes = isProduction
       EditorPluginType.ScMcExercise,
       EditorPluginType.InputExercise,
       EditorPluginType.H5p,
-      EditorPluginType.FillInTheGapExercise,
+      EditorPluginType.FillInTheBlanksExercise,
     ] as const)
 
 export function ExerciseEditor({ editable, state }: ExerciseProps) {

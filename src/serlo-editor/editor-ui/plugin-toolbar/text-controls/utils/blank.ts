@@ -9,27 +9,27 @@ import {
 import { v4 as uuid_v4 } from 'uuid'
 
 import { selectionHasElement, trimSelection } from './selection'
-import type { Gap } from '@/serlo-editor/plugins/text'
+import type { Blank } from '@/serlo-editor/plugins/text'
 
-function matchGaps(node: Node) {
-  return Element.isElement(node) && node.type === 'gap'
+function matchBlanks(node: Node) {
+  return Element.isElement(node) && node.type === 'blank'
 }
 
-export function isGapActive(editor: SlateEditor) {
-  return selectionHasElement((e) => e.type === 'gap', editor)
+export function isBlankActive(editor: SlateEditor) {
+  return selectionHasElement((e) => e.type === 'blank', editor)
 }
 
-export function getGapElement(editor: SlateEditor): Gap | undefined {
-  const [match] = Array.from(SlateEditor.nodes(editor, { match: matchGaps }))
-  return match && (match[0] as Gap)
+export function getBlankElement(editor: SlateEditor): Blank | undefined {
+  const [match] = Array.from(SlateEditor.nodes(editor, { match: matchBlanks }))
+  return match && (match[0] as Blank)
 }
 
-export function toggleGap(editor: SlateEditor) {
-  if (isGapActive(editor)) {
+export function toggleBlank(editor: SlateEditor) {
+  if (isBlankActive(editor)) {
     Transforms.removeNodes(editor, {
-      match: (n) => Element.isElement(n) && n.type === 'gap',
+      match: (n) => Element.isElement(n) && n.type === 'blank',
     })
-    // TODO: Gap and also its content disappear. Instead gap content should be added back as text element (also not working in toggleMath)
+    // TODO: Blank and also its content disappear. Instead blank content should be added back as text element (also not working in toggleMath)
     return
   }
 
@@ -38,8 +38,8 @@ export function toggleGap(editor: SlateEditor) {
 
   if (isCollapsed) {
     Transforms.insertNodes(editor, {
-      type: 'gap',
-      gapId: uuid_v4(),
+      type: 'blank',
+      blankId: uuid_v4(),
       correctAnswer: '',
       alternativeSolutions: [],
       children: [{ text: '' }],
@@ -52,8 +52,8 @@ export function toggleGap(editor: SlateEditor) {
     editor,
     [
       {
-        type: 'gap',
-        gapId: uuid_v4(),
+        type: 'blank',
+        blankId: uuid_v4(),
         correctAnswer:
           SlateEditor.string(editor, trimmedSelection as Location) || '',
         alternativeSolutions: [],

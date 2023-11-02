@@ -11,7 +11,7 @@ export enum TextEditorFormattingOption {
   paragraphs = 'paragraphs',
   richTextBold = 'richTextBold',
   richTextItalic = 'richTextItalic',
-  gap = 'gap',
+  blank = 'blank',
 }
 
 export type ControlButton = ActionControlButton | NestedControlButton
