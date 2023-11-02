@@ -25,6 +25,7 @@ import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { isEmptyRowsDocument } from '@/serlo-editor/plugins/rows/utils/static-is-empty'
 import { CourseNavigation } from '@/serlo-editor/plugins/serlo-template-plugins/course/course-navigation'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { MockupGaps } from './exercises/mockup-gaps.tsx'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { isArticleDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
 
@@ -51,6 +52,9 @@ export function Entity({ data }: EntityProps) {
   })
 
   const { strings } = useInstanceData()
+
+  const isMockupCoursePage = data.id === 244386
+
   return wrapWithSchema(
     <>
       {renderCourseNavigation()}
@@ -59,7 +63,11 @@ export function Entity({ data }: EntityProps) {
       {renderStyledH1()}
       {renderUserTools({ aboveContent: true })}
       <div className="min-h-1/4" key={data.id}>
-        {data.content && renderContent(data.content)}
+        {isMockupCoursePage ? (
+          <MockupGaps />
+        ) : (
+          data.content && renderContent(data.content)
+        )}
       </div>
       {renderCourseFooter()}
       <HSpace amount={20} />
