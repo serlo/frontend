@@ -1,6 +1,8 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
 
 import type { ExerciseProps } from '.'
+import { ExerciseToolbar } from './toolbar'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
@@ -16,7 +18,8 @@ const allInteractiveExerciseTypes = [
   EditorPluginType.H5p,
 ] as const
 
-export function ExerciseEditor({ editable, state }: ExerciseProps) {
+export function ExerciseEditor(props: ExerciseProps) {
+  const { editable, state, focused } = props
   const { content, interactive, solution } = state
 
   // only show supported interactive exercise types
@@ -24,10 +27,32 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
     editorPlugins.getAllWithData().some((plugin) => plugin.type === type)
   )
 
-  const exStrings = useEditorStrings().templatePlugins.exercise
+  const exTemplateStrings = useEditorStrings().templatePlugins.exercise
+  const exPluginStrings = useEditorStrings().plugins.exercise
 
   return (
-    <>
+    <div
+      data-qa="plugin-exercise"
+      className={clsx(
+        'group/exercise rounded-b-xl border-3 border-gray-100 pb-6'
+        // focused && '[&>div.plugin-toolbar]:flex'
+      )}
+    >
+      {focused ? (
+        <ExerciseToolbar {...props} />
+      ) : (
+        <button
+          className={tw`
+            absolute right-0 top-[-23px] z-[22] hidden h-6 rounded-t-md bg-gray-100
+            px-2 pt-0.5 text-sm font-bold
+            hover:bg-editor-primary-100 group-focus-within/exercise:block
+          `}
+          data-qa="plugin-exercise-parent-button"
+        >
+          {exPluginStrings.title}
+        </button>
+      )}
+      <div className="h-10"></div>
       {content.render()}
       <div className="mx-side">
         {interactive.defined ? (
@@ -40,7 +65,7 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
         ) : editable ? (
           <>
             <p className="mb-2 text-gray-400">
-              {exStrings.addOptionalInteractiveEx}
+              {exTemplateStrings.addOptionalInteractiveEx}
             </p>
             <div className="-ml-1.5 flex">
               {interactiveExerciseTypes.map((type) => {
@@ -50,7 +75,7 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
                     onClick={() => interactive.create({ plugin: type })}
                     secondary
                   >
-                    {exStrings[type]}
+                    {exTemplateStrings[type]}
                   </AddButton>
                 )
               })}
@@ -64,7 +89,7 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
                 className="serlo-button-editor-secondary serlo-tooltip-trigger relative top-7 z-20 mr-side"
                 onClick={() => solution.remove()}
               >
-                <EditorTooltip text={exStrings.removeSolution} />
+                <EditorTooltip text={exTemplateStrings.removeSolution} />
                 <FaIcon icon={faTrashAlt} />
               </button>
             </nav>
@@ -73,19 +98,19 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
         ) : (
           <div className="mt-20 max-w-[50%]">
             <AddButton onClick={() => solution.create()}>
-              {exStrings.createSolution}
+              {exTemplateStrings.createSolution}
             </AddButton>
           </div>
         )}
       </div>
-    </>
+    </div>
   )
 
   function renderChildTools() {
     return (
       <>
         <label className="serlo-tooltip-trigger mr-2">
-          <EditorTooltip text={exStrings.changeInteractive} />
+          <EditorTooltip text={exTemplateStrings.changeInteractive} />
           <select
             onChange={({ target }) => {
               if (interactive.defined)
@@ -102,7 +127,7 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
             {interactiveExerciseTypes.map((type) => {
               return (
                 <option key={type} value={type}>
-                  {exStrings[type]}
+                  {exTemplateStrings[type]}
                 </option>
               )
             })}
@@ -114,7 +139,7 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
             if (interactive.defined) interactive.remove()
           }}
         >
-          <EditorTooltip text={exStrings.removeInteractive} />
+          <EditorTooltip text={exTemplateStrings.removeInteractive} />
           <FaIcon icon={faTrashAlt} />
         </button>
       </>
