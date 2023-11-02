@@ -162,10 +162,6 @@ export function WelcomeModal({
         if (body.status === 'success') {
           // eslint-disable-next-line no-console
           console.log('INFO: RelationshipRequest was accepted.')
-          // eslint-disable-next-line no-console
-          console.log(
-            `INFO: Value of LernstandMathe is "${body.attributes['LernstandMathe']}"`
-          )
           setShowModal(false)
           callback()
         }
