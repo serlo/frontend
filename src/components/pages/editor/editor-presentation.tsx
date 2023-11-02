@@ -206,7 +206,7 @@ export function EditorPresentation() {
               <h2 className={clsx(h2Class)}>Connect</h2>
 
               <p className="mt-4 flex-1 text-xl leading-cozy">
-                Leave us you email address and we will reach out to you with
+                Leave us your email address and we will reach out to you with
                 updates.
               </p>
               <p className="mt-8">{renderStayInTouch(true)}</p>
