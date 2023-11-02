@@ -8,12 +8,12 @@ import {
   InteractiveAnswer,
   PreviewOverlaySimple,
 } from '../../editor-ui'
-import { store, selectIsDocumentEmpty } from '../../store'
+import { store, selectIsDocumentEmpty, selectFocused } from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditableContext } from '@/serlo-editor/core/contexts'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
-  const { editable, state, id } = props
+  const { editable, state, id, focused } = props
   const { answers, isSingleChoice } = state
 
   const editorStrings = useEditorStrings()
@@ -33,9 +33,16 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
 
   const [previewActive, setPreviewActive] = useState(false)
 
+  const isAnyAnswerFocused = answers.some(({ content, feedback }) => {
+    const focusedId = selectFocused(store.getState())
+    return focusedId === content.id || focusedId === feedback.id
+  })
+
+  const showUi = focused || isAnyAnswerFocused
+
   const renderer = (
     <EditableContext.Provider value={false}>
-      {/* //margin-hack */}
+      {/* margin-hack */}
       <div className="[&_.ml-4.flex]:mb-block">
         <ScMcExerciseRenderer
           isSingleChoice={isSingleChoice.value}
@@ -55,15 +62,18 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
 
   return (
     <div className="mb-12 mt-24 pt-4">
-      <ScMcExerciseToolbar
-        {...props}
-        previewActive={previewActive}
-        setPreviewActive={setPreviewActive}
-      />
-      <PreviewOverlaySimple active={previewActive}>
+      {showUi ? (
+        <ScMcExerciseToolbar
+          {...props}
+          previewActive={previewActive}
+          setPreviewActive={setPreviewActive}
+        />
+      ) : null}
+      <PreviewOverlaySimple active={showUi ? previewActive : true}>
         {renderer}
       </PreviewOverlaySimple>
-      {editable && !previewActive && (
+
+      {editable && !previewActive && showUi ? (
         <>
           {answers.map((answer, index) => {
             return (
@@ -88,7 +98,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
             {editorStrings.templatePlugins.scMcExercise.addAnswer}
           </AddButton>
         </>
-      )}
+      ) : null}
     </div>
   )
 

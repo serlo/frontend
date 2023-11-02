@@ -37,7 +37,8 @@ export function ExerciseEditor(props: ExerciseProps) {
       data-qa="plugin-exercise"
       className={clsx(
         'group/exercise rounded-b-xl border-3 border-transparent pb-6 focus-within:rounded-tl-xl focus-within:border-gray-100',
-        focused && '!border-gray-100'
+        focused && '!border-gray-100',
+        focused && '[add-solution-wrapper'
       )}
     >
       {focused ? (
@@ -96,7 +97,12 @@ export function ExerciseEditor(props: ExerciseProps) {
             {solution.render()}
           </div>
         ) : (
-          <div className="mt-20 max-w-[50%]">
+          <div
+            className={clsx(
+              'mt-20 hidden max-w-[50%] group-focus-within/exercise:block',
+              focused && '!block'
+            )}
+          >
             <AddButton onClick={() => solution.create()}>
               {exTemplateStrings.createSolution}
             </AddButton>
