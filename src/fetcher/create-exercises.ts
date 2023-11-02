@@ -2,7 +2,6 @@ import { MainUuidType } from './query-types'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import {
   EditorExerciseDocument,
-  EditorSolutionDocument,
   EditorTemplateExerciseGroupDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
@@ -31,22 +30,7 @@ export function createExercise(
     },
   }
 
-  if (!uuid.solution?.currentRevision?.content) return exercise
-  const solutionString = uuid.solution?.currentRevision?.content
-
-  const solution = {
-    ...(parseDocumentString(solutionString) as EditorSolutionDocument),
-    serloContext: {
-      uuid: uuid.solution?.id,
-      exerciseId: uuid.id,
-      trashed: uuid.solution?.trashed,
-      license:
-        uuid.solution?.license && !uuid.solution?.license.default
-          ? uuid.solution?.license
-          : undefined,
-    },
-  }
-  return { ...exercise, solution }
+  return exercise
 }
 
 export function createExerciseGroup(

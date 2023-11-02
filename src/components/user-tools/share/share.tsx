@@ -26,7 +26,6 @@ export function Share({ data, aboveContent }: MoreAuthorToolsProps) {
       UuidType.CoursePage,
       UuidType.ExerciseGroup,
       UuidType.Exercise,
-      UuidType.Solution,
     ].includes(data.type as UuidType)
 
   return (

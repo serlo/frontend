@@ -30,8 +30,6 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
       ? UuidType.Exercise
       : data.type === ExerciseInlineType.ExerciseGroup
       ? UuidType.ExerciseGroup
-      : data.type === ExerciseInlineType.Solution
-      ? UuidType.Solution
       : UuidType.Exercise
   )
 
@@ -67,16 +65,15 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
 
   function getToolsArray() {
     if (!data) return []
-    const noSolution = data.type !== ExerciseInlineType.Solution
     return [
       Tool.Abo,
       ...(hasUnrevised ? [Tool.UnrevisedEdit] : [Tool.Edit, Tool.History]),
-      ...(noSolution ? [Tool.SortGroupedExercises] : []),
-      ...(ExerciseInlineType.Solution ? [] : [Tool.Curriculum]),
+      Tool.SortGroupedExercises,
+      Tool.Curriculum,
       Tool.ChangeLicense,
       Tool.Log,
       Tool.Trash,
-      ...(noSolution ? [Tool.DirectLink] : []),
+      Tool.DirectLink,
     ]
   }
 }

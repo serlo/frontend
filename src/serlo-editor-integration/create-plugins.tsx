@@ -46,7 +46,6 @@ import { textExerciseGroupTypePlugin } from '@/serlo-editor/plugins/serlo-templa
 import { pageTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/page'
 import { taxonomyTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/taxonomy'
 import { textExerciseTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/text-exercise'
-import { textSolutionTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/text-solution'
 import { userTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/user'
 import { videoTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/video'
 import { solutionPlugin } from '@/serlo-editor/plugins/solution'
@@ -179,11 +178,7 @@ export function createPlugins({
       plugin: exercisePlugin,
       visibleInSuggestions: allowExercises,
     },
-    {
-      type: EditorPluginType.Solution,
-      plugin: solutionPlugin,
-      visibleInSuggestions: allowExercises,
-    },
+    { type: EditorPluginType.Solution, plugin: solutionPlugin },
     { type: EditorPluginType.H5p, plugin: H5pPlugin },
     {
       type: EditorPluginType.InputExercise,
@@ -231,7 +226,6 @@ export function createPlugins({
       type: TemplatePluginType.TextExerciseGroup,
       plugin: textExerciseGroupTypePlugin,
     },
-    { type: TemplatePluginType.TextSolution, plugin: textSolutionTypePlugin },
     { type: TemplatePluginType.User, plugin: userTypePlugin },
     { type: TemplatePluginType.Video, plugin: videoTypePlugin },
   ]

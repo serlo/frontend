@@ -18,7 +18,6 @@ import { successHash } from '@/helper/use-leave-confirm'
 import type {
   CourseSerializedState,
   TextExerciseGroupSerializedState,
-  TextExerciseSerializedState,
 } from '@/serlo-editor-integration/convert-editor-response-to-state'
 
 const equalsWithEmptyStringIsNull = eqBy(
@@ -171,21 +170,6 @@ export function useSetEntityMutation() {
             UuidType.GroupedExercise,
             (initialStateState as TextExerciseGroupSerializedState)?.[
               'grouped-text-exercise'
-            ]
-          ))
-      }
-      if (
-        (data.__typename === UuidType.Exercise ||
-          data.__typename === UuidType.GroupedExercise) &&
-        data['text-solution']
-      ) {
-        success =
-          success &&
-          (await mapField(
-            data['text-solution'],
-            UuidType.Solution,
-            (initialStateState as TextExerciseSerializedState)?.[
-              'text-solution'
             ]
           ))
       }

@@ -17,7 +17,7 @@ const allInteractiveExerciseTypes = [
 ] as const
 
 export function ExerciseEditor({ editable, state }: ExerciseProps) {
-  const { content, interactive } = state
+  const { content, interactive, solution } = state
 
   // only show supported interactive exercise types
   const interactiveExerciseTypes = allInteractiveExerciseTypes.filter((type) =>
@@ -25,6 +25,7 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
   )
 
   const exStrings = useEditorStrings().templatePlugins.exercise
+
   return (
     <>
       {content.render()}
@@ -55,6 +56,26 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
           </div>
         </div>
       ) : null}
+      {solution.defined ? (
+        <div className="-ml-side mt-block">
+          <nav className="flex justify-end">
+            <button
+              className="serlo-button-editor-secondary serlo-tooltip-trigger relative top-7 z-20 mr-side"
+              onClick={() => solution.remove()}
+            >
+              <EditorTooltip text={exStrings.removeSolution} />
+              <FaIcon icon={faTrashAlt} />
+            </button>
+          </nav>
+          {solution.render()}
+        </div>
+      ) : (
+        <div className="-ml-1.5 mt-12 max-w-[50%]">
+          <AddButton onClick={() => solution.create()}>
+            {exStrings.createSolution}
+          </AddButton>
+        </div>
+      )}
     </>
   )
 

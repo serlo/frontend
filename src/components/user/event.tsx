@@ -281,18 +281,15 @@ export function Event({
     return [
       UuidType.Exercise,
       UuidType.GroupedExercise,
-      UuidType.Solution,
       UuidType.Thread,
       UuidType.Comment,
     ].includes(typename)
   }
 
   function renderParent(title: string, typename: UuidType) {
-    const preposition = [
-      UuidType.Exercise,
-      UuidType.GroupedExercise,
-      UuidType.Solution,
-    ].includes(typename)
+    const preposition = [UuidType.Exercise, UuidType.GroupedExercise].includes(
+      typename
+    )
       ? strings.events.entityInParentPreposition
       : [UuidType.Thread, UuidType.Comment].includes(typename)
       ? strings.events.commentInParentPreposition
@@ -306,7 +303,6 @@ export function Event({
       [
         UuidType.Exercise,
         UuidType.GroupedExercise,
-        UuidType.Solution,
         UuidType.Thread,
         UuidType.Comment,
       ].includes(typename)
