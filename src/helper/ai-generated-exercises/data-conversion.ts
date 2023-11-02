@@ -71,7 +71,7 @@ function createInteractive(exercise: ExpectedExerciseTypes): Interactive {
               state: [
                 {
                   type: 'p',
-                  children: convertStringToMathNodes(option),
+                  children: convertStringToMathOrTextNodes(option),
                 },
               ],
             },
@@ -169,7 +169,7 @@ function createSolution(
           state: [
             {
               type: 'p',
-              children: convertStringToMathNodes(step),
+              children: convertStringToMathOrTextNodes(step),
             },
           ],
         })),
@@ -225,7 +225,7 @@ export function convertAiGeneratedScExerciseToEditorDocument(
               {
                 type: 'h',
                 level: 3,
-                children: convertStringToMathNodes(inputContent.heading),
+                children: convertStringToMathOrTextNodes(inputContent.heading),
               },
             ],
           },
@@ -234,7 +234,7 @@ export function convertAiGeneratedScExerciseToEditorDocument(
             state: [
               {
                 type: 'p',
-                children: convertStringToMathNodes(inputContent.question),
+                children: convertStringToMathOrTextNodes(inputContent.question),
               },
             ],
           },
@@ -258,21 +258,27 @@ function isSingleChoiceGuard(
 
 type MathElementOrText = MathElement | CustomText
 
-function convertStringToMathNodes(content: string) {
-  const segments = content.split('$')
+function convertStringToMathOrTextNodes(content: string) {
+  const escapedDollarMagicString = '___ESCAPED_DOLLAR_SIGN___'
+  // We're telling the LLM to escape normal $ signs. Sometimes it may use \$ and
+  // mostly \\$ so we're replacing both of them
+  const cleanedContent = content.replace(/\\\$|\\\$/g, escapedDollarMagicString)
+  // const cleanedContent = content
+  const segments = cleanedContent.split('$')
   return segments.reduce<MathElementOrText[]>((acc, segment, index) => {
+    const correctSegment = segment.replaceAll(escapedDollarMagicString, '$')
     if (index % 2 === 0) {
       // Even index means we're dealing with regular text
-      if (segment !== '') {
-        return [...acc, { text: segment }]
+      if (correctSegment !== '') {
+        return [...acc, { text: correctSegment }]
       }
     } else {
       // Odd index means math content
       const mathElement: MathElement = {
         type: 'math',
-        src: segment,
+        src: correctSegment,
         inline: true,
-        children: [{ text: segment }],
+        children: [{ text: correctSegment }],
       }
       return [...acc, mathElement]
     }

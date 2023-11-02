@@ -74,7 +74,7 @@ export const generateExercisePrompt = (params: ExerciseParams): string => {
     : 'Die Schüler haben keine Vorkenntnisse.'
 
   const latexPrompt =
-    'sehr wichtig: alle mathematischen Ausdrücke und Zahlen MÜSSEN in LateX geschrieben sein mit einem $ Zeichen vor und nach dem Ausdruck. Inklusive quadratischer Ausdrücke, Wurzeln und Formeln! $ Zeichen außerhalb von Latex müssen mit einem backslash escaped werden!'
+    'sehr wichtig: alle mathematischen Ausdrücke und Zahlen MÜSSEN in LateX geschrieben sein mit einem $ Zeichen vor und nach dem Ausdruck. Inklusive quadratischer Ausdrücke, Wurzeln und Formeln! $ Zeichen als Klartext (außerhalb von Latex) müssen mit einem doppel backslash escaped werden (\\\\$)!'
 
   return `Du bist eine kreative Lehrkraft, die spannende Aufgaben für Schüler ${gradeOrUniversity} im Fach ${subject} entwickelt. Erstelle zum Thema "${topic}" eine Aufgabe${subtasks} ${exerciseText}. ${priorKnowledgeString}
 Nach Bearbeiten der Aufgabe beherrschen die Schüler folgendes besser: ${learningGoal}
