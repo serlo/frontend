@@ -5,7 +5,7 @@ import {
   faCaretRight,
 } from '@fortawesome/free-solid-svg-icons'
 import ExerciseGenerationLoadingSparkles from 'public/_assets/img/exercise/exercise-generation-loading-sparkles.svg'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { useAuthentication } from '@/auth/use-authentication'
@@ -83,6 +83,9 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
   const entityId = useEntityId()
   editorRenderers.init(createRenderers())
 
+  // Needed for React StrictMode to not run the prompt twice
+  const abortControllerRef = useRef<AbortController | null>(null)
+
   // TODO change initial state back to loading
   const [status, setStatus] = useState(
     isTestingLocally ? Status.Success : Status.Loading
@@ -96,6 +99,11 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
 
   // TODO move all this code to the generic execute-ai-prompt file
   const generateExercise = useCallback(async () => {
+    const abortController = new AbortController()
+    abortControllerRef.current = abortController
+
+    const signal = abortController.signal
+
     console.log('Asking GPT to generate an exercise with prompt', {
       prompt,
       auth,
@@ -109,6 +117,10 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
       // }, 3500)
 
       const graphQlFetch = createAuthAwareGraphqlFetch<GraphQLResponse>(auth)
+
+      if (signal?.aborted) {
+        return
+      }
 
       const query = `
         query ($prompt: String!) {
@@ -124,7 +136,10 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
 
       console.log('Fetching response now!')
       submitEvent('exercise-generation-wizard-prompt-generation')
-      const response = await graphQlFetch(JSON.stringify({ query, variables }))
+      const response = await graphQlFetch(
+        JSON.stringify({ query, variables }),
+        signal
+      )
       console.log('Response: ', { response })
       if (response?.ai?.executePrompt?.success) {
         console.log('Exercise: ', response?.ai.executePrompt.record)
@@ -137,6 +152,13 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
         submitEvent('exercise-generation-wizard-prompt-failure')
       }
     } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') {
+        console.log('Fetch was successfully aborted!')
+        setStatus(Status.Error)
+        submitEvent('exercise-generation-wizard-prompt-execution-aborted')
+        return
+      }
+
       console.error('Failed to generate exercise:', error)
       setErrorMessage(error instanceof Error ? error.message : 'Unknown error!')
       submitEvent('exercise-generation-wizard-prompt-failure')
@@ -145,10 +167,15 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
   }, [prompt, auth])
 
   useEffect(() => {
+    const abortController = abortControllerRef?.current
     // Already handling the error in the generateExercise function
     generateExercise()
       .then(() => void null)
       .catch(() => void null)
+
+    return () => {
+      abortController?.abort()
+    }
   }, [generateExercise])
 
   const { strings } = useLoggedInData() as LoggedInData
@@ -275,6 +302,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
         <button
           className="flex items-center text-brand-700"
           onClick={generateExercise}
+          disabled={status === Status.Loading}
         >
           <FaIcon icon={faRefresh} className="mr-2" />
           {strings.ai.exerciseGeneration.preview.regenerate}
