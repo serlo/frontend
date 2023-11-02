@@ -104,11 +104,6 @@ const registeredHotkeys = [
     option: TextEditorFormattingOption.code,
     handler: toggleCode,
   },
-  {
-    hotkey: 'mod+shift+b',
-    option: TextEditorFormattingOption.blank,
-    handler: toggleBlank,
-  },
 ]
 
 const registeredMarkdownShortcuts = [

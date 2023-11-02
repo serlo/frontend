@@ -843,7 +843,7 @@ export const loggedInData = {
           lists: 'Lists',
           mathFormula: 'Math formula (%ctrlOrCmd% + M)',
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
-          blank: 'Blank (%ctrlOrCmd% + ⇧ + B)',
+          blank: 'Blank',
           bold: 'Bold (%ctrlOrCmd% + B)',
           italic: 'Italic (%ctrlOrCmd% + I)',
           noItemsFound: 'No items found',
