@@ -110,6 +110,7 @@ function H5pEditor({ state, id }: H5pProps) {
           pluginType={EditorPluginType.H5p}
           pluginControls={<InteractiveToolbarTools id={id} />}
         />
+
         <div className="rounded-xl bg-editor-primary-50 p-2">
           <h2 className="serlo-h2">Einfügen von H5P-Inhalt</h2>
           <div>

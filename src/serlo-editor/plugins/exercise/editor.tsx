@@ -37,8 +37,7 @@ export function ExerciseEditor(props: ExerciseProps) {
       data-qa="plugin-exercise"
       className={clsx(
         'group/exercise rounded-b-xl border-3 border-transparent pb-6 focus-within:rounded-tl-xl focus-within:border-gray-100',
-        focused && '!border-gray-100',
-        focused && '[add-solution-wrapper'
+        focused && '!border-gray-100'
       )}
     >
       {focused ? (

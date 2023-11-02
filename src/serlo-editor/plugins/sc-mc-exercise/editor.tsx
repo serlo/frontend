@@ -69,7 +69,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
           setPreviewActive={setPreviewActive}
         />
       ) : null}
-      <PreviewOverlaySimple active={showUi ? previewActive : true}>
+      <PreviewOverlaySimple active={previewActive} fullOpacity={!showUi}>
         {renderer}
       </PreviewOverlaySimple>
 
