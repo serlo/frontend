@@ -2,10 +2,10 @@ import clsx from 'clsx'
 import { SetStateAction, useState } from 'react'
 
 import { HeadTags } from '../head-tags'
-import { PartnerListNew } from '../landing/rework/partner-list-new'
+import { PartnerList } from '../landing/rework/partner-list'
+import { Logo } from '../navigation/header/logo'
 import { endpointEnmeshed } from '@/api/endpoint'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { Logo } from '@/components/navigation/logo'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 export function createQRCode(
@@ -43,7 +43,7 @@ export function DataWallet() {
       <HeadTags data={{ title: 'Data Wallet – Serlo.org' }} />
       <header className="bg-brand-100 px-side pt-12 sm:text-center">
         <div className="pb-6">
-          <Logo subline="" noLink />
+          <Logo />
         </div>
       </header>
 
@@ -122,7 +122,7 @@ export function DataWallet() {
         <h2 className="pb-12 pt-16 text-center font-bold">
           Partner und Unterstützer
         </h2>
-        <PartnerListNew />
+        <PartnerList />
         <nav>
           <a
             href="https://de.serlo.org/serlo"

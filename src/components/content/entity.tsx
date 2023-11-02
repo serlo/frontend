@@ -7,6 +7,7 @@ import {
 import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
 
+import { MockupGaps } from './exercises/mockup-gaps'
 import { HSpace } from './h-space'
 import { Link } from './link'
 import { FaIcon } from '../fa-icon'
@@ -25,7 +26,6 @@ import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { isEmptyRowsDocument } from '@/serlo-editor/plugins/rows/utils/static-is-empty'
 import { CourseNavigation } from '@/serlo-editor/plugins/serlo-template-plugins/course/course-navigation'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { MockupGaps } from './exercises/mockup-gaps.tsx'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { isArticleDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
 
