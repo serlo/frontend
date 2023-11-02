@@ -1,31 +1,19 @@
 import { either as E } from 'fp-ts'
 import { PathReporter } from 'io-ts/lib/PathReporter'
 
-// import * as t from 'io-ts'
-// import { v4 as uuidv4 } from 'uuid'
-
 import {
   ExpectedExerciseTypes,
   ExpectedMultipleChoiceType,
   ExpectedSingleChoiceType,
   InputMultipleChoiceDecoder,
   InputShortAnswerDecoder,
-  // InputDecoder,
-  // InputMultipleChoiceDecoder,
-  // InputShortAnswerDecoder,
   InputSingleChoiceDecoder,
   humanReadableMultipleChoiceExample,
   humanReadableShortAnswerExample,
   humanReadableSingleChoiceExample,
 } from './decoders'
-// import {
-//   InputExerciseState,
-//   ScMcExerciseState,
-//   TypeTextExerciseGroup,
-//   TypeTextExerciseState,
-// } from './types'
-// import { LicenseData } from '@/data-types'
 import { InputExerciseType } from '@/serlo-editor/plugins/input-exercise/input-exercise-type'
+import { CustomText, MathElement } from '@/serlo-editor/plugins/text'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   EditorExerciseDocument,
@@ -83,7 +71,7 @@ function createInteractive(exercise: ExpectedExerciseTypes): Interactive {
               state: [
                 {
                   type: 'p',
-                  children: [{ text: option }],
+                  children: convertStringToMathNodes(option),
                 },
               ],
             },
@@ -181,7 +169,7 @@ function createSolution(
           state: [
             {
               type: 'p',
-              children: [{ text: step }],
+              children: convertStringToMathNodes(step),
             },
           ],
         })),
@@ -237,13 +225,18 @@ export function convertAiGeneratedScExerciseToEditorDocument(
               {
                 type: 'h',
                 level: 3,
-                children: [{ text: inputContent.heading }],
+                children: convertStringToMathNodes(inputContent.heading),
               },
             ],
           },
           {
             plugin: EditorPluginType.Text,
-            state: [{ type: 'p', children: [{ text: inputContent.question }] }],
+            state: [
+              {
+                type: 'p',
+                children: convertStringToMathNodes(inputContent.question),
+              },
+            ],
           },
         ],
       },
@@ -263,6 +256,31 @@ function isSingleChoiceGuard(
   return input.type === 'single_choice'
 }
 
+type MathElementOrText = MathElement | CustomText
+
+function convertStringToMathNodes(content: string) {
+  const segments = content.split('$')
+  return segments.reduce<MathElementOrText[]>((acc, segment, index) => {
+    if (index % 2 === 0) {
+      // Even index means we're dealing with regular text
+      if (segment !== '') {
+        return [...acc, { text: segment }]
+      }
+    } else {
+      // Odd index means math content
+      const mathElement: MathElement = {
+        type: 'math',
+        src: segment,
+        inline: true,
+        children: [{ text: segment }],
+      }
+      return [...acc, mathElement]
+    }
+
+    return acc
+  }, [])
+}
+
 // function createLicense(): LicenseData {
 //   return {
 //     id: 1,
@@ -270,53 +288,5 @@ function isSingleChoiceGuard(
 //     shortTitle: 'CC BY-SA 4.0',
 //     url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
 //     isDefault: true,
-//   }
-// }
-
-// function convertStringToTextPluginParagraph(
-//   content: string
-// ): [FrontendSlatePNode] {
-//   const textPluginState: FrontendContentNode[] = []
-//   let startIndex = 0
-//   let isInMath = false
-
-//   for (const [i, char] of content.split('').entries()) {
-//     // When at '$', if currently in Latex expression - push the current segment as MathElement,
-//     // otherwise push the current segment as CustomText
-//     if (char === '$') {
-//       const segment = content.substring(startIndex, i)
-//       if (segment !== '') {
-//         textPluginState.push(
-//           isInMath ? createMathElement(segment) : createCustomText(segment)
-//         )
-//         isInMath = !isInMath
-//       }
-//       startIndex = i + 1
-//     }
-
-//     // When at the last character, push the remaining string as CustomText
-//     if (i === content.length - 1) {
-//       const segment = content.substring(startIndex, i + 1)
-//       if (segment !== '') {
-//         textPluginState.push(createCustomText(segment))
-//       }
-//     }
-//   }
-
-//   return [{ type: FrontendNodeType.SlateP, children: textPluginState }]
-// }
-
-// function createCustomText(value: string): FrontendTextNode {
-//   return { text: value, type: FrontendNodeType.Text }
-// }
-
-// function createMathElement(value: string): FrontendInlineMathNode {
-//   return {
-//     type: FrontendNodeType.InlineMath,
-//     // src: value,
-//     formula: value,
-//     formulaSource: value,
-//     // inline: true,
-//     // children: [{ text: '' }],
 //   }
 // }
