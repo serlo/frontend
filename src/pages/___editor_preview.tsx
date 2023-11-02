@@ -104,7 +104,7 @@ function Content() {
     <main id="content" className="flex">
       <section className="min-h-screen w-[50vw] border-4 border-r-0 border-editor-primary">
         <header className="mx-side flex justify-between align-middle font-bold">
-          <h2 className="text-editor-primary">Edit</h2>
+          <h2 className="mb-12 text-editor-primary">Edit</h2>
           <div>
             <button
               onClick={() => {
@@ -130,7 +130,7 @@ function Content() {
         </div>
       </section>
       <section className="min-h-screen w-[50vw] border-4 border-editor-primary">
-        <h2 className="mx-side font-bold text-editor-primary">Preview</h2>
+        <h2 className="mx-side mb-12 font-bold text-editor-primary">Preview</h2>
         <div className="serlo-content-with-spacing-fixes mt-[3rem]">
           <StaticRenderer document={parseDocumentString(previewState)} />
         </div>
