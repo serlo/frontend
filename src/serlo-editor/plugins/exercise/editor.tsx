@@ -1,4 +1,5 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
 
 import type { ExerciseProps } from '.'
 import { ExerciseToolbar } from './toolbar/toolbar'
@@ -34,7 +35,10 @@ export function ExerciseEditor(props: ExerciseProps) {
   return (
     <div
       data-qa="plugin-exercise"
-      className="group/exercise rounded-b-xl border-3 border-gray-100 pb-6"
+      className={clsx(
+        'group/exercise rounded-b-xl border-3 border-transparent pb-6 focus-within:rounded-tl-xl focus-within:border-gray-100',
+        focused && '!border-gray-100'
+      )}
     >
       {focused ? (
         <ExerciseToolbar
