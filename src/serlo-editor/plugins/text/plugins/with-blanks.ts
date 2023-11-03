@@ -8,7 +8,7 @@ export const withBlanks = (editor: Editor) => {
   }
 
   editor.isVoid = (element) => {
-    return element.type === 'blank' ? true : isInline(element)
+    return element.type === 'blank' ? true : isVoid(element)
   }
 
   return editor
