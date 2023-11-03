@@ -93,7 +93,7 @@ export const useSlateRenderHandlers = ({
               style={{
                 width: element.correctAnswer.length ? undefined : `3rem`,
               }}
-              className="my-0.5 rounded-full border border-brand bg-brand-50 pl-2"
+              className="h-[25px] rounded-full border border-brand bg-brand-50 pl-2"
               onChange={(e) => {
                 const path = ReactEditor.findPath(editor, element)
                 Transforms.setNodes(

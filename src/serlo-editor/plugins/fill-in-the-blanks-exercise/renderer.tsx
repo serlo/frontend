@@ -96,7 +96,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     //   }}
     // >
     // <BlankDragAndDropSolutions.Provider value={blankDragAndDropSolutions}>
-    <div className="mx-side mb-block">
+    <div className="mx-side mb-block leading-[30px] [&>p]:leading-[30px]">
       <BlankStatesContext.Provider
         value={{
           mode: mode,
