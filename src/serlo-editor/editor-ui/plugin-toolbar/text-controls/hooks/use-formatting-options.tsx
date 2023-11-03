@@ -99,11 +99,6 @@ const registeredHotkeys = [
     option: TextEditorFormattingOption.code,
     handler: toggleCode,
   },
-  {
-    hotkey: 'mod+shift+c',
-    option: TextEditorFormattingOption.code,
-    handler: toggleCode,
-  },
 ]
 
 const registeredMarkdownShortcuts = [
