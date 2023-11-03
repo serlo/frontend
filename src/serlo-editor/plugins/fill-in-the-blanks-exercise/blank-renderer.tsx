@@ -37,7 +37,7 @@ export function BlankRenderer(props: {
             isAnswerCorrect && 'border-green-500',
             isAnswerCorrect === false && 'border-red-500'
           )}
-          size={textInInput.length || 3}
+          size={(textInInput.length ?? 4) + 1}
           spellCheck={false}
           autoCorrect="off"
           placeholder=""
