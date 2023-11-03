@@ -94,6 +94,11 @@ const registeredHotkeys = [
     option: TextEditorFormattingOption.math,
     handler: toggleMath,
   },
+  {
+    hotkey: 'mod+shift+`',
+    option: TextEditorFormattingOption.code,
+    handler: toggleCode,
+  },
 ]
 
 const registeredMarkdownShortcuts = [
@@ -338,17 +343,17 @@ function createToolbarControls(
       onClick: toggleCode,
       renderIcon: () => <FaIcon className="h-[15px]" icon={faCode} />,
     },
-    // Blank
+    // Blank (For Fill in the Blank Exercises)
     {
       name: TextEditorFormattingOption.blank,
       title: textStrings.blank,
       isActive: isBlankActive,
       onClick: toggleBlank,
       renderIcon: () => (
-        <span className="h-[15px] rounded-full border border-editor-primary-300 p-1">
-          Lücke
+        <span className="relative -top-0.5 rounded-lg border-2 border-current px-1 text-[10px] font-bold">
+          _
         </span>
-      ), // TODO: Icon and styling
+      ),
     },
   ].map((option) => {
     return {

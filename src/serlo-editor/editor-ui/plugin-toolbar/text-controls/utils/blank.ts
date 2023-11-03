@@ -26,10 +26,17 @@ export function getBlankElement(editor: SlateEditor): Blank | undefined {
 
 export function toggleBlank(editor: SlateEditor) {
   if (isBlankActive(editor)) {
+    let text = undefined
     Transforms.removeNodes(editor, {
-      match: (n) => Element.isElement(n) && n.type === 'blank',
+      match: (node) => {
+        const isHit = Element.isElement(node) && node.type === 'blank'
+        if (isHit) text = node
+        return isHit
+      },
     })
-    // TODO: Blank and also its content disappear. Instead blank content should be added back as text element (also not working in toggleMath)
+    if (text) {
+      Transforms.insertNodes(editor, { text: (text as Blank).correctAnswer })
+    }
     return
   }
 
