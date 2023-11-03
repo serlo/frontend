@@ -33,7 +33,7 @@ export function BlankRenderer(props: {
       {mode === 'fill-in-the-blanks' ? (
         <input
           className={clsx(
-            'my-0.5 h-full resize-none rounded-full border border-brand bg-brand-50 px-2',
+            'my-0.5 h-full resize-none rounded-full border border-brand bg-brand-50 pl-2',
             isAnswerCorrect && 'border-green-500',
             isAnswerCorrect === false && 'border-red-500'
           )}

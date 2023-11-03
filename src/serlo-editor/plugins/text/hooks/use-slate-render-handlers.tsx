@@ -89,8 +89,11 @@ export const useSlateRenderHandlers = ({
           <span {...attributes} contentEditable={false}>
             <input
               value={element.correctAnswer}
-              size={element.correctAnswer.length}
-              className="my-0.5 rounded-full border border-brand bg-brand-50 pl-2 pr-1"
+              size={element.correctAnswer.length ?? 5}
+              style={{
+                width: element.correctAnswer.length ? undefined : `3rem`,
+              }}
+              className="my-0.5 rounded-full border border-brand bg-brand-50 pl-2"
               onChange={(e) => {
                 const path = ReactEditor.findPath(editor, element)
                 Transforms.setNodes(
@@ -107,7 +110,7 @@ export const useSlateRenderHandlers = ({
       }
       return <div {...attributes}>{children}</div>
     },
-    [focused]
+    [editor, focused]
   )
 
   const handleRenderLeaf = useCallback(
