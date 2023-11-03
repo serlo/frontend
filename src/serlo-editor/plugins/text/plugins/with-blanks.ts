@@ -1,7 +1,7 @@
 import { Editor } from 'slate'
 
 export const withBlanks = (editor: Editor) => {
-  const { isInline } = editor
+  const { isInline, isVoid } = editor
 
   editor.isInline = (element) => {
     return element.type === 'blank' ? true : isInline(element)
