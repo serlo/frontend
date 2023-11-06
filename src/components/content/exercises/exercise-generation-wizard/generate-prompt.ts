@@ -56,10 +56,10 @@ export const generateExercisePrompt = (params: ExerciseParams): string => {
   const { exerciseText, keyDescription } =
     exerciseTypeToPromptTexts[exerciseType]
 
-  const subtasks =
-    numberOfSubtasks < 2
-      ? ''
-      : ` mit ${numberOfSubtasks} voneinander unabhängigen Teilaufgaben`
+  const isGeneratingMultipleExercises = numberOfSubtasks >= 2
+  const subtasks = isGeneratingMultipleExercises
+    ? ` mit ${numberOfSubtasks} voneinander unabhängigen Teilaufgaben. Thematisch sollten die Aufgaben zu der Überschrift passen.`
+    : ''
 
   // * Only supports German at the moment. For i18n, this will require some
   //   extra code (checking against
@@ -74,10 +74,14 @@ export const generateExercisePrompt = (params: ExerciseParams): string => {
     : 'Die Schüler haben keine Vorkenntnisse.'
 
   const latexPrompt =
-    'sehr wichtig: alle mathematischen Ausdrücke und Zahlen MÜSSEN in LateX geschrieben sein mit einem $ Zeichen vor und nach dem Ausdruck. Inklusive quadratischer Ausdrücke, Wurzeln und Formeln! $ Zeichen als Klartext (außerhalb von Latex) müssen mit einem doppel backslash escaped werden (\\\\$)!'
+    'sehr wichtig: alle mathematischen Ausdrücke MÜSSEN in LateX geschrieben sein mit einem $ Zeichen vor UND nach dem Ausdruck. Inklusive quadratischer Ausdrücke, Wurzeln und Formeln! Generiere lieber Aufgaben mit € oder anderen Einheiten da $ Zeichen die als Klartext (außerhalb von Latex) ausgegeben werden sollen, mit einem doppel backslash escaped werden müssen (\\\\$)!'
+
+  const generatedExerciseSingularOrPlural = isGeneratingMultipleExercises
+    ? 'den generierten Aufgaben'
+    : 'der generierten Aufgabe'
 
   return `Du bist eine kreative Lehrkraft, die spannende Aufgaben für Schüler ${gradeOrUniversity} im Fach ${subject} entwickelt. Erstelle zum Thema "${topic}" eine Aufgabe${subtasks} ${exerciseText}. ${priorKnowledgeString}
 Nach Bearbeiten der Aufgabe beherrschen die Schüler folgendes besser: ${learningGoal}
 Verwende leichte Sprache. Das Anforderungsniveau soll ${difficultyText} sein. Beachte folgende Charakterisierung der Schüler: ${difficultyDescription}.
-Stelle die Aufgabe zum Hochladen auf eine Lernplattform in einem unnamed JSON Objekt dar. Beschreibe zunächst den vollständigen und korrekten Rechenweg KLEINSCHRITTIG in ganzen Sätzen, den die Schüler nutzen können, um die Aufgabe zu lösen, als array value mit dem key "steps". Sehr wichtig: Ausschließlich konkrete Schritte und Rechnungen! Füge eine sinnvolle Überschrift zu der generierten Aufgabe als value zu dem key "heading" hinzu. Anschließend, vervollständige das JSON um folgendes: ${keyDescription}. Gebe KEINEN normalen Text aus, der GESAMTE output MUSS sich innerhalb von einem einzigen JSON Objekt befinden und ${latexPrompt}`
+Stelle die Aufgabe zum Hochladen auf eine Lernplattform in einem unnamed JSON Objekt dar. Füge eine sinnvolle Überschrift zu ${generatedExerciseSingularOrPlural} als value zu dem key "heading" hinzu. Die weiteren key value pairs werden in ein array mit dem key "exercises" geschrieben, sodass das JSON so aussieht { "heading": "Relevanter Titel für die generierten Aufgaben", "exercises": [] }. Beschreibe zunächst den vollständigen und korrekten Rechenweg KLEINSCHRITTIG in ganzen Sätzen, den die Schüler nutzen können, um die Aufgabe zu lösen, als array value mit dem key "steps". Sehr wichtig: Ausschließlich konkrete Schritte und Rechnungen! Anschließend, vervollständige das JSON um folgendes: ${keyDescription}. Gebe KEINEN normalen Text aus, der GESAMTE output MUSS sich innerhalb von einem einzigen JSON Objekt befinden und ${latexPrompt}`
 }

@@ -1,7 +1,6 @@
 import * as t from 'io-ts'
 
 export const InputSingleChoiceDecoder = t.strict({
-  heading: t.string,
   type: t.literal('single_choice'),
   question: t.string,
   options: t.array(t.string),
@@ -13,7 +12,6 @@ export const InputSingleChoiceDecoder = t.strict({
 export type ExpectedSingleChoiceType = t.TypeOf<typeof InputSingleChoiceDecoder>
 
 export const humanReadableSingleChoiceExample: ExpectedSingleChoiceType = {
-  heading: 'Exercise heading',
   steps: ['First of possibly many steps'],
   type: 'single_choice',
   question: 'Question of the exercise',
@@ -22,7 +20,6 @@ export const humanReadableSingleChoiceExample: ExpectedSingleChoiceType = {
 }
 
 export const InputMultipleChoiceDecoder = t.strict({
-  heading: t.string,
   type: t.literal('multiple_choice'),
   question: t.string,
   options: t.array(t.string),
@@ -35,7 +32,6 @@ export type ExpectedMultipleChoiceType = t.TypeOf<
 >
 
 export const humanReadableMultipleChoiceExample: ExpectedMultipleChoiceType = {
-  heading: 'Exercise heading',
   steps: ['First of possibly many steps'],
   type: 'multiple_choice',
   question: 'Question of the exercise',
@@ -44,7 +40,6 @@ export const humanReadableMultipleChoiceExample: ExpectedMultipleChoiceType = {
 }
 
 export const InputShortAnswerDecoder = t.strict({
-  heading: t.string,
   type: t.literal('short_answer'),
   question: t.string,
   correct_answer: t.string,
@@ -54,7 +49,6 @@ export const InputShortAnswerDecoder = t.strict({
 export type ExpectedShortAnswerType = t.TypeOf<typeof InputShortAnswerDecoder>
 
 export const humanReadableShortAnswerExample: ExpectedShortAnswerType = {
-  heading: 'Exercise heading',
   steps: ['First of possibly many steps'],
   type: 'short_answer',
   question: 'Question of the exercise',
@@ -69,9 +63,9 @@ export type ExpectedExerciseTypes =
   | ExpectedMultipleChoiceType
   | ExpectedShortAnswerType
 
-export const InputDecoder = t.strict({
+export const LLMOutputDecoder = t.strict({
   heading: t.string,
-  subtasks: t.array(
+  exercises: t.array(
     t.union([
       InputSingleChoiceDecoder,
       InputMultipleChoiceDecoder,
@@ -79,3 +73,14 @@ export const InputDecoder = t.strict({
     ])
   ),
 })
+
+export type ExpectedLLMOutputType = t.TypeOf<typeof LLMOutputDecoder>
+
+export const humanReadableLLMOutputExample: ExpectedLLMOutputType = {
+  heading: 'Heading of exercises',
+  exercises: [
+    humanReadableSingleChoiceExample,
+    humanReadableMultipleChoiceExample,
+    humanReadableShortAnswerExample,
+  ],
+}
