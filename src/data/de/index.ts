@@ -768,6 +768,7 @@ export const loggedInData = {
           lists: "Listen",
           mathFormula: "Matheformel (%ctrlOrCmd% + M)",
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
+          blank: "Blanko",
           bold: "Fett (%ctrlOrCmd% + B)",
           italic: "Kursiv (%ctrlOrCmd% + I)",
           noItemsFound: "keine Einträge gefunden",
@@ -816,6 +817,10 @@ export const loggedInData = {
         scMcExercise: {
           title: "SC/MC Aufgabe",
           description: "Single- oder Multiple Choice Aufgabe"
+        },
+        fillInTheBlanks: {
+          title: 'Fill In The Blanks Exercise',
+          description: 'Text with blanks'
         }
       },
       templatePlugins: {
@@ -872,9 +877,10 @@ export const loggedInData = {
           title: "Titel"
         },
         exercise: {
-          scMcExercise: "Auswahlaufgabe",
-          inputExercise: "Eingabefeld",
-          h5p: "H5P-Inhalt",
+          scMcExercise: 'Choice Exercise',
+          inputExercise: 'Input Exercise',
+          h5p: 'H5p Exercise',
+          fillInTheBlanksExercise: 'Fill In The Blanks',
           addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
           changeInteractive: "Interaktives Element ändern",
           removeInteractive: "Interaktives Element entfernen"
