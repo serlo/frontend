@@ -199,19 +199,19 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
       // TODO: Check answers in drag-and-drop mode
     }
   }
+}
 
-  // Searches for blank objects in text plugin state. They can be at varying depths.
-  function getBlanksWithinObject(obj: object): BlankStates {
-    if (BlankState.is(obj)) {
-      return [obj]
-    }
-
-    // Recursively search this object's values for blank objects
-    return Object.values(obj).reduce((blanks: BlankStates, value: unknown) => {
-      if (typeof value === 'object' && value !== null) {
-        return [...blanks, ...getBlanksWithinObject(value)]
-      }
-      return blanks
-    }, [])
+// Searches for blank objects in text plugin state. They can be at varying depths.
+function getBlanksWithinObject(obj: object): BlankStates {
+  if (BlankState.is(obj)) {
+    return [obj]
   }
+
+  // Recursively search this object's values for blank objects
+  return Object.values(obj).reduce((blanks: BlankStates, value: unknown) => {
+    if (typeof value === 'object' && value !== null) {
+      return [...blanks, ...getBlanksWithinObject(value)]
+    }
+    return blanks
+  }, [])
 }
