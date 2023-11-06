@@ -150,7 +150,7 @@ export const instanceData = {
         hideSolution: "Ocultar la solución"
       },
       boxTypes: {
-        blank: "Espacio en blanco",
+        blank: 'Blank',
         example: "Ejemplo",
         quote: "Cita",
         approach: "Planteamiento",
@@ -768,6 +768,7 @@ export const loggedInData = {
           lists: "Listas",
           mathFormula: "Fórmula matemática (%ctrlOrCmd% + M)",
           code: "Código (%ctrlOrCmd% + + + `)",
+          blank: 'Blank',
           bold: "Negrilla (%ctrlOrCmd% + B)",
           italic: "Itálica (%ctrlOrCmd% + I)",
           noItemsFound: "Elementos no encontrados",
@@ -816,6 +817,10 @@ export const loggedInData = {
         scMcExercise: {
           title: 'SC/MC Exercise',
           description: 'Single Choice or Multiple Choice'
+        },
+        fillInTheBlanks: {
+          title: 'Fill In The Blanks Exercise',
+          description: 'Text with blanks'
         }
       },
       templatePlugins: {
@@ -872,9 +877,10 @@ export const loggedInData = {
           title: "Título"
         },
         exercise: {
-          scMcExercise: "Ejercicio de opción múltiple",
-          inputExercise: "Ejercicio de respuesta escrita",
-          h5p: "Ejercicio h5p",
+          scMcExercise: 'Choice Exercise',
+          inputExercise: 'Input Exercise',
+          h5p: 'H5p Exercise',
+          fillInTheBlanksExercise: 'Fill In The Blanks',
           addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
           changeInteractive: "Cambiar elemento interactivo",
           removeInteractive: "Eliminar elemento interactivo"

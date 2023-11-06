@@ -13,6 +13,7 @@ import { Node, Editor as SlateEditor } from 'slate'
 import { ColorTextIcon } from '../color-text-icon'
 import { textColors } from '../const'
 import { TextEditorFormattingOption, ControlButton } from '../types'
+import { isBlankActive, toggleBlank } from '../utils/blank'
 import {
   getColorIndex,
   isAnyColorActive,
@@ -56,12 +57,14 @@ import {
   withLinks,
   withLists,
   withMath,
+  withBlanks,
 } from '@/serlo-editor/plugins/text/plugins'
 
 const textPluginsMapper = {
   [TextEditorFormattingOption.math]: withMath,
   [TextEditorFormattingOption.links]: withLinks,
   [TextEditorFormattingOption.lists]: withLists,
+  [TextEditorFormattingOption.blank]: withBlanks,
 }
 
 const isRegisteredTextPlugin = (
@@ -90,6 +93,11 @@ const registeredHotkeys = [
     hotkey: 'mod+m',
     option: TextEditorFormattingOption.math,
     handler: toggleMath,
+  },
+  {
+    hotkey: 'mod+shift+`',
+    option: TextEditorFormattingOption.code,
+    handler: toggleCode,
   },
 ]
 
@@ -334,6 +342,18 @@ function createToolbarControls(
       isActive: isCodeActive,
       onClick: toggleCode,
       renderIcon: () => <FaIcon className="h-[15px]" icon={faCode} />,
+    },
+    // Blank (For Fill in the Blank Exercises)
+    {
+      name: TextEditorFormattingOption.blank,
+      title: textStrings.blank,
+      isActive: isBlankActive,
+      onClick: toggleBlank,
+      renderIcon: () => (
+        <span className="relative -top-0.5 rounded-lg border-2 border-current px-1 text-[10px] font-bold">
+          _
+        </span>
+      ),
     },
   ].map((option) => {
     return {

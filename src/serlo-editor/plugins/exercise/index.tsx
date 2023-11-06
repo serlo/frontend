@@ -15,10 +15,12 @@ const exerciseState = object({
       | EditorPluginType.ScMcExercise
       | EditorPluginType.InputExercise
       | EditorPluginType.H5p
+      | EditorPluginType.FillInTheBlanksExercise
     >({
       plugin: EditorPluginType.ScMcExercise,
     })
   ),
+  solution: optional(child({ plugin: EditorPluginType.Solution })),
 })
 
 export type ExercisePluginState = typeof exerciseState
