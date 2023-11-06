@@ -15,6 +15,7 @@ const exerciseState = object({
       | EditorPluginType.ScMcExercise
       | EditorPluginType.InputExercise
       | EditorPluginType.H5p
+      | EditorPluginType.FillInTheBlanksExercise
     >({
       plugin: EditorPluginType.ScMcExercise,
     })

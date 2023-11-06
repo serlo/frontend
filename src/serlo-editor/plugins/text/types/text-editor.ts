@@ -10,6 +10,15 @@ export type CustomElement =
   | Heading
   | Link
   | MathElement
+  | Blank
+
+export interface Blank {
+  type: 'blank'
+  children: CustomText[]
+  blankId: string // Used to uniquely identify a blank
+  correctAnswer: string
+  alternativeSolutions: string[]
+}
 
 export interface Heading {
   type: 'h'
@@ -66,6 +75,8 @@ export interface CustomText {
   showPlaceholder?: boolean
 }
 
+// Adds type info for custom elements to slate
+// See: https://docs.slatejs.org/concepts/12-typescript
 declare module 'slate' {
   interface CustomTypes {
     Editor: BaseEditor & ReactEditor & typeof ListsEditor

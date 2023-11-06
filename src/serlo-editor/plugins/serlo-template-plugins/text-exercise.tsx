@@ -37,6 +37,7 @@ export const textExerciseTypeState = entityType(
 
 export type TextExerciseTypePluginState = typeof textExerciseTypeState
 
+/** Exercise with an optional solution spoiler */
 export const textExerciseTypePlugin: EditorPlugin<
   TextExerciseTypePluginState,
   { skipControls: boolean }

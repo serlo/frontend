@@ -3,6 +3,7 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import type { ExerciseProps } from '.'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { isProduction } from '@/helper/is-production'
 import { tw } from '@/helper/tw'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
@@ -10,11 +11,18 @@ import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { store, selectDocument } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-const allInteractiveExerciseTypes = [
-  EditorPluginType.ScMcExercise,
-  EditorPluginType.InputExercise,
-  EditorPluginType.H5p,
-] as const
+const allInteractiveExerciseTypes = isProduction
+  ? ([
+      EditorPluginType.ScMcExercise,
+      EditorPluginType.InputExercise,
+      EditorPluginType.H5p,
+    ] as const)
+  : ([
+      EditorPluginType.ScMcExercise,
+      EditorPluginType.InputExercise,
+      EditorPluginType.H5p,
+      EditorPluginType.FillInTheBlanksExercise,
+    ] as const)
 
 export function ExerciseEditor({ editable, state }: ExerciseProps) {
   const { content, interactive } = state
