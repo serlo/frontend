@@ -413,10 +413,10 @@ export const instanceData = {
       messages: {
         code1010003: 'Please confirm this action by verifying that it is you.',
         code1010001: 'Sign in',
-        code1010002: 'Sign in with NBP Account',
+        code1010002: 'Sign in via „Mein Bildungsraum“',
         code1010013: 'Continue with SSO',
         code1040001: 'Register',
-        code1040002: 'Register with NBP Account',
+        code1040002: 'Register via „Mein Bildungsraum“',
         code1040003: 'Continue',
         code1050001: 'Your changes have been saved! 🎉',
         code1060001:
@@ -847,6 +847,7 @@ export const loggedInData = {
           lists: 'Lists',
           mathFormula: 'Math formula (%ctrlOrCmd% + M)',
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
+          blank: 'Blank',
           bold: 'Bold (%ctrlOrCmd% + B)',
           italic: 'Italic (%ctrlOrCmd% + I)',
           noItemsFound: 'No items found',
@@ -895,6 +896,10 @@ export const loggedInData = {
         scMcExercise: {
           title: 'SC/MC Exercise',
           description: 'Single Choice or Multiple Choice'
+        },
+        fillInTheBlanks: {
+          title: 'Fill In The Blanks Exercise',
+          description: 'Text with blanks'
         }
       },
       templatePlugins: {
@@ -953,9 +958,10 @@ export const loggedInData = {
           title: 'Title',
         },
         exercise: {
-          scMcExercise: 'Choice exercise',
-          inputExercise: 'Input exercise',
-          h5p: 'H5p exercise',
+          scMcExercise: 'Choice Exercise',
+          inputExercise: 'Input Exercise',
+          h5p: 'H5p Exercise',
+          fillInTheBlanksExercise: 'Fill In The Blanks',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
           removeInteractive: 'Remove interactive element',

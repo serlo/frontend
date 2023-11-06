@@ -150,7 +150,7 @@ export const instanceData = {
         hideSolution: "Ocultar la solución"
       },
       boxTypes: {
-        blank: "Espacio en blanco",
+        blank: 'Blank',
         example: "Ejemplo",
         quote: "Cita",
         approach: "Planteamiento",
@@ -379,10 +379,10 @@ export const instanceData = {
       messages: {
         code1010003: "Por favor, confirma esta acción al verificar que eres tú.",
         code1010001: "Iniciar sesión",
-        code1010002: "Iniciar sesión con mi Cuenta de NBP",
+        code1010002: 'Sign in via „Mein Bildungsraum“',
         code1010013: "Continuar con SSO",
         code1040001: "Registrarse",
-        code1040002: "Registrarse con una Cuenta NBP",
+        code1040002: 'Register via „Mein Bildungsraum“',
         code1040003: "Continuar",
         code1050001: "Tus cambios han sido guardados! 🎉",
         code1060001: "Has recuperado tu cuenta con éxito. Por favor, cambia tu contraseña en los próximos minutos.",
@@ -768,6 +768,7 @@ export const loggedInData = {
           lists: "Listas",
           mathFormula: "Fórmula matemática (%ctrlOrCmd% + M)",
           code: "Código (%ctrlOrCmd% + + + `)",
+          blank: 'Blank',
           bold: "Negrilla (%ctrlOrCmd% + B)",
           italic: "Itálica (%ctrlOrCmd% + I)",
           noItemsFound: "Elementos no encontrados",
@@ -816,6 +817,10 @@ export const loggedInData = {
         scMcExercise: {
           title: 'SC/MC Exercise',
           description: 'Single Choice or Multiple Choice'
+        },
+        fillInTheBlanks: {
+          title: 'Fill In The Blanks Exercise',
+          description: 'Text with blanks'
         }
       },
       templatePlugins: {
@@ -872,9 +877,10 @@ export const loggedInData = {
           title: "Título"
         },
         exercise: {
-          scMcExercise: "Ejercicio de opción múltiple",
-          inputExercise: "Ejercicio de respuesta escrita",
-          h5p: "Ejercicio h5p",
+          scMcExercise: 'Choice Exercise',
+          inputExercise: 'Input Exercise',
+          h5p: 'H5p Exercise',
+          fillInTheBlanksExercise: 'Fill In The Blanks',
           addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
           changeInteractive: "Cambiar elemento interactivo",
           removeInteractive: "Eliminar elemento interactivo"
