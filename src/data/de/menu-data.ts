@@ -155,7 +155,7 @@ export const footerData: InstanceData['footerData'] = {
       ],
     },
     {
-      title: 'Code & APIs',
+      title: 'Products',
       children: [
         {
           title: 'GitHub',

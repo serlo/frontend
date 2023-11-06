@@ -51,24 +51,15 @@ export const footerData: InstanceData['footerData'] = {
       title: 'General',
       children: [
         { title: 'About Serlo', url: '/serlo' },
-        { title: 'Get involved!', url: '/27469' },
         { title: 'Contact', url: '/41043' },
         {
           title: 'Serlo in other languages',
           url: `/global`,
         },
-        {
-          title: 'API',
-          url: `/105250`,
-        },
-        {
-          title: 'Serlo Editor',
-          url: `https://en.${serloDomain}/editor`,
-        },
       ],
     },
     {
-      title: 'Stay in touch',
+      title: 'Take part',
       children: [
         {
           title: 'Newsletter',
@@ -76,9 +67,32 @@ export const footerData: InstanceData['footerData'] = {
           icon: FooterIcon.newsletter,
         },
         {
+          title: 'Jobs',
+          url: `https://de.${serloDomain}/jobs`,
+          icon: FooterIcon.job,
+        },
+        { title: 'Community', url: '/27469' },
+      ],
+    },
+    {
+      title: 'Products',
+      children: [
+        {
           title: 'GitHub',
           url: 'https://github.com/serlo',
           icon: FooterIcon.github,
+        },
+        {
+          title: 'Serlo Editor',
+          url: `https://en.${serloDomain}/editor`,
+        },
+        {
+          title: 'Metadata API',
+          url: `https://en.${serloDomain}/metadata`,
+        },
+        {
+          title: 'iFrame API',
+          url: 'https://github.com/serlo/documentation/wiki/iframe-API',
         },
       ],
     },
