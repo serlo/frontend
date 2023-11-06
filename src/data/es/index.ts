@@ -150,7 +150,7 @@ export const instanceData = {
         hideSolution: "Ocultar la solución"
       },
       boxTypes: {
-        blank: "Espacio en blanco",
+        blank: 'Blank',
         example: "Ejemplo",
         quote: "Cita",
         approach: "Planteamiento",
@@ -768,7 +768,7 @@ export const loggedInData = {
           lists: "Listas",
           mathFormula: "Fórmula matemática (%ctrlOrCmd% + M)",
           code: "Código (%ctrlOrCmd% + + + `)",
-          blank: "Espacio en blanco",
+          blank: 'Blank',
           bold: "Negrilla (%ctrlOrCmd% + B)",
           italic: "Itálica (%ctrlOrCmd% + I)",
           noItemsFound: "Elementos no encontrados",
