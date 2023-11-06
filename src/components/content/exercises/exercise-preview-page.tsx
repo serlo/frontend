@@ -15,14 +15,16 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { useEntityId } from '@/contexts/uuids-context'
 import { LoggedInData } from '@/data-types'
 import {
-  /* convertAiGeneratedDataToEditorData */ convertAiGeneratedScExerciseToEditorDocument,
+  IEditorExerciseData,
+  convertAiGeneratedScExerciseToEditorDocument,
+  transformEditorDataToExerciseGroup,
 } from '@/helper/ai-generated-exercises/data-conversion'
 import { ErrorBoundary } from '@/helper/error-boundary'
 import { submitEvent } from '@/helper/submit-event'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { EditorExerciseDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorTemplateExerciseGroupDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 interface ExercisePreviewPageProps {
   prompt: string
@@ -96,6 +98,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const auth = useAuthentication()
+  const isExecutingPrompt = useRef(false)
 
   // TODO move all this code to the generic execute-ai-prompt file
   const generateExercise = useCallback(async () => {
@@ -109,6 +112,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
       auth,
     })
     try {
+      isExecutingPrompt.current = true
       setStatus(Status.Loading)
 
       // setTimeout(() => {
@@ -159,14 +163,38 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
         return
       }
 
+      if (
+        error instanceof Error &&
+        'response' in error &&
+        error['response'] instanceof Response
+      ) {
+        const response: Response = error['response']
+
+        if (response.status === 500) {
+          setErrorMessage('Server error occurred. Please try again later.')
+        } else {
+          setErrorMessage(`Error: Received status code ${response.status}`)
+        }
+        setStatus(Status.Error)
+        submitEvent('exercise-generation-wizard-prompt-execution-aborted')
+        return
+      }
+
       console.error('Failed to generate exercise:', error)
       setErrorMessage(error instanceof Error ? error.message : 'Unknown error!')
       submitEvent('exercise-generation-wizard-prompt-failure')
       setStatus(Status.Error)
+    } finally {
+      isExecutingPrompt.current = false
     }
   }, [prompt, auth])
 
   useEffect(() => {
+    if (isExecutingPrompt.current) {
+      // Prevents StrictMode from executing the effect twice.
+      return
+    }
+
     const abortController = abortControllerRef?.current
     // Already handling the error in the generateExercise function
     generateExercise()
@@ -182,9 +210,12 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
 
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0)
 
-  const editorData = useMemo<EditorExerciseDocument[]>(() => {
+  const editorData = useMemo<IEditorExerciseData>(() => {
     if (!exerciseData) {
-      return []
+      return {
+        exercises: [],
+        heading: '',
+      }
     }
 
     try {
@@ -195,11 +226,16 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
       setErrorMessage(
         error instanceof Error ? error.message : 'Unknown error while parsing!'
       )
-      return []
+      return {
+        exercises: [],
+        heading: '',
+      }
     }
   }, [exerciseData])
 
   console.log('EditorData: ', editorData)
+
+  const numberOfExercises = editorData?.exercises?.length ?? 0
 
   return (
     <ModalWithCloseButton
@@ -224,8 +260,15 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
         {status === Status.Success && (
           <div>
             <ErrorBoundary>
-              {editorData && editorData[currentExerciseIndex] && (
-                <StaticRenderer document={editorData[currentExerciseIndex]} />
+              {editorData && editorData.exercises[currentExerciseIndex] && (
+                <StaticRenderer
+                  document={editorData.exercises[currentExerciseIndex]}
+                  // Using the index as key should work because there is no way
+                  // to remove/add exercises and upon regeneration of the
+                  // prompt, the state changes to Loading and the component will
+                  // be unmounted anyway.
+                  key={currentExerciseIndex}
+                />
               )}
             </ErrorBoundary>
           </div>
@@ -240,7 +283,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
         )}
       </div>
 
-      {editorData?.length > 1 && (
+      {numberOfExercises > 1 && (
         <div className="mt-4 flex w-2/5 justify-between">
           {currentExerciseIndex > 0 && (
             <button
@@ -255,12 +298,12 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
             </button>
           )}
 
-          {currentExerciseIndex < editorData.length - 1 && (
+          {currentExerciseIndex < numberOfExercises - 1 && (
             <button
               className="mb-2 ml-auto self-end rounded bg-transparent px-2 py-1 text-brand-700"
               onClick={() =>
                 setCurrentExerciseIndex((prev) =>
-                  Math.min(editorData.length - 1, prev + 1)
+                  Math.min(numberOfExercises - 1, prev + 1)
                 )
               }
             >
@@ -280,18 +323,28 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
           className="flex items-center text-brand-700"
           onClick={() => {
             const id = `temp_ai_generated_exercise_${new Date().getTime()}`
-            sessionStorage.setItem(
-              id,
-              JSON.stringify({
-                plugin: 'type-text-exercise',
-                state: {
-                  content: JSON.stringify(editorData[0]),
-                  'text-solution': {
-                    content: JSON.stringify(editorData[0].solution),
+
+            if (editorData && editorData.exercises.length === 1) {
+              sessionStorage.setItem(
+                id,
+                JSON.stringify({
+                  plugin: 'type-text-exercise',
+                  state: {
+                    content: JSON.stringify(editorData.exercises[0]),
+                    'text-solution': {
+                      content: JSON.stringify(editorData.exercises[0].solution),
+                    },
                   },
-                },
-              })
-            )
+                })
+              )
+              window.location.href = `/entity/create/Exercise/${entityId}?loadFromSession=${id}`
+              return
+            }
+
+            const exerciseGroup: EditorTemplateExerciseGroupDocument =
+              transformEditorDataToExerciseGroup(editorData)
+            sessionStorage.setItem(id, JSON.stringify(exerciseGroup))
+
             window.location.href = `/entity/create/Exercise/${entityId}?loadFromSession=${id}`
           }}
         >
