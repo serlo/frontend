@@ -285,7 +285,7 @@ export interface EntityData {
   title?: string
   schemaData?: SchemaData
   content?: AnyEditorDocument | AnyEditorDocument[]
-  licenseData?: LicenseData
+  licenseId?: number
   courseData?: CourseData
   unrevisedRevisions?: number
   unrevisedCourseRevisions?: number

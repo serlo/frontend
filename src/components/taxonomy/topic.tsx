@@ -52,7 +52,6 @@ export function Topic({ data }: TopicProps) {
   const isTopic = data.taxonomyType === TaxonomyTermType.Topic
 
   const hasExercises = data.exercisesContent.length > 0
-  const defaultLicense = hasExercises ? getDefaultLicense() : undefined
 
   editorRenderers.init(createRenderers())
 
@@ -82,7 +81,8 @@ export function Topic({ data }: TopicProps) {
           />
         )}
       </div>
-      {defaultLicense && <LicenseNotice data={defaultLicense} />}
+      {/* Default license notice */}
+      <LicenseNotice />
 
       {/* Temporary donations banner trial */}
       {isExerciseFolder ? (
@@ -202,15 +202,5 @@ export function Topic({ data }: TopicProps) {
         aboveContent={setting?.aboveContent}
       />
     )
-  }
-
-  // … interesting hack
-  function getDefaultLicense() {
-    for (let i = 0; i < data.exercisesContent.length; i++) {
-      const license = data.exercisesContent[i].serloContext?.license
-      if (license) return { ...license, isDefault: true }
-    }
-    //no part of collection has default license so don't show default notice.
-    return undefined
   }
 }
