@@ -1,5 +1,5 @@
 import { createElement, useCallback, useMemo } from 'react'
-import { Editor as SlateEditor } from 'slate'
+import { Editor as SlateEditor, Transforms } from 'slate'
 import { ReactEditor, RenderElementProps, RenderLeafProps } from 'slate-react'
 
 import { MathElement } from '../components/math-element'
@@ -80,9 +80,34 @@ export const useSlateRenderHandlers = ({
           </MathElement>
         )
       }
+      if (element.type === 'blank') {
+        // TODO: Render <BlankRenderer> here instead
+        // <BlankRenderer> needs to ...
+        // - always show input fields
+        // - accept callback onChange that is passed to input element to update correctAnswer
+        return (
+          <span {...attributes} contentEditable={false}>
+            <input
+              value={element.correctAnswer}
+              size={(element.correctAnswer.length ?? 4) + 1}
+              className="h-[25px] rounded-full border border-brand bg-brand-50 pl-2 pr-1"
+              onChange={(e) => {
+                const path = ReactEditor.findPath(editor, element)
+                Transforms.setNodes(
+                  editor,
+                  { correctAnswer: e.target.value },
+                  { at: path }
+                )
+              }}
+            />
+            {/* children is always an empty text but slate will complain if this is not included here */}
+            {children}
+          </span>
+        )
+      }
       return <div {...attributes}>{children}</div>
     },
-    [focused]
+    [editor, focused]
   )
 
   const handleRenderLeaf = useCallback(
