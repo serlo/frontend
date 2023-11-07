@@ -22,7 +22,6 @@ import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin
 import {
   EditorExerciseDocument,
   EditorSolutionDocument,
-  EditorTemplateExerciseGroupDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
@@ -123,10 +122,10 @@ export function convertAiGeneratedScExerciseToEditorDocument(
           ],
         },
         interactive,
+        solution,
       },
       // doesn't have an id yet
       id: undefined,
-      solution,
     }
 
     return exerciseDocument
@@ -357,37 +356,81 @@ function createLicense(): License['license'] {
   }
 }
 
+interface GroupedTextExercise {
+  id: number
+  license: License['license']
+  changes: string
+  revision: number
+  content: string
+  'text-solution': {
+    id: number
+    license: License['license']
+    revision: number
+    changes: string
+    content: string
+  }
+}
+
+export interface ExpectedExerciseGroup {
+  plugin: TemplatePluginType.TextExerciseGroup
+  state: {
+    id: number
+    license: License['license']
+    changes: string
+    revision: number
+    // Serlo Editor JSON content that is encoded within a string
+    content: string
+    cohesive: boolean
+    'grouped-text-exercise': GroupedTextExercise[]
+  }
+}
+
 export function transformEditorDataToExerciseGroup(
   editorData: IEditorExerciseData
   // id: string
-): EditorTemplateExerciseGroupDocument {
-  // const exercisesTransformed = editorData.map((exercise) => {
-  //   return {
-  //     content: JSON.stringify(exercise.state),
-  //     'text-solution': exercise.solution
-  //       ? { content: JSON.stringify(exercise.solution.state) }
-  //       : undefined,
-  //   }
-  // })
+): ExpectedExerciseGroup {
+  // const getNextId = createIdGenerator(250000)
 
-  const exerciseGroup: EditorTemplateExerciseGroupDocument = {
+  const exercisesTransformed = editorData.exercises.map<GroupedTextExercise>(
+    (exercise) => ({
+      id: -1,
+      license: createLicense(),
+      changes: '',
+      revision: -1,
+      content: JSON.stringify({
+        plugin: EditorPluginType.Exercise,
+        state: exercise.state,
+      }),
+      'text-solution': {
+        id: -1,
+        license: createLicense(),
+        revision: -1,
+        changes: '',
+        content: JSON.stringify(exercise.state.solution),
+      },
+    })
+  )
+
+  const exerciseGroup: ExpectedExerciseGroup = {
     plugin: TemplatePluginType.TextExerciseGroup,
     state: {
-      exercises: editorData.exercises,
+      id: -1,
       license: createLicense(),
+      changes: '',
+      revision: -1,
+      cohesive: false,
+      // Heading of whole exercise group
       content: JSON.stringify(
         createExerciseHeadingInEditor(editorData.heading)
       ),
-      changes: '',
-      'grouped-text-exercise': [],
-      // TODO which id to use here? Why is a number expected instead of a
-      // string? Should we just create a super high number here to ensure that
-      // the is not yet in use
-      id: 2,
-      cohesive: false,
-      revision: 1,
+      'grouped-text-exercise': exercisesTransformed,
     },
   }
 
   return exerciseGroup
 }
+
+// function createIdGenerator(startId: number) {
+//   let currentId = startId
+//   return (): number => currentId++
+// }

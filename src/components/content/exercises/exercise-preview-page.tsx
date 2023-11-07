@@ -15,6 +15,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { useEntityId } from '@/contexts/uuids-context'
 import { LoggedInData } from '@/data-types'
 import {
+  ExpectedExerciseGroup,
   IEditorExerciseData,
   convertAiGeneratedScExerciseToEditorDocument,
   transformEditorDataToExerciseGroup,
@@ -24,7 +25,6 @@ import { submitEvent } from '@/helper/submit-event'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { EditorTemplateExerciseGroupDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 interface ExercisePreviewPageProps {
   prompt: string
@@ -164,6 +164,20 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
       }
 
       if (
+        error instanceof SyntaxError &&
+        error.message.includes("Unexpected token '<'")
+      ) {
+        // This indicates that the error message is HTML content, possibly a
+        // server error
+        setErrorMessage(
+          'A parsing error occurred due to receiving unexpected content.\n\nPlease try again later.'
+        )
+        setStatus(Status.Error)
+        submitEvent('exercise-generation-wizard-prompt-failure')
+        return
+      }
+
+      if (
         error instanceof Error &&
         'response' in error &&
         error['response'] instanceof Response
@@ -176,7 +190,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
           setErrorMessage(`Error: Received status code ${response.status}`)
         }
         setStatus(Status.Error)
-        submitEvent('exercise-generation-wizard-prompt-execution-aborted')
+        submitEvent('exercise-generation-wizard-prompt-failure')
         return
       }
 
@@ -332,7 +346,9 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
                   state: {
                     content: JSON.stringify(editorData.exercises[0]),
                     'text-solution': {
-                      content: JSON.stringify(editorData.exercises[0].solution),
+                      content: JSON.stringify(
+                        editorData.exercises[0].state.solution
+                      ),
                     },
                   },
                 })
@@ -341,7 +357,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
               return
             }
 
-            const exerciseGroup: EditorTemplateExerciseGroupDocument =
+            const exerciseGroup: ExpectedExerciseGroup =
               transformEditorDataToExerciseGroup(editorData)
             sessionStorage.setItem(id, JSON.stringify(exerciseGroup))
 

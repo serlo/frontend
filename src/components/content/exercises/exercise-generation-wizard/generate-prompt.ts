@@ -73,8 +73,9 @@ export const generateExercisePrompt = (params: ExerciseParams): string => {
     ? `Die Schüler haben folgendes Vorwissen: ${priorKnowledge}`
     : 'Die Schüler haben keine Vorkenntnisse.'
 
+  //  Generiere lieber Aufgaben mit € oder anderen Einheiten da $ Zeichen die als Klartext (außerhalb von Latex) ausgegeben werden sollen, mit einem doppel backslash escaped werden müssen (\\\\$)!
   const latexPrompt =
-    'sehr wichtig: alle mathematischen Ausdrücke MÜSSEN in LateX geschrieben sein mit einem $ Zeichen vor UND nach dem Ausdruck. Inklusive quadratischer Ausdrücke, Wurzeln und Formeln! Generiere lieber Aufgaben mit € oder anderen Einheiten da $ Zeichen die als Klartext (außerhalb von Latex) ausgegeben werden sollen, mit einem doppel backslash escaped werden müssen (\\\\$)!'
+    'sehr wichtig: alle mathematischen Ausdrücke MÜSSEN in LateX geschrieben sein mit einem $ Zeichen vor UND nach dem Ausdruck. Inklusive quadratischer Ausdrücke, Wurzeln und Formeln!'
 
   const generatedExerciseSingularOrPlural = isGeneratingMultipleExercises
     ? 'den generierten Aufgaben'

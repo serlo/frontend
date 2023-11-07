@@ -59,7 +59,10 @@ function Content({
         setInitialState(JSON.parse(sessionValue) as typeof initialState)
       }
     } catch (e) {
-      //
+      console.error(
+        'Error occurred parsing data from session storage via url',
+        e
+      )
     }
   }, [])
 
