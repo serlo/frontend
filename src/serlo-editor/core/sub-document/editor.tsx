@@ -85,6 +85,11 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       console.warn('SubDocumentEditor -> Plugin does not exist')
       return null
     }
+    if (!document.plugin) {
+      // eslint-disable-next-line no-console
+      console.warn('SubDocumentEditor -> Document is invalid')
+      return null
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const defaultConfig =

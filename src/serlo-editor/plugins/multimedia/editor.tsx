@@ -11,12 +11,13 @@ import { tw } from '@/helper/tw'
 import { AreImagesDisabledInTableContext } from '@/serlo-editor/plugins/serlo-table/contexts/are-images-disabled-in-table-context'
 import {
   selectAncestorPluginTypes,
-  selectHasFocusedDescendant,
   selectIsFocused,
+  selectStaticDocument,
   store,
   useAppSelector,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorImageDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export function MultimediaEditor(props: MultimediaProps) {
   const [stateCache, setStateCache] = useState<Record<string, unknown>>({})
@@ -28,9 +29,17 @@ export function MultimediaEditor(props: MultimediaProps) {
   const isMediaChildFocused = useAppSelector((storeState) =>
     selectIsFocused(storeState, multimedia.id)
   )
-  const isMediaChildFocusedWithin = useAppSelector((storeState) =>
-    selectHasFocusedDescendant(storeState, multimedia.id)
-  )
+
+  const isMediaChildFocusedWithin = useAppSelector((storeState) => {
+    const staticDocument = selectStaticDocument(storeState, state.multimedia.id)
+    const mediaFocused = selectIsFocused(storeState, state.multimedia.id)
+    if (staticDocument.plugin !== EditorPluginType.Image) return mediaFocused
+    const captionId = (staticDocument as EditorImageDocument).state.caption?.id
+    const captionFocused = captionId
+      ? selectIsFocused(storeState, captionId)
+      : false
+    return mediaFocused || captionFocused
+  })
 
   // we memoize this so we don't need to calculate the ancestors on every render
   // the values should only be calculated when we create it or move the plugin (and that also triggers a remount)

@@ -1,7 +1,7 @@
 import type { Element } from 'slate'
 
 import { InputExerciseRenderer } from './renderer'
-import { StaticSlate } from '../text/static-slate'
+import { StaticSlate } from '../text/static-components/static-slate'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 import { EditorInputExerciseDocument } from '@/serlo-editor-integration/types/editor-plugins'
 

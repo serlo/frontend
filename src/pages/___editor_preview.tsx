@@ -8,7 +8,6 @@ import {
   withDefault,
 } from 'use-query-params'
 
-import { MathSpan } from '@/components/content/math-span'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -128,7 +127,6 @@ function Content() {
         </header>
         <div className="controls-portal pointer-events-none sticky top-0 z-[90] bg-white md:bg-transparent" />
         <div className="serlo-editor-hacks mb-24 max-w-[816px] px-2">
-          <MathSpan formula="" /> {/* preload formula plugin */}
           {editor}
         </div>
       </section>

@@ -2,13 +2,17 @@ import type { RowsProps } from '.'
 import { AllowedChildPlugins } from './allowed-child-plugins-context'
 import { AddRowButtonLarge } from './components/add-row-button-large'
 import { RowEditor } from './components/row-editor'
-import { selectParentPluginType, useAppSelector } from '@/serlo-editor/store'
+import { selectParentPluginType, store } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function RowsEditor({ state, config, id, editable }: RowsProps) {
-  const parentType = useAppSelector((state) =>
-    selectParentPluginType(state, id)
-  )
+  // since this is only used to check if the current plugin is the child of the
+  // root plugin (like a template plugin or article plugin)
+  // this should not change – so we don't need to use useAppSelector here
+  const parentType = selectParentPluginType(store.getState(), id)
+  const isParentTemplatePlugin = parentType?.startsWith('type-')
+  const showLargeAddButton =
+    parentType === EditorPluginType.Article || isParentTemplatePlugin
 
   function insertRowWithSuggestionsOpen(insertIndex: number) {
     const textPluginWithSuggestions = {
@@ -19,10 +23,6 @@ export function RowsEditor({ state, config, id, editable }: RowsProps) {
       state.insert(insertIndex, textPluginWithSuggestions)
     })
   }
-
-  const isParentTemplatePlugin = parentType?.startsWith('type-')
-  const showLargeAddButton =
-    parentType === EditorPluginType.Article || isParentTemplatePlugin
 
   if (!editable) {
     return (

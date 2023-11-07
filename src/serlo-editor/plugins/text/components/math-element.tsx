@@ -1,3 +1,4 @@
+import { KaTeXStyles } from '@/../external/katexstyles'
 import React, { useContext, useMemo } from 'react'
 import { Editor, Node, Path, Range, Transforms } from 'slate'
 import {
@@ -6,6 +7,9 @@ import {
   useSlate,
   useSelected,
 } from 'slate-react'
+
+/* eslint-disable import/no-unassigned-import */
+import 'katex/contrib/mhchem'
 
 import { MathFormula } from './math-formula'
 import type {
@@ -48,12 +52,15 @@ export function MathElement({
 
   if (!shouldShowMathEditor) {
     return (
-      // Slate void elements need to set attributes and contentEditable={false}
-      // See: https://docs.slatejs.org/api/nodes/element#rendering-void-elements
-      <span {...attributes} contentEditable={false}>
-        <MathFormula element={element} />
-        {children}
-      </span>
+      <>
+        <KaTeXStyles />
+        {/* Slate void elements need to set attributes and contentEditable={false}
+          See: https://docs.slatejs.org/api/nodes/element#rendering-void-elements */}
+        <span {...attributes} contentEditable={false}>
+          <MathFormula element={element} />
+          {children}
+        </span>
+      </>
     )
   }
 
@@ -61,32 +68,35 @@ export function MathElement({
   return (
     // Slate void elements need to set attributes and contentEditable={false}
     // See: https://docs.slatejs.org/api/nodes/element#rendering-void-elements
-    <VoidWrapper {...attributes} tabIndex={-1} contentEditable={false}>
-      <MathEditor
-        state={element.src}
-        inline={element.inline}
-        readOnly={false}
-        visual={isVisualMode}
-        disableBlock={isInsideListElement}
-        onInlineChange={handleInlineChange}
-        onChange={(src) => updateElement({ src })}
-        closeMathEditorOverlay={transformOutOfElement}
-        onMoveOutRight={transformOutOfElement}
-        onMoveOutLeft={() => {
-          transformOutOfElement({ reverse: true })
-        }}
-        onDeleteOutRight={() => {
-          transformOutOfElement({ shouldDelete: true })
-        }}
-        onDeleteOutLeft={() => {
-          transformOutOfElement({ shouldDelete: true, reverse: true })
-        }}
-        onEditorChange={(visual) =>
-          preferences.setKey(visualEditorPreferenceKey, visual)
-        }
-      />
-      {children}
-    </VoidWrapper>
+    <>
+      <KaTeXStyles />
+      <VoidWrapper {...attributes} tabIndex={-1} contentEditable={false}>
+        <MathEditor
+          state={element.src}
+          inline={element.inline}
+          readOnly={false}
+          visual={isVisualMode}
+          disableBlock={isInsideListElement}
+          onInlineChange={handleInlineChange}
+          onChange={(src) => updateElement({ src })}
+          closeMathEditorOverlay={transformOutOfElement}
+          onMoveOutRight={transformOutOfElement}
+          onMoveOutLeft={() => {
+            transformOutOfElement({ reverse: true })
+          }}
+          onDeleteOutRight={() => {
+            transformOutOfElement({ shouldDelete: true })
+          }}
+          onDeleteOutLeft={() => {
+            transformOutOfElement({ shouldDelete: true, reverse: true })
+          }}
+          onEditorChange={(visual) =>
+            preferences.setKey(visualEditorPreferenceKey, visual)
+          }
+        />
+        {children}
+      </VoidWrapper>
+    </>
   )
 
   function updateElement(update: Partial<MathElementType>) {

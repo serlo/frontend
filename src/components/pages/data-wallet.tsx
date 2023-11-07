@@ -26,7 +26,7 @@ export function DataWallet() {
       .then((res) => {
         const urlCreator = window.URL || window.webkitURL
         setQrCode(urlCreator.createObjectURL(res))
-        // TODO: When the workflow has been defined in the future we should revoke the object URL when done with:
+        // When the workflow has been defined in the future we should revoke the object URL when done with:
         // urlCreator.revokeObjectUrl(qrCode)
       })
       .catch((e) => {
@@ -60,9 +60,12 @@ export function DataWallet() {
           </h1>
           <p className="serlo-p">
             Wir gehen verantwortungsvoll mit deinen Daten um. Serlo ist dafür
-            Projektpartner der Nationalen Bildungsplattform (NBP). NBP setzt
-            eine sogenannte „Data Wallet“ ein, die es dir ermöglicht, deine
-            Daten sicher und direkt mit uns zu teilen.
+            Projektpartner der digitalen Vernetzugsinfrastruktur{' '}
+            <a href="https://www.meinbildungsraum.de/" className="serlo-link">
+              „Mein Bildungsraum“
+            </a>
+            . Dieses Projekt setzt eine sogenannte „Data Wallet“ ein, die es dir
+            ermöglicht, deine Daten sicher und direkt mit uns zu teilen.
           </p>
           <p className="serlo-p">
             Die Data Wallet ist auf deinem Smartphone, dort sind deine Daten
@@ -71,7 +74,7 @@ export function DataWallet() {
           </p>
           <ol className="serlo-ol mb-4 text-lg">
             <li>
-              Lade dir die Mein Bildungsraum Wallet App auf dein Smartphone.
+              Lade dir die App „Mein Bildungsraum: Wallet“ auf dein Smartphone.
             </li>
             <li>
               Erstelle einen{' '}

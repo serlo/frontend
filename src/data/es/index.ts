@@ -150,7 +150,7 @@ export const instanceData = {
         hideSolution: "Ocultar la solución"
       },
       boxTypes: {
-        blank: "Espacio en blanco",
+        blank: 'Blank',
         example: "Ejemplo",
         quote: "Cita",
         approach: "Planteamiento",
@@ -336,7 +336,8 @@ export const instanceData = {
       register: {
         registerTitle: "Registra tu cuenta de Serlo.org",
         passwordRequirements: "Al menos 8 caracteres, si es más largo, mejor.",
-        registerIntro: "No necesitas una cuenta para aprender en serlo.org.  %break%  Si quieres hacer comentarios, o trabajar en contenidos de aprendizaje has venido al lugar adecuado."
+        registerIntro: "No necesitas una cuenta para aprender en serlo.org.  %break%  Si quieres hacer comentarios, o trabajar en contenidos de aprendizaje has venido al lugar adecuado.",
+        newsletterSubscription: 'Receive concise updates on our current activities in our newsletter. We use your information for sending purposes and for personal greetings. Look forward to relevant information and our annual fundraising campaign once a year. (optional)'
       },
       recoverTitle: "Recupera tu cuenta",
       recoveryInstructions: "Introduce y envía tu dirección de correo electrónico. %break%  A continuación, te enviaremos un correo electrónico con un enlace de restablecimiento.",
@@ -378,10 +379,10 @@ export const instanceData = {
       messages: {
         code1010003: "Por favor, confirma esta acción al verificar que eres tú.",
         code1010001: "Iniciar sesión",
-        code1010002: "Iniciar sesión con mi Cuenta de NBP",
+        code1010002: 'Sign in via „Mein Bildungsraum“',
         code1010013: "Continuar con SSO",
         code1040001: "Registrarse",
-        code1040002: "Registrarse con una Cuenta NBP",
+        code1040002: 'Register via „Mein Bildungsraum“',
         code1040003: "Continuar",
         code1050001: "Tus cambios han sido guardados! 🎉",
         code1060001: "Has recuperado tu cuenta con éxito. Por favor, cambia tu contraseña en los próximos minutos.",
@@ -767,6 +768,7 @@ export const loggedInData = {
           lists: "Listas",
           mathFormula: "Fórmula matemática (%ctrlOrCmd% + M)",
           code: "Código (%ctrlOrCmd% + + + `)",
+          blank: 'Blank',
           bold: "Negrilla (%ctrlOrCmd% + B)",
           italic: "Itálica (%ctrlOrCmd% + I)",
           noItemsFound: "Elementos no encontrados",
@@ -815,6 +817,10 @@ export const loggedInData = {
         scMcExercise: {
           title: 'SC/MC Exercise',
           description: 'Single Choice or Multiple Choice'
+        },
+        fillInTheBlanks: {
+          title: 'Fill In The Blanks Exercise',
+          description: 'Text with blanks'
         }
       },
       templatePlugins: {
@@ -871,9 +877,10 @@ export const loggedInData = {
           title: "Título"
         },
         exercise: {
-          scMcExercise: "Ejercicio de opción múltiple",
-          inputExercise: "Ejercicio de respuesta escrita",
-          h5p: "Ejercicio h5p",
+          scMcExercise: 'Choice Exercise',
+          inputExercise: 'Input Exercise',
+          h5p: 'H5p Exercise',
+          fillInTheBlanksExercise: 'Fill In The Blanks',
           addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
           changeInteractive: "Cambiar elemento interactivo",
           removeInteractive: "Eliminar elemento interactivo"

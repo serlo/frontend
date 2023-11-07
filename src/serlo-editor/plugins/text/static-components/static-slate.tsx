@@ -1,8 +1,9 @@
 import { createElement } from 'react'
 import { Descendant, Element } from 'slate'
 
-import { TextLeafRenderer } from './components/text-leaf-renderer'
-import { ListElementType } from './types/text-editor'
+import { BlankRenderer } from '../../fill-in-the-blanks-exercise/blank-renderer'
+import { TextLeafRenderer } from '../components/text-leaf-renderer'
+import { ListElementType } from '../types/text-editor'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 
 export function StaticSlate({
@@ -66,10 +67,8 @@ export function StaticSlate({
         </li>
       )
     }
+    // "list-item-child"
     if (element.type === ListElementType.LIST_ITEM_TEXT) {
-      // "list-item-child"
-
-      // TODO: maybe write migration or formatter for this?
       // compat: unwrap old content where a list item is wrapped inside another p in state
       const elementChild =
         children.length === 1 && Object.hasOwn(children[0], 'type')
@@ -87,6 +86,14 @@ export function StaticSlate({
     if (element.type === 'math') {
       const MathRenderer = editorRenderers.getMathRenderer()
       return <MathRenderer {...element} />
+    }
+    if (element.type === 'blank') {
+      return (
+        <BlankRenderer
+          correctAnswer={element.correctAnswer}
+          blankId={element.blankId}
+        />
+      )
     }
 
     // unwrap block level math elements

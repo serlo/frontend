@@ -22,9 +22,11 @@ import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { tw } from '@/helper/tw'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { isEmptyRowsDocument } from '@/serlo-editor/plugins/rows/utils/static-is-empty'
 import { CourseNavigation } from '@/serlo-editor/plugins/serlo-template-plugins/course/course-navigation'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
+import { isArticleDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
 
 export interface EntityProps {
   data: EntityData
@@ -206,8 +208,13 @@ export function Entity({ data }: EntityProps) {
         </InfoPanel>
       )
 
-    // TODO: check with other content
-    const hasContent = data.title || data.content
+    // this check could be more exact, but I guess empty articles are the most important case
+    const hasContent = data.content
+      ? !Array.isArray(data.content) && isArticleDocument(data.content)
+        ? !isEmptyRowsDocument(data.content.state.content)
+        : true
+      : !!data.title
+
     if (!hasContent)
       return (
         <InfoPanel icon={faExclamationCircle} type="warning" doNotIndex>

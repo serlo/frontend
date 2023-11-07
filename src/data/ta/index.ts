@@ -336,7 +336,8 @@ export const instanceData = {
       register: {
         registerTitle: 'Register your Serlo Account',
         passwordRequirements: 'At least 8 characters, longer is better.',
-        registerIntro: 'You do not need an account for studying on serlo.org. %break% If you want to comment, or work on content you came to the right place'
+        registerIntro: 'You do not need an account for studying on serlo.org. %break% If you want to comment, or work on content you came to the right place',
+        newsletterSubscription: 'Receive concise updates on our current activities in our newsletter. We use your information for sending purposes and for personal greetings. Look forward to relevant information and our annual fundraising campaign once a year. (optional)'
       },
       recoverTitle: 'Recover your account',
       recoveryInstructions: 'Insert and submit your email address. %break% We will then send you an email with a reset link.',
@@ -378,10 +379,10 @@ export const instanceData = {
       messages: {
         code1010003: 'Please confirm this action by verifying that it is you.',
         code1010001: 'Sign in',
-        code1010002: 'Sign in with NBP Account',
+        code1010002: 'Sign in via „Mein Bildungsraum“',
         code1010013: 'Continue with SSO',
         code1040001: 'Register',
-        code1040002: 'Register with NBP Account',
+        code1040002: 'Register via „Mein Bildungsraum“',
         code1040003: 'Continue',
         code1050001: 'Your changes have been saved! 🎉',
         code1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
@@ -767,6 +768,7 @@ export const loggedInData = {
           lists: 'Lists',
           mathFormula: 'Math formula (%ctrlOrCmd% + M)',
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
+          blank: 'Blank',
           bold: 'Bold (%ctrlOrCmd% + B)',
           italic: 'Italic (%ctrlOrCmd% + I)',
           noItemsFound: 'No items found',
@@ -815,6 +817,10 @@ export const loggedInData = {
         scMcExercise: {
           title: 'SC/MC Exercise',
           description: 'Single Choice or Multiple Choice'
+        },
+        fillInTheBlanks: {
+          title: 'Fill In The Blanks Exercise',
+          description: 'Text with blanks'
         }
       },
       templatePlugins: {
@@ -871,9 +877,10 @@ export const loggedInData = {
           title: "தலைப்பு"
         },
         exercise: {
-          scMcExercise: 'Choice exercise',
-          inputExercise: 'Input exercise',
-          h5p: 'H5p exercise',
+          scMcExercise: 'Choice Exercise',
+          inputExercise: 'Input Exercise',
+          h5p: 'H5p Exercise',
+          fillInTheBlanksExercise: 'Fill In The Blanks',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
           removeInteractive: 'Remove interactive element'

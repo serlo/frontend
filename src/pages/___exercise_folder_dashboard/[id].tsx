@@ -21,6 +21,8 @@ interface FolderData {
     content: object[]
     solved?: number
     visits?: number
+    medianTime?: number
+    medianTimeCount?: number
     solvedByEntity: { [key: number]: number }
   }[]
 }
@@ -207,24 +209,39 @@ export default function Page() {
           </select>
         </div>
         <div className="ml-8">
-          Lösungsraten berechnen sich aus Anzahl korrekte Lösungen / Anzahl
-          Aufrufe.
+          <p>
+            Lösungsraten berechnen sich aus Anzahl korrekte Lösungen / Anzahl
+            Aufrufe.
+          </p>
+          <p>
+            Arbeitszeit wird gemessen zwischen der ersten und letzten korrekt
+            gelösten Aufgabe.
+          </p>
         </div>
         <div className="m-4 flex">
           <div className="flex-1 border p-4">
             <p>
               <strong>Version {start + 1}</strong>
-              {data.versions[start].visits && data.versions[start].solved && (
-                <span className="ml-4 text-sm text-gray-500">
-                  Gesamtquote:{' '}
-                  {(
-                    (data.versions[start].solved! /
-                      data.versions[start].visits!) *
-                    100
-                  ).toFixed(2)}
-                  %
-                </span>
-              )}
+              {data.versions[start].visits !== undefined &&
+                data.versions[start].solved !== undefined && (
+                  <span className="ml-4 text-sm text-gray-500">
+                    Gesamtquote:{' '}
+                    {(
+                      (data.versions[start].solved! /
+                        data.versions[start].visits!) *
+                      100
+                    ).toFixed(2)}
+                    %
+                  </span>
+                )}
+              {data.versions[start].medianTime !== undefined &&
+                data.versions[start].medianTimeCount !== undefined && (
+                  <span className="ml-4 text-sm text-gray-500">
+                    Median Arbeitszeit:{' '}
+                    {Math.round(data.versions[start].medianTime! / 1000 / 60)}{' '}
+                    min ({data.versions[start].medianTimeCount})
+                  </span>
+                )}
             </p>
             {renderVersion(start, changedRevisions)}
           </div>
@@ -239,17 +256,26 @@ export default function Page() {
               <>
                 <p>
                   <strong>Version {end + 1}</strong>
-                  {data.versions[end].visits && data.versions[end].solved && (
-                    <span className="ml-4 text-sm text-gray-500">
-                      Gesamtquote:{' '}
-                      {(
-                        (data.versions[end].solved! /
-                          data.versions[end].visits!) *
-                        100
-                      ).toFixed(2)}
-                      %
-                    </span>
-                  )}
+                  {data.versions[end].visits !== undefined &&
+                    data.versions[end].solved !== undefined && (
+                      <span className="ml-4 text-sm text-gray-500">
+                        Gesamtquote:{' '}
+                        {(
+                          (data.versions[end].solved! /
+                            data.versions[end].visits!) *
+                          100
+                        ).toFixed(2)}
+                        %
+                      </span>
+                    )}
+                  {data.versions[end].medianTime !== undefined &&
+                    data.versions[end].medianTimeCount !== undefined && (
+                      <span className="ml-4 text-sm text-gray-500">
+                        Median Arbeitszeit:{' '}
+                        {Math.round(data.versions[end].medianTime! / 1000 / 60)}{' '}
+                        min ({data.versions[end].medianTimeCount})
+                      </span>
+                    )}
                 </p>
                 {renderVersion(end, changedRevisions)}
               </>

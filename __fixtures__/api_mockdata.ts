@@ -1,4 +1,4 @@
-//TODO: Prefer manually crafted data over long API answers for tests
+// For new Tests: Prefer manually crafted data over long API answers for tests
 // e.g. JSON.stringify([[{ col: 24, content: "## Hello World"}]])
 
 import { UuidType } from '@/data-types'
