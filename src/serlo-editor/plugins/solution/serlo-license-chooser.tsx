@@ -74,6 +74,7 @@ export function SerloLicenseChooser({ licenseId }: SerloLicenseChooserProps) {
                 if (licenseId.defined) licenseId.set(parseInt(e.target.value))
                 else licenseId.create(parseInt(e.target.value))
               }}
+              value={licenseId.defined ? licenseId.value : undefined}
             >
               {licenses.map(({ id, title }) => {
                 return (
