@@ -1,4 +1,4 @@
-export const licenses = [
+export const licenseDataContent = [
   {
     id: 1,
     content:

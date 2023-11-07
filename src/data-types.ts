@@ -193,9 +193,7 @@ export interface LicenseDetailPage {
 
 export interface LicenseDetailData {
   id: number
-  title: string
   content: EditorRowsDocument
-  isDefault: boolean
 }
 
 // For types that are supported through their own pages we return this helper in request-page

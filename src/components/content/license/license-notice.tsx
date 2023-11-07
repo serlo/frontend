@@ -49,7 +49,7 @@ export function LicenseNotice({
           py-2.5 text-sm text-almost-black mobile:flex
         `}
       >
-        <LicenseIcons title={title} isDefault={!!isDefault} />
+        <LicenseIcons title={title} isDefault={isDefault} />
         <br />
         <span className="mobile:ml-3">
           {' '}

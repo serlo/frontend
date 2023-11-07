@@ -229,11 +229,6 @@ export const revisionQuery = gql`
               id
             }
           }
-          license {
-            id
-            default
-            title
-          }
           currentRevision {
             id
             content
@@ -259,11 +254,6 @@ export const revisionQuery = gql`
           instance
           id
           alias
-          license {
-            id
-            default
-            title
-          }
           currentRevision {
             id
             ...exerciseGroupRevision
