@@ -9,6 +9,7 @@ import { ExerciseLicenseNotice } from '@/components/content/license/exercise-lic
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import { useAB } from '@/contexts/ab'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
+import { useEntityId } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { StaticSolutionRenderer } from '@/serlo-editor/plugins/solution/static'
 
@@ -18,12 +19,14 @@ const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
   )
 )
 
-// Special version for serlo.org with author tools and license
+// Special version for serlo.org with author tools, comments and license
 export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const { asPath } = useRouter()
   const ab = useAB()
   const isRevisionView = useContext(RevisionViewContext)
   const context = props.serloContext
+
+  const exerciseUuid = useEntityId()
 
   if (isPrintMode && !printModeSolutionVisible) return null
 
@@ -35,20 +38,16 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
     ? false
     : window.location.href.includes('#comment-')
 
-  const beforeSlot = (
-    <>
-      {context?.license ? (
-        <div className="absolute right-0 z-20">
-          <ExerciseLicenseNotice data={context.license} />
-        </div>
-      ) : null}
-    </>
-  )
+  const beforeSlot = context?.license ? (
+    <div className="absolute right-0 z-20">
+      <ExerciseLicenseNotice data={context.license} />
+    </div>
+  ) : null
 
   const afterSlot =
-    context?.uuid && !isRevisionView ? (
+    exerciseUuid && !isRevisionView ? (
       <Lazy>
-        <CommentAreaEntity entityId={context.uuid} />
+        <CommentAreaEntity entityId={exerciseUuid} />
       </Lazy>
     ) : null
 
