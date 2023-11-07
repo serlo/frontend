@@ -1,3 +1,4 @@
+import { licenses } from './license-data-short'
 import {
   headerData,
   footerData,
@@ -7,9 +8,10 @@ import {
 
 export const instanceData = {
   lang: 'en',
-  headerData: headerData,
-  footerData: footerData,
-  secondaryMenus: secondaryMenus,
+  headerData,
+  footerData,
+  secondaryMenus,
+  licenses,
   strings: {
     header: {
       slogan: 'The Open Learning Platform',
@@ -120,6 +122,7 @@ export const instanceData = {
       special: 'Different license',
       nonFree:
         'Usage of this content might be more restricted than our other content.',
+      appliesTo: 'Applies to'
     },
     course: {
       showPages: 'Show course overview',

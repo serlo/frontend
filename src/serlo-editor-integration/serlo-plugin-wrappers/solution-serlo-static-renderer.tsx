@@ -5,7 +5,6 @@ import { useContext } from 'react'
 import type { EditorSolutionDocument } from '../types/editor-plugins'
 import type { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
 import { Lazy } from '@/components/content/lazy'
-import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import { useAB } from '@/contexts/ab'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
@@ -38,12 +37,6 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
     ? false
     : window.location.href.includes('#comment-')
 
-  const beforeSlot = context?.license ? (
-    <div className="absolute right-0 z-20">
-      <ExerciseLicenseNotice data={context.license} />
-    </div>
-  ) : null
-
   const afterSlot =
     exerciseUuid && !isRevisionView ? (
       <Lazy>
@@ -69,7 +62,6 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
     <div className="relative">
       <StaticSolutionRenderer
         {...props}
-        beforeSlot={beforeSlot}
         solutionVisibleOnInit={solutionVisibleOnInit}
         afterSlot={afterSlot}
         onSolutionOpen={onSolutionOpen}
