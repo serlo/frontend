@@ -21,7 +21,7 @@ import { triggerSentry } from '@/helper/trigger-sentry'
 import { frontendOrigin } from '@/helper/urls/frontent-origin'
 
 export interface FrontendClientBaseProps {
-  children: JSX.Element
+  children: JSX.Element | (JSX.Element | null)[]
   noHeaderFooter?: boolean
   noContainers?: boolean
   showNav?: boolean
