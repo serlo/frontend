@@ -1,5 +1,5 @@
 import { serloDomain } from '../../helper/urls/serlo-domain'
-import { InstanceData, LandingSubjectsData } from '@/data-types'
+import { FooterIcon, InstanceData, LandingSubjectsData } from '@/data-types'
 
 export const landingSubjectsData: LandingSubjectsData = {
   subjects: [],
@@ -19,6 +19,28 @@ export const headerData: InstanceData['headerData'] = [
 
 export const footerData: InstanceData['footerData'] = {
   footerNavigation: [
+    {
+      title: 'Products',
+      children: [
+        {
+          title: 'GitHub',
+          url: 'https://github.com/serlo',
+          icon: FooterIcon.github,
+        },
+        {
+          title: 'Serlo Editor',
+          url: `https://en.${serloDomain}/editor`,
+        },
+        {
+          title: 'Metadata API',
+          url: `https://en.${serloDomain}/metadata`,
+        },
+        {
+          title: 'iFrame API',
+          url: 'https://github.com/serlo/documentation/wiki/iframe-API',
+        },
+      ],
+    },
     {
       title: 'कानूनी शर्तें',
       children: [
