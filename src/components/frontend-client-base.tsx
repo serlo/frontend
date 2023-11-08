@@ -8,6 +8,7 @@ import { getInstanceDataByLang } from 'src/helper/feature-i18n'
 
 import { ConditionalWrap } from './conditional-wrap'
 import { HeaderFooter } from './header-footer'
+import { MaintenanceBanner } from './maintenance-banner'
 import { MaxWidthDiv } from './navigation/max-width-div'
 import { AuthProvider } from '@/auth/auth-provider'
 import { checkLoggedIn } from '@/auth/cookie/check-logged-in'
@@ -137,6 +138,7 @@ export function FrontendClientBase({
                 {/* should not be necessary…?*/}
                 {children as JSX.Element}
               </ConditionalWrap>
+              <MaintenanceBanner />
             </ConditionalWrap>
             <ToastNotice />
           </UuidsProvider>
