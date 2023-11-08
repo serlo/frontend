@@ -1,9 +1,11 @@
+import { licenses } from './license-data-short';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
   lang: "hi",
-  headerData: headerData,
-  footerData: footerData,
-  secondaryMenus: secondaryMenus,
+  headerData,
+  footerData,
+  secondaryMenus,
+  licenses,
   strings: {
     header: {
       slogan: "ओपन लर्निंग प्लेटफॉर्म",
@@ -110,7 +112,8 @@ export const instanceData = {
     license: {
       readMore: "सूचना",
       special: "अलग लाइसेंस",
-      nonFree: "इस सामग्री का उपयोग हमारी अन्य सामग्री की तुलना में अधिक प्रतिबंधित हो सकता है।"
+      nonFree: "इस सामग्री का उपयोग हमारी अन्य सामग्री की तुलना में अधिक प्रतिबंधित हो सकता है।",
+      appliesTo: 'Applies to'
     },
     course: {
       showPages: "पाठ्यक्रम का अवलोकन करें",
@@ -883,7 +886,9 @@ export const loggedInData = {
           fillInTheBlanksExercise: 'Fill In The Blanks',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
-          removeInteractive: 'Remove interactive element'
+          removeInteractive: 'Remove interactive element',
+          createSolution: 'Create solution',
+          removeSolution: 'Remove solution'
         },
         event: {
           seoTitle: 'Title for search engines',
@@ -921,7 +926,8 @@ export const loggedInData = {
           openArticleTab: 'Open the article in a new tab:',
           linkTitle: 'Title of the link',
           showSolution: 'Show solution',
-          hideSolution: 'Hide solution'
+          hideSolution: 'Hide solution',
+          changeLicense: 'Change license'
         },
         textExerciseGroup: {
           removeExercise: 'Remove exercise',
@@ -929,10 +935,6 @@ export const loggedInData = {
           kindOfExerciseGroup: 'Kind of exercise group',
           notCohesive: 'not cohesive',
           cohesive: 'cohesive'
-        },
-        textExercise: {
-          removeSolution: 'Remove solution',
-          createSolution: 'Create solution'
         }
       },
       edtrIo: {
