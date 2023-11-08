@@ -49,16 +49,18 @@ export const footerData: InstanceData['footerData'] = {
     },
     {
       title: 'Restez en contact',
-      children: [{ title: 'Participes!', url: '/141581' }],
-    },
-    {
-      title: 'Products',
       children: [
+        { title: 'Participes!', url: '/141581' },
         {
           title: 'GitHub',
           url: 'https://github.com/serlo',
           icon: FooterIcon.github,
         },
+      ],
+    },
+    {
+      title: 'Products',
+      children: [
         {
           title: 'Serlo Editor',
           url: `https://en.${serloDomain}/editor`,

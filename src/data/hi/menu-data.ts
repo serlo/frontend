@@ -23,11 +23,6 @@ export const footerData: InstanceData['footerData'] = {
       title: 'Products',
       children: [
         {
-          title: 'GitHub',
-          url: 'https://github.com/serlo',
-          icon: FooterIcon.github,
-        },
-        {
           title: 'Serlo Editor',
           url: `https://en.${serloDomain}/editor`,
         },
@@ -38,6 +33,11 @@ export const footerData: InstanceData['footerData'] = {
         {
           title: 'iFrame API',
           url: 'https://github.com/serlo/documentation/wiki/iframe-API',
+        },
+        {
+          title: 'GitHub',
+          url: 'https://github.com/serlo',
+          icon: FooterIcon.github,
         },
       ],
     },

@@ -71,17 +71,17 @@ export const footerData: InstanceData['footerData'] = {
           url: `https://de.${serloDomain}/jobs`,
           icon: FooterIcon.job,
         },
+        {
+          title: 'GitHub',
+          url: 'https://github.com/serlo',
+          icon: FooterIcon.github,
+        },
         { title: 'Community', url: '/27469' },
       ],
     },
     {
       title: 'Products',
       children: [
-        {
-          title: 'GitHub',
-          url: 'https://github.com/serlo',
-          icon: FooterIcon.github,
-        },
         {
           title: 'Serlo Editor',
           url: `https://en.${serloDomain}/editor`,
