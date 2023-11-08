@@ -138,8 +138,8 @@ export function FrontendClientBase({
                 {/* should not be necessary…?*/}
                 {children as JSX.Element}
               </ConditionalWrap>
-              <MaintenanceBanner />
             </ConditionalWrap>
+            <MaintenanceBanner />
             <ToastNotice />
           </UuidsProvider>
         </LoggedInDataProvider>
