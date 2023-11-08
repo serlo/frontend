@@ -112,7 +112,8 @@ export const instanceData = {
     license: {
       readMore: "Was bedeutet das?",
       special: "Besondere Lizenz",
-      nonFree: "Die Nutzung könnte vielleicht strengeren Regeln unterliegen als bei unseren anderen Inhalten."
+      nonFree: "Die Nutzung könnte vielleicht strengeren Regeln unterliegen als bei unseren anderen Inhalten.",
+      appliesTo: "Gilt für"
     },
     course: {
       showPages: "Kursübersicht anzeigen",
@@ -885,7 +886,9 @@ export const loggedInData = {
           fillInTheBlanksExercise: "Lückentext",
           addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
           changeInteractive: "Interaktives Element ändern",
-          removeInteractive: "Interaktives Element entfernen"
+          removeInteractive: "Interaktives Element entfernen",
+          createSolution: "Lösung hinzufügen",
+          removeSolution: "Lösung entfernen"
         },
         event: {
           seoTitle: "Titel für Suchmaschinen",
@@ -923,7 +926,8 @@ export const loggedInData = {
           openArticleTab: "Öffne den Artikel in einem neuen Tab",
           linkTitle: "Titel der Verlinkung",
           showSolution: "Lösung anzeigen",
-          hideSolution: "Lösung ausblenden"
+          hideSolution: "Lösung ausblenden",
+          changeLicense: "Lizenz ändern"
         },
         textExerciseGroup: {
           removeExercise: "Teilaufgabe entfernen",
@@ -931,10 +935,6 @@ export const loggedInData = {
           kindOfExerciseGroup: "Art der Aufgabengruppe",
           notCohesive: "nicht zusammenhängend",
           cohesive: "zusammenhängend"
-        },
-        textExercise: {
-          removeSolution: "Lösung entfernen",
-          createSolution: "Lösung hinzufügen"
         }
       },
       edtrIo: {
