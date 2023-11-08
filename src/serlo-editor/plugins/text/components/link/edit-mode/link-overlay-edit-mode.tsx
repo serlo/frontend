@@ -135,7 +135,7 @@ export function LinkOverlayEditMode({
               isCustomLink
             />
           </div>
-          {/* link suggestion only work on de.serlo.org until we have generate the quickbar data in other instances as well */}
+          {/* link suggestion only work on de.serlo.org until we generate the quickbar data in other instances as well */}
           {serloLinkSearch && (
             <p className="mx-side mt-5 whitespace-normal border-t-2 border-gray-100 pt-3 text-sm text-gray-600">
               Manche Inhalte lassen sich über die Suche nicht finden. <br />

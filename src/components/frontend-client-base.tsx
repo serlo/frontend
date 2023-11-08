@@ -2,7 +2,7 @@ import type { AuthorizationPayload } from '@serlo/authorization'
 import Cookies from 'js-cookie'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
-import { PropsWithChildren, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { default as ToastNotice } from 'react-notify-toast'
 import { getInstanceDataByLang } from 'src/helper/feature-i18n'
 
@@ -20,7 +20,8 @@ import { Instance } from '@/fetcher/graphql-types/operations'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { frontendOrigin } from '@/helper/urls/frontent-origin'
 
-export type FrontendClientBaseProps = PropsWithChildren<{
+export interface FrontendClientBaseProps {
+  children: JSX.Element
   noHeaderFooter?: boolean
   noContainers?: boolean
   showNav?: boolean
@@ -28,7 +29,7 @@ export type FrontendClientBaseProps = PropsWithChildren<{
   revisionId?: number
   authorization?: AuthorizationPayload
   loadLoggedInData?: boolean
-}>
+}
 
 Router.events.on('routeChangeStart', () => {
   NProgress.start()
@@ -134,8 +135,7 @@ export function FrontendClientBase({
                   </div>
                 )}
               >
-                {/* should not be necessary…?*/}
-                {children as JSX.Element}
+                {children}
               </ConditionalWrap>
             </ConditionalWrap>
             <ToastNotice />
