@@ -13,21 +13,23 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 
 // based on Quickbar, duplicates some code
 
-export function LinkOverlayEditMode({
-  serloLinkSearch,
-  value,
-  setHref,
-  removeLink,
-  shouldFocus,
-  quickbarData,
-}: {
-  serloLinkSearch: boolean
+interface LinkOverlayEditModeProps {
+  isSerloLinkSearchActive: boolean
   value: string
   setHref: (href: string) => void
   removeLink: () => void
   shouldFocus: boolean
   quickbarData: QuickbarData | null
-}) {
+}
+
+export function LinkOverlayEditMode({
+  isSerloLinkSearchActive,
+  value,
+  setHref,
+  removeLink,
+  shouldFocus,
+  quickbarData,
+}: LinkOverlayEditModeProps) {
   const [query, setQuery] = useState(value)
   const [selectedIndex, setSelectedIndex] = useState(-1)
 
@@ -41,8 +43,8 @@ export function LinkOverlayEditMode({
   const { enableScope, disableScope } = useHotkeysContext()
 
   useEffect(() => {
-    if (serloLinkSearch) setSelectedIndex(0)
-  }, [query, quickbarData, value, serloLinkSearch])
+    if (isSerloLinkSearchActive) setSelectedIndex(0)
+  }, [query, quickbarData, value, isSerloLinkSearchActive])
 
   const results = quickbarData ? findResults(quickbarData, query) : []
   useEffect(() => {
@@ -93,7 +95,7 @@ export function LinkOverlayEditMode({
     }
   }
 
-  const isLoading = serloLinkSearch && !quickbarData
+  const isLoading = isSerloLinkSearchActive && !quickbarData
 
   return (
     <>
@@ -136,7 +138,7 @@ export function LinkOverlayEditMode({
             />
           </div>
           {/* link suggestion only work on de.serlo.org until we generate the quickbar data in other instances as well */}
-          {serloLinkSearch && (
+          {isSerloLinkSearchActive && (
             <p className="mx-side mt-5 whitespace-normal border-t-2 border-gray-100 pt-3 text-sm text-gray-600">
               Manche Inhalte lassen sich über die Suche nicht finden. <br />
               In dem Fall{' '}

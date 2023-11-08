@@ -1,4 +1,5 @@
 import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
+import { useContext } from 'react'
 
 import type { SolutionProps } from '.'
 import { SolutionRenderer } from './renderer'
@@ -9,20 +10,22 @@ import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { selectIsDocumentEmpty, useAppSelector } from '@/serlo-editor/store'
+import { IsSerloContext } from '@/serlo-editor-integration/context/is-serlo-context'
 
 export function SolutionEditor({ editable, state, focused }: SolutionProps) {
   const { prerequisite, strategy, licenseId } = state
   const hasStrategy = !useAppSelector((state) =>
     selectIsDocumentEmpty(state, strategy.id)
   )
-
-  const isSerlo = true // TODO: what is a good way to only activate this when using from within serlo?
   const solutionStrings = useEditorStrings().templatePlugins.solution
+  const showLicenseChooser = useContext(IsSerloContext) // only on serlo
 
   return (
     <SolutionRenderer
       elementBeforePrerequisite={
-        isSerlo ? <SerloLicenseChooser licenseId={licenseId} /> : null
+        showLicenseChooser ? (
+          <SerloLicenseChooser licenseId={licenseId} />
+        ) : null
       }
       prerequisite={renderPrerequisiteContent()}
       strategy={
