@@ -113,7 +113,7 @@ export const instanceData = {
       readMore: "Was bedeutet das?",
       special: "Besondere Lizenz",
       nonFree: "Die Nutzung könnte vielleicht strengeren Regeln unterliegen als bei unseren anderen Inhalten.",
-      appliesTo: 'Applies to'
+      appliesTo: "Gilt für"
     },
     course: {
       showPages: "Kursübersicht anzeigen",
@@ -927,7 +927,7 @@ export const loggedInData = {
           linkTitle: "Titel der Verlinkung",
           showSolution: "Lösung anzeigen",
           hideSolution: "Lösung ausblenden",
-          changeLicense: 'Change license'
+          changeLicense: "Lizenz ändern"
         },
         textExerciseGroup: {
           removeExercise: "Teilaufgabe entfernen",
