@@ -1,9 +1,11 @@
+import { licenses } from './license-data-short';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
   lang: "es",
-  headerData: headerData,
-  footerData: footerData,
-  secondaryMenus: secondaryMenus,
+  headerData,
+  footerData,
+  secondaryMenus,
+  licenses,
   strings: {
     header: {
       slogan: "La Plataforma para el Aprendizaje Abierto",
@@ -110,7 +112,8 @@ export const instanceData = {
     license: {
       readMore: "Información",
       special: "Licencia diferente",
-      nonFree: "El uso de este contenido podría estar más restringido que nuestro otro contenido."
+      nonFree: "El uso de este contenido podría estar más restringido que nuestro otro contenido.",
+      appliesTo: 'Applies to'
     },
     course: {
       showPages: "Mostrar descripción del curso",
@@ -883,7 +886,9 @@ export const loggedInData = {
           fillInTheBlanksExercise: 'Fill In The Blanks',
           addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
           changeInteractive: "Cambiar elemento interactivo",
-          removeInteractive: "Eliminar elemento interactivo"
+          removeInteractive: "Eliminar elemento interactivo",
+          createSolution: "Crear solución",
+          removeSolution: "Eliminar solución"
         },
         event: {
           seoTitle: "Título para motores de búsqueda",
@@ -921,7 +926,8 @@ export const loggedInData = {
           openArticleTab: "Abrir el artículo en una nueva pestaña:",
           linkTitle: "Título del enlace",
           showSolution: "Mostrar la solución",
-          hideSolution: "Ocultar la solución"
+          hideSolution: "Ocultar la solución",
+          changeLicense: 'Change license'
         },
         textExerciseGroup: {
           removeExercise: "Eliminar ejercicio",
@@ -929,10 +935,6 @@ export const loggedInData = {
           kindOfExerciseGroup: "Tipo de grupo de ejercicios",
           notCohesive: "no es cohesivo",
           cohesive: "cohesivo"
-        },
-        textExercise: {
-          removeSolution: "Eliminar solución",
-          createSolution: "Crear solución"
         }
       },
       edtrIo: {
