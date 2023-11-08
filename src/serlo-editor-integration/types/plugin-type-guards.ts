@@ -99,7 +99,7 @@ export function isMultimediaDocument(
 export function isRowsDocument(
   document: AnyEditorDocument
 ): document is EditorRowsDocument {
-  return document.plugin === EditorPluginType.Rows
+  return document?.plugin === EditorPluginType.Rows
 }
 export function isScMcExerciseDocument(
   document: AnyEditorDocument

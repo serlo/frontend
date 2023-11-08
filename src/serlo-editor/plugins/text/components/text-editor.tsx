@@ -217,9 +217,7 @@ export function TextEditor(props: TextEditorProps) {
         data-qa="plugin-text-editor"
       />
 
-      {focused ? (
-        <LinkControls serloLinkSearch={config.serloLinkSearch} />
-      ) : null}
+      {focused ? <LinkControls /> : null}
 
       {showSuggestions ? (
         <SlateHoverOverlay position="below">

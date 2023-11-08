@@ -1,7 +1,10 @@
 import dynamic from 'next/dynamic'
 import { useContext, useEffect, useState } from 'react'
 
-import type { EditorExerciseDocument } from '../types/editor-plugins'
+import type {
+  EditorExerciseDocument,
+  EditorSolutionDocument,
+} from '../types/editor-plugins'
 import { useAuthentication } from '@/auth/use-authentication'
 import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
@@ -26,12 +29,18 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
 
   const context = props.serloContext
 
+  const solutionLicenseId = (props.state.solution as EditorSolutionDocument)
+    ?.state.licenseId
+
   return (
     <div className="relative">
       <div className="absolute -right-8 -mt-1">
-        {context?.license ? (
+        {context?.license || solutionLicenseId ? (
           <div className="ml-1">
-            <ExerciseLicenseNotice data={context.license} />
+            <ExerciseLicenseNotice
+              exerciseLicenseId={context?.license?.id}
+              solutionLicenseId={solutionLicenseId}
+            />
           </div>
         ) : null}
         {loaded && auth && context?.uuid && !isRevisionView ? (
