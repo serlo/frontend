@@ -8,7 +8,6 @@ export enum TemplatePluginType {
   Taxonomy = 'type-taxonomy',
   TextExercise = 'type-text-exercise',
   TextExerciseGroup = 'type-text-exercise-group',
-  TextSolution = 'type-text-solution',
   Video = 'type-video',
   User = 'type-user',
 }

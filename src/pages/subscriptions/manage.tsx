@@ -33,7 +33,6 @@ const filters = [
   UuidType.Exercise,
   UuidType.GroupedExercise,
   UuidType.ExerciseGroup,
-  UuidType.Solution,
   UuidType.User,
   UuidType.Course,
   UuidType.TaxonomyTerm,

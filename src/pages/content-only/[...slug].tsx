@@ -49,13 +49,13 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
       authorization={pageData.authorization}
     >
       <LazyIframeResizer />
-      {pageData.metaData && (
+      {pageData.metaData ? (
         <HeadTags
           data={pageData.metaData}
           breadcrumbsData={pageData.breadcrumbsData}
           noindex
         />
-      )}
+      ) : null}
       <div className="relative">
         <MaxWidthDiv showNav={!!pageData.secondaryMenuData}>
           <main>{page}</main>

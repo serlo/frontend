@@ -57,6 +57,7 @@ export interface InstanceData {
   headerData: HeaderData
   footerData: FooterData
   secondaryMenus: SecondaryMenuData[]
+  licenses: LicenseData[]
 }
 
 // Menus are trees of title and urls, possibly with icons.
@@ -404,14 +405,14 @@ export interface SchemaData {
   setContentAsSection?: boolean
 }
 
-// A license notice.
-
+/**  License data without content for `license/details/…` page. */
 export interface LicenseData {
+  id: number // id of the license
   title: string
   url: string // to to license
-  id: number // of the license
-  isDefault: boolean
+  isDefault?: boolean
   shortTitle?: string // show this if not default
+  agreement: string
 }
 
 // Data for a course page.

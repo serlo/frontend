@@ -21,7 +21,7 @@ export const UnsupportedEditor: React.FunctionComponent<
     <>
       {focused && editable ? (
         <PluginToolbar
-          pluginType={EditorPluginType.PagePartners}
+          pluginType={EditorPluginType.Unsupported}
           pluginControls={<PluginDefaultTools pluginId={id} />}
         />
       ) : null}

@@ -45,8 +45,14 @@ export async function requestPage(
 
   if (uuid.__typename === UuidType.Comment) return { kind: 'not-found' } // no content for comments
 
-  // redirect revisions
-  // (can maybe be deleted if CFWorker redirects those for us)
+  // Standalone solutions are not supported any more
+  // TODO: remove after change in API
+  if (
+    uuid.__typename === UuidType.Solution ||
+    uuid.__typename === UuidRevType.Solution
+  )
+    return { kind: 'not-found' }
+
   if (
     uuid.__typename === UuidRevType.Article ||
     uuid.__typename === UuidRevType.Page ||
@@ -57,9 +63,10 @@ export async function requestPage(
     uuid.__typename === UuidRevType.GroupedExercise ||
     uuid.__typename === UuidRevType.Exercise ||
     uuid.__typename === UuidRevType.ExerciseGroup ||
-    uuid.__typename === UuidRevType.Solution ||
     uuid.__typename === UuidRevType.Course
   ) {
+    // redirect revisions
+    // (can maybe be deleted if CFWorker redirects those for us)
     return {
       kind: 'redirect',
       target:
@@ -67,11 +74,6 @@ export async function requestPage(
           ? uuid.alias
           : `/entity/repository/compare/0/${uuid.id}`,
     }
-  }
-
-  // for solutions just request whole exercise
-  if (uuid.__typename === UuidType.Solution) {
-    return await requestPage(`/${uuid.exercise.id}`, instance)
   }
 
   const secondaryMenuData = await prettifyLinksInSecondaryMenu(

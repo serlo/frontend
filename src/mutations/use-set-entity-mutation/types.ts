@@ -18,7 +18,6 @@ import type {
   TaxonomySerializedState,
   TextExerciseGroupSerializedState,
   TextExerciseSerializedState,
-  TextSolutionSerializedState,
   VideoSerializedState,
 } from '@/serlo-editor-integration/convert-editor-response-to-state'
 
@@ -55,7 +54,6 @@ export type SupportedTypesSerializedState =
   | EventSerializedState
   | TextExerciseSerializedState
   | TextExerciseGroupSerializedState
-  | TextSolutionSerializedState
   | VideoSerializedState
   | TextGroupedExerciseSerilizedState
 
@@ -80,7 +78,6 @@ export interface SetEntityMutationRunnerData {
 
 export type ChildFieldsData =
   | CoursePageSerializedState
-  | TextSolutionSerializedState
   | TextExerciseGroupSerializedState
   | TextExerciseSerializedState
   | TextGroupedExerciseSerilizedState
