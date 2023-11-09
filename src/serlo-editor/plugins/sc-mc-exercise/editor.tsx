@@ -1,19 +1,30 @@
 import { useState } from 'react'
 
 import type { ScMcExerciseProps } from '.'
-import { ScMcExerciseRenderer } from './renderer/renderer'
+import { ScMcExerciseStaticRenderer } from './static'
 import { ScMcExerciseToolbar } from './toolbar'
 import {
   AddButton,
   InteractiveAnswer,
   PreviewOverlaySimple,
 } from '../../editor-ui'
-import { store, selectIsDocumentEmpty, selectFocused } from '../../store'
+import {
+  store,
+  selectFocused,
+  selectStaticDocument,
+  useAppSelector,
+} from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { EditorScMcExerciseDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   const { state, id, focused } = props
   const { answers, isSingleChoice } = state
+
+  const staticDocument = useAppSelector(
+    (storeState) =>
+      selectStaticDocument(storeState, id) as EditorScMcExerciseDocument
+  )
 
   const editorStrings = useEditorStrings()
 
@@ -38,23 +49,6 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   })
 
   const showUi = focused || isAnyAnswerFocused
-
-  const renderer = (
-    /* margin-hack */
-    <div className="[&_.ml-4.flex]:mb-block">
-      <ScMcExerciseRenderer
-        isSingleChoice={isSingleChoice.value}
-        idBase={`sc-mc-${id}`}
-        answers={answers.slice(0).map(({ isCorrect, feedback, content }) => {
-          return {
-            isCorrect: isCorrect.value,
-            feedback: isEmpty(feedback.id) ? null : feedback.render(),
-            content: isEmpty(content.id) ? null : content.render(),
-          }
-        })}
-      />
-    </div>
-  )
 
   // cleanup answers states:
   // make sure we have at least one answer
@@ -83,9 +77,15 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
           setPreviewActive={setPreviewActive}
         />
       ) : null}
-      {/* TODO: This will probably cause problems without editable */}
       <PreviewOverlaySimple previewActive={previewActive} fullOpacity={!showUi}>
-        {renderer}
+        {/* margin-hack */}
+        <div className="[&_.ml-4.flex]:mb-block">
+          <ScMcExerciseStaticRenderer
+            {...staticDocument}
+            idBase={`sc-mc-${id}`}
+            noShuffle
+          />
+        </div>
       </PreviewOverlaySimple>
 
       {!previewActive && showUi ? (
@@ -116,8 +116,4 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
       ) : null}
     </div>
   )
-
-  function isEmpty(id: string) {
-    return selectIsDocumentEmpty(store.getState(), id)
-  }
 }

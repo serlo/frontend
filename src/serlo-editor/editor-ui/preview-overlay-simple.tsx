@@ -20,8 +20,7 @@ export function PreviewOverlaySimple({
           fullOpacity ? 'bg-opacity-0' : ''
         )}
       />
-      {/* TODO: check if we can use static renderer here */}
-      {previewActive ? children : children}
+      {children}
     </div>
   )
 }

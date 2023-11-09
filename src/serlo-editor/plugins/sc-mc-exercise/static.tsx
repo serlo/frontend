@@ -17,19 +17,23 @@ export function ScMcExerciseStaticRenderer({
   idBase,
   onEvaluate,
   renderExtraAnswerContent,
+  noShuffle,
 }: EditorScMcExerciseDocument & {
   idBase: string
   isPrintMode?: boolean
-  onEvaluate: ScMcExerciseRendererProps['onEvaluate']
-  renderExtraAnswerContent: ScMcExerciseRendererProps['renderExtraAnswerContent']
+  onEvaluate?: ScMcExerciseRendererProps['onEvaluate']
+  renderExtraAnswerContent?: ScMcExerciseRendererProps['renderExtraAnswerContent']
+  noShuffle?: true
 }) {
   const [shuffledAnswers, setShuffledAnswers] = useState(state.answers)
 
   useEffect(() => {
-    if (!renderExtraAnswerContent) {
-      setShuffledAnswers(shuffleArray(state.answers))
-    }
-  }, [state.answers, renderExtraAnswerContent])
+    setShuffledAnswers(
+      renderExtraAnswerContent || noShuffle
+        ? state.answers
+        : shuffleArray(state.answers)
+    )
+  }, [state.answers, renderExtraAnswerContent, noShuffle])
 
   const answers = shuffledAnswers
     .slice(0)
