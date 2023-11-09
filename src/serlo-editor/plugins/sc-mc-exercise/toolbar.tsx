@@ -1,5 +1,5 @@
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
-import { type Dispatch, type SetStateAction } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
 
 import type { ScMcExerciseProps } from '.'
 import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'

@@ -75,7 +75,7 @@ export function InputExerciseEditor(props: InputExerciseProps) {
         />
       ) : null}
 
-      <PreviewOverlaySimple active={previewActive} fullOpacity={!showUi}>
+      <PreviewOverlaySimple previewActive={previewActive} fullOpacity={!showUi}>
         {renderer}
       </PreviewOverlaySimple>
       {!previewActive && showUi ? (

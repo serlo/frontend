@@ -18,11 +18,11 @@ export const ExerciseToolbar = ({
   const { interactive } = state
   const exTemplateStrings = useEditorStrings().templatePlugins.exercise
 
-  const currentySelected = interactive.defined
+  const currentlySelected = interactive.defined
     ? selectDocument(store.getState(), interactive.id)?.plugin
     : undefined
 
-  const pluginSettings = currentySelected ? (
+  const pluginSettings = currentlySelected ? (
     <>
       <label className="serlo-tooltip-trigger mr-2">
         <EditorTooltip text={exTemplateStrings.changeInteractive} />
@@ -35,7 +35,7 @@ export const ExerciseToolbar = ({
                     mr-2 cursor-pointer rounded-md !border border-gray-500 bg-editor-primary-100 px-1 py-[1px] text-sm transition-all
                   hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
                   `}
-          value={currentySelected ?? ''}
+          value={currentlySelected ?? ''}
         >
           {interactiveExerciseTypes.map((type) => {
             return (
