@@ -1,9 +1,11 @@
+import { licenses } from './license-data-short';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
   lang: "fr",
-  headerData: headerData,
-  footerData: footerData,
-  secondaryMenus: secondaryMenus,
+  headerData,
+  footerData,
+  secondaryMenus,
+  licenses,
   strings: {
     header: {
       slogan: "La plateforme d'apprentissage libre",
@@ -110,7 +112,8 @@ export const instanceData = {
     license: {
       readMore: "Information",
       special: "Licence différente",
-      nonFree: "L'utilisation de ce contenu pourrait être plus restreinte que notre autre contenu."
+      nonFree: "L'utilisation de ce contenu pourrait être plus restreinte que notre autre contenu.",
+      appliesTo: 'Applies to'
     },
     course: {
       showPages: "Afficher la vue globale du cours",
@@ -379,10 +382,10 @@ export const instanceData = {
       messages: {
         code1010003: 'Please confirm this action by verifying that it is you.',
         code1010001: 'Sign in',
-        code1010002: 'Sign in with NBP Account',
+        code1010002: 'Sign in via „Mein Bildungsraum“',
         code1010013: 'Continue with SSO',
         code1040001: 'Register',
-        code1040002: 'Register with NBP Account',
+        code1040002: 'Register via „Mein Bildungsraum“',
         code1040003: 'Continue',
         code1050001: 'Your changes have been saved! 🎉',
         code1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
@@ -768,6 +771,7 @@ export const loggedInData = {
           lists: "Listes",
           mathFormula: "Formule mathématique (%ctrlOrCmd% + M)",
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
+          blank: 'Blank',
           bold: "Gras (%ctrlOrCmd% + B)",
           italic: "Italique (%ctrlOrCmd% + I)",
           noItemsFound: "Aucun élément trouvé",
@@ -816,6 +820,10 @@ export const loggedInData = {
         scMcExercise: {
           title: 'SC/MC Exercise',
           description: 'Single Choice or Multiple Choice'
+        },
+        fillInTheBlanks: {
+          title: 'Fill In The Blanks Exercise',
+          description: 'Text with blanks'
         }
       },
       templatePlugins: {
@@ -872,12 +880,15 @@ export const loggedInData = {
           title: "Titre"
         },
         exercise: {
-          scMcExercise: "Exercice de choix",
-          inputExercise: "Exercice de saisie",
-          h5p: 'H5p exercise',
+          scMcExercise: 'Choice Exercise',
+          inputExercise: 'Input Exercise',
+          h5p: 'H5p Exercise',
+          fillInTheBlanksExercise: 'Fill In The Blanks',
           addOptionalInteractiveEx: "Ajouter un exercice interactif optionnel :",
           changeInteractive: 'Change interactive element',
-          removeInteractive: 'Remove interactive element'
+          removeInteractive: 'Remove interactive element',
+          createSolution: "Créer une solution",
+          removeSolution: "Supprimer la solution"
         },
         event: {
           seoTitle: "Titre pour les moteurs de recherche",
@@ -915,7 +926,8 @@ export const loggedInData = {
           openArticleTab: "Ouvrir l'article dans un nouvel onglet :",
           linkTitle: "Titre du lien",
           showSolution: "Afficher la solution",
-          hideSolution: "Masquer la solution"
+          hideSolution: "Masquer la solution",
+          changeLicense: 'Change license'
         },
         textExerciseGroup: {
           removeExercise: "Supprimer l'exercice",
@@ -923,10 +935,6 @@ export const loggedInData = {
           kindOfExerciseGroup: "Type de groupe d'exercice",
           notCohesive: "pas cohérent",
           cohesive: "cohérent"
-        },
-        textExercise: {
-          removeSolution: "Supprimer la solution",
-          createSolution: "Créer une solution"
         }
       },
       edtrIo: {

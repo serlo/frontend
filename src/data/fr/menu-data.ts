@@ -40,25 +40,38 @@ export const footerData: InstanceData['footerData'] = {
       title: 'Général',
       children: [
         { title: 'À propos de serlo', url: '/141579' },
-        { title: 'Participes!', url: '/141581' },
         { title: 'Contact', url: '/143390' },
         {
           title: "Serlo dans d'autres langues",
           url: `https://en.${serloDomain}/global`,
-        },
-        {
-          title: 'API',
-          url: `https://en.${serloDomain}/community/technology-and-development/content-api`,
         },
       ],
     },
     {
       title: 'Restez en contact',
       children: [
+        { title: 'Participes!', url: '/141581' },
         {
           title: 'GitHub',
           url: 'https://github.com/serlo',
           icon: FooterIcon.github,
+        },
+      ],
+    },
+    {
+      title: 'Products',
+      children: [
+        {
+          title: 'Serlo Editor',
+          url: `https://en.${serloDomain}/editor`,
+        },
+        {
+          title: 'Metadata API',
+          url: `https://en.${serloDomain}/metadata`,
+        },
+        {
+          title: 'iFrame API',
+          url: 'https://github.com/serlo/documentation/wiki/iframe-API',
         },
       ],
     },

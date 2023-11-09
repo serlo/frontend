@@ -43,7 +43,9 @@ export function createExerciseGroup(
 
   const exercises = uuid.exercises
     .map(createExercise)
-    .filter(Boolean) as EditorExerciseDocument[]
+    .filter(
+      (exercise) => exercise && !exercise.serloContext?.trashed
+    ) as EditorExerciseDocument[]
 
   return {
     plugin: TemplatePluginType.TextExerciseGroup,

@@ -41,7 +41,7 @@ export function child<K extends string, S = unknown>(
       return id
     },
     toStoreState(staticDocument, { createDocument }) {
-      const id = staticDocument.id ?? v4()
+      const id = staticDocument?.id ?? v4()
       createDocument({ id, ...staticDocument })
       return id
     },

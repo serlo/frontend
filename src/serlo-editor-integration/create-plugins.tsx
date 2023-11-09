@@ -14,7 +14,6 @@ import IconText from '@/assets-webkit/img/editor/icon-text.svg'
 import IconVideo from '@/assets-webkit/img/editor/icon-video.svg'
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { type LoggedInData, UuidType } from '@/data-types'
-import { Instance } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
 import type { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { anchorPlugin } from '@/serlo-editor/plugins/anchor'
@@ -23,6 +22,7 @@ import { audioPlugin } from '@/serlo-editor/plugins/audio'
 import { createBoxPlugin } from '@/serlo-editor/plugins/box'
 import { equationsPlugin } from '@/serlo-editor/plugins/equations'
 import { exercisePlugin } from '@/serlo-editor/plugins/exercise'
+import { fillInTheBlanksExercise } from '@/serlo-editor/plugins/fill-in-the-blanks-exercise'
 import { geoGebraPlugin } from '@/serlo-editor/plugins/geogebra'
 import { H5pPlugin } from '@/serlo-editor/plugins/h5p'
 import { createHighlightPlugin } from '@/serlo-editor/plugins/highlight'
@@ -56,11 +56,9 @@ import { videoPlugin } from '@/serlo-editor/plugins/video'
 
 export function createPlugins({
   editorStrings,
-  instance,
   parentType,
 }: {
   editorStrings: LoggedInData['strings']['editor']
-  instance: Instance
   parentType?: string
 }): PluginsWithData {
   const isPage = parentType === UuidType.Page
@@ -68,7 +66,7 @@ export function createPlugins({
   return [
     {
       type: EditorPluginType.Text,
-      plugin: createTextPlugin({ serloLinkSearch: instance === Instance.De }),
+      plugin: createTextPlugin({}),
       visibleInSuggestions: true,
       icon: <IconText />,
     },
@@ -191,6 +189,14 @@ export function createPlugins({
       }),
     },
     { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
+    ...(isProduction
+      ? []
+      : [
+          {
+            type: EditorPluginType.FillInTheBlanksExercise,
+            plugin: fillInTheBlanksExercise,
+          },
+        ]),
 
     // Special plugins, never visible in suggestions
     // ===================================================

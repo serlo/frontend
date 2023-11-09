@@ -1,9 +1,11 @@
+import { licenses } from './license-data-short';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
   lang: "hi",
-  headerData: headerData,
-  footerData: footerData,
-  secondaryMenus: secondaryMenus,
+  headerData,
+  footerData,
+  secondaryMenus,
+  licenses,
   strings: {
     header: {
       slogan: "ओपन लर्निंग प्लेटफॉर्म",
@@ -110,7 +112,8 @@ export const instanceData = {
     license: {
       readMore: "सूचना",
       special: "अलग लाइसेंस",
-      nonFree: "इस सामग्री का उपयोग हमारी अन्य सामग्री की तुलना में अधिक प्रतिबंधित हो सकता है।"
+      nonFree: "इस सामग्री का उपयोग हमारी अन्य सामग्री की तुलना में अधिक प्रतिबंधित हो सकता है।",
+      appliesTo: 'Applies to'
     },
     course: {
       showPages: "पाठ्यक्रम का अवलोकन करें",
@@ -379,10 +382,10 @@ export const instanceData = {
       messages: {
         code1010003: 'Please confirm this action by verifying that it is you.',
         code1010001: 'Sign in',
-        code1010002: 'Sign in with NBP Account',
+        code1010002: 'Sign in via „Mein Bildungsraum“',
         code1010013: 'Continue with SSO',
         code1040001: 'Register',
-        code1040002: 'Register with NBP Account',
+        code1040002: 'Register via „Mein Bildungsraum“',
         code1040003: 'Continue',
         code1050001: 'Your changes have been saved! 🎉',
         code1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
@@ -768,6 +771,7 @@ export const loggedInData = {
           lists: 'Lists',
           mathFormula: 'Math formula (%ctrlOrCmd% + M)',
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
+          blank: 'Blank',
           bold: 'Bold (%ctrlOrCmd% + B)',
           italic: 'Italic (%ctrlOrCmd% + I)',
           noItemsFound: 'No items found',
@@ -816,6 +820,10 @@ export const loggedInData = {
         scMcExercise: {
           title: 'SC/MC Exercise',
           description: 'Single Choice or Multiple Choice'
+        },
+        fillInTheBlanks: {
+          title: 'Fill In The Blanks Exercise',
+          description: 'Text with blanks'
         }
       },
       templatePlugins: {
@@ -872,12 +880,15 @@ export const loggedInData = {
           title: "शीर्षक"
         },
         exercise: {
-          scMcExercise: 'Choice exercise',
-          inputExercise: 'Input exercise',
-          h5p: 'H5p exercise',
+          scMcExercise: 'Choice Exercise',
+          inputExercise: 'Input Exercise',
+          h5p: 'H5p Exercise',
+          fillInTheBlanksExercise: 'Fill In The Blanks',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
-          removeInteractive: 'Remove interactive element'
+          removeInteractive: 'Remove interactive element',
+          createSolution: 'Create solution',
+          removeSolution: 'Remove solution'
         },
         event: {
           seoTitle: 'Title for search engines',
@@ -915,7 +926,8 @@ export const loggedInData = {
           openArticleTab: 'Open the article in a new tab:',
           linkTitle: 'Title of the link',
           showSolution: 'Show solution',
-          hideSolution: 'Hide solution'
+          hideSolution: 'Hide solution',
+          changeLicense: 'Change license'
         },
         textExerciseGroup: {
           removeExercise: 'Remove exercise',
@@ -923,10 +935,6 @@ export const loggedInData = {
           kindOfExerciseGroup: 'Kind of exercise group',
           notCohesive: 'not cohesive',
           cohesive: 'cohesive'
-        },
-        textExercise: {
-          removeSolution: 'Remove solution',
-          createSolution: 'Create solution'
         }
       },
       edtrIo: {

@@ -12,6 +12,7 @@ import type {
   Heading,
   Link,
   MathElement,
+  Blank,
 } from './types/text-editor'
 import { emptyDocumentFactory } from './utils/document'
 import { isEmptyObject } from './utils/object'
@@ -78,6 +79,7 @@ export type {
   ListItemText,
   Heading,
   Link,
+  Blank,
   MathElement,
   CustomText,
   TextEditorConfig,
