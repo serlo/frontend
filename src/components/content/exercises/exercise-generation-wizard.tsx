@@ -15,7 +15,6 @@ import { Topic } from './exercise-generation-wizard/topic'
 import { FaIcon } from '@/components/fa-icon'
 import { AuthorToolsData } from '@/components/user-tools/foldout-author-menus/author-tools'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { LoggedInData } from '@/data-types'
 import { isProduction } from '@/helper/is-production'
 import { submitEvent } from '@/helper/submit-event'
 
@@ -59,7 +58,8 @@ export const ExerciseGenerationWizard: React.FC<
     props
 
   // Only logged in users can see this
-  const { strings } = useLoggedInData() as LoggedInData
+  const { exerciseGeneration: exerciseGenerationString } =
+    useLoggedInData()!.strings.ai
 
   // TODO show limitation message before page one. We may need to handle this
   // one within the generate-exercise-button.tsx component and either render a
@@ -90,7 +90,7 @@ export const ExerciseGenerationWizard: React.FC<
 
     if (canUpdateTitle) {
       const newTitle =
-        strings.ai.exerciseGeneration.modalTitleWithTaxonomy +
+        exerciseGenerationString.modalTitleWithTaxonomy +
         subject.charAt(0).toUpperCase() +
         subject.slice(1) +
         ' - ' +
@@ -98,7 +98,14 @@ export const ExerciseGenerationWizard: React.FC<
 
       setTitle(newTitle)
     }
-  }, [topic, subject, setTitle, canUpdateTitle, currentPage, strings])
+  }, [
+    topic,
+    subject,
+    setTitle,
+    canUpdateTitle,
+    currentPage,
+    exerciseGenerationString,
+  ])
 
   const [grade, setGrade] = useState<string>('5')
 
@@ -154,7 +161,7 @@ export const ExerciseGenerationWizard: React.FC<
     <div className="flex h-full flex-grow flex-col overflow-y-auto p-4 pb-0">
       {isSummary && (
         <h1 className="mb-4 text-left font-bold">
-          {strings.ai.exerciseGeneration.summary}
+          {exerciseGenerationString.summary}
         </h1>
       )}
       {/* Scrollable content */}
@@ -262,7 +269,8 @@ const NavigationFooter: React.FC<NavigationFooterProps> = ({
   onPrev,
   onSubmit,
 }) => {
-  const { strings } = useLoggedInData() as LoggedInData
+  const { exerciseGeneration: exerciseGenerationString } =
+    useLoggedInData()!.strings.ai
 
   useEffect(() => {
     submitEvent('exercise-generation-wizard-page: ' + currentPage)
@@ -276,15 +284,15 @@ const NavigationFooter: React.FC<NavigationFooterProps> = ({
           onClick={onSubmit}
         >
           {generatesMultipleExercises
-            ? strings.ai.exerciseGeneration.generateExercisesButton
-            : strings.ai.exerciseGeneration.generateExerciseButton}
+            ? exerciseGenerationString.generateExercisesButton
+            : exerciseGenerationString.generateExerciseButton}
         </button>
       ) : (
         <button
           className="mb-2 self-end rounded bg-brand-700 px-4 py-2 text-white"
           onClick={onNext}
         >
-          {strings.ai.exerciseGeneration.nextButton}
+          {exerciseGenerationString.nextButton}
         </button>
       )}
 
