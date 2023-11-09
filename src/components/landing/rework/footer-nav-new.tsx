@@ -37,14 +37,20 @@ export function FooterNavNew() {
       {/* subjects */}
       {headerData[0].children &&
         renderFooterNavChildren(headerData[0].children)}
-      {/* newsletter/github */}
-      {renderFooterNavChildren(footerData.footerNavigation[1].children)}
+
+      <div>
+        {/* newsletter/jobs/community */}
+        {renderFooterNavChildren(footerData.footerNavigation[1].children)}
+        <br />
+        {/* code & apis */}
+        {renderFooterNavChildren(footerData.footerNavigation[2].children)}
+      </div>
     </nav>
   )
 
   function renderFooterNavChildren(items: { url: string; title: string }[]) {
     return (
-      <ul className="mt-8 mobile:mr-8 mobile:mt-0 mobile:max-w-30p">
+      <ul className="mt-8 mobile:mr-8 mobile:mt-0 mobile:max-w-30p md:max-w-none">
         {items.map(({ url, title }) => (
           <li key={url}>
             <Link

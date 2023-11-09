@@ -5,6 +5,7 @@ import { endpoint } from '@/api/endpoint'
 import { InfoPanel } from '@/components/info-panel'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
+import { UuidType } from '@/data-types'
 import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
@@ -47,11 +48,15 @@ export function InjectionStaticRenderer({
           if (!data.data?.uuid) throw new Error('not found')
           const uuid = data.data.uuid
 
+          // TODO: remove after API change
+          if (uuid.__typename === UuidType.Solution) {
+            throw new Error('trying to load solution')
+          }
+
           if (
             uuid.__typename === 'Article' ||
             uuid.__typename === 'TaxonomyTerm' ||
-            uuid.__typename === 'CoursePage' ||
-            uuid.__typename === 'Solution'
+            uuid.__typename === 'CoursePage'
           ) {
             if (!uuid.alias) setContent([])
             setContent([createFallbackBox(uuid.alias, uuid.title)])
@@ -77,21 +82,11 @@ export function InjectionStaticRenderer({
                     : undefined,
               },
             }
-            const solutionContent = uuid.solution?.currentRevision?.content
-            const solutionContext = {
-              serloContext: {
-                license:
-                  uuid.solution?.license && !uuid.solution?.license.default
-                    ? uuid.solution?.license
-                    : undefined,
-              },
-            }
+
+            // TODO: add solution license info to context another way
 
             setContent([
               { ...JSON.parse(uuid.currentRevision.content), exerciseContext },
-              solutionContent
-                ? { ...JSON.parse(solutionContent), solutionContext }
-                : null,
             ])
             return
           }
@@ -110,25 +105,9 @@ export function InjectionStaticRenderer({
                 },
               }
 
-              const solutionContentAndContext = exercise.solution
-                ?.currentRevision?.content
-                ? {
-                    ...parseDocumentString(
-                      exercise.solution?.currentRevision?.content
-                    ),
-                    serloContext: {
-                      license:
-                        exercise.solution?.license &&
-                        !exercise.solution?.license.default
-                          ? exercise.solution?.license
-                          : undefined,
-                    },
-                  }
-                : null
+              // TODO: add solution license info to context another way
 
-              return exercise.currentRevision
-                ? [exerciseContentAndContext, solutionContentAndContext]
-                : []
+              return exercise.currentRevision ? [exerciseContentAndContext] : []
             })
 
             setContent([
@@ -259,10 +238,6 @@ const query = gql`
         alias
         title
       }
-      ... on Solution {
-        alias
-        title
-      }
     }
   }
 
@@ -270,12 +245,6 @@ const query = gql`
     ...license
     currentRevision {
       content
-    }
-    solution {
-      ...license
-      currentRevision {
-        content
-      }
     }
   }
 

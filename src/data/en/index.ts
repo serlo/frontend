@@ -1,3 +1,4 @@
+import { licenses } from './license-data-short'
 import {
   headerData,
   footerData,
@@ -7,9 +8,10 @@ import {
 
 export const instanceData = {
   lang: 'en',
-  headerData: headerData,
-  footerData: footerData,
-  secondaryMenus: secondaryMenus,
+  headerData,
+  footerData,
+  secondaryMenus,
+  licenses,
   strings: {
     header: {
       slogan: 'The Open Learning Platform',
@@ -124,6 +126,7 @@ export const instanceData = {
       special: 'Different license',
       nonFree:
         'Usage of this content might be more restricted than our other content.',
+      appliesTo: 'Applies to'
     },
     course: {
       showPages: 'Show course overview',
@@ -965,6 +968,8 @@ export const loggedInData = {
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
           removeInteractive: 'Remove interactive element',
+          createSolution: 'Create solution',
+          removeSolution: 'Remove solution',
         },
         event: {
           seoTitle: 'Title for search engines',
@@ -1003,6 +1008,7 @@ export const loggedInData = {
           linkTitle: 'Title of the link',
           showSolution: 'Show solution',
           hideSolution: 'Hide solution',
+          changeLicense: 'Change license',
         },
         textExerciseGroup: {
           removeExercise: 'Remove exercise',
@@ -1010,11 +1016,7 @@ export const loggedInData = {
           kindOfExerciseGroup: 'Kind of exercise group',
           notCohesive: 'not cohesive',
           cohesive: 'cohesive',
-        },
-        textExercise: {
-          removeSolution: 'Remove solution',
-          createSolution: 'Create solution',
-        },
+        }
       },
       edtrIo: {
         localStorage: {

@@ -171,19 +171,6 @@ export function revisionResponseToResponse(
     }
   }
 
-  if (uuid.__typename === UuidRevType.Solution) {
-    uuid.__typename
-    return {
-      __typename: UuidType.Solution,
-      currentRevision: {
-        content,
-      },
-      exercise: uuid.repository.exercise,
-      ...repositoryFields,
-      trashed: uuid.trashed,
-    }
-  }
-
   if (uuid.__typename === UuidRevType.Video) {
     uuid.__typename
     return {

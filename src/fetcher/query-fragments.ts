@@ -249,28 +249,6 @@ export const sharedEventFragments = gql`
         }
       }
     }
-    ... on Solution {
-      exercise {
-        ... on Exercise {
-          __typename
-          taxonomyTerms {
-            nodes {
-              type
-            }
-          }
-        }
-        ... on GroupedExercise {
-          __typename
-          exerciseGroup {
-            taxonomyTerms {
-              nodes {
-                type
-              }
-            }
-          }
-        }
-      }
-    }
   }
 `
 
@@ -286,18 +264,6 @@ export const sharedExerciseFragments = gql`
       content
       date
     }
-    solution {
-      ...solution
-    }
-    ...license
-  }
-
-  fragment solution on Solution {
-    id
-    currentRevision {
-      content
-    }
-    trashed
     ...license
   }
 `

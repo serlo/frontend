@@ -150,9 +150,13 @@ export function DataWallet() {
         <style jsx>
           {`
             .partner {
-              background: url('/_assets/img/landing/about-container.svg')
-                no-repeat;
               border-bottom: 2rem solid #fff1db;
+              background-image: url('/_assets/img/landing/about-container.svg');
+              background-repeat: no-repeat, no-repeat;
+              background-position: 77% 12%;
+              background-size:
+                200%,
+                100vw 100%;
             }
           `}
         </style>

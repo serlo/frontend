@@ -14,7 +14,6 @@ import IconText from '@/assets-webkit/img/editor/icon-text.svg'
 import IconVideo from '@/assets-webkit/img/editor/icon-video.svg'
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { type LoggedInData, UuidType } from '@/data-types'
-import { Instance } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
 import type { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { anchorPlugin } from '@/serlo-editor/plugins/anchor'
@@ -47,7 +46,6 @@ import { textExerciseGroupTypePlugin } from '@/serlo-editor/plugins/serlo-templa
 import { pageTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/page'
 import { taxonomyTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/taxonomy'
 import { textExerciseTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/text-exercise'
-import { textSolutionTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/text-solution'
 import { userTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/user'
 import { videoTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/video'
 import { solutionPlugin } from '@/serlo-editor/plugins/solution'
@@ -58,12 +56,10 @@ import { videoPlugin } from '@/serlo-editor/plugins/video'
 
 export function createPlugins({
   editorStrings,
-  instance,
   parentType,
   allowExercises,
 }: {
   editorStrings: LoggedInData['strings']['editor']
-  instance: Instance
   parentType?: string
   allowExercises?: boolean
 }): PluginsWithData {
@@ -72,7 +68,7 @@ export function createPlugins({
   return [
     {
       type: EditorPluginType.Text,
-      plugin: createTextPlugin({ serloLinkSearch: instance === Instance.De }),
+      plugin: createTextPlugin({}),
       visibleInSuggestions: true,
       icon: <IconText />,
     },
@@ -180,11 +176,7 @@ export function createPlugins({
       plugin: exercisePlugin,
       visibleInSuggestions: allowExercises,
     },
-    {
-      type: EditorPluginType.Solution,
-      plugin: solutionPlugin,
-      visibleInSuggestions: allowExercises,
-    },
+    { type: EditorPluginType.Solution, plugin: solutionPlugin },
     { type: EditorPluginType.H5p, plugin: H5pPlugin },
     {
       type: EditorPluginType.InputExercise,
@@ -240,7 +232,6 @@ export function createPlugins({
       type: TemplatePluginType.TextExerciseGroup,
       plugin: textExerciseGroupTypePlugin,
     },
-    { type: TemplatePluginType.TextSolution, plugin: textSolutionTypePlugin },
     { type: TemplatePluginType.User, plugin: userTypePlugin },
     { type: TemplatePluginType.Video, plugin: videoTypePlugin },
   ]

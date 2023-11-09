@@ -10,7 +10,6 @@ import {
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
@@ -59,8 +58,6 @@ function Content() {
 
   const isNotEmpty = previewState !== emptyState
 
-  const { lang } = useInstanceData()
-
   const debouncedSetState = debounce(
     (state?: string | null) => setPreviewState(state ?? emptyState),
     40
@@ -93,7 +90,6 @@ function Content() {
   editorPlugins.init(
     createPlugins({
       editorStrings,
-      instance: lang,
       parentType: 'Article',
       allowExercises: true,
     })
