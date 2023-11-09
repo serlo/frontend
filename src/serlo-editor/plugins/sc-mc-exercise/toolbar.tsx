@@ -2,6 +2,7 @@ import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import type { Dispatch, SetStateAction } from 'react'
 
 import type { ScMcExerciseProps } from '.'
+import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
@@ -13,6 +14,7 @@ export const ScMcExerciseToolbar = ({
   state,
   previewActive,
   setPreviewActive,
+  id,
 }: ScMcExerciseProps & {
   previewActive: boolean
   setPreviewActive: Dispatch<SetStateAction<boolean>>
@@ -62,6 +64,7 @@ export const ScMcExerciseToolbar = ({
           </label>
         </>
       }
+      pluginControls={<InteractiveToolbarTools id={id} />}
     />
   )
 }

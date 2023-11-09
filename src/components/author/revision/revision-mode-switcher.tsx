@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { type Dispatch, type SetStateAction } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
 
 import { DisplayModes } from './display-modes'
 import { Link } from '@/components/content/link'

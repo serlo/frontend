@@ -1,5 +1,5 @@
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import { type Dispatch, type SetStateAction } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
 
 import { LayoutChooser } from './layout-chooser'
 import type { PageLayoutPluginProps } from '..'

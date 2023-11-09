@@ -8,12 +8,12 @@ import {
   InteractiveAnswer,
   PreviewOverlaySimple,
 } from '../../editor-ui'
-import { store, selectIsDocumentEmpty } from '../../store'
+import { store, selectIsDocumentEmpty, selectFocused } from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditableContext } from '@/serlo-editor/core/contexts'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
-  const { editable, state, id } = props
+  const { editable, state, id, focused } = props
   const { answers, isSingleChoice } = state
 
   const editorStrings = useEditorStrings()
@@ -33,9 +33,16 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
 
   const [previewActive, setPreviewActive] = useState(false)
 
+  const isAnyAnswerFocused = answers.some(({ content, feedback }) => {
+    const focusedId = selectFocused(store.getState())
+    return focusedId === content.id || focusedId === feedback.id
+  })
+
+  const showUi = focused || isAnyAnswerFocused
+
   const renderer = (
     <EditableContext.Provider value={false}>
-      {/* //margin-hack */}
+      {/* margin-hack */}
       <div className="[&_.ml-4.flex]:mb-block">
         <ScMcExerciseRenderer
           isSingleChoice={isSingleChoice.value}
@@ -53,18 +60,39 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   )
   if (!editable) return renderer
 
+  // cleanup answers states:
+  // make sure we have at least one answer
+  if (answers.length === 0) answers.insert()
+
+  if (isSingleChoice.value && answers.length > 0) {
+    const correctAnswers = state.answers.filter(
+      (answer) => answer.isCorrect.value === true
+    )
+    // make sure for single choice at least one answer is correct
+    if (correctAnswers.length === 0) answers[0].isCorrect.set(true)
+
+    // make sure for single choice we never have multiple correct answers
+    if (correctAnswers.length > 1) {
+      correctAnswers.forEach((answer) => answer.isCorrect.set(false))
+      correctAnswers[0].isCorrect.set(true)
+    }
+  }
+
   return (
     <div className="mb-12 mt-24 pt-4">
-      <ScMcExerciseToolbar
-        {...props}
-        previewActive={previewActive}
-        setPreviewActive={setPreviewActive}
-      />
-      <PreviewOverlaySimple active={previewActive}>
+      {showUi ? (
+        <ScMcExerciseToolbar
+          {...props}
+          previewActive={previewActive}
+          setPreviewActive={setPreviewActive}
+        />
+      ) : null}
+      <PreviewOverlaySimple previewActive={previewActive} fullOpacity={!showUi}>
         {renderer}
       </PreviewOverlaySimple>
-      {editable && !previewActive && (
-        <>
+
+      {editable && !previewActive && showUi ? (
+        <div className="[&_.plugin-toolbar]:left-side [&_.plugin-toolbar]:top-[-60px]">
           {answers.map((answer, index) => {
             return (
               <InteractiveAnswer
@@ -87,8 +115,8 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
           <AddButton onClick={handleAddButtonClick}>
             {editorStrings.templatePlugins.scMcExercise.addAnswer}
           </AddButton>
-        </>
-      )}
+        </div>
+      ) : null}
     </div>
   )
 

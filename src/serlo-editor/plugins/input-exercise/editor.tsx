@@ -10,6 +10,7 @@ import {
 } from '../../editor-ui'
 import {
   focus,
+  selectFocused,
   selectIsDocumentEmpty,
   store,
   useAppDispatch,
@@ -18,7 +19,8 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function InputExerciseEditor(props: InputExerciseProps) {
-  const { editable, state, id } = props
+  const { editable, state, id, focused } = props
+  const { answers, type, unit } = state
   const inputExStrings = useEditorStrings().templatePlugins.inputExercise
 
   const dispatch = useAppDispatch()
@@ -39,15 +41,14 @@ export function InputExerciseEditor(props: InputExerciseProps) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => overwriteFocus, [])
 
+  const storeState = store.getState()
+
   const renderer = (
     <InputExerciseRenderer
-      type={state.type.value}
-      unit={state.unit.value}
-      answers={state.answers.map(({ isCorrect, value, feedback }) => {
-        const isEmptyFeedback = selectIsDocumentEmpty(
-          store.getState(),
-          feedback.id
-        )
+      type={type.value}
+      unit={unit.value}
+      answers={answers.map(({ isCorrect, value, feedback }) => {
+        const isEmptyFeedback = selectIsDocumentEmpty(storeState, feedback.id)
         return {
           isCorrect: isCorrect.value,
           value: value.value,
@@ -56,23 +57,31 @@ export function InputExerciseEditor(props: InputExerciseProps) {
       })}
     />
   )
-
   if (!editable) return renderer
+
+  const isAnyAnswerFocused = answers.some(
+    ({ feedback }) => feedback.id === selectFocused(storeState)
+  )
+
+  const showUi = focused || isAnyAnswerFocused
 
   return (
     <div className="mb-12 mt-24 pt-4">
-      <InputExerciseToolbar
-        {...props}
-        previewActive={previewActive}
-        setPreviewActive={setPreviewActive}
-      />
-      <PreviewOverlaySimple active={previewActive}>
+      {showUi ? (
+        <InputExerciseToolbar
+          {...props}
+          previewActive={previewActive}
+          setPreviewActive={setPreviewActive}
+        />
+      ) : null}
+
+      <PreviewOverlaySimple previewActive={previewActive} fullOpacity={!showUi}>
         {renderer}
       </PreviewOverlaySimple>
-      {!previewActive && (
+      {!previewActive && showUi ? (
         <>
-          {state.answers.map((answer, index: number) => {
-            const isLast = index === state.answers.length - 1
+          {answers.map((answer, index: number) => {
+            const isLast = index === answers.length - 1
             return (
               <InteractiveAnswer
                 key={answer.feedback.id}
@@ -94,7 +103,7 @@ export function InputExerciseEditor(props: InputExerciseProps) {
                 handleChange={() =>
                   answer.isCorrect.set(!answer.isCorrect.value)
                 }
-                remove={() => state.answers.remove(index)}
+                remove={() => answers.remove(index)}
               />
             )
           })}
@@ -105,14 +114,14 @@ export function InputExerciseEditor(props: InputExerciseProps) {
                 isCorrect: false,
                 feedback: { plugin: EditorPluginType.Text },
               }
-              state.answers.insert(undefined, wrongAnswer)
+              answers.insert(undefined, wrongAnswer)
               overwriteFocus(true)
             }}
           >
             {inputExStrings.addAnswer}
           </AddButton>
         </>
-      )}
+      ) : null}
     </div>
   )
 }
