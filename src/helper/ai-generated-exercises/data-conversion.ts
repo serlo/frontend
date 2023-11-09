@@ -311,6 +311,7 @@ function createSolution(
     plugin: EditorPluginType.Solution,
     state: {
       prerequisite: undefined,
+      licenseId: 1,
       strategy: {
         plugin: EditorPluginType.Text,
         state: [
