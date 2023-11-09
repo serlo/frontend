@@ -14,7 +14,6 @@ export const PageLayoutToolbar = ({
   id,
   state,
   focused,
-  editable,
   showSettingsModal,
   setShowSettingsModal,
 }: PageLayoutPluginProps & {
@@ -23,7 +22,7 @@ export const PageLayoutToolbar = ({
 }) => {
   const pageLayoutStrings = useEditorStrings().plugins.pageLayout
 
-  if (!focused || !editable) return null
+  if (!focused) return null
 
   return (
     <PluginToolbar

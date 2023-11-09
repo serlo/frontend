@@ -11,12 +11,10 @@ interface ArticleRelatedContentSectionProps {
     | 'articles'
     | 'courses'
     | 'videos']
-  editable: boolean
 }
 
 export function ArticleRelatedContentSection({
   data,
-  editable,
 }: ArticleRelatedContentSectionProps) {
   const articleStrings = useEditorStrings().templatePlugins.article
 
@@ -25,7 +23,7 @@ export function ArticleRelatedContentSection({
   return (
     <>
       {data.map((item, index) => {
-        return editable ? (
+        return (
           <li key={item.id.value} className="flex">
             <a
               href={`/${item.id.value}`}
@@ -36,10 +34,6 @@ export function ArticleRelatedContentSection({
               {item.title.value}
             </a>
             {renderButtons(index)}
-          </li>
-        ) : (
-          <li key={item.id.value}>
-            <a href={`/${item.id.value}`}>{item.title.value}</a>
           </li>
         )
       })}

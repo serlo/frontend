@@ -15,11 +15,11 @@ export const UnsupportedEditor: React.FunctionComponent<
 
   const unsupportedType = selectStaticDocument(store.getState(), props.id)
     ?.plugin
-  const { focused, id, editable } = props
+  const { focused, id } = props
 
   return (
     <>
-      {focused && editable ? (
+      {focused ? (
         <PluginToolbar
           pluginType={EditorPluginType.Unsupported}
           pluginControls={<PluginDefaultTools pluginId={id} />}

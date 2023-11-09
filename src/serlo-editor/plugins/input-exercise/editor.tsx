@@ -19,7 +19,7 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function InputExerciseEditor(props: InputExerciseProps) {
-  const { editable, state, id, focused } = props
+  const { state, id, focused } = props
   const { answers, type, unit } = state
   const inputExStrings = useEditorStrings().templatePlugins.inputExercise
 
@@ -57,7 +57,6 @@ export function InputExerciseEditor(props: InputExerciseProps) {
       })}
     />
   )
-  if (!editable) return renderer
 
   const isAnyAnswerFocused = answers.some(
     ({ feedback }) => feedback.id === selectFocused(storeState)
@@ -75,6 +74,7 @@ export function InputExerciseEditor(props: InputExerciseProps) {
         />
       ) : null}
 
+      {/* TODO: This will probably cause problems without editable */}
       <PreviewOverlaySimple previewActive={previewActive} fullOpacity={!showUi}>
         {renderer}
       </PreviewOverlaySimple>

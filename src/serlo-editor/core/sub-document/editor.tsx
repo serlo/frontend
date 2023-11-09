@@ -143,7 +143,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         <plugin.Component
           containerRef={containerRef}
           id={id}
-          editable
           focused={focused}
           config={config}
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

@@ -50,13 +50,11 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (props.editable) {
-      // focus on title, remove focus from content
-      setTimeout(() => {
-        dispatch(focus(null))
-        titleRef.current?.focus()
-      })
-    }
+    // focus on title, remove focus from content
+    setTimeout(() => {
+      dispatch(focus(null))
+      titleRef.current?.focus()
+    })
     // only after creating plugin
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -78,17 +76,13 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
         />
       </div>
       <h1 className="serlo-h1 mt-20" itemProp="name">
-        {props.editable ? (
-          <input
-            ref={titleRef}
-            className={headerInputClasses}
-            placeholder={articleStrings.title}
-            value={title.value}
-            onChange={(e) => title.set(e.target.value)}
-          />
-        ) : (
-          title.value
-        )}
+        <input
+          ref={titleRef}
+          className={headerInputClasses}
+          placeholder={articleStrings.title}
+          value={title.value}
+          onChange={(e) => title.set(e.target.value)}
+        />
       </h1>
 
       <section itemProp="articleBody">{content.render()}</section>

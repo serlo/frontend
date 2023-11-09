@@ -74,7 +74,6 @@ export function SerloEditor({
         <LocalStorageNotice useStored={useStored} setUseStored={setUseStored} />
         <Editor
           initialState={useStored ? getStateFromLocalStorage()! : initialState}
-          editable
           onChange={({ changed, getDocument }) => {
             if (!changed) return
             void debouncedStoreToLocalStorage(getDocument())

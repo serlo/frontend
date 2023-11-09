@@ -22,7 +22,7 @@ const captionFormattingOptions = [
 ]
 
 export function ImageEditor(props: ImageProps) {
-  const { editable, focused, state, config } = props
+  const { focused, state, config } = props
   const imageStrings = useEditorStrings().plugins.image
 
   const [showSettingsModal, setShowSettingsModal] = useState(false)
@@ -45,20 +45,20 @@ export function ImageEditor(props: ImageProps) {
   const urlInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    if (editable && !state.caption.defined) {
+    if (!state.caption.defined) {
       state.caption.create({ plugin: EditorPluginType.Text })
     }
-  }, [editable, state.caption])
+  }, [state.caption])
 
   useEffect(() => {
     setShowInlineImageUrl(!state.src.value)
     // updatating when src changes could hide input while you are typing so:
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editable, focused])
+  }, [focused])
 
   useEffect(() => {
     // manually set focus to url after creating plugin
-    if (editable && focused) {
+    if (focused) {
       setTimeout(() => {
         urlInputRef.current?.focus()
       })

@@ -10,10 +10,9 @@ import {
 } from '../../editor-ui'
 import { store, selectIsDocumentEmpty, selectFocused } from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { EditableContext } from '@/serlo-editor/core/contexts'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
-  const { editable, state, id, focused } = props
+  const { state, id, focused } = props
   const { answers, isSingleChoice } = state
 
   const editorStrings = useEditorStrings()
@@ -41,24 +40,21 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   const showUi = focused || isAnyAnswerFocused
 
   const renderer = (
-    <EditableContext.Provider value={false}>
-      {/* margin-hack */}
-      <div className="[&_.ml-4.flex]:mb-block">
-        <ScMcExerciseRenderer
-          isSingleChoice={isSingleChoice.value}
-          idBase={`sc-mc-${id}`}
-          answers={answers.slice(0).map(({ isCorrect, feedback, content }) => {
-            return {
-              isCorrect: isCorrect.value,
-              feedback: isEmpty(feedback.id) ? null : feedback.render(),
-              content: isEmpty(content.id) ? null : content.render(),
-            }
-          })}
-        />
-      </div>
-    </EditableContext.Provider>
+    /* margin-hack */
+    <div className="[&_.ml-4.flex]:mb-block">
+      <ScMcExerciseRenderer
+        isSingleChoice={isSingleChoice.value}
+        idBase={`sc-mc-${id}`}
+        answers={answers.slice(0).map(({ isCorrect, feedback, content }) => {
+          return {
+            isCorrect: isCorrect.value,
+            feedback: isEmpty(feedback.id) ? null : feedback.render(),
+            content: isEmpty(content.id) ? null : content.render(),
+          }
+        })}
+      />
+    </div>
   )
-  if (!editable) return renderer
 
   // cleanup answers states:
   // make sure we have at least one answer
@@ -87,11 +83,12 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
           setPreviewActive={setPreviewActive}
         />
       ) : null}
+      {/* TODO: This will probably cause problems without editable */}
       <PreviewOverlaySimple previewActive={previewActive} fullOpacity={!showUi}>
         {renderer}
       </PreviewOverlaySimple>
 
-      {editable && !previewActive && showUi ? (
+      {!previewActive && showUi ? (
         <div className="[&_.plugin-toolbar]:left-side [&_.plugin-toolbar]:top-[-60px]">
           {answers.map((answer, index) => {
             return (
