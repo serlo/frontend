@@ -163,16 +163,14 @@ export const ExerciseGenerationWizard: React.FC<
         ref={topOfSummaryRef}
       >
         {(isSummary || currentPage === 1) && (
-          <>
-            <Subject
-              onNext={handleNext}
-              isSummary={isSummary}
-              jumpToPage={setCurrentPage}
-              subject={subject}
-              setSubject={setSubject}
-              defaultSubject={defaultSubject}
-            />
-          </>
+          <Subject
+            onNext={handleNext}
+            isSummary={isSummary}
+            jumpToPage={setCurrentPage}
+            subject={subject}
+            setSubject={setSubject}
+            defaultSubject={defaultSubject}
+          />
         )}
         {(isSummary || currentPage === 2) && (
           <Topic

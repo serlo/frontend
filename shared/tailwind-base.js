@@ -12,7 +12,6 @@ const brand = '#007ec1'
 const brandGreen = '#95bc1a'
 const sunflower = '#ffbe5e'
 const sunflowerColors = {
-  400: '#ffd8a6',
   DEFAULT: sunflower,
   300: sunflower,
   200: '#ffdaa3',
@@ -20,6 +19,7 @@ const sunflowerColors = {
   50: '#fff9f0',
 }
 
+// eslint-disable-next-line import/no-default-export
 export default {
   theme: {
     extend: {
@@ -51,11 +51,7 @@ export default {
           muted: '#cfe097',
         },
         gray: colors.neutral,
-        lightgray: '#a3a3a3',
-        'background-gray': '#f2f2f2',
         berry: '#857189',
-        lightblue: '#b8e7ff',
-        lightskyblue: '#93c5fd',
         newgreen: '#2fceb1',
         'editor-primary': sunflowerColors,
         'almost-black': '#404040',

@@ -86,7 +86,7 @@ export function ModalWithCloseButton({
 
       {showConfirmation && (
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-75">
-          <div className="rounded bg-editor-primary-400 p-6 shadow-lg ">
+          <div className="rounded bg-orange-200 p-6 shadow-lg ">
             <p className="px-4">{confirmCloseDescription}</p>
             <div className="mt-4 flex space-x-4">
               <button

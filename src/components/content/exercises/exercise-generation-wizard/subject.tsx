@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from 'react'
 
 import { WizardPageProps } from './wizard-page-props'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { LoggedInData } from '@/data-types'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface SubjectProps extends WizardPageProps {
@@ -12,15 +11,16 @@ interface SubjectProps extends WizardPageProps {
   setSubject: (subject: string) => void
 }
 
-export const Subject: React.FC<SubjectProps> = ({
+export function Subject({
   isSummary,
   onNext,
   jumpToPage,
   subject,
   setSubject,
   defaultSubject,
-}) => {
-  const { strings } = useLoggedInData() as LoggedInData
+}: SubjectProps) {
+  const { subject: subjectStrings } =
+    useLoggedInData()!.strings.ai.exerciseGeneration
   const [selectedRadio, setSelectedRadio] = useState<string>(
     defaultSubject
       ? defaultSubject === subject
@@ -40,7 +40,7 @@ export const Subject: React.FC<SubjectProps> = ({
     return (
       <div className="flex items-center justify-start text-brand-700">
         <span onClick={() => jumpToPage(1)} className="mr-4 font-semibold">
-          {strings.ai.exerciseGeneration.subject.defaultLabel}
+          {subjectStrings.defaultLabel}
         </span>
         <button onClick={() => jumpToPage(1)} className="underline">
           {subject.charAt(0).toUpperCase() + subject.slice(1)}
@@ -51,8 +51,8 @@ export const Subject: React.FC<SubjectProps> = ({
   return (
     <div className="flex flex-col">
       <p className="mb-4 text-xl">
-        {replacePlaceholders(strings.ai.exerciseGeneration.subject.title, {
-          subject: <b>{strings.ai.exerciseGeneration.subject.subject}</b>,
+        {replacePlaceholders(subjectStrings.title, {
+          subject: <b>{subjectStrings.subject}</b>,
         })}
       </p>
       {defaultSubject ? (
@@ -67,7 +67,7 @@ export const Subject: React.FC<SubjectProps> = ({
               setSelectedRadio(defaultSubject)
               setSubject(defaultSubject)
             }}
-            className="text-brand-700 focus:ring-lightblue"
+            className="text-brand-700 focus:ring-sky-200"
           />
           <label htmlFor="defaultSubject" className="ml-2">
             {defaultSubject.charAt(0).toUpperCase() + defaultSubject.slice(1)}
@@ -87,10 +87,10 @@ export const Subject: React.FC<SubjectProps> = ({
             setSubject('')
             setSelectedRadio('custom')
           }}
-          className="text-brand-700 focus:ring-lightblue"
+          className="text-brand-700 focus:ring-sky-200"
         />
         <label htmlFor="customSubject" className="ml-2">
-          {strings.ai.exerciseGeneration.subject.otherSubjectLabel}
+          {subjectStrings.otherSubjectLabel}
         </label>
         <input
           type="text"
@@ -102,10 +102,8 @@ export const Subject: React.FC<SubjectProps> = ({
               onNext()
             }
           }}
-          className="ml-2 rounded-md border border-lightblue p-2 pl-2 focus:border-lightblue focus:outline-brand-700"
-          placeholder={
-            strings.ai.exerciseGeneration.subject.customSubjectPlaceholder
-          }
+          className="ml-2 rounded-md border border-sky-200 p-2 pl-2 focus:border-sky-200 focus:outline-brand-700"
+          placeholder={subjectStrings.customSubjectPlaceholder}
           ref={focusRef}
         />
       </div>

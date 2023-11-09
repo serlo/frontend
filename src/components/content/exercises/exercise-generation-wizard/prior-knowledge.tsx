@@ -1,6 +1,7 @@
+import clsx from 'clsx'
+
 import { WizardPageProps } from './wizard-page-props'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { LoggedInData } from '@/data-types'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface PriorKnowledgeProps extends WizardPageProps {
@@ -8,37 +9,31 @@ interface PriorKnowledgeProps extends WizardPageProps {
   setPriorKnowledge: (knowledge: string) => void
 }
 
-export const PriorKnowledge: React.FC<PriorKnowledgeProps> = ({
+export function PriorKnowledge({
   priorKnowledge,
   setPriorKnowledge,
   onNext,
   isSummary,
-}) => {
-  const { strings } = useLoggedInData() as LoggedInData
+}: PriorKnowledgeProps) {
+  const { priorKnowledge: priorKnowledgeStrings } =
+    useLoggedInData()!.strings.ai.exerciseGeneration
 
   return (
-    <div className={`flex flex-col ${isSummary ? 'mb-4' : ''}`}>
+    <div className={clsx('flex flex-col', isSummary && 'mb-4')}>
       {!isSummary && (
         <p className="mb-4 text-xl">
-          {replacePlaceholders(
-            strings.ai.exerciseGeneration.priorKnowledge.title,
-            {
-              priorKnowledge: (
-                <b>
-                  {strings.ai.exerciseGeneration.priorKnowledge.priorKnowledge}
-                </b>
-              ),
-            }
-          )}
+          {replacePlaceholders(priorKnowledgeStrings.title, {
+            priorKnowledge: <b>{priorKnowledgeStrings.priorKnowledge}</b>,
+          })}
         </p>
       )}
 
       <label htmlFor="priorKnowledge" className="font-semibold text-brand-700">
-        {strings.ai.exerciseGeneration.priorKnowledge.label}
+        {priorKnowledgeStrings.label}
       </label>
       {!isSummary && (
-        <p className="my-2 text-sm font-thin text-lightgray">
-          {strings.ai.exerciseGeneration.priorKnowledge.example}
+        <p className="my-2 text-sm font-thin text-gray-400">
+          {priorKnowledgeStrings.example}
         </p>
       )}
       <textarea
@@ -50,8 +45,8 @@ export const PriorKnowledge: React.FC<PriorKnowledgeProps> = ({
             onNext()
           }
         }}
-        className="w-11/12 resize-none rounded-md border border-lightblue p-2 pl-2 focus:border-lightblue focus:outline-brand-700"
-        placeholder={strings.ai.exerciseGeneration.priorKnowledge.placeholder}
+        className="w-11/12 resize-none rounded-md border border-sky-200 p-2 pl-2 focus:border-sky-200 focus:outline-brand-700"
+        placeholder={priorKnowledgeStrings.placeholder}
       />
     </div>
   )

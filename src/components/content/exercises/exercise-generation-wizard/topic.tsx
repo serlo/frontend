@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from 'react'
 
 import { WizardPageProps } from './wizard-page-props'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { LoggedInData } from '@/data-types'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface TopicProps extends WizardPageProps {
@@ -21,7 +20,8 @@ export const Topic: React.FC<TopicProps> = ({
   setTopic,
   defaultTopic,
 }) => {
-  const { strings } = useLoggedInData() as LoggedInData
+  const { topic: topicStrings } =
+    useLoggedInData()!.strings.ai.exerciseGeneration
 
   const [selectedRadio, setSelectedRadio] = useState<string>(
     defaultTopic ? (defaultTopic === topic ? defaultTopic : 'custom') : 'custom'
@@ -38,7 +38,7 @@ export const Topic: React.FC<TopicProps> = ({
     return (
       <div className="flex items-center justify-start text-brand-700">
         <span onClick={() => jumpToPage(2)} className="mr-4 font-semibold">
-          {strings.ai.exerciseGeneration.topic.defaultLabel}
+          {topicStrings.defaultLabel}
         </span>
         <button onClick={() => jumpToPage(2)} className="underline">
           {topic}
@@ -50,8 +50,8 @@ export const Topic: React.FC<TopicProps> = ({
   return (
     <div className="flex flex-col">
       <p className="mb-4 text-xl">
-        {replacePlaceholders(strings.ai.exerciseGeneration.topic.title, {
-          topic: <b>{strings.ai.exerciseGeneration.topic.topic}</b>,
+        {replacePlaceholders(topicStrings.title, {
+          topic: <b>{topicStrings.topic}</b>,
         })}
       </p>
       {defaultTopic ? (
@@ -66,7 +66,7 @@ export const Topic: React.FC<TopicProps> = ({
               setSelectedRadio(defaultTopic)
               setTopic(defaultTopic)
             }}
-            className="text-brand-700 focus:ring-lightblue"
+            className="text-brand-700 focus:ring-sky-200"
           />
           <label htmlFor="defaultTopic" className="ml-2">
             {defaultTopic.charAt(0).toUpperCase() + defaultTopic.slice(1)}
@@ -86,10 +86,10 @@ export const Topic: React.FC<TopicProps> = ({
             setTopic('')
             setSelectedRadio('custom')
           }}
-          className="text-brand-700 focus:ring-lightblue"
+          className="text-brand-700 focus:ring-sky-200"
         />
         <label htmlFor="customTopic" className="ml-2 ">
-          {strings.ai.exerciseGeneration.topic.otherTopicLabel}
+          {topicStrings.otherTopicLabel}
         </label>
         <input
           type="text"
@@ -101,10 +101,8 @@ export const Topic: React.FC<TopicProps> = ({
               onNext()
             }
           }}
-          className="ml-2 rounded-md border border-lightblue p-2 pl-2 focus:border-lightblue focus:outline-brand-700"
-          placeholder={
-            strings.ai.exerciseGeneration.topic.customTopicPlaceholder
-          }
+          className="ml-2 rounded-md border border-sky-200 p-2 pl-2 focus:border-sky-200 focus:outline-brand-700"
+          placeholder={topicStrings.customTopicPlaceholder}
           ref={focusRef}
         />
       </div>

@@ -2,7 +2,6 @@ import { ExerciseGenerationDifficulty } from './generate-prompt'
 import { WizardPageProps } from './wizard-page-props'
 import { MenuButton, MenuItem } from '../menu-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { LoggedInData } from '@/data-types'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface DifficultyProps extends WizardPageProps {
@@ -12,24 +11,23 @@ interface DifficultyProps extends WizardPageProps {
   setLearningGoal: (goal: string) => void
 }
 
-export const Difficulty: React.FC<DifficultyProps> = ({
+export function Difficulty({
   difficulty,
   setDifficulty,
   learningGoal,
   setLearningGoal,
   onNext,
   isSummary,
-}) => {
-  const { strings } = useLoggedInData() as LoggedInData
+}: DifficultyProps) {
+  const { difficulty: difficultyStrings } =
+    useLoggedInData()!.strings.ai.exerciseGeneration
 
   return (
     <div className="flex flex-col">
       {!isSummary && (
         <p className="mb-4 text-xl">
-          {replacePlaceholders(strings.ai.exerciseGeneration.difficulty.title, {
-            difficulty: (
-              <b>{strings.ai.exerciseGeneration.difficulty.difficulty}</b>
-            ),
+          {replacePlaceholders(difficultyStrings.title, {
+            difficulty: <b>{difficultyStrings.difficulty}</b>,
           })}
         </p>
       )}
@@ -39,7 +37,7 @@ export const Difficulty: React.FC<DifficultyProps> = ({
           htmlFor="difficultyDropdown"
           className="mr-2 font-semibold text-brand-700"
         >
-          {strings.ai.exerciseGeneration.difficulty.label}
+          {difficultyStrings.label}
         </label>
         <MenuButton
           value={difficulty || ''}
@@ -48,27 +46,19 @@ export const Difficulty: React.FC<DifficultyProps> = ({
           }
           defaultValue=""
         >
-          <MenuItem value="">
-            {strings.ai.exerciseGeneration.difficulty.chooseOption}
-          </MenuItem>
-          <MenuItem value="low">
-            {strings.ai.exerciseGeneration.difficulty.easy}
-          </MenuItem>
-          <MenuItem value="medium">
-            {strings.ai.exerciseGeneration.difficulty.medium}
-          </MenuItem>
-          <MenuItem value="high">
-            {strings.ai.exerciseGeneration.difficulty.hard}
-          </MenuItem>
+          <MenuItem value="">{difficultyStrings.chooseOption}</MenuItem>
+          <MenuItem value="low">{difficultyStrings.easy}</MenuItem>
+          <MenuItem value="medium">{difficultyStrings.medium}</MenuItem>
+          <MenuItem value="high">{difficultyStrings.hard}</MenuItem>
         </MenuButton>
       </div>
 
       <label htmlFor="learningGoal" className="font-semibold text-brand-700">
-        {strings.ai.exerciseGeneration.difficulty.learningGoalLabel}
+        {difficultyStrings.learningGoalLabel}
       </label>
       {!isSummary && (
-        <p className="my-2 text-sm font-thin text-lightgray">
-          {strings.ai.exerciseGeneration.difficulty.learningGoalExample}
+        <p className="my-2 text-sm font-thin text-gray-400">
+          {difficultyStrings.learningGoalExample}
         </p>
       )}
       <textarea
@@ -80,10 +70,8 @@ export const Difficulty: React.FC<DifficultyProps> = ({
             onNext()
           }
         }}
-        className="w-11/12 resize-none rounded-md border border-lightblue p-2 pl-2 focus:border-lightblue focus:outline-brand-700"
-        placeholder={
-          strings.ai.exerciseGeneration.difficulty.learningGoalPlaceholder
-        }
+        className="w-11/12 resize-none rounded-md border border-sky-200 p-2 pl-2 focus:border-sky-200 focus:outline-brand-700"
+        placeholder={difficultyStrings.learningGoalPlaceholder}
       />
     </div>
   )

@@ -35,7 +35,7 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
       {/* Portal would be rendered underneath the modal but I don't think it's needed */}
       {/* <Select.Portal className="z-50"> */}
       <Select.Content
-        className="rounded-md border border-lightblue bg-white"
+        className="rounded-md border border-sky-200 bg-white"
         side="bottom"
         // align="end"
         position="popper"

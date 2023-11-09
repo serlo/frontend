@@ -3,7 +3,6 @@ import { useState, useRef, useEffect } from 'react'
 import { WizardPageProps } from './wizard-page-props'
 import { MenuButton, MenuItem } from '../menu-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { LoggedInData } from '@/data-types'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface ExerciseTypeProps extends WizardPageProps {
@@ -13,15 +12,16 @@ interface ExerciseTypeProps extends WizardPageProps {
   setNumberOfSubtasks: (num: number) => void
 }
 
-export const ExerciseType: React.FC<ExerciseTypeProps> = ({
+export function ExerciseType({
   exerciseType,
   setExerciseType,
   numberOfSubtasks,
   setNumberOfSubtasks,
   onNext,
   isSummary,
-}) => {
-  const { strings } = useLoggedInData() as LoggedInData
+}: ExerciseTypeProps) {
+  const { exerciseType: exerciseTypeStrings } =
+    useLoggedInData()!.strings.ai.exerciseGeneration
   const [hasSubtasks, setHasSubtasks] = useState<boolean>(
     numberOfSubtasks !== 0
   )
@@ -37,14 +37,9 @@ export const ExerciseType: React.FC<ExerciseTypeProps> = ({
     <div className="flex flex-col">
       {!isSummary && (
         <p className="mb-4 text-xl">
-          {replacePlaceholders(
-            strings.ai.exerciseGeneration.exerciseType.title,
-            {
-              exerciseType: (
-                <b>{strings.ai.exerciseGeneration.exerciseType.exerciseType}</b>
-              ),
-            }
-          )}
+          {replacePlaceholders(exerciseTypeStrings.title, {
+            exerciseType: <b>{exerciseTypeStrings.exerciseType}</b>,
+          })}
         </p>
       )}
 
@@ -53,24 +48,22 @@ export const ExerciseType: React.FC<ExerciseTypeProps> = ({
           htmlFor="exerciseTypeDropdown"
           className="mr-2 font-semibold text-brand-700"
         >
-          {strings.ai.exerciseGeneration.exerciseType.label}
+          {exerciseTypeStrings.label}
         </label>
         <MenuButton
           value={exerciseType || ''}
           onChange={(newValue) => setExerciseType(newValue)}
           defaultValue=""
         >
-          <MenuItem value="">
-            {strings.ai.exerciseGeneration.exerciseType.chooseOption}
-          </MenuItem>
+          <MenuItem value="">{exerciseTypeStrings.chooseOption}</MenuItem>
           <MenuItem value="multiple choice">
-            {strings.ai.exerciseGeneration.exerciseType.multipleChoice}
+            {exerciseTypeStrings.multipleChoice}
           </MenuItem>
           <MenuItem value="single choice">
-            {strings.ai.exerciseGeneration.exerciseType.singleChoice}
+            {exerciseTypeStrings.singleChoice}
           </MenuItem>
           <MenuItem value="single number solution">
-            {strings.ai.exerciseGeneration.exerciseType.solutionWithOneNumber}
+            {exerciseTypeStrings.solutionWithOneNumber}
           </MenuItem>
         </MenuButton>
       </div>
@@ -78,12 +71,10 @@ export const ExerciseType: React.FC<ExerciseTypeProps> = ({
       <p className="mb-4 mt-7 text-lg text-brand-700">
         {isSummary ? (
           <span className="text-base font-semibold">
-            {strings.ai.exerciseGeneration.exerciseType.subtasksTitleSummary}
+            {exerciseTypeStrings.subtasksTitleSummary}
           </span>
         ) : (
-          <span>
-            {strings.ai.exerciseGeneration.exerciseType.subtasksTitle}
-          </span>
+          <span>{exerciseTypeStrings.subtasksTitle}</span>
         )}
       </p>
       <div className="flex items-center">
@@ -97,7 +88,7 @@ export const ExerciseType: React.FC<ExerciseTypeProps> = ({
             setHasSubtasks(false)
             setNumberOfSubtasks(0)
           }}
-          className="text-brand-700 focus:ring-lightblue"
+          className="text-brand-700 focus:ring-sky-200"
         />
         <label
           htmlFor="noSubtasks"
@@ -105,7 +96,7 @@ export const ExerciseType: React.FC<ExerciseTypeProps> = ({
             !hasSubtasks ? 'font-semibold text-brand-700' : ''
           }`}
         >
-          {strings.ai.exerciseGeneration.exerciseType.noSubtasks}
+          {exerciseTypeStrings.noSubtasks}
         </label>
       </div>
 
@@ -117,7 +108,7 @@ export const ExerciseType: React.FC<ExerciseTypeProps> = ({
           value="yes"
           checked={hasSubtasks}
           onChange={() => setHasSubtasks(true)}
-          className="text-brand-700 focus:ring-lightblue"
+          className="text-brand-700 focus:ring-sky-200"
         />
         <label
           htmlFor="hasSubtasks"
@@ -125,7 +116,7 @@ export const ExerciseType: React.FC<ExerciseTypeProps> = ({
             hasSubtasks ? 'font-semibold text-brand-700' : ''
           }`}
         >
-          {strings.ai.exerciseGeneration.exerciseType.yesSubtasks}
+          {exerciseTypeStrings.yesSubtasks}
         </label>
         <input
           type="number"
@@ -137,11 +128,8 @@ export const ExerciseType: React.FC<ExerciseTypeProps> = ({
               onNext()
             }
           }}
-          className="ml-2 rounded-md border border-lightblue p-2 pl-2 focus:border-lightblue focus:outline-brand-700"
-          placeholder={
-            strings.ai.exerciseGeneration.exerciseType
-              .numberOfSubtasksPlaceholder
-          }
+          className="ml-2 rounded-md border border-sky-200 p-2 pl-2 focus:border-sky-200 focus:outline-brand-700"
+          placeholder={exerciseTypeStrings.numberOfSubtasksPlaceholder}
           ref={focusRef}
         />
       </div>

@@ -10,12 +10,12 @@ interface CloseButtonProps {
   dataQa?: string
 }
 
-export const CloseButton: React.FC<CloseButtonProps> = ({
+export function CloseButton({
   onClick,
   title,
   className,
   dataQa,
-}) => {
+}: CloseButtonProps) {
   return (
     <button
       onClick={onClick}

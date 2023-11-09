@@ -4,7 +4,6 @@ import {
   faCaretLeft,
   faCaretRight,
 } from '@fortawesome/free-solid-svg-icons'
-import ExerciseGenerationLoadingSparkles from 'public/_assets/img/exercise/exercise-generation-loading-sparkles.svg'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
@@ -258,8 +257,8 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
       onCloseClick={closePage}
       confirmCloseDescription="Are you sure you want to close the preview? All data will be lost!"
       overwriteClassNameCompletely
-      className="fixed left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center bg-background-gray"
-      closeButtonClassName="!bg-lightskyblue absolute right-2 top-2 text-black"
+      className="fixed left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center bg-gray-100"
+      closeButtonClassName="!bg-blue-300 absolute right-2 top-2 text-black"
     >
       {status === Status.Loading && (
         <div className="mb-6 flex items-center justify-center">
@@ -396,7 +395,7 @@ const Skeleton = () => {
         <div className="h-4 w-1/4 rounded bg-gray-300"></div>
       </div>
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
-        <ExerciseGenerationLoadingSparkles className=" h-24 w-24 animate-pulse" />
+        <span className="h-24 w-24 animate-pulse text-7xl">✨</span>
       </div>
     </div>
   )
