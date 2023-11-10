@@ -14,7 +14,6 @@ import IconText from '@/assets-webkit/img/editor/icon-text.svg'
 import IconVideo from '@/assets-webkit/img/editor/icon-video.svg'
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { type LoggedInData, UuidType } from '@/data-types'
-import { Instance } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
 import type { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { anchorPlugin } from '@/serlo-editor/plugins/anchor'
@@ -57,21 +56,17 @@ import { videoPlugin } from '@/serlo-editor/plugins/video'
 
 export function createPlugins({
   editorStrings,
-  instance,
   parentType,
-  allowExercises,
 }: {
   editorStrings: LoggedInData['strings']['editor']
-  instance: Instance
   parentType?: string
-  allowExercises?: boolean
 }): PluginsWithData {
   const isPage = parentType === UuidType.Page
 
   return [
     {
       type: EditorPluginType.Text,
-      plugin: createTextPlugin({ serloLinkSearch: instance === Instance.De }),
+      plugin: createTextPlugin({}),
       visibleInSuggestions: true,
       icon: <IconText />,
     },
@@ -177,7 +172,7 @@ export function createPlugins({
     {
       type: EditorPluginType.Exercise,
       plugin: exercisePlugin,
-      visibleInSuggestions: allowExercises,
+      visibleInSuggestions: !isProduction,
     },
     { type: EditorPluginType.Solution, plugin: solutionPlugin },
     { type: EditorPluginType.H5p, plugin: H5pPlugin },

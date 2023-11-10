@@ -3,12 +3,14 @@ import clsx from 'clsx'
 import { EditableContext } from '../core'
 
 interface PreviewOverlaySimpleProps {
-  active: boolean
+  previewActive: boolean
+  fullOpacity: boolean
   children: React.ReactNode
 }
 
 export function PreviewOverlaySimple({
-  active,
+  previewActive,
+  fullOpacity,
   children,
 }: PreviewOverlaySimpleProps) {
   return (
@@ -16,10 +18,11 @@ export function PreviewOverlaySimple({
       <div
         className={clsx(
           'absolute top-0 z-20 h-full w-full',
-          active ? 'hidden' : 'bg-white bg-opacity-80'
+          previewActive ? 'hidden' : 'bg-white bg-opacity-80',
+          fullOpacity ? 'bg-opacity-0' : ''
         )}
       />
-      {active ? (
+      {previewActive ? (
         <EditableContext.Provider value={false}>
           {children}
         </EditableContext.Provider>

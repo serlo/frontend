@@ -59,6 +59,8 @@ export default async function handler(
       <meta charset="utf-8">
       <link rel="stylesheet" href="/_assets/h5p/h5p_drag_question_1_14_min.css"/>
       <script src="/_assets/h5p/h5p_drag_question_1_14.js"></script>
+      <script src="/_assets/h5p/image.js"></script>
+      <script src="/_assets/h5p/mathdisplay.js"></script>
     `
     )
   }

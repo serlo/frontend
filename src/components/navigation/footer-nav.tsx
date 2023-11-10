@@ -25,7 +25,7 @@ export function FooterNav({ data }: FooterNavProps) {
           {data.map((category, index) => (
             <div
               key={index}
-              className="mt-4 w-full px-side pt-0.25 sm:w-1/2 md:w-1/3"
+              className="mt-4 w-full px-side pt-0.25 sm:w-1/2 md:w-1/4"
             >
               <h3 className="mb-2 mt-4 font-bold text-almost-black">
                 {category.title}

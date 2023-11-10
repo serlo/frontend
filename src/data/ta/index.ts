@@ -112,7 +112,8 @@ export const instanceData = {
     license: {
       readMore: "தகவல்",
       special: 'Different license',
-      nonFree: 'Usage of this content might be more restricted than our other content.'
+      nonFree: 'Usage of this content might be more restricted than our other content.',
+      appliesTo: 'Applies to'
     },
     course: {
       showPages: "வகுப்பு மேலோட்டத்தைக் காட்டவும்",
@@ -885,7 +886,9 @@ export const loggedInData = {
           fillInTheBlanksExercise: 'Fill In The Blanks',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
-          removeInteractive: 'Remove interactive element'
+          removeInteractive: 'Remove interactive element',
+          createSolution: 'Create solution',
+          removeSolution: 'Remove solution'
         },
         event: {
           seoTitle: 'Title for search engines',
@@ -923,7 +926,8 @@ export const loggedInData = {
           openArticleTab: 'Open the article in a new tab:',
           linkTitle: 'Title of the link',
           showSolution: "விடையைக் காட்டு",
-          hideSolution: "விடையை மறைக்கவும்"
+          hideSolution: "விடையை மறைக்கவும்",
+          changeLicense: 'Change license'
         },
         textExerciseGroup: {
           removeExercise: 'Remove exercise',
@@ -931,10 +935,6 @@ export const loggedInData = {
           kindOfExerciseGroup: 'Kind of exercise group',
           notCohesive: 'not cohesive',
           cohesive: 'cohesive'
-        },
-        textExercise: {
-          removeSolution: 'Remove solution',
-          createSolution: 'Create solution'
         }
       },
       edtrIo: {
