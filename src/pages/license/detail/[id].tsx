@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LicenseDetail } from '@/components/pages/license-detail'
-import { licenseDataContent } from '@/data/licenses/license-data-content'
+import { licensesContent } from '@/data/licenses/licenses-content'
 import { LicenseDetailProps } from '@/data-types'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
@@ -21,7 +21,7 @@ export const getStaticProps: GetStaticProps<LicenseDetailProps> = async (
 
   if (isNaN(id)) return { notFound: true }
 
-  const licenseContent = licenseDataContent.find((license) => id === license.id)
+  const licenseContent = licensesContent.find((license) => id === license.id)
     ?.content
 
   if (!licenseContent) return { notFound: true }
