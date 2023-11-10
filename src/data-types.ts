@@ -183,12 +183,10 @@ export type LandingSubjectIcon =
 // License detail page has some additional data and is not part of the PageData type
 
 export interface LicenseDetailProps {
-  pageData: LicenseDetailPage
-}
-
-export interface LicenseDetailPage {
-  kind: 'license-detail'
-  licenseData: LicenseDetailData
+  pageData: {
+    kind: 'license-detail'
+    licenseData: LicenseDetailData
+  }
 }
 
 export interface LicenseDetailData {
