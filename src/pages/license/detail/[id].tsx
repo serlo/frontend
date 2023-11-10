@@ -21,8 +21,9 @@ export const getStaticProps: GetStaticProps<LicenseDetailProps> = async (
 
   if (isNaN(id)) return { notFound: true }
 
-  const licenseContent = licenseDataContent.find((license) => license.id)
+  const licenseContent = licenseDataContent.find((license) => id === license.id)
     ?.content
+
   if (!licenseContent) return { notFound: true }
 
   // hack to remove undefined pluginId value, can be removed when we move to app directory
