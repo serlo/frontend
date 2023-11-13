@@ -95,7 +95,7 @@ export const instanceData = {
       pdfNoSolutions: "PDF ohne Lösungen"
     },
     modal: {
-      leaveNow: "Jetzt verlassen",
+      leaveNow: "Jetzt schließen",
       noStay: "Nein, ich möchte bleiben"
     },
     editOrAdd: {
@@ -1121,7 +1121,7 @@ export const loggedInData = {
           loadingHeading: "Aufgabe wird erstellt...",
           publishExercise: "Aufgabe veröffentlichen",
           openExerciseInEditor: "Im Editor öffnen",
-          regenerate: "Aufgabe regenerieren"
+          regenerate: "Aufgabe neu generieren"
         }
       }
     }
