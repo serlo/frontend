@@ -386,7 +386,7 @@ export const instanceData = {
       messages: {
         code1010003: "Zur Sicherheit überprüfen wir hier noch mal, ob das dein Account ist.",
         code1010001: "Anmelden",
-        code1010002: "Über „Mein Bildungsraum“ anmelden",
+        code1010002: "Anmelden mit Mein Bildungsraum",
         code1010013: "Weiter mit SSO",
         code1040001: "Account anlegen",
         code1040002: "Über „Mein Bildungsraum“ Account registrieren",
