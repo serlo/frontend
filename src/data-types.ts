@@ -183,19 +183,15 @@ export type LandingSubjectIcon =
 // License detail page has some additional data and is not part of the PageData type
 
 export interface LicenseDetailProps {
-  pageData: LicenseDetailPage
-}
-
-export interface LicenseDetailPage {
-  kind: 'license-detail'
-  licenseData: LicenseDetailData
+  pageData: {
+    kind: 'license-detail'
+    licenseData: LicenseDetailData
+  }
 }
 
 export interface LicenseDetailData {
   id: number
-  title: string
   content: EditorRowsDocument
-  isDefault: boolean
 }
 
 // For types that are supported through their own pages we return this helper in request-page
@@ -285,7 +281,7 @@ export interface EntityData {
   title?: string
   schemaData?: SchemaData
   content?: AnyEditorDocument | AnyEditorDocument[]
-  licenseData?: LicenseData
+  licenseId?: number
   courseData?: CourseData
   unrevisedRevisions?: number
   unrevisedCourseRevisions?: number

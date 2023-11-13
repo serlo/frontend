@@ -289,7 +289,7 @@ export async function requestPage(
     }
   }
 
-  const licenseData = { ...uuid.license, isDefault: uuid.license.default }
+  const licenseId = uuid.license.id
 
   if (uuid.__typename === UuidType.Article) {
     return {
@@ -302,7 +302,7 @@ export async function requestPage(
         typename: UuidType.Article,
         title: uuid.currentRevision?.title ?? uuid.revisions?.nodes[0]?.title,
         content,
-        licenseData,
+        licenseId,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
           useArticleTag: true,
@@ -351,7 +351,7 @@ export async function requestPage(
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
-        licenseData,
+        licenseId,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -388,7 +388,7 @@ export async function requestPage(
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
-        licenseData,
+        licenseId,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -443,7 +443,7 @@ export async function requestPage(
         typename: UuidType.CoursePage,
         title: uuid.currentRevision?.title ?? '',
         content,
-        licenseData,
+        licenseId,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
           useArticleTag: true,

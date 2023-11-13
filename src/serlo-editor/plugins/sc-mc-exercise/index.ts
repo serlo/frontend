@@ -16,7 +16,8 @@ const scMcExerciseState = object({
       content: child({ plugin: EditorPluginType.Text }),
       isCorrect: boolean(false),
       feedback: child({ plugin: EditorPluginType.Text }),
-    })
+    }),
+    2
   ),
 })
 

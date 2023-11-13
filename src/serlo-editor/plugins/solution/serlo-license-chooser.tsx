@@ -1,15 +1,11 @@
 import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import type { SolutionProps } from '.'
-import { endpoint } from '@/api/endpoint'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { LicensesForInstaceQuery } from '@/fetcher/graphql-types/operations'
-import { showToastNotice } from '@/helper/show-toast-notice'
-import { licensesQuery } from '@/pages/entity/license/update/[id]'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 
 interface SerloLicenseChooserProps {
@@ -20,33 +16,7 @@ export function SerloLicenseChooser({ licenseId }: SerloLicenseChooserProps) {
   const solutionStrings = useEditorStrings().templatePlugins.solution
   const [showLicenseModal, setShowLicenseModal] = useState(false)
 
-  const { lang: instance } = useInstanceData()
-
-  const [licenses, setLicenses] = useState<
-    LicensesForInstaceQuery['license']['licenses']
-  >([])
-
-  useEffect(() => {
-    void fetch(endpoint, {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-
-      body: JSON.stringify({
-        query: licensesQuery,
-        variables: { instance },
-      }),
-    })
-      .then((res) => res.json())
-      .then((data: { data: LicensesForInstaceQuery }) => {
-        setLicenses(data.data.license.licenses)
-      })
-      .catch(() => {
-        showToastNotice('could not load licenses')
-      })
-  }, [instance])
+  const { licenses } = useInstanceData()
 
   return (
     <>

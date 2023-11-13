@@ -57,11 +57,9 @@ import { videoPlugin } from '@/serlo-editor/plugins/video'
 export function createPlugins({
   editorStrings,
   parentType,
-  allowExercises,
 }: {
   editorStrings: LoggedInData['strings']['editor']
   parentType?: string
-  allowExercises?: boolean
 }): PluginsWithData {
   const isPage = parentType === UuidType.Page
 
@@ -174,7 +172,7 @@ export function createPlugins({
     {
       type: EditorPluginType.Exercise,
       plugin: exercisePlugin,
-      visibleInSuggestions: allowExercises,
+      visibleInSuggestions: !isProduction,
     },
     { type: EditorPluginType.Solution, plugin: solutionPlugin },
     { type: EditorPluginType.H5p, plugin: H5pPlugin },

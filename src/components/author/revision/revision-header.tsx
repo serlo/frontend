@@ -1,5 +1,5 @@
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
-import { type Dispatch, type SetStateAction } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
 
 import type { DisplayModes } from './display-modes'
 import { RevisionModeSwitcher } from './revision-mode-switcher'

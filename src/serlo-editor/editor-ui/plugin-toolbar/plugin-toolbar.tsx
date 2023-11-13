@@ -28,8 +28,8 @@ export function PluginToolbar({
     <div
       className={clsx(
         tw`
-        plugin-toolbar absolute -top-[2.6rem] left-[5px] right-0 z-[21] flex h-9
-        items-center justify-between rounded-t-lg bg-editor-primary-100 pl-2
+        plugin-toolbar absolute -top-[2.6rem] left-[5px] right-0 z-[21] flex
+        h-9 items-center justify-between rounded-t-lg bg-editor-primary-100 pl-2
         before:pointer-events-none before:absolute before:-top-7
         before:left-0 before:block before:h-7 before:w-full
         before:bg-gradient-to-t before:from-[rgba(255,255,255,0.95)] before:via-[rgba(255,255,255,0.7)] before:to-transparent

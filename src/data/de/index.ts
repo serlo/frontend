@@ -813,6 +813,10 @@ export const loggedInData = {
           description: "Audioaufnahmen von Vocaroo einbinden",
           audioUrl: "Audio URL eingeben"
         },
+        exercise: {
+          title: "Aufgabe",
+          description: "Interaktive- oder Textaufgaben"
+        },
         inputExercise: {
           title: "Eingabefeld",
           description: "Die Lösung kann Text oder eine Formel sein"

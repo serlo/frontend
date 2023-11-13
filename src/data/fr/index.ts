@@ -813,6 +813,10 @@ export const loggedInData = {
           description: 'Link to audio files on Vocaroo',
           audioUrl: 'Enter Audio URL'
         },
+        exercise: {
+          title: "Exercice",
+          description: 'Interactive or text based exercise'
+        },
         inputExercise: {
           title: 'Input Exercise',
           description: 'Solution can be text or math'

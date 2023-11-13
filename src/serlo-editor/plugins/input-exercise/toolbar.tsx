@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from 'react'
 
 import type { InputExerciseProps } from '.'
 import { InputExerciseType } from './input-exercise-type'
+import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
@@ -14,6 +15,7 @@ export const InputExerciseToolbar = ({
   state,
   previewActive,
   setPreviewActive,
+  id,
 }: InputExerciseProps & {
   previewActive: boolean
   setPreviewActive: Dispatch<SetStateAction<boolean>>
@@ -76,6 +78,7 @@ export const InputExerciseToolbar = ({
           </label>
         </>
       }
+      pluginControls={<InteractiveToolbarTools id={id} />}
     />
   )
 }

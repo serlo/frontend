@@ -38,9 +38,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           const parent = selectChildTreeOfParent(store.getState(), id)
           if (parent) dispatch(focus(parent.id))
         } else {
-          // prevents parents from stealing focus of children
-          if (document?.plugin === 'exercise') return
-
           // default focus dispatch
           dispatch(focus(id))
         }
