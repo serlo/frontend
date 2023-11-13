@@ -22,6 +22,7 @@ import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin
 import {
   EditorExerciseDocument,
   EditorSolutionDocument,
+  EditorTemplateExerciseGroupDocument,
 } from '@/serlo-editor-integration/types/editor-plugins'
 import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
@@ -34,7 +35,8 @@ export interface IEditorExerciseData {
 }
 
 export function convertAiGeneratedScExerciseToEditorDocument(
-  input: ExpectedLLMOutputType | null
+  input: ExpectedLLMOutputType | null,
+  licenseId: number
 ): IEditorExerciseData {
   if (!input) {
     return {
@@ -92,7 +94,7 @@ export function convertAiGeneratedScExerciseToEditorDocument(
     console.log('InputContent: ', { inputContent })
 
     const interactive = createInteractive(inputContent)
-    const solution = createSolution(inputContent)
+    const solution = createSolution(inputContent, licenseId)
 
     const exerciseDocument: EditorExerciseDocument = {
       plugin: EditorPluginType.Exercise,
@@ -303,13 +305,14 @@ function createInteractive(exercise: ExpectedExerciseTypes): Interactive {
 }
 
 function createSolution(
-  exercise: ExpectedExerciseTypes
+  exercise: ExpectedExerciseTypes,
+  licenseId: number
 ): EditorSolutionDocument {
   return {
     plugin: EditorPluginType.Solution,
     state: {
       prerequisite: undefined,
-      licenseId: 1,
+      licenseId,
       strategy: {
         plugin: EditorPluginType.Text,
         state: [
@@ -344,92 +347,40 @@ function isSingleChoiceGuard(
   return input.type === 'single_choice'
 }
 
-function createLicense(): LicenseData {
-  return {
-    id: 1,
-    title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0.',
-    shortTitle: 'CC BY-SA 4.0',
-    url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-    agreement:
-      'Mit dem Speichern dieser Seite versicherst du, dass du deinen Beitrag (damit sind auch Änderungen gemeint) selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/21654">Nutzungsbedingungen</a> festlegen darf. Falls du den Beitrag nicht selbst verfasst hast, muss er unter den <a href="/21654">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, notwendigen Lizenzanforderungen zu folgen.',
-  }
-}
-
-interface GroupedTextExercise {
-  id: number
-  license: LicenseData
-  changes: string
-  revision: number
-  content: string
-  'text-solution': {
-    id: number
-    license: LicenseData
-    revision: number
-    changes: string
-    content: string
-  }
-}
-
-export interface ExpectedExerciseGroup {
-  plugin: TemplatePluginType.TextExerciseGroup
-  state: {
-    id: number
-    license: LicenseData
-    changes: string
-    revision: number
-    // Serlo Editor JSON content that is encoded within a string
-    content: string
-    cohesive: boolean
-    'grouped-text-exercise': GroupedTextExercise[]
-  }
-}
-
 export function transformEditorDataToExerciseGroup(
-  editorData: IEditorExerciseData
-  // id: string
-): ExpectedExerciseGroup {
-  // const getNextId = createIdGenerator(250000)
+  editorData: IEditorExerciseData,
+  license: LicenseData
+): EditorTemplateExerciseGroupDocument {
+  const exercisesTransformed = editorData.exercises.map<
+    EditorTemplateExerciseGroupDocument['state']['grouped-text-exercise'][0]
+  >((exercise) => ({
+    id: 0,
+    license,
+    changes: '[KI generiert]: ',
+    revision: 0,
+    content: JSON.stringify({
+      plugin: EditorPluginType.Exercise,
+      state: exercise.state,
+    }),
+  }))
 
-  const exercisesTransformed = editorData.exercises.map<GroupedTextExercise>(
-    (exercise) => ({
-      id: -1,
-      license: createLicense(),
-      changes: '',
-      revision: -1,
-      content: JSON.stringify({
-        plugin: EditorPluginType.Exercise,
-        state: exercise.state,
-      }),
-      'text-solution': {
-        id: -1,
-        license: createLicense(),
-        revision: -1,
-        changes: '',
-        content: JSON.stringify(exercise.state.solution),
-      },
-    })
-  )
-
-  const exerciseGroup: ExpectedExerciseGroup = {
+  const exerciseGroup: EditorTemplateExerciseGroupDocument = {
     plugin: TemplatePluginType.TextExerciseGroup,
     state: {
-      id: -1,
-      license: createLicense(),
-      changes: '',
-      revision: -1,
+      id: 0,
+      licenseId: license.id,
+      changes: '[KI generiert]: ',
+      revision: 0,
       cohesive: false,
       // Heading of whole exercise group
       content: JSON.stringify(
         createExerciseHeadingInEditor(editorData.heading)
       ),
       'grouped-text-exercise': exercisesTransformed,
+      // ? What is the difference between grouped-text-exercise and exercises?
+      exercises: [],
     },
   }
 
   return exerciseGroup
 }
-
-// function createIdGenerator(startId: number) {
-//   let currentId = startId
-//   return (): number => currentId++
-// }
