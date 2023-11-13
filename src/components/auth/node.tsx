@@ -5,6 +5,7 @@ import clsx from 'clsx'
 import { type FormEvent, useState } from 'react'
 
 import { FlowType } from './flow-type'
+import { LoginButtonBildungsraum } from './login-button-bildungsraum'
 import { FaIcon } from '../fa-icon'
 import { Message, getKratosMessageString } from '@/components/auth/message'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -89,31 +90,19 @@ export function Node({
           </>
         )
       }
-      // provider - NBP button
+      // provider: Mein Bildungsraum
       case 'button': {
-        const label = node.meta.label?.id
-          ? getKratosMessageString(
-              node.meta.label.id,
-              strings.auth.messages,
-              node.meta.label?.text ?? strings.auth.messages.code1010002
-            )
-          : undefined
-        return (
-          <div className="mt-10">
-            <hr />
-            <button
-              className="serlo-button-blue mt-10 block w-full py-2 text-xl"
-              name={attributes.name}
-              onClick={(e) => {
-                void onSubmit(e, (attributes as { value: string }).value)
-              }}
-              value={(attributes.value as string) || ''}
-              disabled={attributes.disabled || disabled}
-            >
-              {label}
-            </button>
-          </div>
-        )
+        if (attributes.name === 'provider' && attributes.value === 'nbp') {
+          return (
+            <LoginButtonBildungsraum
+              attributes={attributes}
+              onSubmit={onSubmit}
+              disabled={disabled}
+            />
+          )
+        }
+        triggerSentry({ message: 'kratos: unexpected button node' })
+        return null
       }
 
       case 'submit': {
