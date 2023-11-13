@@ -18,32 +18,23 @@ import {
 } from '@/serlo-editor/plugin'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-const licenseState = object({
-  id: number(),
-  title: string(),
-  shortTitle: string(),
-  url: string(),
-  agreement: string(),
-})
-
 export const uuid = {
   id: number(),
 }
 
-export const license = {
-  license: optional(licenseState),
-}
-
 export const entity = {
   ...uuid,
-  ...license,
   revision: number(),
+  licenseId: optional(number()),
   changes: string(),
 }
 
 export type Uuid = StateTypesStaticType<typeof uuid>
-export type License = StateTypesStaticType<typeof license>
-export type Entity = Uuid & License & { revision: number; changes?: string }
+export type Entity = Uuid & {
+  revision: number
+  changes?: string
+  licenseId?: number
+}
 
 export function entityType<
   Ds extends Record<string, StateType>,

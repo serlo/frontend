@@ -272,11 +272,6 @@ export const sharedLicenseFragments = gql`
   fragment license on AbstractRepository {
     license {
       id
-      url
-      title
-      shortTitle
-      default
-      agreement
     }
   }
 `

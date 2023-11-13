@@ -80,7 +80,7 @@ export interface EditorExerciseDocument {
     trashed?: boolean
     grouped?: boolean
     unrevisedRevisions?: number
-    license?: License
+    licenseId?: number
   }
 }
 export interface EditorGeogebraDocument {

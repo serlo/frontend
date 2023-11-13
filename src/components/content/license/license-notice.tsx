@@ -6,24 +6,30 @@ import { LicenseIcons } from './license-icons'
 import { Link } from '../link'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { LicenseData } from '@/data-types'
+import { getLicense } from '@/data/licenses/licenses-helpers'
 import { tw } from '@/helper/tw'
 
 interface LicenseNoticeProps {
-  data: LicenseData
+  licenseId?: number
   minimal?: boolean
   type?: 'video' | 'task' | 'exercise-group' | 'solution'
 }
 
-export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
-  const { lang, strings } = useInstanceData()
+export function LicenseNotice({
+  licenseId,
+  minimal,
+  type,
+}: LicenseNoticeProps) {
+  const { lang, strings, licenses } = useInstanceData()
   const router = useRouter()
   const urlSlugArray = Array.isArray(router.query.slug)
     ? router.query.slug
     : [router.query.slug]
   const canonicalHref = `https://${lang}.serlo.org/` + urlSlugArray.join('/')
 
-  const { title, isDefault, url, id, shortTitle } = data
+  const licenseData = getLicense(licenses, licenseId)
+
+  const { title, isDefault, url, id, shortTitle } = licenseData
   // only link license
   const titleParts = title.split('CC')
   const text = titleParts.length === 2 ? titleParts[0] : ''
@@ -43,7 +49,7 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
           py-2.5 text-sm text-almost-black mobile:flex
         `}
       >
-        <LicenseIcons title={title} isDefault={!!isDefault} />
+        <LicenseIcons title={title} isDefault={isDefault} />
         <br />
         <span className="mobile:ml-3">
           {' '}

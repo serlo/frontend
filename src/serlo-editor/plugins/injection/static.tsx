@@ -76,10 +76,7 @@ export function InjectionStaticRenderer({
           ) {
             const exerciseContext = {
               serloContext: {
-                license:
-                  uuid.license && !uuid.license.default
-                    ? uuid.license
-                    : undefined,
+                licenseId: uuid.license.id,
               },
             }
 
@@ -98,10 +95,7 @@ export function InjectionStaticRenderer({
               const exerciseContentAndContext = {
                 ...parseDocumentString(exercise.currentRevision?.content),
                 serloContext: {
-                  license:
-                    uuid.license && !uuid.license.default
-                      ? uuid.license
-                      : undefined,
+                  licenseId: uuid.license.id,
                 },
               }
 
@@ -200,7 +194,7 @@ const query = gql`
         ...injectionExercise
       }
       ... on ExerciseGroup {
-        ...license
+        ...injectionLicense
         currentRevision {
           content
         }
@@ -242,20 +236,15 @@ const query = gql`
   }
 
   fragment injectionExercise on AbstractExercise {
-    ...license
+    ...injectionLicense
     currentRevision {
       content
     }
   }
 
-  fragment license on AbstractRepository {
+  fragment injectionLicense on AbstractRepository {
     license {
       id
-      url
-      title
-      shortTitle
-      default
-      agreement
     }
   }
 `
