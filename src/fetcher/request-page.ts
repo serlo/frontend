@@ -45,14 +45,6 @@ export async function requestPage(
 
   if (uuid.__typename === UuidType.Comment) return { kind: 'not-found' } // no content for comments
 
-  // Standalone solutions are not supported any more
-  // TODO: remove after change in API
-  if (
-    uuid.__typename === UuidType.Solution ||
-    uuid.__typename === UuidRevType.Solution
-  )
-    return { kind: 'not-found' }
-
   if (
     uuid.__typename === UuidRevType.Article ||
     uuid.__typename === UuidRevType.Page ||

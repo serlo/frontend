@@ -42,7 +42,7 @@ export function RevisionHistoryLoader<T>({
 
   if (!revisionsResponse) return null
 
-  if (!revisionsResponse.data?.uuid.revisions) return null // no revision loader for solutions
+  if (!revisionsResponse.data?.uuid.revisions) return null
 
   const revisions = revisionsResponse.data?.uuid.revisions.nodes
 

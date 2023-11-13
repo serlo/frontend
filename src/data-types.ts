@@ -343,7 +343,6 @@ export enum UuidRevType {
   ExerciseGroup = 'ExerciseGroupRevision',
   GroupedExercise = 'GroupedExerciseRevision',
   Page = 'PageRevision',
-  Solution = 'SolutionRevision',
   Video = 'VideoRevision',
 }
 
@@ -359,7 +358,6 @@ export enum UuidType {
   ExerciseGroup = 'ExerciseGroup',
   GroupedExercise = 'GroupedExercise',
   Page = 'Page',
-  Solution = 'Solution',
   TaxonomyTerm = 'TaxonomyTerm',
   User = 'User',
   Video = 'Video',
@@ -370,7 +368,6 @@ export type UuidWithRevType = UuidRevType | UuidType
 // special inline types for author tools
 
 export enum ExerciseInlineType {
-  Solution = '_SolutionInline',
   ExerciseGroup = '_ExerciseGroupInline',
   Exercise = '_ExerciseInline',
 }
