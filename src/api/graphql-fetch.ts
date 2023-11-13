@@ -22,13 +22,11 @@ export function createGraphqlFetch() {
   }
 }
 
-export function createAuthAwareGraphqlFetch<T = any>(
-  auth: AuthenticationPayload
-) {
+export function createAuthAwareGraphqlFetch(auth: AuthenticationPayload) {
   return async function graphqlFetch(
     args: string,
     abortSignal?: AbortController['signal']
-  ): Promise<T> {
+  ) {
     if (auth === null) throw new Error('unauthorized')
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return

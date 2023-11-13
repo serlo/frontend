@@ -63,7 +63,7 @@ export function useExecuteAIPrompt<T extends UnknownRecord>({
       isExecutingPrompt.current = true
       setStatus(ExecutePromptStatus.Loading)
 
-      const graphQlFetch = createAuthAwareGraphqlFetch<GraphQLResponse<T>>(auth)
+      const graphQlFetch = createAuthAwareGraphqlFetch(auth)
 
       if (signal?.aborted) {
         return
@@ -81,10 +81,10 @@ export function useExecuteAIPrompt<T extends UnknownRecord>({
       `
       const variables = { prompt }
       submitEvent(`${submitEventPrefix}-fetch-${numberOfRegenerations}`)
-      const response = await graphQlFetch(
+      const response = (await graphQlFetch(
         JSON.stringify({ query, variables }),
         signal
-      )
+      )) as GraphQLResponse<T> // could be improved by using generated types here
 
       if (response?.ai?.executePrompt?.success) {
         setData(response?.ai.executePrompt.record)
