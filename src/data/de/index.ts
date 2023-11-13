@@ -231,7 +231,7 @@ export const instanceData = {
       by: "Von",
       parentFallbackLink: "Zum übergeordneten Inhalt",
       hasChanges: "In diesem Bereich hat es Änderungen gegeben",
-      positionForGrouped: "Diese %exercise_or_solution% ist Teil von %title%.",
+      positionForGrouped: 'This %exercise% is part of %title%.',
       helpLink: "Reviewer-Hilfe"
     },
     revisionHistory: {
@@ -1054,74 +1054,74 @@ export const loggedInData = {
     },
     ai: {
       exerciseGeneration: {
-        buttonTitle: 'Generate exercises with AI',
-        initialModalTitle: 'Create an exercise automatically with help of AI',
-        modalTitleWithTaxonomy: 'Exercise generation with AI: ',
-        confirmCloseDescription: 'Do you want to cancel the exercise generation? Your data will be lost.',
-        summary: 'Summary',
+        buttonTitle: "Aufgabe mit KI generieren",
+        initialModalTitle: "Aufgabe automatisch mit KI erstellen",
+        modalTitleWithTaxonomy: "Aufgabenerstellung mit KI:",
+        confirmCloseDescription: "Möchtest du die Aufgabenerstellung verlassen? Die Daten werden gelöscht.",
+        summary: "Zusammenfassung",
         nextButton: "Weiter",
-        nextExerciseButton: 'Next exercise',
-        previousButton: 'Previous exercise',
-        generateExerciseButton: 'Generate exercise',
-        generateExercisesButton: 'Generate exercises',
+        nextExerciseButton: "Nächste Aufgabe",
+        previousButton: "Vorherige Aufgabe",
+        generateExerciseButton: "Aufgabe generieren",
+        generateExercisesButton: "Aufgaben generieren",
         subject: {
-          title: 'Which %subject% would you like to create an exercise for?',
-          subject: 'subject',
+          title: "Für welches %subject%  willst du eine Aufgabe erstellen?",
+          subject: "Fach",
           defaultLabel: "Fach",
-          otherSubjectLabel: 'Other subject',
-          customSubjectPlaceholder: 'Enter custom subject'
+          otherSubjectLabel: "Anderes Fach",
+          customSubjectPlaceholder: "Fach eingeben"
         },
         topic: {
-          title: 'About which %topic% would you like to generate exercises?',
-          topic: 'topic',
-          defaultLabel: 'Topic',
-          otherTopicLabel: 'Other topic',
-          customTopicPlaceholder: 'Enter custom topic'
+          title: "Über welches %topic% willst du eine Aufgabe erstellen?",
+          topic: "Thema",
+          defaultLabel: "Thema",
+          otherTopicLabel: "Anderes Thema",
+          customTopicPlaceholder: "Thema eingeben"
         },
         grade: {
-          title: 'Which %grade% are the students in?',
-          grade: 'grade',
-          label: 'Grade',
-          university: 'University'
+          title: "In welcher %grade% sind die Schüler*innen?",
+          grade: "Stufe",
+          label: "Stufe",
+          university: "Universität"
         },
         exerciseType: {
-          title: 'What %exerciseType% are you interested in?',
-          exerciseType: 'exercise type',
-          label: 'Exercise type',
-          subtasksTitleSummary: 'Subtasks',
-          subtasksTitle: 'Should there be subtasks?',
-          noSubtasks: 'No',
-          yesSubtasks: 'Yes',
-          numberOfSubtasksPlaceholder: 'Number of subtasks',
-          chooseOption: "Choose an option",
+          title: "An welchem %exerciseType% bist du interessiert? ",
+          exerciseType: "Aufgabentyp",
+          label: "Aufgabentyp",
+          subtasksTitleSummary: "Teilaufgaben",
+          subtasksTitle: "Soll die Aufgabe Teilaufgaben haben?",
+          noSubtasks: "Nein",
+          yesSubtasks: "Ja",
+          numberOfSubtasksPlaceholder: "Anzahl",
+          chooseOption: "Wähle eine Option",
           multipleChoice: "Multiple Choice",
           singleChoice: "Single Choice",
-          solutionWithOneNumber: "Solution with 1 number"
+          solutionWithOneNumber: "Lösung mit einer Zahl"
         },
         difficulty: {
-          title: 'What is the %difficulty% level of the exercise and learning goal?',
-          difficulty: 'difficulty',
-          label: 'Difficulty',
-          learningGoalLabel: 'Learning goal',
-          learningGoalExample: 'Example: Students understand the basics of algebra.',
-          learningGoalPlaceholder: 'Enter learning goal',
-          chooseOption: 'Choose an option',
-          easy: 'Easy',
-          medium: 'Medium',
-          hard: 'Hard'
+          title: "Was ist der %difficulty% der Aufgabe und das Lernziel?",
+          difficulty: "Schwierigkeitsgrad",
+          label: "Schwierigkeitsgrade",
+          learningGoalLabel: "Lernziel",
+          learningGoalExample: "Beispiel: Schüler*innen verstehen die Grundlagen von Algebra.",
+          learningGoalPlaceholder: "Lernziel eingeben",
+          chooseOption: "Wähle eine Option",
+          easy: "Einfach",
+          medium: "Mittel",
+          hard: "Knifflig"
         },
         priorKnowledge: {
-          title: 'What is the %priorKnowledge% that the students should have?',
-          priorKnowledge: 'prior knowledge',
-          label: 'Prior Knowledge',
-          example: 'Example: The students know how basic algebra works and already solved some exercises on the topic.',
-          placeholder: 'E.g., Basic arithmetic, fundamentals of algebra'
+          title: "Welches %priorKnowledge% sollten die Schüler*innen haben?",
+          priorKnowledge: "Vorwissen",
+          label: "Vorwissen",
+          example: "Beispiel: Die Schüler*innen haben schon einige Aufgaben zu dem Thema bearbeitet.",
+          placeholder: "z.B. Gutes Fundament in Algebra"
         },
         preview: {
-          loadingHeading: 'Exercise is being generated...',
-          publishExercise: 'Publish exercise',
-          openExerciseInEditor: 'Open in editor',
-          regenerate: 'Regenerate exercise'
+          loadingHeading: "Aufgabe wird erstellt...",
+          publishExercise: "Aufgabe veröffentlichen",
+          openExerciseInEditor: "Im Editor öffnen",
+          regenerate: "Aufgabe regenerieren"
         }
       }
     }
