@@ -305,14 +305,13 @@ function createInteractive(exercise: ExpectedExerciseTypes): Interactive {
 }
 
 function createSolution(
-  exercise: ExpectedExerciseTypes,
-  licenseId: number
+  exercise: ExpectedExerciseTypes
 ): EditorSolutionDocument {
   return {
     plugin: EditorPluginType.Solution,
     state: {
       prerequisite: undefined,
-      licenseId,
+      licenseId: undefined,
       strategy: {
         plugin: EditorPluginType.Text,
         state: [

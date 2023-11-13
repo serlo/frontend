@@ -15,7 +15,7 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { useEntityId } from '@/contexts/uuids-context'
-import { getLicense } from '@/data/licenses/licenses-helpers'
+import { getDefaultLicense } from '@/data/licenses/licenses-helpers'
 import { LoggedInData } from '@/data-types'
 import {
   IEditorExerciseData,
@@ -42,7 +42,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
   editorRenderers.init(createRenderers())
 
   const { licenses } = useInstanceData()
-  const license = getLicense(licenses, 1)
+  const license = getDefaultLicense(licenses)
   const {
     data: exerciseData,
     errorMessage,
