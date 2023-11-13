@@ -1,3 +1,4 @@
+import { faWandSparkles } from '@fortawesome/free-solid-svg-icons'
 import {
   Entity,
   Subscription,
@@ -10,6 +11,7 @@ import { Fragment } from 'react'
 
 import { SubItem } from './sub-item'
 import { useCanDo } from '@/auth/use-can-do'
+import { useAiWizard } from '@/contexts/ai-wizard-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
@@ -20,6 +22,7 @@ import {
 } from '@/data-types'
 import { Instance, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
+import { isProduction } from '@/helper/is-production'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
@@ -62,6 +65,7 @@ export interface AuthorToolsData {
   alias?: string
   taxonomyType?: TaxonomyTermType
   revisionId?: number
+  title?: string
   parentId?: number
   courseId?: number
   grouped?: boolean
@@ -91,6 +95,8 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
   const router = useRouter()
   const canDo = useCanDo()
+
+  const { showWizard, canUseAiFeatures } = useAiWizard()
 
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings
@@ -278,7 +284,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
     const allowedTypes: Record<
       TaxonomyTermType,
-      (UuidType | TaxonomyTermType)[]
+      (UuidType | TaxonomyTermType | 'AI')[]
     > = {
       topic: [
         UuidType.Article,
@@ -289,7 +295,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         TaxonomyTermType.Topic,
         TaxonomyTermType.ExerciseFolder,
       ],
-      exerciseFolder: [UuidType.Exercise, UuidType.ExerciseGroup],
+      exerciseFolder: [UuidType.Exercise, UuidType.ExerciseGroup, 'AI'],
       subject: [TaxonomyTermType.Topic],
       root: [TaxonomyTermType.Subject],
     }
@@ -300,6 +306,23 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       (lang !== Instance.De && router.asPath.startsWith('/community'))
 
     const entries = allowedTypes[data.taxonomyType].map((entityType) => {
+      if (entityType === 'AI') {
+        // For now, we don't allow the AI feature to make it into production until
+        // the testing is done
+        if (!canUseAiFeatures || isProduction) {
+          return null
+        }
+
+        return (
+          <SubItem
+            key="ai"
+            title={loggedInStrings.ai.exerciseGeneration.buttonTitle}
+            onClick={showWizard}
+            icon={faWandSparkles}
+          />
+        )
+      }
+
       if (entityType === UuidType.Event && !shouldRenderEvents) return null
 
       const title = getTranslatedType(strings, entityType)

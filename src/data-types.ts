@@ -405,7 +405,7 @@ export interface SchemaData {
 export interface LicenseData {
   id: number // id of the license
   title: string
-  url: string // to to license
+  url: string // to the license
   isDefault?: boolean
   shortTitle?: string // show this if not default
   agreement: string
