@@ -78,7 +78,7 @@ export function ModalWithCloseButton({
             onClick={onRequestClose}
             title={strings.share.close}
             dataQa="modal-close-button"
-            className={closeButtonClassName}
+            className={clsx('absolute right-2 top-2', closeButtonClassName)}
           />
         </>
       )}
