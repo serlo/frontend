@@ -1,21 +1,18 @@
-import {
-  editorContent,
-  headerInputClasses,
-  license,
-  uuid,
-} from './common/common'
+import { editorContent, headerInputClasses, uuid } from './common/common'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import {
   EditorPlugin,
   EditorPluginProps,
+  number,
   object,
+  optional,
   string,
 } from '@/serlo-editor/plugin'
 
 export const pageTypeState = object({
   ...uuid,
-  ...license,
+  licenseId: optional(number()),
   title: string(),
   content: editorContent(),
 })

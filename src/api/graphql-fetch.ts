@@ -23,7 +23,10 @@ export function createGraphqlFetch() {
 }
 
 export function createAuthAwareGraphqlFetch(auth: AuthenticationPayload) {
-  return async function graphqlFetch(args: string) {
+  return async function graphqlFetch(
+    args: string,
+    abortSignal?: AbortController['signal']
+  ) {
     if (auth === null) throw new Error('unauthorized')
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -35,6 +38,7 @@ export function createAuthAwareGraphqlFetch(auth: AuthenticationPayload) {
       const { query, variables } = JSON.parse(args) as ParsedArgs
       const client = new GraphQLClient(endpoint, {
         credentials: 'include',
+        signal: abortSignal,
       })
       return client.request(query, variables)
     }
@@ -46,6 +50,7 @@ export function createAuthAwareGraphqlFetch(auth: AuthenticationPayload) {
         },
         method: 'POST',
         body: args,
+        signal: abortSignal,
       })
       return result.json()
     }

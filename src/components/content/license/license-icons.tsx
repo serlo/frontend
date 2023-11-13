@@ -11,7 +11,7 @@ import { FaIcon } from '@/components/fa-icon'
 
 interface LicenseIconsProps {
   title: string
-  isDefault: boolean
+  isDefault?: boolean
 }
 
 export function LicenseIcons({ title, isDefault }: LicenseIconsProps) {

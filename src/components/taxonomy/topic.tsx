@@ -10,10 +10,12 @@ import { TopicCategories } from './topic-categories'
 import { ExerciseNumbering } from '../content/exercises/exercise-numbering'
 import { FaIcon } from '../fa-icon'
 import { InfoPanel } from '../info-panel'
+import { ExerciseGenerationWrapperProps } from '../user-tools/exercise-generation-wrapper'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useAB } from '@/contexts/ab'
+import { AiWizardService, useAiWizard } from '@/contexts/ai-wizard-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
@@ -41,6 +43,12 @@ const NewFolderPrototype = dynamic<NewFolderPrototypeProps>(() =>
   import('./new-folder-prototype').then((mod) => mod.NewFolderPrototype)
 )
 
+const ExerciseGenerationWrapper = dynamic<ExerciseGenerationWrapperProps>(() =>
+  import('../user-tools/exercise-generation-wrapper').then(
+    (mod) => mod.ExerciseGenerationWrapper
+  )
+)
+
 export function Topic({ data }: TopicProps) {
   const { strings } = useInstanceData()
 
@@ -52,52 +60,55 @@ export function Topic({ data }: TopicProps) {
   const isTopic = data.taxonomyType === TaxonomyTermType.Topic
 
   const hasExercises = data.exercisesContent.length > 0
-  const defaultLicense = hasExercises ? getDefaultLicense() : undefined
 
   editorRenderers.init(createRenderers())
 
   return (
-    <>
-      {data.trashed && renderTrashedNotice()}
-      {renderHeader()}
-      {renderUserTools({ aboveContent: true })}
-      <div className="min-h-1/2">
-        <div className="mt-6 sm:mb-5">
-          <StaticRenderer
-            document={data.description as unknown as EditorRowsDocument}
-          />
+    <AiWizardService>
+      <>
+        {data.trashed && renderTrashedNotice()}
+        {renderHeader()}
+        {renderUserTools({ aboveContent: true })}
+        <div className="min-h-1/2">
+          <div className="mt-6 sm:mb-5">
+            <StaticRenderer
+              document={data.description as unknown as EditorRowsDocument}
+            />
+          </div>
+
+          {renderSubterms()}
+
+          {renderExercises()}
+
+          {isTopic && <TopicCategories data={data} full />}
+
+          {isExerciseFolder && data.events && (
+            <TopicCategories
+              data={data}
+              categories={[TopicCategoryType.events]}
+              full
+            />
+          )}
         </div>
+        {/* Default license notice */}
+        <LicenseNotice />
 
-        {renderSubterms()}
-
-        {renderExercises()}
-
-        {isTopic && <TopicCategories data={data} full />}
-
-        {isExerciseFolder && data.events && (
-          <TopicCategories
-            data={data}
-            categories={[TopicCategoryType.events]}
-            full
+        {/* Temporary donations banner trial */}
+        {isExerciseFolder ? (
+          <DonationsBanner
+            id={data.id}
+            entityData={{
+              ...data,
+              typename: UuidType.TaxonomyTerm,
+              isUnrevised: false,
+            }}
           />
-        )}
-      </div>
-      {defaultLicense && <LicenseNotice data={defaultLicense} />}
+        ) : null}
 
-      {/* Temporary donations banner trial */}
-      {isExerciseFolder ? (
-        <DonationsBanner
-          id={data.id}
-          entityData={{
-            ...data,
-            typename: UuidType.TaxonomyTerm,
-            isUnrevised: false,
-          }}
-        />
-      ) : null}
-
-      {renderUserTools()}
-    </>
+        {renderUserTools()}
+        <ExerciseGenerationOrNull data={data} />
+      </>
+    </AiWizardService>
   )
 
   function renderTrashedNotice() {
@@ -203,14 +214,20 @@ export function Topic({ data }: TopicProps) {
       />
     )
   }
+}
 
-  // … interesting hack
-  function getDefaultLicense() {
-    for (let i = 0; i < data.exercisesContent.length; i++) {
-      const license = data.exercisesContent[i].serloContext?.license
-      if (license) return { ...license, isDefault: true }
-    }
-    //no part of collection has default license so don't show default notice.
-    return undefined
-  }
+interface ExerciseGenerationOrNullProps {
+  data: TopicProps['data']
+}
+
+function ExerciseGenerationOrNull({ data }: ExerciseGenerationOrNullProps) {
+  const { isShowingAiWizard } = useAiWizard()
+
+  if (!isShowingAiWizard) return null
+
+  return (
+    <ExerciseGenerationWrapper
+      data={{ type: UuidType.TaxonomyTerm, ...data }}
+    />
+  )
 }
