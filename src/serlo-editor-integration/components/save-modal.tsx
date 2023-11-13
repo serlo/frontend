@@ -44,7 +44,6 @@ export function SaveModal({
   const [highlightMissingFields, setHighlightMissingFields] = useState(false)
   const { licenses } = useInstanceData()
 
-  const hasLicense = licenseId && licenseId.defined
   const licenseAccepted = !licenseId || hasAgreedLicense
   const changesFilled = !changes || changesText
   const maySave = licenseAccepted && changesFilled
@@ -212,11 +211,10 @@ export function SaveModal({
   }
 
   function renderLicense() {
-    if (!hasLicense) return null
-
+    if (licenseId === undefined) return null
     const licenseAgreement = getLicense(
       licenses,
-      licenseId.value
+      licenseId?.defined ? licenseId.value : undefined
     ).agreement.replace(/<a href/g, '<a target="_blank" href')
 
     if (!licenseAgreement) return null
