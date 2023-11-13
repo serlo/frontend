@@ -95,7 +95,7 @@ export const instanceData = {
       pdfNoSolutions: "PDF ohne Lösungen"
     },
     modal: {
-      leaveNow: "Jetzt schließen",
+      leaveNow: "Jetzt verlassen",
       noStay: "Nein, ich möchte bleiben"
     },
     editOrAdd: {
