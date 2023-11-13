@@ -245,7 +245,7 @@ export const instanceData = {
       by: 'By',
       parentFallbackLink: 'To parent content',
       hasChanges: 'There have been changes in this area',
-      positionForGrouped: 'This %exercise_or_solution% is part of %title%.',
+      positionForGrouped: 'This %exercise% is part of %title%.',
       helpLink: 'Revision Help',
     },
     revisionHistory: {

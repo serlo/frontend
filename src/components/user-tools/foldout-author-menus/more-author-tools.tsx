@@ -14,6 +14,18 @@ export interface MoreAuthorToolsProps {
   title?: string
 }
 
+const supportedTypes: AuthorToolsData['type'][] = [
+  UuidType.Page,
+  UuidType.Article,
+  UuidType.Video,
+  UuidType.Applet,
+  UuidType.Event,
+  UuidType.CoursePage,
+  UuidType.TaxonomyTerm,
+  ExerciseInlineType.Exercise,
+  ExerciseInlineType.ExerciseGroup,
+]
+
 export function MoreAuthorTools({
   data,
   aboveContent,
@@ -23,21 +35,8 @@ export function MoreAuthorTools({
   const loggedInData = useLoggedInData()
   const { strings } = useInstanceData()
 
-  if (!data) return null
-
   if (!data || !loggedInData) return null
-  const supportedTypes: AuthorToolsData['type'][] = [
-    UuidType.Page,
-    UuidType.Article,
-    UuidType.Video,
-    UuidType.Applet,
-    UuidType.Event,
-    UuidType.CoursePage,
-    UuidType.TaxonomyTerm,
-    ExerciseInlineType.Exercise,
-    ExerciseInlineType.ExerciseGroup,
-    ExerciseInlineType.Solution,
-  ]
+
   if (!supportedTypes.includes(data.type)) return null
 
   return (
