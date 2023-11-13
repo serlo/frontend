@@ -34,7 +34,7 @@ export interface IEditorExerciseData {
 }
 
 export function convertAiGeneratedScExerciseToEditorDocument(
-  input: string
+  input: ExpectedLLMOutputType | null
 ): IEditorExerciseData {
   if (!input) {
     return {
@@ -43,9 +43,7 @@ export function convertAiGeneratedScExerciseToEditorDocument(
     }
   }
 
-  const parsed = JSON.parse(input) as ExpectedLLMOutputType
-
-  const decodedExercises = LLMOutputDecoder.decode(parsed)
+  const decodedExercises = LLMOutputDecoder.decode(input)
 
   if (E.isLeft(decodedExercises)) {
     const errors = PathReporter.report(decodedExercises)
