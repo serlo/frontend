@@ -6,13 +6,13 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { FileState } from '@/serlo-editor/plugin/upload'
 
 interface AudioRendererProps {
-  src: string | File | FileState<Blob>
+  source: string | File | FileState<Blob>
 }
 
-export function AudioRenderer({ src }: AudioRendererProps) {
+export function AudioRenderer({ source }: AudioRendererProps) {
   const { strings } = useInstanceData()
 
-  if (!src) {
+  if (!source) {
     return (
       <div className="mx-side text-center print:hidden">
         <FaIcon icon={faFilm} className="h-16" />
@@ -23,5 +23,5 @@ export function AudioRenderer({ src }: AudioRendererProps) {
     )
   }
 
-  return <AudioPlayer audioFile={src as Blob} />
+  return <AudioPlayer audioFile={source as Blob} />
 }

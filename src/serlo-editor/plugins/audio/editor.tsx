@@ -6,24 +6,26 @@ import { AudioToolbar } from './toolbar'
 
 export const AudioEditor = (props: AudioProps) => {
   const { focused, state, editable } = props
-  const src = state.src.value
+  const source = state.source.value
 
-  console.log('AudioEditor rendered with src value (should be a url)', { src })
+  console.log('AudioEditor rendered with source value (should be a url)', {
+    source,
+  })
   // const audioStrings = useEditorStrings().plugins.audio
 
   return (
     <>
-      {focused && <AudioToolbar {...props} audioUrl={src as string} />}
-      {src && !editable ? (
+      {focused && <AudioToolbar {...props} audioUrl={source as string} />}
+      {source && !editable ? (
         <div>
-          <AudioRenderer src={src} />
+          <AudioRenderer source={source} />
         </div>
       ) : (
         // In edit mode, we render the recorder which will also render the audio
         // player
         <AudioRecorder
-          base64AudioRecording=""
-          setBase64AudioRecording={() => void undefined}
+          source={source}
+          setSource={(value) => state.source.set(value)}
         />
       )}
     </>

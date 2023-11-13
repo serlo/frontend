@@ -8,6 +8,7 @@ import { formatTime } from './format-time'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { FileState } from '@/serlo-editor/plugin/upload'
 
 const getCurrentDateFormatted = (): string => {
   const today = new Date()
@@ -18,16 +19,14 @@ const getCurrentDateFormatted = (): string => {
 }
 
 interface AudioRecorderProps {
-  base64AudioRecording: string
-  setBase64AudioRecording: (base64AudioRecording: string) => void
+  source: FileState<string>
+  setSource: (value: FileState<string>) => void
 }
 
-export function AudioRecorder({
-  // TODO change props
-  setBase64AudioRecording,
-  base64AudioRecording,
-}: AudioRecorderProps) {
+export function AudioRecorder({ source, setSource }: AudioRecorderProps) {
   const [status, setStatus] = useState<RecordingStatus>(RecordingStatus.IDLE)
+
+  // TODO get rid of this and just replace with source and setSource
   const [audioURL, setAudioURL] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [recordTime, setRecordTime] = useState(0)
@@ -42,10 +41,10 @@ export function AudioRecorder({
     status === RecordingStatus.UPLOADING || status === RecordingStatus.UPLOADED
 
   useEffect(() => {
-    if (base64AudioRecording) {
+    if (source) {
       setStatus(RecordingStatus.UPLOADED)
     }
-  }, [base64AudioRecording])
+  }, [source])
 
   useEffect(() => {
     if (status === RecordingStatus.RECORDING) {
@@ -74,12 +73,13 @@ export function AudioRecorder({
         const audioBlob = new Blob(recordedChunks.current, {
           type: 'audio/wav',
         })
-        blobToBase64(audioBlob)
+        // blobToBase64(audioBlob)
 
         const url = URL.createObjectURL(audioBlob)
 
         console.log('Audio url:', url)
         setAudioURL(url)
+        setSource(url)
         setStatus(RecordingStatus.UPLOADED)
       }
 
@@ -101,18 +101,18 @@ export function AudioRecorder({
     }
   }
 
-  const blobToBase64 = (blob: Blob) => {
-    const reader = new FileReader()
-    const loadEndHandler = function () {
-      const base64data = reader.result
-      setBase64AudioRecording(base64data as string)
+  // const blobToBase64 = (blob: Blob) => {
+  //   const reader = new FileReader()
+  //   const loadEndHandler = function () {
+  //     const base64data = reader.result
+  //     setBase64AudioRecording(base64data as string)
 
-      showToastNotice(audioStrings.recordingSuccessfullyUploaded, 'success')
-      reader.removeEventListener('loadend', loadEndHandler)
-    }
-    reader.addEventListener('loadend', loadEndHandler)
-    reader.readAsDataURL(blob)
-  }
+  //     showToastNotice(audioStrings.recordingSuccessfullyUploaded, 'success')
+  //     reader.removeEventListener('loadend', loadEndHandler)
+  //   }
+  //   reader.addEventListener('loadend', loadEndHandler)
+  //   reader.readAsDataURL(blob)
+  // }
 
   const deleteAudio = () => {
     if (mediaRecorderRef.current) {
@@ -127,7 +127,7 @@ export function AudioRecorder({
     setAudioURL(null)
     setRecordTime(0)
     setStatus(RecordingStatus.IDLE)
-    setBase64AudioRecording('')
+    // setBase64AudioRecording('')
   }
 
   const stopRecording = () => {
