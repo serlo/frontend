@@ -12,11 +12,12 @@ import {
 } from './exercise-generation-wizard/execute-ai-prompt'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { useEntityId } from '@/contexts/uuids-context'
+import { getDefaultLicense } from '@/data/licenses/licenses-helpers'
 import { LoggedInData } from '@/data-types'
 import {
-  ExpectedExerciseGroup,
   IEditorExerciseData,
   convertAiGeneratedScExerciseToEditorDocument,
   transformEditorDataToExerciseGroup,
@@ -26,6 +27,7 @@ import { ErrorBoundary } from '@/helper/error-boundary'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
+import { EditorTemplateExerciseGroupDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 interface ExercisePreviewPageProps {
   prompt: string
@@ -39,6 +41,8 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
   const entityId = useEntityId()
   editorRenderers.init(createRenderers())
 
+  const { licenses } = useInstanceData()
+  const license = getDefaultLicense(licenses)
   const {
     data: exerciseData,
     errorMessage,
@@ -168,11 +172,6 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
                   plugin: 'type-text-exercise',
                   state: {
                     content: JSON.stringify(editorData.exercises[0]),
-                    'text-solution': {
-                      content: JSON.stringify(
-                        editorData.exercises[0].state.solution
-                      ),
-                    },
                   },
                 })
               )
@@ -180,8 +179,8 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
               return
             }
 
-            const exerciseGroup: ExpectedExerciseGroup =
-              transformEditorDataToExerciseGroup(editorData)
+            const exerciseGroup: EditorTemplateExerciseGroupDocument =
+              transformEditorDataToExerciseGroup(editorData, license)
             sessionStorage.setItem(id, JSON.stringify(exerciseGroup))
 
             window.location.href = `/entity/create/Exercise/${entityId}?loadFromSession=${id}`
