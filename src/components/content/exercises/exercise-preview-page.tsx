@@ -61,10 +61,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
 
   const editorData = useMemo<IEditorExerciseData>(() => {
     try {
-      return convertAiGeneratedScExerciseToEditorDocument(
-        exerciseData,
-        license.id
-      )
+      return convertAiGeneratedScExerciseToEditorDocument(exerciseData)
     } catch (error) {
       console.error('Error while parsing exercise data: ', error)
       setStatus(ExecutePromptStatus.Error)
@@ -76,7 +73,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
         heading: '',
       }
     }
-  }, [exerciseData, setErrorMessage, setStatus, license])
+  }, [exerciseData, setErrorMessage, setStatus])
 
   console.log('EditorData: ', editorData)
 

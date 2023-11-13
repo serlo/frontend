@@ -35,8 +35,7 @@ export interface IEditorExerciseData {
 }
 
 export function convertAiGeneratedScExerciseToEditorDocument(
-  input: ExpectedLLMOutputType | null,
-  licenseId: number
+  input: ExpectedLLMOutputType | null
 ): IEditorExerciseData {
   if (!input) {
     return {
@@ -94,7 +93,7 @@ export function convertAiGeneratedScExerciseToEditorDocument(
     console.log('InputContent: ', { inputContent })
 
     const interactive = createInteractive(inputContent)
-    const solution = createSolution(inputContent, licenseId)
+    const solution = createSolution(inputContent)
 
     const exerciseDocument: EditorExerciseDocument = {
       plugin: EditorPluginType.Exercise,
