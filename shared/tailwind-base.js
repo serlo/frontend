@@ -19,7 +19,6 @@ const sunflowerColors = {
   50: '#fff9f0',
 }
 
-// eslint-disable-next-line import/no-default-export
 export default {
   theme: {
     extend: {
