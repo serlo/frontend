@@ -95,8 +95,8 @@ export const instanceData = {
       pdfNoSolutions: "PDF ohne Lösungen"
     },
     modal: {
-      leaveNow: 'Leave now',
-      noStay: 'No, I want to stay'
+      leaveNow: "Jetzt verlassen",
+      noStay: "Nein, ich möchte bleiben"
     },
     editOrAdd: {
       button: "Überarbeiten",
@@ -231,7 +231,7 @@ export const instanceData = {
       by: "Von",
       parentFallbackLink: "Zum übergeordneten Inhalt",
       hasChanges: "In diesem Bereich hat es Änderungen gegeben",
-      positionForGrouped: 'This %exercise% is part of %title%.',
+      positionForGrouped: "Diese %exercise% ist Teil von %title%.",
       helpLink: "Reviewer-Hilfe"
     },
     revisionHistory: {
@@ -1094,8 +1094,8 @@ export const loggedInData = {
           yesSubtasks: "Ja",
           numberOfSubtasksPlaceholder: "Anzahl",
           chooseOption: "Wähle eine Option",
-          multipleChoice: "Multiple Choice",
-          singleChoice: "Single Choice",
+          multipleChoice: "Multiple-Choice",
+          singleChoice: "Single-Choice",
           solutionWithOneNumber: "Lösung mit einer Zahl"
         },
         difficulty: {
