@@ -15,8 +15,8 @@ import {
   humanReadableShortAnswerExample,
   humanReadableSingleChoiceExample,
 } from './decoders'
+import { LicenseData } from '@/data-types'
 import { InputExerciseType } from '@/serlo-editor/plugins/input-exercise/input-exercise-type'
-import { License } from '@/serlo-editor/plugins/serlo-template-plugins/common/common'
 import { CustomText, MathElement } from '@/serlo-editor/plugins/text'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
@@ -52,7 +52,7 @@ export function convertAiGeneratedScExerciseToEditorDocument(
       `The data from the API seems to have an invalid structure.\n\n${errors
         .map((error) => `${error.split('|}/')[1]} was not provided correctly`)
         .join('\n')} \n\nReceived: \n${JSON.stringify(
-        parsed,
+        input,
         null,
         2
       )}\n\nExpected format: \n${JSON.stringify(
@@ -77,7 +77,7 @@ export function convertAiGeneratedScExerciseToEditorDocument(
         `The data from the API seems to have an invalid structure.\n\n${errors
           .map((error) => `${error.split('|}/')[1]} was not provided correctly`)
           .join('\n')} \n\nReceived: \n${JSON.stringify(
-          parsed,
+          input,
           null,
           2
         )}\n\nExpected format: \n${JSON.stringify(
@@ -344,7 +344,7 @@ function isSingleChoiceGuard(
   return input.type === 'single_choice'
 }
 
-function createLicense(): License['license'] {
+function createLicense(): LicenseData {
   return {
     id: 1,
     title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0.',
@@ -357,13 +357,13 @@ function createLicense(): License['license'] {
 
 interface GroupedTextExercise {
   id: number
-  license: License['license']
+  license: LicenseData
   changes: string
   revision: number
   content: string
   'text-solution': {
     id: number
-    license: License['license']
+    license: LicenseData
     revision: number
     changes: string
     content: string
@@ -374,7 +374,7 @@ export interface ExpectedExerciseGroup {
   plugin: TemplatePluginType.TextExerciseGroup
   state: {
     id: number
-    license: License['license']
+    license: LicenseData
     changes: string
     revision: number
     // Serlo Editor JSON content that is encoded within a string
