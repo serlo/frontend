@@ -231,7 +231,7 @@ export const instanceData = {
       by: "Por",
       parentFallbackLink: "A contenido padre",
       hasChanges: "Ha habido cambios en esta área",
-      positionForGrouped: "Este/a %exercise_or_solution% es parte de %title%.",
+      positionForGrouped: 'This %exercise% is part of %title%.',
       helpLink: "Ayuda de revisión"
     },
     revisionHistory: {
