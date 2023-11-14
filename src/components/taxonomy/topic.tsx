@@ -75,7 +75,7 @@ export function Topic({ data }: TopicProps) {
 
     // Function to extract numeric and alphabetic parts
     const extractParts = (str: string): [number, string] => {
-      const match = str.match(regex)
+      const match = str.match(regex)!
       return [parseInt(match[1], 10), match[2]]
     }
 
