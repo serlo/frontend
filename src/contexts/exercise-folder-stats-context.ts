@@ -16,6 +16,7 @@ export interface ExerciseFolderStatsData {
   revisions: number[]
   times: string[]
   sessionsByDay: { date: string; count: number; medianTime: number }[]
+  journeys: { [key: string]: number[] }
 }
 
 export const ExerciseFolderStatsContext =

@@ -122,6 +122,8 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
   const sessions = new Set()
   const interactiveSessions = new Set()
 
+  const journeys: { [key: string]: number[] } = {}
+
   const sessionsByDate: {
     [key: string]: {
       sessions: Set<string>
@@ -179,6 +181,13 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
     })
     if (obj.result === 'correct') {
       entry.correct.add(obj.sessionId)
+
+      if (!journeys[obj.sessionId]) {
+        journeys[obj.sessionId] = []
+      }
+      if (!journeys[obj.sessionId].includes(obj.entityId)) {
+        journeys[obj.sessionId].push(obj.entityId)
+      }
     }
     if (obj.result === 'wrong') {
       entry.wrong.add(obj.sessionId)
@@ -243,6 +252,7 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
           count: entry[1].sessions.size,
           medianTime: entry[1].medianTime || 0,
         })),
+        journeys,
       },
     },
     revalidate: 60 * 10, // 10 min,

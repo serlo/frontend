@@ -20,6 +20,7 @@ import { useExerciseFolderStats } from '@/contexts/exercise-folder-stats-context
 import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
+import { FrontendNodeType } from '@/frontend-node-types'
 import { abSubmission } from '@/helper/ab-submission'
 import { renderArticle } from '@/schema/article-renderer'
 
@@ -54,6 +55,62 @@ export function Topic({ data }: TopicProps) {
 
   const hasExercises = data.exercisesContent.length > 0
   const defaultLicense = hasExercises ? getDefaultLicense() : undefined
+
+  const mapping: { [key: string]: string } = {}
+  data.exercisesContent.forEach((exercise, i) => {
+    if (exercise.type === FrontendNodeType.Exercise) {
+      mapping[exercise.context.id] = `${i + 1}`
+    } else {
+      exercise.children?.forEach((child) => {
+        mapping[child.context.id] = `${i + 1}${String.fromCharCode(
+          'a'.charCodeAt(0) + child.positionInGroup!
+        )}`
+      })
+    }
+  })
+
+  // calculate matrix
+  const matrix: { [key: string]: { [key: string]: number } } = {}
+  let things: string[] = []
+  if (exerciseStats) {
+    const ids: { [key: number]: number } = {}
+    Object.values(exerciseStats.journeys).forEach((journey) => {
+      journey.forEach((id) => {
+        if (!ids[id]) {
+          ids[id] = 0
+        }
+        ids[id]++
+      })
+    })
+    const entries = Object.entries(ids)
+    entries.sort((a, b) => b[1] - a[1])
+    things = entries.map((e) => e[0])
+    things.sort((a, b) => mapping[a].localeCompare(mapping[b]))
+    // prepare matrix
+    for (const thing of things) {
+      matrix[thing] = {}
+      for (const t2 of things) {
+        matrix[thing][t2] = 0
+      }
+      matrix[thing]['E'] = 0
+    }
+    matrix['S'] = {}
+    for (const t2 of things) {
+      matrix['S'][t2] = 0
+    }
+    matrix['S']['E'] = 0
+    for (const journey of Object.values(exerciseStats.journeys)) {
+      let prev = 'S'
+      for (let i = 0; i <= journey.length; i++) {
+        if (i < journey.length) {
+          matrix[prev][journey[i]]++
+          prev = journey[i].toString()
+        } else {
+          matrix[prev]['E']++
+        }
+      }
+    }
+  }
 
   useEffect(() => {
     const ctx = document.getElementById('chart')
@@ -213,6 +270,54 @@ export function Topic({ data }: TopicProps) {
             <div className="my-12 w-full">
               <canvas id="chart2"></canvas>
             </div>
+            {matrix && (
+              <div className="mb-2">
+                Wenn jemand eine Aufgabe löst, zeigt die Zeile welche Aufgabe
+                als nächstes gelöst wird. S = Start, E = Ende. Prozentwerte sind
+                pro Zeile.
+              </div>
+            )}
+            {matrix && (
+              <table>
+                <tr>
+                  <th></th>
+                  {[...things, 'E'].map((t) => (
+                    <th key={t} className="border p-1">
+                      {t === 'E' ? t : mapping[t]}
+                    </th>
+                  ))}
+                </tr>
+                {['S', ...things].map((r) => (
+                  <tr key={r === 'S' ? r : mapping[r]}>
+                    <td className="border p-1">
+                      <strong>{r === 'S' ? r : mapping[r]}</strong>
+                    </td>
+                    {[...things, 'E'].map((t) => (
+                      <td className="border p-1" key={t}>
+                        {r === t ? (
+                          <strong>-</strong>
+                        ) : (
+                          <>
+                            {matrix[r][t]}
+                            <br />
+                            <span className="text-sm text-gray-700">
+                              {(
+                                (100 * matrix[r][t]) /
+                                [...things, 'E'].reduce(
+                                  (res, obj) => res + matrix[r][obj],
+                                  0
+                                )
+                              ).toFixed(0)}
+                              %
+                            </span>
+                          </>
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </table>
+            )}
           </>
         ) : null}
         <h1 className="serlo-h1 mb-10 mt-8" itemProp="name">
