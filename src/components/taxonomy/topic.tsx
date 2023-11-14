@@ -69,6 +69,29 @@ export function Topic({ data }: TopicProps) {
     }
   })
 
+  function customSort(a: string, b: string): number {
+    // Regular expression to separate numeric and alphabetic parts
+    const regex = /(\d+)([a-zA-Z]*)/
+
+    // Function to extract numeric and alphabetic parts
+    const extractParts = (str: string): [number, string] => {
+      const match = str.match(regex)
+      return [parseInt(match[1], 10), match[2]]
+    }
+
+    // Extract parts for comparison
+    const partsA = extractParts(a)
+    const partsB = extractParts(b)
+
+    // Compare numeric parts
+    if (partsA[0] !== partsB[0]) {
+      return partsA[0] - partsB[0]
+    }
+
+    // If numeric parts are equal, compare alphabetic parts
+    return partsA[1].localeCompare(partsB[1])
+  }
+
   // calculate matrix
   const matrix: { [key: string]: { [key: string]: number } } = {}
   let things: string[] = []
@@ -85,7 +108,7 @@ export function Topic({ data }: TopicProps) {
     const entries = Object.entries(ids)
     entries.sort((a, b) => b[1] - a[1])
     things = entries.map((e) => e[0])
-    things.sort((a, b) => mapping[a].localeCompare(mapping[b]))
+    things.sort((a, b) => customSort(mapping[a], mapping[b]))
     // prepare matrix
     for (const thing of things) {
       matrix[thing] = {}
