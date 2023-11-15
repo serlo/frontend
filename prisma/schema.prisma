@@ -14,7 +14,7 @@ model ExerciseSubmission {
   entityId   Int
   revisionId Int
   type       String   @db.VarChar(8)
-  result     String   @db.VarChar(8)
+  result     String   @db.VarChar(255)
   timestamp  DateTime @default(now())
   sessionId  String   @db.VarChar(64)
 
@@ -70,12 +70,12 @@ model ABTestingData {
 }
 
 model QuickbarStats {
-  id           Int      @id @default(autoincrement())
-  path         String   @db.VarChar(1024)
-  query        String   @db.VarChar(1024)
-  target       String   @db.VarChar(128)
-  isSubject    Boolean
-  timestamp    DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  path      String   @db.VarChar(1024)
+  query     String   @db.VarChar(1024)
+  target    String   @db.VarChar(128)
+  isSubject Boolean
+  timestamp DateTime @default(now())
 
   @@index([timestamp])
 }
