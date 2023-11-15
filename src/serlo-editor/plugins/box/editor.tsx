@@ -17,7 +17,7 @@ const titleFormattingOptions = [
 ]
 
 export function BoxEditor(props: BoxProps) {
-  const { focused, editable } = props
+  const { focused } = props
   const { title, type, content, anchorId } = props.state
 
   const hasNoType = type.value === ''
@@ -59,14 +59,13 @@ export function BoxEditor(props: BoxProps) {
         className={clsx(
           showToolbar && '[&>figure]:rounded-t-none',
           'transition-opacity',
-          editable && isEmptyContent && 'opacity-30 focus-within:opacity-100',
+          isEmptyContent && 'opacity-30 focus-within:opacity-100',
           showToolbar && '!opacity-100 ',
           '[&:focus-within_.box-warning]:hidden',
           // making space for first toolbar, not wysiwyg
           '[&>figure>figcaption]:!mb-9',
           // toolbar finetuning
-          editable &&
-            tw`
+          tw`
             [&_.plugin-toolbar]:ml-[-2px]
             [&_.plugin-toolbar]:mr-[-16px]
             [&_.plugin-toolbar]:rounded-none

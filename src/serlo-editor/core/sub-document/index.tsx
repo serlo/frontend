@@ -1,10 +1,8 @@
-import { Component, useCallback, useContext } from 'react'
+import { Component, useCallback } from 'react'
 
 import { SubDocumentEditor } from './editor'
-import { SubDocumentRenderer } from './renderer'
 import { undo, useAppDispatch } from '../../store'
 import type { PluginProps } from '../../types/internal__plugin-state'
-import { EditableContext } from '../contexts'
 
 /**
  * Renders a subset of the whole document tree starting from `props.id` including all children.
@@ -16,16 +14,14 @@ import { EditableContext } from '../contexts'
  * @param props - {@link SubDocumentProps}
  */
 export const SubDocument = (props: SubDocumentProps) => {
-  const editable = useContext(EditableContext)
   const dispatch = useAppDispatch()
   const undoMemo = useCallback(() => {
     void dispatch(undo())
   }, [dispatch])
 
-  const Component = editable ? SubDocumentEditor : SubDocumentRenderer
   return (
     <ErrorBoundary undo={undoMemo}>
-      <Component {...props} />
+      <SubDocumentEditor {...props} />
     </ErrorBoundary>
   )
 }

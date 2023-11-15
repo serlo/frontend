@@ -112,11 +112,6 @@ export interface EditorPluginProps<
   id: string
 
   /**
-   * `true` if the document is currently editable
-   */
-  editable: boolean
-
-  /**
    * `true` if the document is currently focused
    */
   focused: boolean

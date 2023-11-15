@@ -143,20 +143,16 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
         open={courseNavOpen}
         onOverviewButtonClick={() => setCourseNavOpen(!courseNavOpen)}
         title={
-          props.editable ? (
-            <input
-              autoFocus
-              className={tw`
+          <input
+            autoFocus
+            className={tw`
                 -ml-2 mt-1 min-w-[70%] rounded-xl border-2 border-transparent
                 bg-editor-primary-100 px-2 py-0 focus:border-editor-primary focus:outline-none
               `}
-              placeholder={courseStrings.title}
-              value={title.value}
-              onChange={(e) => title.set(e.target.value)}
-            />
-          ) : (
-            title.value
-          )
+            placeholder={courseStrings.title}
+            value={title.value}
+            onChange={(e) => title.set(e.target.value)}
+          />
         }
         pages={staticPages.map((coursePage) => {
           return {

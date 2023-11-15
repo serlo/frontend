@@ -1,7 +1,5 @@
 import clsx from 'clsx'
 
-import { EditableContext } from '../core'
-
 interface PreviewOverlaySimpleProps {
   previewActive: boolean
   fullOpacity: boolean
@@ -22,13 +20,7 @@ export function PreviewOverlaySimple({
           fullOpacity ? 'bg-opacity-0' : ''
         )}
       />
-      {previewActive ? (
-        <EditableContext.Provider value={false}>
-          {children}
-        </EditableContext.Provider>
-      ) : (
-        children
-      )}
+      {children}
     </div>
   )
 }

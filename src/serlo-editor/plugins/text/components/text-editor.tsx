@@ -36,7 +36,7 @@ export type TextEditorProps = EditorPluginProps<
 
 // Regular text editor - used as a standalone plugin
 export function TextEditor(props: TextEditorProps) {
-  const { state, id, editable, focused, containerRef } = props
+  const { state, id, focused, containerRef } = props
 
   const textStrings = useEditorStrings().plugins.text
   const config = useTextConfig(props.config)
@@ -61,7 +61,6 @@ export function TextEditor(props: TextEditorProps) {
   const suggestions = useSuggestions({
     editor,
     id,
-    editable,
     focused,
     isInlineChildEditor: config.isInlineChildEditor,
   })
@@ -155,7 +154,6 @@ export function TextEditor(props: TextEditorProps) {
       const isFirstLine = path[0] === 0
       if (
         (!focused && !isFirstLine) ||
-        !editable ||
         selection === null ||
         Editor.isEditor(node) ||
         !Range.includes(selection, path) ||
@@ -167,7 +165,7 @@ export function TextEditor(props: TextEditorProps) {
       }
       return [{ ...selection, showPlaceholder: true }]
     },
-    [editable, editor, focused]
+    [editor, focused]
   )
 
   // fallback to static placeholder when:
@@ -196,7 +194,7 @@ export function TextEditor(props: TextEditorProps) {
       ) : null}
 
       <Editable
-        readOnly={!editable}
+        readOnly={false}
         onKeyDown={handleEditableKeyDown}
         onPaste={handleEditablePaste}
         renderElement={handleRenderElement}
@@ -207,7 +205,7 @@ export function TextEditor(props: TextEditorProps) {
             : decorateEmptyLinesWithPlaceholder
         }
         placeholder={
-          editable && shouldShowStaticPlaceholder
+          shouldShowStaticPlaceholder
             ? config.placeholder ?? textStrings.placeholder
             : undefined
         }

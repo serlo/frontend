@@ -9,14 +9,10 @@ import { InlineSettings } from '../../plugin/helpers/inline-settings'
 import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { selectIsDocumentEmpty, useAppSelector } from '@/serlo-editor/store'
 import { IsSerloContext } from '@/serlo-editor-integration/context/is-serlo-context'
 
-export function SolutionEditor({ editable, state, focused }: SolutionProps) {
+export function SolutionEditor({ state, focused }: SolutionProps) {
   const { prerequisite, strategy, licenseId } = state
-  const hasStrategy = !useAppSelector((state) =>
-    selectIsDocumentEmpty(state, strategy.id)
-  )
   const solutionStrings = useEditorStrings().templatePlugins.solution
   const showLicenseChooser = useContext(IsSerloContext) // only on serlo
 
@@ -29,15 +25,13 @@ export function SolutionEditor({ editable, state, focused }: SolutionProps) {
       }
       prerequisite={renderPrerequisiteContent()}
       strategy={
-        hasStrategy || editable ? (
-          <div className="-mx-2 px-side">
-            {strategy.render({
-              config: {
-                placeholder: solutionStrings.optionalExplanation,
-              },
-            })}
-          </div>
-        ) : null
+        <div className="-mx-2 px-side">
+          {strategy.render({
+            config: {
+              placeholder: solutionStrings.optionalExplanation,
+            },
+          })}
+        </div>
       }
       steps={<div className="ml-1">{state.steps.render()}</div>}
       solutionVisibleOnInit
@@ -46,14 +40,6 @@ export function SolutionEditor({ editable, state, focused }: SolutionProps) {
 
   function renderPrerequisiteContent() {
     const hasId = prerequisite.defined && prerequisite.id.value
-
-    if (!editable) {
-      return hasId && prerequisite.title.value ? (
-        <a className="serlo-link" href={`/${prerequisite.id.value}`}>
-          {prerequisite.title.value}
-        </a>
-      ) : null
-    }
 
     return (
       <>

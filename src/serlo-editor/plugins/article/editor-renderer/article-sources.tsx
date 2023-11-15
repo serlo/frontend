@@ -15,39 +15,23 @@ import { SerloAddButton } from '@/serlo-editor/plugin/helpers/serlo-editor-butto
 
 interface ArticleSourcesProps {
   sources: ArticleProps['state']['sources']
-  editable: boolean
 }
 
-export function ArticleSources({ sources, editable }: ArticleSourcesProps) {
+export function ArticleSources({ sources }: ArticleSourcesProps) {
   const articleStrings = useEditorStrings().templatePlugins.article
-
-  if (!editable && sources.length === 0) return null
 
   return (
     <>
-      {editable ? (
-        <SerloAddButton
-          text={articleStrings.addSource}
-          onClick={() => sources.insert(sources.length)}
-          className="mb-2 mt-0"
-        />
-      ) : null}
+      <SerloAddButton
+        text={articleStrings.addSource}
+        onClick={() => sources.insert(sources.length)}
+        className="mb-2 mt-0"
+      />
       <ul className="serlo-ul mb-4 mt-2 text-lg">
-        {sources.map(editable ? renderEditableSource : renderSource)}
+        {sources.map(renderEditableSource)}
       </ul>
     </>
   )
-
-  function renderSource(
-    { href, title }: ArticleSourcesProps['sources'][number],
-    index: number
-  ) {
-    return (
-      <li key={index}>
-        <a href={href.value}>{title.value}</a>
-      </li>
-    )
-  }
 
   function renderEditableSource(
     source: ArticleSourcesProps['sources'][number],

@@ -26,15 +26,10 @@ const TeamDataDecoder = t.array(
   })
 )
 
-export function PageTeamToolbar({
-  focused,
-  editable,
-  id,
-  state,
-}: PageTeamPluginProps) {
+export function PageTeamToolbar({ focused, id, state }: PageTeamPluginProps) {
   const { lang } = useInstanceData()
 
-  if (!focused || !editable) return null
+  if (!focused) return null
 
   const buttonClassName = tw`
     mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all
