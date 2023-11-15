@@ -12,18 +12,13 @@ import { useGridFocus } from './grid-focus'
 import { StepEditor } from './step-editor'
 import { StepSegment } from './step-segment'
 import type { EquationsProps } from '..'
-import {
-  EquationsRenderer,
-  type EquationsRendererStep,
-  renderDownArrow,
-} from '../renderer'
-import { Sign } from '../sign'
+import { renderDownArrow } from '../renderer'
+import { EquationsStaticRenderer } from '../static'
 import { EquationsToolbar } from '../toolbar'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
-import { MathRenderer } from '@/serlo-editor/math'
 import {
   store,
   focus,
@@ -34,11 +29,13 @@ import {
   useAppSelector,
   useAppDispatch,
   selectChildTree,
+  selectStaticDocument,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import type { EditorEquationsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export function EquationsEditor(props: EquationsProps) {
-  const { focused, state } = props
+  const { focused, state, id } = props
 
   const dispatch = useAppDispatch()
   const focusedElement = useAppSelector(selectFocused)
@@ -49,6 +46,10 @@ export function EquationsEditor(props: EquationsProps) {
       props.state.steps.map((step) => step.explanation.id)
     ) ||
     focusedElement === state.firstExplanation.id
+
+  const staticDocument = useAppSelector((storeState) =>
+    selectStaticDocument(storeState, id)
+  )
 
   const transformationTarget = toTransformationTarget(
     state.transformationTarget.value
@@ -169,44 +170,12 @@ export function EquationsEditor(props: EquationsProps) {
 
   const equationsStrings = useEditorStrings().plugins.equations
 
-  if (!nestedFocus)
+  if (!nestedFocus) {
     return (
-      <EquationsRenderer
-        firstExplanation={
-          selectIsDocumentEmpty(
-            store.getState(),
-            state.firstExplanation.id
-          ) ? null : (
-            <div className="serlo-p mb-0 [&_.plugin-wrapper-container]:!mb-0">
-              {state.firstExplanation.render()}
-            </div>
-          )
-        }
-        steps={getStaticSteps()}
-        transformationTarget={transformationTarget}
-        formulaRenderer={(formula: string) => (
-          <MathRenderer inline state={formula} />
-        )}
+      <EquationsStaticRenderer
+        {...(staticDocument as EditorEquationsDocument)}
       />
     )
-
-  function getStaticSteps(): EquationsRendererStep[] {
-    return state.steps.map(({ left, sign, right, transform, explanation }) => {
-      return {
-        left: left.value,
-        sign: sign.value as Sign,
-        right: right.value,
-        transform: transform.value,
-        explanation: selectIsDocumentEmpty(
-          store.getState(),
-          explanation.id
-        ) ? null : (
-          <div className="serlo-p mb-0 [&_.plugin-wrapper-container]:!mb-0">
-            {explanation.render()}
-          </div>
-        ),
-      }
-    })
   }
 
   const hasFocusWithin =

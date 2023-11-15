@@ -57,6 +57,8 @@ export const Notifications = ({
   function renderNotifications(nodes: NotificationProps['data']['nodes']) {
     return nodes.map((node) => {
       if (hidden.includes(node.id)) return null
+      // TODO: https://github.com/serlo/frontend/issues/3086
+      if (!node.event) return <p className="serlo-p">Error</p>
       return (
         <Event
           key={node.id}

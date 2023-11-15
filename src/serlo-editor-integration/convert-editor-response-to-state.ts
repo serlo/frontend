@@ -5,7 +5,6 @@ import type { AppletTypePluginState } from '../serlo-editor/plugins/serlo-templa
 import type { ArticleTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/article'
 import {
   type Entity,
-  type License,
   type Uuid,
 } from '../serlo-editor/plugins/serlo-template-plugins/common/common'
 import type { CourseTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/course/course'
@@ -46,16 +45,8 @@ export function convertEditorResponseToState(
     TaxonomyTerm: { convert: convertTaxonomy },
   }
 
-  const license =
-    'license' in uuid
-      ? {
-          id: uuid.license.id,
-          title: uuid.license.title,
-          shortTitle: uuid.license.shortTitle,
-          url: uuid.license.url,
-          agreement: uuid.license.agreement,
-        }
-      : undefined
+  const licenseId = Object.hasOwn(uuid, 'license') ? uuid.license.id : undefined
+
   const { id } = uuid
 
   const currentRev =
@@ -76,7 +67,7 @@ export function convertEditorResponseToState(
 
   const entityFields = {
     id,
-    license: license!,
+    licenseId,
   }
 
   try {
@@ -203,7 +194,7 @@ export function convertEditorResponseToState(
       plugin: TemplatePluginType.CoursePage,
       state: {
         id: uuid.id,
-        license: license!, // there could be cases where this is not correct
+        licenseId,
         revision,
         changes: '',
         icon: 'explanation',
@@ -277,7 +268,7 @@ export function convertEditorResponseToState(
       plugin: TemplatePluginType.TextExercise,
       state: {
         id: uuid.id,
-        license: license!,
+        licenseId,
         changes: '',
         revision,
         content:
@@ -405,10 +396,11 @@ export interface EventSerializedState extends Entity {
   meta_description?: string
 }
 
-export interface PageSerializedState extends Uuid, License {
+export interface PageSerializedState extends Uuid {
   __typename?: UuidType.Page
   title?: string
   content: SerializedStaticState
+  licenseId?: number
 }
 
 export interface TaxonomySerializedState extends Uuid {

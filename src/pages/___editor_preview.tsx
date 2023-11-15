@@ -22,6 +22,7 @@ import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createPlugins } from '@/serlo-editor-integration/create-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
   return (
@@ -52,7 +53,7 @@ const emptyState = JSON.stringify({
 
 function Content() {
   const [previewState, setPreviewState] = useQueryParam(
-    'name',
+    'state',
     withDefault(StringParam, emptyState)
   )
 
@@ -102,6 +103,28 @@ function Content() {
         <header className="mx-side flex justify-between align-middle font-bold">
           <h2 className="mb-12 text-editor-primary">Edit</h2>
           <div>
+            <input
+              onPaste={({ clipboardData }) => {
+                const pastedString = clipboardData.getData('text/plain').trim()
+                const cleanJsonString = pastedString
+                  .replace(/'/g, '')
+                  .replace(/\\"/g, '"')
+
+                try {
+                  const jsonObject = JSON.parse(
+                    cleanJsonString
+                  ) as AnyEditorDocument
+                  setPreviewState(JSON.stringify(jsonObject))
+                } catch (error) {
+                  // eslint-disable-next-line no-console
+                  console.error('Error parsing JSON:', error)
+                  showToastNotice('sorry, invalid json', 'warning')
+                }
+              }}
+              className="mt-0.5 w-20 bg-gray-100 text-sm"
+              placeholder="paste json"
+            />
+            {' | '}
             <button
               onClick={() => {
                 void navigator.clipboard.writeText(previewState)

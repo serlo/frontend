@@ -125,11 +125,9 @@ export function Revision({ data }: RevisionProps) {
 
   function renderExercisePreview() {
     if (
-      ![
-        UuidRevType.Solution,
-        UuidRevType.ExerciseGroup,
-        UuidRevType.GroupedExercise,
-      ].includes(data.typename) ||
+      ![UuidRevType.ExerciseGroup, UuidRevType.GroupedExercise].includes(
+        data.typename
+      ) ||
       data.repository.parentId === undefined
     )
       return null
@@ -158,10 +156,7 @@ export function Revision({ data }: RevisionProps) {
           {char && (
             <span className="mx-side mb-10 inline-block bg-editor-primary-100 px-1">
               {replacePlaceholders(strings.revisions.positionForGrouped, {
-                exercise_or_solution:
-                  data.typename === UuidRevType.GroupedExercise
-                    ? strings.content.exercises.task
-                    : strings.entities.solution,
+                exercise: strings.content.exercises.task,
                 title: (
                   <b>
                     {strings.entities.groupedExercise} {char}

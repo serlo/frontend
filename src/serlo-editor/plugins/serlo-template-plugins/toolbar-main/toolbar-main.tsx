@@ -23,14 +23,14 @@ import { SaveModal } from '@/serlo-editor-integration/components/save-modal'
 
 interface ToolbarMainProps {
   changes?: StateTypeReturnType<(typeof entity)['changes']>
-  license?: StateTypeReturnType<(typeof entity)['license']>
+  licenseId?: StateTypeReturnType<(typeof entity)['licenseId']>
   showSubscriptionOptions?: boolean
 }
 
 export function ToolbarMain({
   showSubscriptionOptions,
   changes,
-  license,
+  licenseId,
 }: ToolbarMainProps) {
   const dispatch = useAppDispatch()
   const undoable = useAppSelector(selectHasUndoActions)
@@ -57,7 +57,7 @@ export function ToolbarMain({
         open={saveModalOpen}
         setOpen={setSaveModalOpen}
         changes={changes}
-        license={license}
+        licenseId={licenseId}
         showSubscriptionOptions={showSubscriptionOptions}
       />
     </>

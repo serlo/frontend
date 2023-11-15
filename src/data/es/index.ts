@@ -94,6 +94,10 @@ export const instanceData = {
       pdf: "Descargar PDF",
       pdfNoSolutions: "PDF sin soluciones"
     },
+    modal: {
+      leaveNow: 'Leave now',
+      noStay: 'No, I want to stay'
+    },
     editOrAdd: {
       button: "Editar",
       addNewEntities: "Añadir nuevo contenido",
@@ -227,7 +231,7 @@ export const instanceData = {
       by: "Por",
       parentFallbackLink: "A contenido padre",
       hasChanges: "Ha habido cambios en esta área",
-      positionForGrouped: "Este/a %exercise_or_solution% es parte de %title%.",
+      positionForGrouped: 'This %exercise% is part of %title%.',
       helpLink: "Ayuda de revisión"
     },
     revisionHistory: {
@@ -1047,6 +1051,79 @@ export const loggedInData = {
     },
     roles: {
       addButton: "Añadir como %role%"
+    },
+    ai: {
+      exerciseGeneration: {
+        buttonTitle: 'Generate exercises with AI',
+        initialModalTitle: 'Create an exercise automatically with help of AI',
+        modalTitleWithTaxonomy: 'Exercise generation with AI: ',
+        confirmCloseDescription: 'Do you want to cancel the exercise generation? Your data will be lost.',
+        summary: 'Summary',
+        nextButton: "Siguiente",
+        nextExerciseButton: 'Next exercise',
+        previousButton: 'Previous exercise',
+        generateExerciseButton: 'Generate exercise',
+        generateExercisesButton: 'Generate exercises',
+        subject: {
+          title: 'Which %subject% would you like to create an exercise for?',
+          subject: 'subject',
+          defaultLabel: "Asunto",
+          otherSubjectLabel: 'Other subject',
+          customSubjectPlaceholder: 'Enter custom subject'
+        },
+        topic: {
+          title: 'About which %topic% would you like to generate exercises?',
+          topic: 'topic',
+          defaultLabel: 'Topic',
+          otherTopicLabel: 'Other topic',
+          customTopicPlaceholder: 'Enter custom topic'
+        },
+        grade: {
+          title: 'Which %grade% are the students in?',
+          grade: 'grade',
+          label: 'Grade',
+          university: 'University'
+        },
+        exerciseType: {
+          title: 'What %exerciseType% are you interested in?',
+          exerciseType: 'exercise type',
+          label: 'Exercise type',
+          subtasksTitleSummary: 'Subtasks',
+          subtasksTitle: 'Should there be subtasks?',
+          noSubtasks: 'No',
+          yesSubtasks: 'Yes',
+          numberOfSubtasksPlaceholder: 'Number of subtasks',
+          chooseOption: "Choose an option",
+          multipleChoice: "Multiple Choice",
+          singleChoice: "Single Choice",
+          solutionWithOneNumber: "Solution with 1 number"
+        },
+        difficulty: {
+          title: 'What is the %difficulty% level of the exercise and learning goal?',
+          difficulty: 'difficulty',
+          label: 'Difficulty',
+          learningGoalLabel: 'Learning goal',
+          learningGoalExample: 'Example: Students understand the basics of algebra.',
+          learningGoalPlaceholder: 'Enter learning goal',
+          chooseOption: 'Choose an option',
+          easy: 'Easy',
+          medium: 'Medium',
+          hard: 'Hard'
+        },
+        priorKnowledge: {
+          title: 'What is the %priorKnowledge% that the students should have?',
+          priorKnowledge: 'prior knowledge',
+          label: 'Prior Knowledge',
+          example: 'Example: The students know how basic algebra works and already solved some exercises on the topic.',
+          placeholder: 'E.g., Basic arithmetic, fundamentals of algebra'
+        },
+        preview: {
+          loadingHeading: 'Exercise is being generated...',
+          publishExercise: 'Publish exercise',
+          openExerciseInEditor: 'Open in editor',
+          regenerate: 'Regenerate exercise'
+        }
+      }
     }
   }
 };

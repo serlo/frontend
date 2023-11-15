@@ -1,5 +1,6 @@
 import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { useEffect, useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
 import { FrontendClientBase } from '@/components/frontend-client-base'
@@ -33,37 +34,66 @@ interface EntityCreateProps {
   entityNeedsReview: boolean
 }
 
-export default renderedPageNoHooks<EntityCreateProps>(
-  ({ taxonomyTerm, entityType, entityNeedsReview }) => {
-    const { id: taxonomyParentId } = taxonomyTerm
+export default renderedPageNoHooks<EntityCreateProps>((props) => {
+  return <Content props={props} />
+})
 
-    const addRevisionProps = {
-      initialState: { plugin: AllowedPlugins[entityType] },
-      type: UuidType[entityType],
-      entityNeedsReview,
-      taxonomyParentId,
-      errorType: 'none',
-    } as const
+function Content({
+  props: { taxonomyTerm, entityType, entityNeedsReview },
+}: {
+  props: EntityCreateProps
+}) {
+  const [initialState, setInitialState] = useState({
+    plugin: AllowedPlugins[entityType],
+  })
 
-    return (
-      <FrontendClientBase
-        noContainers
-        loadLoggedInData={!isProduction} // warn: enables preview editor without login
-        entityId={taxonomyParentId}
-      >
-        <div className="relative">
-          <MaxWidthDiv>
-            <main>
-              <Guard needsAuth={isProduction ? true : undefined} data>
-                <AddRevision {...addRevisionProps} />
-              </Guard>
-            </main>
-          </MaxWidthDiv>{' '}
-        </div>
-      </FrontendClientBase>
-    )
-  }
-)
+  useEffect(() => {
+    try {
+      // you can pass a session storage key with `&loadFormSession=mykey` to
+      // let the editor load custom inital state
+      const params = new URLSearchParams(window.location.search)
+      const sessionKey = params.get('loadFromSession') ?? ''
+      const sessionValue = sessionStorage.getItem(sessionKey) ?? ''
+      if (sessionKey && sessionValue) {
+        // we pray that this works, otherwise editor will through error message
+        setInitialState(JSON.parse(sessionValue) as typeof initialState)
+      }
+    } catch (e) {
+      console.error(
+        'Error occurred parsing data from session storage via url',
+        e
+      )
+    }
+  }, [])
+
+  const { id: taxonomyParentId } = taxonomyTerm
+
+  const addRevisionProps = {
+    initialState,
+    type: UuidType[entityType],
+    entityNeedsReview,
+    taxonomyParentId,
+    errorType: 'none',
+  } as const
+
+  return (
+    <FrontendClientBase
+      noContainers
+      loadLoggedInData={!isProduction} // warn: enables preview editor without login
+      entityId={taxonomyParentId}
+    >
+      <div className="relative">
+        <MaxWidthDiv>
+          <main>
+            <Guard needsAuth={isProduction ? true : undefined} data>
+              <AddRevision {...addRevisionProps} />
+            </Guard>
+          </main>
+        </MaxWidthDiv>{' '}
+      </div>
+    </FrontendClientBase>
+  )
+}
 
 export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
   context
