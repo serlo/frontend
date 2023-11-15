@@ -1,11 +1,8 @@
-import { micromark } from 'micromark'
-import { GetStaticProps } from 'next'
+import type { GetStaticProps } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import { fetchAndConvertLegalMarkdown } from '@/fetcher/fetch-and-convert-legal-markdown'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
-
-export const legalRepo =
-  'https://raw.githubusercontent.com/serlo/serlo.org-legal/main'
 
 export interface LegalData {
   contentHtml: string
@@ -22,7 +19,7 @@ function Content({ contentHtml, isGerman }: LegalData) {
       <h1 className="serlo-h1 mt-24">
         {isGerman ? 'Impressum' : 'Legal Notice'}
       </h1>
-      <main
+      <div
         className="serlo-prose-hacks"
         dangerouslySetInnerHTML={{ __html: contentHtml }}
       />
@@ -32,17 +29,7 @@ function Content({ contentHtml, isGerman }: LegalData) {
 
 export const getStaticProps: GetStaticProps<LegalData> = async (context) => {
   const isGerman = context.locale === 'de'
-  const url = `${legalRepo}/${isGerman ? 'de' : 'en'}/imprint.md`
+  const contentHtml = await fetchAndConvertLegalMarkdown(isGerman, 'imprint.md')
 
-  try {
-    const response = await fetch(url)
-    const markdown = await response.text()
-    const contentHtml = micromark(markdown, {
-      allowDangerousHtml: true,
-    })
-    return { props: { contentHtml, isGerman } }
-  } catch (e) {
-    console.error(e)
-    return { notFound: true }
-  }
+  return { props: { contentHtml, isGerman } }
 }

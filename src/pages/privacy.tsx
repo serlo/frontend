@@ -1,9 +1,9 @@
-import { micromark } from 'micromark'
-import { GetStaticProps } from 'next'
+import type { GetStaticProps } from 'next'
 
-import { LegalData, legalRepo } from './legal'
+import type { LegalData } from './legal'
 import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import { fetchAndConvertLegalMarkdown } from '@/fetcher/fetch-and-convert-legal-markdown'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { BoxRenderer } from '@/serlo-editor/plugins/box/renderer'
 
@@ -60,7 +60,7 @@ function Content({ contentHtml, isGerman, lastChange }: PrivacyPageData) {
           </Link>
         </p>
       </BoxRenderer>
-      <main
+      <div
         className="serlo-prose-hacks"
         dangerouslySetInnerHTML={{ __html: contentHtml }}
       />
@@ -73,14 +73,12 @@ export const getStaticProps: GetStaticProps<PrivacyPageData> = async (
 ) => {
   const isGerman = context.locale === 'de'
   const instance = isGerman ? 'de' : 'en'
-  const url = `${legalRepo}/${instance}/privacy/current.md`
 
   try {
-    const response = await fetch(url)
-    const markdown = await response.text()
-    const contentHtml = micromark(markdown, {
-      allowDangerousHtml: true,
-    })
+    const contentHtml = await fetchAndConvertLegalMarkdown(
+      isGerman,
+      'privacy/current.md'
+    )
 
     const lastUpdateResponse = await fetch(
       `https://api.github.com/repos/serlo/serlo.org-legal/commits?path=%2F${instance}%2Fprivacy%2Fcurrent.md&page=1&per_page=1`
