@@ -97,7 +97,7 @@ export const footerData: InstanceData['footerData'] = {
           title: 'பயன்பாட்டு விதிமுறைகளை',
           url: `https://de.${serloDomain}/terms`,
         },
-        { title: 'முத்திரை', url: `https://de.${serloDomain}/imprint` },
+        { title: 'முத்திரை', url: `https://de.${serloDomain}/legal` },
       ],
     },
   ],
