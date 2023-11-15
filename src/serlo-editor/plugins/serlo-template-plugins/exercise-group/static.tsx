@@ -47,7 +47,7 @@ export function TextExerciseGroupTypeStaticRenderer(
               type: ExerciseInlineType.ExerciseGroup,
               id: context?.uuid,
               trashed: context?.trashed,
-              unrevisedRevisions: context?.uuid,
+              unrevisedRevisions: context?.unrevisedRevisions,
             }}
           />
         </div>
