@@ -24,7 +24,7 @@ function Content({ contentHtml, isGerman, lastChange }: PrivacyPageData) {
       </h1>
       <p className="serlo-p">
         <i>
-          {isGerman ? 'wirksam ab dem' : 'effective'} {date}
+          {isGerman ? 'wirksam ab dem' : 'effective'} <time>{date}</time>
         </i>
         <br />
         {isGerman
