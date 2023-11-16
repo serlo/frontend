@@ -41,7 +41,7 @@ export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
         path: asPath,
         entityId,
         revisionId,
-        result: val.length < 8 ? val : val.substring(0, 7) + '.',
+        result: val.substring(0, 200),
         type: 'ival',
       },
       ab
