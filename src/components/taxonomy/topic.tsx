@@ -82,8 +82,6 @@ export function Topic({ data }: TopicProps) {
     }
   })
 
-  console.log(mapping)
-
   function customSort(a: string, b: string): number {
     // Regular expression to separate numeric and alphabetic parts
     const regex = /(\d+)([a-zA-Z]*)/
