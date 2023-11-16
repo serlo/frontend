@@ -9,7 +9,7 @@ import { PreviewOverlay } from '@/serlo-editor/editor-ui'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function InjectionEditor(props: InjectionProps) {
-  const { focused, state, editable } = props
+  const { focused, state } = props
 
   const [cache, setCache] = useState(state.value)
   const [showSettingsModal, setShowSettingsModal] = useState(false)
@@ -18,15 +18,6 @@ export function InjectionEditor(props: InjectionProps) {
     const timeout = setTimeout(() => setCache(state.value), 2000)
     return () => clearTimeout(timeout)
   }, [focused, state.value])
-
-  if (!editable) {
-    return (
-      <InjectionStaticRenderer
-        plugin={EditorPluginType.Injection}
-        state={state.value}
-      />
-    )
-  }
 
   return (
     <>

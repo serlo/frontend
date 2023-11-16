@@ -310,7 +310,7 @@ function createSolution(
     plugin: EditorPluginType.Solution,
     state: {
       prerequisite: undefined,
-      licenseId: 1,
+      licenseId: undefined,
       strategy: {
         plugin: EditorPluginType.Text,
         state: [

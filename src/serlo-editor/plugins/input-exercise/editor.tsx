@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 import type { InputExerciseProps } from '.'
-import { InputExerciseRenderer } from './renderer'
+import { InputExerciseStaticRenderer } from './static'
 import { InputExerciseToolbar } from './toolbar'
 import {
   AddButton,
@@ -11,22 +11,29 @@ import {
 import {
   focus,
   selectFocused,
-  selectIsDocumentEmpty,
+  selectStaticDocument,
   store,
   useAppDispatch,
+  useAppSelector,
 } from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorInputExerciseDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export function InputExerciseEditor(props: InputExerciseProps) {
-  const { editable, state, id, focused } = props
-  const { answers, type, unit } = state
+  const { state, id, focused } = props
+  const { answers } = state
   const inputExStrings = useEditorStrings().templatePlugins.inputExercise
 
   const dispatch = useAppDispatch()
 
   const [previewActive, setPreviewActive] = useState(false)
   const newestAnswerRef = useRef<HTMLInputElement>(null)
+
+  const staticDocument = useAppSelector(
+    (storeState) =>
+      selectStaticDocument(storeState, id) as EditorInputExerciseDocument
+  )
 
   function overwriteFocus(force?: boolean) {
     setTimeout(() => {
@@ -41,26 +48,8 @@ export function InputExerciseEditor(props: InputExerciseProps) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => overwriteFocus, [])
 
-  const storeState = store.getState()
-
-  const renderer = (
-    <InputExerciseRenderer
-      type={type.value}
-      unit={unit.value}
-      answers={answers.map(({ isCorrect, value, feedback }) => {
-        const isEmptyFeedback = selectIsDocumentEmpty(storeState, feedback.id)
-        return {
-          isCorrect: isCorrect.value,
-          value: value.value,
-          feedback: isEmptyFeedback ? null : feedback.render(),
-        }
-      })}
-    />
-  )
-  if (!editable) return renderer
-
   const isAnyAnswerFocused = answers.some(
-    ({ feedback }) => feedback.id === selectFocused(storeState)
+    ({ feedback }) => feedback.id === selectFocused(store.getState())
   )
 
   const showUi = focused || isAnyAnswerFocused
@@ -76,7 +65,7 @@ export function InputExerciseEditor(props: InputExerciseProps) {
       ) : null}
 
       <PreviewOverlaySimple previewActive={previewActive} fullOpacity={!showUi}>
-        {renderer}
+        <InputExerciseStaticRenderer {...staticDocument} />
       </PreviewOverlaySimple>
       {!previewActive && showUi ? (
         <>

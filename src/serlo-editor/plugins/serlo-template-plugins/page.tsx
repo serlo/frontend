@@ -32,17 +32,13 @@ function PageTypeEditor(props: EditorPluginProps<PageTypePluginState>) {
   return (
     <article>
       <h1 className="serlo-h1" itemProp="name">
-        {props.editable ? (
-          <input
-            autoFocus
-            className={headerInputClasses}
-            placeholder={placeholder}
-            value={title.value}
-            onChange={(e) => title.set(e.target.value)}
-          />
-        ) : (
-          title.value
-        )}
+        <input
+          autoFocus
+          className={headerInputClasses}
+          placeholder={placeholder}
+          value={title.value}
+          onChange={(e) => title.set(e.target.value)}
+        />
       </h1>
       <section itemProp="articleBody">{content.render()}</section>
       <ToolbarMain {...props.state} />

@@ -29,7 +29,7 @@ export type InteractiveExerciseType =
   (typeof allInteractiveExerciseTypes)[number]
 
 export function ExerciseEditor(props: ExerciseProps) {
-  const { editable, state, focused } = props
+  const { state, focused } = props
   const { content, interactive, solution } = state
 
   const interactiveExerciseTypes = allInteractiveExerciseTypes.filter((type) =>
@@ -69,7 +69,7 @@ export function ExerciseEditor(props: ExerciseProps) {
       <div className="mx-side">
         {interactive.defined ? (
           interactive.render()
-        ) : editable ? (
+        ) : (
           <>
             <p className="mb-2 text-gray-400">
               {exTemplateStrings.addOptionalInteractiveEx}
@@ -88,7 +88,7 @@ export function ExerciseEditor(props: ExerciseProps) {
               })}
             </div>
           </>
-        ) : null}
+        )}
         {solution.defined ? (
           <div className="-ml-side mt-block">
             <nav className="flex justify-end">

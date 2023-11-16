@@ -38,7 +38,7 @@ export const PageTeamRenderer = ({
     extraLinkUrl,
     photo,
   }: TeamDataEntry) {
-    const imageSrc = photo ?? getAvatarUrl(user ?? '?')
+    const imageSrc = photo.length ? photo : getAvatarUrl(user ?? 'x')
 
     return (
       <div key={firstName + lastName} className="mb-10 text-center">

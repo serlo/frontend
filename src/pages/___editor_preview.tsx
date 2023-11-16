@@ -67,7 +67,6 @@ function Content() {
     () => (
       <Editor
         initialState={parseDocumentString(previewState)}
-        editable
         onChange={({ changed, getDocument }) => {
           if (!changed) return
           void debouncedSetState(JSON.stringify(getDocument()))

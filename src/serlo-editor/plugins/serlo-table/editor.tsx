@@ -26,14 +26,12 @@ import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin
 
 const headerTextFormattingOptions = [
   TextEditorFormattingOption.code,
-  TextEditorFormattingOption.katex,
   TextEditorFormattingOption.links,
   TextEditorFormattingOption.math,
 ]
 const cellTextFormattingOptions = [
   TextEditorFormattingOption.code,
   TextEditorFormattingOption.colors,
-  TextEditorFormattingOption.katex,
   TextEditorFormattingOption.links,
   TextEditorFormattingOption.lists,
   TextEditorFormattingOption.math,
