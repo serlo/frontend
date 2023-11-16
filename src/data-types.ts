@@ -7,10 +7,11 @@ import {
 } from './fetcher/graphql-types/operations'
 import type { User } from './fetcher/query-types'
 import type {
-  FrontendContentNode,
-  FrontendExerciseGroupNode,
-  FrontendExerciseNode,
-} from './frontend-node-types'
+  AnyEditorDocument,
+  EditorExerciseDocument,
+  EditorRowsDocument,
+  EditorTemplateExerciseGroupDocument,
+} from './serlo-editor-integration/types/editor-plugins'
 import type { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 import { Role, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
@@ -56,6 +57,7 @@ export interface InstanceData {
   headerData: HeaderData
   footerData: FooterData
   secondaryMenus: SecondaryMenuData[]
+  licenses: LicenseData[]
 }
 
 // Menus are trees of title and urls, possibly with icons.
@@ -181,19 +183,15 @@ export type LandingSubjectIcon =
 // License detail page has some additional data and is not part of the PageData type
 
 export interface LicenseDetailProps {
-  pageData: LicenseDetailPage
-}
-
-export interface LicenseDetailPage {
-  kind: 'license-detail'
-  licenseData: LicenseDetailData
+  pageData: {
+    kind: 'license-detail'
+    licenseData: LicenseDetailData
+  }
 }
 
 export interface LicenseDetailData {
   id: number
-  title: string
-  content: FrontendContentNode[]
-  isDefault: boolean
+  content: EditorRowsDocument
 }
 
 // For types that are supported through their own pages we return this helper in request-page
@@ -282,8 +280,8 @@ export interface EntityData {
   revisionId?: number
   title?: string
   schemaData?: SchemaData
-  content?: FrontendContentNode[]
-  licenseData?: LicenseData
+  content?: AnyEditorDocument | AnyEditorDocument[]
+  licenseId?: number
   courseData?: CourseData
   unrevisedRevisions?: number
   unrevisedCourseRevisions?: number
@@ -312,7 +310,7 @@ export interface RevisionData {
     title?: string
     metaTitle?: string
     metaDescription?: string
-    content?: FrontendContentNode[]
+    content?: AnyEditorDocument | AnyEditorDocument[]
     url?: string
   }
   currentRevision: {
@@ -320,7 +318,7 @@ export interface RevisionData {
     title?: string
     metaTitle?: string
     metaDescription?: string
-    content?: FrontendContentNode[]
+    content?: AnyEditorDocument | AnyEditorDocument[]
     url?: string
   }
   changes?: string
@@ -345,7 +343,6 @@ export enum UuidRevType {
   ExerciseGroup = 'ExerciseGroupRevision',
   GroupedExercise = 'GroupedExerciseRevision',
   Page = 'PageRevision',
-  Solution = 'SolutionRevision',
   Video = 'VideoRevision',
 }
 
@@ -361,7 +358,6 @@ export enum UuidType {
   ExerciseGroup = 'ExerciseGroup',
   GroupedExercise = 'GroupedExercise',
   Page = 'Page',
-  Solution = 'Solution',
   TaxonomyTerm = 'TaxonomyTerm',
   User = 'User',
   Video = 'Video',
@@ -372,7 +368,6 @@ export type UuidWithRevType = UuidRevType | UuidType
 // special inline types for author tools
 
 export enum ExerciseInlineType {
-  Solution = '_SolutionInline',
   ExerciseGroup = '_ExerciseGroupInline',
   Exercise = '_ExerciseInline',
 }
@@ -403,14 +398,14 @@ export interface SchemaData {
   setContentAsSection?: boolean
 }
 
-// A license notice.
-
+/**  License data without content for `license/details/…` page. */
 export interface LicenseData {
+  id: number // id of the license
   title: string
-  url: string // to to license
-  id: number // of the license
-  isDefault: boolean
+  url: string // to the license
+  isDefault?: boolean
   shortTitle?: string // show this if not default
+  agreement: string
 }
 
 // Data for a course page.
@@ -447,7 +442,7 @@ export interface UserPage extends EntityPageBase {
     imageUrl: string
     chatUrl?: string
     motivation?: string
-    description?: FrontendContentNode[] | null
+    description?: EditorRowsDocument | null
     lastLogin?: string | null
     date: string
     roles: { role: Role; instance: Instance | null }[]
@@ -476,7 +471,7 @@ export interface TaxonomyTermBase {
   applets: TaxonomyLink[]
   exercises: TaxonomyLink[]
   events: TaxonomyLink[]
-  description?: FrontendContentNode[]
+  description?: EditorRowsDocument
 }
 
 export interface TaxonomyLink {
@@ -502,7 +497,10 @@ export interface TaxonomyData extends TaxonomyTermBase {
   trashed: boolean
   taxonomyType: TaxonomyTermType
   subterms: TaxonomySubTerm[]
-  exercisesContent: (FrontendExerciseNode | FrontendExerciseGroupNode)[]
+  exercisesContent: (
+    | EditorExerciseDocument
+    | EditorTemplateExerciseGroupDocument
+  )[]
   licenseData?: LicenseData
 }
 

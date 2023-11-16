@@ -27,12 +27,13 @@ import {
   spoilerExample,
   textExExample,
 } from './education-plugin-examples'
-import { Geogebra } from '@/components/content/geogebra'
 import { FaIcon } from '@/components/fa-icon'
 import { UuidsProvider } from '@/contexts/uuids-context'
 import { tw } from '@/helper/tw'
+import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-export const h2Class =
+const h2Class =
   'text-center text-4xl leading-cozy tracking-tight font-extrabold'
 
 const categories = ['educational', 'basic'] as const
@@ -93,7 +94,11 @@ const pluginData = [
     icon: faCubes,
     description:
       'With the GeoGebra applet, moving or interactive graphics can be integrated into the content. You can create your own applet or choose from the huge free public applet collection on geogebra.org.',
-    example: <Geogebra id="d4eNMF5R" />,
+    example: (
+      <StaticRenderer
+        document={{ plugin: EditorPluginType.Geogebra, state: 'd4eNMF5R' }}
+      />
+    ),
     category: 'educational',
   },
   {

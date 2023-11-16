@@ -8,7 +8,7 @@ import {
   SetExerciseGroupInput,
   SetVideoInput,
 } from '@/fetcher/graphql-types/operations'
-import {
+import type {
   AppletSerializedState,
   ArticleSerializedState,
   CoursePageSerializedState,
@@ -18,9 +18,8 @@ import {
   TaxonomySerializedState,
   TextExerciseGroupSerializedState,
   TextExerciseSerializedState,
-  TextSolutionSerializedState,
   VideoSerializedState,
-} from '@/serlo-editor-integration/editor-response-to-state'
+} from '@/serlo-editor-integration/convert-editor-response-to-state'
 
 export interface OnSaveData {
   controls: {
@@ -55,7 +54,6 @@ export type SupportedTypesSerializedState =
   | EventSerializedState
   | TextExerciseSerializedState
   | TextExerciseGroupSerializedState
-  | TextSolutionSerializedState
   | VideoSerializedState
   | TextGroupedExerciseSerilizedState
 
@@ -80,7 +78,6 @@ export interface SetEntityMutationRunnerData {
 
 export type ChildFieldsData =
   | CoursePageSerializedState
-  | TextSolutionSerializedState
   | TextExerciseGroupSerializedState
   | TextExerciseSerializedState
   | TextGroupedExerciseSerilizedState

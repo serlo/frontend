@@ -20,11 +20,13 @@ export interface SentryGlobal {
 interface TriggerSentryData {
   message?: string
   code?: number
+  data?: unknown
 }
 
 export function triggerSentry({
   message = 'without message',
   code = 0,
+  data,
 }: TriggerSentryData) {
   // eslint-disable-next-line no-console
   console.error(message)
@@ -36,6 +38,7 @@ export function triggerSentry({
     windowWithSentry.Sentry?.addBreadcrumb({
       category: 'error message',
       message,
+      data,
       level: windowWithSentry.Sentry?.Severity?.Info || 'info',
     })
     windowWithSentry.Sentry?.captureException(new Error(`${code}: ${message}`))

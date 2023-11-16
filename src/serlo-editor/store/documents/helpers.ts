@@ -1,7 +1,7 @@
 import { ChildTreeNode } from './types'
 import { ROOT } from '../root/constants'
 import { DocumentState } from '../types'
-import type { StoreSerializeHelpers } from '@/serlo-editor/plugin'
+import type { ToStaticHelpers } from '@/serlo-editor/plugin'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
 export function getChildTree(
@@ -44,29 +44,29 @@ export function findChildTreeNodeParentById(
   return null
 }
 
-interface getSerializedDocumentArgs {
+interface getStaticDocumentArgs {
   documents: Record<string, DocumentState>
   id: string
   omitId?: boolean
 }
 
-export function getSerializedDocument({
+export function getStaticDocument({
   documents,
   id,
   omitId = false,
-}: getSerializedDocumentArgs) {
+}: getStaticDocumentArgs) {
   const document = documents[id]
   const plugin = editorPlugins.getByType(document.plugin)
 
-  const serializeHelpers: StoreSerializeHelpers = {
-    getDocument: (id: string) =>
-      getSerializedDocument({ documents, id, omitId }),
+  const toStaticHelpers: ToStaticHelpers = {
+    getStoreDocument: (id: string) =>
+      getStaticDocument({ documents, id, omitId }),
     omitId,
   }
 
   return {
     plugin: document.plugin,
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    state: plugin.state.serialize(document.state, serializeHelpers),
+    state: plugin.state.toStaticState(document.state, toStaticHelpers),
   }
 }

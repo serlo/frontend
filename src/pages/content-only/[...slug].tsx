@@ -9,7 +9,6 @@ import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { Topic } from '@/components/taxonomy/topic'
 import { SlugProps } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import { prettifyLinks } from '@/fetcher/prettify-links'
 import { requestPage } from '@/fetcher/request-page'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
@@ -50,13 +49,13 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
       authorization={pageData.authorization}
     >
       <LazyIframeResizer />
-      {pageData.metaData && (
+      {pageData.metaData ? (
         <HeadTags
           data={pageData.metaData}
           breadcrumbsData={pageData.breadcrumbsData}
           noindex
         />
-      )}
+      ) : null}
       <div className="relative">
         <MaxWidthDiv showNav={!!pageData.secondaryMenuData}>
           <main>{page}</main>
@@ -89,8 +88,6 @@ export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
   ) {
     return { notFound: true }
   }
-
-  await prettifyLinks(pageData)
 
   return {
     props: {

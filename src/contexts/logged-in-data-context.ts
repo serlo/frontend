@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react'
 
 import type { LoggedInData } from '@/data-types'
 
-export const LoggedInDataContext = createContext<LoggedInData | null>(null)
+const LoggedInDataContext = createContext<LoggedInData | null>(null)
 
 export const LoggedInDataProvider = LoggedInDataContext.Provider
 

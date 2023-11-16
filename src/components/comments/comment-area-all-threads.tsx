@@ -9,8 +9,8 @@ import { useState } from 'react'
 import { CommentAreaAllThreadsThread } from './comment-area-all-threads-thread'
 import { FaIcon } from '../fa-icon'
 import { Guard } from '../guard'
+import { InfoPanel } from '../info-panel'
 import { LoadingSpinner } from '../loading/loading-spinner'
-import { StaticInfoPanel } from '../static-info-panel'
 import { PleaseLogIn } from '../user/please-log-in'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -38,12 +38,12 @@ export function CommentAreaAllThreads() {
 
   return (
     <>
-      <StaticInfoPanel icon={faInfoCircle} type="info">
+      <InfoPanel icon={faInfoCircle} type="info">
         {replacePlaceholders(strings.comments.commentsOverviewExplanation, {
           break: <br />,
           instance: lang,
         })}
-      </StaticInfoPanel>
+      </InfoPanel>
       {lang === Instance.De && (
         <div className="mb-3 mt-[50px]">
           <FaIcon icon={faFilter} className="ml-2 mr-3" />
@@ -119,9 +119,9 @@ export function CommentAreaAllThreads() {
       <Guard data={commentData} error={error}>
         <>
           {auth === null ? (
-            <StaticInfoPanel icon={faWarning} type="warning">
+            <InfoPanel icon={faWarning} type="warning">
               <PleaseLogIn noWrapper />
-            </StaticInfoPanel>
+            </InfoPanel>
           ) : null}
           {renderThreads()}
           <div className="border-truegray-300 mx-side mt-24 h-24 border-t-2">

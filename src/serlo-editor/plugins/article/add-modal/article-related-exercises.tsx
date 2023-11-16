@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 
 import { SerloAddButton } from '../../../plugin/helpers/serlo-editor-button'
-import { InjectionRenderer } from '../../injection/renderer'
+import { InjectionStaticRenderer } from '../../injection/static'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -13,7 +13,7 @@ import {
 } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
-import { renderNested } from '@/schema/article-renderer'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface ArticleRelatedExercisesProps {
   exerciseFolderId: number
@@ -78,9 +78,9 @@ export function ArticleRelatedExercises({
 
     return (
       <div key={id} className="my-5 border-t-2 border-black py-5">
-        <InjectionRenderer
-          href={`/${id}`}
-          renderNested={(value, ...prefix) => renderNested(value, [], prefix)}
+        <InjectionStaticRenderer
+          plugin={EditorPluginType.Injection}
+          state={`/${id}`}
         />
         <SerloAddButton
           text={articleStrings.addModal.buttonAddType.replace(

@@ -1,18 +1,16 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import { gql } from 'graphql-request'
 import { useContext, useEffect, useState } from 'react'
 
 import { LocalStorageButton } from './local-storage-button'
 import { entity } from '../../serlo-editor/plugins/serlo-template-plugins/common/common'
 import { useHandleSave } from '../../serlo-editor/plugins/serlo-template-plugins/helpers/use-handle-save'
 import { SaveContext } from '../context/save-context'
-import { useGraphqlSwr } from '@/api/use-graphql-swr'
+import { InfoPanel } from '@/components/info-panel'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import type { DefaultLicenseAgreementQuery } from '@/fetcher/graphql-types/operations'
+import { getLicense } from '@/data/licenses/licenses-helpers'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { tw } from '@/helper/tw'
 import type { StateTypeReturnType } from '@/serlo-editor/plugin'
@@ -21,14 +19,14 @@ export interface SaveModalProps {
   open: boolean
   setOpen: (arg0: boolean) => void
   changes?: StateTypeReturnType<(typeof entity)['changes']>
-  license?: StateTypeReturnType<(typeof entity)['license']>
+  licenseId?: StateTypeReturnType<(typeof entity)['licenseId']>
   showSubscriptionOptions?: boolean
 }
 
 export function SaveModal({
   open,
   setOpen,
-  license,
+  licenseId,
   changes,
   showSubscriptionOptions,
 }: SaveModalProps) {
@@ -37,23 +35,21 @@ export function SaveModal({
     showSubscriptionOptions
   )
   const { userCanSkipReview, entityNeedsReview } = useContext(SaveContext)
-  const [agreement, setAgreement] = useState(false)
+  const [hasAgreedLicense, setHasAgreedLicense] = useState(false)
   const [notificationSubscription, setNotificationSubscription] = useState(true)
   const [emailSubscription, setEmailSubscription] = useState(true)
   const [skipReview, setSkipReview] = useState(false)
   const [changesText, setChangesText] = useState(changes?.value ?? '?')
   const [fireSave, setFireSave] = useState(false)
   const [highlightMissingFields, setHighlightMissingFields] = useState(false)
-  const { lang } = useInstanceData()
-  const defaultLicenseAgreement =
-    useLicensesFetch(lang).data?.license.defaultLicense.agreement
+  const { licenses } = useInstanceData()
 
-  const licenseAccepted = !license || agreement
+  const licenseAccepted = !licenseId || hasAgreedLicense
   const changesFilled = !changes || changesText
   const maySave = licenseAccepted && changesFilled
   const showSkipCheckout = userCanSkipReview && entityNeedsReview
   const isOnlyText =
-    !showSkipCheckout && !showSubscriptionOptions && !license && !changes
+    !showSkipCheckout && !showSubscriptionOptions && !licenseId && !changes
 
   useEffect(() => {
     if (fireSave) {
@@ -164,12 +160,12 @@ export function SaveModal({
   function renderAlert() {
     if (!hasError) return null
     return (
-      <StaticInfoPanel type="warning" icon={faExclamationCircle}>
+      <InfoPanel type="warning" icon={faExclamationCircle}>
         {editorStrings.errorSaving}
         <br />
         {editorStrings.saveLocallyAndRefresh}
         <LocalStorageButton open={open} />
-      </StaticInfoPanel>
+      </InfoPanel>
     )
   }
 
@@ -215,12 +211,11 @@ export function SaveModal({
   }
 
   function renderLicense() {
-    if (!license) return null
-
-    const licenseAgreement =
-      license && license.defined
-        ? license.agreement.value.replace(/<a href/g, '<a target="_blank" href')
-        : defaultLicenseAgreement
+    if (licenseId === undefined) return null
+    const licenseAgreement = getLicense(
+      licenses,
+      licenseId?.defined ? licenseId.value : undefined
+    ).agreement.replace(/<a href/g, '<a target="_blank" href')
 
     if (!licenseAgreement) return null
 
@@ -233,10 +228,10 @@ export function SaveModal({
       >
         <input
           type="checkbox"
-          checked={agreement}
+          checked={hasAgreedLicense}
           onChange={(e) => {
             const { checked } = e.target as HTMLInputElement
-            setAgreement(checked)
+            setHasAgreedLicense(checked)
           }}
         />{' '}
         <span
@@ -277,24 +272,4 @@ export function SaveModal({
       </>
     )
   }
-}
-
-const licensesQuery = gql`
-  query defaultLicenseAgreement($instance: Instance!) {
-    license {
-      defaultLicense(instance: $instance) {
-        agreement
-      }
-    }
-  }
-`
-
-function useLicensesFetch(instance: string) {
-  return useGraphqlSwr<DefaultLicenseAgreementQuery>({
-    query: licensesQuery,
-    variables: { instance },
-    config: {
-      refreshInterval: 24 * 60 * 60 * 1000, // day
-    },
-  })
 }

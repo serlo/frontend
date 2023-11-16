@@ -83,7 +83,8 @@ export function Flow<T extends SubmitPayload>({
         if (
           node.attributes.type === 'hidden' ||
           node.attributes.type === 'submit' ||
-          node.attributes.type === 'button'
+          node.attributes.type === 'button' ||
+          node.attributes.type === 'checkbox'
         ) {
           values[getNodeId(node)] = node.attributes.value
         }

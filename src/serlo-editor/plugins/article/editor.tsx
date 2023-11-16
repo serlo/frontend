@@ -9,7 +9,7 @@ import { ArticleRenderer } from './renderer'
 import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
-export function ArticleEditor({ editable, state }: ArticleProps) {
+export function ArticleEditor({ state }: ArticleProps) {
   const {
     introduction,
     content,
@@ -25,24 +25,22 @@ export function ArticleEditor({ editable, state }: ArticleProps) {
   return (
     <>
       <ArticleRenderer
-        introduction={introduction.render()}
-        content={content.render()}
+        introduction={<div>{introduction.render()}</div>}
+        content={<div data-qa="plugin-article-content">{content.render()}</div>}
         exercises={
           <>
-            <ArticleExercises exercises={exercises} editable={editable} />
+            <ArticleExercises exercises={exercises} />
             {renderButton(modalStrings.buttonEx)}
           </>
         }
         exercisesFolder={
           <>
-            {editable || exerciseFolder.title.value ? (
-              <a
-                className="serlo-link font-bold"
-                href={`/${exerciseFolder.id.value}`}
-              >
-                {exerciseFolder.title.value}
-              </a>
-            ) : null}{' '}
+            <a
+              className="serlo-link font-bold"
+              href={`/${exerciseFolder.id.value}`}
+            >
+              {exerciseFolder.title.value}
+            </a>{' '}
             <span className="-ml-1 -mt-3 inline-block">
               {renderButton(modalStrings.buttonExFolder, true)}
             </span>
@@ -50,37 +48,23 @@ export function ArticleEditor({ editable, state }: ArticleProps) {
         }
         relatedContent={{
           articles: relatedContent.articles.length ? (
-            <ArticleRelatedContentSection
-              data={relatedContent.articles}
-              editable={editable}
-            />
+            <ArticleRelatedContentSection data={relatedContent.articles} />
           ) : null,
           courses: relatedContent.courses.length ? (
-            <ArticleRelatedContentSection
-              data={relatedContent.courses}
-              editable={editable}
-            />
+            <ArticleRelatedContentSection data={relatedContent.courses} />
           ) : null,
           videos: relatedContent.videos.length ? (
-            <ArticleRelatedContentSection
-              data={relatedContent.videos}
-              editable={editable}
-            />
+            <ArticleRelatedContentSection data={relatedContent.videos} />
           ) : null,
         }}
         relatedContentExtra={renderButton(modalStrings.buttonContent)}
-        sources={<ArticleSources editable={editable} sources={sources} />}
+        sources={<ArticleSources sources={sources} />}
       />
-
-      {/*  ?? {renderButton(modalStrings.buttonContent)} */}
-
-      {editable && (
-        <ArticleAddModal
-          data={state}
-          open={modalOpen}
-          setModalOpen={setModalOpen}
-        />
-      )}
+      <ArticleAddModal
+        data={state}
+        open={modalOpen}
+        setModalOpen={setModalOpen}
+      />
     </>
   )
 

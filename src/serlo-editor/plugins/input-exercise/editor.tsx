@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import type { InputExerciseProps } from '.'
-import { InputExerciseRenderer } from './renderer'
+import { InputExerciseStaticRenderer } from './static'
 import { InputExerciseToolbar } from './toolbar'
 import {
   AddButton,
@@ -10,14 +10,19 @@ import {
 } from '../../editor-ui'
 import {
   focus,
-  selectIsDocumentEmpty,
+  selectFocused,
+  selectStaticDocument,
   store,
   useAppDispatch,
+  useAppSelector,
 } from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorInputExerciseDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export function InputExerciseEditor(props: InputExerciseProps) {
-  const { editable, state, id } = props
+  const { state, id, focused } = props
+  const { answers } = state
   const inputExStrings = useEditorStrings().templatePlugins.inputExercise
 
   const dispatch = useAppDispatch()
@@ -25,40 +30,47 @@ export function InputExerciseEditor(props: InputExerciseProps) {
   const [previewActive, setPreviewActive] = useState(false)
   const newestAnswerRef = useRef<HTMLInputElement>(null)
 
-  const renderer = (
-    <InputExerciseRenderer
-      type={state.type.value}
-      unit={state.unit.value}
-      answers={state.answers.map(({ isCorrect, value, feedback }) => {
-        const isEmptyFeedback = selectIsDocumentEmpty(
-          store.getState(),
-          feedback.id
-        )
-        return {
-          isCorrect: isCorrect.value,
-          value: value.value,
-          feedback: isEmptyFeedback ? null : feedback.render(),
-        }
-      })}
-    />
+  const staticDocument = useAppSelector(
+    (storeState) =>
+      selectStaticDocument(storeState, id) as EditorInputExerciseDocument
   )
 
-  if (!editable) return renderer
+  function overwriteFocus(force?: boolean) {
+    setTimeout(() => {
+      if (force) dispatch(focus(id))
+      newestAnswerRef.current?.focus()
+      // Needs to wait for the editor focus to finish and then overwrite it. It's definitely a hack, but it works so far.
+      // 50 is arbitrary value that seems to work nicely (10 was to low for firefox in my testing)
+    }, 50)
+  }
+
+  // overwrite focus on first render
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => overwriteFocus, [])
+
+  const isAnyAnswerFocused = answers.some(
+    ({ feedback }) => feedback.id === selectFocused(store.getState())
+  )
+
+  const showUi = focused || isAnyAnswerFocused
 
   return (
     <div className="mb-12 mt-24 pt-4">
-      <InputExerciseToolbar
-        {...props}
-        previewActive={previewActive}
-        setPreviewActive={setPreviewActive}
-      />
-      <PreviewOverlaySimple active={previewActive}>
-        {renderer}
+      {showUi ? (
+        <InputExerciseToolbar
+          {...props}
+          previewActive={previewActive}
+          setPreviewActive={setPreviewActive}
+        />
+      ) : null}
+
+      <PreviewOverlaySimple previewActive={previewActive} fullOpacity={!showUi}>
+        <InputExerciseStaticRenderer {...staticDocument} />
       </PreviewOverlaySimple>
-      {!previewActive && (
+      {!previewActive && showUi ? (
         <>
-          {state.answers.map((answer, index: number) => {
-            const isLast = index === state.answers.length - 1
+          {answers.map((answer, index: number) => {
+            const isLast = index === answers.length - 1
             return (
               <InteractiveAnswer
                 key={answer.feedback.id}
@@ -80,27 +92,25 @@ export function InputExerciseEditor(props: InputExerciseProps) {
                 handleChange={() =>
                   answer.isCorrect.set(!answer.isCorrect.value)
                 }
-                remove={() => state.answers.remove(index)}
+                remove={() => answers.remove(index)}
               />
             )
           })}
           <AddButton
             onClick={() => {
-              state.answers.insert()
-              setTimeout(() => {
-                dispatch(focus(id))
-                newestAnswerRef.current?.focus()
-                // this needs to wait for the editor focus to finish
-                // and then overwrite it. It's definitely a hack.
-                // 50 is arbitrary value that seems to work nicely.
-                // 10 was to low for firefox in my testing
-              }, 50)
+              const wrongAnswer = {
+                value: '',
+                isCorrect: false,
+                feedback: { plugin: EditorPluginType.Text },
+              }
+              answers.insert(undefined, wrongAnswer)
+              overwriteFocus(true)
             }}
           >
             {inputExStrings.addAnswer}
           </AddButton>
         </>
-      )}
+      ) : null}
     </div>
   )
 }

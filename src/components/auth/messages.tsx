@@ -1,7 +1,7 @@
 import { faInfoCircle, faWarning } from '@fortawesome/free-solid-svg-icons'
 import { UiText } from '@ory/client'
 
-import { StaticInfoPanel } from '../static-info-panel'
+import { InfoPanel } from '../info-panel'
 import { Message } from '@/components/auth/message'
 
 export interface MessagesProps {
@@ -18,14 +18,14 @@ export function Messages({ messages }: MessagesProps) {
             const panelType = type === 'info' ? 'info' : 'warning'
 
             return (
-              <StaticInfoPanel
+              <InfoPanel
                 key={id}
                 type={panelType}
                 icon={type === 'info' ? faInfoCircle : faWarning}
               >
                 {' '}
                 <Message uiText={uiText} />
-              </StaticInfoPanel>
+              </InfoPanel>
             )
           })
         : null}

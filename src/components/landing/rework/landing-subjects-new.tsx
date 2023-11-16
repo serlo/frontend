@@ -68,7 +68,9 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
             font-size: 1.3rem;
             line-height: normal;
             width: auto;
-            transition: color 0.4s ease, background-color 0.4s ease;
+            transition:
+              color 0.4s ease,
+              background-color 0.4s ease;
           }
 
           @media (max-width: 799) {

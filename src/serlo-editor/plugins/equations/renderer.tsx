@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { Fragment, type ReactNode } from 'react'
 
-import { Sign, renderSignToString } from './sign'
+import { Sign, signStrings } from './sign'
 
 export interface EquationsRendererStep {
   left: string
@@ -45,10 +45,7 @@ export function EquationsRenderer({
               'text-right'
             )}
           {transformationTarget !== 'term' || i !== 0 ? (
-            renderTD(
-              formulaRenderer(renderSignToString(step.sign)),
-              'text-center'
-            )
+            renderTD(formulaRenderer(signStrings[step.sign]), 'text-center')
           ) : (
             <td />
           )}

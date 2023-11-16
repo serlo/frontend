@@ -1,7 +1,7 @@
 import { TopicCategories } from './topic-categories'
 import { Link } from '@/components/content/link'
 import { TaxonomySubTerm } from '@/data-types'
-import { renderArticle } from '@/schema/article-renderer'
+import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 
 export interface SubTopicProps {
   data: TaxonomySubTerm
@@ -10,7 +10,7 @@ export interface SubTopicProps {
   hideTitle?: boolean
 }
 
-export function SubTopic({ data, subid, id, hideTitle }: SubTopicProps) {
+export function SubTopic({ data, subid, hideTitle }: SubTopicProps) {
   return (
     <>
       {hideTitle ? null : (
@@ -23,8 +23,7 @@ export function SubTopic({ data, subid, id, hideTitle }: SubTopicProps) {
         <div className="flex-[1_1_40%]">
           {' '}
           <div className="mt-6 sm:mb-5">
-            {data.description &&
-              renderArticle(data.description, `tax${id}`, `subtopic${subid}`)}
+            <StaticRenderer document={data.description} />
           </div>
         </div>
 

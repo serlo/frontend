@@ -26,8 +26,8 @@ export function SubjectLandingContent({
   subject,
 }: SubjectLandingContentProps) {
   const { lang } = useInstanceData()
-
   if (lang !== Instance.De) return null
+
   const instanceData = getServerSideStrings(lang)
 
   const data = deSubjectLandingData[subject]

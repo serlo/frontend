@@ -3,12 +3,7 @@ import clsx from 'clsx'
 import type { BoxProps } from '.'
 import { EmptyWarning } from './components/empty-warning'
 import { TypeChooserBox } from './components/type-chooser-box'
-import {
-  type BoxType,
-  BoxRenderer,
-  boxTypeStyle,
-  defaultStyle,
-} from './renderer'
+import { type BoxType, BoxRenderer } from './renderer'
 import { BoxToolbar } from './toolbar'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
@@ -22,23 +17,18 @@ const titleFormattingOptions = [
 ]
 
 export function BoxEditor(props: BoxProps) {
-  const { focused, editable } = props
+  const { focused } = props
   const { title, type, content, anchorId } = props.state
+
   const hasNoType = type.value === ''
   const typedValue = (hasNoType ? 'blank' : type.value) as BoxType
 
-  const style = boxTypeStyle[typedValue]
-  const borderColorClass = Object.hasOwn(style, 'borderColorClass')
-    ? style.borderColorClass
-    : defaultStyle.borderColorClass
+  const editorStrings = useEditorStrings()
 
   const contentId = content.get()
   const isEmptyContent = useAppSelector((state) =>
     selectIsEmptyRows(state, contentId)
   )
-
-  const editorStrings = useEditorStrings()
-
   const isTitleFocused = useAppSelector((state) =>
     selectIsFocused(state, title.id)
   )
@@ -47,26 +37,35 @@ export function BoxEditor(props: BoxProps) {
 
   if (hasNoType) {
     return (
-      <TypeChooserBox typeState={type} borderColorClass={borderColorClass} />
+      <div data-qa="plugin-box">
+        <TypeChooserBox typeState={type} />
+      </div>
     )
   }
 
+  const titleConfig = {
+    config: {
+      placeholder: editorStrings.plugins.box.titlePlaceholder,
+      formattingOptions: titleFormattingOptions,
+      isInlineChildEditor: true,
+    },
+  }
+
   return (
-    <>
+    <div data-qa="plugin-box">
       {showToolbar ? <BoxToolbar {...props} /> : null}
 
       <div
         className={clsx(
           showToolbar && '[&>figure]:rounded-t-none',
           'transition-opacity',
-          editable && isEmptyContent && 'opacity-30 focus-within:opacity-100',
+          isEmptyContent && 'opacity-30 focus-within:opacity-100',
           showToolbar && '!opacity-100 ',
           '[&:focus-within_.box-warning]:hidden',
           // making space for first toolbar, not wysiwyg
           '[&>figure>figcaption]:!mb-9',
           // toolbar finetuning
-          editable &&
-            tw`
+          tw`
             [&_.plugin-toolbar]:ml-[-2px]
             [&_.plugin-toolbar]:mr-[-16px]
             [&_.plugin-toolbar]:rounded-none
@@ -75,24 +74,24 @@ export function BoxEditor(props: BoxProps) {
         )}
       >
         {isEmptyContent && !showToolbar ? <EmptyWarning /> : null}
+
         <BoxRenderer
           boxType={typedValue}
           title={
-            <div className="-ml-1 inline-block max-h-6 min-w-[15rem] font-bold">
-              {title.render({
-                config: {
-                  placeholder: editorStrings.plugins.box.titlePlaceholder,
-                  formattingOptions: titleFormattingOptions,
-                  isInlineChildEditor: true,
-                },
-              })}
+            <div
+              className="-ml-1 inline-block max-h-6 min-w-[15rem] font-bold"
+              data-qa="plugin-box-title"
+            >
+              {title.render(titleConfig)}
             </div>
           }
           anchorId={anchorId.value}
         >
-          <div className="-ml-3 px-side">{content.render()}</div>
+          <div className="-ml-3 px-side" data-qa="plugin-box-content">
+            {content.render()}
+          </div>
         </BoxRenderer>
       </div>
-    </>
+    </div>
   )
 }

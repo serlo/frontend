@@ -11,7 +11,7 @@ import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { isTempFile, usePendingFileUploader } from '@/serlo-editor/plugin'
-import { selectHasFocusedChild, useAppSelector } from '@/serlo-editor/store'
+import { selectIsFocused, useAppSelector } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const captionFormattingOptions = [
@@ -22,7 +22,7 @@ const captionFormattingOptions = [
 ]
 
 export function ImageEditor(props: ImageProps) {
-  const { editable, focused, state, config } = props
+  const { focused, state, config } = props
   const imageStrings = useEditorStrings().plugins.image
 
   const [showSettingsModal, setShowSettingsModal] = useState(false)
@@ -30,9 +30,12 @@ export function ImageEditor(props: ImageProps) {
 
   usePendingFileUploader(state.src, config.upload)
 
-  const isCaptionFocused = useAppSelector((storeState) =>
-    selectHasFocusedChild(storeState, props.id)
-  )
+  const isCaptionFocused = useAppSelector((storeState) => {
+    return state.caption.defined
+      ? selectIsFocused(storeState, state.caption.id)
+      : false
+  })
+
   const hasFocus = focused || isCaptionFocused
   const isLoading = isTempFile(state.src.value) && !state.src.value.loaded
 
@@ -42,20 +45,20 @@ export function ImageEditor(props: ImageProps) {
   const urlInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    if (editable && !state.caption.defined) {
+    if (!state.caption.defined) {
       state.caption.create({ plugin: EditorPluginType.Text })
     }
-  }, [editable, state.caption])
+  }, [state.caption])
 
   useEffect(() => {
     setShowInlineImageUrl(!state.src.value)
     // updatating when src changes could hide input while you are typing so:
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editable, focused])
+  }, [focused])
 
   useEffect(() => {
     // manually set focus to url after creating plugin
-    if (editable && focused) {
+    if (focused) {
       setTimeout(() => {
         urlInputRef.current?.focus()
       })

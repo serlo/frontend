@@ -38,9 +38,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           const parent = selectChildTreeOfParent(store.getState(), id)
           if (parent) dispatch(focus(parent.id))
         } else {
-          // prevents parents from stealing focus of children
-          if (document?.plugin === 'exercise') return
-
           // default focus dispatch
           dispatch(focus(id))
         }
@@ -83,6 +80,11 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     if (!plugin) {
       // eslint-disable-next-line no-console
       console.warn('SubDocumentEditor -> Plugin does not exist')
+      return null
+    }
+    if (!document.plugin) {
+      // eslint-disable-next-line no-console
+      console.warn('SubDocumentEditor -> Document is invalid')
       return null
     }
 
@@ -141,7 +143,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         <plugin.Component
           containerRef={containerRef}
           id={id}
-          editable
           focused={focused}
           config={config}
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

@@ -27,25 +27,25 @@ export interface StateType<S = any, T = any, R = any> {
    * @param helpers - helpers (e.g. to insert a document in the store)
    * @returns initial state
    */
-  createInitialState(helpers: StoreDeserializeHelpers): T
+  createInitialState(helpers: ToStoreHelpers): T
 
   /**
-   * Deserializes a serialized state
+   * Converts a static state into a store state
    *
-   * @param serialized - serialized state to deserialize
+   * @param staticState - static state or document to convert
    * @param helpers - helpers (e.g. to insert an document in the store)
-   * @returns deserialized state
+   * @returns store state
    */
-  deserialize(serialized: S, helpers: StoreDeserializeHelpers): T
+  toStoreState(staticState: S, helpers: ToStoreHelpers): T
 
   /**
-   * Serializes a state
+   * Converts a store state to a static state
    *
-   * @param deserialized - state to serialize
-   * @param helpers - helpers (e.g. to serialize an document)
-   * @returns serialized state
+   * @param storeState - state to convert
+   * @param helpers - helpers (e.g. to convert a state)
+   * @returns static state
    */
-  serialize(deserialized: T, helpers: StoreSerializeHelpers): S
+  toStaticState(storeState: T, helpers: ToStaticHelpers): S
 
   /**
    * Gives the editor information about the children of the plugin (e.g. to build the document tree)
@@ -63,10 +63,7 @@ export interface StateType<S = any, T = any, R = any> {
  * @param helpers - helpers (e.g. to insert an document in the store)
  * @returns new state
  */
-export type StateUpdater<T> = (
-  previousState: T,
-  helpers: StoreDeserializeHelpers
-) => T
+export type StateUpdater<T> = (previousState: T, helpers: ToStoreHelpers) => T
 
 /**
  * Describes an asynchronous state update
@@ -92,21 +89,21 @@ export interface FocusableChild {
 }
 
 /**
- * Maps a [[StateType]] to the type of its serialized state
+ * Maps a [[StateType]] to the type of its static state
  *
  */
-export type StateTypeSerializedType<D extends StateType> = D extends StateType<
+export type StateTypeStaticType<D extends StateType> = D extends StateType<
   infer S
 >
   ? S
   : never
 
-export type StateTypesSerializedType<Ds extends Record<string, StateType>> = {
-  [K in keyof Ds]: StateTypeSerializedType<Ds[K]>
+export type StateTypesStaticType<Ds extends Record<string, StateType>> = {
+  [K in keyof Ds]: StateTypeStaticType<Ds[K]>
 }
 
 /**
- * Maps a [[StateType]] to the type of its deserialized state
+ * Maps a [[StateType]] to the type of its store state
  *
  */
 export type StateTypeValueType<D extends StateType> = D extends StateType<
@@ -138,13 +135,10 @@ export type StateTypesReturnType<Ds extends Record<string, StateType>> = {
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
 /**
- * Helpers to be used by a [[StateType]] when working with a serialized state
+ * Helpers to be used by a [[StateType]] when working with a static state
  *
  */
-export interface StoreDeserializeHelpers<
-  K extends string = string,
-  S = unknown
-> {
+export interface ToStoreHelpers<K extends string = string, S = unknown> {
   /**
    * Inserts a document into the store
    *
@@ -154,17 +148,17 @@ export interface StoreDeserializeHelpers<
 }
 
 /**
- * Helpers to be used by a [[StateType]] when working with a deserialized state
+ * Helpers to be used by a [[StateType]] when working with a store state
  *
  */
-export interface StoreSerializeHelpers<K extends string = string, S = unknown> {
+export interface ToStaticHelpers<K extends string = string, S = unknown> {
   /**
    * Retrieves a document from the store
    *
    * @param id - id of the document
    * @returns the document if it exists, `null` otherwise
    */
-  getDocument(id: string): { plugin: K; state?: S } | null
+  getStoreDocument(id: string): { plugin: K; state?: S } | null
   omitId?: boolean
 }
 

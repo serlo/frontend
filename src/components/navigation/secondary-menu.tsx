@@ -59,7 +59,7 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
             return (
               <li className="mb-1.5" key={entry.title}>
                 <Link
-                  href={entry.url}
+                  href={entry.url ?? `/${entry.id}`}
                   className="group block py-1 hover:no-underline"
                   noExternalIcon
                 >

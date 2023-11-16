@@ -6,6 +6,7 @@ import {
   RevisionPreviewBoxes,
   type RevisionPreviewBoxesProps,
 } from './revision-preview-boxes'
+import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { UserTools } from '@/components/user-tools/user-tools'
@@ -14,15 +15,16 @@ import { type RevisionData, UuidRevType } from '@/data-types'
 import { removeHash } from '@/helper/remove-hash'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
-import { renderNested } from '@/schema/article-renderer'
-import { InjectionRenderer } from '@/serlo-editor/plugins/injection/renderer'
+import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { InjectionStaticRenderer } from '@/serlo-editor/plugins/injection/static'
+import { createRenderers } from '@/serlo-editor-integration/create-renderers'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export interface RevisionProps {
   data: RevisionData
 }
 
 export function Revision({ data }: RevisionProps) {
-  // const auth = useAuthentication()
   const { strings } = useInstanceData()
   const isCurrentRevision = data.thisRevision.id === data.currentRevision.id
   const hasCurrentRevision = data.currentRevision.id !== undefined
@@ -30,6 +32,7 @@ export function Revision({ data }: RevisionProps) {
   const [displayMode, setDisplayMode] = useState<DisplayModes>(
     DisplayModes.This
   )
+  editorRenderers.init(createRenderers())
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -122,11 +125,9 @@ export function Revision({ data }: RevisionProps) {
 
   function renderExercisePreview() {
     if (
-      ![
-        UuidRevType.Solution,
-        UuidRevType.ExerciseGroup,
-        UuidRevType.GroupedExercise,
-      ].includes(data.typename) ||
+      ![UuidRevType.ExerciseGroup, UuidRevType.GroupedExercise].includes(
+        data.typename
+      ) ||
       data.repository.parentId === undefined
     )
       return null
@@ -155,10 +156,7 @@ export function Revision({ data }: RevisionProps) {
           {char && (
             <span className="mx-side mb-10 inline-block bg-editor-primary-100 px-1">
               {replacePlaceholders(strings.revisions.positionForGrouped, {
-                exercise_or_solution:
-                  data.typename === UuidRevType.GroupedExercise
-                    ? strings.content.exercises.task
-                    : strings.entities.solution,
+                exercise: strings.content.exercises.task,
                 title: (
                   <b>
                     {strings.entities.groupedExercise} {char}
@@ -167,10 +165,12 @@ export function Revision({ data }: RevisionProps) {
               })}{' '}
             </span>
           )}
-          <InjectionRenderer
-            href={`/${parentId}`}
-            renderNested={(value, ...prefix) => renderNested(value, [], prefix)}
-          />
+          <Lazy>
+            <InjectionStaticRenderer
+              plugin={EditorPluginType.Injection}
+              state={parentId.toString()}
+            />
+          </Lazy>
         </div>
       </>
     )

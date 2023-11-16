@@ -80,7 +80,7 @@ function InternalLink({
     const isAnchor = _href.startsWith('#') || _href.startsWith('/#')
     const isMailto = _href.startsWith('mailto:')
     // pathname maps to the page that rendered the site, this is more reliable
-    const isContentOnly = router.pathname.startsWith('/content-only/') //router.pathname
+    const isContentOnly = router.pathname.startsWith('/content-only/')
 
     if (isAnchor || isMailto || isSerloSubdomain || isExternal || isContentOnly)
       return { parsedHref: href, clientSide: false, isExternal, isContentOnly }
@@ -110,7 +110,8 @@ function InternalLink({
   }
 
   function renderDefaultLink(_href: string) {
-    const openBlank = unreviewed && isExternal
+    const isOnProfile = router.pathname.startsWith('/user/')
+    const openBlank = (unreviewed || isOnProfile) && isExternal
     return (
       // eslint-disable-next-line react/jsx-no-target-blank
       <a

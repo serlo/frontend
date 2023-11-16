@@ -1,9 +1,17 @@
-import { Entity, Subscription, TaxonomyTerm, Uuid } from '@serlo/authorization'
+import { faWandSparkles } from '@fortawesome/free-solid-svg-icons'
+import {
+  Entity,
+  Subscription,
+  TaxonomyTerm,
+  Uuid,
+  UuidType as AuthUuidType,
+} from '@serlo/authorization'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
 import { SubItem } from './sub-item'
 import { useCanDo } from '@/auth/use-can-do'
+import { useAiWizard } from '@/contexts/ai-wizard-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
@@ -14,6 +22,7 @@ import {
 } from '@/data-types'
 import { Instance, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
+import { isProduction } from '@/helper/is-production'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
@@ -23,14 +32,13 @@ import { useSubscriptionSetMutation } from '@/mutations/use-subscription-set-mut
 export enum Tool {
   Abo = 'abo',
   ChangeLicense = 'changeLicense',
-  CopyItems = 'copyItems',
+  MoveOrCopyItems = 'moveOrCopyItems',
   Curriculum = 'curriculum',
   Edit = 'edit',
   EditTax = 'editTax',
   UnrevisedEdit = 'unrevisedEdit',
   History = 'history',
   Log = 'log',
-  MoveItems = 'moveItems',
   NewEntitySubmenu = 'newEntitySubmenu',
   Separator = 'separator',
   SortCoursePages = 'sortCoursePages',
@@ -57,6 +65,7 @@ export interface AuthorToolsData {
   alias?: string
   taxonomyType?: TaxonomyTermType
   revisionId?: number
+  title?: string
   parentId?: number
   courseId?: number
   grouped?: boolean
@@ -86,6 +95,8 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
   const router = useRouter()
   const canDo = useCanDo()
+
+  const { showWizard, canUseAiFeatures } = useAiWizard()
 
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings
@@ -145,7 +156,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       url: `/taxonomy/term/sort/entities/${data.id}`,
       canDo: canDo(Entity.orderChildren),
     },
-    copyItems: {
+    moveOrCopyItems: {
       url: `/taxonomy/term/copy/batch/${data.id}`,
       canDo: canDo(TaxonomyTerm.change),
     },
@@ -153,20 +164,26 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       url: `/entity/license/update/${data.id}`,
       canDo: canDo(Entity.updateLicense),
     },
-    moveItems: {
-      url: `/taxonomy/term/move/batch/${data.id}`,
-      canDo: canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild),
-    },
     directLink: {
       title: loggedInStrings.authorMenu.directLink,
       url: `/${data.id}`,
       canDo: true,
     },
-    analyticsLink: {
-      title: loggedInStrings.authorMenu.analyticsLink,
-      url: `https://simpleanalytics.com/${lang}.serlo.org${data.alias ?? ''}`,
-      canDo: canDo(Uuid.delete('Page')) && data.alias,
-    },
+    analyticsLink:
+      data.taxonomyType === TaxonomyTermType.ExerciseFolder &&
+      lang === Instance.De
+        ? {
+            title: 'Daten-Dashboard für Ordner anzeigen',
+            url: `/___exercise_folder_dashboard/${data.id}`,
+            canDo: canDo(Uuid.create('Entity')),
+          }
+        : {
+            title: loggedInStrings.authorMenu.analyticsLink,
+            url: `https://simpleanalytics.com/${lang}.serlo.org${
+              data.alias ?? ''
+            }`,
+            canDo: canDo(Uuid.delete('Page')) && data.alias,
+          },
   } as ToolsConfig
 
   return (
@@ -267,7 +284,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
     const allowedTypes: Record<
       TaxonomyTermType,
-      (UuidType | TaxonomyTermType)[]
+      (UuidType | TaxonomyTermType | 'AI')[]
     > = {
       topic: [
         UuidType.Article,
@@ -278,7 +295,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         TaxonomyTermType.Topic,
         TaxonomyTermType.ExerciseFolder,
       ],
-      exerciseFolder: [UuidType.Exercise, UuidType.ExerciseGroup],
+      exerciseFolder: [UuidType.Exercise, UuidType.ExerciseGroup, 'AI'],
       subject: [TaxonomyTermType.Topic],
       root: [TaxonomyTermType.Subject],
     }
@@ -289,6 +306,23 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       (lang !== Instance.De && router.asPath.startsWith('/community'))
 
     const entries = allowedTypes[data.taxonomyType].map((entityType) => {
+      if (entityType === 'AI') {
+        // For now, we don't allow the AI feature to make it into production until
+        // the testing is done
+        if (!canUseAiFeatures || isProduction) {
+          return null
+        }
+
+        return (
+          <SubItem
+            key="ai"
+            title={loggedInStrings.ai.exerciseGeneration.buttonTitle}
+            onClick={showWizard}
+            icon={faWandSparkles}
+          />
+        )
+      }
+
       if (entityType === UuidType.Event && !shouldRenderEvents) return null
 
       const title = getTranslatedType(strings, entityType)
@@ -328,8 +362,9 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 }
 
-function typeToAuthorizationType(type: string) {
-  if ([UuidType.Page, UuidRevType.Page].includes(type as UuidType)) return type
+function typeToAuthorizationType(type: AuthorToolsData['type']): AuthUuidType {
+  if (type === UuidType.Page) return 'Page'
+  if (type === UuidRevType.Page) return 'PageRevision'
   if (type.includes('Revision')) return 'EntityRevision'
   return 'Entity'
 }

@@ -1,12 +1,15 @@
 import { faInfoCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { Entity } from '@serlo/authorization'
 import { NextPage } from 'next'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
 import { useAuthentication } from '@/auth/use-authentication'
+import { useCanDo } from '@/auth/use-can-do'
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
-import { StaticInfoPanel } from '@/components/static-info-panel'
+import { InfoPanel } from '@/components/info-panel'
+import { TimeAgo } from '@/components/time-ago'
 import { Events } from '@/components/user/events'
 import { ProfileActivityGraphs } from '@/components/user/profile-activity-graphs'
 import { ProfileBadges } from '@/components/user/profile-badges'
@@ -17,7 +20,10 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
-import { renderArticle } from '@/schema/article-renderer'
+import { isProduction } from '@/helper/is-production'
+import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 export interface ProfileProps {
   userData: UserPage['userData']
@@ -26,6 +32,9 @@ export interface ProfileProps {
 export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const { strings, lang } = useInstanceData()
   const auth = useAuthentication()
+  const canDo = useCanDo()
+
+  editorRenderers.init(createRenderers())
 
   const {
     id,
@@ -136,13 +145,13 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
       <section>
         <h2 className="serlo-h2">{strings.profiles.aboutMe}</h2>
         {isUserWithoutActivities && isOwnProfile ? (
-          <StaticInfoPanel icon={faInfoCircle}>
+          <InfoPanel icon={faInfoCircle}>
             {strings.profiles.lockedDescriptionTitle}
             <br />
             {strings.profiles.lockedDescriptionText}
-          </StaticInfoPanel>
+          </InfoPanel>
         ) : (
-          renderArticle(description, `profile${id}`)
+          <StaticRenderer document={description} />
         )}
       </section>
     )
@@ -167,16 +176,17 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   }
 
   function renderRoles() {
+    const showLastLogin = !isProduction || canDo(Entity.checkoutRevision)
+
     return (
       <aside className="mx-side mt-20 text-sm text-gray-500">
         <ProfileRoles roles={userData.roles} />
-        {/* Temporarily hidden:
-        {lastLoginDate && (
+        {showLastLogin && userData.lastLogin ? (
           <p>
             {strings.profiles.lastLogin}:{' '}
-            <TimeAgo className="pl-2 font-bold" datetime={lastLoginDate} />
+            <TimeAgo className="pl-2 font-bold" datetime={userData.lastLogin} />
           </p>
-        )} */}
+        ) : null}
       </aside>
     )
   }

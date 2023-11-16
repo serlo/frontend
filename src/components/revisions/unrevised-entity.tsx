@@ -22,9 +22,6 @@ function getNodes(entity: UnrevisedRevisionEntity) {
   if (Object.hasOwn(entity, 'revisions')) {
     return entity.revisions?.nodes
   }
-  if (Object.hasOwn(entity, 'solutionRevisions')) {
-    return entity.solutionRevisions.nodes
-  }
   return []
 }
 

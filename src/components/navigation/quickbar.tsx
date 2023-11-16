@@ -5,6 +5,7 @@ import { useState, useRef, useEffect, KeyboardEvent } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { isMac } from '@/helper/client-detection'
+import { quickbarStatsSubmission } from '@/helper/quickbar-stats-submission'
 import { tw } from '@/helper/tw'
 
 export interface QuickbarDataEntry {
@@ -36,6 +37,8 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
 
   const wrapper = useRef<HTMLDivElement>(null)
   const overlayWrapper = useRef<HTMLDivElement>(null)
+
+  const isSubject = !!subject
 
   useEffect(() => {
     if (query && !data) {
@@ -76,8 +79,18 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
     }, 200)
 
   const goToSearch = () => {
-    // not using router since the hacky search component does not refresh easily
-    window.location.href = `/search?q=${encodeURIComponent(query)}`
+    quickbarStatsSubmission(
+      {
+        path: router.asPath,
+        query,
+        target: '/search',
+        isSubject,
+      },
+      () => {
+        // not using router since the hacky search component does not refresh easily
+        window.location.href = `/search?q=${encodeURIComponent(query)}`
+      }
+    )
   }
 
   const goToResult = (
@@ -88,6 +101,12 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
   ) => {
     event.preventDefault()
     const url = `/${id}`
+    quickbarStatsSubmission({
+      path: router.asPath,
+      query,
+      target: url,
+      isSubject,
+    })
 
     if ((isMac && event.metaKey) || (!isMac && event.ctrlKey)) {
       window.open(url)

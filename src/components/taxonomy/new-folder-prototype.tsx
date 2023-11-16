@@ -9,13 +9,14 @@ import { useHotkeys } from 'react-hotkeys-hook'
 
 import { FaIcon } from '../fa-icon'
 import { TaxonomyData } from '@/data-types'
-import {
-  FrontendExerciseGroupNode,
-  FrontendExerciseNode,
-  FrontendNodeType,
-} from '@/frontend-node-types'
 import { tw } from '@/helper/tw'
-import { renderArticle } from '@/schema/article-renderer'
+import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import {
+  EditorExerciseDocument,
+  EditorTemplateExerciseGroupDocument,
+} from '@/serlo-editor-integration/types/editor-plugins'
+import { isTemplateExerciseGroupDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
 
 export interface NewFolderPrototypeProps {
   data: TaxonomyData
@@ -69,9 +70,9 @@ const hardcodedDataforDreisatz = [
 export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
   const [showInModal, setShowInModal] = useState(-1)
 
-  /*const solved = JSON.parse(
-    sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
-  ) as number[]*/
+  // const solved = JSON.parse(
+  //   sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
+  // ) as number[]
 
   useHotkeys(['esc'], () => {
     setShowInModal(-1)
@@ -79,9 +80,7 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
 
   if (showInModal >= 0) {
     const element = data.exercisesContent[showInModal]
-    element.positionOnPage = undefined
-
-    //const isSolved = solved.includes(element.context.id)
+    // const isSolved = solved.includes(element.context.id)
     return (
       <>
         <div className="fixed inset-0 z-[150] bg-gray-100"></div>
@@ -133,17 +132,25 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
     <div className="mx-side flex flex-col items-center mobile:flex-row mobile:flex-wrap">
       {data.exercisesContent.map((exercise, i) => {
         const entry = hardcodedDataforDreisatz[i]
-        const solved = JSON.parse(
-          sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
-        ) as number[]
-        const solvedPercentage = exercise.children
-          ? exercise.children.filter((child) =>
-              solved.includes(child.context.id)
-            ).length / exercise.children.length
+        const solved =
+          typeof window !== 'undefined'
+            ? (JSON.parse(
+                sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
+              ) as number[])
+            : undefined
+
+        const solvedPercentage = isTemplateExerciseGroupDocument(exercise)
+          ? exercise.state.exercises.filter(
+              (exercise) =>
+                exercise.serloContext?.uuid &&
+                solved?.includes(exercise.serloContext.uuid)
+            ).length / exercise.state.exercises.length
           : -1
 
         const isSolved =
-          solved.includes(exercise.context.id) || solvedPercentage === 1
+          (exercise.serloContext?.uuid &&
+            solved?.includes(exercise.serloContext?.uuid)) ||
+          solvedPercentage === 1
 
         return (
           <Fragment key={i}>
@@ -239,16 +246,18 @@ function ExerciseWrapper({
   title,
   close,
 }: {
-  element: FrontendExerciseGroupNode | FrontendExerciseNode
+  element: EditorExerciseDocument | EditorTemplateExerciseGroupDocument
   title: string
   close: () => void
 }) {
   const [index, setIndex] = useState(0)
+
   const solved = JSON.parse(
     sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
   ) as number[]
   // element.children![index].positionInGroup = undefined
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [val, triggerRender] = useState(1)
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -258,18 +267,15 @@ function ExerciseWrapper({
 
   const isSolvedInThisSession =
     val > 1 &&
-    (solved.includes(element.context.id) ||
-      (element.children && solved.includes(element.children[index].context.id)))
+    ((element.serloContext?.uuid &&
+      solved?.includes(element.serloContext.uuid)) ||
+      (isTemplateExerciseGroupDocument(element) &&
+        element.state.exercises[index].serloContext?.uuid &&
+        solved?.includes(
+          element.state.exercises[index].serloContext?.uuid as number
+        )))
 
-  if (element.type === FrontendNodeType.Exercise) {
-    element.task.content!.content = element.task.content!.content.filter(
-      (x) => {
-        if (x.children && x.children[0].type === FrontendNodeType.H) {
-          return false
-        }
-        return true
-      }
-    )
+  if (element.plugin === EditorPluginType.Exercise) {
     return (
       <>
         <div className="flex-1" />
@@ -281,10 +287,15 @@ function ExerciseWrapper({
             )}
           >
             <div>
-              <h2 className="mx-side mt-6 hyphens-manual text-xl font-bold">
+              <h2 className="mx-side mt-6 hyphens-manual pb-2 text-xl font-bold">
                 {title}
               </h2>
-              <div key={index}>{renderArticle([element])}</div>
+              <div
+                key={index}
+                className="[&_.serlo-h2]:hidden [&_.serlo-h3]:hidden"
+              >
+                <StaticRenderer document={element} />
+              </div>
             </div>
           </div>
           <div
@@ -323,8 +334,9 @@ function ExerciseWrapper({
               {title}
             </h2>
 
-            <div className="mt-6">{renderArticle(element.content)}</div>
-            <div>{renderArticle([element.children![index]])}</div>
+            <div className="mt-6">
+              <StaticRenderer document={element.state.exercises[index]} />
+            </div>
           </div>
         </div>
         <div className="mt-2.5 flex justify-between">
@@ -341,7 +353,7 @@ function ExerciseWrapper({
           ) : (
             <div />
           )}
-          {index + 1 < element.children!.length ? (
+          {index + 1 < element.state.exercises.length ? (
             <button
               className={clsx(
                 'pointer-events-auto rounded-xl  px-8 py-4 font-bold  transition-colors',

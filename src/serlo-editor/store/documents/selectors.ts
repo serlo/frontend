@@ -4,7 +4,7 @@ import * as R from 'ramda'
 import {
   getChildTree,
   findChildTreeNodeParentById,
-  getSerializedDocument,
+  getStaticDocument,
 } from './helpers'
 import { ChildTreeNode } from './types'
 import {
@@ -35,14 +35,14 @@ export const selectDocumentPluginType = createSelector(
   (documents, id) => documents[id].plugin as EditorPluginType
 )
 
-export const selectSerializedDocument = createDeepEqualSelector(
+export const selectStaticDocument = createDeepEqualSelector(
   [selectSelf, (_state, id: string) => id],
-  (documents, id) => getSerializedDocument({ documents, id })
+  (documents, id) => getStaticDocument({ documents, id })
 )
 
-export const selectSerializedDocumentWithoutIds = createDeepEqualSelector(
+export const selectStaticDocumentWithoutIds = createDeepEqualSelector(
   [selectSelf, (_state, id: string) => id],
-  (documents, id) => getSerializedDocument({ documents, id, omitId: true })
+  (documents, id) => getStaticDocument({ documents, id, omitId: true })
 )
 
 export const selectIsDocumentEmpty = createSelector(
@@ -69,7 +69,9 @@ export const selectChildTree: (
   id?: string
 ) => ChildTreeNode | null = createJsonStringifySelector(
   [selectSelf, (_state, id?: string) => id],
-  (documents, id) => getChildTree(documents, id)
+  (documents, id) => {
+    return getChildTree(documents, id)
+  }
 )
 
 export const selectChildTreeOfParent = createSelector(

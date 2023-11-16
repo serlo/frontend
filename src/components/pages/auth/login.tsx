@@ -1,6 +1,6 @@
 import type { LoginFlow, UpdateLoginFlowBody } from '@ory/client'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { changeButtonTypeOfSSOProvider, sortKratosUiNodes } from './ory-helper'
 import {
@@ -37,7 +37,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
   const { strings } = useInstanceData()
   const loginStrings = strings.auth.login
 
-  const [initStarted, setInitStarted] = useState(false)
+  const initStarted = useRef<boolean>(false)
 
   const {
     return_to: returnTo,
@@ -60,11 +60,11 @@ export function Login({ oauth }: { oauth?: boolean }) {
     }
 
     // Make sure we only init the flow once
-    if (initStarted) {
+    if (initStarted.current) {
       return
     }
 
-    setInitStarted(true)
+    initStarted.current = true
 
     void (async () => {
       try {

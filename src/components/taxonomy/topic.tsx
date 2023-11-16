@@ -9,20 +9,26 @@ import { RatingProps } from 'react-simple-star-rating'
 import { NewFolderPrototypeProps } from './new-folder-prototype'
 import { SubTopic } from './sub-topic'
 import { TopicCategories } from './topic-categories'
+import { ExerciseNumbering } from '../content/exercises/exercise-numbering'
 import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
-import { StaticInfoPanel } from '../static-info-panel'
+import { InfoPanel } from '../info-panel'
+import { ExerciseGenerationWrapperProps } from '../user-tools/exercise-generation-wrapper'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useAB } from '@/contexts/ab'
+import { AiWizardService, useAiWizard } from '@/contexts/ai-wizard-context'
 import { useExerciseFolderStats } from '@/contexts/exercise-folder-stats-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
-import { FrontendNodeType } from '@/frontend-node-types'
 import { abSubmission } from '@/helper/ab-submission'
-import { renderArticle } from '@/schema/article-renderer'
+import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { createRenderers } from '@/serlo-editor-integration/create-renderers'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export interface TopicProps {
   data: TaxonomyData
@@ -42,6 +48,12 @@ const NewFolderPrototype = dynamic<NewFolderPrototypeProps>(() =>
   import('./new-folder-prototype').then((mod) => mod.NewFolderPrototype)
 )
 
+const ExerciseGenerationWrapper = dynamic<ExerciseGenerationWrapperProps>(() =>
+  import('../user-tools/exercise-generation-wrapper').then(
+    (mod) => mod.ExerciseGenerationWrapper
+  )
+)
+
 export function Topic({ data }: TopicProps) {
   const { strings } = useInstanceData()
   const exerciseStats = useExerciseFolderStats()
@@ -54,16 +66,17 @@ export function Topic({ data }: TopicProps) {
   const isTopic = data.taxonomyType === TaxonomyTermType.Topic
 
   const hasExercises = data.exercisesContent.length > 0
-  const defaultLicense = hasExercises ? getDefaultLicense() : undefined
+
+  editorRenderers.init(createRenderers())
 
   const mapping: { [key: string]: string } = {}
   data.exercisesContent.forEach((exercise, i) => {
-    if (exercise.type === FrontendNodeType.Exercise) {
-      mapping[exercise.context.id] = `${i + 1}`
+    if (exercise.plugin === EditorPluginType.Exercise) {
+      mapping[exercise.serloContext!.uuid!] = `${i + 1}`
     } else {
-      exercise.children?.forEach((child) => {
-        mapping[child.context.id] = `${i + 1}${String.fromCharCode(
-          'a'.charCodeAt(0) + child.positionInGroup!
+      exercise.state.exercises.forEach((child, i) => {
+        mapping[child.serloContext!.uuid!] = `${i + 1}${String.fromCharCode(
+          'a'.charCodeAt(0) + i
         )}`
       })
     }
@@ -190,31 +203,46 @@ export function Topic({ data }: TopicProps) {
   }, [exerciseStats?.sessionsByDay])
 
   return (
-    <>
-      {data.trashed && renderTrashedNotice()}
-      {renderHeader()}
-      {renderUserTools({ aboveContent: true })}
-      <div className="min-h-1/2">
-        <div className="mt-6 sm:mb-5">
-          {data.description &&
-            renderArticle(data.description, `taxdesc${data.id}`)}
+    <AiWizardService>
+      <>
+        {data.trashed && renderTrashedNotice()}
+        {renderHeader()}
+        {renderUserTools({ aboveContent: true })}
+        <div className="min-h-1/2">
+          <div className="mt-6 sm:mb-5">
+            <StaticRenderer
+              document={data.description as unknown as EditorRowsDocument}
+            />
+          </div>
+
+          {renderSubterms()}
+
+          {renderExercises()}
+
+          {isTopic && <TopicCategories data={data} full />}
+
+          {isExerciseFolder && data.events && (
+            <TopicCategories
+              data={data}
+              categories={[TopicCategoryType.events]}
+              full
+            />
+          )}
         </div>
+        {/* Default license notice */}
+        <LicenseNotice />
 
-        {renderSubterms()}
-
-        {renderExercises()}
-
-        {isTopic && <TopicCategories data={data} full />}
-
-        {isExerciseFolder && data.events && (
-          <TopicCategories
-            data={data}
-            categories={[TopicCategoryType.events]}
-            full
+        {/* Temporary donations banner trial */}
+        {isExerciseFolder ? (
+          <DonationsBanner
+            id={data.id}
+            entityData={{
+              ...data,
+              typename: UuidType.TaxonomyTerm,
+              isUnrevised: false,
+            }}
           />
-        )}
-      </div>
-      {defaultLicense && <LicenseNotice data={defaultLicense} />}
+        ) : null}
 
       {/* Temporary donations banner trial */}
       {isExerciseFolder && !exerciseStats ? (
@@ -228,15 +256,18 @@ export function Topic({ data }: TopicProps) {
         />
       ) : null}
 
-      {renderUserTools()}
-    </>
+     
+        {renderUserTools()}
+        <ExerciseGenerationOrNull data={data} />
+      </>
+    </AiWizardService>
   )
 
   function renderTrashedNotice() {
     return (
-      <StaticInfoPanel icon={faTrash} doNotIndex>
+      <InfoPanel icon={faTrash} doNotIndex>
         {strings.content.trashedNotice}
-      </StaticInfoPanel>
+      </InfoPanel>
     )
   }
 
@@ -380,21 +411,22 @@ export function Topic({ data }: TopicProps) {
         </>
       )
     }
+
+    if (!hasExercises || !data.exercisesContent) return null
     return (
-      hasExercises &&
-      data.exercisesContent &&
-      data.exercisesContent.map((exercise, i) => {
-        return (
-          <Fragment key={i}>
-            {renderArticle(
-              [exercise],
-              `tax${data.id}`,
-              `ex${exercise.context.id}`
-            )}
-            {i === 1 && renderSurvey()}
-          </Fragment>
-        )
-      })
+      <ol className="mt-12">
+        {data.exercisesContent.map((exerciseOrGroup, i) => {
+          const exerciseUuid = exerciseOrGroup.serloContext?.uuid
+
+          return (
+            <li key={exerciseOrGroup.id ?? exerciseUuid} className="pb-10">
+              <ExerciseNumbering href={`/${exerciseUuid}`} index={i} />
+              <StaticRenderer document={exerciseOrGroup} />
+              {i === 1 && renderSurvey()}
+            </li>
+          )
+        })}
+      </ol>
     )
   }
 
@@ -437,22 +469,22 @@ export function Topic({ data }: TopicProps) {
       />
     )
   }
+}
 
-  function getDefaultLicense() {
-    for (let i = 0; i < data.exercisesContent.length; i++) {
-      const content = data.exercisesContent[i]
+interface ExerciseGenerationOrNullProps {
+  data: TopicProps['data']
+}
 
-      if (content.type === 'exercise-group') {
-        if (content.license?.isDefault) return content.license
-      } else {
-        if (content.task?.license?.isDefault) return content.task.license
-        if (content.solution?.license?.isDefault)
-          return content.solution.license
-      }
-    }
-    //no part of collection has default license so don't show default notice.
-    return undefined
-  }
+function ExerciseGenerationOrNull({ data }: ExerciseGenerationOrNullProps) {
+  const { isShowingAiWizard } = useAiWizard()
+
+  if (!isShowingAiWizard) return null
+
+  return (
+    <ExerciseGenerationWrapper
+      data={{ type: UuidType.TaxonomyTerm, ...data }}
+    />
+  )
 }
 
 function RangePicker(props: { id: string }) {

@@ -10,7 +10,6 @@ export enum EditorPluginType {
   Highlight = 'highlight',
   Image = 'image',
   Injection = 'injection',
-  Layout = 'layout',
   Multimedia = 'multimedia',
 
   PageLayout = 'pageLayout',
@@ -28,6 +27,7 @@ export enum EditorPluginType {
   Exercise = 'exercise',
   ScMcExercise = 'scMcExercise',
   InputExercise = 'inputExercise',
+  FillInTheBlanksExercise = 'fillInTheBlanksExercise',
   Solution = 'solution',
 
   Unsupported = 'unsupported',

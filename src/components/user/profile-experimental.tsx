@@ -15,7 +15,7 @@ export const features = {
     cookieName: 'useEditorAnchorLinkCopyTool',
     isActive: false,
     activeInDev: true,
-    hideInProduction: true,
+    hideInProduction: false,
   },
 }
 
@@ -71,12 +71,18 @@ export function ProfileExperimental() {
     updateState({})
   }
 
+  function shouldBeVisible(key: FeatureKey) {
+    if (!Object.hasOwn(features, key)) return false
+    if (isProduction && features[key].hideInProduction) return false
+    return true
+  }
+
   return (
     <section className="mt-10">
       <h2 className="serlo-h2" id="experiments">
         🧪 Experimente
       </h2>
-      {features.edtrPasteHack && (
+      {shouldBeVisible('edtrPasteHack') ? (
         <div>
           <h3 className="serlo-h3 mb-3">
             {renderFeatureButton('edtrPasteHack')} Einfügen von Serlo
@@ -86,9 +92,9 @@ export function ProfileExperimental() {
             Experimentelles Feature: nur aktivieren wenn du weißt was du tust.
           </p>
         </div>
-      )}
+      ) : null}
       <hr className="mx-side -mt-2 mb-4" />
-      {features.editorAnchorLinkCopyTool && (
+      {shouldBeVisible('editorAnchorLinkCopyTool') ? (
         <div>
           <h3 className="serlo-h3 mb-3">
             {renderFeatureButton('editorAnchorLinkCopyTool')} Editor: Anker-Link
@@ -101,7 +107,7 @@ export function ProfileExperimental() {
             erhalten hat.
           </p>
         </div>
-      )}
+      ) : null}
     </section>
   )
 

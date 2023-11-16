@@ -70,11 +70,11 @@ export function createImagePlugin(
         }
       }
     },
-    isEmpty: (serializedState) => {
+    isEmpty: (staticState) => {
       return (
-        (!serializedState.src.value || isTempFile(serializedState.src.value)) &&
-        (!serializedState.link.defined || !serializedState.link.href.value) &&
-        (!serializedState.alt.defined || !serializedState.alt.value)
+        (!staticState.src.value || isTempFile(staticState.src.value)) &&
+        (!staticState.link.defined || !staticState.link.href.value) &&
+        (!staticState.alt.defined || !staticState.alt.value)
       )
     },
   }

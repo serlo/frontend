@@ -1,15 +1,17 @@
 import { EditorPluginType } from './editor-plugin-type'
-import type { LayoutPluginState } from '../../serlo-editor/plugins/_on-the-way-out/layout'
+import { TemplatePluginType } from './template-plugin-type'
 import type { ArticlePluginState } from '../../serlo-editor/plugins/article'
 import type { ExercisePluginState } from '../../serlo-editor/plugins/exercise'
 import type { InjectionPluginState } from '../../serlo-editor/plugins/injection'
 import type { SolutionPluginState } from '../../serlo-editor/plugins/solution'
 import type { UnsupportedPluginState } from '../../serlo-editor/plugins/unsupported'
-import type { StateTypeSerializedType } from '@/serlo-editor/plugin'
+import { License } from '@/fetcher/query-types'
+import type { PrettyStaticState } from '@/serlo-editor/plugin'
 import type { AnchorPluginState } from '@/serlo-editor/plugins/anchor'
 import { AudioPluginState } from '@/serlo-editor/plugins/audio'
 import { BoxPluginState } from '@/serlo-editor/plugins/box'
 import { EquationsPluginState } from '@/serlo-editor/plugins/equations'
+import { FillInTheBlanksExerciseState } from '@/serlo-editor/plugins/fill-in-the-blanks-exercise'
 import type { GeogebraPluginState } from '@/serlo-editor/plugins/geogebra'
 import { H5pPluginState } from '@/serlo-editor/plugins/h5p'
 import type { HighlightPluginState } from '@/serlo-editor/plugins/highlight'
@@ -22,6 +24,7 @@ import { PageTeamPluginState } from '@/serlo-editor/plugins/page-team'
 import type { RowsPluginState } from '@/serlo-editor/plugins/rows'
 import type { ScMcExercisePluginState } from '@/serlo-editor/plugins/sc-mc-exercise'
 import { SerloTablePluginState } from '@/serlo-editor/plugins/serlo-table'
+import { TextExerciseGroupTypePluginState } from '@/serlo-editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
 import type { SpoilerPluginState } from '@/serlo-editor/plugins/spoiler'
 import type {
   TextEditorState,
@@ -33,162 +36,207 @@ import type { VideoPluginState } from '@/serlo-editor/plugins/video'
 export type SlateBlockElement = CustomElement
 export type SlateTextElement = CustomText
 
-// All supported editor plugins in their serialized versions
+// All supported editor plugins in their static versions
 
-export interface EditorAnchorPlugin {
+export interface EditorAnchorDocument {
   plugin: EditorPluginType.Anchor
-  state: StateTypeSerializedType<AnchorPluginState>
+  state: PrettyStaticState<AnchorPluginState>
   id?: string
 }
-export interface EditorArticlePlugin {
+export interface EditorArticleDocument {
   plugin: EditorPluginType.Article
-  state: StateTypeSerializedType<ArticlePluginState>
+  state: PrettyStaticState<ArticlePluginState>
   id?: string
 }
-export interface EditorBoxPlugin {
+export interface EditorArticleIntroductionDocument {
+  plugin: EditorPluginType.ArticleIntroduction
+  state: PrettyStaticState<MultimediaPluginState>
+  id?: string
+}
+export interface EditorBoxDocument {
   plugin: EditorPluginType.Box
-  state: StateTypeSerializedType<BoxPluginState>
+  state: PrettyStaticState<BoxPluginState>
   id?: string
 }
-export interface EditorUnsupportedPlugin {
+export interface EditorUnsupportedDocument {
   plugin: EditorPluginType.Unsupported
-  state: StateTypeSerializedType<UnsupportedPluginState>
+  state: PrettyStaticState<UnsupportedPluginState>
   id?: string
 }
-export interface EditorEquationsPlugin {
+export interface EditorEquationsDocument {
   plugin: EditorPluginType.Equations
-  state: StateTypeSerializedType<EquationsPluginState>
+  state: PrettyStaticState<EquationsPluginState>
   id?: string
 }
-export interface EditorExercisePlugin {
+export interface EditorExerciseDocument {
   plugin: EditorPluginType.Exercise
-  state: StateTypeSerializedType<ExercisePluginState>
+  state: PrettyStaticState<ExercisePluginState>
   id?: string
+
+  // additional data for serlo, not part of normal state
+  serloContext?: {
+    uuid?: number
+    revisionId?: number
+    trashed?: boolean
+    grouped?: boolean
+    unrevisedRevisions?: number
+    licenseId?: number
+  }
 }
-export interface EditorGeogebraPlugin {
+export interface EditorGeogebraDocument {
   plugin: EditorPluginType.Geogebra
-  state: StateTypeSerializedType<GeogebraPluginState>
+  state: PrettyStaticState<GeogebraPluginState>
   id?: string
 }
-export interface EditorHighlightPlugin {
+export interface EditorHighlightDocument {
   plugin: EditorPluginType.Highlight
-  state: StateTypeSerializedType<HighlightPluginState>
+  state: PrettyStaticState<HighlightPluginState>
   id?: string
 }
-export interface EditorImagePlugin {
+export interface EditorImageDocument {
   plugin: EditorPluginType.Image
-  state: StateTypeSerializedType<ImagePluginState>
+  state: PrettyStaticState<ImagePluginState>
   id?: string
 }
-export interface EditorInjectionPlugin {
+export interface EditorInjectionDocument {
   plugin: EditorPluginType.Injection
-  state: StateTypeSerializedType<InjectionPluginState>
+  state: PrettyStaticState<InjectionPluginState>
   id?: string
 }
-export interface EditorInputExercisePlugin {
+export interface EditorInputExerciseDocument {
   plugin: EditorPluginType.InputExercise
-  state: StateTypeSerializedType<InputExercisePluginState>
+  state: PrettyStaticState<InputExercisePluginState>
   id?: string
 }
-export interface EditorLayoutPlugin {
-  plugin: EditorPluginType.Layout
-  state: StateTypeSerializedType<LayoutPluginState>
-  id?: string
-}
-export interface EditorMultimediaPlugin {
+export interface EditorMultimediaDocument {
   plugin: EditorPluginType.Multimedia
-  state: StateTypeSerializedType<MultimediaPluginState>
+  state: PrettyStaticState<MultimediaPluginState>
   id?: string
 }
-export interface EditorRowsPlugin {
+export interface EditorRowsDocument {
   plugin: EditorPluginType.Rows
-  state: StateTypeSerializedType<RowsPluginState>
+  state: PrettyStaticState<RowsPluginState>
   id?: string
 }
-export interface EditorScMcExercisePlugin {
+export interface EditorScMcExerciseDocument {
   plugin: EditorPluginType.ScMcExercise
-  state: StateTypeSerializedType<ScMcExercisePluginState>
+  state: PrettyStaticState<ScMcExercisePluginState>
   id?: string
 }
-export interface EditorSpoilerPlugin {
+export interface EditorFillInTheBlanksExerciseDocument {
+  plugin: EditorPluginType.FillInTheBlanksExercise
+  state: PrettyStaticState<FillInTheBlanksExerciseState>
+  id?: string
+}
+export interface EditorSpoilerDocument {
   plugin: EditorPluginType.Spoiler
-  state: StateTypeSerializedType<SpoilerPluginState>
+  state: PrettyStaticState<SpoilerPluginState>
   id?: string
 }
-export interface EditorSerloInjectionPlugin {
+export interface EditorSerloInjectionDocument {
   plugin: EditorPluginType.Injection
-  state: StateTypeSerializedType<InjectionPluginState>
+  state: PrettyStaticState<InjectionPluginState>
   id?: string
 }
-export interface EditorSolutionPlugin {
+export interface EditorSolutionDocument {
   plugin: EditorPluginType.Solution
-  state: StateTypeSerializedType<SolutionPluginState>
+  state: PrettyStaticState<SolutionPluginState>
   id?: string
+
+  // additional data for serlo, not part of normal state
+  serloContext?: {
+    uuid?: number
+    exerciseId?: number
+    trashed?: boolean
+    unrevisedRevisions?: number
+    license?: License
+  }
 }
-export interface EditorSerloTablePlugin {
+export interface EditorSerloTableDocument {
   plugin: EditorPluginType.SerloTable
-  state: StateTypeSerializedType<SerloTablePluginState>
+  state: PrettyStaticState<SerloTablePluginState>
   id?: string
 }
-export interface EditorTextPlugin {
+export interface EditorTextDocument {
   plugin: EditorPluginType.Text
-  state: StateTypeSerializedType<TextEditorState>
+  state: PrettyStaticState<TextEditorState>
   id?: string
 }
-export interface EditorVideoPlugin {
+export interface EditorVideoDocument {
   plugin: EditorPluginType.Video
-  state: StateTypeSerializedType<VideoPluginState>
+  state: PrettyStaticState<VideoPluginState>
   id?: string
 }
-export interface EditorAudioPlugin {
+export interface EditorAudioDocument {
   plugin: EditorPluginType.Audio
-  state: StateTypeSerializedType<AudioPluginState>
+  state: PrettyStaticState<AudioPluginState>
   id?: string
 }
-export interface EditorPageLayoutPlugin {
+export interface EditorPageLayoutDocument {
   plugin: EditorPluginType.PageLayout
-  state: StateTypeSerializedType<PageLayoutPluginState>
+  state: PrettyStaticState<PageLayoutPluginState>
   id?: string
 }
-export interface EditorPageTeamPlugin {
+export interface EditorPageTeamDocument {
   plugin: EditorPluginType.PageTeam
-  state: StateTypeSerializedType<PageTeamPluginState>
+  state: PrettyStaticState<PageTeamPluginState>
   id?: string
 }
-export interface EditorPagePartnersPlugin {
+export interface EditorPagePartnersDocument {
   plugin: EditorPluginType.PagePartners
-  state: StateTypeSerializedType<PagePartnersPluginState>
+  state: PrettyStaticState<PagePartnersPluginState>
   id?: string
 }
-export interface EditorH5PPlugin {
+export interface EditorH5PDocument {
   plugin: EditorPluginType.H5p
-  state: StateTypeSerializedType<H5pPluginState>
+  state: PrettyStaticState<H5pPluginState>
   id?: string
 }
 
-export type SupportedEditorPlugin =
-  | EditorArticlePlugin
-  | EditorGeogebraPlugin
-  | EditorAnchorPlugin
-  | EditorVideoPlugin
-  | EditorAudioPlugin
-  | EditorSerloTablePlugin
-  | EditorHighlightPlugin
-  | EditorSerloInjectionPlugin
-  | EditorLayoutPlugin
-  | EditorMultimediaPlugin
-  | EditorSpoilerPlugin
-  | EditorBoxPlugin
-  | EditorImagePlugin
-  | EditorTextPlugin
-  | EditorRowsPlugin
-  | EditorEquationsPlugin
-  | EditorPageLayoutPlugin
-  | EditorPageTeamPlugin
-  | EditorPagePartnersPlugin
+// Template Plugins
+export interface EditorTemplateExerciseGroupDocument {
+  plugin: TemplatePluginType.TextExerciseGroup
+  state: PrettyStaticState<TextExerciseGroupTypePluginState> & {
+    // extra field that is not actually part of the state until we move solutions into exercises
+    exercises: EditorExerciseDocument[]
+  }
+  id?: string
 
-export interface UnknownEditorPlugin {
+  // additional data for serlo, not part of normal state
+  serloContext?: {
+    uuid?: number
+    trashed?: boolean
+    unrevisedRevisions?: number
+    license?: License
+  }
+}
+
+export type SupportedEditorDocument =
+  | EditorArticleDocument
+  | EditorArticleIntroductionDocument
+  | EditorGeogebraDocument
+  | EditorAnchorDocument
+  | EditorVideoDocument
+  | EditorAudioDocument
+  | EditorSerloTableDocument
+  | EditorHighlightDocument
+  | EditorSerloInjectionDocument
+  | EditorMultimediaDocument
+  | EditorSpoilerDocument
+  | EditorBoxDocument
+  | EditorImageDocument
+  | EditorTextDocument
+  | EditorRowsDocument
+  | EditorEquationsDocument
+  | EditorExerciseDocument
+  | EditorPageLayoutDocument
+  | EditorPageTeamDocument
+  | EditorPagePartnersDocument
+
+export interface UnknownEditorDocument {
   plugin: string
   state?: unknown
   id?: string
 }
+
+export type AnyEditorDocument = SupportedEditorDocument | UnknownEditorDocument

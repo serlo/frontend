@@ -4,11 +4,11 @@ import { Editable, Slate, withReact } from 'slate-react'
 
 import { CustomElement, CustomText } from '@/serlo-editor/plugins/text'
 
-const serialize = (value: Descendant[]): string => {
+const slateToString = (value: Descendant[]): string => {
   return ((value[0] as CustomElement).children[0] as CustomText).text
 }
 
-const deserialize = (value: string): Descendant[] => [
+const stringToSlate = (value: string): Descendant[] => [
   {
     type: 'p',
     children: [{ text: value }],
@@ -24,7 +24,7 @@ export function InlineInput(props: {
   const { onChange, value, placeholder } = props
 
   const initialValue = useMemo(
-    () => deserialize(value),
+    () => stringToSlate(value),
     // initialValue should not be recalculated on rerender
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -37,7 +37,7 @@ export function InlineInput(props: {
       editor={editor}
       initialValue={initialValue}
       onChange={(newValue) => {
-        onChange(serialize(newValue))
+        onChange(slateToString(newValue))
       }}
     >
       <Editable

@@ -7,7 +7,7 @@ import { selectDocuments } from '../documents'
 import { handleRecursiveInserts } from '../documents/saga'
 import { persistHistory } from '../history'
 
-// TODO: Move initRootSaga to documents slice and remove root slice completely
+// Consider moving initRootSaga to documents slice and remove root slice completely
 
 export function* rootSaga() {
   yield takeEvery(runInitRootSaga, initRootSaga)
@@ -24,8 +24,7 @@ function* initRootSaga(action: ReturnType<typeof runInitRootSaga>) {
 
   yield all(actions.map((reversible) => put(reversible.action)))
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const documents: ReturnType<typeof selectDocuments> = yield select(
-    selectDocuments
-  )
+  const documents: ReturnType<typeof selectDocuments> =
+    yield select(selectDocuments)
   yield put(persistHistory(documents))
 }

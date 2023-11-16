@@ -5,10 +5,10 @@ import {
   StateExecutor,
   StateType,
   StateTypeReturnType,
-  StateTypeSerializedType,
+  StateTypeStaticType,
   StateTypeValueType,
   StateUpdater,
-  StoreDeserializeHelpers,
+  ToStoreHelpers,
 } from './internal-plugin-state'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -20,7 +20,7 @@ export function list<D extends StateType>(
   type: D,
   initialCount = 0
 ): ListStateType<D> {
-  type S = StateTypeSerializedType<D>
+  type S = StateTypeStaticType<D>
   type T = StateTypeValueType<D>
 
   interface WrappedValue {
@@ -37,7 +37,10 @@ export function list<D extends StateType>(
 
       return Object.assign(items, {
         set(
-          updater: (currentList: T[], deserialize: (serialized: S) => T) => T[]
+          updater: (
+            currentList: T[],
+            staticToStore: (staticDocument: S) => T
+          ) => T[]
         ) {
           onChange((wrappedItems, helpers) => {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -46,7 +49,7 @@ export function list<D extends StateType>(
               wrap,
               updater(unwrapped, (options) =>
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                type.deserialize(options, helpers)
+                type.toStoreState(options, helpers)
               )
             )
           })
@@ -55,7 +58,7 @@ export function list<D extends StateType>(
           onChange((items, helpers) => {
             const wrappedSubState = wrap(
               options
-                ? (type.deserialize(options, helpers) as T)
+                ? (type.toStoreState(options, helpers) as T)
                 : (type.createInitialState(helpers) as T)
             )
             return R.insert(
@@ -100,10 +103,7 @@ export function list<D extends StateType>(
           function wrapUpdater(
             initial: StateUpdater<T>
           ): StateUpdater<WrappedValue[]> {
-            return (
-              oldItems: WrappedValue[],
-              helpers: StoreDeserializeHelpers
-            ) => {
+            return (oldItems: WrappedValue[], helpers: ToStoreHelpers) => {
               const index = oldItems.findIndex((item) => item.id === id)
               return R.update(
                 index,
@@ -131,17 +131,17 @@ export function list<D extends StateType>(
         return wrap(type.createInitialState(helpers) as T)
       }, initialCount)
     },
-    deserialize(serialized, helpers) {
+    toStoreState(staticDocument, helpers) {
       return R.map((s) => {
-        return wrap(type.deserialize(s, helpers) as T)
-      }, serialized)
+        return wrap(type.toStoreState(s, helpers) as T)
+      }, staticDocument)
     },
-    serialize(deserialized, helpers) {
+    toStaticState(storeState, helpers) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return R.map(({ value }) => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return type.serialize(value, helpers)
-      }, deserialized)
+        return type.toStaticState(value, helpers)
+      }, storeState)
     },
     getFocusableChildren(items) {
       return R.flatten(
@@ -161,7 +161,7 @@ export function list<D extends StateType>(
 }
 
 export type ListStateType<D extends StateType> = StateType<
-  StateTypeSerializedType<D>[],
+  StateTypeStaticType<D>[],
   {
     id: string
     value: StateTypeValueType<D>
@@ -170,12 +170,12 @@ export type ListStateType<D extends StateType> = StateType<
     set(
       updater: (
         currentList: StateTypeValueType<D>[],
-        deserialize: (
-          serialized: StateTypeSerializedType<D>
+        staticToStore: (
+          staticState: StateTypeStaticType<D>
         ) => StateTypeValueType<D>
       ) => StateTypeValueType<D>[]
     ): void
-    insert(index?: number, options?: StateTypeSerializedType<D>): void
+    insert(index?: number, options?: StateTypeStaticType<D>): void
     remove(index: number): void
     move(from: number, to: number): void
   }

@@ -18,9 +18,9 @@ import {
 } from '@/data-types'
 import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 import {
-  editorResponseToState,
+  convertEditorResponseToState,
   isError,
-} from '@/serlo-editor-integration/editor-response-to-state'
+} from '@/serlo-editor-integration/convert-editor-response-to-state'
 import { revisionResponseToResponse } from '@/serlo-editor-integration/revision-response-to-response'
 import type { SerloEditorProps } from '@/serlo-editor-integration/serlo-editor'
 
@@ -73,7 +73,7 @@ export async function fetchEditorData(
 
   if (!data) return { errorType: 'failed-fetch' }
 
-  const result = editorResponseToState(data)
+  const result = convertEditorResponseToState(data)
 
   const breadcrumbsData = createBreadcrumbs(data, instance)
 
@@ -89,7 +89,7 @@ export async function fetchEditorData(
     throw new Error(result.error)
   } else {
     return {
-      ...result,
+      initialState: { ...result },
       type: data.__typename as UuidWithRevType,
       entityNeedsReview,
       id: repoId,

@@ -1,35 +1,53 @@
-@font-face {
-  font-family: 'Karmilla';
-  font-style: normal;
-  font-weight: 400;
-  src: url('/_assets/fonts/karmilla/karmilla-regular.woff2') format('woff2'),
-    url('/_assets/fonts/karmilla/karmilla-regular.woff') format('woff');
-  font-display: swap;
+/* fallback for browsers that do not support variable font sizes */
+@supports not (font-variation-settings: normal) {
+  /* generated with https://gwfh.mranftl.com/fonts/karla?subsets=latin */
+  /* using "latin" and widths 400, 600, 800 */
+  @font-face {
+    font-family: 'Karla';
+    font-display: swap;
+    font-style: normal;
+    font-weight: 400;
+    src: url('/_assets/fonts/karla/karla-400.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Karla';
+    font-display: swap;
+    font-style: normal;
+    font-weight: 700;
+    src: url('/_assets/fonts/karla/karla-700.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Karla';
+    font-display: swap;
+    font-style: normal;
+    font-weight: 800;
+    src: url('/_assets/fonts/karla/karla-800.woff2') format('woff2');
+  }
 }
 
-@font-face {
-  font-family: 'Karmilla';
-  font-style: normal;
-  font-weight: 700;
-  src: url('/_assets/fonts/karmilla/karmilla-bold.woff2') format('woff2'),
-    url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
-  font-display: swap;
+/* variable font for modern browsers, all weights: but please stick to 400,700,800 if possible */
+@supports (font-variation-settings: normal) {
+  /* generated with https://variable-font-helper.web.app/ */
+  /* using "latin" */
+  @font-face {
+    font-family: 'Karla';
+    font-display: swap;
+    font-style: normal;
+    font-weight: 400 800;
+    src: url('/_assets/fonts/karla/karla-variable.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+      U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122,
+      U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
 }
 
-@font-face {
-  font-family: 'Karmilla';
-  font-style: normal;
-  font-weight: 800;
-  src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2') format('woff2'),
-    url('/_assets/fonts/karmilla/karmilla-bolder.woff') format('woff');
-  font-display: swap;
-}
+/* manually optimized */
+/* width 700 */
 
 @font-face {
   font-family: 'Caveat';
+  font-display: swap;
   font-style: bold;
   font-weight: 700;
-  src: url('/_assets/fonts/caveat/caveat-bold.woff2') format('woff2'),
-    url('/_assets/fonts/caveat/caveat-bold.woff') format('woff');
-  font-display: swap;
+  src: url('/_assets/fonts/caveat/caveat-700.woff2') format('woff2');
 }

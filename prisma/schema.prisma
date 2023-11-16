@@ -14,7 +14,7 @@ model ExerciseSubmission {
   entityId   Int
   revisionId Int
   type       String   @db.VarChar(8)
-  result     String   @db.VarChar(8)
+  result     String   @db.VarChar(255)
   timestamp  DateTime @default(now())
   sessionId  String   @db.VarChar(64)
 
@@ -54,20 +54,28 @@ model PrototypeThreadStatus {
 
 model ABTestingData {
   id           Int      @id @default(autoincrement())
-
   group        String   @db.VarChar(8)
   experiment   String   @db.VarChar(64)
   entityId     Int
-  topicId      Int
-
   type         String   @db.VarChar(8)
   result       String   @db.VarChar(8)
-  
   sessionId    String   @db.VarChar(64)
   isProduction Boolean
   timestamp    DateTime @default(now())
+  topicId      Int
 
   @@index([experiment])
   @@index([entityId])
+  @@index([timestamp])
+}
+
+model QuickbarStats {
+  id        Int      @id @default(autoincrement())
+  path      String   @db.VarChar(1024)
+  query     String   @db.VarChar(1024)
+  target    String   @db.VarChar(128)
+  isSubject Boolean
+  timestamp DateTime @default(now())
+
   @@index([timestamp])
 }

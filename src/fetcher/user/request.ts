@@ -2,11 +2,12 @@ import { AuthorizationPayload, Scope } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
 import { userQuery } from './query'
-import { convertStateStringToFrontendNode } from '../convert-state-string-to-frontend-node'
 import { User } from '../query-types'
 import { endpoint } from '@/api/endpoint'
 import { PageNotFound, UserPage, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
+import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
+import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export async function requestUser(
   path: string,
@@ -27,7 +28,7 @@ export async function requestUser(
   const description =
     !uuid.description || uuid.description === 'NULL'
       ? undefined
-      : convertStateStringToFrontendNode(uuid.description)
+      : (parseDocumentString(uuid.description) as EditorRowsDocument)
 
   return {
     kind: 'user/profile',

@@ -1,19 +1,23 @@
 import { faBellSlash, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { Entity } from '@serlo/authorization'
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
+import dynamic from 'next/dynamic'
 
 import { UserLink } from './user-link'
-import { MathSpan } from '../content/math-span'
 import { FaIcon } from '../fa-icon'
 import { useAuthentication } from '@/auth/use-authentication'
+import { useCanDo } from '@/auth/use-can-do'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LoggedInData, UuidType } from '@/data-types'
 import { GetNotificationsQuery } from '@/fetcher/graphql-types/operations'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
+import { isProduction } from '@/helper/is-production'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
+import type { StaticMathProps } from '@/serlo-editor/plugins/text/static-components/static-math'
 
 type Event = GetNotificationsQuery['notifications']['nodes'][number]['event']
 
@@ -24,7 +28,7 @@ type EventParent = Extract<Event, { parent: any }>['parent']
 type EventAbstractUuid = Extract<Event, { __typename: string }>
 
 interface EventProps {
-  event: EventAbstractUuid
+  event?: EventAbstractUuid | null
   eventId: number
   unread: boolean
   loggedInStrings?: LoggedInData['strings']['notifications']
@@ -33,6 +37,12 @@ interface EventProps {
   slim?: boolean
   noPrivateContent?: boolean
 }
+
+const StaticMath = dynamic<StaticMathProps>(() =>
+  import('@/serlo-editor/plugins/text/static-components/static-math').then(
+    (mod) => mod.StaticMath
+  )
+)
 
 export function Event({
   event,
@@ -45,10 +55,24 @@ export function Event({
   noPrivateContent,
 }: EventProps) {
   const { strings } = useInstanceData()
-  const eventDate = new Date(event.date)
 
   // for chat invitation mvp
-  const auth = useAuthentication()
+  const authId = useAuthentication()?.id
+
+  const canDo = useCanDo()
+  const showErrors = !isProduction || canDo(Entity.checkoutRevision)
+
+  if (!event) {
+    return showErrors ? (
+      <p className="my-2.5 bg-amber-100 px-side py-1 font-bold">
+        Faulty Event (id: {eventId}){' '}
+      </p>
+    ) : null
+  }
+
+  const { actor, __typename, objectId } = event
+
+  const eventDate = new Date(event.date)
 
   return (
     <>
@@ -77,14 +101,14 @@ export function Event({
     string: string,
     replaceables: { [key: string]: JSX.Element | string }
   ) {
-    replaceables.actor = <UserLink noBadges user={event.actor} />
+    replaceables.actor = <UserLink noBadges user={actor} />
     return replacePlaceholders(string, replaceables)
   }
 
   function renderText() {
-    const actor = <UserLink noBadges user={event.actor} />
+    const userLink = <UserLink noBadges user={actor} />
 
-    switch (event.__typename) {
+    switch (__typename) {
       case 'SetThreadStateNotificationEvent':
         return parseString(
           event.archived
@@ -108,7 +132,7 @@ export function Event({
 
       case 'CreateThreadNotificationEvent':
         // for invite to chat mvp
-        if (event.object.id === auth?.id) {
+        if (event.object.id === authId) {
           return parseString(strings.events.inviteToChat, {
             chatLink: (
               <a className="serlo-link" href="https://community.serlo.org">
@@ -158,7 +182,7 @@ export function Event({
 
       case 'CheckoutRevisionNotificationEvent':
         return parseString(strings.events.checkoutRevision, {
-          actor: actor,
+          actor: userLink,
           revision: renderRevision(event.revision.id),
           repository: renderObject(event.repository),
         })
@@ -223,7 +247,7 @@ export function Event({
   }
 
   function renderAdditionalText() {
-    if (noPrivateContent) return null
+    if (noPrivateContent || !event) return null
 
     if (
       event.__typename === 'RejectRevisionNotificationEvent' ||
@@ -246,8 +270,8 @@ export function Event({
       content.length > maxLength
         ? content.substring(0, maxLength) + '…'
         : content
-    const withMath = replaceWithJSX([shortened], /%%(.+?)%%/g, (str, i) => (
-      <MathSpan key={`math-${i}`} formula={str} />
+    const withMath = replaceWithJSX([shortened], /%%(.+?)%%/g, (formula, i) => (
+      <StaticMath key={`math-${i}`} type="math" src={formula} inline />
     ))
     return <div className="text-gray-500">{withMath}</div>
   }
@@ -274,18 +298,15 @@ export function Event({
     return [
       UuidType.Exercise,
       UuidType.GroupedExercise,
-      UuidType.Solution,
       UuidType.Thread,
       UuidType.Comment,
     ].includes(typename)
   }
 
   function renderParent(title: string, typename: UuidType) {
-    const preposition = [
-      UuidType.Exercise,
-      UuidType.GroupedExercise,
-      UuidType.Solution,
-    ].includes(typename)
+    const preposition = [UuidType.Exercise, UuidType.GroupedExercise].includes(
+      typename
+    )
       ? strings.events.entityInParentPreposition
       : [UuidType.Thread, UuidType.Comment].includes(typename)
       ? strings.events.commentInParentPreposition
@@ -299,7 +320,6 @@ export function Event({
       [
         UuidType.Exercise,
         UuidType.GroupedExercise,
-        UuidType.Solution,
         UuidType.Thread,
         UuidType.Comment,
       ].includes(typename)
@@ -373,7 +393,7 @@ export function Event({
         <button
           className="serlo-button-blue-transparent mr-3 text-base"
           onClick={() => {
-            void mute(event.objectId)
+            void mute(objectId)
             if (unread) void setToRead(eventId)
           }}
         >

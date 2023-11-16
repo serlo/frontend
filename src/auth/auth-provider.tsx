@@ -110,9 +110,9 @@ function getAuthPayloadFromLocalCookie(): AuthenticationPayload {
 export function getAuthPayloadFromSession(session: Session | null) {
   return session
     ? {
-        username: (session.identity.traits as { username: string }).username,
+        username: (session.identity?.traits as { username: string }).username,
         id: (
-          session.identity.metadata_public as {
+          session.identity?.metadata_public as {
             legacy_id: number
           }
         )?.legacy_id,

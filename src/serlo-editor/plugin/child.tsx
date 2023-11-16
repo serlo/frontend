@@ -2,7 +2,7 @@ import { mergeDeepRight, omit } from 'ramda'
 import { v4 } from 'uuid'
 
 import type {
-  StoreSerializeHelpers,
+  ToStaticHelpers,
   StateType,
   PluginProps,
 } from './internal-plugin-state'
@@ -40,13 +40,13 @@ export function child<K extends string, S = unknown>(
       createDocument({ id, plugin, state: initialState })
       return id
     },
-    deserialize(serialized, { createDocument }) {
-      const id = serialized.id ?? v4()
-      createDocument({ id, ...serialized })
+    toStoreState(staticDocument, { createDocument }) {
+      const id = staticDocument?.id ?? v4()
+      createDocument({ id, ...staticDocument })
       return id
     },
-    serialize(id, { getDocument, omitId }: StoreSerializeHelpers<K, S>) {
-      const document = getDocument(id)
+    toStaticState(id, { getStoreDocument, omitId }: ToStaticHelpers<K, S>) {
+      const document = getStoreDocument(id)
       if (document === null) {
         throw new Error('No document with this id exists')
       }

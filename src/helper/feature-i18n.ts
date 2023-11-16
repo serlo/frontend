@@ -45,7 +45,7 @@ import {
 import { InstanceData, UuidWithRevType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 
-export const languages: Instance[] = Object.values(Instance)
+const languages: Instance[] = Object.values(Instance)
 
 export function parseLanguageSubfolder(alias: string) {
   for (const lang of languages) {
@@ -55,16 +55,6 @@ export function parseLanguageSubfolder(alias: string) {
     }
   }
   return { alias, instance: Instance.De }
-}
-
-export function isOnLanguageSubdomain() {
-  if (typeof window === 'undefined') return false
-  else {
-    for (const lang of languages) {
-      if (window.location.host.startsWith(`${lang}.`)) return true
-    }
-  }
-  return false
 }
 
 export function getInstanceDataByLang(lang: Instance) {

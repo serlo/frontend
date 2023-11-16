@@ -1,12 +1,19 @@
-import { InstanceData } from '@/data-types'
+import { InstanceData, UuidType } from '@/data-types'
+import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
 export function getTranslatedType(
   strings: InstanceData['strings'],
   typename?: string
 ): string {
   if (!typename) return strings.entities['content']
+
+  const replacedTypename =
+    typename === TemplatePluginType.TextExerciseGroup
+      ? UuidType.ExerciseGroup
+      : typename
+
   const camelCase = (
-    typename.charAt(0).toLowerCase() + typename.slice(1)
+    replacedTypename.charAt(0).toLowerCase() + replacedTypename.slice(1)
   ).replace(/-./g, (x) => x[1].toUpperCase())
 
   const { entities, categories } = strings

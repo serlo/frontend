@@ -1,3 +1,4 @@
+// Temporary file while working on unified renderer
 import {
   faExclamationCircle,
   faTools,
@@ -9,27 +10,30 @@ import { useState, MouseEvent } from 'react'
 import { HSpace } from './h-space'
 import { Link } from './link'
 import { FaIcon } from '../fa-icon'
-import { StaticInfoPanel } from '../static-info-panel'
+import { InfoPanel } from '../info-panel'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, UuidType } from '@/data-types'
-import { FrontendContentNode } from '@/frontend-node-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { tw } from '@/helper/tw'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
-import { renderArticle } from '@/schema/article-renderer'
+import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { isEmptyRowsDocument } from '@/serlo-editor/plugins/rows/utils/static-is-empty'
 import { CourseNavigation } from '@/serlo-editor/plugins/serlo-template-plugins/course/course-navigation'
+import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { createRenderers } from '@/serlo-editor-integration/create-renderers'
+import { isArticleDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
 
 export interface EntityProps {
   data: EntityData
 }
 
 export function Entity({ data }: EntityProps) {
-  // state@/components/comments/comment-area
+  editorRenderers.init(createRenderers())
 
   // courseNav: start opened when only some entries
   const [courseNavOpen, setCourseNavOpen] = useState(
@@ -60,7 +64,7 @@ export function Entity({ data }: EntityProps) {
       {renderCourseFooter()}
       <HSpace amount={20} />
       {renderUserTools()}
-      {data.licenseData && <LicenseNotice data={data.licenseData} />}
+      {data.licenseId ? <LicenseNotice licenseId={data.licenseId} /> : null}
     </>
   )
 
@@ -128,8 +132,9 @@ export function Entity({ data }: EntityProps) {
     return comp
   }
 
-  function renderContent(value: FrontendContentNode[]) {
-    const content = renderArticle(value, `entity${data.id}`)
+  function renderContent(document: EntityData['content']) {
+    const content = <StaticRenderer document={document} />
+
     if (data.schemaData?.setContentAsSection) {
       return <section itemProp="articleBody">{content}</section>
     }
@@ -176,9 +181,9 @@ export function Entity({ data }: EntityProps) {
     if (validPages.length > 0) return null
     return (
       <>
-        <StaticInfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
+        <InfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
           {strings.course.noPagesWarning}
-        </StaticInfoPanel>
+        </InfoPanel>
       </>
     )
   }
@@ -198,17 +203,23 @@ export function Entity({ data }: EntityProps) {
   function renderNotices() {
     if (data.trashed)
       return (
-        <StaticInfoPanel icon={faTrash} doNotIndex>
+        <InfoPanel icon={faTrash} doNotIndex>
           {strings.content.trashedNotice}
-        </StaticInfoPanel>
+        </InfoPanel>
       )
 
-    const hasContent = data.title || data.content?.length
+    // this check could be more exact, but I guess empty articles are the most important case
+    const hasContent = data.content
+      ? !Array.isArray(data.content) && isArticleDocument(data.content)
+        ? !isEmptyRowsDocument(data.content.state.content)
+        : true
+      : !!data.title
+
     if (!hasContent)
       return (
-        <StaticInfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
+        <InfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
           {strings.content.emptyNotice}
-        </StaticInfoPanel>
+        </InfoPanel>
       )
 
     if (data.isUnrevised) {
@@ -218,11 +229,11 @@ export function Entity({ data }: EntityProps) {
         </Link>
       )
       return (
-        <StaticInfoPanel icon={faTools} type="warning">
+        <InfoPanel icon={faTools} type="warning">
           {replacePlaceholders(strings.content.unrevisedNotice, {
             link,
           })}
-        </StaticInfoPanel>
+        </InfoPanel>
       )
     }
   }

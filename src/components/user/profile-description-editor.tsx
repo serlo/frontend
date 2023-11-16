@@ -1,5 +1,5 @@
 import { useUserSetDescriptionMutation } from '@/mutations/use-user-set-description-mutation'
-import { convertUserByDescription } from '@/serlo-editor-integration/editor-response-to-state'
+import { convertUserByDescription } from '@/serlo-editor-integration/convert-editor-response-to-state'
 import { SerloEditor } from '@/serlo-editor-integration/serlo-editor'
 
 export interface ProfileDescriptionEditorProps {
@@ -27,7 +27,7 @@ export function ProfileDescriptionEditor({
     })
   }
 
-  const initialState = convertUserByDescription(rawDescription).initialState
+  const initialState = convertUserByDescription(rawDescription)
 
   return (
     <>

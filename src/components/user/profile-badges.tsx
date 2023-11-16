@@ -90,29 +90,10 @@ export function ProfileBadges({
     anchor?: string
   }) {
     const content = (
-      <>
-        <div className="badge-container">
-          {Badge}
-          <p className="text-sm leading-tight">{name}</p>
-        </div>
-        <style jsx>{`
-          .badge-container {
-            margin-right: 30px;
-            width: 65px;
-          }
-          .badge-container :global(> svg) {
-            height: 40px;
-            margin-top: 15px;
-            margin-bottom: 10px;
-          }
-          .badge-container :global(> *) {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-          }
-        `}</style>
-      </>
+      <div className="badge-container mr-7 mt-4 w-16 [&>*]:mx-auto [&>*]:block [&>*]:text-center [&_svg]:mb-2.5 [&_svg]:h-10">
+        {Badge}
+        <p className="text-sm leading-tight">{name}</p>
+      </div>
     )
     return lang === Instance.De && anchor ? (
       <NextLink href={`/community/202923/rollen-der-serlo-community#${anchor}`}>

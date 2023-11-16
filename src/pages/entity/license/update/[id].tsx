@@ -1,25 +1,18 @@
-import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useState } from 'react'
 
-import { endpoint } from '@/api/endpoint'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import {
-  LicensesForInstaceQuery,
-  LicensesForInstaceQueryVariables,
-  Instance,
-} from '@/fetcher/graphql-types/operations'
+import { LicenseData } from '@/data-types'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { useEntityUpdateLicenseMutation } from '@/mutations/use-entity-update-license-mutation'
 
 interface UpdateLicenseProps {
   id: number
-  licenses: LicensesForInstaceQuery['license']['licenses']
 }
 
 export default renderedPageNoHooks<UpdateLicenseProps>((props) => (
@@ -28,11 +21,11 @@ export default renderedPageNoHooks<UpdateLicenseProps>((props) => (
   </FrontendClientBase>
 ))
 
-function Content({ id, licenses }: UpdateLicenseProps) {
+function Content({ id }: UpdateLicenseProps) {
   const updateLicense = useEntityUpdateLicenseMutation()
+  const { strings, licenses } = useInstanceData()
   const [licenseId, setLicenseId] = useState<number>(licenses[0].id)
   const loggedInData = useLoggedInData()
-  const { strings } = useInstanceData()
   if (!loggedInData)
     return (
       <div className="mt-12">
@@ -63,7 +56,7 @@ function Content({ id, licenses }: UpdateLicenseProps) {
     </>
   )
 
-  function renderOption(license: UpdateLicenseProps['licenses'][number]) {
+  function renderOption(license: LicenseData) {
     return (
       <option
         className="bg-brand-200 text-brand"
@@ -85,28 +78,16 @@ function Content({ id, licenses }: UpdateLicenseProps) {
   }
 }
 
-export const getStaticProps: GetStaticProps<UpdateLicenseProps> = async (
-  context
-) => {
+export const getStaticProps: GetStaticProps<UpdateLicenseProps> = (context) => {
   const id = parseInt(context.params?.id as string)
 
+  // get current license ID here maybe?
+
   if (isNaN(id)) return { notFound: true }
-
-  const instance = context.locale! as Instance
-
-  const result = await request<
-    LicensesForInstaceQuery,
-    LicensesForInstaceQueryVariables
-  >(endpoint, licensesQuery, {
-    instance,
-  })
-
-  const { licenses } = result.license
 
   return {
     props: {
       id,
-      licenses,
     },
     revalidate: 60 * 60 * 24, //one day in seconds
   }
@@ -118,15 +99,3 @@ export const getStaticPaths: GetStaticPaths = async () => {
     fallback: 'blocking',
   }
 }
-
-export const licensesQuery = gql`
-  query licensesForInstace($instance: Instance!) {
-    license {
-      licenses(instance: $instance) {
-        id
-        default
-        title
-      }
-    }
-  }
-`

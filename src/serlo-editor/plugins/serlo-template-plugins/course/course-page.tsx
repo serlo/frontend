@@ -50,13 +50,11 @@ function CoursePageTypeEditor(
   })
 
   useEffect(() => {
-    if (props.editable) {
-      // focus on title, remove focus from content
-      setTimeout(() => {
-        dispatch(focus(null))
-        titleRef.current?.focus()
-      })
-    }
+    // focus on title, remove focus from content
+    setTimeout(() => {
+      dispatch(focus(null))
+      titleRef.current?.focus()
+    })
     // only after creating plugin
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -67,18 +65,14 @@ function CoursePageTypeEditor(
     <>
       <article>
         <h1 className="serlo-h1 mt-12">
-          {props.editable ? (
-            <input
-              ref={titleRef}
-              autoFocus
-              className={headerInputClasses}
-              placeholder={placeholder}
-              value={title.value}
-              onChange={(e) => title.set(e.target.value)}
-            />
-          ) : (
-            <span itemProp="name">{title.value}</span>
-          )}
+          <input
+            ref={titleRef}
+            autoFocus
+            className={headerInputClasses}
+            placeholder={placeholder}
+            value={title.value}
+            onChange={(e) => title.set(e.target.value)}
+          />
         </h1>
 
         {content.render()}

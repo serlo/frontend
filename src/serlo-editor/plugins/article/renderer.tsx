@@ -27,25 +27,25 @@ export function ArticleRenderer({
 
   return (
     <>
-      {introduction}
+      <div className="[&>div]:mx-side [&>div]:rounded-xl [&>div]:border-3 [&>div]:border-brand-50 [&>div]:py-5 ">
+        {introduction}
+      </div>
       {content}
       {exercises || exercisesFolder ? (
         <>
-          <h2 className="serlo-h2">{strings.content.exercisesTitle}</h2>
+          <h2 className="serlo-h2 mb-16">{strings.content.exercisesTitle}</h2>
 
           {exercises}
 
           {exercisesFolder ? (
-            <p className="serlo-p">
+            <p className="serlo-p mt-8">
               {strings.content.moreExercises}:<br />
               {exercisesFolder}
             </p>
           ) : null}
         </>
       ) : null}
-
       {renderRelatedContent()}
-
       {sources ? (
         <>
           <h2 className="serlo-h2">{strings.content.sourcesTitle}</h2>

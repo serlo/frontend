@@ -1,8 +1,8 @@
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
-
-module.exports = withBundleAnalyzer({
+import bundleAnalyzer from '@next/bundle-analyzer'
+/**
+ * @type {import('next').NextConfig}
+ */
+const nextConfig = {
   webpack(config, { isServer }) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>
@@ -84,4 +84,10 @@ module.exports = withBundleAnalyzer({
       skipDefaultConversion: true,
     },
   },
+}
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
 })
+
+export default withBundleAnalyzer(nextConfig)

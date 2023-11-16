@@ -5,9 +5,11 @@ import clsx from 'clsx'
 import { type FormEvent, useState } from 'react'
 
 import { FlowType } from './flow-type'
+import { LoginButtonBildungsraum } from './login-button-bildungsraum'
 import { FaIcon } from '../fa-icon'
 import { Message, getKratosMessageString } from '@/components/auth/message'
 import { useInstanceData } from '@/contexts/instance-context'
+import { isProduction } from '@/helper/is-production'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 export interface NodeProps {
@@ -64,37 +66,44 @@ export function Node({
           />
         )
 
+      // maybe helpful: https://github.com/ory/elements/blob/main/src/react-components/checkbox.tsx#L23
       case 'checkbox': {
-        triggerSentry({
-          message: `kratos: tried to render input node which is not supported atm: ${attributes.type}`,
-        })
-        return null
-      }
-      // provider - NBP button
-      case 'button': {
-        const label = node.meta.label?.id
-          ? getKratosMessageString(
-              node.meta.label.id,
-              strings.auth.messages,
-              node.meta.label?.text ?? strings.auth.messages.code1010002
-            )
-          : undefined
         return (
-          <div className="mt-10">
-            <hr />
-            <button
-              className="serlo-button-blue mt-10 block w-full py-2 text-xl"
-              name={attributes.name}
-              onClick={(e) => {
-                void onSubmit(e, (attributes as { value: string }).value)
-              }}
-              value={(attributes.value as string) || ''}
-              disabled={attributes.disabled || disabled}
-            >
-              {label}
-            </button>
-          </div>
+          <>
+            <label className="flex items-start">
+              <input
+                type="checkbox"
+                id={attributes.name}
+                name={attributes.name}
+                value={1}
+                checked={!!value}
+                onChange={(e) => {
+                  onChange(e.target.checked)
+                }}
+                className="mr-2 mt-0.5 h-4 w-4 min-w-[14px] scale-125 accent-brand"
+              />
+
+              {/* For now we use checkbox only for newsletter subscription */}
+              <span className="inline-block">
+                {strings.auth.register.newsletterSubscription}
+              </span>
+            </label>
+          </>
         )
+      }
+      // provider: Mein Bildungsraum
+      case 'button': {
+        if (attributes.name === 'provider' && attributes.value === 'nbp') {
+          return (
+            <LoginButtonBildungsraum
+              attributes={attributes}
+              onSubmit={onSubmit}
+              disabled={disabled}
+            />
+          )
+        }
+        triggerSentry({ message: 'kratos: unexpected button node' })
+        return null
       }
 
       case 'submit': {
@@ -107,22 +116,30 @@ export function Node({
             strings.auth.messages.code1010013
           )
 
+        const isRegister = node.meta.label?.id === 1040001
+
         return (
-          <button
-            className="serlo-button-green mt-10 block w-full py-2 text-xl"
-            name={attributes.name}
-            onClick={(e) => {
-              void onSubmit(e, (attributes as { value: string }).value)
-            }}
-            value={(attributes.value as string) || ''}
-            disabled={attributes.disabled || disabled}
-          >
-            {isLoading ? (
-              <FaIcon icon={faSpinner} className="animate-spin-slow" />
-            ) : (
-              (label as string)
+          <div
+            className={clsx(
+              isRegister && !isProduction ? 'border-gray mt-20 border-t' : ''
             )}
-          </button>
+          >
+            <button
+              className="serlo-button-green mt-10 mt-10 block w-full py-2 text-xl"
+              name={attributes.name}
+              onClick={(e) => {
+                void onSubmit(e, (attributes as { value: string }).value)
+              }}
+              value={(attributes.value as string) || ''}
+              disabled={attributes.disabled || disabled}
+            >
+              {isLoading ? (
+                <FaIcon icon={faSpinner} className="animate-spin-slow" />
+              ) : (
+                (label as string)
+              )}
+            </button>
+          </div>
         )
       }
 

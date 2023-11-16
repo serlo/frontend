@@ -20,9 +20,9 @@ import { triggerSentry } from '@/helper/trigger-sentry'
 import { revisionHistoryQuery } from '@/pages/entity/repository/history/[id]'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import {
-  editorResponseToState,
+  convertEditorResponseToState,
   isError,
-} from '@/serlo-editor-integration/editor-response-to-state'
+} from '@/serlo-editor-integration/convert-editor-response-to-state'
 import { revisionResponseToResponse } from '@/serlo-editor-integration/revision-response-to-response'
 
 export function RevisionHistoryLoader<T>({
@@ -42,7 +42,7 @@ export function RevisionHistoryLoader<T>({
 
   if (!revisionsResponse) return null
 
-  if (!revisionsResponse.data?.uuid.revisions) return null // no revision loader for solutions
+  if (!revisionsResponse.data?.uuid.revisions) return null
 
   const revisions = revisionsResponse.data?.uuid.revisions.nodes
 
@@ -128,12 +128,12 @@ export function RevisionHistoryLoader<T>({
         })
         const { uuid } = data
         const prepared = revisionResponseToResponse(uuid)
-        const converted = editorResponseToState(prepared!)
+        const converted = convertEditorResponseToState(prepared!)
 
         if (isError(converted)) {
           handleError(`editor: revision conversion | ${converted.error}`)
         } else {
-          onSwitchRevision(converted.initialState.state as T)
+          onSwitchRevision(converted.state as T)
           setShowRevisions(false)
         }
       } catch (e) {

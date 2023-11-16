@@ -50,7 +50,7 @@ describe('check all supported typenames with stored api-data', () => {
 
     expect(pageData.metaData?.contentType).toBe('page')
     expect(pageData.metaData?.metaDescription).toBe(
-      'Serlo.org bietet einfache Erklärungen, Kurse, Lernvideos, Übungen und Musterlösungen mit denen Schüler*innen und Studierende nach ihrem …'
+      'Serlo.org bietet einfache Erklärungen, Kurse, Lernvideos, Übungen und Musterlösungen mit denen Schüler*innen und Studierende nach ihrem eigenen Bedarf …'
     )
     expect(pageData.metaData?.metaImage).toBe(
       `https://de.${serloDomain}/_assets/img/meta/meta.png`
@@ -62,7 +62,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.kind).toBe('single-entity')
     expect(pageData.entityData.id).toBe(18922)
     expect(pageData.entityData.title).toBe('Über Serlo')
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: Article', async () => {
@@ -84,7 +83,7 @@ describe('check all supported typenames with stored api-data', () => {
     )
     expect(pageData.metaData?.contentType).toBe('article')
     expect(pageData.metaData?.metaDescription).toBe(
-      'Um Dezimalbrüche zu addieren oder zu subtrahieren, geht man ähnlich vor wie bei der schriftlichen Addition bzw. Subtraktion.AdditionEs gibt …'
+      'Um Dezimalbrüche zu addieren oder zu subtrahieren , geht man ähnlich vor wie bei der schriftlichen Addition bzw. Subtraktion .'
     )
     assertCorrectMetaImageLink(pageData)
     assertCorrectHorizonDataFormat(pageData)
@@ -96,7 +95,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.entityData.title).toBe(
       'Addition und Subtraktion von Dezimalbrüchen'
     )
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: CoursePage', async () => {
@@ -139,7 +137,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.kind).toBe('single-entity')
     expect(pageData.entityData.id).toBe(52020)
     expect(pageData.entityData.title).toBe('Übersicht')
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: Video', async () => {
@@ -168,7 +165,7 @@ describe('check all supported typenames with stored api-data', () => {
     )
     expect(pageData.metaData?.contentType).toBe('video')
     expect(pageData.metaData?.metaDescription).toBe(
-      'Inhalt:Konstruktion der Winkel  und .Konstruktion der Winkel  und  mit detailliertem Konstruktionsplan.Konstruktion der Winkelhalbierenden …'
+      'Inhalt: Konstruktion der Winkel 360^\\circ und 180^\\circ . Konstruktion der Winkel 90^\\circ und 60^\\circ mit detailliertem Konstruktionsplan. Konstruktion …'
     )
     assertCorrectMetaImageLink(pageData)
     assertCorrectHorizonDataFormat(pageData)
@@ -178,7 +175,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.kind).toBe('single-entity')
     expect(pageData.entityData.id).toBe(40744)
     expect(pageData.entityData.title).toBe('Winkel konstruieren')
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: Applet', async () => {
@@ -211,7 +207,7 @@ describe('check all supported typenames with stored api-data', () => {
     )
     expect(pageData.metaData?.contentType).toBe('applet')
     expect(pageData.metaData?.metaDescription).toBe(
-      'Stelle mit den Schiebereglern die Brüche ein, die du multiplizieren möchtest. Die Bruchteile werden dann in den Rechtecken farbig markiert. …'
+      'Stelle mit den Schiebereglern die Brüche ein, die du multiplizieren möchtest. Die Bruchteile werden dann in den Rechtecken farbig markiert. Mit dem …'
     )
 
     assertCorrectMetaImageLink(pageData)
@@ -222,7 +218,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.kind).toBe('single-entity')
     expect(pageData.entityData.id).toBe(138114)
     expect(pageData.entityData.title).toBe('Brüche Multiplizieren')
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: TaxonomyTerm', async () => {
@@ -257,7 +252,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.kind).toBe('taxonomy')
     expect(pageData.taxonomyData.id).toBe(5)
     expect(pageData.taxonomyData.title).toBe('Mathe')
-    expect(Array.isArray(pageData.taxonomyData.subterms)).toBe(true)
   })
 
   test('typename: Exercise', async () => {
@@ -306,7 +300,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.newsletterPopup).toBe(false)
     expect(pageData.kind).toBe('single-entity')
     expect(pageData.entityData.id).toBe(54210)
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: ExerciseGroup', async () => {
@@ -347,7 +340,7 @@ describe('check all supported typenames with stored api-data', () => {
 
     expect(pageData.metaData?.contentType).toBe('exercisegroup')
     expect(pageData.metaData?.metaDescription).toBe(
-      'Finde die passenden Gleichungen zu den Funktionsgraphen:Die Ruhelage der Funktion liegt auf der -Achse.Der Graph schneidet das Koordinatensystem …'
+      'Finde die passenden Gleichungen zu den Funktionsgraphen:'
     )
 
     assertCorrectMetaImageLink(pageData)
@@ -357,7 +350,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.newsletterPopup).toBe(false)
     expect(pageData.kind).toBe('single-entity')
     expect(pageData.entityData.id).toBe(53205)
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: GroupedExercise', async () => {
@@ -367,9 +359,7 @@ describe('check all supported typenames with stored api-data', () => {
 
     expect(pageData.metaData?.title).toBe('Teilaufgabe - lernen mit Serlo!')
     expect(pageData.metaData?.contentType).toBe('groupedexercise')
-    expect(pageData.metaData?.metaDescription).toBe(
-      'Die Ruhelage der Funktion liegt auf der -Achse.Der Graph schneidet das Koordinatensystem im Nullpunkt, also handelt es sich um eine Sinusfunktion …'
-    )
+    expect(pageData.metaData?.metaDescription).toBe(undefined)
     assertCorrectMetaImageLink(pageData)
     assertCorrectHorizonDataFormat(pageData)
 
@@ -377,7 +367,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.newsletterPopup).toBe(false)
     expect(pageData.kind).toBe('single-entity')
     expect(pageData.entityData.id).toBe(53209)
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
     expect(pageData.breadcrumbsData?.length === 1)
   })
 
@@ -461,7 +450,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.kind).toBe('single-entity')
     expect(pageData.entityData.id).toBe(52020)
     expect(pageData.entityData.title).toBe('Übersicht')
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 
   test('typename: Event', async () => {
@@ -471,7 +459,7 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.metaData?.title).toBe('Serlo')
     expect(pageData.metaData?.contentType).toBe('event')
     expect(pageData.metaData?.metaDescription).toBe(
-      '31.08.20 - 25.09.2020, Mo-Fr Digital Learning Academy in MünchenonlineGemeinsame Arbeit an Lerninhalten, Workshops zu verschiedenen Themen …'
+      '31.08.20 - 25.09.2020, Mo-Fr Digital Learning Academy in München online  Gemeinsame Arbeit an Lerninhalten, Workshops zu verschiedenen Themen und …'
     )
 
     expect(pageData.metaData?.metaImage).toBe(
@@ -482,7 +470,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.cacheKey).toBe('/de/145590')
     expect(pageData.newsletterPopup).toBe(false)
     expect(pageData.kind).toBe('single-entity')
-    expect(Array.isArray(pageData.entityData.content)).toBe(true)
   })
 })
 

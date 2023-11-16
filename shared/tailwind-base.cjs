@@ -1,4 +1,4 @@
-// This tailwind preset is also used in https://github.com/serlo/serlo-editor-for-edusharing. Using a tailwind preset like this allows sharing the configuration between multiple repos.
+// This tailwind preset is only used in https://github.com/serlo/serlo-editor-for-edusharing
 
 const colors = require('tailwindcss/colors')
 const plugin = require('tailwindcss/plugin')
@@ -81,7 +81,7 @@ module.exports = {
         cozy: '1.33',
       },
       margin: {
-        block: '30px',
+        block: '28px',
         '15vh': '15vh',
       },
       padding: {
@@ -108,7 +108,7 @@ module.exports = {
         input: `0 0 4px 0 ${brand}`,
       },
       fontFamily: {
-        serlo: 'Karmilla, sans-serif',
+        serlo: 'Karla, sans-serif',
         handwritten: 'Caveat, sans-serif',
       },
       backgroundImage: {

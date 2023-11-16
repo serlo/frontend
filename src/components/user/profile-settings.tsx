@@ -2,11 +2,11 @@ import { ProfileDescriptionEditor } from './profile-description-editor'
 import { ProfileExperimental } from './profile-experimental'
 import { getAvatarUrl } from './user-link'
 import { useAuthentication } from '@/auth/use-authentication'
-import { Spoiler } from '@/components/content/spoiler'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { SpoilerRenderer } from '@/serlo-editor/plugins/spoiler/renderer'
 
 interface ProfileSettingsProps {
   rawDescription: string
@@ -76,29 +76,25 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
     )
 
     return (
-      <>
-        <Spoiler
-          title={buttonText}
-          body={
-            <>
-              <p className="serlo-p mt-5">
-                {replacePlaceholders(description, { chatLink })}
-              </p>
-              <ol className="serlo-ol">
-                <li>{replacePlaceholders(steps.goToChat, { chatLink })}</li>
-                <li>{steps.signIn}</li>
-                <li>
-                  {replacePlaceholders(steps.goToMyAccount, { myAccountLink })}
-                </li>
-                <li>{steps.uploadPicture}</li>
-                <li>
-                  {replacePlaceholders(steps.refreshPage, { refreshLink })}
-                </li>
-              </ol>
-            </>
-          }
-        />
-      </>
+      <SpoilerRenderer
+        title={<>{buttonText}</>}
+        content={
+          <>
+            <p className="serlo-p mt-5">
+              {replacePlaceholders(description, { chatLink })}
+            </p>
+            <ol className="serlo-ol">
+              <li>{replacePlaceholders(steps.goToChat, { chatLink })}</li>
+              <li>{steps.signIn}</li>
+              <li>
+                {replacePlaceholders(steps.goToMyAccount, { myAccountLink })}
+              </li>
+              <li>{steps.uploadPicture}</li>
+              <li>{replacePlaceholders(steps.refreshPage, { refreshLink })}</li>
+            </ol>
+          </>
+        }
+      />
     )
   }
 
@@ -108,9 +104,9 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
     const editUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdb_My7YAVNA7ha9XnBcYCZDk36cOqgcWkBqowatbefX0IzEg/viewform?usp=pp_url&entry.14483495=${username}`
 
     return (
-      <Spoiler
-        title={buttonText}
-        body={
+      <SpoilerRenderer
+        title={<>{buttonText}</>}
+        content={
           <>
             <p className="serlo-p mt-5">{intro}</p>
             <p className="serlo-p">{privacy}</p>

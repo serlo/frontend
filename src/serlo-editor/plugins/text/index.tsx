@@ -12,6 +12,7 @@ import type {
   Heading,
   Link,
   MathElement,
+  Blank,
 } from './types/text-editor'
 import { emptyDocumentFactory } from './utils/document'
 import { isEmptyObject } from './utils/object'
@@ -23,23 +24,23 @@ const createTextPlugin = (
   Component: TextEditor,
   config,
   state: serializedScalar(emptyDocumentFactory(), {
-    serialize({ value }) {
-      return value
+    toStaticState({ value }) {
+      return value //slate
     },
-    deserialize(value) {
-      if (value.length === 0) {
+    toStoreState(descendants) {
+      if (descendants.length === 0) {
         return emptyDocumentFactory()
       }
 
       // If the first child of the Element is an empty object,
       // replace it with an empty document.
       // https://docs.slatejs.org/concepts/11-normalizing#built-in-constraints
-      const firstChild = (value[0] as CustomElement).children[0]
+      const firstChild = (descendants[0] as CustomElement).children[0]
       if (isEmptyObject(firstChild)) {
         return emptyDocumentFactory()
       }
 
-      return { value, selection: null }
+      return { value: descendants, selection: null }
     },
   }),
   onKeyDown() {
@@ -78,6 +79,7 @@ export type {
   ListItemText,
   Heading,
   Link,
+  Blank,
   MathElement,
   CustomText,
   TextEditorConfig,

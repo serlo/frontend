@@ -1,12 +1,9 @@
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
-import { convertStateStringToFrontendNode } from './convert-state-string-to-frontend-node'
 import { createBreadcrumbs } from './create-breadcrumbs'
-import { createExercise, createExerciseGroup } from './create-exercises'
+import { createExerciseGroup, createExercise } from './create-exercises'
 import { createHorizon } from './create-horizon'
-import { createInlineLicense } from './create-inline-license'
-import { getMetaImage, getMetaDescription } from './create-meta-data'
 import { createSecondaryMenu } from './create-secondary-menu'
 import { buildTaxonomyData } from './create-taxonomy'
 import { createTitle } from './create-title'
@@ -15,14 +12,20 @@ import {
   MainUuidQuery,
   MainUuidQueryVariables,
 } from './graphql-types/operations'
+import { getArticleMetaDescription } from './meta-data/get-article-meta-description'
+import { getMetaDescription } from './meta-data/get-meta-description'
+import { getMetaImage } from './meta-data/get-meta-image'
+import { prettifyLinksInSecondaryMenu } from './prettify-links-state/prettify-links-in-secondary-menu'
+import { prettifyLinksInState } from './prettify-links-state/prettify-links-in-state'
 import { dataQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData, UuidRevType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
-import { FrontendNodeType } from '@/frontend-node-types'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
+import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 // ALWAYS start alias with slash
 export async function requestPage(
@@ -39,7 +42,9 @@ export async function requestPage(
   const uuid = response.uuid
   const authorization = response.authorization as AuthorizationPayload
   if (!uuid) return { kind: 'not-found' }
-  // Can be deleted if CFWorker redirects those for us
+
+  if (uuid.__typename === UuidType.Comment) return { kind: 'not-found' } // no content for comments
+
   if (
     uuid.__typename === UuidRevType.Article ||
     uuid.__typename === UuidRevType.Page ||
@@ -50,9 +55,10 @@ export async function requestPage(
     uuid.__typename === UuidRevType.GroupedExercise ||
     uuid.__typename === UuidRevType.Exercise ||
     uuid.__typename === UuidRevType.ExerciseGroup ||
-    uuid.__typename === UuidRevType.Solution ||
     uuid.__typename === UuidRevType.Course
   ) {
+    // redirect revisions
+    // (can maybe be deleted if CFWorker redirects those for us)
     return {
       kind: 'redirect',
       target:
@@ -62,13 +68,9 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename === UuidType.Comment) return { kind: 'not-found' } // no content for comments
-
-  if (uuid.__typename === UuidType.Solution) {
-    return await requestPage(`/${uuid.exercise.id}`, instance)
-  }
-
-  const secondaryMenuData = createSecondaryMenu(uuid, instance)
+  const secondaryMenuData = await prettifyLinksInSecondaryMenu(
+    createSecondaryMenu(uuid, instance)
+  )
   const breadcrumbsData = createBreadcrumbs(uuid, instance)
   const horizonData = instance === Instance.De ? createHorizon() : undefined
   const cacheKey = `/${instance}${alias}`
@@ -154,7 +156,7 @@ export async function requestPage(
     uuid.__typename === UuidType.Exercise ||
     uuid.__typename === UuidType.GroupedExercise
   ) {
-    const exercise = [createExercise(uuid)]
+    const exercise = createExercise(uuid)
     return {
       kind: 'single-entity',
       entityData: {
@@ -185,7 +187,7 @@ export async function requestPage(
             ? 'text-exercise'
             : 'groupedexercise',
         metaImage,
-        metaDescription: getMetaDescription(exercise),
+        metaDescription: getMetaDescription(exercise?.state.content),
       },
       horizonData,
       cacheKey,
@@ -194,14 +196,14 @@ export async function requestPage(
   }
 
   if (uuid.__typename === UuidType.ExerciseGroup) {
-    const exercise = [createExerciseGroup(uuid)]
+    const exerciseGroup = createExerciseGroup(uuid)
     return {
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
         alias: uuid.alias,
         typename: UuidType.ExerciseGroup,
-        content: exercise,
+        content: exerciseGroup,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -211,7 +213,9 @@ export async function requestPage(
         title,
         contentType: 'exercisegroup',
         metaImage,
-        metaDescription: getMetaDescription(exercise),
+        metaDescription: getMetaDescription(
+          exerciseGroup?.state.content as unknown as EditorRowsDocument
+        ),
       },
       horizonData,
       cacheKey,
@@ -219,9 +223,11 @@ export async function requestPage(
     }
   }
 
-  const content = convertStateStringToFrontendNode(
+  const content = (await prettifyLinksInState(
     uuid.currentRevision?.content
-  )
+      ? parseDocumentString(uuid.currentRevision?.content)
+      : undefined
+  )) as EditorRowsDocument
 
   if (uuid.__typename === UuidType.Event) {
     return {
@@ -275,7 +281,7 @@ export async function requestPage(
     }
   }
 
-  const licenseData = { ...uuid.license, isDefault: uuid.license.default }
+  const licenseId = uuid.license.id
 
   if (uuid.__typename === UuidType.Article) {
     return {
@@ -288,7 +294,7 @@ export async function requestPage(
         typename: UuidType.Article,
         title: uuid.currentRevision?.title ?? uuid.revisions?.nodes[0]?.title,
         content,
-        licenseData,
+        licenseId,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
           useArticleTag: true,
@@ -303,7 +309,7 @@ export async function requestPage(
         metaImage,
         metaDescription: uuid.currentRevision?.metaDescription
           ? uuid.currentRevision?.metaDescription
-          : getMetaDescription(content),
+          : getArticleMetaDescription(content),
         dateCreated: uuid.date,
         dateModified: uuid.currentRevision?.date,
       },
@@ -327,19 +333,17 @@ export async function requestPage(
         content: [
           {
             plugin: EditorPluginType.Video,
-            type: FrontendNodeType.Video,
             state: {
               src: uuid.currentRevision?.url ?? '',
               alt: uuid.currentRevision?.title ?? '',
             },
-            license: createInlineLicense(uuid.license),
           },
-          ...content,
+          ...(content ? [content] : []),
         ],
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
-        licenseData,
+        licenseId,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -369,15 +373,14 @@ export async function requestPage(
         content: [
           {
             plugin: EditorPluginType.Geogebra,
-            type: FrontendNodeType.Geogebra,
             state: uuid.currentRevision?.url ?? '',
           },
-          ...content,
+          ...(content ? [content] : []),
         ],
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
-        licenseData,
+        licenseId,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -432,7 +435,7 @@ export async function requestPage(
         typename: UuidType.CoursePage,
         title: uuid.currentRevision?.title ?? '',
         content,
-        licenseData,
+        licenseId,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
           useArticleTag: true,

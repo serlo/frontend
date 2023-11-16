@@ -7,17 +7,22 @@ import { EditorRoadmap } from './editor-roadmap'
 import { EditorTeam, teamDataSimon } from './editor-team'
 import { EducationPlugins } from './education-plugins'
 import { Link } from '@/components/content/link'
-import { Video } from '@/components/content/video'
 import { HeadTags } from '@/components/head-tags'
 import { Logo } from '@/components/navigation/header/logo'
 import { breakpoints } from '@/helper/breakpoints'
 import { tw } from '@/helper/tw'
+import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { createRenderers } from '@/serlo-editor-integration/create-renderers'
+import { VideoSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/video-serlo-static-renderer'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-export const h2Class =
+const h2Class =
   'text-center text-4xl leading-cozy tracking-tight font-extrabold'
 const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
 
 export function EditorPresentation() {
+  editorRenderers.init(createRenderers())
+
   return (
     <>
       <HeadTags
@@ -82,7 +87,13 @@ export function EditorPresentation() {
               </p>
             </div>
             <div className="-mx-side mt-8 pl-2 sm:max-w-[32rem] sm:flex-1">
-              <Video src="https://www.youtube.com/watch?v=wjaPgGdw23w" />
+              <VideoSerloStaticRenderer
+                plugin={EditorPluginType.Video}
+                state={{
+                  src: 'https://www.youtube.com/watch?v=wjaPgGdw23w',
+                  alt: 'Video introducing the Serlo Editor',
+                }}
+              />
             </div>
           </div>
         </section>
@@ -195,7 +206,7 @@ export function EditorPresentation() {
               <h2 className={clsx(h2Class)}>Connect</h2>
 
               <p className="mt-4 flex-1 text-xl leading-cozy">
-                Leave us you email address and we will reach out to you with
+                Leave us your email address and we will reach out to you with
                 updates.
               </p>
               <p className="mt-8">{renderStayInTouch(true)}</p>
@@ -236,7 +247,9 @@ export function EditorPresentation() {
             padding-top: 11rem;
             padding-bottom: 9rem;
             background-position: 20% 19%;
-            background-size: 82%, 100vw 100%;
+            background-size:
+              82%,
+              100vw 100%;
           }
         }
         :global(body) {

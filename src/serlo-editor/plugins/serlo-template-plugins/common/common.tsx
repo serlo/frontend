@@ -3,8 +3,8 @@ import { mapObjIndexed } from 'ramda'
 import { tw } from '@/helper/tw'
 import {
   StateType,
-  StateTypesSerializedType,
-  StateTypeSerializedType,
+  StateTypesStaticType,
+  StateTypeStaticType,
   StateTypesValueType,
   StateTypeValueType,
   StateTypesReturnType,
@@ -18,44 +18,35 @@ import {
 } from '@/serlo-editor/plugin'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-const licenseState = object({
-  id: number(),
-  title: string(),
-  shortTitle: string(),
-  url: string(),
-  agreement: string(),
-})
-
 export const uuid = {
   id: number(),
 }
 
-export const license = {
-  license: optional(licenseState),
-}
-
 export const entity = {
   ...uuid,
-  ...license,
   revision: number(),
+  licenseId: optional(number()),
   changes: string(),
 }
 
-export type Uuid = StateTypesSerializedType<typeof uuid>
-export type License = StateTypesSerializedType<typeof license>
-export type Entity = Uuid & License & { revision: number; changes?: string }
+export type Uuid = StateTypesStaticType<typeof uuid>
+export type Entity = Uuid & {
+  revision: number
+  changes?: string
+  licenseId?: number
+}
 
 export function entityType<
   Ds extends Record<string, StateType>,
-  Childs extends Record<string, StateType>
+  Childs extends Record<string, StateType>,
 >(
   ownTypes: Ds,
   children: Childs
 ): StateType<
-  StateTypesSerializedType<Ds & Childs>,
+  StateTypesStaticType<Ds & Childs>,
   StateTypesValueType<Ds & Childs>,
   StateTypesReturnType<Ds & Childs> & {
-    replaceOwnState: (newValue: StateTypesSerializedType<Ds>) => void
+    replaceOwnState: (newValue: StateTypesStaticType<Ds>) => void
   }
 > {
   const objectType = object<Ds & Childs>({ ...ownTypes, ...children })
@@ -70,7 +61,7 @@ export function entityType<
             return mapObjIndexed((_value, key) => {
               if (key in ownTypes) {
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                return ownTypes[key].deserialize(newValue[key], helpers)
+                return ownTypes[key].toStoreState(newValue[key], helpers)
               } else {
                 return previousState[key]
               }
@@ -85,15 +76,15 @@ export function entityType<
 export function serialized<S extends StateType>(type: S) {
   return {
     ...type,
-    serialize(...args: Parameters<typeof type.serialize>) {
-      return JSON.stringify(type.serialize(...args))
+    serialize(...args: Parameters<typeof type.toStaticState>) {
+      return JSON.stringify(type.toStaticState(...args))
     },
     deserialize(
       serialized: string,
-      helpers: Parameters<typeof type.deserialize>[1]
+      helpers: Parameters<typeof type.toStoreState>[1]
     ) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return type.deserialize(JSON.parse(serialized), helpers)
+      return type.toStoreState(JSON.parse(serialized), helpers)
     },
   }
 }
@@ -108,19 +99,20 @@ export function editorContent(
   const originalChild = child<string>({ plugin })
   return {
     ...originalChild,
-    serialize(...args: Parameters<typeof originalChild.serialize>) {
-      return JSON.stringify(originalChild.serialize(...args))
+    toStaticState(...args: Parameters<typeof originalChild.toStaticState>) {
+      return JSON.stringify(originalChild.toStaticState(...args))
     },
-    deserialize(
+    toStoreState(
       serialized: string,
-      helpers: Parameters<typeof originalChild.deserialize>[1]
+      helpers: Parameters<typeof originalChild.toStoreState>[1]
     ) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      return originalChild.deserialize(JSON.parse(serialized), helpers)
+      return originalChild.toStoreState(JSON.parse(serialized), helpers)
     },
   }
 }
 
+/** jup it's basically a string */
 export function serializedChild(
   plugin: string
 ): StateType<
@@ -131,14 +123,14 @@ export function serializedChild(
   const originalChild = child({ plugin, config: { skipControls: true } })
   return {
     ...originalChild,
-    serialize(...args: Parameters<typeof originalChild.serialize>) {
-      return originalChild.serialize(...args).state
+    toStaticState(...args: Parameters<typeof originalChild.toStaticState>) {
+      return originalChild.toStaticState(...args).state
     },
-    deserialize(
+    toStoreState(
       serialized: string,
-      helpers: Parameters<typeof originalChild.deserialize>[1]
+      helpers: Parameters<typeof originalChild.toStoreState>[1]
     ) {
-      return originalChild.deserialize(
+      return originalChild.toStoreState(
         {
           plugin,
           state: serialized,
@@ -150,7 +142,7 @@ export function serializedChild(
 }
 
 export function optionalSerializedChild(plugin: string): StateType<
-  StateTypeSerializedType<ReturnType<typeof serializedChild>> | null,
+  StateTypeStaticType<ReturnType<typeof serializedChild>> | null,
   StateTypeValueType<ReturnType<typeof serializedChild>> | null,
   StateTypeReturnType<ReturnType<typeof serializedChild>> & {
     create: (state?: unknown) => void
@@ -173,7 +165,7 @@ export function optionalSerializedChild(plugin: string): StateType<
         create(state?: unknown) {
           onChange((_oldId, helpers) => {
             if (typeof state !== 'undefined') {
-              return child.deserialize(state, helpers)
+              return child.toStoreState(state, helpers)
             }
             return child.createInitialState(helpers)
           })
@@ -183,19 +175,19 @@ export function optionalSerializedChild(plugin: string): StateType<
         },
       }
     },
-    serialize(
-      deserialized: string | null,
-      helpers: Parameters<typeof child.serialize>[1]
+    toStaticState(
+      state: string | null,
+      helpers: Parameters<typeof child.toStaticState>[1]
     ) {
-      if (!deserialized) return null
-      return child.serialize(deserialized, helpers)
+      if (!state) return null
+      return child.toStaticState(state, helpers)
     },
-    deserialize(
-      serialized: string | null,
-      helpers: Parameters<typeof child.deserialize>[1]
+    toStoreState(
+      state: string | null,
+      helpers: Parameters<typeof child.toStoreState>[1]
     ) {
-      if (!serialized) return null
-      return child.deserialize(serialized, helpers)
+      if (!state) return null
+      return child.toStoreState(state, helpers)
     },
     createInitialState() {
       return null

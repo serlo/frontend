@@ -6,11 +6,11 @@ import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
+import { InfoPanel } from '@/components/info-panel'
 import {
   ManageSubscriptions,
   SubscriptionNode,
 } from '@/components/pages/manage-subscriptions'
-import { StaticInfoPanel } from '@/components/static-info-panel'
 import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -33,7 +33,6 @@ const filters = [
   UuidType.Exercise,
   UuidType.GroupedExercise,
   UuidType.ExerciseGroup,
-  UuidType.Solution,
   UuidType.User,
   UuidType.Course,
   UuidType.TaxonomyTerm,
@@ -113,10 +112,10 @@ function Content() {
     return (
       <>
         {renderTitle()}
-        <StaticInfoPanel type="info">
+        <InfoPanel type="info">
           <br />
           <PleaseLogIn />
-        </StaticInfoPanel>
+        </InfoPanel>
       </>
     )
   }

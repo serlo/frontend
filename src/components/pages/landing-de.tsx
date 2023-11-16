@@ -146,7 +146,9 @@ export function LandingDE({ data }: LandingDEProps) {
             url('/_assets/img/landing/about-container.svg');
           background-repeat: no-repeat, no-repeat;
           background-position: 77% 12%;
-          background-size: 200%, 100vw 100%;
+          background-size:
+            200%,
+            100vw 100%;
         }
 
         @media (min-width: ${breakpoints.sm}) {
@@ -154,7 +156,9 @@ export function LandingDE({ data }: LandingDEProps) {
             padding-top: 11rem;
             padding-bottom: 9rem;
             background-position: 20% 19%;
-            background-size: 82%, 100vw 100%;
+            background-size:
+              82%,
+              100vw 100%;
           }
         }
       `}</style>

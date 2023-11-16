@@ -9,7 +9,7 @@ import {
   insertPluginChildAfter,
   removePluginChild,
   selectChildTreeOfParent,
-  selectSerializedDocumentWithoutIds,
+  selectStaticDocumentWithoutIds,
   store,
   useAppDispatch,
 } from '@/serlo-editor/store'
@@ -31,10 +31,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
     const parent = selectChildTreeOfParent(store.getState(), pluginId)
     if (!parent) return
 
-    const document = selectSerializedDocumentWithoutIds(
-      store.getState(),
-      pluginId
-    )
+    const document = selectStaticDocumentWithoutIds(store.getState(), pluginId)
     if (!document) return
 
     dispatch(

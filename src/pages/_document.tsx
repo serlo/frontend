@@ -6,7 +6,7 @@ import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { htmlEscapeStringForJson } from '@/helper/html-escape'
 
 const bodyStyles = {
-  fontFamily: 'Karmilla, sans-serif',
+  fontFamily: 'Karla, sans-serif',
   backgroundColor: '#fff',
 }
 
@@ -17,7 +17,19 @@ const sentryLoader = `
       environment: "${process.env.NEXT_PUBLIC_ENV}",
       release: "frontend@${
         process.env.NEXT_PUBLIC_COMMIT_SHA?.substring(0, 7) ?? ''
-      }"
+      }",
+      beforeSend(event, hint) {
+        /* ignore safari warning in JsonLd component */
+        const error = hint.originalException;
+        if (
+          error &&
+          error.message &&
+          error.message.startsWith('r["@context"].toLowerCase')
+        ) {
+          return null
+        }
+        return event;
+      },
     });
     window.Sentry.forceLoad();
   }
@@ -73,28 +85,14 @@ export default class MyDocument extends Document {
           />
           <link
             rel="preload"
-            href="/_assets/fonts/karmilla/karmilla-regular.woff2"
+            href="/_assets/fonts/karla/karla-variable.woff2"
             as="font"
             type="font/woff2"
             crossOrigin=""
           />
           <link
             rel="preload"
-            href="/_assets/fonts/karmilla/karmilla-bold.woff2"
-            as="font"
-            type="font/woff2"
-            crossOrigin=""
-          />
-          <link
-            rel="preload"
-            href="/_assets/fonts/karmilla/karmilla-bolder.woff2"
-            as="font"
-            type="font/woff2"
-            crossOrigin=""
-          />
-          <link
-            rel="preload"
-            href="/_assets/fonts/caveat/caveat-bold.woff2"
+            href="/_assets/fonts/caveat/caveat-700.woff2"
             as="font"
             type="font/woff2"
             crossOrigin=""
@@ -113,7 +111,7 @@ export default class MyDocument extends Document {
             process.env.NEXT_PUBLIC_COMMIT_SHA !== undefined && (
               <script
                 dangerouslySetInnerHTML={{
-                  __html: sentryLoader.replace(/[\s]/g, ''),
+                  __html: sentryLoader,
                 }}
               />
             )}

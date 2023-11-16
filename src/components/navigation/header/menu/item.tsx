@@ -15,7 +15,7 @@ import type { HeaderLinkData } from '@/data-types'
 import { submitEvent } from '@/helper/submit-event'
 import { tw } from '@/helper/tw'
 
-export const styledLinkCls = tw`
+const styledLinkCls = tw`
   navtrigger block flex w-full
   items-center border-b border-brand-400
   p-4 align-middle text-[1.33rem] font-bold text-brand
