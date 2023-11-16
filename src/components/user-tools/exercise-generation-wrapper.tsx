@@ -32,8 +32,6 @@ export const ExerciseGenerationWrapper = ({
     strings.ai.exerciseGeneration.initialModalTitle
   )
 
-  // TODO change this, only for testing.
-  // const [activePage, setActivePage] = useState(ActivePage.ExercisePreviewPage)
   const [activePage, setActivePage] = useState(
     ActivePage.ExerciseGenerationWizard
   )
