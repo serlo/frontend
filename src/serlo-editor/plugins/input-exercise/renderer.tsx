@@ -109,8 +109,7 @@ export function InputExerciseRenderer({
               checkAnswer(val).correct && 'bg-green-200'
             )}
           >
-            {val.length < 8 ? val : val.substring(0, 7) + ' …'}{' '}
-            <span className="text-gray-600">(x {count})</span>,
+            {val} <span className="text-gray-600">(x {count})</span>,
           </span>
         ))}
       </>
