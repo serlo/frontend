@@ -7,6 +7,7 @@ import type { CommentAreaEntityProps } from '@/components/comments/comment-area-
 import { Lazy } from '@/components/content/lazy'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import { useAB } from '@/contexts/ab'
+import { useExerciseFolderStats } from '@/contexts/exercise-folder-stats-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { useEntityId } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
@@ -24,6 +25,11 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const ab = useAB()
   const isRevisionView = useContext(RevisionViewContext)
   const context = props.serloContext
+  const exerciseData = useExerciseFolderStats()
+
+  const entry = exerciseData?.data[context!.exerciseId!]
+
+  const count = entry?.solutionOpen
 
   const exerciseUuid = useEntityId()
 
@@ -65,6 +71,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
         solutionVisibleOnInit={solutionVisibleOnInit}
         afterSlot={afterSlot}
         onSolutionOpen={onSolutionOpen}
+        count={count}
       />
     </div>
   )

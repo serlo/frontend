@@ -11,11 +11,13 @@ export function StaticSolutionRenderer({
   beforeSlot,
   afterSlot,
   onSolutionOpen,
+  count,
 }: EditorSolutionDocument & {
   solutionVisibleOnInit: boolean
   afterSlot?: JSX.Element | null
   beforeSlot?: JSX.Element | null
   onSolutionOpen?: () => void
+  count?: number
 }) {
   const { prerequisite, strategy, steps } = state
 
@@ -50,6 +52,7 @@ export function StaticSolutionRenderer({
       }
       solutionVisibleOnInit={solutionVisibleOnInit}
       onSolutionOpen={onSolutionOpen}
+      count={count}
     />
   )
 }

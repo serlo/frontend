@@ -1,9 +1,7 @@
 import { useRouter } from 'next/router'
-import { useContext } from 'react'
 
 import { useAB } from '@/contexts/ab'
 import { useInstanceData } from '@/contexts/instance-context'
-import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { InputExerciseStaticRenderer } from '@/serlo-editor/plugins/input-exercise/static'
@@ -16,12 +14,11 @@ export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
   const exStrings = useInstanceData().strings.content.exercises
   const { asPath } = useRouter()
   const ab = useAB()
-  const isRevisionView = useContext(RevisionViewContext)
 
   return (
     <>
       <InputExerciseStaticRenderer {...props} onEvaluate={onEvaluate} />
-      {isRevisionView ? renderRevisionExtra() : null}
+      {renderRevisionExtra()}
     </>
   )
 
@@ -57,7 +54,10 @@ export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
         <span className="mx-side text-sm font-bold">
           {exStrings.answer} {answer.isCorrect && `[${exStrings.correct}]`}:
         </span>
-        {answer.value}
+        {answer.value}{' '}
+        <span className="ml-4 inline-block text-gray-500">
+          [{props.state.type}]
+        </span>
         <StaticRenderer document={answer.feedback} />
       </div>
     ))
