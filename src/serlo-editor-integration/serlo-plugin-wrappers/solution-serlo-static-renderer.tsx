@@ -27,7 +27,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const context = props.serloContext
   const exerciseData = useExerciseFolderStats()
 
-  const entry = exerciseData?.data[context!.exerciseId!]
+  const entry = context ? exerciseData?.data[context.exerciseId!] : undefined
 
   const count = entry?.solutionOpen
 

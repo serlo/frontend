@@ -74,13 +74,15 @@ export function Topic({ data }: TopicProps) {
     if (exercise.plugin === EditorPluginType.Exercise) {
       mapping[exercise.serloContext!.uuid!] = `${i + 1}`
     } else {
-      exercise.state.exercises.forEach((child, i) => {
+      exercise.state.exercises.forEach((child, j) => {
         mapping[child.serloContext!.uuid!] = `${i + 1}${String.fromCharCode(
-          'a'.charCodeAt(0) + i
+          'a'.charCodeAt(0) + j
         )}`
       })
     }
   })
+
+  console.log(mapping)
 
   function customSort(a: string, b: string): number {
     // Regular expression to separate numeric and alphabetic parts
