@@ -12,14 +12,14 @@ interface TopicProps extends WizardPageProps {
   setTopic: (topic: string) => void
 }
 
-export const Topic: React.FC<TopicProps> = ({
+export function Topic({
   onNext,
   jumpToPage,
   isSummary,
   topic,
   setTopic,
   defaultTopic,
-}) => {
+}: TopicProps) {
   const { topic: topicStrings } =
     useLoggedInData()!.strings.ai.exerciseGeneration
 
@@ -108,4 +108,17 @@ export const Topic: React.FC<TopicProps> = ({
       </div>
     </div>
   )
+}
+
+// Helper function to extract the topic from title.
+// E.g Aufgaben zum Dreisatz => Dreisatz
+export function extractTopicFromTitle(
+  title: string | undefined
+): string | null {
+  if (!title) {
+    return null
+  }
+
+  const match = title.match(/Aufgaben zu(?:m|r)? (.+)/)
+  return match ? match[1].trim() : null
 }

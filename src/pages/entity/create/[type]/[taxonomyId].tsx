@@ -1,7 +1,8 @@
 import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
+import { LazyLoadExerciseGenerationWrapperOrNull } from './lazy-load-exercise-generation-wrapper-or-null'
 import { endpoint } from '@/api/endpoint'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
@@ -16,6 +17,7 @@ import {
 import { sharedTaxonomyParents } from '@/fetcher/query-fragments'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
+import { EditorProps } from '@/serlo-editor/core'
 import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
 enum AllowedPlugins {
@@ -32,6 +34,7 @@ interface EntityCreateProps {
   entityType: keyof typeof AllowedPlugins
   taxonomyTerm: Extract<GetTaxonomyTypeQuery['uuid'], { title: any }>
   entityNeedsReview: boolean
+  subject: string
 }
 
 export default renderedPageNoHooks<EntityCreateProps>((props) => {
@@ -39,32 +42,15 @@ export default renderedPageNoHooks<EntityCreateProps>((props) => {
 })
 
 function Content({
-  props: { taxonomyTerm, entityType, entityNeedsReview },
+  props: { taxonomyTerm, entityType, entityNeedsReview, subject },
 }: {
   props: EntityCreateProps
 }) {
-  const [initialState, setInitialState] = useState({
-    plugin: AllowedPlugins[entityType],
-  })
-
-  useEffect(() => {
-    try {
-      // you can pass a session storage key with `&loadFormSession=mykey` to
-      // let the editor load custom inital state
-      const params = new URLSearchParams(window.location.search)
-      const sessionKey = params.get('loadFromSession') ?? ''
-      const sessionValue = sessionStorage.getItem(sessionKey) ?? ''
-      if (sessionKey && sessionValue) {
-        // we pray that this works, otherwise editor will through error message
-        setInitialState(JSON.parse(sessionValue) as typeof initialState)
-      }
-    } catch (e) {
-      console.error(
-        'Error occurred parsing data from session storage via url',
-        e
-      )
+  const [initialState, setInitialState] = useState<EditorProps['initialState']>(
+    {
+      plugin: AllowedPlugins[entityType],
     }
-  }, [])
+  )
 
   const { id: taxonomyParentId } = taxonomyTerm
 
@@ -87,6 +73,11 @@ function Content({
           <main>
             <Guard needsAuth={isProduction ? true : undefined} data>
               <AddRevision {...addRevisionProps} />
+              <LazyLoadExerciseGenerationWrapperOrNull
+                subject={subject}
+                taxonomyTitle={taxonomyTerm.title}
+                setEditorState={setInitialState}
+              />
             </Guard>
           </main>
         </MaxWidthDiv>{' '}
@@ -132,6 +123,7 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
       entityType: entityType as keyof typeof AllowedPlugins,
       taxonomyTerm: { ...result.uuid },
       entityNeedsReview: !isTestArea,
+      subject: breadcrumbsData?.[0]?.label || 'Unknown subject',
     },
     revalidate: 60 * 30, // 0.5 hours,
   }

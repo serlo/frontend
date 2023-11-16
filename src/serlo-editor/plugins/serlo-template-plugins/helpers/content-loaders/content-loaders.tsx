@@ -15,10 +15,6 @@ export function ContentLoaders({
   entityType,
   onSwitchRevision,
 }: ContentLoadersProps) {
-  if (id === -1) {
-    return null
-  }
-
   return id ? (
     <RevisionHistoryLoader
       id={id}

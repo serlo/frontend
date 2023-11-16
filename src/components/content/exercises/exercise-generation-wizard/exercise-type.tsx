@@ -56,14 +56,14 @@ export function ExerciseType({
           defaultValue=""
         >
           <MenuItem value="">{exerciseTypeStrings.chooseOption}</MenuItem>
-          <MenuItem value="multiple choice">
-            {exerciseTypeStrings.multipleChoice}
-          </MenuItem>
           <MenuItem value="single choice">
             {exerciseTypeStrings.singleChoice}
           </MenuItem>
+          <MenuItem value="multiple choice">
+            {exerciseTypeStrings.multipleChoice}
+          </MenuItem>
           <MenuItem value="single number solution">
-            {exerciseTypeStrings.solutionWithOneNumber}
+            {exerciseTypeStrings.inputExercise}
           </MenuItem>
         </MenuButton>
       </div>

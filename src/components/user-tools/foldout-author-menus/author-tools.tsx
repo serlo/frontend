@@ -1,4 +1,7 @@
-import { faWandSparkles } from '@fortawesome/free-solid-svg-icons'
+import {
+  faWandSparkles,
+  faWandMagicSparkles,
+} from '@fortawesome/free-solid-svg-icons'
 import {
   Entity,
   Subscription,
@@ -11,7 +14,8 @@ import { Fragment } from 'react'
 
 import { SubItem } from './sub-item'
 import { useCanDo } from '@/auth/use-can-do'
-import { useAiWizard } from '@/contexts/ai-wizard-context'
+import { extractTopicFromTitle } from '@/components/content/exercises/exercise-generation-wizard/topic'
+import { useAiFeatures } from '@/components/content/exercises/use-ai-features'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
@@ -22,7 +26,6 @@ import {
 } from '@/data-types'
 import { Instance, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
-import { isProduction } from '@/helper/is-production'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
@@ -89,6 +92,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   const loggedInData = useLoggedInData()
   const { lang, strings } = useInstanceData()
 
+  console.log('AuthorTools:', { data })
   const isSubscribed = useIsSubscribed(data.id)
   const setSubscription = useSubscriptionSetMutation()
   const setUuidState = useSetUuidStateMutation()
@@ -96,7 +100,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   const router = useRouter()
   const canDo = useCanDo()
 
-  const { showWizard, canUseAiFeatures } = useAiWizard()
+  const { canUseAiFeaturesOutsideProduction } = useAiFeatures()
 
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings
@@ -284,7 +288,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
     const allowedTypes: Record<
       TaxonomyTermType,
-      (UuidType | TaxonomyTermType | 'AI')[]
+      (UuidType | TaxonomyTermType)[]
     > = {
       topic: [
         UuidType.Article,
@@ -295,7 +299,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         TaxonomyTermType.Topic,
         TaxonomyTermType.ExerciseFolder,
       ],
-      exerciseFolder: [UuidType.Exercise, UuidType.ExerciseGroup, 'AI'],
+      exerciseFolder: [UuidType.Exercise, UuidType.ExerciseGroup],
       subject: [TaxonomyTermType.Topic],
       root: [TaxonomyTermType.Subject],
     }
@@ -306,23 +310,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       (lang !== Instance.De && router.asPath.startsWith('/community'))
 
     const entries = allowedTypes[data.taxonomyType].map((entityType) => {
-      if (entityType === 'AI') {
-        // For now, we don't allow the AI feature to make it into production until
-        // the testing is done
-        if (!canUseAiFeatures || isProduction) {
-          return null
-        }
-
-        return (
-          <SubItem
-            key="ai"
-            title={loggedInStrings.ai.exerciseGeneration.buttonTitle}
-            onClick={showWizard}
-            icon={faWandSparkles}
-          />
-        )
-      }
-
       if (entityType === UuidType.Event && !shouldRenderEvents) return null
 
       const title = getTranslatedType(strings, entityType)
@@ -349,12 +336,38 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         )
       }
 
+      const showAiItem =
+        canUseAiFeaturesOutsideProduction &&
+        entityType === UuidType.ExerciseGroup
+
+      const topic = extractTopicFromTitle(data?.title) || ''
+
       return (
-        <SubItem
-          key={title}
-          title={title}
-          href={`/entity/create/${entityType}/${data.id}`}
-        />
+        <Fragment key={title}>
+          <SubItem
+            key={title}
+            title={title}
+            href={`/entity/create/${entityType}/${data.id}`}
+          />
+          {showAiItem ? (
+            <Fragment key="ai-group">
+              <SubItem
+                key="ai-single-exercise"
+                title={
+                  loggedInStrings.ai.exerciseGeneration.buttonTitleSingular
+                }
+                href={`/entity/create/${UuidType.Exercise}/${data.id}?showAiWizard=true&topic=${topic}`}
+                icon={faWandSparkles}
+              />
+              <SubItem
+                key="ai-group-exercise"
+                title={loggedInStrings.ai.exerciseGeneration.buttonTitle}
+                href={`/entity/create/${entityType}/${data.id}?showAiWizard=true&topic=${topic}`}
+                icon={faWandMagicSparkles}
+              />
+            </Fragment>
+          ) : null}
+        </Fragment>
       )
     })
 

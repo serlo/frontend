@@ -10,17 +10,20 @@ import {
 import { Grade } from './exercise-generation-wizard/grade'
 import { PriorKnowledge } from './exercise-generation-wizard/prior-knowledge'
 import { Prompt } from './exercise-generation-wizard/prompt'
-import { Subject } from './exercise-generation-wizard/subject'
 import { Topic } from './exercise-generation-wizard/topic'
 import { FaIcon } from '@/components/fa-icon'
-import { AuthorToolsData } from '@/components/user-tools/foldout-author-menus/author-tools'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { isProduction } from '@/helper/is-production'
 import { submitEvent } from '@/helper/submit-event'
 
 export interface ExerciseGenerationWizardProps {
-  // TODO only require the props that are actually needed!
-  data: AuthorToolsData
+  data: {
+    subject: string
+
+    title: string
+
+    topic: string
+  }
 
   setTitle: (title: string) => void
 
@@ -29,21 +32,11 @@ export interface ExerciseGenerationWizardProps {
   setPrompt: (newPrompt: string) => void
 }
 
-// Extracts topic from title. E.g Aufgaben zum Dreisatz => Dreisatz
-function extractTopicFromTitle(title: string | undefined): string | null {
-  if (!title) {
-    return null
-  }
-
-  const match = title.match(/Aufgaben zu(?:m|r)? (.+)/)
-  return match ? match[1].trim() : null
-}
-
 function useScrollToTopOfSummaryWhenInView(currentPage: number) {
   const topOfSummaryRef = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => {
-    if (topOfSummaryRef && topOfSummaryRef.current && currentPage === 7) {
+    if (topOfSummaryRef && topOfSummaryRef.current && currentPage === 6) {
       topOfSummaryRef.current.scrollTo(0, 0)
     }
   }, [currentPage])
@@ -51,30 +44,18 @@ function useScrollToTopOfSummaryWhenInView(currentPage: number) {
   return topOfSummaryRef
 }
 
-export const ExerciseGenerationWizard: React.FC<
-  ExerciseGenerationWizardProps
-> = (props) => {
+export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
   const { data, setTitle, handleTransitionToExercisePage, setPrompt, prompt } =
     props
+
+  const { subject, topic: defaultTopic } = data
 
   // Only logged in users can see this
   const { exerciseGeneration: exerciseGenerationString } =
     useLoggedInData()!.strings.ai
 
-  // TODO show limitation message before page one. We may need to handle this
-  // one within the generate-exercise-button.tsx component and either render a
-  // second modal or conditionally hide the close button as there is only one
-  // CTA and no close button on the limitation page.
-  // const [showLimitationMessage, setShowLimitationMessage] = useState(false)
-
   const [currentPage, setCurrentPage] = useState(1)
 
-  // Extract subject from alias. E.g /mathe/66809/aufgaben-zum-dreisatz => mathe
-  const defaultSubject = data.alias?.split('/')[1] || null
-  // TODO find a more resilient way to get the taxonomy and subject
-  const [subject, setSubject] = useState<string>(defaultSubject || '')
-
-  const defaultTopic = extractTopicFromTitle(data?.title)
   const [topic, setTopic] = useState<string>(defaultTopic || '')
 
   const [canUpdateTitle, setCanUpdateTitle] = useState<boolean>(false)
@@ -82,9 +63,9 @@ export const ExerciseGenerationWizard: React.FC<
   const topOfSummaryRef = useScrollToTopOfSummaryWhenInView(currentPage)
 
   useEffect(() => {
-    // Page 3 needs to be visited once before we update the title. When going
-    // back to page 1 or 2, we are updating it live as the user is typing.
-    if (currentPage === 3 && !canUpdateTitle) {
+    // Page 2 needs to be visited once before we update the title. When going
+    // back to page 1, we are updating it live as the user is typing.
+    if (currentPage === 2 && !canUpdateTitle) {
       setCanUpdateTitle(true)
     }
 
@@ -143,7 +124,7 @@ export const ExerciseGenerationWizard: React.FC<
   ])
 
   const handleNext = () => {
-    if (currentPage < 7) {
+    if (currentPage < 6) {
       setCurrentPage((prev) => prev + 1)
     }
   }
@@ -154,7 +135,7 @@ export const ExerciseGenerationWizard: React.FC<
     }
   }
 
-  const isSummary = currentPage === 7
+  const isSummary = currentPage === 6
 
   return (
     // Remove bottom padding as the modal itself already has decent spacing there
@@ -170,16 +151,6 @@ export const ExerciseGenerationWizard: React.FC<
         ref={topOfSummaryRef}
       >
         {(isSummary || currentPage === 1) && (
-          <Subject
-            onNext={handleNext}
-            isSummary={isSummary}
-            jumpToPage={setCurrentPage}
-            subject={subject}
-            setSubject={setSubject}
-            defaultSubject={defaultSubject}
-          />
-        )}
-        {(isSummary || currentPage === 2) && (
           <Topic
             onNext={handleNext}
             jumpToPage={setCurrentPage}
@@ -189,7 +160,7 @@ export const ExerciseGenerationWizard: React.FC<
             defaultTopic={defaultTopic}
           />
         )}
-        {(isSummary || currentPage === 3) && (
+        {(isSummary || currentPage === 2) && (
           <Grade
             grade={grade}
             setGrade={setGrade}
@@ -197,7 +168,7 @@ export const ExerciseGenerationWizard: React.FC<
             isSummary={isSummary}
           />
         )}
-        {(isSummary || currentPage === 4) && (
+        {(isSummary || currentPage === 3) && (
           <ExerciseType
             exerciseType={exerciseType}
             setExerciseType={setExerciseType}
@@ -207,7 +178,7 @@ export const ExerciseGenerationWizard: React.FC<
             isSummary={isSummary}
           />
         )}
-        {(isSummary || currentPage === 5) && (
+        {(isSummary || currentPage === 4) && (
           <Difficulty
             difficulty={difficulty}
             setDifficulty={setDifficulty}
@@ -217,7 +188,7 @@ export const ExerciseGenerationWizard: React.FC<
             isSummary={isSummary}
           />
         )}
-        {(isSummary || currentPage === 6) && (
+        {(isSummary || currentPage === 5) && (
           <PriorKnowledge
             priorKnowledge={priorKnowledge}
             setPriorKnowledge={setPriorKnowledge}
@@ -262,13 +233,13 @@ interface NavigationFooterProps {
   generatesMultipleExercises: boolean
 }
 
-const NavigationFooter: React.FC<NavigationFooterProps> = ({
+function NavigationFooter({
   generatesMultipleExercises,
   currentPage,
   onNext,
   onPrev,
   onSubmit,
-}) => {
+}: NavigationFooterProps) {
   const { exerciseGeneration: exerciseGenerationString } =
     useLoggedInData()!.strings.ai
 
@@ -278,9 +249,9 @@ const NavigationFooter: React.FC<NavigationFooterProps> = ({
 
   return (
     <div className="relative mt-auto flex flex-col items-center justify-between">
-      {currentPage === 7 ? (
+      {currentPage === 6 ? (
         <button
-          className="mb-2 self-end rounded bg-brand-700 px-4 py-2 text-white"
+          className="serlo-button-blue mb-2 self-end rounded bg-brand-700 px-4 py-2 text-white"
           onClick={onSubmit}
         >
           {generatesMultipleExercises
@@ -289,7 +260,7 @@ const NavigationFooter: React.FC<NavigationFooterProps> = ({
         </button>
       ) : (
         <button
-          className="mb-2 self-end rounded bg-brand-700 px-4 py-2 text-white"
+          className="serlo-button-blue mb-2 self-end rounded bg-brand-700 px-4 py-2 text-white"
           onClick={onNext}
         >
           {exerciseGenerationString.nextButton}
@@ -303,13 +274,13 @@ const NavigationFooter: React.FC<NavigationFooterProps> = ({
           </button>
         )}
 
-        <span className="mx-4">{currentPage} / 7</span>
+        <span className="mx-4">{currentPage} / 6</span>
 
-        {currentPage !== 7 && (
+        {currentPage !== 6 && (
           <button
             onClick={onNext}
             className={`text-brand-700 ${
-              currentPage === 7
+              currentPage === 6
                 ? 'cursor-not-allowed opacity-50'
                 : 'cursor-pointer'
             }`}

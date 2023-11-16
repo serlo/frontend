@@ -10,6 +10,8 @@ import {
 import { ContentLoaders } from '../helpers/content-loaders/content-loaders'
 import { TextExerciseTypePluginState } from '../text-exercise'
 import { ToolbarMain } from '../toolbar-main/toolbar-main'
+import { AiExerciseGenerationButton } from '@/components/content/exercises/ai-exercise-generation-button'
+import { useAiFeatures } from '@/components/content/exercises/use-ai-features'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
@@ -62,7 +64,7 @@ function TextExerciseGroupTypeEditor(
     revision,
     replaceOwnState,
   } = props.state
-
+  const { canUseAiFeaturesOutsideProduction } = useAiFeatures()
   const exGroupStrings = useEditorStrings().templatePlugins.textExerciseGroup
 
   const staticState = selectStaticDocument(store.getState(), props.id)
@@ -76,6 +78,7 @@ function TextExerciseGroupTypeEditor(
   return (
     <>
       <div className="absolute right-0 -mt-20 mr-side flex">
+        {canUseAiFeaturesOutsideProduction && <AiExerciseGenerationButton />}
         <ContentLoaders
           id={id.value}
           currentRevision={revision.value}
