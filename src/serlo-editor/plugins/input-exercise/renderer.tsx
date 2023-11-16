@@ -3,8 +3,8 @@ import clsx from 'clsx'
 import { useState, useEffect } from 'react'
 
 import { InputExerciseType } from './input-exercise-type'
-import { useExerciseFolderStats } from '@/contexts/exercise-folder-stats-context'
 import { Feedback } from '../sc-mc-exercise/renderer/feedback'
+import { useExerciseFolderStats } from '@/contexts/exercise-folder-stats-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { tw } from '@/helper/tw'
 
@@ -99,11 +99,14 @@ export function InputExerciseRenderer({
   )
 
   function prettyPrintSolutionEntries(values: string[]) {
-    const counted = values.reduce((res, val) => {
-      const entry = (res[val] = res[val] ?? { count: 0 })
-      entry.count++
-      return res
-    }, {} as { [key: string]: { count: number } })
+    const counted = values.reduce(
+      (res, val) => {
+        const entry = (res[val] = res[val] ?? { count: 0 })
+        entry.count++
+        return res
+      },
+      {} as { [key: string]: { count: number } }
+    )
     const entries = Object.entries(counted)
     entries.sort((a, b) => b[1].count - a[1].count)
     return (
