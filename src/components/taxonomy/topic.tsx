@@ -244,19 +244,18 @@ export function Topic({ data }: TopicProps) {
           />
         ) : null}
 
-      {/* Temporary donations banner trial */}
-      {isExerciseFolder && !exerciseStats ? (
-        <DonationsBanner
-          id={data.id}
-          entityData={{
-            ...data,
-            typename: UuidType.TaxonomyTerm,
-            isUnrevised: false,
-          }}
-        />
-      ) : null}
+        {/* Temporary donations banner trial */}
+        {isExerciseFolder && !exerciseStats ? (
+          <DonationsBanner
+            id={data.id}
+            entityData={{
+              ...data,
+              typename: UuidType.TaxonomyTerm,
+              isUnrevised: false,
+            }}
+          />
+        ) : null}
 
-     
         {renderUserTools()}
         <ExerciseGenerationOrNull data={data} />
       </>

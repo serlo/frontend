@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { endpoint } from '@/api/endpoint'
 import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { idsQuery } from '@/fetcher/query-ids'
+import { idsQuery } from '@/fetcher/prettify-links-state/ids-query'
 import { prisma } from '@/helper/prisma'
 
 interface Data {
@@ -134,18 +134,21 @@ export const getStaticProps: GetStaticProps<Data> = async (context) => {
     //
   }
 
-  const groups = data.reduce((result, obj) => {
-    /*const dateKey = obj.timestamp.toLocaleDateString('de-DE', {
+  const groups = data.reduce(
+    (result, obj) => {
+      /*const dateKey = obj.timestamp.toLocaleDateString('de-DE', {
       timeZone: 'Europe/Berlin',
       weekday: 'short',
       day: 'numeric',
       month: 'long',
       year: 'numeric',
     })*/
-    const dateKey = dateParam
-    ;(result[dateKey] = result[dateKey] || []).push(obj)
-    return result
-  }, {} as { [key: string]: ExerciseSubmission[] })
+      const dateKey = dateParam
+      ;(result[dateKey] = result[dateKey] || []).push(obj)
+      return result
+    },
+    {} as { [key: string]: ExerciseSubmission[] }
+  )
 
   const output: Data = {
     groups: [],
@@ -179,40 +182,49 @@ export const getStaticProps: GetStaticProps<Data> = async (context) => {
     const entityAll = new Set()
     data.forEach((entry) => entityAll.add(entry.entityId))
 
-    const sessionsTimesAllObj = data.reduce((result, obj) => {
-      const key = obj.sessionId
-      const ts = obj.timestamp.getTime()
-      const entry = (result[key] = result[key] || { start: ts, end: ts })
-      if (ts < entry.start) {
-        entry.start = ts
-      }
-      if (ts > entry.end) {
-        entry.end = ts
-      }
-      return result
-    }, {} as { [key: string]: { start: number; end: number } })
+    const sessionsTimesAllObj = data.reduce(
+      (result, obj) => {
+        const key = obj.sessionId
+        const ts = obj.timestamp.getTime()
+        const entry = (result[key] = result[key] || { start: ts, end: ts })
+        if (ts < entry.start) {
+          entry.start = ts
+        }
+        if (ts > entry.end) {
+          entry.end = ts
+        }
+        return result
+      },
+      {} as { [key: string]: { start: number; end: number } }
+    )
 
     const sessionTimesAll = Object.values(sessionsTimesAllObj).map(
       (obj) => obj.end - obj.start
     )
 
-    const solvedBySessionAllObj = data.reduce((result, obj) => {
-      const key = obj.sessionId
-      ;(result[key] = result[key] || { solved: new Set() }).solved.add(
-        obj.entityId
-      )
-      return result
-    }, {} as { [key: string]: { solved: Set<number> } })
+    const solvedBySessionAllObj = data.reduce(
+      (result, obj) => {
+        const key = obj.sessionId
+        ;(result[key] = result[key] || { solved: new Set() }).solved.add(
+          obj.entityId
+        )
+        return result
+      },
+      {} as { [key: string]: { solved: Set<number> } }
+    )
 
     const solvedCountAll = Object.values(solvedBySessionAllObj).map(
       (obj) => obj.solved.size
     )
 
-    const pagesObj = data.reduce((result, obj) => {
-      const path = obj.path
-      ;(result[path] = result[path] || []).push(obj)
-      return result
-    }, {} as { [key: string]: ExerciseSubmission[] })
+    const pagesObj = data.reduce(
+      (result, obj) => {
+        const path = obj.path
+        ;(result[path] = result[path] || []).push(obj)
+        return result
+      },
+      {} as { [key: string]: ExerciseSubmission[] }
+    )
 
     const pagesArr = Object.entries(pagesObj)
 
@@ -244,21 +256,24 @@ export const getStaticProps: GetStaticProps<Data> = async (context) => {
 
       //if (solved.size === 0) continue
 
-      const sessionTimesObj = page[1].reduce((result, obj) => {
-        const key = obj.sessionId
-        const ts = obj.timestamp.getTime()
-        const entry = (result[key] = result[key] || {
-          start: ts,
-          end: ts,
-        })
-        if (ts < entry.start) {
-          entry.start = ts
-        }
-        if (ts > entry.end) {
-          entry.end = ts
-        }
-        return result
-      }, {} as { [key: string]: { start: number; end: number } })
+      const sessionTimesObj = page[1].reduce(
+        (result, obj) => {
+          const key = obj.sessionId
+          const ts = obj.timestamp.getTime()
+          const entry = (result[key] = result[key] || {
+            start: ts,
+            end: ts,
+          })
+          if (ts < entry.start) {
+            entry.start = ts
+          }
+          if (ts > entry.end) {
+            entry.end = ts
+          }
+          return result
+        },
+        {} as { [key: string]: { start: number; end: number } }
+      )
 
       const sessionTimes = Object.values(sessionTimesObj).map(
         (obj) => obj.end - obj.start
@@ -289,16 +304,19 @@ export const getStaticProps: GetStaticProps<Data> = async (context) => {
         }
       }
 
-      const otherPaths = data.reduce((result, obj) => {
-        if (!sessions.has(obj.sessionId) || obj.path === page[0]) {
+      const otherPaths = data.reduce(
+        (result, obj) => {
+          if (!sessions.has(obj.sessionId) || obj.path === page[0]) {
+            return result
+          }
+          const key = obj.path
+          ;(result[key] = result[key] || { ids: new Set() }).ids.add(
+            obj.sessionId
+          )
           return result
-        }
-        const key = obj.path
-        ;(result[key] = result[key] || { ids: new Set() }).ids.add(
-          obj.sessionId
-        )
-        return result
-      }, {} as { [key: string]: { ids: Set<string> } })
+        },
+        {} as { [key: string]: { ids: Set<string> } }
+      )
 
       const contextPaths = Object.entries(otherPaths).map((p) => ({
         path: p[0],
@@ -307,15 +325,18 @@ export const getStaticProps: GetStaticProps<Data> = async (context) => {
 
       contextPaths.sort((a, b) => b.count - a.count)
 
-      const solvedBySessionObj = page[1].reduce((result, obj) => {
-        const key = obj.sessionId
-        const entry = (result[key] = result[key] || { solved: new Set() })
-        if (obj.result !== 'correct') {
+      const solvedBySessionObj = page[1].reduce(
+        (result, obj) => {
+          const key = obj.sessionId
+          const entry = (result[key] = result[key] || { solved: new Set() })
+          if (obj.result !== 'correct') {
+            return result
+          }
+          entry.solved.add(obj.entityId)
           return result
-        }
-        entry.solved.add(obj.entityId)
-        return result
-      }, {} as { [key: string]: { solved: Set<number> } })
+        },
+        {} as { [key: string]: { solved: Set<number> } }
+      )
 
       const solvedCount = Object.values(solvedBySessionObj).map(
         (obj) => obj.solved.size

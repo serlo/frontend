@@ -9,11 +9,10 @@ import {
 } from '@/contexts/exercise-folder-stats-context'
 import { SlugProps } from '@/data-types'
 import { Instance, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
-import { prettifyLinks } from '@/fetcher/prettify-links'
 import { requestPage } from '@/fetcher/request-page'
-import { FrontendNodeType } from '@/frontend-node-types'
 import { prisma } from '@/helper/prisma'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface DetailsProps {
   pageData: SlugProps['pageData']
@@ -72,8 +71,6 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
     return { notFound: true }
   }
 
-  await prettifyLinks(pageData)
-
   const date = (context.params?.date as string) ?? ''
 
   const ids = []
@@ -83,11 +80,11 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
 
   if (pageData.kind === 'taxonomy') {
     for (const ex of pageData.taxonomyData.exercisesContent) {
-      if (ex.type === FrontendNodeType.Exercise) {
-        ids.push(ex.context.id)
+      if (ex.plugin === EditorPluginType.Exercise) {
+        ids.push(ex.serloContext!.uuid!)
       } else {
-        for (const child of ex.children ?? []) {
-          ids.push(child.context.id)
+        for (const child of ex.state.exercises ?? []) {
+          ids.push(child.serloContext!.uuid)
         }
       }
     }
@@ -133,78 +130,88 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
     }
   } = {}
 
-  const data = relevantData.reduce((result, obj) => {
-    /*if (start && end) {
+  const data = relevantData.reduce(
+    (result, obj) => {
+      /*if (start && end) {
       const ts = new Date(obj.timestamp).getTime()
       if (ts < start.getTime() || ts > end.getTime()) {
         return result
       }
     }*/
 
-    const date = obj.timestamp.toLocaleDateString('de-DE', {
-      timeZone: 'Europe/Berlin',
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    })
+      const date = obj.timestamp.toLocaleDateString('de-DE', {
+        timeZone: 'Europe/Berlin',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
 
-    const entryByDate = (sessionsByDate[date] = sessionsByDate[date] || {
-      sessions: new Set(),
-      ts: obj.timestamp.getTime(),
-      sessionTs: {},
-    })
+      const entryByDate = (sessionsByDate[date] = sessionsByDate[date] || {
+        sessions: new Set(),
+        ts: obj.timestamp.getTime(),
+        sessionTs: {},
+      })
 
-    entryByDate.sessions.add(obj.sessionId)
+      entryByDate.sessions.add(obj.sessionId)
 
-    if (!entryByDate.sessionTs[obj.sessionId]) {
-      entryByDate.sessionTs[obj.sessionId] = { ts: [] }
-    }
-
-    entryByDate.sessionTs[obj.sessionId].ts.push(obj.timestamp.getTime())
-
-    if (!sessions.has(obj.sessionId)) {
-      times.push(
-        obj.timestamp.toLocaleTimeString('de-DE', {
-          timeZone: 'Europe/Berlin',
-          hour: '2-digit',
-          minute: '2-digit',
-        })
-      )
-    }
-
-    const key = obj.entityId
-    const entry = (result[key] = result[key] ?? {
-      correct: new Set(),
-      wrong: new Set(),
-      open: new Set(),
-      ivals: [],
-    })
-    if (obj.result === 'correct') {
-      entry.correct.add(obj.sessionId)
-
-      if (!journeys[obj.sessionId]) {
-        journeys[obj.sessionId] = []
+      if (!entryByDate.sessionTs[obj.sessionId]) {
+        entryByDate.sessionTs[obj.sessionId] = { ts: [] }
       }
-      if (!journeys[obj.sessionId].includes(obj.entityId)) {
-        journeys[obj.sessionId].push(obj.entityId)
+
+      entryByDate.sessionTs[obj.sessionId].ts.push(obj.timestamp.getTime())
+
+      if (!sessions.has(obj.sessionId)) {
+        times.push(
+          obj.timestamp.toLocaleTimeString('de-DE', {
+            timeZone: 'Europe/Berlin',
+            hour: '2-digit',
+            minute: '2-digit',
+          })
+        )
+      }
+
+      const key = obj.entityId
+      const entry = (result[key] = result[key] ?? {
+        correct: new Set(),
+        wrong: new Set(),
+        open: new Set(),
+        ivals: [],
+      })
+      if (obj.result === 'correct') {
+        entry.correct.add(obj.sessionId)
+
+        if (!journeys[obj.sessionId]) {
+          journeys[obj.sessionId] = []
+        }
+        if (!journeys[obj.sessionId].includes(obj.entityId)) {
+          journeys[obj.sessionId].push(obj.entityId)
+        }
+      }
+      if (obj.result === 'wrong') {
+        entry.wrong.add(obj.sessionId)
+      }
+      if (obj.result === 'open') {
+        entry.open.add(obj.sessionId)
+      }
+      if (obj.type === 'ival') {
+        entry.ivals.push(obj.result)
+      }
+      sessions.add(obj.sessionId)
+      revisions.push(obj.revisionId)
+      if (obj.result !== 'open') {
+        interactiveSessions.add(obj.sessionId)
+      }
+      return result
+    },
+    {} as {
+      [key: string]: {
+        correct: Set<string>
+        wrong: Set<string>
+        open: Set<string>
+        ivals: string[]
       }
     }
-    if (obj.result === 'wrong') {
-      entry.wrong.add(obj.sessionId)
-    }
-    if (obj.result === 'open') {
-      entry.open.add(obj.sessionId)
-    }
-    if (obj.type === 'ival') {
-      entry.ivals.push(obj.result)
-    }
-    sessions.add(obj.sessionId)
-    revisions.push(obj.revisionId)
-    if (obj.result !== 'open') {
-      interactiveSessions.add(obj.sessionId)
-    }
-    return result
-  }, {} as { [key: string]: { correct: Set<string>; wrong: Set<string>; open: Set<string>; ivals: string[] } })
+  )
 
   const output: ExerciseFolderStatsData['data'] = {}
 

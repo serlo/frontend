@@ -12,7 +12,7 @@ export function ExerciseStaticRenderer({ state }: EditorExerciseDocument) {
   return (
     <>
       <StaticRenderer document={content} />
-      
+
       {renderExerciseStats()}
       <StaticRenderer document={interactive} />
       <StaticRenderer document={solution} />
