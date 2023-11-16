@@ -12,12 +12,15 @@ export const AiWizardContext = createContext<{
 
 export const AiWizardProvider = AiWizardContext.Provider
 
-const errorMessage = 'attempted to use ai wizard context outside of provider!'
-
 export function useAiWizard() {
   const data = useContext(AiWizardContext)
   if (data === null) {
-    throw new Error(errorMessage)
+    return {
+      showWizard: () => {},
+      closeWizard: () => {},
+      canUseAiFeatures: false,
+      isShowingAiWizard: false,
+    }
   }
   return data
 }
