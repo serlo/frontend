@@ -7,7 +7,7 @@ import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
-import { UuidType, type UnrevisedRevisionsData } from '@/data-types'
+import type { UnrevisedRevisionsData } from '@/data-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
 
 export type UnrevisedRevisionEntity =
@@ -44,9 +44,6 @@ function getTitle(entity: UnrevisedRevisionEntity) {
 
 export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
   const { strings } = useInstanceData()
-
-  // TODO: remove after API change
-  if (entity.__typename === UuidType.Solution) return null
 
   const nodes = getNodes(entity)
   const title = getTitle(entity)

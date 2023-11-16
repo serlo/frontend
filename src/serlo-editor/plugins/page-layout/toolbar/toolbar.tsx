@@ -1,5 +1,5 @@
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import { type Dispatch, type SetStateAction } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
 
 import { LayoutChooser } from './layout-chooser'
 import type { PageLayoutPluginProps } from '..'
@@ -14,7 +14,6 @@ export const PageLayoutToolbar = ({
   id,
   state,
   focused,
-  editable,
   showSettingsModal,
   setShowSettingsModal,
 }: PageLayoutPluginProps & {
@@ -23,7 +22,7 @@ export const PageLayoutToolbar = ({
 }) => {
   const pageLayoutStrings = useEditorStrings().plugins.pageLayout
 
-  if (!focused || !editable) return null
+  if (!focused) return null
 
   return (
     <PluginToolbar

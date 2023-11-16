@@ -24,7 +24,7 @@ export function PluginToolMenu({ pluginControls }: PluginToolMenuProps) {
           </Trigger>
 
           <Content>
-            <List className="absolute right-0">
+            <List className="absolute right-0 z-30">
               <div className="serlo-sub-list-hover mt-2 bg-editor-primary-100 px-0">
                 {pluginControls}
               </div>

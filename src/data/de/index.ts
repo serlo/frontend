@@ -94,6 +94,10 @@ export const instanceData = {
       pdf: "Als PDF herunterladen",
       pdfNoSolutions: "PDF ohne Lösungen"
     },
+    modal: {
+      leaveNow: "Jetzt verlassen",
+      noStay: "Nein, ich möchte bleiben"
+    },
     editOrAdd: {
       button: "Überarbeiten",
       addNewEntities: "Inhalt hinzufügen",
@@ -227,7 +231,7 @@ export const instanceData = {
       by: "Von",
       parentFallbackLink: "Zum übergeordneten Inhalt",
       hasChanges: "In diesem Bereich hat es Änderungen gegeben",
-      positionForGrouped: "Diese %exercise_or_solution% ist Teil von %title%.",
+      positionForGrouped: "Diese %exercise% ist Teil von %title%.",
       helpLink: "Reviewer-Hilfe"
     },
     revisionHistory: {
@@ -382,7 +386,7 @@ export const instanceData = {
       messages: {
         code1010003: "Zur Sicherheit überprüfen wir hier noch mal, ob das dein Account ist.",
         code1010001: "Anmelden",
-        code1010002: "Über „Mein Bildungsraum“ anmelden",
+        code1010002: "Anmelden mit Mein Bildungsraum",
         code1010013: "Weiter mit SSO",
         code1040001: "Account anlegen",
         code1040002: "Über „Mein Bildungsraum“ Account registrieren",
@@ -813,6 +817,10 @@ export const loggedInData = {
           description: "Audioaufnahmen von Vocaroo einbinden",
           audioUrl: "Audio URL eingeben"
         },
+        exercise: {
+          title: "Aufgabe",
+          description: "Interaktive- oder Textaufgaben"
+        },
         inputExercise: {
           title: "Eingabefeld",
           description: "Die Lösung kann Text oder eine Formel sein"
@@ -1043,6 +1051,79 @@ export const loggedInData = {
     },
     roles: {
       addButton: "Als %role% hinzufügen"
+    },
+    ai: {
+      exerciseGeneration: {
+        buttonTitle: "Aufgabe mit KI generieren",
+        initialModalTitle: "Aufgabe automatisch mit KI erstellen",
+        modalTitleWithTaxonomy: "Aufgabenerstellung mit KI:",
+        confirmCloseDescription: "Möchtest du die Aufgabenerstellung verlassen? Die Daten werden gelöscht.",
+        summary: "Zusammenfassung",
+        nextButton: "Weiter",
+        nextExerciseButton: "Nächste Aufgabe",
+        previousButton: "Vorherige Aufgabe",
+        generateExerciseButton: "Aufgabe generieren",
+        generateExercisesButton: "Aufgaben generieren",
+        subject: {
+          title: "Für welches %subject%  willst du eine Aufgabe erstellen?",
+          subject: "Fach",
+          defaultLabel: "Fach",
+          otherSubjectLabel: "Anderes Fach",
+          customSubjectPlaceholder: "Fach eingeben"
+        },
+        topic: {
+          title: "Über welches %topic% willst du eine Aufgabe erstellen?",
+          topic: "Thema",
+          defaultLabel: "Thema",
+          otherTopicLabel: "Anderes Thema",
+          customTopicPlaceholder: "Thema eingeben"
+        },
+        grade: {
+          title: "In welcher %grade% sind die Schüler*innen?",
+          grade: "Stufe",
+          label: "Stufe",
+          university: "Universität"
+        },
+        exerciseType: {
+          title: "An welchem %exerciseType% bist du interessiert? ",
+          exerciseType: "Aufgabentyp",
+          label: "Aufgabentyp",
+          subtasksTitleSummary: "Teilaufgaben",
+          subtasksTitle: "Soll die Aufgabe Teilaufgaben haben?",
+          noSubtasks: "Nein",
+          yesSubtasks: "Ja",
+          numberOfSubtasksPlaceholder: "Anzahl",
+          chooseOption: "Wähle eine Option",
+          multipleChoice: "Multiple-Choice",
+          singleChoice: "Single-Choice",
+          solutionWithOneNumber: "Lösung mit einer Zahl"
+        },
+        difficulty: {
+          title: "Was ist der %difficulty% der Aufgabe und das Lernziel?",
+          difficulty: "Schwierigkeitsgrad",
+          label: "Schwierigkeitsgrade",
+          learningGoalLabel: "Lernziel",
+          learningGoalExample: "Beispiel: Schüler*innen verstehen die Grundlagen von Algebra.",
+          learningGoalPlaceholder: "Lernziel eingeben",
+          chooseOption: "Wähle eine Option",
+          easy: "Einfach",
+          medium: "Mittel",
+          hard: "Knifflig"
+        },
+        priorKnowledge: {
+          title: "Welches %priorKnowledge% sollten die Schüler*innen haben?",
+          priorKnowledge: "Vorwissen",
+          label: "Vorwissen",
+          example: "Beispiel: Die Schüler*innen haben schon einige Aufgaben zu dem Thema bearbeitet.",
+          placeholder: "z.B. Gutes Fundament in Algebra"
+        },
+        preview: {
+          loadingHeading: "Aufgabe wird erstellt...",
+          publishExercise: "Aufgabe veröffentlichen",
+          openExerciseInEditor: "Im Editor öffnen",
+          regenerate: "Aufgabe neu generieren"
+        }
+      }
     }
   }
 };

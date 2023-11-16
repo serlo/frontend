@@ -64,7 +64,7 @@ export function Entity({ data }: EntityProps) {
       {renderCourseFooter()}
       <HSpace amount={20} />
       {renderUserTools()}
-      {data.licenseData && <LicenseNotice data={data.licenseData} />}
+      {data.licenseId ? <LicenseNotice licenseId={data.licenseId} /> : null}
     </>
   )
 

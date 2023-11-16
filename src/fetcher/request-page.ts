@@ -45,14 +45,6 @@ export async function requestPage(
 
   if (uuid.__typename === UuidType.Comment) return { kind: 'not-found' } // no content for comments
 
-  // Standalone solutions are not supported any more
-  // TODO: remove after change in API
-  if (
-    uuid.__typename === UuidType.Solution ||
-    uuid.__typename === UuidRevType.Solution
-  )
-    return { kind: 'not-found' }
-
   if (
     uuid.__typename === UuidRevType.Article ||
     uuid.__typename === UuidRevType.Page ||
@@ -289,7 +281,7 @@ export async function requestPage(
     }
   }
 
-  const licenseData = { ...uuid.license, isDefault: uuid.license.default }
+  const licenseId = uuid.license.id
 
   if (uuid.__typename === UuidType.Article) {
     return {
@@ -302,7 +294,7 @@ export async function requestPage(
         typename: UuidType.Article,
         title: uuid.currentRevision?.title ?? uuid.revisions?.nodes[0]?.title,
         content,
-        licenseData,
+        licenseId,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
           useArticleTag: true,
@@ -351,7 +343,7 @@ export async function requestPage(
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
-        licenseData,
+        licenseId,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -388,7 +380,7 @@ export async function requestPage(
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
-        licenseData,
+        licenseId,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -443,7 +435,7 @@ export async function requestPage(
         typename: UuidType.CoursePage,
         title: uuid.currentRevision?.title ?? '',
         content,
-        licenseData,
+        licenseId,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
           useArticleTag: true,

@@ -49,7 +49,6 @@ export async function requestRevision(
     uuid.__typename === UuidRevType.GroupedExercise ||
     uuid.__typename === UuidRevType.Exercise ||
     uuid.__typename === UuidRevType.ExerciseGroup ||
-    uuid.__typename === UuidRevType.Solution ||
     uuid.__typename === UuidRevType.Course
   ) {
     const isExercise =
@@ -86,13 +85,9 @@ export async function requestRevision(
         : null
 
     const getParentId = () => {
-      if (uuid.__typename === UuidRevType.GroupedExercise)
-        return uuid.repository.exerciseGroup.id
-      if (uuid.__typename === UuidRevType.Solution) {
-        // TODO: remove after API change
-        return 0
-      }
-      return uuid.repository.id
+      return uuid.__typename === UuidRevType.GroupedExercise
+        ? uuid.repository.exerciseGroup.id
+        : uuid.repository.id
     }
 
     const getPositionInGroup = () => {
@@ -107,9 +102,6 @@ export async function requestRevision(
 
     // likely the previously accepted revision
     const getPreviousRevisionId = () => {
-      // TODO: remove after API change
-      if (uuid.__typename === UuidRevType.Solution) return undefined
-
       const revNodes = uuid.repository.revisions?.nodes
       if (!revNodes) return
       const thisIndex = revNodes.findIndex((node) => node.id === uuid.id)
@@ -128,9 +120,6 @@ export async function requestRevision(
     const currentRevision = Object.hasOwn(uuid, 'repository')
       ? uuid.repository.currentRevision
       : undefined
-
-    // TODO: remove after API change
-    if (uuid.__typename === UuidRevType.Solution) return { kind: 'not-found' }
 
     return {
       kind: 'revision',

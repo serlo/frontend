@@ -6,25 +6,24 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 
 export function HighlightEditor(props: HighlightProps) {
-  const { config, state, focused, editable } = props
+  const { config, state, focused } = props
   const { Renderer } = config
 
-  const edit = focused && editable
-  const [throttledEdit, setEditThrottled] = useState(edit)
+  const [throttledEdit, setEditThrottled] = useState(focused)
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
   const editorStrings = useEditorStrings()
 
   useEffect(() => {
-    if (edit) {
+    if (focused) {
       setTimeout(() => {
         textAreaRef.current?.focus()
       })
     }
-  }, [edit])
+  }, [focused])
 
-  if (edit !== throttledEdit) {
-    if (edit) {
+  if (focused !== throttledEdit) {
+    if (focused) {
       setEditThrottled(true)
     } else {
       setTimeout(() => setEditThrottled(false), 100)
@@ -33,7 +32,7 @@ export function HighlightEditor(props: HighlightProps) {
 
   const numberOflines = state.code.value.split(/\r\n|\r|\n/).length
 
-  if (!throttledEdit && !edit) {
+  if (!throttledEdit && !focused) {
     return (
       <Renderer
         language={state.language.value}

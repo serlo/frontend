@@ -5,7 +5,6 @@ import { endpoint } from '@/api/endpoint'
 import { InfoPanel } from '@/components/info-panel'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
-import { UuidType } from '@/data-types'
 import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
@@ -48,11 +47,6 @@ export function InjectionStaticRenderer({
           if (!data.data?.uuid) throw new Error('not found')
           const uuid = data.data.uuid
 
-          // TODO: remove after API change
-          if (uuid.__typename === UuidType.Solution) {
-            throw new Error('trying to load solution')
-          }
-
           if (
             uuid.__typename === 'Article' ||
             uuid.__typename === 'TaxonomyTerm' ||
@@ -76,14 +70,9 @@ export function InjectionStaticRenderer({
           ) {
             const exerciseContext = {
               serloContext: {
-                license:
-                  uuid.license && !uuid.license.default
-                    ? uuid.license
-                    : undefined,
+                licenseId: uuid.license.id,
               },
             }
-
-            // TODO: add solution license info to context another way
 
             setContent([
               { ...JSON.parse(uuid.currentRevision.content), exerciseContext },
@@ -98,14 +87,9 @@ export function InjectionStaticRenderer({
               const exerciseContentAndContext = {
                 ...parseDocumentString(exercise.currentRevision?.content),
                 serloContext: {
-                  license:
-                    uuid.license && !uuid.license.default
-                      ? uuid.license
-                      : undefined,
+                  licenseId: uuid.license.id,
                 },
               }
-
-              // TODO: add solution license info to context another way
 
               return exercise.currentRevision ? [exerciseContentAndContext] : []
             })
@@ -118,7 +102,6 @@ export function InjectionStaticRenderer({
                   content: parseDocumentString(
                     uuid.currentRevision.content
                   ) as EditorRowsDocument,
-                  // solutions are not really part of the state at this point, but cleaner this way
                   exercises,
                 },
               },
@@ -200,7 +183,7 @@ const query = gql`
         ...injectionExercise
       }
       ... on ExerciseGroup {
-        ...license
+        ...injectionLicense
         currentRevision {
           content
         }
@@ -242,20 +225,15 @@ const query = gql`
   }
 
   fragment injectionExercise on AbstractExercise {
-    ...license
+    ...injectionLicense
     currentRevision {
       content
     }
   }
 
-  fragment license on AbstractRepository {
+  fragment injectionLicense on AbstractRepository {
     license {
       id
-      url
-      title
-      shortTitle
-      default
-      agreement
     }
   }
 `

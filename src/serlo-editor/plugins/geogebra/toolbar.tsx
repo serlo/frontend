@@ -1,5 +1,5 @@
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import { type Dispatch, type SetStateAction } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
 
 import type { GeogebraProps } from '.'
 import { EditorInput } from '../../editor-ui'

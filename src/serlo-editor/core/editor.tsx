@@ -1,10 +1,10 @@
-import { useMemo, useEffect, ReactNode, useRef, useState } from 'react'
+import { useEffect, ReactNode, useRef, useState } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { HotkeysProvider, useHotkeys } from 'react-hotkeys-hook'
 import { Provider } from 'react-redux'
 
-import { EditableContext, PreferenceContextProvider } from './contexts'
+import { PreferenceContextProvider } from './contexts'
 import { useBlurOnOutsideClick } from './hooks/use-blur-on-outside-click'
 import { SubDocument } from './sub-document'
 import {
@@ -37,12 +37,7 @@ export function Editor(props: EditorProps) {
   )
 }
 
-function InnerDocument({
-  children,
-  editable = true,
-  onChange,
-  ...props
-}: EditorProps) {
+function InnerDocument({ children, onChange, ...props }: EditorProps) {
   const [isInitialized, setIsInitialized] = useState(false)
   const dispatch = useAppDispatch()
 
@@ -68,7 +63,6 @@ function InnerDocument({
     dispatch(runInitRootSaga({ initialState: props.initialState }))
     setIsInitialized(true)
   }, [props.initialState, dispatch])
-  const editableContextValue = useMemo(() => editable, [editable])
 
   useHotkeys(
     ['ctrl+z, meta+z'],
@@ -134,9 +128,7 @@ function InnerDocument({
   return (
     <div className="relative" ref={wrapperRef}>
       <PreferenceContextProvider>
-        <EditableContext.Provider value={editableContextValue}>
-          {renderChildren(ROOT)}
-        </EditableContext.Provider>
+        {renderChildren(ROOT)}
       </PreferenceContextProvider>
     </div>
   )
@@ -164,7 +156,6 @@ export interface EditorProps {
     state?: unknown
   }
   onChange?: OnEditorChange
-  editable?: boolean
 }
 
 export type OnEditorChange = (payload: {
