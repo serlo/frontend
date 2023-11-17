@@ -14,7 +14,6 @@ import { Fragment } from 'react'
 
 import { SubItem } from './sub-item'
 import { useCanDo } from '@/auth/use-can-do'
-import { extractTopicFromTitle } from '@/components/content/exercises/exercise-generation-wizard/topic'
 import { useAiFeatures } from '@/components/content/exercises/use-ai-features'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -339,8 +338,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       const showAiItem =
         canUseAiFeaturesOutsideProduction &&
         entityType === UuidType.ExerciseGroup
-
-      const topic = extractTopicFromTitle(data?.title) || ''
 
       return (
         <Fragment key={title}>
