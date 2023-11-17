@@ -50,9 +50,9 @@ function TextExerciseTypeEditor({
     <>
       {config.skipControls ? null : (
         <div className="absolute right-0 -mt-20 mr-side flex flex-row gap-4">
-          {canUseAiFeaturesOutsideProduction && (
+          {canUseAiFeaturesOutsideProduction ? (
             <AiExerciseGenerationButton isSingularExercise />
-          )}
+          ) : null}
           <ContentLoaders
             id={state.id.value}
             currentRevision={state.revision.value}

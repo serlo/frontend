@@ -78,7 +78,9 @@ function TextExerciseGroupTypeEditor(
   return (
     <>
       <div className="absolute right-0 -mt-20 mr-side flex">
-        {canUseAiFeaturesOutsideProduction && <AiExerciseGenerationButton />}
+        {canUseAiFeaturesOutsideProduction ? (
+          <AiExerciseGenerationButton />
+        ) : null}
         <ContentLoaders
           id={id.value}
           currentRevision={revision.value}

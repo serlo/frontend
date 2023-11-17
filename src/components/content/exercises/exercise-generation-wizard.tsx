@@ -90,11 +90,13 @@ export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
 
   const [grade, setGrade] = useState<string>('5')
 
-  const [exerciseType, setExerciseType] = useState<string | null>(null)
+  const [exerciseType, setExerciseType] = useState<string | null>(
+    'single choice'
+  )
   const [numberOfSubtasks, setNumberOfSubtasks] = useState<number>(0)
 
   const [difficulty, setDifficulty] =
-    useState<ExerciseGenerationDifficulty | null>(null)
+    useState<ExerciseGenerationDifficulty | null>('low')
   const [learningGoal, setLearningGoal] = useState<string>('')
 
   const [priorKnowledge, setPriorKnowledge] = useState<string>('')

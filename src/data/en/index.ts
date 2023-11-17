@@ -1174,13 +1174,16 @@ export const loggedInData = {
           label: 'Exercise type',
           subtasksTitleSummary: 'Subtasks',
           subtasksTitle: 'Should there be subtasks?',
+          subtasksTitleExerciseGroup: 'How many subtasks should there be?',
           noSubtasks: 'No',
           yesSubtasks: 'Yes',
+          subtasksLabel: 'Exercises',
           numberOfSubtasksPlaceholder: 'Number of subtasks',
           chooseOption: "Choose an option",
           multipleChoice: "Multiple Choice",
           singleChoice: "Single Choice",
-          inputExercise: "Input exercise"
+          inputExercise: "Input exercise",
+          exerciseGroupNeedsTwoOrMoreSubtasks: 'Within an exercise group, you must create two or more exercises.'
         },
         difficulty: {
           title: 'What is the %difficulty% level of the exercise and learning goal?',

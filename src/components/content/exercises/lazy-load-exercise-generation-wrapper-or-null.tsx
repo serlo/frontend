@@ -28,12 +28,6 @@ export function LazyLoadExerciseGenerationWrapperOrNull({
   const [showWizard, setShowWizard] = useState(false)
   const topic = extractTopicFromTitle(taxonomyTitle)
 
-  console.log('LazyLoadExerciseGenerationWrapperOrNull: ', {
-    router,
-    canUseAiFeatures,
-    showWizard,
-  })
-
   useEffect(() => {
     if (router.query.showAiWizard === 'true' && canUseAiFeatures) {
       setShowWizard(true)
@@ -51,9 +45,8 @@ export function LazyLoadExerciseGenerationWrapperOrNull({
         setShowWizard(false)
 
         const url = new URL(window.location.href)
-        // Delete any existing query params
+        // Delete any existing query param
         url.searchParams.delete('showAiWizard')
-        url.searchParams.delete('topic')
         // Update URL without reloading the page
         router
           .replace(url.pathname + url.search, undefined, {

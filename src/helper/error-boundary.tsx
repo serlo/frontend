@@ -1,5 +1,7 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react'
 
+import { isProduction } from './is-production'
+
 interface Props {
   children: ReactNode
   somethingWentWrongString: string
@@ -31,8 +33,8 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <div>
           <h1>{this.props.somethingWentWrongString}</h1>
-          {process.env.NODE_ENV === 'development' && (
-            <details style={{ whiteSpace: 'pre-wrap' }}>
+          {!isProduction && (
+            <details className="whitespace-pre-wrap">
               {this.state.error ? this.state.error.toString() : null}
               <br />
               {this.state.errorInfo?.componentStack}
