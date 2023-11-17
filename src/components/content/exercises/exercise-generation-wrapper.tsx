@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import { ExerciseGenerationWizard } from '../content/exercises/exercise-generation-wizard'
-import { ExercisePreviewPage } from '../content/exercises/exercise-preview-page'
-import { ModalWithCloseButton } from '../modal-with-close-button'
+import { ExerciseGenerationWizard } from './exercise-generation-wizard'
+import { ExercisePreviewPage } from './exercise-preview-page'
+import { ModalWithCloseButton } from '../../modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
 import { submitEvent } from '@/helper/submit-event'
@@ -54,8 +54,6 @@ export const ExerciseGenerationWrapper = ({
         confirmCloseDescription={
           strings.ai.exerciseGeneration.confirmCloseDescription
         }
-        // It will take the custom value (top-40%) of the ModalWithCloseButton
-        // without the important
         className="flex !h-3/4 max-h-[80vh] min-h-[420px] flex-col pb-4"
       >
         <ExerciseGenerationWizard

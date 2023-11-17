@@ -2,12 +2,12 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 
-import { ExerciseGenerationWrapperProps } from '../../../../components/user-tools/exercise-generation-wrapper'
+import { ExerciseGenerationWrapperProps } from './exercise-generation-wrapper'
 import { extractTopicFromTitle } from '@/components/content/exercises/exercise-generation-wizard/topic'
 import { useAiFeatures } from '@/components/content/exercises/use-ai-features'
 
 const ExerciseGenerationWrapper = dynamic<ExerciseGenerationWrapperProps>(() =>
-  import('../../../../components/user-tools/exercise-generation-wrapper').then(
+  import('./exercise-generation-wrapper').then(
     (mod) => mod.ExerciseGenerationWrapper
   )
 )

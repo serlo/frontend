@@ -2,7 +2,7 @@ import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useState } from 'react'
 
-import { LazyLoadExerciseGenerationWrapperOrNull } from './lazy-load-exercise-generation-wrapper-or-null'
+import { LazyLoadExerciseGenerationWrapperOrNull } from '../../../../components/content/exercises/lazy-load-exercise-generation-wrapper-or-null'
 import { endpoint } from '@/api/endpoint'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
