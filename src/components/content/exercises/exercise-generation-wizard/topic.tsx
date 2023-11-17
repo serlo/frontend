@@ -115,10 +115,5 @@ export function Topic({
 export function extractTopicFromTitle(
   title: string | undefined
 ): string | null {
-  if (!title) {
-    return null
-  }
-
-  const match = title.match(/Aufgaben zu(?:m|r)? (.+)/)
-  return match ? match[1].trim() : null
+  return title?.replace(/^Aufgaben zu./, '').trim() || null
 }
