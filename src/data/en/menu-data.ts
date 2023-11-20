@@ -108,7 +108,7 @@ export const footerData: InstanceData['footerData'] = {
           title: 'Terms of use',
           url: `https://en.${serloDomain}/terms`,
         },
-        { title: 'Imprint', url: `/imprint` },
+        { title: 'Legal Notice', url: `/legal` },
       ],
     },
   ],
