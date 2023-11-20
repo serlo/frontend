@@ -192,7 +192,7 @@ export function Donations() {
             Datenschutz
           </a>
           {' • '}
-          <a className="hover:underline" href="/impressum" target="_blank">
+          <a className="hover:underline" href="/legal" target="_blank">
             Impressum
           </a>
         </div>

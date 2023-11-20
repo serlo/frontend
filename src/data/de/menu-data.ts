@@ -188,7 +188,7 @@ export const footerData: InstanceData['footerData'] = {
           title: 'Nutzungsbedingungen und Urheberrecht',
           url: `https://de.${serloDomain}/terms`,
         },
-        { title: 'Impressum', url: `https://de.${serloDomain}/imprint` },
+        { title: 'Impressum', url: `https://de.${serloDomain}/legal` },
       ],
     },
   ],

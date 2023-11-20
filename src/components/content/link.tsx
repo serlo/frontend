@@ -19,9 +19,7 @@ export interface LinkProps {
 
 // imported from cf worker redirects.ts
 export const cfWorkerLinks = [
-  '/privacy',
   '/imprint',
-  '/terms',
   '/datenschutz',
   '/nutzungsbedingungen',
   '/impressum',
