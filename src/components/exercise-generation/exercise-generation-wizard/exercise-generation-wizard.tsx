@@ -1,5 +1,3 @@
-import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 
 import { Difficulty } from './difficulty'
@@ -12,10 +10,9 @@ import { Grade } from './grade'
 import { PriorKnowledge } from './prior-knowledge'
 import { Prompt } from './prompt'
 import { Topic } from './topic'
-import { FaIcon } from '@/components/fa-icon'
+import { WizardFooter } from './wizard-footer'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { isProduction } from '@/helper/is-production'
-import { submitEvent } from '@/helper/submit-event'
 
 export interface ExerciseGenerationWizardProps {
   data: {
@@ -190,12 +187,11 @@ export function ExerciseGenerationWizard({
         )}
       </div>
 
-      <NavigationFooter
+      <WizardFooter
         currentPage={currentPage}
         generatesMultipleExercises={numberOfSubtasks > 0}
         onNext={handleNext}
         onPrev={handlePrev}
-        isSummary={isSummary}
         onSubmit={() => {
           // eslint-disable-next-line no-console
           console.log("Let's generate exercise", {
@@ -212,82 +208,6 @@ export function ExerciseGenerationWizard({
           handleTransitionToExercisePage()
         }}
       />
-    </div>
-  )
-}
-
-interface NavigationFooterProps {
-  currentPage: number
-  isSummary: boolean
-  onNext: () => void
-  onPrev: () => void
-  onSubmit: () => void
-  generatesMultipleExercises: boolean
-}
-
-function NavigationFooter({
-  generatesMultipleExercises,
-  isSummary,
-  currentPage,
-  onNext,
-  onPrev,
-  onSubmit,
-}: NavigationFooterProps) {
-  const { exerciseGeneration: exerciseGenerationString } =
-    useLoggedInData()!.strings.ai
-
-  useEffect(() => {
-    submitEvent('exercise-generation-wizard-page: ' + currentPage)
-  }, [currentPage])
-
-  const hideBackButton = currentPage === 1
-  const hideNextButton = isSummary
-
-  return (
-    <div className="relative mt-auto flex flex-col items-center justify-between">
-      {currentPage === 6 ? (
-        <button
-          className="serlo-button-blue mb-2 self-end rounded bg-brand-700 px-4 py-2 text-white"
-          onClick={onSubmit}
-        >
-          {generatesMultipleExercises
-            ? exerciseGenerationString.generateExercisesButton
-            : exerciseGenerationString.generateExerciseButton}
-        </button>
-      ) : (
-        <button
-          className="serlo-button-blue mb-2 self-end rounded bg-brand-700 px-4 py-2 text-white"
-          onClick={onNext}
-        >
-          {exerciseGenerationString.nextButton}
-        </button>
-      )}
-
-      <div className="mt-2 flex w-full items-center justify-center">
-        <button
-          onClick={onPrev}
-          disabled={hideBackButton}
-          className={clsx(
-            'cursor-pointer p-2 text-brand-700',
-            hideBackButton && 'pointer-events-none opacity-0'
-          )}
-        >
-          <FaIcon icon={faAngleLeft} />
-        </button>
-
-        <span className="mx-1.5 text-center">{currentPage} / 6</span>
-
-        <button
-          onClick={onNext}
-          disabled={hideNextButton}
-          className={clsx(
-            'p-2 text-brand-700',
-            hideNextButton && 'pointer-events-none opacity-0'
-          )}
-        >
-          <FaIcon icon={faAngleRight} />
-        </button>
-      </div>
     </div>
   )
 }
