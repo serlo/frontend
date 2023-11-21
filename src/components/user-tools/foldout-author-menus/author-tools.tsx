@@ -352,13 +352,13 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
                 title={
                   loggedInStrings.ai.exerciseGeneration.buttonTitleSingular
                 }
-                href={`/entity/create/${UuidType.Exercise}/${data.id}?showAiWizard=true`}
+                href={`/entity/create/${UuidType.Exercise}/${data.id}?showAiWizard=`}
                 icon={faWandSparkles}
               />
               <SubItem
                 key="ai-group-exercise"
                 title={loggedInStrings.ai.exerciseGeneration.buttonTitle}
-                href={`/entity/create/${entityType}/${data.id}?showAiWizard=true`}
+                href={`/entity/create/${entityType}/${data.id}?showAiWizard=`}
                 icon={faWandMagicSparkles}
               />
             </Fragment>

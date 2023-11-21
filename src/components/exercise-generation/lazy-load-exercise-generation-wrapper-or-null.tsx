@@ -51,7 +51,7 @@ export function LazyLoadExerciseGenerationWrapperOrNull({
         setShowWizard(false)
 
         const url = new URL(window.location.href)
-        // Delete any existing query param
+        // Delete existing query param
         url.searchParams.delete('showAiWizard')
         // Update URL without reloading the page
         router
