@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useRef, useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { WizardPageProps } from './wizard-page-props'
 import { MenuButton, MenuItem } from '../menu-button'
@@ -24,20 +24,12 @@ export function ExerciseType({
   const exerciseTypeStrings =
     useLoggedInData()!.strings.ai.exerciseGeneration.exerciseType
 
-  const router = useRouter()
-
-  const isExerciseGroup = router.asPath
-    .toLowerCase()
+  const isExerciseGroup = useRouter()
+    .asPath.toLowerCase()
     .includes('/exercisegroup/')
 
-  const focusRef = useRef<HTMLInputElement>(null)
-
   useEffect(() => {
-    if (!isExerciseGroup) {
-      setNumberOfSubtasks(0)
-      return
-    }
-    if (focusRef.current) focusRef.current.focus()
+    if (!isExerciseGroup) setNumberOfSubtasks(0)
   }, [isExerciseGroup, setNumberOfSubtasks])
 
   return (
@@ -101,9 +93,9 @@ export function ExerciseType({
                   onNext()
                 }
               }}
-              className="ml-2 rounded-md border border-sky-200 p-2 pl-2 focus:border-sky-200 focus:outline-brand-700"
+              className="ml-2 rounded-md border border-brand-200 p-2 pl-2 focus:border-brand-200 focus:outline-brand-700"
               placeholder={exerciseTypeStrings.numberOfSubtasksPlaceholder}
-              ref={focusRef}
+              autoFocus
             />
           </div>
         </>
