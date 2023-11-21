@@ -95,6 +95,7 @@ export function useExecuteAIPrompt<T extends UnknownRecord>({
       }
     } catch (error) {
       if (error instanceof Error && error.name === 'AbortError') {
+        // eslint-disable-next-line no-console
         console.log('Fetch was successfully aborted!')
         setStatus(ExecutePromptStatus.Error)
         submitEvent(`${submitEventPrefix}-aborted`)
@@ -133,6 +134,7 @@ export function useExecuteAIPrompt<T extends UnknownRecord>({
         return
       }
 
+      // eslint-disable-next-line no-console
       console.error('Failed to execute prompt:', error)
       setErrorMessage(error instanceof Error ? error.message : 'Unknown error!')
       submitEvent(`${submitEventPrefix}-failure`)

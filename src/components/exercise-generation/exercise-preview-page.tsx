@@ -66,6 +66,7 @@ export function ExercisePreviewPage({
     try {
       return convertAiGeneratedScExerciseToEditorDocument(exerciseData)
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Error while parsing exercise data: ', error)
       setStatus(ExecutePromptStatus.Error)
       setErrorMessage(
@@ -78,6 +79,7 @@ export function ExercisePreviewPage({
     }
   }, [exerciseData, setErrorMessage, setStatus])
 
+  // eslint-disable-next-line no-console
   console.log('EditorData: ', editorData)
 
   const numberOfExercises = editorData?.exercises?.length ?? 0

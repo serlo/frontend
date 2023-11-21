@@ -91,7 +91,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   const loggedInData = useLoggedInData()
   const { lang, strings } = useInstanceData()
 
-  console.log('AuthorTools:', { data })
   const isSubscribed = useIsSubscribed(data.id)
   const setSubscription = useSubscriptionSetMutation()
   const setUuidState = useSetUuidStateMutation()
