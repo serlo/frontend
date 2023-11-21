@@ -1,16 +1,16 @@
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import React, { useEffect, useState } from 'react'
 
-import { Difficulty } from './exercise-generation-wizard/difficulty'
-import { ExerciseType } from './exercise-generation-wizard/exercise-type'
+import { Difficulty } from './difficulty'
+import { ExerciseType } from './exercise-type'
 import {
   ExerciseGenerationDifficulty,
   generateExercisePrompt,
-} from './exercise-generation-wizard/generate-prompt'
-import { Grade } from './exercise-generation-wizard/grade'
-import { PriorKnowledge } from './exercise-generation-wizard/prior-knowledge'
-import { Prompt } from './exercise-generation-wizard/prompt'
-import { Topic } from './exercise-generation-wizard/topic'
+} from './generate-prompt'
+import { Grade } from './grade'
+import { PriorKnowledge } from './prior-knowledge'
+import { Prompt } from './prompt'
+import { Topic } from './topic'
 import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { isProduction } from '@/helper/is-production'
@@ -22,16 +22,21 @@ export interface ExerciseGenerationWizardProps {
     title: string
     topic: string
   }
+  isExerciseGroup: boolean
   setTitle: (title: string) => void
   handleTransitionToExercisePage: () => void
   prompt: string
   setPrompt: (newPrompt: string) => void
 }
 
-export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
-  const { data, setTitle, handleTransitionToExercisePage, setPrompt, prompt } =
-    props
-
+export function ExerciseGenerationWizard({
+  data,
+  isExerciseGroup,
+  setTitle,
+  handleTransitionToExercisePage,
+  setPrompt,
+  prompt,
+}: ExerciseGenerationWizardProps) {
   const { subject, topic: defaultTopic } = data
 
   // Only logged in users can see this
@@ -91,7 +96,7 @@ export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
       topic,
       grade,
       exerciseType: exerciseType || 'single choice',
-      numberOfSubtasks,
+      numberOfSubtasks: isExerciseGroup ? numberOfSubtasks : 0,
       learningGoal,
       difficulty: difficulty || 'low',
       priorKnowledge,
@@ -107,6 +112,7 @@ export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
     difficulty,
     priorKnowledge,
     setPrompt,
+    isExerciseGroup,
   ])
 
   const handleNext = () => {
@@ -151,6 +157,7 @@ export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
         )}
         {(isSummary || currentPage === 3) && (
           <ExerciseType
+            isExerciseGroup={isExerciseGroup}
             exerciseType={exerciseType}
             setExerciseType={setExerciseType}
             numberOfSubtasks={numberOfSubtasks}
@@ -188,6 +195,7 @@ export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
         onNext={handleNext}
         onPrev={handlePrev}
         onSubmit={() => {
+          // eslint-disable-next-line no-console
           console.log("Let's generate exercise", {
             subject,
             topic,

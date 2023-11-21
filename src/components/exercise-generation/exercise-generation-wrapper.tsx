@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import { ExerciseGenerationWizard } from './exercise-generation-wizard'
+import { ExerciseGenerationWizard } from './exercise-generation-wizard/exercise-generation-wizard'
 import { ExercisePreviewPage } from './exercise-preview-page'
-import { ModalWithCloseButton } from '../../modal-with-close-button'
+import { ModalWithCloseButton } from '../modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
 import { submitEvent } from '@/helper/submit-event'
@@ -11,6 +11,7 @@ import { EditorProps } from '@/serlo-editor/core'
 export interface ExerciseGenerationWrapperProps {
   subject: string
   topic: string
+  isExerciseGroup: boolean
   closeWizard: () => void
   setEditorState: (editorState: EditorProps['initialState']) => void
 }
@@ -24,6 +25,7 @@ export const ExerciseGenerationWrapper = ({
   subject,
   closeWizard,
   topic,
+  isExerciseGroup,
   setEditorState,
 }: ExerciseGenerationWrapperProps) => {
   const { strings } = useLoggedInData() as LoggedInData
@@ -62,6 +64,7 @@ export const ExerciseGenerationWrapper = ({
             title,
             topic,
           }}
+          isExerciseGroup={isExerciseGroup}
           setTitle={setTitle}
           handleTransitionToExercisePage={handleTransitionToExercisePage}
           prompt={prompt}

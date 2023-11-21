@@ -14,7 +14,7 @@ import { Fragment } from 'react'
 
 import { SubItem } from './sub-item'
 import { useCanDo } from '@/auth/use-can-do'
-import { useAiFeatures } from '@/components/content/exercises/use-ai-features'
+import { useAiFeatures } from '@/components/exercise-generation/use-ai-features'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {

@@ -3,7 +3,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
-import { LazyLoadExerciseGenerationWrapperOrNull } from '@/components/content/exercises/lazy-load-exercise-generation-wrapper-or-null'
+import { LazyLoadExerciseGenerationWrapperOrNull } from '@/components/exercise-generation/lazy-load-exercise-generation-wrapper-or-null'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
@@ -30,8 +30,10 @@ enum AllowedPlugins {
   ExerciseGroup = TemplatePluginType.TextExerciseGroup,
 }
 
+export type AllowedPluginType = keyof typeof AllowedPlugins
+
 interface EntityCreateProps {
-  entityType: keyof typeof AllowedPlugins
+  entityType: AllowedPluginType
   taxonomyTerm: Extract<GetTaxonomyTypeQuery['uuid'], { title: any }>
   entityNeedsReview: boolean
   subject: string
@@ -75,6 +77,7 @@ function Content({
               <AddRevision {...addRevisionProps} />
               <LazyLoadExerciseGenerationWrapperOrNull
                 subject={subject}
+                entityType={entityType}
                 taxonomyTitle={taxonomyTerm.title}
                 setEditorState={setInitialState}
               />

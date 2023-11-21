@@ -3,8 +3,8 @@ import clsx from 'clsx'
 import { editorContent, entity, entityType } from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { AiExerciseGenerationButton } from '@/components/content/exercises/ai-exercise-generation-button'
-import { useAiFeatures } from '@/components/content/exercises/use-ai-features'
+import { AiExerciseGenerationButton } from '@/components/exercise-generation/ai-exercise-generation-button'
+import { useAiFeatures } from '@/components/exercise-generation/use-ai-features'
 import { UuidType } from '@/data-types'
 import {
   type EditorPlugin,
