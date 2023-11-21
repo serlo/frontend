@@ -1,53 +1,40 @@
-import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { Difficulty } from './exercise-generation-wizard/difficulty'
-import { ExerciseType } from './exercise-generation-wizard/exercise-type'
+import { Difficulty } from './difficulty'
+import { ExerciseType } from './exercise-type'
 import {
   ExerciseGenerationDifficulty,
   generateExercisePrompt,
-} from './exercise-generation-wizard/generate-prompt'
-import { Grade } from './exercise-generation-wizard/grade'
-import { PriorKnowledge } from './exercise-generation-wizard/prior-knowledge'
-import { Prompt } from './exercise-generation-wizard/prompt'
-import { Topic } from './exercise-generation-wizard/topic'
-import { FaIcon } from '@/components/fa-icon'
+} from './generate-prompt'
+import { Grade } from './grade'
+import { PriorKnowledge } from './prior-knowledge'
+import { Prompt } from './prompt'
+import { Topic } from './topic'
+import { WizardFooter } from './wizard-footer'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { isProduction } from '@/helper/is-production'
-import { submitEvent } from '@/helper/submit-event'
 
 export interface ExerciseGenerationWizardProps {
   data: {
     subject: string
-
     title: string
-
     topic: string
   }
-
+  isExerciseGroup: boolean
   setTitle: (title: string) => void
-
   handleTransitionToExercisePage: () => void
   prompt: string
   setPrompt: (newPrompt: string) => void
 }
 
-function useScrollToTopOfSummaryWhenInView(currentPage: number) {
-  const topOfSummaryRef = useRef<HTMLHeadingElement>(null)
-
-  useEffect(() => {
-    if (topOfSummaryRef && topOfSummaryRef.current && currentPage === 6) {
-      topOfSummaryRef.current.scrollTo(0, 0)
-    }
-  }, [currentPage])
-
-  return topOfSummaryRef
-}
-
-export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
-  const { data, setTitle, handleTransitionToExercisePage, setPrompt, prompt } =
-    props
-
+export function ExerciseGenerationWizard({
+  data,
+  isExerciseGroup,
+  setTitle,
+  handleTransitionToExercisePage,
+  setPrompt,
+  prompt,
+}: ExerciseGenerationWizardProps) {
   const { subject, topic: defaultTopic } = data
 
   // Only logged in users can see this
@@ -60,7 +47,7 @@ export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
 
   const [canUpdateTitle, setCanUpdateTitle] = useState<boolean>(false)
 
-  const topOfSummaryRef = useScrollToTopOfSummaryWhenInView(currentPage)
+  const isSummary = currentPage === 6
 
   useEffect(() => {
     // Page 2 needs to be visited once before we update the title. When going
@@ -93,7 +80,7 @@ export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
   const [exerciseType, setExerciseType] = useState<string | null>(
     'single choice'
   )
-  const [numberOfSubtasks, setNumberOfSubtasks] = useState<number>(0)
+  const [numberOfSubtasks, setNumberOfSubtasks] = useState<number>(2)
 
   const [difficulty, setDifficulty] =
     useState<ExerciseGenerationDifficulty | null>('low')
@@ -107,7 +94,7 @@ export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
       topic,
       grade,
       exerciseType: exerciseType || 'single choice',
-      numberOfSubtasks,
+      numberOfSubtasks: isExerciseGroup ? numberOfSubtasks : 0,
       learningGoal,
       difficulty: difficulty || 'low',
       priorKnowledge,
@@ -123,6 +110,7 @@ export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
     difficulty,
     priorKnowledge,
     setPrompt,
+    isExerciseGroup,
   ])
 
   const handleNext = () => {
@@ -137,8 +125,6 @@ export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
     }
   }
 
-  const isSummary = currentPage === 6
-
   return (
     // Remove bottom padding as the modal itself already has decent spacing there
     <div className="flex h-full flex-grow flex-col overflow-y-auto p-4 pb-0">
@@ -148,10 +134,7 @@ export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
         </h1>
       )}
       {/* Scrollable content */}
-      <div
-        className="mb-7 flex flex-grow flex-col gap-y-7 overflow-y-auto"
-        ref={topOfSummaryRef}
-      >
+      <div className="mb-7 flex flex-grow flex-col gap-y-7 overflow-y-auto">
         {(isSummary || currentPage === 1) && (
           <Topic
             onNext={handleNext}
@@ -172,6 +155,7 @@ export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
         )}
         {(isSummary || currentPage === 3) && (
           <ExerciseType
+            isExerciseGroup={isExerciseGroup}
             exerciseType={exerciseType}
             setExerciseType={setExerciseType}
             numberOfSubtasks={numberOfSubtasks}
@@ -203,12 +187,13 @@ export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
         )}
       </div>
 
-      <NavigationFooter
+      <WizardFooter
         currentPage={currentPage}
         generatesMultipleExercises={numberOfSubtasks > 0}
         onNext={handleNext}
         onPrev={handlePrev}
         onSubmit={() => {
+          // eslint-disable-next-line no-console
           console.log("Let's generate exercise", {
             subject,
             topic,
@@ -223,74 +208,6 @@ export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
           handleTransitionToExercisePage()
         }}
       />
-    </div>
-  )
-}
-
-interface NavigationFooterProps {
-  currentPage: number
-  onNext: () => void
-  onPrev: () => void
-  onSubmit: () => void
-  generatesMultipleExercises: boolean
-}
-
-function NavigationFooter({
-  generatesMultipleExercises,
-  currentPage,
-  onNext,
-  onPrev,
-  onSubmit,
-}: NavigationFooterProps) {
-  const { exerciseGeneration: exerciseGenerationString } =
-    useLoggedInData()!.strings.ai
-
-  useEffect(() => {
-    submitEvent('exercise-generation-wizard-page: ' + currentPage)
-  }, [currentPage])
-
-  return (
-    <div className="relative mt-auto flex flex-col items-center justify-between">
-      {currentPage === 6 ? (
-        <button
-          className="serlo-button-blue mb-2 self-end rounded bg-brand-700 px-4 py-2 text-white"
-          onClick={onSubmit}
-        >
-          {generatesMultipleExercises
-            ? exerciseGenerationString.generateExercisesButton
-            : exerciseGenerationString.generateExerciseButton}
-        </button>
-      ) : (
-        <button
-          className="serlo-button-blue mb-2 self-end rounded bg-brand-700 px-4 py-2 text-white"
-          onClick={onNext}
-        >
-          {exerciseGenerationString.nextButton}
-        </button>
-      )}
-
-      <div className="mt-4 flex w-full items-center justify-center">
-        {currentPage !== 1 && (
-          <button onClick={onPrev} className="cursor-pointer text-brand-700">
-            <FaIcon icon={faAngleLeft} />
-          </button>
-        )}
-
-        <span className="mx-4">{currentPage} / 6</span>
-
-        {currentPage !== 6 && (
-          <button
-            onClick={onNext}
-            className={`text-brand-700 ${
-              currentPage === 6
-                ? 'cursor-not-allowed opacity-50'
-                : 'cursor-pointer'
-            }`}
-          >
-            <FaIcon icon={faAngleRight} />
-          </button>
-        )}
-      </div>
     </div>
   )
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { either as E } from 'fp-ts'
 import { PathReporter } from 'io-ts/lib/PathReporter'
 

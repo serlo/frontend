@@ -33,7 +33,7 @@ export function MenuButton({
         </Select.Icon>
       </Select.Trigger>
       <Select.Content
-        className="rounded-md border border-sky-200 bg-white"
+        className="rounded-md border border-brand-300 bg-white"
         side="bottom"
         position="popper"
       >

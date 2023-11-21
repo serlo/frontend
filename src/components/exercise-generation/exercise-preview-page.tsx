@@ -28,6 +28,7 @@ import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { EditorTemplateExerciseGroupDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
 interface ExercisePreviewPageProps {
   prompt: string
@@ -65,6 +66,7 @@ export function ExercisePreviewPage({
     try {
       return convertAiGeneratedScExerciseToEditorDocument(exerciseData)
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Error while parsing exercise data: ', error)
       setStatus(ExecutePromptStatus.Error)
       setErrorMessage(
@@ -77,6 +79,7 @@ export function ExercisePreviewPage({
     }
   }, [exerciseData, setErrorMessage, setStatus])
 
+  // eslint-disable-next-line no-console
   console.log('EditorData: ', editorData)
 
   const numberOfExercises = editorData?.exercises?.length ?? 0
@@ -171,14 +174,9 @@ export function ExercisePreviewPage({
           onClick={() => {
             if (editorData && editorData.exercises.length === 1) {
               setEditorState({
-                plugin: 'type-text-exercise',
+                plugin: TemplatePluginType.TextExercise,
                 state: {
                   content: JSON.stringify(editorData.exercises[0]),
-                  'text-solution': {
-                    content: JSON.stringify(
-                      editorData.exercises[0].state.solution
-                    ),
-                  },
                 },
               })
               closePage()

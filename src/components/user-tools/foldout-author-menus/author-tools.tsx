@@ -14,7 +14,7 @@ import { Fragment } from 'react'
 
 import { SubItem } from './sub-item'
 import { useCanDo } from '@/auth/use-can-do'
-import { useAiFeatures } from '@/components/content/exercises/use-ai-features'
+import { useAiFeatures } from '@/components/exercise-generation/use-ai-features'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
@@ -91,7 +91,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   const loggedInData = useLoggedInData()
   const { lang, strings } = useInstanceData()
 
-  console.log('AuthorTools:', { data })
   const isSubscribed = useIsSubscribed(data.id)
   const setSubscription = useSubscriptionSetMutation()
   const setUuidState = useSetUuidStateMutation()
@@ -353,13 +352,13 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
                 title={
                   loggedInStrings.ai.exerciseGeneration.buttonTitleSingular
                 }
-                href={`/entity/create/${UuidType.Exercise}/${data.id}?showAiWizard=true`}
+                href={`/entity/create/${UuidType.Exercise}/${data.id}?showAiWizard=`}
                 icon={faWandSparkles}
               />
               <SubItem
                 key="ai-group-exercise"
                 title={loggedInStrings.ai.exerciseGeneration.buttonTitle}
-                href={`/entity/create/${entityType}/${data.id}?showAiWizard=true`}
+                href={`/entity/create/${entityType}/${data.id}?showAiWizard=`}
                 icon={faWandMagicSparkles}
               />
             </Fragment>
