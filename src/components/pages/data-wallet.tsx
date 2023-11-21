@@ -139,7 +139,7 @@ export function DataWallet() {
           </a>
           {' • '}
           <a
-            href="https://de.serlo.org/imprint"
+            href="https://de.serlo.org/legal"
             target="_blank"
             rel="noreferrer"
             className="serlo-link"
