@@ -48,7 +48,7 @@ import { taxonomyTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugin
 import { textExerciseTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/text-exercise'
 import { userTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/user'
 import { videoTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/video'
-import { solutionPlugin } from '@/serlo-editor/plugins/solution'
+import { createSolutionPlugin } from '@/serlo-editor/plugins/solution'
 import { createSpoilerPlugin } from '@/serlo-editor/plugins/spoiler'
 import { createTextPlugin } from '@/serlo-editor/plugins/text'
 import { unsupportedPlugin } from '@/serlo-editor/plugins/unsupported'
@@ -174,7 +174,7 @@ export function createPlugins({
       plugin: exercisePlugin,
       visibleInSuggestions: !isProduction,
     },
-    { type: EditorPluginType.Solution, plugin: solutionPlugin },
+    { type: EditorPluginType.Solution, plugin: createSolutionPlugin() },
     { type: EditorPluginType.H5p, plugin: H5pPlugin },
     {
       type: EditorPluginType.InputExercise,
