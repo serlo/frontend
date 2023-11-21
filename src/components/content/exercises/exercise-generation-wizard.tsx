@@ -1,5 +1,5 @@
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Difficulty } from './exercise-generation-wizard/difficulty'
 import { ExerciseType } from './exercise-generation-wizard/exercise-type'
@@ -19,29 +19,13 @@ import { submitEvent } from '@/helper/submit-event'
 export interface ExerciseGenerationWizardProps {
   data: {
     subject: string
-
     title: string
-
     topic: string
   }
-
   setTitle: (title: string) => void
-
   handleTransitionToExercisePage: () => void
   prompt: string
   setPrompt: (newPrompt: string) => void
-}
-
-function useScrollToTopOfSummaryWhenInView(currentPage: number) {
-  const topOfSummaryRef = useRef<HTMLHeadingElement>(null)
-
-  useEffect(() => {
-    if (topOfSummaryRef && topOfSummaryRef.current && currentPage === 6) {
-      topOfSummaryRef.current.scrollTo(0, 0)
-    }
-  }, [currentPage])
-
-  return topOfSummaryRef
 }
 
 export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
@@ -60,7 +44,7 @@ export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
 
   const [canUpdateTitle, setCanUpdateTitle] = useState<boolean>(false)
 
-  const topOfSummaryRef = useScrollToTopOfSummaryWhenInView(currentPage)
+  const isSummary = currentPage === 6
 
   useEffect(() => {
     // Page 2 needs to be visited once before we update the title. When going
@@ -137,8 +121,6 @@ export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
     }
   }
 
-  const isSummary = currentPage === 6
-
   return (
     // Remove bottom padding as the modal itself already has decent spacing there
     <div className="flex h-full flex-grow flex-col overflow-y-auto p-4 pb-0">
@@ -148,10 +130,7 @@ export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
         </h1>
       )}
       {/* Scrollable content */}
-      <div
-        className="mb-7 flex flex-grow flex-col gap-y-7 overflow-y-auto"
-        ref={topOfSummaryRef}
-      >
+      <div className="mb-7 flex flex-grow flex-col gap-y-7 overflow-y-auto">
         {(isSummary || currentPage === 1) && (
           <Topic
             onNext={handleNext}
