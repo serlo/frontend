@@ -77,7 +77,7 @@ export function ExerciseGenerationWizard(props: ExerciseGenerationWizardProps) {
   const [exerciseType, setExerciseType] = useState<string | null>(
     'single choice'
   )
-  const [numberOfSubtasks, setNumberOfSubtasks] = useState<number>(0)
+  const [numberOfSubtasks, setNumberOfSubtasks] = useState<number>(2)
 
   const [difficulty, setDifficulty] =
     useState<ExerciseGenerationDifficulty | null>('low')
