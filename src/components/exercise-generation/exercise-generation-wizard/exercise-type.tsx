@@ -86,7 +86,6 @@ export function ExerciseType({
               }}
               className="ml-2 rounded-md border border-brand-200 p-2 pl-2 focus:border-brand-200 focus:outline-brand-700"
               placeholder={exerciseTypeStrings.numberOfSubtasksPlaceholder}
-              autoFocus={!isSummary}
             />
           </div>
         </>
