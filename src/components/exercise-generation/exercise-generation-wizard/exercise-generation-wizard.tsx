@@ -1,4 +1,5 @@
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 
 import { Difficulty } from './difficulty'
@@ -194,6 +195,7 @@ export function ExerciseGenerationWizard({
         generatesMultipleExercises={numberOfSubtasks > 0}
         onNext={handleNext}
         onPrev={handlePrev}
+        isSummary={isSummary}
         onSubmit={() => {
           // eslint-disable-next-line no-console
           console.log("Let's generate exercise", {
@@ -216,6 +218,7 @@ export function ExerciseGenerationWizard({
 
 interface NavigationFooterProps {
   currentPage: number
+  isSummary: boolean
   onNext: () => void
   onPrev: () => void
   onSubmit: () => void
@@ -224,6 +227,7 @@ interface NavigationFooterProps {
 
 function NavigationFooter({
   generatesMultipleExercises,
+  isSummary,
   currentPage,
   onNext,
   onPrev,
@@ -235,6 +239,9 @@ function NavigationFooter({
   useEffect(() => {
     submitEvent('exercise-generation-wizard-page: ' + currentPage)
   }, [currentPage])
+
+  const hideBackButton = currentPage === 1
+  const hideNextButton = isSummary
 
   return (
     <div className="relative mt-auto flex flex-col items-center justify-between">
@@ -256,27 +263,30 @@ function NavigationFooter({
         </button>
       )}
 
-      <div className="mt-4 flex w-full items-center justify-center">
-        {currentPage !== 1 && (
-          <button onClick={onPrev} className="cursor-pointer text-brand-700">
-            <FaIcon icon={faAngleLeft} />
-          </button>
-        )}
+      <div className="mt-2 flex w-full items-center justify-center">
+        <button
+          onClick={onPrev}
+          disabled={hideBackButton}
+          className={clsx(
+            'cursor-pointer p-2 text-brand-700',
+            hideBackButton && 'pointer-events-none opacity-0'
+          )}
+        >
+          <FaIcon icon={faAngleLeft} />
+        </button>
 
-        <span className="mx-4">{currentPage} / 6</span>
+        <span className="mx-1.5 text-center">{currentPage} / 6</span>
 
-        {currentPage !== 6 && (
-          <button
-            onClick={onNext}
-            className={`text-brand-700 ${
-              currentPage === 6
-                ? 'cursor-not-allowed opacity-50'
-                : 'cursor-pointer'
-            }`}
-          >
-            <FaIcon icon={faAngleRight} />
-          </button>
-        )}
+        <button
+          onClick={onNext}
+          disabled={hideNextButton}
+          className={clsx(
+            'p-2 text-brand-700',
+            hideNextButton && 'pointer-events-none opacity-0'
+          )}
+        >
+          <FaIcon icon={faAngleRight} />
+        </button>
       </div>
     </div>
   )
