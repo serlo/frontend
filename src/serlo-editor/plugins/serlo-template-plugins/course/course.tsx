@@ -123,7 +123,7 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
         <ModalWithCloseButton
           isOpen={showSettingsModal}
           onCloseClick={() => setShowSettingsModal(false)}
-          className="!max-w-xl"
+          className="max-w-xl"
         >
           <div className="mx-side mb-3 mt-12">
             <SettingsTextarea

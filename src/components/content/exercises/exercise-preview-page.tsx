@@ -86,7 +86,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
       confirmCloseDescription="Are you sure you want to close the preview? All data will be lost!"
       overwriteClassNameCompletely
       className="fixed left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center bg-gray-100"
-      closeButtonClassName="!bg-blue-300 absolute right-2 top-2 text-black"
+      closeButtonClassName="bg-blue-300 absolute right-2 top-2 text-black"
     >
       {status === ExecutePromptStatus.Loading && (
         <div className="mb-6 flex items-center justify-center">

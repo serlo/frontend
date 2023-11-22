@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { useState, type ReactNode, useCallback } from 'react'
 import BaseModal from 'react-modal'
+import { twMerge } from 'tailwind-merge'
 
 import { CloseButton } from './close-button'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -20,7 +21,7 @@ interface ModalWithCloseButtonProps {
   title?: string
   onCloseClick: () => void
   children: ReactNode
-  className?: string | ReactModal.Classes
+  className?: string
   alignTitleAndCloseButton?: boolean
   confirmCloseDescription?: string | undefined
   overwriteClassNameCompletely?: boolean
@@ -54,7 +55,7 @@ export function ModalWithCloseButton({
       className={
         overwriteClassNameCompletely
           ? className
-          : clsx(ModalClsx, 'top-[40%] w-[500px] pb-10', className)
+          : twMerge(ModalClsx, 'top-[40%] w-[500px] pb-10', className)
       }
     >
       {alignTitleAndCloseButton ? (
@@ -78,7 +79,10 @@ export function ModalWithCloseButton({
             onClick={onRequestClose}
             title={strings.share.close}
             dataQa="modal-close-button"
-            className={clsx('absolute right-3.5 top-3.5', closeButtonClassName)}
+            className={twMerge(
+              'absolute right-3.5 top-3.5',
+              closeButtonClassName
+            )}
           />
         </>
       )}

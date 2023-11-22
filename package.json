@@ -90,6 +90,7 @@
     "slate": "^0.94.1",
     "slate-react": "^0.99.0",
     "swr": "^2.2.4",
+    "tailwind-merge": "^2.0.0",
     "timeago-react": "^3.0.6",
     "timeago.js": "^4.0.2",
     "tiny-warning": "^1.0.3",

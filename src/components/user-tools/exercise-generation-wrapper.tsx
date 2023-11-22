@@ -52,9 +52,7 @@ export const ExerciseGenerationWrapper = ({
         confirmCloseDescription={
           strings.ai.exerciseGeneration.confirmCloseDescription
         }
-        // It will take the custom value (top-40%) of the ModalWithCloseButton
-        // without the important
-        className="!top-1/2 flex max-h-[80vh] min-h-[420px] flex-col pb-4"
+        className="top-1/2 flex max-h-[80vh] min-h-[420px] flex-col pb-4"
       >
         <ExerciseGenerationWizard
           data={data}
