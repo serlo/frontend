@@ -1,7 +1,7 @@
 import type { SuggestionOption } from '../hooks/use-suggestions'
-import IconFallback from '@/assets-webkit/img/editor/icon-fallback.svg'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
+import IconFallback from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 
 interface SuggestionsProps {
   options: SuggestionOption[]
