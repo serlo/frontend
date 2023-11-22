@@ -50,9 +50,6 @@ interface FillInTheBlanksRendererProps {
 
 export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
   const { text, textPluginState, mode } = props
-
-  console.log('Fill in the gap: ', { text, textPluginState, mode })
-
   const exStrings = useInstanceData().strings.content.exercises
 
   // Used to show feedback when user clicked "Stimmts?" button
