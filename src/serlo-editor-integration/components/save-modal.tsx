@@ -81,6 +81,10 @@ export function SaveModal({
         setOpen(false)
       }}
       title={editorStrings.save}
+      className={clsx(
+        !isOnlyText &&
+          'top-[2rem] max-h-full w-auto -translate-x-1/2 translate-y-0 overflow-y-auto pb-20'
+      )}
     >
       <div className="mx-side">
         {renderChanges()}
@@ -92,24 +96,12 @@ export function SaveModal({
         {renderAlert()}
         {renderModalButtons()}
       </div>
-      {isOnlyText ? null : (
-        <style jsx global>{`
-          .ReactModal__Content {
-            overflow-y: auto;
-            top: 0;
-            bottom: 1rem;
-            margin-top: 2rem;
-            transform: translate(-50%, 0);
-            max-height: 100%;
-          }
-        `}</style>
-      )}
     </ModalWithCloseButton>
   )
 
   function renderModalButtons() {
     return (
-      <div className="mx-side mt-4 text-right">
+      <div className="mt-4 flex justify-end gap-2">
         <button
           className="serlo-button-transparent"
           onClick={() => setOpen(false)}
@@ -130,7 +122,7 @@ export function SaveModal({
             }
           }}
           className={clsx(
-            'serlo-button ml-2',
+            'serlo-button',
             pending ? 'cursor-default text-gray-300' : 'serlo-button-green'
           )}
           disabled={pending}

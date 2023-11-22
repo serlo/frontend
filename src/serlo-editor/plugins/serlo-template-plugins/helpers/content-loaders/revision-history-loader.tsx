@@ -75,32 +75,17 @@ export function RevisionHistoryLoader<T>({
           setShowRevisions(false)
         }}
         title={editorStrings.edtrIo.switchRevision}
+        className="top-[3rem] max-h-[80vh] w-[900px] max-w-[90vw] translate-y-0 overflow-y-auto pt-0"
       >
-        {/* // a bit untidy, but it's very nice to reuse this component here */}
+        {/* a bit untidy, but it's very nice to reuse this component here */}
         <SerloRevisionHistory
           data={revisionsResponse.data?.uuid}
           hideEdit
           onSelectRevision={onSelectRevision}
           selectedRevisionId={currentRevision}
+          tableClassName="mt-12 !w-auto"
         />
       </ModalWithCloseButton>
-      <style jsx global>{`
-        .ReactModalPortal .ReactModal__Content {
-          /* this css colides with save-modal.tsx */
-          width: 900px;
-          max-width: 90vw;
-          max-height: 80vh;
-          top: 2rem;
-          overflow-y: auto;
-          padding-top: 0;
-          transform: translate(-50%, 0);
-        }
-
-        .ReactModalPortal .ReactModal__Content table {
-          margin-top: 3rem;
-          width: auto;
-        }
-      `}</style>
     </div>
   )
 

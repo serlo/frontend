@@ -20,7 +20,7 @@ interface ModalWithCloseButtonProps {
   title?: string
   onCloseClick: () => void
   children: ReactNode
-  className?: string
+  className?: string | ReactModal.Classes
   alignTitleAndCloseButton?: boolean
   confirmCloseDescription?: string | undefined
   overwriteClassNameCompletely?: boolean
