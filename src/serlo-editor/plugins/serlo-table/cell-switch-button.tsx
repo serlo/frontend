@@ -1,7 +1,6 @@
 import { faImages, faParagraph } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon, useEditorStrings } from '@serlo/serlo-editor'
 
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { ChildStateType } from '@/serlo-editor/plugin/child'
 import {
   selectDocument,

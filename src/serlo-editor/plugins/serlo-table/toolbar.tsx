@@ -1,8 +1,8 @@
+import { useEditorStrings, tw } from '@serlo/serlo-editor'
+
 import type { SerloTableProps } from '.'
 import { TableType } from './renderer'
 import { getTableType } from './utils/get-table-type'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'

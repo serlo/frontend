@@ -1,7 +1,7 @@
+import { tw } from '@serlo/serlo-editor'
 import * as MQ from 'react-mathquill'
 
 import type { MathEditorProps } from './editor'
-import { tw } from '@/helper/tw'
 
 if (typeof window !== 'undefined') {
   MQ.addStyles()

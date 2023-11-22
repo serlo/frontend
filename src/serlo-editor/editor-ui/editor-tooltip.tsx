@@ -1,7 +1,5 @@
+import { isMac, useInstanceData } from '@serlo/serlo-editor'
 import clsx from 'clsx'
-
-import { useInstanceData } from '@/contexts/instance-context'
-import { isMac } from '@/helper/client-detection'
 
 export function EditorTooltip({
   text,

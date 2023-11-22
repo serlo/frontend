@@ -1,4 +1,5 @@
 import { faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { tw } from '@serlo/serlo-editor'
 import { useState } from 'react'
 
 import { CourseNavigation } from './course-navigation'
@@ -17,7 +18,6 @@ import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
-import { tw } from '@/helper/tw'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import {

@@ -1,8 +1,8 @@
+import { useInstanceData } from '@serlo/serlo-editor'
 import clsx from 'clsx'
 import { useState } from 'react'
 
 import { BoxRenderer } from '../box/renderer'
-import { useInstanceData } from '@/contexts/instance-context'
 
 interface SolutionRendererProps {
   prerequisite: JSX.Element | null

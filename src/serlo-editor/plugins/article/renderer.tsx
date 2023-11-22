@@ -1,4 +1,4 @@
-import { useInstanceData } from '@/contexts/instance-context'
+import { useInstanceData } from '@serlo/serlo-editor'
 
 export interface ArticleRendererProps {
   introduction: JSX.Element | null

@@ -1,3 +1,4 @@
+// only used in frontend
 import { faCircleArrowUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
 import type { ArticleProps } from '..'

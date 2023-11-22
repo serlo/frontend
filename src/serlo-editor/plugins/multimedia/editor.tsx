@@ -1,3 +1,4 @@
+import { useEditorStrings, tw } from '@serlo/serlo-editor'
 import { useMemo, useState } from 'react'
 
 import type { MultimediaProps } from '.'
@@ -6,8 +7,6 @@ import { getStyleHacks } from './style-hacks'
 import { MultimediaSizeSelect } from './toolbar/size-select'
 import { MultimediaToolbar } from './toolbar/toolbar'
 import { MultimediaTypeSelect } from './toolbar/type-select'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
 import { AreImagesDisabledInTableContext } from '@/serlo-editor/plugins/serlo-table/contexts/are-images-disabled-in-table-context'
 import {
   selectAncestorPluginTypes,

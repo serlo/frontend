@@ -1,3 +1,4 @@
+import { useEditorStrings } from '@serlo/serlo-editor'
 import { useEffect, useRef, useState } from 'react'
 
 import type { InputExerciseProps } from '.'
@@ -16,7 +17,6 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '../../store'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 import { EditorInputExerciseDocument } from '@/serlo-editor/types/editor-plugins'
 

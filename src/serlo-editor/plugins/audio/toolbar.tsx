@@ -1,5 +1,10 @@
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import {
+  FaIcon,
+  ModalWithCloseButton,
+  useEditorStrings,
+} from '@serlo/serlo-editor'
+import {
   KeyboardEvent as ReactKeyboardEvent,
   Dispatch,
   SetStateAction,
@@ -9,9 +14,6 @@ import { Key } from 'ts-key-enum'
 
 import type { AudioProps } from '.'
 import { EditorInput } from '../../editor-ui'
-import { FaIcon } from '@/components/fa-icon'
-import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'

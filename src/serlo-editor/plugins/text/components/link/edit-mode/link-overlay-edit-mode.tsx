@@ -1,3 +1,9 @@
+import {
+  showToastNotice,
+  useEditorStrings,
+  useInstanceData,
+  LoadingSpinner,
+} from '@serlo/serlo-editor'
 import clsx from 'clsx'
 import { useEffect, useState, KeyboardEvent } from 'react'
 import { useHotkeysContext } from 'react-hotkeys-hook'
@@ -5,11 +11,11 @@ import { useHotkeysContext } from 'react-hotkeys-hook'
 import { EditModeInput } from './edit-mode-input'
 import { EditModeResultEntry } from './edit-mode-result-entry'
 import { getCleanUrl } from '../../../utils/link'
-import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { QuickbarData, findResults } from '@/components/navigation/quickbar'
-import { useInstanceData } from '@/contexts/instance-context'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { showToastNotice } from '@/helper/show-toast-notice'
+// serlo specific
+import {
+  findResults,
+  type QuickbarData,
+} from '@/components/navigation/quickbar'
 
 // based on Quickbar, duplicates some code
 

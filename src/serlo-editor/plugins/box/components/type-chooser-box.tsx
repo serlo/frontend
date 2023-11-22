@@ -1,8 +1,7 @@
+import { FaIcon, useInstanceData, useEditorStrings } from '@serlo/serlo-editor'
+
 import type { BoxProps } from '..'
 import { boxTypeIcons, types } from '../renderer'
-import { FaIcon } from '@/components/fa-icon'
-import { useInstanceData } from '@/contexts/instance-context'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface TypeChooserProps {
   typeState: BoxProps['state']['type']

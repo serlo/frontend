@@ -1,12 +1,14 @@
 import { faCog } from '@fortawesome/free-solid-svg-icons'
+import {
+  FaIcon,
+  ModalWithCloseButton,
+  useEditorStrings,
+} from '@serlo/serlo-editor'
 import { Dispatch, SetStateAction } from 'react'
 
 import type { ImageProps } from '.'
 import { SettingsModalControls } from './controls/settings-modal-controls'
 import { UploadButton } from './controls/upload-button'
-import { FaIcon } from '@/components/fa-icon'
-import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'

@@ -1,6 +1,5 @@
 import { faLink } from '@fortawesome/free-solid-svg-icons'
-
-import { FaIcon } from '@/components/fa-icon'
+import { FaIcon } from '@serlo/serlo-editor'
 
 interface ShowAudioSettingsButtonProps {
   openSettings: () => void

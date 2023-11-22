@@ -1,6 +1,5 @@
+import { useInstanceData } from '@serlo/serlo-editor'
 import type { ReactNode } from 'react'
-
-import { useInstanceData } from '@/contexts/instance-context'
 
 export interface FeedbackProps {
   correct: boolean

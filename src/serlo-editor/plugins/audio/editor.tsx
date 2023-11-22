@@ -1,10 +1,10 @@
+import { useEditorStrings } from '@serlo/serlo-editor'
 import { useState } from 'react'
 
 import type { AudioProps } from '.'
 import { parseAudioUrl, AudioRenderer } from './renderer'
 import { ShowAudioSettingsButton } from './show-audio-settings-button'
 import { AudioToolbar } from './toolbar'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export const AudioEditor = (props: AudioProps) => {
   const { focused, state } = props

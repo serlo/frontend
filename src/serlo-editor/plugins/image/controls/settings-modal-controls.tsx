@@ -1,7 +1,7 @@
+import { useEditorStrings, tw } from '@serlo/serlo-editor'
+
 import { OverlayInput } from './overlay-input'
 import type { ImageProps } from '..'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
 import { isTempFile } from '@/serlo-editor/plugin'
 
 export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {

@@ -1,9 +1,8 @@
+import { useEditorStrings, showToastNotice } from '@serlo/serlo-editor'
 import { useCallback } from 'react'
 import { Editor as SlateEditor } from 'slate'
 
 import { insertPlugin } from '../utils/insert-plugin'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { showToastNotice } from '@/helper/show-toast-notice'
 import { isSelectionWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import {

@@ -1,8 +1,7 @@
+import { tw, useEditorStrings } from '@serlo/serlo-editor'
 import clsx from 'clsx'
 
 import type { PageLayoutPluginProps } from '..'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
 
 const firstColumsSizes = [50, 66, 33]
 

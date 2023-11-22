@@ -1,10 +1,8 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { tw, FaIcon, useEditorStrings } from '@serlo/serlo-editor'
 import { RenderLeafProps } from 'slate-react'
 
 import { TextLeafRenderer } from './text-leaf-renderer'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 
 export function TextLeafWithPlaceholder(

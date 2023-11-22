@@ -1,7 +1,7 @@
+import { useEditorStrings, tw } from '@serlo/serlo-editor'
+
 import type { ExerciseProps } from '..'
 import type { InteractiveExerciseType } from '../editor'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'

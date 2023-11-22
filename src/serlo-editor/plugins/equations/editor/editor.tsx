@@ -3,6 +3,7 @@ import {
   faPlusCircle,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon, useEditorStrings, tw } from '@serlo/serlo-editor'
 import { includes } from 'ramda'
 import { useCallback, useEffect, useRef } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
@@ -15,9 +16,6 @@ import type { EquationsProps } from '..'
 import { renderDownArrow } from '../renderer'
 import { EquationsStaticRenderer } from '../static'
 import { EquationsToolbar } from '../toolbar'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import {
   store,

@@ -1,9 +1,7 @@
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
+import { FaIcon, useEditorStrings, tw } from '@serlo/serlo-editor'
 
 import type { HighlightProps } from '.'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'

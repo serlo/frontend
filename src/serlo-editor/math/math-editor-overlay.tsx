@@ -1,9 +1,8 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon, useEditorStrings } from '@serlo/serlo-editor'
 
 import type { MathEditorProps } from './editor'
 import { MathEditorTextarea } from './textarea'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function MathEditorOverlay({
   hasError,

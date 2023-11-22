@@ -2,14 +2,16 @@ import {
   faFileImport,
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons'
+import {
+  FaIcon,
+  useInstanceData,
+  showToastNotice,
+  tw,
+} from '@serlo/serlo-editor'
 import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
 
 import type { PageTeamPluginProps } from '.'
-import { FaIcon } from '@/components/fa-icon'
-import { useInstanceData } from '@/contexts/instance-context'
-import { showToastNotice } from '@/helper/show-toast-notice'
-import { tw } from '@/helper/tw'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'

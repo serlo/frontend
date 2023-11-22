@@ -1,11 +1,10 @@
+// only used in frontend
+import { FaIcon, useInstanceData, useEditorStrings } from '@serlo/serlo-editor'
 import { gql } from 'graphql-request'
 
 import { SerloAddButton } from '../../../plugin/helpers/serlo-editor-button'
 import { InjectionStaticRenderer } from '../../injection/static'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
-import { FaIcon } from '@/components/fa-icon'
-import { useInstanceData } from '@/contexts/instance-context'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType, type UuidWithRevType } from '@/data-types'
 import {
   TaxonomyTermType,

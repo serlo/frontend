@@ -1,3 +1,4 @@
+// this plugin is only used in frontend
 import { StaticRenderer } from '../../static-renderer/static-renderer'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 import { Link } from '@/components/content/link'

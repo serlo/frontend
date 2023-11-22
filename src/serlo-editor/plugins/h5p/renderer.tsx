@@ -1,6 +1,6 @@
+// only used for frontend
+import { useInstanceData } from '@serlo/serlo-editor'
 import Script from 'next/script'
-
-import { useInstanceData } from '@/contexts/instance-context'
 
 export interface H5pRendererProps {
   url: string

@@ -1,8 +1,7 @@
+import { tw, useEditorStrings } from '@serlo/serlo-editor'
 import { Dispatch, SetStateAction } from 'react'
 
 import type { MultimediaProps } from '..'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
 import { getPluginTitle } from '@/serlo-editor/plugin/helpers/get-plugin-title'
 import {
   selectDocument,

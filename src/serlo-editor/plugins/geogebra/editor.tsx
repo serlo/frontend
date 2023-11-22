@@ -1,9 +1,9 @@
+import { FaIcon } from '@serlo/serlo-editor'
 import { useState } from 'react'
 
 import type { GeogebraProps } from '.'
 import { GeogebraRenderer, parseId } from './renderer'
 import { GeogebraToolbar } from './toolbar'
-import { FaIcon } from '@/components/fa-icon'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { EmbedWrapper } from '@/serlo-editor/editor-ui/embed-wrapper'
 

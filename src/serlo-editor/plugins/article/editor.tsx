@@ -1,3 +1,4 @@
+import { useEditorStrings } from '@serlo/serlo-editor'
 import { useState } from 'react'
 
 import type { ArticleProps } from '.'
@@ -7,7 +8,6 @@ import { ArticleRelatedContentSection } from './editor-renderer/article-related-
 import { ArticleSources } from './editor-renderer/article-sources'
 import { ArticleRenderer } from './renderer'
 import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function ArticleEditor({ state }: ArticleProps) {
   const {

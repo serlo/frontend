@@ -1,4 +1,4 @@
-import { articleColors } from '@/helper/colors'
+import { articleColors } from '@serlo/serlo-editor'
 
 export const textColors = Object.entries(articleColors).map(([key, value]) => ({
   value,

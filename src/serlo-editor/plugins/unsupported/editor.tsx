@@ -1,8 +1,7 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon, useEditorStrings } from '@serlo/serlo-editor'
 
 import type { UnsupportedPluginProps } from '.'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { selectStaticDocument, store } from '@/serlo-editor/store'

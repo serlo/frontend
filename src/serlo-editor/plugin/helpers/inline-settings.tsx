@@ -1,6 +1,6 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon } from '@serlo/serlo-editor'
 
-import { FaIcon } from '@/components/fa-icon'
 import { HoverOverlay, HoverPosition } from '@/serlo-editor/editor-ui'
 
 export function InlineSettings({

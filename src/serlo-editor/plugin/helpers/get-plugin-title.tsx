@@ -1,4 +1,4 @@
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@serlo/serlo-editor'
 
 export function getPluginTitle(
   pluginStrings: ReturnType<typeof useEditorStrings>['plugins'],

@@ -1,4 +1,5 @@
 import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon, useEditorStrings } from '@serlo/serlo-editor'
 import clsx from 'clsx'
 import { KeyboardEvent, useState } from 'react'
 
@@ -10,8 +11,6 @@ import { SerloTableToolbar } from './toolbar'
 import { getTableType } from './utils/get-table-type'
 import { TextEditorConfig } from '../text'
 import { instanceStateStore } from '../text/utils/instance-state-store'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import {

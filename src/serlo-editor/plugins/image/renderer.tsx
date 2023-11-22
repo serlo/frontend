@@ -1,5 +1,7 @@
+// serlo specific
+import { useInstanceData } from '@serlo/serlo-editor'
+
 import { Link } from '@/components/content/link'
-import { useInstanceData } from '@/contexts/instance-context'
 
 interface ImageProps {
   image: {

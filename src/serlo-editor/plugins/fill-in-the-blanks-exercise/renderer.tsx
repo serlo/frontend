@@ -1,4 +1,5 @@
 // import { DndContext, UniqueIdentifier } from '@dnd-kit/core'
+import { useInstanceData } from '@serlo/serlo-editor'
 import * as t from 'io-ts'
 import { ReactNode, useMemo, useState } from 'react'
 
@@ -6,7 +7,6 @@ import { ReactNode, useMemo, useState } from 'react'
 // import { BlankSolutionsArea } from './components/blank-solution-area'
 import { BlankStatesContext } from './context/blank-context'
 import { Feedback } from '../sc-mc-exercise/renderer/feedback'
-import { useInstanceData } from '@/contexts/instance-context'
 
 // --- Drag and drop stuff
 // TODO: Use Map container here as well

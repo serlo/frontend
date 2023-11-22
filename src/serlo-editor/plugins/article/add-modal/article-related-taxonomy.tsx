@@ -1,3 +1,4 @@
+// only used in frontend
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { gql } from 'graphql-request'
 

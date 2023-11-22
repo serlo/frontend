@@ -1,6 +1,6 @@
+import { tw } from '@serlo/serlo-editor'
 import { mapObjIndexed } from 'ramda'
 
-import { tw } from '@/helper/tw'
 import {
   StateType,
   StateTypesStaticType,

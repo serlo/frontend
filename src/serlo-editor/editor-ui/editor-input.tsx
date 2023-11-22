@@ -1,6 +1,5 @@
+import { tw } from '@serlo/serlo-editor'
 import { forwardRef } from 'react'
-
-import { tw } from '@/helper/tw'
 
 interface EditorInputProps
   extends React.DetailedHTMLProps<

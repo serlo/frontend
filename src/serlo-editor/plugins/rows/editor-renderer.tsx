@@ -1,3 +1,4 @@
+import { tw } from '@serlo/serlo-editor'
 import clsx from 'clsx'
 import * as R from 'ramda'
 import React, { useRef, useState, useMemo } from 'react'
@@ -7,7 +8,6 @@ import { NativeTypes } from 'react-dnd-html5-backend'
 import type { RowsPluginConfig, RowsPluginState } from '.'
 import { RowDragButton } from './components/row-drag-button'
 import { useCanDrop } from './components/use-can-drop'
-import { tw } from '@/helper/tw'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
 import { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import {

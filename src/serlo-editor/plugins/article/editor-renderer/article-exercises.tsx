@@ -1,3 +1,4 @@
+// only used in frontend
 import { faArrowCircleUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { Fragment } from 'react'
 

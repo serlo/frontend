@@ -1,12 +1,11 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { tw, FaIcon, useInstanceData } from '@serlo/serlo-editor'
 import clsx from 'clsx'
 import { useState, KeyboardEvent, useEffect } from 'react'
 
 import { VideoType } from '../plugins/video/renderer'
-import { FaIcon } from '@/components/fa-icon'
-import { useInstanceData } from '@/contexts/instance-context'
+// Serlo specific:
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
-import { tw } from '@/helper/tw'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
 // based on PrivacyWrapper
@@ -62,6 +61,7 @@ export function EmbedWrapper({
   )
 
   function renderPlaceholder() {
+    // TODO: this is serlo specific
     const previewImageUrl = `https://embed.${serloDomain}/thumbnail?url=${encodeURIComponent(
       embedUrl || ''
     )}`

@@ -1,9 +1,10 @@
 import { faClone, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { useEditorStrings } from '@serlo/serlo-editor'
 import { useCallback, useContext } from 'react'
 
 import { AnchorLinkCopyTool } from './anchor-link-copy-tool'
 import { DropdownButton } from './dropdown-button'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
+// serlo specific
 import { UuidsContext } from '@/contexts/uuids-context'
 import {
   insertPluginChildAfter,

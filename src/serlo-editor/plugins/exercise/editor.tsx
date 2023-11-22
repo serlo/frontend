@@ -1,12 +1,11 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon, useEditorStrings, tw } from '@serlo/serlo-editor'
 import clsx from 'clsx'
 
 import type { ExerciseProps } from '.'
 import { ExerciseToolbar } from './toolbar/toolbar'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
+// serlo specific
 import { isProduction } from '@/helper/is-production'
-import { tw } from '@/helper/tw'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'

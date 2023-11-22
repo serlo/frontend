@@ -1,7 +1,6 @@
+import { tw } from '@serlo/serlo-editor'
 import clsx from 'clsx'
 import { useState } from 'react'
-
-import { tw } from '@/helper/tw'
 
 export interface SpoilerRendererProps {
   title: JSX.Element

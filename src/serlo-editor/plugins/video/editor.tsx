@@ -1,10 +1,10 @@
+import { faPlayCircle } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon } from '@serlo/serlo-editor'
 import { useState } from 'react'
 
 import type { VideoProps } from '.'
 import { parseVideoUrl, VideoRenderer } from './renderer'
 import { VideoToolbar } from './toolbar'
-import { FaIcon } from '@/components/fa-icon'
-import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { EmbedWrapper } from '@/serlo-editor/editor-ui/embed-wrapper'
 
 export type SettingsModalState = 'url' | 'description' | false
@@ -41,7 +41,7 @@ export const VideoEditor = (props: VideoProps) => {
           onClick={() => setShowSettingsModal('url')}
         >
           <FaIcon
-            icon={entityIconMapping['video']}
+            icon={faPlayCircle}
             className="text-7xl text-editor-primary-200"
           />
         </div>

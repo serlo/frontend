@@ -1,10 +1,8 @@
 import { faLink } from '@fortawesome/free-solid-svg-icons'
+import { useEditorStrings, tw, FaIcon } from '@serlo/serlo-editor'
 
 import type { AnchorProps } from '.'
 import { AnchorRenderer } from './renderer'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'

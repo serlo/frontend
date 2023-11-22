@@ -1,12 +1,10 @@
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
+import { FaIcon, useEditorStrings, tw } from '@serlo/serlo-editor'
 import { Dispatch, SetStateAction } from 'react'
 
 import type { InputExerciseProps } from '.'
 import { InputExerciseType } from './input-exercise-type'
 import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'

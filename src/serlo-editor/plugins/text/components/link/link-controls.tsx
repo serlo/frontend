@@ -1,3 +1,4 @@
+import { useInstanceData, Instance } from '@serlo/serlo-editor'
 import { useContext, useEffect, useState } from 'react'
 import { Range, Transforms } from 'slate'
 import { ReactEditor, useSlate } from 'slate-react'
@@ -10,8 +11,6 @@ import {
   QuickbarData,
   fetchQuickbarData,
 } from '@/components/navigation/quickbar'
-import { useInstanceData } from '@/contexts/instance-context'
-import { Instance } from '@/fetcher/graphql-types/operations'
 import {
   getLinkElement,
   isLinkActive,

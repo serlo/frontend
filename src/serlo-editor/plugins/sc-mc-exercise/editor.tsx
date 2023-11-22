@@ -1,3 +1,4 @@
+import { useEditorStrings } from '@serlo/serlo-editor'
 import { useState } from 'react'
 
 import type { ScMcExerciseProps } from '.'
@@ -14,7 +15,6 @@ import {
   selectStaticDocument,
   useAppSelector,
 } from '../../store'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditorScMcExerciseDocument } from '@/serlo-editor/types/editor-plugins'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {

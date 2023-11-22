@@ -1,10 +1,11 @@
+import { useEditorStrings } from '@serlo/serlo-editor'
+
 import { TransformationTarget } from './editor-renderer'
 import type { GridFocus } from './grid-focus'
 import { InlineMath } from './inline-math'
 import { StepSegment } from './step-segment'
 import type { stepProps } from '..'
 import { Sign, signStrings } from '../sign'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import type { StateTypeReturnType } from '@/serlo-editor/plugin'
 
 export interface StepEditorProps {

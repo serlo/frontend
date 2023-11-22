@@ -1,6 +1,6 @@
 import { McRenderer } from './mc-renderer'
 import { ScRenderer } from './sc-renderer'
-import { ExerciseSubmissionData } from '@/helper/exercise-submission'
+import type { ExerciseSubmissionData } from '@/helper/exercise-submission'
 
 export interface ScMcExerciseRendererAnswer {
   isCorrect: boolean

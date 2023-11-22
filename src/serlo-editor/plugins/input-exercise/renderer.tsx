@@ -1,11 +1,10 @@
+import { useInstanceData, tw } from '@serlo/serlo-editor'
 import type A from 'algebra.js'
 import clsx from 'clsx'
 import { useState, useEffect } from 'react'
 
 import { InputExerciseType } from './input-exercise-type'
 import { Feedback } from '../sc-mc-exercise/renderer/feedback'
-import { useInstanceData } from '@/contexts/instance-context'
-import { tw } from '@/helper/tw'
 
 interface InputExersiseRendererProps {
   type: string

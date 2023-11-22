@@ -1,8 +1,8 @@
+// only used in frontend
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon, useInstanceData } from '@serlo/serlo-editor'
 
 import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
-import { FaIcon } from '@/components/fa-icon'
-import { useInstanceData } from '@/contexts/instance-context'
 import { ExternalProvider } from '@/helper/use-consent'
 
 export enum AudioType {

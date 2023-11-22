@@ -1,5 +1,4 @@
-import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { ModalWithCloseButton, useEditorStrings } from '@serlo/serlo-editor'
 
 export const MathHelpModal = ({
   isHelpOpen,

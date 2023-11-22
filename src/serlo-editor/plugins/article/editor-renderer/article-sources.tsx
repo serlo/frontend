@@ -1,3 +1,4 @@
+// only used in frontend
 import {
   faTrashAlt,
   faUpRightFromSquare,

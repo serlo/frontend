@@ -1,11 +1,9 @@
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
+import { useEditorStrings, FaIcon, tw } from '@serlo/serlo-editor'
 import type { Dispatch, SetStateAction } from 'react'
 
 import type { ScMcExerciseProps } from '.'
 import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'

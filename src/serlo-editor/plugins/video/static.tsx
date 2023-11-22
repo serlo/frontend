@@ -1,4 +1,5 @@
-import { useInstanceData } from '@/contexts/instance-context'
+import { useInstanceData } from '@serlo/serlo-editor'
+
 import {
   parseVideoUrl,
   VideoRenderer,

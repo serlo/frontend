@@ -1,5 +1,6 @@
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon, tw, useEditorStrings } from '@serlo/serlo-editor'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -10,9 +11,6 @@ import { MathEditorOverlay } from './math-editor-overlay'
 import { MathHelpModal } from './math-help-modal'
 import { VisualEditor } from './visual-editor'
 import { StaticMath } from '../plugins/text/static-components/static-math'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
 
 export interface MathEditorProps {
   state: string

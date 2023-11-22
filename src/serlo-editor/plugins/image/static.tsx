@@ -1,7 +1,8 @@
+import { useInstanceData } from '@serlo/serlo-editor'
+
 import { ImageRenderer } from './renderer'
 import { extractStringFromTextDocument } from '../text/utils/static-extract-text'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
-import { useInstanceData } from '@/contexts/instance-context'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorImageDocument } from '@/serlo-editor/types/editor-plugins'
 

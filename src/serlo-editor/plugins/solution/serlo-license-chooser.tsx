@@ -1,11 +1,13 @@
 import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons'
+import {
+  ModalWithCloseButton,
+  useInstanceData,
+  FaIcon,
+  useEditorStrings,
+} from '@serlo/serlo-editor'
 import { useState } from 'react'
 
 import type { SolutionProps } from '.'
-import { FaIcon } from '@/components/fa-icon'
-import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { useInstanceData } from '@/contexts/instance-context'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 
 interface SerloLicenseChooserProps {

@@ -1,7 +1,6 @@
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon } from '@serlo/serlo-editor'
 import clsx from 'clsx'
-
-import { FaIcon } from '@/components/fa-icon'
 
 interface DropdownButtonProps {
   onClick: () => void

@@ -1,7 +1,7 @@
+import { tw } from '@serlo/serlo-editor'
 import clsx from 'clsx'
 
 import type { MultimediaProps } from '..'
-import { tw } from '@/helper/tw'
 
 interface MultimediaSizeSelectButtonProps {
   state: MultimediaProps['state']['width']

@@ -1,9 +1,7 @@
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
+import { tw, FaIcon, useInstanceData } from '@serlo/serlo-editor'
 
-import { FaIcon } from '@/components/fa-icon'
-import { useInstanceData } from '@/contexts/instance-context'
-import { Instance } from '@/fetcher/graphql-types/operations'
-import { tw } from '@/helper/tw'
+import type { Instance } from '@/fetcher/graphql-types/operations'
 
 export enum VideoType {
   YouTube = 'YouTube',

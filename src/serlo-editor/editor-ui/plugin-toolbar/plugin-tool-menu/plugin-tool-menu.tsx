@@ -6,9 +6,8 @@ import {
   Root,
   Trigger,
 } from '@radix-ui/react-navigation-menu'
+import { FaIcon } from '@serlo/serlo-editor'
 import { ReactElement } from 'react'
-
-import { FaIcon } from '@/components/fa-icon'
 
 interface PluginToolMenuProps {
   pluginControls: ReactElement

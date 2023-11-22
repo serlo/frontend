@@ -4,11 +4,10 @@ import {
   faPencilAlt,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon, useEditorStrings } from '@serlo/serlo-editor'
 import clsx from 'clsx'
 
-import { FaIcon } from '@/components/fa-icon'
-import { QuickbarData } from '@/components/navigation/quickbar'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import type { QuickbarData } from '@/components/navigation/quickbar'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 
 export function LinkOverlayWithHref({

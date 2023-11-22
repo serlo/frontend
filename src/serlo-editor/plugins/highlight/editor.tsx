@@ -1,9 +1,8 @@
+import { useEditorStrings, tw } from '@serlo/serlo-editor'
 import { useEffect, useRef, useState } from 'react'
 
 import type { HighlightProps } from '.'
 import { HighlightToolbar } from './toolbar'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
 
 export function HighlightEditor(props: HighlightProps) {
   const { config, state, focused } = props

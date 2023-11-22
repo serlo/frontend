@@ -1,9 +1,8 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { useInstanceData, FaIcon } from '@serlo/serlo-editor'
 import { useEffect, useRef, KeyboardEvent, ClipboardEvent } from 'react'
 
 import { getCleanUrl } from '../../../utils/link'
-import { FaIcon } from '@/components/fa-icon'
-import { useInstanceData } from '@/contexts/instance-context'
 
 export function EditModeInput({
   query,

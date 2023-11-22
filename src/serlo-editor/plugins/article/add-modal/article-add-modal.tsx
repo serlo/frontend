@@ -1,12 +1,15 @@
+// only used in frontend
+import {
+  ModalWithCloseButton,
+  useInstanceData,
+  useEditorStrings,
+} from '@serlo/serlo-editor'
 import { useState } from 'react'
 
 import { ArticleRelatedExercises } from './article-related-exercises'
 import { ArticleRelatedMagicInput } from './article-related-magic-input'
 import { ArticleRelatedTaxonomy } from './article-related-taxonomy'
 import type { ArticleProps } from '..'
-import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { useInstanceData } from '@/contexts/instance-context'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType, type UuidWithRevType } from '@/data-types'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { replacePlaceholders } from '@/helper/replace-placeholders'

@@ -1,6 +1,5 @@
+import { tw } from '@serlo/serlo-editor'
 import clsx from 'clsx'
-
-import { tw } from '@/helper/tw'
 
 export function getStyleHacks(
   focused: boolean,

@@ -1,9 +1,6 @@
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon, useEditorStrings, tw } from '@serlo/serlo-editor'
 import clsx from 'clsx'
-
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
 
 interface AddRowButtonFloatingProps {
   onClick: React.MouseEventHandler<HTMLButtonElement>

@@ -1,10 +1,8 @@
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon, useEditorStrings, tw } from '@serlo/serlo-editor'
 import clsx from 'clsx'
 import type { ConnectDragSource } from 'react-dnd'
 
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 
 interface RowDragButtonProps {

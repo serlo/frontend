@@ -1,9 +1,8 @@
+import { tw, useEditorStrings } from '@serlo/serlo-editor'
 import clsx from 'clsx'
 
 import type { SpoilerProps } from '.'
 import { SpoilerRenderer } from './renderer'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'

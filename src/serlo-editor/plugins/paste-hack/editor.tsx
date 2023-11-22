@@ -1,10 +1,9 @@
+import { tw, showToastNotice } from '@serlo/serlo-editor'
 import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
 import { useRef } from 'react'
 
 import type { PasteHackPluginProps } from '.'
-import { showToastNotice } from '@/helper/show-toast-notice'
-import { tw } from '@/helper/tw'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import {

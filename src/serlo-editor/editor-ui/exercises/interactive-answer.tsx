@@ -4,9 +4,7 @@ import {
   faCheckSquare,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
-
-import { FaIcon } from '@/components/fa-icon'
-import { useInstanceData } from '@/contexts/instance-context'
+import { FaIcon, useInstanceData } from '@serlo/serlo-editor'
 
 interface InteractiveAnswerProps {
   isRadio?: boolean

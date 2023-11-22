@@ -1,13 +1,10 @@
+import { type EditorStrings, useEditorStrings } from '@serlo/serlo-editor'
 import { useContext, useState, useEffect, useRef, useMemo } from 'react'
 import { useHotkeys, useHotkeysContext } from 'react-hotkeys-hook'
 import { Editor as SlateEditor, Node } from 'slate'
 import { Key } from 'ts-key-enum'
 
 import { insertPlugin } from '../utils/insert-plugin'
-import {
-  EditorStrings,
-  useEditorStrings,
-} from '@/contexts/logged-in-data-context'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { AllowedChildPlugins } from '@/serlo-editor/plugins/rows'
 import { checkIsAllowedNesting } from '@/serlo-editor/plugins/rows/utils/check-is-allowed-nesting'

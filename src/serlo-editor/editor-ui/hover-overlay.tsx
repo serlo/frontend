@@ -1,7 +1,6 @@
+import { tw } from '@serlo/serlo-editor'
 import { createRef, useEffect, useState, ReactNode, RefObject } from 'react'
 import { BaseSelection } from 'slate'
-
-import { tw } from '@/helper/tw'
 
 export type HoverPosition = 'above' | 'below'
 

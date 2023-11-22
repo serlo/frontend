@@ -1,8 +1,8 @@
+import { tw } from '@serlo/serlo-editor'
 import { useState, useCallback, createRef, useEffect } from 'react'
 
 import type { MathEditorProps } from './editor'
 import { EditorTextarea } from '../editor-ui'
-import { tw } from '@/helper/tw'
 
 interface MathEditorTextareaProps
   extends Pick<

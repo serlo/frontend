@@ -9,11 +9,8 @@ import {
   faSplotch,
   faThumbtack,
 } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon, useInstanceData, tw } from '@serlo/serlo-editor'
 import clsx from 'clsx'
-
-import { FaIcon } from '@/components/fa-icon'
-import { useInstanceData } from '@/contexts/instance-context'
-import { tw } from '@/helper/tw'
 
 export const boxTypeIcons = {
   blank: undefined,

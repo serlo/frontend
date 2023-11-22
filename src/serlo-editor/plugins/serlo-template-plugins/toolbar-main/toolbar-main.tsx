@@ -1,13 +1,15 @@
 import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
+import {
+  FaIcon,
+  useEditorStrings,
+  showToastNotice,
+  useLeaveConfirm,
+} from '@serlo/serlo-editor'
 import clsx from 'clsx'
 import { useState } from 'react'
 
 import { ClientOnlyPortal } from './client-only-portal'
 import { entity } from '../common/common'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { showToastNotice } from '@/helper/show-toast-notice'
-import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import type { StateTypeReturnType } from '@/serlo-editor/plugin'
 import {

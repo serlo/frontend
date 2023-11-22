@@ -6,6 +6,13 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons'
 import { onKeyDown as slateListsOnKeyDown } from '@prezly/slate-lists'
+import {
+  isMac,
+  FaIcon,
+  useInstanceData,
+  useEditorStrings,
+  type LoggedInData,
+} from '@serlo/serlo-editor'
 import isHotkey from 'is-hotkey'
 import React, { useCallback, useMemo } from 'react'
 import { Node, Editor as SlateEditor } from 'slate'
@@ -41,11 +48,6 @@ import {
   toggleHeading,
   toggleItalicMark,
 } from '../utils/rich-text'
-import { FaIcon } from '@/components/fa-icon'
-import { useInstanceData } from '@/contexts/instance-context'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import type { LoggedInData } from '@/data-types'
-import { isMac } from '@/helper/client-detection'
 import {
   editorBold,
   EditorSvgIcon,

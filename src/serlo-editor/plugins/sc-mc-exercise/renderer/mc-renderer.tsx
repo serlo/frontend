@@ -1,12 +1,11 @@
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faCheckSquare } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon, useInstanceData } from '@serlo/serlo-editor'
 import clsx from 'clsx'
 import { useState } from 'react'
 
 import { Feedback } from './feedback'
 import type { ScMcExerciseRendererProps } from './renderer'
-import { FaIcon } from '@/components/fa-icon'
-import { useInstanceData } from '@/contexts/instance-context'
 
 export function McRenderer({
   answers,

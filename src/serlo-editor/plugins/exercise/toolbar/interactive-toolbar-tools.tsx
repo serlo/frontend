@@ -1,8 +1,8 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { useEditorStrings } from '@serlo/serlo-editor'
 import { useCallback } from 'react'
 
 import type { ExerciseProps } from '..'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { DropdownButton } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/dropdown-button'
 import {
   focus,

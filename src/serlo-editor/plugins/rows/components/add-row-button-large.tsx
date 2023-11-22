@@ -1,7 +1,5 @@
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
-
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { useEditorStrings, FaIcon } from '@serlo/serlo-editor'
 
 interface AddRowButtonLargeProps {
   onClick: React.MouseEventHandler<HTMLButtonElement>
