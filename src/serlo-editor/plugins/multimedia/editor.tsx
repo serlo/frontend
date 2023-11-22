@@ -16,8 +16,8 @@ import {
   store,
   useAppSelector,
 } from '@/serlo-editor/store'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import { EditorImageDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
+import { EditorImageDocument } from '@/serlo-editor/types/editor-plugins'
 
 export function MultimediaEditor(props: MultimediaProps) {
   const [stateCache, setStateCache] = useState<Record<string, unknown>>({})

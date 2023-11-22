@@ -26,7 +26,7 @@ import { isEmptyRowsDocument } from '@/serlo-editor/plugins/rows/utils/static-is
 import { CourseNavigation } from '@/serlo-editor/plugins/serlo-template-plugins/course/course-navigation'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { isArticleDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
+import { isArticleDocument } from '@/serlo-editor/types/plugin-type-guards'
 
 export interface EntityProps {
   data: EntityData

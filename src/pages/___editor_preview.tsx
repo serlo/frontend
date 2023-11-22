@@ -21,8 +21,8 @@ import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createPlugins } from '@/serlo-editor-integration/create-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
+import { AnyEditorDocument } from '@/serlo-editor/types/editor-plugins'
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
   return (

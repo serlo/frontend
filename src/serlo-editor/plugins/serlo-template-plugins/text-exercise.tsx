@@ -10,7 +10,7 @@ import {
   type PrettyStaticState,
 } from '@/serlo-editor/plugin'
 import { selectStaticDocument, store } from '@/serlo-editor/store'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 export const textExerciseTypeState = entityType(
   {

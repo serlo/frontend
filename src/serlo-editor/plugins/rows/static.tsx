@@ -1,6 +1,6 @@
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import type { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
+import type { EditorRowsDocument } from '@/serlo-editor/types/editor-plugins'
 
 export function RowsStaticRenderer({ state }: EditorRowsDocument) {
   return (

@@ -11,7 +11,7 @@ import type {
   EditorExerciseDocument,
   EditorRowsDocument,
   EditorTemplateExerciseGroupDocument,
-} from './serlo-editor-integration/types/editor-plugins'
+} from './serlo-editor/types/editor-plugins'
 import type { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 import { Role, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 

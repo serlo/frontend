@@ -11,8 +11,8 @@ import type { TaxonomySubTerm } from '@/data-types'
 import { isPartiallyInView } from '@/helper/is-partially-in-view'
 import { tw } from '@/helper/tw'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { isImageDocument } from '@/serlo-editor/types/plugin-type-guards'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { isImageDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
 
 interface SubjectLandingTopicOverviewProps {
   subterms: TaxonomySubTerm[]

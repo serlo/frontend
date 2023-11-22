@@ -9,7 +9,7 @@ import {
   useAppSelector,
 } from '@/serlo-editor/store'
 import { StateTypesReturnType } from '@/serlo-editor/types/internal__plugin-state'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 interface CellSwitchButtonProps {
   cell: StateTypesReturnType<{

@@ -9,7 +9,7 @@ import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import {
   EditorRowsDocument,
   EditorTemplateExerciseGroupDocument,
-} from '@/serlo-editor-integration/types/editor-plugins'
+} from '@/serlo-editor/types/editor-plugins'
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
   import(

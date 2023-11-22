@@ -10,9 +10,9 @@ import {
 import { useInstanceData } from '@/contexts/instance-context'
 import { type RevisionData, UuidRevType } from '@/data-types'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 import { GeogebraSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/geogebra-serlo-static-renderer'
 import { VideoSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/video-serlo-static-renderer'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export interface RevisionPreviewBoxesProps {
   dataSet: RevisionData['thisRevision'] | RevisionData['currentRevision']

@@ -2,7 +2,7 @@ import {
   GeogebraRenderer,
   parseId,
 } from '@/serlo-editor/plugins/geogebra/renderer'
-import { EditorGeogebraDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorGeogebraDocument } from '@/serlo-editor/types/editor-plugins'
 
 export function GeogebraStaticRenderer({ state: id }: EditorGeogebraDocument) {
   const { url, cleanId } = parseId(id)

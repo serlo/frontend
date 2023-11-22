@@ -5,7 +5,7 @@ import { PluginToolMenu } from './plugin-tool-menu/plugin-tool-menu'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { getPluginTitle } from '@/serlo-editor/plugin/helpers/get-plugin-title'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 interface PluginToolbarProps {
   pluginType: EditorPluginType | string

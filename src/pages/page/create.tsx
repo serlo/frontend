@@ -5,7 +5,7 @@ import { AddRevision } from '@/components/pages/add-revision'
 import { UuidType } from '@/data-types'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
-import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
+import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 
 export default renderedPageNoHooks(() => {
   const addRevisionProps = {

@@ -5,7 +5,7 @@ import { ArticleRenderer } from '@/serlo-editor/plugins/article/renderer'
 import {
   EditorArticleDocument,
   EditorMultimediaDocument,
-} from '@/serlo-editor-integration/types/editor-plugins'
+} from '@/serlo-editor/types/editor-plugins'
 
 interface ArticleNodeUuidLink {
   id: string

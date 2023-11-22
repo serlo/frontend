@@ -23,8 +23,8 @@ import {
   PrettyStaticState,
 } from '@/serlo-editor/plugin'
 import { selectStaticDocument, store } from '@/serlo-editor/store'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
+import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 
 // text-exercises also include interactive exercises, we keep the naming to avoid db-migration
 

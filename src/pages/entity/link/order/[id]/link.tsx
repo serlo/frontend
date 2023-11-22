@@ -27,7 +27,7 @@ import { requestPage } from '@/fetcher/request-page'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useEntitySortMutation } from '@/mutations/use-entity-sort-mutation'
-import { isTemplateExerciseGroupDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
+import { isTemplateExerciseGroupDocument } from '@/serlo-editor/types/plugin-type-guards'
 
 // this duplicates some code from /taxonomy/term/sort… but since this feature here is only temporary I'm okay with that
 

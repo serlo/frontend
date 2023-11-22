@@ -9,13 +9,13 @@ import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 import {
   AnyEditorDocument,
   EditorInjectionDocument,
   EditorRowsDocument,
-} from '@/serlo-editor-integration/types/editor-plugins'
-import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
+} from '@/serlo-editor/types/editor-plugins'
+import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 
 export function InjectionStaticRenderer({
   state: href,

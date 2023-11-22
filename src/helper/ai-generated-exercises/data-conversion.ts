@@ -18,13 +18,13 @@ import {
 import { LicenseData } from '@/data-types'
 import { InputExerciseType } from '@/serlo-editor/plugins/input-exercise/input-exercise-type'
 import { CustomText, MathElement } from '@/serlo-editor/plugins/text'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 import {
   EditorExerciseDocument,
   EditorSolutionDocument,
   EditorTemplateExerciseGroupDocument,
-} from '@/serlo-editor-integration/types/editor-plugins'
-import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
+} from '@/serlo-editor/types/editor-plugins'
+import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 
 /**
  * Data needed to render and edit the exercises in the editor.

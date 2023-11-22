@@ -28,7 +28,7 @@ import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useTaxonomyTermSortMutation } from '@/mutations/taxonomyTerm'
-import { isSolutionDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
+import { isSolutionDocument } from '@/serlo-editor/types/plugin-type-guards'
 
 export const allCategories = [
   TopicCategoryType.articles,

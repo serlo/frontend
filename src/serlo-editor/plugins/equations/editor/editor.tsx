@@ -31,8 +31,8 @@ import {
   selectChildTree,
   selectStaticDocument,
 } from '@/serlo-editor/store'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import type { EditorEquationsDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
+import type { EditorEquationsDocument } from '@/serlo-editor/types/editor-plugins'
 
 export function EquationsEditor(props: EquationsProps) {
   const { focused, state, id } = props

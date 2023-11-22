@@ -1,6 +1,3 @@
-import { EditorPluginType } from './types/editor-plugin-type'
-import type { AnyEditorDocument } from './types/editor-plugins'
-import { TemplatePluginType } from './types/template-plugin-type'
 import type { AppletTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/applet'
 import type { ArticleTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/article'
 import {
@@ -16,6 +13,9 @@ import type { TaxonomyTypePluginState } from '../serlo-editor/plugins/serlo-temp
 import type { TextExerciseTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/text-exercise'
 import type { UserTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/user'
 import type { VideoTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/video'
+import { EditorPluginType } from '../serlo-editor/types/editor-plugin-type'
+import type { AnyEditorDocument } from '../serlo-editor/types/editor-plugins'
+import { TemplatePluginType } from '../serlo-editor/types/template-plugin-type'
 import { UuidType, UuidRevType } from '@/data-types'
 import type { User, MainUuidType } from '@/fetcher/query-types'
 import { triggerSentry } from '@/helper/trigger-sentry'

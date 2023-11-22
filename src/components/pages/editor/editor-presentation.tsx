@@ -14,7 +14,7 @@ import { tw } from '@/helper/tw'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { VideoSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/video-serlo-static-renderer'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 const h2Class =
   'text-center text-4xl leading-cozy tracking-tight font-extrabold'

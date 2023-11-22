@@ -13,7 +13,7 @@ import {
 } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 interface ArticleRelatedExercisesProps {
   exerciseFolderId: number
