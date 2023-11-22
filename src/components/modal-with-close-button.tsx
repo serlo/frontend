@@ -24,7 +24,6 @@ interface ModalWithCloseButtonProps {
   className?: string
   alignTitleAndCloseButton?: boolean
   confirmCloseDescription?: string | undefined
-  overwriteClassNameCompletely?: boolean
   closeButtonClassName?: string
 }
 
@@ -36,7 +35,6 @@ export function ModalWithCloseButton({
   className,
   alignTitleAndCloseButton,
   confirmCloseDescription,
-  overwriteClassNameCompletely,
   closeButtonClassName,
 }: ModalWithCloseButtonProps) {
   const { strings } = useInstanceData()
@@ -52,11 +50,7 @@ export function ModalWithCloseButton({
     <BaseModal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      className={
-        overwriteClassNameCompletely
-          ? className
-          : twMerge(ModalClsx, 'top-[40%] w-[500px] pb-10', className)
-      }
+      className={twMerge(ModalClsx, 'top-[40%] w-[500px] pb-10', className)}
     >
       {alignTitleAndCloseButton ? (
         <div className="flex w-full items-center justify-between py-4">
