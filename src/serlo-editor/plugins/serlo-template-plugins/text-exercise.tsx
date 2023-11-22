@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { useRouter } from 'next/router'
 
 import { editorContent, entity, entityType } from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
@@ -13,7 +14,6 @@ import {
 } from '@/serlo-editor/plugin'
 import { selectStaticDocument, store } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import { useRouter } from 'next/router'
 
 export const textExerciseTypeState = entityType(
   {

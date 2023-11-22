@@ -1,4 +1,5 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { useRouter } from 'next/router'
 
 import { TextExerciseGroupTypeRenderer } from './renderer'
 import {
@@ -27,7 +28,6 @@ import {
 import { selectStaticDocument, store } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
-import { useRouter } from 'next/router'
 
 // text-exercises also include interactive exercises, we keep the naming to avoid db-migration
 
