@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { useRouter } from 'next/router'
 
 import { editorContent, entity, entityType } from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
@@ -42,6 +43,11 @@ function TextExerciseTypeEditor({
   const { content } = state
 
   const { canUseAiFeaturesOutsideProduction } = useAiFeatures()
+
+  const router = useRouter()
+  const currentPath = router.asPath.toLowerCase()
+  const isCreatingNewExercise = currentPath.includes('/create/exercise')
+
   const staticDocument = selectStaticDocument(store.getState(), id)
     ?.state as PrettyStaticState<TextExerciseTypePluginState>
   if (!staticDocument) return null
@@ -50,7 +56,7 @@ function TextExerciseTypeEditor({
     <>
       {config.skipControls ? null : (
         <div className="absolute right-0 -mt-20 mr-side flex flex-row gap-4">
-          {canUseAiFeaturesOutsideProduction ? (
+          {canUseAiFeaturesOutsideProduction && isCreatingNewExercise ? (
             <AiExerciseGenerationButton isSingularExercise />
           ) : null}
           <ContentLoaders

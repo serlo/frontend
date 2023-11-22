@@ -1,4 +1,5 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { useRouter } from 'next/router'
 
 import { TextExerciseGroupTypeRenderer } from './renderer'
 import {
@@ -65,6 +66,11 @@ function TextExerciseGroupTypeEditor(
     replaceOwnState,
   } = props.state
   const { canUseAiFeaturesOutsideProduction } = useAiFeatures()
+  const router = useRouter()
+  const currentPath = router.asPath.toLowerCase()
+  const isCreatingNewExerciseGroup = currentPath.includes(
+    '/create/exercisegroup'
+  )
   const exGroupStrings = useEditorStrings().templatePlugins.textExerciseGroup
 
   const staticState = selectStaticDocument(store.getState(), props.id)
@@ -78,7 +84,7 @@ function TextExerciseGroupTypeEditor(
   return (
     <>
       <div className="absolute right-0 -mt-20 mr-side flex">
-        {canUseAiFeaturesOutsideProduction ? (
+        {canUseAiFeaturesOutsideProduction && isCreatingNewExerciseGroup ? (
           <AiExerciseGenerationButton />
         ) : null}
         <ContentLoaders
