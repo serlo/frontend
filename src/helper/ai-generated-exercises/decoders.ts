@@ -6,7 +6,7 @@ export const InputSingleChoiceDecoder = t.strict({
   options: t.array(t.string),
   correct_option: t.number,
   steps: t.array(t.string),
-  // TODO strategy
+  // TODO: strategy
 })
 
 export type ExpectedSingleChoiceType = t.TypeOf<typeof InputSingleChoiceDecoder>

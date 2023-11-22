@@ -1,4 +1,4 @@
-import { ReactElement, useState, useEffect } from 'react'
+import { useState, useEffect, ReactNode } from 'react'
 
 import { useAuthentication } from '@/auth/use-authentication'
 import { LoadingError } from '@/components/loading/loading-error'
@@ -9,7 +9,7 @@ export interface GuardProps {
   data?: any
   error?: object
   needsAuth?: boolean
-  children: ReactElement | null
+  children: ReactNode
 }
 
 export function Guard({ children, data, error, needsAuth }: GuardProps) {
@@ -26,6 +26,6 @@ export function Guard({ children, data, error, needsAuth }: GuardProps) {
 
   if (!data && !error) return <LoadingSpinner noText />
   if (error) return <LoadingError error={JSON.stringify(error)} />
-  if (data && children) return children
+  if (data && children) return <>{children}</>
   return null
 }
