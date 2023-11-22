@@ -36,17 +36,13 @@ function TaxonomyTypeEditor(props: EditorPluginProps<TaxonomyTypePluginState>) {
     <>
       <header>
         <h1 className="serlo-h1" itemProp="name">
-          {props.editable ? (
-            <input
-              autoFocus
-              className={headerInputClasses}
-              placeholder={editorStrings.taxonomy.title}
-              value={term.name.value}
-              onChange={(e) => term.name.set(e.target.value)}
-            />
-          ) : (
-            term.name.value
-          )}
+          <input
+            autoFocus
+            className={headerInputClasses}
+            placeholder={editorStrings.taxonomy.title}
+            value={term.name.value}
+            onChange={(e) => term.name.set(e.target.value)}
+          />
         </h1>
       </header>
 

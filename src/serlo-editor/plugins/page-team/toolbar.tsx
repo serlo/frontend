@@ -14,27 +14,24 @@ import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-const TeamDataDecoder = t.array(
-  t.strict({
-    firstName: t.string,
-    lastName: t.string,
-    user: t.string,
-    position: t.string,
-    extraLinkUrl: t.string,
-    extraLinkText: t.string,
-    photo: t.string,
-  })
-)
+const required = t.type({
+  firstName: t.string,
+  lastName: t.string,
+  user: t.string,
+})
+const optional = t.partial({
+  position: t.string,
+  extraLinkUrl: t.string,
+  extraLinkText: t.string,
+  photo: t.string,
+})
 
-export function PageTeamToolbar({
-  focused,
-  editable,
-  id,
-  state,
-}: PageTeamPluginProps) {
+const TeamDataDecoder = t.array(t.intersection([required, optional]))
+
+export function PageTeamToolbar({ focused, id, state }: PageTeamPluginProps) {
   const { lang } = useInstanceData()
 
-  if (!focused || !editable) return null
+  if (!focused) return null
 
   const buttonClassName = tw`
     mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all
@@ -72,7 +69,17 @@ export function PageTeamToolbar({
               )
 
               if (E.isRight(teamData)) {
-                state.data.set(() => teamData.right)
+                const data = teamData.right.map((entry) => {
+                  return {
+                    position: '',
+                    extraLinkUrl: '',
+                    extraLinkText: '',
+                    photo: '',
+                    ...entry,
+                  }
+                })
+
+                state.data.set(() => data)
                 showToastNotice('👍 Imported', 'success')
               } else {
                 throw new Error(

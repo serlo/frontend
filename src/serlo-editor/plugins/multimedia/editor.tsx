@@ -21,7 +21,7 @@ import { EditorImageDocument } from '@/serlo-editor-integration/types/editor-plu
 
 export function MultimediaEditor(props: MultimediaProps) {
   const [stateCache, setStateCache] = useState<Record<string, unknown>>({})
-  const { config, state, editable, focused } = props
+  const { config, state, focused } = props
   const { explanation, multimedia, width } = state
 
   const multimediaStrings = useEditorStrings().plugins.multimedia
@@ -67,7 +67,7 @@ export function MultimediaEditor(props: MultimediaProps) {
 
   return (
     <div className="group/multimedia" data-qa="plugin-multimedia-wrapper">
-      {editable && focused ? (
+      {focused ? (
         <MultimediaToolbar id={props.id}>
           <MultimediaSizeSelect
             state={state.width}
@@ -82,8 +82,7 @@ export function MultimediaEditor(props: MultimediaProps) {
             />
           )}
         </MultimediaToolbar>
-      ) : null}
-      {editable && !focused ? (
+      ) : (
         <button
           className={tw`
             absolute right-0 top-[-65px] z-[22] hidden h-6 rounded-t-md bg-gray-100
@@ -94,7 +93,7 @@ export function MultimediaEditor(props: MultimediaProps) {
         >
           {multimediaStrings.title}
         </button>
-      ) : null}
+      )}
       <div className={pluginToolbarAndStyleHacks}>
         <AreImagesDisabledInTableContext.Provider value>
           <MultimediaRenderer

@@ -1,20 +1,30 @@
 import { useState } from 'react'
 
 import type { ScMcExerciseProps } from '.'
-import { ScMcExerciseRenderer } from './renderer/renderer'
+import { ScMcExerciseStaticRenderer } from './static'
 import { ScMcExerciseToolbar } from './toolbar'
 import {
   AddButton,
   InteractiveAnswer,
   PreviewOverlaySimple,
 } from '../../editor-ui'
-import { store, selectIsDocumentEmpty, selectFocused } from '../../store'
+import {
+  store,
+  selectFocused,
+  selectStaticDocument,
+  useAppSelector,
+} from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { EditableContext } from '@/serlo-editor/core/contexts'
+import { EditorScMcExerciseDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
-  const { editable, state, id, focused } = props
+  const { state, id, focused } = props
   const { answers, isSingleChoice } = state
+
+  const staticDocument = useAppSelector(
+    (storeState) =>
+      selectStaticDocument(storeState, id) as EditorScMcExerciseDocument
+  )
 
   const editorStrings = useEditorStrings()
 
@@ -39,26 +49,6 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   })
 
   const showUi = focused || isAnyAnswerFocused
-
-  const renderer = (
-    <EditableContext.Provider value={false}>
-      {/* margin-hack */}
-      <div className="[&_.ml-4.flex]:mb-block">
-        <ScMcExerciseRenderer
-          isSingleChoice={isSingleChoice.value}
-          idBase={`sc-mc-${id}`}
-          answers={answers.slice(0).map(({ isCorrect, feedback, content }) => {
-            return {
-              isCorrect: isCorrect.value,
-              feedback: isEmpty(feedback.id) ? null : feedback.render(),
-              content: isEmpty(content.id) ? null : content.render(),
-            }
-          })}
-        />
-      </div>
-    </EditableContext.Provider>
-  )
-  if (!editable) return renderer
 
   // cleanup answers states:
   // make sure we have at least one answer
@@ -88,10 +78,17 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
         />
       ) : null}
       <PreviewOverlaySimple previewActive={previewActive} fullOpacity={!showUi}>
-        {renderer}
+        {/* margin-hack */}
+        <div className="[&_.ml-4.flex]:mb-block">
+          <ScMcExerciseStaticRenderer
+            {...staticDocument}
+            idBase={`sc-mc-${id}`}
+            noShuffle
+          />
+        </div>
       </PreviewOverlaySimple>
 
-      {editable && !previewActive && showUi ? (
+      {!previewActive && showUi ? (
         <div className="[&_.plugin-toolbar]:left-side [&_.plugin-toolbar]:top-[-60px]">
           {answers.map((answer, index) => {
             return (
@@ -119,8 +116,4 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
       ) : null}
     </div>
   )
-
-  function isEmpty(id: string) {
-    return selectIsDocumentEmpty(store.getState(), id)
-  }
 }

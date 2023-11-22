@@ -1182,8 +1182,7 @@ export const loggedInData = {
           chooseOption: "Choose an option",
           multipleChoice: "Multiple Choice",
           singleChoice: "Single Choice",
-          inputExercise: "Input exercise",
-          exerciseGroupNeedsTwoOrMoreSubtasks: 'Within an exercise group, you must create two or more exercises.'
+          inputExercise: "Input exercise"
         },
         difficulty: {
           title: 'What is the %difficulty% level of the exercise and learning goal?',

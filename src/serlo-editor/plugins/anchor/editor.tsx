@@ -11,7 +11,7 @@ import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plug
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const AnchorEditor = (props: AnchorProps) => {
-  const { editable, focused, state, id } = props
+  const { focused, state, id } = props
 
   const editorStrings = useEditorStrings()
 
@@ -41,7 +41,7 @@ export const AnchorEditor = (props: AnchorProps) => {
           }
         />
       ) : null}
-      {editable ? <FaIcon icon={faLink} className="mr-[5px]" /> : null}
+      <FaIcon icon={faLink} className="mr-[5px]" />
       <AnchorRenderer {...props} />
     </>
   )
