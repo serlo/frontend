@@ -83,7 +83,7 @@ export function SaveModal({
       title={editorStrings.save}
       className={clsx(
         !isOnlyText &&
-          '!top-[2rem] max-h-full w-auto !-translate-x-1/2 translate-y-0 overflow-y-auto pb-20'
+          '!top-[2rem] max-h-full !w-[900px] !-translate-x-1/2 translate-y-0 overflow-y-auto pb-20'
       )}
     >
       <div className="mx-side">
