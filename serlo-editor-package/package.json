@@ -1,0 +1,18 @@
+{
+  "name": "@serlo/serlo-editor",
+  "version": "0.0.1",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/serlo/frontend/issues"
+  },
+  "type": "module",
+  "repository": "serlo/frontend",
+  "license": "Apache-2.0",
+  "author": "Serlo Education e.V.",
+  "packageManager": "yarn@3.6.1",
+  "exports": {
+    ".": "./index.ts",
+    "./*/*.ts": "./../src/serlo-editor/*/*.ts",
+    "./*/*.tsx": "./../src/serlo-editor/*/*.tsx"
+  }
+}

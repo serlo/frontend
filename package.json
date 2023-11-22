@@ -47,6 +47,7 @@
     "@radix-ui/react-select": "^1.2.2",
     "@reduxjs/toolkit": "^1.9.7",
     "@serlo/authorization": "^0.57.3",
+    "@serlo/serlo-editor": "workspace:^",
     "@tippyjs/react": "^4.2.6",
     "algebra.js": "^0.2.6",
     "array-move": "^4.0.0",
@@ -162,6 +163,9 @@
     "ts-unused-exports": "^10.0.1",
     "typescript": "^5.2.2"
   },
+  "workspaces": [
+    "serlo-editor-package"
+  ],
   "packageManager": "yarn@3.6.1",
   "engines": {
     "node": "^18.0.0"

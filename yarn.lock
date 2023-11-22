@@ -3968,6 +3968,7 @@ __metadata:
     "@radix-ui/react-select": ^1.2.2
     "@reduxjs/toolkit": ^1.9.7
     "@serlo/authorization": ^0.57.3
+    "@serlo/serlo-editor": "workspace:^"
     "@svgr/webpack": ^8.1.0
     "@tailwindcss/typography": ^0.5.10
     "@tippyjs/react": ^4.2.6
@@ -4072,6 +4073,12 @@ __metadata:
     typescript: ^5.2.2
     use-query-params: ^2.2.1
     uuid: ^9.0.1
+  languageName: unknown
+  linkType: soft
+
+"@serlo/serlo-editor@workspace:^, @serlo/serlo-editor@workspace:serlo-editor-package":
+  version: 0.0.0-use.local
+  resolution: "@serlo/serlo-editor@workspace:serlo-editor-package"
   languageName: unknown
   linkType: soft
 
