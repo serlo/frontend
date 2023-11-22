@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { useState, type ReactNode, useCallback } from 'react'
 import BaseModal from 'react-modal'
 import { twMerge } from 'tailwind-merge'
