@@ -26,8 +26,8 @@ import { ExpectedLLMOutputType } from '@/helper/ai-generated-exercises/decoders'
 import { ErrorBoundary } from '@/helper/error-boundary'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { EditorTemplateExerciseGroupDocument } from '@/serlo-editor/types/editor-plugins'
+import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 interface ExercisePreviewPageProps {
   prompt: string

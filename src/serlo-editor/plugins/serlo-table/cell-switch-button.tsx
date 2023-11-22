@@ -8,8 +8,8 @@ import {
   selectIsFocused,
   useAppSelector,
 } from '@/serlo-editor/store'
-import { StateTypesReturnType } from '@/serlo-editor/types/internal__plugin-state'
 import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
+import { StateTypesReturnType } from '@/serlo-editor/types/internal__plugin-state'
 
 interface CellSwitchButtonProps {
   cell: StateTypesReturnType<{

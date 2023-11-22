@@ -17,8 +17,8 @@ import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { InjectionStaticRenderer } from '@/serlo-editor/plugins/injection/static'
-import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
+import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 export interface RevisionProps {
   data: RevisionData

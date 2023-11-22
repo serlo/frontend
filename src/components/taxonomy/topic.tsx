@@ -22,8 +22,8 @@ import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { abSubmission } from '@/helper/ab-submission'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { EditorRowsDocument } from '@/serlo-editor/types/editor-plugins'
+import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 export interface TopicProps {
   data: TaxonomyData

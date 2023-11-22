@@ -5,7 +5,7 @@ import KaTeX from 'katex'
 /* eslint-disable import/no-unassigned-import */
 import 'katex/contrib/mhchem'
 import type { MathElement } from '../types/text-editor'
-import { sanitizeLatex } from '@/schema/sanitize-latex'
+import { sanitizeLatex } from '@/serlo-editor/plugins/text/utils/sanitize-latex'
 
 export type StaticMathProps = Omit<MathElement, 'children'>
 
