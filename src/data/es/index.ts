@@ -1093,8 +1093,7 @@ export const loggedInData = {
           chooseOption: "Choose an option",
           multipleChoice: "Multiple Choice",
           singleChoice: "Single Choice",
-          inputExercise: "Ejercicio de respuesta escrita",
-          exerciseGroupNeedsTwoOrMoreSubtasks: 'Within an exercise group, you must create two or more exercises.'
+          inputExercise: "Ejercicio de respuesta escrita"
         },
         difficulty: {
           title: 'What is the %difficulty% level of the exercise and learning goal?',
