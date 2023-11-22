@@ -109,11 +109,3 @@ export function Topic({
     </div>
   )
 }
-
-// Helper function to extract the topic from title.
-// E.g Aufgaben zum Dreisatz => Dreisatz
-export function extractTopicFromTitle(
-  title: string | undefined
-): string | null {
-  return title?.replace(/^Aufgaben zu./, '').trim() || null
-}

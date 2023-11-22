@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 
 import { ExerciseGenerationWrapperProps } from './exercise-generation-wrapper'
-import { extractTopicFromTitle } from '@/components/exercise-generation/exercise-generation-wizard/topic'
 import { useAiFeatures } from '@/components/exercise-generation/use-ai-features'
 import type { AllowedPluginType } from '@/pages/entity/create/[type]/[taxonomyId]'
 import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
@@ -32,7 +31,7 @@ export function LazyLoadExerciseGenerationWrapperOrNull({
   const router = useRouter()
   const { canUseAiFeatures } = useAiFeatures()
   const [showWizard, setShowWizard] = useState(false)
-  const topic = extractTopicFromTitle(taxonomyTitle)
+  const topic = taxonomyTitle?.replace(/^Aufgaben zu./, '').trim() || ''
 
   useEffect(() => {
     const shouldShow =
@@ -62,7 +61,7 @@ export function LazyLoadExerciseGenerationWrapperOrNull({
           .catch(() => void null)
       }}
       subject={subject}
-      topic={topic || ''}
+      topic={topic}
       setEditorState={setEditorState}
     />
   )
