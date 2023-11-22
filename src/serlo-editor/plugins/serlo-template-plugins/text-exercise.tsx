@@ -13,6 +13,7 @@ import {
 } from '@/serlo-editor/plugin'
 import { selectStaticDocument, store } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { useRouter } from 'next/router'
 
 export const textExerciseTypeState = entityType(
   {
@@ -42,6 +43,11 @@ function TextExerciseTypeEditor({
   const { content } = state
 
   const { canUseAiFeaturesOutsideProduction } = useAiFeatures()
+
+  const router = useRouter()
+  const currentPath = router.asPath.toLowerCase()
+  const isCreatingNewExercise = currentPath.includes('/create/exercise')
+
   const staticDocument = selectStaticDocument(store.getState(), id)
     ?.state as PrettyStaticState<TextExerciseTypePluginState>
   if (!staticDocument) return null
@@ -50,7 +56,7 @@ function TextExerciseTypeEditor({
     <>
       {config.skipControls ? null : (
         <div className="absolute right-0 -mt-20 mr-side flex flex-row gap-4">
-          {canUseAiFeaturesOutsideProduction ? (
+          {canUseAiFeaturesOutsideProduction && isCreatingNewExercise ? (
             <AiExerciseGenerationButton isSingularExercise />
           ) : null}
           <ContentLoaders

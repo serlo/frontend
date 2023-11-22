@@ -27,6 +27,7 @@ import {
 import { selectStaticDocument, store } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
+import { useRouter } from 'next/router'
 
 // text-exercises also include interactive exercises, we keep the naming to avoid db-migration
 
@@ -65,6 +66,11 @@ function TextExerciseGroupTypeEditor(
     replaceOwnState,
   } = props.state
   const { canUseAiFeaturesOutsideProduction } = useAiFeatures()
+  const router = useRouter()
+  const currentPath = router.asPath.toLowerCase()
+  const isCreatingNewExerciseGroup = currentPath.includes(
+    '/create/exercisegroup'
+  )
   const exGroupStrings = useEditorStrings().templatePlugins.textExerciseGroup
 
   const staticState = selectStaticDocument(store.getState(), props.id)
@@ -78,7 +84,7 @@ function TextExerciseGroupTypeEditor(
   return (
     <>
       <div className="absolute right-0 -mt-20 mr-side flex">
-        {canUseAiFeaturesOutsideProduction ? (
+        {canUseAiFeaturesOutsideProduction && isCreatingNewExerciseGroup ? (
           <AiExerciseGenerationButton />
         ) : null}
         <ContentLoaders
