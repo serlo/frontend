@@ -40,7 +40,7 @@ export const PageLayoutToolbar = ({
             <ModalWithCloseButton
               isOpen={showSettingsModal}
               onCloseClick={() => setShowSettingsModal(false)}
-              className="translate-y-0 top-1/3 max-w-xl"
+              className="top-1/3 max-w-xl translate-y-0"
             >
               <LayoutChooser {...state} />
             </ModalWithCloseButton>
