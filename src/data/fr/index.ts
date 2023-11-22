@@ -1054,7 +1054,8 @@ export const loggedInData = {
     },
     ai: {
       exerciseGeneration: {
-        buttonTitle: 'Generate exercises with AI',
+        buttonTitleSingular: 'Generate an exercise with AI',
+        buttonTitle: 'AI generate exercise group',
         initialModalTitle: 'Create an exercise automatically with help of AI',
         modalTitleWithTaxonomy: 'Exercise generation with AI: ',
         confirmCloseDescription: 'Do you want to cancel the exercise generation? Your data will be lost.',
@@ -1064,13 +1065,7 @@ export const loggedInData = {
         previousButton: 'Previous exercise',
         generateExerciseButton: 'Generate exercise',
         generateExercisesButton: 'Generate exercises',
-        subject: {
-          title: 'Which %subject% would you like to create an exercise for?',
-          subject: 'subject',
-          defaultLabel: "Sujet",
-          otherSubjectLabel: 'Other subject',
-          customSubjectPlaceholder: 'Enter custom subject'
-        },
+        somethingWentWrong: 'Something went wrong. Please try again.',
         topic: {
           title: 'About which %topic% would you like to generate exercises?',
           topic: 'topic',
@@ -1090,13 +1085,16 @@ export const loggedInData = {
           label: 'Exercise type',
           subtasksTitleSummary: 'Subtasks',
           subtasksTitle: 'Should there be subtasks?',
+          subtasksTitleExerciseGroup: 'How many subtasks should there be?',
           noSubtasks: 'No',
           yesSubtasks: 'Yes',
+          subtasksLabel: "exercices",
           numberOfSubtasksPlaceholder: 'Number of subtasks',
           chooseOption: "Choose an option",
           multipleChoice: "Multiple Choice",
           singleChoice: "Single Choice",
-          solutionWithOneNumber: "Solution with 1 number"
+          inputExercise: "Exercice de saisie",
+          exerciseGroupNeedsTwoOrMoreSubtasks: 'Within an exercise group, you must create two or more exercises.'
         },
         difficulty: {
           title: 'What is the %difficulty% level of the exercise and learning goal?',
