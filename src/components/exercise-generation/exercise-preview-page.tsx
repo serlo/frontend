@@ -4,6 +4,7 @@ import {
   faCaretLeft,
   faCaretRight,
 } from '@fortawesome/free-solid-svg-icons'
+import ExerciseGenerationLoadingSparkles from 'public/_assets/img/exercise/sparkles.svg'
 import React, { useMemo, useState } from 'react'
 
 import {
@@ -14,35 +15,34 @@ import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { useEntityId } from '@/contexts/uuids-context'
 import { getDefaultLicense } from '@/data/licenses/licenses-helpers'
-import { LoggedInData } from '@/data-types'
 import {
-  IEditorExerciseData,
+  ExercisePreviewFromAi,
   convertAiGeneratedScExerciseToEditorDocument,
   transformEditorDataToExerciseGroup,
 } from '@/helper/ai-generated-exercises/data-conversion'
 import { ExpectedLLMOutputType } from '@/helper/ai-generated-exercises/decoders'
 import { ErrorBoundary } from '@/helper/error-boundary'
+import { EditorProps } from '@/serlo-editor/core'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { EditorTemplateExerciseGroupDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
 interface ExercisePreviewPageProps {
   prompt: string
   closePage: () => void
+  setEditorState: (editorState: EditorProps['initialState']) => void
 }
 
-export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
+export function ExercisePreviewPage({
   prompt,
   closePage,
-}) => {
-  const entityId = useEntityId()
+  setEditorState,
+}: ExercisePreviewPageProps) {
   editorRenderers.init(createRenderers())
 
-  const { licenses } = useInstanceData()
-  const license = getDefaultLicense(licenses)
   const {
     data: exerciseData,
     errorMessage,
@@ -55,14 +55,18 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
     submitEventPrefix: 'exercise-generation-wizard-prompt-execution',
   })
 
-  const { strings } = useLoggedInData() as LoggedInData
+  const { exerciseGeneration: exerciseGenerationStrings } =
+    useLoggedInData()!.strings.ai
 
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0)
 
-  const editorData = useMemo<IEditorExerciseData>(() => {
+  const { licenses } = useInstanceData()
+  const license = getDefaultLicense(licenses)
+  const editorData = useMemo<ExercisePreviewFromAi>(() => {
     try {
       return convertAiGeneratedScExerciseToEditorDocument(exerciseData)
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Error while parsing exercise data: ', error)
       setStatus(ExecutePromptStatus.Error)
       setErrorMessage(
@@ -75,6 +79,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
     }
   }, [exerciseData, setErrorMessage, setStatus])
 
+  // eslint-disable-next-line no-console
   console.log('EditorData: ', editorData)
 
   const numberOfExercises = editorData?.exercises?.length ?? 0
@@ -85,13 +90,13 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
       onCloseClick={closePage}
       confirmCloseDescription="Are you sure you want to close the preview? All data will be lost!"
       overwriteClassNameCompletely
-      className="fixed left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center bg-gray-100"
+      className="fixed !top-0 left-1/2 z-50 flex h-full !max-h-none !w-full !max-w-none flex-col items-center justify-center bg-gray-100"
       closeButtonClassName="!bg-blue-300 absolute right-2 top-2 text-black"
     >
       {status === ExecutePromptStatus.Loading && (
         <div className="mb-6 flex items-center justify-center">
           <h1 className="font-semibold text-black">
-            {strings.ai.exerciseGeneration.preview.loadingHeading}
+            {exerciseGenerationStrings.preview.loadingHeading}
           </h1>
         </div>
       )}
@@ -100,7 +105,11 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
         {status === ExecutePromptStatus.Loading && <Skeleton />}
         {status === ExecutePromptStatus.Success && (
           <div>
-            <ErrorBoundary>
+            <ErrorBoundary
+              somethingWentWrongString={
+                exerciseGenerationStrings.somethingWentWrong
+              }
+            >
               {editorData && editorData.exercises[currentExerciseIndex] && (
                 <StaticRenderer
                   document={editorData.exercises[currentExerciseIndex]}
@@ -135,7 +144,7 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
             >
               <FaIcon icon={faCaretLeft} className="mr-2 text-sm" />
 
-              {strings.ai.exerciseGeneration.previousButton}
+              {exerciseGenerationStrings.previousButton}
             </button>
           )}
 
@@ -148,62 +157,56 @@ export const ExercisePreviewPage: React.FC<ExercisePreviewPageProps> = ({
                 )
               }
             >
-              {strings.ai.exerciseGeneration.nextExerciseButton}
+              {exerciseGenerationStrings.nextExerciseButton}
               <FaIcon icon={faCaretRight} className="ml-2 text-sm" />
             </button>
           )}
         </div>
       )}
 
-      <div className="mt-8 flex w-2/5 flex-col items-end space-y-2">
+      <div className="mt-8 flex w-2/5 flex-col items-end space-y-1">
         {/* Not supported for now */}
         {/* <button className="self-end rounded bg-brand-700 px-6 py-2 text-white">
-          {strings.ai.exerciseGeneration.preview.publishExercise}
+          {exerciseGenerationStrings.preview.publishExercise}
         </button> */}
         <button
-          className="flex items-center text-brand-700"
+          className="flex items-center p-2 text-brand-700 hover:bg-blue-100"
           onClick={() => {
-            const id = `temp_ai_generated_exercise_${new Date().getTime()}`
-
             if (editorData && editorData.exercises.length === 1) {
-              sessionStorage.setItem(
-                id,
-                JSON.stringify({
-                  plugin: 'type-text-exercise',
-                  state: {
-                    content: JSON.stringify(editorData.exercises[0]),
-                  },
-                })
-              )
-              window.location.href = `/entity/create/Exercise/${entityId}?loadFromSession=${id}`
+              setEditorState({
+                plugin: TemplatePluginType.TextExercise,
+                state: {
+                  content: JSON.stringify(editorData.exercises[0]),
+                },
+              })
+              closePage()
               return
             }
 
             const exerciseGroup: EditorTemplateExerciseGroupDocument =
               transformEditorDataToExerciseGroup(editorData, license)
-            sessionStorage.setItem(id, JSON.stringify(exerciseGroup))
-
-            window.location.href = `/entity/create/Exercise/${entityId}?loadFromSession=${id}`
+            setEditorState(exerciseGroup)
+            closePage()
           }}
         >
           <FaIcon icon={faPencilAlt} className="mr-2" />
 
-          {strings.ai.exerciseGeneration.preview.openExerciseInEditor}
+          {exerciseGenerationStrings.preview.openExerciseInEditor}
         </button>
         <button
-          className="flex items-center text-brand-700"
+          className="flex items-center p-2 text-brand-700 hover:bg-blue-100"
           onClick={regenerate}
           disabled={status === ExecutePromptStatus.Loading}
         >
           <FaIcon icon={faRefresh} className="mr-2" />
-          {strings.ai.exerciseGeneration.preview.regenerate}
+          {exerciseGenerationStrings.preview.regenerate}
         </button>
       </div>
     </ModalWithCloseButton>
   )
 }
 
-const Skeleton = () => {
+function Skeleton() {
   return (
     <div className="relative h-full w-full">
       <div className="flex animate-pulse flex-col space-y-4">
@@ -218,7 +221,7 @@ const Skeleton = () => {
         <div className="h-4 w-1/4 rounded bg-gray-300"></div>
       </div>
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
-        <span className="h-24 w-24 animate-pulse text-7xl">✨</span>
+        <ExerciseGenerationLoadingSparkles className="h-24 w-24 animate-pulse" />
       </div>
     </div>
   )

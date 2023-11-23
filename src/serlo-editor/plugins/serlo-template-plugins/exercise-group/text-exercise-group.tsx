@@ -1,4 +1,5 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { useRouter } from 'next/router'
 
 import { TextExerciseGroupTypeRenderer } from './renderer'
 import {
@@ -10,6 +11,8 @@ import {
 import { ContentLoaders } from '../helpers/content-loaders/content-loaders'
 import { TextExerciseTypePluginState } from '../text-exercise'
 import { ToolbarMain } from '../toolbar-main/toolbar-main'
+import { AiExerciseGenerationButton } from '@/components/exercise-generation/ai-exercise-generation-button'
+import { useAiFeatures } from '@/components/exercise-generation/use-ai-features'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
@@ -62,7 +65,12 @@ function TextExerciseGroupTypeEditor(
     revision,
     replaceOwnState,
   } = props.state
-
+  const { canUseAiFeaturesOutsideProduction } = useAiFeatures()
+  const router = useRouter()
+  const currentPath = router.asPath.toLowerCase()
+  const isCreatingNewExerciseGroup = currentPath.includes(
+    '/create/exercisegroup'
+  )
   const exGroupStrings = useEditorStrings().templatePlugins.textExerciseGroup
 
   const staticState = selectStaticDocument(store.getState(), props.id)
@@ -76,6 +84,9 @@ function TextExerciseGroupTypeEditor(
   return (
     <>
       <div className="absolute right-0 -mt-20 mr-side flex">
+        {canUseAiFeaturesOutsideProduction && isCreatingNewExerciseGroup ? (
+          <AiExerciseGenerationButton />
+        ) : null}
         <ContentLoaders
           id={id.value}
           currentRevision={revision.value}

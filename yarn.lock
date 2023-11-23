@@ -4033,7 +4033,7 @@ __metadata:
     postcss-nested: ^6.0.1
     prettier: ^3.0.3
     prettier-plugin-packagejson: ^2.4.6
-    prettier-plugin-tailwindcss: ^0.5.5
+    prettier-plugin-tailwindcss: ^0.5.7
     prisma: ^5.2.0
     prop-types: ^15.8.1
     qrcode.react: ^3.1.0
@@ -11979,9 +11979,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-tailwindcss@npm:^0.5.5":
-  version: 0.5.5
-  resolution: "prettier-plugin-tailwindcss@npm:0.5.5"
+"prettier-plugin-tailwindcss@npm:^0.5.7":
+  version: 0.5.7
+  resolution: "prettier-plugin-tailwindcss@npm:0.5.7"
   peerDependencies:
     "@ianvs/prettier-plugin-sort-imports": "*"
     "@prettier/plugin-pug": "*"
@@ -12028,7 +12028,7 @@ __metadata:
       optional: true
     prettier-plugin-twig-melody:
       optional: true
-  checksum: 4032a6b9258564100b77bb04f36a7342556591b8b69eefaa23a5e2a50d5111ed637c8e1ab94b5102c0eccdc39d67e6cdd379d7c8a9f9f6e15a1aa6c864d953da
+  checksum: 616c6eabd319453294fb1d2b241d6ff68b876092a902da67c90c39d4a2120ad605749ead09e08f3be11b4abdb60e63ce5dad1088f277b431b1131ffb365ce679
   languageName: node
   linkType: hard
 
