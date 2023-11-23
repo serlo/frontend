@@ -22,7 +22,6 @@ interface ModalWithCloseButtonProps {
   className?: string | ReactModal.Classes
   alignTitleAndCloseButton?: boolean
   confirmCloseDescription?: string | undefined
-  overwriteClassNameCompletely?: boolean
   closeButtonClassName?: string
 }
 
@@ -34,7 +33,6 @@ export function ModalWithCloseButton({
   className,
   alignTitleAndCloseButton,
   confirmCloseDescription,
-  overwriteClassNameCompletely,
   closeButtonClassName,
 }: ModalWithCloseButtonProps) {
   const { strings } = useInstanceData()
@@ -50,11 +48,7 @@ export function ModalWithCloseButton({
     <BaseModal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      className={
-        overwriteClassNameCompletely
-          ? className
-          : cn(ModalClasses, 'top-[40%] w-[500px] pb-10', className)
-      }
+      className={cn('serlo-modal', className)}
     >
       {alignTitleAndCloseButton ? (
         <div className="flex w-full items-center justify-between py-4">
@@ -107,9 +101,3 @@ export function ModalWithCloseButton({
     </BaseModal>
   )
 }
-
-export const ModalClasses = cn(`
-  absolute left-1/2 -mr-[50%] max-w-[85%] -translate-x-1/2
-  -translate-y-1/2 rounded-xl border-none bg-white
-  px-2.5  pt-2.5 shadow-modal outline-none
-`)

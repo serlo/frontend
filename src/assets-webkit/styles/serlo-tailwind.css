@@ -60,6 +60,16 @@
   .serlo-h5 {
     @apply mx-side mb-5 mt-0;
   }
+  .serlo-modal {
+    @apply absolute left-1/2 -mr-[50%] max-w-[85%] -translate-x-1/2 -translate-y-1/2;
+    @apply rounded-xl border-none bg-white px-2.5 pt-2.5 shadow-modal;
+    @apply outline-none top-[40%] w-[500px] pb-10;
+  }
+  .serlo-close-button {
+    @apply inline-flex h-9 w-9 cursor-pointer items-center;
+    @apply justify-center rounded-full border-none bg-transparent;
+    @apply leading-tight text-almost-black hover:bg-brand hover:text-white;
+  }
   .serlo-table {
     @apply mx-side border-separate border-spacing-0 hyphens-auto whitespace-nowrap break-normal border-brand-200 mobile:whitespace-normal;
   }

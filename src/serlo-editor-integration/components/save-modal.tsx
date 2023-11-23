@@ -80,7 +80,7 @@ export function SaveModal({
         setOpen(false)
       }}
       title={editorStrings.save}
-      className={clsx(
+      className={cn(
         !isOnlyText &&
           '!top-[2rem] max-h-full !w-[900px] !-translate-x-1/2 translate-y-0 overflow-y-auto pb-20'
       )}

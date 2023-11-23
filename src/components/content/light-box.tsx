@@ -1,7 +1,6 @@
 import { ReactNode } from 'react'
 import Modal from 'react-modal'
 
-import { ModalClasses } from '../modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
 
@@ -18,7 +17,7 @@ export function LightBox({ label, src, alt, onClose }: LightBoxProps) {
   return (
     <>
       <Modal
-        className={cn(ModalClasses, 'top-1/2 pb-7 text-center')}
+        className={cn('serlo-modal', 'top-1/2 pb-7 text-center')}
         isOpen
         onRequestClose={onClose}
       >
