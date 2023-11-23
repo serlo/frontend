@@ -1,5 +1,6 @@
-import clsx from 'clsx'
 import { ReactNode } from 'react'
+
+import { cn } from '@/helper/cn'
 
 interface MaxWidthDivProps {
   showNav?: boolean
@@ -14,7 +15,7 @@ export function MaxWidthDiv({
 }: MaxWidthDivProps) {
   return (
     <div
-      className={clsx(
+      className={cn(
         'mx-auto max-w-screen-sm sm:ml-[51px]',
         !noMarginBottom && 'mb-24',
         showNav ? 'md:ml-[200px] lg:ml-auto' : 'md:ml-auto'

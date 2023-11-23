@@ -1,7 +1,6 @@
 import { faSpinner, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons'
 import type { UiNode, UiNodeInputAttributes } from '@ory/client'
 import { isUiNodeInputAttributes } from '@ory/integrations/ui'
-import clsx from 'clsx'
 import { type FormEvent, useState } from 'react'
 
 import { FlowType } from './flow-type'
@@ -9,6 +8,7 @@ import { LoginButtonBildungsraum } from './login-button-bildungsraum'
 import { FaIcon } from '../fa-icon'
 import { Message, getKratosMessageString } from '@/components/auth/message'
 import { useInstanceData } from '@/contexts/instance-context'
+import { cn } from '@/helper/cn'
 import { isProduction } from '@/helper/is-production'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
@@ -120,7 +120,7 @@ export function Node({
 
         return (
           <div
-            className={clsx(
+            className={cn(
               isRegister && !isProduction ? 'border-gray mt-20 border-t' : ''
             )}
           >
@@ -149,7 +149,7 @@ export function Node({
         return (
           <div>
             <label
-              className={clsx('my-6 block', attributes.required && 'font-bold')}
+              className={cn('my-6 block', attributes.required && 'font-bold')}
             >
               <span className="flex content-end justify-between">
                 {fieldName}
@@ -197,7 +197,7 @@ export function Node({
             required
             defaultValue=""
           >
-            <option value="" disabled className={clsx('hidden', optionClass)}>
+            <option value="" disabled className={cn('hidden', optionClass)}>
               - {strings.auth.interests.pleaseChoose} -
             </option>
             <option value="parent" className={optionClass}>

@@ -1,9 +1,9 @@
-import clsx from 'clsx'
 import Image from 'next/image'
 
 import { Link } from '@/components/content/link'
 import type { TeamDataEntry } from '@/components/pages/editor/editor-team'
 import { getAvatarUrl } from '@/components/user/user-link'
+import { cn } from '@/helper/cn'
 
 export interface PageTeamRendererProps {
   data: TeamDataEntry[]
@@ -20,7 +20,7 @@ export const PageTeamRenderer = ({
 
   return (
     <div
-      className={clsx(
+      className={cn(
         'my-14 mobile:grid mobile:grid-cols-2 mobile:gap-2 sm:grid-cols-3',
         extraCols && 'md:grid-cols-4 lg:grid-cols-5'
       )}
@@ -43,7 +43,7 @@ export const PageTeamRenderer = ({
     return (
       <div key={firstName + lastName} className="mb-10 text-center">
         <div
-          className={clsx(
+          className={cn(
             'relative mx-auto mb-5 aspect-square',
             compact ? 'max-w-[8rem]' : 'max-w-[11rem]'
           )}

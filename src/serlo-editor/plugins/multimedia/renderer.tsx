@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { cn } from '@/helper/cn'
 
 export interface MultimediaRendererProps {
   mediaWidth: number // 25 | 50 | 75 | 100 Percent
@@ -21,7 +21,7 @@ export function MultimediaRenderer({
     <div className="flex flex-col-reverse rounded-xl mobile:block">
       <div
         onClick={onClick}
-        className={clsx(
+        className={cn(
           'media-wrapper relative z-10 mobile:float-right mobile:-mb-1 mobile:ml-2 mobile:mt-1',
           widthClass,
           extraImageClass

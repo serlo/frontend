@@ -1,7 +1,6 @@
-import clsx from 'clsx'
-
 import { WizardPageProps } from './wizard-page-props'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { cn } from '@/helper/cn'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface PriorKnowledgeProps extends WizardPageProps {
@@ -19,7 +18,7 @@ export function PriorKnowledge({
     useLoggedInData()!.strings.ai.exerciseGeneration
 
   return (
-    <div className={clsx('flex flex-col', isSummary && 'mb-4')}>
+    <div className={cn('flex flex-col', isSummary && 'mb-4')}>
       {!isSummary && (
         <p className="mb-4 text-xl">
           {replacePlaceholders(priorKnowledgeStrings.title, {

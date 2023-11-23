@@ -9,11 +9,10 @@ import {
   faSplotch,
   faThumbtack,
 } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 export const boxTypeIcons = {
   blank: undefined,
@@ -52,8 +51,8 @@ export function BoxRenderer({ boxType, title, anchorId, children }: BoxProps) {
   return (
     <figure
       id={anchorId}
-      className={clsx(
-        tw`
+      className={cn(
+        `
           serlo-box relative mx-side mb-6 
           rounded-xl border-3 pb-2 pt-[2px]
           [&>div.my-block]:first:mt-3.5
@@ -66,7 +65,7 @@ export function BoxRenderer({ boxType, title, anchorId, children }: BoxProps) {
         <a className="!no-underline">
           {isBlank ? null : (
             <span
-              className={clsx(
+              className={cn(
                 title && !isBlank ? 'mr-1.5' : '',
                 isAttention ? 'text-orange' : 'text-brand'
               )}

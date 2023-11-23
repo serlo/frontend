@@ -3,13 +3,12 @@ import {
   faCaretRight,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { Fragment, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
 import { FaIcon } from '../fa-icon'
 import { TaxonomyData } from '@/data-types'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
@@ -94,19 +93,19 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
             onClick={() => {
               setShowInModal(-1)
             }}
-            className={tw`
-          absolute right-4 top-4 z-[300] h-10 w-10 rounded-full bg-blue-200 text-xl
-          hover:bg-blue-300
-        `}
+            className={cn(`
+              absolute right-4 top-4 z-[300] h-10 w-10 rounded-full bg-blue-200 text-xl
+             hover:bg-blue-300
+          `)}
           >
             <FaIcon icon={faTimes} />
           </button>
           <div
-            className={tw`
+            className={cn(`
           pointer-events-none relative
           z-[200] mx-auto flex
           h-full w-[900px] max-w-full flex-col overflow-y-hidden px-6
-        `}
+            `)}
             onClick={(e) => {
               e.stopPropagation()
             }}
@@ -155,11 +154,11 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
         return (
           <Fragment key={i}>
             <div
-              className={tw`
+              className={cn(`
                 relative mb-5 mr-4 h-[238px] w-[176px]
                 cursor-pointer rounded border hover:border-brand hover:shadow-xl
                 hover:outline hover:outline-2 hover:outline-brand
-              `}
+              `)}
               onClick={() => {
                 setShowInModal(i)
               }}
@@ -185,7 +184,7 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
                 )}
               </div>
               <div
-                className={clsx(
+                className={cn(
                   'relative h-[140px] rounded-b',
                   isSolved && 'bg-brandgreen'
                 )}
@@ -281,7 +280,7 @@ function ExerciseWrapper({
         <div className="flex-1" />
         <div className="flex-1">
           <div
-            className={clsx(
+            className={cn(
               'pointer-events-auto max-h-[calc(100vh-150px)] overflow-y-auto rounded-xl bg-white',
               isSolvedInThisSession && '[&_.serlo-button-blue]:invisible'
             )}
@@ -299,7 +298,7 @@ function ExerciseWrapper({
             </div>
           </div>
           <div
-            className={clsx(
+            className={cn(
               ' mt-2.5 flex justify-end',
               !isSolvedInThisSession && 'hidden'
             )}
@@ -324,7 +323,7 @@ function ExerciseWrapper({
       <div className="flex-1" />
       <div className="flex-1">
         <div
-          className={clsx(
+          className={cn(
             'pointer-events-auto max-h-[calc(100vh-150px)] overflow-y-auto rounded-xl bg-white',
             isSolvedInThisSession && '[&_.serlo-button-blue]:invisible'
           )}
@@ -355,7 +354,7 @@ function ExerciseWrapper({
           )}
           {index + 1 < element.state.exercises.length ? (
             <button
-              className={clsx(
+              className={cn(
                 'pointer-events-auto rounded-xl  px-8 py-4 font-bold  transition-colors',
                 isSolvedInThisSession
                   ? 'bg-brand text-white'

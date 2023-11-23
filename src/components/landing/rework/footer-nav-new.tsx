@@ -1,17 +1,17 @@
 import { Separator } from './separator'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 export function FooterNavNew() {
   const { headerData, footerData } = useInstanceData()
 
   return (
     <nav
-      className={tw`
+      className={cn(`
         flex-wrap justify-center text-center mobile:flex
         mobile:text-left md:justify-between
-      `}
+      `)}
     >
       <div className="text-center md:mr-5 md:text-left">
         <h1 className="-mt-2 mb-10 font-handwritten text-4xl">
@@ -54,10 +54,10 @@ export function FooterNavNew() {
         {items.map(({ url, title }) => (
           <li key={url}>
             <Link
-              className={tw`
+              className={cn(`
                 mb-2 inline-block w-auto border-b-2 border-transparent
                 text-almost-black hover:border-brand hover:text-brand hover:no-underline
-              `}
+              `)}
               href={url}
               noExternalIcon
             >

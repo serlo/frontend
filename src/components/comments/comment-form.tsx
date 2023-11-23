@@ -4,14 +4,13 @@ import {
   faArrowRight,
   faSave,
 } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { useState, KeyboardEvent, useRef, ChangeEvent } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { isMac } from '@/helper/client-detection'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 interface CommentFormProps {
   onSend: (
@@ -62,9 +61,9 @@ export function CommentForm({
 
   return (
     <div
-      className={clsx(
+      className={cn(
         !isEditing && 'bg-brandgreen-50',
-        tw`
+        `
           mx-side mb-7 mt-4 flex items-center rounded-2xl
           border-2 border-brandgreen-50 py-1 transition-colors duration-200
           ease-in focus-within:border-brandgreen-muted
@@ -84,10 +83,10 @@ export function CommentForm({
         onKeyDown={onKeyDown}
         placeholder={placeholder}
         minRows={1}
-        className={tw`
-            serlo-input-font-reset w-full resize-none border-0 bg-transparent
-            pl-4 pr-14 text-lg text-black placeholder-brandgreen focus:!outline-none
-          `}
+        className={cn(`
+          serlo-input-font-reset w-full resize-none border-0 bg-transparent
+          pl-4 pr-14 text-lg text-black placeholder-brandgreen focus:!outline-none
+        `)}
       />
       {renderButton()}
     </div>
@@ -110,14 +109,14 @@ export function CommentForm({
       <button
         title={sendTitle}
         onClick={onSendAction}
-        className={clsx(
+        className={cn(
           'serlo-button-green self-end pl-2',
           reply ? 'mr-1 h-8 w-8 text-base' : 'my-1 mr-2 w-10 text-2xl'
         )}
       >
         <FaIcon
           icon={icon}
-          className={clsx(
+          className={cn(
             reply ? '' : 'pl-0.5',
             isSending && 'animate-spin-slow'
           )}

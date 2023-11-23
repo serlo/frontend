@@ -4,11 +4,11 @@ import {
   faPencilAlt,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 
 import { FaIcon } from '@/components/fa-icon'
 import { QuickbarData } from '@/components/navigation/quickbar'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { cn } from '@/helper/cn'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 
 export function LinkOverlayWithHref({
@@ -35,7 +35,7 @@ export function LinkOverlayWithHref({
       <a
         href={value}
         target="_blank"
-        className={clsx(
+        className={cn(
           'serlo-link serlo-tooltip-trigger mr-auto max-w-[27rem] whitespace-normal font-bold outline-none focus:underline',
           isCustomLink ? '!text-gray-800' : 'text-brand'
         )}

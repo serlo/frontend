@@ -1,12 +1,11 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { useState, KeyboardEvent, useEffect } from 'react'
 
 import { VideoType } from '../plugins/video/renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
+import { cn } from '@/helper/cn'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
-import { tw } from '@/helper/tw'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
 // based on PrivacyWrapper
@@ -48,8 +47,8 @@ export function EmbedWrapper({
 
   return (
     <div
-      className={clsx(
-        tw`
+      className={cn(
+        `
           group relative mx-side mb-block block
           cursor-pointer bg-cover bg-center [contain:content]
           `,
@@ -85,7 +84,7 @@ export function EmbedWrapper({
             onKeyDown={onKeyDown}
           >
             <FaIcon
-              className={clsx('py-0.5', showIframe && 'animate-spin-slow')}
+              className={cn('py-0.5', showIframe && 'animate-spin-slow')}
               icon={showIframe ? faSpinner : entityIconMapping[type]}
             />{' '}
             {strings.embed.general}

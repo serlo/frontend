@@ -1,7 +1,7 @@
 import { createRef, useEffect, useState, ReactNode, RefObject } from 'react'
 import { BaseSelection } from 'slate'
 
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 export type HoverPosition = 'above' | 'below'
 
@@ -60,11 +60,11 @@ export function HoverOverlay(props: HoverOverlayProps) {
   return (
     <div
       ref={overlay}
-      className={tw`
+      className={cn(`
         absolute -left-[10000px] -top-[10000px] z-[95] overflow-auto whitespace-nowrap
         rounded-md bg-white text-almost-black opacity-0 shadow-modal
         transition-opacity [&_a]:text-almost-black [&_a]:hover:text-brand
-      `}
+      `)}
     >
       {children}
     </div>

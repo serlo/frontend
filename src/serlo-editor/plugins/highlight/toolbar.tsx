@@ -3,7 +3,7 @@ import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import type { HighlightProps } from '.'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
@@ -26,11 +26,11 @@ export const HighlightToolbar = ({ id, state }: HighlightProps) => {
             />
             <select
               onChange={(e) => state.language.set(e.target.value)}
-              className={tw`
+              className={cn(`
                 mr-2 cursor-pointer rounded-md !border border-gray-500 bg-editor-primary-100
                 px-1 py-[1px] text-sm transition-all
               hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
-              `}
+              `)}
               value={state.language.value}
             >
               {languages.map((language) => {

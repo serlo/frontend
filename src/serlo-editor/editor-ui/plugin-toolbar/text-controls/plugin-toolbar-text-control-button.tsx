@@ -1,6 +1,6 @@
-import clsx from 'clsx'
 import { MouseEventHandler } from 'react'
 
+import { cn } from '@/helper/cn'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 
 interface PluginToolbarTextControlButtonProps {
@@ -23,7 +23,7 @@ export function PluginToolbarTextControlButton({
 
   return (
     <button
-      className={clsx(
+      className={cn(
         active
           ? 'bg-editor-primary-200 text-almost-black shadow-menu hover:text-black'
           : '#b6b6b6 hover:text-editor-primary',
