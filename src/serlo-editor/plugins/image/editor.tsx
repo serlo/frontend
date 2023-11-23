@@ -12,7 +12,7 @@ import { cn } from '@/helper/cn'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { isTempFile, usePendingFileUploader } from '@/serlo-editor/plugin'
 import { selectIsFocused, useAppSelector } from '@/serlo-editor/store'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 const captionFormattingOptions = [
   TextEditorFormattingOption.richTextBold,

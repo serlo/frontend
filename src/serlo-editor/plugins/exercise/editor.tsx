@@ -9,7 +9,7 @@ import { isProduction } from '@/helper/is-production'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 const allInteractiveExerciseTypes = isProduction
   ? ([

@@ -12,7 +12,7 @@ import {
 import { endpoint } from '@/api/endpoint'
 import { PageNotFound, RevisionPage, UuidRevType } from '@/data-types'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
-import { EditorExerciseDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorExerciseDocument } from '@/serlo-editor/types/editor-plugins'
 
 export async function requestRevision(
   revisionId: number,

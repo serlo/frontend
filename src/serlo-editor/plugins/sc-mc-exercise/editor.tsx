@@ -15,7 +15,7 @@ import {
   useAppSelector,
 } from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { EditorScMcExerciseDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorScMcExerciseDocument } from '@/serlo-editor/types/editor-plugins'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   const { state, id, focused } = props

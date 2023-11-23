@@ -26,9 +26,9 @@ import { ErrorBoundary } from '@/helper/error-boundary'
 import { EditorProps } from '@/serlo-editor/core'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { EditorTemplateExerciseGroupDocument } from '@/serlo-editor/types/editor-plugins'
+import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { EditorTemplateExerciseGroupDocument } from '@/serlo-editor-integration/types/editor-plugins'
-import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
 interface ExercisePreviewPageProps {
   prompt: string

@@ -6,7 +6,7 @@ import { InjectionStaticRenderer } from './static'
 import { InjectionToolbar } from './toolbar'
 import { FaIcon } from '@/components/fa-icon'
 import { PreviewOverlay } from '@/serlo-editor/editor-ui'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 export function InjectionEditor(props: InjectionProps) {
   const { focused, state } = props

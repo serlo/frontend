@@ -20,8 +20,8 @@ import { abSubmission } from '@/helper/ab-submission'
 import { cn } from '@/helper/cn'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { EditorRowsDocument } from '@/serlo-editor/types/editor-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export interface TopicProps {
   data: TaxonomyData

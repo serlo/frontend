@@ -28,7 +28,7 @@ import {
   string,
 } from '@/serlo-editor/plugin'
 import { selectStaticDocument, store } from '@/serlo-editor/store'
-import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
+import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 
 export const courseTypeState = entityType(
   {

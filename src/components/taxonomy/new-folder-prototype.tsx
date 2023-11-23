@@ -10,12 +10,12 @@ import { FaIcon } from '../fa-icon'
 import { TaxonomyData } from '@/data-types'
 import { cn } from '@/helper/cn'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 import {
   EditorExerciseDocument,
   EditorTemplateExerciseGroupDocument,
-} from '@/serlo-editor-integration/types/editor-plugins'
-import { isTemplateExerciseGroupDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
+} from '@/serlo-editor/types/editor-plugins'
+import { isTemplateExerciseGroupDocument } from '@/serlo-editor/types/plugin-type-guards'
 
 export interface NewFolderPrototypeProps {
   data: TaxonomyData

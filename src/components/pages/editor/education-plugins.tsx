@@ -30,7 +30,7 @@ import { FaIcon } from '@/components/fa-icon'
 import { UuidsProvider } from '@/contexts/uuids-context'
 import { cn } from '@/helper/cn'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 const h2Class =
   'text-center text-4xl leading-cozy tracking-tight font-extrabold'

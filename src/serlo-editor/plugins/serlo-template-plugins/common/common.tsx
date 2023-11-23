@@ -16,7 +16,7 @@ import {
   string,
   optional,
 } from '@/serlo-editor/plugin'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 export const uuid = {
   id: number(),

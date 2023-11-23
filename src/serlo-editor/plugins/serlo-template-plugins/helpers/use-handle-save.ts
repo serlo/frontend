@@ -4,9 +4,9 @@ import { useContext, useEffect, useState } from 'react'
 import type { SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
 import { store, selectStaticDocument } from '@/serlo-editor/store'
 import { ROOT } from '@/serlo-editor/store/root/constants'
+import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 import { storeStateToLocalStorage } from '@/serlo-editor-integration/components/local-storage-notice'
 import { SaveContext } from '@/serlo-editor-integration/context/save-context'
-import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
 export function useHandleSave(
   visible: boolean,

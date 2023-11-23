@@ -18,7 +18,7 @@ import { sharedTaxonomyParents } from '@/fetcher/query-fragments'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { EditorProps } from '@/serlo-editor/core'
-import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
+import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 
 enum AllowedPlugins {
   Article = TemplatePluginType.Article,
