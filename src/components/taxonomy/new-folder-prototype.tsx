@@ -3,7 +3,6 @@ import {
   faCaretRight,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { Fragment, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
@@ -185,7 +184,7 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
                 )}
               </div>
               <div
-                className={clsx(
+                className={cn(
                   'relative h-[140px] rounded-b',
                   isSolved && 'bg-brandgreen'
                 )}
@@ -281,7 +280,7 @@ function ExerciseWrapper({
         <div className="flex-1" />
         <div className="flex-1">
           <div
-            className={clsx(
+            className={cn(
               'pointer-events-auto max-h-[calc(100vh-150px)] overflow-y-auto rounded-xl bg-white',
               isSolvedInThisSession && '[&_.serlo-button-blue]:invisible'
             )}
@@ -299,7 +298,7 @@ function ExerciseWrapper({
             </div>
           </div>
           <div
-            className={clsx(
+            className={cn(
               ' mt-2.5 flex justify-end',
               !isSolvedInThisSession && 'hidden'
             )}
@@ -324,7 +323,7 @@ function ExerciseWrapper({
       <div className="flex-1" />
       <div className="flex-1">
         <div
-          className={clsx(
+          className={cn(
             'pointer-events-auto max-h-[calc(100vh-150px)] overflow-y-auto rounded-xl bg-white',
             isSolvedInThisSession && '[&_.serlo-button-blue]:invisible'
           )}
@@ -355,7 +354,7 @@ function ExerciseWrapper({
           )}
           {index + 1 < element.state.exercises.length ? (
             <button
-              className={clsx(
+              className={cn(
                 'pointer-events-auto rounded-xl  px-8 py-4 font-bold  transition-colors',
                 isSolvedInThisSession
                   ? 'bg-brand text-white'

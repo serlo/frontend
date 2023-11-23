@@ -1,5 +1,4 @@
 import { faPaperPlane, faSpinner } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { ChangeEvent, useEffect, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 
@@ -60,7 +59,7 @@ export function ProfileChatButton({
       <a
         href={url}
         onClick={onClickAction}
-        className={clsx(
+        className={cn(
           className,
           'serlo-button-green mt-[5px] block w-44 self-start text-center [grid-area:chatButton]'
         )}
@@ -123,7 +122,7 @@ export function ProfileChatButton({
             }}
             placeholder={strings.profiles.inviteModal.messagePlaceholder}
             minRows={2}
-            className={clsx(
+            className={cn(
               'serlo-input-font-reset w-full text-lg',
               'resize-none border-0 bg-transparent text-black outline-none',
               'pl-4 pr-14',
@@ -138,7 +137,7 @@ export function ProfileChatButton({
           >
             <FaIcon
               icon={pending ? faSpinner : faPaperPlane}
-              className={clsx(pending && 'animate-spin-slow')}
+              className={cn(pending && 'animate-spin-slow')}
             />{' '}
             {button}
           </a>

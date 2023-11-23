@@ -1,5 +1,4 @@
 import { faEye, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'
 import { UserLink } from '../user/user-link'
@@ -7,6 +6,7 @@ import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { Revision, Revisions } from '@/fetcher/query-types'
+import { cn } from '@/helper/cn'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
 
 export interface RevisionHistoryProps {
@@ -67,7 +67,7 @@ export function RevisionHistory({
             href={isEditorLink ? undefined : viewUrl}
           >
             <span
-              className={clsx(
+              className={cn(
                 isImportant ? 'font-bold' : undefined,
                 isActiveEditorLink ? 'cursor-pointer' : ''
               )}
@@ -131,7 +131,7 @@ export function RevisionHistory({
   function getStatus(trashed?: boolean, isCurrent?: boolean) {
     return (
       <span
-        className={clsx(
+        className={cn(
           'inline-block h-4 w-4 rounded-full',
           trashed ? '#c56c6c' : isCurrent ? 'bg-brandgreen' : '#eee'
         )}

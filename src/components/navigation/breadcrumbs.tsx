@@ -2,7 +2,6 @@ import {
   faArrowCircleLeft,
   faFolderOpen,
 } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { Fragment } from 'react'
 
 import { Link } from '../content/link'
@@ -43,7 +42,7 @@ export function Breadcrumbs({
     if (bcEntry.ellipsis) {
       return (
         <span
-          className={clsx(
+          className={cn(
             'hidden cursor-default sm:inline-block',
             withRightArrow
           )}
@@ -55,7 +54,7 @@ export function Breadcrumbs({
       if (data?.length !== index + 1) {
         return (
           <Link
-            className={clsx(
+            className={cn(
               'hidden sm:inline-block',
               withRightArrow,
               bcEntry.url && 'hover:bg-brand hover:text-white'

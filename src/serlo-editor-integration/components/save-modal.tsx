@@ -1,5 +1,4 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { useContext, useEffect, useState } from 'react'
 
 import { LocalStorageButton } from './local-storage-button'
@@ -129,7 +128,7 @@ export function SaveModal({
               )
             }
           }}
-          className={clsx(
+          className={cn(
             'serlo-button ml-2',
             pending ? 'cursor-default text-gray-300' : 'serlo-button-green'
           )}
@@ -173,7 +172,7 @@ export function SaveModal({
     if (!changes) return null
     return (
       <label
-        className={clsx(
+        className={cn(
           'font-bold',
           highlightMissingFields && !changesFilled && 'bg-red-100'
         )}
@@ -221,7 +220,7 @@ export function SaveModal({
 
     return (
       <label
-        className={clsx(
+        className={cn(
           'block pb-2',
           highlightMissingFields && !licenseAccepted && 'bg-red-100'
         )}

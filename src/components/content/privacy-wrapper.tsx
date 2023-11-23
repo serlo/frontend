@@ -1,10 +1,10 @@
 import { faHeart, faSpinner } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import Image from 'next/image'
 import { useState, KeyboardEvent, useEffect } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
+import { cn } from '@/helper/cn'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
@@ -75,7 +75,7 @@ export function PrivacyWrapper({
 
   return (
     <div
-      className={clsx(
+      className={cn(
         className,
         !isTwingle && 'mx-side',
         `
@@ -112,7 +112,7 @@ export function PrivacyWrapper({
             alt={`${strings.content.previewImage} ${provider}`}
             fill
             sizes="(max-width: 1023px) 100vw, 770px"
-            className={clsx(
+            className={cn(
               'absolute left-0 h-full w-full rounded-xl object-cover',
               isTwingle ? 'opacity-50' : 'opacity-90'
             )}
@@ -131,21 +131,21 @@ export function PrivacyWrapper({
           </div>
         )}
         <div
-          className={clsx(
+          className={cn(
             'absolute inset-0 flex items-center justify-around',
             consentGiven ? '' : '-top-28 mobile:-top-12 sm:-top-24'
           )}
           onClick={confirmLoad}
         >
           <button
-            className={clsx(
+            className={cn(
               isTwingle ? 'serlo-button-blue' : 'serlo-button-light',
               'group-hover:bg-brand-500 group-hover:text-white'
             )}
             onKeyDown={onKeyDown}
           >
             <FaIcon
-              className={clsx('py-0.5', showIframe && 'animate-spin-slow')}
+              className={cn('py-0.5', showIframe && 'animate-spin-slow')}
               icon={
                 showIframe
                   ? faSpinner

@@ -15,7 +15,6 @@ import {
   faTable,
   faEquals,
 } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { useRef, useState } from 'react'
 
 import {
@@ -185,7 +184,7 @@ export function EducationPlugins() {
 
   return (
     <div className="text-center">
-      <h2 className={clsx(h2Class, 'mb-4')}>Features</h2>
+      <h2 className={cn(h2Class, 'mb-4')}>Features</h2>
       <div className="sm:flex">
         <div className="mb-4 text-left sm:mb-12 sm:mt-8 sm:w-min sm:text-right">
           {renderPluginsMenu()}
@@ -274,7 +273,7 @@ export function EducationPlugins() {
               >
                 {thisCategory}{' '}
                 <span
-                  className={clsx(
+                  className={cn(
                     'inline-block transition-transform duration-300',
                     isSelected && 'translate-y-[1px] rotate-180'
                   )}
@@ -283,7 +282,7 @@ export function EducationPlugins() {
                 </span>
               </button>
               <nav
-                className={clsx(
+                className={cn(
                   'h-0 overflow-hidden transition-all duration-300'
                 )}
                 ref={categoryRef}
@@ -310,7 +309,7 @@ export function EducationPlugins() {
       >
         <button
           onClick={() => setSelectedTitle(title)}
-          className={clsx(
+          className={cn(
             cn`
               m-1 whitespace-nowrap rounded-md px-2 py-1
               shadow-menu hover:bg-brand-50

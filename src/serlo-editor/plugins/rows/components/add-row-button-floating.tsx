@@ -1,8 +1,8 @@
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { cn } from '@/helper/cn'
 
 interface AddRowButtonFloatingProps {
   onClick: React.MouseEventHandler<HTMLButtonElement>
@@ -22,13 +22,13 @@ export function AddRowButtonFloating({
       {hide ? null : (
         <div className="group flex justify-center">
           <button
-            className={clsx(
+            className={cn(
               `
-                add-trigger z-20 h-7 w-7
-                rounded-full pt-1 text-center
-                text-gray-600 transition-all hover:cursor-pointer
-                hover:text-editor-primary hover:opacity-100
-                focus-visible:text-editor-primary group-hover:opacity-60
+              add-trigger z-20 h-7 w-7
+              rounded-full pt-1 text-center
+              text-gray-600 transition-all hover:cursor-pointer
+              hover:text-editor-primary hover:opacity-100
+              focus-visible:text-editor-primary group-hover:opacity-60
               `,
               focused ? 'opacity-60' : 'opacity-0'
             )}

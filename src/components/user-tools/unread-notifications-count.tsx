@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { gql } from 'graphql-request'
 
 import { FaIcon, FaIconProps } from '../fa-icon'
@@ -38,7 +37,7 @@ export function UnreadNotificationsCount({
 
   return (
     <span
-      className={clsx(
+      className={cn(
         'relative inline-block h-[1em] w-5',
         count > 0 && 'text-brand',
         'notification-count-span'

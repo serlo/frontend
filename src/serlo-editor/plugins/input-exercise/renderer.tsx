@@ -1,5 +1,4 @@
 import type A from 'algebra.js'
-import clsx from 'clsx'
 import { useState, useEffect } from 'react'
 
 import { InputExerciseType } from './input-exercise-type'
@@ -70,7 +69,7 @@ export function InputExerciseRenderer({
       <div className="mt-4 flex">
         {AlgebraJs ? (
           <button
-            className={clsx(
+            className={cn(
               'serlo-button-blue h-8',
               value === '' && 'pointer-events-none opacity-0'
             )}

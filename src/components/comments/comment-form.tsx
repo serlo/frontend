@@ -4,7 +4,6 @@ import {
   faArrowRight,
   faSave,
 } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { useState, KeyboardEvent, useRef, ChangeEvent } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 
@@ -62,7 +61,7 @@ export function CommentForm({
 
   return (
     <div
-      className={clsx(
+      className={cn(
         !isEditing && 'bg-brandgreen-50',
         `
           mx-side mb-7 mt-4 flex items-center rounded-2xl
@@ -110,14 +109,14 @@ export function CommentForm({
       <button
         title={sendTitle}
         onClick={onSendAction}
-        className={clsx(
+        className={cn(
           'serlo-button-green self-end pl-2',
           reply ? 'mr-1 h-8 w-8 text-base' : 'my-1 mr-2 w-10 text-2xl'
         )}
       >
         <FaIcon
           icon={icon}
-          className={clsx(
+          className={cn(
             reply ? '' : 'pl-0.5',
             isSending && 'animate-spin-slow'
           )}

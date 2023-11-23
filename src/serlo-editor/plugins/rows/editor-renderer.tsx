@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import * as R from 'ramda'
 import React, { useRef, useState, useMemo } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
@@ -7,6 +6,7 @@ import { NativeTypes } from 'react-dnd-html5-backend'
 import type { RowsPluginConfig, RowsPluginState } from '.'
 import { RowDragButton } from './components/row-drag-button'
 import { useCanDrop } from './components/use-can-drop'
+import { cn } from '@/helper/cn'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
 import { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import {
@@ -196,7 +196,7 @@ export function EditorRowRenderer({
       {draggingAbove ? dropPreview : null}
       <div
         ref={container}
-        className={clsx(
+        className={cn(
           'rows-editor-renderer-container',
           'border-l-2 border-transparent',
           shouldShowBorder &&

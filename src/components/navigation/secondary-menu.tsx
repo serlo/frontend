@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { useRef, useEffect } from 'react'
 
 import { Link } from '../content/link'
@@ -33,7 +32,7 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
           {data.map((entry) => {
             return (
               <li
-                className={clsx(
+                className={cn(
                   'mr-4 inline-block border-b-2 py-[3px] text-[0.9rem] font-bold',
                   entry.active ? 'border-brand' : 'border-brand-200'
                 )}
@@ -64,7 +63,7 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
                   noExternalIcon
                 >
                   <span
-                    className={clsx(
+                    className={cn(
                       `serlo-button rounded-xl py-[3px] tracking-slightly-tighter
                       group-hover:bg-brand group-hover:text-white
                       `,

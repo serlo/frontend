@@ -1,11 +1,11 @@
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import type { MouseEvent } from 'react'
 
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { CoursePagesData } from '@/data-types'
+import { cn } from '@/helper/cn'
 
 export interface CourseNavigationProps {
   title: string | JSX.Element
@@ -38,10 +38,7 @@ export function CourseNavigation({
         >
           {strings.course.pages}{' '}
           <span
-            className={clsx(
-              'inline-block',
-              open && 'translate-y-0.5 rotate-180'
-            )}
+            className={cn('inline-block', open && 'translate-y-0.5 rotate-180')}
           >
             ▾
           </span>
@@ -52,7 +49,7 @@ export function CourseNavigation({
           {pages.map(({ url, active, title, noCurrentRevision }) => (
             <li key={url}>
               <Link
-                className={clsx(
+                className={cn(
                   'text-lg leading-browser',
                   {
                     'font-semibold text-almost-black hover:no-underline':

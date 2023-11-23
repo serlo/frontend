@@ -4,7 +4,6 @@ import {
   Trigger,
   Link,
 } from '@radix-ui/react-navigation-menu'
-import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
 
 import { Icon } from './icon'
@@ -37,13 +36,13 @@ export function Item({ link, elementAsIcon, className }: ItemProps) {
   const textAndIcon = (
     <>
       <Icon elementOrIcon={elementAsIcon ?? link.icon} />
-      <span className={clsx(elementAsIcon && 'md:sr-only')}>{link.title}</span>
+      <span className={cn(elementAsIcon && 'md:sr-only')}>{link.title}</span>
     </>
   )
 
   return (
     <RadixItem
-      className={clsx(
+      className={cn(
         'block duration-700 ease-linear md:mx-[3px] md:inline-block',
         className
       )}
@@ -57,7 +56,7 @@ export function Item({ link, elementAsIcon, className }: ItemProps) {
     return (
       <NextLink legacyBehavior href={link.url} passHref>
         <Link
-          className={clsx('group', styledLinkCls)}
+          className={cn('group', styledLinkCls)}
           // temporarily track spenden button use
           onClick={() => {
             if (link.url === '/spenden')

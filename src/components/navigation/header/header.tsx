@@ -1,5 +1,4 @@
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { Router, useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -41,7 +40,7 @@ export function Header() {
 
   return (
     <header
-      className={clsx(
+      className={cn(
         `
           bg-[url("/_assets/img/header-curve.svg")] bg-[length:100vw_3rem]
           bg-bottom bg-no-repeat pb-9 pt-3 text-almost-black
@@ -54,13 +53,10 @@ export function Header() {
         <div className="flex-wrap mobileExt:flex mobileExt:justify-between lg:flex-nowrap">
           <Logo foldOnMobile />
           <div
-            className={clsx(
-              `
-                order-last mt-[1.7rem] min-h-[50px] w-full
-                md:order-none md:mt-8 md:block
-                md:w-auto lg:order-last
-              `,
-              mobileMenuOpen ? '' : 'hidden'
+            className={cn(
+              `order-last mt-[1.7rem] min-h-[50px] w-full
+              md:order-none md:mt-8 md:block
+              md:w-auto lg:order-last`
             )}
           >
             <Menu />

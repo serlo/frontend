@@ -1,7 +1,6 @@
 import { faGripLines, faTools } from '@fortawesome/free-solid-svg-icons'
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
 import { arrayMoveImmutable } from 'array-move'
-import clsx from 'clsx'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -24,6 +23,7 @@ import {
 } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestPage } from '@/fetcher/request-page'
+import { cn } from '@/helper/cn'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useEntitySortMutation } from '@/mutations/use-entity-sort-mutation'
@@ -148,7 +148,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
           return (
             <li
               ref={provided.innerRef}
-              className={clsx(
+              className={cn(
                 'mb-1 block w-max rounded-sm p-1 leading-cozy',
                 snapshot.isDragging && 'bg-brand-100'
               )}
@@ -159,7 +159,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                 <FaIcon icon={faGripLines} />
               </span>{' '}
               <Link
-                className={clsx(
+                className={cn(
                   link.unrevised ? 'opacity-60' : undefined,
                   'text-[1.2rem]'
                 )}

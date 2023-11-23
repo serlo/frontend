@@ -1,5 +1,4 @@
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import type { ConnectDragSource } from 'react-dnd'
 
 import { FaIcon } from '@/components/fa-icon'
@@ -16,7 +15,7 @@ export function RowDragButton({ drag }: RowDragButtonProps) {
 
   return (
     <div
-      className={clsx(
+      className={cn(
         'rows-tools',
         'absolute left-2 z-[22] rounded-l-md bg-white bg-opacity-70 opacity-0 transition-opacity'
       )}

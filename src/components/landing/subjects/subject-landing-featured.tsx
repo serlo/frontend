@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
@@ -50,7 +49,7 @@ export function SubjectLandingFeatured({
     return (
       <Link
         key={data.title}
-        className={clsx(
+        className={cn(
           `
             group relative mx-2
             mb-4 box-border

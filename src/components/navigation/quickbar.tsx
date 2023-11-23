@@ -1,10 +1,10 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useState, useRef, useEffect, KeyboardEvent } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { isMac } from '@/helper/client-detection'
+import { cn } from '@/helper/cn'
 import { quickbarStatsSubmission } from '@/helper/quickbar-stats-submission'
 
 export interface QuickbarDataEntry {
@@ -198,7 +198,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
         role="listbox"
         id="quickbar-listbox"
         data-qa="quickbar-combobox-overlay"
-        className={clsx(
+        className={cn(
           `absolute left-side right-side z-[100] ml-2 mt-2
             max-w-2xl rounded-xl border bg-white px-5 pb-2 shadow
           `,
@@ -222,7 +222,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
                 data-qa={`quickbar-option-${index}`}
               >
                 <p
-                  className={clsx('my-2', {
+                  className={cn('my-2', {
                     'bg-brand-50': index === selection,
                   })}
                 >
@@ -242,7 +242,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
               </a>
             ))}
             <p
-              className={clsx('mt-2 text-lg text-gray-800', {
+              className={cn('mt-2 text-lg text-gray-800', {
                 'bg-brand-50': selection === results.length,
               })}
             >

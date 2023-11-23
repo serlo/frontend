@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import Image from 'next/image'
 import { zip } from 'ramda'
 import { Fragment } from 'react'
@@ -28,7 +27,7 @@ export function CommunityWallPersons({
       return (
         <Fragment key={name}>
           <figure
-            className={clsx(
+            className={cn(
               `
                 group z-30 mx-1 mt-12
                 w-1/3v max-w-[13rem] text-center
@@ -64,7 +63,7 @@ export function CommunityWallPersons({
                 @{name}
               </p>
               <span
-                className={clsx(
+                className={cn(
                   'rounded-2xl px-2 py-1 text-base font-bold text-white',
                   role.includes('Autor')
                     ? 'bg-yellow'

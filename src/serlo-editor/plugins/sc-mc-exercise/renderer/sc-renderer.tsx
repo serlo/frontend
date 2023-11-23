@@ -1,12 +1,12 @@
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { useState } from 'react'
 
 import { Feedback } from './feedback'
 import type { ScMcExerciseRendererProps } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
+import { cn } from '@/helper/cn'
 
 export function ScRenderer({
   answers,
@@ -41,7 +41,7 @@ export function ScRenderer({
                   }}
                 />
                 <label
-                  className={clsx(
+                  className={cn(
                     /* we override some styles in the answer content to show it inline */
                     'flex cursor-pointer items-center [&_.slate-container]:mb-0 [&_.slate-p]:ml-2'
                   )}
@@ -64,7 +64,7 @@ export function ScRenderer({
 
       <div className="mt-5 flex">
         <button
-          className={clsx(
+          className={cn(
             'serlo-button-blue mb-5 mr-3 h-8',
             selected === undefined &&
               'pointer-events-none bg-transparent text-gray-400 opacity-100'

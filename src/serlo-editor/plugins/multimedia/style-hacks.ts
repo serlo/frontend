@@ -1,11 +1,11 @@
-import clsx from 'clsx'
+import { cn } from '@/helper/cn'
 
 export function getStyleHacks(
   focused: boolean,
   isMediaChildFocused: boolean,
   isMediaChildFocusedWithin: boolean
 ) {
-  return clsx(
+  return cn(
     // active border style in editor
     focused && '[&>div]:border-editor-primary-100',
 

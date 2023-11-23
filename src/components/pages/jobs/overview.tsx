@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import Image from 'next/image'
 import { default as NextLink } from 'next/link'
 import { Fragment } from 'react'
@@ -143,9 +142,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
           `)}
         >
           <div className="mt-12 w-full px-2 sm:ml-10 sm:mt-32">
-            <p className={clsx(italicClass, 'serlo-add-eyebrows mr-6')}>
-              Hey du
-            </p>
+            <p className={cn(italicClass, 'serlo-add-eyebrows mr-6')}>Hey du</p>
             <h1
               className={cn(`
                 mx-auto mb-6 mt-3 max-w-md
@@ -172,25 +169,25 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
 
         <section className="mt-3 px-2 text-center">
           <h3
-            className={clsx(h2Class, 'mt-12 inline-block hyphens-auto pb-3')}
+            className={cn(h2Class, 'mt-12 inline-block hyphens-auto pb-3')}
             id="stellen"
           >
             Unsere offenen Stellen
           </h3>
           <div className="mt-5 justify-center px-side pt-8 text-left sm:flex">
             <div className="mx-auto w-full max-w-xl sm:mr-4">
-              <h3 className={clsx(h3Class, 'mb-2 ml-5')}>Hauptamtlich</h3>
+              <h3 className={cn(h3Class, 'mb-2 ml-5')}>Hauptamtlich</h3>
               {renderPositions(jobs)}
             </div>
             <div className="mx-auto w-full max-w-xl sm:ml-4">
               <div>
-                <h3 className={clsx(h3Class, 'mb-2 ml-5 mt-16 sm:mt-0')}>
+                <h3 className={cn(h3Class, 'mb-2 ml-5 mt-16 sm:mt-0')}>
                   Ehrenamtlich
                 </h3>
                 {renderPositions(volunteers)}
               </div>
               <div className="mt-16">
-                <h3 className={clsx(h3Class, 'mb-2 ml-5')}>Praktika</h3>
+                <h3 className={cn(h3Class, 'mb-2 ml-5')}>Praktika</h3>
                 {renderPositions(internships)}
               </div>
             </div>
@@ -205,7 +202,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
               text-almost-black
             `)}
           >
-            <p className={clsx(h2Class, 'mt-8 px-1')}>
+            <p className={cn(h2Class, 'mt-8 px-1')}>
               Das erwartet dich bei uns
             </p>
           </h3>
@@ -237,9 +234,9 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
           </div>
         </section>
 
-        <section className={clsx('mt-18 -mb-8')}>
+        <section className={cn('mt-18 -mb-8')}>
           <div className="mx-auto max-w-4xl text-center">
-            <p className={clsx(h2Class, 'mt-8')}>Noch Fragen?</p>
+            <p className={cn(h2Class, 'mt-8')}>Noch Fragen?</p>
             <p className="mt-3 text-[1.3rem]">
               Dann schreib uns an{' '}
               <a className="text-brand underline" href="mailto:jobs@serlo.org">

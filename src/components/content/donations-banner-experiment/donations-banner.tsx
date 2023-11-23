@@ -1,5 +1,4 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 
@@ -279,7 +278,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
               )
               if (bannerRef.current) observer.observe(bannerRef.current)
             }}
-            className={clsx(
+            className={cn(
               'mx-auto mb-3',
               isTestimonial
                 ? 'max-w-[12rem] rounded-full sm:mt-2 sm:p-3'

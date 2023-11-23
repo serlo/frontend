@@ -1,5 +1,6 @@
-import clsx from 'clsx'
 import { useState } from 'react'
+
+import { cn } from '@/helper/cn'
 
 export interface SpoilerRendererProps {
   title: JSX.Element
@@ -17,7 +18,7 @@ export function SpoilerRenderer({
 
   return (
     <div
-      className={clsx(
+      className={cn(
         'mb-block flex flex-col rounded-xl border-3 mobile:mx-side',
         '[&>div.my-block:first-of-type]:mt-5',
         isOpen ? 'border-brand-200' : 'border-brand-100'
@@ -25,7 +26,7 @@ export function SpoilerRenderer({
     >
       <button
         onClick={() => setOpen(!open)}
-        className={clsx(
+        className={cn(
           `
             serlo-input-font-reset z-10 m-0 border-none px-side py-2.5
             text-left text-lg leading-normal text-almost-black transition-colors

@@ -1,7 +1,7 @@
-import clsx from 'clsx'
 import { Fragment, type ReactNode } from 'react'
 
 import { Sign, signStrings } from './sign'
+import { cn } from '@/helper/cn'
 
 export interface EquationsRendererStep {
   left: string
@@ -78,7 +78,7 @@ export function EquationsRenderer({
       align?: 'text-left' | 'text-right' | 'text-center'
     ) {
       return (
-        <td className={clsx('px-1 pb-3 pt-1 align-baseline text-lg', align)}>
+        <td className={cn('px-1 pb-3 pt-1 align-baseline text-lg', align)}>
           {content}
         </td>
       )

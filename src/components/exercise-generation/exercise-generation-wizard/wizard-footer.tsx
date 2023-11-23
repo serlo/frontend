@@ -1,9 +1,9 @@
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { useEffect } from 'react'
 
 import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { cn } from '@/helper/cn'
 import { submitEvent } from '@/helper/submit-event'
 
 interface WizardFooterProps {
@@ -57,7 +57,7 @@ export function WizardFooter({
         <button
           onClick={onPrev}
           disabled={hideBackButton}
-          className={clsx(
+          className={cn(
             'cursor-pointer p-2 text-brand-700',
             hideBackButton && 'pointer-events-none opacity-0'
           )}
@@ -70,7 +70,7 @@ export function WizardFooter({
         <button
           onClick={onNext}
           disabled={hideNextButton}
-          className={clsx(
+          className={cn(
             'p-2 text-brand-700',
             hideNextButton && 'pointer-events-none opacity-0'
           )}

@@ -1,7 +1,6 @@
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { Root, List } from '@radix-ui/react-navigation-menu'
-import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
@@ -14,6 +13,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
+import { cn } from '@/helper/cn'
 
 interface UserToolsProps {
   id?: number
@@ -73,7 +73,7 @@ export function UserTools({
     if (firstPass) setFirstPass(false)
   }, [auth, firstPass])
 
-  const fadeIn = clsx(
+  const fadeIn = cn(
     'transition-opacity',
     firstPass ? 'opacity-0' : 'opacity-100'
   )
@@ -82,7 +82,7 @@ export function UserTools({
 
   return (
     <Root
-      className={clsx(
+      className={cn(
         'serlo-user-tools',
         aboveContent
           ? ''
@@ -92,7 +92,7 @@ export function UserTools({
       aria-label="Tool Menu"
     >
       <List
-        className={clsx(
+        className={cn(
           aboveContent
             ? 'mb-8 mr-4 mt-4 justify-end text-right mobile:flex sm:-mt-6 sm:text-left lg:hidden'
             : 'pointer-events-auto flex flex-col items-start rounded-md bg-white'
