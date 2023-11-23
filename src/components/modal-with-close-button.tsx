@@ -5,13 +5,6 @@ import { CloseButton } from './close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
 
-try {
-  BaseModal.defaultStyles.overlay!.zIndex = 101
-} catch (e) {
-  // eslint-disable-next-line no-console
-  console.error(e)
-}
-
 BaseModal.setAppElement('#__next')
 
 interface ModalWithCloseButtonProps {
