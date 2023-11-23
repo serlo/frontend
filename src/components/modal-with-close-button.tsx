@@ -39,7 +39,7 @@ export function ModalWithCloseButton({
 
   return (
     <BaseModal
-      overlayClassName="z-[101]"
+      overlayClassName={cn(defaultModalOverlayStyles, 'z-[101]')}
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       className={cn('serlo-modal', className)}
@@ -95,3 +95,8 @@ export function ModalWithCloseButton({
     </BaseModal>
   )
 }
+
+// See https://github.com/reactjs/react-modal/blob/master/src/components/Modal.js#L107
+export const defaultModalOverlayStyles = cn(
+  'fixed top-0 left-0 right-0 bottom-0 bg-white bg-opacity-75'
+)

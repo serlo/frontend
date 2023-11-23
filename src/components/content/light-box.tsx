@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 import Modal from 'react-modal'
 
+import { defaultModalOverlayStyles } from '../modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
 
@@ -20,7 +21,7 @@ export function LightBox({ label, src, alt, onClose }: LightBoxProps) {
     <>
       <Modal
         className={cn('serlo-modal', 'pb-7 text-center')}
-        overlayClassName="z-[101]"
+        overlayClassName={cn(defaultModalOverlayStyles, 'z-[101]')}
         isOpen
         onRequestClose={onClose}
       >
