@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState } from 'react'
 
@@ -8,9 +7,9 @@ import { MetaBar } from './meta-bar'
 import { Link } from '../content/link'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
+import { cn } from '@/helper/cn'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
 import { scrollIfNeeded } from '@/helper/scroll'
-import { tw } from '@/helper/tw'
 import { useEditCommentMutation } from '@/mutations/thread'
 import type { StaticMathProps } from '@/serlo-editor/plugins/text/static-components/static-math'
 
@@ -85,14 +84,9 @@ export function Comment({
     <div
       ref={commentRef}
       id={`comment-${id}`}
-      className={clsx(
+      className={cn(
         'pb-0.5 pt-1 transition-colors duration-700 ease-out',
-        isParent
-          ? ''
-          : tw`
-            mb-5 ml-4 mt-8 border-l-6 border-brand-200 
-            pb-0.5
-          `
+        isParent ? '' : 'mb-5 ml-4 mt-8 border-l-6 border-brand-200 pb-0.5'
       )}
     >
       <MetaBar
@@ -137,7 +131,7 @@ export function Comment({
         </>
       ) : (
         <p
-          className={clsx(
+          className={cn(
             'serlo-p mb-0 whitespace-pre-line break-words',
             isHighlight ? 'rounded-xl bg-editor-primary-100 !p-2' : ''
           )}

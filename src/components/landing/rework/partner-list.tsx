@@ -1,6 +1,4 @@
-import clsx from 'clsx'
-
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 const partners = [
   {
@@ -48,7 +46,7 @@ const partners = [
 export function PartnerList({ inContent }: { inContent?: boolean }) {
   return (
     <div
-      className={clsx(
+      className={cn(
         'mx-side mt-auto flex max-w-5xl  flex-wrap pb-7 text-gray-800 sm:mx-auto',
         inContent ? 'justify-start' : 'justify-evenly sm:justify-center'
       )}
@@ -70,8 +68,8 @@ export function PartnerList({ inContent }: { inContent?: boolean }) {
       // eslint-disable-next-line @next/next/no-img-element
       <img
         key={name}
-        className={clsx(
-          tw`
+        className={cn(
+          `
             max-h-[4.5rem] max-w-[20rem] px-8 opacity-80
             sm:max-h-[5.3rem] sm:px-8 md:max-h-24
           `,

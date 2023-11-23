@@ -17,9 +17,9 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEntityId } from '@/contexts/uuids-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
+import { cn } from '@/helper/cn'
 import { colors } from '@/helper/colors'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { tw } from '@/helper/tw'
 
 export interface ShareModalProps {
   isOpen: boolean
@@ -155,11 +155,11 @@ export function ShareModal({
     return (
       <>
         <input /*ShareInput*/
-          className={tw`
+          className={cn(`
             mb-2 ml-3 mr-0 w-[250px] rounded-2xl
             border-none bg-brandgreen-50 px-2.5 py-1
             focus:shadow-input focus:outline-none
-          `}
+          `)}
           ref={shareInputRef}
           onFocus={(e) => e.target.select()}
           defaultValue={shareUrl}
@@ -198,8 +198,8 @@ export function ShareModal({
   }
 }
 
-const shareButton = tw`
+const shareButton = cn(`
   serlo-button-green-transparent
   mx-side mt-1.5 block py-0.5 text-base
   sm:ml-3 sm:mr-0 sm:mt-0 sm:inline
-`
+`)

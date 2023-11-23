@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { useEffect, useState, KeyboardEvent } from 'react'
 import { useHotkeysContext } from 'react-hotkeys-hook'
 
@@ -9,6 +8,7 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { QuickbarData, findResults } from '@/components/navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 // based on Quickbar, duplicates some code
@@ -124,7 +124,7 @@ export function LinkOverlayEditMode({
             />
           ))}
           <div
-            className={clsx('mt-2 text-lg text-gray-800', {
+            className={cn('mt-2 text-lg text-gray-800', {
               'bg-brand-50': selectedIndex === results.length,
             })}
           >

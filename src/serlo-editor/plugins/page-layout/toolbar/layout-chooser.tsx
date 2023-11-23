@@ -1,8 +1,6 @@
-import clsx from 'clsx'
-
 import type { PageLayoutPluginProps } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 const firstColumsSizes = [50, 66, 33]
 
@@ -34,8 +32,8 @@ export const LayoutChooser = ({
             event.preventDefault()
             widthPercent.set(percent)
           }}
-          className={clsx(
-            tw`
+          className={cn(
+            `
               group mr-2 flex h-24 w-24 flex-row rounded-lg bg-editor-primary-100 p-1
               opacity-75 hover:bg-editor-primary-200 focus:bg-editor-primary-200
             `,

@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { type ReactNode } from 'react'
 
 import { DisplayModes } from './display-modes'
@@ -9,6 +8,7 @@ import {
 } from './revision-diff-viewer'
 import { useInstanceData } from '@/contexts/instance-context'
 import { type RevisionData, UuidRevType } from '@/data-types'
+import { cn } from '@/helper/cn'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 import { GeogebraSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/geogebra-serlo-static-renderer'
@@ -127,7 +127,7 @@ export function RevisionPreviewBoxes({
           </b>
         </p>
         <div
-          className={clsx(
+          className={cn(
             (data.typename === UuidRevType.Exercise ||
               data.typename === UuidRevType.GroupedExercise) &&
               '!py-2',

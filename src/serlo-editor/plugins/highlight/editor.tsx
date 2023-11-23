@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { HighlightProps } from '.'
 import { HighlightToolbar } from './toolbar'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 export function HighlightEditor(props: HighlightProps) {
   const { config, state, focused } = props
@@ -56,11 +56,11 @@ export function HighlightEditor(props: HighlightProps) {
         ref={textAreaRef}
         // make sure editor does not create new plugin on enter etc
         onKeyDown={(e) => e.stopPropagation()}
-        className={tw`
+        className={cn(`
             m-auto w-full items-center rounded-xl border-3 border-editor-primary-200 p-side
             pt-6 font-mono
             focus-within:border-editor-primary-200 focus-within:outline-none
-          `}
+        `)}
         style={{ height: `${50 + numberOflines * 26}px` }} // simple autogrow
       >
         {state.code.value}

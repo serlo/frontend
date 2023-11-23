@@ -1,9 +1,8 @@
-import clsx from 'clsx'
 import { ReactElement } from 'react'
 
 import { PluginToolMenu } from './plugin-tool-menu/plugin-tool-menu'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import { getPluginTitle } from '@/serlo-editor/plugin/helpers/get-plugin-title'
 import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
@@ -26,8 +25,8 @@ export function PluginToolbar({
 
   return (
     <div
-      className={clsx(
-        tw`
+      className={cn(
+        `
         plugin-toolbar absolute -top-[2.6rem] left-[5px] right-0 z-[21] flex
         h-9 items-center justify-between rounded-t-lg bg-editor-primary-100 pl-2
         before:pointer-events-none before:absolute before:-top-7

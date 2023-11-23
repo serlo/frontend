@@ -3,7 +3,7 @@ import { Item, Link } from '@radix-ui/react-navigation-menu'
 import { default as NextLink } from 'next/link'
 
 import { FaIcon } from '@/components/fa-icon'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 export interface SubItemProps {
   title: string
@@ -12,10 +12,10 @@ export interface SubItemProps {
   icon?: IconDefinition
 }
 
-const itemClasses = tw`
+const itemClasses = cn(`
   serlo-button-blue-transparent inline-flex items-center hyphens-auto rounded-[12px]
   py-1 text-left text-base font-normal leading-tight  group-hover:bg-brand group-hover:text-white
-`
+`)
 
 export function SubItem({ title, href, onClick, icon }: SubItemProps) {
   const isAbsolute = href && href.indexOf('//') > -1

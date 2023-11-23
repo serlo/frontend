@@ -17,7 +17,7 @@ import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import {
@@ -123,7 +123,7 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
         <ModalWithCloseButton
           isOpen={showSettingsModal}
           onCloseClick={() => setShowSettingsModal(false)}
-          className="!max-w-xl"
+          className="max-w-xl"
         >
           <div className="mx-side mb-3 mt-12">
             <SettingsTextarea
@@ -145,10 +145,10 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
         title={
           <input
             autoFocus
-            className={tw`
+            className={cn(`
                 -ml-2 mt-1 min-w-[70%] rounded-xl border-2 border-transparent
                 bg-editor-primary-100 px-2 py-0 focus:border-editor-primary focus:outline-none
-              `}
+              `)}
             placeholder={courseStrings.title}
             value={title.value}
             onChange={(e) => title.set(e.target.value)}

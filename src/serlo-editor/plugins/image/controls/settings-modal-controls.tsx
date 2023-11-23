@@ -1,7 +1,7 @@
 import { OverlayInput } from './overlay-input'
 import type { ImageProps } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import { isTempFile } from '@/serlo-editor/plugin'
 
 export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
@@ -40,12 +40,12 @@ export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
               else alt.remove()
             } else alt.create(value)
           }}
-          className={tw`
+          className={cn(`
             serlo-input-font-reset
             mt-1.5 min-h-[100px] w-3/4 resize-none rounded-md
             border-2 border-editor-primary-100  bg-editor-primary-100 p-2.5 
             focus:border-editor-primary-300 focus:outline-none
-          `}
+          `)}
         />
       </label>
       <OverlayInput

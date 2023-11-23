@@ -1,6 +1,7 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import clsx from 'clsx'
 import { CSSProperties } from 'react'
+
+import { cn } from '@/helper/cn'
 
 export interface FaIconProps {
   icon: IconDefinition
@@ -16,7 +17,7 @@ export function FaIcon({ icon, className, style }: FaIconProps) {
       viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`}
       aria-hidden
       focusable={false}
-      className={clsx('serlo-fa-icon', className)}
+      className={cn('serlo-fa-icon', className)}
       style={style}
     >
       <path

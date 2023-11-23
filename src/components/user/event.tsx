@@ -1,7 +1,6 @@
 import { faBellSlash, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { Entity } from '@serlo/authorization'
 import Tippy from '@tippyjs/react'
-import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 
 import { UserLink } from './user-link'
@@ -13,6 +12,7 @@ import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LoggedInData, UuidType } from '@/data-types'
 import { GetNotificationsQuery } from '@/fetcher/graphql-types/operations'
+import { cn } from '@/helper/cn'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { isProduction } from '@/helper/is-production'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -77,7 +77,7 @@ export function Event({
   return (
     <>
       <div
-        className={clsx(
+        className={cn(
           'relative my-2.5 px-side py-6 odd:bg-brand-100',
           slim && 'pb-1 pt-1'
         )}
@@ -87,7 +87,7 @@ export function Event({
           datetime={eventDate}
           dateAsTitle
         />
-        <div className={clsx('mb-2 mt-0.25 pr-24', unread && 'font-bold')}>
+        <div className={cn('mb-2 mt-0.25 pr-24', unread && 'font-bold')}>
           {unread && <span className="text-brand">● </span>}
           {renderText()}
         </div>

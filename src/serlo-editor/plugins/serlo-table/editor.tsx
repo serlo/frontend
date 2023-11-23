@@ -1,5 +1,4 @@
 import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { KeyboardEvent, useState } from 'react'
 
 import type { SerloTableProps } from '.'
@@ -12,6 +11,7 @@ import { TextEditorConfig } from '../text'
 import { instanceStateStore } from '../text/utils/instance-state-store'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { cn } from '@/helper/cn'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import {
@@ -119,7 +119,7 @@ export function SerloTableEditor(props: SerloTableProps) {
               key={colIndex}
               onKeyUp={onKeyUpHandler} // keyUp because some onKeyDown keys are not bubbling
               onKeyDown={onKeyDownHandler}
-              className={clsx(
+              className={cn(
                 '[&>div>[data-slate-editor]]:pr-2',
                 '[&>div>[data-slate-editor]]:pb-block'
               )}
@@ -188,7 +188,7 @@ export function SerloTableEditor(props: SerloTableProps) {
 
       return (
         <button
-          className={clsx(
+          className={cn(
             'serlo-tooltip-trigger text-gray-300 transition-colors hover:text-editor-primary focus:text-editor-primary',
             isRow ? '' : 'mr-2'
           )}
@@ -309,7 +309,7 @@ export function SerloTableEditor(props: SerloTableProps) {
     return (
       <div className="relative">
         <button
-          className={clsx(
+          className={cn(
             'serlo-button-editor-secondary serlo-tooltip-trigger',
             'absolute -bottom-1.5 z-20 mx-side w-[calc(100%-1.9rem)]'
           )}
@@ -328,7 +328,7 @@ export function SerloTableEditor(props: SerloTableProps) {
   function renderAddColButton() {
     return (
       <button
-        className={clsx(
+        className={cn(
           'serlo-button-editor-secondary serlo-tooltip-trigger -ml-1 mb-8 px-2.5'
         )}
         onClick={() => insertCol()}

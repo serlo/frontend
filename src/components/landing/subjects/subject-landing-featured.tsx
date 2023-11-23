@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
@@ -12,10 +11,10 @@ import {
 } from '@/data/de/de-subject-landing-data'
 import { UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
+import { cn } from '@/helper/cn'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { shuffleArray } from '@/helper/shuffle-array'
-import { tw } from '@/helper/tw'
 
 const maxOnMobile = 4
 
@@ -36,11 +35,11 @@ export function SubjectLandingFeatured({
 
   return (
     <div
-      className={tw`
+      className={cn(`
         mx-auto flex w-full
         flex-wrap items-stretch justify-around
         px-side pb-6 sm:max-w-3xl lg:max-w-max
-      `}
+      `)}
     >
       {content.map(renderFeaturedBox)}
     </div>
@@ -50,8 +49,8 @@ export function SubjectLandingFeatured({
     return (
       <Link
         key={data.title}
-        className={clsx(
-          tw`
+        className={cn(
+          `
             group relative mx-2
             mb-4 box-border
             w-36 rounded p-2.5
@@ -66,11 +65,11 @@ export function SubjectLandingFeatured({
         <div className="relative mb-2.5 mr-5 aspect-square rounded-lg bg-brand-100 transition-all group-hover:bg-white">
           {data.img ? (
             <Image
-              className={tw`
+              className={cn(`
                 rounded-lg object-contain object-center
                 opacity-80 mix-blend-multiply
                 transition-all group-hover:opacity-100
-              `}
+              `)}
               fill
               sizes="13rem"
               alt={data.title}
@@ -78,11 +77,11 @@ export function SubjectLandingFeatured({
             />
           ) : (
             <div
-              className={tw`
+              className={cn(`
                 flex aspect-square items-center justify-center
                 align-middle text-4xl text-brand-300 opacity-80 transition-all
                 group-hover:opacity-100
-              `}
+              `)}
             >
               {renderTypeIcon(data.type)}
             </div>

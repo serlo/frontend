@@ -1,6 +1,6 @@
 import type { SuggestionOption } from '../hooks/use-suggestions'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import IconFallback from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 
 interface SuggestionsProps {
@@ -38,16 +38,16 @@ export const Suggestions = ({
             onMouseMove={() => {
               onMouseMove(index)
             }}
-            className={tw`
+            className={cn(`
               group/suggestion flex cursor-pointer items-center px-5 py-2.5
               hover:bg-editor-primary-50 data-[active=true]:bg-editor-primary-50
-            `}
+            `)}
           >
             <div
-              className={tw`
+              className={cn(`
                mr-3 flex-[0_0_95px] rounded-md border border-transparent group-hover/suggestion:border-gray-300
                group-data-[active=true]/suggestion:border-gray-300 [&>svg]:rounded-md
-              `}
+              `)}
             >
               {icon ?? <IconFallback />}
             </div>

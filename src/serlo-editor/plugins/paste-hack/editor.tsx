@@ -3,8 +3,8 @@ import * as t from 'io-ts'
 import { useRef } from 'react'
 
 import type { PasteHackPluginProps } from '.'
+import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { tw } from '@/helper/tw'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import {
@@ -133,11 +133,11 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
         <textarea
           autoFocus
           ref={textareaRef}
-          className={tw`
+          className={cn(`
             mb-7 mt-1 flex w-full items-center rounded-2xl
             border-2 border-editor-primary-100 bg-editor-primary-100
             p-2 focus-within:border-editor-primary focus-within:outline-none
-          `}
+          `)}
           // make sure editor does not create new plugin on enter etc
           onKeyDown={(e) => e.stopPropagation()}
         />

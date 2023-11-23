@@ -6,7 +6,7 @@ import { InputExerciseType } from './input-exercise-type'
 import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
@@ -48,11 +48,11 @@ export const InputExerciseToolbar = ({
             <select
               value={state.type.value}
               onChange={(event) => state.type.set(event.target.value)}
-              className={tw`
+              className={cn(`
                 bg-editor-primary-10 mr-2 max-w-[13rem] cursor-pointer rounded-md !border
                 border-gray-500 bg-transparent px-1 py-[1px] text-sm transition-all
                 hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
-              `}
+              `)}
             >
               {Object.values(InputExerciseType).map((exerciseType) => (
                 <option key={exerciseType} value={exerciseType}>
@@ -69,11 +69,11 @@ export const InputExerciseToolbar = ({
               onChange={({ target }) => {
                 state.unit.set(target.value)
               }}
-              className={tw`
+              className={cn(`
               mr-2 w-20 cursor-pointer rounded-md !border border-gray-500
             bg-editor-primary-100 px-1 py-[1px] text-sm transition-all
             hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
-            `}
+            `)}
             />
           </label>
         </>

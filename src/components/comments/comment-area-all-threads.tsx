@@ -3,7 +3,6 @@ import {
   faWarning,
   faFilter,
 } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { useState } from 'react'
 
 import { CommentAreaAllThreadsThread } from './comment-area-all-threads-thread'
@@ -16,6 +15,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { CommentStatus, Instance } from '@/fetcher/graphql-types/operations'
 import { useCommentDataAll } from '@/fetcher/use-comment-data-all'
+import { cn } from '@/helper/cn'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export function CommentAreaAllThreads() {
@@ -49,7 +49,7 @@ export function CommentAreaAllThreads() {
           <FaIcon icon={faFilter} className="ml-2 mr-3" />
           Filtern nach
           <span
-            className={clsx(
+            className={cn(
               "after:absolute after:-ml-7 after:mt-1.5 after:text-2xl after:text-black after:content-['▾']",
               'inline-block border-solid after:pointer-events-none'
             )}
@@ -59,7 +59,7 @@ export function CommentAreaAllThreads() {
               onChange={(e) => {
                 setFilter(e.target.value)
               }}
-              className={clsx(
+              className={cn(
                 filter ? 'bg-brand-400' : 'bg-gray-200',
                 'ml-3 cursor-pointer appearance-none rounded-lg  p-3 pr-9 [&>option:selected]:bg-brand-100 [&>option]:bg-white'
               )}
@@ -76,7 +76,7 @@ export function CommentAreaAllThreads() {
             </select>
           </span>
           <span
-            className={clsx(
+            className={cn(
               "after:absolute after:-ml-7 after:mt-1.5 after:text-2xl after:text-black after:content-['▾']",
               'ml-12 inline-block border-solid after:pointer-events-none'
             )}
@@ -87,7 +87,7 @@ export function CommentAreaAllThreads() {
                 setStatus(e.target.value)
                 setShowRefresh(false)
               }}
-              className={clsx(
+              className={cn(
                 status ? 'bg-brand-400' : 'bg-gray-200',
                 'cursor-pointer appearance-none rounded-lg bg-brand-400 p-3 pr-9 [&>option:selected]:bg-brand-100 [&>option]:bg-white'
               )}

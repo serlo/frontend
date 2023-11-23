@@ -1,8 +1,7 @@
-import clsx from 'clsx'
-
 import { WizardPageProps } from './wizard-page-props'
 import { MenuButton, MenuItem } from '../menu-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { cn } from '@/helper/cn'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface GradeProps extends WizardPageProps {
@@ -31,7 +30,7 @@ export function Grade({
   ]
 
   return (
-    <div className={clsx('flex', isSummary ? 'flex-row' : 'flex-col')}>
+    <div className={cn('flex', isSummary ? 'flex-row' : 'flex-col')}>
       {!isSummary && (
         <p className="mb-4 text-xl">
           {replacePlaceholders(gradeStrings.title, {
@@ -40,7 +39,7 @@ export function Grade({
         </p>
       )}
 
-      <div className={clsx(!isSummary && 'mb-8', 'flex items-center')}>
+      <div className={cn(!isSummary && 'mb-8', 'flex items-center')}>
         <label htmlFor="grade" className="font-semibold text-brand-700">
           {gradeStrings.label}
         </label>

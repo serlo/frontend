@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import jsonDiff from 'json-diff'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -11,6 +10,7 @@ import { useEffect, useState } from 'react'
 
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
+import { cn } from '@/helper/cn'
 
 interface FolderData {
   id: number
@@ -124,7 +124,7 @@ export default function Page() {
           {data.versions.map((change, i) => {
             return (
               <div
-                className={clsx(
+                className={cn(
                   'relative m-4 h-36 w-56 rounded-xl p-2',
                   i === start || i === end
                     ? 'bg-green-200'
@@ -305,7 +305,7 @@ export default function Page() {
                 <a
                   href={`/${entry.current_revision_id}`}
                   target="_blank"
-                  className={clsx(
+                  className={cn(
                     'hover:underline',
                     cr[entry.current_revision_id] === 'added' &&
                       'text-green-600',
@@ -336,7 +336,7 @@ export default function Page() {
                   <a
                     href={`/${entry.current_revision_id}`}
                     target="_blank"
-                    className={clsx(
+                    className={cn(
                       'hover:underline',
                       cr[entry.current_revision_id] === 'added' &&
                         'text-green-600',
@@ -359,7 +359,7 @@ export default function Page() {
                           <a
                             href={`/${child.current_revision_id}`}
                             target="_blank"
-                            className={clsx(
+                            className={cn(
                               'hover:underline',
                               cr[child.current_revision_id] === 'added' &&
                                 'text-green-600',

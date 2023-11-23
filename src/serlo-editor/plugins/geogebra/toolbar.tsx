@@ -38,7 +38,7 @@ export const GeogebraToolbar = ({
             <ModalWithCloseButton
               isOpen={showSettingsModal}
               onCloseClick={() => setShowSettingsModal(false)}
-              className="!top-1/3 !max-w-xl"
+              className="top-8 max-w-xl translate-y-0 sm:top-1/3"
             >
               <h3 className="serlo-h3 mt-4">
                 {editorStrings.edtrIo.settings}: {geogebraStrings.title}

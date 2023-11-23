@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { useRouter } from 'next/router'
 
 import { editorContent, entity, entityType } from './common/common'
@@ -7,6 +6,7 @@ import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { AiExerciseGenerationButton } from '@/components/exercise-generation/ai-exercise-generation-button'
 import { useAiFeatures } from '@/components/exercise-generation/use-ai-features'
 import { UuidType } from '@/data-types'
+import { cn } from '@/helper/cn'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -68,10 +68,7 @@ function TextExerciseTypeEditor({
         </div>
       )}
       <article
-        className={clsx(
-          'text-exercise',
-          config.skipControls ? 'mt-12' : 'mt-32'
-        )}
+        className={cn('text-exercise', config.skipControls ? 'mt-12' : 'mt-32')}
       >
         {content.render()}
         {config.skipControls ? null : (

@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { cn } from '@/helper/cn'
 
 interface EditorIconProps {
   pathData: string
@@ -11,7 +11,7 @@ export function EditorSvgIcon({ pathData, className }: EditorIconProps) {
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      className={clsx('inline-block overflow-hidden align-middle', className)}
+      className={cn('inline-block overflow-hidden align-middle', className)}
     >
       <path fill="currentcolor" d={pathData} />
     </svg>

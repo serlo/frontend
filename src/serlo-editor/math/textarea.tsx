@@ -2,7 +2,7 @@ import { useState, useCallback, createRef, useEffect } from 'react'
 
 import type { MathEditorProps } from './editor'
 import { EditorTextarea } from '../editor-ui'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 interface MathEditorTextareaProps
   extends Pick<
@@ -40,10 +40,10 @@ export const MathEditorTextarea = (props: MathEditorTextareaProps) => {
 
   return (
     <EditorTextarea
-      className={tw`
+      className={cn(`
         mx-0 my-1 h-24 !w-[80vw] !max-w-[600px] rounded-md !border-2
         border-transparent text-black !shadow-none focus:border-editor-primary
-      `}
+      `)}
       onChange={parentOnChange}
       onCopy={(e) => e.stopPropagation()}
       onCut={(e) => e.stopPropagation()}

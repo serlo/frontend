@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import Image from 'next/image'
 import { default as NextLink } from 'next/link'
 import { Fragment } from 'react'
@@ -8,7 +7,7 @@ import { HeadTags } from '@/components/head-tags'
 import { UserTools } from '@/components/user-tools/user-tools'
 import type { CommunityWallPerson } from '@/data/de/community-people'
 import { breakpoints } from '@/helper/breakpoints'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import type { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
 
 const testimonials = [
@@ -107,9 +106,11 @@ const specials = [
   },
 ]
 
-const h2Class = tw`text-center text-4xl font-extrabold leading-cozy tracking-tight`
-const h3Class = tw`text-[1.3rem] font-extrabold text-gray-700`
-const italicClass = tw`font-handwritten text-3xl italic text-brand`
+const h2Class = cn(
+  `text-center text-4xl font-extrabold leading-cozy tracking-tight`
+)
+const h3Class = cn(`text-[1.3rem] font-extrabold text-gray-700`)
+const italicClass = cn(`font-handwritten text-3xl italic text-brand`)
 
 // type CategorizedJobsProps = Record<string, PersonioPosition[]>
 export interface JobsOverviewProps {
@@ -124,31 +125,29 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
       <HeadTags data={{ title: 'Jobs bei Serlo' }} />
 
       <div
-        className={tw`
+        className={cn(`
           -mt-12 w-[100vw]
           text-center text-gray-700 md:relative md:left-[calc(-50vw+50%)]
           md:ml-0 md:max-w-[100vw]
           md:text-left
-        `}
+        `)}
       >
         <div className="mt-16 md:mt-[11vh]">
           <UserTools aboveContent />
         </div>
         <section
-          className={tw`
+          className={cn(`
             font-bold sm:flex
             sm:flex-row-reverse sm:text-left
-          `}
+          `)}
         >
           <div className="mt-12 w-full px-2 sm:ml-10 sm:mt-32">
-            <p className={clsx(italicClass, 'serlo-add-eyebrows mr-6')}>
-              Hey du
-            </p>
+            <p className={cn(italicClass, 'serlo-add-eyebrows mr-6')}>Hey du</p>
             <h1
-              className={tw`
+              className={cn(`
                 mx-auto mb-6 mt-3 max-w-md
                 text-5xl font-extrabold leading-tight tracking-tight sm:ml-0
-              `}
+              `)}
             >
               Digitale Bildung braucht{' '}
               <span className="serlo-underlined !pr-0">dich&thinsp;!</span>
@@ -160,9 +159,9 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
                 src="/_assets/img/jobs/jobs-header.jpg"
                 alt="Zwei Menschen beim Arbeiten"
                 fill
-                className={tw`
+                className={cn(`
               rounded-full object-cover object-left
-              `}
+              `)}
               />
             </div>
           </aside>
@@ -170,25 +169,25 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
 
         <section className="mt-3 px-2 text-center">
           <h3
-            className={clsx(h2Class, 'mt-12 inline-block hyphens-auto pb-3')}
+            className={cn(h2Class, 'mt-12 inline-block hyphens-auto pb-3')}
             id="stellen"
           >
             Unsere offenen Stellen
           </h3>
           <div className="mt-5 justify-center px-side pt-8 text-left sm:flex">
             <div className="mx-auto w-full max-w-xl sm:mr-4">
-              <h3 className={clsx(h3Class, 'mb-2 ml-5')}>Hauptamtlich</h3>
+              <h3 className={cn(h3Class, 'mb-2 ml-5')}>Hauptamtlich</h3>
               {renderPositions(jobs)}
             </div>
             <div className="mx-auto w-full max-w-xl sm:ml-4">
               <div>
-                <h3 className={clsx(h3Class, 'mb-2 ml-5 mt-16 sm:mt-0')}>
+                <h3 className={cn(h3Class, 'mb-2 ml-5 mt-16 sm:mt-0')}>
                   Ehrenamtlich
                 </h3>
                 {renderPositions(volunteers)}
               </div>
               <div className="mt-16">
-                <h3 className={clsx(h3Class, 'mb-2 ml-5')}>Praktika</h3>
+                <h3 className={cn(h3Class, 'mb-2 ml-5')}>Praktika</h3>
                 {renderPositions(internships)}
               </div>
             </div>
@@ -197,22 +196,22 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
 
         <section className="mt-24 bg-orangeBow bg-100% !pt-12">
           <h3
-            className={tw`
+            className={cn(`
               mx-auto text-center text-4xl font-bold
               leading-cozy tracking-tight
               text-almost-black
-            `}
+            `)}
           >
-            <p className={clsx(h2Class, 'mt-8 px-1')}>
+            <p className={cn(h2Class, 'mt-8 px-1')}>
               Das erwartet dich bei uns
             </p>
           </h3>
           <div
-            className={tw`
+            className={cn(`
               relative mx-auto mb-12 grid max-w-2xl
               grid-cols-2 pb-16 pt-4
               text-left text-[1.3rem] md:max-w-4xl md:grid-cols-3 md:pb-16 lg:mb-16
-            `}
+            `)}
           >
             {specials.map(({ src, title, content }) => {
               return (
@@ -235,9 +234,9 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
           </div>
         </section>
 
-        <section className={clsx('mt-18 -mb-8')}>
+        <section className={cn('mt-18 -mb-8')}>
           <div className="mx-auto max-w-4xl text-center">
-            <p className={clsx(h2Class, 'mt-8')}>Noch Fragen?</p>
+            <p className={cn(h2Class, 'mt-8')}>Noch Fragen?</p>
             <p className="mt-3 text-[1.3rem]">
               Dann schreib uns an{' '}
               <a className="text-brand underline" href="mailto:jobs@serlo.org">
@@ -320,11 +319,11 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
                 ) : null} */}
               <li key={id}>
                 <NextLink
-                  className={tw`
+                  className={cn(`
                     mb-5 block rounded-xl px-5
                     py-4 text-lg shadow-menu transition-colors
                     hover:bg-brand/5
-                  `}
+                  `)}
                   href={`/jobs/${id}`}
                 >
                   <span className="font-bold text-brand">{name}</span>
@@ -343,19 +342,19 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
     return (
       <figure
         key={name}
-        className={tw`
+        className={cn(`
           group relative mx-auto
           mt-12 max-w-[20rem]
           text-center sm:w-1/3v
-        `}
+        `)}
       >
         <div className="relative w-full">
           <div
-            className={tw`
+            className={cn(`
               absolute left-5 right-12 top-5 bg-wiggle bg-contain
               bg-no-repeat pb-6/5 opacity-0 transition-all
               duration-200 ease-linear group-hover:rotate-1 group-hover:opacity-100
-            `}
+            `)}
           ></div>
         </div>
         <Image
@@ -367,10 +366,10 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
         />
         <p className="mt-3 text-base font-bold">@{name}</p>
         <span
-          className={tw`
+          className={cn(`
             rounded-2xl px-2 py-1 font-handwritten
             text-xl font-bold text-brand
-          `}
+          `)}
         >
           {role}
         </span>
