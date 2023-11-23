@@ -49,7 +49,7 @@ export function getStyleHacks(
     // also media-wrapper needs to be relative to be clickable (is float:right)
     // but needs to be static to not restrict toolbar width
     (isMediaChildFocused || isMediaChildFocusedWithin) &&
-      '[&_.media-wrapper_.plugin-wrapper-container]:!static [&_.media-wrapper]:!static',
+      '[&_.media-wrapper]:!static [&_.media-wrapper_.plugin-wrapper-container]:!static',
 
     // top toolbars border radius right (for article intro, first rows child, media child)
     `

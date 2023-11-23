@@ -108,7 +108,7 @@ export function ModalWithCloseButton({
   )
 }
 
-export const ModalClsx = cn(`
+export const ModalClasses = cn(`
   absolute left-1/2 -mr-[50%] max-w-[85%] -translate-x-1/2
   -translate-y-1/2 rounded-xl border-none bg-white
   px-2.5  pt-2.5 shadow-modal outline-none
