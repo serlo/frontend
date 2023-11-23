@@ -5,13 +5,6 @@ import { CloseButton } from './close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
 
-try {
-  BaseModal.defaultStyles.overlay!.zIndex = 101
-} catch (e) {
-  // eslint-disable-next-line no-console
-  console.error(e)
-}
-
 BaseModal.setAppElement('#__next')
 
 interface ModalWithCloseButtonProps {
@@ -22,7 +15,6 @@ interface ModalWithCloseButtonProps {
   className?: string
   alignTitleAndCloseButton?: boolean
   confirmCloseDescription?: string | undefined
-  overwriteClassNameCompletely?: boolean
   closeButtonClassName?: string
 }
 
@@ -34,7 +26,6 @@ export function ModalWithCloseButton({
   className,
   alignTitleAndCloseButton,
   confirmCloseDescription,
-  overwriteClassNameCompletely,
   closeButtonClassName,
 }: ModalWithCloseButtonProps) {
   const { strings } = useInstanceData()
@@ -48,13 +39,10 @@ export function ModalWithCloseButton({
 
   return (
     <BaseModal
+      overlayClassName={cn(defaultModalOverlayStyles, 'z-[101]')}
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      className={
-        overwriteClassNameCompletely
-          ? className
-          : cn(ModalClasses, 'top-[40%] w-[500px] pb-10', className)
-      }
+      className={cn('serlo-modal', className)}
     >
       {alignTitleAndCloseButton ? (
         <div className="flex w-full items-center justify-between py-4">
@@ -108,8 +96,7 @@ export function ModalWithCloseButton({
   )
 }
 
-export const ModalClasses = cn(`
-  absolute left-1/2 -mr-[50%] max-w-[85%] -translate-x-1/2
-  -translate-y-1/2 rounded-xl border-none bg-white
-  px-2.5  pt-2.5 shadow-modal outline-none
-`)
+// See https://github.com/reactjs/react-modal/blob/master/src/components/Modal.js#L107
+export const defaultModalOverlayStyles = cn(
+  'fixed bottom-0 left-0 right-0 top-0 bg-white bg-opacity-75'
+)

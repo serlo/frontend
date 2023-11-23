@@ -14,6 +14,7 @@ export interface RevisionHistoryProps {
   hideEdit?: boolean
   onSelectRevision?: (id: number) => void
   selectedRevisionId?: number
+  tableClassName?: string
 }
 
 export function RevisionHistory({
@@ -21,6 +22,7 @@ export function RevisionHistory({
   hideEdit,
   onSelectRevision,
   selectedRevisionId,
+  tableClassName,
 }: RevisionHistoryProps) {
   const { strings } = useInstanceData()
   if (!data) return null
@@ -31,7 +33,9 @@ export function RevisionHistory({
   }
 
   return (
-    <table className="relative mx-side w-full border-collapse">
+    <table
+      className={cn('relative mx-side w-full border-collapse', tableClassName)}
+    >
       <thead>
         <tr>
           {renderTh(changes)}
