@@ -98,5 +98,5 @@ export function ModalWithCloseButton({
 
 // See https://github.com/reactjs/react-modal/blob/master/src/components/Modal.js#L107
 export const defaultModalOverlayStyles = cn(
-  'fixed top-0 left-0 right-0 bottom-0 bg-white bg-opacity-75'
+  'fixed bottom-0 left-0 right-0 top-0 bg-white bg-opacity-75'
 )
