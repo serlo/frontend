@@ -20,6 +20,7 @@ export function LightBox({ label, src, alt, onClose }: LightBoxProps) {
     <>
       <Modal
         className={cn('serlo-modal', 'pb-7 text-center')}
+        overlayClassName="z-[101]"
         isOpen
         onRequestClose={onClose}
       >
