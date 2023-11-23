@@ -17,11 +17,9 @@ import { isProduction } from '@/helper/is-production'
 export interface ExerciseGenerationWizardProps {
   data: {
     subject: string
-    title: string
     topic: string
   }
   isExerciseGroup: boolean
-  setTitle: (title: string) => void
   handleTransitionToExercisePage: () => void
   prompt: string
   setPrompt: (newPrompt: string) => void
@@ -30,7 +28,6 @@ export interface ExerciseGenerationWizardProps {
 export function ExerciseGenerationWizard({
   data,
   isExerciseGroup,
-  setTitle,
   handleTransitionToExercisePage,
   setPrompt,
   prompt,
@@ -45,35 +42,7 @@ export function ExerciseGenerationWizard({
 
   const [topic, setTopic] = useState<string>(defaultTopic || '')
 
-  const [canUpdateTitle, setCanUpdateTitle] = useState<boolean>(false)
-
   const isSummary = currentPage === 6
-
-  useEffect(() => {
-    // Page 2 needs to be visited once before we update the title. When going
-    // back to page 1, we are updating it live as the user is typing.
-    if (currentPage === 2 && !canUpdateTitle) {
-      setCanUpdateTitle(true)
-    }
-
-    if (canUpdateTitle) {
-      const newTitle =
-        exerciseGenerationString.modalTitleWithTaxonomy +
-        subject.charAt(0).toUpperCase() +
-        subject.slice(1) +
-        ' - ' +
-        topic
-
-      setTitle(newTitle)
-    }
-  }, [
-    topic,
-    subject,
-    setTitle,
-    canUpdateTitle,
-    currentPage,
-    exerciseGenerationString,
-  ])
 
   const [grade, setGrade] = useState<string>('5')
 

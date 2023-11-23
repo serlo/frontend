@@ -22,6 +22,7 @@ import {
   transformEditorDataToExerciseGroup,
 } from '@/helper/ai-generated-exercises/data-conversion'
 import { ExpectedLLMOutputType } from '@/helper/ai-generated-exercises/decoders'
+import { cn } from '@/helper/cn'
 import { ErrorBoundary } from '@/helper/error-boundary'
 import { EditorProps } from '@/serlo-editor/core'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
@@ -55,7 +56,7 @@ export function ExercisePreviewPage({
     submitEventPrefix: 'exercise-generation-wizard-prompt-execution',
   })
 
-  const { exerciseGeneration: exerciseGenerationStrings } =
+  const { exerciseGeneration: exGenerationStrings } =
     useLoggedInData()!.strings.ai
 
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0)
@@ -88,14 +89,17 @@ export function ExercisePreviewPage({
     <ModalWithCloseButton
       isOpen
       onCloseClick={closePage}
-      confirmCloseDescription="Are you sure you want to close the preview? All data will be lost!"
-      className="fixed left-1/2 top-0 flex h-full max-h-none w-full max-w-none translate-y-0 flex-col items-center justify-center bg-gray-100"
-      closeButtonClassName="!bg-blue-300 absolute right-2 top-2 text-black"
+      confirmCloseDescription={exGenerationStrings.confirmCloseDescription}
+      className={cn(
+        `bg-gray-100" fixed left-1/2 top-0 flex h-full max-h-none
+        w-full max-w-none translate-y-0 flex-col items-center justify-center`
+      )}
+      extraCloseButtonClassName="bg-brand-200"
     >
       {status === ExecutePromptStatus.Loading && (
         <div className="mb-6 flex items-center justify-center">
           <h1 className="font-semibold text-black">
-            {exerciseGenerationStrings.preview.loadingHeading}
+            {exGenerationStrings.preview.loadingHeading}
           </h1>
         </div>
       )}
@@ -105,9 +109,7 @@ export function ExercisePreviewPage({
         {status === ExecutePromptStatus.Success && (
           <div>
             <ErrorBoundary
-              somethingWentWrongString={
-                exerciseGenerationStrings.somethingWentWrong
-              }
+              somethingWentWrongString={exGenerationStrings.somethingWentWrong}
             >
               {editorData && editorData.exercises[currentExerciseIndex] && (
                 <StaticRenderer
@@ -143,7 +145,7 @@ export function ExercisePreviewPage({
             >
               <FaIcon icon={faCaretLeft} className="mr-2 text-sm" />
 
-              {exerciseGenerationStrings.previousButton}
+              {exGenerationStrings.previousButton}
             </button>
           )}
 
@@ -156,20 +158,28 @@ export function ExercisePreviewPage({
                 )
               }
             >
-              {exerciseGenerationStrings.nextExerciseButton}
+              {exGenerationStrings.nextExerciseButton}
               <FaIcon icon={faCaretRight} className="ml-2 text-sm" />
             </button>
           )}
         </div>
       )}
 
-      <div className="mt-8 flex w-2/5 flex-col items-end space-y-1">
+      <div className="mt-12 flex w-2/5 justify-between">
         {/* Not supported for now */}
         {/* <button className="self-end rounded bg-brand-700 px-6 py-2 text-white">
           {exerciseGenerationStrings.preview.publishExercise}
         </button> */}
         <button
-          className="flex items-center p-2 text-brand-700 hover:bg-blue-100"
+          className="serlo-button-light text-base"
+          onClick={regenerate}
+          disabled={status === ExecutePromptStatus.Loading}
+        >
+          <FaIcon icon={faRefresh} className="mr-2" />
+          {exGenerationStrings.preview.regenerate}
+        </button>
+        <button
+          className="serlo-button-blue text-base"
           onClick={() => {
             if (editorData && editorData.exercises.length === 1) {
               setEditorState({
@@ -190,15 +200,7 @@ export function ExercisePreviewPage({
         >
           <FaIcon icon={faPencilAlt} className="mr-2" />
 
-          {exerciseGenerationStrings.preview.openExerciseInEditor}
-        </button>
-        <button
-          className="flex items-center p-2 text-brand-700 hover:bg-blue-100"
-          onClick={regenerate}
-          disabled={status === ExecutePromptStatus.Loading}
-        >
-          <FaIcon icon={faRefresh} className="mr-2" />
-          {exerciseGenerationStrings.preview.regenerate}
+          {exGenerationStrings.preview.openExerciseInEditor}
         </button>
       </div>
     </ModalWithCloseButton>
