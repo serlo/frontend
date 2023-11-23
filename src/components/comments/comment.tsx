@@ -10,7 +10,6 @@ import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
 import { scrollIfNeeded } from '@/helper/scroll'
-import { tw } from '@/helper/tw'
 import { useEditCommentMutation } from '@/mutations/thread'
 import type { StaticMathProps } from '@/serlo-editor/plugins/text/static-components/static-math'
 
@@ -87,12 +86,7 @@ export function Comment({
       id={`comment-${id}`}
       className={clsx(
         'pb-0.5 pt-1 transition-colors duration-700 ease-out',
-        isParent
-          ? ''
-          : tw`
-            mb-5 ml-4 mt-8 border-l-6 border-brand-200 
-            pb-0.5
-          `
+        isParent ? '' : 'mb-5 ml-4 mt-8 border-l-6 border-brand-200 pb-0.5'
       )}
     >
       <MetaBar

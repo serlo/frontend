@@ -12,10 +12,10 @@ import { preventHover } from './prevent-hover'
 import { SubContent } from './sub-content'
 import { FaIcon } from '@/components/fa-icon'
 import type { HeaderLinkData } from '@/data-types'
+import { cn } from '@/helper/cn'
 import { submitEvent } from '@/helper/submit-event'
-import { tw } from '@/helper/tw'
 
-const styledLinkCls = tw`
+const styledLinkCls = cn(`
   navtrigger block flex w-full
   items-center border-b border-brand-400
   p-4 align-middle text-[1.33rem] font-bold text-brand
@@ -23,7 +23,7 @@ const styledLinkCls = tw`
   hover:bg-brand-300 hover:no-underline md:my-0 md:mt-[2px] md:block
   md:px-[7px] md:py-0.5 md:text-center md:text-[0.9rem]
   md:leading-tight md:text-brand-700 md:transition
-`
+`)
 
 export interface ItemProps {
   link: HeaderLinkData

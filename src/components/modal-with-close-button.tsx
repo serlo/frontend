@@ -4,7 +4,7 @@ import BaseModal from 'react-modal'
 
 import { CloseButton } from './close-button'
 import { useInstanceData } from '@/contexts/instance-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 try {
   BaseModal.defaultStyles.overlay!.zIndex = 101
@@ -109,8 +109,8 @@ export function ModalWithCloseButton({
   )
 }
 
-export const ModalClsx = tw`
+export const ModalClsx = cn(`
   absolute left-1/2 -mr-[50%] max-w-[85%] -translate-x-1/2
   -translate-y-1/2 rounded-xl border-none bg-white
   px-2.5  pt-2.5 shadow-modal outline-none
-`
+`)

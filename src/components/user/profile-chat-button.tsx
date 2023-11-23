@@ -7,9 +7,9 @@ import { FaIcon } from '../fa-icon'
 import { useAuthentication } from '@/auth/use-authentication'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
+import { cn } from '@/helper/cn'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { tw } from '@/helper/tw'
 import { useCreateThreadMutation } from '@/mutations/thread'
 
 interface ProfileChatButtonProps {
@@ -109,11 +109,11 @@ export function ProfileChatButton({
           {replacePlaceholders(part2, { username })}
         </p>
         <div
-          className={tw`
+          className={cn(`
             mx-side mb-7 mt-4 flex items-center rounded-2xl
             bg-brandgreen-50 py-1
             transition-colors duration-200 ease-in focus-within:bg-brandgreen-100
-          `}
+          `)}
         >
           <TextareaAutosize
             value={message}

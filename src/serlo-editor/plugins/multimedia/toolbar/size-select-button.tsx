@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 
 import type { MultimediaProps } from '..'
-import { tw } from '@/helper/tw'
 
 interface MultimediaSizeSelectButtonProps {
   state: MultimediaProps['state']['width']
@@ -21,7 +20,7 @@ export const MultimediaSizeSelectButton = ({
       state.set(percent)
     }}
     className={clsx(
-      tw`
+      `
         group mr-2 flex h-24 w-24 flex-row rounded-lg bg-editor-primary-100 p-1
         opacity-75 hover:bg-editor-primary-200 focus:bg-editor-primary-200
       `,

@@ -29,7 +29,7 @@ import {
 } from './education-plugin-examples'
 import { FaIcon } from '@/components/fa-icon'
 import { UuidsProvider } from '@/contexts/uuids-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
@@ -311,7 +311,7 @@ export function EducationPlugins() {
         <button
           onClick={() => setSelectedTitle(title)}
           className={clsx(
-            tw`
+            cn`
               m-1 whitespace-nowrap rounded-md px-2 py-1
               shadow-menu hover:bg-brand-50
             `,

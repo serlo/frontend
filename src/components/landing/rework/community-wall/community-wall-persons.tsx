@@ -5,7 +5,7 @@ import { Fragment } from 'react'
 
 import { Link } from '@/components/content/link'
 import { CommunityWallPerson } from '@/data/de/community-people'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 interface CommunityWallPersonsProps {
   persons: CommunityWallPerson[]
@@ -29,7 +29,7 @@ export function CommunityWallPersons({
         <Fragment key={name}>
           <figure
             className={clsx(
-              tw`
+              `
                 group z-30 mx-1 mt-12
                 w-1/3v max-w-[13rem] text-center
                 sm:w-1/4v md:absolute md:w-1/8v
@@ -40,11 +40,11 @@ export function CommunityWallPersons({
           >
             <div className="relative z-0 w-full">
               <div
-                className={tw`
+                className={cn(`
                   absolute -left-12 -right-12 bg-wiggle bg-contain
                   bg-no-repeat pb-6/5 opacity-0 transition-all
                   duration-200 ease-linear group-hover:rotate-1 group-hover:opacity-100
-                `}
+                `)}
               ></div>
             </div>
             <Link

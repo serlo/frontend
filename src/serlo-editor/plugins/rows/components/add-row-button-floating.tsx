@@ -3,7 +3,6 @@ import clsx from 'clsx'
 
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
 
 interface AddRowButtonFloatingProps {
   onClick: React.MouseEventHandler<HTMLButtonElement>
@@ -24,7 +23,7 @@ export function AddRowButtonFloating({
         <div className="group flex justify-center">
           <button
             className={clsx(
-              tw`
+              `
                 add-trigger z-20 h-7 w-7
                 rounded-full pt-1 text-center
                 text-gray-600 transition-all hover:cursor-pointer

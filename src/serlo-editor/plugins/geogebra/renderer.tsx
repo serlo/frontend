@@ -1,6 +1,6 @@
 import Script from 'next/script'
 
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 export interface GeogebraRendererProps {
   id: string
@@ -43,11 +43,9 @@ export function GeogebraRenderer({ id, url }: GeogebraRendererProps) {
         }}
       />
       <div
-        className={
-          `geogebra-scaler-${id} ` +
-          tw`absolute top-0 flex h-full w-full items-center justify-center
-          overflow-hidden rounded-xl bg-brand-50 p-0`
-        }
+        className={cn(`geogebra-scaler-${id} absolute top-0 flex h-full w-full
+        items-center justify-center
+        overflow-hidden rounded-xl bg-brand-50 p-0`)}
       >
         {url ? <div id={`ggb-element-${id}`} className="mx-auto"></div> : null}
       </div>

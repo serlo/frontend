@@ -2,7 +2,7 @@ import { RefObject } from 'react'
 
 import type { ImageProps } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import { isTempFile } from '@/serlo-editor/plugin'
 
 export function InlineSrcControls({
@@ -28,10 +28,10 @@ export function InlineSrcControls({
           value={!isTempFile(src.value) ? src.value : ''}
           disabled={isTempFile(src.value) && !src.value.failed}
           onChange={(e) => state.src.set(e.target.value)}
-          className={tw`
+          className={cn(`
             mb-side mr-2 block w-60 rounded-xl border-2 border-editor-primary-100 bg-editor-primary-100
             px-2.5 py-[3px] text-almost-black focus:border-editor-primary focus:outline-none
-          `}
+          `)}
           data-qa="plugin-image-src"
         />
       </label>

@@ -10,7 +10,7 @@ import { Link } from '@/components/content/link'
 import { HeadTags } from '@/components/head-tags'
 import { Logo } from '@/components/navigation/header/logo'
 import { breakpoints } from '@/helper/breakpoints'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { VideoSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/video-serlo-static-renderer'
@@ -37,20 +37,20 @@ export function EditorPresentation() {
       </header>
 
       <div
-        className={tw`
+        className={cn(`
           -mt-12 text-gray-700
           sm:text-center md:relative
           md:left-[calc(-50vw+50%)] md:ml-0
           md:text-left
-        `}
+        `)}
       >
         <section className="mt-32 px-4 text-center font-bold">
           <h1
-            className={tw`
+            className={cn(`
               mx-auto mt-3
               text-5xl font-extrabold
               leading-tight tracking-tight
-            `}
+            `)}
           >
             <span className="serlo-underlined !pr-0 pb-2">Serlo Editor</span>
             <sup className="relative -top-6 ml-2 inline-block text-base text-brand">
@@ -170,10 +170,10 @@ export function EditorPresentation() {
         </section>
 
         <section
-          className={tw`
+          className={cn(`
             bg-size mt-8 bg-brand-100 bg-topWaveFromWhite bg-contain bg-top
             bg-no-repeat px-2 pt-20 sm:bg-[length:100%_3vw] md:pt-28
-          `}
+          `)}
         >
           <h2 className={clsx(h2Class, 'mb-8')}>About us</h2>
           <div className="mx-side max-w-4xl text-left sm:mx-auto">
@@ -269,7 +269,7 @@ export function EditorPresentation() {
       <a
         href="https://forms.gle/A6qZrkHoW4Q5K3Mb6"
         className={clsx(
-          tw`
+          `
             serlo-new-landing-button serlo-button-with-wings
             !mb-8 inline-block rounded-full transition-colors
             before:!mt-[-1.1rem] after:!mt-[-1.1rem]

@@ -6,7 +6,6 @@ import { VideoType } from '../plugins/video/renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
-import { tw } from '@/helper/tw'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
 // based on PrivacyWrapper
@@ -49,7 +48,7 @@ export function EmbedWrapper({
   return (
     <div
       className={clsx(
-        tw`
+        `
           group relative mx-side mb-block block
           cursor-pointer bg-cover bg-center [contain:content]
           `,

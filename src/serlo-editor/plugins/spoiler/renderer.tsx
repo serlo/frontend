@@ -1,8 +1,6 @@
 import clsx from 'clsx'
 import { useState } from 'react'
 
-import { tw } from '@/helper/tw'
-
 export interface SpoilerRendererProps {
   title: JSX.Element
   content: JSX.Element
@@ -28,7 +26,7 @@ export function SpoilerRenderer({
       <button
         onClick={() => setOpen(!open)}
         className={clsx(
-          tw`
+          `
             serlo-input-font-reset z-10 m-0 border-none px-side py-2.5
             text-left text-lg leading-normal text-almost-black transition-colors
           `,

@@ -1,7 +1,5 @@
 import clsx from 'clsx'
 
-import { tw } from '@/helper/tw'
-
 const partners = [
   {
     name: 'Bundesministerium für Bildung und Forschung',
@@ -71,7 +69,7 @@ export function PartnerList({ inContent }: { inContent?: boolean }) {
       <img
         key={name}
         className={clsx(
-          tw`
+          `
             max-h-[4.5rem] max-w-[20rem] px-8 opacity-80
             sm:max-h-[5.3rem] sm:px-8 md:max-h-24
           `,

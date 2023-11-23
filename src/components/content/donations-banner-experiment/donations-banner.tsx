@@ -8,9 +8,9 @@ import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
+import { cn } from '@/helper/cn'
 import { isProduction } from '@/helper/is-production'
 import { submitEvent } from '@/helper/submit-event'
-import { tw } from '@/helper/tw'
 
 // Round 2
 // 10% Artikel & Aufgabensammlung
@@ -251,13 +251,13 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
     <Lazy slim>
       <aside
         ref={bannerRef}
-        className={tw`
+        className={cn(`
             relative w-[100vw] overflow-x-hidden bg-[url("/_assets/img/landing/about-container.svg")] 
             bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat 
             px-side py-6 text-center
             text-xl sm:-mx-2 sm:flex sm:max-w-[100vw] sm:justify-between
             sm:px-0 sm:text-left lg:my-16 lg:py-10 lg:text-2xl
-          `}
+          `)}
       >
         {renderHideButton()}
         <figure className="mx-auto mt-6 max-w-[22rem] text-center sm:mr-0 sm:max-w-[15rem]">

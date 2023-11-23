@@ -3,7 +3,7 @@ import { useRef, useEffect } from 'react'
 
 import { Link } from '../content/link'
 import { SecondaryMenuData } from '@/data-types'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 export interface SecondaryMenuProps {
   data: SecondaryMenuData['entries']
@@ -24,10 +24,10 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
     <>
       <nav className="overflow-x-scroll md:hidden">
         <div
-          className={tw`
+          className={cn(`
             pointer-events-none absolute right-0 z-10 h-16 w-14 
             bg-gradient-to-l from-white to-white/0
-          `}
+          `)}
         />
         <ul className="my-3.5 whitespace-nowrap px-4 pt-3" ref={containerRef}>
           {data.map((entry) => {
@@ -49,10 +49,10 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
         </ul>
       </nav>
       <nav
-        className={tw`
+        className={cn(`
           absolute left-side z-10 mt-8
           hidden w-[170px] md:block xl:left-0 xl:ml-side-lg xl:w-[200px]
-        `}
+        `)}
       >
         <ul>
           {data.map((entry) => {
@@ -65,9 +65,8 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
                 >
                   <span
                     className={clsx(
-                      tw`
-                        serlo-button rounded-xl py-[3px] tracking-slightly-tighter
-                        group-hover:bg-brand group-hover:text-white
+                      `serlo-button rounded-xl py-[3px] tracking-slightly-tighter
+                      group-hover:bg-brand group-hover:text-white
                       `,
                       entry.active
                         ? 'bg-brand-200 text-black'

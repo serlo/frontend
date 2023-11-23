@@ -7,7 +7,7 @@ import { Link } from '../link'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { getLicense } from '@/data/licenses/licenses-helpers'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 interface LicenseNoticeProps {
   licenseId?: number
@@ -44,10 +44,10 @@ export function LicenseNotice({
   function renderFullNotice() {
     return (
       <div
-        className={tw`
+        className={cn(`
           my-10 border-t-2 border-brand-200 px-side
           py-2.5 text-sm text-almost-black mobile:flex
-        `}
+        `)}
       >
         <LicenseIcons title={title} isDefault={isDefault} />
         <br />

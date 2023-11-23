@@ -13,7 +13,6 @@ import clsx from 'clsx'
 
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { tw } from '@/helper/tw'
 
 export const boxTypeIcons = {
   blank: undefined,
@@ -53,7 +52,7 @@ export function BoxRenderer({ boxType, title, anchorId, children }: BoxProps) {
     <figure
       id={anchorId}
       className={clsx(
-        tw`
+        `
           serlo-box relative mx-side mb-6 
           rounded-xl border-3 pb-2 pt-[2px]
           [&>div.my-block]:first:mt-3.5

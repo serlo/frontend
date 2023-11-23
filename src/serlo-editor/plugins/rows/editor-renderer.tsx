@@ -7,7 +7,6 @@ import { NativeTypes } from 'react-dnd-html5-backend'
 import type { RowsPluginConfig, RowsPluginState } from '.'
 import { RowDragButton } from './components/row-drag-button'
 import { useCanDrop } from './components/use-can-drop'
-import { tw } from '@/helper/tw'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
 import { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import {
@@ -201,7 +200,7 @@ export function EditorRowRenderer({
           'rows-editor-renderer-container',
           'border-l-2 border-transparent',
           shouldShowBorder &&
-            tw`
+            `
             transition-colors
             focus-within:border-gray-400
             hover:!border-gray-200
@@ -209,7 +208,7 @@ export function EditorRowRenderer({
             [&:has(.rows-editor-renderer-container:focus-within)]:border-transparent
             [&:hover:has(.rows-editor-renderer-container:focus-within)]:!border-gray-200
             `,
-          tw`
+          `
           [&:focus-within>.rows-tools]:opacity-100
           [&:has(.rows-editor-renderer-container:focus-within)>.rows-tools]:opacity-0
           [&:hover>.rows-tools]:!opacity-100
