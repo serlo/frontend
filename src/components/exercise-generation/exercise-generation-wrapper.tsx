@@ -1,16 +1,19 @@
 import { useState } from 'react'
 
-import { AuthorToolsData } from './foldout-author-menus/author-tools'
-import { ExerciseGenerationWizard } from '../content/exercises/exercise-generation-wizard'
-import { ExercisePreviewPage } from '../content/exercises/exercise-preview-page'
+import { ExerciseGenerationWizard } from './exercise-generation-wizard/exercise-generation-wizard'
+import { ExercisePreviewPage } from './exercise-preview-page'
 import { ModalWithCloseButton } from '../modal-with-close-button'
-import { useAiWizard } from '@/contexts/ai-wizard-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
 import { submitEvent } from '@/helper/submit-event'
+import { EditorProps } from '@/serlo-editor/core'
 
 export interface ExerciseGenerationWrapperProps {
-  data: AuthorToolsData
+  subject: string
+  topic: string
+  isExerciseGroup: boolean
+  closeWizard: () => void
+  setEditorState: (editorState: EditorProps['initialState']) => void
 }
 
 enum ActivePage {
@@ -19,7 +22,11 @@ enum ActivePage {
 }
 
 export const ExerciseGenerationWrapper = ({
-  data,
+  subject,
+  closeWizard,
+  topic,
+  isExerciseGroup,
+  setEditorState,
 }: ExerciseGenerationWrapperProps) => {
   const { strings } = useLoggedInData() as LoggedInData
 
@@ -27,13 +34,10 @@ export const ExerciseGenerationWrapper = ({
     strings.ai.exerciseGeneration.initialModalTitle
   )
 
-  // TODO change this, only for testing.
-  // const [activePage, setActivePage] = useState(ActivePage.ExercisePreviewPage)
   const [activePage, setActivePage] = useState(
     ActivePage.ExerciseGenerationWizard
   )
   const [prompt, setPrompt] = useState('')
-  const { closeWizard } = useAiWizard()
 
   const handleTransitionToExercisePage = () => {
     setActivePage(ActivePage.ExercisePreviewPage)
@@ -52,12 +56,15 @@ export const ExerciseGenerationWrapper = ({
         confirmCloseDescription={
           strings.ai.exerciseGeneration.confirmCloseDescription
         }
-        // It will take the custom value (top-40%) of the ModalWithCloseButton
-        // without the important
-        className="!top-1/2 flex max-h-[80vh] min-h-[420px] flex-col pb-4"
+        className="flex !h-3/4 max-h-[80vh] min-h-[420px] flex-col pb-4"
       >
         <ExerciseGenerationWizard
-          data={data}
+          data={{
+            subject,
+            title,
+            topic,
+          }}
+          isExerciseGroup={isExerciseGroup}
           setTitle={setTitle}
           handleTransitionToExercisePage={handleTransitionToExercisePage}
           prompt={prompt}
@@ -67,6 +74,7 @@ export const ExerciseGenerationWrapper = ({
       {activePage === ActivePage.ExercisePreviewPage && (
         <ExercisePreviewPage
           prompt={prompt}
+          setEditorState={setEditorState}
           closePage={() => {
             submitEvent('exercise-generation-wizard-exercise-preview-closed')
             closeWizard()

@@ -12,14 +12,14 @@ interface TopicProps extends WizardPageProps {
   setTopic: (topic: string) => void
 }
 
-export const Topic: React.FC<TopicProps> = ({
+export function Topic({
   onNext,
   jumpToPage,
   isSummary,
   topic,
   setTopic,
   defaultTopic,
-}) => {
+}: TopicProps) {
   const { topic: topicStrings } =
     useLoggedInData()!.strings.ai.exerciseGeneration
 
@@ -66,7 +66,7 @@ export const Topic: React.FC<TopicProps> = ({
               setSelectedRadio(defaultTopic)
               setTopic(defaultTopic)
             }}
-            className="text-brand-700 focus:ring-sky-200"
+            className="text-brand-700 focus:ring-brand-300"
           />
           <label htmlFor="defaultTopic" className="ml-2">
             {defaultTopic.charAt(0).toUpperCase() + defaultTopic.slice(1)}
@@ -86,7 +86,7 @@ export const Topic: React.FC<TopicProps> = ({
             setTopic('')
             setSelectedRadio('custom')
           }}
-          className="text-brand-700 focus:ring-sky-200"
+          className="text-brand-700 focus:ring-brand-300"
         />
         <label htmlFor="customTopic" className="ml-2 ">
           {topicStrings.otherTopicLabel}
@@ -101,7 +101,7 @@ export const Topic: React.FC<TopicProps> = ({
               onNext()
             }
           }}
-          className="ml-2 rounded-md border border-sky-200 p-2 pl-2 focus:border-sky-200 focus:outline-brand-700"
+          className="ml-2 rounded-md border border-brand-300 p-2 pl-2 focus:border-brand-300 focus:outline-brand-700"
           placeholder={topicStrings.customTopicPlaceholder}
           ref={focusRef}
         />

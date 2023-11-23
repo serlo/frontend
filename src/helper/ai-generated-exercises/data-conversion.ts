@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { either as E } from 'fp-ts'
 import { PathReporter } from 'io-ts/lib/PathReporter'
 
@@ -29,14 +30,14 @@ import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 /**
  * Data needed to render and edit the exercises in the editor.
  */
-export interface IEditorExerciseData {
+export interface ExercisePreviewFromAi {
   exercises: EditorExerciseDocument[]
   heading: string
 }
 
 export function convertAiGeneratedScExerciseToEditorDocument(
   input: ExpectedLLMOutputType | null
-): IEditorExerciseData {
+): ExercisePreviewFromAi {
   if (!input) {
     return {
       exercises: [],
@@ -346,7 +347,7 @@ function isSingleChoiceGuard(
 }
 
 export function transformEditorDataToExerciseGroup(
-  editorData: IEditorExerciseData,
+  editorData: ExercisePreviewFromAi,
   license: LicenseData
 ): EditorTemplateExerciseGroupDocument {
   const exercisesTransformed = editorData.exercises.map<

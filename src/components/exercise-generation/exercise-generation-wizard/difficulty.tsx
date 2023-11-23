@@ -70,7 +70,7 @@ export function Difficulty({
             onNext()
           }
         }}
-        className="w-11/12 resize-none rounded-md border border-sky-200 p-2 pl-2 focus:border-sky-200 focus:outline-brand-700"
+        className="w-11/12 resize-none rounded-md border border-brand-300 p-2 pl-2 focus:border-brand-300 focus:outline-brand-700"
         placeholder={difficultyStrings.learningGoalPlaceholder}
       />
     </div>
