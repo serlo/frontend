@@ -4,6 +4,15 @@ import Modal from 'react-modal'
 import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
 
+try {
+  Modal.defaultStyles.overlay!.zIndex = 101
+} catch (e) {
+  // eslint-disable-next-line no-console
+  console.error(e)
+}
+
+Modal.setAppElement('#__next')
+
 export interface LightBoxProps {
   src: string
   alt?: string
@@ -17,7 +26,7 @@ export function LightBox({ label, src, alt, onClose }: LightBoxProps) {
   return (
     <>
       <Modal
-        className={cn('serlo-modal', 'top-1/2 pb-7 text-center')}
+        className={cn('serlo-modal', 'pb-7 text-center')}
         isOpen
         onRequestClose={onClose}
       >
