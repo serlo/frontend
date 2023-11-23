@@ -1,6 +1,6 @@
 import { mapObjIndexed } from 'ramda'
 
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import {
   StateType,
   StateTypesStaticType,
@@ -198,4 +198,6 @@ export function optionalSerializedChild(plugin: string): StateType<
   }
 }
 
-export const headerInputClasses = tw`mt-4 w-full border-b-2 border-none border-transparent focus:border-brand focus:outline-none`
+export const headerInputClasses = cn(
+  `mt-4 w-full border-b-2 border-none border-transparent focus:border-brand focus:outline-none`
+)

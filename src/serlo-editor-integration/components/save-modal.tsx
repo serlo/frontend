@@ -1,5 +1,4 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { useContext, useEffect, useState } from 'react'
 
 import { LocalStorageButton } from './local-storage-button'
@@ -11,8 +10,8 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { getLicense } from '@/data/licenses/licenses-helpers'
+import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { tw } from '@/helper/tw'
 import type { StateTypeReturnType } from '@/serlo-editor/plugin'
 
 export interface SaveModalProps {
@@ -129,7 +128,7 @@ export function SaveModal({
               )
             }
           }}
-          className={clsx(
+          className={cn(
             'serlo-button ml-2',
             pending ? 'cursor-default text-gray-300' : 'serlo-button-green'
           )}
@@ -173,7 +172,7 @@ export function SaveModal({
     if (!changes) return null
     return (
       <label
-        className={clsx(
+        className={cn(
           'font-bold',
           highlightMissingFields && !changesFilled && 'bg-red-100'
         )}
@@ -187,10 +186,10 @@ export function SaveModal({
             const { value } = e.target as HTMLTextAreaElement
             setChangesText(value)
           }}
-          className={tw`
+          className={cn(`
             focus-within:border-truegray-400 mb-7 mt-1 flex w-full items-center rounded-2xl
             border-2 border-yellow-200 bg-yellow-200 p-2 focus-within:outline-none
-          `}
+          `)}
         />
       </label>
     )
@@ -221,7 +220,7 @@ export function SaveModal({
 
     return (
       <label
-        className={clsx(
+        className={cn(
           'block pb-2',
           highlightMissingFields && !licenseAccepted && 'bg-red-100'
         )}

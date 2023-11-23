@@ -1,7 +1,7 @@
 import type { SuggestionOption } from '../hooks/use-suggestions'
 import IconFallback from '@/assets-webkit/img/editor/icon-fallback.svg'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 interface SuggestionsProps {
   options: SuggestionOption[]
@@ -38,16 +38,16 @@ export const Suggestions = ({
             onMouseMove={() => {
               onMouseMove(index)
             }}
-            className={tw`
+            className={cn(`
               group/suggestion flex cursor-pointer items-center px-5 py-2.5
               hover:bg-editor-primary-50 data-[active=true]:bg-editor-primary-50
-            `}
+            `)}
           >
             <div
-              className={tw`
+              className={cn(`
                mr-3 flex-[0_0_95px] rounded-md border border-transparent group-hover/suggestion:border-gray-300
                group-data-[active=true]/suggestion:border-gray-300 [&>svg]:rounded-md
-              `}
+              `)}
             >
               {icon ?? <IconFallback />}
             </div>

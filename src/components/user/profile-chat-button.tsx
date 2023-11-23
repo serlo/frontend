@@ -1,5 +1,4 @@
 import { faPaperPlane, faSpinner } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { ChangeEvent, useEffect, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 
@@ -7,9 +6,9 @@ import { FaIcon } from '../fa-icon'
 import { useAuthentication } from '@/auth/use-authentication'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
+import { cn } from '@/helper/cn'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { tw } from '@/helper/tw'
 import { useCreateThreadMutation } from '@/mutations/thread'
 
 interface ProfileChatButtonProps {
@@ -60,7 +59,7 @@ export function ProfileChatButton({
       <a
         href={url}
         onClick={onClickAction}
-        className={clsx(
+        className={cn(
           className,
           'serlo-button-green mt-[5px] block w-44 self-start text-center [grid-area:chatButton]'
         )}
@@ -109,11 +108,11 @@ export function ProfileChatButton({
           {replacePlaceholders(part2, { username })}
         </p>
         <div
-          className={tw`
+          className={cn(`
             mx-side mb-7 mt-4 flex items-center rounded-2xl
             bg-brandgreen-50 py-1
             transition-colors duration-200 ease-in focus-within:bg-brandgreen-100
-          `}
+          `)}
         >
           <TextareaAutosize
             value={message}
@@ -123,7 +122,7 @@ export function ProfileChatButton({
             }}
             placeholder={strings.profiles.inviteModal.messagePlaceholder}
             minRows={2}
-            className={clsx(
+            className={cn(
               'serlo-input-font-reset w-full text-lg',
               'resize-none border-0 bg-transparent text-black outline-none',
               'pl-4 pr-14',
@@ -138,7 +137,7 @@ export function ProfileChatButton({
           >
             <FaIcon
               icon={pending ? faSpinner : faPaperPlane}
-              className={clsx(pending && 'animate-spin-slow')}
+              className={cn(pending && 'animate-spin-slow')}
             />{' '}
             {button}
           </a>

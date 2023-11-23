@@ -1,10 +1,9 @@
-import clsx from 'clsx'
 import { useState, type ReactNode, useCallback } from 'react'
 import BaseModal from 'react-modal'
 
 import { CloseButton } from './close-button'
 import { useInstanceData } from '@/contexts/instance-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 try {
   BaseModal.defaultStyles.overlay!.zIndex = 101
@@ -54,7 +53,7 @@ export function ModalWithCloseButton({
       className={
         overwriteClassNameCompletely
           ? className
-          : clsx(ModalClsx, 'top-[40%] w-[500px] pb-10', className)
+          : cn(ModalClasses, 'top-[40%] w-[500px] pb-10', className)
       }
     >
       {alignTitleAndCloseButton ? (
@@ -78,7 +77,7 @@ export function ModalWithCloseButton({
             onClick={onRequestClose}
             title={strings.share.close}
             dataQa="modal-close-button"
-            className={clsx('absolute right-3.5 top-3.5', closeButtonClassName)}
+            className={cn('absolute right-3.5 top-3.5', closeButtonClassName)}
           />
         </>
       )}
@@ -109,8 +108,8 @@ export function ModalWithCloseButton({
   )
 }
 
-export const ModalClsx = tw`
+export const ModalClasses = cn(`
   absolute left-1/2 -mr-[50%] max-w-[85%] -translate-x-1/2
   -translate-y-1/2 rounded-xl border-none bg-white
   px-2.5  pt-2.5 shadow-modal outline-none
-`
+`)

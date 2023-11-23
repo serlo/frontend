@@ -2,13 +2,12 @@ import {
   faArrowCircleLeft,
   faFolderOpen,
 } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { Fragment } from 'react'
 
 import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
 import { BreadcrumbsData, BreadcrumbEntry } from '@/data-types'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 export interface BreadcrumbsProps {
   data?: BreadcrumbsData
@@ -35,15 +34,15 @@ export function Breadcrumbs({
   )
 
   function renderBreadcrumbEntry(bcEntry: BreadcrumbEntry, index: number) {
-    const withRightArrow = tw`
+    const withRightArrow = cn(`
       serlo-button mb-1 mr-5 py-0.5 font-normal
       after:absolute after:ml-3 after:text-gray-300 after:content-['>'] 
-    `
+    `)
 
     if (bcEntry.ellipsis) {
       return (
         <span
-          className={clsx(
+          className={cn(
             'hidden cursor-default sm:inline-block',
             withRightArrow
           )}
@@ -55,7 +54,7 @@ export function Breadcrumbs({
       if (data?.length !== index + 1) {
         return (
           <Link
-            className={clsx(
+            className={cn(
               'hidden sm:inline-block',
               withRightArrow,
               bcEntry.url && 'hover:bg-brand hover:text-white'
@@ -69,10 +68,10 @@ export function Breadcrumbs({
         return (
           <>
             <Link
-              className={tw`
+              className={cn(`
                 serlo-button bg-brand-200 py-0.5 hover:bg-brand-400
                 hover:text-white sm:bg-brand-100 sm:hover:bg-brand
-              `}
+              `)}
               href={bcEntry.url ?? undefined}
             >
               <span className="pr-1 pt-0.25 sm:hidden">{renderIcon()}</span>

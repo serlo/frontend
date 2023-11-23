@@ -9,7 +9,7 @@ import ParticipateIcon from '@/assets-webkit/img/footer-participate.svg'
 import { Link } from '@/components/content/link'
 import { FooterNav } from '@/components/navigation/footer-nav'
 import { useInstanceData } from '@/contexts/instance-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 export function Footer() {
   const { footerData } = useInstanceData()
@@ -27,11 +27,11 @@ function About() {
     <div className="flex flex-col md:flex-row">
       <div className="relative min-h-[54px] w-full bg-brand">
         <div
-          className={tw`
+          className={cn(`
             absolute right-4 top-2 flex h-10
             w-10 cursor-pointer items-center justify-center rounded-full text-white
             transition-colors hover:bg-brand-500
-          `}
+          `)}
           onClick={() => window.scrollTo(0, 0)}
           title={strings.footer.toTop}
         >

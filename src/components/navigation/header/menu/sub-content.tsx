@@ -1,11 +1,11 @@
 import { Content, List } from '@radix-ui/react-navigation-menu'
-import clsx from 'clsx'
 
 import { preventHover } from './prevent-hover'
 import { SubItem } from './sub-item'
 import { SubParticipateMega } from './sub-participate-mega'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { HeaderLinkData } from '@/data-types'
+import { cn } from '@/helper/cn'
 
 export interface SubContentProps {
   subItems: HeaderLinkData[]
@@ -23,7 +23,7 @@ export function SubContent({ subItems, parent }: SubContentProps) {
 
   return (
     <Content
-      className={clsx(
+      className={cn(
         'text-left md:absolute md:z-[999] md:pt-2',
         (isLast || isParticipate) && 'md:right-0'
       )}

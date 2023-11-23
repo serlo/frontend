@@ -1,10 +1,10 @@
 // import { useDroppable } from '@dnd-kit/core'
-import clsx from 'clsx'
 import { useContext } from 'react'
 
 // import { BlankSolution } from './components/blank-solution'
 // import { BlankDragAndDropSolutions } from './renderer'
 import { BlankStatesContext } from './context/blank-context'
+import { cn } from '@/helper/cn'
 
 export function BlankRenderer(props: {
   correctAnswer: string
@@ -32,7 +32,7 @@ export function BlankRenderer(props: {
     <>
       {mode === 'fill-in-the-blanks' ? (
         <input
-          className={clsx(
+          className={cn(
             'h-[25px] resize-none rounded-full border border-brand bg-brand-50 pl-2 pr-1',
             isAnswerCorrect && 'border-green-500',
             isAnswerCorrect === false && 'border-red-500'
@@ -81,7 +81,7 @@ export function BlankRenderer(props: {
 
 //   return (
 //     <span
-//       className={clsx(
+//       className={cn(
 //         'rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2',
 //         isOver && 'bg-slate-400'
 //       )}

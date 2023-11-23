@@ -1,10 +1,10 @@
 import { KaTeXStyles } from '@/../external/katexstyles'
-import clsx from 'clsx'
 import KaTeX from 'katex'
 
 /* eslint-disable import/no-unassigned-import */
 import 'katex/contrib/mhchem'
 import type { MathElement } from '../types/text-editor'
+import { cn } from '@/helper/cn'
 import { sanitizeLatex } from '@/schema/sanitize-latex'
 
 export type StaticMathProps = Omit<MathElement, 'children'>
@@ -23,7 +23,7 @@ export function StaticMath({ src, inline }: StaticMathProps) {
 
   return (
     <div
-      className={clsx(
+      className={cn(
         'serlo-math-wrapper text-center',
         nowrap && 'whitespace-nowrap'
       )}

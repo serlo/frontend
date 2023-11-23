@@ -3,7 +3,7 @@ import { faFilm } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 export enum VideoType {
   YouTube = 'YouTube',
@@ -47,7 +47,9 @@ export function VideoRenderer({ src, type }: VideoRendererProps) {
   )
 }
 
-const videoClassName = tw`absolute left-0 top-0 z-20 h-full w-full border-none bg-black/30`
+const videoClassName = cn(
+  `absolute left-0 top-0 z-20 h-full w-full border-none bg-black/30`
+)
 
 export function parseVideoUrl(
   checkSrc: string,

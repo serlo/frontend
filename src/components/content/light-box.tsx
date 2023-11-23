@@ -1,9 +1,9 @@
-import clsx from 'clsx'
 import { ReactNode } from 'react'
 import Modal from 'react-modal'
 
-import { ModalClsx } from '../modal-with-close-button'
+import { ModalClasses } from '../modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
+import { cn } from '@/helper/cn'
 
 export interface LightBoxProps {
   src: string
@@ -18,7 +18,7 @@ export function LightBox({ label, src, alt, onClose }: LightBoxProps) {
   return (
     <>
       <Modal
-        className={clsx(ModalClsx, 'top-1/2 pb-7 text-center')}
+        className={cn(ModalClasses, 'top-1/2 pb-7 text-center')}
         isOpen
         onRequestClose={onClose}
       >

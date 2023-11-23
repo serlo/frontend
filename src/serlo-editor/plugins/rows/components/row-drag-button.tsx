@@ -1,10 +1,9 @@
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import type { ConnectDragSource } from 'react-dnd'
 
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 
 interface RowDragButtonProps {
@@ -16,15 +15,16 @@ export function RowDragButton({ drag }: RowDragButtonProps) {
 
   return (
     <div
-      className={clsx(
+      className={cn(
         'rows-tools',
         'absolute left-2 z-[22] rounded-l-md bg-white bg-opacity-70 opacity-0 transition-opacity'
       )}
     >
       <button
-        className={tw`
+        className={cn(`
             serlo-tooltip-trigger -mt-[3px] mb-1.5 cursor-grab select-none
-            border-0 bg-none active:cursor-grabbing`}
+            border-0 bg-none active:cursor-grabbing
+        `)}
         ref={drag}
       >
         <EditorTooltip
@@ -32,9 +32,10 @@ export function RowDragButton({ drag }: RowDragButtonProps) {
           className="-ml-4 !pb-2"
         />
         <div
-          className={tw`
+          className={cn(`
               serlo-button-editor-primary rounded-full bg-transparent px-1.5
-              py-0.5 text-almost-black hover:bg-editor-primary-200`}
+              py-0.5 text-almost-black hover:bg-editor-primary-200
+          `)}
           aria-hidden="true"
         >
           <FaIcon icon={faGripVertical} />

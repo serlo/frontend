@@ -9,7 +9,7 @@ import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { CoursePagesData } from '@/data-types'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 export interface CourseFooterProps {
   onOverviewButtonClick: (e: MouseEvent<HTMLButtonElement>) => void
@@ -59,10 +59,10 @@ export function CourseFooter({
             </div>
             <div className="flex text-lg">
               <b
-                className={tw`
+                className={cn(`
                   mr-1.5 mt-1.5 h-4 w-4 rounded-full
                   bg-brand-200 pt-0.25 text-center text-xs leading-tight text-brand
-                `}
+                `)}
               >
                 {nextIndex + 1}
               </b>{' '}

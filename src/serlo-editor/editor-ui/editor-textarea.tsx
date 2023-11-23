@@ -1,5 +1,6 @@
-import clsx from 'clsx'
 import { TextareaHTMLAttributes, forwardRef } from 'react'
+
+import { cn } from '@/helper/cn'
 
 type EditorTextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   onMoveOutRight?(): void
@@ -17,7 +18,7 @@ export const EditorTextarea = forwardRef<
 ) {
   return (
     <textarea
-      className={clsx(
+      className={cn(
         'm-auto w-full resize-none p-2.5 font-mono shadow-menu outline-none',
         className
       )}

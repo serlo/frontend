@@ -6,7 +6,7 @@ import { UserToolsItem } from '../user-tools-item'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidRevType } from '@/data-types'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import {
   RevisionMutationMode,
   useRevisionDecideMutation,
@@ -118,11 +118,11 @@ export function CheckoutRejectButtons({
             setReason(event.target.value)
           }}
           onKeyDown={onKeyDown}
-          className={tw`
+          className={cn(`
             bold my-5 box-border min-h-[80px] w-full
             rounded-xl border-0 bg-brand-50 py-2 pl-4 pr-14
             outline-none focus-visible:bg-brand-200
-          `}
+          `)}
         />
       </>
     )

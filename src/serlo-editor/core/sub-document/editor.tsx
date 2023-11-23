@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import * as R from 'ramda'
 import { useRef, useMemo, useCallback } from 'react'
 
@@ -15,6 +14,7 @@ import {
   useAppSelector,
 } from '../../store'
 import type { StateUpdater } from '../../types/internal__plugin-state'
+import { cn } from '@/helper/cn'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
@@ -127,7 +127,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
     return (
       <div
-        className={clsx(
+        className={cn(
           `plugin-${document?.plugin}`,
           'outline-none',
           isInlineChildEditor || isTemplatePlugin
