@@ -35,7 +35,7 @@ export function RevisionHistory({
 
   return (
     <table
-      className={clsx(
+      className={cn(
         'relative mx-side w-full border-collapse',
         tableClassName
       )}
