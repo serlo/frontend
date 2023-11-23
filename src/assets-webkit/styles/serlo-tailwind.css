@@ -61,7 +61,7 @@
     @apply mx-side mb-5 mt-0;
   }
   .serlo-modal {
-    @apply absolute left-1/2 z-50 -mr-[50%] max-w-[85%] -translate-x-1/2 -translate-y-1/2;
+    @apply absolute left-1/2 -mr-[50%] max-w-[85%] -translate-x-1/2 -translate-y-1/2;
     @apply rounded-xl border-none bg-white px-2.5 pt-2.5 shadow-modal;
     @apply top-[40%] w-[500px] pb-10 outline-none;
   }

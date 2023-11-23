@@ -39,6 +39,7 @@ export function ModalWithCloseButton({
 
   return (
     <BaseModal
+      overlayClassName="z-[101]"
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       className={cn('serlo-modal', className)}
