@@ -14,7 +14,6 @@ export interface RevisionHistoryProps {
   hideEdit?: boolean
   onSelectRevision?: (id: number) => void
   selectedRevisionId?: number
-
   tableClassName?: string
 }
 
