@@ -53,7 +53,7 @@ export function ModalWithCloseButton({
       className={
         overwriteClassNameCompletely
           ? className
-          : cn(ModalClsx, 'top-[40%] w-[500px] pb-10', className)
+          : cn(ModalClasses, 'top-[40%] w-[500px] pb-10', className)
       }
     >
       {alignTitleAndCloseButton ? (
