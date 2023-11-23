@@ -75,7 +75,7 @@ export function RevisionHistoryLoader<T>({
           setShowRevisions(false)
         }}
         title={editorStrings.edtrIo.switchRevision}
-        className="!top-[3rem] max-h-[80vh] w-[900px] max-w-[90vw] translate-y-0 overflow-y-auto pt-0"
+        className="top-[3rem] max-h-[80vh] w-[900px] max-w-[90vw] translate-y-0 overflow-y-auto pt-0"
       >
         {/* a bit untidy, but it's very nice to reuse this component here */}
         <SerloRevisionHistory

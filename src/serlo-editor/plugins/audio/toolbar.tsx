@@ -62,7 +62,7 @@ export const AudioToolbar = ({
             <ModalWithCloseButton
               isOpen={showSettingsModal}
               onCloseClick={() => setShowSettingsModal(false)}
-              className="!top-1/3 !max-w-xl"
+              className="top-1/3 max-w-xl translate-y-0"
             >
               <h3 className="serlo-h3 mt-4">{audioStrings.title}</h3>
 

@@ -85,6 +85,7 @@ export function ArticleAddModal({
     <ModalWithCloseButton
       isOpen={open}
       onCloseClick={() => setModalOpen(false)}
+      className="top-[2rem] translate-y-0"
     >
       <h3 className="serlo-h3 mb-4 mt-5">{articleStrings.addModal.title}</h3>
       <div className="mx-side">

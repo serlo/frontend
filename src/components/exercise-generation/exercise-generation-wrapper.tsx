@@ -56,7 +56,7 @@ export const ExerciseGenerationWrapper = ({
         confirmCloseDescription={
           strings.ai.exerciseGeneration.confirmCloseDescription
         }
-        className="flex !h-3/4 max-h-[80vh] min-h-[420px] flex-col pb-4"
+        className="flex h-3/4 max-h-[80vh] min-h-[420px] flex-col pb-4"
       >
         <ExerciseGenerationWizard
           data={{
