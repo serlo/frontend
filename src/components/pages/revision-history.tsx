@@ -35,10 +35,7 @@ export function RevisionHistory({
 
   return (
     <table
-      className={cn(
-        'relative mx-side w-full border-collapse',
-        tableClassName
-      )}
+      className={cn('relative mx-side w-full border-collapse', tableClassName)}
     >
       <thead>
         <tr>
