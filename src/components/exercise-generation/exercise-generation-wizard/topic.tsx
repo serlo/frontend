@@ -55,10 +55,9 @@ export function Topic({
         })}
       </p>
       {defaultTopic ? (
-        <div className="flex items-center">
+        <label className="pl-2">
           <input
             type="radio"
-            id="defaultTopic"
             name="topic"
             value={defaultTopic}
             checked={selectedRadio === defaultTopic}
@@ -66,18 +65,15 @@ export function Topic({
               setSelectedRadio(defaultTopic)
               setTopic(defaultTopic)
             }}
-            className="text-brand-700 focus:ring-brand-300"
+            className="mr-2 text-brand-700 focus:ring-brand-300"
           />
-          <label htmlFor="defaultTopic" className="ml-2">
-            {defaultTopic.charAt(0).toUpperCase() + defaultTopic.slice(1)}
-          </label>
-        </div>
+          {defaultTopic.charAt(0).toUpperCase() + defaultTopic.slice(1)}
+        </label>
       ) : null}
 
-      <div className="mt-4 flex items-center">
+      <label className="mt-3 pl-2">
         <input
           type="radio"
-          id="customTopic"
           name="topic"
           value="custom"
           checked={selectedRadio === 'custom'}
@@ -86,26 +82,27 @@ export function Topic({
             setTopic('')
             setSelectedRadio('custom')
           }}
-          className="text-brand-700 focus:ring-brand-300"
+          className="mr-2 text-brand-700 focus:ring-brand-300"
         />
-        <label htmlFor="customTopic" className="ml-2 ">
-          {topicStrings.otherTopicLabel}
-        </label>
+        {topicStrings.otherTopicLabel}
         <input
           type="text"
-          disabled={selectedRadio !== 'custom'}
           value={selectedRadio === 'custom' ? topic : ''}
           onChange={(e) => setTopic(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              onNext()
+            if (e.key === 'Enter') onNext()
+          }}
+          onFocus={() => {
+            if (selectedRadio !== 'custom') {
+              setTopic('')
+              setSelectedRadio('custom')
             }
           }}
           className="ml-2 rounded-md border border-brand-300 p-2 pl-2 focus:border-brand-300 focus:outline-brand-700"
           placeholder={topicStrings.customTopicPlaceholder}
           ref={focusRef}
         />
-      </div>
+      </label>
     </div>
   )
 }

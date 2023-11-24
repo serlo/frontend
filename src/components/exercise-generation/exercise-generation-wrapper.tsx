@@ -4,7 +4,6 @@ import { ExerciseGenerationWizard } from './exercise-generation-wizard/exercise-
 import { ExercisePreviewPage } from './exercise-preview-page'
 import { ModalWithCloseButton } from '../modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { LoggedInData } from '@/data-types'
 import { submitEvent } from '@/helper/submit-event'
 import { EditorProps } from '@/serlo-editor/core'
 
@@ -28,11 +27,7 @@ export const ExerciseGenerationWrapper = ({
   isExerciseGroup,
   setEditorState,
 }: ExerciseGenerationWrapperProps) => {
-  const { strings } = useLoggedInData() as LoggedInData
-
-  const [title, setTitle] = useState(
-    strings.ai.exerciseGeneration.initialModalTitle
-  )
+  const exGenerationStrings = useLoggedInData()!.strings.ai.exerciseGeneration
 
   const [activePage, setActivePage] = useState(
     ActivePage.ExerciseGenerationWizard
@@ -51,21 +46,14 @@ export const ExerciseGenerationWrapper = ({
           closeWizard()
         }}
         isOpen={activePage === ActivePage.ExerciseGenerationWizard}
-        title={title}
-        alignTitleAndCloseButton
-        confirmCloseDescription={
-          strings.ai.exerciseGeneration.confirmCloseDescription
-        }
+        title={exGenerationStrings.initialModalTitle}
         className="flex h-3/4 max-h-[80vh] min-h-[420px] flex-col pb-4"
+        extraTitleClassName="serlo-h2 mt-3 mr-7 flex-grow border-none py-0 text-center text-sm font-normal"
+        confirmCloseDescription={exGenerationStrings.confirmCloseDescription}
       >
         <ExerciseGenerationWizard
-          data={{
-            subject,
-            title,
-            topic,
-          }}
+          data={{ subject, topic }}
           isExerciseGroup={isExerciseGroup}
-          setTitle={setTitle}
           handleTransitionToExercisePage={handleTransitionToExercisePage}
           prompt={prompt}
           setPrompt={setPrompt}
