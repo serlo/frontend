@@ -91,8 +91,8 @@ export function ExercisePreviewPage({
       onCloseClick={closePage}
       confirmCloseDescription={exGenerationStrings.confirmCloseDescription}
       className={cn(
-        `bg-gray-100" fixed left-1/2 top-0 flex h-full max-h-none
-        w-full max-w-none translate-y-0 flex-col items-center justify-center`
+        `bg-gray-100" fixed left-1/2 top-0 flex h-full max-h-none w-full
+        max-w-none translate-y-0 flex-col items-center justify-center rounded-none`
       )}
       extraCloseButtonClassName="bg-brand-200"
     >
