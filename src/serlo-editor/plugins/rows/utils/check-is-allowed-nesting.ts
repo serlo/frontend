@@ -47,7 +47,9 @@ export function checkIsAllowedNesting(
 
     const rootPlugin = typesOfAncestors[0]
     if (
-      rootPlugin.startsWith('type-') && // only on serlo, allowed everywhere in edusharing
+      // serlo template plugins start with "type-…"
+      // so we use this to not hide exercises in edusharing and /___editor_preview
+      rootPlugin.startsWith('type-') &&
       rootPlugin !== TemplatePluginType.Article &&
       rootPlugin !== TemplatePluginType.CoursePage
     ) {
