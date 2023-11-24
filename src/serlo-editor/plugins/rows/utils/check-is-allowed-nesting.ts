@@ -1,4 +1,5 @@
 import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
+import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 
 export function checkIsAllowedNesting(
   pluginType: string,
@@ -38,6 +39,20 @@ export function checkIsAllowedNesting(
     ).length > 1
   ) {
     return false
+  }
+
+  if (pluginType === EditorPluginType.Exercise) {
+    // never allow exercises in solutions
+    if (typesOfAncestors.includes(EditorPluginType.Solution)) return false
+
+    const rootPlugin = typesOfAncestors[0]
+    if (
+      rootPlugin.startsWith('type-') && // only on serlo, allowed everywhere in edusharing
+      rootPlugin !== TemplatePluginType.Article &&
+      rootPlugin !== TemplatePluginType.CoursePage
+    ) {
+      return false
+    }
   }
 
   return true
