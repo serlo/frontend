@@ -317,8 +317,7 @@ function createSolution(
         state: [
           {
             type: 'p',
-            // ? Should we add the 'strategy' to the prompt too?
-            children: [{ text: '' }],
+            children: [{ text: exercise.strategy }],
           },
         ],
       },
