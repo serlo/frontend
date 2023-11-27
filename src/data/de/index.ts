@@ -1098,7 +1098,7 @@ export const loggedInData = {
         difficulty: {
           title: "Was ist der %difficulty% der Aufgabe und das Lernziel?",
           difficulty: "Schwierigkeitsgrad",
-          label: "Schwierigkeitsgrade",
+          label: "Schwierigkeitsgrad",
           learningGoalLabel: "Lernziel",
           learningGoalExample: "Beispiel: Schüler*innen verstehen die Grundlagen von Algebra.",
           learningGoalPlaceholder: "Lernziel eingeben",
