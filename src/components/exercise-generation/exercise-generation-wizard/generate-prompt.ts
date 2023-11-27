@@ -1,6 +1,6 @@
 import {
   ExerciseGenerationDifficulty,
-  mapDifficultyToDescriptor,
+  difficultyToDescriptor,
 } from './difficulty'
 
 interface ExerciseParams {
@@ -119,7 +119,7 @@ function getPreLearningGoalForMultipleChoice({
   topic: string
   difficulty: ExerciseGenerationDifficulty | null
 }) {
-  const difficultyDescriptor = mapDifficultyToDescriptor(difficulty || 'low')
+  const difficultyDescriptor = difficultyToDescriptor[difficulty || 'low']
 
   return `Die Schüler*innen verstehen, wie ${topic} in ${difficultyDescriptor} Situationen angewendet werden kann. `
 }

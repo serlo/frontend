@@ -79,14 +79,8 @@ export function Difficulty({
 }
 
 // No i18n needed for now, as the exercise generation only works for German
-export function mapDifficultyToDescriptor(
-  difficulty: ExerciseGenerationDifficulty
-): string {
-  const mapping: { [key in ExerciseGenerationDifficulty]: string } = {
-    low: 'einfachen',
-    medium: 'typischen',
-    high: 'komplexen',
-  }
-
-  return mapping[difficulty]
-}
+export const difficultyToDescriptor = {
+  low: 'einfachen',
+  medium: 'typischen',
+  high: 'komplexen',
+} as const
