@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
-import { Difficulty } from './difficulty'
+import { Difficulty, ExerciseGenerationDifficulty } from './difficulty'
 import { ExerciseType } from './exercise-type'
-import {
-  ExerciseGenerationDifficulty,
-  generateExercisePrompt,
-} from './generate-prompt'
+import { generateExercisePrompt } from './generate-prompt'
 import { Grade } from './grade'
 import { PriorKnowledge } from './prior-knowledge'
 import { Prompt } from './prompt'

@@ -1,8 +1,9 @@
-import { ExerciseGenerationDifficulty } from './generate-prompt'
 import { WizardPageProps } from './wizard-page-props'
 import { MenuButton, MenuItem } from '../menu-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+
+export type ExerciseGenerationDifficulty = 'low' | 'medium' | 'high'
 
 interface DifficultyProps extends WizardPageProps {
   difficulty: ExerciseGenerationDifficulty | null
@@ -75,4 +76,17 @@ export function Difficulty({
       />
     </div>
   )
+}
+
+// No i18n needed for now, as the exercise generation only works for German
+export function mapDifficultyToDescriptor(
+  difficulty: ExerciseGenerationDifficulty
+): string {
+  const mapping: { [key in ExerciseGenerationDifficulty]: string } = {
+    low: 'einfachen',
+    medium: 'typischen',
+    high: 'komplexen',
+  }
+
+  return mapping[difficulty]
 }
