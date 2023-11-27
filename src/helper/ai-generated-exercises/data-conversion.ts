@@ -267,12 +267,12 @@ function createInteractive(exercise: ExpectedExerciseTypes): Interactive {
         plugin: EditorPluginType.InputExercise,
         state: {
           // ? How can we differentiate between NumberExact and
-          // ExpressionEqual? Do we need to include it in the prompt?
+          // ExpressionEqual? Do we need to include this in the prompt?
           type: InputExerciseType.NumberExact,
           unit: '',
           answers: [
             {
-              value: exercise.correct_answer,
+              value: removeLatexFromAnswer(exercise.correct_answer),
               isCorrect: true,
               feedback: {
                 plugin: EditorPluginType.Text,
@@ -382,4 +382,16 @@ export function transformEditorDataToExerciseGroup(
   }
 
   return exerciseGroup
+}
+
+/**
+ * Sometimes the answers get formatted in LaTeX. However, this would mean that
+ * for input exercises, the user has to type in $answer$ to have it marked as
+ * correct.
+ */
+function removeLatexFromAnswer(answer: string): string {
+  if (answer.startsWith('$') && answer.endsWith('$')) {
+    return answer.slice(1, -1)
+  }
+  return answer
 }
