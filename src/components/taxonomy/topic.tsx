@@ -108,7 +108,6 @@ export function Topic({ data }: TopicProps) {
   // calculate matrix
   const matrix: { [key: string]: { [key: string]: number } } = {}
   let things: string[] = []
-  let medianSolved = -1
   if (exerciseStats) {
     const ids: { [key: number]: number } = {}
     Object.values(exerciseStats.journeys).forEach((journey) => {
