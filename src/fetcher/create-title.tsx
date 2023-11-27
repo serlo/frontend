@@ -12,7 +12,7 @@ export function createTitle(uuid: MainUuidType, instance: Instance): string {
   const instanceData = getServerSideStrings(instance)
   const suffix = ` - ${instanceData.title}`
 
-  const title = getRawTitle(uuid, instance)
+  const title = getRawTitle(uuid, 2)
 
   if (!title) return 'Serlo'
   if (uuid.__typename.endsWith('Revision')) return title
