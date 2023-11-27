@@ -14,16 +14,14 @@ import { IsSerloContext } from '@/serlo-editor-integration/context/is-serlo-cont
 export function SolutionEditor({ state, focused }: SolutionProps) {
   const { prerequisite, strategy, licenseId } = state
   const solutionStrings = useEditorStrings().templatePlugins.solution
-  const showLicenseChooser = useContext(IsSerloContext) // only on serlo
+  const isSerlo = useContext(IsSerloContext) // only on serlo
 
   return (
     <SolutionRenderer
       elementBeforePrerequisite={
-        showLicenseChooser ? (
-          <SerloLicenseChooser licenseId={licenseId} />
-        ) : null
+        isSerlo ? <SerloLicenseChooser licenseId={licenseId} /> : null
       }
-      prerequisite={renderPrerequisiteContent()}
+      prerequisite={isSerlo ? renderPrerequisiteContent() : null}
       strategy={
         <div className="-mx-2 px-side">
           {strategy.render({
