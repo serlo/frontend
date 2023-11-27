@@ -108,6 +108,7 @@ export function Topic({ data }: TopicProps) {
   // calculate matrix
   const matrix: { [key: string]: { [key: string]: number } } = {}
   let things: string[] = []
+  let medianSolved = -1
   if (exerciseStats) {
     const ids: { [key: number]: number } = {}
     Object.values(exerciseStats.journeys).forEach((journey) => {
@@ -146,6 +147,29 @@ export function Topic({ data }: TopicProps) {
         }
       }
     }
+  }
+
+  const median = (arr: number[]) => {
+    const mid = Math.floor(arr.length / 2),
+      nums = [...arr].sort((a, b) => a - b)
+    return arr.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2
+  }
+
+  function histogram(ns: number[]) {
+    const output: { [key: string]: number } = {}
+    for (const n of ns) {
+      if (!output[n]) output[n] = 0
+
+      output[n]++
+    }
+    const entries = Object.entries(output)
+    entries.sort((a, b) => parseInt(a[0]) - parseInt(b[0]))
+    return entries
+      .map(
+        ([id, len]) =>
+          `Länge ${id} (x${len} | ${Math.round((len / ns.length) * 100)}%)`
+      )
+      .join(', ')
   }
 
   useEffect(() => {
@@ -371,6 +395,17 @@ export function Topic({ data }: TopicProps) {
                 ))}
               </table>
             )}
+            <div className="mt-3">
+              Median gelöste Aufgaben:{' '}
+              {median(
+                Object.values(exerciseStats.journeys).map((j) => j.length)
+              )}
+              <br />
+              Verteilung:{' '}
+              {histogram(
+                Object.values(exerciseStats.journeys).map((j) => j.length)
+              )}
+            </div>
           </>
         ) : null}
         <h1 className="serlo-h1 mb-10 mt-8" itemProp="name">
