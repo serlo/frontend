@@ -1,5 +1,6 @@
-import clsx from 'clsx'
 import { Fragment } from 'react'
+
+import { cn } from '@/helper/cn'
 
 export enum TableType {
   OnlyColumnHeader = 'OnlyColumnHeader',
@@ -58,7 +59,7 @@ export function SerloTableRenderer({
     const isHead = isRowHead || isColHead
     const scope = isColHead ? 'col' : 'row'
 
-    const borderClass = clsx(
+    const borderClass = cn(
       'first:border-l-3',
       firstRow && 'border-t-3 first:rounded-tl-xl last:rounded-tr-xl',
       lastRow && 'first:rounded-bl-xl last:rounded-br-xl'
@@ -69,12 +70,12 @@ export function SerloTableRenderer({
         {isHead ? (
           <th
             scope={scope}
-            className={clsx('serlo-th px-0 align-top', borderClass)}
+            className={cn('serlo-th px-0 align-top', borderClass)}
           >
             {cell}
           </th>
         ) : (
-          <td className={clsx('serlo-td px-0', borderClass)}>{cell}</td>
+          <td className={cn('serlo-td px-0', borderClass)}>{cell}</td>
         )}
       </Fragment>
     )

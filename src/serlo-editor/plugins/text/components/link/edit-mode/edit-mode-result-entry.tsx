@@ -1,7 +1,7 @@
 import { faExternalLink } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 
 import { FaIcon } from '@/components/fa-icon'
+import { cn } from '@/helper/cn'
 
 export function EditModeResultEntry({
   selectedIndex,
@@ -21,7 +21,7 @@ export function EditModeResultEntry({
   return (
     <a
       key={index}
-      className={clsx(
+      className={cn(
         'serlo-link flex cursor-pointer bg-white px-side py-2',
         'hover:!bg-editor-primary-100 hover:!no-underline',
         index === selectedIndex && '!bg-editor-primary-100'
@@ -42,7 +42,7 @@ export function EditModeResultEntry({
       <p className="whitespace-normal text-lg leading-cozy">
         <span className="text-gray-700">{pathHeader}</span>
         <span
-          className={clsx(
+          className={cn(
             'block font-bold',
             isCustomLink ? 'text-gray-800' : 'text-brand-800'
           )}

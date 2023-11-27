@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 import { Link } from './link'
 import { HorizonData } from '@/data-types'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 export interface HorizonProps {
   data: HorizonData
@@ -12,20 +12,20 @@ export function Horizon({ data }: HorizonProps) {
   return (
     <aside
       id="horizon"
-      className={tw`
+      className={cn(`
         -ml-2.5 px-side pb-6 pt-8
         sm:flex sm:items-stretch sm:justify-between
-      `}
+      `)}
     >
       {data.map(({ imageUrl, url, title, text }, index) => {
         return (
           <button
-            className={tw`
+            className={cn(`
               mb-8 box-border hidden
               w-full max-w-screen-mobile
               rounded px-2.5 py-4 first:block hover:shadow-menu
               sm:mb-0 sm:mr-6 sm:block sm:w-1/3
-            `}
+            `)}
             tabIndex={-1}
             key={index}
           >

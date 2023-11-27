@@ -4,7 +4,6 @@ export enum TextEditorFormattingOption {
   code = 'code',
   colors = 'colors',
   headings = 'headings',
-  katex = 'katex',
   links = 'links',
   lists = 'lists',
   math = 'math',

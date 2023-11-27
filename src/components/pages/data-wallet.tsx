@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { useState } from 'react'
 
 import { Link } from '../content/link'
@@ -7,6 +6,7 @@ import { PartnerList } from '../landing/rework/partner-list'
 import { Logo } from '../navigation/header/logo'
 import { endpointBaseUrl } from '@/api/endpoint'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
+import { cn } from '@/helper/cn'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 export const endpointEnmeshed = `${endpointBaseUrl}/enmeshed`
@@ -49,7 +49,7 @@ export function DataWallet() {
       </header>
 
       <section
-        className={clsx(
+        className={cn(
           'serlo-responsive-margin mb-20 mt-5',
           'md:mt-12 md:px-8 lg:block'
         )}
@@ -139,7 +139,7 @@ export function DataWallet() {
           </a>
           {' • '}
           <a
-            href="https://de.serlo.org/imprint"
+            href="https://de.serlo.org/legal"
             target="_blank"
             rel="noreferrer"
             className="serlo-link"

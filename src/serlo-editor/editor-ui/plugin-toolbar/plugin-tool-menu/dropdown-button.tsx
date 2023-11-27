@@ -1,7 +1,7 @@
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 
 import { FaIcon } from '@/components/fa-icon'
+import { cn } from '@/helper/cn'
 
 interface DropdownButtonProps {
   onClick: () => void
@@ -20,7 +20,7 @@ export function DropdownButton({
 }: DropdownButtonProps) {
   return (
     <button
-      className={clsx('group/button w-full px-3 text-left', className)}
+      className={cn('group/button w-full px-3 text-left', className)}
       onClick={onClick}
       data-qa={dataQa}
     >

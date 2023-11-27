@@ -19,10 +19,10 @@ import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
+import { AnyEditorDocument } from '@/serlo-editor/types/editor-plugins'
 import { createPlugins } from '@/serlo-editor-integration/create-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
   return (

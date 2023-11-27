@@ -1054,7 +1054,8 @@ export const loggedInData = {
     },
     ai: {
       exerciseGeneration: {
-        buttonTitle: "Aufgabe mit KI generieren",
+        buttonTitleSingular: "Aufgabe mit KI erstellen",
+        buttonTitle: "Teilaufgaben mit KI erstellen",
         initialModalTitle: "Aufgabe automatisch mit KI erstellen",
         modalTitleWithTaxonomy: "Aufgabenerstellung mit KI:",
         confirmCloseDescription: "Möchtest du die Aufgabenerstellung verlassen? Die Daten werden gelöscht.",
@@ -1064,13 +1065,7 @@ export const loggedInData = {
         previousButton: "Vorherige Aufgabe",
         generateExerciseButton: "Aufgabe generieren",
         generateExercisesButton: "Aufgaben generieren",
-        subject: {
-          title: "Für welches %subject%  willst du eine Aufgabe erstellen?",
-          subject: "Fach",
-          defaultLabel: "Fach",
-          otherSubjectLabel: "Anderes Fach",
-          customSubjectPlaceholder: "Fach eingeben"
-        },
+        somethingWentWrong: "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
         topic: {
           title: "Über welches %topic% willst du eine Aufgabe erstellen?",
           topic: "Thema",
@@ -1090,13 +1085,15 @@ export const loggedInData = {
           label: "Aufgabentyp",
           subtasksTitleSummary: "Teilaufgaben",
           subtasksTitle: "Soll die Aufgabe Teilaufgaben haben?",
+          subtasksTitleExerciseGroup: "Wieviele Teilaufgaben soll es geben?",
           noSubtasks: "Nein",
           yesSubtasks: "Ja",
+          subtasksLabel: "Aufgaben",
           numberOfSubtasksPlaceholder: "Anzahl",
           chooseOption: "Wähle eine Option",
           multipleChoice: "Multiple-Choice",
           singleChoice: "Single-Choice",
-          solutionWithOneNumber: "Lösung mit einer Zahl"
+          inputExercise: "Eingabefeld"
         },
         difficulty: {
           title: "Was ist der %difficulty% der Aufgabe und das Lernziel?",

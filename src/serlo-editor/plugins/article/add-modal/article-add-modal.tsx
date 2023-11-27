@@ -10,7 +10,7 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType, type UuidWithRevType } from '@/data-types'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 interface ArticleAddModalProps {
   open: boolean
@@ -85,6 +85,7 @@ export function ArticleAddModal({
     <ModalWithCloseButton
       isOpen={open}
       onCloseClick={() => setModalOpen(false)}
+      className="top-8 translate-y-0"
     >
       <h3 className="serlo-h3 mb-4 mt-5">{articleStrings.addModal.title}</h3>
       <div className="mx-side">

@@ -53,7 +53,7 @@ export const footerData: InstanceData['footerData'] = {
           title: 'नियम और शर्ते',
           url: `https://de.${serloDomain}/terms`,
         },
-        { title: 'Imprint', url: `https://de.${serloDomain}/imprint` },
+        { title: 'Legal Notice', url: `https://de.${serloDomain}/legal` },
       ],
     },
   ],

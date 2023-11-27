@@ -6,8 +6,8 @@ import {
   communityWallPersons,
   CommunityWallPerson,
 } from '@/data/de/community-people'
+import { cn } from '@/helper/cn'
 import { shuffleArray } from '@/helper/shuffle-array'
-import { tw } from '@/helper/tw'
 
 const positions = [
   ['8%', '-5%'],
@@ -34,10 +34,10 @@ export function CommunityWall() {
   return (
     <section className="overflow-hidden">
       <h3
-        className={tw`
+        className={cn(`
             relative z-10 mx-auto mt-32 max-w-2xl px-2
             text-center text-4xl font-bold leading-cozy tracking-tight text-almost-black
-          `}
+          `)}
       >
         Wir sind eine große, ehrenamtliche Community und gestalten Serlo
         <p className="font-handwritten text-5xl italic text-brand">
@@ -46,10 +46,10 @@ export function CommunityWall() {
       </h3>
       <div className="relative z-0 mt-1 h-0 w-full">
         <div
-          className={tw`
+          className={cn(`
               absolute inset-0 -mt-14 ml-5 h-32
               bg-circled-and-arrow bg-contain bg-top bg-no-repeat
-            `}
+           `)}
         ></div>
       </div>
 
@@ -64,12 +64,12 @@ export function CommunityWall() {
           <div className="relative">
             <div className="absolute inset-0 flex justify-center">
               <div
-                className={tw`
+                className={cn(`
                   pointer-events-none h-5 w-72 select-none
                   bg-underlined bg-contain bg-top
                   bg-no-repeat opacity-0 transition-all
                   duration-200 ease-linear group-hover:rotate-1 group-hover:opacity-100
-                `}
+                `)}
               />
             </div>
           </div>
@@ -77,10 +77,10 @@ export function CommunityWall() {
       </div>
 
       <div
-        className={tw`
+        className={cn(`
           flex flex-wrap justify-evenly
           md:relative md:mb-72 md:block md:h-630
-        `}
+        `)}
       >
         <CommunityWallPersons persons={persons} positions={positions} />
       </div>

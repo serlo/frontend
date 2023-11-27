@@ -120,7 +120,7 @@ export const footerData: InstanceData['footerData'] = {
           title: 'Términos legales',
           url: `https://es.${serloDomain}/terms`,
         },
-        { title: 'Imprint', url: `https://es.${serloDomain}/imprint` },
+        { title: 'Legal Notice', url: `https://es.${serloDomain}/legal` },
       ],
     },
   ],

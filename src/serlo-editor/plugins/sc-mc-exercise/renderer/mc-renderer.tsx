@@ -1,12 +1,12 @@
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faCheckSquare } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { useState } from 'react'
 
 import { Feedback } from './feedback'
 import type { ScMcExerciseRendererProps } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
+import { cn } from '@/helper/cn'
 
 export function McRenderer({
   answers,
@@ -50,7 +50,7 @@ export function McRenderer({
                   }}
                 />
                 <label
-                  className={clsx(
+                  className={cn(
                     /* we override some styles in the answer content to show it inline */
                     'flex cursor-pointer items-center [&_.slate-container]:mb-0 [&_.slate-p]:ml-2'
                   )}

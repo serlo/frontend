@@ -1,10 +1,10 @@
 import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
 import { useRouter } from 'next/router'
 import { ForwardedRef, forwardRef, ReactNode } from 'react'
 
 import { FaIcon } from '../fa-icon'
+import { cn } from '@/helper/cn'
 
 export interface LinkProps {
   href?: string
@@ -19,9 +19,7 @@ export interface LinkProps {
 
 // imported from cf worker redirects.ts
 export const cfWorkerLinks = [
-  '/privacy',
   '/imprint',
-  '/terms',
   '/datenschutz',
   '/nutzungsbedingungen',
   '/impressum',
@@ -116,7 +114,7 @@ function InternalLink({
       // eslint-disable-next-line react/jsx-no-target-blank
       <a
         href={_href}
-        className={clsx(className, 'serlo-link')}
+        className={cn(className, 'serlo-link')}
         rel={openBlank ? 'ugc nofollow noreferrer' : undefined}
         target={openBlank || isContentOnly ? '_blank' : undefined}
         title={title}
@@ -138,7 +136,7 @@ function InternalLink({
       <NextLink
         prefetch={false}
         href={_href}
-        className={clsx(className, 'serlo-link')}
+        className={cn(className, 'serlo-link')}
         title={title}
         onClick={onClick}
       >

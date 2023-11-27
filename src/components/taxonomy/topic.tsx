@@ -1,5 +1,4 @@
 import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { Fragment, useState } from 'react'
 import { RatingProps } from 'react-simple-star-rating'
@@ -10,20 +9,19 @@ import { TopicCategories } from './topic-categories'
 import { ExerciseNumbering } from '../content/exercises/exercise-numbering'
 import { FaIcon } from '../fa-icon'
 import { InfoPanel } from '../info-panel'
-import { ExerciseGenerationWrapperProps } from '../user-tools/exercise-generation-wrapper'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useAB } from '@/contexts/ab'
-import { AiWizardService, useAiWizard } from '@/contexts/ai-wizard-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { abSubmission } from '@/helper/ab-submission'
+import { cn } from '@/helper/cn'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { EditorRowsDocument } from '@/serlo-editor/types/editor-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export interface TopicProps {
   data: TaxonomyData
@@ -43,12 +41,6 @@ const NewFolderPrototype = dynamic<NewFolderPrototypeProps>(() =>
   import('./new-folder-prototype').then((mod) => mod.NewFolderPrototype)
 )
 
-const ExerciseGenerationWrapper = dynamic<ExerciseGenerationWrapperProps>(() =>
-  import('../user-tools/exercise-generation-wrapper').then(
-    (mod) => mod.ExerciseGenerationWrapper
-  )
-)
-
 export function Topic({ data }: TopicProps) {
   const { strings } = useInstanceData()
 
@@ -64,51 +56,48 @@ export function Topic({ data }: TopicProps) {
   editorRenderers.init(createRenderers())
 
   return (
-    <AiWizardService>
-      <>
-        {data.trashed && renderTrashedNotice()}
-        {renderHeader()}
-        {renderUserTools({ aboveContent: true })}
-        <div className="min-h-1/2">
-          <div className="mt-6 sm:mb-5">
-            <StaticRenderer
-              document={data.description as unknown as EditorRowsDocument}
-            />
-          </div>
-
-          {renderSubterms()}
-
-          {renderExercises()}
-
-          {isTopic && <TopicCategories data={data} full />}
-
-          {isExerciseFolder && data.events && (
-            <TopicCategories
-              data={data}
-              categories={[TopicCategoryType.events]}
-              full
-            />
-          )}
-        </div>
-        {/* Default license notice */}
-        <LicenseNotice />
-
-        {/* Temporary donations banner trial */}
-        {isExerciseFolder ? (
-          <DonationsBanner
-            id={data.id}
-            entityData={{
-              ...data,
-              typename: UuidType.TaxonomyTerm,
-              isUnrevised: false,
-            }}
+    <>
+      {data.trashed && renderTrashedNotice()}
+      {renderHeader()}
+      {renderUserTools({ aboveContent: true })}
+      <div className="min-h-1/2">
+        <div className="mt-6 sm:mb-5">
+          <StaticRenderer
+            document={data.description as unknown as EditorRowsDocument}
           />
-        ) : null}
+        </div>
 
-        {renderUserTools()}
-        <ExerciseGenerationOrNull data={data} />
-      </>
-    </AiWizardService>
+        {renderSubterms()}
+
+        {renderExercises()}
+
+        {isTopic && <TopicCategories data={data} full />}
+
+        {isExerciseFolder && data.events && (
+          <TopicCategories
+            data={data}
+            categories={[TopicCategoryType.events]}
+            full
+          />
+        )}
+      </div>
+      {/* Default license notice */}
+      <LicenseNotice />
+
+      {/* Temporary donations banner trial */}
+      {isExerciseFolder ? (
+        <DonationsBanner
+          id={data.id}
+          entityData={{
+            ...data,
+            typename: UuidType.TaxonomyTerm,
+            isUnrevised: false,
+          }}
+        />
+      ) : null}
+
+      {renderUserTools()}
+    </>
   )
 
   function renderTrashedNotice() {
@@ -198,7 +187,7 @@ export function Topic({ data }: TopicProps) {
             setHasFeedback(true)
           }}
         />
-        <div className={clsx('mt-3', hasFeedback ? '' : 'invisible')}>
+        <div className={cn('mt-3', hasFeedback ? '' : 'invisible')}>
           Danke für dein Feedback! &#10084;
         </div>
       </div>
@@ -214,20 +203,4 @@ export function Topic({ data }: TopicProps) {
       />
     )
   }
-}
-
-interface ExerciseGenerationOrNullProps {
-  data: TopicProps['data']
-}
-
-function ExerciseGenerationOrNull({ data }: ExerciseGenerationOrNullProps) {
-  const { isShowingAiWizard } = useAiWizard()
-
-  if (!isShowingAiWizard) return null
-
-  return (
-    <ExerciseGenerationWrapper
-      data={{ type: UuidType.TaxonomyTerm, ...data }}
-    />
-  )
 }

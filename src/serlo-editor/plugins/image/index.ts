@@ -14,7 +14,7 @@ import {
   upload,
 } from '../../plugin'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 const imageState = object({
   src: upload(''),

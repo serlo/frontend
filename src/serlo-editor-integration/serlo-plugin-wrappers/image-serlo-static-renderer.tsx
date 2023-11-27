@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 
+import { EditorImageDocument } from '../../serlo-editor/types/editor-plugins'
 import { ExtraInfoIfRevisionView } from '../extra-info-if-revision-view'
-import { EditorImageDocument } from '../types/editor-plugins'
 import { ImageStaticRenderer } from '@/serlo-editor/plugins/image/static'
 
 export function ImageSerloStaticRenderer(props: EditorImageDocument) {

@@ -1,17 +1,10 @@
-import clsx from 'clsx'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useState, type ReactNode, useCallback } from 'react'
 import BaseModal from 'react-modal'
 
-import { CloseButton } from './close-button'
+import { FaIcon } from './fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { tw } from '@/helper/tw'
-
-try {
-  BaseModal.defaultStyles.overlay!.zIndex = 101
-} catch (e) {
-  // eslint-disable-next-line no-console
-  console.error(e)
-}
+import { cn } from '@/helper/cn'
 
 BaseModal.setAppElement('#__next')
 
@@ -21,10 +14,9 @@ interface ModalWithCloseButtonProps {
   onCloseClick: () => void
   children: ReactNode
   className?: string
-  alignTitleAndCloseButton?: boolean
   confirmCloseDescription?: string | undefined
-  overwriteClassNameCompletely?: boolean
-  closeButtonClassName?: string
+  extraTitleClassName?: string
+  extraCloseButtonClassName?: string
 }
 
 export function ModalWithCloseButton({
@@ -33,10 +25,9 @@ export function ModalWithCloseButton({
   onCloseClick,
   children,
   className,
-  alignTitleAndCloseButton,
+  extraTitleClassName,
   confirmCloseDescription,
-  overwriteClassNameCompletely,
-  closeButtonClassName,
+  extraCloseButtonClassName,
 }: ModalWithCloseButtonProps) {
   const { strings } = useInstanceData()
   const [showConfirmation, setShowConfirmation] = useState(false)
@@ -49,54 +40,43 @@ export function ModalWithCloseButton({
 
   return (
     <BaseModal
+      overlayClassName={cn(defaultModalOverlayStyles, 'z-[101]')}
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      className={
-        overwriteClassNameCompletely
-          ? className
-          : clsx(ModalClsx, 'top-[40%] w-[500px] pb-10', className)
-      }
+      className={cn('serlo-modal', className)}
     >
-      {alignTitleAndCloseButton ? (
-        <div className="flex w-full items-center justify-between py-4">
-          {title && (
-            <h2 className="serlo-h2 my-0 flex-grow border-none py-0 text-center text-sm font-normal">
-              {title}
-            </h2>
-          )}
-          <CloseButton
-            onClick={onRequestClose}
-            title={strings.share.close}
-            dataQa="modal-close-button"
-            className={closeButtonClassName}
-          />
-        </div>
-      ) : (
-        <>
-          {title && <h2 className="serlo-h2">{title}</h2>}
-          <CloseButton
-            onClick={onRequestClose}
-            title={strings.share.close}
-            dataQa="modal-close-button"
-            className={clsx('absolute right-3.5 top-3.5', closeButtonClassName)}
-          />
-        </>
-      )}
+      {title ? (
+        <h2 className={cn('serlo-h2', extraTitleClassName)}>{title}</h2>
+      ) : null}
+      <button
+        onClick={onRequestClose}
+        title={title}
+        className={cn(
+          `absolute right-3.5 top-3.5 inline-flex h-9 w-9 cursor-pointer items-center
+          justify-center rounded-full border-none leading-tight
+        text-almost-black hover:bg-brand hover:text-white`,
+          extraCloseButtonClassName
+        )}
+        data-qa="modal-close-button"
+      >
+        <FaIcon icon={faXmark} className="h-5" />
+      </button>
+
       {children}
 
       {showConfirmation && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-75">
-          <div className="rounded bg-orange-200 p-6 shadow-lg ">
-            <p className="px-4">{confirmCloseDescription}</p>
+        <div className="absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-gray-500 bg-opacity-75 px-4">
+          <div className="rounded-xl bg-editor-primary-100 p-6 shadow-lg ">
+            <p className="px-2">{confirmCloseDescription}</p>
             <div className="mt-4 flex space-x-4">
               <button
-                className="mr-4 rounded bg-transparent px-4 py-2 text-blue-500 hover:bg-white"
+                className="serlo-button-blue-transparent mr-4"
                 onClick={onCloseClick}
               >
                 {strings.modal.leaveNow}
               </button>
               <button
-                className="serlo-button-blue rounded bg-blue-500 px-4 py-2 text-white"
+                className="serlo-button-blue"
                 onClick={() => setShowConfirmation(false)}
               >
                 {strings.modal.noStay}
@@ -109,8 +89,7 @@ export function ModalWithCloseButton({
   )
 }
 
-export const ModalClsx = tw`
-  absolute left-1/2 -mr-[50%] max-w-[85%] -translate-x-1/2
-  -translate-y-1/2 rounded-xl border-none bg-white
-  px-2.5  pt-2.5 shadow-modal outline-none
-`
+// See https://github.com/reactjs/react-modal/blob/master/src/components/Modal.js#L107
+export const defaultModalOverlayStyles = cn(
+  'fixed bottom-0 left-0 right-0 top-0 bg-white bg-opacity-75'
+)

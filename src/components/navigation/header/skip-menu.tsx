@@ -1,6 +1,6 @@
 import { useInstanceData } from '@/contexts/instance-context'
+import { cn } from '@/helper/cn'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
-import { tw } from '@/helper/tw'
 
 export function SkipMenu() {
   const { strings } = useInstanceData()
@@ -8,10 +8,10 @@ export function SkipMenu() {
 
   return (
     <div
-      className={tw`
+      className={cn(`
         sr-only left-side top-side rounded-md bg-yellow
         focus-within:not-sr-only focus-within:absolute focus-within:p-side
-      `}
+      `)}
     >
       {replacePlaceholders(skipStrings.sentence, {
         content: (

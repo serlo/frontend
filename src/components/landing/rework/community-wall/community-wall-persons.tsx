@@ -1,11 +1,10 @@
-import clsx from 'clsx'
 import Image from 'next/image'
 import { zip } from 'ramda'
 import { Fragment } from 'react'
 
 import { Link } from '@/components/content/link'
 import { CommunityWallPerson } from '@/data/de/community-people'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 interface CommunityWallPersonsProps {
   persons: CommunityWallPerson[]
@@ -28,8 +27,8 @@ export function CommunityWallPersons({
       return (
         <Fragment key={name}>
           <figure
-            className={clsx(
-              tw`
+            className={cn(
+              `
                 group z-30 mx-1 mt-12
                 w-1/3v max-w-[13rem] text-center
                 sm:w-1/4v md:absolute md:w-1/8v
@@ -40,11 +39,11 @@ export function CommunityWallPersons({
           >
             <div className="relative z-0 w-full">
               <div
-                className={tw`
+                className={cn(`
                   absolute -left-12 -right-12 bg-wiggle bg-contain
                   bg-no-repeat pb-6/5 opacity-0 transition-all
                   duration-200 ease-linear group-hover:rotate-1 group-hover:opacity-100
-                `}
+                `)}
               ></div>
             </div>
             <Link
@@ -64,7 +63,7 @@ export function CommunityWallPersons({
                 @{name}
               </p>
               <span
-                className={clsx(
+                className={cn(
                   'rounded-2xl px-2 py-1 text-base font-bold text-white',
                   role.includes('Autor')
                     ? 'bg-yellow'

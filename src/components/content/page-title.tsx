@@ -1,6 +1,7 @@
-import clsx from 'clsx'
 import Head from 'next/head'
 import { PropsWithChildren } from 'react'
+
+import { cn } from '@/helper/cn'
 
 type PageTitleProps = PropsWithChildren<{
   headTitle?: boolean
@@ -23,7 +24,7 @@ export function PageTitle({
         </Head>
       )}
       <h1
-        className={clsx(
+        className={cn(
           'serlo-h1 mt-20 hyphens-manual',
           extraBold &&
             'text-4xl font-extrabold tracking-tight text-almost-black'

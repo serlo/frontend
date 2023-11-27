@@ -1,7 +1,7 @@
 import type { Descendant } from 'slate'
 
-import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
-import { isTextDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
+import { AnyEditorDocument } from '@/serlo-editor/types/editor-plugins'
+import { isTextDocument } from '@/serlo-editor/types/plugin-type-guards'
 
 export function extractDescendant(node: Descendant): string {
   if (Object.hasOwn(node, 'type') && Object.hasOwn(node, 'children')) {

@@ -5,7 +5,7 @@ import { ExtraInfoIfRevisionView } from './extra-info-if-revision-view'
 import { GeogebraSerloStaticRenderer } from './serlo-plugin-wrappers/geogebra-serlo-static-renderer'
 import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-static-renderer'
 import { VideoSerloStaticRenderer } from './serlo-plugin-wrappers/video-serlo-static-renderer'
-import { EditorPluginType } from './types/editor-plugin-type'
+import { EditorPluginType } from '../serlo-editor/types/editor-plugin-type'
 import type {
   EditorFillInTheBlanksExerciseDocument,
   EditorAnchorDocument,
@@ -23,8 +23,8 @@ import type {
   EditorSolutionDocument,
   EditorSpoilerDocument,
   EditorTemplateExerciseGroupDocument,
-} from './types/editor-plugins'
-import { TemplatePluginType } from './types/template-plugin-type'
+} from '../serlo-editor/types/editor-plugins'
+import { TemplatePluginType } from '../serlo-editor/types/template-plugin-type'
 import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
 import { isPrintMode } from '@/components/print-mode'

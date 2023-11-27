@@ -5,7 +5,7 @@ import { Link } from '../link'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { getLicense } from '@/data/licenses/licenses-helpers'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 
 interface ExerciseLicenseNoticeProps {
@@ -62,9 +62,9 @@ export function ExerciseLicenseNotice({
   return (
     <>
       <Link
-        className={tw`
+        className={cn(`
           serlo-button-blue-transparent serlo-tooltip-trigger w-[33px] text-[18px] text-base font-normal hover:no-underline
-        `}
+        `)}
         href={licenseHref}
         noExternalIcon
       >

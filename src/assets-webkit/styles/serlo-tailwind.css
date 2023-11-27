@@ -55,10 +55,15 @@
     @apply mx-side mb-8 mt-0 pt-3 text-1.5xl font-bold text-gray-900;
   }
   .serlo-h4 {
-    @apply mx-side mb-5 mt-0 text-base-plus;
+    @apply mx-side mb-5 mt-0 text-base-plus font-bold;
   }
   .serlo-h5 {
     @apply mx-side mb-5 mt-0;
+  }
+  .serlo-modal {
+    @apply absolute left-1/2 -mr-[50%] max-w-[85%] -translate-x-1/2 -translate-y-1/2;
+    @apply rounded-xl border-none bg-white px-2.5 pt-2.5 shadow-modal;
+    @apply top-[40%] w-[500px] pb-10 outline-none;
   }
   .serlo-table {
     @apply mx-side border-separate border-spacing-0 hyphens-auto whitespace-nowrap break-normal border-brand-200 mobile:whitespace-normal;
@@ -401,6 +406,33 @@
 
   .serlo-underlined {
     @apply whitespace-nowrap bg-underlined-simple bg-bottom bg-no-repeat pr-4;
+  }
+
+  .serlo-prose-hacks {
+    p {
+      @apply serlo-p;
+    }
+    h1 {
+      @apply serlo-h1;
+    }
+    h2 {
+      @apply serlo-h2;
+    }
+    h3 {
+      @apply serlo-h3;
+    }
+    h4 {
+      @apply serlo-h4;
+    }
+    a {
+      @apply serlo-link;
+    }
+    ul {
+      @apply serlo-ul text-lg;
+    }
+    ol {
+      @apply serlo-ol text-lg;
+    }
   }
 }
 

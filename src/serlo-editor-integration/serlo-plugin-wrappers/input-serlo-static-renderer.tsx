@@ -8,7 +8,7 @@ import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { InputExerciseStaticRenderer } from '@/serlo-editor/plugins/input-exercise/static'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorInputExerciseDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorInputExerciseDocument } from '@/serlo-editor/types/editor-plugins'
 
 export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
   const entityId = useEntityId()

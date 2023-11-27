@@ -3,7 +3,7 @@ import { faCircleArrowUp, faRedoAlt } from '@fortawesome/free-solid-svg-icons'
 import type { ImageProps } from '..'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { TempFile, isTempFile } from '@/serlo-editor/plugin'
 
@@ -15,11 +15,11 @@ export function UploadButton({ config, state }: ImageProps) {
   return (
     <>
       <label
-        className={tw`
+        className={cn(`
           mr-2 cursor-pointer rounded-md border border-gray-500
           px-1 text-sm transition-all focus-within:bg-editor-primary-200 hover:bg-editor-primary-200
           focus-visible:bg-editor-primary-200
-        `}
+        `)}
       >
         {imageStrings.upload} <FaIcon icon={faCircleArrowUp} />
         <input

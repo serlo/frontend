@@ -1,16 +1,15 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 
 import type { ExerciseProps } from '.'
 import { ExerciseToolbar } from './toolbar/toolbar'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { cn } from '@/helper/cn'
 import { isProduction } from '@/helper/is-production'
-import { tw } from '@/helper/tw'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 const allInteractiveExerciseTypes = isProduction
   ? ([
@@ -42,7 +41,7 @@ export function ExerciseEditor(props: ExerciseProps) {
   return (
     <div
       data-qa="plugin-exercise"
-      className={clsx(
+      className={cn(
         'group/exercise rounded-b-xl border-3 border-transparent pb-6 focus-within:rounded-tl-xl focus-within:border-gray-100',
         focused && '!border-gray-100'
       )}
@@ -54,11 +53,11 @@ export function ExerciseEditor(props: ExerciseProps) {
         />
       ) : (
         <button
-          className={tw`
+          className={cn(`
             absolute right-0 top-[-23px] z-[22] hidden h-6 rounded-t-md bg-gray-100
             px-2 pt-0.5 text-sm font-bold
             hover:bg-editor-primary-100 group-focus-within/exercise:block
-          `}
+          `)}
           data-qa="plugin-exercise-parent-button"
         >
           {exPluginStrings.title}
@@ -104,7 +103,7 @@ export function ExerciseEditor(props: ExerciseProps) {
           </div>
         ) : (
           <div
-            className={clsx(
+            className={cn(
               'mt-20 hidden max-w-[50%] group-focus-within/exercise:block',
               focused && '!block'
             )}

@@ -1,6 +1,5 @@
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useHotkeys } from 'react-hotkeys-hook'
@@ -12,7 +11,7 @@ import { VisualEditor } from './visual-editor'
 import { StaticMath } from '../plugins/text/static-components/static-math'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 export interface MathEditorProps {
   state: string
@@ -80,7 +79,7 @@ export function MathEditor(props: MathEditorProps) {
           <div
             onClick={(e) => e.stopPropagation()}
             {...props.additionalContainerProps}
-            className={clsx(
+            className={cn(
               props.inline
                 ? 'inline-block'
                 : 'my-[1.45em] flex flex-col items-center'
@@ -95,7 +94,7 @@ export function MathEditor(props: MathEditorProps) {
           </div>
         ) : (
           <div
-            className={clsx(
+            className={cn(
               props.inline ? 'inline-block' : '',
               'rounded-md bg-editor-primary-200'
             )}
@@ -110,11 +109,11 @@ export function MathEditor(props: MathEditorProps) {
             className="inline-block"
           >
             <select
-              className={tw`
+              className={cn(`
                   ml-2 cursor-pointer rounded-md !border border-gray-500 bg-editor-primary-100
                   px-1 py-[2px] text-base text-almost-black transition-all
                 hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
-                `}
+                `)}
               value={isVisualMode ? 'visual' : 'latex'}
               data-qa="plugin-toolbar-math-type-switch"
               onChange={(e) => {

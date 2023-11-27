@@ -6,7 +6,7 @@ import { licensesContent } from '@/data/licenses/licenses-content'
 import { LicenseDetailProps } from '@/data-types'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
-import type { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import type { EditorRowsDocument } from '@/serlo-editor/types/editor-plugins'
 
 export default renderedPageNoHooks<LicenseDetailProps>(({ pageData }) => (
   <FrontendClientBase>

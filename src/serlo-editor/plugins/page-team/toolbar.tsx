@@ -8,33 +8,35 @@ import * as t from 'io-ts'
 import type { PageTeamPluginProps } from '.'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
+import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { tw } from '@/helper/tw'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
-const TeamDataDecoder = t.array(
-  t.strict({
-    firstName: t.string,
-    lastName: t.string,
-    user: t.string,
-    position: t.string,
-    extraLinkUrl: t.string,
-    extraLinkText: t.string,
-    photo: t.string,
-  })
-)
+const required = t.type({
+  firstName: t.string,
+  lastName: t.string,
+  user: t.string,
+})
+const optional = t.partial({
+  position: t.string,
+  extraLinkUrl: t.string,
+  extraLinkText: t.string,
+  photo: t.string,
+})
+
+const TeamDataDecoder = t.array(t.intersection([required, optional]))
 
 export function PageTeamToolbar({ focused, id, state }: PageTeamPluginProps) {
   const { lang } = useInstanceData()
 
   if (!focused) return null
 
-  const buttonClassName = tw`
+  const buttonClassName = cn(`
     mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all
   hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200
-  `
+  `)
 
   return (
     <PluginToolbar
@@ -67,7 +69,17 @@ export function PageTeamToolbar({ focused, id, state }: PageTeamPluginProps) {
               )
 
               if (E.isRight(teamData)) {
-                state.data.set(() => teamData.right)
+                const data = teamData.right.map((entry) => {
+                  return {
+                    position: '',
+                    extraLinkUrl: '',
+                    extraLinkText: '',
+                    photo: '',
+                    ...entry,
+                  }
+                })
+
+                state.data.set(() => data)
                 showToastNotice('👍 Imported', 'success')
               } else {
                 throw new Error(

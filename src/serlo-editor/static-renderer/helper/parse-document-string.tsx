@@ -1,5 +1,5 @@
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
+import { AnyEditorDocument } from '@/serlo-editor/types/editor-plugins'
 
 const fallback = { plugin: EditorPluginType.Rows }
 /**
