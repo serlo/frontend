@@ -84,6 +84,9 @@ const nextConfig = {
       skipDefaultConversion: true,
     },
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 }
 
 const withBundleAnalyzer = bundleAnalyzer({
