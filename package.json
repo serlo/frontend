@@ -1,7 +1,6 @@
 {
   "name": "@serlo/frontend",
   "version": "0.0.1",
-  "private": true,
   "bugs": {
     "url": "https://github.com/serlo/frontend/issues"
   },
@@ -9,6 +8,18 @@
   "repository": "serlo/frontend",
   "license": "Apache-2.0",
   "author": "Serlo Education e.V.",
+  "main": "./dist/frontend.umd.cjs",
+  "module": "./dist/frontend.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/frontend.js",
+      "require": "./dist/frontend.umd.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "_eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "_prettier": "prettier .",
@@ -16,6 +27,7 @@
     "build": "npm-run-all build:prisma build:next",
     "build:next": "next build",
     "build:prisma": "yarn prisma generate",
+    "build-editor": "tsc && vite build",
     "check:all": "scripts/check-all.sh",
     "check:api": "node ./scripts/check-api-version.mjs",
     "check:tailwind": "node ./scripts/check-tailwind.js",
@@ -48,6 +60,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@serlo/authorization": "^0.57.3",
     "@tippyjs/react": "^4.2.6",
+    "@vitejs/plugin-react": "^4.2.0",
     "algebra.js": "^0.2.6",
     "array-move": "^4.0.0",
     "autoprefixer": "^10.4.16",
@@ -160,7 +173,9 @@
     "tailwindcss": "^3.3.3",
     "tailwindcss-animate": "^1.0.7",
     "ts-unused-exports": "^10.0.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vite": "^5.0.2",
+    "vite-plugin-dts": "^3.6.3"
   },
   "packageManager": "yarn@3.6.1",
   "engines": {
