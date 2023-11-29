@@ -19,7 +19,7 @@ jobs:
           max_timeout: 1200
           check_interval: 20
       - run: yarn
-      - run: yarn test
+      - run: yarn test-firefox
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
