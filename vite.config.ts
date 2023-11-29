@@ -1,5 +1,4 @@
 import react from '@vitejs/plugin-react'
-import * as fs from 'fs'
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
@@ -31,15 +30,5 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
-  plugins: [
-    react(),
-    dts({
-      afterBuild: () => {
-        fs.writeFileSync(
-          resolve(__dirname, './dist/index.d.ts'),
-          `export * from './src/serlo-editor/package'`
-        )
-      },
-    }),
-  ],
+  plugins: [react(), dts()],
 })
