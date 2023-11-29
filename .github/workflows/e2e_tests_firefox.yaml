@@ -1,0 +1,27 @@
+name: e2e tests
+on:
+  workflow_dispatch:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - uses: actions/checkout@v3
+        with:
+          repository: 'serlo/frontend-e2e-tests'
+          ref: '80-run-tests-with-firefox'
+      - uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 1200
+          check_interval: 20
+      - run: yarn
+      - run: yarn test
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: e2e-screenshots-on-fail
+          path: output/ # or path/to/artifact
