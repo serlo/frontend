@@ -104,10 +104,15 @@ export const generateExercisePrompt = (params: ExerciseParams): string => {
         })
       : ''
 
+  const solutionSteps =
+    exerciseType === 'multiple choice'
+      ? `Beschreibe die korrekten Antworten als array value mit dem key "steps". Falls es etwas zu rechnen gibt, beschreibe den vollständigen und korrekten Rechenweg KLEINSCHRITTIG in ganzen Sätzen.`
+      : 'Beschreibe zunächst den vollständigen und korrekten Rechenweg KLEINSCHRITTIG in ganzen Sätzen, den die Schüler nutzen können, um die Aufgabe zu lösen, als array value mit dem key "steps". Sehr wichtig: Ausschließlich konkrete Schritte und Rechnungen!'
+
   return `Du bist eine kreative Lehrkraft, die spannende Aufgaben für Schüler ${gradeOrUniversity} im Fach ${subject} entwickelt. Erstelle zum Thema "${topic}" eine Aufgabe${subtasks} ${exerciseText}. ${priorKnowledgeString}
 Nach Bearbeiten der Aufgabe beherrschen die Schüler folgendes besser: ${preLearningGoal}${learningGoal}
 Verwende leichte Sprache. Das Anforderungsniveau soll ${difficultyText} sein. Beachte folgende Charakterisierung der Schüler: ${difficultyDescription}.
-Stelle die Aufgabe zum Hochladen auf eine Lernplattform in einem unnamed JSON Objekt dar. Füge eine sinnvolle Überschrift zu ${generatedExerciseSingularOrPlural} als value zu dem key "heading" hinzu. Die weiteren key value pairs werden in ein array mit dem key "exercises" geschrieben, sodass das JSON so aussieht { "heading": "Relevanter Titel für die generierten Aufgaben", "exercises": [] }. Beschreibe zunächst den vollständigen und korrekten Rechenweg KLEINSCHRITTIG in ganzen Sätzen, den die Schüler nutzen können, um die Aufgabe zu lösen, als array value mit dem key "steps". Sehr wichtig: Ausschließlich konkrete Schritte und Rechnungen!
+Stelle die Aufgabe zum Hochladen auf eine Lernplattform in einem unnamed JSON Objekt dar. Füge eine sinnvolle Überschrift zu ${generatedExerciseSingularOrPlural} als value zu dem key "heading" hinzu. Die weiteren key value pairs werden alle in ein array mit dem key "exercises" geschrieben, sodass das JSON so aussieht { "heading": "Relevanter Titel für die generierten Aufgaben", "exercises": [] }. ${solutionSteps}
 Überlege welche Fehler die Schüler machen könnten und formuliere eine kurze Strategie (JSON key "strategy" mit einem string als value) mit einem kurzen allgemeinen Tipp zum Vorgehen beim Lösen der Aufgabe. Der Tipp sollte nicht die Lösung enthalten.
 Verwende bei der Aufgabenformulierung einen Operator und vermeide W-Fragen! Anschließend, vervollständige das JSON um folgendes: ${keyDescription}. Gebe KEINEN normalen Text aus, der GESAMTE output MUSS sich innerhalb von einem einzigen JSON Objekt befinden und ${latexPrompt}`
 }
