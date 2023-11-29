@@ -4439,9 +4439,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@serlo/frontend@workspace:.":
+"@serlo/editor@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@serlo/frontend@workspace:."
+  resolution: "@serlo/editor@workspace:."
   dependencies:
     "@babel/core": ^7.23.0
     "@fortawesome/fontawesome-svg-core": 6.4.2

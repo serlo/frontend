@@ -11,8 +11,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/serlo-editor/package/index.ts'),
-      name: 'frontend',
-      fileName: 'frontend',
+      name: 'editor',
+      fileName: 'editor',
       formats: ['es'],
     },
     rollupOptions: {

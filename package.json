@@ -1,6 +1,6 @@
 {
-  "name": "@serlo/frontend",
-  "version": "0.0.19",
+  "name": "@serlo/editor",
+  "version": "0.0.1",
   "bugs": {
     "url": "https://github.com/serlo/frontend/issues"
   },
@@ -8,12 +8,11 @@
   "repository": "serlo/frontend",
   "license": "Apache-2.0",
   "author": "Serlo Education e.V.",
-  "main": "./dist/frontend.umd.cjs",
-  "module": "./dist/frontend.js",
+  "module": "./dist/editor.js",
   "types": "./dist/src/serlo-editor/package/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/frontend.js"
+      "import": "./dist/editor.js"
     },
     "./dist/editor-tailwind.css": {
       "import": "./dist/editor-tailwind.css",
