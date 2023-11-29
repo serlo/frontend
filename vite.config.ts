@@ -13,6 +13,7 @@ export default defineConfig({
       entry: resolve(__dirname, 'src/serlo-editor/package/index.ts'),
       name: 'frontend',
       fileName: 'frontend',
+      formats: ['es'],
     },
     rollupOptions: {
       external: ['react', 'react-dom'],
