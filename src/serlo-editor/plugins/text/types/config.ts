@@ -22,13 +22,11 @@ export interface TextEditorConfig {
   isInlineChildEditor?: true
   formattingOptions?: TextEditorFormattingOption[]
   noLinebreaks?: boolean
-  serloLinkSearch: boolean
   controls?: InlineTextEditorControls
 }
 
 export interface InlineTextEditorConfig {
   placeholder?: TextEditorConfig['placeholder']
   noLinebreaks?: TextEditorConfig['noLinebreaks']
-  serloLinkSearch: TextEditorConfig['serloLinkSearch']
   controls: Required<InlineTextEditorControls>
 }

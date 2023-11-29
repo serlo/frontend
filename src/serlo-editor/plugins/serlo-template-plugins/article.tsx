@@ -20,7 +20,7 @@ import {
   string,
 } from '@/serlo-editor/plugin'
 import { useAppDispatch, focus } from '@/serlo-editor/store'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 export const articleTypeState = entityType(
   {
@@ -50,13 +50,11 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (props.editable) {
-      // focus on title, remove focus from content
-      setTimeout(() => {
-        dispatch(focus(null))
-        titleRef.current?.focus()
-      })
-    }
+    // focus on title, remove focus from content
+    setTimeout(() => {
+      dispatch(focus(null))
+      titleRef.current?.focus()
+    })
     // only after creating plugin
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -78,17 +76,13 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
         />
       </div>
       <h1 className="serlo-h1 mt-20" itemProp="name">
-        {props.editable ? (
-          <input
-            ref={titleRef}
-            className={headerInputClasses}
-            placeholder={articleStrings.title}
-            value={title.value}
-            onChange={(e) => title.set(e.target.value)}
-          />
-        ) : (
-          title.value
-        )}
+        <input
+          ref={titleRef}
+          className={headerInputClasses}
+          placeholder={articleStrings.title}
+          value={title.value}
+          onChange={(e) => title.set(e.target.value)}
+        />
       </h1>
 
       <section itemProp="articleBody">{content.render()}</section>
@@ -98,7 +92,7 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
         <ModalWithCloseButton
           isOpen={showSettingsModal}
           onCloseClick={() => setShowSettingsModal(false)}
-          className="!top-1/3 !max-w-xl"
+          className="top-8 max-w-xl translate-y-0 sm:top-1/3"
         >
           <div className="mx-side mb-3 mt-12">
             <SettingsTextarea

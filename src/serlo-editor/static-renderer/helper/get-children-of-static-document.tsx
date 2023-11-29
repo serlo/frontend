@@ -1,4 +1,4 @@
-import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { AnyEditorDocument } from '@/serlo-editor/types/editor-plugins'
 import {
   isArticleIntroductionDocument,
   isArticleDocument,
@@ -8,7 +8,7 @@ import {
   isPageLayoutDocument,
   isRowsDocument,
   isSolutionDocument,
-} from '@/serlo-editor-integration/types/plugin-type-guards'
+} from '@/serlo-editor/types/plugin-type-guards'
 
 /**
  * Helper for static renderer that returns the direct children of the supplied document.

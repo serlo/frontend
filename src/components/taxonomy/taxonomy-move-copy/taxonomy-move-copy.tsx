@@ -4,7 +4,6 @@ import {
   faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons'
 import { TaxonomyTerm } from '@serlo/authorization'
-import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
 import { getPreviewStringFromExercise } from './get-preview-string-from-exercise'
@@ -24,6 +23,7 @@ import {
   UuidWithRevType,
 } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
+import { cn } from '@/helper/cn'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -154,10 +154,10 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
     _title: string,
     taxType?: TaxonomyTermType
   ) {
-    const buttonClass = clsx(
-      'text-base serlo-button-light mr-3',
+    const buttonClass = cn(
+      'serlo-button-light mr-3 text-base',
       !buttonsActive &&
-        'bg-gray-100 text-gray-400 cursor-not-allowed hover:bg-gray-100 hover:text-gray-400'
+        'cursor-not-allowed bg-gray-100 text-gray-400 hover:bg-gray-100 hover:text-gray-400'
     )
 
     const buttonText = (isMove: boolean) => {

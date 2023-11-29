@@ -1,5 +1,5 @@
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import { type Dispatch, type SetStateAction } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
 
 import type { GeogebraProps } from '.'
 import { EditorInput } from '../../editor-ui'
@@ -8,7 +8,7 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 export const GeogebraToolbar = ({
   id,
@@ -38,7 +38,7 @@ export const GeogebraToolbar = ({
             <ModalWithCloseButton
               isOpen={showSettingsModal}
               onCloseClick={() => setShowSettingsModal(false)}
-              className="!top-1/3 !max-w-xl"
+              className="top-8 max-w-xl translate-y-0 sm:top-1/3"
             >
               <h3 className="serlo-h3 mt-4">
                 {editorStrings.edtrIo.settings}: {geogebraStrings.title}

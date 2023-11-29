@@ -1,20 +1,30 @@
 import { useState } from 'react'
 
 import type { ScMcExerciseProps } from '.'
-import { ScMcExerciseRenderer } from './renderer/renderer'
+import { ScMcExerciseStaticRenderer } from './static'
 import { ScMcExerciseToolbar } from './toolbar'
 import {
   AddButton,
   InteractiveAnswer,
   PreviewOverlaySimple,
 } from '../../editor-ui'
-import { store, selectIsDocumentEmpty } from '../../store'
+import {
+  store,
+  selectFocused,
+  selectStaticDocument,
+  useAppSelector,
+} from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { EditableContext } from '@/serlo-editor/core/contexts'
+import { EditorScMcExerciseDocument } from '@/serlo-editor/types/editor-plugins'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
-  const { editable, state, id } = props
+  const { state, id, focused } = props
   const { answers, isSingleChoice } = state
+
+  const staticDocument = useAppSelector(
+    (storeState) =>
+      selectStaticDocument(storeState, id) as EditorScMcExerciseDocument
+  )
 
   const editorStrings = useEditorStrings()
 
@@ -33,38 +43,53 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
 
   const [previewActive, setPreviewActive] = useState(false)
 
-  const renderer = (
-    <EditableContext.Provider value={false}>
-      {/* //margin-hack */}
-      <div className="[&_.ml-4.flex]:mb-block">
-        <ScMcExerciseRenderer
-          isSingleChoice={isSingleChoice.value}
-          idBase={`sc-mc-${id}`}
-          answers={answers.slice(0).map(({ isCorrect, feedback, content }) => {
-            return {
-              isCorrect: isCorrect.value,
-              feedback: isEmpty(feedback.id) ? null : feedback.render(),
-              content: isEmpty(content.id) ? null : content.render(),
-            }
-          })}
-        />
-      </div>
-    </EditableContext.Provider>
-  )
-  if (!editable) return renderer
+  const isAnyAnswerFocused = answers.some(({ content, feedback }) => {
+    const focusedId = selectFocused(store.getState())
+    return focusedId === content.id || focusedId === feedback.id
+  })
+
+  const showUi = focused || isAnyAnswerFocused
+
+  // cleanup answers states:
+  // make sure we have at least one answer
+  if (answers.length === 0) answers.insert()
+
+  if (isSingleChoice.value && answers.length > 0) {
+    const correctAnswers = state.answers.filter(
+      (answer) => answer.isCorrect.value === true
+    )
+    // make sure for single choice at least one answer is correct
+    if (correctAnswers.length === 0) answers[0].isCorrect.set(true)
+
+    // make sure for single choice we never have multiple correct answers
+    if (correctAnswers.length > 1) {
+      correctAnswers.forEach((answer) => answer.isCorrect.set(false))
+      correctAnswers[0].isCorrect.set(true)
+    }
+  }
 
   return (
     <div className="mb-12 mt-24 pt-4">
-      <ScMcExerciseToolbar
-        {...props}
-        previewActive={previewActive}
-        setPreviewActive={setPreviewActive}
-      />
-      <PreviewOverlaySimple active={previewActive}>
-        {renderer}
+      {showUi ? (
+        <ScMcExerciseToolbar
+          {...props}
+          previewActive={previewActive}
+          setPreviewActive={setPreviewActive}
+        />
+      ) : null}
+      <PreviewOverlaySimple previewActive={previewActive} fullOpacity={!showUi}>
+        {/* margin-hack */}
+        <div className="[&_.ml-4.flex]:mb-block">
+          <ScMcExerciseStaticRenderer
+            {...staticDocument}
+            idBase={`sc-mc-${id}`}
+            noShuffle
+          />
+        </div>
       </PreviewOverlaySimple>
-      {editable && !previewActive && (
-        <>
+
+      {!previewActive && showUi ? (
+        <div className="[&_.plugin-toolbar]:left-side [&_.plugin-toolbar]:top-[-60px]">
           {answers.map((answer, index) => {
             return (
               <InteractiveAnswer
@@ -87,12 +112,8 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
           <AddButton onClick={handleAddButtonClick}>
             {editorStrings.templatePlugins.scMcExercise.addAnswer}
           </AddButton>
-        </>
-      )}
+        </div>
+      ) : null}
     </div>
   )
-
-  function isEmpty(id: string) {
-    return selectIsDocumentEmpty(store.getState(), id)
-  }
 }

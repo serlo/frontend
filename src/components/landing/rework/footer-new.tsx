@@ -31,7 +31,7 @@ export function FooterNew() {
           }
         `}</style>
         <nav className="text-center">
-          {footerData.footerNavigation[2].children.map(({ title, url }) => {
+          {footerData.footerNavigation[3].children.map(({ title, url }) => {
             return (
               <Fragment key={title}>
                 <Link

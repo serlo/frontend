@@ -204,12 +204,6 @@ export const revisionQuery = gql`
             date
           }
           ...license
-          solution {
-            id
-            currentRevision {
-              content
-            }
-          }
           revisions(unrevised: false) {
             totalCount
             nodes {
@@ -234,11 +228,6 @@ export const revisionQuery = gql`
             exercises {
               id
             }
-          }
-          license {
-            id
-            default
-            title
           }
           currentRevision {
             id
@@ -265,11 +254,6 @@ export const revisionQuery = gql`
           instance
           id
           alias
-          license {
-            id
-            default
-            title
-          }
           currentRevision {
             id
             ...exerciseGroupRevision
@@ -285,42 +269,6 @@ export const revisionQuery = gql`
             ...exercise
             revisions(unrevised: true) {
               totalCount
-            }
-          }
-        }
-      }
-      ... on SolutionRevision {
-        content
-        changes
-        repository {
-          ...license
-          trashed
-          instance
-          id
-          alias
-          exercise {
-            __typename
-            ... on Exercise {
-              id
-            }
-            ... on GroupedExercise {
-              id
-              exerciseGroup {
-                id
-                exercises {
-                  id
-                }
-              }
-            }
-          }
-          currentRevision {
-            id
-            content
-          }
-          revisions(unrevised: false) {
-            nodes {
-              id
-              trashed
             }
           }
         }

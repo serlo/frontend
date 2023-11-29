@@ -6,12 +6,12 @@ import {
   getStateFromLocalStorage,
   LocalStorageNotice,
 } from './components/local-storage-notice'
+import { IsSerloContext } from './context/is-serlo-context'
 import { SaveContext } from './context/save-context'
 import { createPlugins } from './create-plugins'
 import { createRenderers } from './create-renderers'
 import { useCanDo } from '@/auth/use-can-do'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidWithRevType } from '@/data-types'
 import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
@@ -46,8 +46,6 @@ export function SerloEditor({
   const userCanSkipReview = canDo(Entity.checkoutRevision)
   const [useStored, setUseStored] = useState(false)
 
-  const { lang } = useInstanceData()
-
   const loggedInData = useLoggedInData()
   if (!loggedInData)
     return (
@@ -62,7 +60,6 @@ export function SerloEditor({
   editorPlugins.init(
     createPlugins({
       editorStrings,
-      instance: lang,
       parentType: type,
     })
   )
@@ -70,20 +67,21 @@ export function SerloEditor({
   editorRenderers.init(createRenderers())
 
   return (
-    <SaveContext.Provider
-      value={{ onSave, userCanSkipReview, entityNeedsReview }}
-    >
-      <LocalStorageNotice useStored={useStored} setUseStored={setUseStored} />
-      <Editor
-        initialState={useStored ? getStateFromLocalStorage()! : initialState}
-        editable
-        onChange={({ changed, getDocument }) => {
-          if (!changed) return
-          void debouncedStoreToLocalStorage(getDocument())
-        }}
+    <IsSerloContext.Provider value>
+      <SaveContext.Provider
+        value={{ onSave, userCanSkipReview, entityNeedsReview }}
       >
-        {children}
-      </Editor>
-    </SaveContext.Provider>
+        <LocalStorageNotice useStored={useStored} setUseStored={setUseStored} />
+        <Editor
+          initialState={useStored ? getStateFromLocalStorage()! : initialState}
+          onChange={({ changed, getDocument }) => {
+            if (!changed) return
+            void debouncedStoreToLocalStorage(getDocument())
+          }}
+        >
+          {children}
+        </Editor>
+      </SaveContext.Provider>
+    </IsSerloContext.Provider>
   )
 }

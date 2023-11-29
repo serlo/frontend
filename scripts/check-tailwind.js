@@ -19,7 +19,7 @@ const knownExceptions = [
 
 const isFileRegex = /\/.+\..+/
 const simpleClassNameRegex = /className="([^"]+)"/g
-const clsxRegex = /className={clsx\(.+?\)}/gs
+const cnRegex = /className={cn\(.+?\)}/gs
 const strRegex = /'(.+?)'/g
 
 function walkDir(path) {
@@ -47,7 +47,7 @@ files.forEach((file) => {
     filesWithStyledComponents.push(file)
   }
   const classNames = []
-  for (const m of content.matchAll(clsxRegex)) {
+  for (const m of content.matchAll(cnRegex)) {
     const cur = []
     for (const str of m[0].matchAll(strRegex)) {
       cur.push(str[1])

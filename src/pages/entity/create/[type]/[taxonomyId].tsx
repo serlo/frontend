@@ -1,7 +1,9 @@
 import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
+import { LazyLoadExerciseGenerationWrapperOrNull } from '@/components/exercise-generation/lazy-load-exercise-generation-wrapper-or-null'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
@@ -15,7 +17,8 @@ import {
 import { sharedTaxonomyParents } from '@/fetcher/query-fragments'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
-import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
+import { EditorProps } from '@/serlo-editor/core'
+import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 
 enum AllowedPlugins {
   Article = TemplatePluginType.Article,
@@ -27,43 +30,64 @@ enum AllowedPlugins {
   ExerciseGroup = TemplatePluginType.TextExerciseGroup,
 }
 
+export type AllowedPluginType = keyof typeof AllowedPlugins
+
 interface EntityCreateProps {
-  entityType: keyof typeof AllowedPlugins
+  entityType: AllowedPluginType
   taxonomyTerm: Extract<GetTaxonomyTypeQuery['uuid'], { title: any }>
   entityNeedsReview: boolean
+  subject: string
 }
 
-export default renderedPageNoHooks<EntityCreateProps>(
-  ({ taxonomyTerm, entityType, entityNeedsReview }) => {
-    const { id: taxonomyParentId } = taxonomyTerm
+export default renderedPageNoHooks<EntityCreateProps>((props) => {
+  return <Content props={props} />
+})
 
-    const addRevisionProps = {
-      initialState: { plugin: AllowedPlugins[entityType] },
-      type: UuidType[entityType],
-      entityNeedsReview,
-      taxonomyParentId,
-      errorType: 'none',
-    } as const
+function Content({
+  props: { taxonomyTerm, entityType, entityNeedsReview, subject },
+}: {
+  props: EntityCreateProps
+}) {
+  const [initialState, setInitialState] = useState<EditorProps['initialState']>(
+    {
+      plugin: AllowedPlugins[entityType],
+    }
+  )
 
-    return (
-      <FrontendClientBase
-        noContainers
-        loadLoggedInData={!isProduction} // warn: enables preview editor without login
-        entityId={taxonomyParentId}
-      >
-        <div className="relative">
-          <MaxWidthDiv>
-            <main>
-              <Guard needsAuth={isProduction ? true : undefined} data>
-                <AddRevision {...addRevisionProps} />
-              </Guard>
-            </main>
-          </MaxWidthDiv>{' '}
-        </div>
-      </FrontendClientBase>
-    )
-  }
-)
+  const { id: taxonomyParentId } = taxonomyTerm
+
+  const addRevisionProps = {
+    initialState,
+    type: UuidType[entityType],
+    entityNeedsReview,
+    taxonomyParentId,
+    errorType: 'none',
+  } as const
+
+  return (
+    <FrontendClientBase
+      noContainers
+      loadLoggedInData={!isProduction} // warn: enables preview editor without login
+      entityId={taxonomyParentId}
+    >
+      <div className="relative">
+        <MaxWidthDiv>
+          <main>
+            <Guard needsAuth={isProduction ? true : undefined} data>
+              <AddRevision {...addRevisionProps} />
+              <LazyLoadExerciseGenerationWrapperOrNull
+                subject={subject}
+                entityType={entityType}
+                taxonomyTitle={taxonomyTerm.title}
+                setEditorState={setInitialState}
+              />
+            </Guard>
+          </main>
+        </MaxWidthDiv>{' '}
+      </div>
+    </FrontendClientBase>
+  )
+}
 
 export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
   context
@@ -102,6 +126,7 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
       entityType: entityType as keyof typeof AllowedPlugins,
       taxonomyTerm: { ...result.uuid },
       entityNeedsReview: !isTestArea,
+      subject: breadcrumbsData?.[0]?.label || 'Unknown subject',
     },
     revalidate: 60 * 30, // 0.5 hours,
   }

@@ -10,9 +10,9 @@ import {
   RevisionUuidQueryVariables,
 } from '../graphql-types/operations'
 import { endpoint } from '@/api/endpoint'
-import { PageNotFound, RevisionPage, UuidRevType, UuidType } from '@/data-types'
+import { PageNotFound, RevisionPage, UuidRevType } from '@/data-types'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
-import { EditorExerciseDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorExerciseDocument } from '@/serlo-editor/types/editor-plugins'
 
 export async function requestRevision(
   revisionId: number,
@@ -49,7 +49,6 @@ export async function requestRevision(
     uuid.__typename === UuidRevType.GroupedExercise ||
     uuid.__typename === UuidRevType.Exercise ||
     uuid.__typename === UuidRevType.ExerciseGroup ||
-    uuid.__typename === UuidRevType.Solution ||
     uuid.__typename === UuidRevType.Course
   ) {
     const isExercise =
@@ -86,27 +85,12 @@ export async function requestRevision(
         : null
 
     const getParentId = () => {
-      if (uuid.__typename === UuidRevType.GroupedExercise)
-        return uuid.repository.exerciseGroup.id
-      if (uuid.__typename === UuidRevType.Solution) {
-        const exercise = uuid.repository.exercise
-        if (exercise.__typename === UuidType.GroupedExercise)
-          return exercise.exerciseGroup?.id
-        return exercise.id
-      }
-      return uuid.repository.id
+      return uuid.__typename === UuidRevType.GroupedExercise
+        ? uuid.repository.exerciseGroup.id
+        : uuid.repository.id
     }
 
     const getPositionInGroup = () => {
-      if (uuid.__typename === UuidRevType.Solution) {
-        const exercise = uuid.repository.exercise
-        if (exercise.__typename === UuidType.GroupedExercise) {
-          const pos = exercise.exerciseGroup?.exercises.findIndex(
-            (ex) => ex.id === exercise.id
-          )
-          return pos && pos > -1 ? pos : undefined
-        }
-      }
       if (uuid.__typename === UuidRevType.GroupedExercise) {
         const pos = uuid.repository.exerciseGroup.exercises.findIndex(
           (ex) => ex.id === uuid.repository.id

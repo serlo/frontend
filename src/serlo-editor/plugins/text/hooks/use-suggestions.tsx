@@ -16,12 +16,11 @@ import {
   store,
   useAppDispatch,
 } from '@/serlo-editor/store'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 interface useSuggestionsArgs {
   editor: SlateEditor
   id: string
-  editable: boolean
   focused: boolean
   isInlineChildEditor?: boolean
 }
@@ -39,7 +38,7 @@ const hotkeyConfig = {
 }
 
 export const useSuggestions = (args: useSuggestionsArgs) => {
-  const { editor, id, editable, focused, isInlineChildEditor } = args
+  const { editor, id, focused, isInlineChildEditor } = args
 
   const dispatch = useAppDispatch()
   const [selected, setSelected] = useState(0)
@@ -78,7 +77,6 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
 
   const showSuggestions =
     !isInlineChildEditor &&
-    editable &&
     focused &&
     text.startsWith('/') &&
     filteredOptions.length > 0

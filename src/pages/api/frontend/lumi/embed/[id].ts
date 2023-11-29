@@ -11,7 +11,7 @@ export default async function handler(
   const lumiRes = await fetch(embedUrl)
   const html = await lumiRes.text()
 
-  const prepared = html
+  let prepared = html
     .replace(/(<script\s+src=")\/api\/v1\/h5p/g, '$1/api/frontend/lumi/proxy')
     .replace(
       /("stylesheet"\s+href=")\/api\/v1\/h5p/g,
@@ -44,6 +44,26 @@ export default async function handler(
     })
     </script>`
     )
+
+  if (prepared.includes('"library": "H5P.DragQuestion 1.14"')) {
+    // use cached bundle
+    const regex =
+      /<link [^>]*href="[^"]*"[^>]*>|<script [^>]*src="[^"]*"[^>]*><\/script>/g
+
+    // Remove the matched tags from the 'prepared' variable
+    prepared = prepared.replace(regex, '')
+
+    prepared = prepared.replace(
+      '<meta charset="utf-8">',
+      `
+      <meta charset="utf-8">
+      <link rel="stylesheet" href="/_assets/h5p/h5p_drag_question_1_14_min.css"/>
+      <script src="/_assets/h5p/h5p_drag_question_1_14.js"></script>
+      <script src="/_assets/h5p/image.js"></script>
+      <script src="/_assets/h5p/mathdisplay.js"></script>
+    `
+    )
+  }
 
   //console.log(prepared)
   res.setHeader('Content-Type', lumiRes.headers.get('Content-Type') ?? '')

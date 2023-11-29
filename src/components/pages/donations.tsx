@@ -7,7 +7,7 @@ import { HeadTags } from '../head-tags'
 import { PartnerList } from '../landing/rework/partner-list'
 import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
 import { Logo } from '@/components/navigation/header/logo'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import { ExternalProvider } from '@/helper/use-consent'
 
 export function Donations() {
@@ -33,24 +33,24 @@ export function Donations() {
         <Logo />
       </header>
       <div
-        className={tw`
+        className={cn(`
           -mt-12 text-center text-gray-700
           md:ml-0 md:max-w-[100vw]
           md:text-left
-        `}
+        `)}
       >
         <section
-          className={tw`
+          className={cn(`
             mt-20 flex flex-col-reverse font-bold sm:mx-side
             sm:flex-row-reverse sm:text-left lg:mt-10
-          `}
+          `)}
         >
           <div className="mt-2 w-full px-2 sm:ml-10 sm:mt-20">
             <h1
-              className={tw`
+              className={cn(`
                 mx-auto mb-6 mt-3 max-w-md
                 text-5xl font-extrabold leading-tight tracking-tight sm:ml-0
-              `}
+              `)}
             >
               Deine Spende macht einen{' '}
               <span className="serlo-underlined !pr-0 pb-2">Unterschied</span>.
@@ -64,20 +64,20 @@ export function Donations() {
                 fill
                 priority
                 sizes="23rem"
-                className={tw`
+                className={cn(`
                   block aspect-square !h-80 !w-80 rounded-full
                   object-cover object-center mobile:mx-auto
                   sm:mx-0 sm:ml-auto sm:!h-[23rem] sm:!w-[23rem] sm:max-w-none
-              `}
+              `)}
               />
             </div>
           </aside>
         </section>
         <div
-          className={tw`
+          className={cn(`
             mt-12 sm:mx-side-lg md:flex md:justify-evenly
             lg:mx-auto lg:max-w-5xl
-          `}
+          `)}
         >
           <div className="mx-auto max-w-2xl">
             <section>
@@ -106,10 +106,10 @@ export function Donations() {
           </div>
 
           <section
-            className={tw`
+            className={cn(`
               mx-auto max-w-md px-side
               pt-6 text-left md:max-w-xs md:pt-0
-            `}
+            `)}
           >
             <h3 className="-mt-0.5 mb-5 text-xl font-bold">
               Dein Ansprechpartner
@@ -178,9 +178,9 @@ export function Donations() {
 
       <footer>
         <div
-          className={tw`
+          className={cn(`
             -mb-20 -mt-28 bg-brand-100 p-7 px-side pt-28 text-center text-white
-          `}
+          `)}
         >
           <h3 className="mx-auto mb-8 text-lg font-bold text-almost-black">
             Partner und Förderer
@@ -192,7 +192,7 @@ export function Donations() {
             Datenschutz
           </a>
           {' • '}
-          <a className="hover:underline" href="/impressum" target="_blank">
+          <a className="hover:underline" href="/legal" target="_blank">
             Impressum
           </a>
         </div>

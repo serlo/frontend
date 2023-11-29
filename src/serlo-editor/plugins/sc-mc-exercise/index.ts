@@ -7,7 +7,7 @@ import {
   list,
   object,
 } from '../../plugin'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 const scMcExerciseState = object({
   isSingleChoice: boolean(false),
@@ -16,7 +16,8 @@ const scMcExerciseState = object({
       content: child({ plugin: EditorPluginType.Text }),
       isCorrect: boolean(false),
       feedback: child({ plugin: EditorPluginType.Text }),
-    })
+    }),
+    2
   ),
 })
 

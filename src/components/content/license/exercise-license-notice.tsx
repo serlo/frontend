@@ -4,38 +4,56 @@ import { faSlash } from '@fortawesome/free-solid-svg-icons'
 import { Link } from '../link'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import type { License } from '@/fetcher/query-types'
-import { tw } from '@/helper/tw'
+import { getLicense } from '@/data/licenses/licenses-helpers'
+import { cn } from '@/helper/cn'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 
 interface ExerciseLicenseNoticeProps {
-  data: License
-  type?: 'exercise' | 'solution' | 'exercise-group'
+  exerciseLicenseId?: number
+  solutionLicenseId?: number
 }
-
+/** Small license info button for Exercise and Solution  */
 export function ExerciseLicenseNotice({
-  data,
-  type,
+  exerciseLicenseId,
+  solutionLicenseId,
 }: ExerciseLicenseNoticeProps) {
-  const { title: explanation, default: isDefault, id, shortTitle } = data
-  const { strings } = useInstanceData()
+  const { strings, licenses } = useInstanceData()
 
-  if (isDefault) return null
+  const exerciseLicense = getLicense(licenses, exerciseLicenseId)
+  const solutionLicense = getLicense(licenses, solutionLicenseId)
+
+  //  Both default, don't display
+  if (exerciseLicense.isDefault && solutionLicense.isDefault) return null
+
+  const { task } = strings.content.exercises
+  const { solution } = strings.entities
+
+  // Task special, solution default: Display with "Aufgabenstellung"
+  // Task and solution special and the same: Display with "Aufgabenstellung und Lösung"
+  // Task default, solution special (very rare): Display with "Lösung"
+  const typeString =
+    !exerciseLicense.isDefault && solutionLicense.isDefault
+      ? task
+      : exerciseLicense.id === solutionLicense.id
+      ? `${task} & ${solution}`
+      : solution
+
+  const licenseToDisplay = exerciseLicense.isDefault
+    ? solutionLicense
+    : exerciseLicense
+
+  const { title: explanation, id, shortTitle } = licenseToDisplay
 
   const titleParts = explanation.split('CC')
   const licenseName =
     titleParts.length === 2 ? `CC${titleParts[1]}` : explanation
   const isCreativeCommons = licenseName.indexOf('CC') > -1
 
-  const typeString =
-    type === 'solution'
-      ? strings.entities.solution
-      : strings.content.exercises.task
   const licenseHref = `/license/detail/${id}`
 
-  const tooltipTitle = `${
-    shortTitle ? shortTitle : strings.license.special
-  } (${typeString})`
+  const tooltipTitle = `${shortTitle ? shortTitle : strings.license.special} (${
+    strings.license.appliesTo
+  }: ${typeString})`
 
   const tooltipExplanation = isCreativeCommons
     ? explanation
@@ -44,9 +62,9 @@ export function ExerciseLicenseNotice({
   return (
     <>
       <Link
-        className={tw`
+        className={cn(`
           serlo-button-blue-transparent serlo-tooltip-trigger w-[33px] text-[18px] text-base font-normal hover:no-underline
-        `}
+        `)}
         href={licenseHref}
         noExternalIcon
       >

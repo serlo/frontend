@@ -9,7 +9,7 @@ import { StaticSlate } from '../text/static-components/static-slate'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 import { shuffleArray } from '@/helper/shuffle-array'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorScMcExerciseDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorScMcExerciseDocument } from '@/serlo-editor/types/editor-plugins'
 
 export function ScMcExerciseStaticRenderer({
   state,
@@ -17,19 +17,23 @@ export function ScMcExerciseStaticRenderer({
   idBase,
   onEvaluate,
   renderExtraAnswerContent,
+  noShuffle,
 }: EditorScMcExerciseDocument & {
   idBase: string
   isPrintMode?: boolean
-  onEvaluate: ScMcExerciseRendererProps['onEvaluate']
-  renderExtraAnswerContent: ScMcExerciseRendererProps['renderExtraAnswerContent']
+  onEvaluate?: ScMcExerciseRendererProps['onEvaluate']
+  renderExtraAnswerContent?: ScMcExerciseRendererProps['renderExtraAnswerContent']
+  noShuffle?: true
 }) {
   const [shuffledAnswers, setShuffledAnswers] = useState(state.answers)
 
   useEffect(() => {
-    if (!renderExtraAnswerContent) {
-      setShuffledAnswers(shuffleArray(state.answers))
-    }
-  }, [state.answers, renderExtraAnswerContent])
+    setShuffledAnswers(
+      renderExtraAnswerContent || noShuffle
+        ? state.answers
+        : shuffleArray(state.answers)
+    )
+  }, [state.answers, renderExtraAnswerContent, noShuffle])
 
   const answers = shuffledAnswers
     .slice(0)

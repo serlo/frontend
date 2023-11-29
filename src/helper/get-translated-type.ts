@@ -1,5 +1,5 @@
 import { InstanceData, UuidType } from '@/data-types'
-import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
+import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 
 export function getTranslatedType(
   strings: InstanceData['strings'],

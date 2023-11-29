@@ -1,11 +1,11 @@
 import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { useState } from 'react'
 
 import { ClientOnlyPortal } from './client-only-portal'
 import { entity } from '../common/common'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
@@ -23,14 +23,14 @@ import { SaveModal } from '@/serlo-editor-integration/components/save-modal'
 
 interface ToolbarMainProps {
   changes?: StateTypeReturnType<(typeof entity)['changes']>
-  license?: StateTypeReturnType<(typeof entity)['license']>
+  licenseId?: StateTypeReturnType<(typeof entity)['licenseId']>
   showSubscriptionOptions?: boolean
 }
 
 export function ToolbarMain({
   showSubscriptionOptions,
   changes,
-  license,
+  licenseId,
 }: ToolbarMainProps) {
   const dispatch = useAppDispatch()
   const undoable = useAppSelector(selectHasUndoActions)
@@ -57,7 +57,7 @@ export function ToolbarMain({
         open={saveModalOpen}
         setOpen={setSaveModalOpen}
         changes={changes}
-        license={license}
+        licenseId={licenseId}
         showSubscriptionOptions={showSubscriptionOptions}
       />
     </>
@@ -69,7 +69,7 @@ export function ToolbarMain({
     const onClick = () => dispatch(isUndo ? undo() : redo())
     return (
       <button
-        className={clsx(
+        className={cn(
           'serlo-button serlo-tooltip-trigger',
           disabled ? 'cursor-default text-gray-300' : 'serlo-button-light'
         )}

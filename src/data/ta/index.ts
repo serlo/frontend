@@ -1,9 +1,11 @@
+import { licenses } from './license-data-short';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
   lang: "ta",
-  headerData: headerData,
-  footerData: footerData,
-  secondaryMenus: secondaryMenus,
+  headerData,
+  footerData,
+  secondaryMenus,
+  licenses,
   strings: {
     header: {
       slogan: "அனைவருக்கும் திறந்த உரிமம் உள்ள ஓர் இணையத்தளம்",
@@ -92,6 +94,10 @@ export const instanceData = {
       pdf: 'Download as PDF',
       pdfNoSolutions: 'PDF without solutions'
     },
+    modal: {
+      leaveNow: 'Leave now',
+      noStay: 'No, I want to stay'
+    },
     editOrAdd: {
       button: "திருத்தம்",
       addNewEntities: "புதிய உள்ளடக்கம் சேர்க்கவும்",
@@ -110,7 +116,8 @@ export const instanceData = {
     license: {
       readMore: "தகவல்",
       special: 'Different license',
-      nonFree: 'Usage of this content might be more restricted than our other content.'
+      nonFree: 'Usage of this content might be more restricted than our other content.',
+      appliesTo: 'Applies to'
     },
     course: {
       showPages: "வகுப்பு மேலோட்டத்தைக் காட்டவும்",
@@ -224,7 +231,7 @@ export const instanceData = {
       by: 'By',
       parentFallbackLink: 'To parent content',
       hasChanges: 'There have been changes in this area',
-      positionForGrouped: 'This %exercise_or_solution% is part of %title%.',
+      positionForGrouped: 'This %exercise% is part of %title%.',
       helpLink: 'Revision Help'
     },
     revisionHistory: {
@@ -768,6 +775,7 @@ export const loggedInData = {
           lists: 'Lists',
           mathFormula: 'Math formula (%ctrlOrCmd% + M)',
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
+          blank: 'Blank',
           bold: 'Bold (%ctrlOrCmd% + B)',
           italic: 'Italic (%ctrlOrCmd% + I)',
           noItemsFound: 'No items found',
@@ -809,6 +817,10 @@ export const loggedInData = {
           description: 'Link to audio files on Vocaroo',
           audioUrl: 'Enter Audio URL'
         },
+        exercise: {
+          title: "பயிற்சிகள்",
+          description: 'Interactive or text based exercise'
+        },
         inputExercise: {
           title: 'Input Exercise',
           description: 'Solution can be text or math'
@@ -816,6 +828,10 @@ export const loggedInData = {
         scMcExercise: {
           title: 'SC/MC Exercise',
           description: 'Single Choice or Multiple Choice'
+        },
+        fillInTheBlanks: {
+          title: 'Fill In The Blanks Exercise',
+          description: 'Text with blanks'
         }
       },
       templatePlugins: {
@@ -872,12 +888,15 @@ export const loggedInData = {
           title: "தலைப்பு"
         },
         exercise: {
-          scMcExercise: 'Choice exercise',
-          inputExercise: 'Input exercise',
-          h5p: 'H5p exercise',
+          scMcExercise: 'Choice Exercise',
+          inputExercise: 'Input Exercise',
+          h5p: 'H5p Exercise',
+          fillInTheBlanksExercise: 'Fill In The Blanks',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
-          removeInteractive: 'Remove interactive element'
+          removeInteractive: 'Remove interactive element',
+          createSolution: 'Create solution',
+          removeSolution: 'Remove solution'
         },
         event: {
           seoTitle: 'Title for search engines',
@@ -915,7 +934,8 @@ export const loggedInData = {
           openArticleTab: 'Open the article in a new tab:',
           linkTitle: 'Title of the link',
           showSolution: "விடையைக் காட்டு",
-          hideSolution: "விடையை மறைக்கவும்"
+          hideSolution: "விடையை மறைக்கவும்",
+          changeLicense: 'Change license'
         },
         textExerciseGroup: {
           removeExercise: 'Remove exercise',
@@ -923,10 +943,6 @@ export const loggedInData = {
           kindOfExerciseGroup: 'Kind of exercise group',
           notCohesive: 'not cohesive',
           cohesive: 'cohesive'
-        },
-        textExercise: {
-          removeSolution: 'Remove solution',
-          createSolution: 'Create solution'
         }
       },
       edtrIo: {
@@ -1035,6 +1051,76 @@ export const loggedInData = {
     },
     roles: {
       addButton: 'Add as %role%'
+    },
+    ai: {
+      exerciseGeneration: {
+        buttonTitleSingular: 'Generate an exercise with AI',
+        buttonTitle: 'AI generate exercise group',
+        initialModalTitle: 'Create an exercise automatically with help of AI',
+        modalTitleWithTaxonomy: 'Exercise generation with AI: ',
+        confirmCloseDescription: 'Do you want to cancel the exercise generation? Your data will be lost.',
+        summary: 'Summary',
+        nextButton: "அடுத்து",
+        nextExerciseButton: 'Next exercise',
+        previousButton: 'Previous exercise',
+        generateExerciseButton: 'Generate exercise',
+        generateExercisesButton: 'Generate exercises',
+        somethingWentWrong: 'Something went wrong. Please try again.',
+        topic: {
+          title: 'About which %topic% would you like to generate exercises?',
+          topic: 'topic',
+          defaultLabel: 'Topic',
+          otherTopicLabel: 'Other topic',
+          customTopicPlaceholder: 'Enter custom topic'
+        },
+        grade: {
+          title: 'Which %grade% are the students in?',
+          grade: 'grade',
+          label: 'Grade',
+          university: 'University'
+        },
+        exerciseType: {
+          title: 'What %exerciseType% are you interested in?',
+          exerciseType: 'exercise type',
+          label: 'Exercise type',
+          subtasksTitleSummary: 'Subtasks',
+          subtasksTitle: 'Should there be subtasks?',
+          subtasksTitleExerciseGroup: 'How many subtasks should there be?',
+          noSubtasks: 'No',
+          yesSubtasks: 'Yes',
+          subtasksLabel: "பயிற்சிகள்",
+          numberOfSubtasksPlaceholder: 'Number of subtasks',
+          chooseOption: "Choose an option",
+          multipleChoice: "Multiple Choice",
+          singleChoice: "Single Choice",
+          inputExercise: "Input exercise"
+        },
+        difficulty: {
+          title: 'What is the %difficulty% level of the exercise and learning goal?',
+          difficulty: 'difficulty',
+          label: 'Difficulty',
+          learningGoalLabel: 'Learning goal',
+          learningGoalExample: 'Example: Students understand the basics of algebra.',
+          learningGoalPlaceholder: 'Enter learning goal',
+          chooseOption: 'Choose an option',
+          easy: 'Easy',
+          medium: 'Medium',
+          hard: 'Hard'
+        },
+        priorKnowledge: {
+          title: 'What is the %priorKnowledge% that the students should have?',
+          priorKnowledge: 'prior knowledge',
+          label: 'Prior Knowledge',
+          example: 'Example: The students know how basic algebra works and already solved some exercises on the topic.',
+          placeholder: 'E.g., Basic arithmetic, fundamentals of algebra'
+        },
+        preview: {
+          loadingHeading: 'Exercise is being generated...',
+          publishExercise: 'Publish exercise',
+          openExerciseInEditor: 'Open in editor',
+          regenerate: 'Regenerate exercise'
+        }
+      }
     }
   }
 };

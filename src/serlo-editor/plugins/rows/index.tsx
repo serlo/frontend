@@ -7,7 +7,7 @@ import {
   list,
 } from '../../plugin'
 import { ROOT } from '@/serlo-editor/store/root/constants'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 function createRowsState(content: ChildStateTypeConfig) {
   return list(child(content), 1)

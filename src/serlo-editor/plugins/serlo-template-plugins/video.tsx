@@ -49,17 +49,13 @@ function VideoTypeEditor(props: EditorPluginProps<VideoTypePluginState>) {
         />
       </div>
       <h1 className="serlo-h1 mt-32">
-        {props.editable ? (
-          <input
-            autoFocus
-            className={headerInputClasses}
-            placeholder={editorStrings.plugins.video.titlePlaceholder}
-            value={title.value}
-            onChange={(e) => title.set(e.target.value)}
-          />
-        ) : (
-          <span itemProp="name">{title.value}</span>
-        )}
+        <input
+          autoFocus
+          className={headerInputClasses}
+          placeholder={editorStrings.plugins.video.titlePlaceholder}
+          value={title.value}
+          onChange={(e) => title.set(e.target.value)}
+        />
       </h1>
       <article>
         <videoPlugin.Component

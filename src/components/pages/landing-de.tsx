@@ -10,7 +10,7 @@ import { Link } from '@/components/content/link'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { InstanceLandingData } from '@/data-types'
 import { breakpoints } from '@/helper/breakpoints'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
 export interface LandingDEProps {
@@ -36,10 +36,10 @@ export function LandingDE({ data }: LandingDEProps) {
             <WelcomeMessage />
           </p>
           <h1
-            className={tw`
+            className={cn(`
               mx-auto mb-6 mt-3 max-w-2xl
               text-center text-5xl font-extrabold tracking-tight
-            `}
+            `)}
           >
             Was möchtest du{' '}
             <span className="serlo-underlined pb-2">lernen ?</span>
@@ -60,11 +60,11 @@ export function LandingDE({ data }: LandingDEProps) {
         </section>
 
         <section
-          className={tw`
+          className={cn(`
             about mt-7
             text-center text-4xl font-bold
             tracking-tight
-          `}
+          `)}
         >
           <p className="mx-auto mb-8 max-w-2xl px-2">
             Unsere Lernplattform wird von einem gemeinnützigen Verein
@@ -96,11 +96,11 @@ export function LandingDE({ data }: LandingDEProps) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/_assets/img/landing/birds.svg" className="mx-auto" />
           <h3
-            className={tw`
+            className={cn(`
               mx-auto mt-7 max-w-2xl
               hyphens-auto text-center text-4xl
               font-bold leading-cozy tracking-tight
-            `}
+            `)}
           >
             Zusammen setzen wir uns für mehr Bildungsgerechtigkeit und die
             digitale Transformation unserer Schulen ein.
@@ -109,23 +109,23 @@ export function LandingDE({ data }: LandingDEProps) {
 
         <section className="bg-blueWave bg-100% pt-4 text-center">
           <h3
-            className={tw`
+            className={cn(`
               relative z-10 mx-auto
               mb-16 mt-32
               max-w-2xl text-center text-4xl font-bold leading-cozy tracking-tight
-            `}
+            `)}
           >
             Partner und Förderer
           </h3>
           <PartnerList />
           <Link
-            className={tw`
+            className={cn(`
               serlo-button-with-eyebrows mx-auto mt-12 hidden
               rounded-lg border-2 border-solid border-almost-black
               px-8 py-4 text-xl font-bold tracking-tight text-almost-black
               hover:border-brand-500 hover:text-brand-500 hover:no-underline
               md:inline-block
-            `}
+            `)}
             href="/partner"
           >
             Alle Partner ansehen

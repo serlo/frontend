@@ -13,7 +13,7 @@ import {
 } from '../helpers'
 import { State } from '../types'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 const selectSelf = (state: State) => state.documents
 

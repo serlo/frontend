@@ -1,9 +1,11 @@
+import { licenses } from './license-data-short';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
   lang: "de",
-  headerData: headerData,
-  footerData: footerData,
-  secondaryMenus: secondaryMenus,
+  headerData,
+  footerData,
+  secondaryMenus,
+  licenses,
   strings: {
     header: {
       slogan: "Die freie Lernplattform",
@@ -92,6 +94,10 @@ export const instanceData = {
       pdf: "Als PDF herunterladen",
       pdfNoSolutions: "PDF ohne Lösungen"
     },
+    modal: {
+      leaveNow: "Jetzt verlassen",
+      noStay: "Nein, ich möchte bleiben"
+    },
     editOrAdd: {
       button: "Überarbeiten",
       addNewEntities: "Inhalt hinzufügen",
@@ -110,7 +116,8 @@ export const instanceData = {
     license: {
       readMore: "Was bedeutet das?",
       special: "Besondere Lizenz",
-      nonFree: "Die Nutzung könnte vielleicht strengeren Regeln unterliegen als bei unseren anderen Inhalten."
+      nonFree: "Die Nutzung könnte vielleicht strengeren Regeln unterliegen als bei unseren anderen Inhalten.",
+      appliesTo: "Gilt für"
     },
     course: {
       showPages: "Kursübersicht anzeigen",
@@ -224,7 +231,7 @@ export const instanceData = {
       by: "Von",
       parentFallbackLink: "Zum übergeordneten Inhalt",
       hasChanges: "In diesem Bereich hat es Änderungen gegeben",
-      positionForGrouped: "Diese %exercise_or_solution% ist Teil von %title%.",
+      positionForGrouped: "Diese %exercise% ist Teil von %title%.",
       helpLink: "Reviewer-Hilfe"
     },
     revisionHistory: {
@@ -379,7 +386,7 @@ export const instanceData = {
       messages: {
         code1010003: "Zur Sicherheit überprüfen wir hier noch mal, ob das dein Account ist.",
         code1010001: "Anmelden",
-        code1010002: "Über „Mein Bildungsraum“ anmelden",
+        code1010002: "Anmelden mit Mein Bildungsraum",
         code1010013: "Weiter mit SSO",
         code1040001: "Account anlegen",
         code1040002: "Über „Mein Bildungsraum“ Account registrieren",
@@ -768,6 +775,7 @@ export const loggedInData = {
           lists: "Listen",
           mathFormula: "Matheformel (%ctrlOrCmd% + M)",
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
+          blank: "Lücke",
           bold: "Fett (%ctrlOrCmd% + B)",
           italic: "Kursiv (%ctrlOrCmd% + I)",
           noItemsFound: "keine Einträge gefunden",
@@ -809,6 +817,10 @@ export const loggedInData = {
           description: "Audioaufnahmen von Vocaroo einbinden",
           audioUrl: "Audio URL eingeben"
         },
+        exercise: {
+          title: "Aufgabe",
+          description: "Interaktive- oder Textaufgaben"
+        },
         inputExercise: {
           title: "Eingabefeld",
           description: "Die Lösung kann Text oder eine Formel sein"
@@ -816,6 +828,10 @@ export const loggedInData = {
         scMcExercise: {
           title: "SC/MC Aufgabe",
           description: "Single- oder Multiple Choice Aufgabe"
+        },
+        fillInTheBlanks: {
+          title: "Lückentext Aufgabe",
+          description: "Ein Text mit Lücken zum Ausfüllen"
         }
       },
       templatePlugins: {
@@ -874,10 +890,13 @@ export const loggedInData = {
         exercise: {
           scMcExercise: "Auswahlaufgabe",
           inputExercise: "Eingabefeld",
-          h5p: "H5P-Inhalt",
+          h5p: "H5P Aufgabe",
+          fillInTheBlanksExercise: "Lückentext",
           addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
           changeInteractive: "Interaktives Element ändern",
-          removeInteractive: "Interaktives Element entfernen"
+          removeInteractive: "Interaktives Element entfernen",
+          createSolution: "Lösung hinzufügen",
+          removeSolution: "Lösung entfernen"
         },
         event: {
           seoTitle: "Titel für Suchmaschinen",
@@ -915,7 +934,8 @@ export const loggedInData = {
           openArticleTab: "Öffne den Artikel in einem neuen Tab",
           linkTitle: "Titel der Verlinkung",
           showSolution: "Lösung anzeigen",
-          hideSolution: "Lösung ausblenden"
+          hideSolution: "Lösung ausblenden",
+          changeLicense: "Lizenz ändern"
         },
         textExerciseGroup: {
           removeExercise: "Teilaufgabe entfernen",
@@ -923,10 +943,6 @@ export const loggedInData = {
           kindOfExerciseGroup: "Art der Aufgabengruppe",
           notCohesive: "nicht zusammenhängend",
           cohesive: "zusammenhängend"
-        },
-        textExercise: {
-          removeSolution: "Lösung entfernen",
-          createSolution: "Lösung hinzufügen"
         }
       },
       edtrIo: {
@@ -1035,6 +1051,76 @@ export const loggedInData = {
     },
     roles: {
       addButton: "Als %role% hinzufügen"
+    },
+    ai: {
+      exerciseGeneration: {
+        buttonTitleSingular: "Aufgabe mit KI erstellen",
+        buttonTitle: "Teilaufgaben mit KI erstellen",
+        initialModalTitle: "Aufgabe automatisch mit KI erstellen",
+        modalTitleWithTaxonomy: "Aufgabenerstellung mit KI:",
+        confirmCloseDescription: "Möchtest du die Aufgabenerstellung verlassen? Die Daten werden gelöscht.",
+        summary: "Zusammenfassung",
+        nextButton: "Weiter",
+        nextExerciseButton: "Nächste Aufgabe",
+        previousButton: "Vorherige Aufgabe",
+        generateExerciseButton: "Aufgabe generieren",
+        generateExercisesButton: "Aufgaben generieren",
+        somethingWentWrong: "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+        topic: {
+          title: "Über welches %topic% willst du eine Aufgabe erstellen?",
+          topic: "Thema",
+          defaultLabel: "Thema",
+          otherTopicLabel: "Anderes Thema",
+          customTopicPlaceholder: "Thema eingeben"
+        },
+        grade: {
+          title: "In welcher %grade% sind die Schüler*innen?",
+          grade: "Stufe",
+          label: "Stufe",
+          university: "Universität"
+        },
+        exerciseType: {
+          title: "An welchem %exerciseType% bist du interessiert? ",
+          exerciseType: "Aufgabentyp",
+          label: "Aufgabentyp",
+          subtasksTitleSummary: "Teilaufgaben",
+          subtasksTitle: "Soll die Aufgabe Teilaufgaben haben?",
+          subtasksTitleExerciseGroup: "Wieviele Teilaufgaben soll es geben?",
+          noSubtasks: "Nein",
+          yesSubtasks: "Ja",
+          subtasksLabel: "Aufgaben",
+          numberOfSubtasksPlaceholder: "Anzahl",
+          chooseOption: "Wähle eine Option",
+          multipleChoice: "Multiple-Choice",
+          singleChoice: "Single-Choice",
+          inputExercise: "Eingabefeld"
+        },
+        difficulty: {
+          title: "Was ist der %difficulty% der Aufgabe und das Lernziel?",
+          difficulty: "Schwierigkeitsgrad",
+          label: "Schwierigkeitsgrad",
+          learningGoalLabel: "Lernziel",
+          learningGoalExample: "Beispiel: Schüler*innen verstehen die Grundlagen von Algebra.",
+          learningGoalPlaceholder: "Lernziel eingeben",
+          chooseOption: "Wähle eine Option",
+          easy: "Einfach",
+          medium: "Mittel",
+          hard: "Knifflig"
+        },
+        priorKnowledge: {
+          title: "Welches %priorKnowledge% sollten die Schüler*innen haben?",
+          priorKnowledge: "Vorwissen",
+          label: "Vorwissen",
+          example: "Beispiel: Die Schüler*innen haben schon einige Aufgaben zu dem Thema bearbeitet.",
+          placeholder: "z.B. Gutes Fundament in Algebra"
+        },
+        preview: {
+          loadingHeading: "Aufgabe wird erstellt...",
+          publishExercise: "Aufgabe veröffentlichen",
+          openExerciseInEditor: "Im Editor öffnen",
+          regenerate: "Aufgabe neu generieren"
+        }
+      }
     }
   }
 };

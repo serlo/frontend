@@ -20,7 +20,7 @@ import {
   type EditorPluginProps,
   string,
 } from '@/serlo-editor/plugin'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 export const appletTypeState = entityType(
   {
@@ -73,17 +73,13 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
         />
       </div>
       <h1 className="serlo-h1 mt-20">
-        {props.editable ? (
-          <input
-            autoFocus
-            className={headerInputClasses}
-            placeholder={appletStrings.placeholder}
-            value={title.value}
-            onChange={(e) => title.set(e.target.value)}
-          />
-        ) : (
-          <span itemProp="name">{title.value}</span>
-        )}
+        <input
+          autoFocus
+          className={headerInputClasses}
+          placeholder={appletStrings.placeholder}
+          value={title.value}
+          onChange={(e) => title.set(e.target.value)}
+        />
       </h1>
 
       {url.render()}
@@ -94,7 +90,7 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
         <ModalWithCloseButton
           isOpen={showSettingsModal}
           onCloseClick={() => setShowSettingsModal(false)}
-          className="!top-1/3 !max-w-xl"
+          className="top-8 max-w-xl translate-y-0 sm:top-1/3"
         >
           <div className="mx-side mb-3 mt-12">
             <SettingsTextarea

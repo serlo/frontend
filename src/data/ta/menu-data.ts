@@ -47,25 +47,38 @@ export const footerData: InstanceData['footerData'] = {
       title: 'பொதுவாக',
       children: [
         { title: 'Serlo பற்றி', url: '/serlo' },
-        { title: 'நீங்களும் ஈடுபடுங்கள்!', url: '/get-involved' },
         { title: 'தொடர்பு', url: '/41043' },
         {
           title: 'பிற மொழிகளில் Serlo',
           url: `https://en.${serloDomain}/global`,
-        },
-        {
-          title: 'API',
-          url: `https://en.${serloDomain}/community/technology-and-development/content-api`,
         },
       ],
     },
     {
       title: 'தொடர்பில் இருக்கவும்',
       children: [
+        { title: 'நீங்களும் ஈடுபடுங்கள்!', url: '/get-involved' },
         {
           title: 'GitHub',
           url: 'https://github.com/serlo',
           icon: FooterIcon.github,
+        },
+      ],
+    },
+    {
+      title: 'Products',
+      children: [
+        {
+          title: 'Serlo Editor',
+          url: `https://en.${serloDomain}/editor`,
+        },
+        {
+          title: 'Metadata API',
+          url: `https://en.${serloDomain}/metadata`,
+        },
+        {
+          title: 'iFrame API',
+          url: 'https://github.com/serlo/documentation/wiki/iframe-API',
         },
       ],
     },
@@ -84,7 +97,7 @@ export const footerData: InstanceData['footerData'] = {
           title: 'பயன்பாட்டு விதிமுறைகளை',
           url: `https://de.${serloDomain}/terms`,
         },
-        { title: 'முத்திரை', url: `https://de.${serloDomain}/imprint` },
+        { title: 'முத்திரை', url: `https://de.${serloDomain}/legal` },
       ],
     },
   ],

@@ -1,9 +1,9 @@
-import clsx from 'clsx'
-import { type Dispatch, type SetStateAction } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
 
 import { DisplayModes } from './display-modes'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
+import { cn } from '@/helper/cn'
 
 export interface RevisionModeSwitcherProps {
   isCurrent: boolean
@@ -64,7 +64,7 @@ export function RevisionModeSwitcher({
     return (
       <button
         onClick={() => setDisplayMode(mode)}
-        className={clsx(
+        className={cn(
           'serlo-button-blue-transparent ml-1',
           displayMode === mode && 'bg-brand text-white'
         )}

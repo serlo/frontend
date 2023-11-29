@@ -5,13 +5,13 @@ import {
   faCreativeCommonsSa,
 } from '@fortawesome/free-brands-svg-icons'
 import { faSlash } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 
 import { FaIcon } from '@/components/fa-icon'
+import { cn } from '@/helper/cn'
 
 interface LicenseIconsProps {
   title: string
-  isDefault: boolean
+  isDefault?: boolean
 }
 
 export function LicenseIcons({ title, isDefault }: LicenseIconsProps) {
@@ -46,7 +46,7 @@ export function LicenseIcons({ title, isDefault }: LicenseIconsProps) {
   function renderIcon(props: { className?: string; icon: IconDefinition }) {
     return (
       <FaIcon
-        className={clsx(
+        className={cn(
           'mb-0.25 text-brand-400 mobile:mr-1 mobile:mt-0.25 mobile:text-[2rem]',
           props.className
         )}

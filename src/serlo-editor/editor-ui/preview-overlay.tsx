@@ -1,7 +1,12 @@
-import clsx from 'clsx'
 import { useState, useCallback, useEffect } from 'react'
 
-import { EditableContext } from '../core'
+import { cn } from '@/helper/cn'
+
+interface PreviewOverlayProps {
+  children: React.ReactNode
+  focused: boolean
+  onChange?: (active: boolean) => void
+}
 
 export function PreviewOverlay(props: PreviewOverlayProps) {
   const [active, setActiveState] = useState(false)
@@ -25,7 +30,7 @@ export function PreviewOverlay(props: PreviewOverlayProps) {
   return (
     <div className="relative">
       <div
-        className={clsx(
+        className={cn(
           'absolute top-0 z-20 h-full w-full',
           props.focused && 'bg-white bg-opacity-80',
           active && 'hidden'
@@ -42,13 +47,7 @@ export function PreviewOverlay(props: PreviewOverlayProps) {
           </div>
         ) : null}
       </div>
-      {!props.editable ? (
-        <EditableContext.Provider value={false}>
-          {props.children}
-        </EditableContext.Provider>
-      ) : (
-        props.children
-      )}
+      {props.children}
       {active ? (
         <div className="flex h-full w-full text-center">
           <button
@@ -61,11 +60,4 @@ export function PreviewOverlay(props: PreviewOverlayProps) {
       ) : null}
     </div>
   )
-}
-
-interface PreviewOverlayProps {
-  children: React.ReactNode
-  focused: boolean
-  editable?: boolean
-  onChange?: (active: boolean) => void
 }

@@ -13,8 +13,8 @@ import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { ExerciseInlineType, UuidType } from '@/data-types'
+import { cn } from '@/helper/cn'
 import { getTranslatedType } from '@/helper/get-translated-type'
-import { tw } from '@/helper/tw'
 
 export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
   const loggedInData = useLoggedInData()
@@ -30,8 +30,6 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
       ? UuidType.Exercise
       : data.type === ExerciseInlineType.ExerciseGroup
       ? UuidType.ExerciseGroup
-      : data.type === ExerciseInlineType.Solution
-      ? UuidType.Solution
       : UuidType.Exercise
   )
 
@@ -40,11 +38,11 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
       <List>
         <Item>
           <Trigger
-            className={tw`
+            className={cn(`
               serlo-button ml-1 hidden h-8 w-8
               p-0 text-center text-base leading-8
               text-brandgreen hover:bg-brandgreen hover:text-white sm:inline-block
-            `}
+            `)}
           >
             <FaIcon icon={faTools} />
           </Trigger>
@@ -67,16 +65,15 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
 
   function getToolsArray() {
     if (!data) return []
-    const noSolution = data.type !== ExerciseInlineType.Solution
     return [
       Tool.Abo,
       ...(hasUnrevised ? [Tool.UnrevisedEdit] : [Tool.Edit, Tool.History]),
-      ...(noSolution ? [Tool.SortGroupedExercises] : []),
-      ...(ExerciseInlineType.Solution ? [] : [Tool.Curriculum]),
+      Tool.SortGroupedExercises,
+      Tool.Curriculum,
       Tool.ChangeLicense,
       Tool.Log,
       Tool.Trash,
-      ...(noSolution ? [Tool.DirectLink] : []),
+      Tool.DirectLink,
     ]
   }
 }

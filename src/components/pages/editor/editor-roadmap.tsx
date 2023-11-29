@@ -1,4 +1,4 @@
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 const roadmapData = [
   {
@@ -55,12 +55,12 @@ export function EditorRoadmap() {
                 return (
                   <li
                     key={title}
-                    className={tw`
+                    className={cn(`
                       mx-auto mb-3 block w-fit rounded-xl px-2 py-1
                       text-base leading-6
                       shadow-menu transition-colors sm:mx-0
                       sm:w-auto
-                    `}
+                    `)}
                   >
                     {title}
                   </li>

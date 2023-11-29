@@ -7,7 +7,7 @@ import { DropdownMenu } from './dropdown-menu'
 import { FaIcon } from '../fa-icon'
 import { UserLink } from '../user/user-link'
 import { TimeAgo } from '@/components/time-ago'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 export interface MetaBarProps {
   user: { username: string; id: number }
@@ -43,11 +43,11 @@ export function MetaBar({
       <UserLink
         user={user}
         withIcon
-        className={tw`
+        className={cn(`
           serlo-button -ml-1 flex items-center
           pl-1 text-lg font-bold text-brand 
           hover:bg-brand-200 hover:text-brand hover:no-underline
-        `}
+        `)}
       />
       {isEditing ? null : (
         <Tippy

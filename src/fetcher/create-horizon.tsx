@@ -1,4 +1,4 @@
-import { horizonData } from '@/data/horizon_de'
+import { horizonData } from '@/data/de/horizon-data'
 import { HorizonData } from '@/data-types'
 
 export function createHorizon(): HorizonData {

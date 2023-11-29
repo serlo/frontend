@@ -10,7 +10,6 @@ import {
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
@@ -20,9 +19,10 @@ import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
+import { AnyEditorDocument } from '@/serlo-editor/types/editor-plugins'
 import { createPlugins } from '@/serlo-editor-integration/create-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
   return (
@@ -53,13 +53,11 @@ const emptyState = JSON.stringify({
 
 function Content() {
   const [previewState, setPreviewState] = useQueryParam(
-    'name',
+    'state',
     withDefault(StringParam, emptyState)
   )
 
   const isNotEmpty = previewState !== emptyState
-
-  const { lang } = useInstanceData()
 
   const debouncedSetState = debounce(
     (state?: string | null) => setPreviewState(state ?? emptyState),
@@ -69,7 +67,6 @@ function Content() {
     () => (
       <Editor
         initialState={parseDocumentString(previewState)}
-        editable
         onChange={({ changed, getDocument }) => {
           if (!changed) return
           void debouncedSetState(JSON.stringify(getDocument()))
@@ -93,9 +90,7 @@ function Content() {
   editorPlugins.init(
     createPlugins({
       editorStrings,
-      instance: lang,
       parentType: 'Article',
-      allowExercises: true,
     })
   )
 
@@ -105,8 +100,30 @@ function Content() {
     <main id="content" className="flex">
       <section className="min-h-screen w-[50vw] border-4 border-r-0 border-editor-primary">
         <header className="mx-side flex justify-between align-middle font-bold">
-          <h2 className="text-editor-primary">Edit</h2>
+          <h2 className="mb-12 text-editor-primary">Edit</h2>
           <div>
+            <input
+              onPaste={({ clipboardData }) => {
+                const pastedString = clipboardData.getData('text/plain').trim()
+                const cleanJsonString = pastedString
+                  .replace(/'/g, '')
+                  .replace(/\\"/g, '"')
+
+                try {
+                  const jsonObject = JSON.parse(
+                    cleanJsonString
+                  ) as AnyEditorDocument
+                  setPreviewState(JSON.stringify(jsonObject))
+                } catch (error) {
+                  // eslint-disable-next-line no-console
+                  console.error('Error parsing JSON:', error)
+                  showToastNotice('sorry, invalid json', 'warning')
+                }
+              }}
+              className="mt-0.5 w-20 bg-gray-100 text-sm"
+              placeholder="paste json"
+            />
+            {' | '}
             <button
               onClick={() => {
                 void navigator.clipboard.writeText(previewState)
@@ -131,7 +148,7 @@ function Content() {
         </div>
       </section>
       <section className="min-h-screen w-[50vw] border-4 border-editor-primary">
-        <h2 className="mx-side font-bold text-editor-primary">Preview</h2>
+        <h2 className="mx-side mb-12 font-bold text-editor-primary">Preview</h2>
         <div className="serlo-content-with-spacing-fixes mt-[3rem]">
           <StaticRenderer document={parseDocumentString(previewState)} />
         </div>

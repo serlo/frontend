@@ -4,7 +4,6 @@ import {
   Trigger,
   Link,
 } from '@radix-ui/react-navigation-menu'
-import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
 
 import { Icon } from './icon'
@@ -12,10 +11,10 @@ import { preventHover } from './prevent-hover'
 import { SubContent } from './sub-content'
 import { FaIcon } from '@/components/fa-icon'
 import type { HeaderLinkData } from '@/data-types'
+import { cn } from '@/helper/cn'
 import { submitEvent } from '@/helper/submit-event'
-import { tw } from '@/helper/tw'
 
-const styledLinkCls = tw`
+const styledLinkCls = cn(`
   navtrigger block flex w-full
   items-center border-b border-brand-400
   p-4 align-middle text-[1.33rem] font-bold text-brand
@@ -23,7 +22,7 @@ const styledLinkCls = tw`
   hover:bg-brand-300 hover:no-underline md:my-0 md:mt-[2px] md:block
   md:px-[7px] md:py-0.5 md:text-center md:text-[0.9rem]
   md:leading-tight md:text-brand-700 md:transition
-`
+`)
 
 export interface ItemProps {
   link: HeaderLinkData
@@ -37,13 +36,13 @@ export function Item({ link, elementAsIcon, className }: ItemProps) {
   const textAndIcon = (
     <>
       <Icon elementOrIcon={elementAsIcon ?? link.icon} />
-      <span className={clsx(elementAsIcon && 'md:sr-only')}>{link.title}</span>
+      <span className={cn(elementAsIcon && 'md:sr-only')}>{link.title}</span>
     </>
   )
 
   return (
     <RadixItem
-      className={clsx(
+      className={cn(
         'block duration-700 ease-linear md:mx-[3px] md:inline-block',
         className
       )}
@@ -57,7 +56,7 @@ export function Item({ link, elementAsIcon, className }: ItemProps) {
     return (
       <NextLink legacyBehavior href={link.url} passHref>
         <Link
-          className={clsx('group', styledLinkCls)}
+          className={cn('group', styledLinkCls)}
           // temporarily track spenden button use
           onClick={() => {
             if (link.url === '/spenden')

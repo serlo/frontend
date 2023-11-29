@@ -4,11 +4,11 @@ import { useState } from 'react'
 import { MultimediaStaticRenderer } from '../../serlo-editor/plugins/multimedia/static'
 import { LightBoxProps } from '@/components/content/light-box'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 import {
   EditorImageDocument,
   EditorMultimediaDocument,
-} from '@/serlo-editor-integration/types/editor-plugins'
+} from '@/serlo-editor/types/editor-plugins'
 
 const LightBox = dynamic<LightBoxProps>(() =>
   import('@/components/content/light-box').then((mod) => mod.LightBox)

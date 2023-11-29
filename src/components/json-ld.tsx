@@ -2,6 +2,7 @@ import Head from 'next/head'
 
 import type { EntityBaseProps } from './entity-base'
 import { useInstanceData } from '@/contexts/instance-context'
+import { getLicense } from '@/data/licenses/licenses-helpers'
 import { UuidType } from '@/data-types'
 
 interface JsonLdProps {
@@ -22,7 +23,7 @@ const typeStrings: Partial<Record<UuidType, string>> = {
 }
 
 export function JsonLd({ data, id }: JsonLdProps) {
-  const { lang } = useInstanceData()
+  const { lang, licenses } = useInstanceData()
 
   const isEntity = data.kind === 'single-entity'
   const isTaxonomy = data.kind === 'taxonomy'
@@ -50,8 +51,8 @@ export function JsonLd({ data, id }: JsonLdProps) {
         : undefined
 
     const license =
-      isEntity && data.entityData.licenseData
-        ? { id: data.entityData.licenseData?.url }
+      isEntity && data.entityData.licenseId
+        ? { id: getLicense(licenses, data.entityData.licenseId).url }
         : undefined
 
     const isPartOf =

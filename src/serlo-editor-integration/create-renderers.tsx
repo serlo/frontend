@@ -5,8 +5,9 @@ import { ExtraInfoIfRevisionView } from './extra-info-if-revision-view'
 import { GeogebraSerloStaticRenderer } from './serlo-plugin-wrappers/geogebra-serlo-static-renderer'
 import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-static-renderer'
 import { VideoSerloStaticRenderer } from './serlo-plugin-wrappers/video-serlo-static-renderer'
-import { EditorPluginType } from './types/editor-plugin-type'
+import { EditorPluginType } from '../serlo-editor/types/editor-plugin-type'
 import type {
+  EditorFillInTheBlanksExerciseDocument,
   EditorAnchorDocument,
   EditorEquationsDocument,
   EditorExerciseDocument,
@@ -22,11 +23,12 @@ import type {
   EditorSolutionDocument,
   EditorSpoilerDocument,
   EditorTemplateExerciseGroupDocument,
-} from './types/editor-plugins'
-import { TemplatePluginType } from './types/template-plugin-type'
+} from '../serlo-editor/types/editor-plugins'
+import { TemplatePluginType } from '../serlo-editor/types/template-plugin-type'
 import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
 import { isPrintMode } from '@/components/print-mode'
+import { isProduction } from '@/helper/is-production'
 import {
   InitRenderersArgs,
   LinkRenderer,
@@ -60,6 +62,12 @@ const InputSerloStaticRenderer = dynamic<EditorInputExerciseDocument>(() =>
     '@/serlo-editor-integration/serlo-plugin-wrappers/input-serlo-static-renderer'
   ).then((mod) => mod.InputSerloStaticRenderer)
 )
+const FillInTheBlanksStaticRenderer =
+  dynamic<EditorFillInTheBlanksExerciseDocument>(() =>
+    import('@/serlo-editor/plugins/fill-in-the-blanks-exercise/static').then(
+      (mod) => mod.FillInTheBlanksStaticRenderer
+    )
+  )
 const InjectionStaticRenderer = dynamic<EditorInjectionDocument>(() =>
   import('@/serlo-editor/plugins/injection/static').then(
     (mod) => mod.InjectionStaticRenderer
@@ -208,6 +216,14 @@ export function createRenderers(): InitRenderersArgs {
         type: EditorPluginType.ScMcExercise,
         renderer: SerloScMcExerciseStaticRenderer,
       },
+      ...(isProduction
+        ? []
+        : [
+            {
+              type: EditorPluginType.FillInTheBlanksExercise,
+              renderer: FillInTheBlanksStaticRenderer,
+            },
+          ]),
       {
         type: EditorPluginType.Solution,
         renderer: SolutionSerloStaticRenderer,
@@ -230,7 +246,6 @@ export function createRenderers(): InitRenderersArgs {
         type: 'exercise-group',
         renderer: TextExerciseGroupTypeStaticRenderer,
       },
-      // { type: TemplatePluginType.TextSolution, renderer: textSolutionTypePlugin },
       // { type: TemplatePluginType.User, renderer: userTypePlugin },
       // { type: TemplatePluginType.Video, renderer: videoTypePlugin },
 

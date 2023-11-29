@@ -41,6 +41,7 @@ enum SortOrderInputFields {
   // Is this still in use?
   'traits.language',
   'traits.interest',
+  'traits.subscribedNewsletter',
   'method',
   // SSO provider button
   'provider',
@@ -54,6 +55,7 @@ export const sortKratosUiNodes = (nodeA: UiNode, nodeB: UiNode) => {
     SortOrderInputFields[aAttributes.name as keyof typeof SortOrderInputFields]
   const bIndex =
     SortOrderInputFields[bAttributes.name as keyof typeof SortOrderInputFields]
+
   if (aIndex === undefined || bIndex === undefined) {
     // eslint-disable-next-line no-console
     console.warn(

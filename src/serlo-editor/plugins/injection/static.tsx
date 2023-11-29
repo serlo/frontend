@@ -9,13 +9,13 @@ import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 import {
   AnyEditorDocument,
   EditorInjectionDocument,
   EditorRowsDocument,
-} from '@/serlo-editor-integration/types/editor-plugins'
-import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
+} from '@/serlo-editor/types/editor-plugins'
+import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 
 export function InjectionStaticRenderer({
   state: href,
@@ -50,8 +50,7 @@ export function InjectionStaticRenderer({
           if (
             uuid.__typename === 'Article' ||
             uuid.__typename === 'TaxonomyTerm' ||
-            uuid.__typename === 'CoursePage' ||
-            uuid.__typename === 'Solution'
+            uuid.__typename === 'CoursePage'
           ) {
             if (!uuid.alias) setContent([])
             setContent([createFallbackBox(uuid.alias, uuid.title)])
@@ -71,27 +70,12 @@ export function InjectionStaticRenderer({
           ) {
             const exerciseContext = {
               serloContext: {
-                license:
-                  uuid.license && !uuid.license.default
-                    ? uuid.license
-                    : undefined,
-              },
-            }
-            const solutionContent = uuid.solution?.currentRevision?.content
-            const solutionContext = {
-              serloContext: {
-                license:
-                  uuid.solution?.license && !uuid.solution?.license.default
-                    ? uuid.solution?.license
-                    : undefined,
+                licenseId: uuid.license.id,
               },
             }
 
             setContent([
               { ...JSON.parse(uuid.currentRevision.content), exerciseContext },
-              solutionContent
-                ? { ...JSON.parse(solutionContent), solutionContext }
-                : null,
             ])
             return
           }
@@ -103,32 +87,11 @@ export function InjectionStaticRenderer({
               const exerciseContentAndContext = {
                 ...parseDocumentString(exercise.currentRevision?.content),
                 serloContext: {
-                  license:
-                    uuid.license && !uuid.license.default
-                      ? uuid.license
-                      : undefined,
+                  licenseId: uuid.license.id,
                 },
               }
 
-              const solutionContentAndContext = exercise.solution
-                ?.currentRevision?.content
-                ? {
-                    ...parseDocumentString(
-                      exercise.solution?.currentRevision?.content
-                    ),
-                    serloContext: {
-                      license:
-                        exercise.solution?.license &&
-                        !exercise.solution?.license.default
-                          ? exercise.solution?.license
-                          : undefined,
-                    },
-                  }
-                : null
-
-              return exercise.currentRevision
-                ? [exerciseContentAndContext, solutionContentAndContext]
-                : []
+              return exercise.currentRevision ? [exerciseContentAndContext] : []
             })
 
             setContent([
@@ -139,7 +102,6 @@ export function InjectionStaticRenderer({
                   content: parseDocumentString(
                     uuid.currentRevision.content
                   ) as EditorRowsDocument,
-                  // solutions are not really part of the state at this point, but cleaner this way
                   exercises,
                 },
               },
@@ -221,7 +183,7 @@ const query = gql`
         ...injectionExercise
       }
       ... on ExerciseGroup {
-        ...license
+        ...injectionLicense
         currentRevision {
           content
         }
@@ -259,34 +221,19 @@ const query = gql`
         alias
         title
       }
-      ... on Solution {
-        alias
-        title
-      }
     }
   }
 
   fragment injectionExercise on AbstractExercise {
-    ...license
+    ...injectionLicense
     currentRevision {
       content
     }
-    solution {
-      ...license
-      currentRevision {
-        content
-      }
-    }
   }
 
-  fragment license on AbstractRepository {
+  fragment injectionLicense on AbstractRepository {
     license {
       id
-      url
-      title
-      shortTitle
-      default
-      agreement
     }
   }
 `

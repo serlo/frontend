@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { gql } from 'graphql-request'
 import { useState } from 'react'
 
@@ -15,6 +14,7 @@ import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
+import { cn } from '@/helper/cn'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -33,7 +33,6 @@ const filters = [
   UuidType.Exercise,
   UuidType.GroupedExercise,
   UuidType.ExerciseGroup,
-  UuidType.Solution,
   UuidType.User,
   UuidType.Course,
   UuidType.TaxonomyTerm,
@@ -64,7 +63,7 @@ function Content() {
           <button
             key={typename}
             onClick={() => setShowTypename(typename)}
-            className={clsx(
+            className={cn(
               'mb-2.5 mr-2',
               showTypename === typename
                 ? 'serlo-button-blue'

@@ -127,16 +127,16 @@ export function LandingInternational({ data }: LandingInternationalProps) {
           background-repeat: no-repeat;
           padding-top: 43.75%;
 
-          background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_sm.570e34cd.jpg');
+          background-image: url('/_assets/img/landing-international/home_sm.jpg');
         }
         @media (min-width: ${breakpoints.sm}) {
           .image-section {
-            background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_md.333b0782.jpg');
+            background-image: url('/_assets/img/landing-international/home_md.jpg');
           }
         }
         @media (min-width: ${breakpoints.md}) {
           .image-section {
-            background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_lg.b46ea2e2.jpg');
+            background-image: url('/_assets/img/landing-international/home_lg.jpg');
           }
         }
         h2 {

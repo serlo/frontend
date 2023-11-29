@@ -1,11 +1,7 @@
-import { EditorPluginType } from './types/editor-plugin-type'
-import type { AnyEditorDocument } from './types/editor-plugins'
-import { TemplatePluginType } from './types/template-plugin-type'
 import type { AppletTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/applet'
 import type { ArticleTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/article'
 import {
   type Entity,
-  type License,
   type Uuid,
 } from '../serlo-editor/plugins/serlo-template-plugins/common/common'
 import type { CourseTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/course/course'
@@ -15,9 +11,11 @@ import type { TextExerciseGroupTypePluginState } from '../serlo-editor/plugins/s
 import type { PageTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/page'
 import type { TaxonomyTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/taxonomy'
 import type { TextExerciseTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/text-exercise'
-import type { TextSolutionTypeState } from '../serlo-editor/plugins/serlo-template-plugins/text-solution'
 import type { UserTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/user'
 import type { VideoTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/video'
+import { EditorPluginType } from '../serlo-editor/types/editor-plugin-type'
+import type { AnyEditorDocument } from '../serlo-editor/types/editor-plugins'
+import { TemplatePluginType } from '../serlo-editor/types/template-plugin-type'
 import { UuidType, UuidRevType } from '@/data-types'
 import type { User, MainUuidType } from '@/fetcher/query-types'
 import { triggerSentry } from '@/helper/trigger-sentry'
@@ -42,22 +40,13 @@ export function convertEditorResponseToState(
     GroupedExercise: { convert: convertTextExercise },
     Exercise: { convert: convertTextExercise },
     ExerciseGroup: { convert: convertTextExerciseGroup },
-    Solution: { convert: convertTextSolution },
     User: { convert: convertUser },
     Video: { convert: convertVideo },
     TaxonomyTerm: { convert: convertTaxonomy },
   }
 
-  const license =
-    'license' in uuid
-      ? {
-          id: uuid.license.id,
-          title: uuid.license.title,
-          shortTitle: uuid.license.shortTitle,
-          url: uuid.license.url,
-          agreement: uuid.license.agreement,
-        }
-      : undefined
+  const licenseId = Object.hasOwn(uuid, 'license') ? uuid.license.id : undefined
+
   const { id } = uuid
 
   const currentRev =
@@ -78,7 +67,7 @@ export function convertEditorResponseToState(
 
   const entityFields = {
     id,
-    license: license!,
+    licenseId,
   }
 
   try {
@@ -205,7 +194,7 @@ export function convertEditorResponseToState(
       plugin: TemplatePluginType.CoursePage,
       state: {
         id: uuid.id,
-        license: license!, // there could be cases where this is not correct
+        licenseId,
         revision,
         changes: '',
         icon: 'explanation',
@@ -279,19 +268,9 @@ export function convertEditorResponseToState(
       plugin: TemplatePluginType.TextExercise,
       state: {
         id: uuid.id,
-        license: license!,
+        licenseId,
         changes: '',
         revision,
-        'text-solution':
-          uuid.solution && !uuid.solution.trashed
-            ? convertTextSolution({
-                ...uuid.solution,
-                alias: uuid.alias,
-                __typename: UuidType.Solution,
-                instance: uuid.instance,
-                exercise: uuid,
-              }).state
-            : '',
         content:
           serializeStaticDocument(
             parseStaticString(uuid.currentRevision?.content)
@@ -336,40 +315,6 @@ export function convertEditorResponseToState(
         cohesive: uuid.currentRevision?.cohesive ?? false,
         'grouped-text-exercise': exercises,
       },
-    }
-  }
-
-  function convertTextSolution(
-    uuid: Extract<MainUuidType, { __typename: 'Solution' }>
-  ): StaticDocument<TextSolutionTypeState> {
-    stack.push({ id: uuid.id, type: 'text-solution' })
-
-    const solutionContent = uuid.currentRevision?.content ?? ''
-    return {
-      plugin: TemplatePluginType.TextSolution,
-      state: {
-        id: uuid.id,
-        license: license!,
-        revision,
-        changes: '',
-        content: getContent(),
-      },
-    }
-
-    function getContent() {
-      const convertdContent = parseStaticString(solutionContent)
-      if (convertdContent !== undefined) {
-        return serializeStaticDocument(convertdContent)
-      }
-
-      return serializeStaticDocument({
-        plugin: EditorPluginType.Solution,
-        state: {
-          prerequisite: undefined,
-          strategy: { plugin: EditorPluginType.Text },
-          steps: convertdContent,
-        },
-      })
     }
   }
 
@@ -451,10 +396,11 @@ export interface EventSerializedState extends Entity {
   meta_description?: string
 }
 
-export interface PageSerializedState extends Uuid, License {
+export interface PageSerializedState extends Uuid {
   __typename?: UuidType.Page
   title?: string
   content: SerializedStaticState
+  licenseId?: number
 }
 
 export interface TaxonomySerializedState extends Uuid {
@@ -471,7 +417,6 @@ export interface TaxonomySerializedState extends Uuid {
 export interface TextExerciseSerializedState extends Entity {
   __typename?: UuidType.Exercise
   content: SerializedStaticState
-  'text-solution'?: TextSolutionSerializedState
   'single-choice-right-answer'?: {
     content: SerializedStaticState
     feedback: SerializedStaticState
@@ -503,11 +448,6 @@ export interface TextExerciseGroupSerializedState extends Entity {
   cohesive?: string
   content: SerializedStaticState
   'grouped-text-exercise'?: TextExerciseSerializedState[]
-}
-
-export interface TextSolutionSerializedState extends Entity {
-  __typename?: UuidType.Solution
-  content: SerializedStaticState
 }
 
 export interface UserSerializedState extends Uuid {

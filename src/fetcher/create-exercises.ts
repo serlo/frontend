@@ -2,10 +2,9 @@ import { MainUuidType } from './query-types'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import {
   EditorExerciseDocument,
-  EditorSolutionDocument,
   EditorTemplateExerciseGroupDocument,
-} from '@/serlo-editor-integration/types/editor-plugins'
-import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
+} from '@/serlo-editor/types/editor-plugins'
+import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 
 type BareExercise = Omit<
   Extract<MainUuidType, { __typename: 'Exercise' | 'GroupedExercise' }>,
@@ -27,26 +26,11 @@ export function createExercise(
       trashed: uuid.trashed,
       grouped: false,
       unrevisedRevisions: uuid.revisions?.totalCount,
-      license: uuid.license && !uuid.license.default ? uuid.license : undefined,
+      licenseId: uuid.license.id,
     },
   }
 
-  if (!uuid.solution?.currentRevision?.content) return exercise
-  const solutionString = uuid.solution?.currentRevision?.content
-
-  const solution = {
-    ...(parseDocumentString(solutionString) as EditorSolutionDocument),
-    serloContext: {
-      uuid: uuid.solution?.id,
-      exerciseId: uuid.id,
-      trashed: uuid.solution?.trashed,
-      license:
-        uuid.solution?.license && !uuid.solution?.license.default
-          ? uuid.solution?.license
-          : undefined,
-    },
-  }
-  return { ...exercise, solution }
+  return exercise
 }
 
 export function createExerciseGroup(
@@ -59,7 +43,9 @@ export function createExerciseGroup(
 
   const exercises = uuid.exercises
     .map(createExercise)
-    .filter(Boolean) as EditorExerciseDocument[]
+    .filter(
+      (exercise) => exercise && !exercise.serloContext?.trashed
+    ) as EditorExerciseDocument[]
 
   return {
     plugin: TemplatePluginType.TextExerciseGroup,

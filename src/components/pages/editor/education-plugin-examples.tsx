@@ -7,8 +7,8 @@ import { SpoilerRenderer } from '@/serlo-editor/plugins/spoiler/renderer'
 import type { StaticMathProps } from '@/serlo-editor/plugins/text/static-components/static-math'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import type { EditorBoxDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
+import type { EditorBoxDocument } from '@/serlo-editor/types/editor-plugins'
 
 const StaticMath = dynamic<StaticMathProps>(() =>
   import('@/serlo-editor/plugins/text/static-components/static-math').then(

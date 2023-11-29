@@ -1,6 +1,6 @@
 import { mapObjIndexed } from 'ramda'
 
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import {
   StateType,
   StateTypesStaticType,
@@ -16,34 +16,25 @@ import {
   string,
   optional,
 } from '@/serlo-editor/plugin'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-
-const licenseState = object({
-  id: number(),
-  title: string(),
-  shortTitle: string(),
-  url: string(),
-  agreement: string(),
-})
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 export const uuid = {
   id: number(),
 }
 
-export const license = {
-  license: optional(licenseState),
-}
-
 export const entity = {
   ...uuid,
-  ...license,
   revision: number(),
+  licenseId: optional(number()),
   changes: string(),
 }
 
 export type Uuid = StateTypesStaticType<typeof uuid>
-export type License = StateTypesStaticType<typeof license>
-export type Entity = Uuid & License & { revision: number; changes?: string }
+export type Entity = Uuid & {
+  revision: number
+  changes?: string
+  licenseId?: number
+}
 
 export function entityType<
   Ds extends Record<string, StateType>,
@@ -207,4 +198,6 @@ export function optionalSerializedChild(plugin: string): StateType<
   }
 }
 
-export const headerInputClasses = tw`mt-4 w-full border-b-2 border-none border-transparent focus:border-brand focus:outline-none`
+export const headerInputClasses = cn(
+  `mt-4 w-full border-b-2 border-none border-transparent focus:border-brand focus:outline-none`
+)

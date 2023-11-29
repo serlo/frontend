@@ -24,8 +24,8 @@ import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
+import { EditorRowsDocument } from '@/serlo-editor/types/editor-plugins'
 
 // ALWAYS start alias with slash
 export async function requestPage(
@@ -45,8 +45,6 @@ export async function requestPage(
 
   if (uuid.__typename === UuidType.Comment) return { kind: 'not-found' } // no content for comments
 
-  // redirect revisions
-  // (can maybe be deleted if CFWorker redirects those for us)
   if (
     uuid.__typename === UuidRevType.Article ||
     uuid.__typename === UuidRevType.Page ||
@@ -57,9 +55,10 @@ export async function requestPage(
     uuid.__typename === UuidRevType.GroupedExercise ||
     uuid.__typename === UuidRevType.Exercise ||
     uuid.__typename === UuidRevType.ExerciseGroup ||
-    uuid.__typename === UuidRevType.Solution ||
     uuid.__typename === UuidRevType.Course
   ) {
+    // redirect revisions
+    // (can maybe be deleted if CFWorker redirects those for us)
     return {
       kind: 'redirect',
       target:
@@ -67,11 +66,6 @@ export async function requestPage(
           ? uuid.alias
           : `/entity/repository/compare/0/${uuid.id}`,
     }
-  }
-
-  // for solutions just request whole exercise
-  if (uuid.__typename === UuidType.Solution) {
-    return await requestPage(`/${uuid.exercise.id}`, instance)
   }
 
   const secondaryMenuData = await prettifyLinksInSecondaryMenu(
@@ -287,7 +281,7 @@ export async function requestPage(
     }
   }
 
-  const licenseData = { ...uuid.license, isDefault: uuid.license.default }
+  const licenseId = uuid.license.id
 
   if (uuid.__typename === UuidType.Article) {
     return {
@@ -300,7 +294,7 @@ export async function requestPage(
         typename: UuidType.Article,
         title: uuid.currentRevision?.title ?? uuid.revisions?.nodes[0]?.title,
         content,
-        licenseData,
+        licenseId,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
           useArticleTag: true,
@@ -349,7 +343,7 @@ export async function requestPage(
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
-        licenseData,
+        licenseId,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -386,7 +380,7 @@ export async function requestPage(
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
-        licenseData,
+        licenseId,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -441,7 +435,7 @@ export async function requestPage(
         typename: UuidType.CoursePage,
         title: uuid.currentRevision?.title ?? '',
         content,
-        licenseData,
+        licenseId,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
           useArticleTag: true,

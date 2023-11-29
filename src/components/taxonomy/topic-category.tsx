@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
 import { TopicCategoryLink } from './topic-category-link'
@@ -10,6 +9,7 @@ import {
   TopicCategoryCustomType,
   TopicCategoryType,
 } from '@/data-types'
+import { cn } from '@/helper/cn'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 
 export interface TopicCategoryProps {
@@ -45,7 +45,7 @@ export function TopicCategory({ links, full, category }: TopicCategoryProps) {
   return (
     <ul
       key={category}
-      className={clsx('mt-5 first:mt-0', full && 'mb-6 mt-0 mobile:mt-2')}
+      className={cn('mt-5 first:mt-0', full && 'mb-6 mt-0 mobile:mt-2')}
     >
       <h4 className="mb-2.5 text-lg font-bold text-gray-900">
         {strings.categories[category]}{' '}

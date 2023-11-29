@@ -1,5 +1,4 @@
 import { faEye } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { Fragment, PropsWithChildren } from 'react'
 
 import { FaIcon } from '../fa-icon'
@@ -8,6 +7,7 @@ import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { UnrevisedRevisionsData } from '@/data-types'
+import { cn } from '@/helper/cn'
 import { getTranslatedType } from '@/helper/get-translated-type'
 
 export type UnrevisedRevisionEntity =
@@ -21,9 +21,6 @@ export interface UnrevisedEntityProps {
 function getNodes(entity: UnrevisedRevisionEntity) {
   if (Object.hasOwn(entity, 'revisions')) {
     return entity.revisions?.nodes
-  }
-  if (Object.hasOwn(entity, 'solutionRevisions')) {
-    return entity.solutionRevisions.nodes
   }
   return []
 }
@@ -179,7 +176,7 @@ const Td = ({
   className,
 }: PropsWithChildren<{ centered?: boolean; className?: string }>) => (
   <td
-    className={clsx(
+    className={cn(
       className,
       'serlo-td',
       centered && 'text-center',

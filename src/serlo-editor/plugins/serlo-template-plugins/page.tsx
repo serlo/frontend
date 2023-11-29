@@ -1,21 +1,18 @@
-import {
-  editorContent,
-  headerInputClasses,
-  license,
-  uuid,
-} from './common/common'
+import { editorContent, headerInputClasses, uuid } from './common/common'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import {
   EditorPlugin,
   EditorPluginProps,
+  number,
   object,
+  optional,
   string,
 } from '@/serlo-editor/plugin'
 
 export const pageTypeState = object({
   ...uuid,
-  ...license,
+  licenseId: optional(number()),
   title: string(),
   content: editorContent(),
 })
@@ -35,17 +32,13 @@ function PageTypeEditor(props: EditorPluginProps<PageTypePluginState>) {
   return (
     <article>
       <h1 className="serlo-h1" itemProp="name">
-        {props.editable ? (
-          <input
-            autoFocus
-            className={headerInputClasses}
-            placeholder={placeholder}
-            value={title.value}
-            onChange={(e) => title.set(e.target.value)}
-          />
-        ) : (
-          title.value
-        )}
+        <input
+          autoFocus
+          className={headerInputClasses}
+          placeholder={placeholder}
+          value={title.value}
+          onChange={(e) => title.set(e.target.value)}
+        />
       </h1>
       <section itemProp="articleBody">{content.render()}</section>
       <ToolbarMain {...props.state} />

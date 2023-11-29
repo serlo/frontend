@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import * as R from 'ramda'
 import { useRef, useMemo, useCallback } from 'react'
 
@@ -15,6 +14,7 @@ import {
   useAppSelector,
 } from '../../store'
 import type { StateUpdater } from '../../types/internal__plugin-state'
+import { cn } from '@/helper/cn'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
@@ -38,9 +38,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           const parent = selectChildTreeOfParent(store.getState(), id)
           if (parent) dispatch(focus(parent.id))
         } else {
-          // prevents parents from stealing focus of children
-          if (document?.plugin === 'exercise') return
-
           // default focus dispatch
           dispatch(focus(id))
         }
@@ -85,6 +82,11 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       console.warn('SubDocumentEditor -> Plugin does not exist')
       return null
     }
+    if (!document.plugin) {
+      // eslint-disable-next-line no-console
+      console.warn('SubDocumentEditor -> Document is invalid')
+      return null
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const defaultConfig =
@@ -125,7 +127,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
     return (
       <div
-        className={clsx(
+        className={cn(
           `plugin-${document?.plugin}`,
           'outline-none',
           isInlineChildEditor || isTemplatePlugin
@@ -141,7 +143,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         <plugin.Component
           containerRef={containerRef}
           id={id}
-          editable
           focused={focused}
           config={config}
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

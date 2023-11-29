@@ -5,8 +5,8 @@ import { HeadTags } from '../head-tags'
 import { GoogleSeachWrapper } from '../navigation/google-search-wrapper'
 import { MaxWidthDiv } from '../navigation/max-width-div'
 import { useInstanceData } from '@/contexts/instance-context'
+import { cn } from '@/helper/cn'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
-import { tw } from '@/helper/tw'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
 export function Search() {
@@ -32,10 +32,10 @@ export function Search() {
   function renderSearch() {
     return (
       <div
-        className={tw`
+        className={cn(`
           mx-side [&_.gsc-control-cse]:!font-serlo [&_.gsc-control-cse]:tracking-slightestly-tighter
           [&_.gsc-table-result]:!font-serlo [&_.gsc-table-result]:tracking-slightestly-tighter
-        `}
+        `)}
       >
         <MaxWidthDiv>
           <GoogleSeachWrapper />

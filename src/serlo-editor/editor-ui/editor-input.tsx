@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 interface EditorInputProps
   extends React.DetailedHTMLProps<
@@ -25,10 +25,10 @@ export const EditorInput = forwardRef<HTMLInputElement, EditorInputProps>(
           autoFocus={autoFocus}
           {...inputProps}
           ref={ref}
-          className={tw`
+          className={cn(`
             rounded-xl border-2 border-editor-primary-100 bg-editor-primary-100
             px-2.5 py-[3px] text-almost-black focus:border-editor-primary focus:outline-none
-          `}
+          `)}
           style={{ width: props.inputWidth }}
         />
       </label>

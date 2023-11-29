@@ -1,10 +1,10 @@
-import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 import LazyLoad from 'react-lazyload'
 
 import { isPrintMode } from '../print-mode'
 import { useAB } from '@/contexts/ab'
+import { cn } from '@/helper/cn'
 
 export interface LazyProps {
   children: ReactNode
@@ -36,7 +36,7 @@ export function Lazy(props: LazyProps) {
         offset={220}
         placeholder={
           <div
-            className={clsx(
+            className={cn(
               'superspecial-noscript-hidden h-auto bg-brand-100',
               props.slim ? 'pb-12' : 'pb-2/3'
             )}

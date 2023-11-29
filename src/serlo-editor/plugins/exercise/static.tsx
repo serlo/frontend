@@ -1,11 +1,8 @@
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorExerciseDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorExerciseDocument } from '@/serlo-editor/types/editor-plugins'
 
-export function ExerciseStaticRenderer({
-  state,
-  solution,
-}: EditorExerciseDocument) {
-  const { content, interactive } = state
+export function ExerciseStaticRenderer({ state }: EditorExerciseDocument) {
+  const { content, interactive, solution } = state
   if (!content) return null
 
   return (

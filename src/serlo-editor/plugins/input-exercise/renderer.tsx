@@ -1,11 +1,10 @@
 import type A from 'algebra.js'
-import clsx from 'clsx'
 import { useState, useEffect } from 'react'
 
 import { InputExerciseType } from './input-exercise-type'
 import { Feedback } from '../sc-mc-exercise/renderer/feedback'
 import { useInstanceData } from '@/contexts/instance-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 interface InputExersiseRendererProps {
   type: string
@@ -47,13 +46,13 @@ export function InputExerciseRenderer({
   return (
     <div className="mx-side mb-7">
       <input
-        className={tw`
+        className={cn(`
             serlo-input-font-reset mb-5
             rounded-3xl border-3 border-brand-400 px-3
             py-2 font-bold text-brand placeholder-brand focus:border-brand focus:bg-white
             focus:text-brand focus:placeholder-opacity-0 focus:opacity-100 focus:outline-none
             active:border-brand print:hidden
-          `}
+          `)}
         type="text"
         value={value}
         onChange={(e) => {
@@ -70,7 +69,7 @@ export function InputExerciseRenderer({
       <div className="mt-4 flex">
         {AlgebraJs ? (
           <button
-            className={clsx(
+            className={cn(
               'serlo-button-blue h-8',
               value === '' && 'pointer-events-none opacity-0'
             )}

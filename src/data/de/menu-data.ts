@@ -130,25 +130,16 @@ export const footerData: InstanceData['footerData'] = {
       title: 'Allgemein',
       children: [
         { title: 'Über Serlo', url: '/serlo' },
-        { title: 'Community', url: '/community' },
         { title: 'Presse', url: '/presse' },
         { title: 'Kontakt', url: '/kontakt' },
         {
           title: 'Other Languages',
           url: `https://en.${serloDomain}/global`,
         },
-        {
-          title: 'API',
-          url: `https://en.${serloDomain}/community/technology-and-development/content-api`,
-        },
-        {
-          title: 'Serlo Editor',
-          url: `https://en.${serloDomain}/editor`,
-        },
       ],
     },
     {
-      title: 'Dabei bleiben',
+      title: 'Dabei sein',
       children: [
         {
           title: 'Newsletter',
@@ -156,14 +147,32 @@ export const footerData: InstanceData['footerData'] = {
           icon: FooterIcon.newsletter,
         },
         {
+          title: 'Jobs',
+          url: `https://de.${serloDomain}/jobs`,
+          icon: FooterIcon.job,
+        },
+        {
           title: 'GitHub',
           url: 'https://github.com/serlo',
           icon: FooterIcon.github,
         },
+        { title: 'Community', url: '/community' },
+      ],
+    },
+    {
+      title: 'Products',
+      children: [
         {
-          title: 'Jobs',
-          url: `https://de.${serloDomain}/jobs`,
-          icon: FooterIcon.job,
+          title: 'Serlo Editor',
+          url: `https://en.${serloDomain}/editor`,
+        },
+        {
+          title: 'Metadata API',
+          url: 'https://en.serlo.org/metadata',
+        },
+        {
+          title: 'iFrame API',
+          url: 'https://github.com/serlo/documentation/wiki/iframe-API',
         },
       ],
     },
@@ -179,7 +188,7 @@ export const footerData: InstanceData['footerData'] = {
           title: 'Nutzungsbedingungen und Urheberrecht',
           url: `https://de.${serloDomain}/terms`,
         },
-        { title: 'Impressum', url: `https://de.${serloDomain}/imprint` },
+        { title: 'Impressum', url: `https://de.${serloDomain}/legal` },
       ],
     },
   ],

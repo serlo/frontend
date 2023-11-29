@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 
 import { editorRenderers } from '../plugin/helpers/editor-renderer'
-import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import type { AnyEditorDocument } from '@/serlo-editor/types/editor-plugins'
 
 interface StaticRendererProps {
   document?: AnyEditorDocument | AnyEditorDocument[]

@@ -3,9 +3,9 @@ import { AllowedChildPlugins } from './allowed-child-plugins-context'
 import { AddRowButtonLarge } from './components/add-row-button-large'
 import { RowEditor } from './components/row-editor'
 import { selectParentPluginType, store } from '@/serlo-editor/store'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
-export function RowsEditor({ state, config, id, editable }: RowsProps) {
+export function RowsEditor({ state, config, id }: RowsProps) {
   // since this is only used to check if the current plugin is the child of the
   // root plugin (like a template plugin or article plugin)
   // this should not change – so we don't need to use useAppSelector here
@@ -22,18 +22,6 @@ export function RowsEditor({ state, config, id, editable }: RowsProps) {
     setTimeout(() => {
       state.insert(insertIndex, textPluginWithSuggestions)
     })
-  }
-
-  if (!editable) {
-    return (
-      <>
-        {state.map((row) => (
-          <div key={row.id} className="my-block pl-[14px]">
-            {row.render()}
-          </div>
-        ))}
-      </>
-    )
   }
 
   return (

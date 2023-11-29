@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 
-import { EditorVideoDocument } from '../types/editor-plugins'
+import { EditorVideoDocument } from '../../serlo-editor/types/editor-plugins'
 import { Lazy } from '@/components/content/lazy'
 import type { PrivacyWrapperProps } from '@/components/content/privacy-wrapper'
 import { ExternalProvider } from '@/helper/use-consent'

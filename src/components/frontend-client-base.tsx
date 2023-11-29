@@ -2,7 +2,7 @@ import type { AuthorizationPayload } from '@serlo/authorization'
 import Cookies from 'js-cookie'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
-import { PropsWithChildren, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { default as ToastNotice } from 'react-notify-toast'
 import { getInstanceDataByLang } from 'src/helper/feature-i18n'
 
@@ -20,7 +20,8 @@ import { Instance } from '@/fetcher/graphql-types/operations'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { frontendOrigin } from '@/helper/urls/frontent-origin'
 
-export type FrontendClientBaseProps = PropsWithChildren<{
+export interface FrontendClientBaseProps {
+  children: JSX.Element | (JSX.Element | null)[]
   noHeaderFooter?: boolean
   noContainers?: boolean
   showNav?: boolean
@@ -28,14 +29,14 @@ export type FrontendClientBaseProps = PropsWithChildren<{
   revisionId?: number
   authorization?: AuthorizationPayload
   loadLoggedInData?: boolean
-}>
+}
 
 Router.events.on('routeChangeStart', () => {
   NProgress.start()
 })
 Router.events.on('routeChangeComplete', (url, { shallow }) => {
   NProgress.done()
-  // when using csr and running into an error, try without csr once
+  // when using csr and running into an error try without csr once
   if (!shallow && document.getElementById('error-page-description') !== null) {
     triggerSentry({ message: 'trying again without csr' })
     setTimeout(() => {
@@ -134,8 +135,7 @@ export function FrontendClientBase({
                   </div>
                 )}
               >
-                {/* should not be necessary…?*/}
-                {children as JSX.Element}
+                {children}
               </ConditionalWrap>
             </ConditionalWrap>
             <ToastNotice />

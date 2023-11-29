@@ -4,13 +4,13 @@ export enum TextEditorFormattingOption {
   code = 'code',
   colors = 'colors',
   headings = 'headings',
-  katex = 'katex',
   links = 'links',
   lists = 'lists',
   math = 'math',
   paragraphs = 'paragraphs',
   richTextBold = 'richTextBold',
   richTextItalic = 'richTextItalic',
+  blank = 'blank',
 }
 
 export type ControlButton = ActionControlButton | NestedControlButton

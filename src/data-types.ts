@@ -11,7 +11,7 @@ import type {
   EditorExerciseDocument,
   EditorRowsDocument,
   EditorTemplateExerciseGroupDocument,
-} from './serlo-editor-integration/types/editor-plugins'
+} from './serlo-editor/types/editor-plugins'
 import type { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 import { Role, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
@@ -57,6 +57,7 @@ export interface InstanceData {
   headerData: HeaderData
   footerData: FooterData
   secondaryMenus: SecondaryMenuData[]
+  licenses: LicenseData[]
 }
 
 // Menus are trees of title and urls, possibly with icons.
@@ -182,19 +183,15 @@ export type LandingSubjectIcon =
 // License detail page has some additional data and is not part of the PageData type
 
 export interface LicenseDetailProps {
-  pageData: LicenseDetailPage
-}
-
-export interface LicenseDetailPage {
-  kind: 'license-detail'
-  licenseData: LicenseDetailData
+  pageData: {
+    kind: 'license-detail'
+    licenseData: LicenseDetailData
+  }
 }
 
 export interface LicenseDetailData {
   id: number
-  title: string
   content: EditorRowsDocument
-  isDefault: boolean
 }
 
 // For types that are supported through their own pages we return this helper in request-page
@@ -284,7 +281,7 @@ export interface EntityData {
   title?: string
   schemaData?: SchemaData
   content?: AnyEditorDocument | AnyEditorDocument[]
-  licenseData?: LicenseData
+  licenseId?: number
   courseData?: CourseData
   unrevisedRevisions?: number
   unrevisedCourseRevisions?: number
@@ -346,7 +343,6 @@ export enum UuidRevType {
   ExerciseGroup = 'ExerciseGroupRevision',
   GroupedExercise = 'GroupedExerciseRevision',
   Page = 'PageRevision',
-  Solution = 'SolutionRevision',
   Video = 'VideoRevision',
 }
 
@@ -362,7 +358,6 @@ export enum UuidType {
   ExerciseGroup = 'ExerciseGroup',
   GroupedExercise = 'GroupedExercise',
   Page = 'Page',
-  Solution = 'Solution',
   TaxonomyTerm = 'TaxonomyTerm',
   User = 'User',
   Video = 'Video',
@@ -373,7 +368,6 @@ export type UuidWithRevType = UuidRevType | UuidType
 // special inline types for author tools
 
 export enum ExerciseInlineType {
-  Solution = '_SolutionInline',
   ExerciseGroup = '_ExerciseGroupInline',
   Exercise = '_ExerciseInline',
 }
@@ -404,14 +398,14 @@ export interface SchemaData {
   setContentAsSection?: boolean
 }
 
-// A license notice.
-
+/**  License data without content for `license/details/…` page. */
 export interface LicenseData {
+  id: number // id of the license
   title: string
-  url: string // to to license
-  id: number // of the license
-  isDefault: boolean
+  url: string // to the license
+  isDefault?: boolean
   shortTitle?: string // show this if not default
+  agreement: string
 }
 
 // Data for a course page.

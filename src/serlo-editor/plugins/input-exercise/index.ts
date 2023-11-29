@@ -10,7 +10,7 @@ import {
   object,
   string,
 } from '../../plugin'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 function createInputExerciseState(
   feedback: ChildStateTypeConfig<string, unknown>

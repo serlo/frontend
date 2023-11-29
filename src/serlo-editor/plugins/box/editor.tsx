@@ -1,12 +1,10 @@
-import clsx from 'clsx'
-
 import type { BoxProps } from '.'
 import { EmptyWarning } from './components/empty-warning'
 import { TypeChooserBox } from './components/type-chooser-box'
 import { type BoxType, BoxRenderer } from './renderer'
 import { BoxToolbar } from './toolbar'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { selectIsEmptyRows } from '@/serlo-editor/plugins/rows'
 import { selectIsFocused, useAppSelector } from '@/serlo-editor/store'
@@ -17,7 +15,7 @@ const titleFormattingOptions = [
 ]
 
 export function BoxEditor(props: BoxProps) {
-  const { focused, editable } = props
+  const { focused } = props
   const { title, type, content, anchorId } = props.state
 
   const hasNoType = type.value === ''
@@ -56,17 +54,16 @@ export function BoxEditor(props: BoxProps) {
       {showToolbar ? <BoxToolbar {...props} /> : null}
 
       <div
-        className={clsx(
+        className={cn(
           showToolbar && '[&>figure]:rounded-t-none',
           'transition-opacity',
-          editable && isEmptyContent && 'opacity-30 focus-within:opacity-100',
+          isEmptyContent && 'opacity-30 focus-within:opacity-100',
           showToolbar && '!opacity-100 ',
           '[&:focus-within_.box-warning]:hidden',
           // making space for first toolbar, not wysiwyg
           '[&>figure>figcaption]:!mb-9',
           // toolbar finetuning
-          editable &&
-            tw`
+          `
             [&_.plugin-toolbar]:ml-[-2px]
             [&_.plugin-toolbar]:mr-[-16px]
             [&_.plugin-toolbar]:rounded-none

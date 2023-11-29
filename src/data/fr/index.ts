@@ -1,9 +1,11 @@
+import { licenses } from './license-data-short';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
   lang: "fr",
-  headerData: headerData,
-  footerData: footerData,
-  secondaryMenus: secondaryMenus,
+  headerData,
+  footerData,
+  secondaryMenus,
+  licenses,
   strings: {
     header: {
       slogan: "La plateforme d'apprentissage libre",
@@ -92,6 +94,10 @@ export const instanceData = {
       pdf: "Télécharger comme PDF",
       pdfNoSolutions: "PDF sans solutions"
     },
+    modal: {
+      leaveNow: 'Leave now',
+      noStay: 'No, I want to stay'
+    },
     editOrAdd: {
       button: 'Edit',
       addNewEntities: 'Add new content',
@@ -110,7 +116,8 @@ export const instanceData = {
     license: {
       readMore: "Information",
       special: "Licence différente",
-      nonFree: "L'utilisation de ce contenu pourrait être plus restreinte que notre autre contenu."
+      nonFree: "L'utilisation de ce contenu pourrait être plus restreinte que notre autre contenu.",
+      appliesTo: 'Applies to'
     },
     course: {
       showPages: "Afficher la vue globale du cours",
@@ -224,7 +231,7 @@ export const instanceData = {
       by: "De",
       parentFallbackLink: "Au contenu parent",
       hasChanges: "Il y a eu des changements de ce contenu",
-      positionForGrouped: "Ce %exercise_or_solution% fait partie de %title%.",
+      positionForGrouped: 'This %exercise% is part of %title%.',
       helpLink: "Aide pour les réviseurs"
     },
     revisionHistory: {
@@ -768,6 +775,7 @@ export const loggedInData = {
           lists: "Listes",
           mathFormula: "Formule mathématique (%ctrlOrCmd% + M)",
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
+          blank: 'Blank',
           bold: "Gras (%ctrlOrCmd% + B)",
           italic: "Italique (%ctrlOrCmd% + I)",
           noItemsFound: "Aucun élément trouvé",
@@ -809,6 +817,10 @@ export const loggedInData = {
           description: 'Link to audio files on Vocaroo',
           audioUrl: 'Enter Audio URL'
         },
+        exercise: {
+          title: "Exercice",
+          description: 'Interactive or text based exercise'
+        },
         inputExercise: {
           title: 'Input Exercise',
           description: 'Solution can be text or math'
@@ -816,6 +828,10 @@ export const loggedInData = {
         scMcExercise: {
           title: 'SC/MC Exercise',
           description: 'Single Choice or Multiple Choice'
+        },
+        fillInTheBlanks: {
+          title: 'Fill In The Blanks Exercise',
+          description: 'Text with blanks'
         }
       },
       templatePlugins: {
@@ -872,12 +888,15 @@ export const loggedInData = {
           title: "Titre"
         },
         exercise: {
-          scMcExercise: "Exercice de choix",
-          inputExercise: "Exercice de saisie",
-          h5p: 'H5p exercise',
+          scMcExercise: 'Choice Exercise',
+          inputExercise: 'Input Exercise',
+          h5p: 'H5p Exercise',
+          fillInTheBlanksExercise: 'Fill In The Blanks',
           addOptionalInteractiveEx: "Ajouter un exercice interactif optionnel :",
           changeInteractive: 'Change interactive element',
-          removeInteractive: 'Remove interactive element'
+          removeInteractive: 'Remove interactive element',
+          createSolution: "Créer une solution",
+          removeSolution: "Supprimer la solution"
         },
         event: {
           seoTitle: "Titre pour les moteurs de recherche",
@@ -915,7 +934,8 @@ export const loggedInData = {
           openArticleTab: "Ouvrir l'article dans un nouvel onglet :",
           linkTitle: "Titre du lien",
           showSolution: "Afficher la solution",
-          hideSolution: "Masquer la solution"
+          hideSolution: "Masquer la solution",
+          changeLicense: 'Change license'
         },
         textExerciseGroup: {
           removeExercise: "Supprimer l'exercice",
@@ -923,10 +943,6 @@ export const loggedInData = {
           kindOfExerciseGroup: "Type de groupe d'exercice",
           notCohesive: "pas cohérent",
           cohesive: "cohérent"
-        },
-        textExercise: {
-          removeSolution: "Supprimer la solution",
-          createSolution: "Créer une solution"
         }
       },
       edtrIo: {
@@ -1035,6 +1051,76 @@ export const loggedInData = {
     },
     roles: {
       addButton: 'Add as %role%'
+    },
+    ai: {
+      exerciseGeneration: {
+        buttonTitleSingular: 'Generate an exercise with AI',
+        buttonTitle: 'AI generate exercise group',
+        initialModalTitle: 'Create an exercise automatically with help of AI',
+        modalTitleWithTaxonomy: 'Exercise generation with AI: ',
+        confirmCloseDescription: 'Do you want to cancel the exercise generation? Your data will be lost.',
+        summary: 'Summary',
+        nextButton: "Suivant",
+        nextExerciseButton: 'Next exercise',
+        previousButton: 'Previous exercise',
+        generateExerciseButton: 'Generate exercise',
+        generateExercisesButton: 'Generate exercises',
+        somethingWentWrong: 'Something went wrong. Please try again.',
+        topic: {
+          title: 'About which %topic% would you like to generate exercises?',
+          topic: 'topic',
+          defaultLabel: 'Topic',
+          otherTopicLabel: 'Other topic',
+          customTopicPlaceholder: 'Enter custom topic'
+        },
+        grade: {
+          title: 'Which %grade% are the students in?',
+          grade: 'grade',
+          label: 'Grade',
+          university: 'University'
+        },
+        exerciseType: {
+          title: 'What %exerciseType% are you interested in?',
+          exerciseType: 'exercise type',
+          label: 'Exercise type',
+          subtasksTitleSummary: 'Subtasks',
+          subtasksTitle: 'Should there be subtasks?',
+          subtasksTitleExerciseGroup: 'How many subtasks should there be?',
+          noSubtasks: 'No',
+          yesSubtasks: 'Yes',
+          subtasksLabel: "exercices",
+          numberOfSubtasksPlaceholder: 'Number of subtasks',
+          chooseOption: "Choose an option",
+          multipleChoice: "Multiple Choice",
+          singleChoice: "Single Choice",
+          inputExercise: "Exercice de saisie"
+        },
+        difficulty: {
+          title: 'What is the %difficulty% level of the exercise and learning goal?',
+          difficulty: 'difficulty',
+          label: 'Difficulty',
+          learningGoalLabel: 'Learning goal',
+          learningGoalExample: 'Example: Students understand the basics of algebra.',
+          learningGoalPlaceholder: 'Enter learning goal',
+          chooseOption: 'Choose an option',
+          easy: 'Easy',
+          medium: 'Medium',
+          hard: 'Hard'
+        },
+        priorKnowledge: {
+          title: 'What is the %priorKnowledge% that the students should have?',
+          priorKnowledge: 'prior knowledge',
+          label: 'Prior Knowledge',
+          example: 'Example: The students know how basic algebra works and already solved some exercises on the topic.',
+          placeholder: 'E.g., Basic arithmetic, fundamentals of algebra'
+        },
+        preview: {
+          loadingHeading: 'Exercise is being generated...',
+          publishExercise: 'Publish exercise',
+          openExerciseInEditor: 'Open in editor',
+          regenerate: 'Regenerate exercise'
+        }
+      }
     }
   }
 };

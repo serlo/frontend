@@ -15,7 +15,6 @@ const entities = [
   ['Exercise', 54210],
   ['ExerciseGroup', 53205],
   ['GroupedExercise', 53209],
-  ['Solution', 195107],
   ['Course', 51979],
   ['Event', 145590],
 ]

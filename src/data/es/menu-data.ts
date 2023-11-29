@@ -70,25 +70,38 @@ export const footerData: InstanceData['footerData'] = {
       title: 'Configuración General',
       children: [
         { title: 'A cerca de Serlo', url: '/serlo' },
-        { title: '¡Participa!', url: '/participa' },
         { title: 'Contactanos', url: '/181414' },
         {
           title: 'Serlo en otros idiomas',
           url: `https://en.${serloDomain}/global`,
-        },
-        {
-          title: 'API',
-          url: `https://en.${serloDomain}/community/technology-and-development/content-api`,
         },
       ],
     },
     {
       title: 'Mantente en contacto',
       children: [
+        { title: '¡Participa!', url: '/participa' },
         {
           title: 'GitHub',
           url: 'https://github.com/serlo',
           icon: FooterIcon.github,
+        },
+      ],
+    },
+    {
+      title: 'Products',
+      children: [
+        {
+          title: 'Serlo Editor',
+          url: `https://en.${serloDomain}/editor`,
+        },
+        {
+          title: 'Metadata API',
+          url: `https://en.${serloDomain}/metadata`,
+        },
+        {
+          title: 'iFrame API',
+          url: 'https://github.com/serlo/documentation/wiki/iframe-API',
         },
       ],
     },
@@ -107,7 +120,7 @@ export const footerData: InstanceData['footerData'] = {
           title: 'Términos legales',
           url: `https://es.${serloDomain}/terms`,
         },
-        { title: 'Imprint', url: `https://es.${serloDomain}/imprint` },
+        { title: 'Legal Notice', url: `https://es.${serloDomain}/legal` },
       ],
     },
   ],

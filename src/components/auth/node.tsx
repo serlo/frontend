@@ -1,13 +1,15 @@
 import { faSpinner, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons'
 import type { UiNode, UiNodeInputAttributes } from '@ory/client'
 import { isUiNodeInputAttributes } from '@ory/integrations/ui'
-import clsx from 'clsx'
 import { type FormEvent, useState } from 'react'
 
 import { FlowType } from './flow-type'
+import { LoginButtonBildungsraum } from './login-button-bildungsraum'
 import { FaIcon } from '../fa-icon'
 import { Message, getKratosMessageString } from '@/components/auth/message'
 import { useInstanceData } from '@/contexts/instance-context'
+import { cn } from '@/helper/cn'
+import { isProduction } from '@/helper/is-production'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 export interface NodeProps {
@@ -89,31 +91,19 @@ export function Node({
           </>
         )
       }
-      // provider - NBP button
+      // provider: Mein Bildungsraum
       case 'button': {
-        const label = node.meta.label?.id
-          ? getKratosMessageString(
-              node.meta.label.id,
-              strings.auth.messages,
-              node.meta.label?.text ?? strings.auth.messages.code1010002
-            )
-          : undefined
-        return (
-          <div className="mt-10">
-            <hr />
-            <button
-              className="serlo-button-blue mt-10 block w-full py-2 text-xl"
-              name={attributes.name}
-              onClick={(e) => {
-                void onSubmit(e, (attributes as { value: string }).value)
-              }}
-              value={(attributes.value as string) || ''}
-              disabled={attributes.disabled || disabled}
-            >
-              {label}
-            </button>
-          </div>
-        )
+        if (attributes.name === 'provider' && attributes.value === 'nbp') {
+          return (
+            <LoginButtonBildungsraum
+              attributes={attributes}
+              onSubmit={onSubmit}
+              disabled={disabled}
+            />
+          )
+        }
+        triggerSentry({ message: 'kratos: unexpected button node' })
+        return null
       }
 
       case 'submit': {
@@ -126,22 +116,30 @@ export function Node({
             strings.auth.messages.code1010013
           )
 
+        const isRegister = node.meta.label?.id === 1040001
+
         return (
-          <button
-            className="serlo-button-green mt-10 block w-full py-2 text-xl"
-            name={attributes.name}
-            onClick={(e) => {
-              void onSubmit(e, (attributes as { value: string }).value)
-            }}
-            value={(attributes.value as string) || ''}
-            disabled={attributes.disabled || disabled}
-          >
-            {isLoading ? (
-              <FaIcon icon={faSpinner} className="animate-spin-slow" />
-            ) : (
-              (label as string)
+          <div
+            className={cn(
+              isRegister && !isProduction ? 'border-gray mt-20 border-t' : ''
             )}
-          </button>
+          >
+            <button
+              className="serlo-button-green mt-10 mt-10 block w-full py-2 text-xl"
+              name={attributes.name}
+              onClick={(e) => {
+                void onSubmit(e, (attributes as { value: string }).value)
+              }}
+              value={(attributes.value as string) || ''}
+              disabled={attributes.disabled || disabled}
+            >
+              {isLoading ? (
+                <FaIcon icon={faSpinner} className="animate-spin-slow" />
+              ) : (
+                (label as string)
+              )}
+            </button>
+          </div>
         )
       }
 
@@ -151,7 +149,7 @@ export function Node({
         return (
           <div>
             <label
-              className={clsx('my-6 block', attributes.required && 'font-bold')}
+              className={cn('my-6 block', attributes.required && 'font-bold')}
             >
               <span className="flex content-end justify-between">
                 {fieldName}
@@ -199,7 +197,7 @@ export function Node({
             required
             defaultValue=""
           >
-            <option value="" disabled className={clsx('hidden', optionClass)}>
+            <option value="" disabled className={cn('hidden', optionClass)}>
               - {strings.auth.interests.pleaseChoose} -
             </option>
             <option value="parent" className={optionClass}>

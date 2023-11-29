@@ -17,8 +17,8 @@ import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { InjectionStaticRenderer } from '@/serlo-editor/plugins/injection/static'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export interface RevisionProps {
   data: RevisionData
@@ -125,11 +125,9 @@ export function Revision({ data }: RevisionProps) {
 
   function renderExercisePreview() {
     if (
-      ![
-        UuidRevType.Solution,
-        UuidRevType.ExerciseGroup,
-        UuidRevType.GroupedExercise,
-      ].includes(data.typename) ||
+      ![UuidRevType.ExerciseGroup, UuidRevType.GroupedExercise].includes(
+        data.typename
+      ) ||
       data.repository.parentId === undefined
     )
       return null
@@ -158,10 +156,7 @@ export function Revision({ data }: RevisionProps) {
           {char && (
             <span className="mx-side mb-10 inline-block bg-editor-primary-100 px-1">
               {replacePlaceholders(strings.revisions.positionForGrouped, {
-                exercise_or_solution:
-                  data.typename === UuidRevType.GroupedExercise
-                    ? strings.content.exercises.task
-                    : strings.entities.solution,
+                exercise: strings.content.exercises.task,
                 title: (
                   <b>
                     {strings.entities.groupedExercise} {char}

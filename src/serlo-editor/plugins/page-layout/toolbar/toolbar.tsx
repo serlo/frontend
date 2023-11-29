@@ -1,5 +1,5 @@
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import { type Dispatch, type SetStateAction } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
 
 import { LayoutChooser } from './layout-chooser'
 import type { PageLayoutPluginProps } from '..'
@@ -8,13 +8,12 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 export const PageLayoutToolbar = ({
   id,
   state,
   focused,
-  editable,
   showSettingsModal,
   setShowSettingsModal,
 }: PageLayoutPluginProps & {
@@ -23,7 +22,7 @@ export const PageLayoutToolbar = ({
 }) => {
   const pageLayoutStrings = useEditorStrings().plugins.pageLayout
 
-  if (!focused || !editable) return null
+  if (!focused) return null
 
   return (
     <PluginToolbar
@@ -41,7 +40,7 @@ export const PageLayoutToolbar = ({
             <ModalWithCloseButton
               isOpen={showSettingsModal}
               onCloseClick={() => setShowSettingsModal(false)}
-              className="!top-1/3 !max-w-xl"
+              className="top-8 max-w-xl translate-y-0 sm:top-1/3"
             >
               <LayoutChooser {...state} />
             </ModalWithCloseButton>

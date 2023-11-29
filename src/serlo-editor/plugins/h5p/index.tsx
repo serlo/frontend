@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react'
 
 import { H5pRenderer, parseH5pUrl } from './renderer'
+import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
 import { EditorInput } from '@/serlo-editor/editor-ui'
+import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import {
   type EditorPlugin,
   type EditorPluginProps,
   type StringStateType,
   string,
 } from '@/serlo-editor/plugin'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 export type H5pPluginState = StringStateType
 export type H5pProps = EditorPluginProps<H5pPluginState>
@@ -37,7 +40,7 @@ export const H5pPlugin: EditorPlugin<H5pPluginState> = {
 }
 
 // Note: This plugin will not be translated for now, as i18n work is deprioritized
-function H5pEditor({ state }: H5pProps) {
+function H5pEditor({ state, id }: H5pProps) {
   const hasState = !!state.value
 
   const [mode, setMode] = useState<'edit' | 'loading' | 'preview'>(
@@ -102,72 +105,81 @@ function H5pEditor({ state }: H5pProps) {
 
   if (mode === 'edit' || mode === 'loading') {
     return (
-      <div className="rounded-xl bg-editor-primary-50 p-2">
-        <h2 className="serlo-h2">Einfügen von H5P-Inhalt</h2>
-        <div>
-          Gehe in folgenden Schritten vor, um einen H5P-Inhalt zu erstellen und
-          einzufügen:
-          <ul className="serlo-ul">
-            <li>
-              Besuche{' '}
-              <a
-                className="serlo-link"
-                href="https://app.lumi.education/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Lumi Cloud
-              </a>
-              .
-            </li>
-            <li>
-              Registriere dich mit deiner E-Mail-Adresse und melde dich an.
-            </li>
-            <li>
-              Klicke auf &quot;Neuen Inhalt erstellen&quot; und wähle eines der
-              folgenden Inhaltstypen:
-              <ul className="serlo-ul">
-                {Object.values(availableH5pExercises).map((exercise) => (
-                  <li key={exercise}>{exercise}</li>
-                ))}
-              </ul>
-            </li>
-            <li>
-              Erstelle deinen Inhalt, speichere ihn und klicke dann auf
-              &quot;Inhalt bereitstellen&quot;.
-            </li>
-            <li>Füge die Verknüpfung zur Bereitstellung hier ein:</li>
-          </ul>
+      <div className="mb-12 mt-24 pt-4">
+        <PluginToolbar
+          pluginType={EditorPluginType.H5p}
+          pluginControls={<InteractiveToolbarTools id={id} />}
+        />
+
+        <div className="rounded-xl bg-editor-primary-50 p-2">
+          <h2 className="serlo-h2">Einfügen von H5P-Inhalt</h2>
+          <div>
+            Gehe in folgenden Schritten vor, um einen H5P-Inhalt zu erstellen
+            und einzufügen:
+            <ul className="serlo-ul">
+              <li>
+                Besuche{' '}
+                <a
+                  className="serlo-link"
+                  href="https://app.lumi.education/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Lumi Cloud
+                </a>
+                .
+              </li>
+              <li>
+                Registriere dich mit deiner E-Mail-Adresse und melde dich an.
+              </li>
+              <li>
+                Klicke auf &quot;Neuen Inhalt erstellen&quot; und wähle eines
+                der folgenden Inhaltstypen:
+                <ul className="serlo-ul">
+                  {Object.values(availableH5pExercises).map((exercise) => (
+                    <li key={exercise}>{exercise}</li>
+                  ))}
+                </ul>
+              </li>
+              <li>
+                Erstelle deinen Inhalt, speichere ihn und klicke dann auf
+                &quot;Inhalt bereitstellen&quot;.
+              </li>
+              <li>Füge die Verknüpfung zur Bereitstellung hier ein:</li>
+            </ul>
+          </div>
+          <div className="mt-4">
+            <EditorInput
+              label="URL zu Lumi-Bereitstellung "
+              placeholder="https://app.lumi.education/run/J3j0eR"
+              value={state.value}
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                const val = e.target.value
+                validateInput(val)
+                state.set(val)
+              }}
+              inputWidth="70%"
+              width="100%"
+            />
+            <button
+              className="serlo-button ml-3 mt-2 bg-brandgreen-300 disabled:cursor-default disabled:bg-gray-300"
+              disabled={
+                state.value === '' || error !== '' || mode === 'loading'
+              }
+              onClick={() => {
+                setMode('loading')
+                void checkContent()
+              }}
+            >
+              {mode === 'loading' ? '... wird geladen ...' : 'Einfügen'}
+            </button>
+          </div>
+          {error && <p className="mx-side mt-2 text-red-500">{error}</p>}
+          <p className="mt-4 max-w-[67%] text-sm text-gray-500">
+            Hinweis: Um existierende Inhalte zu nutzen, lade diese herunter,
+            lade sie in deinen Account hoch und stelle sie dort bereit.
+          </p>
         </div>
-        <div className="mt-4">
-          <EditorInput
-            label="URL zu Lumi-Bereitstellung "
-            placeholder="https://app.lumi.education/run/J3j0eR"
-            value={state.value}
-            onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-              const val = e.target.value
-              validateInput(val)
-              state.set(val)
-            }}
-            inputWidth="70%"
-            width="100%"
-          />
-          <button
-            className="serlo-button ml-3 mt-2 bg-brandgreen-300 disabled:cursor-default disabled:bg-gray-300"
-            disabled={state.value === '' || error !== '' || mode === 'loading'}
-            onClick={() => {
-              setMode('loading')
-              void checkContent()
-            }}
-          >
-            {mode === 'loading' ? '... wird geladen ...' : 'Einfügen'}
-          </button>
-        </div>
-        {error && <p className="mx-side mt-2 text-red-500">{error}</p>}
-        <p className="mt-4 max-w-[67%] text-sm text-gray-500">
-          Hinweis: Um existierende Inhalte zu nutzen, lade diese herunter, lade
-          sie in deinen Account hoch und stelle sie dort bereit.
-        </p>
       </div>
     )
   }

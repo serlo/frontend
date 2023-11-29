@@ -1,5 +1,4 @@
 import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { Fragment, useState } from 'react'
 import { RatingProps } from 'react-simple-star-rating'
@@ -18,10 +17,11 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { abSubmission } from '@/helper/ab-submission'
+import { cn } from '@/helper/cn'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { EditorRowsDocument } from '@/serlo-editor/types/editor-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
 
 export interface TopicProps {
   data: TaxonomyData
@@ -52,7 +52,6 @@ export function Topic({ data }: TopicProps) {
   const isTopic = data.taxonomyType === TaxonomyTermType.Topic
 
   const hasExercises = data.exercisesContent.length > 0
-  const defaultLicense = hasExercises ? getDefaultLicense() : undefined
 
   editorRenderers.init(createRenderers())
 
@@ -82,7 +81,8 @@ export function Topic({ data }: TopicProps) {
           />
         )}
       </div>
-      {defaultLicense && <LicenseNotice data={defaultLicense} />}
+      {/* Default license notice */}
+      <LicenseNotice />
 
       {/* Temporary donations banner trial */}
       {isExerciseFolder ? (
@@ -187,7 +187,7 @@ export function Topic({ data }: TopicProps) {
             setHasFeedback(true)
           }}
         />
-        <div className={clsx('mt-3', hasFeedback ? '' : 'invisible')}>
+        <div className={cn('mt-3', hasFeedback ? '' : 'invisible')}>
           Danke für dein Feedback! &#10084;
         </div>
       </div>
@@ -202,15 +202,5 @@ export function Topic({ data }: TopicProps) {
         aboveContent={setting?.aboveContent}
       />
     )
-  }
-
-  // … interesting hack
-  function getDefaultLicense() {
-    for (let i = 0; i < data.exercisesContent.length; i++) {
-      const license = data.exercisesContent[i].serloContext?.license
-      if (license) return { ...license, isDefault: true }
-    }
-    //no part of collection has default license so don't show default notice.
-    return undefined
   }
 }
