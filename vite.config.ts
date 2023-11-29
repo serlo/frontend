@@ -29,5 +29,5 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
-  plugins: [react(), dts()],
+  plugins: [react(), dts({ rollupTypes: true })],
 })
