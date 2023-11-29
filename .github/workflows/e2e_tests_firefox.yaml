@@ -1,4 +1,4 @@
-name: e2e tests
+name: e2e tests with firefox
 on:
   workflow_dispatch:
   pull_request:
