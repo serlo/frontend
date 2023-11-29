@@ -2,6 +2,7 @@ import { createElement, useCallback, useMemo } from 'react'
 import { Editor as SlateEditor, Transforms } from 'slate'
 import { ReactEditor, RenderElementProps, RenderLeafProps } from 'slate-react'
 
+import { BlankRenderer } from '../../fill-in-the-blanks-exercise/blank-renderer'
 import { MathElement } from '../components/math-element'
 import { TextLeafWithPlaceholder } from '../components/text-leaf-with-placeholder'
 import { ListElementType } from '../types/text-editor'
@@ -81,17 +82,14 @@ export const useSlateRenderHandlers = ({
         )
       }
       if (element.type === 'blank') {
-        // TODO: Render <BlankRenderer> here instead
-        // <BlankRenderer> needs to ...
-        // - always show input fields
-        // - accept callback onChange that is passed to input element to update correctAnswer
         return (
           <span {...attributes} contentEditable={false}>
-            <input
-              value={element.correctAnswer}
-              size={(element.correctAnswer.length ?? 4) + 1}
-              className="h-[25px] rounded-full border border-brand bg-brand-50 pl-2 pr-1"
+            <BlankRenderer
+              correctAnswer={element.correctAnswer}
+              blankId={element.blankId}
+              forceMode="typing"
               onChange={(e) => {
+                if (!e) return
                 const path = ReactEditor.findPath(editor, element)
                 Transforms.setNodes(
                   editor,
