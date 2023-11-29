@@ -1,3 +1,13 @@
+import IconBox from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-box.svg'
+import IconEquation from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-equation.svg'
+import IconGeogebra from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
+import IconHighlight from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
+import IconMultimedia from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-multimedia.svg'
+import IconSpoiler from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
+import IconTable from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-table.svg'
+import IconText from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-text.svg'
+import IconVideo from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-video.svg'
+
 export * from './editor'
 
 export { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
@@ -29,6 +39,7 @@ export { SpoilerStaticRenderer } from '@/serlo-editor/plugins/spoiler/static'
 export type { MathElement } from '@/serlo-editor/plugins/text'
 export { TextStaticRenderer } from '@/serlo-editor/plugins/text/static'
 export { VideoStaticRenderer } from '@/serlo-editor/plugins/video/static'
+export { StaticMath } from '@/serlo-editor/plugins/text/static-components/static-math'
 
 // plugins
 export { createBoxPlugin } from '@/serlo-editor/plugins/box'
@@ -44,12 +55,14 @@ export { unsupportedPlugin } from '@/serlo-editor/plugins/unsupported'
 export { videoPlugin } from '@/serlo-editor/plugins/video'
 
 // icons
-export * as IconBox from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-box.svg'
-export * as IconEquation from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-equation.svg'
-export * as IconGeogebra from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
-export * as IconHighlight from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
-export * as IconMultimedia from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-multimedia.svg'
-export * as IconSpoiler from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
-export * as IconTable from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-table.svg'
-export * as IconText from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-text.svg'
-export * as IconVideo from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-video.svg'
+export {
+  IconBox,
+  IconEquation,
+  IconGeogebra,
+  IconHighlight,
+  IconMultimedia,
+  IconSpoiler,
+  IconTable,
+  IconText,
+  IconVideo,
+}
