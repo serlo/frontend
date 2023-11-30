@@ -42,7 +42,7 @@ function TextExerciseTypeEditor({
 }: EditorPluginProps<TextExerciseTypePluginState, { skipControls: boolean }>) {
   const { content } = state
 
-  const { canUseAiFeaturesOutsideProduction } = useAiFeatures()
+  const { canUseAiFeatures } = useAiFeatures()
 
   const router = useRouter()
   const currentPath = router.asPath.toLowerCase()
@@ -56,7 +56,7 @@ function TextExerciseTypeEditor({
     <>
       {config.skipControls ? null : (
         <div className="absolute right-0 -mt-20 mr-side flex flex-row gap-4">
-          {canUseAiFeaturesOutsideProduction && isCreatingNewExercise ? (
+          {canUseAiFeatures && isCreatingNewExercise ? (
             <AiExerciseGenerationButton isSingularExercise />
           ) : null}
           <ContentLoaders
