@@ -45,7 +45,7 @@ export function WizardFooter({
               ? exerciseGenerationString.generateExercisesButton
               : exerciseGenerationString.generateExerciseButton}
           </button>
-          <p className="mb-2 mr-4 self-end text-right text-sm text-gray-600">
+          <p className="mb-2 self-end text-right text-sm text-gray-600">
             {exerciseGenerationString.hallucinationWarning}
           </p>
         </>
