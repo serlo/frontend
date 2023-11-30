@@ -3926,19 +3926,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@serlo/api@npm:^0.57.3":
-  version: 0.57.3
-  resolution: "@serlo/api@npm:0.57.3"
-  checksum: d8369f335a2b0ffaf0309a39d7115f7efad9fd8d91bac609a7c4152ccd735eee532eca1216b89a1496211f30eae29ce1f7a7c4309bdacf930055d4db1f296a69
-  languageName: node
-  linkType: hard
-
-"@serlo/authorization@npm:^0.57.3":
-  version: 0.57.3
-  resolution: "@serlo/authorization@npm:0.57.3"
-  dependencies:
-    "@serlo/api": ^0.57.3
-  checksum: 96f6d57c8402e094075861e7652d0017c0fda3337d6061021adba26f69ae04b804a72034255579b2e1a5478389290a1dab23acfc6742536ab18ca13509f64fc1
+"@serlo/authorization@npm:^0.59.1":
+  version: 0.59.1
+  resolution: "@serlo/authorization@npm:0.59.1"
+  checksum: 574402c5984520d143c94752a1037ae278167f031900faa16153eb45deb0ef6f447b45ee2b04760e5218b6a5dd58033ab5ed2f3c57fe68b28cf0d22b66253d96
   languageName: node
   linkType: hard
 
@@ -3967,7 +3958,7 @@ __metadata:
     "@radix-ui/react-navigation-menu": ^1.1.4
     "@radix-ui/react-select": ^1.2.2
     "@reduxjs/toolkit": ^1.9.7
-    "@serlo/authorization": ^0.57.3
+    "@serlo/authorization": ^0.59.1
     "@svgr/webpack": ^8.1.0
     "@tailwindcss/typography": ^0.5.10
     "@tippyjs/react": ^4.2.6
