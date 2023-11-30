@@ -47,7 +47,7 @@ export const ExerciseGenerationWrapper = ({
         }}
         isOpen={activePage === ActivePage.ExerciseGenerationWizard}
         title={exGenerationStrings.initialModalTitle}
-        className="flex h-3/4 max-h-[80vh] min-h-[420px] flex-col pb-4"
+        className="top-0 flex h-full max-h-none min-h-[420px] w-full max-w-none translate-y-0 flex-col pb-4 sm:top-[40%] sm:h-3/4 sm:max-h-[80vh] sm:w-auto sm:max-w-[85%] sm:-translate-y-1/2"
         extraTitleClassName="serlo-h2 mt-3 mr-7 flex-grow border-none py-0 text-center text-sm font-normal"
         confirmCloseDescription={exGenerationStrings.confirmCloseDescription}
       >

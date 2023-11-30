@@ -84,7 +84,7 @@ export function ExerciseType({
                   onNext()
                 }
               }}
-              className="ml-2 rounded-md border border-brand-200 p-2 pl-2 focus:border-brand-200 focus:outline-brand-700"
+              className="rounded-md border border-brand-200 p-2 pl-2 focus:border-brand-200 focus:outline-brand-700 sm:ml-2"
               placeholder={exerciseTypeStrings.numberOfSubtasksPlaceholder}
             />
           </div>
