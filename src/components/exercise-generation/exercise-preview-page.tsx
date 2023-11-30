@@ -179,12 +179,19 @@ export function ExercisePreviewPage({
           {exGenerationStrings.preview.regenerate}
         </button>
         <button
-          className="serlo-button-blue text-base"
+          className={cn(
+            'serlo-button-blue text-base',
+            status !== ExecutePromptStatus.Success &&
+              'cursor-not-allowed opacity-70'
+          )}
+          disabled={status !== ExecutePromptStatus.Success}
           onClick={() => {
             if (editorData && editorData.exercises.length === 1) {
               setEditorState({
                 plugin: TemplatePluginType.TextExercise,
                 state: {
+                  licenseId: license.id,
+                  changes: '[KI generiert]: ',
                   content: JSON.stringify(editorData.exercises[0]),
                 },
               })
