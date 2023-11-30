@@ -1066,6 +1066,7 @@ export const loggedInData = {
         generateExerciseButton: "Aufgabe generieren",
         generateExercisesButton: "Aufgaben generieren",
         somethingWentWrong: "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+        hallucinationWarning: "Die KI kann inkorrekte Lösungen erstellen. Bitte überprüfe die Inhalte.",
         topic: {
           title: "Über welches %topic% willst du eine Aufgabe erstellen?",
           topic: "Thema",

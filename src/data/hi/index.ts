@@ -1066,6 +1066,7 @@ export const loggedInData = {
         generateExerciseButton: 'Generate exercise',
         generateExercisesButton: 'Generate exercises',
         somethingWentWrong: 'Something went wrong. Please try again.',
+        hallucinationWarning: 'The AI can generate incorrect exercises. Please review carefully.',
         topic: {
           title: 'About which %topic% would you like to generate exercises?',
           topic: 'topic',
