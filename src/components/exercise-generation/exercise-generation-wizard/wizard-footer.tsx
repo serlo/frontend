@@ -36,14 +36,19 @@ export function WizardFooter({
   return (
     <div className="relative mt-auto flex flex-col items-center justify-between">
       {isSummary ? (
-        <button
-          className="serlo-button-blue mb-2 self-end rounded px-4 py-2 text-white"
-          onClick={onSubmit}
-        >
-          {generatesMultipleExercises
-            ? exerciseGenerationString.generateExercisesButton
-            : exerciseGenerationString.generateExerciseButton}
-        </button>
+        <>
+          <button
+            className="serlo-button-blue mb-2 self-end rounded px-4 py-2 text-white"
+            onClick={onSubmit}
+          >
+            {generatesMultipleExercises
+              ? exerciseGenerationString.generateExercisesButton
+              : exerciseGenerationString.generateExerciseButton}
+          </button>
+          <p className="mb-2 mr-4 self-end text-right text-sm text-gray-600">
+            {exerciseGenerationString.hallucinationWarning}
+          </p>
+        </>
       ) : (
         <button
           className="serlo-button-blue mb-2 self-end rounded px-4 py-2 text-white"
