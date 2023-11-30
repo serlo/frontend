@@ -131,7 +131,7 @@ export function ExercisePreviewPage({
       className="fixed left-1/2 top-0 flex h-full max-h-none w-full max-w-none translate-y-0 flex-col items-center justify-center rounded-none bg-gray-100"
       extraCloseButtonClassName="bg-brand-200"
     >
-      <div className="relative mt-6 flex flex-col sm:h-full sm:w-full md:h-4/5 md:w-4/5 lg:h-2/3 lg:w-2/5">
+      <div className="relative mt-8 flex flex-col overflow-y-auto sm:h-full sm:w-full md:h-4/5 md:w-4/5 lg:h-2/3 lg:w-2/5">
         {status === ExecutePromptStatus.Loading ? (
           <div className="mb-6 flex flex-col items-center justify-center text-center">
             <h1 className="font-semibold text-black">
