@@ -22,10 +22,13 @@ interface GraphQLResponse<T extends UnknownRecord = UnknownRecord> {
     }
   }
 }
+export interface ChatCompletionMessageParam {
+  role: 'user' | 'system'
+  content: string
+}
 
 interface UseExecuteAIPromptProps {
-  prompt: string
-
+  messages: ChatCompletionMessageParam[]
   submitEventPrefix: string
 }
 
@@ -35,11 +38,11 @@ interface UseExecuteAIPromptReturn<T extends UnknownRecord> {
   setStatus: (status: ExecutePromptStatus) => void
   errorMessage: string | null
   setErrorMessage: (errorMessage: string | null) => void
-  regenerate: () => void
+  regeneratePrompt: () => void
 }
 
 export function useExecuteAIPrompt<T extends UnknownRecord>({
-  prompt,
+  messages,
   submitEventPrefix,
 }: UseExecuteAIPromptProps): UseExecuteAIPromptReturn<T> {
   const auth = useAuthentication()
@@ -70,16 +73,16 @@ export function useExecuteAIPrompt<T extends UnknownRecord>({
       }
 
       const query = `
-        query ($prompt: String!) {
+        query ($messages: [ChatCompletionMessageParam!]!) {
           ai {
-            executePrompt(prompt: $prompt) {
+            executePrompt(messages: $messages) {
               success
               record
             }
           }
         }
       `
-      const variables = { prompt }
+      const variables = { messages }
       submitEvent(`${submitEventPrefix}-fetch-${numberOfRegenerations}`)
       const response = (await graphQlFetch(
         JSON.stringify({ query, variables }),
@@ -142,7 +145,7 @@ export function useExecuteAIPrompt<T extends UnknownRecord>({
     } finally {
       isExecutingPrompt.current = false
     }
-  }, [prompt, auth, submitEventPrefix, numberOfRegenerations])
+  }, [messages, auth, submitEventPrefix, numberOfRegenerations])
 
   useEffect(() => {
     if (isExecutingPrompt.current) {
@@ -159,11 +162,18 @@ export function useExecuteAIPrompt<T extends UnknownRecord>({
     }
   }, [executePrompt])
 
-  const regenerate = useCallback(() => {
+  const regeneratePrompt = useCallback(() => {
     if (!isExecutingPrompt.current) {
       setNumberOfRegenerations((prev) => prev + 1)
     }
   }, [])
 
-  return { data, status, setStatus, errorMessage, setErrorMessage, regenerate }
+  return {
+    data,
+    status,
+    setStatus,
+    errorMessage,
+    setErrorMessage,
+    regeneratePrompt,
+  }
 }
