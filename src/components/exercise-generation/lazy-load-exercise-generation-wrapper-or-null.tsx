@@ -49,16 +49,22 @@ export function LazyLoadExerciseGenerationWrapperOrNull({
       closeWizard={() => {
         setShowWizard(false)
 
-        const url = new URL(window.location.href)
-        // Delete existing query param
-        url.searchParams.delete('showAiWizard')
-        // Update URL without reloading the page
-        router
-          .replace(url.pathname + url.search, undefined, {
-            shallow: true,
-          })
-          .then(() => void null)
-          .catch(() => void null)
+        const referrer = router.query.referrer
+        if (referrer === 'exercise-folder') {
+          // If we come from an exercise folder, we want to transition back!
+          router.back()
+        } else {
+          const url = new URL(window.location.href)
+          // Delete existing query param
+          url.searchParams.delete('showAiWizard')
+          // Update URL without reloading the page
+          router
+            .replace(url.pathname + url.search, undefined, {
+              shallow: true,
+            })
+            .then(() => void null)
+            .catch(() => void null)
+        }
       }}
       subject={subject}
       topic={topic}
