@@ -5,9 +5,10 @@ import {
   faCaretRight,
 } from '@fortawesome/free-solid-svg-icons'
 import ExerciseGenerationLoadingSparkles from 'public/_assets/img/exercise/sparkles.svg'
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 
 import {
+  ChatCompletionMessageParam,
   ExecutePromptStatus,
   useExecuteAIPrompt,
 } from './exercise-generation-wizard/execute-ai-prompt'
@@ -42,7 +43,23 @@ export function ExercisePreviewPage({
   closePage,
   setEditorState,
 }: ExercisePreviewPageProps) {
+  const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([
+    {
+      role: 'user',
+      content: prompt,
+    },
+  ])
   editorRenderers.init(createRenderers())
+
+  // We want to prepend the message as upon regenerating dozens of times, the
+  // context window should get automatically truncated from the start (not the
+  // end).
+  const prependMessage = useCallback(
+    (newMessage: ChatCompletionMessageParam) => {
+      setMessages((prevMessages) => [newMessage, ...prevMessages])
+    },
+    []
+  )
 
   const {
     data: exerciseData,
@@ -50,11 +67,32 @@ export function ExercisePreviewPage({
     setErrorMessage,
     status,
     setStatus,
-    regenerate,
+    regeneratePrompt,
   } = useExecuteAIPrompt<ExpectedLLMOutputType>({
-    prompt,
+    messages,
     submitEventPrefix: 'exercise-generation-wizard-prompt-execution',
   })
+
+  const regenerate = useCallback(() => {
+    if (!exerciseData?.exercises?.[0].question) {
+      regeneratePrompt()
+      return
+    }
+
+    const contentOfPreviousMessage = exerciseData?.exercises
+      ?.map(({ question }) => question)
+      .join('|')
+    const numberOfQuestions = exerciseData?.exercises?.length ?? 0
+
+    prependMessage({
+      role: 'user',
+      content: `Die letzte generierte Aufgabe hatte die folgende ${
+        numberOfQuestions <= 1
+          ? 'Fragestellung'
+          : "Fragestellungen (die Fragen sind separiert mit '|') "
+      }. Bitte generiere eine andere Aufgabe und sei kreativ: ${contentOfPreviousMessage}`,
+    })
+  }, [prependMessage, regeneratePrompt, exerciseData?.exercises])
 
   const { exerciseGeneration: exGenerationStrings } =
     useLoggedInData()!.strings.ai
