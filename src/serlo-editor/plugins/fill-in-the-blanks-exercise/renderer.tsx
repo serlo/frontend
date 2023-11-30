@@ -32,7 +32,8 @@ const Blank = t.type({
   type: t.literal('blank'),
   blankId: t.string,
   correctAnswer: t.string,
-  alternativeSolutions: t.array(t.string),
+  // Disabled alternative correct solutions for now
+  // alternativeSolutions: t.array(t.string),
 })
 
 type Blanks = t.TypeOf<typeof Blank>[]
@@ -201,14 +202,14 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
         { isCorrect: boolean | undefined }
       >()
       blanks.forEach((blankState) => {
-        const blankText =
+        const trimmedBlankText =
           textInBlanks.get(blankState.blankId)?.text.trim() ?? ''
-        const isCorrect =
-          blankText === blankState.correctAnswer.trim() ||
-          blankText ===
-            blankState.alternativeSolutions.find(
-              (alternativeSolution) => blankText === alternativeSolution.trim()
-            )
+        const trimmedCorrectAnswer = blankState.correctAnswer.trim()
+        // Disabled alternative correct solutions for now
+        // const trimmedAlternativeSolutions = blankState.alternativeSolutions.map(alternativeSolution => alternativeSolution.trim())
+        const isCorrect = trimmedBlankText === trimmedCorrectAnswer
+        // Disabled alternative correct solutions for now
+        // || trimmedAlternativeSolutions.find((alternativeSolution) => trimmedBlankText === alternativeSolution)
         newBlankAnswersCorrectList.set(blankState.blankId, {
           isCorrect: isCorrect,
         })

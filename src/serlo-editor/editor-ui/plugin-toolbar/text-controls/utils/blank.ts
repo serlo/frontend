@@ -48,7 +48,8 @@ export function toggleBlank(editor: SlateEditor) {
       type: 'blank',
       blankId: uuid_v4(),
       correctAnswer: '',
-      alternativeSolutions: [],
+      // Disabled alternative correct solutions for now
+      // alternativeSolutions: [],
       children: [{ text: '' }],
     })
     return
@@ -63,7 +64,8 @@ export function toggleBlank(editor: SlateEditor) {
         blankId: uuid_v4(),
         correctAnswer:
           SlateEditor.string(editor, trimmedSelection as Location) || '',
-        alternativeSolutions: [],
+        // Disabled alternative correct solutions for now
+        // alternativeSolutions: [],
         children: [{ text: '' }],
       },
     ],
