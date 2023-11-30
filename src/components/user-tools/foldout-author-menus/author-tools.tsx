@@ -98,7 +98,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   const router = useRouter()
   const canDo = useCanDo()
 
-  const { canUseAiFeaturesOutsideProduction } = useAiFeatures()
+  const { canUseAiFeatures } = useAiFeatures()
 
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings
@@ -335,8 +335,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       }
 
       const showAiItem =
-        canUseAiFeaturesOutsideProduction &&
-        entityType === UuidType.ExerciseGroup
+        canUseAiFeatures && entityType === UuidType.ExerciseGroup
 
       return (
         <Fragment key={title}>
