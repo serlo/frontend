@@ -60,7 +60,7 @@ export function ExerciseType({
 
       {isExerciseGroup ? (
         <>
-          <p className="mb-4 mt-7 text-lg text-brand-700">
+          <p className="mt-7 text-lg text-brand-700">
             {isSummary ? (
               <span className="text-base font-semibold">
                 {exerciseTypeStrings.subtasksTitleSummary}
@@ -70,7 +70,7 @@ export function ExerciseType({
             )}
           </p>
 
-          <div className="mt-2 flex items-center">
+          <div className="flex items-center">
             <input
               type="number"
               min={2}
@@ -84,7 +84,7 @@ export function ExerciseType({
                   onNext()
                 }
               }}
-              className="rounded-md border border-brand-200 p-2 pl-2 focus:border-brand-200 focus:outline-brand-700 sm:ml-2"
+              className="rounded-md border border-brand-200 p-2 pl-2 focus:border-brand-200 focus:outline-brand-700"
               placeholder={exerciseTypeStrings.numberOfSubtasksPlaceholder}
             />
           </div>
