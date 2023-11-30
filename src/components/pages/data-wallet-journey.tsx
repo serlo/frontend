@@ -59,7 +59,7 @@ export function DataWallet() {
           </h1>
           <p className="serlo-p">
             Wir gehen verantwortungsvoll mit deinen Daten um. Serlo ist dafür
-            Projektpartner des Bildungsraums Digital (BIRD). BIRD setzt eine
+            Projektpartner vom Mein Bildungsraum. Mein Bildungsraum setzt eine
             sogenannte „Data Wallet“ ein, die es dir ermöglicht, deine Daten
             sicher und direkt mit uns zu teilen.
           </p>
@@ -73,11 +73,11 @@ export function DataWallet() {
               Lade dir die{' '}
               <a
                 className="serlo-link font-bold"
-                href="https://enmeshed.eu/use/basics"
+                href="https://play.google.com/store/apps/details?id=de.bildungsraum.wallet.beta"
                 target="_blank"
                 rel="noreferrer"
               >
-                Enmeshed App
+                "Mein Bildungsraum: Wallet"-App
               </a>{' '}
               auf dein Smartphone.
             </li>
@@ -96,12 +96,12 @@ export function DataWallet() {
                 ))}
             </li>
             <li>
-              Lege in deiner Enmeshed App ein neues Profil an und füge Serlo als
-              Kontakt hinzu, indem du den QR-Code scannst.
+              Lege in deiner App "Mein Bildungsraum: Wallet" ein neues Profil an
+              und füge Serlo als Kontakt hinzu, indem du den QR-Code scannst.
             </li>
             <li>
               Sobald der Kontakt verifiziert wurde, erhältst du innerhalb
-              weniger Minuten eine Benachrichtigung in deiner Enmeshed App.
+              weniger Minuten eine Benachrichtigung in deiner Wallet-App.
             </li>
           </ol>
           <p className="serlo-p mt-16">

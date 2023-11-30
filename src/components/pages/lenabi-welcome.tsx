@@ -75,7 +75,7 @@ export function LenabiWelcome() {
             ) : (
               <div className="max-w-3xl text-center font-normal">
                 <p className="serlo-p">
-                  Wenn du die Lerndaten aus deiner BIRD Data-Wallet für Serlo
+                  Wenn du die Lerndaten aus deiner Data-Wallet für Serlo
                   freigibts,
                   <br />
                   kannst du hier deine aktuelle Lernempfehlungen und Aufgaben

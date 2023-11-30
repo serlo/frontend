@@ -78,11 +78,8 @@ export function WelcomeModal({
         title="Eigenen Lernstand laden"
       >
         <p className="serlo-p">
-          Hier kannst du deinen Lernstand aus deiner{' '}
-          <a className="serlo-link" href="/wallet" target="_blank">
-            BIRD Data-Wallet
-          </a>{' '}
-          laden. Wenn du das noch nie gemacht hast, wir eine{' '}
+          Hier kannst du deinen Lernstand aus deiner Data-Wallet laden. Wenn du
+          das noch nie gemacht hast, wir eine{' '}
           <a className="serlo-link" target="_blank" href="/wallet">
             ausführlichere Anleitung
           </a>{' '}
@@ -100,11 +97,8 @@ export function WelcomeModal({
           </p>
         )}
         <p className="serlo-p">
-          Nachdem du den Code mit der{' '}
-          <a className="serlo-link" target="_blank" href="/wallet">
-            Enmeshed
-          </a>{' '}
-          App gescannt hast erscheint hier gleich dein Lernstand
+          Nachdem du den Code mit der Wallet-App gescannt hast erscheint hier
+          gleich dein Lernstand
           <button className="serlo-link" onClick={handleMockLoad}>
             .
           </button>
