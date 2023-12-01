@@ -3,10 +3,9 @@ import {
   faRefresh,
   faCaretLeft,
   faCaretRight,
-  faCaretDown,
 } from '@fortawesome/free-solid-svg-icons'
 import ExerciseGenerationLoadingSparkles from 'public/_assets/img/exercise/sparkles.svg'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 
 import {
   ChatCompletionMessageParam,
@@ -51,52 +50,6 @@ export function ExercisePreviewPage({
     },
   ])
   editorRenderers.init(createRenderers())
-
-  const [showScrollButton, setShowScrollButton] = useState(false)
-
-  const scrollContentDown = () => {
-    if (contentRef.current) {
-      // Scroll down by a certain amount, e.g., 100px. Adjust as needed.
-      contentRef.current.scrollBy({ top: 100, behavior: 'smooth' })
-    }
-  }
-
-  useEffect(() => {
-    const checkOverflow = () => {
-      const current = contentRef.current
-      if (current) {
-        // Show the button if the content's scroll height is greater than its client height
-        setShowScrollButton(current.scrollHeight > current.clientHeight)
-      }
-    }
-
-    // Check for overflow when the component mounts
-    checkOverflow()
-
-    // You might want to check again on window resize
-    window.addEventListener('resize', checkOverflow)
-
-    return () => {
-      window.removeEventListener('resize', checkOverflow)
-    }
-  }, [])
-  const [isScrolled, setIsScrolled] = useState(false)
-  const contentRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (contentRef.current) {
-        setIsScrolled(contentRef.current.scrollTop > 10) // Adjust '10' based on your needs
-      }
-    }
-
-    const scrollableElement = contentRef.current
-    scrollableElement?.addEventListener('scroll', handleScroll)
-
-    return () => {
-      scrollableElement?.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
 
   // We want to prepend the message as upon regenerating dozens of times, the
   // context window should get automatically truncated from the start (not the
@@ -201,10 +154,7 @@ export function ExercisePreviewPage({
           </div>
         ) : null}
 
-        <div
-          className="relative overflow-y-auto rounded-xl bg-white p-8"
-          ref={contentRef}
-        >
+        <div className="relative overflow-y-auto rounded-xl bg-white p-8">
           {status === ExecutePromptStatus.Loading && <Skeleton />}
           {status === ExecutePromptStatus.Success && (
             <div>
@@ -224,19 +174,6 @@ export function ExercisePreviewPage({
                   />
                 )}
               </ErrorBoundary>
-              {/* Arrow down icon, to indicate that there is more content */}
-              {showScrollButton && (
-                <button
-                  onClick={scrollContentDown}
-                  className={cn(
-                    'absolute left-1/2 top-0 -translate-x-1/2 transform',
-                    !isScrolled && 'hidden'
-                  )}
-                  aria-label="Scroll down"
-                >
-                  <FaIcon icon={faCaretDown} className="text-xl" />
-                </button>
-              )}
             </div>
           )}
           {status === ExecutePromptStatus.Error && (
