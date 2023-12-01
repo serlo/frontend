@@ -3,14 +3,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 
 import { changeButtonTypeOfSSOProvider, sortKratosUiNodes } from './ory-helper'
-import {
-  filterUnwantedRedirection,
-  loginUrl,
-  logoutUrl,
-  registrationUrl,
-  verificationUrl,
-  recoveryUrl,
-} from './utils'
+import { registrationUrl, recoveryUrl } from './utils'
 import { getAuthPayloadFromSession } from '@/auth/auth-provider'
 import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
 import { kratos } from '@/auth/kratos'
