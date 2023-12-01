@@ -118,7 +118,20 @@ export function EquationsApp() {
           <div className="mr-3"></div>
         </div>
         <div className="shrink grow overflow-auto" ref={scrollDiv}>
-          <div className="overview mx-auto mb-[200px] mt-7 max-w-[600px] px-4 [&>h3]:mt-8 [&>h3]:text-lg [&>h3]:font-bold">
+          <div className="overview mx-auto mt-7 max-w-[600px] px-4 [&>h3]:mt-8 [&>h3]:text-lg [&>h3]:font-bold">
+            <div className="rounded border-2 border-orange-300 p-2">
+              Diese App befindet sich aktuell im Beta-Test.
+              <br />
+              <a
+                href="https://forms.gle/PFUYn8fn5zAkzpqe8"
+                target="_blank"
+                rel="noreferrer"
+                className="serlo-link"
+              >
+                Wir freuen uns über dein Feedback
+              </a>
+              .
+            </div>
             <h3>Serlo 26258 - Aufgaben zu linearen Gleichungen</h3>
             {renderExample('x+1=4')}
             {renderExample('2x=8')}
@@ -203,6 +216,23 @@ export function EquationsApp() {
               >
                 eigene Aufgabe erstellen
               </button>
+            </div>
+            <div className="mb-6 mt-[200px] text-center">
+              <a
+                href="https://de.serlo.org/privacy"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Datenschutz
+              </a>
+              <span className="mx-5 inline-block">|</span>
+              <a
+                href="https://de.serlo.org/legal"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Impressum
+              </a>
             </div>
           </div>
         </div>
