@@ -37,10 +37,10 @@ export function Topic({
   if (isSummary) {
     return (
       <div className="flex items-center justify-start text-brand-700">
-        <span onClick={() => jumpToPage(2)} className="mr-4 font-semibold">
+        <span onClick={() => jumpToPage(1)} className="mr-4 font-semibold">
           {topicStrings.defaultLabel}
         </span>
-        <button onClick={() => jumpToPage(2)} className="underline">
+        <button onClick={() => jumpToPage(1)} className="underline">
           {topic}
         </button>
       </div>
