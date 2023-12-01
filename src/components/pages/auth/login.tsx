@@ -152,11 +152,6 @@ export function Login({ oauth }: { oauth?: boolean }) {
   async function onLogin(values: UpdateLoginFlowBody) {
     if (!flow?.id) return
 
-    const redirection = filterUnwantedRedirection({
-      desiredPath: sessionStorage.getItem('previousPathname'),
-      unwantedPaths: [verificationUrl, logoutUrl, loginUrl, recoveryUrl],
-    })
-
     try {
       await kratos
         .updateLoginFlow({ flow: flow.id, updateLoginFlowBody: values })
@@ -168,7 +163,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
           showToastNotice(
             strings.notices.welcome.replace('%username%', username)
           )
-          void router.push(flow.return_to ?? redirection)
+          void router.push('/willkommen')
           return
         })
     } catch (e: unknown) {
