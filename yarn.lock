@@ -1571,6 +1571,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cortex-js/compute-engine@npm:0.22.0, @cortex-js/compute-engine@npm:^0.22.0":
+  version: 0.22.0
+  resolution: "@cortex-js/compute-engine@npm:0.22.0"
+  dependencies:
+    complex.js: ^2.1.1
+    decimal.js: ^10.4.3
+  checksum: 1ccc95b86b03697394f1fb3427d5e6a9d8b8706749a1c930956d8c0a89c4913e80c39d2731c2625c457ccfdb00e1c898b4d2e860112c1b01f283f39722e28ea6
+  languageName: node
+  linkType: hard
+
 "@emotion/cache@npm:^10.0.27":
   version: 10.0.29
   resolution: "@emotion/cache@npm:10.0.29"
@@ -3938,6 +3948,7 @@ __metadata:
   resolution: "@serlo/frontend@workspace:."
   dependencies:
     "@babel/core": ^7.23.0
+    "@cortex-js/compute-engine": ^0.22.0
     "@fortawesome/fontawesome-svg-core": 6.4.2
     "@fortawesome/free-brands-svg-icons": 6.4.2
     "@fortawesome/free-regular-svg-icons": 6.4.2
@@ -3963,6 +3974,7 @@ __metadata:
     "@tailwindcss/typography": ^0.5.10
     "@tippyjs/react": ^4.2.6
     "@types/algebra.js": ^0.2.2
+    "@types/canvas-confetti": ^1.6.4
     "@types/escape-html": ^1.0.2
     "@types/iframe-resizer": ^3.5.10
     "@types/jest": ^29.5.5
@@ -3989,6 +4001,7 @@ __metadata:
     array-move: ^4.0.0
     autoprefixer: ^10.4.16
     babel-jest: ^29.7.0
+    canvas-confetti: ^1.9.2
     clsx: ^2.0.0
     cross-env: ^7.0.3
     dotenv: ^16.3.1
@@ -4013,6 +4026,7 @@ __metadata:
     js-cookie: ^3.0.5
     json-diff: ^1.0.6
     katex: ^0.16.9
+    mathlive: ^0.97.4
     micromark: ^4.0.0
     msw: ^0.47.4
     next: ^13.5.4
@@ -4341,6 +4355,13 @@ __metadata:
   dependencies:
     "@babel/types": ^7.3.0
   checksum: a797ea09c72307569e3ee08aa3900ca744ce3091114084f2dc59b67a45ee7d01df7865252790dbfa787a7915ce892cdc820c9b920f3683292765fc656b08dc63
+  languageName: node
+  linkType: hard
+
+"@types/canvas-confetti@npm:^1.6.4":
+  version: 1.6.4
+  resolution: "@types/canvas-confetti@npm:1.6.4"
+  checksum: 0452e1f381e5d59471578be1b83f2908f0906ba0fddfe16f941a07e070f4ad91ceaf1a68bd84d84bb5e81214c95ef00137677d9d61d81119051425ca5ce307ba
   languageName: node
   linkType: hard
 
@@ -5928,6 +5949,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"canvas-confetti@npm:^1.9.2":
+  version: 1.9.2
+  resolution: "canvas-confetti@npm:1.9.2"
+  checksum: e85fc0bbcd6ce7879997ccf18ba5a9747589ecf6916a06bdb3d229551e8c45c74fd5b9f8d455763db4a9e868c4c3e13b4630c26451823c9f7d1d390f0f0ab192
+  languageName: node
+  linkType: hard
+
 "capital-case@npm:^1.0.4":
   version: 1.0.4
   resolution: "capital-case@npm:1.0.4"
@@ -6328,6 +6356,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"complex.js@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "complex.js@npm:2.1.1"
+  checksum: a0802cc3f0eb7703088edfc3fe209ae7be5ce93c0e710a0f288be2e29ee31b3530a8c0d3330d7c2a668410dfe4293a4038554d66c7f1f1165997941bdc1092aa
+  languageName: node
+  linkType: hard
+
 "compute-scroll-into-view@npm:^1.0.17":
   version: 1.0.17
   resolution: "compute-scroll-into-view@npm:1.0.17"
@@ -6686,6 +6721,13 @@ __metadata:
   version: 10.3.1
   resolution: "decimal.js@npm:10.3.1"
   checksum: 0351ac9f05fe050f23227aa6a4573bee2d58fa7378fcf28d969a8c789525032effb488a90320fd3fe86a66e17b4bc507d811b15eada5b7f0e7ec5d2af4c24a59
+  languageName: node
+  linkType: hard
+
+"decimal.js@npm:^10.4.3":
+  version: 10.4.3
+  resolution: "decimal.js@npm:10.4.3"
+  checksum: 796404dcfa9d1dbfdc48870229d57f788b48c21c603c3f6554a1c17c10195fc1024de338b0cf9e1efe0c7c167eeb18f04548979bcc5fdfabebb7cc0ae3287bae
   languageName: node
   linkType: hard
 
@@ -10554,6 +10596,15 @@ __metadata:
   bin:
     markdown-it: bin/markdown-it.js
   checksum: 890555711c1c00fa03b936ca2b213001a3b9b37dea140d8445ae4130ce16628392aad24b12e2a0a9935336ca5951f2957a38f4e5309a2e38eab44e25ff32a41e
+  languageName: node
+  linkType: hard
+
+"mathlive@npm:^0.97.4":
+  version: 0.97.4
+  resolution: "mathlive@npm:0.97.4"
+  dependencies:
+    "@cortex-js/compute-engine": 0.22.0
+  checksum: 268a4e4102e3e22d65e0c9dca050291333b03febe98d0ed0851bd3a7e8f0df56aba2ae454738e2846019ae415ff0116976956927b1d7f83f9df1408a10ffc52d
   languageName: node
   linkType: hard
 
