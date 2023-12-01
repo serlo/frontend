@@ -1117,6 +1117,7 @@ export const loggedInData = {
         },
         preview: {
           loadingHeading: "Aufgabe wird erstellt...",
+          patience: 'It can take up to two minutes',
           publishExercise: "Aufgabe veröffentlichen",
           openExerciseInEditor: "Im Editor öffnen",
           regenerate: "Aufgabe neu generieren"
