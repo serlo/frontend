@@ -91,8 +91,15 @@ export function ToolbarMain({
       <button
         className="serlo-button-green pointer-events-auto ml-2 md:mr-[-11.5vw] lg:-mr-52 xl:-mr-64"
         onClick={() => {
-          if (isChanged) setSaveModalOpen(true)
-          else showToastNotice('👀 ' + editorStrings.noChangesWarning)
+          if (
+            isChanged ||
+            changes?.value.startsWith('[KI generiert]:') ||
+            false
+          ) {
+            setSaveModalOpen(true)
+          } else {
+            showToastNotice('👀 ' + editorStrings.noChangesWarning)
+          }
         }}
       >
         <FaIcon icon={faSave} /> {editorStrings.edtrIo.save}
