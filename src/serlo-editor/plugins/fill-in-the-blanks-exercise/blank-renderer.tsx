@@ -1,9 +1,11 @@
 // import { useDroppable } from '@dnd-kit/core'
-import { ChangeEventHandler, useContext } from 'react'
-
+import { ChangeEventHandler, ReactNode, useContext } from 'react'
 // import { BlankSolution } from './components/blank-solution'
 // import { BlankDragAndDropSolutions } from './renderer'
-import type { FillInTheBlanksMode } from '.'
+import { useDrop } from 'react-dnd'
+
+import type { BlankId, DraggableId, FillInTheBlanksMode } from '.'
+import { DraggableSolution } from './components/blank-solution'
 import { FillInTheBlanksContext } from './context/blank-context'
 import { cn } from '@/helper/cn'
 
@@ -32,6 +34,14 @@ export function BlankRenderer(props: {
   const textInBlank =
     fillInTheBlanksContext.textInBlanks.get(props.blankId)?.text ?? ''
 
+  const draggableSolutionInBlank = [
+    ...fillInTheBlanksContext.locationOfDraggables.value,
+  ].find((entry) => entry[1] === props.blankId)
+
+  const containsDraggableId = draggableSolutionInBlank
+    ? draggableSolutionInBlank[0]
+    : null
+
   return (
     <>
       {mode === 'typing' ? (
@@ -56,6 +66,18 @@ export function BlankRenderer(props: {
         />
       ) : (
         <>
+          <DroppableBlank
+            blankId={props.blankId}
+            disable={containsDraggableId !== null}
+          >
+            {containsDraggableId ? (
+              <DraggableSolution
+                text="Banana"
+                draggableId={containsDraggableId}
+              />
+            ) : null}
+          </DroppableBlank>
+          {/* <EmptyBlankWithDropZone blankId={props.blankId} /> */}
           {/* {draggableElementInBlank ? (
             <BlankSolution
               text={draggableElementInBlank.text}
@@ -100,3 +122,41 @@ export function BlankRenderer(props: {
 //     ></span>
 //   )
 // }
+
+function DroppableBlank(props: {
+  blankId: BlankId
+  disable: boolean
+  children: ReactNode
+}) {
+  const fillInTheBlanksContext = useContext(FillInTheBlanksContext)
+  const [{ isOver }, dropRef] = useDrop({
+    accept: 'blank-solution',
+    drop: (item) => {
+      if (!fillInTheBlanksContext) return
+      const newMap = new Map<DraggableId, BlankId>(
+        fillInTheBlanksContext.locationOfDraggables.value
+      )
+      newMap.set(
+        (item as { draggableId: DraggableId }).draggableId,
+        props.blankId
+      )
+      fillInTheBlanksContext.locationOfDraggables.set(newMap)
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+    }),
+    canDrop: () => !props.disable,
+  })
+
+  return (
+    <span
+      className={cn(
+        'rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2',
+        isOver && !props.disable && 'bg-slate-400'
+      )}
+      ref={dropRef}
+    >
+      {props.children}
+    </span>
+  )
+}

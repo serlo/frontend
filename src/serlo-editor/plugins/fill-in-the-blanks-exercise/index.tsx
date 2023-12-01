@@ -12,6 +12,10 @@ import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 export type FillInTheBlanksMode = 'typing' | 'drag-and-drop'
 
+export type BlankId = string
+
+export type DraggableId = string
+
 export const fillInTheBlanksExercise: EditorPlugin<FillInTheBlanksExerciseState> =
   {
     Component: FillInTheBlanksExerciseEditor,
@@ -24,7 +28,7 @@ export type FillInTheBlanksExerciseState = ReturnType<
 >
 
 function createFillInTheBlanksExerciseState() {
-  const defaultMode: FillInTheBlanksMode = 'typing'
+  const defaultMode: FillInTheBlanksMode = 'drag-and-drop'
 
   return object({
     text: child({

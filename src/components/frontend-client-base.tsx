@@ -3,6 +3,8 @@ import Cookies from 'js-cookie'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import { useState, useEffect } from 'react'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import { default as ToastNotice } from 'react-notify-toast'
 import { getInstanceDataByLang } from 'src/helper/feature-i18n'
 
@@ -116,33 +118,36 @@ export function FrontendClientBase({
   //console.dir(initialProps)
 
   return (
-    <InstanceDataProvider value={instanceData}>
-      <PrintMode />
-      <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
-        <LoggedInDataProvider value={loggedInData}>
-          <UuidsProvider value={{ entityId, revisionId }}>
-            <ConditionalWrap
-              condition={!noHeaderFooter}
-              wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
-            >
+    // TODO: Move DndProvider to better location
+    <DndProvider backend={HTML5Backend}>
+      <InstanceDataProvider value={instanceData}>
+        <PrintMode />
+        <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
+          <LoggedInDataProvider value={loggedInData}>
+            <UuidsProvider value={{ entityId, revisionId }}>
               <ConditionalWrap
-                condition={!noContainers}
-                wrapper={(kids) => (
-                  <div className="relative">
-                    <MaxWidthDiv showNav={showNav}>
-                      <main id="content">{kids}</main>
-                    </MaxWidthDiv>
-                  </div>
-                )}
+                condition={!noHeaderFooter}
+                wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
               >
-                {children}
+                <ConditionalWrap
+                  condition={!noContainers}
+                  wrapper={(kids) => (
+                    <div className="relative">
+                      <MaxWidthDiv showNav={showNav}>
+                        <main id="content">{kids}</main>
+                      </MaxWidthDiv>
+                    </div>
+                  )}
+                >
+                  {children}
+                </ConditionalWrap>
               </ConditionalWrap>
-            </ConditionalWrap>
-            <ToastNotice />
-          </UuidsProvider>
-        </LoggedInDataProvider>
-      </AuthProvider>
-    </InstanceDataProvider>
+              <ToastNotice />
+            </UuidsProvider>
+          </LoggedInDataProvider>
+        </AuthProvider>
+      </InstanceDataProvider>
+    </DndProvider>
   )
 
   function getCachedLoggedInData() {

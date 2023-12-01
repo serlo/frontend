@@ -4,7 +4,9 @@ import { type ReactNode, useMemo, useState } from 'react'
 
 // import { BlankSolution } from './components/blank-solution'
 // import { BlankSolutionsArea } from './components/blank-solution-area'
-import type { FillInTheBlanksMode } from '.'
+import type { BlankId, DraggableId, FillInTheBlanksMode } from '.'
+import { DraggableSolution } from './components/blank-solution'
+import { DraggableSolutionArea } from './components/blank-solution-area'
 import { FillInTheBlanksContext } from './context/blank-context'
 import { Feedback } from '../sc-mc-exercise/renderer/feedback'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -37,8 +39,6 @@ const Blank = t.type({
 })
 
 type Blanks = t.TypeOf<typeof Blank>[]
-
-type BlankId = string
 
 interface FillInTheBlanksRendererProps {
   text: ReactNode
@@ -93,6 +93,10 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
   }, [blanks, textUserTypedIntoBlanks, initialTextInBlank])
 
   // --- Drag & drop stuff
+  // Maps DraggableId to the BlankId where this draggable element is currently located
+  const [locationOfDraggables, setLocationOfDraggables] = useState(
+    new Map<DraggableId, BlankId>()
+  )
   // TODO: Should get blank solutions from text state
   // const [blankDragAndDropSolutions, setBlankDragAndDropSolutions] = useState<
   //   BlankDragAndDropSolution[]
@@ -125,10 +129,34 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
             value: textUserTypedIntoBlanks,
             set: setTextUserTypedIntoBlanks,
           },
+          locationOfDraggables: {
+            value: locationOfDraggables,
+            set: setLocationOfDraggables,
+          },
         }}
       >
         {text}
       </FillInTheBlanksContext.Provider>
+      {mode === 'drag-and-drop' ? (
+        <DraggableSolutionArea
+          locationOfDraggables={{
+            value: locationOfDraggables,
+            set: setLocationOfDraggables,
+          }}
+        >
+          {blanks.map((blank, index) => {
+            if (locationOfDraggables.get(`draggable-${blank.blankId}`))
+              return null
+            return (
+              <DraggableSolution
+                key={index}
+                text={blank.correctAnswer}
+                draggableId={`draggable-${blank.blankId}`}
+              />
+            )
+          })}
+        </DraggableSolutionArea>
+      ) : null}
       {/* {mode === 'drag-and-drop' ? (
         <BlankSolutionsArea>
           <>
@@ -182,6 +210,15 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
               className="ml-5"
               key={index}
             >{`Text: ${text} | BlankId: ${blankId}`}</div>
+          )
+        })}
+      </div>
+      <div className="">
+        {[...locationOfDraggables].map((entry, index) => {
+          return (
+            <div key={index}>
+              {`DraggableId: ${entry[0]} in blankId: ${entry[1]}`}
+            </div>
           )
         })}
       </div>
