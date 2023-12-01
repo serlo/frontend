@@ -70,14 +70,14 @@ export function DataWallet() {
           </p>
           <ol className="serlo-ol mb-4 text-lg">
             <li>
-              Lade dir die{' '}
+              Lade dir die App{' '}
               <a
                 className="serlo-link font-bold"
                 href="https://play.google.com/store/apps/details?id=de.bildungsraum.wallet.beta"
                 target="_blank"
                 rel="noreferrer"
               >
-                "Mein Bildungsraum: Wallet"-App
+                Mein Bildungsraum: Wallet
               </a>{' '}
               auf dein Smartphone.
             </li>
@@ -96,8 +96,8 @@ export function DataWallet() {
                 ))}
             </li>
             <li>
-              Lege in deiner App "Mein Bildungsraum: Wallet" ein neues Profil an
-              und füge Serlo als Kontakt hinzu, indem du den QR-Code scannst.
+              Lege in deiner Wallet-App ein neues Profil an und füge Serlo als
+              Kontakt hinzu, indem du den QR-Code scannst.
             </li>
             <li>
               Sobald der Kontakt verifiziert wurde, erhältst du innerhalb
