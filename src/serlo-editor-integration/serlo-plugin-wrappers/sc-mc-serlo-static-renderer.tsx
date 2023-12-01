@@ -12,7 +12,7 @@ import {
 } from '@/helper/exercise-submission'
 import { ScMcExerciseRendererAnswer } from '@/serlo-editor/plugins/sc-mc-exercise/renderer/renderer'
 import { ScMcExerciseStaticRenderer } from '@/serlo-editor/plugins/sc-mc-exercise/static'
-import { EditorScMcExerciseDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorScMcExerciseDocument } from '@/serlo-editor/types/editor-plugins'
 
 export function ScMcSerloStaticRenderer(props: EditorScMcExerciseDocument) {
   const { asPath } = useRouter()

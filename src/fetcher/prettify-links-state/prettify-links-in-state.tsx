@@ -5,12 +5,12 @@ import { idsQuery } from './ids-query'
 import { endpoint } from '@/api/endpoint'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 import { getChildrenOfStaticDocument } from '@/serlo-editor/static-renderer/helper/get-children-of-static-document'
-import { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { AnyEditorDocument } from '@/serlo-editor/types/editor-plugins'
 import {
   isImageDocument,
   isSolutionDocument,
   isTextDocument,
-} from '@/serlo-editor-integration/types/plugin-type-guards'
+} from '@/serlo-editor/types/plugin-type-guards'
 
 export interface IdsQueryReturn {
   [key: string]: {

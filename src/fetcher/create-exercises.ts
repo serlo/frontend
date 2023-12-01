@@ -3,8 +3,8 @@ import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse
 import {
   EditorExerciseDocument,
   EditorTemplateExerciseGroupDocument,
-} from '@/serlo-editor-integration/types/editor-plugins'
-import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
+} from '@/serlo-editor/types/editor-plugins'
+import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 
 type BareExercise = Omit<
   Extract<MainUuidType, { __typename: 'Exercise' | 'GroupedExercise' }>,

@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from 'react'
 import type {
   EditorExerciseDocument,
   EditorSolutionDocument,
-} from '../types/editor-plugins'
+} from '../../serlo-editor/types/editor-plugins'
 import { useAuthentication } from '@/auth/use-authentication'
 import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'

@@ -4,7 +4,7 @@ import { isEmptyRowsDocument } from '../rows/utils/static-is-empty'
 import { StaticSlate } from '../text/static-components/static-slate'
 import { BoxRenderer, BoxType } from '@/serlo-editor/plugins/box/renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorBoxDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorBoxDocument } from '@/serlo-editor/types/editor-plugins'
 
 export function BoxStaticRenderer({ state }: EditorBoxDocument) {
   const { type: boxType, title, anchorId, content } = state

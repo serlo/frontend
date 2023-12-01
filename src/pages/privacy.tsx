@@ -2,6 +2,7 @@ import type { GetStaticProps } from 'next'
 
 import type { LegalData } from './legal'
 import { Link } from '@/components/content/link'
+import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { fetchAndConvertLegalMarkdown } from '@/fetcher/fetch-and-convert-legal-markdown'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
@@ -19,9 +20,10 @@ function Content({ contentHtml, isGerman, lastChange }: PrivacyPageData) {
   )
   return (
     <FrontendClientBase>
-      <h1 className="serlo-h1 mt-24">
-        {isGerman ? 'Datenschutzerklärung' : 'Privacy Policy'}
-      </h1>
+      <PageTitle
+        title={isGerman ? 'Datenschutzerklärung' : 'Privacy Policy'}
+        headTitle
+      />
       <p className="serlo-p">
         <i>
           {isGerman ? 'wirksam ab dem' : 'effective'} <time>{date}</time>

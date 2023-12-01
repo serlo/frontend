@@ -12,8 +12,8 @@ import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import type { TaxonomySubTerm } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
+import { cn } from '@/helper/cn'
 import { getServerSideStrings } from '@/helper/feature-i18n'
-import { tw } from '@/helper/tw'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
 interface SubjectLandingContentProps {
@@ -43,19 +43,19 @@ export function SubjectLandingContent({
       <Header />
       <main id="content" className="text-almost-black">
         <section
-          className={tw`
+          className={cn(`
             mx-auto mt-16 max-w-3xl
             text-center sm:flex
             sm:text-left md:mt-14
-          `}
+          `)}
         >
           <div>
             <h1
-              className={tw`
+              className={cn(`
                 mb-10 mt-3 text-4xl
                 font-extrabold
                 tracking-tight sm:text-6xl
-              `}
+              `)}
             >
               <span className="serlo-underlined inline-block w-min max-w-[27rem] !whitespace-normal pb-3">
                 {data.title}
@@ -89,10 +89,10 @@ export function SubjectLandingContent({
 
         <section className="mb-8 mt-20 text-center">
           <h2
-            className={tw`
+            className={cn(`
               mx-auto mt-3 max-w-2xl
               pb-10 text-3xl font-extrabold tracking-tight
-            `}
+            `)}
           >
             <span className="pb-2">Beliebte Inhalte</span>
           </h2>

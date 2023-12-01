@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { cn } from '@/helper/cn'
 
 interface PreviewOverlaySimpleProps {
   previewActive: boolean
@@ -14,7 +14,7 @@ export function PreviewOverlaySimple({
   return (
     <div className="relative">
       <div
-        className={clsx(
+        className={cn(
           'absolute top-0 z-20 h-full w-full',
           previewActive ? 'hidden' : 'bg-white bg-opacity-80',
           fullOpacity ? 'bg-opacity-0' : ''

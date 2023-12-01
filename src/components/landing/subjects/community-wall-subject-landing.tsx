@@ -8,8 +8,8 @@ import {
   type CommunityWallPerson,
 } from '@/data/de/community-people'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
+import { cn } from '@/helper/cn'
 import { shuffleArray } from '@/helper/shuffle-array'
-import { tw } from '@/helper/tw'
 
 const positions = [
   ['8%', '-8%'],
@@ -40,11 +40,11 @@ export function CommunityWallSubjectLanding({
       <div className="relative z-10 mt-32 justify-center">
         <div className="z-20 w-full text-center md:absolute">
           <h3
-            className={tw`
+            className={cn(`
                 relative z-10 mx-auto
                 mb-8 mt-20
                 max-w-xl text-center text-3xl font-extrabold leading-cozy tracking-tight
-              `}
+              `)}
           >
             Lust, das Fach {title} mitzugestalten?
           </h3>
@@ -57,10 +57,10 @@ export function CommunityWallSubjectLanding({
           </p>
           <div className="group text-center">
             <Link
-              className={tw`
+              className={cn(`
                 serlo-new-landing-button mt-6 inline-block px-4
                 py-2 text-lg hover:no-underline group-hover:bg-brand-500
-              `}
+              `)}
               href={contributeLink}
             >
               Mitmachen
@@ -68,12 +68,12 @@ export function CommunityWallSubjectLanding({
             <div className="relative">
               <div className="absolute inset-0 flex justify-center">
                 <div
-                  className={tw`
+                  className={cn(`
                     pointer-events-none h-5 w-48 select-none
                     bg-underlined bg-contain bg-top
                     bg-no-repeat opacity-0 transition-all
                     duration-200 ease-linear group-hover:rotate-1 group-hover:opacity-100
-                  `}
+                  `)}
                 />
               </div>
             </div>
@@ -81,10 +81,10 @@ export function CommunityWallSubjectLanding({
         </div>
 
         <div
-          className={tw`
+          className={cn(`
             flex flex-wrap justify-evenly md:relative md:block
             md:h-630 md:pb-12 lg:mx-auto lg:max-w-[85rem]
-          `}
+          `)}
         >
           <CommunityWallPersons
             persons={persons}

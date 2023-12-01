@@ -24,8 +24,8 @@ import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
+import { EditorRowsDocument } from '@/serlo-editor/types/editor-plugins'
 
 // ALWAYS start alias with slash
 export async function requestPage(

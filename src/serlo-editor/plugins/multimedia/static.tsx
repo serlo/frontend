@@ -7,7 +7,7 @@ import {
   EditorImageDocument,
   EditorMultimediaDocument,
   EditorVideoDocument,
-} from '@/serlo-editor-integration/types/editor-plugins'
+} from '@/serlo-editor/types/editor-plugins'
 
 type MultimediaChild =
   | EditorImageDocument

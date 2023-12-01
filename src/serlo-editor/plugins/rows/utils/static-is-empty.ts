@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-cycle
 import { isEmptyTextDocument } from '../../text/utils/static-is-empty'
-import type { AnyEditorDocument } from '@/serlo-editor-integration/types/editor-plugins'
-import { isRowsDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
+import type { AnyEditorDocument } from '@/serlo-editor/types/editor-plugins'
+import { isRowsDocument } from '@/serlo-editor/types/plugin-type-guards'
 
 export function isEmptyRowsDocument(rows: AnyEditorDocument) {
   if (!isRowsDocument(rows)) return false

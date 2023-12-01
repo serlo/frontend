@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 export interface OverlayInputProps
   extends React.DetailedHTMLProps<
@@ -20,11 +20,11 @@ export const OverlayInput = forwardRef<HTMLInputElement, OverlayInputProps>(
           autoFocus={autoFocus}
           {...props}
           ref={ref}
-          className={tw`
+          className={cn(`
              serlo-input-font-reset w-3/4 rounded-md border-2
            border-editor-primary-100 bg-editor-primary-100
            focus:border-editor-primary focus:outline-none
-          `}
+          `)}
         />
       </label>
     )

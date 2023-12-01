@@ -1,5 +1,6 @@
 import type { GetStaticProps } from 'next'
 
+import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { fetchAndConvertLegalMarkdown } from '@/fetcher/fetch-and-convert-legal-markdown'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
@@ -16,9 +17,7 @@ export default renderedPageNoHooks<LegalData>((props) => {
 function Content({ contentHtml, isGerman }: LegalData) {
   return (
     <FrontendClientBase>
-      <h1 className="serlo-h1 mt-24">
-        {isGerman ? 'Impressum' : 'Legal Notice'}
-      </h1>
+      <PageTitle title={isGerman ? 'Impressum' : 'Legal Notice'} headTitle />
       <div
         className="serlo-prose-hacks"
         dangerouslySetInnerHTML={{ __html: contentHtml }}

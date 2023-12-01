@@ -8,7 +8,7 @@ import {
 } from '@/data-types'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
-import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorRowsDocument } from '@/serlo-editor/types/editor-plugins'
 
 type TaxonomyTerm = Extract<
   MainUuidQuery['uuid'],

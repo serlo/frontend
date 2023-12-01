@@ -1,7 +1,7 @@
-import clsx from 'clsx'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
+import { cn } from '@/helper/cn'
 import { isProduction } from '@/helper/is-production'
 
 export const features = {
@@ -123,13 +123,13 @@ export function ProfileExperimental() {
         }
       >
         <div
-          className={clsx(
+          className={cn(
             'flex h-6 w-12 rounded-full bg-gray-300 p-1 duration-300 ease-in-out',
             isActive && 'bg-green-400'
           )}
         >
           <div
-            className={clsx(
+            className={cn(
               'h-4 w-4 transform rounded-full bg-white shadow-md duration-300 ease-in-out',
               isActive && 'translate-x-6'
             )}

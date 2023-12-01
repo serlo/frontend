@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 
-import type { EditorSolutionDocument } from '../types/editor-plugins'
+import type { EditorSolutionDocument } from '../../serlo-editor/types/editor-plugins'
 import type { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
 import { Lazy } from '@/components/content/lazy'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'

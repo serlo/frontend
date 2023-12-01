@@ -1,7 +1,7 @@
 import * as MQ from 'react-mathquill'
 
 import type { MathEditorProps } from './editor'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 if (typeof window !== 'undefined') {
   MQ.addStyles()
@@ -91,11 +91,11 @@ export function VisualEditor(props: VisualEditorProps) {
 
   return (
     <div
-      className={tw`
+      className={cn(`
         rounded-sm focus-within:outline
         focus-within:outline-2 focus-within:outline-offset-1 focus-within:outline-editor-primary
         [&_.mq-editable-field]:!border-none [&_.mq-editable-field]:!shadow-none
-      `}
+      `)}
     >
       <MQ.EditableMathField
         latex={props.state}

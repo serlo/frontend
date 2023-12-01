@@ -1,4 +1,4 @@
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 export const partners = [
   {
@@ -42,10 +42,10 @@ export const partners = [
 export function EditorPartnerList() {
   return (
     <div
-      className={tw`
+      className={cn(`
         mt-auto flex flex-wrap justify-evenly pb-7
         text-gray-800 sm:justify-center
-      `}
+      `)}
     >
       {partners.map(renderPartner)}
     </div>

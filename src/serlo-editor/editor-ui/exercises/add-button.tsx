@@ -1,7 +1,7 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 
 import { FaIcon } from '@/components/fa-icon'
+import { cn } from '@/helper/cn'
 
 interface AddButtonProps {
   onClick: () => void
@@ -20,7 +20,7 @@ export function AddButton({
     <button
       title={title}
       onMouseDown={onClick}
-      className={clsx(
+      className={cn(
         secondary
           ? 'serlo-button-editor-secondary'
           : 'serlo-button-editor-primary',

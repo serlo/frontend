@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
@@ -8,11 +7,11 @@ import { SubTopic } from '../../taxonomy/sub-topic'
 import type { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import type { TaxonomySubTerm } from '@/data-types'
+import { cn } from '@/helper/cn'
 import { isPartiallyInView } from '@/helper/is-partially-in-view'
-import { tw } from '@/helper/tw'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
+import { isImageDocument } from '@/serlo-editor/types/plugin-type-guards'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { isImageDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
 
 interface SubjectLandingTopicOverviewProps {
   subterms: TaxonomySubTerm[]
@@ -100,13 +99,12 @@ export function SubjectLandingTopicOverview({
           return (
             <button
               key={term.title}
-              className={clsx(
-                tw`
+              className={cn(
+                `
                   m-2 flex min-h-[4rem]
                   w-auto rounded-xl p-2 text-left text-left font-bold
                   text-brand shadow-menu transition-colors hover:bg-brand/5
                 `,
-
                 isActive ? 'bg-brand/10 text-black hover:bg-brand/10' : '',
                 src ? '' : 'pl-16'
               )}

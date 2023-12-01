@@ -16,17 +16,17 @@ import { CourseFooter } from '@/components/navigation/course-footer'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, UuidType } from '@/data-types'
+import { cn } from '@/helper/cn'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
-import { tw } from '@/helper/tw'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 import { isEmptyRowsDocument } from '@/serlo-editor/plugins/rows/utils/static-is-empty'
 import { CourseNavigation } from '@/serlo-editor/plugins/serlo-template-plugins/course/course-navigation'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+import { isArticleDocument } from '@/serlo-editor/types/plugin-type-guards'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { isArticleDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
 
 export interface EntityProps {
   data: EntityData
@@ -83,11 +83,11 @@ export function Entity({ data }: EntityProps) {
     if (!data.courseData) return null
     return (
       <span
-        className={tw`
+        className={cn(`
           -mt-1.5 mr-1.5 inline-block h-7 w-7
           justify-center rounded-full bg-brand-200 text-center align-middle
           text-xl font-bold text-brand
-        `}
+        `)}
       >
         {data.courseData.index + 1}
       </span>

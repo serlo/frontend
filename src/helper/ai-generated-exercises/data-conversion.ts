@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { either as E } from 'fp-ts'
 import { PathReporter } from 'io-ts/lib/PathReporter'
 
@@ -18,25 +19,25 @@ import {
 import { LicenseData } from '@/data-types'
 import { InputExerciseType } from '@/serlo-editor/plugins/input-exercise/input-exercise-type'
 import { CustomText, MathElement } from '@/serlo-editor/plugins/text'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 import {
   EditorExerciseDocument,
   EditorSolutionDocument,
   EditorTemplateExerciseGroupDocument,
-} from '@/serlo-editor-integration/types/editor-plugins'
-import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
+} from '@/serlo-editor/types/editor-plugins'
+import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 
 /**
  * Data needed to render and edit the exercises in the editor.
  */
-export interface IEditorExerciseData {
+export interface ExercisePreviewFromAi {
   exercises: EditorExerciseDocument[]
   heading: string
 }
 
 export function convertAiGeneratedScExerciseToEditorDocument(
   input: ExpectedLLMOutputType | null
-): IEditorExerciseData {
+): ExercisePreviewFromAi {
   if (!input) {
     return {
       exercises: [],
@@ -266,12 +267,12 @@ function createInteractive(exercise: ExpectedExerciseTypes): Interactive {
         plugin: EditorPluginType.InputExercise,
         state: {
           // ? How can we differentiate between NumberExact and
-          // ExpressionEqual? Do we need to include it in the prompt?
+          // ExpressionEqual? Do we need to include this in the prompt?
           type: InputExerciseType.NumberExact,
           unit: '',
           answers: [
             {
-              value: exercise.correct_answer,
+              value: removeLatexFromAnswer(exercise.correct_answer),
               isCorrect: true,
               feedback: {
                 plugin: EditorPluginType.Text,
@@ -316,8 +317,7 @@ function createSolution(
         state: [
           {
             type: 'p',
-            // ? Should we add the 'strategy' to the prompt too?
-            children: [{ text: '' }],
+            children: [{ text: exercise.strategy }],
           },
         ],
       },
@@ -346,7 +346,7 @@ function isSingleChoiceGuard(
 }
 
 export function transformEditorDataToExerciseGroup(
-  editorData: IEditorExerciseData,
+  editorData: ExercisePreviewFromAi,
   license: LicenseData
 ): EditorTemplateExerciseGroupDocument {
   const exercisesTransformed = editorData.exercises.map<
@@ -381,4 +381,16 @@ export function transformEditorDataToExerciseGroup(
   }
 
   return exerciseGroup
+}
+
+/**
+ * Sometimes the answers get formatted in LaTeX. However, this would mean that
+ * for input exercises, the user has to type in $answer$ to have it marked as
+ * correct.
+ */
+function removeLatexFromAnswer(answer: string): string {
+  if (answer.startsWith('$') && answer.endsWith('$')) {
+    return answer.slice(1, -1)
+  }
+  return answer
 }

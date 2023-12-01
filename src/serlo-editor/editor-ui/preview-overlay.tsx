@@ -1,5 +1,6 @@
-import clsx from 'clsx'
 import { useState, useCallback, useEffect } from 'react'
+
+import { cn } from '@/helper/cn'
 
 interface PreviewOverlayProps {
   children: React.ReactNode
@@ -29,7 +30,7 @@ export function PreviewOverlay(props: PreviewOverlayProps) {
   return (
     <div className="relative">
       <div
-        className={clsx(
+        className={cn(
           'absolute top-0 z-20 h-full w-full',
           props.focused && 'bg-white bg-opacity-80',
           active && 'hidden'

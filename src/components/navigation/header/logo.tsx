@@ -1,7 +1,6 @@
-import clsx from 'clsx'
-
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
+import { cn } from '@/helper/cn'
 
 export interface LogoProps {
   foldOnMobile?: boolean
@@ -21,7 +20,7 @@ export function Logo({ foldOnMobile }: LogoProps) {
         height="80"
       />
       <span
-        className={clsx(
+        className={cn(
           'align-text-top font-handwritten text-xl text-almost-black',
           foldOnMobile
             ? 'ml-9 mt-2 block mobileExt:ml-9 mobileExt:inline-block mobileExt:whitespace-nowrap sm:ml-2 sm:mt-4'

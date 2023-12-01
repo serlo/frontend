@@ -1,55 +1,70 @@
 import * as t from 'io-ts'
 
-export const InputSingleChoiceDecoder = t.strict({
-  type: t.literal('single_choice'),
-  question: t.string,
-  options: t.array(t.string),
-  correct_option: t.number,
+const CommonExerciseProperties = t.strict({
   steps: t.array(t.string),
-  // TODO strategy
+  strategy: t.string,
 })
+
+const baseExample = {
+  steps: ['First of possibly many steps'],
+  strategy: 'General tip on how to solve the exercise',
+}
+
+export const InputSingleChoiceDecoder = t.intersection([
+  CommonExerciseProperties,
+  t.strict({
+    type: t.literal('single_choice'),
+    question: t.string,
+    options: t.array(t.string),
+    correct_option: t.number,
+  }),
+])
 
 export type ExpectedSingleChoiceType = t.TypeOf<typeof InputSingleChoiceDecoder>
 
 export const humanReadableSingleChoiceExample: ExpectedSingleChoiceType = {
-  steps: ['First of possibly many steps'],
+  ...baseExample,
   type: 'single_choice',
   question: 'Question of the exercise',
   options: ['The first of a few options', 'The second option'],
   correct_option: 0,
 }
 
-export const InputMultipleChoiceDecoder = t.strict({
-  type: t.literal('multiple_choice'),
-  question: t.string,
-  options: t.array(t.string),
-  correct_options: t.array(t.number),
-  steps: t.array(t.string),
-})
+export const InputMultipleChoiceDecoder = t.intersection([
+  CommonExerciseProperties,
+  t.strict({
+    type: t.literal('multiple_choice'),
+    question: t.string,
+    options: t.array(t.string),
+    correct_options: t.array(t.number),
+  }),
+])
 
 export type ExpectedMultipleChoiceType = t.TypeOf<
   typeof InputMultipleChoiceDecoder
 >
 
 export const humanReadableMultipleChoiceExample: ExpectedMultipleChoiceType = {
-  steps: ['First of possibly many steps'],
+  ...baseExample,
   type: 'multiple_choice',
   question: 'Question of the exercise',
   options: ['The first of a few options', 'The second option', 'Wrong option'],
   correct_options: [0, 1],
 }
 
-export const InputShortAnswerDecoder = t.strict({
-  type: t.literal('short_answer'),
-  question: t.string,
-  correct_answer: t.string,
-  steps: t.array(t.string),
-})
+export const InputShortAnswerDecoder = t.intersection([
+  CommonExerciseProperties,
+  t.strict({
+    type: t.literal('short_answer'),
+    question: t.string,
+    correct_answer: t.string,
+  }),
+])
 
 export type ExpectedShortAnswerType = t.TypeOf<typeof InputShortAnswerDecoder>
 
 export const humanReadableShortAnswerExample: ExpectedShortAnswerType = {
-  steps: ['First of possibly many steps'],
+  ...baseExample,
   type: 'short_answer',
   question: 'Question of the exercise',
   correct_answer: 'One correct answer',

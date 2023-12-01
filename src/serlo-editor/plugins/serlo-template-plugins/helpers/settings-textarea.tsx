@@ -1,4 +1,4 @@
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import { StateTypeReturnType, string } from '@/serlo-editor/plugin'
 
 export function SettingsTextarea({
@@ -17,11 +17,11 @@ export function SettingsTextarea({
         autoFocus={autoFocus}
         value={state.value}
         onChange={(e) => state.set(e.target.value)}
-        className={tw`
+        className={cn(`
           mb-7 mt-1 flex w-full items-center rounded-2xl border-2
           border-editor-primary-100 bg-editor-primary-100 p-2
           focus-within:border-editor-primary focus-within:outline-none
-        `}
+        `)}
       />
     </label>
   )

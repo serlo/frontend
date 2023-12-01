@@ -1,10 +1,10 @@
 import type { EquationsProps } from '.'
 import { TransformationTarget } from './editor/editor-renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 export const EquationsToolbar = ({ id, state }: EquationsProps) => {
   const equationsStrings = useEditorStrings().plugins.equations
@@ -15,11 +15,11 @@ export const EquationsToolbar = ({ id, state }: EquationsProps) => {
       pluginSettings={
         <select
           onChange={(e) => state.transformationTarget.set(e.target.value)}
-          className={tw`
+          className={cn(`
                 mr-2 cursor-pointer rounded-md !border border-gray-500
               bg-editor-primary-100 px-1 py-[1px] text-sm transition-all
               hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
-              `}
+              `)}
           value={state.transformationTarget.value}
         >
           <option value={TransformationTarget.Equation}>

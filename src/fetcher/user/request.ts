@@ -7,7 +7,7 @@ import { endpoint } from '@/api/endpoint'
 import { PageNotFound, UserPage, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
-import { EditorRowsDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorRowsDocument } from '@/serlo-editor/types/editor-plugins'
 
 export async function requestUser(
   path: string,

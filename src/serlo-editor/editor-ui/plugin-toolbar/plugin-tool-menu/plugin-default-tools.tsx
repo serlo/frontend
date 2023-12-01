@@ -13,7 +13,7 @@ import {
   store,
   useAppDispatch,
 } from '@/serlo-editor/store'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 interface PluginDefaultToolsProps {
   pluginId: string

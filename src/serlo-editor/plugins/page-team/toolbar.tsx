@@ -8,11 +8,11 @@ import * as t from 'io-ts'
 import type { PageTeamPluginProps } from '.'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
+import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { tw } from '@/helper/tw'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 const required = t.type({
   firstName: t.string,
@@ -33,10 +33,10 @@ export function PageTeamToolbar({ focused, id, state }: PageTeamPluginProps) {
 
   if (!focused) return null
 
-  const buttonClassName = tw`
+  const buttonClassName = cn(`
     mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all
   hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200
-  `
+  `)
 
   return (
     <PluginToolbar

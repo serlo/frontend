@@ -1,7 +1,6 @@
-import clsx from 'clsx'
-
 import { useInstanceData } from '@/contexts/instance-context'
 import { isMac } from '@/helper/client-detection'
+import { cn } from '@/helper/cn'
 
 export function EditorTooltip({
   text,
@@ -22,7 +21,7 @@ export function EditorTooltip({
 
   return (
     <span
-      className={clsx(
+      className={cn(
         'serlo-tooltip sr-only pointer-events-none bottom-full block cursor-default opacity-0 transition-opacity',
         className
       )}

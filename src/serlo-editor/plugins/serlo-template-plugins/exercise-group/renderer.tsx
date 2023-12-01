@@ -1,4 +1,4 @@
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 export interface TextExerciseGroupTypeRendererProps {
   content: JSX.Element
@@ -22,10 +22,10 @@ export function TextExerciseGroupTypeRenderer({
           return (
             <li
               key={id ?? index}
-              className={tw`
+              className={cn(`
                 serlo-exercise-wrapper serlo-grouped-exercise-wrapper
                 mt-6 pt-2 [&>div]:border-none
-              `}
+              `)}
             >
               {element}
             </li>

@@ -1,5 +1,4 @@
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { Router, useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -10,8 +9,8 @@ import { SkipMenu } from './skip-menu'
 import { FaIcon } from '@/components/fa-icon'
 import { Quickbar } from '@/components/navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
+import { cn } from '@/helper/cn'
 import { submitEvent } from '@/helper/submit-event'
-import { tw } from '@/helper/tw'
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -41,8 +40,8 @@ export function Header() {
 
   return (
     <header
-      className={clsx(
-        tw`
+      className={cn(
+        `
           bg-[url("/_assets/img/header-curve.svg")] bg-[length:100vw_3rem]
           bg-bottom bg-no-repeat pb-9 pt-3 text-almost-black
         `,
@@ -54,13 +53,10 @@ export function Header() {
         <div className="flex-wrap mobileExt:flex mobileExt:justify-between lg:flex-nowrap">
           <Logo foldOnMobile />
           <div
-            className={clsx(
-              tw`
-                order-last mt-[1.7rem] min-h-[50px] w-full
-                md:order-none md:mt-8 md:block
-                md:w-auto lg:order-last
-              `,
-              mobileMenuOpen ? '' : 'hidden'
+            className={cn(
+              `order-last mt-[1.7rem] min-h-[50px] w-full
+              md:order-none md:mt-8 md:block
+              md:w-auto lg:order-last`
             )}
           >
             <Menu />
@@ -81,12 +77,12 @@ export function Header() {
     if (hideQuickbar) return null
     return (
       <Quickbar
-        className={tw`
+        className={cn(`
           mx-auto mt-7 text-left font-normal
           mobileExt:ml-4 mobileExt:mr-0 mobileExt:mt-5 mobileExt:max-w-sm mobileExt:flex-grow mobileExt:px-2
           md:mt-0 md:max-w-xs
           lg:mt-6 lg:max-w-sm
-        `}
+        `)}
         placeholder={strings.header.search}
       />
     )

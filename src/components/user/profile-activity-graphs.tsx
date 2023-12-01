@@ -1,7 +1,7 @@
 import { ProfileActivityGraph } from '@/components/user/profile-activity-graph'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserActivityByType } from '@/fetcher/graphql-types/operations'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 interface ProfileActivityGraphsProps {
   values: UserActivityByType
@@ -12,10 +12,10 @@ export function ProfileActivityGraphs({ values }: ProfileActivityGraphsProps) {
 
   return (
     <section
-      className={tw`
+      className={cn(`
         mx-auto my-20 flex max-w-lg flex-wrap justify-center
         sm:max-w-none sm:flex-nowrap sm:justify-between
-      `}
+      `)}
     >
       {renderGraph('edits', 3000)}
       {renderGraph('comments', 200)}

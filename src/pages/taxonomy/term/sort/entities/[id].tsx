@@ -1,7 +1,6 @@
 import { faGripLines, faTools } from '@fortawesome/free-solid-svg-icons'
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
 import { arrayMoveImmutable } from 'array-move'
-import clsx from 'clsx'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -24,11 +23,12 @@ import {
 } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestPage } from '@/fetcher/request-page'
+import { cn } from '@/helper/cn'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useTaxonomyTermSortMutation } from '@/mutations/taxonomyTerm'
-import { isSolutionDocument } from '@/serlo-editor-integration/types/plugin-type-guards'
+import { isSolutionDocument } from '@/serlo-editor/types/plugin-type-guards'
 
 export const allCategories = [
   TopicCategoryType.articles,
@@ -200,7 +200,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
-              className={clsx(
+              className={cn(
                 'mb-1 block w-max rounded-sm p-1 leading-cozy',
                 snapshot.isDragging && 'bg-brand-100'
               )}
@@ -209,7 +209,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
                 <FaIcon icon={faGripLines} />
               </span>{' '}
               <Link
-                className={clsx(
+                className={cn(
                   link.unrevised ? 'opacity-60' : undefined,
                   'text-[1.2rem]'
                 )}

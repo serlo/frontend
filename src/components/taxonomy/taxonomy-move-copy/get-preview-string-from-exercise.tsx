@@ -5,7 +5,7 @@ import {
   EditorExerciseDocument,
   EditorRowsDocument,
   EditorTemplateExerciseGroupDocument,
-} from '@/serlo-editor-integration/types/editor-plugins'
+} from '@/serlo-editor/types/editor-plugins'
 
 export function getPreviewStringFromExercise(
   document: EditorExerciseDocument | EditorTemplateExerciseGroupDocument,

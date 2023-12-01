@@ -1,5 +1,4 @@
 import { faTools } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'
 import { Link } from '@/components/content/link'
@@ -9,6 +8,7 @@ import {
   TopicCategoryCustomType,
   TopicCategoryType,
 } from '@/data-types'
+import { cn } from '@/helper/cn'
 
 export interface TopicCategoryProps {
   links: TaxonomyLink[]
@@ -23,7 +23,7 @@ export function TopicCategoryLink({ link }: { link: TaxonomyLink }) {
   return (
     <li className="" key={link.url + '_' + link.title}>
       <Link
-        className={clsx(
+        className={cn(
           link.unrevised ? 'opacity-60' : undefined,
           'block py-1.5 text-lg leading-cozy'
         )}

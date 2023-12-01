@@ -3,19 +3,19 @@ import {
   faChalkboardUser as courseIcon,
   faFilePen as exerciseIcon,
 } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import Image from 'next/image'
 
 import { EditorContact } from '../editor/editor-contact'
 import { teamDataKulla } from '../editor/editor-team'
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
+import { cn } from '@/helper/cn'
 
 export const MetadataApiPresentation = () => {
   return (
     <>
       <div
-        className={clsx(
+        className={cn(
           'md:relative md:left-[calc(-50vw+50%)]',
           'md:ml-0 md:text-left',
           '-mt-12 sm:text-center',
@@ -24,7 +24,7 @@ export const MetadataApiPresentation = () => {
       >
         <section className="mt-32 px-4 text-center font-bold">
           <h1
-            className={clsx(
+            className={cn(
               'text-5xl font-extrabold',
               'leading-tight tracking-tight',
               'mx-auto mt-3'

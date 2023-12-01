@@ -7,10 +7,9 @@ import {
   faUserEdit,
   faUserFriends,
 } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 
 import { FaIcon } from '@/components/fa-icon'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 
 const menuIconMapping = {
   subject: faGraduationCap,
@@ -36,8 +35,8 @@ export function Icon({ elementOrIcon }: IconProps) {
   return (
     <span
       aria-hidden
-      className={clsx(
-        tw`
+      className={cn(
+        `
           mr-2.5 flex h-10 w-10 items-center justify-center rounded-full
           bg-brand-200 text-brand-500
         `,

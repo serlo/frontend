@@ -1,8 +1,8 @@
-import clsx from 'clsx'
 import { useState } from 'react'
 
 import { BoxRenderer } from '../box/renderer'
 import { useInstanceData } from '@/contexts/instance-context'
+import { cn } from '@/helper/cn'
 
 interface SolutionRendererProps {
   prerequisite: JSX.Element | null
@@ -63,7 +63,7 @@ export function SolutionRenderer({
 
     return (
       <button
-        className={clsx(
+        className={cn(
           'serlo-button-blue-transparent mb-4 ml-side mr-auto pr-2 text-base',
           solutionVisible && 'bg-brand text-white'
         )}

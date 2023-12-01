@@ -9,7 +9,7 @@ import { StaticSlate } from '../text/static-components/static-slate'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 import { shuffleArray } from '@/helper/shuffle-array'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorScMcExerciseDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorScMcExerciseDocument } from '@/serlo-editor/types/editor-plugins'
 
 export function ScMcExerciseStaticRenderer({
   state,

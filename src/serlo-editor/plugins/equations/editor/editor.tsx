@@ -17,7 +17,7 @@ import { EquationsStaticRenderer } from '../static'
 import { EquationsToolbar } from '../toolbar'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
+import { cn } from '@/helper/cn'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import {
   store,
@@ -31,8 +31,8 @@ import {
   selectChildTree,
   selectStaticDocument,
 } from '@/serlo-editor/store'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-import type { EditorEquationsDocument } from '@/serlo-editor-integration/types/editor-plugins'
+import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
+import type { EditorEquationsDocument } from '@/serlo-editor/types/editor-plugins'
 
 export function EquationsEditor(props: EquationsProps) {
   const { focused, state, id } = props
@@ -316,7 +316,9 @@ export function EquationsEditor(props: EquationsProps) {
 
   function renderButtons(row: number) {
     if (!nestedFocus) return
-    const buttonClass = tw`serlo-button-editor-secondary serlo-tooltip-trigger mr-2 h-8 w-8`
+    const buttonClass = cn(
+      `serlo-button-editor-secondary serlo-tooltip-trigger mr-2 h-8 w-8`
+    )
 
     return (
       <div className="ml-6 text-right">
