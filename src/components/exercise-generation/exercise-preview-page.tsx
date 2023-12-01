@@ -5,7 +5,7 @@ import {
   faCaretRight,
 } from '@fortawesome/free-solid-svg-icons'
 import ExerciseGenerationLoadingSparkles from 'public/_assets/img/exercise/sparkles.svg'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
   ChatCompletionMessageParam,
@@ -60,6 +60,17 @@ export function ExercisePreviewPage({
     },
     []
   )
+
+  useEffect(() => {
+    // We want to hide the global scroll when in the preview as the modal takes
+    // up the whole height. The scroll bar of the background (behind the modal)
+    // is very distracting as one can not see the content that is being scrolled.
+    document.documentElement.style.overflowY = 'hidden'
+
+    return () => {
+      document.documentElement.style.overflowY = ''
+    }
+  }, [])
 
   const {
     data: exerciseData,
@@ -129,7 +140,7 @@ export function ExercisePreviewPage({
       onCloseClick={closePage}
       confirmCloseDescription={exGenerationStrings.confirmCloseDescription}
       className="fixed left-1/2 top-0 flex h-full max-h-none w-full max-w-none translate-y-0 flex-col items-center justify-center rounded-none bg-gray-100"
-      extraCloseButtonClassName="bg-brand-200"
+      extraCloseButtonClassName={cn('z-30 bg-brand-200')}
     >
       <div className="relative mt-8 flex flex-col overflow-y-auto sm:h-full sm:w-full md:h-4/5 md:w-4/5 lg:h-2/3 lg:w-2/5">
         {status === ExecutePromptStatus.Loading ? (
