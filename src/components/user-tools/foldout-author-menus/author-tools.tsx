@@ -98,7 +98,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   const router = useRouter()
   const canDo = useCanDo()
 
-  const { canUseAiFeaturesOutsideProduction } = useAiFeatures()
+  const { canUseAiFeatures } = useAiFeatures()
 
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings
@@ -335,8 +335,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       }
 
       const showAiItem =
-        canUseAiFeaturesOutsideProduction &&
-        entityType === UuidType.ExerciseGroup
+        canUseAiFeatures && entityType === UuidType.ExerciseGroup
 
       return (
         <Fragment key={title}>
@@ -352,13 +351,13 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
                 title={
                   loggedInStrings.ai.exerciseGeneration.buttonTitleSingular
                 }
-                href={`/entity/create/${UuidType.Exercise}/${data.id}?showAiWizard=`}
+                href={`/entity/create/${UuidType.Exercise}/${data.id}?showAiWizard=&referrer=exercise-folder`}
                 icon={faWandSparkles}
               />
               <SubItem
                 key="ai-group-exercise"
                 title={loggedInStrings.ai.exerciseGeneration.buttonTitle}
-                href={`/entity/create/${entityType}/${data.id}?showAiWizard=`}
+                href={`/entity/create/${entityType}/${data.id}?showAiWizard=&referrer=exercise-folder`}
                 icon={faWandMagicSparkles}
               />
             </Fragment>
