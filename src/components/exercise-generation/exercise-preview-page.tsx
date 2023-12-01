@@ -129,7 +129,7 @@ export function ExercisePreviewPage({
       onCloseClick={closePage}
       confirmCloseDescription={exGenerationStrings.confirmCloseDescription}
       className="fixed left-1/2 top-0 flex h-full max-h-none w-full max-w-none translate-y-0 flex-col items-center justify-center rounded-none bg-gray-100"
-      extraCloseButtonClassName="bg-brand-200"
+      extraCloseButtonClassName={cn('z-30 bg-brand-200')}
     >
       <div className="relative mt-8 flex flex-col overflow-y-auto sm:h-full sm:w-full md:h-4/5 md:w-4/5 lg:h-2/3 lg:w-2/5">
         {status === ExecutePromptStatus.Loading ? (
@@ -154,7 +154,7 @@ export function ExercisePreviewPage({
           </div>
         ) : null}
 
-        <div className="relative overflow-y-auto rounded-xl bg-white p-8">
+        <div className="relative overflow-y-auto rounded-xl bg-white p-8 shadow-bottom">
           {status === ExecutePromptStatus.Loading && <Skeleton />}
           {status === ExecutePromptStatus.Success && (
             <div>

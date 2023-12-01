@@ -106,6 +106,8 @@ module.exports = {
         menu: 'rgba(0, 0, 0, 0.2) 0px 2px 4px',
         modal: '0px 0px 10px 0px rgba(0, 0, 0, 0.25)',
         input: `0 0 4px 0 ${brand}`,
+        bottom:
+          '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
       },
       fontFamily: {
         serlo: 'Karla, sans-serif',
