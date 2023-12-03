@@ -17,7 +17,7 @@ import type { Revisions } from '@/fetcher/query-types'
 import { revisionQuery } from '@/fetcher/revision/query'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
-import { revisionHistoryQuery } from '@/pages/entity/repository/history/[id]'
+// import { revisionHistoryQuery } from '@/pages/entity/repository/history/[id]'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import {
   convertEditorResponseToState,
@@ -91,7 +91,7 @@ export function RevisionHistoryLoader<T>({
 
   function useRevisionsFetch(id: number) {
     return useGraphqlSwr<{ uuid: Revisions }>({
-      query: revisionHistoryQuery,
+      query: 'revisionHistoryQuery',
       variables: { id },
       noKey: id === 0,
       config: {

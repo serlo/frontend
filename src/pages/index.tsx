@@ -1,35 +1,44 @@
-import { GetStaticProps } from 'next'
+/* eslint-disable @next/next/no-before-interactive-script-outside-document */
+import { NextPage } from 'next'
+import Script from 'next/script'
 
+import { EquationsApp } from '@/components/equations-app/equations-app'
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { LandingDE } from '@/components/pages/landing-de'
-import { LandingInternational } from '@/components/pages/landing-international'
-import { LandingProps } from '@/data-types'
-import { getLandingData } from '@/helper/feature-i18n'
-import { renderedPageNoHooks } from '@/helper/rendered-page'
+import { HeadTags } from '@/components/head-tags'
 
-export default renderedPageNoHooks<LandingProps>(({ pageData }, { router }) => {
-  if (router.locale === 'de') {
-    return (
-      <FrontendClientBase noContainers noHeaderFooter>
-        <LandingDE data={pageData.landingData} />
-      </FrontendClientBase>
-    )
-  }
-
+const ContentPage: NextPage = () => {
   return (
-    <FrontendClientBase noContainers>
-      <LandingInternational data={pageData.landingData} />
+    <FrontendClientBase
+      noHeaderFooter
+      noContainers
+      showNav={false}
+      authorization={{}}
+    >
+      <EquationsApp />
+      <HeadTags
+        data={{
+          title: 'Serlo Gleichungs-App',
+          metaDescription:
+            'Löse Gleichung interaktiv mit Feedback für deinen individuellen Rechenweg',
+        }}
+      />
+      <Script
+        src="/_assets/mathlive/mathlive.min.js"
+        strategy="beforeInteractive"
+      ></Script>
+      <style jsx global>{`
+        math-field::part(content) {
+          cursor: text;
+        }
+        math-field::part(menu-toggle) {
+          display: none;
+        }
+        .overview math-field::part(virtual-keyboard-toggle) {
+          display: none;
+        }
+      `}</style>
     </FrontendClientBase>
   )
-})
-
-export const getStaticProps: GetStaticProps<LandingProps> = async (context) => {
-  return {
-    props: {
-      pageData: {
-        kind: 'landing',
-        landingData: getLandingData(context.locale!),
-      },
-    },
-  }
 }
+
+export default ContentPage

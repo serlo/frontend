@@ -1,24 +1,25 @@
 import type { AuthorizationPayload } from '@serlo/authorization'
-import Cookies from 'js-cookie'
-import { Router, useRouter } from 'next/router'
+// import Cookies from 'js-cookie'
+import { Router } from 'next/router'
 import NProgress from 'nprogress'
 import { useState, useEffect } from 'react'
 import { default as ToastNotice } from 'react-notify-toast'
-import { getInstanceDataByLang } from 'src/helper/feature-i18n'
+// import { getInstanceDataByLang } from 'src/helper/feature-i18n'
 
 import { ConditionalWrap } from './conditional-wrap'
 import { HeaderFooter } from './header-footer'
 import { MaxWidthDiv } from './navigation/max-width-div'
 import { AuthProvider } from '@/auth/auth-provider'
-import { checkLoggedIn } from '@/auth/cookie/check-logged-in'
+// import { checkLoggedIn } from '@/auth/cookie/check-logged-in'
 import { PrintMode } from '@/components/print-mode'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { UuidsProvider } from '@/contexts/uuids-context'
+import { instanceData as deData } from '@/data/de'
 import { InstanceData, LoggedInData } from '@/data-types'
-import { Instance } from '@/fetcher/graphql-types/operations'
+// import { Instance } from '@/fetcher/graphql-types/operations'
 import { triggerSentry } from '@/helper/trigger-sentry'
-import { frontendOrigin } from '@/helper/urls/frontent-origin'
+// import { frontendOrigin } from '@/helper/urls/frontent-origin'
 
 export interface FrontendClientBaseProps {
   children: JSX.Element | (JSX.Element | null)[]
@@ -46,11 +47,6 @@ Router.events.on('routeChangeComplete', (url, { shallow }) => {
 })
 Router.events.on('routeChangeError', () => NProgress.done())
 
-// assumes that the lang-strings in the i18n files are actually valid Instance strings
-type FixedInstanceData = ReturnType<typeof getInstanceDataByLang> & {
-  lang: Instance
-}
-
 export function FrontendClientBase({
   children,
   noHeaderFooter,
@@ -59,24 +55,9 @@ export function FrontendClientBase({
   entityId,
   revisionId,
   authorization,
-  loadLoggedInData,
 }: FrontendClientBaseProps) {
-  const { locale } = useRouter()
-  const [instanceData] = useState<InstanceData>(() => {
-    if (typeof window === 'undefined') {
-      // load instance data for server side rendering
-      // Note: using require to avoid webpack bundling it
-      return getInstanceDataByLang(
-        (locale as Instance) ?? Instance.De
-      ) as FixedInstanceData
-    } else {
-      // load instance data from client from document tag
-      return JSON.parse(
-        document.getElementById('__FRONTEND_CLIENT_INSTANCE_DATA__')
-          ?.textContent ?? '{}'
-      ) as FixedInstanceData
-    }
-  })
+  // const { locale } = useRouter()
+  const [instanceData] = useState<InstanceData>(deData as InstanceData)
 
   useEffect(() => {
     //tiny history
@@ -98,19 +79,16 @@ export function FrontendClientBase({
     }
   })
 
-  const [loggedInData, setLoggedInData] = useState<LoggedInData | null>(
-    getCachedLoggedInData()
-  )
+  const [loggedInData] = useState<LoggedInData | null>(getCachedLoggedInData())
 
-  const isLoggedIn = checkLoggedIn()
+  // const isLoggedIn = false //checkLoggedIn()
 
-  useEffect(fetchLoggedInData, [
+  /*useEffect(fetchLoggedInData, [
     instanceData.lang,
     loggedInData,
     loadLoggedInData,
     isLoggedIn,
-    locale,
-  ])
+  ])*/
 
   // dev
   //console.dir(initialProps)
@@ -158,7 +136,7 @@ export function FrontendClientBase({
     return JSON.parse(cacheValue) as LoggedInData
   }
 
-  function fetchLoggedInData() {
+  /*function fetchLoggedInData() {
     const cookies = typeof window === 'undefined' ? {} : Cookies.get()
     if (loggedInData) return
     if (isLoggedIn || loadLoggedInData) {
@@ -179,5 +157,5 @@ export function FrontendClientBase({
         fetch('/api/frontend/preview').catch(() => {})
       }
     }
-  }
+  }*/
 }

@@ -3,6 +3,7 @@ import bundleAnalyzer from '@next/bundle-analyzer'
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
+  output: 'export',
   webpack(config, { isServer }) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>
@@ -36,11 +37,11 @@ const nextConfig = {
 
     return config
   },
-  i18n: {
+  /*i18n: {
     locales: ['de', 'en', 'ta', 'hi', 'fr', 'es'],
     defaultLocale: 'de',
     localeDetection: false,
-  },
+  },*/
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
   transpilePackages: ['ramda'], // context: https://github.com/vercel/next.js/issues/40183

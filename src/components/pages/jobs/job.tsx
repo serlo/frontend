@@ -3,7 +3,30 @@ import { HeadTags } from '@/components/head-tags'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { UserTools } from '@/components/user-tools/user-tools'
-import type { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
+// import type { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
+
+interface PersonioPosition {
+  id: number
+  name: string
+  office: string
+  employmentType: string
+  department?: string
+  recruitingCategory?: string
+  jobDescriptions?: {
+    jobDescription?: PersonioJobDescription[]
+  }
+  seniority?: string
+  schedule?: string
+  yearsOfExperience?: string
+  occupation?: string
+  occupationCategory?: string
+  createdAt?: string
+}
+
+export interface PersonioJobDescription {
+  name: string
+  value: string
+}
 
 const h2Class =
   'mx-side text-4xl leading-cozy tracking-tight font-extrabold text-gray-700'

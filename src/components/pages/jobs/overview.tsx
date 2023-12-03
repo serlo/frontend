@@ -8,7 +8,30 @@ import { UserTools } from '@/components/user-tools/user-tools'
 import type { CommunityWallPerson } from '@/data/de/community-people'
 import { breakpoints } from '@/helper/breakpoints'
 import { cn } from '@/helper/cn'
-import type { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
+// import type { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
+
+interface PersonioPosition {
+  id: number
+  name: string
+  office: string
+  employmentType: string
+  department?: string
+  recruitingCategory?: string
+  jobDescriptions?: {
+    jobDescription?: PersonioJobDescription[]
+  }
+  seniority?: string
+  schedule?: string
+  yearsOfExperience?: string
+  occupation?: string
+  occupationCategory?: string
+  createdAt?: string
+}
+
+export interface PersonioJobDescription {
+  name: string
+  value: string
+}
 
 const testimonials = [
   {

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 
 import { ExerciseGenerationWrapperProps } from './exercise-generation-wrapper'
 import { useAiFeatures } from '@/components/exercise-generation/use-ai-features'
-import type { AllowedPluginType } from '@/pages/entity/create/[type]/[taxonomyId]'
+// import type { AllowedPluginType } from '@/pages/entity/create/[type]/[taxonomyId]'
 import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 
 const ExerciseGenerationWrapper = dynamic<ExerciseGenerationWrapperProps>(() =>
@@ -15,7 +15,7 @@ const ExerciseGenerationWrapper = dynamic<ExerciseGenerationWrapperProps>(() =>
 
 interface LazyLoadExerciseGenerationWrapperOrNullProps {
   subject: string
-  entityType: AllowedPluginType
+  entityType: any //AllowedPluginType
   taxonomyTitle: string
   setEditorState: ExerciseGenerationWrapperProps['setEditorState']
 }
