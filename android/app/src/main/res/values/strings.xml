@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Serlo Gleichungs-App</string>
+    <string name="title_activity_main">Serlo Gleichungs-App</string>
+    <string name="package_name">de.serlo.org.app</string>
+    <string name="custom_url_scheme">de.serlo.org.app</string>
+</resources>

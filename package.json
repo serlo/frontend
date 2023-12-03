@@ -33,6 +33,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@capacitor/android": "^5.5.1",
+    "@capacitor/core": "^5.5.1",
     "@cortex-js/compute-engine": "^0.22.0",
     "@fortawesome/fontawesome-svg-core": "6.4.2",
     "@fortawesome/free-brands-svg-icons": "6.4.2",
@@ -104,6 +106,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.0",
+    "@capacitor/cli": "^5.5.1",
     "@graphiql/toolkit": "^0.9.1",
     "@graphql-codegen/add": "^5.0.0",
     "@graphql-codegen/cli": "5.0.0",
