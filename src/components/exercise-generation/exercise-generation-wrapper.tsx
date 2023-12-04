@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 
 import { ExerciseGenerationWizard } from './exercise-generation-wizard/exercise-generation-wizard'
@@ -29,6 +30,7 @@ export const ExerciseGenerationWrapper = ({
 }: ExerciseGenerationWrapperProps) => {
   const exGenerationStrings = useLoggedInData()!.strings.ai.exerciseGeneration
 
+  const router = useRouter()
   const [activePage, setActivePage] = useState(
     ActivePage.ExerciseGenerationWizard
   )
@@ -36,6 +38,18 @@ export const ExerciseGenerationWrapper = ({
 
   const handleTransitionToExercisePage = () => {
     setActivePage(ActivePage.ExercisePreviewPage)
+
+    const url = new URL(window.location.href)
+    // Delete existing referrer query param so that we land on the empty
+    // exercise creation page when closing the preview page modal
+    url.searchParams.delete('referrer')
+    // Update URL without reloading the page
+    router
+      .replace(url.pathname + url.search, undefined, {
+        shallow: true,
+      })
+      .then(() => void null)
+      .catch(() => void null)
   }
 
   return (
