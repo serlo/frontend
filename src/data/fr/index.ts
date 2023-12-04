@@ -1117,6 +1117,7 @@ export const loggedInData = {
         },
         preview: {
           loadingHeading: 'Exercise is being generated...',
+          patience: 'It can take up to two minutes',
           publishExercise: 'Publish exercise',
           openExerciseInEditor: 'Open in editor',
           regenerate: 'Regenerate exercise'
