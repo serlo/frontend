@@ -17,7 +17,8 @@ export interface Blank {
   children: CustomText[]
   blankId: string // Used to uniquely identify a blank
   correctAnswer: string
-  alternativeSolutions: string[]
+  // Disabled alternative correct solutions for now
+  // alternativeSolutions: string[]
 }
 
 export interface Heading {

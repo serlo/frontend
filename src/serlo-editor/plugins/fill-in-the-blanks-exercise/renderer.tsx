@@ -1,10 +1,11 @@
 // import { DndContext, UniqueIdentifier } from '@dnd-kit/core'
 import * as t from 'io-ts'
-import { ReactNode, useMemo, useState } from 'react'
+import { type ReactNode, useMemo, useState } from 'react'
 
 // import { BlankSolution } from './components/blank-solution'
 // import { BlankSolutionsArea } from './components/blank-solution-area'
-import { BlankStatesContext } from './context/blank-context'
+import type { FillInTheBlanksMode } from '.'
+import { FillInTheBlanksContext } from './context/blank-context'
 import { Feedback } from '../sc-mc-exercise/renderer/feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 
@@ -27,14 +28,15 @@ import { useInstanceData } from '@/contexts/instance-context'
 // >(null)
 
 // TODO: Copy of type in /src/serlo-editor/plugins/text/types/text-editor.ts
-const BlankState = t.type({
+const Blank = t.type({
   type: t.literal('blank'),
   blankId: t.string,
   correctAnswer: t.string,
-  alternativeSolutions: t.array(t.string),
+  // Disabled alternative correct solutions for now
+  // alternativeSolutions: t.array(t.string),
 })
 
-type BlankStates = t.TypeOf<typeof BlankState>[]
+type Blanks = t.TypeOf<typeof Blank>[]
 
 type BlankId = string
 
@@ -45,11 +47,12 @@ interface FillInTheBlanksRendererProps {
     state?: unknown
     id?: string | undefined
   }
-  mode: string
+  mode: FillInTheBlanksMode
+  initialTextInBlank: 'empty' | 'correct-answer'
 }
 
 export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
-  const { text, textPluginState, mode } = props
+  const { text, textPluginState, mode, initialTextInBlank } = props
 
   const exStrings = useInstanceData().strings.content.exercises
 
@@ -58,20 +61,36 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
 
   // Maps blankId to the learner feedback after clicking "Stimmts?" button
   // isCorrect === undefined -> no feedback
-  const [blanksFeedback, setBlanksFeedback] = useState(
+  const [feedbackForBlanks, setFeedbackForBlanks] = useState(
     new Map<BlankId, { isCorrect?: boolean }>()
   )
 
-  // Maps blankId to the text entered by the user
-  const [textUserTypedIntoBlank, setTextUserTypedIntoBlank] = useState(
+  /** Array of blank elements extracted from text editor state */
+  const blanks: Blanks = useMemo(() => {
+    return getBlanksWithinObject(textPluginState)
+  }, [textPluginState])
+
+  // Maps blankId to the text entered by the user. Modified when user types into a blank and causes rerender.
+  const [textUserTypedIntoBlanks, setTextUserTypedIntoBlanks] = useState(
     new Map<BlankId, { text: string }>()
   )
 
-  // List of blank elements found in text editor state
-  const blankStateList: BlankStates = useMemo(() => {
-    // TODO: Remove entries in textUserTypedIntoBlank where blankId no longer exists.
-    return getBlanksWithinObject(textPluginState)
-  }, [textPluginState])
+  /** Maps blankId to the text that should be displayed in the blank.  */
+  const textInBlanks = useMemo(() => {
+    const newMap = new Map<BlankId, { text: string }>()
+    blanks.forEach((blankState) =>
+      newMap.set(blankState.blankId, {
+        text:
+          initialTextInBlank === 'correct-answer'
+            ? blankState.correctAnswer
+            : '',
+      })
+    )
+    textUserTypedIntoBlanks.forEach((textUserTypedIntoBlank, blankId) =>
+      newMap.set(blankId, { text: textUserTypedIntoBlank.text })
+    )
+    return newMap
+  }, [blanks, textUserTypedIntoBlanks, initialTextInBlank])
 
   // --- Drag & drop stuff
   // TODO: Should get blank solutions from text state
@@ -97,18 +116,19 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     // >
     // <BlankDragAndDropSolutions.Provider value={blankDragAndDropSolutions}>
     <div className="mx-side mb-block leading-[30px] [&>p]:leading-[30px]">
-      <BlankStatesContext.Provider
+      <FillInTheBlanksContext.Provider
         value={{
           mode: mode,
-          blanksFeedback: blanksFeedback,
-          textUserTypedIntoBlank: {
-            value: textUserTypedIntoBlank,
-            set: setTextUserTypedIntoBlank,
+          feedbackForBlanks: feedbackForBlanks,
+          textInBlanks: textInBlanks,
+          textUserTypedIntoBlanks: {
+            value: textUserTypedIntoBlanks,
+            set: setTextUserTypedIntoBlanks,
           },
         }}
       >
         {text}
-      </BlankStatesContext.Provider>
+      </FillInTheBlanksContext.Provider>
       {/* {mode === 'drag-and-drop' ? (
         <BlankSolutionsArea>
           <>
@@ -138,7 +158,9 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
         </button>
         {showFeedback && (
           <Feedback
-            correct={[...blanksFeedback].every((entry) => entry[1].isCorrect)}
+            correct={[...feedbackForBlanks].every(
+              (entry) => entry[1].isCorrect
+            )}
           />
         )}
       </div>
@@ -146,13 +168,13 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
       {/* Only debug output from here on */}
       <div className="hidden">
         Blanks state:
-        {blankStateList.map((blank, index) => (
+        {blanks.map((blank, index) => (
           <div key={index}>{JSON.stringify(blank)}</div>
         ))}
       </div>
       <div className="hidden">
         <div>State textUserTypedIntoBlank:</div>
-        {[...textUserTypedIntoBlank].map((entry, index) => {
+        {[...textUserTypedIntoBlanks].map((entry, index) => {
           const blankId = entry[0]
           const text = entry[1].text
           return (
@@ -174,41 +196,40 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
   )
 
   function checkAnswers() {
-    if (mode === 'fill-in-the-blanks') {
+    if (mode === 'typing') {
       const newBlankAnswersCorrectList = new Map<
         BlankId,
         { isCorrect: boolean | undefined }
       >()
-      blankStateList.forEach((blankState) => {
-        const textUserTypedIntoThisBlank =
-          textUserTypedIntoBlank.get(blankState.blankId)?.text.trim() ?? ''
-        const isCorrect =
-          textUserTypedIntoThisBlank === blankState.correctAnswer.trim() ||
-          textUserTypedIntoThisBlank ===
-            blankState.alternativeSolutions.find(
-              (alternativeSolution) =>
-                textUserTypedIntoThisBlank === alternativeSolution.trim()
-            )
+      blanks.forEach((blankState) => {
+        const trimmedBlankText =
+          textInBlanks.get(blankState.blankId)?.text.trim() ?? ''
+        const trimmedCorrectAnswer = blankState.correctAnswer.trim()
+        // Disabled alternative correct solutions for now
+        // const trimmedAlternativeSolutions = blankState.alternativeSolutions.map(alternativeSolution => alternativeSolution.trim())
+        const isCorrect = trimmedBlankText === trimmedCorrectAnswer
+        // Disabled alternative correct solutions for now
+        // || trimmedAlternativeSolutions.find((alternativeSolution) => trimmedBlankText === alternativeSolution)
         newBlankAnswersCorrectList.set(blankState.blankId, {
           isCorrect: isCorrect,
         })
       })
 
-      setBlanksFeedback(newBlankAnswersCorrectList)
+      setFeedbackForBlanks(newBlankAnswersCorrectList)
     } else if (mode === 'drag-and-drop') {
       // TODO: Check answers in drag-and-drop mode
     }
   }
 }
 
-// Searches for blank objects in text plugin state. They can be at varying depths.
-function getBlanksWithinObject(obj: object): BlankStates {
-  if (BlankState.is(obj)) {
+/** Searches for blank objects in text plugin state. They can be at varying depths. */
+function getBlanksWithinObject(obj: object): Blanks {
+  if (Blank.is(obj)) {
     return [obj]
   }
 
   // Recursively search this object's values for blank objects
-  return Object.values(obj).reduce((blanks: BlankStates, value: unknown) => {
+  return Object.values(obj).reduce((blanks: Blanks, value: unknown) => {
     if (typeof value === 'object' && value !== null) {
       return [...blanks, ...getBlanksWithinObject(value)]
     }
