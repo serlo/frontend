@@ -54,6 +54,31 @@ export { createTextPlugin } from '@/serlo-editor/plugins/text'
 export { unsupportedPlugin } from '@/serlo-editor/plugins/unsupported'
 export { videoPlugin } from '@/serlo-editor/plugins/video'
 
+export { ROOT } from '@/serlo-editor/store/root/constants'
+export {
+  redo,
+  undo,
+  selectHasPendingChanges,
+  useAppDispatch,
+  useAppSelector,
+  store,
+  selectPendingChanges,
+  selectHasUndoActions,
+  selectHasRedoActions,
+  persistHistory,
+  selectDocuments,
+  selectStaticDocument,
+} from '@/serlo-editor/store'
+
+export { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
+
+export { string, object, optional, number } from '@/serlo-editor/plugin'
+export type {
+  EditorPlugin,
+  EditorPluginProps,
+  PrettyStaticState,
+} from '@/serlo-editor/plugin'
+
 // icons
 export {
   IconBox,
