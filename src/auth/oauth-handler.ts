@@ -77,7 +77,7 @@ export const oauthHandler = async (type: HandlerType, challenge?: string) => {
     const redirect = accept!.redirectUri
     if (typeof redirect !== 'string') throwError()
 
-    window.location.href = redirect
+    window.location.href = '/willkommen'
   } catch (error) {
     throwError(error)
   }
