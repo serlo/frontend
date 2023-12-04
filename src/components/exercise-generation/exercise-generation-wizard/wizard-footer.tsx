@@ -12,6 +12,7 @@ interface WizardFooterProps {
   onPrev: () => void
   onSubmit: () => void
   generatesMultipleExercises: boolean
+  isNonMathSubject: boolean
 }
 
 export function WizardFooter({
@@ -20,6 +21,7 @@ export function WizardFooter({
   onNext,
   onPrev,
   onSubmit,
+  isNonMathSubject,
 }: WizardFooterProps) {
   const { exerciseGeneration: exerciseGenerationString } =
     useLoggedInData()!.strings.ai
@@ -45,6 +47,11 @@ export function WizardFooter({
               ? exerciseGenerationString.generateExercisesButton
               : exerciseGenerationString.generateExerciseButton}
           </button>
+          {isNonMathSubject && (
+            <p className="mb-2 mt-2 self-end text-right text-sm text-gray-600">
+              Bitte beachte, dass das Feature für Matheaufgaben optimiert wurde.
+            </p>
+          )}
           <p className="mb-2 self-end text-right text-sm text-gray-600">
             {exerciseGenerationString.hallucinationWarning}
           </p>
