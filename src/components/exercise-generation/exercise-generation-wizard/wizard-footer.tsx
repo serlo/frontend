@@ -47,14 +47,17 @@ export function WizardFooter({
               ? exerciseGenerationString.generateExercisesButton
               : exerciseGenerationString.generateExerciseButton}
           </button>
-          {isNonMathSubject && (
-            <p className="mb-2 mt-2 self-end text-right text-sm text-gray-600">
+          {isNonMathSubject ? (
+            <p className="mb-2 self-end text-right text-sm text-gray-600">
               Bitte beachte, dass das Feature für Matheaufgaben optimiert wurde.
+              Die KI kann inkorrekte Lösungen erstellen. Bitte überprüfe die
+              Inhalte.
+            </p>
+          ) : (
+            <p className="mb-2 self-end text-right text-sm text-gray-600">
+              {exerciseGenerationString.hallucinationWarning}
             </p>
           )}
-          <p className="mb-2 self-end text-right text-sm text-gray-600">
-            {exerciseGenerationString.hallucinationWarning}
-          </p>
         </>
       ) : (
         <button
