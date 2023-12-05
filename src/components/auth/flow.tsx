@@ -204,7 +204,7 @@ export function handleFlowError<S>(
           unwantedPaths: [verificationUrl, loginUrl, registrationUrl],
         })
         setTimeout(() => {
-          window.location.href = redirection
+          window.location.href = 'https://journey.serlo-staging.dev/willkommen'
         }, 3000)
 
         return
