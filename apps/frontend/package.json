@@ -12,7 +12,7 @@
     "build": "npm-run-all build:prisma build:next",
     "build:next": "next build",
     "build:prisma": "yarn prisma generate",
-    "check:all": "scripts/check-all.sh",
+    "check:all": "./scripts/check-all.sh",
     "check:api": "node ./scripts/check-api-version.mjs",
     "check:tailwind": "node ./scripts/check-tailwind.js",
     "codegen": "graphql-codegen",
