@@ -2,10 +2,10 @@
   "name": "@serlo/monorepo",
   "version": "0.0.1",
   "private": true,
-  "repository": "serlo/frontend",
   "bugs": {
     "url": "https://github.com/serlo/frontend/issues"
   },
+  "repository": "serlo/frontend",
   "license": "Apache-2.0",
   "author": "Serlo Education e.V.",
   "workspaces": [
@@ -13,6 +13,8 @@
     "packages/*"
   ],
   "scripts": {
+    ":format:prettier": "yarn prettier . '!{apps,packages}/**/*' --write",
+    ":prettier": "yarn prettier . '!{apps,packages}/**/*' --check",
     "build": "yarn workspace @serlo/frontend build",
     "build:next": "yarn workspace @serlo/frontend build:next",
     "build:prisma": "yarn workspace @serlo/frontend build:prisma",
@@ -29,15 +31,14 @@
     "lint:prettier": "yarn workspace @serlo/frontend lint:prettier",
     "lint:tsc": "yarn workspace @serlo/frontend lint:tsc",
     "start": "yarn workspace @serlo/frontend start",
-    "test": "yarn workspace @serlo/frontend test",
-    "global:prettier": "yarn prettier . --check",
-    "global:format:prettier": "yarn prettier . --write"
+    "test": "yarn workspace @serlo/frontend test"
+  },
+  "devDependencies": {
+    "prettier": "^3.1.0",
+    "prettier-plugin-packagejson": "^2.4.6"
   },
   "packageManager": "yarn@3.6.1",
   "engines": {
     "node": "^18.0.0"
-  },
-  "devDependencies": {
-    "prettier": "^3.1.0"
   }
 }

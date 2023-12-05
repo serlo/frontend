@@ -4240,6 +4240,7 @@ __metadata:
   resolution: "@serlo/monorepo@workspace:."
   dependencies:
     prettier: ^3.1.0
+    prettier-plugin-packagejson: ^2.4.6
   languageName: unknown
   linkType: soft
 
