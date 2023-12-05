@@ -129,8 +129,8 @@ export default function Page() {
                   i === start || i === end
                     ? 'bg-green-200'
                     : i >= start && i < end
-                    ? 'bg-yellow-200'
-                    : 'bg-gray-100'
+                      ? 'bg-yellow-200'
+                      : 'bg-gray-100'
                 )}
                 key={i}
               >

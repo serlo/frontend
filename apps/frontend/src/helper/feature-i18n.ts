@@ -64,14 +64,14 @@ export function getInstanceDataByLang(lang: Instance) {
     lang === Instance.De
       ? deInstanceData
       : lang === Instance.Es
-      ? esInstanceData
-      : lang === Instance.Fr
-      ? frInstanceData
-      : lang === Instance.Ta
-      ? taInstanceData
-      : lang === Instance.Hi
-      ? hiInstanceData
-      : enInstanceData
+        ? esInstanceData
+        : lang === Instance.Fr
+          ? frInstanceData
+          : lang === Instance.Ta
+            ? taInstanceData
+            : lang === Instance.Hi
+              ? hiInstanceData
+              : enInstanceData
 
   return mergeDeepRight(enData, data) as typeof enInstanceData
 }
@@ -83,14 +83,14 @@ export function getServerSideStrings(lang: string) {
     lang === Instance.De
       ? deServerSideStrings
       : lang === Instance.Es
-      ? esServerSideStrings
-      : lang === Instance.Fr
-      ? frServerSideStrings
-      : lang === Instance.Ta
-      ? taServerSideStrings
-      : lang === Instance.Hi
-      ? hiServerSideStrings
-      : enServerSideStrings
+        ? esServerSideStrings
+        : lang === Instance.Fr
+          ? frServerSideStrings
+          : lang === Instance.Ta
+            ? taServerSideStrings
+            : lang === Instance.Hi
+              ? hiServerSideStrings
+              : enServerSideStrings
 
   return mergeDeepRight(enData, data) as typeof enServerSideStrings
 }
@@ -102,14 +102,14 @@ export function getLandingData(lang: string) {
     lang === Instance.De
       ? deInstanceLandingData
       : lang === Instance.Es
-      ? esInstanceLandingData
-      : lang === Instance.Fr
-      ? frInstanceLandingData
-      : lang === Instance.Ta
-      ? taInstanceLandingData
-      : lang === Instance.Hi
-      ? hiInstanceLandingData
-      : enInstanceLandingData
+        ? esInstanceLandingData
+        : lang === Instance.Fr
+          ? frInstanceLandingData
+          : lang === Instance.Ta
+            ? taInstanceLandingData
+            : lang === Instance.Hi
+              ? hiInstanceLandingData
+              : enInstanceLandingData
 
   return mergeDeepRight(enData, data) as typeof enInstanceLandingData
 }
@@ -121,14 +121,14 @@ export function getLoggedInData(lang: string) {
     lang === Instance.De
       ? deLoggedInData
       : lang === Instance.Es
-      ? esLoggedInData
-      : lang === Instance.Fr
-      ? frLoggedInData
-      : lang === Instance.Ta
-      ? taLoggedInData
-      : lang === Instance.Hi
-      ? hiLoggedInData
-      : enLoggedInData
+        ? esLoggedInData
+        : lang === Instance.Fr
+          ? frLoggedInData
+          : lang === Instance.Ta
+            ? taLoggedInData
+            : lang === Instance.Hi
+              ? hiLoggedInData
+              : enLoggedInData
 
   return mergeDeepRight(enData, data) as typeof enLoggedInData
 }
@@ -140,14 +140,14 @@ export function getKratosMailStrings(lang: string) {
     lang === Instance.De
       ? deKratosMailStrings
       : lang === Instance.Es
-      ? esKratosMailStrings
-      : lang === Instance.Fr
-      ? frKratosMailStrings
-      : lang === Instance.Ta
-      ? taKratosMailStrings
-      : lang === Instance.Hi
-      ? hiKratosMailStrings
-      : enKratosMailStrings
+        ? esKratosMailStrings
+        : lang === Instance.Fr
+          ? frKratosMailStrings
+          : lang === Instance.Ta
+            ? taKratosMailStrings
+            : lang === Instance.Hi
+              ? hiKratosMailStrings
+              : enKratosMailStrings
 
   return mergeDeepRight(enData, data) as typeof enKratosMailStrings
 }

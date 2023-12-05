@@ -34,8 +34,8 @@ export function InteractiveAnswer({
       ? faCheckCircle
       : faCircle
     : isActive
-    ? faCheckSquare
-    : faSquare
+      ? faCheckSquare
+      : faSquare
 
   return (
     <div className="relative mb-2.5 flex items-center border-t-2 border-editor-primary">

@@ -68,8 +68,8 @@ export function CommentAreaAllThreadsThread({
                 status === 'open'
                   ? 'bg-yellow'
                   : status === CommentStatus.Done
-                  ? 'bg-brandgreen-500'
-                  : 'bg-gray-200'
+                    ? 'bg-brandgreen-500'
+                    : 'bg-gray-200'
               )}
               disabled={!canSetStatus}
               value={status}

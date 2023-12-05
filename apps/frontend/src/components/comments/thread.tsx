@@ -59,10 +59,10 @@ export function Thread({
     const text = showChildren
       ? strings.comments.hideReplies
       : comments.length === 2
-      ? strings.comments.showMoreReply
-      : replacePlaceholders(strings.comments.showMoreReplies, {
-          number: (comments.length - 1).toString(),
-        })
+        ? strings.comments.showMoreReply
+        : replacePlaceholders(strings.comments.showMoreReplies, {
+            number: (comments.length - 1).toString(),
+          })
 
     const icon = showChildren ? '▴' : '▾'
 

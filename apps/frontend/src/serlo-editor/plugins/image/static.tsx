@@ -20,8 +20,8 @@ export function ImageStaticRenderer({
   const altOrFallbacks = alt
     ? alt
     : hasVisibleCaption
-    ? extractStringFromTextDocument(caption)
-    : altFallback
+      ? extractStringFromTextDocument(caption)
+      : altFallback
 
   return (
     <ImageRenderer

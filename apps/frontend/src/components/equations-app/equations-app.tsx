@@ -316,8 +316,8 @@ export function EquationsApp() {
             ? ' \\Leftrightarrow'
             : ` \\vert ${actions[i].displayLatex}`
           : mode === 'done'
-          ? ' '
-          : ' \\boxed{\\textcolor{orange}{?}}'
+            ? ' '
+            : ' \\boxed{\\textcolor{orange}{?}}'
       }`
     })
     .join('\\\\\n')}\\end{align}`

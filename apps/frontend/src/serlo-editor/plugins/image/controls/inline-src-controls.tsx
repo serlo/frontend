@@ -15,8 +15,8 @@ export function InlineSrcControls({
   const placeholder = !isTempFile(src.value)
     ? imageStrings.placeholderEmpty
     : !src.value.failed
-    ? imageStrings.placeholderUploading
-    : imageStrings.placeholderFailed
+      ? imageStrings.placeholderUploading
+      : imageStrings.placeholderFailed
 
   return (
     <p className="mx-side flex flex-wrap text-base">

@@ -99,8 +99,8 @@ export const getStaticProps: GetStaticProps<EventHistoryProps> = async (
       pageData.kind === 'single-entity'
         ? pageData.entityData
         : pageData.kind === 'taxonomy'
-        ? pageData.taxonomyData
-        : pageData.userData
+          ? pageData.taxonomyData
+          : pageData.userData
 
     return {
       props: {

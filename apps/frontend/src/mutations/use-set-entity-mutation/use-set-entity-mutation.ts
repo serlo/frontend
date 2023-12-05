@@ -82,8 +82,8 @@ export function useSetEntityMutation() {
           parentId: genericInput.entityId
             ? undefined
             : isRecursiveCall
-            ? savedParentId
-            : taxonomyParentId,
+              ? savedParentId
+              : taxonomyParentId,
         }
       } catch (error) {
         // eslint-disable-next-line no-console

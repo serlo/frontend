@@ -87,8 +87,8 @@ function InternalLink({
     const internalHref = /^\\[\d]+$/.test(_href) // compat: e.g. \1234
       ? _href.replace('\\', '/')
       : _href.startsWith('/')
-      ? _href
-      : '/' + _href
+        ? _href
+        : '/' + _href
 
     // do not use CSR for redirects that are handled in the cf-worker
     const clientSide = !cfWorkerLinks.includes(internalHref)

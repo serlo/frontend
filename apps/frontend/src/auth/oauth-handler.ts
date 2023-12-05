@@ -71,8 +71,8 @@ export const oauthHandler = async (type: HandlerType, challenge?: string) => {
       type === 'login'
         ? response.oauth.acceptLogin
         : type === 'logout'
-        ? response.oauth.acceptLogout
-        : response.oauth.acceptConsent
+          ? response.oauth.acceptLogout
+          : response.oauth.acceptConsent
 
     const redirect = accept!.redirectUri
     if (typeof redirect !== 'string') throwError()

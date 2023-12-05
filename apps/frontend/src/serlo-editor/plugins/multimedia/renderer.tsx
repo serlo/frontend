@@ -42,11 +42,11 @@ export function MultimediaRenderer({
     return width === 25
       ? 'mobile:w-1/4'
       : width === 50
-      ? 'mobile:w-2/4'
-      : width === 75
-      ? 'mobile:w-3/4'
-      : width === 100
-      ? 'mobile:w-full'
-      : 'mobile:w-2/4'
+        ? 'mobile:w-2/4'
+        : width === 75
+          ? 'mobile:w-3/4'
+          : width === 100
+            ? 'mobile:w-full'
+            : 'mobile:w-2/4'
   }
 }

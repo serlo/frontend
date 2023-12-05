@@ -150,8 +150,8 @@ export function PrivacyWrapper({
                 showIframe
                   ? faSpinner
                   : type === 'twingle'
-                  ? faHeart
-                  : entityIconMapping[type]
+                    ? faHeart
+                    : entityIconMapping[type]
               }
             />{' '}
             {buttonLabel}

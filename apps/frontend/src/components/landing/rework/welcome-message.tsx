@@ -4,8 +4,8 @@ export function WelcomeMessage() {
     hours >= 4 && hours < 9
       ? { message: 'Yeah, Schule geht los', icon: '' }
       : hours > 22 || hours < 4
-      ? { message: 'Oha! Um diese Zeit noch fleißig?', icon: '🦉' }
-      : { message: 'Schön, dass Du da bist', icon: '' }
+        ? { message: 'Oha! Um diese Zeit noch fleißig?', icon: '🦉' }
+        : { message: 'Schön, dass Du da bist', icon: '' }
 
   return (
     <>

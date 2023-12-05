@@ -48,8 +48,8 @@ export function useRevisionDecideMutation() {
     const mutation = isPage
       ? checkoutPageMutation
       : isCheckout
-      ? checkoutEntityMutation
-      : rejectEntityMutation
+        ? checkoutEntityMutation
+        : rejectEntityMutation
     NProgress.start()
 
     const success = await mutationFetch(mutation, input)

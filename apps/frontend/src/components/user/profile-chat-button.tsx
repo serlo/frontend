@@ -47,8 +47,8 @@ export function ProfileChatButton({
       ? strings.profiles.goToChat
       : strings.profiles.registerChat
     : isRegistered
-    ? strings.profiles.directMessage
-    : strings.profiles.inviteToChat
+      ? strings.profiles.directMessage
+      : strings.profiles.inviteToChat
 
   const url = isOwnProfile ? 'https://community.serlo.org/' : chatUrl
   const onClickAction =

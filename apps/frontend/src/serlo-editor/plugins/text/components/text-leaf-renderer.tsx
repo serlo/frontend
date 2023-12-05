@@ -26,10 +26,10 @@ export function TextLeafRenderer({
   const LeafTag = leaf.strong
     ? 'b'
     : leaf.em
-    ? 'i'
-    : leaf.code
-    ? 'code'
-    : 'span'
+      ? 'i'
+      : leaf.code
+        ? 'code'
+        : 'span'
 
   if (styleCount === 0 && LeafTag === 'span') return <>{children}</>
 

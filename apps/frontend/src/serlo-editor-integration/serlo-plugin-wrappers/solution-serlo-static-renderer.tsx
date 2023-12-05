@@ -32,10 +32,10 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const solutionVisibleOnInit = isRevisionView
     ? true
     : isPrintMode
-    ? printModeSolutionVisible
-    : typeof window === 'undefined'
-    ? false
-    : window.location.href.includes('#comment-')
+      ? printModeSolutionVisible
+      : typeof window === 'undefined'
+        ? false
+        : window.location.href.includes('#comment-')
 
   const afterSlot =
     exerciseUuid && !isRevisionView ? (

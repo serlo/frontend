@@ -30,8 +30,8 @@ export function CommentAreaAllThreads() {
     (status === 'all'
       ? undefined
       : status
-      ? status
-      : undefined) as CommentStatus
+        ? status
+        : undefined) as CommentStatus
   )
   const { lang, strings } = useInstanceData()
   const auth = useAuthentication()

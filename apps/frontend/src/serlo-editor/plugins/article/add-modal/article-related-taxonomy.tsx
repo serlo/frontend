@@ -86,8 +86,8 @@ export function ArticleRelatedTaxonomy({
     const title = typename.includes(UuidType.Exercise)
       ? getTranslatedType(strings, typename)
       : typename === UuidType.TaxonomyTerm
-      ? item.name
-      : item.currentRevision?.title
+        ? item.name
+        : item.currentRevision?.title
 
     if (!title) return null
 

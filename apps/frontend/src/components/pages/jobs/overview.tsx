@@ -396,9 +396,9 @@ export function renderSubline({
     return schedule === 'full-or-part-time'
       ? ' • Voll- oder Teilzeit'
       : schedule === 'full-time'
-      ? ' • Vollzeit'
-      : schedule === 'part-time'
-      ? ' • Teilzeit'
-      : ''
+        ? ' • Vollzeit'
+        : schedule === 'part-time'
+          ? ' • Teilzeit'
+          : ''
   }
 }

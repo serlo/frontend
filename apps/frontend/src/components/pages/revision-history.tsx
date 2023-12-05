@@ -143,8 +143,8 @@ export function RevisionHistory({
           trashed
             ? strings.revisions.rejectedNotice
             : isCurrent
-            ? strings.revisions.currentNotice
-            : strings.revisions.unknownNotice
+              ? strings.revisions.currentNotice
+              : strings.revisions.unknownNotice
         }
       />
     )

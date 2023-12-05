@@ -5,7 +5,6 @@ import NProgress from 'nprogress'
 import { useState, useEffect } from 'react'
 import { default as ToastNotice } from 'react-notify-toast'
 
-
 import { ConditionalWrap } from './conditional-wrap'
 import { HeaderFooter } from './header-footer'
 import { MaxWidthDiv } from './navigation/max-width-div'

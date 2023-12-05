@@ -70,8 +70,8 @@ export function StepEditor(props: StepEditorProps) {
             row === 0
               ? '4x+3x'
               : transformationTarget === TransformationTarget.Term
-              ? `[${equationsStrings.term}]`
-              : `[${equationsStrings.rightHandSide}]`
+                ? `[${equationsStrings.term}]`
+                : `[${equationsStrings.rightHandSide}]`
           }
           state={state.right}
           onChange={(src) => state.right.set(src)}

@@ -29,9 +29,9 @@ export function getMetaImage(alias: string) {
   const imageFileName = rootsWithImage.includes(root)
     ? root
     : metaAliases.includes(alias)
-    ? 'meta'
-    : alias.length <= 1
-    ? 'landing'
-    : 'serlo' // fallback, i18n in the future
+      ? 'meta'
+      : alias.length <= 1
+        ? 'landing'
+        : 'serlo' // fallback, i18n in the future
   return `https://de.${serloDomain}/_assets/img/meta/${imageFileName}.png`
 }

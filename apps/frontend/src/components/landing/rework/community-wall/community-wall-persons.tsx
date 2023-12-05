@@ -68,10 +68,10 @@ export function CommunityWallPersons({
                   role.includes('Autor')
                     ? 'bg-yellow'
                     : role.includes('Team')
-                    ? 'bg-brand-500'
-                    : role.includes('Lehrer')
-                    ? 'bg-newgreen'
-                    : 'bg-berry'
+                      ? 'bg-brand-500'
+                      : role.includes('Lehrer')
+                        ? 'bg-newgreen'
+                        : 'bg-berry'
                 )}
               >
                 {role}

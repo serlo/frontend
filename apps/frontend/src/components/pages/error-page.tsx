@@ -46,8 +46,8 @@ export function ErrorPage({ code, message }: ErrorPageProps) {
   const additionalText = isDeletedComment
     ? ''
     : isProbablyTemporary
-    ? errStrings.temporary
-    : errStrings.permanent
+      ? errStrings.temporary
+      : errStrings.permanent
 
   return (
     <>

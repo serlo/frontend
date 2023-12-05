@@ -130,8 +130,8 @@ export function SaveModal({
           {pending
             ? editorStrings.saving
             : (showSkipCheckout && skipReview) || !showSkipCheckout
-            ? editorStrings.save
-            : editorStrings.saveWithReview}
+              ? editorStrings.save
+              : editorStrings.saveWithReview}
         </button>
       </div>
     )

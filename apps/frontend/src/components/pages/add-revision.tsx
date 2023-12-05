@@ -95,18 +95,18 @@ export function AddRevision({
       type === UuidType.Page
         ? await addPageRevision(data as PageSerializedState)
         : type === UuidType.TaxonomyTerm
-        ? await taxonomyCreateOrUpdateMutation(
-            data as TaxonomyCreateOrUpdateMutationData
-          )
-        : await setEntityMutation(
-            {
-              ...data,
-              __typename: type,
-            } as SetEntityMutationData,
-            willNeedReview,
-            initialState,
-            taxonomyParentId
-          )
+          ? await taxonomyCreateOrUpdateMutation(
+              data as TaxonomyCreateOrUpdateMutationData
+            )
+          : await setEntityMutation(
+              {
+                ...data,
+                __typename: type,
+              } as SetEntityMutationData,
+              willNeedReview,
+              initialState,
+              taxonomyParentId
+            )
 
     return success ? Promise.resolve() : Promise.reject()
   }

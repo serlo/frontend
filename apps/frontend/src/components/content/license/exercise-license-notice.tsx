@@ -35,8 +35,8 @@ export function ExerciseLicenseNotice({
     !exerciseLicense.isDefault && solutionLicense.isDefault
       ? task
       : exerciseLicense.id === solutionLicense.id
-      ? `${task} & ${solution}`
-      : solution
+        ? `${task} & ${solution}`
+        : solution
 
   const licenseToDisplay = exerciseLicense.isDefault
     ? solutionLicense

@@ -77,8 +77,8 @@ export function ScRenderer({
           {selected !== undefined
             ? exStrings.check
             : isPrintMode
-            ? exStrings.printModeChooseOption
-            : exStrings.chooseOption}
+              ? exStrings.printModeChooseOption
+              : exStrings.chooseOption}
         </button>
         {showFeedback && selected !== undefined && answers[selected] ? (
           <Feedback correct={answers[selected].isCorrect}>

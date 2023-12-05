@@ -244,8 +244,8 @@ export function SerloTableEditor(props: SerloTableProps) {
         const colToFocusAfter = isRow
           ? focusedColIndex ?? 0
           : colIndex + 1 < rows[0].columns.length
-          ? colIndex + 1
-          : colIndex - 1
+            ? colIndex + 1
+            : colIndex - 1
 
         dispatch(
           focus(rows[rowToFocusAfter].columns[colToFocusAfter].content.id)

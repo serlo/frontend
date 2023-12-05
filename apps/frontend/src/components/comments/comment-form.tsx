@@ -100,10 +100,10 @@ export function CommentForm({
     const icon = isSending
       ? faSpinner
       : isEditing
-      ? faSave
-      : reply
-      ? faReply
-      : faArrowRight
+        ? faSave
+        : reply
+          ? faReply
+          : faArrowRight
 
     return (
       <button
