@@ -107,6 +107,7 @@
     "@graphql-codegen/typescript": "4.0.1",
     "@graphql-codegen/typescript-operations": "4.0.1",
     "@next/bundle-analyzer": "^13.5.4",
+    "@serlo/typescript-config": "workspace:*",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/typography": "^0.5.10",
     "@types/algebra.js": "^0.2.2",

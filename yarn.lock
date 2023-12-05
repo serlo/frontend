@@ -4124,6 +4124,7 @@ __metadata:
     "@radix-ui/react-select": ^1.2.2
     "@reduxjs/toolkit": ^1.9.7
     "@serlo/authorization": ^0.59.1
+    "@serlo/typescript-config": "workspace:*"
     "@svgr/webpack": ^8.1.0
     "@tailwindcss/typography": ^0.5.10
     "@tippyjs/react": ^4.2.6
@@ -4239,6 +4240,12 @@ __metadata:
   resolution: "@serlo/monorepo@workspace:."
   dependencies:
     prettier: ^3.1.0
+  languageName: unknown
+  linkType: soft
+
+"@serlo/typescript-config@workspace:*, @serlo/typescript-config@workspace:packages/typescript-config":
+  version: 0.0.0-use.local
+  resolution: "@serlo/typescript-config@workspace:packages/typescript-config"
   languageName: unknown
   linkType: soft
 
