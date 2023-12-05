@@ -28,13 +28,7 @@ import {
   changeButtonTypeOfSSOProvider,
   sortKratosUiNodes,
 } from '../pages/auth/ory-helper'
-import {
-  filterUnwantedRedirection,
-  loginUrl,
-  registrationUrl,
-  VALIDATION_ERROR_TYPE,
-  verificationUrl,
-} from '../pages/auth/utils'
+import { VALIDATION_ERROR_TYPE } from '../pages/auth/utils'
 import { checkLoggedIn } from '@/auth/cookie/check-logged-in'
 import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
 import type { AxiosError } from '@/auth/types'
@@ -198,11 +192,6 @@ export function handleFlowError<S>(
       case 'session_already_available': {
         if (!checkLoggedIn()) void fetchAndPersistAuthSession()
         showToastNotice(strings.notices.alreadyLoggedIn, 'default', 3000)
-
-        const redirection = filterUnwantedRedirection({
-          desiredPath: sessionStorage.getItem('previousPathname'),
-          unwantedPaths: [verificationUrl, loginUrl, registrationUrl],
-        })
         setTimeout(() => {
           window.location.href = 'https://journey.serlo-staging.dev/willkommen'
         }, 3000)
