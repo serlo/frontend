@@ -1,4 +1,6 @@
-# packages and apps
+# this also checks .gitignore
+
+# let packages and apps handle pretter themselves for now
 apps
 packages
 
