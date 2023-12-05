@@ -28,8 +28,8 @@ function walkDir(path) {
     return dir.endsWith('.tsx')
       ? [newPath]
       : isFileRegex.test(newPath)
-      ? []
-      : walkDir(newPath)
+        ? []
+        : walkDir(newPath)
   })
 }
 
