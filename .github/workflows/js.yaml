@@ -14,6 +14,7 @@ jobs:
         with:
           node-version: 18.x
       - run: yarn
+      - run: yarn build:prisma
       - run: yarn lint:eslint
   prettier:
     runs-on: ubuntu-latest
