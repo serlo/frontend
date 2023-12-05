@@ -31,7 +31,7 @@ const nextConfig = {
     // fixes problem with frontend-client-base needs language data on server but document is not ready
     if (!isServer) {
       // resolve feature-i18n as empty module on client
-      config.resolve.alias['src/helper/feature-i18n'] = false
+      config.resolve.alias['apps/frontend/src/helper/feature-i18n'] = false
     }
 
     return config

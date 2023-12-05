@@ -3,7 +3,7 @@
 # Info: This workflow is generated with npx -p github:hashicorp/nextjs-bundle-analysis generate
 # Line 115 was manually modified to fix find-comment
 
-name: "Next.js Bundle Analysis"
+name: 'Next.js Bundle Analysis'
 
 on:
   pull_request:
@@ -15,7 +15,7 @@ on:
 defaults:
   run:
     # change this if your nextjs app does not live at the root of the repo
-    working-directory: ./apps/frontend/
+    working-directory: ./
 
 permissions:
   contents: read # for checkout repository
@@ -112,7 +112,7 @@ jobs:
         id: fc
         with:
           issue-number: ${{ github.event.number }}
-          body-includes: "<!-- __NEXTJS_BUNDLE_@serlo/frontend -->"
+          body-includes: '<!-- __NEXTJS_BUNDLE_@serlo/frontend -->'
 
       - name: Create Comment
         uses: peter-evans/create-or-update-comment@v2
