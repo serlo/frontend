@@ -1,33 +1,12 @@
-// import { DndContext, UniqueIdentifier } from '@dnd-kit/core'
 import * as t from 'io-ts'
 import { type ReactNode, useMemo, useState } from 'react'
 
-// import { BlankSolution } from './components/blank-solution'
-// import { BlankSolutionsArea } from './components/blank-solution-area'
 import type { BlankId, DraggableId, FillInTheBlanksMode } from '.'
 import { DraggableSolution } from './components/blank-solution'
 import { DraggableSolutionArea } from './components/blank-solution-area'
 import { FillInTheBlanksContext } from './context/blank-context'
 import { Feedback } from '../sc-mc-exercise/renderer/feedback'
 import { useInstanceData } from '@/contexts/instance-context'
-
-// --- Drag and drop stuff
-// TODO: Use Map container here as well
-// export interface BlankDragAndDropSolution {
-//   draggableId: UniqueIdentifier
-//   text: string
-//   inDroppableId: UniqueIdentifier
-// }
-// const initialDragAndDropSolutions: BlankDragAndDropSolution[] = [
-//   {
-//     draggableId: 'draggable-1',
-//     text: 'draggable-1',
-//     inDroppableId: 'blank-solutions-area',
-//   },
-// ]
-// export const BlankDragAndDropSolutions = createContext<
-//   BlankDragAndDropSolution[] | null
-// >(null)
 
 // TODO: Copy of type in /src/serlo-editor/plugins/text/types/text-editor.ts
 const Answer = t.intersection([
@@ -102,33 +81,21 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     return newMap
   }, [blanks, textUserTypedIntoBlanks, initialTextInBlank])
 
-  // --- Drag & drop stuff
+  const draggables = useMemo(() => {
+    return blanks.map((blank) => {
+      return {
+        draggableId: `solution-${blank.blankId}`,
+        text: blank.correctAnswers[0].answer,
+      }
+    })
+  }, [blanks])
+
   // Maps DraggableId to the BlankId where this draggable element is currently located
   const [locationOfDraggables, setLocationOfDraggables] = useState(
     new Map<DraggableId, BlankId>()
   )
-  // TODO: Should get blank solutions from text state
-  // const [blankDragAndDropSolutions, setBlankDragAndDropSolutions] = useState<
-  //   BlankDragAndDropSolution[]
-  // >(initialDragAndDropSolutions)
 
   return (
-    // <DndContext
-    //   onDragEnd={(e) => {
-    //     setBlankDragAndDropSolutions((blankDragAndDropSolutions) => {
-    //       // Draggable not dropped over droppable -> Do not change state
-    //       if (!e.over) return blankDragAndDropSolutions
-    //       const index = blankDragAndDropSolutions.findIndex(
-    //         (draggable) => draggable.draggableId === e.active.id
-    //       )
-    //       if (index === -1) return blankDragAndDropSolutions
-    //       // Change where this draggable is
-    //       blankDragAndDropSolutions[index].inDroppableId = e.over.id
-    //       return [...blankDragAndDropSolutions]
-    //     })
-    //   }}
-    // >
-    // <BlankDragAndDropSolutions.Provider value={blankDragAndDropSolutions}>
     <div className="mx-side mb-block leading-[30px] [&>p]:leading-[30px]">
       <FillInTheBlanksContext.Provider
         value={{
@@ -139,6 +106,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
             value: textUserTypedIntoBlanks,
             set: setTextUserTypedIntoBlanks,
           },
+          draggables: draggables,
           locationOfDraggables: {
             value: locationOfDraggables,
             set: setLocationOfDraggables,
@@ -154,34 +122,18 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
             set: setLocationOfDraggables,
           }}
         >
-          {blanks.map((blank, index) => {
-            if (locationOfDraggables.get(`draggable-${blank.blankId}`))
-              return null
+          {draggables.map((draggable, index) => {
+            if (locationOfDraggables.get(draggable.draggableId)) return null
             return (
               <DraggableSolution
                 key={index}
-                text={blank.correctAnswers[0].answer}
-                draggableId={`draggable-${blank.blankId}`}
+                text={draggable.text}
+                draggableId={draggable.draggableId}
               />
             )
           })}
         </DraggableSolutionArea>
       ) : null}
-      {/* {mode === 'drag-and-drop' ? (
-        <BlankSolutionsArea>
-          <>
-            {blankDragAndDropSolutions
-              .filter((entry) => entry.inDroppableId === 'blank-solutions-area')
-              .map((dragAndDropSolution, index) => (
-                <BlankSolution
-                  key={index}
-                  text={dragAndDropSolution.text}
-                  draggableId={dragAndDropSolution.draggableId}
-                />
-              ))}
-          </>
-        </BlankSolutionsArea>
-      ) : null} */}
 
       {/* Copied from mc-renderer.tsx */}
       <div className="mt-2 flex">
@@ -223,7 +175,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
           )
         })}
       </div>
-      <div className="">
+      <div className="hidden">
         {[...locationOfDraggables].map((entry, index) => {
           return (
             <div key={index}>
@@ -232,13 +184,15 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
           )
         })}
       </div>
-      {/* <div className="hidden">
-        {blankDragAndDropSolutions.map((entry, index) => (
-          <div
-            key={index}
-          >{`DraggableId: ${entry.draggableId} | in droppableId: ${entry.inDroppableId} | containing text: ${entry.text}`}</div>
-        ))}
-      </div> */}
+      <div className="hidden">
+        {draggables.map((draggable, index) => {
+          return (
+            <div key={index}>
+              {`DraggableId: ${draggable.draggableId} with text: ${draggable.text}`}
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 

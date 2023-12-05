@@ -12,6 +12,10 @@ export const FillInTheBlanksContext = createContext<{
     value: Map<BlankId, { text: string }>
     set: React.Dispatch<React.SetStateAction<Map<BlankId, { text: string }>>>
   }
+  draggables: {
+    draggableId: DraggableId
+    text: string
+  }[]
   locationOfDraggables: {
     value: Map<DraggableId, BlankId>
     set: React.Dispatch<React.SetStateAction<Map<DraggableId, BlankId>>>

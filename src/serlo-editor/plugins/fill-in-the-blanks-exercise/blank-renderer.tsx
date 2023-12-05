@@ -1,7 +1,4 @@
-// import { useDroppable } from '@dnd-kit/core'
 import { ChangeEventHandler, ReactNode, useContext } from 'react'
-// import { BlankSolution } from './components/blank-solution'
-// import { BlankDragAndDropSolutions } from './renderer'
 import { useDrop } from 'react-dnd'
 
 import type { BlankId, DraggableId, FillInTheBlanksMode } from '.'
@@ -15,11 +12,6 @@ export function BlankRenderer(props: {
   onChange?: ChangeEventHandler<HTMLInputElement>
   forceMode?: FillInTheBlanksMode
 }) {
-  // const dragAndDropSolutions = useContext(BlankDragAndDropSolutions)
-  // const draggableElementInBlank = dragAndDropSolutions?.find(
-  //   (entry) => entry.inDroppableId === props.blankId
-  // )
-
   const fillInTheBlanksContext = useContext(FillInTheBlanksContext)
   if (fillInTheBlanksContext === null) {
     // blankStates was not provided by FillInTheBlanksRenderer -> cannot continue
@@ -37,9 +29,13 @@ export function BlankRenderer(props: {
     ...fillInTheBlanksContext.locationOfDraggables.value,
   ].find((entry) => entry[1] === props.blankId)
 
-  const containsDraggableId = draggableSolutionInBlank
+  const draggableIdInThisBlank = draggableSolutionInBlank
     ? draggableSolutionInBlank[0]
     : null
+
+  const draggableText = fillInTheBlanksContext.draggables.find(
+    (draggable) => draggable.draggableId === draggableIdInThisBlank
+  )?.text
 
   return (
     <>
@@ -67,24 +63,15 @@ export function BlankRenderer(props: {
         <>
           <DroppableBlank
             blankId={props.blankId}
-            disable={containsDraggableId !== null}
+            disable={draggableIdInThisBlank !== null}
           >
-            {containsDraggableId ? (
+            {draggableIdInThisBlank ? (
               <DraggableSolution
-                text="Banana"
-                draggableId={containsDraggableId}
+                text={draggableText ?? ''}
+                draggableId={draggableIdInThisBlank}
               />
             ) : null}
           </DroppableBlank>
-          {/* <EmptyBlankWithDropZone blankId={props.blankId} /> */}
-          {/* {draggableElementInBlank ? (
-            <BlankSolution
-              text={draggableElementInBlank.text}
-              draggableId={draggableElementInBlank.draggableId}
-            />
-          ) : (
-            <EmptyBlankWithDropZone id={props.blankId} />
-          )} */}
         </>
       )}
     </>
@@ -105,22 +92,6 @@ export function BlankRenderer(props: {
     )
   }
 }
-
-// function EmptyBlankWithDropZone(props: { id: string }) {
-//   const { setNodeRef, isOver } = useDroppable({
-//     id: props.id,
-//   })
-
-//   return (
-//     <span
-//       className={cn(
-//         'rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2',
-//         isOver && 'bg-slate-400'
-//       )}
-//       ref={setNodeRef}
-//     ></span>
-//   )
-// }
 
 function DroppableBlank(props: {
   blankId: BlankId
