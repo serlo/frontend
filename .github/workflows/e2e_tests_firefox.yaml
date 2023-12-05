@@ -1,7 +1,9 @@
 name: e2e tests with firefox
 on:
   workflow_dispatch:
-  pull_request:
+  push:
+    branches:
+      - staging
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -12,7 +14,6 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repository: 'serlo/frontend-e2e-tests'
-          ref: '80-run-tests-with-firefox'
       - uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
