@@ -156,7 +156,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
           showToastNotice(
             strings.notices.welcome.replace('%username%', username)
           )
-          void router.push('/willkommen')
+          window.location.href = 'https://journey.serlo-staging.dev/willkommen'
           return
         })
     } catch (e: unknown) {
