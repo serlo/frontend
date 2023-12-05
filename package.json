@@ -29,10 +29,15 @@
     "lint:prettier": "yarn workspace @serlo/frontend lint:prettier",
     "lint:tsc": "yarn workspace @serlo/frontend lint:tsc",
     "start": "yarn workspace @serlo/frontend start",
-    "test": "yarn workspace @serlo/frontend test"
+    "test": "yarn workspace @serlo/frontend test",
+    "global:prettier": "yarn prettier . --check",
+    "global:format:prettier": "yarn prettier . --write"
   },
   "packageManager": "yarn@3.6.1",
   "engines": {
     "node": "^18.0.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.1.0"
   }
 }

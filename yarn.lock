@@ -4237,6 +4237,8 @@ __metadata:
 "@serlo/monorepo@workspace:.":
   version: 0.0.0-use.local
   resolution: "@serlo/monorepo@workspace:."
+  dependencies:
+    prettier: ^3.1.0
   languageName: unknown
   linkType: soft
 
@@ -12485,7 +12487,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.0.3":
+"prettier@npm:^3.0.3, prettier@npm:^3.1.0":
   version: 3.1.0
   resolution: "prettier@npm:3.1.0"
   bin:
