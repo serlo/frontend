@@ -1,6 +1,3 @@
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
-
 import type { FillInTheBlanksMode } from '.'
 import { FillInTheBlanksRenderer } from './renderer'
 import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'

@@ -5,6 +5,7 @@ import { ReactNode } from 'react'
 import { useDrop } from 'react-dnd'
 
 import type { BlankId, DraggableId } from '..'
+import { cn } from '@/helper/cn'
 
 // export function BlankSolutionsArea(props: { children: ReactNode }) {
 //   const { setNodeRef } = useDroppable({
@@ -43,7 +44,10 @@ export function DraggableSolutionArea(props: {
   })
   return (
     <div
-      className="mt-5 min-h-8 w-full rounded-full bg-slate-100"
+      className={cn(
+        'mt-5 min-h-8 w-full rounded-full bg-slate-100',
+        isOver ? 'bg-slate-200' : ''
+      )}
       ref={dropRef}
     >
       {props.children}

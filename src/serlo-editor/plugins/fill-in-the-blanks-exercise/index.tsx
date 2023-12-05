@@ -28,7 +28,7 @@ export type FillInTheBlanksExerciseState = ReturnType<
 >
 
 function createFillInTheBlanksExerciseState() {
-  const defaultMode: FillInTheBlanksMode = 'drag-and-drop'
+  const defaultMode: FillInTheBlanksMode = 'typing'
 
   return object({
     text: child({
@@ -41,6 +41,8 @@ function createFillInTheBlanksExerciseState() {
       },
     }),
     mode: string(defaultMode),
+    // This could be used to persist additional answers for mode drag-and-drop
+    // additionalDraggableAnswers: optional(list(object({ answer: string() }))),
   })
 }
 

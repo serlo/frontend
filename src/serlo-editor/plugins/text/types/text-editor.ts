@@ -12,13 +12,17 @@ export type CustomElement =
   | MathElement
   | Blank
 
+export interface Answer {
+  answer: string
+  learnerFeedback?: string // Currently unused
+}
+
 export interface Blank {
   type: 'blank'
   children: CustomText[]
   blankId: string // Used to uniquely identify a blank
-  correctAnswer: string
-  // Disabled alternative correct solutions for now
-  // alternativeSolutions: string[]
+  correctAnswers: Answer[]
+  incorrectAnswers?: Answer[] // Unused currently
 }
 
 export interface Heading {

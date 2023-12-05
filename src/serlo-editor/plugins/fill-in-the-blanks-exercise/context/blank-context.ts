@@ -1,10 +1,6 @@
 import { createContext } from 'react'
 
-import type { FillInTheBlanksMode } from '..'
-
-type BlankId = string
-
-type DraggableId = string
+import type { BlankId, DraggableId, FillInTheBlanksMode } from '..'
 
 // Used to pass state to BlankRenderer from FillInTheBlanksRenderer
 // BlankRenderer will use this state alongside the state stored in the slate custom element 'blank' to render.

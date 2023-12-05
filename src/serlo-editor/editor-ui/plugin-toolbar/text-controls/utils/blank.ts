@@ -35,7 +35,10 @@ export function toggleBlank(editor: SlateEditor) {
       },
     })
     if (text) {
-      Transforms.insertNodes(editor, { text: (text as Blank).correctAnswer })
+      const blank = text as Blank
+      Transforms.insertNodes(editor, {
+        text: blank.correctAnswers[0]?.answer ?? '',
+      })
     }
     return
   }
@@ -47,9 +50,7 @@ export function toggleBlank(editor: SlateEditor) {
     Transforms.insertNodes(editor, {
       type: 'blank',
       blankId: uuid_v4(),
-      correctAnswer: '',
-      // Disabled alternative correct solutions for now
-      // alternativeSolutions: [],
+      correctAnswers: [{ answer: '' }],
       children: [{ text: '' }],
     })
     return
@@ -62,10 +63,14 @@ export function toggleBlank(editor: SlateEditor) {
       {
         type: 'blank',
         blankId: uuid_v4(),
-        correctAnswer:
-          SlateEditor.string(editor, trimmedSelection as Location) || '',
-        // Disabled alternative correct solutions for now
-        // alternativeSolutions: [],
+        correctAnswers: [
+          {
+            answer: SlateEditor.string(
+              editor,
+              trimmedSelection as Location
+            ).trim(),
+          },
+        ],
         children: [{ text: '' }],
       },
     ],

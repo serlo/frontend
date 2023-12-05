@@ -85,20 +85,32 @@ export const useSlateRenderHandlers = ({
         return (
           <span {...attributes} contentEditable={false}>
             <BlankRenderer
-              correctAnswer={element.correctAnswer}
               blankId={element.blankId}
               forceMode="typing"
               onChange={(e) => {
                 if (!e) return
                 const path = ReactEditor.findPath(editor, element)
+                const newCorrectAnswers = element.correctAnswers.map(
+                  (correctAnswer, i) => {
+                    // First element is set to new value
+                    if (i === 0) {
+                      return {
+                        answer: e.target.value.trim(),
+                        learnerFeedback: correctAnswer.learnerFeedback,
+                      }
+                    }
+                    // Rest is copied as is
+                    return { ...correctAnswer }
+                  }
+                )
                 Transforms.setNodes(
                   editor,
-                  { correctAnswer: e.target.value },
+                  { correctAnswers: newCorrectAnswers },
                   { at: path }
                 )
               }}
             />
-            {/* children is always an empty text but slate will complain if this is not included here */}
+            {/* Because blank is a void element we need to render children here even though it will always be an empty text element. Slate will complain if this is not included here */}
             {children}
           </span>
         )

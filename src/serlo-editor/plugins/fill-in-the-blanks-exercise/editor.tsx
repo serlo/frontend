@@ -37,7 +37,7 @@ export function FillInTheBlanksExerciseEditor(
       />
 
       {/* Only debug views from here on */}
-      <div className="hidden">{JSON.stringify(textPluginState)}</div>
+      <div className="">{JSON.stringify(textPluginState)}</div>
     </div>
   )
 }

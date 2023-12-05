@@ -30,13 +30,25 @@ import { useInstanceData } from '@/contexts/instance-context'
 // >(null)
 
 // TODO: Copy of type in /src/serlo-editor/plugins/text/types/text-editor.ts
-const Blank = t.type({
-  type: t.literal('blank'),
-  blankId: t.string,
-  correctAnswer: t.string,
-  // Disabled alternative correct solutions for now
-  // alternativeSolutions: t.array(t.string),
-})
+const Answer = t.intersection([
+  t.type({
+    answer: t.string,
+  }),
+  t.partial({
+    learnerFeedback: t.string,
+  }),
+])
+const Blank = t.intersection([
+  t.type({
+    type: t.literal('blank'),
+    children: t.unknown,
+    blankId: t.string,
+    correctAnswers: t.array(Answer),
+  }),
+  t.partial({
+    incorrectAnswers: t.array(Answer),
+  }),
+])
 
 type Blanks = t.TypeOf<typeof Blank>[]
 
@@ -78,14 +90,12 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
   /** Maps blankId to the text that should be displayed in the blank.  */
   const textInBlanks = useMemo(() => {
     const newMap = new Map<BlankId, { text: string }>()
-    blanks.forEach((blankState) =>
+    blanks.forEach((blankState) => {
+      const firstCorrectAnswer = blankState.correctAnswers[0]?.answer ?? ''
       newMap.set(blankState.blankId, {
-        text:
-          initialTextInBlank === 'correct-answer'
-            ? blankState.correctAnswer
-            : '',
+        text: initialTextInBlank === 'correct-answer' ? firstCorrectAnswer : '',
       })
-    )
+    })
     textUserTypedIntoBlanks.forEach((textUserTypedIntoBlank, blankId) =>
       newMap.set(blankId, { text: textUserTypedIntoBlank.text })
     )
@@ -150,7 +160,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
             return (
               <DraggableSolution
                 key={index}
-                text={blank.correctAnswer}
+                text={blank.correctAnswers[0].answer}
                 draggableId={`draggable-${blank.blankId}`}
               />
             )
@@ -241,12 +251,9 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
       blanks.forEach((blankState) => {
         const trimmedBlankText =
           textInBlanks.get(blankState.blankId)?.text.trim() ?? ''
-        const trimmedCorrectAnswer = blankState.correctAnswer.trim()
-        // Disabled alternative correct solutions for now
-        // const trimmedAlternativeSolutions = blankState.alternativeSolutions.map(alternativeSolution => alternativeSolution.trim())
-        const isCorrect = trimmedBlankText === trimmedCorrectAnswer
-        // Disabled alternative correct solutions for now
-        // || trimmedAlternativeSolutions.find((alternativeSolution) => trimmedBlankText === alternativeSolution)
+        const isCorrect = blankState.correctAnswers.some(
+          (correctAnswer) => correctAnswer.answer === trimmedBlankText
+        )
         newBlankAnswersCorrectList.set(blankState.blankId, {
           isCorrect: isCorrect,
         })

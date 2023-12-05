@@ -11,7 +11,6 @@ import { cn } from '@/helper/cn'
 
 /** Renders either an input element (where user can type into) or a drop area (where user can drop draggable answers) depending on the mode  */
 export function BlankRenderer(props: {
-  correctAnswer: string
   blankId: string
   onChange?: ChangeEventHandler<HTMLInputElement>
   forceMode?: FillInTheBlanksMode

@@ -34,7 +34,7 @@ export function DraggableSolution(props: {
   text: string
   draggableId: DraggableId
 }) {
-  const [_, dragRef] = useDrag({
+  const [, dragRef] = useDrag({
     type: 'blank-solution',
     item: { draggableId: props.draggableId },
   })
