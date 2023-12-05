@@ -30,6 +30,12 @@
     "lint:tsc": "yarn workspace @serlo/frontend lint:tsc",
     "start": "yarn workspace @serlo/frontend start",
     "test": "yarn workspace @serlo/frontend test",
+    "e2e": "yarn workspace @serlo/e2e-tests e2e",
+    "e2e-firefox": "yarn workspace @serlo/e2e-tests e2e-firefox",
+    "e2e-workers": "yarn workspace @serlo/e2e-tests e2e-workers",
+    "e2e-firefox-workers": "yarn workspace @serlo/e2e-tests e2e-firefox-workers",
+    "e2e-localhost": "yarn workspace @serlo/e2e-tests e2e-localhost",
+    "e2e-localapi": "yarn workspace @serlo/e2e-tests e2e-localapi",
     "global:prettier": "yarn prettier . --check",
     "global:format:prettier": "yarn prettier . --write"
   },
