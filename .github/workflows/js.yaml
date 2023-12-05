@@ -6,6 +6,14 @@ on:
       - production
   pull_request:
 jobs:
+  yarn:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - run: yarn --check-cache
   eslint:
     runs-on: ubuntu-latest
     steps:
