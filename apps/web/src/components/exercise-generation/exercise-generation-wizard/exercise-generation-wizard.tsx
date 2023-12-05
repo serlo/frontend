@@ -161,6 +161,10 @@ export function ExerciseGenerationWizard({
           generatesMultipleExercises={numberOfSubtasks > 0}
           onNext={handleNext}
           onPrev={handlePrev}
+          isNonMathSubject={
+            subject.toLowerCase() !== 'mathe' &&
+            subject.toLowerCase() !== 'mathematik'
+          }
           onSubmit={() => {
             // eslint-disable-next-line no-console
             console.log("Let's generate exercise", {

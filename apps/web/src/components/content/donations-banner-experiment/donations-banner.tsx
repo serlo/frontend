@@ -329,7 +329,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
         }
         @media (min-width: 1216px) {
           button {
-            zoom: 1.15;
+            /*zoom: 1.15;*/
             position: absolute;
           }
         }
