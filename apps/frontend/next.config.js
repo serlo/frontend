@@ -1,4 +1,6 @@
 import bundleAnalyzer from '@next/bundle-analyzer'
+import path from 'path'
+import { fileURLToPath } from 'url'
 /**
  * @type {import('next').NextConfig}
  */
@@ -31,7 +33,15 @@ const nextConfig = {
     // fixes problem with frontend-client-base needs language data on server but document is not ready
     if (!isServer) {
       // resolve feature-i18n as empty module on client
-      config.resolve.alias['apps/frontend/src/helper/feature-i18n'] = false
+      config.resolve.alias[
+        path.join(
+          path.dirname(fileURLToPath(import.meta.url)),
+          'src',
+          'helper',
+          'feature-i18n.tsx'
+        )
+      ] = false
+      console.log(config.resolve.alias)
     }
 
     return config

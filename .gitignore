@@ -41,3 +41,4 @@ tsconfig.tsbuildinfo
 
 # nvm
 .nvmrc
+apps/frontend/node_modules
