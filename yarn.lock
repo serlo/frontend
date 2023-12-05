@@ -4097,9 +4097,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@serlo/frontend@workspace:apps/frontend":
+"@serlo/frontend@workspace:apps/web":
   version: 0.0.0-use.local
-  resolution: "@serlo/frontend@workspace:apps/frontend"
+  resolution: "@serlo/frontend@workspace:apps/web"
   dependencies:
     "@babel/core": ^7.23.0
     "@cortex-js/compute-engine": ^0.22.0

@@ -4,7 +4,7 @@
 
 ## Notable Packages
 
-- [Frontend](./apps/frontend/README.md) – Next.js app that serves [serlo.org](https://serlo.org).
+- [Frontend](./apps/web/README.md) – Next.js app that serves [serlo.org](https://serlo.org).
 
 ## Issues and backlog
 
