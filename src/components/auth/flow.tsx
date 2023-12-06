@@ -73,15 +73,13 @@ export function Flow<T extends SubmitPayload>({
   const [values, setValues] = useState<Record<string, unknown>>(() => {
     const values: Record<string, unknown> = {}
     filteredNodes.forEach((node) => {
-      if (isUiNodeInputAttributes(node.attributes)) {
-        if (
-          node.attributes.type === 'hidden' ||
-          node.attributes.type === 'submit' ||
-          node.attributes.type === 'button' ||
-          node.attributes.type === 'checkbox'
-        ) {
-          values[getNodeId(node)] = node.attributes.value
-        }
+      if (
+        isUiNodeInputAttributes(node.attributes) &&
+        ['hidden', 'submit', 'button', 'checkbox'].includes(
+          node.attributes.type
+        )
+      ) {
+        values[getNodeId(node)] = node.attributes.value
       }
     })
     return values
