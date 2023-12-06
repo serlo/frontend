@@ -42,7 +42,7 @@ import {
   instanceLandingData as taInstanceLandingData,
   kratosMailStrings as taKratosMailStrings,
 } from '@/data/ta'
-import { InstanceData, UuidWithRevType } from '@/data-types'
+import { type InstanceData, UuidWithRevType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 
 const languages: Instance[] = Object.values(Instance)
@@ -73,7 +73,7 @@ export function getInstanceDataByLang(lang: Instance) {
               ? hiInstanceData
               : enInstanceData
 
-  return mergeDeepRight(enData, data)
+  return mergeDeepRight(enData, data) as InstanceData
 }
 
 export function getServerSideStrings(lang: string) {
