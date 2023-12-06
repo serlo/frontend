@@ -13,8 +13,8 @@
     "packages/*"
   ],
   "scripts": {
-    ":format:prettier": "yarn prettier . --write",
-    ":prettier": "yarn prettier . --check",
+    ":format:prettier": "yarn prettier . '!{apps,packages}/**/*' --write",
+    ":prettier": "yarn prettier . '!{apps,packages}/**/*' --check",
     "build": "yarn workspace @serlo/frontend build",
     "build:next": "yarn workspace @serlo/frontend build:next",
     "build:prisma": "yarn workspace @serlo/frontend build:prisma",
