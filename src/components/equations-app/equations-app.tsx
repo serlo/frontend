@@ -602,11 +602,17 @@ export function EquationsApp() {
 
                                 // console.log(termL, valueL, '\n', termR, valueR)
 
-                                if (Math.abs(valueL) > 0.00001) {
+                                if (
+                                  typeof valueL !== 'number' ||
+                                  Math.abs(valueL) > 0.00001
+                                ) {
                                   setInputState('left-mismatch')
                                   return
                                 }
-                                if (Math.abs(valueR) > 0.00001) {
+                                if (
+                                  typeof valueR !== 'number' ||
+                                  Math.abs(valueR) > 0.00001
+                                ) {
                                   setInputState('right-mismatch')
                                   return
                                 }
