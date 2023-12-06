@@ -3,9 +3,6 @@
 # dependencies
 node_modules
 
-# testing
-/coverage
-
 # production
 build
 dist
@@ -40,3 +37,5 @@ yarn-error.log*
 
 # nvm
 .nvmrc
+
+apps/e2e-tests/output

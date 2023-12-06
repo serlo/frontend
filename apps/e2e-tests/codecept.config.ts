@@ -14,7 +14,7 @@ exports.config = {
       keepBrowserState: true,
       keepCookies: true,
       show: isCI ? false : true,
-      ...(true && isChromium
+      ...(isCI && isChromium
         ? {
             chromium: {
               args: ['--no-sandbox'], // this is needed for github CI to work
@@ -52,7 +52,7 @@ exports.config = {
             I.amOnPage('/')
             I.waitForElement(
               `header nav img[title='Benutzer*in ${adminUser}']`,
-              15,
+              15
             )
           },
           // see https://github.com/codeceptjs/CodeceptJS/issues/1591#issuecomment-480800333

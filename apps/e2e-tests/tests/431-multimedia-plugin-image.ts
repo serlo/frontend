@@ -5,7 +5,7 @@ Feature('Serlo Editor - Multimedia plugin - image multimedia type')
 
 const login = async (I: CodeceptJS.I) => {
   const loginButtonVisible = await I.grabNumberOfVisibleElements(
-    locate('a').withAttr({ href: '/auth/login' }),
+    locate('a').withAttr({ href: '/auth/login' })
   )
 
   if (!loginButtonVisible) {
@@ -24,7 +24,7 @@ const login = async (I: CodeceptJS.I) => {
 
 const logout = async (I: CodeceptJS.I) => {
   const userAvatarVisible = await I.grabNumberOfVisibleElements(
-    locate('img').withAttr({ alt: 'Avatar' }),
+    locate('img').withAttr({ alt: 'Avatar' })
   )
 
   if (!userAvatarVisible) {
@@ -86,11 +86,11 @@ Scenario('Multimedia plugin successful image upload', async ({ I }) => {
   I.fillField('Maximale Breite', maxWidth)
   I.click('$modal-close-button')
   I.seeElement(
-    locate('.mx-auto').withAttr({ style: `max-width: ${maxWidth}px;` }),
+    locate('.mx-auto').withAttr({ style: `max-width: ${maxWidth}px;` })
   )
 
   I.say(
-    'Switch to video and back to image - uploaded image and settings should stay',
+    'Switch to video and back to image - uploaded image and settings should stay'
   )
   I.click(locate('$plugin-image-editor').inside('.plugin-rows'))
   I.click('$plugin-multimedia-parent-button')
@@ -98,7 +98,7 @@ Scenario('Multimedia plugin successful image upload', async ({ I }) => {
   I.selectOption('$plugin-multimedia-type-select', 'Video')
   I.click('$modal-close-button')
   I.seeElement(
-    locate('$plugin-video-placeholder').inside('$plugin-multimedia-wrapper'),
+    locate('$plugin-video-placeholder').inside('$plugin-multimedia-wrapper')
   )
   I.click('$plugin-multimedia-settings-button')
   I.selectOption('$plugin-multimedia-type-select', 'Bild')
@@ -106,7 +106,7 @@ Scenario('Multimedia plugin successful image upload', async ({ I }) => {
   I.seeElement(locate('img.serlo-img').withAttr({ alt: description }))
   I.seeElement(locate('$plugin-image-link').withAttr({ href }))
   I.seeElement(
-    locate('.mx-auto').withAttr({ style: `max-width: ${maxWidth}px;` }),
+    locate('.mx-auto').withAttr({ style: `max-width: ${maxWidth}px;` })
   )
 
   await logout(I)
@@ -130,7 +130,7 @@ Scenario('Multimedia plugin invalid image URL', async ({ I }) => {
   I.seeElement(
     locate('img.serlo-img').withAttr({
       src: 'https://de.serlo.org/_assets/img/serlo-logo',
-    }),
+    })
   )
   I.dontSeeElement(locate('$plugin-image-placeholder').inside('plugin-rows'))
 
@@ -175,7 +175,7 @@ Scenario('Multimedia plugin valid image URL', async ({ I }) => {
   I.fillField('Maximale Breite', maxWidth)
   I.click('$modal-close-button')
   I.seeElement(
-    locate('.mx-auto').withAttr({ style: `max-width: ${maxWidth}px;` }),
+    locate('.mx-auto').withAttr({ style: `max-width: ${maxWidth}px;` })
   )
 
   I.say('Switch to video and back to image - image and settings should stay')
@@ -185,7 +185,7 @@ Scenario('Multimedia plugin valid image URL', async ({ I }) => {
   I.selectOption('$plugin-multimedia-type-select', 'Video')
   I.click('$modal-close-button')
   I.seeElement(
-    locate('$plugin-video-placeholder').inside('$plugin-multimedia-wrapper'),
+    locate('$plugin-video-placeholder').inside('$plugin-multimedia-wrapper')
   )
   I.click('$plugin-multimedia-settings-button')
   I.selectOption('$plugin-multimedia-type-select', 'Bild')
@@ -194,7 +194,7 @@ Scenario('Multimedia plugin valid image URL', async ({ I }) => {
   I.seeElement(locate('img.serlo-img').withAttr({ alt: description }))
   I.seeElement(locate('$plugin-image-link').withAttr({ href: link }))
   I.seeElement(
-    locate('.mx-auto').withAttr({ style: `max-width: ${maxWidth}px;` }),
+    locate('.mx-auto').withAttr({ style: `max-width: ${maxWidth}px;` })
   )
 
   await logout(I)
@@ -220,7 +220,7 @@ Scenario('Multimedia plugin fill in image caption', async ({ I }) => {
   I.selectOption('$plugin-multimedia-type-select', 'Video')
   I.click('$modal-close-button')
   I.seeElement(
-    locate('$plugin-video-placeholder').inside('$plugin-multimedia-wrapper'),
+    locate('$plugin-video-placeholder').inside('$plugin-multimedia-wrapper')
   )
   I.click('$plugin-multimedia-settings-button')
   I.selectOption('$plugin-multimedia-type-select', 'Bild')

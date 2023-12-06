@@ -6,7 +6,7 @@ integration tests for serlo.org
 git clone https://github.com/serlo/frontend-e2e-tests.git
 cd frontend-e2e-tests
 yarn
-yarn test
+yarn e2e
 ```
 
 output should look something like that:
@@ -18,25 +18,25 @@ Tests are written with Playwright (wrapped by CodeceptJS), extensive documentati
 To run a single test, use `--grep`:
 
 ```sh
-yarn test --grep "Quickbar"
+yarn e2e --grep "Quickbar"
 ```
 
 You can also run a single file:
 
 ```sh
-yarn test tests/000-general.ts
+yarn e2e tests/000-general.ts
 ```
 
 Run all editor tests:
 
 ```sh
-yarn test tests/4*.ts
+yarn e2e tests/4*.ts
 ```
 
 You can run tests on firefox instead of chromium with
 
 ```sh
-yarn test-firefox
+yarn e2e-firefox
 ```
 
 The tests are written in `/tests`, the file names are setting the order of execution. The browser session is stored between tests, TypeScript is supported.

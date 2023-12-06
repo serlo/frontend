@@ -48,7 +48,7 @@ Scenario('Multimedia plugin toolbar controls', async ({ I }) => {
   I.selectOption('$plugin-multimedia-type-select', 'Video')
   I.click('$modal-close-button')
   I.seeElement(
-    locate('$plugin-video-placeholder').inside('$plugin-multimedia-wrapper'),
+    locate('$plugin-video-placeholder').inside('$plugin-multimedia-wrapper')
   )
 
   I.say('Change the type of the multimedia content to GeoGebra')
@@ -56,6 +56,6 @@ Scenario('Multimedia plugin toolbar controls', async ({ I }) => {
   I.selectOption('$plugin-multimedia-type-select', 'GeoGebra Applet')
   I.click('$modal-close-button')
   I.seeElement(
-    locate('$plugin-geogebra-placeholder').inside('$plugin-multimedia-wrapper'),
+    locate('$plugin-geogebra-placeholder').inside('$plugin-multimedia-wrapper')
   )
 })

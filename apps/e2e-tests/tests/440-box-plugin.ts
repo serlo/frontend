@@ -74,7 +74,7 @@ Scenario(
 
     I.see('Boxtitel', '$plugin-box-title')
     I.see('Boxinhalt', '$plugin-box-content')
-  },
+  }
 )
 
 Scenario(
@@ -98,7 +98,7 @@ Scenario(
     I.type('Boxinhalt')
     I.click('input[placeholder="Titel"]') // unfocus box plugin
     I.dontSeeElement('$plugin-box-empty-content-warning')
-  },
+  }
 )
 
 Scenario('Set box type using keyboard', async ({ I }) => {

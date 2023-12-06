@@ -109,7 +109,7 @@ Scenario(
     }
     I.type('### ')
     I.dontSee('Some text', 'h3')
-  },
+  }
 )
 
 Scenario(
@@ -240,5 +240,5 @@ Scenario(
     I.see('LaTeX')
     I.click('$plugin-toolbar-button-matheformel')
     I.dontSeeElement('span.katex')
-  },
+  }
 )

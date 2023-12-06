@@ -127,7 +127,7 @@ Scenario(
       I.dontSeeInField(articleHeadingInput, `${firstWord}${secondWord}`)
       I.dontSeeInField(articleHeadingInput, firstWord)
     }
-  },
+  }
 )
 
 Scenario(
@@ -170,7 +170,7 @@ Scenario(
       I.dontSeeInField(imagePluginUrlInput, `${firstWord}${secondWord}`)
       I.dontSeeInField(imagePluginUrlInput, firstWord)
     }
-  },
+  }
 )
 
 Scenario(
@@ -211,5 +211,5 @@ Scenario(
       I.pressKey(keys.REDO)
       I.seeInField(articleHeadingInput, `${firstWord}${secondWord}`)
     }
-  },
+  }
 )
