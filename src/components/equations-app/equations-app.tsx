@@ -23,7 +23,6 @@ type InputState =
   | 'var-mismatch'
   | 'left-mismatch'
   | 'right-mismatch'
-  | 'mismatch'
 
 export function EquationsApp() {
   const ce = new ComputeEngine()
@@ -104,7 +103,6 @@ export function EquationsApp() {
     return () => {
       window.removeEventListener('popstate', handlePopstate)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (showOverview) {
@@ -529,7 +527,7 @@ export function EquationsApp() {
                     <div className="mb-2 flex items-baseline justify-between">
                       <div className="pt-3 text-base font-bold text-gray-700 ">
                         {actions[actions.length - 1].type === 'simplify'
-                          ? 'Gleichung vereinfachen:'
+                          ? 'Terme in Gleichung vereinfachen:'
                           : 'Forme auf beiden Seiten um:'}
                       </div>
                       <button
@@ -594,40 +592,23 @@ export function EquationsApp() {
                                   ce.assign(variableSymbol, i)
                                 }
 
-                                const type = actions[actions.length - 1].type
+                                const termL = `( ${refLeft} ) - ( ${parts[0]} )`
+                                const valueL = safeParse(termL).N()
+                                  .value as number
 
-                                if (type === 'simplify') {
-                                  const termP = `( ${refLeft} ) - ( ${refRight} )`
-                                  const valueP = safeParse(termP).N()
-                                    .value as number
+                                const termR = `( ${refRight} ) - ( ${parts[1]} )`
+                                const valueR = safeParse(termR).N()
+                                  .value as number
 
-                                  const term = `( ${parts[0]} ) - ( ${parts[1]} )`
-                                  const value = safeParse(term).N()
-                                    .value as number
+                                // console.log(termL, valueL, '\n', termR, valueR)
 
-                                  if (Math.abs(valueP - value) > 0.0001) {
-                                    setInputState('mismatch')
-                                    return
-                                  }
-                                } else {
-                                  const termL = `( ${refLeft} ) - ( ${parts[0]} )`
-                                  const valueL = safeParse(termL).N()
-                                    .value as number
-
-                                  const termR = `( ${refRight} ) - ( ${parts[1]} )`
-                                  const valueR = safeParse(termR).N()
-                                    .value as number
-
-                                  // console.log(termL, valueL, '\n', termR, valueR)
-
-                                  if (Math.abs(valueL) > 0.00001) {
-                                    setInputState('left-mismatch')
-                                    return
-                                  }
-                                  if (Math.abs(valueR) > 0.00001) {
-                                    setInputState('right-mismatch')
-                                    return
-                                  }
+                                if (Math.abs(valueL) > 0.00001) {
+                                  setInputState('left-mismatch')
+                                  return
+                                }
+                                if (Math.abs(valueR) > 0.00001) {
+                                  setInputState('right-mismatch')
+                                  return
                                 }
                                 //if (symbols.size == 0) break
                               }
@@ -671,9 +652,6 @@ export function EquationsApp() {
                       )}
                       {inputState === 'var-mismatch' && (
                         <span>Variablen passen nicht</span>
-                      )}
-                      {inputState === 'mismatch' && (
-                        <span>Vereinfachung nicht äquivalent</span>
                       )}
                       {inputState === 'left-mismatch' && (
                         <span>
