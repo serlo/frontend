@@ -14,4 +14,4 @@ jobs:
         with:
           node-version: 18.x
       - run: yarn
-      - run: yarn global:prettier
+      - run: yarn :prettier

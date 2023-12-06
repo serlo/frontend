@@ -15,8 +15,10 @@ import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { UuidsProvider } from '@/contexts/uuids-context'
 import { InstanceData, LoggedInData } from '@/data-types'
-import { Instance } from '@/fetcher/graphql-types/operations'
-import { getInstanceDataByLang } from '@/helper/feature-i18n'
+import {
+  FixedInstanceData,
+  featureI18nForServerOnly,
+} from '@/helper/feature-i18n-for-server-only'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { frontendOrigin } from '@/helper/urls/frontent-origin'
 
@@ -46,11 +48,6 @@ Router.events.on('routeChangeComplete', (url, { shallow }) => {
 })
 Router.events.on('routeChangeError', () => NProgress.done())
 
-// assumes that the lang-strings in the i18n files are actually valid Instance strings
-type FixedInstanceData = ReturnType<typeof getInstanceDataByLang> & {
-  lang: Instance
-}
-
 export function FrontendClientBase({
   children,
   noHeaderFooter,
@@ -66,9 +63,7 @@ export function FrontendClientBase({
     if (typeof window === 'undefined') {
       // load instance data for server side rendering
       // Note: using require to avoid webpack bundling it
-      return getInstanceDataByLang(
-        (locale as Instance) ?? Instance.De
-      ) as FixedInstanceData
+      return featureI18nForServerOnly(locale)
     } else {
       // load instance data from client from document tag
       return JSON.parse(

@@ -31,17 +31,15 @@ const nextConfig = {
     fileLoaderRule.exclude = /\.svg$/i
 
     // fixes problem with frontend-client-base needs language data on server but document is not ready
+    // resolve feature-i18n as empty module on client
     if (!isServer) {
-      // resolve feature-i18n as empty module on client
-      config.resolve.alias[
-        path.join(
-          path.dirname(fileURLToPath(import.meta.url)),
-          'src',
-          'helper',
-          'feature-i18n.tsx'
-        )
-      ] = false
-      console.log(config.resolve.alias)
+      const featureI18nFile = path.join(
+        path.dirname(fileURLToPath(import.meta.url)),
+        'src',
+        'helper',
+        'feature-i18n-for-server-only.ts'
+      )
+      config.resolve.alias[featureI18nFile] = false
     }
 
     return config

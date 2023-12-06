@@ -42,7 +42,7 @@ import {
   instanceLandingData as taInstanceLandingData,
   kratosMailStrings as taKratosMailStrings,
 } from '@/data/ta'
-import { InstanceData, UuidWithRevType } from '@/data-types'
+import { type InstanceData, UuidWithRevType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 
 const languages: Instance[] = Object.values(Instance)
@@ -73,7 +73,7 @@ export function getInstanceDataByLang(lang: Instance) {
               ? hiInstanceData
               : enInstanceData
 
-  return mergeDeepRight(enData, data) as typeof enInstanceData
+  return mergeDeepRight(enData, data) as InstanceData
 }
 
 export function getServerSideStrings(lang: string) {
@@ -92,7 +92,7 @@ export function getServerSideStrings(lang: string) {
               ? hiServerSideStrings
               : enServerSideStrings
 
-  return mergeDeepRight(enData, data) as typeof enServerSideStrings
+  return mergeDeepRight(enData, data)
 }
 
 export function getLandingData(lang: string) {
@@ -111,7 +111,7 @@ export function getLandingData(lang: string) {
               ? hiInstanceLandingData
               : enInstanceLandingData
 
-  return mergeDeepRight(enData, data) as typeof enInstanceLandingData
+  return mergeDeepRight(enData, data)
 }
 
 export function getLoggedInData(lang: string) {
@@ -130,7 +130,7 @@ export function getLoggedInData(lang: string) {
               ? hiLoggedInData
               : enLoggedInData
 
-  return mergeDeepRight(enData, data) as typeof enLoggedInData
+  return mergeDeepRight(enData, data)
 }
 
 export function getKratosMailStrings(lang: string) {
@@ -149,7 +149,7 @@ export function getKratosMailStrings(lang: string) {
               ? hiKratosMailStrings
               : enKratosMailStrings
 
-  return mergeDeepRight(enData, data) as typeof enKratosMailStrings
+  return mergeDeepRight(enData, data)
 }
 
 export function getEntityStringByTypename(

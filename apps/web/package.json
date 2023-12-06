@@ -173,9 +173,6 @@
     "minimumChangeThreshold": 0,
     "showDetails": true
   },
-  "svgr": {
-    "svgo": false
-  },
   "postcss": {
     "plugins": {
       "tailwindcss/nesting": {},
@@ -183,5 +180,8 @@
       "postcss-flexbugs-fixes": {},
       "autoprefixer": {}
     }
+  },
+  "svgr": {
+    "svgo": false
   }
 }
