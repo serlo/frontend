@@ -32,16 +32,14 @@ const nextConfig = {
 
     // fixes problem with frontend-client-base needs language data on server but document is not ready
     // resolve feature-i18n as empty module on client
-    const featureI18nFile = path.join(
-      path.dirname(fileURLToPath(import.meta.url)),
-      'src',
-      'helper',
-      'feature-i18n.tsx'
-    )
     if (!isServer) {
+      const featureI18nFile = path.join(
+        path.dirname(fileURLToPath(import.meta.url)),
+        'src',
+        'helper',
+        'feature-i18n-for-server-only.ts'
+      )
       config.resolve.alias[featureI18nFile] = false
-    } else {
-      delete config.resolve.alias[featureI18nFile]
     }
 
     return config
