@@ -1,13 +1,24 @@
 import type { FillInTheBlanksExerciseProps, FillInTheBlanksMode } from '.'
 import { FillInTheBlanksRenderer } from './renderer'
+import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
-import { selectDocument, useAppSelector } from '@/serlo-editor/store'
+import {
+  selectDocument,
+  selectIsFocused,
+  useAppSelector,
+} from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
 export function FillInTheBlanksExerciseEditor(
   props: FillInTheBlanksExerciseProps
 ) {
   const { focused } = props
+
+  const isRendererTextPluginFocused = useAppSelector((storeState) => {
+    return selectIsFocused(storeState, props.state.text.id)
+  })
+
+  const hasFocus = focused || isRendererTextPluginFocused
 
   // Rerender if text plugin state changes
   const textPluginState = useAppSelector((state) => {
@@ -18,19 +29,18 @@ export function FillInTheBlanksExerciseEditor(
 
   return (
     <div className="mb-12 mt-10 pt-4">
-      {/* while developing */}
-      <div className="hidden">
-        {focused ? (
-          // TODO: Add button to toggle between fill-in-the-blanks and drag-and-drop
-          // TODO: Make toolbars nested like in multimedia
-          <PluginToolbar
-            pluginType={EditorPluginType.FillInTheBlanksExercise}
-            className="!left-[21px] top-[-33px] w-[calc(100%-37px)]"
-          />
-        ) : null}
-      </div>
+      {hasFocus ? (
+        // TODO: Add button to toggle between fill-in-the-blanks and drag-and-drop
+        <PluginToolbar
+          pluginType={EditorPluginType.FillInTheBlanksExercise}
+          className="!left-[21px] top-[-33px] w-[calc(100%-37px)]"
+          pluginControls={<InteractiveToolbarTools id={props.id} />}
+        />
+      ) : null}
       <FillInTheBlanksRenderer
-        text={props.state.text.render()}
+        text={props.state.text.render({
+          config: { isInlineChildEditor: true },
+        })}
         textPluginState={textPluginState}
         mode={props.state.mode.value as FillInTheBlanksMode}
         initialTextInBlank="correct-answer"
