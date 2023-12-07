@@ -48,7 +48,7 @@ Some of the features we use:
 
 We are trying out a [serverless sql database](https://app.planetscale.com/serlo/serlo_planetscale) and use it to build prototypes. Don't use for production features yet!
 
-Add the environment variable `DATABASE_URL` to `.env.local` (next.js) and `prisma/.env` (prisma cli). You can generate the database url from planetscale or ping one of us to generat one for you. (sorry for the inconvienience here). Run `yarn prisma generate` to update the prisma client and test the database connection.
+Add the environment variable `DATABASE_URL` to `apps/web/.env.local` (next.js). You can generate the database url from planetscale or ping one of us to generat one for you. (sorry for the inconvienience here). Run `yarn prisma:build` to update the prisma client and test the database connection. Run `yarn prisma:studio` for Prisma Studio, run `yarn prisma:db-pull` to download db schema.
 
 ## Repository Overview
 
