@@ -15,11 +15,13 @@ const allInteractiveExerciseTypes = isProduction
   ? ([
       EditorPluginType.ScMcExercise,
       EditorPluginType.InputExercise,
+      EditorPluginType.TextAreaExercise,
       EditorPluginType.H5p,
     ] as const)
   : ([
       EditorPluginType.ScMcExercise,
       EditorPluginType.InputExercise,
+      EditorPluginType.TextAreaExercise,
       EditorPluginType.H5p,
       EditorPluginType.FillInTheBlanksExercise,
     ] as const)
