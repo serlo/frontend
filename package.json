@@ -30,10 +30,13 @@
     "lint:eslint": "yarn workspace @serlo/frontend lint:eslint",
     "lint:prettier": "yarn workspace @serlo/frontend lint:prettier",
     "lint:tsc": "yarn workspace @serlo/frontend lint:tsc",
+    "prisma:db-pull": "dotenv -e apps/web/.env.local yarn workspace @serlo/frontend prisma db pull",
+    "prisma:studio": "dotenv -e apps/web/.env.local yarn workspace @serlo/frontend prisma studio",
     "start": "yarn workspace @serlo/frontend start",
     "test": "yarn workspace @serlo/frontend test"
   },
   "devDependencies": {
+    "dotenv-cli": "^7.3.0",
     "prettier": "^3.1.0",
     "prettier-plugin-packagejson": "^2.4.6"
   },

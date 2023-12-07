@@ -82,10 +82,8 @@ model QuickbarStats {
 
 model EquationsAppStats {
   id        Int      @id @default(autoincrement())
-  
   event     String   @db.VarChar(255)
   latex     String   @db.VarChar(255)
-
   sessionId String   @db.VarChar(64)
   timestamp DateTime @default(now())
 
