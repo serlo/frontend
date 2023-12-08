@@ -9,13 +9,15 @@ function createTextAreaExerciseState() {
   return object({})
 }
 
-export const textAreaExercisePlugin: EditorPlugin<TextAreaExerciseState> = {
-  Component: TextAreaExerciseEditor,
-  state: createTextAreaExerciseState(),
-  config: {},
-}
+export const textAreaExercisePlugin: EditorPlugin<TextAreaExercisePluginState> =
+  {
+    Component: TextAreaExerciseEditor,
+    state: createTextAreaExerciseState(),
+    config: {},
+  }
 
-export type TextAreaExerciseState = ReturnType<
+export type TextAreaExercisePluginState = ReturnType<
   typeof createTextAreaExerciseState
 >
-export type TextAreaExerciseProps = EditorPluginProps<TextAreaExerciseState>
+export type TextAreaExerciseProps =
+  EditorPluginProps<TextAreaExercisePluginState>

@@ -4,6 +4,7 @@ import type { ArticlePluginState } from '../plugins/article'
 import type { ExercisePluginState } from '../plugins/exercise'
 import type { InjectionPluginState } from '../plugins/injection'
 import type { SolutionPluginState } from '../plugins/solution'
+import { TextAreaExercisePluginState } from '../plugins/text-area-exercise'
 import type { UnsupportedPluginState } from '../plugins/unsupported'
 import { License } from '@/fetcher/query-types'
 import type { PrettyStaticState } from '@/serlo-editor/plugin'
@@ -106,6 +107,11 @@ export interface EditorInjectionDocument {
 export interface EditorInputExerciseDocument {
   plugin: EditorPluginType.InputExercise
   state: PrettyStaticState<InputExercisePluginState>
+  id?: string
+}
+export interface EditorTextAreaExerciseDocument {
+  plugin: EditorPluginType.TextAreaExercise
+  state: PrettyStaticState<TextAreaExercisePluginState>
   id?: string
 }
 export interface EditorMultimediaDocument {
