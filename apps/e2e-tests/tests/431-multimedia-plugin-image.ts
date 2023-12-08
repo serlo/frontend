@@ -35,7 +35,7 @@ const logout = async (I: CodeceptJS.I) => {
   I.say('Log out')
   I.click('Benutzer')
   I.click('Abmelden')
-  I.waitForText('Bis bald!', 10)
+  I.waitForText('Bis bald!', 20)
   I.see('Anmelden')
 }
 

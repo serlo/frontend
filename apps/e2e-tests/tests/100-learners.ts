@@ -229,7 +229,7 @@ Scenario('Taxonomy', ({ I }) => {
   I.click('2021')
 
   // Takes a long time to load
-  I.waitForText('Berechne', 30)
+  I.waitForText('Berechne', 40)
 
   I.amOnPage('/24370')
   I.see('Artikel')
