@@ -1,0 +1,21 @@
+# Third-party
+
+# Transpiled
+.next
+
+# Lock files
+*.lock
+
+# HTML files
+*.html
+
+# Generated files
+src/data/*/index.ts
+src/fetcher/graphql-types/operations.ts
+graphql.schema.json
+
+# Assets
+public
+
+# Yarn
+.yarn/
