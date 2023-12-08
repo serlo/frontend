@@ -24,6 +24,7 @@
     "lint:eslint": "yarn _eslint",
     "lint:prettier": "yarn _prettier --check",
     "lint:tsc": "tsc --noEmit",
+    "tsc": "tsc",
     "show-unused-exports": "ts-unused-exports tsconfig.json --excludePathsFromReport=src/pages/ --excludePathsFromReport=src/fetcher/graphql-types/operations.ts --allowUnusedTypes",
     "start": "next start",
     "test": "jest"
@@ -44,6 +45,7 @@
     "@radix-ui/react-select": "^1.2.2",
     "@reduxjs/toolkit": "^1.9.7",
     "@serlo/authorization": "^0.59.1",
+    "@serlo/editor": "workspace:*",
     "@tippyjs/react": "^4.2.6",
     "algebra.js": "^0.2.6",
     "array-move": "^4.0.0",

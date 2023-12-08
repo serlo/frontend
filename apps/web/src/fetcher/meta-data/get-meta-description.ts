@@ -1,10 +1,10 @@
-import { extractStringFromTextDocument } from '@/serlo-editor/plugins/text/utils/static-extract-text'
-import { getChildrenOfStaticDocument } from '@/serlo-editor/static-renderer/helper/get-children-of-static-document'
-import { AnyEditorDocument } from '@/serlo-editor/types/editor-plugins'
+import { extractStringFromTextDocument } from '@serlo/editor/src/plugins/text/utils/static-extract-text'
+import { getChildrenOfStaticDocument } from '@serlo/editor/src/static-renderer/helper/get-children-of-static-document'
+import { AnyEditorDocument } from '@serlo/editor/src/types/editor-plugins'
 import {
   isRowsDocument,
   isTextDocument,
-} from '@/serlo-editor/types/plugin-type-guards'
+} from '@serlo/editor/src/types/plugin-type-guards'
 
 export function getMetaDescription(
   content?: AnyEditorDocument

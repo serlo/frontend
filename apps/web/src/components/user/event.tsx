@@ -1,5 +1,6 @@
 import { faBellSlash, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { Entity } from '@serlo/authorization'
+import type { StaticMathProps } from '@serlo/editor/src/plugins/text/static-components/static-math'
 import Tippy from '@tippyjs/react'
 import dynamic from 'next/dynamic'
 
@@ -17,7 +18,6 @@ import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { isProduction } from '@/helper/is-production'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
-import type { StaticMathProps } from '@/serlo-editor/plugins/text/static-components/static-math'
 
 type Event = GetNotificationsQuery['notifications']['nodes'][number]['event']
 
@@ -39,7 +39,7 @@ interface EventProps {
 }
 
 const StaticMath = dynamic<StaticMathProps>(() =>
-  import('@/serlo-editor/plugins/text/static-components/static-math').then(
+  import('@serlo/editor/src/plugins/text/static-components/static-math').then(
     (mod) => mod.StaticMath
   )
 )

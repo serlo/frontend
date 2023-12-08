@@ -1,25 +1,26 @@
-import type { AppletTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/applet'
-import type { ArticleTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/article'
+import type { StateType, StateTypeStaticType } from '@serlo/editor/src/plugin'
+import type { AppletTypePluginState } from '@serlo/editor/src/plugins/serlo-template-plugins/applet'
+import type { ArticleTypePluginState } from '@serlo/editor/src/plugins/serlo-template-plugins/article'
 import {
   type Entity,
   type Uuid,
-} from '../serlo-editor/plugins/serlo-template-plugins/common/common'
-import type { CourseTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/course/course'
-import type { CoursePageTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/course/course-page'
-import type { EventTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/event'
-import type { TextExerciseGroupTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
-import type { PageTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/page'
-import type { TaxonomyTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/taxonomy'
-import type { TextExerciseTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/text-exercise'
-import type { UserTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/user'
-import type { VideoTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/video'
-import { EditorPluginType } from '../serlo-editor/types/editor-plugin-type'
-import type { AnyEditorDocument } from '../serlo-editor/types/editor-plugins'
-import { TemplatePluginType } from '../serlo-editor/types/template-plugin-type'
+} from '@serlo/editor/src/plugins/serlo-template-plugins/common/common'
+import type { CourseTypePluginState } from '@serlo/editor/src/plugins/serlo-template-plugins/course/course'
+import type { CoursePageTypePluginState } from '@serlo/editor/src/plugins/serlo-template-plugins/course/course-page'
+import type { EventTypePluginState } from '@serlo/editor/src/plugins/serlo-template-plugins/event'
+import type { TextExerciseGroupTypePluginState } from '@serlo/editor/src/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
+import type { PageTypePluginState } from '@serlo/editor/src/plugins/serlo-template-plugins/page'
+import type { TaxonomyTypePluginState } from '@serlo/editor/src/plugins/serlo-template-plugins/taxonomy'
+import type { TextExerciseTypePluginState } from '@serlo/editor/src/plugins/serlo-template-plugins/text-exercise'
+import type { UserTypePluginState } from '@serlo/editor/src/plugins/serlo-template-plugins/user'
+import type { VideoTypePluginState } from '@serlo/editor/src/plugins/serlo-template-plugins/video'
+import { EditorPluginType } from '@serlo/editor/src/types/editor-plugin-type'
+import type { AnyEditorDocument } from '@serlo/editor/src/types/editor-plugins'
+import { TemplatePluginType } from '@serlo/editor/src/types/template-plugin-type'
+
 import { UuidType, UuidRevType } from '@/data-types'
 import type { User, MainUuidType } from '@/fetcher/query-types'
 import { triggerSentry } from '@/helper/trigger-sentry'
-import type { StateType, StateTypeStaticType } from '@/serlo-editor/plugin'
 
 /** Converts graphql query response to static editor document */
 export function convertEditorResponseToState(

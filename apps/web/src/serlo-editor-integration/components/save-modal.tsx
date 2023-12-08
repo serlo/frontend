@@ -1,9 +1,10 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import type { StateTypeReturnType } from '@serlo/editor/src/plugin'
+import { entity } from '@serlo/editor/src/plugins/serlo-template-plugins/common/common'
+import { useHandleSave } from '@serlo/editor/src/plugins/serlo-template-plugins/helpers/use-handle-save'
 import { useContext, useEffect, useState } from 'react'
 
 import { LocalStorageButton } from './local-storage-button'
-import { entity } from '../../serlo-editor/plugins/serlo-template-plugins/common/common'
-import { useHandleSave } from '../../serlo-editor/plugins/serlo-template-plugins/helpers/use-handle-save'
 import { SaveContext } from '../context/save-context'
 import { InfoPanel } from '@/components/info-panel'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
@@ -12,7 +13,6 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { getLicense } from '@/data/licenses/licenses-helpers'
 import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import type { StateTypeReturnType } from '@/serlo-editor/plugin'
 
 export interface SaveModalProps {
   open: boolean

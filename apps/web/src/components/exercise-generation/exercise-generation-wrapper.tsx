@@ -1,3 +1,4 @@
+import { EditorProps } from '@serlo/editor/src/core'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
@@ -6,7 +7,6 @@ import { ExercisePreviewPage } from './exercise-preview-page'
 import { ModalWithCloseButton } from '../modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { submitEvent } from '@/helper/submit-event'
-import { EditorProps } from '@/serlo-editor/core'
 
 export interface ExerciseGenerationWrapperProps {
   subject: string

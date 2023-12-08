@@ -4,6 +4,11 @@ import {
   faTools,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
+import { editorRenderers } from '@serlo/editor/src/plugin/helpers/editor-renderer'
+import { isEmptyRowsDocument } from '@serlo/editor/src/plugins/rows/utils/static-is-empty'
+import { CourseNavigation } from '@serlo/editor/src/plugins/serlo-template-plugins/course/course-navigation'
+import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
+import { isArticleDocument } from '@serlo/editor/src/types/plugin-type-guards'
 import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
 
@@ -21,11 +26,6 @@ import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
-import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
-import { isEmptyRowsDocument } from '@/serlo-editor/plugins/rows/utils/static-is-empty'
-import { CourseNavigation } from '@/serlo-editor/plugins/serlo-template-plugins/course/course-navigation'
-import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { isArticleDocument } from '@/serlo-editor/types/plugin-type-guards'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 export interface EntityProps {

@@ -1,4 +1,7 @@
 import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { editorRenderers } from '@serlo/editor/src/plugin/helpers/editor-renderer'
+import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
+import { EditorRowsDocument } from '@serlo/editor/src/types/editor-plugins'
 import dynamic from 'next/dynamic'
 import { Fragment, useState } from 'react'
 import { RatingProps } from 'react-simple-star-rating'
@@ -18,9 +21,6 @@ import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { abSubmission } from '@/helper/ab-submission'
 import { cn } from '@/helper/cn'
-import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
-import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorRowsDocument } from '@/serlo-editor/types/editor-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 export interface TopicProps {

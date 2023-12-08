@@ -3,7 +3,8 @@
   "baseUrl": ".",
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@editor/*": ["../../packages/editor/src/*"]
     },
     "plugins": [{ "name": "next" }]
   },
@@ -14,5 +15,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "shared/tailwind-base.js"
-  ]
+  ],
+  "rootDir": "."
 }

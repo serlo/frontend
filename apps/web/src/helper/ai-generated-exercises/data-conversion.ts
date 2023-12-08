@@ -1,4 +1,14 @@
 /* eslint-disable no-console */
+
+import { InputExerciseType } from '@serlo/editor/src/plugins/input-exercise/input-exercise-type'
+import { CustomText, MathElement } from '@serlo/editor/src/plugins/text'
+import { EditorPluginType } from '@serlo/editor/src/types/editor-plugin-type'
+import {
+  EditorExerciseDocument,
+  EditorSolutionDocument,
+  EditorTemplateExerciseGroupDocument,
+} from '@serlo/editor/src/types/editor-plugins'
+import { TemplatePluginType } from '@serlo/editor/src/types/template-plugin-type'
 import { either as E } from 'fp-ts'
 import { PathReporter } from 'io-ts/lib/PathReporter'
 
@@ -17,15 +27,6 @@ import {
   humanReadableSingleChoiceExample,
 } from './decoders'
 import { LicenseData } from '@/data-types'
-import { InputExerciseType } from '@/serlo-editor/plugins/input-exercise/input-exercise-type'
-import { CustomText, MathElement } from '@/serlo-editor/plugins/text'
-import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
-import {
-  EditorExerciseDocument,
-  EditorSolutionDocument,
-  EditorTemplateExerciseGroupDocument,
-} from '@/serlo-editor/types/editor-plugins'
-import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 
 /**
  * Data needed to render and edit the exercises in the editor.

@@ -1,10 +1,10 @@
 import { faWandSparkles } from '@fortawesome/free-solid-svg-icons'
+import { EditorTooltip } from '@serlo/editor/src/editor-ui/editor-tooltip'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 
 export function AiExerciseGenerationButton({
   isSingularExercise,

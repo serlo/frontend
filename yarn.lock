@@ -4097,7 +4097,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@serlo/editor@workspace:packages/editor":
+"@serlo/editor@workspace:*, @serlo/editor@workspace:packages/editor":
   version: 0.0.0-use.local
   resolution: "@serlo/editor@workspace:packages/editor"
   dependencies:
@@ -4113,6 +4113,7 @@ __metadata:
     "@radix-ui/react-navigation-menu": ^1.1.4
     "@radix-ui/react-select": ^1.2.2
     "@reduxjs/toolkit": ^1.9.7
+    "@serlo/frontend": "workspace:*"
     "@serlo/typescript-config": "workspace:*"
     "@svgr/webpack": ^8.1.0
     "@tailwindcss/typography": ^0.5.10
@@ -4192,7 +4193,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@serlo/frontend@workspace:apps/web":
+"@serlo/frontend@workspace:*, @serlo/frontend@workspace:apps/web":
   version: 0.0.0-use.local
   resolution: "@serlo/frontend@workspace:apps/web"
   dependencies:
@@ -4219,6 +4220,7 @@ __metadata:
     "@radix-ui/react-select": ^1.2.2
     "@reduxjs/toolkit": ^1.9.7
     "@serlo/authorization": ^0.59.1
+    "@serlo/editor": "workspace:*"
     "@serlo/typescript-config": "workspace:*"
     "@svgr/webpack": ^8.1.0
     "@tailwindcss/typography": ^0.5.10

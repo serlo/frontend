@@ -1,7 +1,7 @@
 import {
   isEmptyCustomText,
   isEmptyDescendant,
-} from '@/serlo-editor/plugins/text/utils/static-is-empty'
+} from '@serlo/editor/src/plugins/text/utils/static-is-empty'
 
 const text = { text: 'abc123' }
 const emptyText = { text: '' }

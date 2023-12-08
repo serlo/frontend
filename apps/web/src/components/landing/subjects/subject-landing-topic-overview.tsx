@@ -1,3 +1,5 @@
+import { editorRenderers } from '@serlo/editor/src/plugin/helpers/editor-renderer'
+import { isImageDocument } from '@serlo/editor/src/types/plugin-type-guards'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
@@ -9,8 +11,6 @@ import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import type { TaxonomySubTerm } from '@/data-types'
 import { cn } from '@/helper/cn'
 import { isPartiallyInView } from '@/helper/is-partially-in-view'
-import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
-import { isImageDocument } from '@/serlo-editor/types/plugin-type-guards'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 interface SubjectLandingTopicOverviewProps {
