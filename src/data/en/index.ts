@@ -904,7 +904,7 @@ export const loggedInData = {
           title: 'SC/MC Exercise',
           description: 'Single Choice or Multiple Choice'
         },
-        fillInTheBlanks: {
+        textWithBlanksExercise: {
           title: 'Fill In The Blanks Exercise',
           description: 'Text with blanks'
         }
@@ -967,8 +967,8 @@ export const loggedInData = {
         exercise: {
           scMcExercise: 'Choice Exercise',
           inputExercise: 'Input Exercise',
+          textWithBlanksExercise: 'Fill In The Blanks Exercise',
           h5p: 'H5p Exercise',
-          fillInTheBlanksExercise: 'Fill In The Blanks',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
           removeInteractive: 'Remove interactive element',
@@ -1182,7 +1182,8 @@ export const loggedInData = {
           chooseOption: "Choose an option",
           multipleChoice: "Multiple Choice",
           singleChoice: "Single Choice",
-          inputExercise: "Input exercise"
+          inputExercise: "Input exercise",
+          textWithBlanksExercise: "Fill In The Blanks Exercise"
         },
         difficulty: {
           title: 'What is the %difficulty% level of the exercise and learning goal?',
