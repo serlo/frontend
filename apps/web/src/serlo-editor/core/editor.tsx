@@ -1,4 +1,6 @@
 import { useEffect, ReactNode, useRef, useState } from 'react'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import { HotkeysProvider, useHotkeys } from 'react-hotkeys-hook'
 import { Provider } from 'react-redux'
 
@@ -24,9 +26,13 @@ import { ROOT } from '../store/root/constants'
 export function Editor(props: EditorProps) {
   return (
     <Provider store={store}>
-      <HotkeysProvider initiallyActiveScopes={['global', 'root-up-down-enter']}>
-        <InnerDocument {...props} />
-      </HotkeysProvider>
+      <DndProvider backend={HTML5Backend}>
+        <HotkeysProvider
+          initiallyActiveScopes={['global', 'root-up-down-enter']}
+        >
+          <InnerDocument {...props} />
+        </HotkeysProvider>
+      </DndProvider>
     </Provider>
   )
 }
