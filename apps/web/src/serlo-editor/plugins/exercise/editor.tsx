@@ -5,24 +5,17 @@ import { ExerciseToolbar } from './toolbar/toolbar'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
-import { isProduction } from '@/helper/is-production'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 
-const allInteractiveExerciseTypes = isProduction
-  ? ([
-      EditorPluginType.ScMcExercise,
-      EditorPluginType.InputExercise,
-      EditorPluginType.H5p,
-    ] as const)
-  : ([
-      EditorPluginType.ScMcExercise,
-      EditorPluginType.InputExercise,
-      EditorPluginType.H5p,
-      EditorPluginType.FillInTheBlanksExercise,
-    ] as const)
+const allInteractiveExerciseTypes = [
+  EditorPluginType.ScMcExercise,
+  EditorPluginType.InputExercise,
+  EditorPluginType.H5p,
+  EditorPluginType.FillInTheBlanksExercise,
+] as const
 
 export type InteractiveExerciseType =
   (typeof allInteractiveExerciseTypes)[number]
