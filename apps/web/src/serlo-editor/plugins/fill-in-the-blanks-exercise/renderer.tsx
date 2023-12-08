@@ -9,25 +9,15 @@ import { Feedback } from '../sc-mc-exercise/renderer/feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 
 // TODO: Copy of type in /src/serlo-editor/plugins/text/types/text-editor.ts
-const Answer = t.intersection([
-  t.type({
-    answer: t.string,
-  }),
-  t.partial({
-    learnerFeedback: t.string,
-  }),
-])
-const Blank = t.intersection([
-  t.type({
-    type: t.literal('blank'),
-    children: t.unknown,
-    blankId: t.string,
-    correctAnswers: t.array(Answer),
-  }),
-  t.partial({
-    incorrectAnswers: t.array(Answer),
-  }),
-])
+const Answer = t.type({
+  answer: t.string,
+})
+const Blank = t.type({
+  type: t.literal('blank'),
+  children: t.unknown,
+  blankId: t.string,
+  correctAnswers: t.array(Answer),
+})
 
 type Blanks = t.TypeOf<typeof Blank>[]
 

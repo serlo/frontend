@@ -96,7 +96,6 @@ export const useSlateRenderHandlers = ({
                     if (i === 0) {
                       return {
                         answer: e.target.value.trim(),
-                        learnerFeedback: correctAnswer.learnerFeedback,
                       }
                     }
                     // Rest is copied as is
