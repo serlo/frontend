@@ -37,10 +37,11 @@ export function toggleBlank(editor: SlateEditor) {
     return
   }
 
-  const { selection } = editor
-  const isCollapsed = selection && Range.isCollapsed(selection)
+  const selection = trimSelection(editor)
 
-  if (isCollapsed) {
+  if (selection === null) return
+
+  if (Range.isCollapsed(selection)) {
     Transforms.insertNodes(editor, {
       type: 'blank',
       blankId: uuid_v4(),
@@ -50,7 +51,6 @@ export function toggleBlank(editor: SlateEditor) {
     return
   }
 
-  const trimmedSelection = trimSelection(editor)
   Transforms.insertNodes(
     editor,
     [
@@ -58,16 +58,11 @@ export function toggleBlank(editor: SlateEditor) {
         type: 'blank',
         blankId: uuid_v4(),
         correctAnswers: [
-          {
-            answer: SlateEditor.string(
-              editor,
-              trimmedSelection as Location
-            ).trim(),
-          },
+          { answer: SlateEditor.string(editor, selection).trim() },
         ],
         children: [{ text: '' }],
       },
     ],
-    { at: trimmedSelection as Location }
+    { at: selection }
   )
 }
