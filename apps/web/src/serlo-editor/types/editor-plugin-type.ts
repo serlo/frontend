@@ -27,7 +27,7 @@ export enum EditorPluginType {
   Exercise = 'exercise',
   ScMcExercise = 'scMcExercise',
   InputExercise = 'inputExercise',
-  FillInTheBlanksExercise = 'textWithBlanksExercise',
+  FillInTheBlanksExercise = 'blanksExercise',
   Solution = 'solution',
 
   Unsupported = 'unsupported',

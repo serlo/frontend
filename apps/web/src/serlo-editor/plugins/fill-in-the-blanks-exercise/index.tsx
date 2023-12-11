@@ -20,14 +20,12 @@ export const fillInTheBlanksExercise: EditorPlugin<FillInTheBlanksExerciseState>
   {
     Component: FillInTheBlanksExerciseEditor,
     config: {},
-    state: createFillInTheBlanksExerciseState(),
+    state: createState(),
   }
 
-export type FillInTheBlanksExerciseState = ReturnType<
-  typeof createFillInTheBlanksExerciseState
->
+export type FillInTheBlanksExerciseState = ReturnType<typeof createState>
 
-function createFillInTheBlanksExerciseState() {
+function createState() {
   const defaultMode: FillInTheBlanksMode = 'typing'
 
   return object({
