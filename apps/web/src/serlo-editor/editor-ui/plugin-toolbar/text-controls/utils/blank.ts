@@ -35,16 +35,12 @@ export function toggleBlank(editor: SlateEditor) {
 
   if (selection === null) return
 
-  const isCollaped = Range.isCollapsed(selection)
-  const answer = isCollaped ? '' : SlateEditor.string(editor, selection).trim()
-
   const newBlankNode: Blank = {
     type: 'blank',
     blankId: uuid_v4(),
-    correctAnswers: [{ answer }],
+    correctAnswers: [{ answer: SlateEditor.string(editor, selection).trim() }],
     children: [{ text: '' }],
   }
-  const at = isCollaped ? selection : undefined
 
-  Transforms.insertNodes(editor, newBlankNode, { at })
+  Transforms.insertNodes(editor, newBlankNode, { at: selection })
 }
