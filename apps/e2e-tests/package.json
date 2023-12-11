@@ -5,6 +5,7 @@
   "scripts": {
     "e2e": "codeceptjs run --debug",
     "e2e-firefox": "cross-env BROWSER=firefox codeceptjs run --steps",
+    "e2e-firefox-localhost": "cross-env BROWSER=firefox FRONTEND_URL=http://localhost:3000 codeceptjs run --steps",
     "e2e-firefox-workers": "cross-env BROWSER=firefox codeceptjs run-workers --suites 3",
     "e2e-localapi": "cross-env FRONTEND_API=local codeceptjs run --steps",
     "e2e-localhost": "cross-env FRONTEND_URL=http://localhost:3000 codeceptjs run --steps",
