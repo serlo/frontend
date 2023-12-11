@@ -415,7 +415,7 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
                 {renderButton('')}
               </div>
               <div className="flex justify-center">
-                {renderButton('(', ['insert', '[(]'])}
+                {renderButton('(', ['insert', '('])}
                 {renderButton(')', ['insert', ')'])}
                 <div className="flex-1"></div>
                 {renderButton('1', ['insert', '1'])}
@@ -456,7 +456,7 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
                     specialCommand: true,
                   }
                 )}
-                {renderButton(<FaIcon icon={faCheck} />, ['insert', ''], {
+                {renderButton(<FaIcon icon={faCheck} />, ['commit'], {
                   specialCommand: true,
                 })}
               </div>

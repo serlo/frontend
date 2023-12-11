@@ -1,7 +1,10 @@
 import { faCheckCircle, faLock } from '@fortawesome/free-solid-svg-icons'
 
 import { FaIcon } from '../fa-icon'
-import { LinearEquationData } from '@/data/de/gleichungs-app'
+import {
+  LinearEquationData,
+  linearEquationData,
+} from '@/data/de/gleichungs-app'
 import { cn } from '@/helper/cn'
 
 interface OverviewProps {
@@ -9,6 +12,7 @@ interface OverviewProps {
   unlockedLevel: number
   selectLevel: (n: number) => void
   solved: number[]
+  unlock: () => void
 }
 
 export function Overview({
@@ -16,7 +20,13 @@ export function Overview({
   unlockedLevel,
   selectLevel,
   solved,
+  unlock,
 }: OverviewProps) {
+  const isUnlockAvailable =
+    linearEquationData.levels
+      .find((l) => l.number === unlockedLevel)!
+      .tasks.filter((t) => t.isGolden && solved.includes(t.number)).length >= 2
+
   return (
     <div>
       <h2 className="mb-8 mt-12 text-center text-2xl font-bold">
@@ -109,13 +119,26 @@ export function Overview({
                 <FaIcon icon={faLock} />
               </div>
             )}
-            {level.number === unlockedLevel + 1 && (
-              <div className="text- absolute left-0 right-0 top-20 text-center">
-                Löse 2 goldene Aufgaben in Level {unlockedLevel}
-                <br />
-                um dieses Level freizuschalten
-              </div>
-            )}
+            {level.number === unlockedLevel + 1 &&
+              (isUnlockAvailable ? (
+                <div className="absolute left-0 right-0 top-20 text-center">
+                  <button
+                    className="rounded bg-green-200 px-3 py-2 font-bold hover:bg-green-300"
+                    onClick={(e) => {
+                      unlock()
+                      e.preventDefault()
+                    }}
+                  >
+                    Level freischalten
+                  </button>
+                </div>
+              ) : (
+                <div className="absolute left-0 right-0 top-20 text-center">
+                  Löse 2 goldene Aufgaben in Level {unlockedLevel}
+                  <br />
+                  um dieses Level freizuschalten
+                </div>
+              ))}
           </div>
         </div>
       ))}

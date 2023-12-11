@@ -10,7 +10,7 @@ import {
 } from '@/data/de/gleichungs-app'
 
 export function EquationsAppV2() {
-  const [unlockedLevel /*setUnlockedLevel*/] = useState(1)
+  const [unlockedLevel, setUnlockedLevel] = useState(1)
   const [solved, setSolved] = useState<number[]>([])
 
   const [taskNumber, setTaskNumber] = useState(-1)
@@ -51,6 +51,9 @@ export function EquationsAppV2() {
         <div className="shrink grow">
           <div className="mx-auto mt-4 max-w-[600px] px-4 [&>h3]:mt-8 [&>h3]:text-lg [&>h3]:font-bold">
             <Overview
+              unlock={() => {
+                setUnlockedLevel((l) => l + 1)
+              }}
               data={linearEquationData}
               unlockedLevel={unlockedLevel}
               selectLevel={(n) => {
