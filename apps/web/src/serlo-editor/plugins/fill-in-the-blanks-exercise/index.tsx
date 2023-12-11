@@ -1,5 +1,4 @@
 import { FillInTheBlanksExerciseEditor } from './editor'
-import { defaultFormattingOptions } from '../text/hooks/use-text-config'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import {
   type EditorPlugin,
