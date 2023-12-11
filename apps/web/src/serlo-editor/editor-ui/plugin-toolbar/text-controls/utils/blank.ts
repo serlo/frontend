@@ -1,4 +1,4 @@
-import { Editor as SlateEditor, Element, Range, Transforms } from 'slate'
+import { Editor as SlateEditor, Element, Transforms } from 'slate'
 import { v4 as uuid_v4 } from 'uuid'
 
 import { selectionHasElement, trimSelection } from './selection'
