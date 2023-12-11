@@ -1,4 +1,4 @@
-interface LinearEquationTask {
+export interface LinearEquationTask {
   latex: string
   number: number
   version?: number
@@ -8,6 +8,7 @@ interface LinearEquationTask {
 interface LinearEquationLevel {
   tasks: LinearEquationTask[]
   number: number
+  heading: string
 }
 
 export interface LinearEquationData {
@@ -18,6 +19,7 @@ export const linearEquationData: LinearEquationData = {
   levels: [
     {
       number: 1,
+      heading: 'Herzlich Willkommen',
       tasks: [
         { number: 1, latex: '123' },
         { number: 2, latex: '123' },
@@ -30,6 +32,7 @@ export const linearEquationData: LinearEquationData = {
     },
     {
       number: 2,
+      heading: 'Herzlich Willkommen',
       tasks: [
         { number: 8, latex: '123' },
         { number: 9, latex: '123' },
@@ -42,6 +45,7 @@ export const linearEquationData: LinearEquationData = {
     },
     {
       number: 3,
+      heading: 'Herzlich Willkommen',
       tasks: [
         { number: 15, latex: '123' },
         { number: 16, latex: '123' },
@@ -54,6 +58,7 @@ export const linearEquationData: LinearEquationData = {
     },
     {
       number: 4,
+      heading: 'Herzlich Willkommen',
       tasks: [
         { number: 22, latex: '123' },
         { number: 23, latex: '123' },
@@ -66,6 +71,7 @@ export const linearEquationData: LinearEquationData = {
     },
     {
       number: 5,
+      heading: 'Herzlich Willkommen',
       tasks: [
         { number: 29, latex: '123' },
         { number: 30, latex: '123' },

@@ -9,9 +9,7 @@ import { v4 } from 'uuid'
 
 import { MathField } from './math-field'
 import { MathField2 } from './math-field-2'
-import { Overview } from './overview'
 import { FaIcon } from '../fa-icon'
-import { linearEquationData } from '@/data/de/gleichungs-app'
 
 type Mode = 'done' | 'input' | 'choose'
 type InputState =
@@ -135,7 +133,7 @@ export function EquationsApp() {
               </a>
               .
             </div>
-            <Overview data={linearEquationData} unlockedLevel={1} />
+            {/*<Overview data={linearEquationData} unlockedLevel={1} />*/}
             {/*<h3>Serlo 26258 - Aufgaben zu linearen Gleichungen</h3>
             {renderExample('x+1=4')}
             {renderExample('2x=8')}
@@ -207,6 +205,7 @@ export function EquationsApp() {
             {renderExample('12-(-3x+6)=18-(9+3x)')}
     {renderExample('2-7(2x+5)-3(2x-4)=19')}*/}
 
+            <div className="text-center">Liste aller Aufgaben</div>
             <div className="text-center">
               {' '}
               <button
@@ -423,11 +422,11 @@ export function EquationsApp() {
                     e.preventDefault()
                   }}
                   onClick={(e) => {
-                    console.log(
+                    /*  console.log(
                       document
                         .getElementById('math-input-field')
                         .executeCommand(['insert', 'X'])
-                    )
+                    )*/
                     e.preventDefault()
                   }}
                 >

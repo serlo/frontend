@@ -1,4 +1,4 @@
-import { faLock, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
+import { faLock } from '@fortawesome/free-solid-svg-icons'
 
 import { FaIcon } from '../fa-icon'
 import { LinearEquationData } from '@/data/de/gleichungs-app'
@@ -7,20 +7,37 @@ import { cn } from '@/helper/cn'
 interface OverviewProps {
   data: LinearEquationData
   unlockedLevel: number
+  selectLevel: (n: number) => void
 }
 
-export function Overview({ data, unlockedLevel }: OverviewProps) {
+export function Overview({ data, unlockedLevel, selectLevel }: OverviewProps) {
   return (
     <div>
-      <h2 className="mb-5 mt-8 text-center text-2xl font-bold">
+      <div className="rounded bg-gray-100 p-2">
+        Diese App befindet sich in Entwicklung.
+        <br />
+        <a
+          href="https://forms.gle/PFUYn8fn5zAkzpqe8"
+          target="_blank"
+          rel="noreferrer"
+          className="serlo-link"
+        >
+          Wir freuen uns über dein Feedback
+        </a>
+        .
+      </div>
+      <h2 className="mb-7 mt-12 text-center text-2xl font-bold">
         Lineare Gleichungen
       </h2>
       {data.levels.map((level) => (
         <div key={level.number}>
-          <div className="relative mb-10 rounded-xl bg-orange-100 pb-5 pt-2">
-            <div className="mx-3 flex items-baseline justify-between">
-              <span className="text-lg font-bold">Level {level.number}</span>
-              <button
+          <div className="relative mb-10 rounded-xl bg-orange-100 pb-9 pt-4">
+            <div className="mx-5 flex items-baseline justify-between">
+              <span className="text-lg font-bold">
+                Level {level.number}
+                {level.number <= unlockedLevel ? <> - {level.heading}</> : null}
+              </span>
+              {/*<button
                 className={cn(
                   'rounded bg-orange-300 px-1 py-0.5 hover:bg-orange-400',
                   level.number > unlockedLevel && 'hidden'
@@ -28,19 +45,27 @@ export function Overview({ data, unlockedLevel }: OverviewProps) {
               >
                 <FaIcon icon={faQuestionCircle} className="mr-1" />
                 Info
-              </button>
+                </button>*/}
             </div>
             <div
               className={cn(
-                'mt-3 flex justify-center',
+                'mt-6 flex justify-center',
                 level.number > unlockedLevel && 'invisible'
               )}
             >
               {level.tasks
                 .filter((t) => !t.isGolden)
-                .map((task) => (
-                  <div key={task.number} className="mr-4">
-                    <button className="h-14 w-14 rounded bg-gray-200 text-center align-middle text-xl hover:bg-gray-300">
+                .map((task, i, arr) => (
+                  <div
+                    key={task.number}
+                    className={cn(i + 1 < arr.length && 'mr-4 mobileExt:mr-8')}
+                  >
+                    <button
+                      className="h-14 w-14 rounded bg-gray-200 text-center align-middle text-xl hover:bg-gray-300"
+                      onClick={() => {
+                        selectLevel(task.number)
+                      }}
+                    >
                       {task.number}
                     </button>
                   </div>
@@ -48,27 +73,35 @@ export function Overview({ data, unlockedLevel }: OverviewProps) {
             </div>
             <div
               className={cn(
-                'mt-3 flex justify-center',
+                'mt-4 flex justify-center mobileExt:mt-6',
                 level.number > unlockedLevel && 'invisible'
               )}
             >
               {level.tasks
                 .filter((t) => t.isGolden)
-                .map((task) => (
-                  <div key={task.number} className="mr-4">
-                    <button className="h-14 w-14 rounded bg-yellow-400 text-center align-middle text-xl hover:bg-yellow-500">
+                .map((task, i, arr) => (
+                  <div
+                    key={task.number}
+                    className={cn(i + 1 < arr.length && 'mr-4 mobileExt:mr-8')}
+                  >
+                    <button
+                      className="h-14 w-14 rounded bg-yellow-400 text-center align-middle text-xl hover:bg-yellow-500"
+                      onClick={() => {
+                        selectLevel(task.number)
+                      }}
+                    >
                       {task.number}
                     </button>
                   </div>
                 ))}
             </div>
             {level.number > unlockedLevel + 1 && (
-              <div className="absolute left-0 right-0 top-16 text-center text-7xl text-gray-300">
+              <div className="absolute left-0 right-0 top-20 text-center text-7xl text-gray-300">
                 <FaIcon icon={faLock} />
               </div>
             )}
             {level.number === unlockedLevel + 1 && (
-              <div className="text- absolute left-0 right-0 top-16 text-center">
+              <div className="text- absolute left-0 right-0 top-20 text-center">
                 Löse 2 goldene Aufgaben in Level {unlockedLevel}
                 <br />
                 um dieses Level freizuschalten
