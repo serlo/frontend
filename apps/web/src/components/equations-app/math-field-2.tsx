@@ -32,11 +32,12 @@ export function MathField2(props: MathFieldProps) {
         mf.current.scriptDepth = 1
 
         mf.current.addEventListener('focusin', () => {
-          window.mathVirtualKeyboard.show()
+          //window.mathVirtualKeyboard.show()
         })
         mf.current.addEventListener('focusout', () => {
-          window.mathVirtualKeyboard.hide()
+          //window.mathVirtualKeyboard.hide()
         })
+        mf.current.mathVirtualKeyboardPolicy = 'manual'
 
         const beforeInputHandler = (ev: InputEvent) => {
           if (ev.inputType === 'insertLineBreak') {
@@ -67,6 +68,7 @@ export function MathField2(props: MathFieldProps) {
 
   return (
     <math-field
+      id="math-input-field"
       style={{ display: 'block' }}
       ref={mf}
       onInput={(evt) => {

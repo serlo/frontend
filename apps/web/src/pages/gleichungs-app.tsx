@@ -33,7 +33,7 @@ const ContentPage: NextPage = () => {
         math-field::part(menu-toggle) {
           display: none;
         }
-        .overview math-field::part(virtual-keyboard-toggle) {
+        math-field::part(virtual-keyboard-toggle) {
           display: none;
         }
       `}</style>

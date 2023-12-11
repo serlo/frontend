@@ -417,6 +417,23 @@ export function EquationsApp() {
                   }}
                 />
               </div>
+              <div>
+                <button
+                  onMouseDown={(e) => {
+                    e.preventDefault()
+                  }}
+                  onClick={(e) => {
+                    console.log(
+                      document
+                        .getElementById('math-input-field')
+                        .executeCommand(['insert', 'X'])
+                    )
+                    e.preventDefault()
+                  }}
+                >
+                  Test
+                </button>
+              </div>
               {inputState === 'error' && <div>{rejectReason.current}</div>}
             </>
           ) : (
