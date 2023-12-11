@@ -1,14 +1,8 @@
-import {
-  Editor as SlateEditor,
-  Element,
-  Node,
-  Range,
-  Transforms,
-  Location,
-} from 'slate'
+import { Editor as SlateEditor, Element, Range, Transforms } from 'slate'
 import { v4 as uuid_v4 } from 'uuid'
 
 import { selectionHasElement, trimSelection } from './selection'
+import type { Blank } from '@/serlo-editor/plugins/text'
 
 export function isBlankActive(editor: SlateEditor) {
   return selectionHasElement((e) => e.type === 'blank', editor)
@@ -41,28 +35,16 @@ export function toggleBlank(editor: SlateEditor) {
 
   if (selection === null) return
 
-  if (Range.isCollapsed(selection)) {
-    Transforms.insertNodes(editor, {
-      type: 'blank',
-      blankId: uuid_v4(),
-      correctAnswers: [{ answer: '' }],
-      children: [{ text: '' }],
-    })
-    return
-  }
+  const isCollaped = Range.isCollapsed(selection)
+  const answer = isCollaped ? '' : SlateEditor.string(editor, selection).trim()
 
-  Transforms.insertNodes(
-    editor,
-    [
-      {
-        type: 'blank',
-        blankId: uuid_v4(),
-        correctAnswers: [
-          { answer: SlateEditor.string(editor, selection).trim() },
-        ],
-        children: [{ text: '' }],
-      },
-    ],
-    { at: selection }
-  )
+  const newBlankNode: Blank = {
+    type: 'blank',
+    blankId: uuid_v4(),
+    correctAnswers: [{ answer }],
+    children: [{ text: '' }],
+  }
+  const at = isCollaped ? selection : undefined
+
+  Transforms.insertNodes(editor, newBlankNode, { at })
 }
