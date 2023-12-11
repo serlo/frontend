@@ -134,7 +134,7 @@ export function Overview({
                 </div>
               ) : (
                 <div className="absolute left-0 right-0 top-20 text-center">
-                  Löse 2 goldene Aufgaben in Level {unlockedLevel}
+                  Löse 2 goldene Aufgaben aus Level {unlockedLevel}
                   <br />
                   um dieses Level freizuschalten
                 </div>

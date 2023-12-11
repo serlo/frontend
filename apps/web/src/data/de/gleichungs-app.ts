@@ -32,7 +32,7 @@ export const linearEquationData: LinearEquationData = {
     },
     {
       number: 2,
-      heading: 'Herzlich Willkommen',
+      heading: 'Variablen auf beiden Seiten',
       tasks: [
         { number: 8, latex: '123' },
         { number: 9, latex: '123' },
@@ -71,6 +71,45 @@ export const linearEquationData: LinearEquationData = {
     },
     {
       number: 5,
+      heading: 'Herzlich Willkommen',
+      tasks: [
+        { number: 29, latex: '123' },
+        { number: 30, latex: '123' },
+        { number: 31, latex: '123' },
+        { number: 32, latex: '123' },
+        { number: 33, latex: '123', isGolden: true },
+        { number: 34, latex: '123', isGolden: true },
+        { number: 35, latex: '123', isGolden: true },
+      ],
+    },
+    {
+      number: 6,
+      heading: 'Herzlich Willkommen',
+      tasks: [
+        { number: 29, latex: '123' },
+        { number: 30, latex: '123' },
+        { number: 31, latex: '123' },
+        { number: 32, latex: '123' },
+        { number: 33, latex: '123', isGolden: true },
+        { number: 34, latex: '123', isGolden: true },
+        { number: 35, latex: '123', isGolden: true },
+      ],
+    },
+    {
+      number: 7,
+      heading: 'Herzlich Willkommen',
+      tasks: [
+        { number: 29, latex: '123' },
+        { number: 30, latex: '123' },
+        { number: 31, latex: '123' },
+        { number: 32, latex: '123' },
+        { number: 33, latex: '123', isGolden: true },
+        { number: 34, latex: '123', isGolden: true },
+        { number: 35, latex: '123', isGolden: true },
+      ],
+    },
+    {
+      number: 8,
       heading: 'Herzlich Willkommen',
       tasks: [
         { number: 29, latex: '123' },
