@@ -36,7 +36,6 @@ function createState() {
           TextEditorFormattingOption.code,
           TextEditorFormattingOption.colors,
           TextEditorFormattingOption.lists,
-          TextEditorFormattingOption.math,
           TextEditorFormattingOption.richTextBold,
           TextEditorFormattingOption.richTextItalic,
           TextEditorFormattingOption.blank,
