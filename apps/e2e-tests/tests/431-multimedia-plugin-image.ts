@@ -19,7 +19,7 @@ const login = async (I: CodeceptJS.I) => {
   I.fillField('Benutzername oder E-Mailadresse', 'dal')
   I.fillField('Passwort', '123456')
   I.click('Anmelden', "button[value='password']")
-  I.waitForText('Willkommen dal!', 10)
+  I.waitForElement(locate('img').withAttr({ alt: 'Avatar' }), 10)
 }
 
 const logout = async (I: CodeceptJS.I) => {
@@ -35,8 +35,7 @@ const logout = async (I: CodeceptJS.I) => {
   I.say('Log out')
   I.click('Benutzer')
   I.click('Abmelden')
-  I.waitForText('Bis bald!', 20)
-  I.see('Anmelden')
+  I.waitForText('Anmelden', 20)
 }
 
 Before(popupWarningFix)
