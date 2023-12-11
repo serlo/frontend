@@ -26,7 +26,7 @@ export interface Blank {
   // Here we could specify incorrect answers for this blank with specific learner feedback
   // incorrectAnswers?: Answer[]
   // Here we could add a default feedback for the learner
-  // defaultLearnerFeedback: string
+  // defaultIncorrectAnswerFeedback: string
   // Here we could specify a method to check the answer
   // checkAnswerMethod?: 'text' | 'number' | 'math-expression'
 }
