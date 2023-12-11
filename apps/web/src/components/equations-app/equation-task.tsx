@@ -1,12 +1,20 @@
+/* eslint-disable @next/next/no-img-element */
 import { ComputeEngine } from '@cortex-js/compute-engine'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
-import { faCircleCheck, faRotateLeft } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCaretLeft,
+  faCaretRight,
+  faCheck,
+  faCircleCheck,
+  faDeleteLeft,
+  faRotateLeft,
+} from '@fortawesome/free-solid-svg-icons'
 import * as confetti from 'canvas-confetti' // why is this throwing warnings? sigh ..
-import { Expression } from 'mathlive'
-import { useRef, useState } from 'react'
+import { Expression, MathfieldElement, Selector } from 'mathlive'
+import { ReactNode, useRef, useState } from 'react'
 
-import { MathField } from './math-field'
 import { MathField2 } from './math-field-2'
+import { ReadonlyMathField } from './readonly-math-field'
 import { FaIcon } from '../fa-icon'
 import { LinearEquationTask } from '@/data/de/gleichungs-app'
 import { cn } from '@/helper/cn'
@@ -27,6 +35,11 @@ type InputState =
   | 'right-mismatch'
 
 export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
+  try {
+    window.MathfieldElement.decimalSeparator = ','
+  } catch (e) {
+    //
+  }
   const ce = new ComputeEngine()
 
   function safeParse(latex: string) {
@@ -84,7 +97,7 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
     .join('\\\\\n')}\\end{align}`
 
   return (
-    <div>
+    <div className="mb-[500px]">
       <h2 className={cn('mt-6 text-xl')}>
         <span
           className={cn(
@@ -98,7 +111,7 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
         Löse die Gleichung und bestimme die Lösungsmenge.
       </div>
       <div className="mt-6 text-xl">
-        <MathField readonly key={output} value={output} />
+        <ReadonlyMathField key={output} value={output} />
       </div>
       {mode === 'choose' && (
         <div>
@@ -131,9 +144,8 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
                     className="relative mr-6 mt-3 rounded border bg-gray-50 px-2 py-1 text-xl hover:bg-gray-100"
                     key={i}
                   >
-                    <MathField
+                    <ReadonlyMathField
                       key={op.latex}
-                      readonly
                       value={`\\vert ${op.displayLatex ?? op.latex}`}
                     />
                     <span
@@ -157,9 +169,8 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
                     className="relative mr-6 mt-3 rounded bg-green-200 px-2 py-1 text-xl hover:bg-green-300"
                     key={i}
                   >
-                    <MathField
+                    <ReadonlyMathField
                       key={op.displayLatex}
-                      readonly
                       value={op.displayLatex}
                     />
                     <span
@@ -197,161 +208,267 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
       )}
 
       {mode === 'input' && (
-        <div className="mt-3 flex items-baseline text-xl">
-          <div className="grow">
-            <div className="mb-2 flex items-baseline justify-between">
-              <div className="pt-3 text-base font-bold text-gray-700 ">
-                {actions[actions.length - 1].type === 'simplify'
-                  ? 'Terme in Gleichung vereinfachen:'
-                  : 'Forme auf beiden Seiten um:'}
-              </div>
-              <button
-                className="text-sm text-gray-600 hover:text-black"
-                onClick={() => {
-                  setActions((acc) => acc.slice(0, -1))
-                  setMode('choose')
-                  if (list.length === actions.length + 1) {
-                    setList((l) => l.slice(0, -1))
-                  }
-                }}
-              >
-                <FaIcon icon={faRotateLeft} className="text-base sm:text-xs" />
-                <span className="hidden sm:inline">&nbsp;rückgängig</span>
-              </button>
-            </div>
-            <div className="rounded border-2">
-              <MathField2
-                onChange={(latex) => {
-                  setTimeout(() => {
-                    try {
-                      if (!latex) {
-                        setInputState('empty')
-                        return
-                      }
-                      const parsed = safeParse(latex)
-
-                      if (!parsed.isValid) {
-                        setInputState('error')
-                        return
-                      }
-
-                      const symbols = extractSymbols(parsed.json)
-
-                      // console.log(symbols)
-
-                      // console.log(symbols, variableSymbol)
-                      if (
-                        (!symbols.has(variableSymbol) && symbols.size > 0) ||
-                        // (variableSymbol && symbols.size == 0) ||
-                        symbols.size > 1
-                      ) {
-                        setInputState('var-mismatch')
-                        return
-                      }
-
-                      const parts = latex.split('=')
-
-                      if (parts.length < 2) {
-                        setInputState('error')
-                        return
-                      }
-
-                      for (let i = -4; i <= 4; i++) {
-                        if (variableSymbol) {
-                          ce.assign(variableSymbol, i)
-                        }
-
-                        const termL = `( ${refLeft} ) - ( ${parts[0]} )`
-                        const valueL = safeParse(termL).N().value as number
-
-                        const termR = `( ${refRight} ) - ( ${parts[1]} )`
-                        const valueR = safeParse(termR).N().value as number
-
-                        // console.log(termL, valueL, '\n', termR, valueR)
-
-                        if (
-                          typeof valueL !== 'number' ||
-                          Math.abs(valueL) > 0.00001
-                        ) {
-                          setInputState('left-mismatch')
-                          return
-                        }
-                        if (
-                          typeof valueR !== 'number' ||
-                          Math.abs(valueR) > 0.00001
-                        ) {
-                          setInputState('right-mismatch')
-                          return
-                        }
-                        //if (symbols.size == 0) break
-                      }
-
-                      currentLatex.current = latex
-                      setInputState('ok')
-                    } catch (e) {
-                      // eslint-disable-next-line no-console
-                      console.log(e)
-                      setMode('input')
-                      setInputState('error')
-                    }
-                  }, 0)
-                }}
-                onEnter={() => {
-                  if (inputState === 'ok') {
-                    setList((list) => [...list, currentLatex.current])
+        <>
+          <div className="mt-3 flex items-baseline text-xl">
+            <div className="grow">
+              <div className="mb-2 flex items-baseline justify-between">
+                <div className="pt-3 text-base font-bold text-gray-700 ">
+                  {actions[actions.length - 1].type === 'simplify'
+                    ? 'Terme in Gleichung vereinfachen:'
+                    : 'Forme auf beiden Seiten um:'}
+                </div>
+                <button
+                  className="text-sm text-gray-600 hover:text-black"
+                  onClick={() => {
+                    setActions((acc) => acc.slice(0, -1))
                     setMode('choose')
-                    window.mathVirtualKeyboard.hide()
-                  }
-                }}
-              />
-            </div>
-            <div className="ml-1 mt-2 text-base">
-              {inputState === 'empty' && (
-                <span>
-                  Erwarte Eingabe der Form{' '}
-                  <FaIcon icon={faSquare} className="text-sm text-blue-400" />
-                  &nbsp;=&nbsp;
-                  <FaIcon icon={faSquare} className="text-sm text-blue-400" />
-                </span>
-              )}
-              {inputState === 'error' && <span>Fehler bei der Eingabe</span>}
-              {inputState === 'var-mismatch' && (
-                <span>Variablen passen nicht</span>
-              )}
-              {inputState === 'left-mismatch' && (
-                <span>
-                  Term auf der linken Seite der Gleichung ist nicht passend
-                </span>
-              )}
-              {inputState === 'right-mismatch' && (
-                <span>
-                  Term auf der rechten Seite der Gleichung ist nicht passend
-                </span>
-              )}
-              {inputState === 'ok' && (
-                <div className="flex items-baseline justify-between">
-                  <span className="text-green-600">Super!</span>
-                  <button
-                    className="ml-3 inline-block rounded bg-green-200 px-2 py-1 hover:bg-green-300"
-                    onClick={() => {
+                    if (list.length === actions.length + 1) {
+                      setList((l) => l.slice(0, -1))
+                    }
+                  }}
+                >
+                  <FaIcon
+                    icon={faRotateLeft}
+                    className="text-base sm:text-xs"
+                  />
+                  <span className="hidden sm:inline">&nbsp;rückgängig</span>
+                </button>
+              </div>
+              <div className="rounded border-2">
+                <MathField2
+                  onChange={(latex) => {
+                    setTimeout(() => {
+                      try {
+                        if (!latex) {
+                          setInputState('empty')
+                          return
+                        }
+                        const parsed = safeParse(latex)
+
+                        if (!parsed.isValid) {
+                          setInputState('error')
+                          return
+                        }
+
+                        const symbols = extractSymbols(parsed.json)
+
+                        // console.log(symbols)
+
+                        // console.log(symbols, variableSymbol)
+                        if (
+                          (!symbols.has(variableSymbol) && symbols.size > 0) ||
+                          // (variableSymbol && symbols.size == 0) ||
+                          symbols.size > 1
+                        ) {
+                          setInputState('var-mismatch')
+                          return
+                        }
+
+                        const parts = latex.split('=')
+
+                        if (parts.length < 2) {
+                          setInputState('error')
+                          return
+                        }
+
+                        for (let i = -4; i <= 4; i++) {
+                          if (variableSymbol) {
+                            ce.assign(variableSymbol, i)
+                          }
+
+                          const termL = `( ${refLeft} ) - ( ${parts[0]} )`
+                          const valueL = safeParse(termL).N().value as number
+
+                          const termR = `( ${refRight} ) - ( ${parts[1]} )`
+                          const valueR = safeParse(termR).N().value as number
+
+                          // console.log(termL, valueL, '\n', termR, valueR)
+
+                          if (
+                            typeof valueL !== 'number' ||
+                            Math.abs(valueL) > 0.00001
+                          ) {
+                            setInputState('left-mismatch')
+                            return
+                          }
+                          if (
+                            typeof valueR !== 'number' ||
+                            Math.abs(valueR) > 0.00001
+                          ) {
+                            setInputState('right-mismatch')
+                            return
+                          }
+                          //if (symbols.size == 0) break
+                        }
+
+                        currentLatex.current = latex
+                        setInputState('ok')
+                      } catch (e) {
+                        // eslint-disable-next-line no-console
+                        console.log(e)
+                        setMode('input')
+                        setInputState('error')
+                      }
+                    }, 0)
+                  }}
+                  onEnter={() => {
+                    if (inputState === 'ok') {
                       setList((list) => [...list, currentLatex.current])
                       setMode('choose')
-                      window.mathVirtualKeyboard.hide()
-                    }}
-                  >
-                    Weiter
-                  </button>
-                </div>
-              )}
+                    }
+                  }}
+                />
+              </div>
+              <div className="ml-1 mt-2 text-base">
+                {inputState === 'empty' && (
+                  <span>
+                    Erwarte Eingabe der Form{' '}
+                    <FaIcon icon={faSquare} className="text-sm text-blue-400" />
+                    &nbsp;=&nbsp;
+                    <FaIcon icon={faSquare} className="text-sm text-blue-400" />
+                  </span>
+                )}
+                {inputState === 'error' && <span>Fehler bei der Eingabe</span>}
+                {inputState === 'var-mismatch' && (
+                  <span>Variablen passen nicht</span>
+                )}
+                {inputState === 'left-mismatch' && (
+                  <span>
+                    Term auf der linken Seite der Gleichung ist nicht passend
+                  </span>
+                )}
+                {inputState === 'right-mismatch' && (
+                  <span>
+                    Term auf der rechten Seite der Gleichung ist nicht passend
+                  </span>
+                )}
+                {inputState === 'ok' && (
+                  <div className="flex items-baseline justify-between">
+                    <span className="text-green-600">Super!</span>
+                    <button
+                      className="ml-3 inline-block rounded bg-green-200 px-2 py-1 hover:bg-green-300"
+                      onClick={() => {
+                        setList((list) => [...list, currentLatex.current])
+                        setMode('choose')
+                      }}
+                    >
+                      Weiter
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+          <div className="fixed bottom-0 left-0 right-0 h-64 bg-slate-300">
+            <div className="mx-auto max-w-[1024px]">
+              <div className="flex justify-center">
+                {renderButton(
+                  <span style={{ fontFamily: 'KaTeX_Main' }} className="italic">
+                    x
+                  </span>,
+                  ['insert', 'x']
+                )}
+                {renderButton(
+                  <span style={{ fontFamily: 'KaTeX_Main' }} className="italic">
+                    y
+                  </span>,
+                  ['insert', 'y']
+                )}
+                <div className="flex-1"></div>
+                {renderButton('7', ['insert', '7'])}
+                {renderButton('8', ['insert', '8'])}
+                {renderButton('9', ['insert', '9'])}
+                {renderButton('÷', ['insert', '\\div'])}
+                <div className="flex-1"></div>
+                {renderButton(
+                  <img
+                    src="/_assets/img/gleichungs-app/frac.png"
+                    alt="Bruch einfügen"
+                    className="mx-auto"
+                  />,
+                  ['insert', '\\frac{#@}{#0}']
+                )}
+                {renderButton('')}
+                {renderButton('')}
+              </div>
+              <div className="flex justify-center">
+                {renderButton(
+                  <span style={{ fontFamily: 'KaTeX_Main' }} className="italic">
+                    a
+                  </span>,
+                  ['insert', 'a']
+                )}
+                {renderButton(
+                  <span style={{ fontFamily: 'KaTeX_Main' }} className="italic">
+                    b
+                  </span>,
+                  ['insert', 'b']
+                )}
+                <div className="flex-1"></div>
+                {renderButton('4', ['insert', '4'])}
+                {renderButton('5', ['insert', '5'])}
+                {renderButton('6', ['insert', '6'])}
+                {renderButton('×', ['insert', '\\cdot'])}
+                <div className="flex-1"></div>
+                {renderButton('')}
+                {renderButton('')}
+                {renderButton('')}
+              </div>
+              <div className="flex justify-center">
+                {renderButton('(', ['insert', '[(]'])}
+                {renderButton(')', ['insert', ')'])}
+                <div className="flex-1"></div>
+                {renderButton('1', ['insert', '1'])}
+                {renderButton('2', ['insert', '2'])}
+                {renderButton('3', ['insert', '3'])}
+                {renderButton('-', ['insert', '-'])}
+                <div className="flex-1"></div>
+                {renderButton('')}
+                {renderButton('')}
+                {renderButton(
+                  <FaIcon icon={faDeleteLeft} />,
+                  ['deleteBackward'],
+                  {
+                    specialCommand: true,
+                  }
+                )}
+              </div>
+              <div className="flex justify-center">
+                {renderButton('')}
+                {renderButton('')}
+                <div className="flex-1"></div>
+                {renderButton('0', ['insert', '0'])}
+                {renderButton(',', ['insertDecimalSeparator'])}
+                {renderButton('=', ['insert', '='])}
+                {renderButton('+', ['insert', '+'])}
+                <div className="flex-1"></div>
+                {renderButton(
+                  <FaIcon icon={faCaretLeft} />,
+                  ['moveToPreviousChar'],
+                  {
+                    specialCommand: true,
+                  }
+                )}
+                {renderButton(
+                  <FaIcon icon={faCaretRight} />,
+                  ['moveToNextChar'],
+                  {
+                    specialCommand: true,
+                  }
+                )}
+                {renderButton(<FaIcon icon={faCheck} />, ['insert', ''], {
+                  specialCommand: true,
+                })}
+              </div>
+            </div>
+          </div>
+        </>
       )}
       {mode === 'done' && (
         <>
           <div className="mt-2 flex items-baseline justify-start">
             <div className="text-xl">
-              <MathField readonly key={solution} value={solution} />
+              <ReadonlyMathField key={solution} value={solution} />
             </div>
             <div className="ml-8 text-green-500">
               <FaIcon
@@ -377,6 +494,42 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
       )}
     </div>
   )
+
+  function renderButton(
+    label: ReactNode,
+    command?: Selector | [Selector, ...any[]],
+    opts?: { specialCommand: boolean }
+  ) {
+    return (
+      <button
+        onClick={() => {
+          const mf = document.getElementById('math-input-field') as
+            | MathfieldElement
+            | undefined
+
+          if (mf && command) {
+            mf.focus()
+            mf.executeCommand(command)
+          }
+        }}
+        onMouseDown={(e) => {
+          e.preventDefault()
+        }}
+        disabled={!command}
+        className={cn(
+          `
+            mx-1 my-1 h-14 flex-[2_2_0%] rounded text-2xl shadow-sm 
+            disabled:invisible
+          `,
+          opts?.specialCommand
+            ? 'bg-slate-500 hover:bg-slate-400'
+            : 'bg-white hover:bg-gray-100'
+        )}
+      >
+        {label}
+      </button>
+    )
+  }
 
   function extractSymbols(json: Expression): Set<string> {
     const output = new Set<string>()

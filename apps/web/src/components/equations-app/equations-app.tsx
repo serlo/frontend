@@ -7,8 +7,8 @@ import { Expression } from 'mathlive'
 import { useEffect, useRef, useState } from 'react'
 import { v4 } from 'uuid'
 
-import { MathField } from './math-field'
 import { MathField2 } from './math-field-2'
+import { ReadonlyMathField } from './readonly-math-field'
 import { FaIcon } from '../fa-icon'
 
 type Mode = 'done' | 'input' | 'choose'
@@ -440,7 +440,7 @@ export function EquationsApp() {
               <p className="mb-3 mb-7 mt-8">{description}</p>
 
               <div className="text-xl">
-                <MathField readonly key={output} value={output} />
+                <ReadonlyMathField key={output} value={output} />
               </div>
               {mode === 'choose' && (
                 <div>
@@ -473,9 +473,8 @@ export function EquationsApp() {
                             className="relative mr-6 mt-3 rounded border bg-gray-50 px-2 py-1 text-xl hover:bg-gray-100"
                             key={i}
                           >
-                            <MathField
+                            <ReadonlyMathField
                               key={op.latex}
-                              readonly
                               value={`\\vert ${op.displayLatex ?? op.latex}`}
                             />
                             <span
@@ -499,9 +498,8 @@ export function EquationsApp() {
                             className="relative mr-6 mt-3 rounded bg-green-200 px-2 py-1 text-xl hover:bg-green-300"
                             key={i}
                           >
-                            <MathField
+                            <ReadonlyMathField
                               key={op.displayLatex}
-                              readonly
                               value={op.displayLatex}
                             />
                             <span
@@ -710,7 +708,7 @@ export function EquationsApp() {
                 <>
                   <div className="mt-2 flex items-baseline justify-start">
                     <div className="text-xl">
-                      <MathField readonly key={solution} value={solution} />
+                      <ReadonlyMathField key={solution} value={solution} />
                     </div>
                     <div className="ml-8 text-green-500">
                       <FaIcon
