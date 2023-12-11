@@ -33,7 +33,12 @@ function createState() {
       plugin: EditorPluginType.Text,
       config: {
         formattingOptions: [
-          ...defaultFormattingOptions,
+          TextEditorFormattingOption.code,
+          TextEditorFormattingOption.colors,
+          TextEditorFormattingOption.lists,
+          TextEditorFormattingOption.math,
+          TextEditorFormattingOption.richTextBold,
+          TextEditorFormattingOption.richTextItalic,
           TextEditorFormattingOption.blank,
         ],
       },
