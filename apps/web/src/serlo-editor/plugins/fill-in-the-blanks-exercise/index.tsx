@@ -39,6 +39,7 @@ function createState() {
           TextEditorFormattingOption.richTextItalic,
           TextEditorFormattingOption.blank,
         ],
+        isInlineChildEditor: true,
       },
     }),
     mode: string(defaultMode), // Currently there is no method for the user to switch to 'drag-and-drop'
