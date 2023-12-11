@@ -1,6 +1,12 @@
 import bundleAnalyzer from '@next/bundle-analyzer'
 import path from 'path'
 import { fileURLToPath } from 'url'
+
+console.log(
+  'current active environment (staging or production):',
+  process.env.NEXT_PUBLIC_ENV
+)
+
 /**
  * @type {import('next').NextConfig}
  */
