@@ -11,7 +11,7 @@ import {
 
 export function EquationsAppV2() {
   const [unlockedLevel /*setUnlockedLevel*/] = useState(1)
-  //const [solved, setSolved] = useState<number[]>([])
+  const [solved, setSolved] = useState<number[]>([])
 
   const [taskNumber, setTaskNumber] = useState(-1)
   const [hideBackButton, setHideBackButton] = useState(false)
@@ -57,8 +57,9 @@ export function EquationsAppV2() {
                 setTaskNumber(n)
                 setHideBackButton(false)
               }}
+              solved={solved}
             />{' '}
-            <div className="mb-6 mt-[200px] text-center">
+            <div className="mb-6 mt-36 text-center">
               <a href="/privacy" target="_blank" rel="noreferrer">
                 Datenschutz
               </a>
@@ -73,7 +74,18 @@ export function EquationsAppV2() {
       {showTask && task && (
         <div className="shrink grow">
           <div className="mx-auto mt-4 max-w-[600px] px-4">
-            <EquationTask data={task} />
+            <EquationTask
+              data={task}
+              onSolve={(n) => {
+                if (!solved.includes(n)) {
+                  setSolved((list) => [...list, n])
+                }
+                setHideBackButton(true)
+              }}
+              onBack={() => {
+                setTaskNumber(-1)
+              }}
+            />
           </div>
         </div>
       )}

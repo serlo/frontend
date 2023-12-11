@@ -1,4 +1,4 @@
-import { faLock } from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle, faLock } from '@fortawesome/free-solid-svg-icons'
 
 import { FaIcon } from '../fa-icon'
 import { LinearEquationData } from '@/data/de/gleichungs-app'
@@ -8,25 +8,18 @@ interface OverviewProps {
   data: LinearEquationData
   unlockedLevel: number
   selectLevel: (n: number) => void
+  solved: number[]
 }
 
-export function Overview({ data, unlockedLevel, selectLevel }: OverviewProps) {
+export function Overview({
+  data,
+  unlockedLevel,
+  selectLevel,
+  solved,
+}: OverviewProps) {
   return (
     <div>
-      <div className="rounded bg-gray-100 p-2">
-        Diese App befindet sich in Entwicklung.
-        <br />
-        <a
-          href="https://forms.gle/PFUYn8fn5zAkzpqe8"
-          target="_blank"
-          rel="noreferrer"
-          className="serlo-link"
-        >
-          Wir freuen uns über dein Feedback
-        </a>
-        .
-      </div>
-      <h2 className="mb-7 mt-12 text-center text-2xl font-bold">
+      <h2 className="mb-8 mt-12 text-center text-2xl font-bold">
         Lineare Gleichungen
       </h2>
       {data.levels.map((level) => (
@@ -58,7 +51,10 @@ export function Overview({ data, unlockedLevel, selectLevel }: OverviewProps) {
                 .map((task, i, arr) => (
                   <div
                     key={task.number}
-                    className={cn(i + 1 < arr.length && 'mr-4 mobileExt:mr-8')}
+                    className={cn(
+                      i + 1 < arr.length && 'mr-4 mobileExt:mr-8',
+                      'relative'
+                    )}
                   >
                     <button
                       className="h-14 w-14 rounded bg-gray-200 text-center align-middle text-xl hover:bg-gray-300"
@@ -68,6 +64,11 @@ export function Overview({ data, unlockedLevel, selectLevel }: OverviewProps) {
                     >
                       {task.number}
                     </button>
+                    {solved.includes(task.number) && (
+                      <div className="absolute -right-1 -top-1 text-xl text-green-500">
+                        <FaIcon icon={faCheckCircle} />
+                      </div>
+                    )}
                   </div>
                 ))}
             </div>
@@ -82,7 +83,10 @@ export function Overview({ data, unlockedLevel, selectLevel }: OverviewProps) {
                 .map((task, i, arr) => (
                   <div
                     key={task.number}
-                    className={cn(i + 1 < arr.length && 'mr-4 mobileExt:mr-8')}
+                    className={cn(
+                      i + 1 < arr.length && 'mr-4 mobileExt:mr-8',
+                      'relative'
+                    )}
                   >
                     <button
                       className="h-14 w-14 rounded bg-yellow-400 text-center align-middle text-xl hover:bg-yellow-500"
@@ -92,6 +96,11 @@ export function Overview({ data, unlockedLevel, selectLevel }: OverviewProps) {
                     >
                       {task.number}
                     </button>
+                    {solved.includes(task.number) && (
+                      <div className="absolute -right-1 -top-1 text-xl text-green-500">
+                        <FaIcon icon={faCheckCircle} />
+                      </div>
+                    )}
                   </div>
                 ))}
             </div>
@@ -110,6 +119,19 @@ export function Overview({ data, unlockedLevel, selectLevel }: OverviewProps) {
           </div>
         </div>
       ))}
+      <div className="mt-12 rounded bg-gray-100 p-2">
+        Diese App befindet sich in Entwicklung.
+        <br />
+        <a
+          href="https://forms.gle/PFUYn8fn5zAkzpqe8"
+          target="_blank"
+          rel="noreferrer"
+          className="serlo-link"
+        >
+          Wir freuen uns über dein Feedback
+        </a>
+        .
+      </div>
     </div>
   )
 }
