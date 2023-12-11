@@ -26,20 +26,24 @@ export function getBlankElement(editor: SlateEditor): Blank | undefined {
 
 export function toggleBlank(editor: SlateEditor) {
   if (isBlankActive(editor)) {
-    let text = undefined
+    const deletedAnswers: string[] = []
+
     Transforms.removeNodes(editor, {
       match: (node) => {
         const isHit = Element.isElement(node) && node.type === 'blank'
-        if (isHit) text = node
+        if (isHit) {
+          deletedAnswers.push(node.correctAnswers.at(0)?.answer ?? '')
+        }
         return isHit
       },
     })
-    if (text) {
-      const blank = text as Blank
-      Transforms.insertNodes(editor, {
-        text: blank.correctAnswers[0]?.answer ?? '',
-      })
+
+    const collectedAnswers = deletedAnswers.join('')
+
+    if (collectedAnswers.length > 0) {
+      Transforms.insertNodes(editor, { text: collectedAnswers })
     }
+
     return
   }
 
