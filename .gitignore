@@ -41,4 +41,13 @@ yarn-error.log*
 # nvm
 .nvmrc
 
+# E2E tests output
 e2e-tests/output
+
+# E2E tests Yarn
+e2e-tests/.yarn/*
+!e2e-tests/.yarn/cache
+!e2e-tests/.yarn/plugins
+!e2e-tests/.yarn/releases
+e2e-tests/yarn-debug.log*
+e2e-tests/yarn-error.log*
