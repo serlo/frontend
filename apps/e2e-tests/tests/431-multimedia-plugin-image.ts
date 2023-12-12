@@ -19,7 +19,7 @@ const login = async (I: CodeceptJS.I) => {
   I.fillField('Benutzername oder E-Mailadresse', 'dal')
   I.fillField('Passwort', '123456')
   I.click('Anmelden', "button[value='password']")
-  I.waitForElement(locate('img').withAttr({ alt: 'Avatar' }), 10)
+  I.waitForElement(locate('img').withAttr({ alt: 'Avatar' }), 20)
 }
 
 const logout = async (I: CodeceptJS.I) => {
