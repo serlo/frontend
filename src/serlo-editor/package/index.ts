@@ -91,3 +91,5 @@ export {
   IconText,
   IconVideo,
 }
+
+export { FaIcon } from '@/components/fa-icon'
