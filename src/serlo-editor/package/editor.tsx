@@ -10,7 +10,7 @@ export interface SerloEditorProps {
   instanceData: InstanceData
   loggedInData: LoggedInData
   initialState?: EditorProps['initialState']
-  children: (doc: JSX.Element) => JSX.Element
+  children: EditorProps["children"]
 }
 const emptyState = {
   plugin: EditorPluginType.Rows,
@@ -27,13 +27,13 @@ export function SerloEditor({
   instanceData,
   loggedInData,
   initialState,
-  children
+  ...props
 }: SerloEditorProps) {
   return (
     <InstanceDataProvider value={instanceData}>
       <LoggedInDataProvider value={loggedInData}>
         <div className="serlo-editor-hacks mb-24 max-w-[816px] px-2">
-          {children(<Editor initialState={initialState ?? emptyState} />)}
+          <Editor initialState={initialState ?? emptyState} {...props} />
         </div>
       </LoggedInDataProvider>
     </InstanceDataProvider>
