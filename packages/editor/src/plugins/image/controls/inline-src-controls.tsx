@@ -1,9 +1,9 @@
+import { isTempFile } from '@editor/plugin'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { RefObject } from 'react'
 
 import type { ImageProps } from '..'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
-import { isTempFile } from '@editor/plugin'
 
 export function InlineSrcControls({
   state,

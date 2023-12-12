@@ -1,3 +1,4 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useEffect, useState } from 'react'
 
 import { CommunityWallPersons } from './community-wall-persons'
@@ -6,7 +7,6 @@ import {
   communityWallPersons,
   CommunityWallPerson,
 } from '@/data/de/community-people'
-import { cn } from '@/helper/cn'
 import { shuffleArray } from '@/helper/shuffle-array'
 
 const positions = [

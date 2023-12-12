@@ -1,4 +1,11 @@
+import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
+import { isTempFile, usePendingFileUploader } from '@editor/plugin'
+import { selectIsFocused, useAppSelector } from '@editor/store'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faImages } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useEffect, useRef, useState } from 'react'
 
 import type { ImageProps } from '.'
@@ -6,13 +13,6 @@ import { InlineSrcControls } from './controls/inline-src-controls'
 import { ImageRenderer } from './renderer'
 import { ImageToolbar } from './toolbar'
 import { TextEditorConfig } from '../text'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
-import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
-import { isTempFile, usePendingFileUploader } from '@editor/plugin'
-import { selectIsFocused, useAppSelector } from '@editor/store'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 const captionFormattingOptions = [
   TextEditorFormattingOption.richTextBold,

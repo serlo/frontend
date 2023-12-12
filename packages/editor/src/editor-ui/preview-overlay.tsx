@@ -1,6 +1,5 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useState, useCallback, useEffect } from 'react'
-
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 interface PreviewOverlayProps {
   children: React.ReactNode

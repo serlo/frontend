@@ -1,7 +1,7 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import Head from 'next/head'
 import { PropsWithChildren } from 'react'
 
-import { cn } from '@/helper/cn'
 
 type PageTitleProps = PropsWithChildren<{
   headTitle?: boolean

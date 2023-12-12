@@ -10,12 +10,12 @@ import {
   EditorTemplateExerciseGroupDocument,
 } from '@serlo/editor/src/types/editor-plugins'
 import { isTemplateExerciseGroupDocument } from '@serlo/editor/src/types/plugin-type-guards'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { Fragment, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
 import { FaIcon } from '../fa-icon'
 import { TaxonomyData } from '@/data-types'
-import { cn } from '@/helper/cn'
 
 export interface NewFolderPrototypeProps {
   data: TaxonomyData

@@ -1,4 +1,4 @@
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { StateTypeReturnType, string } from '@editor/plugin'
 
 export function SettingsTextarea({

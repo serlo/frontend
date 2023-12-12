@@ -1,5 +1,5 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { MouseEventHandler } from 'react'
 
 interface PluginToolbarTextControlButtonProps {

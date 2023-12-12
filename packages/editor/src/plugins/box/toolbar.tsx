@@ -4,7 +4,7 @@ import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 import type { BoxProps } from '.'
 import { types } from './renderer'

@@ -1,4 +1,5 @@
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useState, KeyboardEvent, ChangeEvent } from 'react'
 
 import { AuthorToolsData } from '../foldout-author-menus/author-tools'
@@ -6,7 +7,6 @@ import { UserToolsItem } from '../user-tools-item'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidRevType } from '@/data-types'
-import { cn } from '@/helper/cn'
 import {
   RevisionMutationMode,
   useRevisionDecideMutation,

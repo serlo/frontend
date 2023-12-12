@@ -1,7 +1,7 @@
 import type { SpoilerProps } from '.'
 import { SpoilerRenderer } from './renderer'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'

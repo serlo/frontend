@@ -1,4 +1,5 @@
 import { faPlusCircle, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { gql } from 'graphql-request'
 import { useRef, useState } from 'react'
 
@@ -16,7 +17,6 @@ import {
   Role,
   UsersByRoleQuery,
 } from '@/fetcher/graphql-types/operations'
-import { cn } from '@/helper/cn'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { useUserAddOrRemoveRoleMutation } from '@/mutations/use-user-role-mutation'

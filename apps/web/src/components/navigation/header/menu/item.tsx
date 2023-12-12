@@ -4,6 +4,7 @@ import {
   Trigger,
   Link,
 } from '@radix-ui/react-navigation-menu'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { default as NextLink } from 'next/link'
 
 import { Icon } from './icon'
@@ -11,7 +12,6 @@ import { preventHover } from './prevent-hover'
 import { SubContent } from './sub-content'
 import { FaIcon } from '@/components/fa-icon'
 import type { HeaderLinkData } from '@/data-types'
-import { cn } from '@/helper/cn'
 import { submitEvent } from '@/helper/submit-event'
 
 const styledLinkCls = cn(`

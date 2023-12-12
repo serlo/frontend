@@ -1,8 +1,8 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import { gql } from 'graphql-request'
 
 import { FaIcon, FaIconProps } from '../fa-icon'
 import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
-import { cn } from '@/helper/cn'
 
 export interface UnreadNotificationsCountProps {
   icon?: FaIconProps['icon']

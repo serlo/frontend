@@ -6,6 +6,7 @@ import {
   Trigger,
   Content,
 } from '@radix-ui/react-navigation-menu'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 import { AuthorTools, Tool } from './author-tools'
 import type { MoreAuthorToolsProps } from './more-author-tools'
@@ -13,7 +14,6 @@ import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { ExerciseInlineType, UuidType } from '@/data-types'
-import { cn } from '@/helper/cn'
 import { getTranslatedType } from '@/helper/get-translated-type'
 
 export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {

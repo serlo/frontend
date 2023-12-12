@@ -1,11 +1,11 @@
 import { Content, List } from '@radix-ui/react-navigation-menu'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 import { preventHover } from './prevent-hover'
 import { SubItem } from './sub-item'
 import { SubParticipateMega } from './sub-participate-mega'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { HeaderLinkData } from '@/data-types'
-import { cn } from '@/helper/cn'
 
 export interface SubContentProps {
   subItems: HeaderLinkData[]

@@ -1,12 +1,12 @@
 import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons'
 import { faSlash } from '@fortawesome/free-solid-svg-icons'
 import { EditorTooltip } from '@serlo/editor/src/editor-ui/editor-tooltip'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 import { Link } from '../link'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { getLicense } from '@/data/licenses/licenses-helpers'
-import { cn } from '@/helper/cn'
 
 interface ExerciseLicenseNoticeProps {
   exerciseLicenseId?: number

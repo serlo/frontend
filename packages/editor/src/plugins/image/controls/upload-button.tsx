@@ -1,11 +1,11 @@
-import { faCircleArrowUp, faRedoAlt } from '@fortawesome/free-solid-svg-icons'
-
-import type { ImageProps } from '..'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { TempFile, isTempFile } from '@editor/plugin'
+import { faCircleArrowUp, faRedoAlt } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { cn } from '@serlo/tailwind/helper/cn'
+
+import type { ImageProps } from '..'
 
 export function UploadButton({ config, state }: ImageProps) {
   const { src } = state

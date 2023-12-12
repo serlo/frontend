@@ -1,4 +1,5 @@
 import type { RegistrationFlow, UpdateRegistrationFlowBody } from '@ory/client'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useRouter } from 'next/router'
 import nProgress from 'nprogress'
 import { useEffect, useState } from 'react'
@@ -14,7 +15,6 @@ import { PageTitle } from '@/components/content/page-title'
 import { InfoPanel } from '@/components/info-panel'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export function Registration() {

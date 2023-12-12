@@ -1,4 +1,5 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 
@@ -7,7 +8,6 @@ import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import { cn } from '@/helper/cn'
 import { isProduction } from '@/helper/is-production'
 import { submitEvent } from '@/helper/submit-event'
 

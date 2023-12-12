@@ -4,7 +4,7 @@ import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@serlo/tailwind/helper/cn'
 import type { Dispatch, SetStateAction } from 'react'
 
 import type { ScMcExerciseProps } from '.'

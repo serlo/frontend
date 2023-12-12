@@ -2,12 +2,12 @@ import {
   faArrowCircleLeft,
   faFolderOpen,
 } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { Fragment } from 'react'
 
 import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
 import { BreadcrumbsData, BreadcrumbEntry } from '@/data-types'
-import { cn } from '@/helper/cn'
 
 export interface BreadcrumbsProps {
   data?: BreadcrumbsData

@@ -5,12 +5,12 @@ import {
   faPencil,
 } from '@fortawesome/free-solid-svg-icons'
 import { Thread } from '@serlo/authorization'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 import { FaIcon } from '../fa-icon'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEntityId } from '@/contexts/uuids-context'
-import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import {
   useSetCommentStateMutation,

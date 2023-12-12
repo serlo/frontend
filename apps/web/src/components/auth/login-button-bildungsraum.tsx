@@ -1,9 +1,9 @@
 import type { UiNodeInputAttributes } from '@ory/client'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { type FormEvent } from 'react'
 
 import MeinBildungsraumLogo from '@/assets-webkit/img/mein-bildungsraum-logo.svg'
 import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 
 export interface NodeProps {
   attributes: UiNodeInputAttributes

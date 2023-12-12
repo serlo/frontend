@@ -1,6 +1,7 @@
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { Root, List } from '@radix-ui/react-navigation-menu'
+import { cn } from '@serlo/tailwind/helper/cn'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
@@ -13,7 +14,6 @@ import { useAuthentication } from '@/auth/use-authentication'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
-import { cn } from '@/helper/cn'
 
 interface UserToolsProps {
   id?: number

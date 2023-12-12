@@ -1,3 +1,4 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useState } from 'react'
 
 import { Link } from '../content/link'
@@ -6,7 +7,6 @@ import { PartnerList } from '../landing/rework/partner-list'
 import { Logo } from '../navigation/header/logo'
 import { endpointBaseUrl } from '@/api/endpoint'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { cn } from '@/helper/cn'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 export const endpointEnmeshed = `${endpointBaseUrl}/enmeshed`

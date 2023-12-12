@@ -1,4 +1,5 @@
 import type { StaticMathProps } from '@serlo/editor/src/plugins/text/static-components/static-math'
+import { cn } from '@serlo/tailwind/helper/cn'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState } from 'react'
 
@@ -8,7 +9,6 @@ import { MetaBar } from './meta-bar'
 import { Link } from '../content/link'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
 import { scrollIfNeeded } from '@/helper/scroll'
 import { useEditCommentMutation } from '@/mutations/thread'

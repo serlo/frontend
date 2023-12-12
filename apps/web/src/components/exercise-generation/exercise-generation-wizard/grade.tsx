@@ -1,7 +1,8 @@
+import { cn } from '@serlo/tailwind/helper/cn'
+
 import { WizardPageProps } from './wizard-page-props'
 import { MenuButton, MenuItem } from '../menu-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { cn } from '@/helper/cn'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface GradeProps extends WizardPageProps {

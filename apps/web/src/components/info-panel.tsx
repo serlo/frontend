@@ -1,8 +1,8 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import Head from 'next/head'
 import { ReactNode } from 'react'
 
 import { FaIcon, FaIconProps } from './fa-icon'
-import { cn } from '@/helper/cn'
 
 const colorClasses = {
   warning: 'bg-orange-200',

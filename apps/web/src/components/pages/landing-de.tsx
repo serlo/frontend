@@ -1,3 +1,5 @@
+import { cn } from '@serlo/tailwind/helper/cn'
+
 import { HeadTags } from '../head-tags'
 import { CommunityWall } from '../landing/rework/community-wall/community-wall'
 import { FooterNew } from '../landing/rework/footer-new'
@@ -10,7 +12,6 @@ import { Link } from '@/components/content/link'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { InstanceLandingData } from '@/data-types'
 import { breakpoints } from '@/helper/breakpoints'
-import { cn } from '@/helper/cn'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
 export interface LandingDEProps {

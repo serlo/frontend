@@ -1,3 +1,4 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useEffect, useState } from 'react'
 
 import { TopicCategoryLink } from './topic-category-link'
@@ -9,7 +10,6 @@ import {
   TopicCategoryCustomType,
   TopicCategoryType,
 } from '@/data-types'
-import { cn } from '@/helper/cn'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 
 export interface TopicCategoryProps {

@@ -1,7 +1,8 @@
+import { cn } from '@serlo/tailwind/helper/cn'
+
 import { ProfileActivityGraph } from '@/components/user/profile-activity-graph'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserActivityByType } from '@/fetcher/graphql-types/operations'
-import { cn } from '@/helper/cn'
 
 interface ProfileActivityGraphsProps {
   values: UserActivityByType

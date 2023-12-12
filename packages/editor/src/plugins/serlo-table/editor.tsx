@@ -11,7 +11,7 @@ import { TextEditorConfig } from '../text'
 import { instanceStateStore } from '../text/utils/instance-state-store'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
 import {

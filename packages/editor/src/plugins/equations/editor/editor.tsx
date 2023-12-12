@@ -1,23 +1,3 @@
-import {
-  faArrowCircleUp,
-  faPlusCircle,
-  faTrashAlt,
-} from '@fortawesome/free-solid-svg-icons'
-import { includes } from 'ramda'
-import { useCallback, useEffect, useRef } from 'react'
-import { useHotkeys } from 'react-hotkeys-hook'
-
-import { toTransformationTarget, TransformationTarget } from './editor-renderer'
-import { useGridFocus } from './grid-focus'
-import { StepEditor } from './step-editor'
-import { StepSegment } from './step-segment'
-import type { EquationsProps } from '..'
-import { renderDownArrow } from '../renderer'
-import { EquationsStaticRenderer } from '../static'
-import { EquationsToolbar } from '../toolbar'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import {
   store,
@@ -33,6 +13,26 @@ import {
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { EditorEquationsDocument } from '@editor/types/editor-plugins'
+import {
+  faArrowCircleUp,
+  faPlusCircle,
+  faTrashAlt,
+} from '@fortawesome/free-solid-svg-icons'
+import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { cn } from '@serlo/tailwind/helper/cn'
+import { includes } from 'ramda'
+import { useCallback, useEffect, useRef } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
+
+import { toTransformationTarget, TransformationTarget } from './editor-renderer'
+import { useGridFocus } from './grid-focus'
+import { StepEditor } from './step-editor'
+import { StepSegment } from './step-segment'
+import type { EquationsProps } from '..'
+import { renderDownArrow } from '../renderer'
+import { EquationsStaticRenderer } from '../static'
+import { EquationsToolbar } from '../toolbar'
 
 export function EquationsEditor(props: EquationsProps) {
   const { focused, state, id } = props

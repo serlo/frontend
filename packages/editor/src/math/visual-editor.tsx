@@ -1,7 +1,7 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import * as MQ from 'react-mathquill'
 
 import type { MathEditorProps } from './editor'
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 if (typeof window !== 'undefined') {
   MQ.addStyles()

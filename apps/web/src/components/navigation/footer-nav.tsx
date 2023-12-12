@@ -1,11 +1,11 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faGithubSquare } from '@fortawesome/free-brands-svg-icons'
 import { faHouseLaptop, faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 import { FaIcon } from '../fa-icon'
 import { Link } from '@/components/content/link'
 import { FooterIcon, FooterNavigation } from '@/data-types'
-import { cn } from '@/helper/cn'
 
 const iconMapping: Record<FooterIcon, IconDefinition> = {
   newsletter: faEnvelope,

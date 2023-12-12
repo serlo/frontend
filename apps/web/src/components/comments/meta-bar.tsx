@@ -1,4 +1,5 @@
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import Tippy from '@tippyjs/react'
 import { useState } from 'react'
 import { Instance, Props } from 'tippy.js'
@@ -7,7 +8,6 @@ import { DropdownMenu } from './dropdown-menu'
 import { FaIcon } from '../fa-icon'
 import { UserLink } from '../user/user-link'
 import { TimeAgo } from '@/components/time-ago'
-import { cn } from '@/helper/cn'
 
 export interface MetaBarProps {
   user: { username: string; id: number }

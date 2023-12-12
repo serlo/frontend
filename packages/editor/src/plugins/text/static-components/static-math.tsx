@@ -4,8 +4,8 @@ import KaTeX from 'katex'
 /* eslint-disable import/no-unassigned-import */
 import 'katex/contrib/mhchem'
 import type { MathElement } from '../types/text-editor'
-import { cn } from '@serlo/frontend/src/helper/cn'
 
+import { cn } from '@serlo/tailwind/helper/cn'
 import { sanitizeLatex } from '@editor/plugins/text/utils/sanitize-latex'
 
 export type StaticMathProps = Omit<MathElement, 'children'>

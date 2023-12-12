@@ -1,6 +1,5 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import Script from 'next/script'
-
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 export interface GeogebraRendererProps {
   id: string

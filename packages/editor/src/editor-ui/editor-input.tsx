@@ -1,6 +1,5 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import { forwardRef } from 'react'
-
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 interface EditorInputProps
   extends React.DetailedHTMLProps<

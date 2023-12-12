@@ -8,6 +8,8 @@ import {
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { EditorImageDocument } from '@editor/types/editor-plugins'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useMemo, useState } from 'react'
 
 import type { MultimediaProps } from '.'
@@ -16,8 +18,6 @@ import { getStyleHacks } from './style-hacks'
 import { MultimediaSizeSelect } from './toolbar/size-select'
 import { MultimediaToolbar } from './toolbar/toolbar'
 import { MultimediaTypeSelect } from './toolbar/type-select'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 export function MultimediaEditor(props: MultimediaProps) {
   const [stateCache, setStateCache] = useState<Record<string, unknown>>({})

@@ -3,13 +3,13 @@ import {
   faChalkboardUser as courseIcon,
   faFilePen as exerciseIcon,
 } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import Image from 'next/image'
 
 import { EditorContact } from '../editor/editor-contact'
 import { teamDataKulla } from '../editor/editor-team'
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
-import { cn } from '@/helper/cn'
 
 export const MetadataApiPresentation = () => {
   return (

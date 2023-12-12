@@ -1,9 +1,9 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import { ReactNode } from 'react'
 import Modal from 'react-modal'
 
 import { defaultModalOverlayStyles } from '../modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 
 Modal.setAppElement('#__next')
 

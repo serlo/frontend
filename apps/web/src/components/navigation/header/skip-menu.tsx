@@ -1,5 +1,6 @@
+import { cn } from '@serlo/tailwind/helper/cn'
+
 import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export function SkipMenu() {

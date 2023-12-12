@@ -1,3 +1,4 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import { gql } from 'graphql-request'
 import { useState, ReactNode } from 'react'
 
@@ -11,7 +12,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { GetNotificationsQuery } from '@/fetcher/graphql-types/operations'
 import { sharedEventFragments } from '@/fetcher/query-fragments'
-import { cn } from '@/helper/cn'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (

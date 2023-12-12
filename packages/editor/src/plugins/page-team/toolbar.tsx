@@ -1,14 +1,14 @@
+import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
+import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
   faFileImport,
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons'
-import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
-import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
 

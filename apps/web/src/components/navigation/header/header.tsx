@@ -1,4 +1,5 @@
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { Router, useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -9,7 +10,6 @@ import { SkipMenu } from './skip-menu'
 import { FaIcon } from '@/components/fa-icon'
 import { Quickbar } from '@/components/navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 import { submitEvent } from '@/helper/submit-event'
 
 export function Header() {

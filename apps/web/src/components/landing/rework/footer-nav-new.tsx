@@ -1,7 +1,8 @@
+import { cn } from '@serlo/tailwind/helper/cn'
+
 import { Separator } from './separator'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 
 export function FooterNavNew() {
   const { headerData, footerData } = useInstanceData()

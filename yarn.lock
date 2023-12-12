@@ -4254,7 +4254,6 @@ __metadata:
     autoprefixer: ^10.4.16
     babel-jest: ^29.7.0
     canvas-confetti: ^1.9.2
-    clsx: ^2.0.0
     cross-env: ^7.0.3
     dotenv: ^16.3.1
     eslint: ^8.51.0
@@ -4339,6 +4338,14 @@ __metadata:
     dotenv-cli: ^7.3.0
     prettier: ^3.1.0
     prettier-plugin-packagejson: ^2.4.6
+  languageName: unknown
+  linkType: soft
+
+"@serlo/tailwind@workspace:packages/tailwind":
+  version: 0.0.0-use.local
+  resolution: "@serlo/tailwind@workspace:packages/tailwind"
+  dependencies:
+    clsx: ^2.0.0
   languageName: unknown
   linkType: soft
 

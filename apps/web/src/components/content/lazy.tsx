@@ -1,10 +1,10 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 import LazyLoad from 'react-lazyload'
 
 import { isPrintMode } from '../print-mode'
 import { useAB } from '@/contexts/ab'
-import { cn } from '@/helper/cn'
 
 export interface LazyProps {
   children: ReactNode

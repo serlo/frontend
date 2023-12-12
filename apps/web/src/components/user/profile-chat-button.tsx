@@ -1,4 +1,5 @@
 import { faPaperPlane, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { ChangeEvent, useEffect, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 
@@ -6,7 +7,6 @@ import { FaIcon } from '../fa-icon'
 import { useAuthentication } from '@/auth/use-authentication'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useCreateThreadMutation } from '@/mutations/thread'

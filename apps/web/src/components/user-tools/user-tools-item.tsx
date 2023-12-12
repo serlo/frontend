@@ -1,8 +1,8 @@
 import { Item, Link } from '@radix-ui/react-navigation-menu'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { default as NextLink } from 'next/link'
 
 import { FaIcon, FaIconProps } from '../fa-icon'
-import { cn } from '@/helper/cn'
 
 export interface UserToolsItemProps {
   title: string

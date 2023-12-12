@@ -2,7 +2,7 @@ import { faFilm } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { Instance } from '@serlo/frontend/src/fetcher/graphql-types/operations'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 export enum VideoType {
   YouTube = 'YouTube',

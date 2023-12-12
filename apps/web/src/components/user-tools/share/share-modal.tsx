@@ -9,6 +9,7 @@ import {
   faDownload,
   faEnvelope,
 } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import QRCode from 'qrcode.react'
 import { MouseEvent, useRef } from 'react'
 
@@ -17,7 +18,6 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEntityId } from '@/contexts/uuids-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import { cn } from '@/helper/cn'
 import { colors } from '@/helper/colors'
 import { showToastNotice } from '@/helper/show-toast-notice'
 

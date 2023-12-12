@@ -1,8 +1,8 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import Image from 'next/image'
 
 import { Link } from './link'
 import { HorizonData } from '@/data-types'
-import { cn } from '@/helper/cn'
 
 export interface HorizonProps {
   data: HorizonData

@@ -2,6 +2,7 @@ import {
   faChevronUp,
   faChevronCircleRight,
 } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 import { FaIcon } from '../fa-icon'
 import DonateIcon from '@/assets-webkit/img/footer-donate.svg'
@@ -9,7 +10,6 @@ import ParticipateIcon from '@/assets-webkit/img/footer-participate.svg'
 import { Link } from '@/components/content/link'
 import { FooterNav } from '@/components/navigation/footer-nav'
 import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 
 export function Footer() {
   const { footerData } = useInstanceData()

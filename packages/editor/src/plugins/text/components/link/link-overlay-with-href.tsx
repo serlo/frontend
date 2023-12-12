@@ -1,15 +1,14 @@
+import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import {
   faExternalLink,
   faNewspaper,
   faPencilAlt,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
-import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { QuickbarData } from '@serlo/frontend/src/components/navigation/quickbar'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 export function LinkOverlayWithHref({
   value,

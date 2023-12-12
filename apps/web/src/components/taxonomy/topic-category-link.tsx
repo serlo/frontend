@@ -1,4 +1,5 @@
 import { faTools } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 import { FaIcon } from '../fa-icon'
 import { Link } from '@/components/content/link'
@@ -8,7 +9,6 @@ import {
   TopicCategoryCustomType,
   TopicCategoryType,
 } from '@/data-types'
-import { cn } from '@/helper/cn'
 
 export interface TopicCategoryProps {
   links: TaxonomyLink[]

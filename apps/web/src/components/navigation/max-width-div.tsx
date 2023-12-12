@@ -1,6 +1,5 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import { ReactNode } from 'react'
-
-import { cn } from '@/helper/cn'
 
 interface MaxWidthDivProps {
   showNav?: boolean

@@ -9,6 +9,7 @@ import { editorRenderers } from '@serlo/editor/src/plugin/helpers/editor-rendere
 import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
 import { EditorTemplateExerciseGroupDocument } from '@serlo/editor/src/types/editor-plugins'
 import { TemplatePluginType } from '@serlo/editor/src/types/template-plugin-type'
+import { cn } from '@serlo/tailwind/helper/cn'
 import ExerciseGenerationLoadingSparkles from 'public/_assets/img/exercise/sparkles.svg'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
@@ -28,7 +29,6 @@ import {
   transformEditorDataToExerciseGroup,
 } from '@/helper/ai-generated-exercises/data-conversion'
 import { ExpectedLLMOutputType } from '@/helper/ai-generated-exercises/decoders'
-import { cn } from '@/helper/cn'
 import { ErrorBoundary } from '@/helper/error-boundary'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 

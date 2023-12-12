@@ -4,13 +4,13 @@ import {
   faArrowRight,
   faSave,
 } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useState, KeyboardEvent, useRef, ChangeEvent } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { isMac } from '@/helper/client-detection'
-import { cn } from '@/helper/cn'
 
 interface CommentFormProps {
   onSend: (

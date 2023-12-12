@@ -1,4 +1,5 @@
 import { faEye, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 import { FaIcon } from '../fa-icon'
 import { UserLink } from '../user/user-link'
@@ -6,7 +7,6 @@ import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { Revision, Revisions } from '@/fetcher/query-types'
-import { cn } from '@/helper/cn'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
 
 export interface RevisionHistoryProps {

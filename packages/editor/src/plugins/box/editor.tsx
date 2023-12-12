@@ -2,7 +2,7 @@ import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/tex
 import { selectIsEmptyRows } from '@editor/plugins/rows'
 import { selectIsFocused, useAppSelector } from '@editor/store'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 import type { BoxProps } from '.'
 import { EmptyWarning } from './components/empty-warning'

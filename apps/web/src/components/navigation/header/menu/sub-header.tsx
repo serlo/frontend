@@ -1,8 +1,8 @@
 import { Link } from '@radix-ui/react-navigation-menu'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { default as NextLink } from 'next/link'
 
 import { HeaderLinkData } from '@/data-types'
-import { cn } from '@/helper/cn'
 
 export interface SubHeaderProps {
   item: HeaderLinkData

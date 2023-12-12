@@ -1,10 +1,10 @@
 import { faHeart, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import Image from 'next/image'
 import { useState, KeyboardEvent, useEffect } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'

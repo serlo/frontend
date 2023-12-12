@@ -1,5 +1,6 @@
+import { cn } from '@serlo/tailwind/helper/cn'
+
 import { Lazy } from '../lazy'
-import { cn } from '@/helper/cn'
 
 const banner = {
   id: 'banner-testimonial-Maria_F',

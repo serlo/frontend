@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 export enum TableType {
   OnlyColumnHeader = 'OnlyColumnHeader',

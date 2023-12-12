@@ -4,6 +4,7 @@ import {
   faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons'
 import { TaxonomyTerm } from '@serlo/authorization'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useEffect, useState } from 'react'
 
 import { getPreviewStringFromExercise } from './get-preview-string-from-exercise'
@@ -23,7 +24,6 @@ import {
   UuidWithRevType,
 } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
-import { cn } from '@/helper/cn'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'

@@ -17,6 +17,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
 import { EditorPluginType } from '@serlo/editor/src/types/editor-plugin-type'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useRef, useState } from 'react'
 
 import {
@@ -30,7 +31,6 @@ import {
 } from './education-plugin-examples'
 import { FaIcon } from '@/components/fa-icon'
 import { UuidsProvider } from '@/contexts/uuids-context'
-import { cn } from '@/helper/cn'
 
 const h2Class =
   'text-center text-4xl leading-cozy tracking-tight font-extrabold'

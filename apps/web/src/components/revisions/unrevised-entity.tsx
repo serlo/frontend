@@ -1,4 +1,5 @@
 import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { Fragment, PropsWithChildren } from 'react'
 
 import { FaIcon } from '../fa-icon'
@@ -7,7 +8,6 @@ import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { UnrevisedRevisionsData } from '@/data-types'
-import { cn } from '@/helper/cn'
 import { getTranslatedType } from '@/helper/get-translated-type'
 
 export type UnrevisedRevisionEntity =

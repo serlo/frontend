@@ -1,3 +1,5 @@
+import { cn } from '@serlo/tailwind/helper/cn'
+
 import type { deSubjectLandingSubjects } from './subject-landing'
 import { HeadTags } from '../head-tags'
 import { FooterNew } from '../landing/rework/footer-new'
@@ -12,7 +14,6 @@ import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import type { TaxonomySubTerm } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
-import { cn } from '@/helper/cn'
 import { getServerSideStrings } from '@/helper/feature-i18n'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 

@@ -1,3 +1,4 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
@@ -11,7 +12,6 @@ import {
 } from '@/data/de/de-subject-landing-data'
 import { UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
-import { cn } from '@/helper/cn'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { shuffleArray } from '@/helper/shuffle-array'

@@ -3,7 +3,7 @@ import * as t from 'io-ts'
 import { useRef } from 'react'
 
 import type { PasteHackPluginProps } from '.'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'

@@ -1,3 +1,4 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import { gql } from 'graphql-request'
 import { useState } from 'react'
 
@@ -14,7 +15,6 @@ import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
-import { cn } from '@/helper/cn'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { replacePlaceholders } from '@/helper/replace-placeholders'

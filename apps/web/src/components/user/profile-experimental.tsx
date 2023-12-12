@@ -1,7 +1,7 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
-import { cn } from '@/helper/cn'
 import { isProduction } from '@/helper/is-production'
 
 export const features = {

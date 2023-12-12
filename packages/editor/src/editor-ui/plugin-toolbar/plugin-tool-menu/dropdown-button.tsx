@@ -1,7 +1,6 @@
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons'
-
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 interface DropdownButtonProps {
   onClick: () => void

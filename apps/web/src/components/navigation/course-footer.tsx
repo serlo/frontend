@@ -2,6 +2,7 @@ import {
   faArrowCircleRight,
   faArrowCircleUp,
 } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import Head from 'next/head'
 import { MouseEvent } from 'react'
 
@@ -9,7 +10,6 @@ import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { CoursePagesData } from '@/data-types'
-import { cn } from '@/helper/cn'
 
 export interface CourseFooterProps {
   onOverviewButtonClick: (e: MouseEvent<HTMLButtonElement>) => void

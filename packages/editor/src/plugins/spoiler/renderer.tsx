@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 export interface SpoilerRendererProps {
   title: JSX.Element

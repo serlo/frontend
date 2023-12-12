@@ -1,5 +1,6 @@
 import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
 import { EditorPluginType } from '@serlo/editor/src/types/editor-plugin-type'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { type ReactNode } from 'react'
 
 import { DisplayModes } from './display-modes'
@@ -10,7 +11,6 @@ import {
 } from './revision-diff-viewer'
 import { useInstanceData } from '@/contexts/instance-context'
 import { type RevisionData, UuidRevType } from '@/data-types'
-import { cn } from '@/helper/cn'
 import { GeogebraSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/geogebra-serlo-static-renderer'
 import { VideoSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/video-serlo-static-renderer'
 

@@ -1,7 +1,7 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import { Fragment, type ReactNode } from 'react'
 
 import { Sign, signStrings } from './sign'
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 export interface EquationsRendererStep {
   left: string

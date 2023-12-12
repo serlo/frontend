@@ -3,6 +3,7 @@ import {
   faWarning,
   faFilter,
 } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useState } from 'react'
 
 import { CommentAreaAllThreadsThread } from './comment-area-all-threads-thread'
@@ -15,7 +16,6 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { CommentStatus, Instance } from '@/fetcher/graphql-types/operations'
 import { useCommentDataAll } from '@/fetcher/use-comment-data-all'
-import { cn } from '@/helper/cn'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export function CommentAreaAllThreads() {

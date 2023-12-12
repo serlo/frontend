@@ -1,4 +1,4 @@
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 export interface MultimediaRendererProps {
   mediaWidth: number // 25 | 50 | 75 | 100 Percent

@@ -1,5 +1,6 @@
+import { cn } from '@serlo/tailwind/helper/cn'
+
 import { Link } from '../link'
-import { cn } from '@/helper/cn'
 
 interface ExerciseNumberingProps {
   index: number

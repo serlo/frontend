@@ -1,9 +1,9 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { entityIconMapping } from '@serlo/frontend/src/helper/icon-by-entity-type'
 import { serloDomain } from '@serlo/frontend/src/helper/urls/serlo-domain'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useState, KeyboardEvent, useEffect } from 'react'
 
 import { VideoType } from '../plugins/video/renderer'

@@ -1,3 +1,4 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useEffect, useState } from 'react'
 
 import { PageTitle } from '../content/page-title'
@@ -5,7 +6,6 @@ import { HeadTags } from '../head-tags'
 import { GoogleSeachWrapper } from '../navigation/google-search-wrapper'
 import { MaxWidthDiv } from '../navigation/max-width-div'
 import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 

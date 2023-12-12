@@ -1,6 +1,7 @@
 import { faSpinner, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons'
 import type { UiNode, UiNodeInputAttributes } from '@ory/client'
 import { isUiNodeInputAttributes } from '@ory/integrations/ui'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { type FormEvent, useState } from 'react'
 
 import { FlowType } from './flow-type'
@@ -8,7 +9,6 @@ import { LoginButtonBildungsraum } from './login-button-bildungsraum'
 import { FaIcon } from '../fa-icon'
 import { Message, getKratosMessageString } from '@/components/auth/message'
 import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 import { isProduction } from '@/helper/is-production'
 import { triggerSentry } from '@/helper/trigger-sentry'
 

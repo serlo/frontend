@@ -1,8 +1,8 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useState, useCallback, createRef, useEffect } from 'react'
 
 import type { MathEditorProps } from './editor'
 import { EditorTextarea } from '../editor-ui'
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 interface MathEditorTextareaProps
   extends Pick<

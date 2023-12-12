@@ -1,6 +1,6 @@
 import { mapObjIndexed } from 'ramda'
 
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@serlo/tailwind/helper/cn'
 import {
   StateType,
   StateTypesStaticType,

@@ -1,5 +1,6 @@
 import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons'
 import { faSlash } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useRouter } from 'next/router'
 
 import { LicenseIcons } from './license-icons'
@@ -7,7 +8,6 @@ import { Link } from '../link'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { getLicense } from '@/data/licenses/licenses-helpers'
-import { cn } from '@/helper/cn'
 
 interface LicenseNoticeProps {
   licenseId?: number

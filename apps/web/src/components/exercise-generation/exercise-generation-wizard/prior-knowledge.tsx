@@ -1,6 +1,7 @@
+import { cn } from '@serlo/tailwind/helper/cn'
+
 import { WizardPageProps } from './wizard-page-props'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { cn } from '@/helper/cn'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface PriorKnowledgeProps extends WizardPageProps {

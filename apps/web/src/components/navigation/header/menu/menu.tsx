@@ -1,4 +1,5 @@
 import { Root, List } from '@radix-ui/react-navigation-menu'
+import { cn } from '@serlo/tailwind/helper/cn'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
@@ -6,7 +7,6 @@ import { Item } from './item'
 import { NoAuthItem } from './no-auth-item'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 
 const AuthItems = dynamic(() =>
   import('./auth-items').then((mod) => mod.AuthItems)

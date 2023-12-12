@@ -1,9 +1,9 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { Item, Link } from '@radix-ui/react-navigation-menu'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { default as NextLink } from 'next/link'
 
 import { FaIcon } from '@/components/fa-icon'
-import { cn } from '@/helper/cn'
 
 export interface SubItemProps {
   title: string

@@ -1,3 +1,4 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import Image from 'next/image'
 import { default as NextLink } from 'next/link'
 import { Fragment } from 'react'
@@ -7,7 +8,6 @@ import { HeadTags } from '@/components/head-tags'
 import { UserTools } from '@/components/user-tools/user-tools'
 import type { CommunityWallPerson } from '@/data/de/community-people'
 import { breakpoints } from '@/helper/breakpoints'
-import { cn } from '@/helper/cn'
 import type { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
 
 const testimonials = [

@@ -1,3 +1,4 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import { gql } from 'graphql-request'
 import { useState } from 'react'
 
@@ -10,7 +11,6 @@ import {
   TaxonomyTermType,
   UuidSimpleQuery,
 } from '@/fetcher/graphql-types/operations'
-import { cn } from '@/helper/cn'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 

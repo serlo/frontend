@@ -7,9 +7,9 @@ import {
   faUserEdit,
   faUserFriends,
 } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 import { FaIcon } from '@/components/fa-icon'
-import { cn } from '@/helper/cn'
 
 const menuIconMapping = {
   subject: faGraduationCap,

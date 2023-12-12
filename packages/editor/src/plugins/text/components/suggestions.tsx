@@ -1,6 +1,6 @@
 import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 import type { SuggestionOption } from '../hooks/use-suggestions'
 

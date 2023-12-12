@@ -1,9 +1,9 @@
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useEffect } from 'react'
 
 import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { cn } from '@/helper/cn'
 import { submitEvent } from '@/helper/submit-event'
 
 interface WizardFooterProps {

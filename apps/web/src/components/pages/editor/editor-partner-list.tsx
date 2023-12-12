@@ -1,4 +1,4 @@
-import { cn } from '@/helper/cn'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 export const partners = [
   {

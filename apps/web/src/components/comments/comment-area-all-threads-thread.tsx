@@ -1,4 +1,5 @@
 import { Entity, Thread } from '@serlo/authorization'
+import { cn } from '@serlo/tailwind/helper/cn'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -11,7 +12,6 @@ import { UuidsProvider } from '@/contexts/uuids-context'
 import { UuidType } from '@/data-types'
 import { CommentStatus } from '@/fetcher/graphql-types/operations'
 import { GetAllThreadsNode } from '@/fetcher/use-comment-data-all'
-import { cn } from '@/helper/cn'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { submitEvent } from '@/helper/submit-event'

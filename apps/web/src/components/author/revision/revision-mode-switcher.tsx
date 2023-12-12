@@ -1,9 +1,9 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import type { Dispatch, SetStateAction } from 'react'
 
 import { DisplayModes } from './display-modes'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 
 export interface RevisionModeSwitcherProps {
   isCurrent: boolean

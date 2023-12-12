@@ -1,10 +1,10 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useRouter } from 'next/router'
 import { useState, useRef, useEffect, KeyboardEvent } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { isMac } from '@/helper/client-detection'
-import { cn } from '@/helper/cn'
 import { quickbarStatsSubmission } from '@/helper/quickbar-stats-submission'
 
 export interface QuickbarDataEntry {

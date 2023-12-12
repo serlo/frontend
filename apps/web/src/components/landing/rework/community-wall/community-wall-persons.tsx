@@ -1,10 +1,10 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import Image from 'next/image'
 import { zip } from 'ramda'
 import { Fragment } from 'react'
 
 import { Link } from '@/components/content/link'
 import { CommunityWallPerson } from '@/data/de/community-people'
-import { cn } from '@/helper/cn'
 
 interface CommunityWallPersonsProps {
   persons: CommunityWallPerson[]

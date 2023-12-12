@@ -1,4 +1,5 @@
 import { faPaypal } from '@fortawesome/free-brands-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import Image from 'next/image'
 
 import { TestimonialDonationsPage } from '../content/donations-banner-experiment/testimonial-donations-page'
@@ -7,7 +8,6 @@ import { HeadTags } from '../head-tags'
 import { PartnerList } from '../landing/rework/partner-list'
 import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
 import { Logo } from '@/components/navigation/header/logo'
-import { cn } from '@/helper/cn'
 import { ExternalProvider } from '@/helper/use-consent'
 
 export function Donations() {

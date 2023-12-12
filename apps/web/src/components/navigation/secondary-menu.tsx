@@ -1,8 +1,8 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useRef, useEffect } from 'react'
 
 import { Link } from '../content/link'
 import { SecondaryMenuData } from '@/data-types'
-import { cn } from '@/helper/cn'
 
 export interface SecondaryMenuProps {
   data: SecondaryMenuData['entries']

@@ -1,7 +1,7 @@
 import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 import { FaIcon } from '@/components/fa-icon'
-import { cn } from '@/helper/cn'
 
 interface MobileMenuButtonProps {
   open: boolean

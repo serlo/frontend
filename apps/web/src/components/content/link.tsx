@@ -1,10 +1,10 @@
 import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { default as NextLink } from 'next/link'
 import { useRouter } from 'next/router'
 import { ForwardedRef, forwardRef, ReactNode } from 'react'
 
 import { FaIcon } from '../fa-icon'
-import { cn } from '@/helper/cn'
 
 export interface LinkProps {
   href?: string

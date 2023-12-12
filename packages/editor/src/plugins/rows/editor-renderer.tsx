@@ -6,7 +6,7 @@ import { NativeTypes } from 'react-dnd-html5-backend'
 import type { RowsPluginConfig, RowsPluginState } from '.'
 import { RowDragButton } from './components/row-drag-button'
 import { useCanDrop } from './components/use-can-drop'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { StateTypeReturnType } from '@editor/plugin'
 import { PluginsWithData } from '@editor/plugin/helpers/editor-plugins'
 import {

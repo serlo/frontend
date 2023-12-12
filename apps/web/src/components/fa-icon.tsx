@@ -1,7 +1,6 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { CSSProperties } from 'react'
-
-import { cn } from '@/helper/cn'
 
 export interface FaIconProps {
   icon: IconDefinition

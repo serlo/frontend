@@ -6,7 +6,7 @@ import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { AiExerciseGenerationButton } from '@serlo/frontend/src/components/exercise-generation/ai-exercise-generation-button'
 import { useAiFeatures } from '@serlo/frontend/src/components/exercise-generation/use-ai-features'
 import { UuidType } from '@serlo/frontend/src/data-types'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@serlo/tailwind/helper/cn'
 import {
   type EditorPlugin,
   type EditorPluginProps,

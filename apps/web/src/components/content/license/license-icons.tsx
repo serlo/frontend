@@ -5,9 +5,9 @@ import {
   faCreativeCommonsSa,
 } from '@fortawesome/free-brands-svg-icons'
 import { faSlash } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 
 import { FaIcon } from '@/components/fa-icon'
-import { cn } from '@/helper/cn'
 
 interface LicenseIconsProps {
   title: string

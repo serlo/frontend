@@ -1,6 +1,5 @@
+import { cn } from '@serlo/tailwind/helper/cn'
 import { TextareaHTMLAttributes, forwardRef } from 'react'
-
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 type EditorTextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   onMoveOutRight?(): void

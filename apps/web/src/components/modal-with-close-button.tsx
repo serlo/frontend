@@ -1,10 +1,10 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@serlo/tailwind/helper/cn'
 import { useState, type ReactNode, useCallback } from 'react'
 import BaseModal from 'react-modal'
 
 import { FaIcon } from './fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 
 BaseModal.setAppElement('#__next')
 
