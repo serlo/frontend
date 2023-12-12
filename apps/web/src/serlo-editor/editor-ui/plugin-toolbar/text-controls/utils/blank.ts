@@ -1,4 +1,11 @@
-import { Editor as SlateEditor, Element, Transforms, Node, Editor } from 'slate'
+import {
+  Editor as SlateEditor,
+  Element,
+  Transforms,
+  Node,
+  Editor,
+  Path,
+} from 'slate'
 import { v4 as uuid_v4 } from 'uuid'
 
 import { selectionHasElement, trimSelection } from './selection'
@@ -18,7 +25,18 @@ export function toggleBlank(editor: SlateEditor) {
 
 function removeBlanks(editor: SlateEditor) {
   Editor.withoutNormalizing(editor, () => {
-    const allElementsInSelection = [...Node.elements(editor)]
+    if (!editor.selection) return
+
+    const anchorPath = editor.selection.anchor.path
+    const focusPath = editor.selection.focus.path
+
+    // Node.elements(...) needs the "smaller" path in 'from'. Otherwise it will return nothing. Depending on how the user selects (expanding selection to the left or right) the anchor path might be "smaller" or "bigger" than the focus path. Here we figure out which path is the smaller/bigger one.
+    const isAnchorLeftOfFocus = Path.compare(anchorPath, focusPath) === -1
+    const startPath = isAnchorLeftOfFocus ? anchorPath : focusPath
+    const endPath = isAnchorLeftOfFocus ? focusPath : anchorPath
+    const allElementsInSelection = [
+      ...Node.elements(editor, { from: startPath, to: endPath }),
+    ]
 
     allElementsInSelection.forEach((element) => {
       if (element[0].type !== 'textBlank') return
