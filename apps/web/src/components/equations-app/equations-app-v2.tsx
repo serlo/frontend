@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { EquationTask } from './equation-task'
 import { Overview } from './overview'
@@ -20,6 +20,14 @@ export function EquationsAppV2() {
   const showTask = taskNumber > 0
 
   let task: LinearEquationTask | null = null
+
+  const lastScrollPosition = useRef(-1)
+
+  useEffect(() => {
+    if (showOverview && lastScrollPosition.current > 0) {
+      window.document.documentElement.scrollTop = lastScrollPosition.current
+    }
+  }, [showOverview])
 
   if (showTask) {
     for (const level of linearEquationData.levels) {
@@ -59,6 +67,8 @@ export function EquationsAppV2() {
               selectLevel={(n) => {
                 setTaskNumber(n)
                 setHideBackButton(false)
+                lastScrollPosition.current =
+                  window.document.scrollingElement?.scrollTop ?? -1
               }}
               solved={solved}
             />{' '}
