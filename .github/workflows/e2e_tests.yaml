@@ -21,7 +21,7 @@ jobs:
           check_interval: 20
       - run: yarn
       - run: npx playwright install --with-deps
-      - run: yarn e2e-workers
+      - run: yarn e2e
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
