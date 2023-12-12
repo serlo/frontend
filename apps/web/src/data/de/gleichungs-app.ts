@@ -62,7 +62,7 @@ export const linearEquationData: LinearEquationData = {
       tasks: [
         { number: 22, latex: 'x = 10 + 2 \\cdot 5' },
         { number: 23, latex: 'y + y = 4 + 4 + 4' },
-        { number: 24, latex: 'a = (5151x + 77) \\cdot 0' },
+        { number: 24, latex: 'a = (555x + 77) \\cdot 0' },
         { number: 25, latex: '3x + 4x = 3 + 4' },
         { number: 26, latex: 'y = 4 + 5 \\cdot 6', isGolden: true },
         { number: 27, latex: 'x = 0 \\cdot (10x + 42)', isGolden: true },

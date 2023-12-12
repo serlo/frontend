@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { faPlay } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState } from 'react'
 
 import { EquationTask } from './equation-task'
@@ -94,9 +94,15 @@ export function EquationsAppV2() {
                         >
                           <span>{t.number}</span>
                         </span>
-                        <span className="flex-grow text-xl">
+                        <span className="text-xl">
                           <ReadonlyMathField value={t.latex} />
                         </span>
+                        {solved.includes(t.number) && (
+                          <span className="ml-2 text-green-500">
+                            <FaIcon icon={faCheck} />
+                          </span>
+                        )}
+                        <span className="flex-grow"></span>
                         <span>
                           <button
                             className="rounded bg-green-200 bg-green-300 px-3 py-1"
@@ -138,6 +144,7 @@ export function EquationsAppV2() {
                   className="underline"
                   onClick={() => {
                     setShowAsList(true)
+                    window.document.scrollingElement?.scrollTo({ top: 0 })
                   }}
                 >
                   Alle Aufgaben als Liste anzeigen
