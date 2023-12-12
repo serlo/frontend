@@ -22,8 +22,7 @@ jobs:
           max_timeout: 1200
           check_interval: 20
       - run: yarn
-      #- run: npx playwright install --with-deps
-      - run: yarn e2e
+      - run: yarn e2e-workers
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
