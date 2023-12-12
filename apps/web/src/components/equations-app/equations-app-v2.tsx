@@ -21,7 +21,7 @@ export function EquationsAppV2() {
   const [taskNumber, setTaskNumber] = useState(-1)
   const [hideBackButton, setHideBackButton] = useState(false)
 
-  const [showAsList, setShowAsList] = useState(true)
+  const [showAsList, setShowAsList] = useState(false)
 
   const showOverview = taskNumber === -1
   const showTask = taskNumber > 0

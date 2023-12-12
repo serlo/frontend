@@ -108,7 +108,7 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
         </span>
       </h2>
       <div className="mt-4">
-        Löse die Gleichung und bestimme die Lösungsmenge.
+        Löse die Gleichung schrittweise und bestimme die Lösungsmenge.
       </div>
       <div className="mt-6 text-xl">
         <ReadonlyMathField key={output} value={output} />
