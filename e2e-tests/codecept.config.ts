@@ -1,6 +1,6 @@
 const useLocalAPI = process.env.FRONTEND_API == 'local'
 
-const adminUser = useLocalAPI ? 'admin' : 'Kulla'
+export const adminUser = useLocalAPI ? 'admin' : 'Kulla'
 const isCI = Boolean(process.env.CI)
 const browser = process.env.BROWSER ?? 'chromium'
 const frontendUrl =
