@@ -56,7 +56,8 @@ export function Header() {
             className={cn(
               `order-last mt-[1.7rem] min-h-[50px] w-full
               md:order-none md:mt-8 md:block
-              md:w-auto lg:order-last`
+              md:w-auto lg:order-last`,
+              mobileMenuOpen ? '' : 'hidden'
             )}
           >
             <Menu />
