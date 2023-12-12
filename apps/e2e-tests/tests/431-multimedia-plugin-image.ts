@@ -1,46 +1,9 @@
 import { addMultimediaPlugin } from './430-multimedia-plugin'
-import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor - Multimedia plugin - image multimedia type')
 
-const login = async (I: CodeceptJS.I) => {
-  const loginButtonVisible = await I.grabNumberOfVisibleElements(
-    locate('a').withAttr({ href: '/auth/login' })
-  )
-
-  if (!loginButtonVisible) {
-    I.say('Already logged in')
-    return
-  }
-
-  I.say('Log in')
-  I.click('Anmelden')
-  I.waitForText('Benutzername oder E-Mailadresse', 10)
-  I.fillField('Benutzername oder E-Mailadresse', 'dal')
-  I.fillField('Passwort', '123456')
-  I.click('Anmelden', "button[value='password']")
-  I.waitForElement(locate('img').withAttr({ alt: 'Avatar' }), 20)
-}
-
-const logout = async (I: CodeceptJS.I) => {
-  const userAvatarVisible = await I.grabNumberOfVisibleElements(
-    locate('img').withAttr({ alt: 'Avatar' })
-  )
-
-  if (!userAvatarVisible) {
-    I.say('Already logged out')
-    return
-  }
-
-  I.say('Log out')
-  I.click(locate('img').withAttr({ alt: 'Avatar' }))
-  I.click('Abmelden')
-  I.waitForText('Anmelden', 20)
-}
-
-Before(({ I }) => {
-  popupWarningFix({ I })
-  logout(I)
+Before(({ login }) => {
+  login('admin')
 })
 
 // Currently, we're not displaying any messages when users try to upload image
@@ -56,8 +19,6 @@ Scenario('Multimedia plugin successful image upload', async ({ I }) => {
   I.wait(1)
 
   I.amOnPage('/entity/create/Article/1377')
-
-  await login(I)
 
   addMultimediaPlugin(I)
 
@@ -113,14 +74,10 @@ Scenario('Multimedia plugin successful image upload', async ({ I }) => {
   I.seeElement(
     locate('.mx-auto').withAttr({ style: `max-width: ${maxWidth}px;` })
   )
-
-  await logout(I)
 })
 
 Scenario('Multimedia plugin invalid image URL', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
-
-  await login(I)
 
   addMultimediaPlugin(I)
 
@@ -138,14 +95,10 @@ Scenario('Multimedia plugin invalid image URL', async ({ I }) => {
     })
   )
   I.dontSeeElement(locate('$plugin-image-placeholder').inside('plugin-rows'))
-
-  await logout(I)
 })
 
 Scenario('Multimedia plugin valid image URL', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
-
-  await login(I)
 
   addMultimediaPlugin(I)
 
@@ -201,14 +154,10 @@ Scenario('Multimedia plugin valid image URL', async ({ I }) => {
   I.seeElement(
     locate('.mx-auto').withAttr({ style: `max-width: ${maxWidth}px;` })
   )
-
-  await logout(I)
 })
 
 Scenario('Multimedia plugin fill in image caption', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
-
-  await login(I)
 
   addMultimediaPlugin(I)
 
@@ -231,6 +180,4 @@ Scenario('Multimedia plugin fill in image caption', async ({ I }) => {
   I.selectOption('$plugin-multimedia-type-select', 'Bild')
   I.click('$modal-close-button')
   I.see(caption, locate('$plugin-text-editor').inside('$plugin-image-editor'))
-
-  await logout(I)
 })
