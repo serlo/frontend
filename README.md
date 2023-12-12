@@ -123,8 +123,7 @@ To run them for the first time:
 ```sh
 cd e2e-tests
 yarn
-# sometimes you might need to install playwright browsers manually
-# npx playwright install
+yarn playwright install
 cd ..
 yarn e2e
 ```
