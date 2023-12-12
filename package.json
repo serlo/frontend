@@ -26,7 +26,6 @@
     "e2e": "cd e2e-tests && yarn e2e",
     "e2e-firefox": "cd e2e-tests && yarn e2e-firefox",
     "e2e-firefox-localhost": "cd e2e-tests && yarn e2e-firefox-localhost",
-    "e2e-firefox-workers": "cd e2e-tests && yarn e2e-firefox-workers",
     "e2e-localapi": "cd e2e-tests && yarn e2e-localapi",
     "e2e-localhost": "cd e2e-tests && yarn e2e-localhost",
     "e2e-workers": "cd e2e-tests && yarn e2e-workers",
