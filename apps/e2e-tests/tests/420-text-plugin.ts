@@ -180,26 +180,18 @@ Scenario('Undo', async ({ I }) => {
 })
 
 Scenario('Undo using keyboard', async ({ I }) => {
-  const keyCombos = {
-    windowsAndLinux: ['control', 'z'],
-    mac: ['command', 'z'],
-  }
+  I.amOnPage('/entity/create/Article/1377')
 
-  for (const [platform, keys] of Object.entries(keyCombos)) {
-    I.say(`Checking undo keyboard shortcut for '${platform}'`)
-    I.amOnPage('/entity/create/Article/1377')
+  I.click('$add-new-plugin-row-button')
 
-    I.click('$add-new-plugin-row-button')
+  I.pressKey('Backspace')
 
-    I.pressKey('Backspace')
+  I.type('Some text')
+  I.see('Some text')
 
-    I.type('Some text')
-    I.see('Some text')
+  I.pressKey(['CommandOrControl', 'Z'])
 
-    I.pressKey(keys)
-
-    I.dontSee('Some text')
-  }
+  I.dontSee('Some text')
 })
 
 Scenario('Redo', async ({ I }) => {
@@ -223,44 +215,29 @@ Scenario('Redo', async ({ I }) => {
 })
 
 Scenario('Redo using keyboard', async ({ I }) => {
-  const keyCombos = {
-    windowsAndLinux: {
-      UNDO: ['control', 'z'],
-      REDO: ['control', 'y'],
-    },
-    mac: {
-      UNDO: ['command', 'z'],
-      REDO: ['command', 'y'],
-    },
-  }
+  I.amOnPage('/entity/create/Article/1377')
 
-  for (const [platform, keys] of Object.entries(keyCombos)) {
-    I.say(`Checking redo keyboard shortcut for '${platform}'`)
+  I.click('$add-new-plugin-row-button')
 
-    I.amOnPage('/entity/create/Article/1377')
+  I.pressKey('Backspace')
 
-    I.click('$add-new-plugin-row-button')
+  I.type('Some text')
 
-    I.pressKey('Backspace')
+  I.see('Some text')
 
-    I.type('Some text')
+  I.pressKey(['CommandOrControl', 'Z'])
 
-    I.see('Some text')
+  I.dontSee('Some text')
 
-    I.pressKey(keys.UNDO)
+  // ! For some reason, the first redo does not work. The second one does. If
+  // one puts a pause() here and runs the command only once through the
+  // interactive shell , it works just as fine as clicking the button.
+  // Therefore, I thought the Ctrl+Y was maybe happening too quickly after the
+  // Ctrl+Z, but even with I.wait(1) inbetween, two executions were needed.
+  I.pressKey(['CommandOrControl', 'Y'])
+  I.pressKey(['CommandOrControl', 'Y'])
 
-    I.dontSee('Some text')
-
-    // ! For some reason, the first redo does not work. The second one does. If
-    // one puts a pause() here and runs the command only once through the
-    // interactive shell , it works just as fine as clicking the button.
-    // Therefore, I thought the Ctrl+Y was maybe happening too quickly after the
-    // Ctrl+Z, but even with I.wait(1) inbetween, two executions were needed.
-    I.pressKey(keys.REDO)
-    I.pressKey(keys.REDO)
-
-    I.see('Some text')
-  }
+  I.see('Some text')
 })
 
 Scenario('Copy/cut/paste text', async ({ I }) => {

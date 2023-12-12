@@ -96,120 +96,87 @@ Scenario('Add plugin via slash command', async ({ I }) => {
 Scenario(
   'Undo via keyboard in input field for article heading',
   async ({ I }) => {
-    const keyCombos = {
-      windowsAndLinux: ['control', 'z'],
-      mac: ['command', 'z'],
-    }
+    I.amOnPage('/entity/create/Article/1377')
 
-    for (const [platform, keys] of Object.entries(keyCombos)) {
-      I.say(`Checking undo keyboard shortcut for '${platform}'`)
+    const articleHeadingInput = 'input[placeholder="Titel"]'
+    I.click(articleHeadingInput)
 
-      I.amOnPage('/entity/create/Article/1377')
+    const firstWord = 'Some '
+    I.type(firstWord)
+    I.wait(2)
 
-      const articleHeadingInput = 'input[placeholder="Titel"]'
-      I.click(articleHeadingInput)
+    const secondWord = 'Text'
+    I.type(secondWord)
 
-      const firstWord = 'Some '
-      I.type(firstWord)
-      I.wait(2)
+    I.seeInField(articleHeadingInput, `${firstWord}${secondWord}`)
 
-      const secondWord = 'Text'
-      I.type(secondWord)
+    I.pressKey(['CommandOrControl', 'Z'])
+    I.dontSeeInField(articleHeadingInput, `${firstWord}${secondWord}`)
+    I.dontSeeInField(articleHeadingInput, `${secondWord}`)
+    I.seeInField(articleHeadingInput, firstWord)
 
-      I.seeInField(articleHeadingInput, `${firstWord}${secondWord}`)
-
-      I.pressKey(keys)
-      I.dontSeeInField(articleHeadingInput, `${firstWord}${secondWord}`)
-      I.dontSeeInField(articleHeadingInput, `${secondWord}`)
-      I.seeInField(articleHeadingInput, firstWord)
-
-      I.pressKey(keys)
-      I.dontSeeInField(articleHeadingInput, `${firstWord}${secondWord}`)
-      I.dontSeeInField(articleHeadingInput, firstWord)
-    }
+    I.pressKey(['CommandOrControl', 'Z'])
+    I.dontSeeInField(articleHeadingInput, `${firstWord}${secondWord}`)
+    I.dontSeeInField(articleHeadingInput, firstWord)
   }
 )
 
 Scenario(
   'Undo via keyboard in input field of picture plugin',
   async ({ I }) => {
-    const keyCombos = {
-      windowsAndLinux: ['control', 'z'],
-      mac: ['command', 'z'],
-    }
+    // make sure autofocus logic after opening is done
+    I.wait(0.5)
+    // No need to create the image plugin first as the multimedia plugin at the
+    // beginning of each page already contains one. But, we do need to focus it,
+    // in order to make the src input visible
+    I.click('$plugin-image-editor')
+    const imagePluginUrlInput =
+      'input[placeholder="https://example.com/image.png"]'
 
-    for (const [platform, keys] of Object.entries(keyCombos)) {
-      I.say(`Checking undo keyboard shortcut for '${platform}'`)
+    I.click(imagePluginUrlInput)
 
-      // make sure autofocus logic after opening is done
-      I.wait(0.5)
-      // No need to create the image plugin first as the multimedia plugin at the
-      // beginning of each page already contains one. But, we do need to focus it,
-      // in order to make the src input visible
-      I.click('$plugin-image-editor')
-      const imagePluginUrlInput =
-        'input[placeholder="https://example.com/image.png"]'
+    const firstWord = 'Some '
+    I.type(firstWord)
+    I.wait(2)
 
-      I.click(imagePluginUrlInput)
+    const secondWord = 'Text'
+    I.type(secondWord)
 
-      const firstWord = 'Some '
-      I.type(firstWord)
-      I.wait(2)
+    I.seeInField(imagePluginUrlInput, `${firstWord}${secondWord}`)
 
-      const secondWord = 'Text'
-      I.type(secondWord)
+    I.pressKey(['CommandOrControl', 'Z'])
+    I.dontSeeInField(imagePluginUrlInput, `${firstWord}${secondWord}`)
+    I.dontSeeInField(imagePluginUrlInput, `${secondWord}`)
+    I.seeInField(imagePluginUrlInput, firstWord)
 
-      I.seeInField(imagePluginUrlInput, `${firstWord}${secondWord}`)
-
-      I.pressKey(keys)
-      I.dontSeeInField(imagePluginUrlInput, `${firstWord}${secondWord}`)
-      I.dontSeeInField(imagePluginUrlInput, `${secondWord}`)
-      I.seeInField(imagePluginUrlInput, firstWord)
-
-      I.pressKey(keys)
-      I.dontSeeInField(imagePluginUrlInput, `${firstWord}${secondWord}`)
-      I.dontSeeInField(imagePluginUrlInput, firstWord)
-    }
+    I.pressKey(['CommandOrControl', 'Z'])
+    I.dontSeeInField(imagePluginUrlInput, `${firstWord}${secondWord}`)
+    I.dontSeeInField(imagePluginUrlInput, firstWord)
   }
 )
 
 Scenario(
   'Redo in input field for article heading via keyboard',
   async ({ I }) => {
-    const keyCombos = {
-      windowsAndLinux: {
-        UNDO: ['control', 'z'],
-        REDO: ['control', 'y'],
-      },
-      mac: {
-        UNDO: ['command', 'z'],
-        REDO: ['command', 'y'],
-      },
-    }
+    I.amOnPage('/entity/create/Article/1377')
 
-    for (const [platform, keys] of Object.entries(keyCombos)) {
-      I.say(`Checking redo keyboard shortcut for '${platform}'`)
+    const articleHeadingInput = { xpath: '//input[@placeholder="Titel"]' }
+    I.click(articleHeadingInput)
 
-      I.amOnPage('/entity/create/Article/1377')
+    const firstWord = 'Some '
+    I.type(firstWord)
+    I.wait(2)
 
-      const articleHeadingInput = { xpath: '//input[@placeholder="Titel"]' }
-      I.click(articleHeadingInput)
+    const secondWord = 'Text'
+    I.type(secondWord)
+    I.seeInField(articleHeadingInput, `${firstWord}${secondWord}`)
 
-      const firstWord = 'Some '
-      I.type(firstWord)
-      I.wait(2)
+    I.pressKey(['CommandOrControl', 'Z'])
+    I.dontSeeInField(articleHeadingInput, `${firstWord}${secondWord}`)
+    I.dontSeeInField(articleHeadingInput, `${secondWord}`)
+    I.seeInField(articleHeadingInput, firstWord)
 
-      const secondWord = 'Text'
-      I.type(secondWord)
-      I.seeInField(articleHeadingInput, `${firstWord}${secondWord}`)
-
-      I.pressKey(keys.UNDO)
-      I.dontSeeInField(articleHeadingInput, `${firstWord}${secondWord}`)
-      I.dontSeeInField(articleHeadingInput, `${secondWord}`)
-      I.seeInField(articleHeadingInput, firstWord)
-
-      I.pressKey(keys.REDO)
-      I.seeInField(articleHeadingInput, `${firstWord}${secondWord}`)
-    }
+    I.pressKey(['CommandOrControl', 'Y'])
+    I.seeInField(articleHeadingInput, `${firstWord}${secondWord}`)
   }
 )
