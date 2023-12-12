@@ -4,23 +4,26 @@ on:
   push:
     branches:
       - staging
+      - feat-e2e-tests
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./e2e-tests
     steps:
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 18.x
-      - uses: actions/checkout@v3
-        with:
-          repository: 'serlo/frontend-e2e-tests'
       - uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 1200
           check_interval: 20
       - run: yarn
-      - run: yarn test-firefox tests/4*.ts
+      #- run: npx playwright install --with-deps
+      - run: yarn e2e-firefox tests/4*.ts
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
