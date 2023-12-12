@@ -15,6 +15,9 @@ Scenario('Login', ({ I }) => {
   I.click('Anmelden', "button[value='password']")
 
   I.waitForText('Willkommen dal!', 10)
+
+  // Wait as a fix for: https://github.com/microsoft/playwright/issues/20749
+  I.wait(1)
 })
 
 Scenario('Logout', ({ I }) => {

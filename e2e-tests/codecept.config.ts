@@ -53,13 +53,12 @@ exports.config = {
             I.fillField('Passwort', '123456')
             I.click('Anmelden', "button[value='password']")
             I.waitForText(`Willkommen ${adminUser}!`, 30)
+            // Wait as a fix for: https://github.com/microsoft/playwright/issues/20749
+            I.wait(1)
           },
           check: (I) => {
             I.amOnPage('/')
-            I.waitForElement(
-              `header nav img[title='Benutzer*in ${adminUser}']`,
-              15
-            )
+            I.waitForElement(`header nav img[alt='Avatar']`, 15)
           },
           // see https://github.com/codeceptjs/CodeceptJS/issues/1591#issuecomment-480800333
           fetch: () => 'whatever',
