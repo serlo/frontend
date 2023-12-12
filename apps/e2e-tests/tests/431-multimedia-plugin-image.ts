@@ -33,7 +33,7 @@ const logout = async (I: CodeceptJS.I) => {
   }
 
   I.say('Log out')
-  I.click('Benutzer')
+  I.click(locate('img').withAttr({ alt: 'Avatar' }))
   I.click('Abmelden')
   I.waitForText('Anmelden', 20)
 }
