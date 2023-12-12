@@ -41,4 +41,4 @@ yarn-error.log*
 # nvm
 .nvmrc
 
-apps/e2e-tests/output
+e2e-tests/output
