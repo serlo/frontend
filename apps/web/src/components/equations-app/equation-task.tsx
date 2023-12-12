@@ -9,7 +9,7 @@ import {
   faDeleteLeft,
   faRotateLeft,
 } from '@fortawesome/free-solid-svg-icons'
-import * as confetti from 'canvas-confetti' // why is this throwing warnings? sigh ..
+import * as confetti from 'canvas-confetti'
 import { Expression, MathfieldElement, Selector } from 'mathlive'
 import { ReactNode, useRef, useState } from 'react'
 
@@ -359,7 +359,7 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
               </div>
             </div>
           </div>
-          <div className="fixed bottom-0 left-0 right-0 h-64 bg-slate-300">
+          <div className="fixed bottom-0 left-0 right-0 bg-slate-300">
             <div className="mx-auto max-w-[1024px]">
               <div className="flex justify-center">
                 {renderButton(
@@ -384,7 +384,7 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
                   <img
                     src="/_assets/img/gleichungs-app/frac.png"
                     alt="Bruch einfügen"
-                    className="mx-auto"
+                    className="mx-auto h-full"
                   />,
                   ['insert', '\\frac{#@}{#0}']
                 )}
@@ -457,7 +457,7 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
                   }
                 )}
                 {renderButton(<FaIcon icon={faCheck} />, ['commit'], {
-                  specialCommand: true,
+                  specialCommand: inputState === 'ok' ? 'submit' : true,
                 })}
               </div>
             </div>
@@ -498,7 +498,7 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
   function renderButton(
     label: ReactNode,
     command?: Selector | [Selector, ...any[]],
-    opts?: { specialCommand: boolean }
+    opts?: { specialCommand: boolean | 'submit' }
   ) {
     return (
       <button
@@ -518,12 +518,14 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
         disabled={!command}
         className={cn(
           `
-            mx-1 my-1 h-14 flex-[2_2_0%] rounded text-2xl shadow-sm 
-            disabled:invisible
+            mx-0.5 my-0.5 h-10 flex-[2_2_0%] rounded text-lg shadow-sm disabled:invisible 
+            mobileExt:mx-1 mobileExt:my-1 mobileExt:h-14 mobileExt:text-2xl
           `,
-          opts?.specialCommand
-            ? 'bg-slate-500 hover:bg-slate-400'
-            : 'bg-white hover:bg-gray-100'
+          opts?.specialCommand === 'submit'
+            ? 'bg-green-300 hover:bg-green-400'
+            : opts?.specialCommand
+              ? 'bg-slate-500 hover:bg-slate-400'
+              : 'bg-white hover:bg-gray-100'
         )}
       >
         {label}

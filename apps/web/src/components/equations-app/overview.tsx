@@ -29,7 +29,7 @@ export function Overview({
 
   return (
     <div>
-      <h2 className="mb-8 mt-12 text-center text-2xl font-bold">
+      <h2 className="mb-6 mt-8 text-center text-2xl font-bold mobileExt:mb-8 mobileExt:mt-12">
         Lineare Gleichungen
       </h2>
       {data.levels.map((level) => (

@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { faCheck, faPlay } from '@fortawesome/free-solid-svg-icons'
+import * as confetti from 'canvas-confetti'
 import { useEffect, useRef, useState } from 'react'
 
 import { EquationTask } from './equation-task'
@@ -112,6 +113,9 @@ export function EquationsAppV2() {
                               lastScrollPosition.current =
                                 window.document.scrollingElement?.scrollTop ??
                                 -1
+                              window.document.scrollingElement?.scrollTo({
+                                top: 0,
+                              })
                             }}
                           >
                             <FaIcon icon={faPlay} />
@@ -126,6 +130,11 @@ export function EquationsAppV2() {
               <Overview
                 unlock={() => {
                   setUnlockedLevel((l) => l + 1)
+                  try {
+                    void confetti.default()
+                  } catch (e) {
+                    // don't care
+                  }
                 }}
                 data={linearEquationData}
                 unlockedLevel={unlockedLevel}
@@ -134,6 +143,7 @@ export function EquationsAppV2() {
                   setHideBackButton(false)
                   lastScrollPosition.current =
                     window.document.scrollingElement?.scrollTop ?? -1
+                  window.document.scrollingElement?.scrollTo({ top: 0 })
                 }}
                 solved={solved}
               />
