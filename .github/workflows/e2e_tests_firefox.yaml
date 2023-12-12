@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - staging
-      - feat-e2e-tests
 jobs:
   test:
     runs-on: ubuntu-latest
