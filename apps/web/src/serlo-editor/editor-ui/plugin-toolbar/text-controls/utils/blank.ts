@@ -1,79 +1,56 @@
-import {
-  Editor as SlateEditor,
-  Element,
-  Node,
-  Range,
-  Transforms,
-  Location,
-} from 'slate'
+import { Editor as SlateEditor, Element, Transforms, Node, Editor } from 'slate'
 import { v4 as uuid_v4 } from 'uuid'
 
 import { selectionHasElement, trimSelection } from './selection'
 import type { Blank } from '@/serlo-editor/plugins/text'
 
-function matchBlanks(node: Node) {
-  return Element.isElement(node) && node.type === 'blank'
-}
-
 export function isBlankActive(editor: SlateEditor) {
   return selectionHasElement((e) => e.type === 'blank', editor)
 }
 
-export function getBlankElement(editor: SlateEditor): Blank | undefined {
-  const [match] = Array.from(SlateEditor.nodes(editor, { match: matchBlanks }))
-  return match && (match[0] as Blank)
-}
-
 export function toggleBlank(editor: SlateEditor) {
   if (isBlankActive(editor)) {
-    let text = undefined
-    Transforms.removeNodes(editor, {
+    removeBlanks(editor)
+  } else {
+    addBlank(editor)
+  }
+}
+
+function removeBlanks(editor: SlateEditor) {
+  Editor.withoutNormalizing(editor, () => {
+    const allElementsInSelection = [...Node.elements(editor)]
+
+    allElementsInSelection.forEach((element) => {
+      if (element[0].type !== 'blank') return
+
+      const path = element[1]
+      const correctAnswer = element[0].correctAnswers.at(0)?.answer ?? ''
+
+      // Inserts the correct answer under element.children.text
+      Transforms.insertText(editor, correctAnswer, { at: path, voids: true })
+    })
+
+    // Removes the blank node and lifts the contained text node (now containing the correct answer) one level up
+    Transforms.unwrapNodes(editor, {
+      voids: true,
       match: (node) => {
-        const isHit = Element.isElement(node) && node.type === 'blank'
-        if (isHit) text = node
-        return isHit
+        return Element.isElement(node) && node.type === 'blank'
       },
     })
-    if (text) {
-      const blank = text as Blank
-      Transforms.insertNodes(editor, {
-        text: blank.correctAnswers[0]?.answer ?? '',
-      })
-    }
-    return
+  })
+}
+
+function addBlank(editor: SlateEditor) {
+  const selection = trimSelection(editor)
+
+  if (selection === null) return
+
+  const newBlankNode: Blank = {
+    type: 'blank',
+    blankId: uuid_v4(),
+    correctAnswers: [{ answer: SlateEditor.string(editor, selection).trim() }],
+    children: [{ text: '' }],
   }
 
-  const { selection } = editor
-  const isCollapsed = selection && Range.isCollapsed(selection)
-
-  if (isCollapsed) {
-    Transforms.insertNodes(editor, {
-      type: 'blank',
-      blankId: uuid_v4(),
-      correctAnswers: [{ answer: '' }],
-      children: [{ text: '' }],
-    })
-    return
-  }
-
-  const trimmedSelection = trimSelection(editor)
-  Transforms.insertNodes(
-    editor,
-    [
-      {
-        type: 'blank',
-        blankId: uuid_v4(),
-        correctAnswers: [
-          {
-            answer: SlateEditor.string(
-              editor,
-              trimmedSelection as Location
-            ).trim(),
-          },
-        ],
-        children: [{ text: '' }],
-      },
-    ],
-    { at: trimmedSelection as Location }
-  )
+  Transforms.insertNodes(editor, newBlankNode, { at: selection })
 }

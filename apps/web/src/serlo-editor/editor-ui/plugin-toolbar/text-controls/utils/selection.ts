@@ -15,7 +15,7 @@ export function selectionHasElement(
   )
 }
 
-export function trimSelection(editor: SlateEditor): Partial<Range> | null {
+export function trimSelection(editor: SlateEditor): Range | null {
   const selection = editor.selection
 
   if (!selection) return null
