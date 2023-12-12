@@ -38,7 +38,10 @@ const logout = async (I: CodeceptJS.I) => {
   I.waitForText('Anmelden', 20)
 }
 
-Before(popupWarningFix)
+Before(({ I }) => {
+  popupWarningFix({ I })
+  logout(I)
+})
 
 // Currently, we're not displaying any messages when users try to upload image
 // while not logged in. This scenario should be added when that is implemented.
@@ -49,6 +52,9 @@ Scenario.todo('Multimedia plugin unauthorized image upload')
 Scenario.todo('Multimedia plugin too big image upload')
 
 Scenario('Multimedia plugin successful image upload', async ({ I }) => {
+  // Wait as a fix for: https://github.com/microsoft/playwright/issues/20749
+  I.wait(1)
+
   I.amOnPage('/entity/create/Article/1377')
 
   await login(I)
