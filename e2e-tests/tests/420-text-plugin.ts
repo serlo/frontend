@@ -159,7 +159,7 @@ Scenario(
     I.pressKey('Backspace')
     I.pressKey('Backspace')
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
-  },
+  }
 )
 
 Scenario.todo('Merge with next plugin using Delete key')
@@ -293,57 +293,57 @@ Scenario('Empty line restrictions while typing', async ({ I }) => {
   I.type('First line')
   I.seeNumberOfElements(
     locate('$plugin-text-leaf-element').inside('.plugin-rows'),
-    1,
+    1
   )
   I.seeNumberOfElements(
     locate('$plugin-text-leaf-element-with-placeholder').inside('.plugin-rows'),
-    0,
+    0
   )
 
   I.say('First Enter key press adds a new line with a placeholder')
   I.pressKey('Enter')
   I.seeNumberOfElements(
     locate('$plugin-text-leaf-element').inside('.plugin-rows'),
-    2,
+    2
   )
   I.seeNumberOfElements(
     locate('$plugin-text-leaf-element-with-placeholder').inside('.plugin-rows'),
-    1,
+    1
   )
 
   I.say('Second Enter key press adds another new line with a placeholder')
   I.pressKey('Enter')
   I.seeNumberOfElements(
     locate('$plugin-text-leaf-element').inside('.plugin-rows'),
-    3,
+    3
   )
   I.seeNumberOfElements(
     locate('$plugin-text-leaf-element-with-placeholder').inside('.plugin-rows'),
-    1,
+    1
   )
 
   I.say('Third Enter key press does not add a new line')
   I.pressKey('Enter')
   I.seeNumberOfElements(
     locate('$plugin-text-leaf-element').inside('.plugin-rows'),
-    3,
+    3
   )
   I.seeNumberOfElements(
     locate('$plugin-text-leaf-element-with-placeholder').inside('.plugin-rows'),
-    1,
+    1
   )
 
   I.say(
-    'Text plugin blur removes one of the adjacent empty lines and hides the placeholder',
+    'Text plugin blur removes one of the adjacent empty lines and hides the placeholder'
   )
   I.click('$plugin-multimedia-wrapper')
   I.seeNumberOfElements(
     locate('$plugin-text-leaf-element').inside('.plugin-rows'),
-    2,
+    2
   )
   I.seeNumberOfElements(
     locate('$plugin-text-leaf-element-with-placeholder').inside('.plugin-rows'),
-    0,
+    0
   )
 })
 

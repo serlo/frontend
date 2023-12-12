@@ -45,7 +45,7 @@ Scenario('Add a link using link suggestion menu', async ({ I }) => {
   I.seeAttributesOnElements('$link-suggestion-2', { 'aria-selected': 'false' })
 
   I.say(
-    'Hovering on a different suggestion than the selected one should not change aria-selected',
+    'Hovering on a different suggestion than the selected one should not change aria-selected'
   )
   I.moveCursorTo('$link-suggestion-0')
   I.seeAttributesOnElements('$link-suggestion-0', { 'aria-selected': 'false' })
@@ -72,7 +72,7 @@ Scenario('Edit existing link', async ({ I }) => {
   I.pressKey('ArrowDown')
   I.pressKey('Enter')
   I.seeElement(
-    locate({ css: '.serlo-editor-hacks a' }).withAttr({ href: '/83249' }),
+    locate({ css: '.serlo-editor-hacks a' }).withAttr({ href: '/83249' })
   )
 
   I.say('Click edit button')
@@ -86,7 +86,7 @@ Scenario('Edit existing link', async ({ I }) => {
   I.pressKey('ArrowDown')
   I.pressKey('Enter')
   I.seeElement(
-    locate({ css: '.serlo-editor-hacks a' }).withAttr({ href: '/274643' }),
+    locate({ css: '.serlo-editor-hacks a' }).withAttr({ href: '/274643' })
   )
 })
 

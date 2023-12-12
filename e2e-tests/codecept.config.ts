@@ -58,7 +58,7 @@ exports.config = {
             I.amOnPage('/')
             I.waitForElement(
               `header nav img[title='Benutzer*in ${adminUser}']`,
-              15,
+              15
             )
           },
           // see https://github.com/codeceptjs/CodeceptJS/issues/1591#issuecomment-480800333

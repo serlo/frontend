@@ -118,7 +118,7 @@ Scenario(
     I.pressKey(['CommandOrControl', 'Z'])
     I.dontSeeInField(articleHeadingInput, `${firstWord}${secondWord}`)
     I.dontSeeInField(articleHeadingInput, firstWord)
-  },
+  }
 )
 
 Scenario(
@@ -152,7 +152,7 @@ Scenario(
     I.pressKey(['CommandOrControl', 'Z'])
     I.dontSeeInField(imagePluginUrlInput, `${firstWord}${secondWord}`)
     I.dontSeeInField(imagePluginUrlInput, firstWord)
-  },
+  }
 )
 
 Scenario(
@@ -178,5 +178,5 @@ Scenario(
 
     I.pressKey(['CommandOrControl', 'Y'])
     I.seeInField(articleHeadingInput, `${firstWord}${secondWord}`)
-  },
+  }
 )

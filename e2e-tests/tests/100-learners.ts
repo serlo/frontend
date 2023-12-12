@@ -127,7 +127,7 @@ const landingPages: LandingPageData[] = [
 Scenario('Subject landing page', ({ I }) => {
   testLandingPage(
     I,
-    landingPages[Math.floor(Math.random() * landingPages.length)],
+    landingPages[Math.floor(Math.random() * landingPages.length)]
   )
 })
 
@@ -360,6 +360,6 @@ Scenario('Check picture in scmc exercise', ({ I }) => {
   I.see('Aufgaben zu Kreisen und Kreisteilen')
 
   I.seeInSource(
-    'https://assets.serlo.org/legacy/56ebffb3bb393_1fe5b83b4ff8aae9bbc0026f127423c166e1ce93.png',
+    'https://assets.serlo.org/legacy/56ebffb3bb393_1fe5b83b4ff8aae9bbc0026f127423c166e1ce93.png'
   )
 })

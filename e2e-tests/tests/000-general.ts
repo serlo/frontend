@@ -35,7 +35,7 @@ Scenario('Main Menu', async ({ I }) => {
     button: string,
     item: string,
     open: boolean,
-    context = 'ul.bg-white',
+    context = 'ul.bg-white'
   ) {
     let maxLoop = 20
     while (

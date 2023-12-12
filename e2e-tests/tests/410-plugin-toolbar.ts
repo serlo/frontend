@@ -19,7 +19,7 @@ Scenario('Duplicate plugin', async ({ I }) => {
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.moveCursorTo(
-    locate('[data-radix-collection-item]').inside('.plugin-toolbar'),
+    locate('[data-radix-collection-item]').inside('.plugin-toolbar')
   )
   I.click('$duplicate-plugin-button')
 
@@ -36,7 +36,7 @@ Scenario('Delete plugin', async ({ I }) => {
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.moveCursorTo(
-    locate('[data-radix-collection-item]').inside('.plugin-toolbar'),
+    locate('[data-radix-collection-item]').inside('.plugin-toolbar')
   )
   I.click('$remove-plugin-button')
 
