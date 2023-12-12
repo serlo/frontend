@@ -93,3 +93,6 @@ export {
 }
 
 export { FaIcon } from '@/components/fa-icon'
+
+export { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
+export { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
