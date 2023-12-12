@@ -445,7 +445,7 @@ __metadata:
     dotenv: ^16.3.1
     playwright: ^1.40.1
     ts-node: ^10.9.1
-    typescript: ^5.1.6
+    typescript: ^5.3.3
   languageName: unknown
   linkType: soft
 
@@ -3865,7 +3865,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.1.6":
+"typescript@npm:^5.3.3":
   version: 5.3.3
   resolution: "typescript@npm:5.3.3"
   bin:
@@ -3875,7 +3875,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^5.1.6#~builtin<compat/typescript>":
+"typescript@patch:typescript@^5.3.3#~builtin<compat/typescript>":
   version: 5.3.3
   resolution: "typescript@patch:typescript@npm%3A5.3.3#~builtin<compat/typescript>::version=5.3.3&hash=14eedb"
   bin:
