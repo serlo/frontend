@@ -14,7 +14,7 @@ Scenario('Login', ({ I }) => {
   // More robust selector
   I.click('Anmelden', "button[value='password']")
 
-  I.waitForText('Willkommen dal!', 10)
+  I.waitForElement(locate('img').withAttr({ alt: 'Avatar' }), 10)
 })
 
 Scenario('Logout', ({ I }) => {
@@ -24,8 +24,7 @@ Scenario('Logout', ({ I }) => {
   I.click('Benutzer')
 
   I.click('Abmelden')
-  I.waitForText('Bis bald!', 10)
-  I.see('Anmelden')
+  I.waitForText('Anmelden', 10)
 })
 
 // make sure user is logged out at the end of the tests
