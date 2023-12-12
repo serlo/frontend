@@ -27,7 +27,7 @@ Scenario('About Serlo', ({ I }) => {
   I.click('Community')
 
   // Make sure it's the right page, wait longer to reduce flakiness
-  I.waitForText("Was gibt\\'s zu tun?", 20)
+  I.waitForText("Was gibt's zu tun?", 20)
 })
 
 Scenario('Main Menu', async ({ I }) => {
@@ -171,7 +171,7 @@ Scenario('Donation', ({ I }) => {
   I.switchTo('iframe')
   I.waitForText('Bitte gib einen Spendenbetrag ein', 30)
   I.click('Jetzt spenden')
-  I.see('Wähle eine Zahlungsart')
+  I.waitForText('Wähle eine Zahlungsart', 10)
   I.switchTo() // back from iframe
 
   I.amOnPage('/')
