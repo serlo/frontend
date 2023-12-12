@@ -1,3 +1,5 @@
+import { adminUser } from '../codecept.config'
+
 Feature('Login')
 
 Scenario('Login', ({ I }) => {
@@ -8,13 +10,13 @@ Scenario('Login', ({ I }) => {
   // Reduce flakiness
   I.waitForText('Benutzername oder E-Mailadresse', 10)
 
-  I.fillField('Benutzername oder E-Mailadresse', 'dal')
+  I.fillField('Benutzername oder E-Mailadresse', adminUser)
   I.fillField('Passwort', '123456')
 
   // More robust selector
   I.click('Anmelden', "button[value='password']")
 
-  I.waitForText('Willkommen dal!', 10)
+  I.waitForText(`Willkommen ${adminUser}!`, 10)
 
   // Wait as a fix for: https://github.com/microsoft/playwright/issues/20749
   I.wait(1)
