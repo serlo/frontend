@@ -15,7 +15,7 @@ const Answer = t.type({
   answer: t.string,
 })
 const Blank = t.type({
-  type: t.literal('blank'),
+  type: t.literal('textBlank'),
   children: t.unknown,
   blankId: t.string,
   correctAnswers: t.array(Answer),
@@ -62,7 +62,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
   const textInBlanks = useMemo(() => {
     const newMap = new Map<BlankId, { text: string }>()
     blanks.forEach((blankState) => {
-      const firstCorrectAnswer = blankState.correctAnswers[0]?.answer ?? ''
+      const firstCorrectAnswer = blankState.correctAnswers.at(0)?.answer ?? ''
       newMap.set(blankState.blankId, {
         text: initialTextInBlank === 'correct-answer' ? firstCorrectAnswer : '',
       })

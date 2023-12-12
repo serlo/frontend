@@ -87,7 +87,7 @@ export function StaticSlate({
       const MathRenderer = editorRenderers.getMathRenderer()
       return <MathRenderer {...element} />
     }
-    if (element.type === 'blank') {
+    if (element.type === 'textBlank') {
       return <BlankRenderer blankId={element.blankId} />
     }
 

@@ -37,7 +37,7 @@ function createState() {
           TextEditorFormattingOption.lists,
           TextEditorFormattingOption.richTextBold,
           TextEditorFormattingOption.richTextItalic,
-          TextEditorFormattingOption.blank,
+          TextEditorFormattingOption.textBlank,
         ],
         isInlineChildEditor: true,
       },

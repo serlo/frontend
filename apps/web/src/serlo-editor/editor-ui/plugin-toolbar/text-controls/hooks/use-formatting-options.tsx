@@ -64,7 +64,7 @@ const textPluginsMapper = {
   [TextEditorFormattingOption.math]: withMath,
   [TextEditorFormattingOption.links]: withLinks,
   [TextEditorFormattingOption.lists]: withLists,
-  [TextEditorFormattingOption.blank]: withBlanks,
+  [TextEditorFormattingOption.textBlank]: withBlanks,
 }
 
 const isRegisteredTextPlugin = (
@@ -345,7 +345,7 @@ function createToolbarControls(
     },
     // Blank (For Fill in the Blank Exercises)
     {
-      name: TextEditorFormattingOption.blank,
+      name: TextEditorFormattingOption.textBlank,
       title: textStrings.blank,
       isActive: isBlankActive,
       onClick: toggleBlank,

@@ -3,7 +3,7 @@ import { createContext } from 'react'
 import type { BlankId, DraggableId, FillInTheBlanksMode } from '..'
 
 // Used to pass state to BlankRenderer from FillInTheBlanksRenderer
-// BlankRenderer will use this state alongside the state stored in the slate custom element 'blank' to render.
+// BlankRenderer will use this state alongside the state stored in the slate custom element 'textBlank' to render.
 export const FillInTheBlanksContext = createContext<{
   mode: FillInTheBlanksMode
   feedbackForBlanks: Map<BlankId, { isCorrect?: boolean }>

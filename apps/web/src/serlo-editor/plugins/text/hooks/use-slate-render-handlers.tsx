@@ -81,7 +81,7 @@ export const useSlateRenderHandlers = ({
           </MathElement>
         )
       }
-      if (element.type === 'blank') {
+      if (element.type === 'textBlank') {
         return (
           <span {...attributes} contentEditable={false}>
             <BlankRenderer

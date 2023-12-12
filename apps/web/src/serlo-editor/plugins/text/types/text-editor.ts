@@ -19,7 +19,7 @@ export interface Answer {
 }
 
 export interface Blank {
-  type: 'blank'
+  type: 'textBlank'
   children: CustomText[]
   blankId: string // Used to uniquely identify a blank
   correctAnswers: Answer[]
@@ -27,8 +27,6 @@ export interface Blank {
   // incorrectAnswers?: Answer[]
   // Here we could add a default feedback for the learner
   // defaultIncorrectAnswerFeedback: string
-  // Here we could specify a method to check the answer
-  // checkAnswerMethod?: 'text' | 'number' | 'math-expression'
 }
 
 export interface Heading {

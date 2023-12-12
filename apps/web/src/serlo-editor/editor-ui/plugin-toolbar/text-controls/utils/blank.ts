@@ -5,7 +5,7 @@ import { selectionHasElement, trimSelection } from './selection'
 import type { Blank } from '@/serlo-editor/plugins/text'
 
 export function isBlankActive(editor: SlateEditor) {
-  return selectionHasElement((e) => e.type === 'blank', editor)
+  return selectionHasElement((e) => e.type === 'textBlank', editor)
 }
 
 export function toggleBlank(editor: SlateEditor) {
@@ -21,7 +21,7 @@ function removeBlanks(editor: SlateEditor) {
     const allElementsInSelection = [...Node.elements(editor)]
 
     allElementsInSelection.forEach((element) => {
-      if (element[0].type !== 'blank') return
+      if (element[0].type !== 'textBlank') return
 
       const path = element[1]
       const correctAnswer = element[0].correctAnswers.at(0)?.answer ?? ''
@@ -34,7 +34,7 @@ function removeBlanks(editor: SlateEditor) {
     Transforms.unwrapNodes(editor, {
       voids: true,
       match: (node) => {
-        return Element.isElement(node) && node.type === 'blank'
+        return Element.isElement(node) && node.type === 'textBlank'
       },
     })
   })
@@ -46,7 +46,7 @@ function addBlank(editor: SlateEditor) {
   if (selection === null) return
 
   const newBlankNode: Blank = {
-    type: 'blank',
+    type: 'textBlank',
     blankId: uuid_v4(),
     correctAnswers: [{ answer: SlateEditor.string(editor, selection).trim() }],
     children: [{ text: '' }],
