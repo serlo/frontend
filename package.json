@@ -25,7 +25,7 @@
     "dev": "yarn workspace @serlo/frontend dev",
     "e2e": "yarn workspace @serlo/e2e-tests e2e",
     "e2e-firefox": "yarn workspace @serlo/e2e-tests e2e-firefox",
-    "e2e-firefox-localhost": "yarn workspace @serlo/e2e-tests e2e-firefox-workers",
+    "e2e-firefox-localhost": "yarn workspace @serlo/e2e-tests e2e-firefox-localhost",
     "e2e-firefox-workers": "yarn workspace @serlo/e2e-tests e2e-firefox-workers",
     "e2e-localapi": "yarn workspace @serlo/e2e-tests e2e-localapi",
     "e2e-localhost": "yarn workspace @serlo/e2e-tests e2e-localhost",
