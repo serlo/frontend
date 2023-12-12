@@ -2,7 +2,7 @@ Feature('Authors')
 
 // expecting user to be logged out before start of tests
 
-Before(({ login, I }) => {
+Before(({ login }) => {
   login('admin') // login as admin for now
 })
 
