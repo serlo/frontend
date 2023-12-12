@@ -18,6 +18,11 @@ export function EquationsAppV2() {
   const [unlockedLevel, setUnlockedLevel] = useState(1)
   const [solved, setSolved] = useState<number[]>([])
 
+  useEffect(() => {
+    setSolved(readSolved())
+    setUnlockedLevel(readUnlocked())
+  }, [])
+
   const [taskNumber, setTaskNumber] = useState(-1)
   const [hideBackButton, setHideBackButton] = useState(false)
 
@@ -129,7 +134,11 @@ export function EquationsAppV2() {
             ) : (
               <Overview
                 unlock={() => {
-                  setUnlockedLevel((l) => l + 1)
+                  setUnlockedLevel((l) => {
+                    const newLevel = l + 1
+                    storeToUnlocked(newLevel)
+                    return newLevel
+                  })
                   try {
                     void confetti.default()
                   } catch (e) {
@@ -180,7 +189,11 @@ export function EquationsAppV2() {
               data={task}
               onSolve={(n) => {
                 if (!solved.includes(n)) {
-                  setSolved((list) => [...list, n])
+                  setSolved((list) => {
+                    const newVal = [...list, n]
+                    storeToSolved(newVal)
+                    return newVal
+                  })
                 }
                 setHideBackButton(true)
               }}
@@ -210,5 +223,42 @@ export function EquationsAppV2() {
       )
     }
     return <div className="mr-3"></div>
+  }
+}
+
+function storeToUnlocked(level: number) {
+  sessionStorage.setItem('serlo_gleichungs_app_unlocked', JSON.stringify(level))
+}
+
+function readUnlocked() {
+  try {
+    const val = parseInt(
+      sessionStorage.getItem('serlo_gleichungs_app_unlocked') ?? '0'
+    )
+    if (val > 0) {
+      return val
+    }
+    return 1
+  } catch (e) {
+    return 1
+  }
+}
+
+function storeToSolved(solved: number[]) {
+  sessionStorage.setItem('serlo_gleichungs_app_solved', JSON.stringify(solved))
+}
+
+function readSolved() {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const state = JSON.parse(
+      sessionStorage.getItem('serlo_gleichungs_app_solved') ?? '[]'
+    )
+    if (Array.isArray(state) && state.every((x) => typeof x === 'number')) {
+      return state as number[]
+    }
+    return []
+  } catch (e) {
+    return []
   }
 }
