@@ -4,10 +4,18 @@ import { fileURLToPath } from 'url'
 
 // check and display env variables
 console.log(
-  'selected environment (staging or production):',
+  '> selected environment (staging or production):',
   process.env.NEXT_PUBLIC_ENV
 )
-console.log('sentry dsn (if available):', process.env.NEXT_PUBLIC_SENTRY_DSN)
+console.log('> sentry dsn (if available):', process.env.NEXT_PUBLIC_SENTRY_DSN)
+console.log(
+  '> commit sha (if available):',
+  process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA
+)
+console.log(
+  '> deployment url (if available):',
+  process.env.NEXT_PUBLIC_VERCEL_URL
+)
 
 /**
  * @type {import('next').NextConfig}
