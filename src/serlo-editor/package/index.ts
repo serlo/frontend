@@ -4,17 +4,12 @@ export { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 export { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 
 export { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
-export type { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
 // default strings
 export {
   instanceData as instanceDataDe,
   loggedInData as loggedInDataDe,
 } from '@/data/de'
-export {
-  instanceData as instanceDataEn,
-  loggedInData as loggedInDataEn,
-} from '@/data/en'
 
 export { ROOT } from '@/serlo-editor/store/root/constants'
 export {
