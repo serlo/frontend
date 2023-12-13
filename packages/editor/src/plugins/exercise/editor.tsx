@@ -1,4 +1,3 @@
-
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'

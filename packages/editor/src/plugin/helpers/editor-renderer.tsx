@@ -1,7 +1,6 @@
 import type { MathElement } from '@editor/plugins/text'
 import type { ComponentType } from 'react'
 
-
 export interface PluginStaticRenderer {
   type: string
   renderer: ComponentType<any>

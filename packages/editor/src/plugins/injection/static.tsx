@@ -1,4 +1,3 @@
-
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'

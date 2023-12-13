@@ -1,4 +1,3 @@
-
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'

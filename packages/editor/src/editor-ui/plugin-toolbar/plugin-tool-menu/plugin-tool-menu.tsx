@@ -9,7 +9,6 @@ import {
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ReactElement } from 'react'
 
-
 interface PluginToolMenuProps {
   pluginControls: ReactElement
 }

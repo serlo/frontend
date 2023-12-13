@@ -1,6 +1,8 @@
-
 import { LoadingSpinner } from '@serlo/frontend/src/components/loading/loading-spinner'
-import { QuickbarData, findResults } from '@serlo/frontend/src/components/navigation/quickbar'
+import {
+  QuickbarData,
+  findResults,
+} from '@serlo/frontend/src/components/navigation/quickbar'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'

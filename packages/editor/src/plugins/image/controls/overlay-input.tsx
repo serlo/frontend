@@ -1,7 +1,6 @@
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { forwardRef } from 'react'
 
-
 export interface OverlayInputProps
   extends React.DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLInputElement>,

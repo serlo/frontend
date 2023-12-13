@@ -1,4 +1,3 @@
-
 import { store, selectStaticDocument } from '@editor/store'
 import { ROOT } from '@editor/store/root/constants'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'

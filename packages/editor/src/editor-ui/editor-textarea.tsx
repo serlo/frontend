@@ -1,7 +1,6 @@
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { TextareaHTMLAttributes, forwardRef } from 'react'
 
-
 type EditorTextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   onMoveOutRight?(): void
   onMoveOutLeft?(): void

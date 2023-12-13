@@ -1,4 +1,3 @@
-
 import { Link } from '@serlo/frontend/src/components/content/link'
 import type { TeamDataEntry } from '@serlo/frontend/src/components/pages/editor/editor-team'
 import { getAvatarUrl } from '@serlo/frontend/src/components/user/user-link'

@@ -3,7 +3,6 @@ import { useMemo, useState } from 'react'
 import { createEditor, Descendant } from 'slate'
 import { Editable, Slate, withReact } from 'slate-react'
 
-
 const slateToString = (value: Descendant[]): string => {
   return ((value[0] as CustomElement).children[0] as CustomText).text
 }

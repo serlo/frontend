@@ -1,4 +1,3 @@
-
 import { ChildStateType } from '@editor/plugin/child'
 import { selectDocument, selectIsFocused, useAppSelector } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
