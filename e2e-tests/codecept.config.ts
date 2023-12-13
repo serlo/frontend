@@ -12,7 +12,7 @@ const isChromium = browser === 'chromium'
 
 exports.config = {
   tests: 'tests/**.ts',
-  output: './output', // we are not using any artifacts right now, but still need an output directory
+  output: './output',
   helpers: {
     Playwright: {
       url: frontendUrl,
