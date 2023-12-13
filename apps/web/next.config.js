@@ -4,17 +4,27 @@ import { fileURLToPath } from 'url'
 
 // check and display env variables
 console.log(
-  '> selected environment (staging or production):',
+  '[NEXT_PUBLIC_ENV] selected environment (staging or production):',
   process.env.NEXT_PUBLIC_ENV
 )
-console.log('> sentry dsn (if available):', process.env.NEXT_PUBLIC_SENTRY_DSN)
 console.log(
-  '> commit sha (if available):',
-  process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA
+  '[NEXT_PUBLIC_SENTRY_DSN] sentry dsn:',
+  process.env.NEXT_PUBLIC_SENTRY_DSN ?? '---'
 )
 console.log(
-  '> deployment url (if available):',
-  process.env.NEXT_PUBLIC_VERCEL_URL
+  '[NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA] commit sha:',
+  process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA ?? '---'
+)
+console.log(
+  '[NEXT_PUBLIC_VERCEL_URL] deployment url:',
+  process.env.NEXT_PUBLIC_VERCEL_URL ?? '---'
+)
+console.log(
+  '[DATABASE_URL] planetscale integration:',
+  process.env.DATABASE_URL &&
+    process.env.DATABASE_URL.includes('serlo_planetscale')
+    ? 'available'
+    : 'not available'
 )
 
 /**
