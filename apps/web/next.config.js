@@ -2,9 +2,29 @@ import bundleAnalyzer from '@next/bundle-analyzer'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
+// check and display env variables
 console.log(
-  'current active environment (staging or production):',
+  '[NEXT_PUBLIC_ENV] selected environment (staging or production):',
   process.env.NEXT_PUBLIC_ENV
+)
+console.log(
+  '[NEXT_PUBLIC_SENTRY_DSN] sentry dsn:',
+  process.env.NEXT_PUBLIC_SENTRY_DSN ?? '---'
+)
+console.log(
+  '[NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA] commit sha:',
+  process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA ?? '---'
+)
+console.log(
+  '[NEXT_PUBLIC_VERCEL_URL] deployment url:',
+  process.env.NEXT_PUBLIC_VERCEL_URL ?? '---'
+)
+console.log(
+  '[DATABASE_URL] planetscale integration:',
+  process.env.DATABASE_URL &&
+    process.env.DATABASE_URL.includes('serlo_planetscale')
+    ? 'available'
+    : 'not available'
 )
 
 /**

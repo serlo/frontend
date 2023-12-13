@@ -22,11 +22,12 @@ async function testLandingPage(I: CodeceptJS.I, data: LandingPageData) {
   // Use icon
   I.click(data.iconSelector)
 
-  I.see(data.headingText)
+  I.waitForText(data.headingText, 5)
 
   // Visit taxonomy
   I.click('Alle Themen')
-  I.click(data.taxRootName, 'nav > a')
+  I.waitForElement('$breadcrumbs', 5)
+  I.click(data.taxRootName, locate('$breadcrumbs').withChild('a'))
 
   // Check correct filter
   I.click(subjectQuickbarSelector)
@@ -196,7 +197,7 @@ Scenario('Video + Injection', ({ I }) => {
   I.see('dass externe Inhalte von')
   I.click('Video abspielen von YouTube')
   I.switchTo('iframe')
-  I.see('Satz des Pythagoras für rechtwinklige Dreiecke')
+  I.seeElement('video')
 })
 
 Scenario('Toggle Solution', ({ I }) => {
@@ -229,7 +230,7 @@ Scenario('Taxonomy', ({ I }) => {
   I.click('2021')
 
   // Takes a long time to load
-  I.waitForText('Berechne', 30)
+  I.see('Berechne')
 
   I.amOnPage('/24370')
   I.see('Artikel')

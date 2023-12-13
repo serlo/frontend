@@ -3,6 +3,7 @@
 # serlo.org – Frontend
 
 Next.js app that serves [serlo.org](https://serlo.org).
+You can find it in `apps/web`.
 
 ## Overview
 
@@ -114,6 +115,21 @@ Technical issues are opened for bugs and feature that we decided to work on. For
 
 This method should avoid stale issues and make it possible to keep an "zero inbox".
 
+## e2e testing
+
+This repo includes e2e test with codeceptjs.
+To run them for the first time:
+
+```sh
+cd e2e-tests
+yarn
+yarn playwright install
+cd ..
+yarn e2e
+```
+
+You can find the [full readme here](https://github.com/serlo/frontend/tree/staging/e2e-tests#readme).
+
 ## More information
 
 You can find more detailed explanations in our wiki. Currently, we have these pages available:
@@ -123,3 +139,4 @@ You can find more detailed explanations in our wiki. Currently, we have these pa
 - [Tailwind Getting Started Guide](https://github.com/serlo/frontend/wiki/Tailwind-Getting-Started-Guide)
 - [VS Code Setup](https://github.com/serlo/frontend/wiki/VS-Code)
 - [Unsorted old stuff](https://github.com/serlo/frontend/wiki/Archive)
+- [Forked packages](https://github.com/serlo/frontend/wiki/Forked-packages)

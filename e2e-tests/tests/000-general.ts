@@ -171,7 +171,7 @@ Scenario('Donation', ({ I }) => {
   I.switchTo('iframe')
   I.waitForText('Bitte gib einen Spendenbetrag ein', 30)
   I.click('Jetzt spenden')
-  I.see('Wähle eine Zahlungsart')
+  I.waitForText('Wähle eine Zahlungsart', 10)
   I.switchTo() // back from iframe
 
   I.amOnPage('/')

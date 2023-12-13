@@ -16,7 +16,7 @@ const sentryLoader = `
     window.Sentry.init({
       environment: "${process.env.NEXT_PUBLIC_ENV}",
       release: "frontend@${
-        process.env.NEXT_PUBLIC_COMMIT_SHA?.substring(0, 7) ?? ''
+        process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.substring(0, 7) ?? ''
       }",
       beforeSend(event, hint) {
         /* ignore safari warning in JsonLd component */
@@ -108,7 +108,7 @@ export default class MyDocument extends Document {
             />
           )}
           {process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined &&
-            process.env.NEXT_PUBLIC_COMMIT_SHA !== undefined && (
+            process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA !== undefined && (
               <script
                 dangerouslySetInnerHTML={{
                   __html: sentryLoader,
