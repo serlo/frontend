@@ -12,7 +12,7 @@ const AuthItems = dynamic(() =>
   import('./auth-items').then((mod) => mod.AuthItems)
 )
 
-export function Menu() {
+export function Menu({ isMobile }: { isMobile?: boolean }) {
   const auth = useAuthentication()
   const { headerData } = useInstanceData()
   const [mounted, setMounted] = useState(false)
@@ -22,7 +22,7 @@ export function Menu() {
   const showAuth = auth && mounted
 
   return (
-    <Root>
+    <Root orientation={isMobile ? 'vertical' : 'horizontal'}>
       <List
         className={cn(
           'relative m-0 block p-0 sm:min-w-[27rem] md:text-right',

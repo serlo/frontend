@@ -60,7 +60,7 @@ export function Header() {
               mobileMenuOpen ? '' : 'hidden'
             )}
           >
-            <Menu />
+            <Menu isMobile={mobileMenuOpen} />
           </div>
           <div className="hidden h-0 basis-full md:block lg:hidden" />
           {renderQuickbar()}
