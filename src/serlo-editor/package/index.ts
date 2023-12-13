@@ -14,7 +14,6 @@ export { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 export { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 
 export { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
-export * from '@/serlo-editor/types/editor-plugins'
 export * from '@/serlo-editor/types/plugin-type-guards'
 export type { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
