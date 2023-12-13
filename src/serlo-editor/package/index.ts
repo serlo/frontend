@@ -28,19 +28,6 @@ export {
   loggedInData as loggedInDataEn,
 } from '@/data/en'
 
-// renderers
-export { BoxStaticRenderer } from '@/serlo-editor/plugins/box/static'
-export { GeogebraStaticRenderer } from '@/serlo-editor/plugins/geogebra/static'
-export { ImageStaticRenderer } from '@/serlo-editor/plugins/image/static'
-export { MultimediaStaticRenderer } from '@/serlo-editor/plugins/multimedia/static'
-export { RowsStaticRenderer } from '@/serlo-editor/plugins/rows/static'
-export { SerloTableStaticRenderer } from '@/serlo-editor/plugins/serlo-table/static'
-export { SpoilerStaticRenderer } from '@/serlo-editor/plugins/spoiler/static'
-export type { MathElement } from '@/serlo-editor/plugins/text'
-export { TextStaticRenderer } from '@/serlo-editor/plugins/text/static'
-export { VideoStaticRenderer } from '@/serlo-editor/plugins/video/static'
-export { StaticMath } from '@/serlo-editor/plugins/text/static-components/static-math'
-
 // plugins
 export { createBoxPlugin } from '@/serlo-editor/plugins/box'
 export { equationsPlugin } from '@/serlo-editor/plugins/equations'
