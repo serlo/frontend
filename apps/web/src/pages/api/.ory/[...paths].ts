@@ -3,8 +3,8 @@ import { createApiHandler, config } from '@ory/integrations/next-edge'
 export { config }
 
 const COOKIE_DOMAINS = {
-  production: process.env.NEXT_PUBLIC_SERLO_DOMAIN_PRODUCTION,
-  staging: process.env.NEXT_PUBLIC_SERLO_DOMAIN_STAGING,
+  production: 'serlo.org',
+  staging: 'serlo-staging.dev',
   local: 'localhost',
 }
 

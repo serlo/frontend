@@ -3,13 +3,13 @@ declare namespace NodeJS {
     // Environment to use
     NEXT_PUBLIC_ENV: 'production' | 'staging' | 'local'
     // Serlo domain for production environment
-    NEXT_PUBLIC_SERLO_DOMAIN_PRODUCTION: string
+    // NEXT_PUBLIC_SERLO_DOMAIN_PRODUCTION: string
     // Serlo domain to be used in staging environment
-    NEXT_PUBLIC_SERLO_DOMAIN_STAGING: string
+    // NEXT_PUBLIC_SERLO_DOMAIN_STAGING: string
     // Sentry DSN (defined in preview & production)
     NEXT_PUBLIC_SENTRY_DSN: string | undefined
     // Google Analytics Tracking ID (defined in production)
-    NEXT_PUBLIC_GA_TRACKING_ID: string | undefined
+    // NEXT_PUBLIC_GA_TRACKING_ID: string | undefined
     // The GitHub SHA of the commit the deployment was triggered by (defined in preview & production)
     NEXT_PUBLIC_COMMIT_SHA: string | undefined
     // The public facing url of the deployment (defined in preview & production)

@@ -2,10 +2,12 @@ import bundleAnalyzer from '@next/bundle-analyzer'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
+// check and display env variables
 console.log(
-  'current active environment (staging or production):',
+  'selected environment (staging or production):',
   process.env.NEXT_PUBLIC_ENV
 )
+console.log('sentry dsn (if available):', process.env.NEXT_PUBLIC_SENTRY_DSN)
 
 /**
  * @type {import('next').NextConfig}
