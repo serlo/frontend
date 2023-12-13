@@ -8,7 +8,7 @@ import IconTable from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-table.s
 import IconText from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-text.svg'
 import IconVideo from '@/serlo-editor/editor-ui/assets/plugin-icons/icon-video.svg'
 
-export * from './editor'
+export { SerloEditor, type SerloEditorProps } from './editor'
 
 export { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 export { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
