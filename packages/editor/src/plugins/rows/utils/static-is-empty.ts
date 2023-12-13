@@ -1,7 +1,8 @@
 // eslint-disable-next-line import/no-cycle
-import { isEmptyTextDocument } from '../../text/utils/static-is-empty'
 import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 import { isRowsDocument } from '@editor/types/plugin-type-guards'
+
+import { isEmptyTextDocument } from '../../text/utils/static-is-empty'
 
 export function isEmptyRowsDocument(rows: AnyEditorDocument) {
   if (!isRowsDocument(rows)) return false

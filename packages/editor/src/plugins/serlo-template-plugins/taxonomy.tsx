@@ -1,6 +1,3 @@
-import { editorContent, headerInputClasses, uuid } from './common/common'
-import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -8,6 +5,10 @@ import {
   string,
   number,
 } from '@editor/plugin'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+
+import { editorContent, headerInputClasses, uuid } from './common/common'
+import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const taxonomyTypeState = object({
   ...uuid,

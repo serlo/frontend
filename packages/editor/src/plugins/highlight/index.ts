@@ -1,5 +1,3 @@
-import { HighlightEditor } from './editor'
-import { HighlightRenderer, type HighlightRendererProps } from './renderer'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -7,6 +5,9 @@ import {
   object,
   string,
 } from '@editor/plugin'
+
+import { HighlightEditor } from './editor'
+import { HighlightRenderer, type HighlightRendererProps } from './renderer'
 
 export interface HighlightConfig {
   Renderer?: HighlightPluginConfig['Renderer']

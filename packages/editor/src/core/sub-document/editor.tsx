@@ -1,3 +1,4 @@
+import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import * as R from 'ramda'
 import { useRef, useMemo, useCallback } from 'react'
@@ -15,7 +16,6 @@ import {
   useAppSelector,
 } from '../../store'
 import type { StateUpdater } from '../../types/internal__plugin-state'
-import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const dispatch = useAppDispatch()

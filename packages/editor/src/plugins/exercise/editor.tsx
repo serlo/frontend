@@ -1,15 +1,16 @@
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
-import type { ExerciseProps } from '.'
-import { ExerciseToolbar } from './toolbar/toolbar'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
-import { isProduction } from '@serlo/frontend/src/helper/is-production'
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { cn } from '@serlo/frontend/src/helper/cn'
+import { isProduction } from '@serlo/frontend/src/helper/is-production'
+
+import type { ExerciseProps } from '.'
+import { ExerciseToolbar } from './toolbar/toolbar'
 
 const allInteractiveExerciseTypes = isProduction
   ? ([

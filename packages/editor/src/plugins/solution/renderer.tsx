@@ -1,8 +1,8 @@
+import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
+import { cn } from '@serlo/frontend/src/helper/cn'
 import { useState } from 'react'
 
 import { BoxRenderer } from '../box/renderer'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 interface SolutionRendererProps {
   prerequisite: JSX.Element | null

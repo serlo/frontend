@@ -1,12 +1,13 @@
-import { faWarning } from '@fortawesome/free-solid-svg-icons'
 
-import type { UnsupportedPluginProps } from '.'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { selectStaticDocument, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { faWarning } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+
+import type { UnsupportedPluginProps } from '.'
 
 export const UnsupportedEditor: React.FunctionComponent<
   UnsupportedPluginProps

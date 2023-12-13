@@ -1,3 +1,5 @@
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
+
 import { InputExerciseEditor } from './editor'
 import { InputExerciseType } from './input-exercise-type'
 import {
@@ -10,7 +12,6 @@ import {
   object,
   string,
 } from '../../plugin'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 function createInputExerciseState(
   feedback: ChildStateTypeConfig<string, unknown>

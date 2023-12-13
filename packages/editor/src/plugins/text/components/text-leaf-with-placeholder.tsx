@@ -1,11 +1,11 @@
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { RenderLeafProps } from 'slate-react'
-
-import { TextLeafRenderer } from './text-leaf-renderer'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
+import { RenderLeafProps } from 'slate-react'
+
+import { TextLeafRenderer } from './text-leaf-renderer'
 
 export function TextLeafWithPlaceholder(
   props: {

@@ -1,6 +1,7 @@
 import { useFormattingOptions } from '@editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { SlateHoverOverlay } from '@editor/editor-ui/slate-hover-overlay'
 import type { EditorPluginProps } from '@editor/plugin'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import React, { useMemo, useEffect, useCallback } from 'react'
 import {
   createEditor,
@@ -27,7 +28,6 @@ import { withEmptyLinesRestriction } from '../plugins'
 import { withCorrectVoidBehavior } from '../plugins/with-correct-void-behavior'
 import type { TextEditorConfig, TextEditorState } from '../types/config'
 import { instanceStateStore } from '../utils/instance-state-store'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 export type TextEditorProps = EditorPluginProps<
   TextEditorState,

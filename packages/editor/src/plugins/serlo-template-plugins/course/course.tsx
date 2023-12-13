@@ -1,4 +1,20 @@
+import { AddButton } from '@editor/editor-ui'
+import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import {
+  type EditorPlugin,
+  type EditorPluginProps,
+  type PrettyStaticState,
+  list,
+  string,
+} from '@editor/plugin'
+import { selectStaticDocument, store } from '@editor/store'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
+import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { UuidType } from '@serlo/frontend/src/data-types'
+import { cn } from '@serlo/frontend/src/helper/cn'
 import { useState } from 'react'
 
 import { CourseNavigation } from './course-navigation'
@@ -13,22 +29,6 @@ import { ContentLoaders } from '../helpers/content-loaders/content-loaders'
 import { RevisionHistoryLoader } from '../helpers/content-loaders/revision-history-loader'
 import { SettingsTextarea } from '../helpers/settings-textarea'
 import { ToolbarMain } from '../toolbar-main/toolbar-main'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { UuidType } from '@serlo/frontend/src/data-types'
-import { cn } from '@serlo/frontend/src/helper/cn'
-import { AddButton } from '@editor/editor-ui'
-import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import {
-  type EditorPlugin,
-  type EditorPluginProps,
-  type PrettyStaticState,
-  list,
-  string,
-} from '@editor/plugin'
-import { selectStaticDocument, store } from '@editor/store'
-import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 export const courseTypeState = entityType(
   {

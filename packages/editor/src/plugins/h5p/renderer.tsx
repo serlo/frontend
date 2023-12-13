@@ -1,6 +1,6 @@
+import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import Script from 'next/script'
 
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 
 export interface H5pRendererProps {
   url: string

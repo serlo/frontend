@@ -1,3 +1,4 @@
+import type { EditorPlugin } from '@editor/plugin'
 import { useEffect } from 'react'
 import { useHotkeys, useHotkeysContext } from 'react-hotkeys-hook'
 import { Key } from 'ts-key-enum'
@@ -15,7 +16,6 @@ import {
   useAppSelector,
   selectIsDocumentEmpty,
 } from '../../store'
-import type { EditorPlugin } from '@editor/plugin'
 
 export const useEnableEditorHotkeys = (
   id: string,

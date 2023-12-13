@@ -1,4 +1,15 @@
+import {
+  type EditorPlugin,
+  type EditorPluginProps,
+  string,
+} from '@editor/plugin'
+import { useAppDispatch, focus } from '@editor/store'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
+import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { UuidType } from '@serlo/frontend/src/data-types'
 import { useEffect, useRef, useState } from 'react'
 
 import {
@@ -10,17 +21,6 @@ import {
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { SettingsTextarea } from './helpers/settings-textarea'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { UuidType } from '@serlo/frontend/src/data-types'
-import {
-  type EditorPlugin,
-  type EditorPluginProps,
-  string,
-} from '@editor/plugin'
-import { useAppDispatch, focus } from '@editor/store'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 export const articleTypeState = entityType(
   {

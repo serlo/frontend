@@ -1,6 +1,7 @@
-import type { PageLayoutPluginProps } from '..'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
+
+import type { PageLayoutPluginProps } from '..'
 
 const firstColumsSizes = [50, 66, 33]
 

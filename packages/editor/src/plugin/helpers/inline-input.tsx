@@ -1,8 +1,8 @@
+import { CustomElement, CustomText } from '@editor/plugins/text'
 import { useMemo, useState } from 'react'
 import { createEditor, Descendant } from 'slate'
 import { Editable, Slate, withReact } from 'slate-react'
 
-import { CustomElement, CustomText } from '@editor/plugins/text'
 
 const slateToString = (value: Descendant[]): string => {
   return ((value[0] as CustomElement).children[0] as CustomText).text

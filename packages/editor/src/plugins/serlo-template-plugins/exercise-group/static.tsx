@@ -1,15 +1,15 @@
-import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
-
-import { TextExerciseGroupTypeRenderer } from './renderer'
-import { useAuthentication } from '@serlo/frontend/src/auth/use-authentication'
-import type { MoreAuthorToolsProps } from '@serlo/frontend/src/components/user-tools/foldout-author-menus/more-author-tools'
-import { ExerciseInlineType } from '@serlo/frontend/src/data-types'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import {
   EditorRowsDocument,
   EditorTemplateExerciseGroupDocument,
 } from '@editor/types/editor-plugins'
+import { useAuthentication } from '@serlo/frontend/src/auth/use-authentication'
+import type { MoreAuthorToolsProps } from '@serlo/frontend/src/components/user-tools/foldout-author-menus/more-author-tools'
+import { ExerciseInlineType } from '@serlo/frontend/src/data-types'
+import dynamic from 'next/dynamic'
+import { useEffect, useState } from 'react'
+
+import { TextExerciseGroupTypeRenderer } from './renderer'
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
   import(

@@ -1,3 +1,6 @@
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
+
 import { ImageEditor } from './editor'
 import type { FileError } from './image-with-serlo-config'
 import {
@@ -13,8 +16,6 @@ import {
   string,
   upload,
 } from '../../plugin'
-import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 const imageState = object({
   src: upload(''),

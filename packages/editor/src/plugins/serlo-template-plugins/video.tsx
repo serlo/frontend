@@ -1,4 +1,13 @@
 import {
+  type EditorPlugin,
+  type EditorPluginProps,
+  string,
+} from '@editor/plugin'
+import { videoPlugin } from '@editor/plugins/video'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { UuidType } from '@serlo/frontend/src/data-types'
+
+import {
   entity,
   editorContent,
   entityType,
@@ -6,14 +15,6 @@ import {
 } from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { UuidType } from '@serlo/frontend/src/data-types'
-import {
-  type EditorPlugin,
-  type EditorPluginProps,
-  string,
-} from '@editor/plugin'
-import { videoPlugin } from '@editor/plugins/video'
 
 export const videoTypeState = entityType(
   {

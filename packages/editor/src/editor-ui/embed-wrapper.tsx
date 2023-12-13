@@ -68,7 +68,6 @@ export function EmbedWrapper({
     return (
       <div className="text-center">
         <div className="relative bg-editor-primary-100 pb-[56.2%]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="absolute left-0 h-full w-full object-cover opacity-50"
             src={previewImageUrl}

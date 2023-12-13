@@ -1,4 +1,12 @@
 import {
+  type EditorPlugin,
+  type EditorPluginProps,
+  string,
+} from '@editor/plugin'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { UuidType } from '@serlo/frontend/src/data-types'
+
+import {
   editorContent,
   entity,
   entityType,
@@ -6,13 +14,6 @@ import {
 } from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { UuidType } from '@serlo/frontend/src/data-types'
-import {
-  type EditorPlugin,
-  type EditorPluginProps,
-  string,
-} from '@editor/plugin'
 
 export const eventTypeState = entityType(
   {

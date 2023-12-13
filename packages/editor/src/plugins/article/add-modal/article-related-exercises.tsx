@@ -20,7 +20,7 @@ interface ArticleRelatedExercisesProps {
 // TODO: codegen does not reach here
 // actual fix: move serlo specific code to frontend repo or abstract another
 
-export type FetchExerciseFolderQuery = {
+export interface FetchExerciseFolderQuery {
   __typename?: 'Query'
   uuid?:
     | { __typename?: 'Applet' }

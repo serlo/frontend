@@ -1,10 +1,11 @@
-import { editorContent } from './common/common'
-import { ToolbarMain } from './toolbar-main/toolbar-main'
 import {
   type EditorPlugin,
   type EditorPluginProps,
   object,
 } from '@editor/plugin'
+
+import { editorContent } from './common/common'
+import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const userTypeState = object({ description: editorContent() })
 

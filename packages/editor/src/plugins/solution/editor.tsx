@@ -1,4 +1,7 @@
 import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { IsSerloContext } from '@serlo/frontend/src/serlo-editor-integration/context/is-serlo-context'
 import { useContext } from 'react'
 
 import type { SolutionProps } from '.'
@@ -7,9 +10,6 @@ import { SerloLicenseChooser } from './serlo-license-chooser'
 import { InlineInput } from '../../plugin/helpers/inline-input'
 import { InlineSettings } from '../../plugin/helpers/inline-settings'
 import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { IsSerloContext } from '@serlo/frontend/src/serlo-editor-integration/context/is-serlo-context'
 
 export function SolutionEditor({ state, focused }: SolutionProps) {
   const { prerequisite, strategy, licenseId } = state

@@ -1,4 +1,3 @@
-import { SolutionEditor } from './editor'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -9,6 +8,8 @@ import {
   number,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+
+import { SolutionEditor } from './editor'
 
 const solutionState = object({
   strategy: child({ plugin: EditorPluginType.Text }),

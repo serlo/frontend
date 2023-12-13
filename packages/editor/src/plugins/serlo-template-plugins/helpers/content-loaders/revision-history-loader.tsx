@@ -1,8 +1,5 @@
+import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { faHistory } from '@fortawesome/free-solid-svg-icons'
-import request from 'graphql-request'
-import NProgress from 'nprogress'
-import { useState } from 'react'
-
 import { endpoint } from '@serlo/frontend/src/api/endpoint'
 import { useGraphqlSwr } from '@serlo/frontend/src/api/use-graphql-swr'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
@@ -18,12 +15,14 @@ import { revisionQuery } from '@serlo/frontend/src/fetcher/revision/query'
 import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 import { triggerSentry } from '@serlo/frontend/src/helper/trigger-sentry'
 import { revisionHistoryQuery } from '@serlo/frontend/src/pages/entity/repository/history/[id]'
-import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import {
   convertEditorResponseToState,
   isError,
 } from '@serlo/frontend/src/serlo-editor-integration/convert-editor-response-to-state'
 import { revisionResponseToResponse } from '@serlo/frontend/src/serlo-editor-integration/revision-response-to-response'
+import request from 'graphql-request'
+import NProgress from 'nprogress'
+import { useState } from 'react'
 
 export function RevisionHistoryLoader<T>({
   id,

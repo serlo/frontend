@@ -5,11 +5,11 @@ import {
   store,
   useAppSelector,
 } from '@editor/store'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { cn } from '@serlo/frontend/src/helper/cn'
 import { Dispatch, SetStateAction } from 'react'
 
 import type { MultimediaProps } from '..'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 interface MultimediaTypeSelectProps {
   allowedPlugins: MultimediaProps['config']['allowedPlugins']

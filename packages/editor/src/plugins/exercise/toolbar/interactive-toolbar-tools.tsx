@@ -1,8 +1,3 @@
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { useCallback } from 'react'
-
-import type { ExerciseProps } from '..'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { DropdownButton } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/dropdown-button'
 import {
   focus,
@@ -11,6 +6,11 @@ import {
   store,
   useAppDispatch,
 } from '@editor/store'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { useCallback } from 'react'
+
+import type { ExerciseProps } from '..'
 
 export const InteractiveToolbarTools = ({ id }: { id: string }) => {
   const exTemplateStrings = useEditorStrings().templatePlugins.exercise

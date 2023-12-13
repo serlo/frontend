@@ -1,5 +1,3 @@
-import { EquationsEditor } from './editor/editor'
-import { Sign } from './sign'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -9,6 +7,9 @@ import {
   string,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+
+import { EquationsEditor } from './editor/editor'
+import { Sign } from './sign'
 
 export const stepProps = object({
   left: string(''),

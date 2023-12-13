@@ -1,5 +1,5 @@
-import { faCircleArrowUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { faCircleArrowUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 

@@ -1,14 +1,14 @@
+import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
+import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
+import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import type { Dispatch, SetStateAction } from 'react'
 
 import { LayoutChooser } from './layout-chooser'
 import type { PageLayoutPluginProps } from '..'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
-import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 export const PageLayoutToolbar = ({
   id,

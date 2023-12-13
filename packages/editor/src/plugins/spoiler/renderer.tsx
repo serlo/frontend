@@ -1,6 +1,6 @@
+import { cn } from '@serlo/frontend/src/helper/cn'
 import { useState } from 'react'
 
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 export interface SpoilerRendererProps {
   title: JSX.Element

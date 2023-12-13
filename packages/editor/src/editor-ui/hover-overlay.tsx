@@ -1,7 +1,7 @@
+import { cn } from '@serlo/frontend/src/helper/cn'
 import { createRef, useEffect, useState, ReactNode, RefObject } from 'react'
 import { BaseSelection } from 'slate'
 
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 export type HoverPosition = 'above' | 'below'
 

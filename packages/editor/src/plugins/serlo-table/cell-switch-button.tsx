@@ -1,11 +1,11 @@
-import { faImages, faParagraph } from '@fortawesome/free-solid-svg-icons'
 
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { ChildStateType } from '@editor/plugin/child'
 import { selectDocument, selectIsFocused, useAppSelector } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { StateTypesReturnType } from '@editor/types/internal__plugin-state'
+import { faImages, faParagraph } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 interface CellSwitchButtonProps {
   cell: StateTypesReturnType<{

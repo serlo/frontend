@@ -1,11 +1,11 @@
 // import { useDroppable } from '@dnd-kit/core'
+import { cn } from '@serlo/frontend/src/helper/cn'
 import { ChangeEventHandler, useContext } from 'react'
 
 // import { BlankSolution } from './components/blank-solution'
 // import { BlankDragAndDropSolutions } from './renderer'
 import type { FillInTheBlanksMode } from '.'
 import { FillInTheBlanksContext } from './context/blank-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 /** Renders either an input element (where user can type into) or a drop area (where user can drop draggable answers) depending on the mode  */
 export function BlankRenderer(props: {

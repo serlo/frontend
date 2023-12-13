@@ -1,12 +1,11 @@
-import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { ReactNode, useState } from 'react'
-
+import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { ReactNode, useState } from 'react'
 
 interface MultimediaToolbarProps {
   id: string

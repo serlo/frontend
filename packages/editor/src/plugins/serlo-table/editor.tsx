@@ -1,17 +1,3 @@
-import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import { KeyboardEvent, useState } from 'react'
-
-import type { SerloTableProps } from '.'
-import { CellSwitchButton } from './cell-switch-button'
-import { useAreImagesDisabledInTable } from './contexts/are-images-disabled-in-table-context'
-import { SerloTableRenderer, TableType } from './renderer'
-import { SerloTableToolbar } from './toolbar'
-import { getTableType } from './utils/get-table-type'
-import { TextEditorConfig } from '../text'
-import { instanceStateStore } from '../text/utils/instance-state-store'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
 import {
@@ -23,6 +9,20 @@ import {
   useAppDispatch,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { cn } from '@serlo/frontend/src/helper/cn'
+import { KeyboardEvent, useState } from 'react'
+
+import type { SerloTableProps } from '.'
+import { CellSwitchButton } from './cell-switch-button'
+import { useAreImagesDisabledInTable } from './contexts/are-images-disabled-in-table-context'
+import { SerloTableRenderer, TableType } from './renderer'
+import { SerloTableToolbar } from './toolbar'
+import { getTableType } from './utils/get-table-type'
+import { TextEditorConfig } from '../text'
+import { instanceStateStore } from '../text/utils/instance-state-store'
 
 const headerTextFormattingOptions = [
   TextEditorFormattingOption.code,

@@ -1,5 +1,6 @@
-import type { MultimediaProps } from '..'
 import { cn } from '@serlo/frontend/src/helper/cn'
+
+import type { MultimediaProps } from '..'
 
 interface MultimediaSizeSelectButtonProps {
   state: MultimediaProps['state']['width']

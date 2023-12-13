@@ -25,7 +25,7 @@ module.exports = {
     browser: true,
   },
   settings: {
-    'import/internal-regex': '^@/',
+    'import/internal-regex': '^@editor/',
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
     },

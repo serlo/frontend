@@ -1,10 +1,10 @@
+import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
+import { cn } from '@serlo/frontend/src/helper/cn'
 import type A from 'algebra.js'
 import { useState, useEffect } from 'react'
 
 import { InputExerciseType } from './input-exercise-type'
 import { Feedback } from '../sc-mc-exercise/renderer/feedback'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 interface InputExersiseRendererProps {
   type: string
