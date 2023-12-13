@@ -2,10 +2,11 @@ name: e2e tests with firefox
 on:
   workflow_dispatch:
   push:
+    # workflow is triggered on staging and branches starting with 'e2e'
+    # but tests always run against staging preview build
     branches:
       - staging
-      - e2e-**
-      - e2e/**
+      - e2e**
 jobs:
   test:
     runs-on: ubuntu-latest
