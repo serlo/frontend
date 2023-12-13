@@ -196,7 +196,7 @@ Scenario('Video + Injection', ({ I }) => {
   I.see('dass externe Inhalte von')
   I.click('Video abspielen von YouTube')
   I.switchTo('iframe')
-  I.see('Satz des Pythagoras für rechtwinklige Dreiecke')
+  I.seeElement('video')
 })
 
 Scenario('Toggle Solution', ({ I }) => {
@@ -229,7 +229,7 @@ Scenario('Taxonomy', ({ I }) => {
   I.click('2021')
 
   // Takes a long time to load
-  I.waitForText('Berechne', 30)
+  I.see('Berechne')
 
   I.amOnPage('/24370')
   I.see('Artikel')

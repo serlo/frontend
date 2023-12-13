@@ -29,7 +29,6 @@ exports.config = {
         : { browser }),
     },
   },
-  name: 'frontend-e2e-tests',
   plugins: {
     // https://codecept.io/locators/#custom-locators
     customLocator: {
@@ -66,7 +65,7 @@ exports.config = {
         },
       },
     },
-    pauseOnFail: {},
+    ...(isCI ? {} : { pauseOnFail: {} }),
     retryFailedStep: {
       enabled: true,
     },
