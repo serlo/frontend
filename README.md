@@ -123,3 +123,4 @@ You can find more detailed explanations in our wiki. Currently, we have these pa
 - [Tailwind Getting Started Guide](https://github.com/serlo/frontend/wiki/Tailwind-Getting-Started-Guide)
 - [VS Code Setup](https://github.com/serlo/frontend/wiki/VS-Code)
 - [Unsorted old stuff](https://github.com/serlo/frontend/wiki/Archive)
+- [Forked packages](https://github.com/serlo/frontend/wiki/Forked-packages)
