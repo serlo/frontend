@@ -2,6 +2,8 @@ import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
+import svgr from 'vite-plugin-svgr'
+
 // https://vitejs.dev/guide/build.html#library-mode
 
 /* we use vite only for building the serlo editor package */
@@ -30,5 +32,5 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
-  plugins: [react(), dts()],
+  plugins: [react(), dts(), svgr({ include: '**/*.svg' })],
 })
