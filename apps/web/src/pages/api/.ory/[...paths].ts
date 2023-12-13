@@ -16,9 +16,9 @@ export const COOKIE_DOMAIN =
       : COOKIE_DOMAINS['local']
 
 const KRATOS_HOSTS = {
-  production: process.env.KRATOS_HOST_PRODUCTION,
-  staging: process.env.KRATOS_HOST_STAGING,
-  local: process.env.KRATOS_HOST_LOCAL,
+  production: 'https://kratos.serlo.org',
+  staging: 'https://kratos.serlo-staging.dev',
+  local: 'http://localhost:4433',
 }
 
 // if env is not set, it's a production build running on localhost, use staging as default
