@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.0",
+    "@serlo/eslint-config-react": "workspace:*",
     "@serlo/typescript-config": "workspace:*",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/typography": "^0.5.10",
