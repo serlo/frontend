@@ -22,11 +22,12 @@ async function testLandingPage(I: CodeceptJS.I, data: LandingPageData) {
   // Use icon
   I.click(data.iconSelector)
 
-  I.see(data.headingText)
+  I.waitForText(data.headingText, 5)
 
   // Visit taxonomy
   I.click('Alle Themen')
-  I.click(data.taxRootName, 'nav > a')
+  I.waitForElement('$breadcrumbs', 5)
+  I.click(data.taxRootName, locate('$breadcrumbs').withChild('a'))
 
   // Check correct filter
   I.click(subjectQuickbarSelector)
