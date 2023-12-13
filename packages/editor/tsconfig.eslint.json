@@ -1,7 +1,9 @@
 {
-  "extends": "./tsconfig.json",
-  "include": [".*.js", "src/**/.*.js"],
+  "extends": "@serlo/typescript-config/editor.json",
   "compilerOptions": {
-    "checkJs": true
-  }
+    "checkJs": true,
+    "outDir": "dist"
+  },
+  "include": [".", ".*.js"],
+  "exclude": ["node_modules", "dist"]
 }

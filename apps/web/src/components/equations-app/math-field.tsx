@@ -45,7 +45,6 @@ export function MathField(props: MathFieldProps) {
       if (props.readonly) {
         mf.current.readOnly = true
         if (mf.current.registers) {
-          // @ts-expect-error readonly?
           mf.current.registers.arraystretch = 1.5
         }
       } else {
