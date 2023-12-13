@@ -18,13 +18,13 @@ jobs:
         with:
           node-version: 18.x
       - uses: actions/checkout@v3
+      - run: yarn
+      - run: yarn playwright install --with-deps chromium
       - uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 1200
           check_interval: 20
-      - run: yarn
-      - run: yarn playwright install --with-deps chromium
       - run: yarn e2e-workers
       - uses: actions/upload-artifact@v3
         if: failure()
