@@ -2,7 +2,7 @@
 import { NextPage } from 'next'
 import Script from 'next/script'
 
-import { EquationsApp } from '@/components/equations-app/equations-app'
+import { EquationsAppV2 } from '@/components/equations-app/equations-app-v2'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
 
@@ -14,7 +14,7 @@ const ContentPage: NextPage = () => {
       showNav={false}
       authorization={{}}
     >
-      <EquationsApp />
+      <EquationsAppV2 />
       <HeadTags
         data={{
           title: 'Serlo Gleichungs-App',
@@ -33,8 +33,11 @@ const ContentPage: NextPage = () => {
         math-field::part(menu-toggle) {
           display: none;
         }
-        .overview math-field::part(virtual-keyboard-toggle) {
+        math-field::part(virtual-keyboard-toggle) {
           display: none;
+        }
+        html {
+          background: white !important;
         }
       `}</style>
     </FrontendClientBase>
