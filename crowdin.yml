@@ -1,10 +1,5 @@
-'preserve_hierarchy': false
-'export_languages': ['de', 'en', 'fr', 'es-ES', 'ta', 'hi']
-
-'files':
-  [
-    {
-      'source': '/apps/web/src/data/en/index.ts',
-      'translation': '/apps/web/src/data/%two_letters_code%/index.ts',
-    },
-  ]
+preserve_hierarchy: false
+export_languages: ['de', 'en', 'fr', 'es-ES', 'ta', 'hi']
+files:
+  - source: /apps/web/src/data/en/index.ts
+    translation: /apps/web/src/data/%two_letters_code%/index.ts
