@@ -20,17 +20,14 @@ export const withBlanks = (editor: Editor) => {
       return
     }
 
-    const blankId = node.blankId
-    const allElements = [...Node.elements(editor)]
-    const otherBlanks = allElements.filter(
+    const otherNodeHasSameId = [...Node.elements(editor)].some(
       ([element, elementPath]) =>
-        element.type === 'textBlank' && !Path.equals(elementPath, nodePath)
-    )
-    const foundBlankWithSameId = otherBlanks.some(
-      ([element]) => element.type === 'textBlank' && element.blankId === blankId
+        element.type === 'textBlank' &&
+        !Path.equals(elementPath, nodePath) &&
+        element.blankId === node.blankId
     )
 
-    if (foundBlankWithSameId) {
+    if (otherNodeHasSameId) {
       // Give this blank a new unique id
       Transforms.setNodes(editor, { blankId: uuid_v4() }, { at: nodePath })
     }
