@@ -1,11 +1,11 @@
+import { EmbedWrapper } from '@editor/editor-ui/embed-wrapper'
+import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
+import { entityIconMapping } from '@serlo/frontend/src/helper/icon-by-entity-type'
 import { useState } from 'react'
 
 import type { GeogebraProps } from '.'
 import { GeogebraRenderer, parseId } from './renderer'
 import { GeogebraToolbar } from './toolbar'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { entityIconMapping } from '@serlo/frontend/src/helper/icon-by-entity-type'
-import { EmbedWrapper } from '@editor/editor-ui/embed-wrapper'
 
 export function GeogebraEditor(props: GeogebraProps) {
   const { focused, state } = props

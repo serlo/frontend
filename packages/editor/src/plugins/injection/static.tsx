@@ -1,11 +1,3 @@
-import { gql } from 'graphql-request'
-import { useEffect, useState } from 'react'
-
-import { endpoint } from '@serlo/frontend/src/api/endpoint'
-import { InfoPanel } from '@serlo/frontend/src/components/info-panel'
-import { LoadingSpinner } from '@serlo/frontend/src/components/loading/loading-spinner'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { triggerSentry } from '@serlo/frontend/src/helper/trigger-sentry'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
@@ -15,9 +7,16 @@ import {
   EditorRowsDocument,
 } from '@editor/types/editor-plugins'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
+import { endpoint } from '@serlo/frontend/src/api/endpoint'
+import { InfoPanel } from '@serlo/frontend/src/components/info-panel'
+import { LoadingSpinner } from '@serlo/frontend/src/components/loading/loading-spinner'
+import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
+import { triggerSentry } from '@serlo/frontend/src/helper/trigger-sentry'
+import { gql } from 'graphql-request'
+import { useEffect, useState } from 'react'
 
 // TODO: move query into frontend
-export type InjectionOnlyContentQuery = {
+export interface InjectionOnlyContentQuery {
   __typename?: 'Query'
   uuid?:
     | {

@@ -1,8 +1,6 @@
+import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { faFileImport } from '@fortawesome/free-solid-svg-icons'
-import request from 'graphql-request'
-import NProgress from 'nprogress'
-import { useState } from 'react'
-
 import { endpoint } from '@serlo/frontend/src/api/endpoint'
 import { UuidUrlInput } from '@serlo/frontend/src/components/author/uuid-url-input'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
@@ -17,13 +15,14 @@ import type {
 import { dataQuery } from '@serlo/frontend/src/fetcher/query'
 import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 import { triggerSentry } from '@serlo/frontend/src/helper/trigger-sentry'
-import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import {
   type ConvertResponseError,
   convertEditorResponseToState,
   isError,
 } from '@serlo/frontend/src/serlo-editor-integration/convert-editor-response-to-state'
+import request from 'graphql-request'
+import NProgress from 'nprogress'
+import { useState } from 'react'
 
 export function ExternalRevisionLoader<T>({
   entityType,

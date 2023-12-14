@@ -1,6 +1,5 @@
-import Script from 'next/script'
-
 import { cn } from '@serlo/frontend/src/helper/cn'
+import Script from 'next/script'
 
 export interface GeogebraRendererProps {
   id: string

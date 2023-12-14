@@ -1,21 +1,3 @@
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { useRouter } from 'next/router'
-
-import { TextExerciseGroupTypeRenderer } from './renderer'
-import {
-  editorContent,
-  entity,
-  serializedChild,
-  entityType,
-} from '../common/common'
-import { ContentLoaders } from '../helpers/content-loaders/content-loaders'
-import { TextExerciseTypePluginState } from '../text-exercise'
-import { ToolbarMain } from '../toolbar-main/toolbar-main'
-import { AiExerciseGenerationButton } from '@serlo/frontend/src/components/exercise-generation/ai-exercise-generation-button'
-import { useAiFeatures } from '@serlo/frontend/src/components/exercise-generation/use-ai-features'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { UuidType } from '@serlo/frontend/src/data-types'
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import {
@@ -28,6 +10,24 @@ import {
 import { selectStaticDocument, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { AiExerciseGenerationButton } from '@serlo/frontend/src/components/exercise-generation/ai-exercise-generation-button'
+import { useAiFeatures } from '@serlo/frontend/src/components/exercise-generation/use-ai-features'
+import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { UuidType } from '@serlo/frontend/src/data-types'
+import { useRouter } from 'next/router'
+
+import { TextExerciseGroupTypeRenderer } from './renderer'
+import {
+  editorContent,
+  entity,
+  serializedChild,
+  entityType,
+} from '../common/common'
+import { ContentLoaders } from '../helpers/content-loaders/content-loaders'
+import { TextExerciseTypePluginState } from '../text-exercise'
+import { ToolbarMain } from '../toolbar-main/toolbar-main'
 
 // text-exercises also include interactive exercises, we keep the naming to avoid db-migration
 

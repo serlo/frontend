@@ -1,7 +1,4 @@
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import { gql } from 'graphql-request'
-
-import { SerloAddButton } from '../../../plugin/helpers/serlo-editor-button'
 import { useGraphqlSwr } from '@serlo/frontend/src/api/use-graphql-swr'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
@@ -12,6 +9,9 @@ import { TaxonomyTermType } from '@serlo/frontend/src/fetcher/graphql-types/oper
 import { getCategoryByTypename } from '@serlo/frontend/src/helper/get-category-by-typename'
 import { getTranslatedType } from '@serlo/frontend/src/helper/get-translated-type'
 import { getIconByTypename } from '@serlo/frontend/src/helper/icon-by-entity-type'
+import { gql } from 'graphql-request'
+
+import { SerloAddButton } from '../../../plugin/helpers/serlo-editor-button'
 
 interface ArticleRelatedTaxonomyProps {
   addEntry: (id: number, typename: UuidWithRevType, title?: string) => void

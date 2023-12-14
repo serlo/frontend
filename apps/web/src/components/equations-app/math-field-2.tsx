@@ -1,4 +1,4 @@
-import MathfieldElement from 'mathlive/dist/types/mathfield-element'
+import type { MathfieldElement } from 'mathlive'
 import { useState, useEffect, createRef, useRef } from 'react'
 
 interface MathFieldProps {
@@ -70,7 +70,6 @@ export function MathField2(props: MathFieldProps) {
       style={{ display: 'block' }}
       ref={mf}
       onInput={(evt) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         const v = (evt.target as MathfieldElement).value
         setValue(v)
         if (props.onChange) {

@@ -1,11 +1,11 @@
+import { StateTypeReturnType } from '@editor/plugin'
+import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
+import { selectIsFocused, useAppSelector } from '@editor/store'
 import { useRef } from 'react'
 
 import { AddRowButtonFloating } from './add-row-button-floating'
 import type { RowsPluginConfig, RowsPluginState } from '..'
 import { EditorRowRenderer } from '../editor-renderer'
-import { StateTypeReturnType } from '@editor/plugin'
-import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
-import { selectIsFocused, useAppSelector } from '@editor/store'
 
 interface RowEditorProps {
   config: RowsPluginConfig

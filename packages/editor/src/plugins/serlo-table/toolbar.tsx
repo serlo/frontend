@@ -1,11 +1,12 @@
-import type { SerloTableProps } from '.'
-import { TableType } from './renderer'
-import { getTableType } from './utils/get-table-type'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { cn } from '@serlo/frontend/src/helper/cn'
+
+import type { SerloTableProps } from '.'
+import { TableType } from './renderer'
+import { getTableType } from './utils/get-table-type'
 
 export const SerloTableToolbar = ({ id, state }: SerloTableProps) => {
   const tableStrings = useEditorStrings().plugins.serloTable

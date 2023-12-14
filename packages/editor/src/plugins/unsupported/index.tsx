@@ -1,4 +1,3 @@
-import { UnsupportedEditor } from './editor'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -6,6 +5,8 @@ import {
   scalar,
   string,
 } from '@editor/plugin'
+
+import { UnsupportedEditor } from './editor'
 
 const unsupportedState = object({
   plugin: string(),

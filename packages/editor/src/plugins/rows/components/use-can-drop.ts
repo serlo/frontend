@@ -1,4 +1,3 @@
-import { checkIsAllowedNesting } from '../utils/check-is-allowed-nesting'
 import {
   store,
   selectAncestorDocumentIds,
@@ -8,6 +7,8 @@ import {
   selectChildTreeOfParent,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+
+import { checkIsAllowedNesting } from '../utils/check-is-allowed-nesting'
 
 export function useCanDrop(
   id: string,

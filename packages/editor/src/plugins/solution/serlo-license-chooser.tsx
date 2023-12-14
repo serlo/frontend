@@ -1,12 +1,12 @@
+import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons'
-import { useState } from 'react'
-
-import type { SolutionProps } from '.'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { useState } from 'react'
+
+import type { SolutionProps } from '.'
 
 interface SerloLicenseChooserProps {
   licenseId: SolutionProps['state']['licenseId']

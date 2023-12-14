@@ -1,6 +1,7 @@
+import { ExerciseSubmissionData } from '@serlo/frontend/src/helper/exercise-submission'
+
 import { McRenderer } from './mc-renderer'
 import { ScRenderer } from './sc-renderer'
-import { ExerciseSubmissionData } from '@serlo/frontend/src/helper/exercise-submission'
 
 export interface ScMcExerciseRendererAnswer {
   isCorrect: boolean

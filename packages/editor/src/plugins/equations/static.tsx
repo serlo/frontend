@@ -1,4 +1,3 @@
-import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import {
   EquationsRenderer,
@@ -6,6 +5,8 @@ import {
 } from '@editor/plugins/equations/renderer'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import type { EditorEquationsDocument } from '@editor/types/editor-plugins'
+
+import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 
 export function EquationsStaticRenderer({ state }: EditorEquationsDocument) {
   const { steps, firstExplanation, transformationTarget } = state

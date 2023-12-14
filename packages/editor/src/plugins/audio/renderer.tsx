@@ -1,5 +1,4 @@
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
-
 import { PrivacyWrapper } from '@serlo/frontend/src/components/content/privacy-wrapper'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'

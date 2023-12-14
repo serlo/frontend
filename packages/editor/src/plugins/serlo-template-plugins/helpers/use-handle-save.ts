@@ -1,12 +1,11 @@
-import { has } from 'ramda'
-import { useContext, useEffect, useState } from 'react'
-
-import type { SupportedTypesSerializedState } from '@serlo/frontend/src/mutations/use-set-entity-mutation/types'
 import { store, selectStaticDocument } from '@editor/store'
 import { ROOT } from '@editor/store/root/constants'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
+import type { SupportedTypesSerializedState } from '@serlo/frontend/src/mutations/use-set-entity-mutation/types'
 import { storeStateToLocalStorage } from '@serlo/frontend/src/serlo-editor-integration/components/local-storage-notice'
 import { SaveContext } from '@serlo/frontend/src/serlo-editor-integration/context/save-context'
+import { has } from 'ramda'
+import { useContext, useEffect, useState } from 'react'
 
 export function useHandleSave(
   visible: boolean,

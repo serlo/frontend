@@ -1,15 +1,15 @@
-import { gql } from 'graphql-request'
-
-import { createImagePlugin as createCoreImagePlugin } from '.'
+import { LoadedFile, UploadValidator } from '@editor/plugin'
 import { createAuthAwareGraphqlFetch } from '@serlo/frontend/src/api/graphql-fetch'
 import { getAuthPayloadFromSession } from '@serlo/frontend/src/auth/auth-provider'
 import { fetchAndPersistAuthSession } from '@serlo/frontend/src/auth/cookie/fetch-and-persist-auth-session'
 import { MediaType } from '@serlo/frontend/src/fetcher/graphql-types/operations'
 import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
-import { LoadedFile, UploadValidator } from '@editor/plugin'
+import { gql } from 'graphql-request'
+
+import { createImagePlugin as createCoreImagePlugin } from '.'
 
 // TODO: move into frontend
-export type MediaUploadQuery = {
+export interface MediaUploadQuery {
   __typename?: 'Query'
   media: {
     __typename?: 'MediaQuery'

@@ -1,3 +1,6 @@
+import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
+import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
@@ -7,9 +10,6 @@ import { Dispatch, SetStateAction } from 'react'
 import type { VideoProps } from '.'
 import type { SettingsModalState } from './editor'
 import { EditorInput } from '../../editor-ui'
-import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
-import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 export const VideoToolbar = ({
   id,

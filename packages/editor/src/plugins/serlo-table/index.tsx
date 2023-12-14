@@ -1,5 +1,3 @@
-import { SerloTableEditor } from './editor'
-import { TableType } from './renderer'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -9,6 +7,9 @@ import {
   string,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+
+import { SerloTableEditor } from './editor'
+import { TableType } from './renderer'
 
 const tableState = object({
   rows: list(

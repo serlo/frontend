@@ -1,4 +1,3 @@
-import { ExerciseEditor } from './editor'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -7,6 +6,8 @@ import {
   optional,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+
+import { ExerciseEditor } from './editor'
 
 const exerciseState = object({
   content: child({ plugin: EditorPluginType.Rows }),

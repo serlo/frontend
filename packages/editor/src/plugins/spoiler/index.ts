@@ -1,3 +1,5 @@
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
+
 import { SpoilerEditor } from './editor'
 import {
   child,
@@ -6,7 +8,6 @@ import {
   object,
   string,
 } from '../../plugin'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 function createSpoilerState(config: SpoilerConfig) {
   return object({

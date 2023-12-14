@@ -1,15 +1,15 @@
+import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
+import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { cn } from '@serlo/frontend/src/helper/cn'
 import { Dispatch, SetStateAction } from 'react'
 
 import type { InputExerciseProps } from '.'
 import { InputExerciseType } from './input-exercise-type'
 import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
-import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 export const InputExerciseToolbar = ({
   state,

@@ -1,10 +1,10 @@
 import { faHashtag } from '@fortawesome/free-solid-svg-icons'
-
-import { DropdownButton } from './dropdown-button'
 import { shouldUseFeature } from '@serlo/frontend/src/components/user/profile-experimental'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
+
+import { DropdownButton } from './dropdown-button'
 
 interface AnchorLinkCopyToolProps {
   serloEntityId: number

@@ -1,9 +1,10 @@
-import { SolutionRenderer } from './renderer'
-import { isEmptyRowsDocument } from '../rows/utils/static-is-empty'
-import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import type { EditorSolutionDocument } from '@editor/types/editor-plugins'
+
+import { SolutionRenderer } from './renderer'
+import { isEmptyRowsDocument } from '../rows/utils/static-is-empty'
+import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 
 export function StaticSolutionRenderer({
   state,

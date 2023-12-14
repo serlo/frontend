@@ -1,3 +1,6 @@
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { EditorInputExerciseDocument } from '@editor/types/editor-plugins'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useEffect, useRef, useState } from 'react'
 
 import type { InputExerciseProps } from '.'
@@ -16,9 +19,6 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '../../store'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { EditorInputExerciseDocument } from '@editor/types/editor-plugins'
 
 export function InputExerciseEditor(props: InputExerciseProps) {
   const { state, id, focused } = props

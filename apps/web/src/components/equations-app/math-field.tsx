@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import MathfieldElement from 'mathlive/dist/types/mathfield-element'
+import type { MathfieldElement } from 'mathlive'
 import { useState, useEffect, createRef } from 'react'
 
 import { FaIcon } from '../fa-icon'
@@ -45,7 +45,7 @@ export function MathField(props: MathFieldProps) {
       if (props.readonly) {
         mf.current.readOnly = true
         if (mf.current.registers) {
-          // @ts-expect-error readonly?
+          // @ts-expect-error not sure why readonly
           mf.current.registers.arraystretch = 1.5
         }
       } else {

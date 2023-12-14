@@ -6,10 +6,10 @@ import {
   optional,
   string,
 } from '@editor/plugin'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 import { editorContent, headerInputClasses, uuid } from './common/common'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 export const pageTypeState = object({
   ...uuid,

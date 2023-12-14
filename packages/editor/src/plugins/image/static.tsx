@@ -1,9 +1,10 @@
+import { StaticRenderer } from '@editor/static-renderer/static-renderer'
+import { EditorImageDocument } from '@editor/types/editor-plugins'
+import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
+
 import { ImageRenderer } from './renderer'
 import { extractStringFromTextDocument } from '../text/utils/static-extract-text'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { StaticRenderer } from '@editor/static-renderer/static-renderer'
-import { EditorImageDocument } from '@editor/types/editor-plugins'
 
 export function ImageStaticRenderer({
   state,

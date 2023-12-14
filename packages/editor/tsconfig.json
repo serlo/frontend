@@ -1,11 +1,19 @@
 {
   "extends": "@serlo/typescript-config/base.json",
-  "baseUrl": ".",
   "compilerOptions": {
     "paths": {
+      "@/*": ["../../apps/web/src/*"],
       "@editor/*": ["./src/*"]
-    }
+    },
+    "outDir": "dist",
+    "module": "ES2022",
+    "moduleResolution": "bundler"
   },
-  "rootDir": ".",
-  "include": ["./src/**/*.ts", "./src/**/*.tsx", "custom.d.ts"]
+  "include": [
+    "custom.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+    // "shared/tailwind-base.js"
+  ],
+  "exclude": ["node_modules", "dist"]
 }

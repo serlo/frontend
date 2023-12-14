@@ -1,6 +1,3 @@
-import { mapObjIndexed } from 'ramda'
-
-import { cn } from '@serlo/frontend/src/helper/cn'
 import {
   StateType,
   StateTypesStaticType,
@@ -17,6 +14,8 @@ import {
   optional,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { cn } from '@serlo/frontend/src/helper/cn'
+import { mapObjIndexed } from 'ramda'
 
 export const uuid = {
   id: number(),

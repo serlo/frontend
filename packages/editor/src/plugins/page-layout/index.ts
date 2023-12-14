@@ -1,4 +1,3 @@
-import { PageLayoutEditor } from './editor'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -7,6 +6,8 @@ import {
   child,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+
+import { PageLayoutEditor } from './editor'
 
 const allowedPlugins = [
   EditorPluginType.Text,

@@ -1,8 +1,7 @@
-import { useContext } from 'react'
-
 import { PreferenceContext, setDefaultPreference } from '@editor/core/contexts'
 import { MathEditor } from '@editor/math'
 import type { StateTypeReturnType, StringStateType } from '@editor/plugin'
+import { useContext } from 'react'
 
 interface InlineMathProps {
   state: StateTypeReturnType<StringStateType>

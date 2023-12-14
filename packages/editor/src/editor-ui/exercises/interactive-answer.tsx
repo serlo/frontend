@@ -4,7 +4,6 @@ import {
   faCheckSquare,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
-
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 

@@ -1,3 +1,6 @@
+import { PreferenceContext } from '@editor/core'
+import { isElementWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
+import { MathEditor } from '@editor/math'
 import { KaTeXStyles } from '@serlo/frontend/src/../external/katexstyles'
 import React, { useContext, useMemo } from 'react'
 import { Editor, Node, Path, Range, Transforms } from 'slate'
@@ -16,10 +19,6 @@ import type {
   MathElement as MathElementType,
   Paragraph,
 } from '../types/text-editor'
-
-import { PreferenceContext } from '@editor/core'
-import { isElementWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
-import { MathEditor } from '@editor/math'
 
 export interface MathElementProps {
   element: MathElementType

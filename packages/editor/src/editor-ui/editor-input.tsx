@@ -1,6 +1,5 @@
-import { forwardRef } from 'react'
-
 import { cn } from '@serlo/frontend/src/helper/cn'
+import { forwardRef } from 'react'
 
 interface EditorInputProps
   extends React.DetailedHTMLProps<

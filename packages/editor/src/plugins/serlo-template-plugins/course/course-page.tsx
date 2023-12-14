@@ -1,3 +1,10 @@
+import {
+  type EditorPlugin,
+  type EditorPluginProps,
+  string,
+} from '@editor/plugin'
+import { focus, useAppDispatch } from '@editor/store'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useEffect, useRef } from 'react'
 
 import {
@@ -7,13 +14,6 @@ import {
   headerInputClasses,
 } from '../common/common'
 import { ToolbarMain } from '../toolbar-main/toolbar-main'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import {
-  type EditorPlugin,
-  type EditorPluginProps,
-  string,
-} from '@editor/plugin'
-import { focus, useAppDispatch } from '@editor/store'
 
 export const coursePageTypeState = entityType(
   {

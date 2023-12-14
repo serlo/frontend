@@ -1,7 +1,6 @@
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { HoverOverlay, HoverPosition } from '@editor/editor-ui'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 
 export function InlineSettings({
   position = 'below',

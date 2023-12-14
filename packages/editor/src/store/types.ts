@@ -11,7 +11,7 @@ export interface DocumentState {
   state: unknown
 }
 
-interface HistoryState {
+export interface HistoryState {
   initialState?: {
     documents: State['documents']
   }

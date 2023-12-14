@@ -1,4 +1,5 @@
 // import { DndContext, UniqueIdentifier } from '@dnd-kit/core'
+import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import * as t from 'io-ts'
 import { type ReactNode, useMemo, useState } from 'react'
 
@@ -7,7 +8,6 @@ import { type ReactNode, useMemo, useState } from 'react'
 import type { FillInTheBlanksMode } from '.'
 import { FillInTheBlanksContext } from './context/blank-context'
 import { Feedback } from '../sc-mc-exercise/renderer/feedback'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 
 // --- Drag and drop stuff
 // TODO: Use Map container here as well

@@ -1,13 +1,3 @@
-import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react'
-
-import { ClientOnlyPortal } from './client-only-portal'
-import { entity } from '../common/common'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
-import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
-import { useLeaveConfirm } from '@serlo/frontend/src/helper/use-leave-confirm'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import type { StateTypeReturnType } from '@editor/plugin'
 import {
@@ -19,7 +9,17 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '@editor/store'
+import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { cn } from '@serlo/frontend/src/helper/cn'
+import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
+import { useLeaveConfirm } from '@serlo/frontend/src/helper/use-leave-confirm'
 import { SaveModal } from '@serlo/frontend/src/serlo-editor-integration/components/save-modal'
+import { useState } from 'react'
+
+import { ClientOnlyPortal } from './client-only-portal'
+import { entity } from '../common/common'
 
 interface ToolbarMainProps {
   changes?: StateTypeReturnType<(typeof entity)['changes']>

@@ -1,9 +1,10 @@
-import { PasteHackEditor } from './editor'
 import {
   type EditorPlugin,
   type EditorPluginProps,
   object,
 } from '@editor/plugin'
+
+import { PasteHackEditor } from './editor'
 
 const pasteHackState = object({})
 

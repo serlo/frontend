@@ -1,10 +1,11 @@
-import type { SpoilerProps } from '.'
-import { SpoilerRenderer } from './renderer'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { cn } from '@serlo/frontend/src/helper/cn'
+
+import type { SpoilerProps } from '.'
+import { SpoilerRenderer } from './renderer'
 
 export function SpoilerEditor(props: SpoilerProps) {
   const { state, id, focused } = props

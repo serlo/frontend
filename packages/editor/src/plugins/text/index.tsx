@@ -1,5 +1,5 @@
 import { type EditorPlugin, serializedScalar } from '@editor/plugin'
-import { Node } from 'slate'
+import { Node as SlateNode } from 'slate'
 
 import { TextEditor, type TextEditorProps } from './components/text-editor'
 import type { TextEditorConfig, TextEditorState } from './types/config'
@@ -53,7 +53,7 @@ const createTextPlugin = (
     return (
       state.value.value
         .map((node) => {
-          const childNodes = [...Node.elements(node)]
+          const childNodes = [...SlateNode.elements(node)]
           if (
             childNodes.find(
               ([node]) => node.type === 'math' && node.src && node.src.length
@@ -62,7 +62,7 @@ const createTextPlugin = (
             return false
           }
 
-          return Node.string(node)
+          return SlateNode.string(node)
         })
         .join('') === ''
     )
