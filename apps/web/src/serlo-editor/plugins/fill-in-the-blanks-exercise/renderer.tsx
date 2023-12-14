@@ -1,7 +1,5 @@
 import * as t from 'io-ts'
 import { type ReactNode, useMemo, useState } from 'react'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import type { BlankId, DraggableId, FillInTheBlanksMode } from '.'
 import { DraggableSolution } from './components/blank-solution'
