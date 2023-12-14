@@ -250,7 +250,7 @@ export const instanceData = {
       reviewersUrl: "/community/202923/rollen-der-serlo-community",
       help2: "Alle können die Bearbeitungen anschauen und weiter bearbeiten. In der Vorschau können Reviewer*in die Bearbeitung übernehmen und Feedback geben.",
       help3: "Du möchtest Reviewer*in werden? Melde dich bei: %contactLink%.",
-      contactPerson: "Alexandra-Wolfram",
+      contactPerson: 'LinaMaria',
       contactPersonUrl: "https://community.serlo.org/direct/Alexandra-Wolfram",
       help4: "Wie geht das Reviewen? Hier gibt es die %guidelineLink%.",
       guideline: "Anleitung",
@@ -775,7 +775,7 @@ export const loggedInData = {
           lists: "Listen",
           mathFormula: "Matheformel (%ctrlOrCmd% + M)",
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
-          blank: "Lücke",
+          blank: "Blanko",
           bold: "Fett (%ctrlOrCmd% + B)",
           italic: "Kursiv (%ctrlOrCmd% + I)",
           noItemsFound: "keine Einträge gefunden",
@@ -829,9 +829,10 @@ export const loggedInData = {
           title: "SC/MC Aufgabe",
           description: "Single- oder Multiple Choice Aufgabe"
         },
-        fillInTheBlanks: {
+        blanksExercise: {
           title: "Lückentext Aufgabe",
-          description: "Ein Text mit Lücken zum Ausfüllen"
+          description: "Ein Text mit Lücken zum Ausfüllen",
+          placeholder: 'Write a text and add blanks'
         }
       },
       templatePlugins: {
@@ -890,8 +891,8 @@ export const loggedInData = {
         exercise: {
           scMcExercise: "Auswahlaufgabe",
           inputExercise: "Eingabefeld",
+          blanksExercise: "Lückentext Aufgabe",
           h5p: "H5P Aufgabe",
-          fillInTheBlanksExercise: "Lückentext",
           addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
           changeInteractive: "Interaktives Element ändern",
           removeInteractive: "Interaktives Element entfernen",
@@ -1094,7 +1095,8 @@ export const loggedInData = {
           chooseOption: "Wähle eine Option",
           multipleChoice: "Multiple-Choice",
           singleChoice: "Single-Choice",
-          inputExercise: "Eingabefeld"
+          inputExercise: "Eingabefeld",
+          blanksExercise: "Lückentext Aufgabe"
         },
         difficulty: {
           title: "Was ist der %difficulty% der Aufgabe und das Lernziel?",
