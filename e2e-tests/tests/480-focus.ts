@@ -21,17 +21,59 @@ Scenario('Autofocus', async ({ I }) => {
 
 Scenario.todo('add test for exercises autofocus') // after exercise refactoring
 
-Scenario('Focus Toolbar', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+Scenario('focus plugins by clicking', async ({ I }) => {
+  I.amOnPage('/entity/repository/add-revision/5')
 
-  I.wait(3)
-  // click below the text
-  I.click('Fasse das Thema des Artikels kurz zusammen', null, {
-    position: { x: 10, y: 100 },
-  })
+  I.click('$plugin-text-editor')
+  I.see('Text', '.plugin-toolbar div')
+  I.type('/Bild')
+  I.pressKey('Enter')
+  I.see('Bild', '.plugin-toolbar div')
+  // image url input is focused
+  I.seeElement('label > input:focus')
 
-  I.see('Erklärung mit Multimedia-Inhalt', '.plugin-toolbar')
+  // caption
+  I.click('$plugin-text-editor')
+  I.see('Bild', '.plugin-toolbar div')
 
-  // I.see('Text', '.plugin-toolbar div')
-  // I.see('Erklärung mit Multimedia-Inhalt', '$plugin-multimedia-parent-button')
+  I.click('Füge ein Element hinzu')
+  I.dontSee('Bild', '.plugin-toolbar div')
+  I.see('Text', '.plugin-toolbar div')
+  I.see('Text', 'h5')
+  // first click outside of editor should close suggestions menu
+  I.click('header')
+  I.dontSeeElement('h5')
+  // second click outside of editor should unfocus plugin
+  I.click('header')
+  I.dontSeeElement('.plugin-toolbar')
 })
+
+Scenario('focus plugins with tab key', async ({ I }) => {
+  I.amOnPage('/entity/create/Article/1377')
+  I.waitForElement('h1 > input:focus', 5)
+  I.pressKey('Tab')
+  // ! caption gets focus first (okay for now)
+  I.see('Bild', '.plugin-toolbar div')
+  I.see('Erklärung mit Multimedia-Inhalt', '$plugin-multimedia-parent-button')
+
+  I.pressKey('Tab')
+  I.see('Text', '.plugin-toolbar div')
+  I.see('Erklärung mit Multimedia-Inhalt', '$plugin-multimedia-parent-button')
+
+  I.pressKey('Tab')
+  I.pressKey('Tab')
+  I.see('Text', '.plugin-toolbar div')
+  I.dontSee('Erklärung mit Multimedia-Inhalt')
+
+  I.type('/injection')
+  I.pressKey('Enter')
+  // move focus back up to text plugin
+  I.pressKey(['Shift', 'Tab'])
+  I.pressKey(['Shift', 'Tab'])
+  I.see('Text', '.plugin-toolbar div')
+  I.see('Erklärung mit Multimedia-Inhalt', '$plugin-multimedia-parent-button')
+})
+
+Scenario.todo('focus plugins with arrow keys')
+
+Scenario.todo('restores cursor positions')
