@@ -32,10 +32,10 @@ function removeBlanks(editor: SlateEditor) {
 
     // Node.elements(...) needs the "smaller" path in 'from'. Otherwise it will return nothing. Depending on how the user selects (expanding selection to the left or right) the anchor path might be "smaller" or "bigger" than the focus path. Here we figure out which path is the smaller/bigger one.
     const isAnchorLeftOfFocus = Path.compare(anchorPath, focusPath) === -1
-    const range = isAnchorLeftOfFocus ? { from: anchorPath, to: focusPath } : { from: focusPath, to: anchorPath }
-    const allElementsInSelection = [
-      ...Node.elements(editor, range),
-    ]
+    const range = isAnchorLeftOfFocus
+      ? { from: anchorPath, to: focusPath }
+      : { from: focusPath, to: anchorPath }
+    const allElementsInSelection = [...Node.elements(editor, range)]
 
     allElementsInSelection.forEach((element) => {
       if (element[0].type !== 'textBlank') return
