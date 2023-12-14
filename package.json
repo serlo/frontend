@@ -29,6 +29,7 @@
     "e2e-localapi": "cd e2e-tests && yarn e2e-localapi",
     "e2e-localhost": "cd e2e-tests && yarn e2e-localhost",
     "e2e-workers": "cd e2e-tests && yarn e2e-workers",
+    "editor:build": "yarn workspace @serlo/editor build",
     "format": "yarn workspace @serlo/frontend format",
     "format:eslint": "yarn workspace @serlo/frontend format:eslint",
     "format:prettier": "yarn workspaces foreach -Ap run format:prettier",
