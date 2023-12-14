@@ -39,7 +39,6 @@ import { VideoSerloStaticRenderer } from './serlo-plugin-wrappers/video-serlo-st
 import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
 import { isPrintMode } from '@/components/print-mode'
-import { isProduction } from '@/helper/is-production'
 import { MultimediaSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/multimedia-serlo-static-renderer'
 
 const EquationsStaticRenderer = dynamic<EditorEquationsDocument>(() =>
@@ -216,14 +215,10 @@ export function createRenderers(): InitRenderersArgs {
         type: EditorPluginType.ScMcExercise,
         renderer: SerloScMcExerciseStaticRenderer,
       },
-      ...(isProduction
-        ? []
-        : [
-            {
-              type: EditorPluginType.FillInTheBlanksExercise,
-              renderer: FillInTheBlanksStaticRenderer,
-            },
-          ]),
+      {
+        type: EditorPluginType.FillInTheBlanksExercise,
+        renderer: FillInTheBlanksStaticRenderer,
+      },
       {
         type: EditorPluginType.Solution,
         renderer: SolutionSerloStaticRenderer,

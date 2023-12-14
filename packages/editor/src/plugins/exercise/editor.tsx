@@ -6,23 +6,16 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { isProduction } from '@serlo/frontend/src/helper/is-production'
 
 import type { ExerciseProps } from '.'
 import { ExerciseToolbar } from './toolbar/toolbar'
 
-const allInteractiveExerciseTypes = isProduction
-  ? ([
-      EditorPluginType.ScMcExercise,
-      EditorPluginType.InputExercise,
-      EditorPluginType.H5p,
-    ] as const)
-  : ([
-      EditorPluginType.ScMcExercise,
-      EditorPluginType.InputExercise,
-      EditorPluginType.H5p,
-      EditorPluginType.FillInTheBlanksExercise,
-    ] as const)
+const allInteractiveExerciseTypes = [
+  EditorPluginType.ScMcExercise,
+  EditorPluginType.InputExercise,
+  EditorPluginType.H5p,
+  EditorPluginType.FillInTheBlanksExercise,
+] as const
 
 export type InteractiveExerciseType =
   (typeof allInteractiveExerciseTypes)[number]

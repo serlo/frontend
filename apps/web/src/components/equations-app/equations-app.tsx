@@ -1,18 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import { ComputeEngine } from '@cortex-js/compute-engine'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
-import {
-  faCircleCheck,
-  faPlay,
-  faRotateLeft,
-} from '@fortawesome/free-solid-svg-icons'
+import { faCircleCheck, faRotateLeft } from '@fortawesome/free-solid-svg-icons'
 import * as confetti from 'canvas-confetti' // why is this throwing warnings? sigh ..
 import { Expression } from 'mathlive'
 import { useEffect, useRef, useState } from 'react'
 import { v4 } from 'uuid'
 
-import { MathField } from './math-field'
 import { MathField2 } from './math-field-2'
+import { ReadonlyMathField } from './readonly-math-field'
 import { FaIcon } from '../fa-icon'
 
 type Mode = 'done' | 'input' | 'choose'
@@ -123,9 +119,9 @@ export function EquationsApp() {
           <div className="mr-3"></div>
         </div>
         <div className="shrink grow overflow-auto" ref={scrollDiv}>
-          <div className="overview mx-auto mt-7 max-w-[600px] px-4 [&>h3]:mt-8 [&>h3]:text-lg [&>h3]:font-bold">
-            <div className="rounded border-2 border-orange-300 p-2">
-              Diese App befindet sich aktuell im Beta-Test.
+          <div className="overview mx-auto mt-4 max-w-[600px] px-4 [&>h3]:mt-8 [&>h3]:text-lg [&>h3]:font-bold">
+            <div className="rounded bg-gray-100 p-2">
+              Diese App befindet sich in Entwicklung.
               <br />
               <a
                 href="https://forms.gle/PFUYn8fn5zAkzpqe8"
@@ -137,7 +133,8 @@ export function EquationsApp() {
               </a>
               .
             </div>
-            <h3>Serlo 26258 - Aufgaben zu linearen Gleichungen</h3>
+            {/*<Overview data={linearEquationData} unlockedLevel={1} />*/}
+            {/*<h3>Serlo 26258 - Aufgaben zu linearen Gleichungen</h3>
             {renderExample('x+1=4')}
             {renderExample('2x=8')}
             {renderExample('4x=3x+5')}
@@ -151,7 +148,7 @@ export function EquationsApp() {
             {renderExample('-8x + 5 = -5')}
             {renderExample('x + 4 = 9x - (5 - x)')}
             {renderExample('\\frac{1}{24} x = 0')}
-            {renderExample('3(a-4)=1-\\frac15(2-a)' /*, 'HN Multiplikation?'*/)}
+            {renderExample('3(a-4)=1-\\frac15(2-a)' , 'HN Multiplikation?')}
             {renderExample('3(4x-3)=4(3x-4)')}
             {renderExample('3(4x+4)=4(3-4x)')}
             <h3>Studyflix - einfache Gleichungen</h3>
@@ -206,8 +203,9 @@ export function EquationsApp() {
             {renderExample('6(4x+8)-12=-3(3-2x)')}
             {renderExample('10-(7x-5)=2-2(x+6)')}
             {renderExample('12-(-3x+6)=18-(9+3x)')}
-            {renderExample('2-7(2x+5)-3(2x-4)=19')}
+    {renderExample('2-7(2x+5)-3(2x-4)=19')}*/}
 
+            <div className="text-center">Liste aller Aufgaben</div>
             <div className="text-center">
               {' '}
               <button
@@ -245,7 +243,7 @@ export function EquationsApp() {
     )
   }
 
-  function renderExample(latex: string, warning?: string) {
+  /*function renderExample(latex: string, warning?: string) {
     const isSolved = solved.current.has(latex)
     return (
       <div className="my-4 flex h-14 items-baseline justify-between">
@@ -306,7 +304,7 @@ export function EquationsApp() {
         </div>
       </div>
     )
-  }
+  }*/
 
   const output = `\\begin{align}${list
     .map((line, i) => {
@@ -418,6 +416,23 @@ export function EquationsApp() {
                   }}
                 />
               </div>
+              <div>
+                <button
+                  onMouseDown={(e) => {
+                    e.preventDefault()
+                  }}
+                  onClick={(e) => {
+                    /*  console.log(
+                      document
+                        .getElementById('math-input-field')
+                        .executeCommand(['insert', 'X'])
+                    )*/
+                    e.preventDefault()
+                  }}
+                >
+                  Test
+                </button>
+              </div>
               {inputState === 'error' && <div>{rejectReason.current}</div>}
             </>
           ) : (
@@ -425,7 +440,7 @@ export function EquationsApp() {
               <p className="mb-3 mb-7 mt-8">{description}</p>
 
               <div className="text-xl">
-                <MathField readonly key={output} value={output} />
+                <ReadonlyMathField key={output} value={output} />
               </div>
               {mode === 'choose' && (
                 <div>
@@ -458,9 +473,8 @@ export function EquationsApp() {
                             className="relative mr-6 mt-3 rounded border bg-gray-50 px-2 py-1 text-xl hover:bg-gray-100"
                             key={i}
                           >
-                            <MathField
+                            <ReadonlyMathField
                               key={op.latex}
-                              readonly
                               value={`\\vert ${op.displayLatex ?? op.latex}`}
                             />
                             <span
@@ -484,9 +498,8 @@ export function EquationsApp() {
                             className="relative mr-6 mt-3 rounded bg-green-200 px-2 py-1 text-xl hover:bg-green-300"
                             key={i}
                           >
-                            <MathField
+                            <ReadonlyMathField
                               key={op.displayLatex}
-                              readonly
                               value={op.displayLatex}
                             />
                             <span
@@ -695,7 +708,7 @@ export function EquationsApp() {
                 <>
                   <div className="mt-2 flex items-baseline justify-start">
                     <div className="text-xl">
-                      <MathField readonly key={solution} value={solution} />
+                      <ReadonlyMathField key={solution} value={solution} />
                     </div>
                     <div className="ml-8 text-green-500">
                       <FaIcon

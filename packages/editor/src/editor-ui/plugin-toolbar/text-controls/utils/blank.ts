@@ -2,73 +2,72 @@ import type { Blank } from '@editor/plugins/text'
 import {
   Editor as SlateEditor,
   Element,
-  Node,
-  Range,
   Transforms,
-  Location,
+  Node,
+  Editor,
+  Path,
 } from 'slate'
 import { v4 as uuid_v4 } from 'uuid'
 
 import { selectionHasElement, trimSelection } from './selection'
 
-function matchBlanks(node: Node) {
-  return Element.isElement(node) && node.type === 'blank'
-}
-
 export function isBlankActive(editor: SlateEditor) {
-  return selectionHasElement((e) => e.type === 'blank', editor)
-}
-
-export function getBlankElement(editor: SlateEditor): Blank | undefined {
-  const [match] = Array.from(SlateEditor.nodes(editor, { match: matchBlanks }))
-  return match && (match[0] as Blank)
+  return selectionHasElement((e) => e.type === 'textBlank', editor)
 }
 
 export function toggleBlank(editor: SlateEditor) {
   if (isBlankActive(editor)) {
-    let text = undefined
-    Transforms.removeNodes(editor, {
+    removeBlanks(editor)
+  } else {
+    addBlank(editor)
+  }
+}
+
+function removeBlanks(editor: SlateEditor) {
+  Editor.withoutNormalizing(editor, () => {
+    if (!editor.selection) return
+
+    const anchorPath = editor.selection.anchor.path
+    const focusPath = editor.selection.focus.path
+
+    // Node.elements(...) needs the "smaller" path in 'from'. Otherwise it will return nothing. Depending on how the user selects (expanding selection to the left or right) the anchor path might be "smaller" or "bigger" than the focus path. Here we figure out which path is the smaller/bigger one.
+    const isAnchorLeftOfFocus = Path.compare(anchorPath, focusPath) === -1
+    const range = isAnchorLeftOfFocus
+      ? { from: anchorPath, to: focusPath }
+      : { from: focusPath, to: anchorPath }
+    const allElementsInSelection = [...Node.elements(editor, range)]
+
+    allElementsInSelection.forEach((element) => {
+      if (element[0].type !== 'textBlank') return
+
+      const path = element[1]
+      const correctAnswer = element[0].correctAnswers.at(0)?.answer ?? ''
+
+      // Inserts the correct answer under element.children.text
+      Transforms.insertText(editor, correctAnswer, { at: path, voids: true })
+    })
+
+    // Removes the blank node and lifts the contained text node (now containing the correct answer) one level up
+    Transforms.unwrapNodes(editor, {
+      voids: true,
       match: (node) => {
-        const isHit = Element.isElement(node) && node.type === 'blank'
-        if (isHit) text = node
-        return isHit
+        return Element.isElement(node) && node.type === 'textBlank'
       },
     })
-    if (text) {
-      Transforms.insertNodes(editor, { text: (text as Blank).correctAnswer })
-    }
-    return
+  })
+}
+
+function addBlank(editor: SlateEditor) {
+  const selection = trimSelection(editor)
+
+  if (selection === null) return
+
+  const newBlankNode: Blank = {
+    type: 'textBlank',
+    blankId: uuid_v4(),
+    correctAnswers: [{ answer: SlateEditor.string(editor, selection).trim() }],
+    children: [{ text: '' }],
   }
 
-  const { selection } = editor
-  const isCollapsed = selection && Range.isCollapsed(selection)
-
-  if (isCollapsed) {
-    Transforms.insertNodes(editor, {
-      type: 'blank',
-      blankId: uuid_v4(),
-      correctAnswer: '',
-      // Disabled alternative correct solutions for now
-      // alternativeSolutions: [],
-      children: [{ text: '' }],
-    })
-    return
-  }
-
-  const trimmedSelection = trimSelection(editor)
-  Transforms.insertNodes(
-    editor,
-    [
-      {
-        type: 'blank',
-        blankId: uuid_v4(),
-        correctAnswer:
-          SlateEditor.string(editor, trimmedSelection as Location) || '',
-        // Disabled alternative correct solutions for now
-        // alternativeSolutions: [],
-        children: [{ text: '' }],
-      },
-    ],
-    { at: trimmedSelection as Location }
-  )
+  Transforms.insertNodes(editor, newBlankNode, { at: selection })
 }

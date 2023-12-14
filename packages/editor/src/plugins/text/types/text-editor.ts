@@ -12,13 +12,21 @@ export type CustomElement =
   | MathElement
   | Blank
 
+export interface Answer {
+  answer: string
+  // Here we could store feedback for the learner that shows up when answers are checked
+  //learnerFeedback?: string
+}
+
 export interface Blank {
-  type: 'blank'
+  type: 'textBlank'
   children: CustomText[]
   blankId: string // Used to uniquely identify a blank
-  correctAnswer: string
-  // Disabled alternative correct solutions for now
-  // alternativeSolutions: string[]
+  correctAnswers: Answer[]
+  // Here we could specify incorrect answers for this blank with specific learner feedback
+  // incorrectAnswers?: Answer[]
+  // Here we could add a default feedback for the learner
+  // defaultIncorrectAnswerFeedback: string
 }
 
 export interface Heading {
