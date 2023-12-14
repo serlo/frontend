@@ -4367,7 +4367,7 @@ __metadata:
     js-cookie: ^3.0.5
     json-diff: ^1.0.6
     katex: ^0.16.9
-    mathlive: ^0.97.4
+    mathlive: ^0.98.4
     micromark: ^4.0.0
     msw: ^0.47.4
     next: ^13.5.4
@@ -11122,12 +11122,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mathlive@npm:^0.97.4":
-  version: 0.97.4
-  resolution: "mathlive@npm:0.97.4"
+"mathlive@npm:^0.98.4":
+  version: 0.98.4
+  resolution: "mathlive@npm:0.98.4"
   dependencies:
     "@cortex-js/compute-engine": 0.22.0
-  checksum: 268a4e4102e3e22d65e0c9dca050291333b03febe98d0ed0851bd3a7e8f0df56aba2ae454738e2846019ae415ff0116976956927b1d7f83f9df1408a10ffc52d
+  checksum: 961e29aa53208ebbdb7ec87446354d5d19ee9cd1812d3655e64665d72e4394c190caba88cf2c9cf60318917137bbba604f88204d7bcb4a1a7a5016bb526415e5
   languageName: node
   linkType: hard
 

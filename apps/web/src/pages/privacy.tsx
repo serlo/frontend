@@ -92,6 +92,7 @@ export const getStaticProps: GetStaticProps<PrivacyPageData> = async (
 
     return { props: { contentHtml, isGerman, lastChange } }
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e)
     return { notFound: true }
   }

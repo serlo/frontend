@@ -5,8 +5,12 @@
       "@/*": ["./src/*"],
       "@editor/*": ["../../packages/editor/src/*"]
     },
-    "plugins": [{ "name": "next" }],
-    "module": "ES2022",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "module": "esnext",
     "moduleResolution": "bundler"
   },
   "include": [

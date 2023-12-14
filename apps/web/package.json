@@ -64,7 +64,7 @@
     "js-cookie": "^3.0.5",
     "json-diff": "^1.0.6",
     "katex": "^0.16.9",
-    "mathlive": "^0.97.4",
+    "mathlive": "^0.98.4",
     "next": "^13.5.4",
     "next-query-params": "^4.2.3",
     "nprogress": "^0.2.0",
