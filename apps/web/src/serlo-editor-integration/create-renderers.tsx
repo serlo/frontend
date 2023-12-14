@@ -28,7 +28,6 @@ import { TemplatePluginType } from '../serlo-editor/types/template-plugin-type'
 import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
 import { isPrintMode } from '@/components/print-mode'
-import { isProduction } from '@/helper/is-production'
 import {
   InitRenderersArgs,
   LinkRenderer,
@@ -216,14 +215,10 @@ export function createRenderers(): InitRenderersArgs {
         type: EditorPluginType.ScMcExercise,
         renderer: SerloScMcExerciseStaticRenderer,
       },
-      ...(isProduction
-        ? []
-        : [
-            {
-              type: EditorPluginType.FillInTheBlanksExercise,
-              renderer: FillInTheBlanksStaticRenderer,
-            },
-          ]),
+      {
+        type: EditorPluginType.FillInTheBlanksExercise,
+        renderer: FillInTheBlanksStaticRenderer,
+      },
       {
         type: EditorPluginType.Solution,
         renderer: SolutionSerloStaticRenderer,

@@ -87,13 +87,8 @@ export function StaticSlate({
       const MathRenderer = editorRenderers.getMathRenderer()
       return <MathRenderer {...element} />
     }
-    if (element.type === 'blank') {
-      return (
-        <BlankRenderer
-          correctAnswer={element.correctAnswer}
-          blankId={element.blankId}
-        />
-      )
+    if (element.type === 'textBlank') {
+      return <BlankRenderer blankId={element.blankId} />
     }
 
     // unwrap block level math elements

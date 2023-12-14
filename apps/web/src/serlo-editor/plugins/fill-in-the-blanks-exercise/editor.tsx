@@ -1,6 +1,7 @@
 import type { FillInTheBlanksExerciseProps, FillInTheBlanksMode } from '.'
 import { FillInTheBlanksRenderer } from './renderer'
 import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import {
   selectDocument,
@@ -17,6 +18,8 @@ export function FillInTheBlanksExerciseEditor(
   const isRendererTextPluginFocused = useAppSelector((storeState) => {
     return selectIsFocused(storeState, props.state.text.id)
   })
+
+  const editorStrings = useEditorStrings()
 
   const hasFocus = focused || isRendererTextPluginFocused
 
@@ -39,7 +42,9 @@ export function FillInTheBlanksExerciseEditor(
       ) : null}
       <FillInTheBlanksRenderer
         text={props.state.text.render({
-          config: { isInlineChildEditor: true },
+          config: {
+            placeholder: editorStrings.plugins.blanksExercise.placeholder,
+          },
         })}
         textPluginState={textPluginState}
         mode={props.state.mode.value as FillInTheBlanksMode}

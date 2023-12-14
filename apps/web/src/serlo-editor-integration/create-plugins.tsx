@@ -189,14 +189,10 @@ export function createPlugins({
       }),
     },
     { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
-    ...(isProduction
-      ? []
-      : [
-          {
-            type: EditorPluginType.FillInTheBlanksExercise,
-            plugin: fillInTheBlanksExercise,
-          },
-        ]),
+    {
+      type: EditorPluginType.FillInTheBlanksExercise,
+      plugin: fillInTheBlanksExercise,
+    },
 
     // Special plugins, never visible in suggestions
     // ===================================================
