@@ -13,7 +13,7 @@ export const withBlanks = (editor: Editor) => {
   }
 
   editor.normalizeNode = (entry) => {
-    const [node, path] = entry
+    const [node, nodePath] = entry
 
     if (!Element.isElement(node) || node.type !== 'textBlank') {
       normalizeNode(entry) // Do nothing here and call next handler
@@ -23,16 +23,16 @@ export const withBlanks = (editor: Editor) => {
     const blankId = node.blankId
     const allElements = [...Node.elements(editor)]
     const otherBlanks = allElements.filter(
-      (element) =>
-        element[0].type === 'textBlank' && !Path.equals(element[1], path)
+      ([element, elementPath]) =>
+        element.type === 'textBlank' && !Path.equals(elementPath, nodePath)
     )
     const foundBlankWithSameId = otherBlanks.some(
-      (blank) => blank[0].type === 'textBlank' && blank[0].blankId === blankId
+      ([element]) => element.type === 'textBlank' && element.blankId === blankId
     )
 
     if (foundBlankWithSameId) {
       // Give this blank a new unique id
-      Transforms.setNodes(editor, { blankId: uuid_v4() }, { at: path })
+      Transforms.setNodes(editor, { blankId: uuid_v4() }, { at: nodePath })
     }
 
     normalizeNode(entry)
