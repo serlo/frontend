@@ -1,5 +1,10 @@
-import { licenses } from './license-data-short';
-import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
+import { licenses } from './license-data-short'
+import {
+  headerData,
+  footerData,
+  landingSubjectsData,
+  secondaryMenus,
+} from './menu-data'
 export const instanceData = {
   lang: 'en',
   headerData,
@@ -14,20 +19,22 @@ export const instanceData = {
       skipLinks: {
         sentence: 'Skip to %content% or %footer%',
         content: 'content',
-        footer: 'footer'
-      }
+        footer: 'footer',
+      },
     },
     search: {
-      privacy: 'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
-      agree: 'Agree to use search'
+      privacy:
+        'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
+      agree: 'Agree to use search',
     },
     footer: {
       summaryHeading: 'Serlo.org is the Wikipedia for learning.',
-      summaryText: 'We are a community of visionaries working tirelessly to make great education freely available to everyone.',
+      summaryText:
+        'We are a community of visionaries working tirelessly to make great education freely available to everyone.',
       learnMore: 'Learn more',
       participate: 'Join the cause',
       donate: 'Donate',
-      toTop: 'To Top'
+      toTop: 'To Top',
     },
     categories: {
       articles: 'Articles',
@@ -39,7 +46,7 @@ export const instanceData = {
       events: 'Events',
       unrevised: 'Unrevised',
       subterms: 'Subterms',
-      exercisesContent: 'Exercises Content'
+      exercisesContent: 'Exercises Content',
     },
     entities: {
       applet: 'Applet',
@@ -64,7 +71,7 @@ export const instanceData = {
       subject: 'Subject',
       userProfile: 'User Profile',
       privacyPolicy: 'Privacy Policy',
-      content: 'Content'
+      content: 'Content',
     },
     pageTitles: {
       notifications: 'Your Notifications',
@@ -78,12 +85,12 @@ export const instanceData = {
       recycleBin: 'Recycle Bin',
       diagon: 'Diagon Alley',
       discussions: 'Comments',
-      manageRoles: 'Manage User Roles'
+      manageRoles: 'Manage User Roles',
     },
     roles: {
       donor: 'Donor',
       author: 'Author',
-      reviewer: 'Reviewer'
+      reviewer: 'Reviewer',
     },
     share: {
       button: 'Share',
@@ -92,11 +99,11 @@ export const instanceData = {
       copySuccess: 'Link copied! ',
       close: 'Close',
       pdf: 'Download as PDF',
-      pdfNoSolutions: 'PDF without solutions'
+      pdfNoSolutions: 'PDF without solutions',
     },
     modal: {
       leaveNow: 'Leave now',
-      noStay: 'No, I want to stay'
+      noStay: 'No, I want to stay',
     },
     editOrAdd: {
       button: 'Edit',
@@ -110,28 +117,31 @@ export const instanceData = {
         loginButton: 'Login now',
         registerButton: 'Register new account',
         psText: 'You can find out in what ways you can contribute %link%.',
-        psLinkText: 'here'
-      }
+        psLinkText: 'here',
+      },
     },
     license: {
       readMore: 'Info',
       special: 'Different license',
-      nonFree: 'Usage of this content might be more restricted than our other content.',
-      appliesTo: 'Applies to'
+      nonFree:
+        'Usage of this content might be more restricted than our other content.',
+      appliesTo: 'Applies to',
     },
     course: {
       showPages: 'Show course overview',
       pages: 'Course overview',
       next: 'Next',
       back: 'Back',
-      noPagesWarning: 'Sorry there seem to be no reviewed pages in this course yet.',
-      noRevisionForPage: 'unreviewed page'
+      noPagesWarning:
+        'Sorry there seem to be no reviewed pages in this course yet.',
+      noRevisionForPage: 'unreviewed page',
     },
     content: {
       show: 'show',
       hide: 'hide',
       trashedNotice: 'This content is marked for deletion.',
-      unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
+      unrevisedNotice:
+        'This content has no accepted revision yet. Please use the %link% to preview.',
       emptyNotice: 'There is no content here. Please edit or delete.',
       picture: 'Picture',
       previewImage: 'Preview Image',
@@ -154,7 +164,7 @@ export const instanceData = {
         chooseOption: 'Click on one of the options.',
         printModeChooseOption: 'Check one of the options.',
         showSolution: 'Show solution',
-        hideSolution: 'Hide solution'
+        hideSolution: 'Hide solution',
       },
       boxTypes: {
         blank: 'Blank',
@@ -166,18 +176,20 @@ export const instanceData = {
         note: 'Note',
         definition: 'Definition',
         theorem: 'Theorem',
-        proof: 'Proof'
+        proof: 'Proof',
       },
       loadingVideoFailed: 'Something went wrong',
-      loadingAudioFailed: 'Something went wrong'
+      loadingAudioFailed: 'Something went wrong',
     },
     consent: {
       title: 'Consent for external Content',
-      intro: 'While using this site you may allowed us to load content from external providers. You can read about the details in the %privacypolicy%.',
+      intro:
+        'While using this site you may allowed us to load content from external providers. You can read about the details in the %privacypolicy%.',
       revokeTitle: 'Revoke',
-      revokeText: 'Here you can revoke your consent. In this case we ask again, before we load content from those providers',
-      noConsent: 'No content saved.',
-      revokeConsent: 'Revoke consent'
+      revokeText:
+        'Here you can revoke your consent. In this case we ask again, before we load content from those providers',
+      noConsent: 'not consented',
+      revokeConsent: 'Revoke consent',
     },
     embed: {
       text: 'By clicking on image or button above you agree that external content from %provider% will be loaded. Also personal data may be transferred to this service in accordance with our %privacypolicy%.',
@@ -185,7 +197,7 @@ export const instanceData = {
       applet: 'Load Applet from %provider%',
       twingle: 'Load Donation Form',
       audio: 'Play audio from %provider%',
-      general: 'Activate'
+      general: 'Activate',
     },
     comments: {
       question: 'Do you have a question?',
@@ -206,10 +218,11 @@ export const instanceData = {
       hideReplies: 'Hide',
       showArchived: 'Show archived %threads%',
       copyLink: 'Copy comment link',
-      commentsOverviewExplanation: 'Here you can see all comments that were written to content on %instance%.serlo.org. %break% Answer questions or find content you could improve. %break% The link above the comment brings you to the relevant entity.',
+      commentsOverviewExplanation:
+        'Here you can see all comments that were written to content on %instance%.serlo.org. %break% Answer questions or find content you could improve. %break% The link above the comment brings you to the relevant entity.',
       edit: 'Edit comment',
       cancelEdit: 'Cancel',
-      saveEdit: 'Save'
+      saveEdit: 'Save',
     },
     revisions: {
       toOverview: 'Back to overview',
@@ -232,7 +245,7 @@ export const instanceData = {
       parentFallbackLink: 'To parent content',
       hasChanges: 'There have been changes in this area',
       positionForGrouped: 'This %exercise% is part of %title%.',
-      helpLink: 'Revision Help'
+      helpLink: 'Revision Help',
     },
     revisionHistory: {
       changes: 'Changes',
@@ -242,19 +255,23 @@ export const instanceData = {
       editLabel: 'Create a new revision starting from this specific revision',
       view: 'Show',
       viewLabel: 'Show this revision',
-      status: 'Status'
+      status: 'Status',
     },
     unrevisedRevisions: {
-      help1: 'All edits by our Authors show up here. %reviewersLink% will check the quality and approve the changes.',
+      help1:
+        'All edits by our Authors show up here. %reviewersLink% will check the quality and approve the changes.',
       reviewers: 'Reviewers',
-      reviewersUrl: 'https://de.serlo.org/community/202923/rollen-der-serlo-community',
-      help2: 'Everybody can preview the edits and continue editing. Inside the preview reviewers can accept the edit and also give feedback.',
+      reviewersUrl:
+        'https://de.serlo.org/community/202923/rollen-der-serlo-community',
+      help2:
+        'Everybody can preview the edits and continue editing. Inside the preview reviewers can accept the edit and also give feedback.',
       help3: 'You want to be a reviewer? Get in contact with: %contactLink%.',
       contactPerson: 'LinaMaria',
       contactPersonUrl: 'https://community.serlo.org/direct/LinaMaria',
       help4: 'How to review? See our %guidelineLink%.',
       guideline: 'Guideline for Reviewing',
-      guidelineUrl: 'https://docs.google.com/document/d/1p03xx2KJrFw8Mui4-xllvSTHcEPi8G1bdC8rGXcH6f8/',
+      guidelineUrl:
+        'https://docs.google.com/document/d/1p03xx2KJrFw8Mui4-xllvSTHcEPi8G1bdC8rGXcH6f8/',
       subjectLinks: 'To Subjects',
       showMoreEntities: 'Show all in %subject%',
       showMoreRevisions: 'Show %number% more…',
@@ -263,16 +280,18 @@ export const instanceData = {
       wipLabelText: 'wip',
       wipLabelNote: 'Marked as work in progress. Do not review yet.',
       newAuthorText: 'new author',
-      newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.',
+      newAuthorNote:
+        'This is one of the first edits of this author, maybe prioritise this.',
       noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉',
       importedContentText: 'imported',
       importedContentNote: 'This revision includes imported content',
-      importedContentIdentifier: 'Content imported from'
+      importedContentIdentifier: 'Content imported from',
     },
     errors: {
       title: '😬 Websites make mistakes sometimes…',
       defaultMessage: 'So sorry, we ran into a problem loading this content.',
-      temporary: 'The good news? The problem seems to be temporary, so please try again later.',
+      temporary:
+        'The good news? The problem seems to be temporary, so please try again later.',
       permanent: 'We will see what we can do about that… ',
       typeNotSupported: 'Please try reloading this page.',
       refreshNow: 'Refresh now',
@@ -280,12 +299,13 @@ export const instanceData = {
       backToHome: 'To our home page',
       deletedComment: {
         title: 'Whoops, this is not here anymore',
-        text: 'Sorry, this %type% is no longer online.%break% But it was deleted for a reason and was probably not worth your time anyway 💚'
-      }
+        text: 'Sorry, this %type% is no longer online.%break% But it was deleted for a reason and was probably not worth your time anyway 💚',
+      },
     },
     print: {
       preparingNotice: 'Preparing print!',
-      warning: 'IMPORTANT: To make sure all images and formulas print, please scroll down to the end of the page once BEFORE you open this dialog. Thank you!'
+      warning:
+        'IMPORTANT: To make sure all images and formulas print, please scroll down to the end of the page once BEFORE you open this dialog. Thank you!',
     },
     profiles: {
       aboutMe: 'About me',
@@ -303,11 +323,12 @@ export const instanceData = {
       registerChat: 'Register for Chat',
       inviteToChat: 'Invite to chat',
       inviteModal: {
-        part1: '%username% is not yet active in our community chat at %chatLink%.',
+        part1:
+          '%username% is not yet active in our community chat at %chatLink%.',
         part2: 'You can invite %username% to the chat to send direct messages.',
         messagePlaceholder: 'Optional: Personal message',
         button: 'Send invitation',
-        success: '✨ Successfully invited!'
+        success: '✨ Successfully invited!',
       },
       activityGraph: {
         edits: 'Edits',
@@ -315,27 +336,31 @@ export const instanceData = {
         reviews: 'Reviews',
         taxonomy: 'Taxonomy',
         legendary: '💙 Just wow! 💙',
-        untilNextLevel: '%amount% more to complete this circle 🎉'
+        untilNextLevel: '%amount% more to complete this circle 🎉',
       },
       editMotivation: 'Edit motivation',
       addMotivation: 'Add motivation',
-      lockedDescriptionTitle: 'Your description currently hidden from the public.',
-      lockedDescriptionText: 'After your first contributions it will become visible to everybody.'
+      lockedDescriptionTitle:
+        'Your description currently hidden from the public.',
+      lockedDescriptionText:
+        'After your first contributions it will become visible to everybody.',
     },
     notices: {
       welcome: '👋 Welcome %username%!',
       bye: '👋 See you soon!',
       alreadyLoggedIn: '👋 Welcome back',
-      warningLoggedOut: '⚠️ You were logged out. Please login again and then use "Load stored edits" to restore your current changes.',
+      warningLoggedOut:
+        '⚠️ You were logged out. Please login again and then use "Load stored edits" to restore your current changes.',
       revisionSaved: 'Revision is saved and will be reviewed soon 👍',
       revisionAccepted: 'Revision was successfully accepted ✅',
       revisionRejected: 'Revision was successfully rejected ❎',
-      revisionSavedAccepted: 'Revision was successfully saved and accepted ✅'
+      revisionSavedAccepted: 'Revision was successfully saved and accepted ✅',
     },
     loading: {
       oneMomentPlease: 'One moment please…',
       isLoading: 'Content is loading…',
-      unknownProblem: 'Sorry, there was a problem loading the content, please try again later.'
+      unknownProblem:
+        'Sorry, there was a problem loading the content, please try again later.',
     },
     auth: {
       pleaseLogInLink: 'Please log in',
@@ -343,19 +368,23 @@ export const instanceData = {
       register: {
         registerTitle: 'Register your Serlo Account',
         passwordRequirements: 'At least 8 characters, longer is better.',
-        registerIntro: 'You do not need an account for studying on serlo.org. %break% If you want to comment, or work on content you came to the right place',
-        newsletterSubscription: 'Receive concise updates on our current activities in our newsletter. We use your information for sending purposes and for personal greetings. Look forward to relevant information and our annual fundraising campaign once a year. (optional)'
+        registerIntro:
+          'You do not need an account for studying on serlo.org. %break% If you want to comment, or work on content you came to the right place',
+        newsletterSubscription:
+          'Receive concise updates on our current activities in our newsletter. We use your information for sending purposes and for personal greetings. Look forward to relevant information and our annual fundraising campaign once a year. (optional)',
       },
       recoverTitle: 'Recover your account',
-      recoveryInstructions: 'Insert and submit your email address. %break% We will then send you an email with a reset link.',
+      recoveryInstructions:
+        'Insert and submit your email address. %break% We will then send you an email with a reset link.',
       verify: {
         title: 'Verify your email',
         instructions: 'Insert and submit your email address to verify it.',
-        alreadyDone: 'You are logged in, so you have already verified your email😊.'
+        alreadyDone:
+          'You are logged in, so you have already verified your email😊.',
       },
       settings: {
         title: 'Change your password',
-        instruction: 'Insert your new password.'
+        instruction: 'Insert your new password.',
       },
       loggingOut: 'Logging you out …',
       login: {
@@ -366,14 +395,15 @@ export const instanceData = {
         registerNewAccount: 'Register new account',
         forgotPassword: 'Did you %forgotLinkText%?',
         forgotLinkText: 'forget your password',
-        validSessionDetected: 'Hey, you are already logged in in another tab. Reload the page to see it!'
+        validSessionDetected:
+          'Hey, you are already logged in in another tab. Reload the page to see it!',
       },
       fields: {
         identifier: 'Username or Email address',
         username: 'Username',
         password: 'Password',
         email: 'Email',
-        interest: "I'm here as..."
+        interest: "I'm here as...",
       },
       interests: {
         pleaseChoose: 'please choose',
@@ -381,7 +411,7 @@ export const instanceData = {
         teacher: 'Teacher',
         pupil: 'Pupil',
         student: 'University student',
-        other: 'Other'
+        other: 'Other',
       },
       messages: {
         code1010003: 'Please confirm this action by verifying that it is you.',
@@ -392,46 +422,64 @@ export const instanceData = {
         code1040002: 'Register via „Mein Bildungsraum“',
         code1040003: 'Continue',
         code1050001: 'Your changes have been saved! 🎉',
-        code1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
-        code1060002: 'An email containing a recovery link has been sent to the email address you provided. %break% Check your mailbox and click on the provided link it contains.',
+        code1060001:
+          'You successfully recovered your account. Please change your password in the next minutes.',
+        code1060002:
+          'An email containing a recovery link has been sent to the email address you provided. %break% Check your mailbox and click on the provided link it contains.',
         code1070003: 'Save',
         code1070005: 'Submit',
-        code1080001: 'An email containing a verification link has been sent to the email address you provided.',
+        code1080001:
+          'An email containing a verification link has been sent to the email address you provided.',
         code1080002: 'You have successfully verified your email address.',
         code4000001: '%reason%',
         code4000002: '%field% is missing.',
         // Should map to usernameInvalid
         code4000004: '%reason%',
         code4000005: '%reason%',
-        code4000006: 'The username, email address or password was incorrect. Please check for spelling mistakes.',
-        code4000007: 'An account with the same email or username exists already.',
-        code4000008: 'The provided authentication code is invalid, please try again.',
-        code4000010: 'Have you already verified your email address?.%break% %verificationLinkText%',
-        code4060004: 'The recovery link is not valid or has already been used. Please try requesting an email again',
-        code4070001: 'The verification link is not valid or has already been used. Please try requesting an email again.',
-        code4070005: 'Sorry, this verification link is not valid any more. Please try requesting an email again.'
+        code4000006:
+          'The username, email address or password was incorrect. Please check for spelling mistakes.',
+        code4000007:
+          'An account with the same email or username exists already.',
+        code4000008:
+          'The provided authentication code is invalid, please try again.',
+        code4000010:
+          'Have you already verified your email address?.%break% %verificationLinkText%',
+        code4060004:
+          'The recovery link is not valid or has already been used. Please try requesting an email again',
+        code4070001:
+          'The verification link is not valid or has already been used. Please try requesting an email again.',
+        code4070005:
+          'Sorry, this verification link is not valid any more. Please try requesting an email again.',
       },
-      usernameInvalid: 'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
-      usernameTooLong: "Sorry, this username is too long, make sure it's 32 characters or less",
-      passwordTooShort: 'Sorry, this password is too short. Please choose one that is at least 8 characters long.',
-      passwordTooLong: 'Sorry, this password is too long. Please choose one that has a maximum of 72 characters.',
-      passwordTooSimilar: 'Sorry, this password is too similar to your email or username.',
-      emailInvalid: 'Sorry, this is not a valid email address. Check for typos.',
-      registrationCheckboxAgreement: 'I agree to the %privacypolicy% and %terms%. I may receive email notifications from Serlo and can opt out at any time.',
+      usernameInvalid:
+        'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
+      usernameTooLong:
+        "Sorry, this username is too long, make sure it's 32 characters or less",
+      passwordTooShort:
+        'Sorry, this password is too short. Please choose one that is at least 8 characters long.',
+      passwordTooLong:
+        'Sorry, this password is too long. Please choose one that has a maximum of 72 characters.',
+      passwordTooSimilar:
+        'Sorry, this password is too similar to your email or username.',
+      emailInvalid:
+        'Sorry, this is not a valid email address. Check for typos.',
+      registrationCheckboxAgreement:
+        'I agree to the %privacypolicy% and %terms%. I may receive email notifications from Serlo and can opt out at any time.',
       consentNeededBeforeProceeding: 'We need your consent before proceeding.',
       terms: 'Terms',
       signUp: 'Register',
       verificationProblem: 'In case you did not get it',
-      verificationLinkText: 'Click here to request the verification email again.'
+      verificationLinkText:
+        'Click here to request the verification email again.',
     },
     keys: {
       ctrl: 'ctrl',
-      return: 'return'
+      return: 'return',
     },
     eventLog: {
       currentEvents: 'Current events',
       oldestEvents: '%amount% oldest events',
-      globalDescription: 'All events that happen somewhere on %lang%.serlo.org'
+      globalDescription: 'All events that happen somewhere on %lang%.serlo.org',
     },
     events: {
       entityInParentPreposition: 'in',
@@ -452,27 +500,31 @@ export const instanceData = {
       createTaxonomyTerm: '%actor% created %term%.',
       setTaxonomyTerm: '%actor% updated %term%.',
       setTaxonomyParentDeleted: '%actor% removed the parent of %child%.',
-      setTaxonomyParentChangedFrom: '%actor% changed parent of %child% from %previousparent% to %parent%.',
-      setTaxonomyParentChanged: '%actor% changed parent of %child% to %parent%.',
+      setTaxonomyParentChangedFrom:
+        '%actor% changed parent of %child% from %previousparent% to %parent%.',
+      setTaxonomyParentChanged:
+        '%actor% changed parent of %child% to %parent%.',
       setUuidStateTrashed: '%actor% trashed %object%.',
       setUuidStateRestored: '%actor% restored %object%.',
-      inviteToChat: '%actor% invited you to the Chat: %comment% Go to %chatLink% to chat with %actor% and others.',
-      entityPlaceholderFallback: 'Content'
+      inviteToChat:
+        '%actor% invited you to the Chat: %comment% Go to %chatLink% to chat with %actor% and others.',
+      entityPlaceholderFallback: 'Content',
     },
     actions: {
-      loadMore: 'Load more'
+      loadMore: 'Load more',
     },
     bin: {
       title: 'Title',
-      trashed: 'Trashed…'
-    }
-  }
-};
+      trashed: 'Trashed…',
+    },
+  },
+}
 export const instanceLandingData = {
   lang: 'en',
   subjectsData: landingSubjectsData,
   strings: {
-    vision: 'It is our vision to enable personalized learning and provide high quality educational resources worldwide – completely free of charge. Serlo is a grassroots organization inspired by Wikipedia. We already provide thousands of articles, videos and solved exercises for five million German students every year. Now it’s time to go international.',
+    vision:
+      'It is our vision to enable personalized learning and provide high quality educational resources worldwide – completely free of charge. Serlo is a grassroots organization inspired by Wikipedia. We already provide thousands of articles, videos and solved exercises for five million German students every year. Now it’s time to go international.',
     learnMore: 'Learn more',
     democraticallyStructured: 'democratically structured',
     nonProfit: 'non-profit',
@@ -481,46 +533,59 @@ export const instanceLandingData = {
     adFree: 'ad-free',
     freeOfCharge: 'free of charge',
     wikiTitle: 'Serlo is the Wikipedia for Learning',
-    wikiText: 'Just like Wikipedia, this platform is created by an engaged community of authors. Serlo Education is run and owned by decentralized teams of volunteers and professionals all over the world.',
+    wikiText:
+      'Just like Wikipedia, this platform is created by an engaged community of authors. Serlo Education is run and owned by decentralized teams of volunteers and professionals all over the world.',
     movementTitle: 'Become a Part of Our Movement for Open Education',
-    callForAuthors: 'We are looking for teachers and enthusiastic educators who are passionate about their subject. Become part of our community to create new learning material and help us improve existing content.',
+    callForAuthors:
+      'We are looking for teachers and enthusiastic educators who are passionate about their subject. Become part of our community to create new learning material and help us improve existing content.',
     communityLink: 'Visit the landing page for authors',
-    callForOther: 'We offer a diverse range of jobs and volunteering opportunities in the fields of software development, design, translation, communications, project management and more.',
-    getInvolved: 'Get involved!'
-  }
-};
+    callForOther:
+      'We offer a diverse range of jobs and volunteering opportunities in the fields of software development, design, translation, communications, project management and more.',
+    getInvolved: 'Get involved!',
+  },
+}
 export const serverSideStrings = {
-  title: 'learn with Serlo!'
-};
+  title: 'learn with Serlo!',
+}
 export const loggedInData = {
-  authMenu: [{
-    url: '/user/notifications',
-    title: 'Notifications',
-    icon: 'notifications'
-  }, {
-    url: '',
-    title: 'User',
-    icon: 'user',
-    children: [{
-      url: '/user/me',
-      title: 'Own profile'
-    }, {
-      url: '/event/history/user/me',
-      title: 'My Edits'
-    }, {
-      url: '/subscriptions/manage',
-      title: 'Subscriptions'
-    }, {
-      url: '/auth/settings',
-      title: 'Change password'
-    }, {
-      url: '/user/settings',
-      title: 'Settings'
-    }, {
-      url: '/auth/logout',
-      title: 'Log out'
-    }]
-  }],
+  authMenu: [
+    {
+      url: '/user/notifications',
+      title: 'Notifications',
+      icon: 'notifications',
+    },
+    {
+      url: '',
+      title: 'User',
+      icon: 'user',
+      children: [
+        {
+          url: '/user/me',
+          title: 'Own profile',
+        },
+        {
+          url: '/event/history/user/me',
+          title: 'My Edits',
+        },
+        {
+          url: '/subscriptions/manage',
+          title: 'Subscriptions',
+        },
+        {
+          url: '/auth/settings',
+          title: 'Change password',
+        },
+        {
+          url: '/user/settings',
+          title: 'Settings',
+        },
+        {
+          url: '/auth/logout',
+          title: 'Log out',
+        },
+      ],
+    },
+  ],
   strings: {
     tools: 'Other Tools',
     authorMenu: {
@@ -552,14 +617,14 @@ export const loggedInData = {
       newEntity: 'New Entity',
       editProfile: 'Edit profile',
       directLink: 'Direct link to this content',
-      analyticsLink: 'See analytics data'
+      analyticsLink: 'See analytics data',
     },
     notifications: {
       hide: 'Deactivate new notifications for this content.',
       setToRead: 'Set notification to read.',
       setAllToRead: 'Set all visible to read',
       showNew: 'New',
-      showRead: 'Read'
+      showRead: 'Read',
     },
     subscriptions: {
       mail: 'E-mails',
@@ -568,21 +633,22 @@ export const loggedInData = {
       getMails: 'activate',
       noNotifications: 'cancel',
       loadedSentence: 'Loaded %loadedCount% of %totalCount% entries.',
-      loadMoreLink: 'Load more!'
+      loadMoreLink: 'Load more!',
     },
     revisions: {
       checkout: {
         action: 'Accept',
         title: 'Accept Revision',
-        explanation: 'Please give the author some feedback.'
+        explanation: 'Please give the author some feedback.',
       },
       reject: {
         action: 'Reject',
         title: 'Reject Revision',
-        explanation: 'Please tell the author why you will not accept the submission.'
+        explanation:
+          'Please tell the author why you will not accept the submission.',
       },
       confirm: 'Confirm',
-      unrevisedTaxNote: 'New content, not accepted yet'
+      unrevisedTaxNote: 'New content, not accepted yet',
     },
     mutations: {
       success: {
@@ -593,16 +659,18 @@ export const loggedInData = {
         save: 'Edit successfully saved ✅',
         updated: 'Successfully updated ✅',
         generic: 'Success 🎉',
-        saveNeedsReview: 'Thank you for your edit 🎉 The reviewers will check it soon and then it will appear on the site.'
+        saveNeedsReview:
+          'Thank you for your edit 🎉 The reviewers will check it soon and then it will appear on the site.',
       },
       errors: {
         UNAUTHENTICATED: 'You have to log in to use this function!',
         FORBIDDEN: 'Sorry, you are not allowed to do that!',
         INVALID_TOKEN: '',
-        BAD_USER_INPUT: 'Sorry, you are trying something that is not supported…',
+        BAD_USER_INPUT:
+          'Sorry, you are trying something that is not supported…',
         UNKNOWN: 'An unknown error…',
-        valueMissing: 'Please fill all required fields'
-      }
+        valueMissing: 'Please fill all required fields',
+      },
     },
     editor: {
       confirmRouteChange: 'Are you sure you want to leave without saving?',
@@ -612,25 +680,28 @@ export const loggedInData = {
           title: 'Anchor',
           description: 'Insert an anchor.',
           identifier: 'Identifier (e.g. "long-explanation")',
-          anchorId: 'ID of the anchor'
+          anchorId: 'ID of the anchor',
         },
         box: {
           title: 'Container',
-          description: 'A container for examples, quotes, warnings, theorems, notes…',
+          description:
+            'A container for examples, quotes, warnings, theorems, notes…',
           type: 'Type of box',
           typeTooltip: 'Choose the type of the box',
           titlePlaceholder: '(optional title)',
           anchorId: 'Anchor ID',
-          emptyContentWarning: 'Boxes without content will not be displayed'
+          emptyContentWarning: 'Boxes without content will not be displayed',
         },
         unsupported: {
           title: 'Unsupported',
           notSupported: 'Sorry, this plugin is not supported:',
-          explanation: 'It will not be displayed to users. You can either remove it or asks developers for support.'
+          explanation:
+            'It will not be displayed to users. You can either remove it or asks developers for support.',
         },
         equations: {
           title: 'Terms and equations',
-          description: 'Write term manipulations and solve multiline equations.',
+          description:
+            'Write term manipulations and solve multiline equations.',
           leftHandSide: 'left-hand side',
           transformation: 'transformation',
           mode: 'Mode',
@@ -645,13 +716,13 @@ export const loggedInData = {
           setEqual: 'Set the terms equal to each other.',
           firstExplanation: 'First explanation',
           moveUpLabel: 'Move up',
-          removeRowLabel: 'Remove row'
+          removeRowLabel: 'Remove row',
         },
         geogebra: {
           title: 'GeoGebra Applet',
           description: 'Embed GeoGebra Materials applets via URL or ID.',
           chooseApplet: 'Choose Applet',
-          urlOrId: 'GeoGebra URL or ID'
+          urlOrId: 'GeoGebra URL or ID',
         },
         highlight: {
           title: 'Source Code',
@@ -661,7 +732,7 @@ export const loggedInData = {
           language: 'Language',
           languageTooltip: 'Choose language for syntax highlighting',
           showLineNumbers: 'Line numbers',
-          lineNumbersTooltip: 'Should users see line numbers?'
+          lineNumbersTooltip: 'Should users see line numbers?',
         },
         image: {
           title: 'Image',
@@ -679,7 +750,7 @@ export const loggedInData = {
           alt: 'Description (hidden)',
           altPlaceholder: 'Describe what the image shows',
           maxWidth: 'Maximum width',
-          maxWidthPlaceholder: 'Enter the maximum width'
+          maxWidthPlaceholder: 'Enter the maximum width',
         },
         injection: {
           title: 'serlo.org Content',
@@ -687,44 +758,46 @@ export const loggedInData = {
           illegalInjectionFound: 'Illegal injection found',
           serloEntitySrc: 'Serlo entity {{src}}',
           serloId: 'Serlo ID',
-          placeholder: 'Serlo ID (e.g. 1565)'
+          placeholder: 'Serlo ID (e.g. 1565)',
         },
         multimedia: {
           title: 'Multimedia content associated with text',
-          description: 'Create an illustrating or explaining multimedia content associated with text.',
+          description:
+            'Create an illustrating or explaining multimedia content associated with text.',
           chooseSize: 'Choose size of multimedia element',
           changeType: 'Change the multimedia type',
           howImportant: 'How important is the multimedia content?',
           isIllustrating: 'It is illustrating',
           isEssential: 'It is essential',
-          reset: 'Reset the multimedia content'
+          reset: 'Reset the multimedia content',
         },
         pageLayout: {
           title: 'Layout Column for Pages',
           description: "The plugin the people want but don't get 🤫",
-          chooseRatio: 'Choose column ratio'
+          chooseRatio: 'Choose column ratio',
         },
         pasteHack: {
           title: 'Experimental State-Paste Plugin',
-          description: 'only on staging'
+          description: 'only on staging',
         },
         pageTeam: {
           title: 'Team Overview',
-          description: 'Only for the teampages'
+          description: 'Only for the teampages',
         },
         pagePartners: {
           title: 'Partner List',
-          description: 'Only for partner page (List of partner logos like on de.serlo.org/)'
+          description:
+            'Only for partner page (List of partner logos like on de.serlo.org/)',
         },
         rows: {
           title: 'Rows',
           searchForTools: 'Search for tools…',
           duplicate: 'Duplicate',
-          copyAnchorLink: "Copy link to this element",
+          copyAnchorLink: 'Copy link to this element',
           remove: 'Remove',
           close: 'Close',
           dragElement: 'Drag the element within the document',
-          addAnElement: 'Add an element'
+          addAnElement: 'Add an element',
         },
         serloTable: {
           title: 'Table',
@@ -740,12 +813,13 @@ export const loggedInData = {
           addType: 'Add %type%',
           addTypeBefore: 'Add %type% before',
           deleteType: 'Delete %type%',
-          confirmDelete: 'Are you sure you want to delete this %type% and the content in it?'
+          confirmDelete:
+            'Are you sure you want to delete this %type% and the content in it?',
         },
         spoiler: {
           title: 'Spoiler',
           description: 'A collapsible box.',
-          enterATitle: 'Enter a title'
+          enterATitle: 'Enter a title',
         },
         text: {
           title: 'Text',
@@ -760,14 +834,16 @@ export const loggedInData = {
           heading: 'Heading',
           headings: 'Headings',
           link: 'Link (%ctrlOrCmd% + K)',
-          noElementPasteInLists: 'Sorry, pasting elements inside of lists is not allowed.',
+          noElementPasteInLists:
+            'Sorry, pasting elements inside of lists is not allowed.',
           linkOverlay: {
             placeholder: 'https://… or /1234',
             inputLabel: 'Paste or type a link',
             edit: 'Edit Link',
             remove: 'Remove Link',
             customLink: 'Custom Link',
-            invalidLinkWarning: 'Please provide a valid link that starts with http(s)://…'
+            invalidLinkWarning:
+              'Please provide a valid link that starts with http(s)://…',
           },
           openInNewTab: 'Open in new tab',
           orderedList: 'Ordered list',
@@ -782,7 +858,7 @@ export const loggedInData = {
           colorNames: {
             blue: 'Blue',
             green: 'Green',
-            orange: 'Orange'
+            orange: 'Orange',
           },
           math: {
             formula: '[formula]',
@@ -800,8 +876,8 @@ export const loggedInData = {
             eG: 'e.g.',
             functions: 'Functions',
             displayAsBlock: 'Display as block',
-            closeMathFormulaEditor: "Close math formula editor"
-          }
+            closeMathFormulaEditor: 'Close math formula editor',
+          },
         },
         video: {
           title: 'Video',
@@ -810,36 +886,36 @@ export const loggedInData = {
           videoDescription: 'Description',
           titlePlaceholder: 'Title',
           url: 'URL',
-          seoTitle: 'Title for search engines'
+          seoTitle: 'Title for search engines',
         },
         audio: {
           title: 'Audio',
           description: 'Link to audio files on Vocaroo',
-          audioUrl: 'Enter Audio URL'
+          audioUrl: 'Enter Audio URL',
         },
         exercise: {
           title: 'Exercise',
-          description: 'Interactive or text based exercise'
+          description: 'Interactive or text based exercise',
         },
         inputExercise: {
           title: 'Input Exercise',
-          description: 'Solution can be text or math'
+          description: 'Solution can be text or math',
         },
         scMcExercise: {
           title: 'SC/MC Exercise',
-          description: 'Single Choice or Multiple Choice'
+          description: 'Single Choice or Multiple Choice',
         },
         blanksExercise: {
           title: 'Fill In The Blanks Exercise',
           description: 'Text with blanks',
-          placeholder: 'Write a text and add blanks'
-        }
+          placeholder: 'Write a text and add blanks',
+        },
       },
       templatePlugins: {
         applet: {
           seoTitle: 'Title for search engines',
           seoDesc: 'Description for search engines',
-          placeholder: 'Title'
+          placeholder: 'Title',
         },
         article: {
           seoTitle: 'Title for search engines',
@@ -858,8 +934,10 @@ export const loggedInData = {
           sourceUrl: 'Optional URL',
           moreInFolder: 'You can find more exercises in the following folder',
           addModal: {
-            introText: 'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %exerciseFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
-            introText2: 'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
+            introText:
+              'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %exerciseFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
+            introText2:
+              'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
             buttonEx: 'Add exercises',
             buttonExFolder: 'Select exercise folder',
             buttonContent: 'Add content',
@@ -873,20 +951,20 @@ export const loggedInData = {
             unsupportedId: 'Sorry, this ID is not supported here',
             addFromFolderTitle: 'From the folder',
             placeholder: 'Paste Serlo ID or URL here',
-            exerciseFolderNote: 'Only one can be selected here'
-          }
+            exerciseFolderNote: 'Only one can be selected here',
+          },
         },
         course: {
           seoDesc: 'Description for search engines',
           title: 'Title',
           removeCoursePage: 'Remove course page',
-          addCoursePage: 'Add course page'
+          addCoursePage: 'Add course page',
         },
         coursePage: {
           explanation: 'Explanation',
           video: 'Video',
           question: 'Question',
-          title: 'Title'
+          title: 'Title',
         },
         exercise: {
           scMcExercise: 'Choice Exercise',
@@ -897,12 +975,12 @@ export const loggedInData = {
           changeInteractive: 'Change interactive element',
           removeInteractive: 'Remove interactive element',
           createSolution: 'Create solution',
-          removeSolution: 'Remove solution'
+          removeSolution: 'Remove solution',
         },
         event: {
           seoTitle: 'Title for search engines',
           seoDesc: 'Description for search engines',
-          title: 'Title'
+          title: 'Title',
         },
         inputExercise: {
           chooseType: 'Choose the exercise type',
@@ -912,13 +990,15 @@ export const loggedInData = {
           feedbackPlaceholder: 'Add a feedback message for this answer',
           yourSolution: 'Your solution',
           types: {
-            'input-string-normalized-match-challenge': "Text (exact, e.g. 'tiger')",
+            'input-string-normalized-match-challenge':
+              "Text (exact, e.g. 'tiger')",
             'input-number-exact-match-challenge': "Number (exact, e.g. '0.5')",
-            'input-expression-equal-match-challenge': "Mathematical expression (equivalent, e.g. '0.5' or '1/2' or '2/4'"
-          }
+            'input-expression-equal-match-challenge':
+              "Mathematical expression (equivalent, e.g. '0.5' or '1/2' or '2/4'",
+          },
         },
         page: {
-          title: 'Title'
+          title: 'Title',
         },
         scMcExercise: {
           singleChoice: 'Single-choice',
@@ -927,7 +1007,7 @@ export const loggedInData = {
           addAnswer: 'Add answer',
           previewMode: 'Preview',
           previewIsActiveHint: 'Preview mode is active',
-          previewIsDeactiveHint: 'Here you can edit'
+          previewIsDeactiveHint: 'Here you can edit',
         },
         solution: {
           optionalExplanation: 'Optionally explain the solution strategy here',
@@ -936,23 +1016,25 @@ export const loggedInData = {
           linkTitle: 'Title of the link',
           showSolution: 'Show solution',
           hideSolution: 'Hide solution',
-          changeLicense: 'Change license'
+          changeLicense: 'Change license',
         },
         textExerciseGroup: {
           removeExercise: 'Remove exercise',
           addExercise: 'Add exercise',
           kindOfExerciseGroup: 'Kind of exercise group',
           notCohesive: 'not cohesive',
-          cohesive: 'cohesive'
-        }
+          cohesive: 'cohesive',
+        },
       },
       edtrIo: {
         localStorage: {
-          found: 'You have locally saved edits of this revision. Do you want to load them?',
+          found:
+            'You have locally saved edits of this revision. Do you want to load them?',
           foundButton: 'Load stored edits',
-          restoreInitial: 'Want to start fresh? Beware that this will delete your current edits!',
+          restoreInitial:
+            'Want to start fresh? Beware that this will delete your current edits!',
           restoreInitialButton: 'Delete changes',
-          confirmRestore: 'Are you sure you want to delete all your changes?'
+          confirmRestore: 'Are you sure you want to delete all your changes?',
         },
         settings: 'Settings',
         extendedSettings: 'Extended Settings',
@@ -963,9 +1045,11 @@ export const loggedInData = {
         saving: 'Saving…',
         missingChanges: 'You need to fill out the changes you made',
         missingLicenseTerms: 'You need to accept the license terms',
-        missingChangesAndLicenseTerms: 'You need to fill out the changes you made and accept the license terms',
+        missingChangesAndLicenseTerms:
+          'You need to fill out the changes you made and accept the license terms',
         errorSaving: 'An error occurred during saving.',
-        saveLocallyAndRefresh: 'You can store the revision locally, refresh the page and try to save again.',
+        saveLocallyAndRefresh:
+          'You can store the revision locally, refresh the page and try to save again.',
         revisionSaved: 'Revision saved',
         saveRevision: 'Save revision',
         changes: 'Describe your changes to the content',
@@ -974,18 +1058,21 @@ export const loggedInData = {
         enableNotifsMail: 'Enable notifications via e-mail',
         switchRevision: 'Switch to another revision',
         importOther: 'Import content from other entity',
-        importOtherExplanation: "Just paste the url or id of another serlo.org entity of the same type here to duplicate it's content here. Do NOT use this to make exact copies or move content. Exercise Groups and Courses are not supported (but Exercises and Course Pages).",
-        importOtherWarning: 'Warning: This overwrites everything that is already present in this editor!',
+        importOtherExplanation:
+          "Just paste the url or id of another serlo.org entity of the same type here to duplicate it's content here. Do NOT use this to make exact copies or move content. Exercise Groups and Courses are not supported (but Exercises and Course Pages).",
+        importOtherWarning:
+          'Warning: This overwrites everything that is already present in this editor!',
         importOtherButton: 'Import content',
         current: 'Current',
         author: 'Author',
         createdAt: 'when?',
         ready: 'Ready to save?',
-        anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.'
+        anchorLinkWarning:
+          'This link will only work in the frontend and for content that has a somewhat new revision.',
       },
       taxonomy: {
-        title: 'Title'
-      }
+        title: 'Title',
+      },
     },
     profileSettings: {
       editAbout: 'Your description',
@@ -993,39 +1080,44 @@ export const loggedInData = {
       editImage: {
         header: 'Profile picture',
         buttonText: 'How to edit your profile picture',
-        description: 'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
+        description:
+          'Currently we use the images from %chatLink% as profile pictures. In order to change your picture, do the following:',
         steps: {
           goToChat: 'Go to %chatLink%.',
           signIn: 'Sign in.',
           goToMyAccount: 'Go in the user menu to %myAccountLink%.',
           myAccount: 'My Account',
-          uploadPicture: 'Upload a new picture (make sure it is square) and click "Save changes".',
-          refreshPage: 'Come back here and refresh the image using %refreshLink%.',
-          refreshLink: 'this link'
-        }
+          uploadPicture:
+            'Upload a new picture (make sure it is square) and click "Save changes".',
+          refreshPage:
+            'Come back here and refresh the image using %refreshLink%.',
+          refreshLink: 'this link',
+        },
       },
       motivation: {
         header: 'Motivation',
         buttonText: 'How to edit your motivation',
-        intro: 'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
-        privacy: 'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
-        toForm: 'Motivation Form'
+        intro:
+          'Motivations are a new feature we test at the moment. To edit your motivation you have to fill out a simple form.',
+        privacy:
+          'The form and data storage is offered by Google and personal data may be transferred to this service when using this feature.',
+        toForm: 'Motivation Form',
       },
       delete: {
         heading: 'How to delete your account',
         text: 'If you want to delete your account, please write us at %mailLink%.%break% Make sure to use your registered email address and %subjectLine% as subject line.',
-        deleteAccount: 'Delete Account'
-      }
+        deleteAccount: 'Delete Account',
+      },
     },
     backend: {
       pages: 'Static Pages',
       authorization: 'Authorization',
       navigation: 'Navigation',
-      recycleBin: 'Recycle Bin'
+      recycleBin: 'Recycle Bin',
     },
     pages: {
       newPage: 'Add new Page',
-      deletedPages: 'Deleted Pages'
+      deletedPages: 'Deleted Pages',
     },
     taxonomyTermTools: {
       copyMove: {
@@ -1037,21 +1129,22 @@ export const loggedInData = {
         copyButtonText: 'Copy to %type%',
         moveSuccess: 'Sucessfully moved',
         copySuccess: 'Sucessfully copied',
-        exerciseFolderNotice: 'Copying or moving the type %exerciseFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead.'
+        exerciseFolderNotice:
+          'Copying or moving the type %exerciseFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead.',
       },
       deleteAdd: {
         confirmDelete: 'Are you sure you want to remove this assignment?',
         addSuccess: 'Sucessfully assigned, reloading …',
         addNewTitle: 'Add new assignment',
-        addButtonText: 'Assign'
+        addButtonText: 'Assign',
       },
       sort: {
         title: 'Sort Entities',
-        saveButtonText: 'Save order'
-      }
+        saveButtonText: 'Save order',
+      },
     },
     roles: {
-      addButton: 'Add as %role%'
+      addButton: 'Add as %role%',
     },
     ai: {
       exerciseGeneration: {
@@ -1059,7 +1152,8 @@ export const loggedInData = {
         buttonTitle: 'AI generate exercise group',
         initialModalTitle: 'Create an exercise automatically with help of AI',
         modalTitleWithTaxonomy: 'Exercise generation with AI: ',
-        confirmCloseDescription: 'Do you want to cancel the exercise generation? Your data will be lost.',
+        confirmCloseDescription:
+          'Do you want to cancel the exercise generation? Your data will be lost.',
         summary: 'Summary',
         nextButton: 'Next',
         nextExerciseButton: 'Next exercise',
@@ -1067,19 +1161,20 @@ export const loggedInData = {
         generateExerciseButton: 'Generate exercise',
         generateExercisesButton: 'Generate exercises',
         somethingWentWrong: 'Something went wrong. Please try again.',
-        hallucinationWarning: 'The AI can generate incorrect exercises. Please review carefully.',
+        hallucinationWarning:
+          'The AI can generate incorrect exercises. Please review carefully.',
         topic: {
           title: 'About which %topic% would you like to generate exercises?',
           topic: 'topic',
           defaultLabel: 'Topic',
           otherTopicLabel: 'Other topic',
-          customTopicPlaceholder: 'Enter custom topic'
+          customTopicPlaceholder: 'Enter custom topic',
         },
         grade: {
           title: 'Which %grade% are the students in?',
           grade: 'grade',
           label: 'Grade',
-          university: 'University'
+          university: 'University',
         },
         exerciseType: {
           title: 'What %exerciseType% are you interested in?',
@@ -1092,42 +1187,45 @@ export const loggedInData = {
           yesSubtasks: 'Yes',
           subtasksLabel: 'Exercises',
           numberOfSubtasksPlaceholder: 'Number of subtasks',
-          chooseOption: "Choose an option",
-          multipleChoice: "Multiple Choice",
-          singleChoice: "Single Choice",
-          inputExercise: "Input exercise",
-          blanksExercise: "Fill In The Blanks Exercise"
+          chooseOption: 'Choose an option',
+          multipleChoice: 'Multiple Choice',
+          singleChoice: 'Single Choice',
+          inputExercise: 'Input exercise',
+          blanksExercise: 'Fill In The Blanks Exercise',
         },
         difficulty: {
-          title: 'What is the %difficulty% level of the exercise and learning goal?',
+          title:
+            'What is the %difficulty% level of the exercise and learning goal?',
           difficulty: 'difficulty',
           label: 'Difficulty',
           learningGoalLabel: 'Learning goal',
-          learningGoalExample: 'Example: Students understand the basics of algebra.',
+          learningGoalExample:
+            'Example: Students understand the basics of algebra.',
           learningGoalPlaceholder: 'Enter learning goal',
           chooseOption: 'Choose an option',
           easy: 'Easy',
           medium: 'Medium',
-          hard: 'Hard'
+          hard: 'Hard',
         },
         priorKnowledge: {
           title: 'What is the %priorKnowledge% that the students should have?',
           priorKnowledge: 'prior knowledge',
           label: 'Prior Knowledge',
-          example: 'Example: The students know how basic algebra works and already solved some exercises on the topic.',
-          placeholder: 'E.g., Basic arithmetic, fundamentals of algebra'
+          example:
+            'Example: The students know how basic algebra works and already solved some exercises on the topic.',
+          placeholder: 'E.g., Basic arithmetic, fundamentals of algebra',
         },
         preview: {
           loadingHeading: 'Exercise is being generated...',
           patience: 'It can take up to two minutes',
           publishExercise: 'Publish exercise',
           openExerciseInEditor: 'Open in editor',
-          regenerate: 'Regenerate exercise'
-        }
-      }
-    }
-  }
-};
+          regenerate: 'Regenerate exercise',
+        },
+      },
+    },
+  },
+}
 export const kratosMailStrings = {
   recovery: {
     valid: {
@@ -1143,7 +1241,7 @@ Best of luck from your Serlo team`,
 <p>Are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
 
 <p>To reset your password please open the following link in your browser:
-<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Best of luck from your Serlo team</p>`
+<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Best of luck from your Serlo team</p>`,
     },
     invalid: {
       subject: '👉 Account access attempted',
@@ -1163,8 +1261,8 @@ Otherwise please just ignore this email.
 <p>But this email address is not linked to a user in our website and therefore the attempt failed.</p>
 <p>If it was you, check if you signed up using a different address.</p>
 <p>Otherwise, please just ignore this email.</p>
-<p>✌️</p>`
-    }
+<p>✌️</p>`,
+    },
   },
   verification: {
     valid: {
@@ -1183,7 +1281,7 @@ Your Community-Support 💚`,
 <p>Please verify your account by clicking the following link:<br/>
 <a style="color: #007ec1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Your Community-Support 💚</p>
-      `
+      `,
     },
     invalid: {
       subject: `👋 Someone tried to verify this email address`,
@@ -1200,7 +1298,7 @@ Otherwise, please just ignore this email.
 <p>Someone asked to verify this email address, but we were unable to find an account at <a href="https://serlo.org">serlo.org</a> for this address.</p>
 <p>If this was you, check if you registered using a different address.</p>
 <p>Otherwise, please just ignore this email.</p>
-<p>✌️</p>`
-    }
-  }
-};
+<p>✌️</p>`,
+    },
+  },
+}
