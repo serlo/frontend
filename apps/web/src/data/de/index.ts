@@ -978,7 +978,7 @@ export const loggedInData = {
         importOtherWarning: "Vorsicht: Diese Funktion überschreibt alle bestehenden Inhalte in diesem Editor.",
         importOtherButton: "Inhalte Importieren",
         current: "Aktuell",
-        author: "Verfasser",
+        author: "Autor*in",
         createdAt: "Zeitstempel",
         ready: "Bereit zum Speichern?",
         anchorLinkWarning: "Dieser Link funktioniert nur im Frontend und für Inhalte, die eine etwas relativ neue akzeptierte Bearbeitung haben."

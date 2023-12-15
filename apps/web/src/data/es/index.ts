@@ -135,7 +135,7 @@ export const instanceData = {
       emptyNotice: "No hay contenido aquí. Por favor, edite o elimine.",
       picture: "Imagen",
       previewImage: "Previsualizar Imagen",
-      imageAltFallback: "Imagen",
+      imageAltFallback: "Imágen",
       exercisesTitle: "Ejercicios",
       moreExercises: "Puedes encontrar más ejercicios en la siguiente carpeta:",
       relatedContentTitle: "¿Todavía quieres más?",
@@ -153,7 +153,7 @@ export const instanceData = {
         yourAnswer: "Tu respuesta...",
         chooseOption: "Elige una de las opciones.",
         printModeChooseOption: "Elige una de las opciones.",
-        showSolution: "Mostrar solución",
+        showSolution: "Mostrar la solución",
         hideSolution: "Ocultar la solución"
       },
       boxTypes: {
@@ -169,7 +169,7 @@ export const instanceData = {
         proof: "Prueba"
       },
       loadingVideoFailed: "Algo ha fallado",
-      loadingAudioFailed: 'Something went wrong'
+      loadingAudioFailed: "Algo ha fallado"
     },
     consent: {
       title: "Consentimiento para contenido externo",
@@ -231,14 +231,14 @@ export const instanceData = {
       by: "Por",
       parentFallbackLink: "A contenido padre",
       hasChanges: "Ha habido cambios en esta área",
-      positionForGrouped: 'This %exercise% is part of %title%.',
+      positionForGrouped: "Este/a %exercise% es parte de %title%.",
       helpLink: "Ayuda de revisión"
     },
     revisionHistory: {
       changes: "Cambios",
       author: "Autor",
       date: "Fecha",
-      edit: "Edición",
+      edit: "Editar",
       editLabel: "Crear una nueva revisión a partir de esta revisión específica",
       view: "Mostrar",
       viewLabel: "Mostrar esta revisión",
@@ -598,7 +598,7 @@ export const loggedInData = {
       errors: {
         UNAUTHENTICATED: "¡Tienes que iniciar sesión para usar esta función!",
         FORBIDDEN: "Lo sentimos, ¡no estás autorizado para hacer esto!",
-        INVALID_TOKEN: '',
+        INVALID_TOKEN: "[secuencia vacía]",
         BAD_USER_INPUT: "Lo sentimos, estás intentando algo que no es posible…",
         UNKNOWN: "Un error desconocido…",
         valueMissing: "Por favor completa todos los campos requeridos"
@@ -925,7 +925,7 @@ export const loggedInData = {
           multipleChoice: "Múltiple elección",
           chooseType: "Elige el tipo de ejercicio",
           addAnswer: "Añadir respuesta",
-          previewMode: 'Preview',
+          previewMode: "Vista Previa",
           previewIsActiveHint: 'Preview mode is active',
           previewIsDeactiveHint: 'Here you can edit'
         },
@@ -936,7 +936,7 @@ export const loggedInData = {
           linkTitle: "Título del enlace",
           showSolution: "Mostrar la solución",
           hideSolution: "Ocultar la solución",
-          changeLicense: 'Change license'
+          changeLicense: "Cambiar licencia"
         },
         textExerciseGroup: {
           removeExercise: "Eliminar ejercicio",
@@ -1070,7 +1070,7 @@ export const loggedInData = {
         hallucinationWarning: 'The AI can generate incorrect exercises. Please review carefully.',
         topic: {
           title: 'About which %topic% would you like to generate exercises?',
-          topic: 'topic',
+          topic: "tema",
           defaultLabel: 'Topic',
           otherTopicLabel: 'Other topic',
           customTopicPlaceholder: 'Enter custom topic'

@@ -77,7 +77,7 @@ export const instanceData = {
       editProfile: 'Edit Profile & Settings',
       recycleBin: 'Recycle Bin',
       diagon: 'Diagon Alley',
-      discussions: 'Comments',
+      discussions: "टिप्पणियां",
       manageRoles: 'Manage User Roles'
     },
     roles: {
@@ -99,7 +99,7 @@ export const instanceData = {
       noStay: 'No, I want to stay'
     },
     editOrAdd: {
-      button: 'Edit',
+      button: "संपादित",
       addNewEntities: 'Add new content',
       addNewExercises: 'Add new exercises',
       editExercises: 'Edit exercises',
@@ -136,7 +136,7 @@ export const instanceData = {
       picture: 'Picture',
       previewImage: 'Preview Image',
       imageAltFallback: 'Image',
-      exercisesTitle: 'Exercises',
+      exercisesTitle: "अभ्यास",
       moreExercises: 'You can find more exercises in the following folder:',
       relatedContentTitle: 'Still want more?',
       relatedContentText: 'You can find more content on this topic here:',
@@ -153,8 +153,8 @@ export const instanceData = {
         yourAnswer: "आपका उत्तर",
         chooseOption: "किसी एक विकल्प पर क्लिक करें",
         printModeChooseOption: "किसी एक विकल्प पर क्लिक करें",
-        showSolution: 'Show solution',
-        hideSolution: 'Hide solution'
+        showSolution: "समाधान दिखाएं",
+        hideSolution: "समाधान छुपाएं"
       },
       boxTypes: {
         blank: 'Blank',
@@ -185,11 +185,11 @@ export const instanceData = {
       applet: "%provider% से लोड एप्लेट ",
       twingle: "लोड दान प्रपत्र",
       audio: 'Play audio from %provider%',
-      general: 'Activate'
+      general: "सक्रिय"
     },
     comments: {
       question: "क्या आपका कोई प्रश्न है?",
-      commentsOne: "टिप्पणी:",
+      commentsOne: "टिप्पणियां",
       commentsMany: "टिप्पणियां",
       submit: "जमा करें",
       archiveThread: "आर्काइव थ्रेड",
@@ -208,8 +208,8 @@ export const instanceData = {
       copyLink: "टिप्पणी लिंक कॉपी करें",
       commentsOverviewExplanation: 'Here you can see all comments that were written to content on %instance%.serlo.org. %break% Answer questions or find content you could improve. %break% The link above the comment brings you to the relevant entity.',
       edit: 'Edit comment',
-      cancelEdit: 'Cancel',
-      saveEdit: 'Save'
+      cancelEdit: "रद्द करें",
+      saveEdit: "सहेजें"
     },
     revisions: {
       toOverview: "अवलोकन पर वापस जाएं",
@@ -238,8 +238,8 @@ export const instanceData = {
       changes: "परिवर्तन",
       author: "लेखक",
       date: "दिनांक",
-      edit: 'Edit',
-      editLabel: 'Create a new revision starting from this specific revision',
+      edit: "संपादित",
+      editLabel: "इस विशिष्ट संशोधन से प्रारंभ एक नया संशोधन बनाएं",
       view: 'Show',
       viewLabel: 'Show this revision',
       status: 'Status'
@@ -292,7 +292,7 @@ export const instanceData = {
       recentActivities: "हाल की गतिविधि",
       showAllActivities: "समस्त गतिविधयाँ दिखाएँ",
       noActivities: 'No activities so far.',
-      lastLogin: 'Last login',
+      lastLogin: "अंतिम लॉगिन",
       yearsWithSerlo: 'Years with Serlo!',
       yearWithSerlo: 'Year with Serlo!',
       roles: "भूमिकाएं",
@@ -310,10 +310,10 @@ export const instanceData = {
         success: '✨ Successfully invited!'
       },
       activityGraph: {
-        edits: 'Edits',
-        comments: 'Comments',
-        reviews: 'Reviews',
-        taxonomy: 'Taxonomy',
+        edits: "संपादित",
+        comments: "टिप्पणियां",
+        reviews: "समीक्षाएँ",
+        taxonomy: "वर्गीकरण",
         legendary: '💙 Just wow! 💙',
         untilNextLevel: '%amount% more to complete this circle 🎉'
       },
@@ -361,7 +361,7 @@ export const instanceData = {
       login: {
         confirmAction: 'Confirm Action',
         signIn: 'Sign in to your Account',
-        logOut: 'Log out',
+        logOut: "लॉगआउट करें",
         newHere: 'Are you new here?',
         registerNewAccount: 'Register new account',
         forgotPassword: 'Did you %forgotLinkText%?',
@@ -370,8 +370,8 @@ export const instanceData = {
       },
       fields: {
         identifier: 'Username or Email address',
-        username: 'Username',
-        password: 'Password',
+        username: "उपयोगकर्ता नाम",
+        password: "पासवर्ड",
         email: 'Email',
         interest: "I'm here as..."
       },
@@ -394,8 +394,8 @@ export const instanceData = {
         code1050001: 'Your changes have been saved! 🎉',
         code1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
         code1060002: 'An email containing a recovery link has been sent to the email address you provided. %break% Check your mailbox and click on the provided link it contains.',
-        code1070003: 'Save',
-        code1070005: 'Submit',
+        code1070003: "सहेजें",
+        code1070005: "जमा करें",
         code1080001: 'An email containing a verification link has been sent to the email address you provided.',
         code1080002: 'You have successfully verified your email address.',
         code4000001: '%reason%',
@@ -457,13 +457,13 @@ export const instanceData = {
       setUuidStateTrashed: '%actor% trashed %object%.',
       setUuidStateRestored: '%actor% restored %object%.',
       inviteToChat: '%actor% invited you to the Chat: %comment% Go to %chatLink% to chat with %actor% and others.',
-      entityPlaceholderFallback: 'Content'
+      entityPlaceholderFallback: "सामग्री"
     },
     actions: {
       loadMore: 'Load more'
     },
     bin: {
-      title: 'Title',
+      title: "शीर्षक",
       trashed: 'Trashed…'
     }
   }
@@ -473,7 +473,7 @@ export const instanceLandingData = {
   subjectsData: landingSubjectsData,
   strings: {
     vision: "हम नॉनप्रॉफिट आर्गेनाइजेशन संगठन हैं जो व्यक्तिगत शिक्षा का समर्थन करते हैं और समान शैक्षणिक अवसरों के लिए काम करते हैं। यह सीखने का मंच दुनिया भर के लाखों छात्रों के लिए हजारों निर्देशक लेख, वीडियो के माध्यम से सीखना और अभ्यास प्रदान करता है - पूरी तरह से नि: शुल्क। अब हिंदी में हमसे जुड़ने का समय है।",
-    learnMore: "और जानो",
+    learnMore: "और जानें",
     democraticallyStructured: "लोकतांत्रिक",
     nonProfit: "नॉनप्रॉफिट",
     transparent: "पारदर्शक",
@@ -737,7 +737,7 @@ export const loggedInData = {
           convertToImage: 'Convert to image',
           row: 'row',
           column: 'column',
-          addType: 'Add %type%',
+          addType: "%type% जोड़ें",
           addTypeBefore: 'Add %type% before',
           deleteType: 'Delete %type%',
           confirmDelete: 'Are you sure you want to delete this %type% and the content in it?'
@@ -862,8 +862,8 @@ export const loggedInData = {
             introText2: 'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
             buttonEx: 'Add exercises',
             buttonExFolder: 'Select exercise folder',
-            buttonContent: 'Add content',
-            buttonAddType: 'Add %type%',
+            buttonContent: "सामग्री जोड़ें",
+            buttonAddType: "%type% जोड़ें",
             title: 'Add related Content or Exercises',
             invalidInput: 'Invalid id or url',
             fetchError: 'Something went wrong, please try later',
@@ -925,7 +925,7 @@ export const loggedInData = {
           multipleChoice: 'Multiple-choice',
           chooseType: 'Choose the exercise type',
           addAnswer: 'Add answer',
-          previewMode: 'Preview',
+          previewMode: "पूर्वावलोकन",
           previewIsActiveHint: 'Preview mode is active',
           previewIsDeactiveHint: 'Here you can edit'
         },
@@ -934,9 +934,9 @@ export const loggedInData = {
           idArticle: 'ID of an article, e.g. 1855',
           openArticleTab: 'Open the article in a new tab:',
           linkTitle: 'Title of the link',
-          showSolution: 'Show solution',
-          hideSolution: 'Hide solution',
-          changeLicense: 'Change license'
+          showSolution: "समाधान दिखाएं",
+          hideSolution: "समाधान छुपाएं",
+          changeLicense: "लायसेंस परिवर्तित करें"
         },
         textExerciseGroup: {
           removeExercise: 'Remove exercise',
@@ -954,12 +954,12 @@ export const loggedInData = {
           restoreInitialButton: 'Delete changes',
           confirmRestore: 'Are you sure you want to delete all your changes?'
         },
-        settings: 'Settings',
+        settings: "सेटिंग्स",
         extendedSettings: 'Extended Settings',
-        close: 'Close',
-        save: 'Save',
+        close: "बंद करें",
+        save: "सहेजें",
         saveWithReview: 'Save and get review',
-        cancel: 'Cancel',
+        cancel: "रद्द करें",
         saving: 'Saving…',
         missingChanges: 'You need to fill out the changes you made',
         missingLicenseTerms: 'You need to accept the license terms',
@@ -977,14 +977,14 @@ export const loggedInData = {
         importOtherExplanation: "Just paste the url or id of another serlo.org entity of the same type here to duplicate it's content here. Do NOT use this to make exact copies or move content. Exercise Groups and Courses are not supported (but Exercises and Course Pages).",
         importOtherWarning: 'Warning: This overwrites everything that is already present in this editor!',
         importOtherButton: 'Import content',
-        current: 'Current',
-        author: 'Author',
+        current: "वर्तमान",
+        author: "लेखक",
         createdAt: 'when?',
         ready: 'Ready to save?',
         anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.'
       },
       taxonomy: {
-        title: 'Title'
+        title: "शीर्षक"
       }
     },
     profileSettings: {
@@ -1019,8 +1019,8 @@ export const loggedInData = {
     },
     backend: {
       pages: 'Static Pages',
-      authorization: 'Authorization',
-      navigation: 'Navigation',
+      authorization: "प्राधिकरण",
+      navigation: "नेविगेशन",
       recycleBin: 'Recycle Bin'
     },
     pages: {
@@ -1070,7 +1070,7 @@ export const loggedInData = {
         hallucinationWarning: 'The AI can generate incorrect exercises. Please review carefully.',
         topic: {
           title: 'About which %topic% would you like to generate exercises?',
-          topic: 'topic',
+          topic: "विषय",
           defaultLabel: 'Topic',
           otherTopicLabel: 'Other topic',
           customTopicPlaceholder: 'Enter custom topic'

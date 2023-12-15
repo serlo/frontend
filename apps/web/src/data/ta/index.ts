@@ -77,7 +77,7 @@ export const instanceData = {
       editProfile: 'Edit Profile & Settings',
       recycleBin: 'Recycle Bin',
       diagon: 'Diagon Alley',
-      discussions: 'Comments',
+      discussions: "கருத்துகள்",
       manageRoles: 'Manage User Roles'
     },
     roles: {
@@ -136,7 +136,7 @@ export const instanceData = {
       picture: "படம்",
       previewImage: 'Preview Image',
       imageAltFallback: "படம்",
-      exercisesTitle: 'Exercises',
+      exercisesTitle: "பயிற்சிகள்",
       moreExercises: 'You can find more exercises in the following folder:',
       relatedContentTitle: 'Still want more?',
       relatedContentText: 'You can find more content on this topic here:',
@@ -185,7 +185,7 @@ export const instanceData = {
       applet: 'Load Applet from %provider%',
       twingle: 'Load Donation Form',
       audio: 'Play audio from %provider%',
-      general: 'Activate'
+      general: "செயல்படுத்துங்கள்"
     },
     comments: {
       question: "உங்களுக்கு கேள்வி உள்ளதா?",
@@ -208,7 +208,7 @@ export const instanceData = {
       copyLink: 'Copy comment link',
       commentsOverviewExplanation: 'Here you can see all comments that were written to content on %instance%.serlo.org. %break% Answer questions or find content you could improve. %break% The link above the comment brings you to the relevant entity.',
       edit: "திருத்து",
-      cancelEdit: 'Cancel',
+      cancelEdit: "ரத்து செய்",
       saveEdit: "சேமி"
     },
     revisions: {
@@ -235,11 +235,11 @@ export const instanceData = {
       helpLink: 'Revision Help'
     },
     revisionHistory: {
-      changes: 'Changes',
+      changes: "மாற்றங்கள்",
       author: "எழுத்தாளர்",
       date: "தேதி",
       edit: "திருத்தம்",
-      editLabel: 'Create a new revision starting from this specific revision',
+      editLabel: "இந்த குறிப்பிட்ட திருத்தத்திலிருந்து திருத்தத்தை உருவாக்கவும்",
       view: "காட்டு",
       viewLabel: 'Show this revision',
       status: 'Status'
@@ -289,13 +289,13 @@ export const instanceData = {
     },
     profiles: {
       aboutMe: 'About me',
-      recentActivities: 'Recent activities',
+      recentActivities: "சமீபத்திய செய்தவை",
       showAllActivities: 'Show all activities',
       noActivities: 'No activities so far.',
-      lastLogin: 'Last login',
+      lastLogin: "கடைசி உள்நுழைவு",
       yearsWithSerlo: 'Years with Serlo!',
       yearWithSerlo: 'Year with Serlo!',
-      roles: 'Roles',
+      roles: "செயல்பங்கு",
       instanceRoles: 'Roles on %lang%.serlo.org:',
       otherRoles: 'Other roles:',
       directMessage: 'Direct message',
@@ -310,10 +310,10 @@ export const instanceData = {
         success: '✨ Successfully invited!'
       },
       activityGraph: {
-        edits: 'Edits',
-        comments: 'Comments',
-        reviews: 'Reviews',
-        taxonomy: 'Taxonomy',
+        edits: "கையாளுதல்",
+        comments: "கருத்துகள்",
+        reviews: "மீளாய்வு",
+        taxonomy: "வகைப்பாடு",
         legendary: '💙 Just wow! 💙',
         untilNextLevel: '%amount% more to complete this circle 🎉'
       },
@@ -370,18 +370,18 @@ export const instanceData = {
       },
       fields: {
         identifier: 'Username or Email address',
-        username: 'Username',
-        password: 'Password',
+        username: "பயனர்பெயர்",
+        password: "கடவுச்சொல்",
         email: 'Email',
         interest: "I'm here as..."
       },
       interests: {
         pleaseChoose: 'please choose',
-        parent: 'Parent',
-        teacher: 'Teacher',
-        pupil: 'Pupil',
-        student: 'University student',
-        other: 'Other'
+        parent: "பெற்றோர்",
+        teacher: "ஆசிரியர்கள்",
+        pupil: "மாணவர்கள்",
+        student: "பல்கலைக்கழக மாணவர்",
+        other: "வேறு"
       },
       messages: {
         code1010003: 'Please confirm this action by verifying that it is you.',
@@ -394,8 +394,8 @@ export const instanceData = {
         code1050001: 'Your changes have been saved! 🎉',
         code1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
         code1060002: 'An email containing a recovery link has been sent to the email address you provided. %break% Check your mailbox and click on the provided link it contains.',
-        code1070003: 'Save',
-        code1070005: 'Submit',
+        code1070003: "சேமி",
+        code1070005: "இணைக்க",
         code1080001: 'An email containing a verification link has been sent to the email address you provided.',
         code1080002: 'You have successfully verified your email address.',
         code4000001: '%reason%',
@@ -457,13 +457,13 @@ export const instanceData = {
       setUuidStateTrashed: '%actor% trashed %object%.',
       setUuidStateRestored: '%actor% restored %object%.',
       inviteToChat: '%actor% invited you to the Chat: %comment% Go to %chatLink% to chat with %actor% and others.',
-      entityPlaceholderFallback: 'Content'
+      entityPlaceholderFallback: "உட்பொருள்"
     },
     actions: {
       loadMore: 'Load more'
     },
     bin: {
-      title: 'Title',
+      title: "தலைப்பு",
       trashed: 'Trashed…'
     }
   }
@@ -550,7 +550,7 @@ export const loggedInData = {
       unrevisedEdit: 'Show unrevised revisions',
       sortEntities: 'Sort content',
       newEntity: 'New Entity',
-      editProfile: 'Edit profile',
+      editProfile: "சுயவிவர திருத்தம்",
       directLink: 'Direct link to this content',
       analyticsLink: 'See analytics data'
     },
@@ -563,7 +563,7 @@ export const loggedInData = {
     },
     subscriptions: {
       mail: "மின்னஞ்சல்",
-      subscription: 'Subscription',
+      subscription: "சந்தா",
       noMails: 'deactivate',
       getMails: "செயல்படுத்துங்கள்",
       noNotifications: 'cancel',
@@ -721,7 +721,7 @@ export const loggedInData = {
           searchForTools: 'Search for tools…',
           duplicate: 'Duplicate',
           copyAnchorLink: "Copy link to this element",
-          remove: 'Remove',
+          remove: "நீக்கு",
           close: "நெருக்கமான",
           dragElement: 'Drag the element within the document',
           addAnElement: 'Add an element'
@@ -737,7 +737,7 @@ export const loggedInData = {
           convertToImage: 'Convert to image',
           row: 'row',
           column: 'column',
-          addType: 'Add %type%',
+          addType: "இணைக்குக %type%",
           addTypeBefore: 'Add %type% before',
           deleteType: 'Delete %type%',
           confirmDelete: 'Are you sure you want to delete this %type% and the content in it?'
@@ -754,11 +754,11 @@ export const loggedInData = {
           addButtonExplanation: 'Click to insert new element',
           quote: 'Quote',
           setColor: 'Set color',
-          resetColor: 'Reset color',
+          resetColor: "நிறத்தை மீட்டமை",
           colors: 'Colors',
           closeSubMenu: 'Close sub menu',
-          heading: 'Heading',
-          headings: 'Headings',
+          heading: "தலைப்பு",
+          headings: "தலைப்புகள்",
           link: 'Link (%ctrlOrCmd% + K)',
           noElementPasteInLists: 'Sorry, pasting elements inside of lists is not allowed.',
           linkOverlay: {
@@ -769,16 +769,16 @@ export const loggedInData = {
             customLink: 'Custom Link',
             invalidLinkWarning: 'Please provide a valid link that starts with http(s)://…'
           },
-          openInNewTab: 'Open in new tab',
-          orderedList: 'Ordered list',
-          unorderedList: 'Unordered list',
-          lists: 'Lists',
+          openInNewTab: "புதியத் தாவலில் திற",
+          orderedList: "கட்டளையிட்ட பட்டியல்",
+          unorderedList: "கட்டளையிடாத பட்டியல்",
+          lists: "பட்டியல்கள்",
           mathFormula: 'Math formula (%ctrlOrCmd% + M)',
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
           blank: 'Blank',
           bold: 'Bold (%ctrlOrCmd% + B)',
           italic: 'Italic (%ctrlOrCmd% + I)',
-          noItemsFound: 'No items found',
+          noItemsFound: "உருப்படிகள் எதுவும் இல்லை",
           colorNames: {
             blue: 'Blue',
             green: 'Green',
@@ -797,7 +797,7 @@ export const loggedInData = {
             subscript: 'Subscript',
             root: 'Root',
             mathSymbols: 'Math symbols',
-            eG: 'e.g.',
+            eG: "உதாரணமாக.",
             functions: "செயல்பாடுகள்",
             displayAsBlock: 'Display as block',
             closeMathFormulaEditor: "Close math formula editor"
@@ -849,10 +849,10 @@ export const loggedInData = {
           stillWantMore: 'Still want more?',
           moreOnTopic: 'You can find more content on this topic here',
           addSource: 'Add source',
-          removeLabel: 'Remove',
+          removeLabel: "நீக்கு",
           moveUpLabel: 'Move up',
           dragLabel: 'Drag to change order',
-          openInTab: 'Open in new tab',
+          openInTab: "புதியத் தாவலில் திற",
           sources: 'Sources',
           sourceText: 'Source Text',
           sourceUrl: 'Optional URL',
@@ -863,7 +863,7 @@ export const loggedInData = {
             buttonEx: 'Add exercises',
             buttonExFolder: 'Select exercise folder',
             buttonContent: "உள்ளடக்கம் சேர்க்கவும்",
-            buttonAddType: 'Add %type%',
+            buttonAddType: "இணைக்குக %type%",
             title: 'Add related Content or Exercises',
             invalidInput: 'Invalid id or url',
             fetchError: 'Something went wrong, please try later',
@@ -906,7 +906,7 @@ export const loggedInData = {
         },
         inputExercise: {
           chooseType: 'Choose the exercise type',
-          unit: 'Unit',
+          unit: "அலகுகள்",
           addAnswer: 'Add answer',
           enterTheValue: 'Enter the value',
           feedbackPlaceholder: 'Add a feedback message for this answer',
@@ -925,7 +925,7 @@ export const loggedInData = {
           multipleChoice: 'Multiple-choice',
           chooseType: 'Choose the exercise type',
           addAnswer: 'Add answer',
-          previewMode: 'Preview',
+          previewMode: "முற்பார்வை",
           previewIsActiveHint: 'Preview mode is active',
           previewIsDeactiveHint: 'Here you can edit'
         },
@@ -936,7 +936,7 @@ export const loggedInData = {
           linkTitle: 'Title of the link',
           showSolution: "விடையைக் காட்டு",
           hideSolution: "விடையை மறைக்கவும்",
-          changeLicense: 'Change license'
+          changeLicense: "உத்தரவு மாற்றுதல்"
         },
         textExerciseGroup: {
           removeExercise: 'Remove exercise',
@@ -954,12 +954,12 @@ export const loggedInData = {
           restoreInitialButton: 'Delete changes',
           confirmRestore: 'Are you sure you want to delete all your changes?'
         },
-        settings: 'Settings',
+        settings: "அமைப்புகள்",
         extendedSettings: 'Extended Settings',
-        close: "மூடுக",
-        save: 'Save',
+        close: "நெருக்கமான",
+        save: "சேமி",
         saveWithReview: 'Save and get review',
-        cancel: 'Cancel',
+        cancel: "ரத்து செய்",
         saving: 'Saving…',
         missingChanges: 'You need to fill out the changes you made',
         missingLicenseTerms: 'You need to accept the license terms',
@@ -967,7 +967,7 @@ export const loggedInData = {
         errorSaving: 'An error occurred during saving.',
         saveLocallyAndRefresh: 'You can store the revision locally, refresh the page and try to save again.',
         revisionSaved: 'Revision saved',
-        saveRevision: 'Save revision',
+        saveRevision: "மீட்டலை புதுப்பித்தல் ",
         changes: 'Describe your changes to the content',
         skipReview: 'Skip peer review (not recommended)',
         enableNotifs: 'Enable serlo.org notifications',
@@ -977,14 +977,14 @@ export const loggedInData = {
         importOtherExplanation: "Just paste the url or id of another serlo.org entity of the same type here to duplicate it's content here. Do NOT use this to make exact copies or move content. Exercise Groups and Courses are not supported (but Exercises and Course Pages).",
         importOtherWarning: 'Warning: This overwrites everything that is already present in this editor!',
         importOtherButton: 'Import content',
-        current: 'Current',
-        author: 'Author',
+        current: "தற்போது",
+        author: "எழுத்தாளர்",
         createdAt: 'when?',
         ready: "சேமிக்கத் தயாரா?",
         anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.'
       },
       taxonomy: {
-        title: 'Title'
+        title: "தலைப்பு"
       }
     },
     profileSettings: {
@@ -1019,8 +1019,8 @@ export const loggedInData = {
     },
     backend: {
       pages: 'Static Pages',
-      authorization: 'Authorization',
-      navigation: 'Navigation',
+      authorization: "அங்கீகரித்தல்",
+      navigation: "வழிசெலுத்தல்",
       recycleBin: 'Recycle Bin'
     },
     pages: {
@@ -1070,7 +1070,7 @@ export const loggedInData = {
         hallucinationWarning: 'The AI can generate incorrect exercises. Please review carefully.',
         topic: {
           title: 'About which %topic% would you like to generate exercises?',
-          topic: 'topic',
+          topic: "தலைப்பு",
           defaultLabel: 'Topic',
           otherTopicLabel: 'Other topic',
           customTopicPlaceholder: 'Enter custom topic'
