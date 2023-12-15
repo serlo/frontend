@@ -9,7 +9,7 @@ export const instanceData = {
   strings: {
     header: {
       slogan: "ओपन लर्निंग प्लेटफॉर्म",
-      search: "तलाश",
+      search: "खोजें",
       login: "लॉग इन करें",
       skipLinks: {
         sentence: 'Skip to %content% or %footer%',
@@ -24,19 +24,19 @@ export const instanceData = {
     footer: {
       summaryHeading: "Serlo.org सीखने की विकिपीडिया है",
       summaryText: "हम महान शिक्षा को हर किसी के लिए स्वतंत्र रूप से उपलब्ध कराने के लिए अथक रूप से काम करने वाले दूरदर्शी समुदाय का एक समुदाय हैं",
-      learnMore: "और जानो",
+      learnMore: "और जानें",
       participate: "कारण में शामिल हों",
       donate: "दान करें",
       toTop: "ऊपर"
     },
     categories: {
       articles: "लेख",
-      courses: "पाठ्यक्रम:",
+      courses: "पाठ्यक्रम",
       videos: "वीडियो",
-      applets: 'Applets',
+      applets: "एप्लेट",
       folders: "फ़ोल्डर्स",
       exercises: "अभ्यास",
-      events: 'Events',
+      events: "कार्यक्रम",
       unrevised: 'Unrevised',
       subterms: 'Subterms',
       exercisesContent: 'Exercises Content'
@@ -55,10 +55,10 @@ export const instanceData = {
       solution: "हल",
       taxonomyTerm: "टैक्सोनोमी शब्द",
       user: "उपयोगकर्ता",
-      video: 'Video',
+      video: "वीडियो",
       exerciseFolder: 'Exercise folder',
-      comment: 'Comment',
-      revision: 'Revision',
+      comment: "टिप्पणियां",
+      revision: "संशोधन",
       thread: "धागा",
       threads: "थ्रेडस",
       subject: "विषय",
@@ -86,11 +86,11 @@ export const instanceData = {
       reviewer: "समीक्षक"
     },
     share: {
-      button: "शेयर करें",
+      button: "सांझा करें",
       title: "सांझा करें",
       copyLink: "लिंक कॉपी करें",
       copySuccess: "लिंक कॉपी किया गया!",
-      close: "बंद",
+      close: "बंद करें",
       pdf: 'Download as PDF',
       pdfNoSolutions: 'PDF without solutions'
     },
@@ -130,7 +130,7 @@ export const instanceData = {
     content: {
       show: "दिखाएँ",
       hide: "छिपाएं",
-      trashedNotice: "यह सामग्री हटाने के लिए चिह्नित है ।",
+      trashedNotice: "यह सामग्री हटाने के लिए चिह्नित है",
       unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       emptyNotice: 'There is no content here. Please edit or delete.',
       picture: 'Picture',
@@ -144,10 +144,10 @@ export const instanceData = {
       exercises: {
         prerequisite: "इस कार्य के लिए आपको निम्नलिखित बुनियादी ज्ञान की आवश्यकता है",
         task: "कार्य",
-        correct: 'Correct',
+        correct: "सही",
         missedSome: 'Almost! You missed at least one correct answer.',
-        wrong: 'Wrong',
-        feedback: 'Feedback',
+        wrong: "गलत",
+        feedback: "फीडबैक",
         answer: 'Answer',
         check: "जाँच करें",
         yourAnswer: "आपका उत्तर",
@@ -189,7 +189,7 @@ export const instanceData = {
     },
     comments: {
       question: "क्या आपका कोई प्रश्न है?",
-      commentsOne: 'Comment',
+      commentsOne: "टिप्पणियां",
       commentsMany: "टिप्पणियां",
       submit: "जमा करें",
       archiveThread: "आर्काइव थ्रेड",
@@ -216,7 +216,7 @@ export const instanceData = {
       toContent: 'Go to content',
       changes: "परिवर्तन",
       context: 'Context (current version)',
-      title: "शीर्षक:",
+      title: "शीर्षक",
       content: "सामग्री",
       metaTitle: "मेटा शीर्षक",
       metaDescription: "मेटा विवरण",
@@ -463,7 +463,7 @@ export const instanceData = {
       loadMore: 'Load more'
     },
     bin: {
-      title: "शीर्षक:",
+      title: "शीर्षक",
       trashed: 'Trashed…'
     }
   }
@@ -473,7 +473,7 @@ export const instanceLandingData = {
   subjectsData: landingSubjectsData,
   strings: {
     vision: "हम नॉनप्रॉफिट आर्गेनाइजेशन संगठन हैं जो व्यक्तिगत शिक्षा का समर्थन करते हैं और समान शैक्षणिक अवसरों के लिए काम करते हैं। यह सीखने का मंच दुनिया भर के लाखों छात्रों के लिए हजारों निर्देशक लेख, वीडियो के माध्यम से सीखना और अभ्यास प्रदान करता है - पूरी तरह से नि: शुल्क। अब हिंदी में हमसे जुड़ने का समय है।",
-    learnMore: "और जानो",
+    learnMore: "और जानें",
     democraticallyStructured: "लोकतांत्रिक",
     nonProfit: "नॉनप्रॉफिट",
     transparent: "पारदर्शक",
@@ -533,7 +533,7 @@ export const loggedInData = {
       moveOrCopyItems: 'Move or copy items',
       addGroupedTextExercise: "समूहीकृत-पाठ-व्यायाम",
       changeLicense: "लायसेंस परिवर्तित करें",
-      subscribe: "सदस्यता लें",
+      subscribe: "सदस्य बनें",
       subscribeNotifications: "सूचनाएं प्राप्त करें",
       subscribeNotificationsAndMail: "ईमेल के माध्यम से सूचनाएं प्राप्त करें ।",
       unsubscribeNotifications: "सदस्यता रद्द",
@@ -563,7 +563,7 @@ export const loggedInData = {
     },
     subscriptions: {
       mail: "ई-मेल",
-      subscription: "सब्स्क्रिप्शन",
+      subscription: "सदस्यता",
       noMails: "निष्क्रिय करें ",
       getMails: 'activate',
       noNotifications: "रद्द करें",
@@ -572,12 +572,12 @@ export const loggedInData = {
     },
     revisions: {
       checkout: {
-        action: "स्वीकारें",
+        action: "स्वीकार करें ",
         title: "संशोधन स्वीकारें",
         explanation: "कृपया लेखक को कुछ प्रतिक्रिया दें"
       },
       reject: {
-        action: "अस्वीकार",
+        action: "अस्वीकार करें",
         title: "संशोधन अस्वीकारें",
         explanation: 'Please tell the author why you will not accept the submission.'
       },
@@ -722,7 +722,7 @@ export const loggedInData = {
           duplicate: 'Duplicate',
           copyAnchorLink: "Copy link to this element",
           remove: 'Remove',
-          close: "बंद",
+          close: "बंद करें",
           dragElement: 'Drag the element within the document',
           addAnElement: 'Add an element'
         },
@@ -804,11 +804,11 @@ export const loggedInData = {
           }
         },
         video: {
-          title: 'Video',
+          title: "वीडियो",
           description: 'Embed YouTube, Vimeo, Wikimedia Commons or BR videos.',
           videoUrl: 'Video URL',
           videoDescription: 'Description',
-          titlePlaceholder: "शीर्षक:",
+          titlePlaceholder: "शीर्षक",
           url: 'URL',
           seoTitle: 'Title for search engines'
         },
@@ -839,12 +839,12 @@ export const loggedInData = {
         applet: {
           seoTitle: 'Title for search engines',
           seoDesc: 'Description for search engines',
-          placeholder: "शीर्षक:"
+          placeholder: "शीर्षक"
         },
         article: {
           seoTitle: 'Title for search engines',
           seoDesc: 'Description for search engines',
-          title: "शीर्षक:",
+          title: "शीर्षक",
           writeShortIntro: 'Write a short introduction',
           stillWantMore: 'Still want more?',
           moreOnTopic: 'You can find more content on this topic here',
@@ -878,15 +878,15 @@ export const loggedInData = {
         },
         course: {
           seoDesc: 'Description for search engines',
-          title: "शीर्षक:",
+          title: "शीर्षक",
           removeCoursePage: 'Remove course page',
           addCoursePage: 'Add course page'
         },
         coursePage: {
           explanation: 'Explanation',
-          video: 'Video',
+          video: "वीडियो",
           question: 'Question',
-          title: "शीर्षक:"
+          title: "शीर्षक"
         },
         exercise: {
           scMcExercise: 'Choice Exercise',
@@ -902,7 +902,7 @@ export const loggedInData = {
         event: {
           seoTitle: 'Title for search engines',
           seoDesc: 'Description for search engines',
-          title: "शीर्षक:"
+          title: "शीर्षक"
         },
         inputExercise: {
           chooseType: 'Choose the exercise type',
@@ -918,7 +918,7 @@ export const loggedInData = {
           }
         },
         page: {
-          title: "शीर्षक:"
+          title: "शीर्षक"
         },
         scMcExercise: {
           singleChoice: 'Single-choice',
@@ -956,7 +956,7 @@ export const loggedInData = {
         },
         settings: "सेटिंग्स",
         extendedSettings: 'Extended Settings',
-        close: "बंद",
+        close: "बंद करें",
         save: "सहेजें",
         saveWithReview: 'Save and get review',
         cancel: "रद्द करें",
@@ -984,7 +984,7 @@ export const loggedInData = {
         anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.'
       },
       taxonomy: {
-        title: "शीर्षक:"
+        title: "शीर्षक"
       }
     },
     profileSettings: {
