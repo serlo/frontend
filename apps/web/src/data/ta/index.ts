@@ -55,7 +55,7 @@ export const instanceData = {
       solution: "தீர்வு",
       taxonomyTerm: 'Taxonomy Term',
       user: "பயனர்",
-      video: 'Video',
+      video: "காணொளி",
       exerciseFolder: 'Exercise folder',
       comment: "கருத்து",
       revision: "மீட்டல்",
@@ -82,7 +82,7 @@ export const instanceData = {
     },
     roles: {
       donor: 'Donor',
-      author: "ஆசிரியர்",
+      author: "எழுத்தாளர்",
       reviewer: 'Reviewer'
     },
     share: {
@@ -90,7 +90,7 @@ export const instanceData = {
       title: "பகிர்!",
       copyLink: "இணைப்பை நகலெடுக்கவும்",
       copySuccess: "இணைப்பு நகலெடுக்கப்பட்டது!",
-      close: "மூடு",
+      close: "நெருக்கமான",
       pdf: 'Download as PDF',
       pdfNoSolutions: 'PDF without solutions'
     },
@@ -135,7 +135,7 @@ export const instanceData = {
       emptyNotice: 'There is no content here. Please edit or delete.',
       picture: "படம்",
       previewImage: 'Preview Image',
-      imageAltFallback: 'Image',
+      imageAltFallback: "படம்",
       exercisesTitle: "பயிற்சிகள்",
       moreExercises: 'You can find more exercises in the following folder:',
       relatedContentTitle: 'Still want more?',
@@ -236,7 +236,7 @@ export const instanceData = {
     },
     revisionHistory: {
       changes: "மாற்றங்கள்",
-      author: "ஆசிரியர்",
+      author: "எழுத்தாளர்",
       date: "தேதி",
       edit: "திருத்தம்",
       editLabel: "இந்த குறிப்பிட்ட திருத்தத்திலிருந்து திருத்தத்தை உருவாக்கவும்",
@@ -476,17 +476,17 @@ export const instanceLandingData = {
     learnMore: "மேலும் அறிக",
     democraticallyStructured: "ஜனநாயக ரீதியாக",
     nonProfit: "இலாப நோக்கற்றது",
-    transparent: "ஒளி புகும்",
+    transparent: "வெளிப்படைத்தன்மை",
     openlyLicensed: "திறந்த உரிமம்",
     adFree: "விளம்பரமின்றி",
     freeOfCharge: "இலவசம்",
-    wikiTitle: "Serlo ஓர் கற்றலுக்கான விக்கிபீடியா",
+    wikiTitle: "Serlo கற்பதற்கு விக்கிபீடியா போன்றது",
     wikiText: "Serlo.org விக்கிபீடியாபோல திறந்த உரிமம் கொண்ட ஓர் இணையத்தளம். இது எம் எழுத்தாளர் குழுவால் உருவாக்கப்படுகின்றது.",
-    movementTitle: "நீங்களும் இதில் பணியாற்றலாம்",
+    movementTitle: "நீங்களும் இதில் பண்ணியாற்றலாம்",
     callForAuthors: "ஆசிரியர்களும் ஆர்வமுள்ள எழுத்தாளர்களும் பாடங்களை உருவாக்க பல வழிகளில் உதவலாம். புதுப் பயிற்சிகளை உருவாக்குவதற்கும் இந்தத் தளத்தின் சில உள்ளடக்கங்களை இன்னும் மேம்படுத்துவதற்கும் நீங்கள் உதவலாம். அதற்கு கீழுள்ள இணையத்திற்குச் செல்லவும்.",
-    communityLink: "எழுத்தாளருக்கான பக்கத்தைப் பார்வையிடவும்",
+    communityLink: "ஆசிரியர்களுக்கான பக்கத்தை  பார்வையிடுங்கள்",
     callForOther: "நாங்கள் பல வகையான வேலைவாய்ப்புகளையும் பொதுச்சேவையாகப் பணியாற்றும் வாய்ப்புகளையும் வழங்குகின்றோம். இந்த இணையத்தளதிற்கு மொழிபெயர்ப்பாளர்கள், வடிவமைப்பாளர்கள், தொலைத்தொடர்பாளர்கள் போன்ற துறை சார்ந்தவர்களை நாங்கள் தேடி நிற்கின்றோம். இணைந்து கொள்ளுங்கள்.",
-    getInvolved: "நீங்களும் ஈடுபடுங்கள்!"
+    getInvolved: "பங்கேற்கவும்!"
   }
 };
 export const serverSideStrings = {
@@ -664,7 +664,7 @@ export const loggedInData = {
           lineNumbersTooltip: 'Should users see line numbers?'
         },
         image: {
-          title: 'Image',
+          title: "படம்",
           description: 'Upload images.',
           upload: 'Upload',
           imageUrl: 'Image URL',
@@ -722,7 +722,7 @@ export const loggedInData = {
           duplicate: 'Duplicate',
           copyAnchorLink: "Copy link to this element",
           remove: "நீக்கு",
-          close: "மூடு",
+          close: "நெருக்கமான",
           dragElement: 'Drag the element within the document',
           addAnElement: 'Add an element'
         },
@@ -804,7 +804,7 @@ export const loggedInData = {
           }
         },
         video: {
-          title: 'Video',
+          title: "காணொளி",
           description: 'Embed YouTube, Vimeo, Wikimedia Commons or BR videos.',
           videoUrl: 'Video URL',
           videoDescription: "விவரிப்பு:",
@@ -845,7 +845,7 @@ export const loggedInData = {
           seoTitle: 'Title for search engines',
           seoDesc: 'Description for search engines',
           title: "தலைப்பு",
-          writeShortIntro: 'Write a short introduction',
+          writeShortIntro: "ஒரு சிறிய அறிமுகத்தை எழுதுங்கள்",
           stillWantMore: 'Still want more?',
           moreOnTopic: 'You can find more content on this topic here',
           addSource: 'Add source',
@@ -884,7 +884,7 @@ export const loggedInData = {
         },
         coursePage: {
           explanation: "விளக்கம்",
-          video: 'Video',
+          video: "காணொளி",
           question: "கேள்வி",
           title: "தலைப்பு"
         },
@@ -956,7 +956,7 @@ export const loggedInData = {
         },
         settings: "அமைப்புகள்",
         extendedSettings: 'Extended Settings',
-        close: "மூடு",
+        close: "நெருக்கமான",
         save: "சேமி",
         saveWithReview: 'Save and get review',
         cancel: "ரத்து செய்",
@@ -978,7 +978,7 @@ export const loggedInData = {
         importOtherWarning: 'Warning: This overwrites everything that is already present in this editor!',
         importOtherButton: 'Import content',
         current: "தற்போது",
-        author: "ஆசிரியர்",
+        author: "எழுத்தாளர்",
         createdAt: 'when?',
         ready: "சேமிக்கத் தயாரா?",
         anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.'
