@@ -22,21 +22,21 @@ export const instanceData = {
       agree: "Accepte d'utiliser la recherche"
     },
     footer: {
-      summaryHeading: "Serlo.org est le Wikipédia pour l'apprentissage.",
-      summaryText: "Nous sommes une communauté de visionnaires qui travaille sans relâche pour offrir une éducation gratuite et accessible à tous.",
+      summaryHeading: "Serlo.org est le Wikipedia pour l'apprentissage.",
+      summaryText: "Nous sommes une communauté de visionnaires qui travaillent sans relâche pour offrir une éducation gratuite accessible à tous.",
       learnMore: "En savoir plus",
-      participate: "Rejoigne-nous",
+      participate: "Participer",
       donate: "Faire un don",
       toTop: "En haut"
     },
     categories: {
-      articles: 'Articles',
-      courses: "Cours",
-      videos: "Vidéos",
-      applets: "Applet",
+      articles: "articles",
+      courses: "cours",
+      videos: "vidéos",
+      applets: 'Applets',
       folders: "Dossiers",
-      exercises: "Exercices",
-      events: "Évènements",
+      exercises: "exercices",
+      events: "Événements",
       unrevised: "Non révisé",
       subterms: 'Subterms',
       exercisesContent: "Contenu des exercices"
@@ -51,7 +51,7 @@ export const instanceData = {
       exerciseGroup: "Groupe d'exercices",
       topic: "Dossier",
       groupedExercise: "Exercice groupé",
-      page: 'Page',
+      page: "page",
       solution: "solution",
       taxonomyTerm: "Terme de taxonomie",
       user: "Utilisateur·Utilisatrice",
@@ -82,7 +82,7 @@ export const instanceData = {
     },
     roles: {
       donor: "Donneur·e",
-      author: "Auteur",
+      author: "Auteur·e",
       reviewer: "Réviseur·e"
     },
     share: {
@@ -128,7 +128,7 @@ export const instanceData = {
       noRevisionForPage: 'unreviewed page'
     },
     content: {
-      show: "annonce",
+      show: "montrer",
       hide: "cacher",
       trashedNotice: "Ce contenu est marqué pour être supprimé.",
       unrevisedNotice: "Ce contenu n'a pas encore accepté de révision. Veuillez utiliser %link% pour un aperçu.",
@@ -136,7 +136,7 @@ export const instanceData = {
       picture: "Image",
       previewImage: "Aperçu de l'image",
       imageAltFallback: 'Image',
-      exercisesTitle: "Exercices",
+      exercisesTitle: "exercices",
       moreExercises: "Tu peux trouver plus d'exercices dans le dossier suivant :",
       relatedContentTitle: "Tu en veux encore plus?",
       relatedContentText: "Tu peux en trouver plus ici :",
@@ -147,14 +147,14 @@ export const instanceData = {
         correct: "Correcte",
         missedSome: "Presque ! Tu as manqué au moins une réponse correcte.",
         wrong: "Incorrect",
-        feedback: "Commentaire",
-        answer: "Réponse",
+        feedback: "Ton avis",
+        answer: "Répondre",
         check: "Vérifier",
         yourAnswer: "Ta réponse...",
         chooseOption: "Sélectionne une des options :",
         printModeChooseOption: "Sélectionne une des options :",
-        showSolution: "Montrer la solution",
-        hideSolution: "Cacher la solution"
+        showSolution: "Afficher la solution",
+        hideSolution: "Masquer la solution"
       },
       boxTypes: {
         blank: 'Blank',
@@ -236,10 +236,10 @@ export const instanceData = {
     },
     revisionHistory: {
       changes: "Modifications",
-      author: "Auteur",
+      author: "Auteur·e",
       date: 'Date',
       edit: "Modifier",
-      editLabel: "Créer une nouvelle révision à partir de cette révision spécifique",
+      editLabel: "Créer une nouvelle révision à partir de cette révision",
       view: "Afficher",
       viewLabel: "Afficher cette révision",
       status: "Statut"
@@ -482,7 +482,7 @@ export const instanceLandingData = {
     freeOfCharge: "gratuit",
     wikiTitle: "Serlo est le Wikipédia pour l'apprentissage",
     wikiText: "Tout comme Wikipédia, cette plateforme est créée par une communauté d'auteur·e·s engagé·e·s. Serlo Education est gérée et détenue par des équipes décentralisées de bénévoles et de professionnel·le·s dans le monde entier.",
-    movementTitle: "Rejoigne notre mouvement pour l'éducation libre",
+    movementTitle: "Rejoignez notre mouvement pour l'éducation libre",
     callForAuthors: "Nous cherchons des enseignant·e·s et des éducateur·e·s enthousiastes et passionné·e·s de leur matière. Devenez un·e auteur·e sur serlo.org, créez de nouveaux contenus et aidez-nous à assurer la qualité de la plateforme d'apprentissage.",
     communityLink: "Visitez la page d'accueil d'auteur·e·s",
     callForOther: "Nous offrons une variété d'emplois et de possibilités de bénévolat dans les domaines du développement de logiciel, de la conception, la traduction, la communication, la gestion de projet et d'autres.",
@@ -515,7 +515,7 @@ export const loggedInData = {
       title: "Changer le mot de passe"
     }, {
       url: '/user/settings',
-      title: "Paramètres"
+      title: "Réglages"
     }, {
       url: '/auth/logout',
       title: "Se déconnecter"
@@ -525,7 +525,7 @@ export const loggedInData = {
     tools: "Autres outils",
     authorMenu: {
       log: "Historique",
-      settings: "Paramètres",
+      settings: "Réglages",
       moveCoursePage: "Déplacer cette page vers un autre cours",
       thisCoursePage: "Cette page de cours",
       addCoursePage: "Ajouter une page de cours",
@@ -550,7 +550,7 @@ export const loggedInData = {
       unrevisedEdit: "Afficher les révisions non révisées",
       sortEntities: "Trier le contenu",
       newEntity: "Nouveau contenu",
-      editProfile: "Éditer profil",
+      editProfile: "Modifier profil",
       directLink: "Lien direct vers ce contenu",
       analyticsLink: 'See analytics data'
     },
@@ -563,7 +563,7 @@ export const loggedInData = {
     },
     subscriptions: {
       mail: 'E-mails',
-      subscription: "Abonnements",
+      subscription: "Abonnement",
       noMails: "désactiver",
       getMails: "activer",
       noNotifications: "annuler",
@@ -629,19 +629,19 @@ export const loggedInData = {
           explanation: 'It will not be displayed to users. You can either remove it or asks developers for support.'
         },
         equations: {
-          title: "Termes et équations",
+          title: 'Terms and equations',
           description: 'Write term manipulations and solve multiline equations.',
           leftHandSide: "côté gauche",
           transformation: "Transformation",
           mode: 'Mode',
           transformationExample: 'e.g. -3x',
-          transformationOfEquations: "Transformation des équations",
-          transformationOfTerms: "Transformation des termes",
-          addNewRow: "Ajouter une nouvelle ligne",
+          transformationOfEquations: 'Transformation of equations',
+          transformationOfTerms: 'Transformation of terms',
+          addNewRow: 'Add new row',
           explanation: "Explication",
-          term: "Terme",
-          rightHandSide: "côté droit",
-          combineLikeTerms: "Combiner comme des termes.",
+          term: 'Term',
+          rightHandSide: 'right-hand side',
+          combineLikeTerms: 'Combine like terms.',
           setEqual: 'Set the terms equal to each other.',
           firstExplanation: 'First explanation',
           moveUpLabel: 'Move up',
@@ -934,8 +934,8 @@ export const loggedInData = {
           idArticle: "ID d'un article, par exemple 1855",
           openArticleTab: "Ouvrir l'article dans un nouvel onglet :",
           linkTitle: "Titre du lien",
-          showSolution: "Montrer la solution",
-          hideSolution: "Cacher la solution",
+          showSolution: "Afficher la solution",
+          hideSolution: "Masquer la solution",
           changeLicense: "Changer license"
         },
         textExerciseGroup: {
@@ -954,7 +954,7 @@ export const loggedInData = {
           restoreInitialButton: 'Delete changes',
           confirmRestore: 'Are you sure you want to delete all your changes?'
         },
-        settings: "Paramètres",
+        settings: "Réglages",
         extendedSettings: "Paramètres avancés",
         close: "Fermer",
         save: "Sauvegarder",
@@ -977,8 +977,8 @@ export const loggedInData = {
         importOtherExplanation: "Just paste the url or id of another serlo.org entity of the same type here to duplicate it's content here. Do NOT use this to make exact copies or move content. Exercise Groups and Courses are not supported (but Exercises and Course Pages).",
         importOtherWarning: 'Warning: This overwrites everything that is already present in this editor!',
         importOtherButton: 'Import content',
-        current: "Actuelle",
-        author: "Auteur",
+        current: "Actuel",
+        author: "Auteur·e",
         createdAt: "Créé le",
         ready: 'Ready to save?',
         anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.'
@@ -1090,7 +1090,7 @@ export const loggedInData = {
           subtasksTitleExerciseGroup: 'How many subtasks should there be?',
           noSubtasks: 'No',
           yesSubtasks: 'Yes',
-          subtasksLabel: "Exercices",
+          subtasksLabel: "exercices",
           numberOfSubtasksPlaceholder: 'Number of subtasks',
           chooseOption: "Choose an option",
           multipleChoice: "Multiple Choice",
