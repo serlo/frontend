@@ -1,7 +1,8 @@
+import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
+
 import { TopicCategories } from './topic-categories'
 import { Link } from '@/components/content/link'
 import { TaxonomySubTerm } from '@/data-types'
-import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 
 export interface SubTopicProps {
   data: TaxonomySubTerm

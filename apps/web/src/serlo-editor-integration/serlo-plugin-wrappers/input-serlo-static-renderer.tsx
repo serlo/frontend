@@ -1,3 +1,6 @@
+import { InputExerciseStaticRenderer } from '@serlo/editor/src/plugins/input-exercise/static'
+import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
+import { EditorInputExerciseDocument } from '@serlo/editor/src/types/editor-plugins'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 
@@ -6,9 +9,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
-import { InputExerciseStaticRenderer } from '@/serlo-editor/plugins/input-exercise/static'
-import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorInputExerciseDocument } from '@/serlo-editor/types/editor-plugins'
 
 export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
   const entityId = useEntityId()

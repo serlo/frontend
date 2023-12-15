@@ -1,4 +1,7 @@
 import { User } from '@serlo/authorization'
+import { editorRenderers } from '@serlo/editor/src/plugin/helpers/editor-renderer'
+import { parseDocumentString } from '@serlo/editor/src/static-renderer/helper/parse-document-string'
+import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
 import { gql } from 'graphql-request'
 import { NextPage } from 'next'
 import Head from 'next/head'
@@ -18,9 +21,6 @@ import { sharedUserFragments } from '@/fetcher/user/query'
 import { isMac } from '@/helper/client-detection'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useMutationFetch } from '@/mutations/helper/use-mutation-fetch'
-import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
-import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
-import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 const ContentPage: NextPage = () => {

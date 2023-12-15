@@ -1,3 +1,5 @@
+import { SpoilerRenderer } from '@serlo/editor/src/plugins/spoiler/renderer'
+
 import { ProfileDescriptionEditor } from './profile-description-editor'
 import { ProfileExperimental } from './profile-experimental'
 import { getAvatarUrl } from './user-link'
@@ -6,7 +8,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
-import { SpoilerRenderer } from '@/serlo-editor/plugins/spoiler/renderer'
 
 interface ProfileSettingsProps {
   rawDescription: string

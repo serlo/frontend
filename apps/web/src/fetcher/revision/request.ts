@@ -1,4 +1,6 @@
 import { AuthorizationPayload } from '@serlo/authorization'
+import { parseDocumentString } from '@serlo/editor/src/static-renderer/helper/parse-document-string'
+import { EditorExerciseDocument } from '@serlo/editor/src/types/editor-plugins'
 import { request } from 'graphql-request'
 
 import { revisionQuery } from './query'
@@ -11,8 +13,6 @@ import {
 } from '../graphql-types/operations'
 import { endpoint } from '@/api/endpoint'
 import { PageNotFound, RevisionPage, UuidRevType } from '@/data-types'
-import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
-import { EditorExerciseDocument } from '@/serlo-editor/types/editor-plugins'
 
 export async function requestRevision(
   revisionId: number,

@@ -120,10 +120,6 @@ export interface AbstractExerciseRevisionEventsArgs {
   last?: InputMaybe<Scalars['Int']['input']>;
 }
 
-export interface AbstractNavigationChild {
-  navigation?: Maybe<Navigation>;
-}
-
 export interface AbstractNotificationEvent {
   actor: User;
   date: Scalars['DateTime']['output'];
@@ -259,16 +255,9 @@ export interface AbstractUuidEventsArgs {
 
 export interface AbstractUuidConnection {
   __typename?: 'AbstractUuidConnection';
-  edges: Array<AbstractUuidCursor>;
   nodes: Array<AbstractUuid>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int']['output'];
-}
-
-export interface AbstractUuidCursor {
-  __typename?: 'AbstractUuidCursor';
-  cursor: Scalars['String']['output'];
-  node: AbstractUuid;
 }
 
 export interface AddRevisionResponse {
@@ -285,7 +274,7 @@ export interface AiQuery {
 
 
 export interface AiQueryExecutePromptArgs {
-  prompt: Scalars['String']['input'];
+  messages: Array<ChatCompletionMessageParam>;
 }
 
 export interface AliasInput {
@@ -395,16 +384,9 @@ export interface AppletRevisionThreadsArgs {
 
 export interface AppletRevisionConnection {
   __typename?: 'AppletRevisionConnection';
-  edges: Array<AppletRevisionCursor>;
   nodes: Array<AppletRevision>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int']['output'];
-}
-
-export interface AppletRevisionCursor {
-  __typename?: 'AppletRevisionCursor';
-  cursor: Scalars['String']['output'];
-  node: AppletRevision;
 }
 
 export interface Article extends AbstractEntity, AbstractRepository, AbstractTaxonomyTermChild, AbstractUuid, InstanceAware, ThreadAware {
@@ -500,46 +482,18 @@ export interface ArticleRevisionThreadsArgs {
 
 export interface ArticleRevisionConnection {
   __typename?: 'ArticleRevisionConnection';
-  edges: Array<ArticleRevisionCursor>;
   nodes: Array<ArticleRevision>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int']['output'];
-}
-
-export interface ArticleRevisionCursor {
-  __typename?: 'ArticleRevisionCursor';
-  cursor: Scalars['String']['output'];
-  node: ArticleRevision;
 }
 
 export interface CacheRemoveInput {
   keys: Array<Scalars['String']['input']>;
 }
 
-export interface CacheRemoveResponse {
-  __typename?: 'CacheRemoveResponse';
-  query: Query;
-  success: Scalars['Boolean']['output'];
-}
-
-export interface CacheSetInput {
-  key: Scalars['String']['input'];
-  value: Scalars['JSON']['input'];
-}
-
-export interface CacheSetResponse {
-  __typename?: 'CacheSetResponse';
-  query: Query;
-  success: Scalars['Boolean']['output'];
-}
-
-export interface CacheUpdateInput {
-  keys: Array<Scalars['String']['input']>;
-}
-
-export interface CacheUpdateResponse {
-  __typename?: 'CacheUpdateResponse';
-  success: Scalars['Boolean']['output'];
+export interface ChatCompletionMessageParam {
+  content: Scalars['String']['input'];
+  role: Scalars['String']['input'];
 }
 
 export interface CheckoutRevisionInput {
@@ -591,16 +545,9 @@ export interface CommentEventsArgs {
 
 export interface CommentConnection {
   __typename?: 'CommentConnection';
-  edges: Array<CommentEdge>;
   nodes: Array<Comment>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int']['output'];
-}
-
-export interface CommentEdge {
-  __typename?: 'CommentEdge';
-  cursor: Scalars['String']['output'];
-  node: Comment;
 }
 
 export enum CommentStatus {
@@ -753,16 +700,9 @@ export interface CoursePageRevisionThreadsArgs {
 
 export interface CoursePageRevisionConnection {
   __typename?: 'CoursePageRevisionConnection';
-  edges: Array<CoursePageRevisionCursor>;
   nodes: Array<CoursePageRevision>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int']['output'];
-}
-
-export interface CoursePageRevisionCursor {
-  __typename?: 'CoursePageRevisionCursor';
-  cursor: Scalars['String']['output'];
-  node: CoursePageRevision;
 }
 
 export interface CourseRevision extends AbstractEntityRevision, AbstractRevision, AbstractUuid, ThreadAware {
@@ -803,16 +743,9 @@ export interface CourseRevisionThreadsArgs {
 
 export interface CourseRevisionConnection {
   __typename?: 'CourseRevisionConnection';
-  edges: Array<CourseRevisionCursor>;
   nodes: Array<CourseRevision>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int']['output'];
-}
-
-export interface CourseRevisionCursor {
-  __typename?: 'CourseRevisionCursor';
-  cursor: Scalars['String']['output'];
-  node: CourseRevision;
 }
 
 export interface CreateCommentNotificationEvent extends AbstractNotificationEvent, InstanceAware {
@@ -1555,40 +1488,6 @@ export interface Mutation {
   uuid: UuidMutation;
 }
 
-export interface Navigation {
-  __typename?: 'Navigation';
-  path: NavigationNodeConnection;
-}
-
-
-export interface NavigationPathArgs {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-}
-
-export interface NavigationNode {
-  __typename?: 'NavigationNode';
-  id?: Maybe<Scalars['Int']['output']>;
-  label: Scalars['String']['output'];
-  url?: Maybe<Scalars['String']['output']>;
-}
-
-export interface NavigationNodeConnection {
-  __typename?: 'NavigationNodeConnection';
-  edges?: Maybe<Array<Maybe<NavigationNodeEdge>>>;
-  nodes: Array<NavigationNode>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
-}
-
-export interface NavigationNodeEdge {
-  __typename?: 'NavigationNodeEdge';
-  cursor: Scalars['String']['output'];
-  node: NavigationNode;
-}
-
 export interface Notification {
   __typename?: 'Notification';
   email: Scalars['Boolean']['output'];
@@ -1666,7 +1565,7 @@ export interface OauthMutationAcceptLogoutArgs {
   challenge: Scalars['String']['input'];
 }
 
-export interface Page extends AbstractNavigationChild, AbstractRepository, AbstractUuid, InstanceAware, ThreadAware {
+export interface Page extends AbstractRepository, AbstractUuid, InstanceAware, ThreadAware {
   __typename?: 'Page';
   alias: Scalars['String']['output'];
   currentRevision?: Maybe<PageRevision>;
@@ -1675,7 +1574,6 @@ export interface Page extends AbstractNavigationChild, AbstractRepository, Abstr
   id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
-  navigation?: Maybe<Navigation>;
   revisions: PageRevisionConnection;
   threads: ThreadsConnection;
   title: Scalars['String']['output'];
@@ -1820,9 +1718,6 @@ export interface PageRevisionCursor {
 
 export interface Query {
   __typename?: 'Query';
-  activeAuthors: UserConnection;
-  activeDonors: UserConnection;
-  activeReviewers: UserConnection;
   ai: AiQuery;
   authorization: Scalars['JSON']['output'];
   entity?: Maybe<EntityQuery>;
@@ -1838,30 +1733,6 @@ export interface Query {
   user: UserQuery;
   uuid?: Maybe<AbstractUuid>;
   version: Scalars['String']['output'];
-}
-
-
-export interface QueryActiveAuthorsArgs {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-}
-
-
-export interface QueryActiveDonorsArgs {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-}
-
-
-export interface QueryActiveReviewersArgs {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
@@ -2244,7 +2115,7 @@ export interface TaxonomyEntityLinksResponse {
   success: Scalars['Boolean']['output'];
 }
 
-export interface TaxonomyTerm extends AbstractNavigationChild, AbstractUuid, InstanceAware, ThreadAware {
+export interface TaxonomyTerm extends AbstractUuid, InstanceAware, ThreadAware {
   __typename?: 'TaxonomyTerm';
   alias: Scalars['String']['output'];
   children: AbstractUuidConnection;
@@ -2253,7 +2124,6 @@ export interface TaxonomyTerm extends AbstractNavigationChild, AbstractUuid, Ins
   id: Scalars['Int']['output'];
   instance: Instance;
   name: Scalars['String']['output'];
-  navigation?: Maybe<Navigation>;
   parent?: Maybe<TaxonomyTerm>;
   taxonomyId: Scalars['Int']['output'];
   threads: ThreadsConnection;
@@ -2898,24 +2768,12 @@ export interface VideoRevisionCursor {
 
 export interface _CacheMutation {
   __typename?: '_cacheMutation';
-  remove: CacheRemoveResponse;
-  set: CacheSetResponse;
-  update: CacheUpdateResponse;
+  remove: DefaultResponse;
 }
 
 
 export interface _CacheMutationRemoveArgs {
   input: CacheRemoveInput;
-}
-
-
-export interface _CacheMutationSetArgs {
-  input: CacheSetInput;
-}
-
-
-export interface _CacheMutationUpdateArgs {
-  input: CacheUpdateInput;
 }
 
 export type OauthLoginMutationVariables = Exact<{
@@ -3141,8 +2999,6 @@ type License_Page_Fragment = { __typename?: 'Page', license: { __typename?: 'Lic
 type License_Video_Fragment = { __typename?: 'Video', license: { __typename?: 'License', id: number } };
 
 export type LicenseFragment = License_Applet_Fragment | License_Article_Fragment | License_Course_Fragment | License_CoursePage_Fragment | License_Event_Fragment | License_Exercise_Fragment | License_ExerciseGroup_Fragment | License_GroupedExercise_Fragment | License_Page_Fragment | License_Video_Fragment;
-
-export type PathFragment = { __typename?: 'Navigation', path: { __typename?: 'NavigationNodeConnection', nodes: Array<{ __typename?: 'NavigationNode', label: string, url?: string | null, id?: number | null }> } };
 
 export type PathToRootFragment = { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number, parent?: { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number, parent?: { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number, parent?: { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number, parent?: { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number, parent?: { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number, parent?: { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number, parent?: { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number, parent?: { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number, parent?: { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number } | null } | null } | null } | null } | null } | null } | null } | null } | null };
 
@@ -3662,61 +3518,3 @@ export type GetTrashedEntitiesQueryVariables = Exact<{
 
 
 export type GetTrashedEntitiesQuery = { __typename?: 'Query', entity?: { __typename?: 'EntityQuery', deletedEntities: { __typename?: 'DeletedEntitiesConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'DeletedEntity', dateOfDeletion?: string | null, entity?: { __typename: 'Applet', id: number, alias: string, title: string } | { __typename: 'Article', id: number, alias: string, title: string } | { __typename: 'Course', id: number, alias: string, title: string } | { __typename: 'CoursePage', id: number, alias: string, title: string } | { __typename: 'Event', id: number, alias: string, title: string } | { __typename: 'Exercise', id: number, alias: string, title: string } | { __typename: 'ExerciseGroup', id: number, alias: string, title: string } | { __typename: 'GroupedExercise', id: number, alias: string, title: string } | { __typename: 'Video', id: number, alias: string, title: string } | null }> } } | null };
-
-export type FetchExerciseFolderQueryVariables = Exact<{
-  id: Scalars['Int']['input'];
-}>;
-
-
-export type FetchExerciseFolderQuery = { __typename?: 'Query', uuid?: { __typename?: 'Applet' } | { __typename?: 'AppletRevision' } | { __typename?: 'Article' } | { __typename?: 'ArticleRevision' } | { __typename?: 'Comment' } | { __typename?: 'Course' } | { __typename?: 'CoursePage' } | { __typename?: 'CoursePageRevision' } | { __typename?: 'CourseRevision' } | { __typename?: 'Event' } | { __typename?: 'EventRevision' } | { __typename?: 'Exercise' } | { __typename?: 'ExerciseGroup' } | { __typename?: 'ExerciseGroupRevision' } | { __typename?: 'ExerciseRevision' } | { __typename?: 'GroupedExercise' } | { __typename?: 'GroupedExerciseRevision' } | { __typename?: 'Page' } | { __typename?: 'PageRevision' } | { __typename: 'TaxonomyTerm', type: TaxonomyTermType, children: { __typename?: 'AbstractUuidConnection', nodes: Array<{ __typename?: 'Applet' } | { __typename?: 'AppletRevision' } | { __typename?: 'Article' } | { __typename?: 'ArticleRevision' } | { __typename?: 'Comment' } | { __typename?: 'Course' } | { __typename?: 'CoursePage' } | { __typename?: 'CoursePageRevision' } | { __typename?: 'CourseRevision' } | { __typename?: 'Event' } | { __typename?: 'EventRevision' } | { __typename: 'Exercise', id: number, trashed: boolean, currentRevision?: { __typename?: 'ExerciseRevision', id: number } | null } | { __typename: 'ExerciseGroup', id: number, trashed: boolean, currentRevision?: { __typename?: 'ExerciseGroupRevision', id: number } | null } | { __typename?: 'ExerciseGroupRevision' } | { __typename?: 'ExerciseRevision' } | { __typename?: 'GroupedExercise' } | { __typename?: 'GroupedExerciseRevision' } | { __typename?: 'Page' } | { __typename?: 'PageRevision' } | { __typename?: 'TaxonomyTerm' } | { __typename?: 'User' } | { __typename?: 'Video' } | { __typename?: 'VideoRevision' }> } } | { __typename?: 'User' } | { __typename?: 'Video' } | { __typename?: 'VideoRevision' } | null };
-
-export type FetchParentQueryQueryVariables = Exact<{
-  id: Scalars['Int']['input'];
-}>;
-
-
-export type FetchParentQueryQuery = { __typename?: 'Query', uuid?: { __typename?: 'Applet' } | { __typename?: 'AppletRevision' } | { __typename?: 'Article', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', id: number, type: TaxonomyTermType, name: string, children: { __typename?: 'AbstractUuidConnection', nodes: Array<{ __typename: 'Applet', id: number, trashed: boolean } | { __typename: 'AppletRevision', id: number, trashed: boolean } | { __typename: 'Article', id: number, trashed: boolean, currentRevision?: { __typename?: 'ArticleRevision', title: string } | null } | { __typename: 'ArticleRevision', id: number, trashed: boolean } | { __typename: 'Comment', id: number, trashed: boolean } | { __typename: 'Course', id: number, trashed: boolean, currentRevision?: { __typename?: 'CourseRevision', title: string } | null } | { __typename: 'CoursePage', id: number, trashed: boolean } | { __typename: 'CoursePageRevision', id: number, trashed: boolean } | { __typename: 'CourseRevision', id: number, trashed: boolean } | { __typename: 'Event', id: number, trashed: boolean } | { __typename: 'EventRevision', id: number, trashed: boolean } | { __typename: 'Exercise', id: number, trashed: boolean, currentRevision?: { __typename?: 'ExerciseRevision', id: number } | null } | { __typename: 'ExerciseGroup', id: number, trashed: boolean } | { __typename: 'ExerciseGroupRevision', id: number, trashed: boolean } | { __typename: 'ExerciseRevision', id: number, trashed: boolean } | { __typename: 'GroupedExercise', id: number, trashed: boolean } | { __typename: 'GroupedExerciseRevision', id: number, trashed: boolean } | { __typename: 'Page', id: number, trashed: boolean } | { __typename: 'PageRevision', id: number, trashed: boolean } | { __typename: 'TaxonomyTerm', name: string, type: TaxonomyTermType, id: number, trashed: boolean } | { __typename: 'User', id: number, trashed: boolean } | { __typename: 'Video', id: number, trashed: boolean, currentRevision?: { __typename?: 'VideoRevision', title: string } | null } | { __typename: 'VideoRevision', id: number, trashed: boolean }> } }> } } | { __typename?: 'ArticleRevision' } | { __typename?: 'Comment' } | { __typename?: 'Course' } | { __typename?: 'CoursePage' } | { __typename?: 'CoursePageRevision' } | { __typename?: 'CourseRevision' } | { __typename?: 'Event' } | { __typename?: 'EventRevision' } | { __typename?: 'Exercise' } | { __typename?: 'ExerciseGroup' } | { __typename?: 'ExerciseGroupRevision' } | { __typename?: 'ExerciseRevision' } | { __typename?: 'GroupedExercise' } | { __typename?: 'GroupedExerciseRevision' } | { __typename?: 'Page' } | { __typename?: 'PageRevision' } | { __typename?: 'TaxonomyTerm' } | { __typename?: 'User' } | { __typename?: 'Video' } | { __typename?: 'VideoRevision' } | null };
-
-export type TaxonomyTermFragment = { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', id: number, type: TaxonomyTermType, name: string, children: { __typename?: 'AbstractUuidConnection', nodes: Array<{ __typename: 'Applet', id: number, trashed: boolean } | { __typename: 'AppletRevision', id: number, trashed: boolean } | { __typename: 'Article', id: number, trashed: boolean, currentRevision?: { __typename?: 'ArticleRevision', title: string } | null } | { __typename: 'ArticleRevision', id: number, trashed: boolean } | { __typename: 'Comment', id: number, trashed: boolean } | { __typename: 'Course', id: number, trashed: boolean, currentRevision?: { __typename?: 'CourseRevision', title: string } | null } | { __typename: 'CoursePage', id: number, trashed: boolean } | { __typename: 'CoursePageRevision', id: number, trashed: boolean } | { __typename: 'CourseRevision', id: number, trashed: boolean } | { __typename: 'Event', id: number, trashed: boolean } | { __typename: 'EventRevision', id: number, trashed: boolean } | { __typename: 'Exercise', id: number, trashed: boolean, currentRevision?: { __typename?: 'ExerciseRevision', id: number } | null } | { __typename: 'ExerciseGroup', id: number, trashed: boolean } | { __typename: 'ExerciseGroupRevision', id: number, trashed: boolean } | { __typename: 'ExerciseRevision', id: number, trashed: boolean } | { __typename: 'GroupedExercise', id: number, trashed: boolean } | { __typename: 'GroupedExerciseRevision', id: number, trashed: boolean } | { __typename: 'Page', id: number, trashed: boolean } | { __typename: 'PageRevision', id: number, trashed: boolean } | { __typename: 'TaxonomyTerm', name: string, type: TaxonomyTermType, id: number, trashed: boolean } | { __typename: 'User', id: number, trashed: boolean } | { __typename: 'Video', id: number, trashed: boolean, currentRevision?: { __typename?: 'VideoRevision', title: string } | null } | { __typename: 'VideoRevision', id: number, trashed: boolean }> } }> };
-
-export type MediaUploadQueryVariables = Exact<{
-  mediaType: MediaType;
-}>;
-
-
-export type MediaUploadQuery = { __typename?: 'Query', media: { __typename?: 'MediaQuery', newUpload: { __typename?: 'MediaUpload', uploadUrl: string, urlAfterUpload: string } } };
-
-export type InjectionOnlyContentQueryVariables = Exact<{
-  path: Scalars['String']['input'];
-}>;
-
-
-export type InjectionOnlyContentQuery = { __typename?: 'Query', uuid?: { __typename: 'Applet', currentRevision?: { __typename?: 'AppletRevision', url: string, content: string } | null } | { __typename: 'AppletRevision' } | { __typename: 'Article', alias: string, title: string } | { __typename: 'ArticleRevision' } | { __typename: 'Comment' } | { __typename: 'Course' } | { __typename: 'CoursePage', alias: string, title: string } | { __typename: 'CoursePageRevision' } | { __typename: 'CourseRevision' } | { __typename: 'Event', currentRevision?: { __typename?: 'EventRevision', content: string } | null } | { __typename: 'EventRevision' } | { __typename: 'Exercise', currentRevision?: { __typename?: 'ExerciseRevision', content: string } | null, license: { __typename?: 'License', id: number } } | { __typename: 'ExerciseGroup', currentRevision?: { __typename?: 'ExerciseGroupRevision', content: string } | null, exercises: Array<{ __typename?: 'GroupedExercise', currentRevision?: { __typename?: 'GroupedExerciseRevision', content: string } | null, license: { __typename?: 'License', id: number } }>, license: { __typename?: 'License', id: number } } | { __typename: 'ExerciseGroupRevision' } | { __typename: 'ExerciseRevision' } | { __typename: 'GroupedExercise', currentRevision?: { __typename?: 'GroupedExerciseRevision', content: string } | null, license: { __typename?: 'License', id: number } } | { __typename: 'GroupedExerciseRevision' } | { __typename: 'Page' } | { __typename: 'PageRevision' } | { __typename: 'TaxonomyTerm', alias: string, title: string } | { __typename: 'User' } | { __typename: 'Video', currentRevision?: { __typename?: 'VideoRevision', url: string, title: string } | null } | { __typename: 'VideoRevision' } | null };
-
-type InjectionExercise_Exercise_Fragment = { __typename?: 'Exercise', currentRevision?: { __typename?: 'ExerciseRevision', content: string } | null, license: { __typename?: 'License', id: number } };
-
-type InjectionExercise_GroupedExercise_Fragment = { __typename?: 'GroupedExercise', currentRevision?: { __typename?: 'GroupedExerciseRevision', content: string } | null, license: { __typename?: 'License', id: number } };
-
-export type InjectionExerciseFragment = InjectionExercise_Exercise_Fragment | InjectionExercise_GroupedExercise_Fragment;
-
-type InjectionLicense_Applet_Fragment = { __typename?: 'Applet', license: { __typename?: 'License', id: number } };
-
-type InjectionLicense_Article_Fragment = { __typename?: 'Article', license: { __typename?: 'License', id: number } };
-
-type InjectionLicense_Course_Fragment = { __typename?: 'Course', license: { __typename?: 'License', id: number } };
-
-type InjectionLicense_CoursePage_Fragment = { __typename?: 'CoursePage', license: { __typename?: 'License', id: number } };
-
-type InjectionLicense_Event_Fragment = { __typename?: 'Event', license: { __typename?: 'License', id: number } };
-
-type InjectionLicense_Exercise_Fragment = { __typename?: 'Exercise', license: { __typename?: 'License', id: number } };
-
-type InjectionLicense_ExerciseGroup_Fragment = { __typename?: 'ExerciseGroup', license: { __typename?: 'License', id: number } };
-
-type InjectionLicense_GroupedExercise_Fragment = { __typename?: 'GroupedExercise', license: { __typename?: 'License', id: number } };
-
-type InjectionLicense_Page_Fragment = { __typename?: 'Page', license: { __typename?: 'License', id: number } };
-
-type InjectionLicense_Video_Fragment = { __typename?: 'Video', license: { __typename?: 'License', id: number } };
-
-export type InjectionLicenseFragment = InjectionLicense_Applet_Fragment | InjectionLicense_Article_Fragment | InjectionLicense_Course_Fragment | InjectionLicense_CoursePage_Fragment | InjectionLicense_Event_Fragment | InjectionLicense_Exercise_Fragment | InjectionLicense_ExerciseGroup_Fragment | InjectionLicense_GroupedExercise_Fragment | InjectionLicense_Page_Fragment | InjectionLicense_Video_Fragment;

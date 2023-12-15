@@ -4,6 +4,11 @@ import {
   faCaretLeft,
   faCaretRight,
 } from '@fortawesome/free-solid-svg-icons'
+import { EditorProps } from '@serlo/editor/src/core'
+import { editorRenderers } from '@serlo/editor/src/plugin/helpers/editor-renderer'
+import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
+import { EditorTemplateExerciseGroupDocument } from '@serlo/editor/src/types/editor-plugins'
+import { TemplatePluginType } from '@serlo/editor/src/types/template-plugin-type'
 import ExerciseGenerationLoadingSparkles from 'public/_assets/img/exercise/sparkles.svg'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
@@ -25,11 +30,6 @@ import {
 import { ExpectedLLMOutputType } from '@/helper/ai-generated-exercises/decoders'
 import { cn } from '@/helper/cn'
 import { ErrorBoundary } from '@/helper/error-boundary'
-import { EditorProps } from '@/serlo-editor/core'
-import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
-import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorTemplateExerciseGroupDocument } from '@/serlo-editor/types/editor-plugins'
-import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 interface ExercisePreviewPageProps {

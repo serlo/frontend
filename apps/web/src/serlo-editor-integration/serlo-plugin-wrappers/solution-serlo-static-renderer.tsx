@@ -1,8 +1,9 @@
+import { StaticSolutionRenderer } from '@serlo/editor/src/plugins/solution/static'
+import type { EditorSolutionDocument } from '@serlo/editor/src/types/editor-plugins'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 
-import type { EditorSolutionDocument } from '../../serlo-editor/types/editor-plugins'
 import type { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
 import { Lazy } from '@/components/content/lazy'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
@@ -10,7 +11,6 @@ import { useAB } from '@/contexts/ab'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { useEntityId } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
-import { StaticSolutionRenderer } from '@/serlo-editor/plugins/solution/static'
 
 const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
   import('@/components/comments/comment-area-entity').then(

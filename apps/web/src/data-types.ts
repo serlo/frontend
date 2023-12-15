@@ -1,4 +1,10 @@
 import { type AuthorizationPayload } from '@serlo/authorization'
+import type {
+  AnyEditorDocument,
+  EditorExerciseDocument,
+  EditorRowsDocument,
+  EditorTemplateExerciseGroupDocument,
+} from '@serlo/editor/src/types/editor-plugins'
 import { type CSSProperties, type FunctionComponent } from 'react'
 
 import {
@@ -6,12 +12,6 @@ import {
   type UnrevisedRevisionsQuery,
 } from './fetcher/graphql-types/operations'
 import type { User } from './fetcher/query-types'
-import type {
-  AnyEditorDocument,
-  EditorExerciseDocument,
-  EditorRowsDocument,
-  EditorTemplateExerciseGroupDocument,
-} from './serlo-editor/types/editor-plugins'
 import type { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 import { Role, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 

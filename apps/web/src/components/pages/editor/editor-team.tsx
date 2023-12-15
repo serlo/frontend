@@ -1,4 +1,4 @@
-import { PageTeamRenderer } from '@/serlo-editor/plugins/page-team/renderer'
+import { PageTeamRenderer } from '@serlo/editor/src/plugins/page-team/renderer'
 
 export interface TeamDataEntry {
   firstName: string

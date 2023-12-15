@@ -1,3 +1,6 @@
+import { parseDocumentString } from '@serlo/editor/src/static-renderer/helper/parse-document-string'
+import { EditorRowsDocument } from '@serlo/editor/src/types/editor-plugins'
+
 import { createExercise, createExerciseGroup } from './create-exercises'
 import { MainUuidQuery, TaxonomyTermType } from './graphql-types/operations'
 import {
@@ -7,8 +10,6 @@ import {
   UuidType,
 } from '@/data-types'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
-import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
-import { EditorRowsDocument } from '@/serlo-editor/types/editor-plugins'
 
 type TaxonomyTerm = Extract<
   MainUuidQuery['uuid'],

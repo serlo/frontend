@@ -1,4 +1,7 @@
 import { AuthorizationPayload } from '@serlo/authorization'
+import { parseDocumentString } from '@serlo/editor/src/static-renderer/helper/parse-document-string'
+import { EditorPluginType } from '@serlo/editor/src/types/editor-plugin-type'
+import { EditorRowsDocument } from '@serlo/editor/src/types/editor-plugins'
 import { request } from 'graphql-request'
 
 import { createBreadcrumbs } from './create-breadcrumbs'
@@ -23,9 +26,6 @@ import { RequestPageData, UuidRevType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
-import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
-import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
-import { EditorRowsDocument } from '@/serlo-editor/types/editor-plugins'
 
 // ALWAYS start alias with slash
 export async function requestPage(

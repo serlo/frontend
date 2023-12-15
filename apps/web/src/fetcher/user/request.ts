@@ -1,4 +1,6 @@
 import { AuthorizationPayload, Scope } from '@serlo/authorization'
+import { parseDocumentString } from '@serlo/editor/src/static-renderer/helper/parse-document-string'
+import { EditorRowsDocument } from '@serlo/editor/src/types/editor-plugins'
 import { request } from 'graphql-request'
 
 import { userQuery } from './query'
@@ -6,8 +8,6 @@ import { User } from '../query-types'
 import { endpoint } from '@/api/endpoint'
 import { PageNotFound, UserPage, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
-import { EditorRowsDocument } from '@/serlo-editor/types/editor-plugins'
 
 export async function requestUser(
   path: string,

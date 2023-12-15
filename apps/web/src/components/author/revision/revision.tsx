@@ -1,3 +1,6 @@
+import { editorRenderers } from '@serlo/editor/src/plugin/helpers/editor-renderer'
+import { InjectionStaticRenderer } from '@serlo/editor/src/plugins/injection/static'
+import { EditorPluginType } from '@serlo/editor/src/types/editor-plugin-type'
 import { useState, useEffect } from 'react'
 
 import { DisplayModes } from './display-modes'
@@ -15,9 +18,6 @@ import { type RevisionData, UuidRevType } from '@/data-types'
 import { removeHash } from '@/helper/remove-hash'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
-import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
-import { InjectionStaticRenderer } from '@/serlo-editor/plugins/injection/static'
-import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 export interface RevisionProps {

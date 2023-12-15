@@ -3,19 +3,19 @@ import {
   faCaretRight,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons'
+import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
+import { EditorPluginType } from '@serlo/editor/src/types/editor-plugin-type'
+import {
+  EditorExerciseDocument,
+  EditorTemplateExerciseGroupDocument,
+} from '@serlo/editor/src/types/editor-plugins'
+import { isTemplateExerciseGroupDocument } from '@serlo/editor/src/types/plugin-type-guards'
 import { Fragment, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
 import { FaIcon } from '../fa-icon'
 import { TaxonomyData } from '@/data-types'
 import { cn } from '@/helper/cn'
-import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
-import { EditorPluginType } from '@/serlo-editor/types/editor-plugin-type'
-import {
-  EditorExerciseDocument,
-  EditorTemplateExerciseGroupDocument,
-} from '@/serlo-editor/types/editor-plugins'
-import { isTemplateExerciseGroupDocument } from '@/serlo-editor/types/plugin-type-guards'
 
 export interface NewFolderPrototypeProps {
   data: TaxonomyData

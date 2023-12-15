@@ -1,5 +1,6 @@
 import { faGripLines, faTools } from '@fortawesome/free-solid-svg-icons'
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
+import { isSolutionDocument } from '@serlo/editor/src/types/plugin-type-guards'
 import { arrayMoveImmutable } from 'array-move'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
@@ -28,7 +29,6 @@ import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useTaxonomyTermSortMutation } from '@/mutations/taxonomyTerm'
-import { isSolutionDocument } from '@/serlo-editor/types/plugin-type-guards'
 
 export const allCategories = [
   TopicCategoryType.articles,
