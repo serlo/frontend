@@ -9,7 +9,7 @@ export const instanceData = {
   strings: {
     header: {
       slogan: "Die freie Lernplattform",
-      search: "Suchen",
+      search: "Suche",
       login: "Anmelden",
       skipLinks: {
         sentence: "Springe zum %content% oder %footer%",
@@ -57,7 +57,7 @@ export const instanceData = {
       user: "Benutzer*in",
       video: 'Video',
       exerciseFolder: "Aufgabensammlung",
-      comment: "Kommentieren",
+      comment: "Kommentar",
       revision: "Bearbeitung",
       thread: "Diskussion",
       threads: "Diskussionen",
@@ -82,7 +82,7 @@ export const instanceData = {
     },
     roles: {
       donor: "Spender*in",
-      author: "Verfasser",
+      author: "Autor*in",
       reviewer: "Reviewer*in"
     },
     share: {
@@ -99,7 +99,7 @@ export const instanceData = {
       noStay: "Nein, ich möchte bleiben"
     },
     editOrAdd: {
-      button: "Bearbeiten",
+      button: "Überarbeiten",
       addNewEntities: "Inhalt hinzufügen",
       addNewExercises: "Aufgabe hinzufügen",
       editExercises: "Aufgaben überarbeiten",
@@ -128,9 +128,9 @@ export const instanceData = {
       noRevisionForPage: "Ungegeprüfte Seite"
     },
     content: {
-      show: "Anzeigen",
+      show: "anzeigen",
       hide: "ausblenden",
-      trashedNotice: "Dieser Inhalt wurde zum Löschen markiert.",
+      trashedNotice: "Dieser Inhalt wurde gelöscht.",
       unrevisedNotice: "Dieser Inhalt wurde noch nicht überprüft. Über den %link% kannst du dir die Entwürfe anzeigen lassen.",
       emptyNotice: "Hier gibt es keinen Inhalt. Bitte bearbeiten oder löschen.",
       picture: "Bild",
@@ -146,7 +146,7 @@ export const instanceData = {
         task: "Aufgabenstellung",
         correct: "Richtig",
         missedSome: "Fast! Dir fehlt noch mindestens eine richtige Antwort.",
-        wrong: "Falsch",
+        wrong: "Leider nicht richtig",
         feedback: 'Feedback',
         answer: "Antwort",
         check: "Stimmt's?",
@@ -189,9 +189,9 @@ export const instanceData = {
     },
     comments: {
       question: "Hast du eine Frage oder Feedback?",
-      commentsOne: "Kommentieren",
+      commentsOne: "Kommentar",
       commentsMany: "Kommentare",
-      submit: "Kommentar abschicken",
+      submit: "Abschicken",
       archiveThread: "Thread archivieren",
       restoreThread: "Thread wiederherstellen",
       deleteThread: "Thread löschen",
@@ -236,9 +236,9 @@ export const instanceData = {
     },
     revisionHistory: {
       changes: "Änderungen",
-      author: "Verfasser",
+      author: "Autor*in",
       date: "Wann?",
-      edit: "Bearbeiten",
+      edit: "Überarbeiten",
       editLabel: "Erstelle eine Bearbeitung von dieser Bearbeitung aus",
       view: "Anzeigen",
       viewLabel: "Diese Bearbeitung anzeigen",
@@ -289,10 +289,10 @@ export const instanceData = {
     },
     profiles: {
       aboutMe: "Über mich",
-      recentActivities: "Aktuelle Aktivitäten",
+      recentActivities: "Aktivitäten",
       showAllActivities: "Alle Aktivitäten anzeigen",
       noActivities: "Bisher keine Aktivitäten.",
-      lastLogin: "Letzter Login",
+      lastLogin: "Zuletzt angemeldet",
       yearsWithSerlo: "Jahre dabei!",
       yearWithSerlo: "Jahr dabei!",
       roles: "Rollen",
@@ -312,8 +312,8 @@ export const instanceData = {
       activityGraph: {
         edits: "Bearbeitungen",
         comments: "Kommentare",
-        reviews: "Überprüfungen",
-        taxonomy: "Baumstruktur",
+        reviews: 'Reviews',
+        taxonomy: "Taxonomie",
         legendary: "💙 Oh wow! 💙",
         untilNextLevel: "%amount% mehr um diesen Kreis zu füllen 🎉"
       },
@@ -378,9 +378,9 @@ export const instanceData = {
       interests: {
         pleaseChoose: "bitte auswählen",
         parent: "Elternteil",
-        teacher: "LehrerIn",
-        pupil: "SchülerIn",
-        student: "StudentIn",
+        teacher: "Lehrer*in",
+        pupil: "Schüler*in",
+        student: "Student*in",
         other: "Sonstige"
       },
       messages: {
@@ -395,7 +395,7 @@ export const instanceData = {
         code1060001: "Du hast deinen Account wiederhergestellt. Bitte ändere dein Passwort in den nächsten Minuten.",
         code1060002: "Wir haben dir eine E-Mail mit einem Link zum Wiederherstellen an die angegebene Adresse geschickt. %break% Schau in deine Mailbox und benutze den Link.",
         code1070003: "Speichern",
-        code1070005: "Kommentar abschicken",
+        code1070005: "Abschicken",
         code1080001: "Eine E-Mail mit einem Bestätigungslink wurde an die angegebene E-Mail-Adresse gesendet.",
         code1080002: "Du hast deine E-Mail-Adresse erfolgreich bestätigt.",
         code4000001: '%reason%',
@@ -484,7 +484,7 @@ export const instanceLandingData = {
     wikiText: "Genau die Wikipedia wird diese Plattform von einer engagierten Autor*innen Community erstellt. Serlo Education wird betrieben von einem dezentralisierten Team Ehrenamtlicher und Professioneller überall auf der Welt.",
     movementTitle: "Werden Sie Teil unserer Bewegung für freie Bildung",
     callForAuthors: "Wir suchen Lehrkräfte mit Begeisterung für ihr Fach. Werden Sie Autor*in auf serlo.org, erstellen Sie neue Inhalte und helfen Sie uns, die Qualität der Lernplattform zu sichern.",
-    communityLink: "Besuche die Startseite für Autor*innen",
+    communityLink: "Zur Startseite für Autor*innen",
     callForOther: "Wir suchen neue hauptamtliche und ehrenamtliche Teammitglieder für die Bereiche Softwareentwicklung, Redaktion und NGO-Management.",
     getInvolved: "Mach mit!"
   }
@@ -545,7 +545,7 @@ export const loggedInData = {
       restoreContent: "Aus dem Papierkorb wiederherstellen",
       sortCoursePages: "Kursseiten sortieren",
       sortGroupedExercises: "Teilaufgaben sortieren",
-      edit: "Bearbeiten",
+      edit: "Überarbeiten",
       editTax: "Titel & Beschreibung bearbeiten",
       unrevisedEdit: "Zeige neue Bearbeitungen",
       sortEntities: "Inhalte sortieren",
@@ -572,12 +572,12 @@ export const loggedInData = {
     },
     revisions: {
       checkout: {
-        action: "Übernehmen",
+        action: "Akzeptieren",
         title: "Bearbeitung akzeptieren",
         explanation: "Bitte gib der Autor*in ein bisschen Feedback."
       },
       reject: {
-        action: "Ablehnen",
+        action: "Nicht akzeptieren",
         title: "Bearbeitung nicht akzeptieren",
         explanation: "Bitte sag der Bearbeiter*in, warum die Änderung nicht angenommen wird."
       },
@@ -862,7 +862,7 @@ export const loggedInData = {
             introText2: "Du kannst entweder eine Serlo ID oder einen Link einfügen, oder unten Inhalte aus dem Elternordner einfügen.",
             buttonEx: "Aufgaben hinzufügen",
             buttonExFolder: "Aufgabenordner auswählen",
-            buttonContent: "Neuer Inhalt",
+            buttonContent: "Inhalt hinzufügen",
             buttonAddType: "%type% hinzufügen",
             title: "Weiterführende Inhalte oder Übungsaufgaben hinzufügen",
             invalidInput: "Ungültige ID oder URL",
@@ -936,7 +936,7 @@ export const loggedInData = {
           linkTitle: "Titel der Verlinkung",
           showSolution: "Lösung anzeigen",
           hideSolution: "Lösung ausblenden",
-          changeLicense: "Lizenz auswählen"
+          changeLicense: "Lizenz ändern"
         },
         textExerciseGroup: {
           removeExercise: "Teilaufgabe entfernen",
@@ -978,7 +978,7 @@ export const loggedInData = {
         importOtherWarning: "Vorsicht: Diese Funktion überschreibt alle bestehenden Inhalte in diesem Editor.",
         importOtherButton: "Inhalte Importieren",
         current: "Aktuell",
-        author: "Verfasser",
+        author: "Autor*in",
         createdAt: "Zeitstempel",
         ready: "Bereit zum Speichern?",
         anchorLinkWarning: "Dieser Link funktioniert nur im Frontend und für Inhalte, die eine etwas relativ neue akzeptierte Bearbeitung haben."
