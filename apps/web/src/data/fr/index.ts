@@ -22,21 +22,21 @@ export const instanceData = {
       agree: "Accepte d'utiliser la recherche"
     },
     footer: {
-      summaryHeading: "Serlo.org est le Wikipedia pour l'apprentissage.",
-      summaryText: "Nous sommes une communauté de visionnaires qui travaillent sans relâche pour offrir une éducation gratuite accessible à tous.",
+      summaryHeading: "Serlo.org est le Wikipédia pour l'apprentissage.",
+      summaryText: "Nous sommes une communauté de visionnaires qui travaille sans relâche pour offrir une éducation gratuite et accessible à tous.",
       learnMore: "En savoir plus",
-      participate: "Participer",
+      participate: "Rejoigne-nous",
       donate: "Faire un don",
       toTop: "En haut"
     },
     categories: {
-      articles: "articles",
-      courses: "cours",
-      videos: "vidéos",
-      applets: 'Applets',
+      articles: 'Articles',
+      courses: "Cours",
+      videos: "Vidéos",
+      applets: "Applet",
       folders: "Dossiers",
-      exercises: "exercices",
-      events: "Événements",
+      exercises: "Exercices",
+      events: "Évènements",
       unrevised: "Non révisé",
       subterms: 'Subterms',
       exercisesContent: "Contenu des exercices"
@@ -51,7 +51,7 @@ export const instanceData = {
       exerciseGroup: "Groupe d'exercices",
       topic: "Dossier",
       groupedExercise: "Exercice groupé",
-      page: "page",
+      page: 'Page',
       solution: "solution",
       taxonomyTerm: "Terme de taxonomie",
       user: "Utilisateur·Utilisatrice",
@@ -75,14 +75,14 @@ export const instanceData = {
       userEdits: 'Edits by %user%',
       userEditsMine: 'My Unrevised Revisions',
       editProfile: "Modifier le profil et les paramètres",
-      recycleBin: "Corbeille",
+      recycleBin: 'Recycle Bin',
       diagon: 'Diagon Alley',
-      discussions: 'Comments',
+      discussions: "Commentaires",
       manageRoles: 'Manage User Roles'
     },
     roles: {
       donor: "Donneur·e",
-      author: "Auteur·e",
+      author: "Auteur",
       reviewer: "Réviseur·e"
     },
     share: {
@@ -99,11 +99,11 @@ export const instanceData = {
       noStay: 'No, I want to stay'
     },
     editOrAdd: {
-      button: 'Edit',
+      button: "Modifier",
       addNewEntities: 'Add new content',
       addNewExercises: 'Add new exercises',
       editExercises: 'Edit exercises',
-      unrevised: 'Show unrevised revisions',
+      unrevised: "Afficher les révisions non révisées",
       inviteModal: {
         title: 'Create with us!',
         text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
@@ -128,7 +128,7 @@ export const instanceData = {
       noRevisionForPage: 'unreviewed page'
     },
     content: {
-      show: "montrer",
+      show: "annonce",
       hide: "cacher",
       trashedNotice: "Ce contenu est marqué pour être supprimé.",
       unrevisedNotice: "Ce contenu n'a pas encore accepté de révision. Veuillez utiliser %link% pour un aperçu.",
@@ -147,19 +147,19 @@ export const instanceData = {
         correct: "Correcte",
         missedSome: "Presque ! Tu as manqué au moins une réponse correcte.",
         wrong: "Incorrect",
-        feedback: "Ton avis",
-        answer: "Répondre",
+        feedback: "Commentaire",
+        answer: "Réponse",
         check: "Vérifier",
         yourAnswer: "Ta réponse...",
         chooseOption: "Sélectionne une des options :",
         printModeChooseOption: "Sélectionne une des options :",
-        showSolution: 'Show solution',
-        hideSolution: 'Hide solution'
+        showSolution: "Montrer la solution",
+        hideSolution: "Cacher la solution"
       },
       boxTypes: {
         blank: 'Blank',
         example: 'Example',
-        quote: 'Quote',
+        quote: "Citation",
         approach: 'Approach',
         remember: 'Remember',
         attention: 'Attention',
@@ -185,7 +185,7 @@ export const instanceData = {
       applet: "Charger l'Applet de %provider%",
       twingle: "Charger le formulaire de don",
       audio: 'Play audio from %provider%',
-      general: 'Activate'
+      general: "Activer"
     },
     comments: {
       question: "As-tu une question?",
@@ -208,8 +208,8 @@ export const instanceData = {
       copyLink: "Copier le lien du commentaire",
       commentsOverviewExplanation: 'Here you can see all comments that were written to content on %instance%.serlo.org. %break% Answer questions or find content you could improve. %break% The link above the comment brings you to the relevant entity.',
       edit: 'Edit comment',
-      cancelEdit: 'Cancel',
-      saveEdit: 'Save'
+      cancelEdit: "Annuler",
+      saveEdit: "Sauvegarder"
     },
     revisions: {
       toOverview: "Retour à la vue d'ensemble",
@@ -236,10 +236,10 @@ export const instanceData = {
     },
     revisionHistory: {
       changes: "Modifications",
-      author: "Auteur·e",
+      author: "Auteur",
       date: 'Date',
       edit: "Modifier",
-      editLabel: "Créer une nouvelle révision à partir de cette révision",
+      editLabel: "Créer une nouvelle révision à partir de cette révision spécifique",
       view: "Afficher",
       viewLabel: "Afficher cette révision",
       status: "Statut"
@@ -361,7 +361,7 @@ export const instanceData = {
       login: {
         confirmAction: 'Confirm Action',
         signIn: 'Sign in to your Account',
-        logOut: 'Log out',
+        logOut: "Se déconnecter",
         newHere: 'Are you new here?',
         registerNewAccount: 'Register new account',
         forgotPassword: 'Did you %forgotLinkText%?',
@@ -370,18 +370,18 @@ export const instanceData = {
       },
       fields: {
         identifier: 'Username or Email address',
-        username: 'Username',
-        password: 'Password',
+        username: "Nom d'utilisateur",
+        password: "Mot de passe",
         email: 'Email',
         interest: "I'm here as..."
       },
       interests: {
         pleaseChoose: 'please choose',
         parent: 'Parent',
-        teacher: 'Teacher',
-        pupil: 'Pupil',
-        student: 'University student',
-        other: 'Other'
+        teacher: "Enseignant",
+        pupil: "Élève",
+        student: "Étudiant universitaire",
+        other: "Autres"
       },
       messages: {
         code1010003: 'Please confirm this action by verifying that it is you.',
@@ -394,8 +394,8 @@ export const instanceData = {
         code1050001: 'Your changes have been saved! 🎉',
         code1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
         code1060002: 'An email containing a recovery link has been sent to the email address you provided. %break% Check your mailbox and click on the provided link it contains.',
-        code1070003: 'Save',
-        code1070005: 'Submit',
+        code1070003: "Sauvegarder",
+        code1070005: "Soumettre",
         code1080001: 'An email containing a verification link has been sent to the email address you provided.',
         code1080002: 'You have successfully verified your email address.',
         code4000001: '%reason%',
@@ -463,7 +463,7 @@ export const instanceData = {
       loadMore: "Charger plus"
     },
     bin: {
-      title: 'Title',
+      title: "Titre",
       trashed: 'Trashed…'
     }
   }
@@ -482,7 +482,7 @@ export const instanceLandingData = {
     freeOfCharge: "gratuit",
     wikiTitle: "Serlo est le Wikipédia pour l'apprentissage",
     wikiText: "Tout comme Wikipédia, cette plateforme est créée par une communauté d'auteur·e·s engagé·e·s. Serlo Education est gérée et détenue par des équipes décentralisées de bénévoles et de professionnel·le·s dans le monde entier.",
-    movementTitle: "Rejoignez notre mouvement pour l'éducation libre",
+    movementTitle: "Rejoigne notre mouvement pour l'éducation libre",
     callForAuthors: "Nous cherchons des enseignant·e·s et des éducateur·e·s enthousiastes et passionné·e·s de leur matière. Devenez un·e auteur·e sur serlo.org, créez de nouveaux contenus et aidez-nous à assurer la qualité de la plateforme d'apprentissage.",
     communityLink: "Visitez la page d'accueil d'auteur·e·s",
     callForOther: "Nous offrons une variété d'emplois et de possibilités de bénévolat dans les domaines du développement de logiciel, de la conception, la traduction, la communication, la gestion de projet et d'autres.",
@@ -515,7 +515,7 @@ export const loggedInData = {
       title: "Changer le mot de passe"
     }, {
       url: '/user/settings',
-      title: "Réglages"
+      title: "Paramètres"
     }, {
       url: '/auth/logout',
       title: "Se déconnecter"
@@ -525,7 +525,7 @@ export const loggedInData = {
     tools: "Autres outils",
     authorMenu: {
       log: "Historique",
-      settings: "Réglages",
+      settings: "Paramètres",
       moveCoursePage: "Déplacer cette page vers un autre cours",
       thisCoursePage: "Cette page de cours",
       addCoursePage: "Ajouter une page de cours",
@@ -550,7 +550,7 @@ export const loggedInData = {
       unrevisedEdit: "Afficher les révisions non révisées",
       sortEntities: "Trier le contenu",
       newEntity: "Nouveau contenu",
-      editProfile: "Modifier profil",
+      editProfile: "Éditer profil",
       directLink: "Lien direct vers ce contenu",
       analyticsLink: 'See analytics data'
     },
@@ -563,7 +563,7 @@ export const loggedInData = {
     },
     subscriptions: {
       mail: 'E-mails',
-      subscription: "Abonnement",
+      subscription: "Abonnements",
       noMails: "désactiver",
       getMails: "activer",
       noNotifications: "annuler",
@@ -629,19 +629,19 @@ export const loggedInData = {
           explanation: 'It will not be displayed to users. You can either remove it or asks developers for support.'
         },
         equations: {
-          title: 'Terms and equations',
+          title: "Termes et équations",
           description: 'Write term manipulations and solve multiline equations.',
           leftHandSide: "côté gauche",
           transformation: "Transformation",
           mode: 'Mode',
           transformationExample: 'e.g. -3x',
-          transformationOfEquations: 'Transformation of equations',
-          transformationOfTerms: 'Transformation of terms',
-          addNewRow: 'Add new row',
+          transformationOfEquations: "Transformation des équations",
+          transformationOfTerms: "Transformation des termes",
+          addNewRow: "Ajouter une nouvelle ligne",
           explanation: "Explication",
-          term: 'Term',
-          rightHandSide: 'right-hand side',
-          combineLikeTerms: 'Combine like terms.',
+          term: "Terme",
+          rightHandSide: "côté droit",
+          combineLikeTerms: "Combiner comme des termes.",
           setEqual: 'Set the terms equal to each other.',
           firstExplanation: 'First explanation',
           moveUpLabel: 'Move up',
@@ -737,7 +737,7 @@ export const loggedInData = {
           convertToImage: 'Convert to image',
           row: 'row',
           column: 'column',
-          addType: 'Add %type%',
+          addType: "Ajouter %type%",
           addTypeBefore: 'Add %type% before',
           deleteType: 'Delete %type%',
           confirmDelete: 'Are you sure you want to delete this %type% and the content in it?'
@@ -862,8 +862,8 @@ export const loggedInData = {
             introText2: 'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
             buttonEx: 'Add exercises',
             buttonExFolder: 'Select exercise folder',
-            buttonContent: 'Add content',
-            buttonAddType: 'Add %type%',
+            buttonContent: "Ajouter contenu",
+            buttonAddType: "Ajouter %type%",
             title: 'Add related Content or Exercises',
             invalidInput: 'Invalid id or url',
             fetchError: 'Something went wrong, please try later',
@@ -925,7 +925,7 @@ export const loggedInData = {
           multipleChoice: "Choix multiple",
           chooseType: "Choisissez le type d'exercice",
           addAnswer: "Ajouter une réponse",
-          previewMode: 'Preview',
+          previewMode: "Aperçu",
           previewIsActiveHint: 'Preview mode is active',
           previewIsDeactiveHint: 'Here you can edit'
         },
@@ -934,9 +934,9 @@ export const loggedInData = {
           idArticle: "ID d'un article, par exemple 1855",
           openArticleTab: "Ouvrir l'article dans un nouvel onglet :",
           linkTitle: "Titre du lien",
-          showSolution: "Afficher la solution",
-          hideSolution: "Masquer la solution",
-          changeLicense: 'Change license'
+          showSolution: "Montrer la solution",
+          hideSolution: "Cacher la solution",
+          changeLicense: "Changer license"
         },
         textExerciseGroup: {
           removeExercise: "Supprimer l'exercice",
@@ -977,7 +977,7 @@ export const loggedInData = {
         importOtherExplanation: "Just paste the url or id of another serlo.org entity of the same type here to duplicate it's content here. Do NOT use this to make exact copies or move content. Exercise Groups and Courses are not supported (but Exercises and Course Pages).",
         importOtherWarning: 'Warning: This overwrites everything that is already present in this editor!',
         importOtherButton: 'Import content',
-        current: "Actuel",
+        current: "Actuelle",
         author: "Auteur",
         createdAt: "Créé le",
         ready: 'Ready to save?',
@@ -1019,7 +1019,7 @@ export const loggedInData = {
     },
     backend: {
       pages: 'Static Pages',
-      authorization: 'Authorization',
+      authorization: "Autorisation",
       navigation: 'Navigation',
       recycleBin: 'Recycle Bin'
     },
@@ -1070,7 +1070,7 @@ export const loggedInData = {
         hallucinationWarning: 'The AI can generate incorrect exercises. Please review carefully.',
         topic: {
           title: 'About which %topic% would you like to generate exercises?',
-          topic: 'topic',
+          topic: "sujet",
           defaultLabel: 'Topic',
           otherTopicLabel: 'Other topic',
           customTopicPlaceholder: 'Enter custom topic'
@@ -1090,7 +1090,7 @@ export const loggedInData = {
           subtasksTitleExerciseGroup: 'How many subtasks should there be?',
           noSubtasks: 'No',
           yesSubtasks: 'Yes',
-          subtasksLabel: "exercices",
+          subtasksLabel: "Exercices",
           numberOfSubtasksPlaceholder: 'Number of subtasks',
           chooseOption: "Choose an option",
           multipleChoice: "Multiple Choice",
