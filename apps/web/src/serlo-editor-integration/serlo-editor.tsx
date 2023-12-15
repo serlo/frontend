@@ -1,4 +1,7 @@
 import { Entity } from '@serlo/authorization'
+import { Editor, type EditorProps } from '@serlo/editor/src/core'
+import { editorPlugins } from '@serlo/editor/src/plugin/helpers/editor-plugins'
+import { editorRenderers } from '@serlo/editor/src/plugin/helpers/editor-renderer'
 import { type ReactNode, useState } from 'react'
 
 import {
@@ -15,9 +18,6 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidWithRevType } from '@/data-types'
 import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
-import { Editor, type EditorProps } from '@/serlo-editor/core'
-import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
-import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
 
 export interface SerloEditorProps {
   children?: ReactNode

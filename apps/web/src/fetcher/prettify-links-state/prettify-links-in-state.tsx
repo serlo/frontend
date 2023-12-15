@@ -1,16 +1,16 @@
+import { getChildrenOfStaticDocument } from '@serlo/editor/src/static-renderer/helper/get-children-of-static-document'
+import { AnyEditorDocument } from '@serlo/editor/src/types/editor-plugins'
+import {
+  isImageDocument,
+  isSolutionDocument,
+  isTextDocument,
+} from '@serlo/editor/src/types/plugin-type-guards'
 import request from 'graphql-request'
 import { Descendant } from 'slate'
 
 import { idsQuery } from './ids-query'
 import { endpoint } from '@/api/endpoint'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
-import { getChildrenOfStaticDocument } from '@/serlo-editor/static-renderer/helper/get-children-of-static-document'
-import { AnyEditorDocument } from '@/serlo-editor/types/editor-plugins'
-import {
-  isImageDocument,
-  isSolutionDocument,
-  isTextDocument,
-} from '@/serlo-editor/types/plugin-type-guards'
 
 export interface IdsQueryReturn {
   [key: string]: {

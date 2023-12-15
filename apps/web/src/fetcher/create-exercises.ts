@@ -1,10 +1,11 @@
-import { MainUuidType } from './query-types'
-import { parseDocumentString } from '@/serlo-editor/static-renderer/helper/parse-document-string'
+import { parseDocumentString } from '@serlo/editor/src/static-renderer/helper/parse-document-string'
 import {
   EditorExerciseDocument,
   EditorTemplateExerciseGroupDocument,
-} from '@/serlo-editor/types/editor-plugins'
-import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
+} from '@serlo/editor/src/types/editor-plugins'
+import { TemplatePluginType } from '@serlo/editor/src/types/template-plugin-type'
+
+import { MainUuidType } from './query-types'
 
 type BareExercise = Omit<
   Extract<MainUuidType, { __typename: 'Exercise' | 'GroupedExercise' }>,

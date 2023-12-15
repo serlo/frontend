@@ -1,10 +1,11 @@
+import { editorRenderers } from '@serlo/editor/src/plugin/helpers/editor-renderer'
+import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
+
 import { LicenseIcons } from '../content/license/license-icons'
 import { HSpace } from '@/components/content/h-space'
 import { useInstanceData } from '@/contexts/instance-context'
 import { getLicense } from '@/data/licenses/licenses-helpers'
 import { LicenseDetailData } from '@/data-types'
-import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
-import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 export function LicenseDetail({ id, content }: LicenseDetailData) {

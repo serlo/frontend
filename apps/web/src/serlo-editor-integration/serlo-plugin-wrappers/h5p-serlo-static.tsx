@@ -1,12 +1,12 @@
+import { parseH5pUrl } from '@serlo/editor/src/plugins/h5p/renderer'
+import { H5pStaticRenderer } from '@serlo/editor/src/plugins/h5p/static'
+import type { EditorH5PDocument } from '@serlo/editor/src/types/editor-plugins'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
-import { H5pStaticRenderer } from '../../serlo-editor/plugins/h5p/static'
 import { useAB } from '@/contexts/ab'
 import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
-import { parseH5pUrl } from '@/serlo-editor/plugins/h5p/renderer'
-import type { EditorH5PDocument } from '@/serlo-editor/types/editor-plugins'
 
 // Special version for serlo.org with exercise submission events
 export function H5pSerloStaticRenderer(props: EditorH5PDocument) {

@@ -1,5 +1,7 @@
 import { faInfoCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { Entity } from '@serlo/authorization'
+import { editorRenderers } from '@serlo/editor/src/plugin/helpers/editor-renderer'
+import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
 import { NextPage } from 'next'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
@@ -21,8 +23,6 @@ import { UserPage, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { isProduction } from '@/helper/is-production'
-import { editorRenderers } from '@/serlo-editor/plugin/helpers/editor-renderer'
-import { StaticRenderer } from '@/serlo-editor/static-renderer/static-renderer'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 export interface ProfileProps {

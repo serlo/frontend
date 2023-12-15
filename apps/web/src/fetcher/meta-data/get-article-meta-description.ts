@@ -1,10 +1,10 @@
-import { extractStringFromTextDocument } from '@/serlo-editor/plugins/text/utils/static-extract-text'
-import { isEmptyTextDocument } from '@/serlo-editor/plugins/text/utils/static-is-empty'
-import { AnyEditorDocument } from '@/serlo-editor/types/editor-plugins'
+import { extractStringFromTextDocument } from '@serlo/editor/src/plugins/text/utils/static-extract-text'
+import { isEmptyTextDocument } from '@serlo/editor/src/plugins/text/utils/static-is-empty'
+import { AnyEditorDocument } from '@serlo/editor/src/types/editor-plugins'
 import {
   isArticleIntroductionDocument,
   isArticleDocument,
-} from '@/serlo-editor/types/plugin-type-guards'
+} from '@serlo/editor/src/types/plugin-type-guards'
 
 /**
  * special metaDescription for articles extracted from the introduction text

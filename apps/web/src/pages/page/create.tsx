@@ -1,3 +1,5 @@
+import { TemplatePluginType } from '@serlo/editor/src/types/template-plugin-type'
+
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
@@ -5,7 +7,6 @@ import { AddRevision } from '@/components/pages/add-revision'
 import { UuidType } from '@/data-types'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
-import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 
 export default renderedPageNoHooks(() => {
   const addRevisionProps = {

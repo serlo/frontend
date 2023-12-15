@@ -1,17 +1,17 @@
-import dynamic from 'next/dynamic'
-import { useContext, useEffect, useState } from 'react'
-
+import { ExerciseStaticRenderer } from '@serlo/editor/src/plugins/exercise/static'
 import type {
   EditorExerciseDocument,
   EditorSolutionDocument,
-} from '../../serlo-editor/types/editor-plugins'
+} from '@serlo/editor/src/types/editor-plugins'
+import dynamic from 'next/dynamic'
+import { useContext, useEffect, useState } from 'react'
+
 import { useAuthentication } from '@/auth/use-authentication'
 import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { UuidsProvider } from '@/contexts/uuids-context'
 import { ExerciseInlineType } from '@/data-types'
-import { ExerciseStaticRenderer } from '@/serlo-editor/plugins/exercise/static'
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
   import(

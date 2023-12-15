@@ -1,3 +1,4 @@
+import { BoxRenderer } from '@serlo/editor/src/plugins/box/renderer'
 import type { GetStaticProps } from 'next'
 
 import type { LegalData } from './legal'
@@ -6,7 +7,6 @@ import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { fetchAndConvertLegalMarkdown } from '@/fetcher/fetch-and-convert-legal-markdown'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
-import { BoxRenderer } from '@/serlo-editor/plugins/box/renderer'
 
 type PrivacyPageData = LegalData & { lastChange: string }
 
@@ -92,6 +92,7 @@ export const getStaticProps: GetStaticProps<PrivacyPageData> = async (
 
     return { props: { contentHtml, isGerman, lastChange } }
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e)
     return { notFound: true }
   }
