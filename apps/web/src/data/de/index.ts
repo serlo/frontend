@@ -35,7 +35,7 @@ export const instanceData = {
       videos: 'Videos',
       applets: 'Applets',
       folders: "Bereiche",
-      exercises: 'Exercises',
+      exercises: "Aufgaben",
       events: "Veranstaltungen",
       unrevised: "Ungeprüft",
       subterms: "Unter-Themenbereich",
@@ -108,7 +108,7 @@ export const instanceData = {
         title: "Erstelle mit uns Lerninhalte!",
         text: "Hallo! %break% Spitze, dass du etwas zu diesem Inhalt beitragen möchtest 👍\nJede*r kann Inhalte bearbeiten, aber du brauchst einen Account.\n\n",
         loginButton: "Jetzt einloggen",
-        registerButton: "Einen neuen Account anlegen",
+        registerButton: "Neuen Account anlegen",
         psText: "%link% kannst du herausfinden, auf welche Arten du beitragen kannst.",
         psLinkText: "Hier"
       }
@@ -1090,7 +1090,7 @@ export const loggedInData = {
           subtasksTitleExerciseGroup: "Wieviele Teilaufgaben soll es geben?",
           noSubtasks: "Nein",
           yesSubtasks: "Ja",
-          subtasksLabel: 'Exercises',
+          subtasksLabel: "Aufgaben",
           numberOfSubtasksPlaceholder: "Anzahl",
           chooseOption: "Wähle eine Option",
           multipleChoice: "Multiple-Choice",
