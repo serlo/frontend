@@ -108,13 +108,13 @@ export const instanceData = {
         title: "Erstelle mit uns Lerninhalte!",
         text: "Hallo! %break% Spitze, dass du etwas zu diesem Inhalt beitragen möchtest 👍\nJede*r kann Inhalte bearbeiten, aber du brauchst einen Account.\n\n",
         loginButton: "Jetzt einloggen",
-        registerButton: "Neuen Account anlegen",
+        registerButton: 'Register new account',
         psText: "%link% kannst du herausfinden, auf welche Arten du beitragen kannst.",
         psLinkText: "Hier"
       }
     },
     license: {
-      readMore: "Information",
+      readMore: "Was bedeutet das?",
       special: "Besondere Lizenz",
       nonFree: "Die Nutzung könnte vielleicht strengeren Regeln unterliegen als bei unseren anderen Inhalten.",
       appliesTo: "Gilt für"
@@ -363,7 +363,7 @@ export const instanceData = {
         signIn: "Mit deinem Account anmelden",
         logOut: "Abmelden",
         newHere: "Bist du neu hier?",
-        registerNewAccount: "Neuen Account anlegen",
+        registerNewAccount: "Einen neuen Account anlegen",
         forgotPassword: "Hast du %forgotLinkText%?",
         forgotLinkText: "dein Passwort vergessen",
         validSessionDetected: "Hey, du bist schon in einem anderen Tab angemeldet. Lade bitte die Seite neu."
@@ -395,7 +395,7 @@ export const instanceData = {
         code1060001: "Du hast deinen Account wiederhergestellt. Bitte ändere dein Passwort in den nächsten Minuten.",
         code1060002: "Wir haben dir eine E-Mail mit einem Link zum Wiederherstellen an die angegebene Adresse geschickt. %break% Schau in deine Mailbox und benutze den Link.",
         code1070003: "Speichern",
-        code1070005: "Abschicken",
+        code1070005: "Absenden",
         code1080001: "Eine E-Mail mit einem Bestätigungslink wurde an die angegebene E-Mail-Adresse gesendet.",
         code1080002: "Du hast deine E-Mail-Adresse erfolgreich bestätigt.",
         code4000001: '%reason%',
@@ -644,7 +644,7 @@ export const loggedInData = {
           combineLikeTerms: "Fasse die Terme zusammen.",
           setEqual: "Setze die Terme gleich.",
           firstExplanation: "Erste Erklärung",
-          moveUpLabel: "Eins nach oben verschieben",
+          moveUpLabel: "Zeile eins nach oben verschieben",
           removeRowLabel: "Zeile entfernen"
         },
         geogebra: {
