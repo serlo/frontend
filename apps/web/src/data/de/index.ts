@@ -832,7 +832,7 @@ export const loggedInData = {
         blanksExercise: {
           title: "Lückentext Aufgabe",
           description: "Ein Text mit Lücken zum Ausfüllen",
-          placeholder: 'Write a text and add blanks'
+          placeholder: "Schreibe einen Text und füge Lücken ein"
         }
       },
       templatePlugins: {
