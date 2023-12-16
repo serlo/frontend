@@ -1,5 +1,5 @@
-import { store, selectStaticDocument } from '@serlo/editor/src/store'
-import { ROOT } from '@serlo/editor/src/store/root/constants'
+import { store, selectStaticDocument } from '@editor/store'
+import { ROOT } from '@editor/store/root/constants'
 import { useEffect, useState } from 'react'
 
 import { storeStateToLocalStorage } from './local-storage-notice'

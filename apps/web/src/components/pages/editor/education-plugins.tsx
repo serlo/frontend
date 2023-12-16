@@ -15,8 +15,8 @@ import {
   faTable,
   faEquals,
 } from '@fortawesome/free-solid-svg-icons'
-import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
-import { EditorPluginType } from '@serlo/editor/src/types/editor-plugin-type'
+import { StaticRenderer } from '@editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useRef, useState } from 'react'
 
 import {

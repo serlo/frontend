@@ -4,7 +4,7 @@ import type {
   EditorExerciseDocument,
   EditorRowsDocument,
   EditorTemplateExerciseGroupDocument,
-} from '@serlo/editor/src/types/editor-plugins'
+} from '@editor/types/editor-plugins'
 import { type CSSProperties, type FunctionComponent } from 'react'
 
 import {

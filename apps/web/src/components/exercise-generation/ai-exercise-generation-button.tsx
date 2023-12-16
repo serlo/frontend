@@ -1,5 +1,5 @@
 import { faWandSparkles } from '@fortawesome/free-solid-svg-icons'
-import { EditorTooltip } from '@serlo/editor/src/editor-ui/editor-tooltip'
+import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 

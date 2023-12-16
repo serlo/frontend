@@ -1,6 +1,6 @@
-import { parseH5pUrl } from '@serlo/editor/src/plugins/h5p/renderer'
-import { H5pStaticRenderer } from '@serlo/editor/src/plugins/h5p/static'
-import type { EditorH5PDocument } from '@serlo/editor/src/types/editor-plugins'
+import { parseH5pUrl } from '@editor/plugins/h5p/renderer'
+import { H5pStaticRenderer } from '@editor/plugins/h5p/static'
+import type { EditorH5PDocument } from '@editor/types/editor-plugins'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 

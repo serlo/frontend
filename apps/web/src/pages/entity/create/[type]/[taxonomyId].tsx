@@ -1,5 +1,5 @@
-import { EditorProps } from '@serlo/editor/src/core'
-import { TemplatePluginType } from '@serlo/editor/src/types/template-plugin-type'
+import { EditorProps } from '@editor/core'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useState } from 'react'

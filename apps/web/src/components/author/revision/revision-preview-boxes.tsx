@@ -1,5 +1,5 @@
-import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
-import { EditorPluginType } from '@serlo/editor/src/types/editor-plugin-type'
+import { StaticRenderer } from '@editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { type ReactNode } from 'react'
 
 import { DisplayModes } from './display-modes'

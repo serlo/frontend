@@ -3,13 +3,13 @@ import {
   faCaretRight,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons'
-import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
-import { EditorPluginType } from '@serlo/editor/src/types/editor-plugin-type'
+import { StaticRenderer } from '@editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
   EditorExerciseDocument,
   EditorTemplateExerciseGroupDocument,
-} from '@serlo/editor/src/types/editor-plugins'
-import { isTemplateExerciseGroupDocument } from '@serlo/editor/src/types/plugin-type-guards'
+} from '@editor/types/editor-plugins'
+import { isTemplateExerciseGroupDocument } from '@editor/types/plugin-type-guards'
 import { Fragment, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
