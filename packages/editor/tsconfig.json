@@ -9,6 +9,6 @@
     "module": "ES2022",
     "moduleResolution": "bundler"
   },
-  "include": ["custom.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["./custom.d.ts", "./global.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "dist"]
 }
