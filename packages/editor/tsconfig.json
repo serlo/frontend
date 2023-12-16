@@ -1,6 +1,7 @@
 {
   "extends": "@serlo/typescript-config/base.json",
   "compilerOptions": {
+    "rootDir": "../..",
     "paths": {
       "@/*": ["../../apps/web/src/*"],
       "@editor/*": ["./src/*"]
@@ -9,6 +10,14 @@
     "module": "ES2022",
     "moduleResolution": "bundler"
   },
-  "include": ["./custom.d.ts", "./global.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "./custom.d.ts",
+    "./global.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "../../apps/web/src/data/old_comment_ids.json",
+    "../../apps/web/**/*ts",
+    "../../apps/web/**/*tsx"
+  ],
   "exclude": ["node_modules", "dist"]
 }
