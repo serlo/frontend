@@ -14,7 +14,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18.x
-      - run: yarn --immutable --immutable-cache
+      - run: yarn
+      - run: yarn build:prisma
 
       - name: Build editor package
         run: yarn editor:build
