@@ -214,8 +214,8 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
               <div className="mb-2 flex items-baseline justify-between">
                 <div className="pt-3 text-base font-bold text-gray-700 ">
                   {actions[actions.length - 1].type === 'simplify'
-                    ? 'Terme in Gleichung vereinfachen:'
-                    : 'Forme auf beiden Seiten um:'}
+                    ? 'Vereinfache:'
+                    : 'Forme um:'}
                 </div>
                 <button
                   className="text-sm text-gray-600 hover:text-black"
@@ -227,11 +227,8 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
                     }
                   }}
                 >
-                  <FaIcon
-                    icon={faRotateLeft}
-                    className="text-base sm:text-xs"
-                  />
-                  <span className="hidden sm:inline">&nbsp;rückgängig</span>
+                  <FaIcon icon={faRotateLeft} className="text-base text-xs" />
+                  <span className="inline">&nbsp;rückgängig</span>
                 </button>
               </div>
               <div className="rounded border-2">
@@ -271,6 +268,9 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
                           return
                         }
 
+                        let normalWayResult: InputState = 'ok'
+                        let reverseWayResult: InputState = 'ok'
+
                         for (let i = -4; i <= 4; i++) {
                           if (variableSymbol) {
                             ce.assign(variableSymbol, i)
@@ -288,21 +288,57 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
                             typeof valueL !== 'number' ||
                             Math.abs(valueL) > 0.00001
                           ) {
-                            setInputState('left-mismatch')
-                            return
+                            normalWayResult = 'left-mismatch'
+                            break
                           }
                           if (
                             typeof valueR !== 'number' ||
                             Math.abs(valueR) > 0.00001
                           ) {
-                            setInputState('right-mismatch')
+                            normalWayResult = 'right-mismatch'
                             return
                           }
-                          //if (symbols.size == 0) break
                         }
 
-                        currentLatex.current = latex
-                        setInputState('ok')
+                        // reversed
+                        for (let i = -4; i <= 4; i++) {
+                          if (variableSymbol) {
+                            ce.assign(variableSymbol, i)
+                          }
+
+                          const termL = `( ${refLeft} ) - ( ${parts[1]} )`
+                          const valueL = safeParse(termL).N().value as number
+
+                          const termR = `( ${refRight} ) - ( ${parts[0]} )`
+                          const valueR = safeParse(termR).N().value as number
+
+                          // console.log(termL, valueL, '\n', termR, valueR)
+
+                          if (
+                            typeof valueL !== 'number' ||
+                            Math.abs(valueL) > 0.00001
+                          ) {
+                            reverseWayResult = 'left-mismatch'
+                            break
+                          }
+                          if (
+                            typeof valueR !== 'number' ||
+                            Math.abs(valueR) > 0.00001
+                          ) {
+                            reverseWayResult = 'right-mismatch'
+                            return
+                          }
+                        }
+
+                        if (
+                          normalWayResult === 'ok' ||
+                          reverseWayResult === 'ok'
+                        ) {
+                          currentLatex.current = latex
+                          setInputState('ok')
+                        } else {
+                          setInputState(normalWayResult)
+                        }
                       } catch (e) {
                         // eslint-disable-next-line no-console
                         console.log(e)
