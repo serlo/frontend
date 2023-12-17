@@ -14,6 +14,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18.x
+          registry-url: https://registry.npmjs.org
       - run: yarn
       - run: yarn build:prisma
 
@@ -29,8 +30,6 @@ jobs:
           else
             echo "::set-output name=already_published::false"
           fi
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to npm
         if: steps.check_published.outputs.already_published == 'false'
