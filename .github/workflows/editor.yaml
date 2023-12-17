@@ -1,0 +1,41 @@
+name: GitHub actions for the editor package
+
+on:
+  push:
+    branches:
+      - staging
+      - editor-package-vite
+
+jobs:
+  detect-new-version:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.version.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - id: version
+        uses: salsify/action-detect-and-tag-new-version@v2
+        with:
+          create-tag: false
+          version-command: |
+            jq ".version" --raw-output < packages/editor/package.json
+
+  npm-publish:
+    runs-on: ubuntu-latest
+    needs: detect-new-version
+    if: ${{ needs.detect-new-version.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .tool-versions
+          registry-url: 'https://registry.npmjs.org'
+      - run: yarn --immutable --immutable-cache
+      - run: yarn editor:build
+      - run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: yarn editor:publish
+
