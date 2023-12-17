@@ -1,4 +1,4 @@
-name: GitHub actions for the editor package
+name: Editor
 
 on:
   push:
