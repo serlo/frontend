@@ -15,7 +15,7 @@
     }
   },
   "module": "./dist/editor.js",
-  "types": "./dist/src/package/index.d.ts",
+  "types": "./dist/packages/editor/src/package/index.d.ts",
   "files": [
     "dist"
   ],
