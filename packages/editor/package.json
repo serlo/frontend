@@ -22,16 +22,16 @@
   "scripts": {
     "_eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "_prettier": "prettier .",
+    "build": "run-s \"build:*\"",
+    "build:vite": "vite build",
+    "build:tailwindcss": "tailwindcss --input ../../apps/web/src/assets-webkit/styles/serlo-tailwind.css -o dist/editor-tailwind.css --postcss",
     "format": "npm-run-all --continue-on-error \"format:*\"",
     "format:eslint": "yarn _eslint --fix",
     "format:prettier": "yarn _prettier --write",
     "lint": "npm-run-all lint:tsc lint:eslint lint:prettier",
     "lint:eslint": "yarn _eslint",
     "lint:prettier": "yarn _prettier --check",
-    "lint:tsc": "tsc --noEmit",
-    "build": "run-s \"build:*\"",
-    "build:vite": "vite build",
-    "build:tailwindcss": "tailwindcss --input ../../apps/web/src/assets-webkit/styles/serlo-tailwind.css -o dist/editor-tailwind.css --postcss"
+    "lint:tsc": "tsc --noEmit"
   },
   "dependencies": {
     "react": "^18.2.0",
