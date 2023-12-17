@@ -1,6 +1,6 @@
+import type { StaticMathProps } from '@editor/plugins/text/static-components/static-math'
 import { faBellSlash, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { Entity } from '@serlo/authorization'
-import type { StaticMathProps } from '@editor/plugins/text/static-components/static-math'
 import Tippy from '@tippyjs/react'
 import dynamic from 'next/dynamic'
 

@@ -1,3 +1,5 @@
+import { StaticRenderer } from '@editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
   faCubes,
   faExpand,
@@ -15,8 +17,6 @@ import {
   faTable,
   faEquals,
 } from '@fortawesome/free-solid-svg-icons'
-import { StaticRenderer } from '@editor/static-renderer/static-renderer'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useRef, useState } from 'react'
 
 import {

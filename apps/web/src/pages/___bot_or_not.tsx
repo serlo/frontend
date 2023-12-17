@@ -1,7 +1,7 @@
-import { User } from '@serlo/authorization'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
+import { User } from '@serlo/authorization'
 import { gql } from 'graphql-request'
 import { NextPage } from 'next'
 import Head from 'next/head'

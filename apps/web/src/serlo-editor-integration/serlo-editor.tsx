@@ -1,7 +1,7 @@
-import { Entity } from '@serlo/authorization'
 import { Editor, type EditorProps } from '@editor/core'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
+import { Entity } from '@serlo/authorization'
 import { type ReactNode, useState } from 'react'
 
 import {

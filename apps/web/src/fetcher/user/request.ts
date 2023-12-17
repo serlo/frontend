@@ -1,6 +1,6 @@
-import { AuthorizationPayload, Scope } from '@serlo/authorization'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { EditorRowsDocument } from '@editor/types/editor-plugins'
+import { AuthorizationPayload, Scope } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
 import { userQuery } from './query'

@@ -1,8 +1,3 @@
-import {
-  faCaretLeft,
-  faCaretRight,
-  faTimes,
-} from '@fortawesome/free-solid-svg-icons'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
@@ -10,6 +5,11 @@ import {
   EditorTemplateExerciseGroupDocument,
 } from '@editor/types/editor-plugins'
 import { isTemplateExerciseGroupDocument } from '@editor/types/plugin-type-guards'
+import {
+  faCaretLeft,
+  faCaretRight,
+  faTimes,
+} from '@fortawesome/free-solid-svg-icons'
 import { Fragment, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 

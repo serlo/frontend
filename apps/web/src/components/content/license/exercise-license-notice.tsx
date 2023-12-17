@@ -1,6 +1,6 @@
+import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons'
 import { faSlash } from '@fortawesome/free-solid-svg-icons'
-import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 
 import { Link } from '../link'
 import { FaIcon } from '@/components/fa-icon'

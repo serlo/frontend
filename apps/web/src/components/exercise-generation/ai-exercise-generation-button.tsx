@@ -1,5 +1,5 @@
-import { faWandSparkles } from '@fortawesome/free-solid-svg-icons'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { faWandSparkles } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 

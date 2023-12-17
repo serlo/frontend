@@ -1,6 +1,6 @@
+import { isTemplateExerciseGroupDocument } from '@editor/types/plugin-type-guards'
 import { faGripLines, faTools } from '@fortawesome/free-solid-svg-icons'
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
-import { isTemplateExerciseGroupDocument } from '@editor/types/plugin-type-guards'
 import { arrayMoveImmutable } from 'array-move'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'

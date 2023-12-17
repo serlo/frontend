@@ -1,7 +1,7 @@
-import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorRowsDocument } from '@editor/types/editor-plugins'
+import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
 import { Fragment, useState } from 'react'
 import { RatingProps } from 'react-simple-star-rating'
