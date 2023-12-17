@@ -16,6 +16,7 @@ export interface IdsQueryReturn {
   [key: string]: {
     alias: string
     instance: string
+    title?: string
   }
 }
 
