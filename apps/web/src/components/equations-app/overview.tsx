@@ -1,5 +1,6 @@
-import { StaticMath } from '@editor/plugins/text/static-components/static-math'
+import type { StaticMathProps } from '@editor/plugins/text/static-components/static-math'
 import { faCheck, faPlay } from '@fortawesome/free-solid-svg-icons'
+import dynamic from 'next/dynamic'
 
 import { FaIcon } from '../fa-icon'
 import { linearEquationData } from '@/data/de/gleichungs-app'
@@ -9,6 +10,12 @@ interface OverviewProps {
   selectLevel: (n: number) => void
   solved: number[]
 }
+
+const StaticMath = dynamic<StaticMathProps>(() =>
+  import('@serlo/editor/src/plugins/text/static-components/static-math').then(
+    (mod) => mod.StaticMath
+  )
+)
 
 export function Overview({ selectLevel, solved }: OverviewProps) {
   return (
