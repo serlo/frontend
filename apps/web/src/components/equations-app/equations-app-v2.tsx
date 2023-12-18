@@ -1,9 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 
+import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState } from 'react'
 
 import { EquationTask } from './equation-task'
 import { Overview } from './overview'
+import { Overview2 } from './overview-2'
+import { FaIcon } from '../fa-icon'
 import {
   LinearEquationTask,
   linearEquationData,
@@ -18,6 +21,9 @@ export function EquationsAppV2() {
 
   const [taskNumber, setTaskNumber] = useState(-1)
   const [hideBackButton, setHideBackButton] = useState(false)
+
+  const [showMenu, setShowMenu] = useState(false)
+  const [page, setPage] = useState<'linear' | 'application'>('linear')
 
   const showOverview = taskNumber === -1
   const showTask = taskNumber > 0
@@ -60,17 +66,48 @@ export function EquationsAppV2() {
       </div>
       {showOverview && (
         <div className="shrink grow">
+          {showMenu && (
+            <div className=" bg-brand-100 text-center">
+              <button
+                className="block w-full border-b-2 border-brand py-4 hover:underline"
+                onClick={() => {
+                  setPage('linear')
+                  setShowMenu(false)
+                }}
+              >
+                <span className="text-lg font-bold">Lineare Gleichungen</span>
+              </button>
+              <button
+                className="block w-full border-b-2 border-brand py-4 hover:underline"
+                onClick={() => {
+                  setPage('application')
+                  setShowMenu(false)
+                }}
+              >
+                <span className="text-lg font-bold">Anwendungsaufgaben</span>
+              </button>
+            </div>
+          )}
           <div className="mx-auto mt-4 max-w-[600px] px-4 [&>h3]:mt-8 [&>h3]:text-lg [&>h3]:font-bold">
-            <Overview
-              selectLevel={(n) => {
-                setTaskNumber(n)
-                setHideBackButton(false)
-                lastScrollPosition.current =
-                  window.document.scrollingElement?.scrollTop ?? -1
-                window.document.scrollingElement?.scrollTo({ top: 0 })
-              }}
-              solved={solved}
-            />
+            {page === 'linear' && (
+              <Overview selectLevel={select} solved={solved} />
+            )}
+            {page === 'application' && (
+              <Overview2 selectLevel={select} solved={solved} />
+            )}
+            <div className="mt-12 rounded bg-gray-100 p-2">
+              Diese App befindet sich in Entwicklung.
+              <br />
+              <a
+                href="https://forms.gle/PFUYn8fn5zAkzpqe8"
+                target="_blank"
+                rel="noreferrer"
+                className="serlo-link"
+              >
+                Wir freuen uns über dein Feedback
+              </a>
+              .
+            </div>
             <div className="mb-6 mt-36 text-center">
               <a href="/privacy" target="_blank" rel="noreferrer">
                 Datenschutz
@@ -86,27 +123,42 @@ export function EquationsAppV2() {
       {showTask && task && (
         <div className="shrink grow">
           <div className="mx-auto mt-4 max-w-[600px] px-4">
-            <EquationTask
-              data={task}
-              onSolve={(n) => {
-                if (!solved.includes(n)) {
-                  setSolved((list) => {
-                    const newVal = [...list, n]
-                    storeToSolved(newVal)
-                    return newVal
-                  })
-                }
-                setHideBackButton(true)
-              }}
-              onBack={() => {
-                setTaskNumber(-1)
-              }}
-            />
+            {page === 'linear' && (
+              <EquationTask
+                data={task}
+                onSolve={(n) => {
+                  solve(n)
+                }}
+                onBack={() => {
+                  setTaskNumber(-1)
+                }}
+              />
+            )}
           </div>
         </div>
       )}
     </div>
   )
+
+  function select(n: number) {
+    setTaskNumber(n)
+    setShowMenu(false)
+    setHideBackButton(false)
+    lastScrollPosition.current =
+      window.document.scrollingElement?.scrollTop ?? -1
+    window.document.scrollingElement?.scrollTo({ top: 0 })
+  }
+
+  function solve(n: number) {
+    if (!solved.includes(n)) {
+      setSolved((list) => {
+        const newVal = [...list, n]
+        storeToSolved(newVal)
+        return newVal
+      })
+    }
+    setHideBackButton(true)
+  }
 
   function renderHeaderUI() {
     if (showTask && !hideBackButton) {
@@ -119,6 +171,26 @@ export function EquationsAppV2() {
             }}
           >
             zurück
+          </button>
+        </div>
+      )
+    } else if (!showTask) {
+      return (
+        <div className="mr-3">
+          <button
+            className="rounded bg-brand px-2 py-1 text-white hover:bg-brand-600"
+            onClick={() => {
+              setShowMenu((val) => !val)
+            }}
+          >
+            {showMenu ? (
+              <>schließen</>
+            ) : (
+              <>
+                <FaIcon icon={faBars} className="mr-2" />
+                Menü
+              </>
+            )}
           </button>
         </div>
       )
