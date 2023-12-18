@@ -5,7 +5,6 @@ import {
   landingSubjectsData,
   secondaryMenus,
 } from './menu-data'
-
 export const instanceData = {
   lang: 'en',
   headerData,
@@ -126,7 +125,7 @@ export const instanceData = {
       special: 'Different license',
       nonFree:
         'Usage of this content might be more restricted than our other content.',
-      appliesTo: 'Applies to'
+      appliesTo: 'Applies to',
     },
     course: {
       showPages: 'Show course overview',
@@ -189,7 +188,7 @@ export const instanceData = {
       revokeTitle: 'Revoke',
       revokeText:
         'Here you can revoke your consent. In this case we ask again, before we load content from those providers',
-      noConsent: 'No content saved.',
+      noConsent: 'not consented',
       revokeConsent: 'Revoke consent',
     },
     embed: {
@@ -371,7 +370,8 @@ export const instanceData = {
         passwordRequirements: 'At least 8 characters, longer is better.',
         registerIntro:
           'You do not need an account for studying on serlo.org. %break% If you want to comment, or work on content you came to the right place',
-        newsletterSubscription: 'Receive concise updates on our current activities in our newsletter. We use your information for sending purposes and for personal greetings. Look forward to relevant information and our annual fundraising campaign once a year. (optional)'
+        newsletterSubscription:
+          'Receive concise updates on our current activities in our newsletter. We use your information for sending purposes and for personal greetings. Look forward to relevant information and our annual fundraising campaign once a year. (optional)',
       },
       recoverTitle: 'Recover your account',
       recoveryInstructions:
@@ -694,9 +694,9 @@ export const loggedInData = {
         },
         unsupported: {
           title: 'Unsupported',
-          notSupported:
-            'Sorry, this plugin is not supported:',
-          explanation: 'It will not be displayed to users. You can either remove it or asks developers for support.'
+          notSupported: 'Sorry, this plugin is not supported:',
+          explanation:
+            'It will not be displayed to users. You can either remove it or asks developers for support.',
         },
         equations: {
           title: 'Terms and equations',
@@ -716,7 +716,7 @@ export const loggedInData = {
           setEqual: 'Set the terms equal to each other.',
           firstExplanation: 'First explanation',
           moveUpLabel: 'Move up',
-          removeRowLabel: 'Remove row'
+          removeRowLabel: 'Remove row',
         },
         geogebra: {
           title: 'GeoGebra Applet',
@@ -793,7 +793,7 @@ export const loggedInData = {
           title: 'Rows',
           searchForTools: 'Search for tools…',
           duplicate: 'Duplicate',
-          copyAnchorLink: "Copy link to this element",
+          copyAnchorLink: 'Copy link to this element',
           remove: 'Remove',
           close: 'Close',
           dragElement: 'Drag the element within the document',
@@ -834,7 +834,8 @@ export const loggedInData = {
           heading: 'Heading',
           headings: 'Headings',
           link: 'Link (%ctrlOrCmd% + K)',
-          noElementPasteInLists: 'Sorry, pasting elements inside of lists is not allowed.',
+          noElementPasteInLists:
+            'Sorry, pasting elements inside of lists is not allowed.',
           linkOverlay: {
             placeholder: 'https://… or /1234',
             inputLabel: 'Paste or type a link',
@@ -875,7 +876,7 @@ export const loggedInData = {
             eG: 'e.g.',
             functions: 'Functions',
             displayAsBlock: 'Display as block',
-            closeMathFormulaEditor: "Close math formula editor",
+            closeMathFormulaEditor: 'Close math formula editor',
           },
         },
         video: {
@@ -890,24 +891,25 @@ export const loggedInData = {
         audio: {
           title: 'Audio',
           description: 'Link to audio files on Vocaroo',
-          audioUrl: 'Enter Audio URL'
+          audioUrl: 'Enter Audio URL',
         },
         exercise: {
           title: 'Exercise',
-          description: 'Interactive or text based exercise'
+          description: 'Interactive or text based exercise',
         },
         inputExercise: {
           title: 'Input Exercise',
-          description: 'Solution can be text or math'
+          description: 'Solution can be text or math',
         },
         scMcExercise: {
           title: 'SC/MC Exercise',
-          description: 'Single Choice or Multiple Choice'
+          description: 'Single Choice or Multiple Choice',
         },
-        fillInTheBlanks: {
+        blanksExercise: {
           title: 'Fill In The Blanks Exercise',
-          description: 'Text with blanks'
-        }
+          description: 'Text with blanks',
+          placeholder: 'Write a text and add blanks',
+        },
       },
       templatePlugins: {
         applet: {
@@ -967,8 +969,8 @@ export const loggedInData = {
         exercise: {
           scMcExercise: 'Choice Exercise',
           inputExercise: 'Input Exercise',
+          blanksExercise: 'Fill In The Blanks Exercise',
           h5p: 'H5p Exercise',
-          fillInTheBlanksExercise: 'Fill In The Blanks',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
           removeInteractive: 'Remove interactive element',
@@ -988,9 +990,11 @@ export const loggedInData = {
           feedbackPlaceholder: 'Add a feedback message for this answer',
           yourSolution: 'Your solution',
           types: {
-            'input-string-normalized-match-challenge': "Text (exact, e.g. 'tiger')",
+            'input-string-normalized-match-challenge':
+              "Text (exact, e.g. 'tiger')",
             'input-number-exact-match-challenge': "Number (exact, e.g. '0.5')",
-            'input-expression-equal-match-challenge': "Mathematical expression (equivalent, e.g. '0.5' or '1/2' or '2/4'",
+            'input-expression-equal-match-challenge':
+              "Mathematical expression (equivalent, e.g. '0.5' or '1/2' or '2/4'",
           },
         },
         page: {
@@ -1020,7 +1024,7 @@ export const loggedInData = {
           kindOfExerciseGroup: 'Kind of exercise group',
           notCohesive: 'not cohesive',
           cohesive: 'cohesive',
-        }
+        },
       },
       edtrIo: {
         localStorage: {
@@ -1063,7 +1067,8 @@ export const loggedInData = {
         author: 'Author',
         createdAt: 'when?',
         ready: 'Ready to save?',
-        anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.',
+        anchorLinkWarning:
+          'This link will only work in the frontend and for content that has a somewhat new revision.',
       },
       taxonomy: {
         title: 'Title',
@@ -1147,7 +1152,8 @@ export const loggedInData = {
         buttonTitle: 'AI generate exercise group',
         initialModalTitle: 'Create an exercise automatically with help of AI',
         modalTitleWithTaxonomy: 'Exercise generation with AI: ',
-        confirmCloseDescription: 'Do you want to cancel the exercise generation? Your data will be lost.',
+        confirmCloseDescription:
+          'Do you want to cancel the exercise generation? Your data will be lost.',
         summary: 'Summary',
         nextButton: 'Next',
         nextExerciseButton: 'Next exercise',
@@ -1155,13 +1161,14 @@ export const loggedInData = {
         generateExerciseButton: 'Generate exercise',
         generateExercisesButton: 'Generate exercises',
         somethingWentWrong: 'Something went wrong. Please try again.',
-        hallucinationWarning: 'The AI can generate incorrect exercises. Please review carefully.',
+        hallucinationWarning:
+          'The AI can generate incorrect exercises. Please review carefully.',
         topic: {
           title: 'About which %topic% would you like to generate exercises?',
           topic: 'topic',
           defaultLabel: 'Topic',
           otherTopicLabel: 'Other topic',
-          customTopicPlaceholder: 'Enter custom topic'
+          customTopicPlaceholder: 'Enter custom topic',
         },
         grade: {
           title: 'Which %grade% are the students in?',
@@ -1180,17 +1187,20 @@ export const loggedInData = {
           yesSubtasks: 'Yes',
           subtasksLabel: 'Exercises',
           numberOfSubtasksPlaceholder: 'Number of subtasks',
-          chooseOption: "Choose an option",
-          multipleChoice: "Multiple Choice",
-          singleChoice: "Single Choice",
-          inputExercise: "Input exercise"
+          chooseOption: 'Choose an option',
+          multipleChoice: 'Multiple Choice',
+          singleChoice: 'Single Choice',
+          inputExercise: 'Input exercise',
+          blanksExercise: 'Fill In The Blanks Exercise',
         },
         difficulty: {
-          title: 'What is the %difficulty% level of the exercise and learning goal?',
+          title:
+            'What is the %difficulty% level of the exercise and learning goal?',
           difficulty: 'difficulty',
           label: 'Difficulty',
           learningGoalLabel: 'Learning goal',
-          learningGoalExample: 'Example: Students understand the basics of algebra.',
+          learningGoalExample:
+            'Example: Students understand the basics of algebra.',
           learningGoalPlaceholder: 'Enter learning goal',
           chooseOption: 'Choose an option',
           easy: 'Easy',
@@ -1201,8 +1211,9 @@ export const loggedInData = {
           title: 'What is the %priorKnowledge% that the students should have?',
           priorKnowledge: 'prior knowledge',
           label: 'Prior Knowledge',
-          example: 'Example: The students know how basic algebra works and already solved some exercises on the topic.',
-          placeholder: 'E.g., Basic arithmetic, fundamentals of algebra'
+          example:
+            'Example: The students know how basic algebra works and already solved some exercises on the topic.',
+          placeholder: 'E.g., Basic arithmetic, fundamentals of algebra',
         },
         preview: {
           loadingHeading: 'Exercise is being generated...',
@@ -1210,12 +1221,11 @@ export const loggedInData = {
           publishExercise: 'Publish exercise',
           openExerciseInEditor: 'Open in editor',
           regenerate: 'Regenerate exercise',
-        }
+        },
       },
     },
   },
 }
-
 export const kratosMailStrings = {
   recovery: {
     valid: {

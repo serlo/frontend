@@ -1,3 +1,4 @@
+import type { StaticMathProps } from '@serlo/editor/src/plugins/text/static-components/static-math'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState } from 'react'
 
@@ -11,7 +12,6 @@ import { cn } from '@/helper/cn'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
 import { scrollIfNeeded } from '@/helper/scroll'
 import { useEditCommentMutation } from '@/mutations/thread'
-import type { StaticMathProps } from '@/serlo-editor/plugins/text/static-components/static-math'
 
 interface CommentProps {
   threadId: string
@@ -23,7 +23,7 @@ interface CommentProps {
 }
 
 const StaticMath = dynamic<StaticMathProps>(() =>
-  import('@/serlo-editor/plugins/text/static-components/static-math').then(
+  import('@serlo/editor/src/plugins/text/static-components/static-math').then(
     (mod) => mod.StaticMath
   )
 )

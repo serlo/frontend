@@ -1,3 +1,5 @@
+import { EditorProps } from '@serlo/editor/src/core'
+import { TemplatePluginType } from '@serlo/editor/src/types/template-plugin-type'
 import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useState } from 'react'
@@ -17,8 +19,6 @@ import {
 import { sharedTaxonomyParents } from '@/fetcher/query-fragments'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
-import { EditorProps } from '@/serlo-editor/core'
-import { TemplatePluginType } from '@/serlo-editor/types/template-plugin-type'
 
 enum AllowedPlugins {
   Article = TemplatePluginType.Article,

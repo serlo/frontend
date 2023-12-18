@@ -1,11 +1,12 @@
-import { InstanceData } from '@/data-types'
-import { getTranslatedType } from '@/helper/get-translated-type'
-import { extractStringFromTextDocument } from '@/serlo-editor/plugins/text/utils/static-extract-text'
+import { extractStringFromTextDocument } from '@serlo/editor/src/plugins/text/utils/static-extract-text'
 import {
   EditorExerciseDocument,
   EditorRowsDocument,
   EditorTemplateExerciseGroupDocument,
-} from '@/serlo-editor/types/editor-plugins'
+} from '@serlo/editor/src/types/editor-plugins'
+
+import { InstanceData } from '@/data-types'
+import { getTranslatedType } from '@/helper/get-translated-type'
 
 export function getPreviewStringFromExercise(
   document: EditorExerciseDocument | EditorTemplateExerciseGroupDocument,

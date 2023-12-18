@@ -276,18 +276,6 @@ export const sharedLicenseFragments = gql`
   }
 `
 
-export const sharedPathFragments = gql`
-  fragment path on Navigation {
-    path {
-      nodes {
-        label
-        url
-        id
-      }
-    }
-  }
-`
-
 // only 10 levels
 export const sharedTaxonomyParents = gql`
   fragment pathToRoot on TaxonomyTerm {

@@ -1,11 +1,11 @@
+import { parseId } from '@serlo/editor/src/plugins/geogebra/renderer'
+import { GeogebraStaticRenderer } from '@serlo/editor/src/plugins/geogebra/static'
+import { EditorGeogebraDocument } from '@serlo/editor/src/types/editor-plugins'
 import dynamic from 'next/dynamic'
 
-import { EditorGeogebraDocument } from '../../serlo-editor/types/editor-plugins'
 import { Lazy } from '@/components/content/lazy'
 import type { PrivacyWrapperProps } from '@/components/content/privacy-wrapper'
 import { ExternalProvider } from '@/helper/use-consent'
-import { parseId } from '@/serlo-editor/plugins/geogebra/renderer'
-import { GeogebraStaticRenderer } from '@/serlo-editor/plugins/geogebra/static'
 
 const PrivacyWrapper = dynamic<PrivacyWrapperProps>(() =>
   import('@/components/content/privacy-wrapper').then(

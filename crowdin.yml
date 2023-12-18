@@ -1,0 +1,6 @@
+preserve_hierarchy: false
+export_languages: ['de', 'en', 'fr', 'es-ES', 'ta', 'hi']
+base_path: /apps/web
+files:
+  - source: /src/data/en/index.ts
+    translation: /src/data/%two_letters_code%/index.ts

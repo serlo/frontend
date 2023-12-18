@@ -1,5 +1,6 @@
 import { faGripLines, faTools } from '@fortawesome/free-solid-svg-icons'
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
+import { isTemplateExerciseGroupDocument } from '@serlo/editor/src/types/plugin-type-guards'
 import { arrayMoveImmutable } from 'array-move'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
@@ -27,7 +28,6 @@ import { cn } from '@/helper/cn'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useEntitySortMutation } from '@/mutations/use-entity-sort-mutation'
-import { isTemplateExerciseGroupDocument } from '@/serlo-editor/types/plugin-type-guards'
 
 // this duplicates some code from /taxonomy/term/sort… but since this feature here is only temporary I'm okay with that
 

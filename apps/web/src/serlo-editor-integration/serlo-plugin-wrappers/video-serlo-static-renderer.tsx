@@ -1,11 +1,11 @@
+import { parseVideoUrl } from '@serlo/editor/src/plugins/video/renderer'
+import { VideoStaticRenderer } from '@serlo/editor/src/plugins/video/static'
+import { EditorVideoDocument } from '@serlo/editor/src/types/editor-plugins'
 import dynamic from 'next/dynamic'
 
-import { EditorVideoDocument } from '../../serlo-editor/types/editor-plugins'
 import { Lazy } from '@/components/content/lazy'
 import type { PrivacyWrapperProps } from '@/components/content/privacy-wrapper'
 import { ExternalProvider } from '@/helper/use-consent'
-import { parseVideoUrl } from '@/serlo-editor/plugins/video/renderer'
-import { VideoStaticRenderer } from '@/serlo-editor/plugins/video/static'
 
 const PrivacyWrapper = dynamic<PrivacyWrapperProps>(() =>
   import('@/components/content/privacy-wrapper').then(

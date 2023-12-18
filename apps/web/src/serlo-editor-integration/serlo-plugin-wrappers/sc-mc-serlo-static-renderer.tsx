@@ -1,3 +1,6 @@
+import { ScMcExerciseRendererAnswer } from '@serlo/editor/src/plugins/sc-mc-exercise/renderer/renderer'
+import { ScMcExerciseStaticRenderer } from '@serlo/editor/src/plugins/sc-mc-exercise/static'
+import { EditorScMcExerciseDocument } from '@serlo/editor/src/types/editor-plugins'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 
@@ -10,9 +13,6 @@ import {
   ExerciseSubmissionData,
   exerciseSubmission,
 } from '@/helper/exercise-submission'
-import { ScMcExerciseRendererAnswer } from '@/serlo-editor/plugins/sc-mc-exercise/renderer/renderer'
-import { ScMcExerciseStaticRenderer } from '@/serlo-editor/plugins/sc-mc-exercise/static'
-import { EditorScMcExerciseDocument } from '@/serlo-editor/types/editor-plugins'
 
 export function ScMcSerloStaticRenderer(props: EditorScMcExerciseDocument) {
   const { asPath } = useRouter()

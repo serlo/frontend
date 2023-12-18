@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import MathfieldElement from 'mathlive/dist/types/mathfield-element'
+import { MathfieldElement } from 'mathlive'
 import { useState, useEffect, createRef } from 'react'
 
 interface MathFieldProps {
