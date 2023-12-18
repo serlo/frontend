@@ -176,7 +176,7 @@ export const instanceData = {
       intro: "Während dem Benutzen der Seite hast du uns vielleicht erlaubt, dass wir Inhalte von externen Anbietern laden. Die Details kannst du in unserer %privacypolicy% nachlesen.",
       revokeTitle: "Widerrufen",
       revokeText: "Hier hast du die Möglichkeit mit einem Klick deine Einwilligung zurückzuziehen. In dem Fall fragen wir wieder nach, bevor wir etwas laden.",
-      noConsent: "Keine Einwilligungen gespeichert",
+      noConsent: 'not consented',
       revokeConsent: "Nicht mehr erlauben"
     },
     embed: {
