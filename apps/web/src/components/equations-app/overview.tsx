@@ -4,6 +4,7 @@ import { ReadonlyMathField } from './readonly-math-field'
 import { FaIcon } from '../fa-icon'
 import { linearEquationData } from '@/data/de/gleichungs-app'
 import { cn } from '@/helper/cn'
+import { StaticMath } from '@editor/plugins/text/static-components/static-math'
 
 interface OverviewProps {
   selectLevel: (n: number) => void
@@ -34,8 +35,8 @@ export function Overview({ selectLevel, solved }: OverviewProps) {
               >
                 <span>{t.number}</span>
               </span>
-              <span className="text-xl">
-                <ReadonlyMathField value={t.latex} />
+              <span className="text-lg">
+                <StaticMath src={t.latex} inline type="math" />
               </span>
               {solved.includes(t.number) && (
                 <span className="ml-2 text-green-500">
