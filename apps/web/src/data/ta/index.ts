@@ -176,7 +176,7 @@ export const instanceData = {
       intro: 'While using this site you may allowed us to load content from external providers. You can read about the details in the %privacypolicy%.',
       revokeTitle: 'Revoke',
       revokeText: 'Here you can revoke your consent. In this case we ask again, before we load content from those providers',
-      noConsent: 'No content saved.',
+      noConsent: 'not consented',
       revokeConsent: 'Revoke consent'
     },
     embed: {
@@ -720,7 +720,7 @@ export const loggedInData = {
           title: 'Rows',
           searchForTools: 'Search for tools…',
           duplicate: 'Duplicate',
-          copyAnchorLink: "Copy link to this element",
+          copyAnchorLink: 'Copy link to this element',
           remove: "நீக்கு",
           close: "நெருக்கமான",
           dragElement: 'Drag the element within the document',
@@ -800,7 +800,7 @@ export const loggedInData = {
             eG: "உதாரணமாக.",
             functions: "செயல்பாடுகள்",
             displayAsBlock: 'Display as block',
-            closeMathFormulaEditor: "Close math formula editor"
+            closeMathFormulaEditor: 'Close math formula editor'
           }
         },
         video: {
@@ -1092,11 +1092,11 @@ export const loggedInData = {
           yesSubtasks: 'Yes',
           subtasksLabel: "பயிற்சிகள்",
           numberOfSubtasksPlaceholder: 'Number of subtasks',
-          chooseOption: "Choose an option",
-          multipleChoice: "Multiple Choice",
-          singleChoice: "Single Choice",
-          inputExercise: "Input exercise",
-          blanksExercise: "Fill In The Blanks Exercise"
+          chooseOption: 'Choose an option',
+          multipleChoice: 'Multiple Choice',
+          singleChoice: 'Single Choice',
+          inputExercise: 'Input exercise',
+          blanksExercise: 'Fill In The Blanks Exercise'
         },
         difficulty: {
           title: 'What is the %difficulty% level of the exercise and learning goal?',
