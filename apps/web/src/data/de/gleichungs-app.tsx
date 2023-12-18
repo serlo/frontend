@@ -1,3 +1,6 @@
+import { StaticMath } from '@editor/plugins/text/static-components/static-math'
+
+/* eslint-disable @next/next/no-img-element */
 export interface LinearEquationTask {
   latex: string
   number: number
@@ -126,4 +129,47 @@ export const linearEquationData: LinearEquationData = {
       ],
     },
   ],
+}
+
+export interface ApplicationTaskData {
+  id: number
+  title: string
+  description: JSX.Element
+  interaction?: ApplicationInteraction
+}
+
+export interface ApplicationInteraction {}
+
+export const applicationTasks: ApplicationTaskData[] = [
+  {
+    id: 1001,
+    title: 'Umfang Figur',
+    description: (
+      <>
+        <p>
+          Stelle einen Term auf für den Umfang dieser Figur auf in Abhängigkeit
+          von {m('x')}.
+        </p>
+        <img
+          src="https://assets.serlo.org/14bcc250-9dcf-11ee-b4be-a5a9129e9224/image.png"
+          alt="Figur"
+          className="mx-auto w-60"
+        />
+      </>
+    ),
+  },
+  {
+    id: 1002,
+    title: 'Term aufstellen',
+    description: <>TODO</>,
+  },
+  {
+    id: 1003,
+    title: 'Platzhalter',
+    description: <>TODO</>,
+  },
+]
+
+function m(latex: string) {
+  return <StaticMath src={latex} inline type="math" />
 }

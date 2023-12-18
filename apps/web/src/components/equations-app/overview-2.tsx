@@ -1,29 +1,38 @@
-/*import type { StaticMathProps } from '@editor/plugins/text/static-components/static-math'
-import { faCheck, faPlay } from '@fortawesome/free-solid-svg-icons'
-import dynamic from 'next/dynamic'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
 import { FaIcon } from '../fa-icon'
-import { linearEquationData } from '@/data/de/gleichungs-app'
-import { cn } from '@/helper/cn'*/
+import { applicationTasks } from '@/data/de/gleichungs-app'
 
 interface Overview2Props {
   selectLevel: (n: number) => void
   solved: number[]
 }
 
-/*const StaticMath = dynamic<StaticMathProps>(() =>
-  import('@serlo/editor/src/plugins/text/static-components/static-math').then(
-    (mod) => mod.StaticMath
-  )
-)*/
-
-export function Overview2(_: Overview2Props) {
+export function Overview2({ selectLevel, solved }: Overview2Props) {
   return (
     <div>
       <h2 className="mb-6 mt-8 text-center text-2xl font-bold mobileExt:mb-8 mobileExt:mt-12">
         Anwendungsaufgaben
       </h2>
-      <div className="mt-24 h-96 text-center">TODO</div>
+      {applicationTasks.map((task) => (
+        <div key={task.id} className="my-6">
+          <button
+            className="text-brand hover:underline"
+            onClick={() => {
+              selectLevel(task.id)
+            }}
+          >
+            {task.title}
+          </button>
+          {solved.includes(task.id) && (
+            <span className="ml-2 text-green-500">
+              <FaIcon icon={faCheck} />
+            </span>
+          )}
+        </div>
+      ))}
+      <div className="mb-96 h-96"></div>
+
       {/*linearEquationData.levels.map((level) => (
         <div key={level.number}>
           <h3 className="mb-4 mt-8 text-xl font-bold">

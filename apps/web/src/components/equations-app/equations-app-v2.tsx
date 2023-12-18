@@ -3,12 +3,15 @@
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState } from 'react'
 
+import { ApplicationTask } from './application-task'
 import { EquationTask } from './equation-task'
 import { Overview } from './overview'
 import { Overview2 } from './overview-2'
 import { FaIcon } from '../fa-icon'
 import {
+  ApplicationTaskData,
   LinearEquationTask,
+  applicationTasks,
   linearEquationData,
 } from '@/data/de/gleichungs-app'
 
@@ -26,9 +29,11 @@ export function EquationsAppV2() {
   const [page, setPage] = useState<'linear' | 'application'>('linear')
 
   const showOverview = taskNumber === -1
-  const showTask = taskNumber > 0
+  const showTaskLinear = taskNumber > 0 && taskNumber < 999
+  const showTaskApplication = taskNumber > 1000
 
-  let task: LinearEquationTask | null = null
+  let taskLinear: LinearEquationTask | null = null
+  let taskApplication: ApplicationTaskData | null = null
 
   const lastScrollPosition = useRef(-1)
 
@@ -38,13 +43,22 @@ export function EquationsAppV2() {
     }
   }, [showOverview])
 
-  if (showTask) {
+  if (showTaskLinear) {
     for (const level of linearEquationData.levels) {
       for (const t of level.tasks) {
         if (t.number === taskNumber) {
-          task = t
+          taskLinear = t
           break
         }
+      }
+    }
+  }
+
+  if (showTaskApplication) {
+    for (const task of applicationTasks) {
+      if (task.id === taskNumber) {
+        taskApplication = task
+        break
       }
     }
   }
@@ -120,20 +134,33 @@ export function EquationsAppV2() {
           </div>
         </div>
       )}
-      {showTask && task && (
+      {showTaskLinear && taskLinear && (
         <div className="shrink grow">
           <div className="mx-auto mt-4 max-w-[600px] px-4">
-            {page === 'linear' && (
-              <EquationTask
-                data={task}
-                onSolve={(n) => {
-                  solve(n)
-                }}
-                onBack={() => {
-                  setTaskNumber(-1)
-                }}
-              />
-            )}
+            <EquationTask
+              data={taskLinear}
+              onSolve={(n) => {
+                solve(n)
+              }}
+              onBack={() => {
+                setTaskNumber(-1)
+              }}
+            />
+          </div>
+        </div>
+      )}
+      {showTaskApplication && taskApplication && (
+        <div className="shrink grow">
+          <div className="mx-auto mt-4 max-w-[600px] px-4">
+            <ApplicationTask
+              data={taskApplication}
+              onSolve={(n) => {
+                solve(n)
+              }}
+              onBack={() => {
+                setTaskNumber(-1)
+              }}
+            />
           </div>
         </div>
       )}
@@ -161,7 +188,7 @@ export function EquationsAppV2() {
   }
 
   function renderHeaderUI() {
-    if (showTask && !hideBackButton) {
+    if ((showTaskLinear || showTaskApplication) && !hideBackButton) {
       return (
         <div className="mr-3">
           <button
@@ -174,7 +201,7 @@ export function EquationsAppV2() {
           </button>
         </div>
       )
-    } else if (!showTask) {
+    } else if (!showTaskLinear) {
       return (
         <div className="mr-3">
           <button
