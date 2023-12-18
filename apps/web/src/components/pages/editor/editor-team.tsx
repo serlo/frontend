@@ -10,14 +10,13 @@ export interface TeamDataEntry {
   photo: string
 }
 
-export const teamDataSimon: TeamDataEntry = {
-  firstName: 'Simon',
-  lastName: 'Köhl',
-  position: 'Partnerships',
-  extraLinkUrl: 'mailto:simon@serlo.org',
-  extraLinkText: 'simon@serlo.org',
-  photo:
-    'https://assets.serlo.org/5fc60eaacdf04_c185cbdb5b62400d973d553587caa6cf00ed294f.jpg',
+export const teamDataVicky: TeamDataEntry = {
+  firstName: 'Vicky',
+  lastName: 'Einhorn',
+  position: 'IT-Projektmanagement',
+  extraLinkUrl: 'mailto:vicky@serlo.org',
+  extraLinkText: 'vicky@serlo.org',
+  photo: 'https://assets.serlo.org/73ad1f00-8ebe-11ee-8ca0-83c071ae11fd.png',
 }
 
 export const teamDataKulla: TeamDataEntry = {
@@ -31,6 +30,7 @@ export const teamDataKulla: TeamDataEntry = {
 }
 
 export const teamData: TeamDataEntry[] = [
+  teamDataVicky,
   {
     firstName: 'Wolfgang',
     lastName: 'Schmid',
@@ -49,7 +49,15 @@ export const teamData: TeamDataEntry[] = [
     photo:
       'https://assets.serlo.org/a0d3abe0-7491-11ed-a78a-a5b96e09d60e/image.jpg',
   },
-  teamDataSimon,
+  {
+    firstName: 'Simon',
+    lastName: 'Köhl',
+    position: 'Partnerships',
+    extraLinkUrl: 'mailto:simon@serlo.org',
+    extraLinkText: 'simon@serlo.org',
+    photo:
+      'https://assets.serlo.org/5fc60eaacdf04_c185cbdb5b62400d973d553587caa6cf00ed294f.jpg',
+  },
   {
     firstName: 'Vitomir',
     lastName: 'Budimir',
