@@ -176,7 +176,7 @@ export const instanceData = {
       intro: "इस साइट का उपयोग करते समय आप हमें बाहरी प्रदाताओं से सामग्री लोड करने की अनुमति दे सकते हैं। आप विवरण के बारे में पढ़ सकते हैं %privacypolicy%.",
       revokeTitle: "वापस लेना",
       revokeText: "यहां आप अपनी सहमति रद्द कर सकते हैं। इस मामले में, हम उन प्रदाताओं से सामग्री लोड करने से पहले फिर से पूछते हैं",
-      noConsent: "कोई सामग्री सहेजी नहीं गई।",
+      noConsent: 'not consented',
       revokeConsent: "सहमति रद्द करें"
     },
     embed: {
@@ -720,7 +720,7 @@ export const loggedInData = {
           title: 'Rows',
           searchForTools: 'Search for tools…',
           duplicate: 'Duplicate',
-          copyAnchorLink: "Copy link to this element",
+          copyAnchorLink: 'Copy link to this element',
           remove: 'Remove',
           close: "बंद करें",
           dragElement: 'Drag the element within the document',
@@ -800,7 +800,7 @@ export const loggedInData = {
             eG: 'e.g.',
             functions: 'Functions',
             displayAsBlock: 'Display as block',
-            closeMathFormulaEditor: "Close math formula editor"
+            closeMathFormulaEditor: 'Close math formula editor'
           }
         },
         video: {
@@ -1092,11 +1092,11 @@ export const loggedInData = {
           yesSubtasks: 'Yes',
           subtasksLabel: "अभ्यास",
           numberOfSubtasksPlaceholder: 'Number of subtasks',
-          chooseOption: "Choose an option",
-          multipleChoice: "Multiple Choice",
-          singleChoice: "Single Choice",
-          inputExercise: "Input exercise",
-          blanksExercise: "Fill In The Blanks Exercise"
+          chooseOption: 'Choose an option',
+          multipleChoice: 'Multiple Choice',
+          singleChoice: 'Single Choice',
+          inputExercise: 'Input exercise',
+          blanksExercise: 'Fill In The Blanks Exercise'
         },
         difficulty: {
           title: 'What is the %difficulty% level of the exercise and learning goal?',
