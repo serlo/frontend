@@ -176,7 +176,7 @@ export const instanceData = {
       intro: "Al utilizar este sitio, puedes permitirnos cargar contenido de proveedores externos. Puedes leer los detalles en la %privacypolicy%.",
       revokeTitle: "Revocar",
       revokeText: "Aquí puedes revocar tu consentimiento. En este caso te lo volvemos a preguntar antes de cargar el contenido de esos proveedores",
-      noConsent: 'not consented',
+      noConsent: "No hay contenido guardado.",
       revokeConsent: "Revocar el consentimiento"
     },
     embed: {
