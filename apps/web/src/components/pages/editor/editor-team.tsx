@@ -13,7 +13,7 @@ export interface TeamDataEntry {
 export const teamDataVicky: TeamDataEntry = {
   firstName: 'Vicky',
   lastName: 'Einhorn',
-  position: 'IT-Projektmanagement',
+  position: 'Project Lead',
   extraLinkUrl: 'mailto:vicky@serlo.org',
   extraLinkText: 'vicky@serlo.org',
   photo: 'https://assets.serlo.org/73ad1f00-8ebe-11ee-8ca0-83c071ae11fd.png',
@@ -31,15 +31,6 @@ export const teamDataKulla: TeamDataEntry = {
 
 export const teamData: TeamDataEntry[] = [
   teamDataVicky,
-  {
-    firstName: 'Wolfgang',
-    lastName: 'Schmid',
-    position: 'Project Lead',
-    extraLinkUrl: 'mailto:wolfgang@serlo.org',
-    extraLinkText: 'wolfgang@serlo.org',
-    photo:
-      'https://assets.serlo.org/5fc60fd578266_ef388187d8288b790cf5378e160278301df24c16.jpg',
-  },
   {
     firstName: 'Sebastian',
     lastName: 'Sapiatz',
