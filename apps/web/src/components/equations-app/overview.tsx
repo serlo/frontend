@@ -1,10 +1,9 @@
+import { StaticMath } from '@editor/plugins/text/static-components/static-math'
 import { faCheck, faPlay } from '@fortawesome/free-solid-svg-icons'
 
-import { ReadonlyMathField } from './readonly-math-field'
 import { FaIcon } from '../fa-icon'
 import { linearEquationData } from '@/data/de/gleichungs-app'
 import { cn } from '@/helper/cn'
-import { StaticMath } from '@editor/plugins/text/static-components/static-math'
 
 interface OverviewProps {
   selectLevel: (n: number) => void
