@@ -12,7 +12,7 @@ export interface TeamDataEntry {
 
 export const teamDataVicky: TeamDataEntry = {
   firstName: 'Vicky',
-  lastName: 'Einhorn',
+  lastName: 'Eichhorn',
   position: 'Project Lead',
   extraLinkUrl: 'mailto:vicky@serlo.org',
   extraLinkText: 'vicky@serlo.org',
