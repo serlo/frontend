@@ -5,7 +5,7 @@ import { EditorContact } from './editor-contact'
 import { EditorFeatures } from './editor-features'
 import { EditorPartnerList, partners } from './editor-partner-list'
 import { EditorRoadmap } from './editor-roadmap'
-import { EditorTeam, teamDataSimon } from './editor-team'
+import { EditorTeam, teamDataVicky } from './editor-team'
 import { EducationPlugins } from './education-plugins'
 import { Link } from '@/components/content/link'
 import { HeadTags } from '@/components/head-tags'
@@ -162,7 +162,7 @@ export function EditorPresentation() {
                 requests.
               </p>
               <div className="mt-8 text-center">
-                <EditorContact contact={teamDataSimon} />
+                <EditorContact contact={teamDataVicky} />
               </div>
             </div>
           </div>
