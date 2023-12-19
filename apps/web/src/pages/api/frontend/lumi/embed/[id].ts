@@ -12,6 +12,18 @@ export default async function handler(
   const html = await lumiRes.text()
 
   let prepared = html
+    .replace(
+      '<link rel="stylesheet" href="https://lumi.s3.fr-par.scw.cloud/h5p/core/styles/h5p.css?version=1.24-master"/>',
+      '<link rel="stylesheet" href="/_assets/h5p/h5p.css"/>'
+    )
+    .replace(
+      '<link rel="stylesheet" href="https://lumi.s3.fr-par.scw.cloud/h5p/libraries/FontAwesome-4.5/h5p-font-awesome.min.css?version=4.5.4"/>',
+      '<link rel="stylesheet" href="/_assets/h5p/h5p-font-awesome.min.css"/>'
+    )
+    .replace(
+      '<link rel="stylesheet" href="https://lumi.s3.fr-par.scw.cloud/h5p/libraries/H5P.FontIcons-1.0/styles/h5p-font-icons.css?version=1.0.11"/>',
+      '<link rel="stylesheet" href="/_assets/h5p/h5p-font-icons.css"/>'
+    )
     .replace(/(<script\s+src=")\/api\/v1\/h5p/g, '$1/api/frontend/lumi/proxy')
     .replace(
       /("stylesheet"\s+href=")\/api\/v1\/h5p/g,
