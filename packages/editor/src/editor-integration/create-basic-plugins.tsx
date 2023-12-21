@@ -22,6 +22,7 @@ import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
 import { solutionPlugin } from '@editor/plugins/solution'
 import { createSpoilerPlugin } from '@editor/plugins/spoiler'
 import { createTextPlugin } from '@editor/plugins/text'
+import { textAreaExercisePlugin } from '@editor/plugins/text-area-exercise'
 import { unsupportedPlugin } from '@editor/plugins/unsupported'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
@@ -29,6 +30,7 @@ import { type LoggedInData } from '@/data-types'
 
 export function createBasicPlugins({
   editorStrings,
+  enableTextAreaExercise = false,
   exerciseVisibleInSuggestion,
   allowedChildPlugins,
   allowImageInTableCells,
@@ -36,6 +38,7 @@ export function createBasicPlugins({
 }: {
   allowedChildPlugins?: string[]
   exerciseVisibleInSuggestion: boolean
+  enableTextAreaExercise?: boolean
   allowImageInTableCells: boolean
   editorStrings: LoggedInData['strings']['editor']
   multimediaConfig?: MultimediaConfig
@@ -98,6 +101,15 @@ export function createBasicPlugins({
       plugin: exercisePlugin,
       visibleInSuggestions: exerciseVisibleInSuggestion,
     },
+    ...(enableTextAreaExercise
+      ? [
+          {
+            type: EditorPluginType.TextAreaExercise,
+            plugin: textAreaExercisePlugin,
+            visibleInSuggestions: false,
+          },
+        ]
+      : []),
     { type: EditorPluginType.Solution, plugin: solutionPlugin },
     {
       type: EditorPluginType.InputExercise,
