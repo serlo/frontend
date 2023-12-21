@@ -901,6 +901,10 @@ export const loggedInData = {
           title: 'Input Exercise',
           description: 'Solution can be text or math',
         },
+        textAreaExercise: {
+          title: 'Text Box Exercise',
+          description: 'A big text box for long answers. No feedback.'
+        },
         scMcExercise: {
           title: 'SC/MC Exercise',
           description: 'Single Choice or Multiple Choice',
@@ -969,6 +973,7 @@ export const loggedInData = {
         exercise: {
           scMcExercise: 'Choice Exercise',
           inputExercise: 'Input Exercise',
+          textAreaExercise: 'Text Box Exercise',
           blanksExercise: 'Fill In The Blanks Exercise',
           h5p: 'H5p Exercise',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
