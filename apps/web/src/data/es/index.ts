@@ -106,7 +106,7 @@ export const instanceData = {
       unrevised: "Mostrar revisiones sin revisar",
       inviteModal: {
         title: "¡Crea con nosotros!",
-        text: "Hola %break% Genial que quieras contribuir a este contenido 👍 %break% Todo el mundo puede editar, pero necesitas una cuenta para hacerlo.",
+        text: "¡Hola! %break% Genial que quieras contribuir a este contenido 👍 %break% Todo el mundo puede editar, pero necesitas una cuenta para hacerlo.",
         loginButton: "Inicie sesión",
         registerButton: "Registrar una nueva cuenta",
         psText: "Puedes averiguar de qué manera puedes contribuir %link%.",
@@ -132,7 +132,7 @@ export const instanceData = {
       hide: "ocultar",
       trashedNotice: "Este contenido está marcado para su eliminación.",
       unrevisedNotice: "Este contenido no tiene ninguna revisión aceptada todavía. Por favor, utiliza este vínculo %link% para previsualizar.",
-      emptyNotice: "No hay contenido aquí. Por favor, edite o elimine.",
+      emptyNotice: "No hay contenido aquí. Por favor, edita o elimina.",
       picture: "Imagen",
       previewImage: "Previsualizar Imagen",
       imageAltFallback: "Imagen",
@@ -157,7 +157,7 @@ export const instanceData = {
         hideSolution: "Ocultar la solución"
       },
       boxTypes: {
-        blank: "En Blanco",
+        blank: "Blanco",
         example: "Ejemplo",
         quote: "Cita",
         approach: "Planteamiento",
@@ -204,7 +204,7 @@ export const instanceData = {
       showMoreReply: "Mostrar una respuesta más",
       showMoreReplies: "Mostrar %number% respuestas más",
       hideReplies: "Ocultar",
-      showArchived: "Mostrar  %threads% archivados",
+      showArchived: "Mostrar %threads% archivados",
       copyLink: "Copiar el vínculo del comentario",
       commentsOverviewExplanation: "Aquí puedes ver todos los comentarios que se han escrito al contenido de %instance%.serlo.org. %break% Responde a las preguntas o encuentra contenido que puedas mejorar. %break% El enlace situado encima del comentario te lleva a la entidad correspondiente.",
       edit: "Editar comentario",
@@ -344,7 +344,7 @@ export const instanceData = {
         registerTitle: "Registra tu cuenta de Serlo.org",
         passwordRequirements: "Al menos 8 caracteres, si es más largo, mejor.",
         registerIntro: "No necesitas una cuenta para aprender en serlo.org.  %break%  Si quieres hacer comentarios, o trabajar en contenidos de aprendizaje has venido al lugar adecuado.",
-        newsletterSubscription: "Recibe actualizaciones concisas sobre nuestras actividades actuales en nuestro boletín. Utilizamos tus datos para el envío y para felicitaciones personales. Recibe información relevante y nuestra campaña anual de recaudación de fondos una vez al año. (opcional)"
+        newsletterSubscription: "Recibe actualizaciones breves sobre nuestras actividades actuales en nuestro boletín. Utilizamos tus datos para el envío y para felicitaciones personales. Recibe información relevante y nuestra campaña anual de recaudación de fondos una vez al año. (opcional)"
       },
       recoverTitle: "Recupera tu cuenta",
       recoveryInstructions: "Introduce y envía tu dirección de correo electrónico. %break%  A continuación, te enviaremos un correo electrónico con un enlace de restablecimiento.",
@@ -499,8 +499,8 @@ export const loggedInData = {
     icon: 'notifications'
   }, {
     url: "[secuencia vacía]",
-    title: "Usuario",
-    icon: 'user',
+    title: "Usuario/a",
+    icon: "usuario/a",
     children: [{
       url: '/user/me',
       title: "Perfil propio"
@@ -675,11 +675,11 @@ export const loggedInData = {
           failedUpload: "Carga fallida",
           captionPlaceholder: "Leyenda opcional",
           href: "Enlace",
-          hrefPlaceholder: "Link de la imagen",
+          hrefPlaceholder: "Vincular la imagen",
           alt: "Descripción (no es visible)",
           altPlaceholder: "Describe lo que muestra la imagen",
           maxWidth: "Ancho máximo",
-          maxWidthPlaceholder: "Introduzca el ancho máximo"
+          maxWidthPlaceholder: "Introduce la anchura máxima"
         },
         injection: {
           title: "serlo.org Contenido",
@@ -775,7 +775,7 @@ export const loggedInData = {
           lists: "Listas",
           mathFormula: "Fórmula matemática (%ctrlOrCmd% + M)",
           code: "Código (%ctrlOrCmd% + + + `)",
-          blank: "En Blanco",
+          blank: "Blanco",
           bold: "Negrilla (%ctrlOrCmd% + B)",
           italic: "Itálica (%ctrlOrCmd% + I)",
           noItemsFound: "Elementos no encontrados",
@@ -979,7 +979,7 @@ export const loggedInData = {
         enableNotifsMail: "Activar notificaciones por correo electrónico",
         switchRevision: "Cambiar a otra revisión",
         importOther: "Importar contenido de otra entidad",
-        importOtherExplanation: "Simplemente pega la url o id de otra entidad serlo.org del mismo tipo aquí para duplicar su contenido aquí. NO utilices esto para hacer copias exactas o mover contenido. Los grupos de ejercicios y cursos no están soportados (pero los ejercicios individuales y las páginas del curso si lo están).",
+        importOtherExplanation: "Simplemente pega la URL o ID de otra entidad serlo.org del mismo tipo aquí para duplicar su contenido aquí. NO utilices esto para hacer copias exactas o mover contenido. Los grupos de ejercicios y cursos no están soportados (pero los ejercicios individuales y las páginas del curso si lo están).",
         importOtherWarning: "Advertencia: ¡Esto sobrescribe todo lo que ya está presente en este editor!",
         importOtherButton: "Importar contenido",
         current: "Actual",
@@ -1099,7 +1099,7 @@ export const loggedInData = {
           numberOfSubtasksPlaceholder: "Número de subtareas",
           chooseOption: "Selecciona una opción",
           multipleChoice: "Selección Múltiple",
-          singleChoice: "Elección única",
+          singleChoice: "Elección Única",
           inputExercise: "Ejercicio de respuesta escrita",
           blanksExercise: "Ejercicio de rellenar los espacios en blanco"
         },
@@ -1136,7 +1136,7 @@ export const loggedInData = {
 export const kratosMailStrings = {
   recovery: {
     valid: {
-      subject: "👉 Acceso a tu cuenta Serlo.org",
+      subject: "👉 Accede a tu cuenta Serlo.org",
       'body.plaintext': `👋 Hola {{ .Identity.traits.username }}, 
 ¿Estás intentando acceder a tu cuenta en serlo.org? Si no es así, ignora este correo.
   
