@@ -14,6 +14,7 @@ const allInteractiveExerciseTypes = [
   EditorPluginType.ScMcExercise,
   EditorPluginType.InputExercise,
   EditorPluginType.H5p,
+  EditorPluginType.TextAreaExercise,
   EditorPluginType.FillInTheBlanksExercise,
 ] as const
 

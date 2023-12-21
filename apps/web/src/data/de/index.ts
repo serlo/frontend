@@ -825,6 +825,10 @@ export const loggedInData = {
           title: "Eingabefeld",
           description: "Die Lösung kann Text oder eine Formel sein"
         },
+        textAreaExercise: {
+          title: "Freitext",
+          description: "Ein großes Eingabefeld"
+        },
         scMcExercise: {
           title: "SC/MC Aufgabe",
           description: "Single- oder Multiple Choice Aufgabe"
@@ -891,6 +895,7 @@ export const loggedInData = {
         exercise: {
           scMcExercise: "Auswahlaufgabe",
           inputExercise: "Eingabefeld",
+          textAreaExercise: "Freitext",
           blanksExercise: "Lückentext Aufgabe",
           h5p: "H5P Aufgabe",
           addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
@@ -1096,6 +1101,7 @@ export const loggedInData = {
           multipleChoice: "Multiple-Choice",
           singleChoice: "Single-Choice",
           inputExercise: "Eingabefeld",
+          textAreaExercise: "Freitext",
           blanksExercise: "Lückentext Aufgabe"
         },
         difficulty: {
