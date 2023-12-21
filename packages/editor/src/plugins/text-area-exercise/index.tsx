@@ -1,9 +1,6 @@
+import { type EditorPlugin, object, EditorPluginProps } from '@editor/plugin'
+
 import { TextAreaExerciseEditor } from './editor'
-import {
-  type EditorPlugin,
-  object,
-  EditorPluginProps,
-} from '@/serlo-editor/plugin'
 
 function createTextAreaExerciseState() {
   return object({})

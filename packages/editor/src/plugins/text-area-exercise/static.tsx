@@ -1,5 +1,6 @@
+import { EditorTextAreaExerciseDocument } from '@editor/types/editor-plugins'
+
 import { TextAreaExerciseRenderer } from './renderer'
-import { EditorTextAreaExerciseDocument } from '@/serlo-editor/types/editor-plugins'
 
 export function TextAreaExerciseStaticRenderer(
   _: EditorTextAreaExerciseDocument
