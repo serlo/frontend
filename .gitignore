@@ -1,30 +1,27 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules
 
 # testing
 /coverage
 
 # production
-/build
-/dist
-/.next
+build
+dist
+.next
 
 # misc
 .DS_Store
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
 # Environment Variables
 .env*.local
 prisma/.env
 
-.now
 .vercel
-/.idea
-/.vscode
+.idea
+.vscode
 tsconfig.tsbuildinfo
 
 # Yarn
@@ -35,9 +32,22 @@ tsconfig.tsbuildinfo
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+yarn-debug.log*
+yarn-error.log*
 
 # asdf-vm
 .tool-versions
 
 # nvm
 .nvmrc
+
+# E2E tests output
+e2e-tests/output
+
+# E2E tests Yarn
+e2e-tests/.yarn/*
+!e2e-tests/.yarn/cache
+!e2e-tests/.yarn/plugins
+!e2e-tests/.yarn/releases
+e2e-tests/yarn-debug.log*
+e2e-tests/yarn-error.log*

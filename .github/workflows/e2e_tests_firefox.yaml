@@ -1,0 +1,33 @@
+name: e2e tests with firefox
+on:
+  workflow_dispatch:
+  push:
+    # workflow is triggered on staging and branches starting with 'e2e'
+    # but tests always run against staging preview build
+    branches:
+      - staging
+      - e2e**
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./e2e-tests
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - run: yarn
+      - run: yarn playwright install --with-deps firefox
+      - uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 1200
+          check_interval: 20
+      - run: yarn e2e-firefox tests/4*.ts
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: e2e-screenshots-on-fail
+          path: e2e-tests/output/ # or path/to/artifact

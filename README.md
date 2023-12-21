@@ -1,8 +1,9 @@
-<img src="https://raw.githubusercontent.com/serlo/frontend/staging/public/_assets/img/serlo-logo-gh.svg" alt="Serlo Logo" title="Serlo" align="right" height="75"/>
+<img src="https://raw.githubusercontent.com/serlo/frontend/staging/apps/web/public/_assets/img/serlo-logo-gh.svg" alt="Serlo Logo" title="Serlo" align="right" height="75"/>
 
 # serlo.org – Frontend
 
 Next.js app that serves [serlo.org](https://serlo.org).
+You can find it in `apps/web`.
 
 ## Overview
 
@@ -48,7 +49,7 @@ Some of the features we use:
 
 We are trying out a [serverless sql database](https://app.planetscale.com/serlo/serlo_planetscale) and use it to build prototypes. Don't use for production features yet!
 
-Add the environment variable `DATABASE_URL` to `.env.local` (next.js) and `prisma/.env` (prisma cli). You can generate the database url from planetscale or ping one of us to generat one for you. (sorry for the inconvienience here). Run `yarn prisma generate` to update the prisma client and test the database connection.
+Add the environment variable `DATABASE_URL` to `apps/web/.env.local` (next.js). You can generate the database url from planetscale or ping one of us to generat one for you. (sorry for the inconvienience here). Run `yarn prisma:build` to update the prisma client and test the database connection. Run `yarn prisma:studio` for Prisma Studio, run `yarn prisma:db-pull` to download db schema.
 
 ## Repository Overview
 
@@ -114,6 +115,21 @@ Technical issues are opened for bugs and feature that we decided to work on. For
 
 This method should avoid stale issues and make it possible to keep an "zero inbox".
 
+## e2e testing
+
+This repo includes e2e test with codeceptjs.
+To run them for the first time:
+
+```sh
+cd e2e-tests
+yarn
+yarn playwright install
+cd ..
+yarn e2e
+```
+
+You can find the [full readme here](https://github.com/serlo/frontend/tree/staging/e2e-tests#readme).
+
 ## More information
 
 You can find more detailed explanations in our wiki. Currently, we have these pages available:
@@ -123,3 +139,4 @@ You can find more detailed explanations in our wiki. Currently, we have these pa
 - [Tailwind Getting Started Guide](https://github.com/serlo/frontend/wiki/Tailwind-Getting-Started-Guide)
 - [VS Code Setup](https://github.com/serlo/frontend/wiki/VS-Code)
 - [Unsorted old stuff](https://github.com/serlo/frontend/wiki/Archive)
+- [Forked packages](https://github.com/serlo/frontend/wiki/Forked-packages)
