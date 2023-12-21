@@ -4,6 +4,14 @@
   "license": "Apache-2.0",
   "author": "Serlo Education e.V.",
   "type": "module",
+  "homepage": "https://de.serlo.org/editor",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/serlo/frontend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/serlo/frontend/issues"
+  },
   "exports": {
     ".": {
       "import": "./dist/editor.js"
