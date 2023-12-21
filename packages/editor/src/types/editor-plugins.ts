@@ -27,6 +27,7 @@ import type {
   CustomElement,
   CustomText,
 } from '@editor/plugins/text'
+import { TextAreaExercisePluginState } from '@editor/plugins/text-area-exercise'
 import type { UnsupportedPluginState } from '@editor/plugins/unsupported'
 import type { VideoPluginState } from '@editor/plugins/video'
 import { License } from '@serlo/frontend/src/fetcher/query-types'
@@ -107,6 +108,11 @@ export interface EditorInjectionDocument {
 export interface EditorInputExerciseDocument {
   plugin: EditorPluginType.InputExercise
   state: PrettyStaticState<InputExercisePluginState>
+  id?: string
+}
+export interface EditorTextAreaExerciseDocument {
+  plugin: EditorPluginType.TextAreaExercise
+  state: PrettyStaticState<TextAreaExercisePluginState>
   id?: string
 }
 export interface EditorMultimediaDocument {

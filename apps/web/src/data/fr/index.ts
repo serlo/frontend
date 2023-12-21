@@ -720,7 +720,7 @@ export const loggedInData = {
           title: 'Rows',
           searchForTools: "Rechercher des outils…",
           duplicate: "Dupliquer",
-          copyAnchorLink: "Copy link to this element",
+          copyAnchorLink: 'Copy link to this element',
           remove: "Supprimer",
           close: "Fermer",
           dragElement: "Faire glisser l'élément dans le document",
@@ -800,7 +800,7 @@ export const loggedInData = {
             eG: "par ex.",
             functions: "Fonctions",
             displayAsBlock: "Afficher comme un bloc",
-            closeMathFormulaEditor: "Close math formula editor"
+            closeMathFormulaEditor: 'Close math formula editor'
           }
         },
         video: {
@@ -1092,11 +1092,11 @@ export const loggedInData = {
           yesSubtasks: 'Yes',
           subtasksLabel: "Exercices",
           numberOfSubtasksPlaceholder: 'Number of subtasks',
-          chooseOption: "Choose an option",
-          multipleChoice: "Multiple Choice",
-          singleChoice: "Single Choice",
+          chooseOption: 'Choose an option',
+          multipleChoice: 'Multiple Choice',
+          singleChoice: 'Single Choice',
           inputExercise: "Exercice de saisie",
-          blanksExercise: "Fill In The Blanks Exercise"
+          blanksExercise: 'Fill In The Blanks Exercise'
         },
         difficulty: {
           title: 'What is the %difficulty% level of the exercise and learning goal?',

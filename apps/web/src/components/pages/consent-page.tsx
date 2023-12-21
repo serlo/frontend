@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Link } from '../content/link'
 import { PageTitle } from '../content/page-title'
@@ -8,17 +8,17 @@ import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
 export function ConsentPage() {
   const { checkConsent, revokeConsent } = useConsent()
+  const [mounted, setMounted] = useState(false)
   const [, updateState] = useState({})
   const { strings } = useInstanceData()
 
-  const consentedProviders = Object.values(ExternalProvider).filter(
-    (provider) => checkConsent(provider)
-  )
+  useEffect(() => setMounted(true), [])
+
+  const consentedProviders = Object.values(ExternalProvider)
 
   return (
     <>
       <PageTitle title={strings.consent.title} headTitle />
-
       <p className="serlo-p">
         {replacePlaceholders(strings.consent.intro, {
           privacypolicy: (
@@ -28,23 +28,15 @@ export function ConsentPage() {
       </p>
       <h2 className="serlo-h2">{strings.consent.revokeTitle}</h2>
       <p className="serlo-p">{strings.consent.revokeText}</p>
-      <table className="serlo-table border-l-3 border-t-3 border-brand-200">
-        <tbody>
-          {consentedProviders.length > 0 ? renderTable() : renderEmpty()}
-        </tbody>
-      </table>
+      {mounted ? (
+        <table className="serlo-table border-l-3 border-t-3 border-brand-200">
+          <tbody>{renderTable()}</tbody>
+        </table>
+      ) : (
+        '…'
+      )}
     </>
   )
-
-  function renderEmpty() {
-    return (
-      <tr>
-        <td className="serlo-td text-lg">
-          <b>{strings.consent.noConsent}</b>
-        </td>
-      </tr>
-    )
-  }
 
   function renderTable() {
     return consentedProviders.map((provider) => {
@@ -54,15 +46,21 @@ export function ConsentPage() {
             <b>{provider}</b>
           </td>
           <td className="serlo-td text-lg">
-            <button
-              className="serlo-button-light"
-              onClick={() => {
-                revokeConsent(provider)
-                updateState({})
-              }}
-            >
-              {strings.consent.revokeConsent}
-            </button>
+            {checkConsent(provider) ? (
+              <button
+                className="serlo-button-light"
+                onClick={() => {
+                  revokeConsent(provider)
+                  updateState({})
+                }}
+              >
+                {strings.consent.revokeConsent}
+              </button>
+            ) : (
+              <span className="ml-1 text-gray-600">
+                ({strings.consent.noConsent})
+              </span>
+            )}
           </td>
         </tr>
       )

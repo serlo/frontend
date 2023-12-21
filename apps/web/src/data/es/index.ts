@@ -720,7 +720,7 @@ export const loggedInData = {
           title: "Filas",
           searchForTools: "Buscar herramientas…",
           duplicate: "Duplicar",
-          copyAnchorLink: "Copy link to this element",
+          copyAnchorLink: 'Copy link to this element',
           remove: "Eliminar",
           close: "Cerrar",
           dragElement: "Arrastra el elemento dentro del documento",
@@ -800,7 +800,7 @@ export const loggedInData = {
             eG: "por ejemplo,",
             functions: "Funciones",
             displayAsBlock: "Mostrar en bloque",
-            closeMathFormulaEditor: "Close math formula editor"
+            closeMathFormulaEditor: 'Close math formula editor'
           }
         },
         video: {
@@ -1092,11 +1092,11 @@ export const loggedInData = {
           yesSubtasks: 'Yes',
           subtasksLabel: "Ejercicios",
           numberOfSubtasksPlaceholder: 'Number of subtasks',
-          chooseOption: "Choose an option",
-          multipleChoice: "Multiple Choice",
-          singleChoice: "Single Choice",
+          chooseOption: 'Choose an option',
+          multipleChoice: 'Multiple Choice',
+          singleChoice: 'Single Choice',
           inputExercise: "Ejercicio de respuesta escrita",
-          blanksExercise: "Fill In The Blanks Exercise"
+          blanksExercise: 'Fill In The Blanks Exercise'
         },
         difficulty: {
           title: 'What is the %difficulty% level of the exercise and learning goal?',
