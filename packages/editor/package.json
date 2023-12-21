@@ -1,17 +1,17 @@
 {
   "name": "@serlo/editor",
-  "version": "0.6.0-beta.4",
-  "license": "Apache-2.0",
-  "author": "Serlo Education e.V.",
-  "type": "module",
+  "version": "0.6.0-beta.5",
   "homepage": "https://de.serlo.org/editor",
+  "bugs": {
+    "url": "https://github.com/serlo/frontend/issues"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/serlo/frontend.git"
   },
-  "bugs": {
-    "url": "https://github.com/serlo/frontend/issues"
-  },
+  "license": "Apache-2.0",
+  "author": "Serlo Education e.V.",
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/editor.js"
