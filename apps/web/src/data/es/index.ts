@@ -22,7 +22,7 @@ export const instanceData = {
       agree: "Acepta utilizar el motor de búsqueda"
     },
     footer: {
-      summaryHeading: "Serlo.org es la Wikipedia para el aprendizaje.",
+      summaryHeading: "Serlo.org es como la Wikipedia para el aprendizaje.",
       summaryText: "Somos una comunidad de visionarios que trabajan sin descanso para que todo el mundo tenga acceso gratuito a una educación excelente.",
       learnMore: "Aprende más",
       participate: "Únete a la causa",
@@ -38,8 +38,8 @@ export const instanceData = {
       exercises: "Ejercicios",
       events: "Eventos",
       unrevised: "Aún no revisado",
-      subterms: 'Subterms',
-      exercisesContent: "Ejercicios contenido"
+      subterms: "Subtérminos",
+      exercisesContent: "Contenido de Ejercicios"
     },
     entities: {
       applet: 'Applet',
