@@ -24,12 +24,18 @@ export default renderedPageNoHooks<JobsProps>((props) => {
   const internships = [] as PersonioPosition[]
   const volunteers = [] as PersonioPosition[]
 
+  function getMaxExp(job: PersonioPosition) {
+    return parseInt(job.yearsOfExperience?.split('-')[1] ?? '0')
+  }
+
   for (let i = 0; i < props.positions.length; i++) {
     const pos = props.positions[i]
     if (pos.employmentType === 'trainee') volunteers.push(pos)
     else if (pos.employmentType === 'intern') internships.push(pos)
     else jobs.push(pos)
   }
+
+  jobs.sort((a, b) => getMaxExp(b) - getMaxExp(a))
 
   return (
     <FrontendClientBase noContainers>
