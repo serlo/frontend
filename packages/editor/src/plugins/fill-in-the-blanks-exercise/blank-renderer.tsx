@@ -1,10 +1,10 @@
 // import { useDroppable } from '@dnd-kit/core'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { ChangeEventHandler, ReactNode, useContext } from 'react'
-import { useDrop } from 'react-dnd'
+import { ChangeEventHandler, useContext } from 'react'
 
-import type { BlankId, DraggableId, FillInTheBlanksMode } from '.'
+import type { FillInTheBlanksMode } from '.'
 import { DraggableSolution } from './components/blank-solution'
+import { DroppableBlank } from './components/droppable-blank'
 import { FillInTheBlanksContext } from './context/blank-context'
 
 /** Renders either an input element (where user can type into) or a drop area (where user can drop draggable answers) depending on the mode  */
@@ -38,44 +38,36 @@ export function BlankRenderer(props: {
     (draggable) => draggable.draggableId === draggableIdInThisBlank
   )?.text
 
-  return (
-    <>
-      {mode === 'typing' ? (
-        <input
-          className={cn(
-            'h-[25px] resize-none rounded-full border border-brand bg-brand-50 pl-2 pr-1',
-            isAnswerCorrect && 'border-green-500',
-            isAnswerCorrect === false && 'border-red-500'
-          )}
-          size={(textInBlank.length ?? 4) + 1}
-          spellCheck={false}
-          autoCorrect="off"
-          placeholder=""
-          type="text"
-          value={textInBlank}
-          onChange={(e) => {
-            setTextUserTypedIntoBlank(e.target.value)
-            if (props.onChange) {
-              props.onChange(e)
-            }
-          }}
-        />
-      ) : (
-        <>
-          <DroppableBlank
-            blankId={props.blankId}
-            disable={draggableIdInThisBlank !== null}
-          >
-            {draggableIdInThisBlank ? (
-              <DraggableSolution
-                text={draggableText ?? ''}
-                draggableId={draggableIdInThisBlank}
-              />
-            ) : null}
-          </DroppableBlank>
-        </>
+  return mode === 'typing' ? (
+    <input
+      className={cn(
+        'h-[25px] resize-none rounded-full border border-brand bg-brand-50 pl-2 pr-1',
+        isAnswerCorrect && 'border-green-500',
+        isAnswerCorrect === false && 'border-red-500'
       )}
-    </>
+      size={(textInBlank.length ?? 4) + 1}
+      spellCheck={false}
+      autoCorrect="off"
+      placeholder=""
+      type="text"
+      value={textInBlank}
+      onChange={(e) => {
+        setTextUserTypedIntoBlank(e.target.value)
+        props.onChange?.(e)
+      }}
+    />
+  ) : (
+    <DroppableBlank
+      blankId={props.blankId}
+      isDisabled={draggableIdInThisBlank !== null}
+    >
+      {draggableIdInThisBlank ? (
+        <DraggableSolution
+          text={draggableText ?? ''}
+          draggableId={draggableIdInThisBlank}
+        />
+      ) : null}
+    </DroppableBlank>
   )
 
   function setTextUserTypedIntoBlank(newText: string) {
@@ -92,42 +84,4 @@ export function BlankRenderer(props: {
       newTextUserTypedIntoBlankList
     )
   }
-}
-
-function DroppableBlank(props: {
-  blankId: BlankId
-  disable: boolean
-  children: ReactNode
-}) {
-  const fillInTheBlanksContext = useContext(FillInTheBlanksContext)
-  const [{ isOver }, dropRef] = useDrop({
-    accept: 'blank-solution',
-    drop: (item) => {
-      if (!fillInTheBlanksContext) return
-      const newMap = new Map<DraggableId, BlankId>(
-        fillInTheBlanksContext.locationOfDraggables.value
-      )
-      newMap.set(
-        (item as { draggableId: DraggableId }).draggableId,
-        props.blankId
-      )
-      fillInTheBlanksContext.locationOfDraggables.set(newMap)
-    },
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-    }),
-    canDrop: () => !props.disable,
-  })
-
-  return (
-    <span
-      className={cn(
-        'rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2',
-        isOver && !props.disable && 'bg-slate-400'
-      )}
-      ref={dropRef}
-    >
-      {props.children}
-    </span>
-  )
 }

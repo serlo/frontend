@@ -2,6 +2,8 @@
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import * as t from 'io-ts'
 import { type ReactNode, useMemo, useState } from 'react'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import type { BlankId, DraggableId, FillInTheBlanksMode } from '.'
 import { DraggableSolution } from './components/blank-solution'
@@ -88,106 +90,106 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
 
   return (
     // Additional prop 'context={window}' prevents error with nested DndProvider components. See: https://github.com/react-dnd/react-dnd/issues/3257#issuecomment-1239254032
-    // <DndProvider backend={HTML5Backend} context={window}>
-    <div className="mx-side mb-block leading-[30px] [&>p]:leading-[30px]">
-      <FillInTheBlanksContext.Provider
-        value={{
-          mode: mode,
-          feedbackForBlanks: feedbackForBlanks,
-          textInBlanks: textInBlanks,
-          textUserTypedIntoBlanks: {
-            value: textUserTypedIntoBlanks,
-            set: setTextUserTypedIntoBlanks,
-          },
-          draggables: draggables,
-          locationOfDraggables: {
-            value: locationOfDraggables,
-            set: setLocationOfDraggables,
-          },
-        }}
-      >
-        {text}
-      </FillInTheBlanksContext.Provider>
-      {mode === 'drag-and-drop' ? (
-        <DraggableSolutionArea
-          locationOfDraggables={{
-            value: locationOfDraggables,
-            set: setLocationOfDraggables,
+    <DndProvider backend={HTML5Backend} context={window}>
+      <div className="mx-side mb-block leading-[30px] [&>p]:leading-[30px]">
+        <FillInTheBlanksContext.Provider
+          value={{
+            mode: mode,
+            feedbackForBlanks: feedbackForBlanks,
+            textInBlanks: textInBlanks,
+            textUserTypedIntoBlanks: {
+              value: textUserTypedIntoBlanks,
+              set: setTextUserTypedIntoBlanks,
+            },
+            draggables: draggables,
+            locationOfDraggables: {
+              value: locationOfDraggables,
+              set: setLocationOfDraggables,
+            },
           }}
         >
-          {draggables.map((draggable, index) => {
-            if (locationOfDraggables.get(draggable.draggableId)) return null
+          {text}
+        </FillInTheBlanksContext.Provider>
+        {mode === 'drag-and-drop' ? (
+          <DraggableSolutionArea
+            locationOfDraggables={{
+              value: locationOfDraggables,
+              set: setLocationOfDraggables,
+            }}
+          >
+            {draggables.map((draggable, index) => {
+              if (locationOfDraggables.get(draggable.draggableId)) return null
+              return (
+                <DraggableSolution
+                  key={index}
+                  text={draggable.text}
+                  draggableId={draggable.draggableId}
+                />
+              )
+            })}
+          </DraggableSolutionArea>
+        ) : null}
+
+        {/* Copied from mc-renderer.tsx */}
+        <div className="mt-2 flex">
+          <button
+            className="serlo-button-blue mr-3 h-8"
+            onClick={() => {
+              checkAnswers()
+              setShowFeedback(true)
+            }}
+          >
+            {exStrings.check}
+          </button>
+          {showFeedback && (
+            <Feedback
+              correct={[...feedbackForBlanks].every(
+                (entry) => entry[1].isCorrect
+              )}
+            />
+          )}
+        </div>
+
+        {/* Only debug output from here on */}
+        <div className="hidden">
+          Blanks state:
+          {blanks.map((blank, index) => (
+            <div key={index}>{JSON.stringify(blank)}</div>
+          ))}
+        </div>
+        <div className="hidden">
+          <div>State textUserTypedIntoBlank:</div>
+          {[...textUserTypedIntoBlanks].map((entry, index) => {
+            const blankId = entry[0]
+            const text = entry[1].text
             return (
-              <DraggableSolution
+              <div
+                className="ml-5"
                 key={index}
-                text={draggable.text}
-                draggableId={draggable.draggableId}
-              />
+              >{`Text: ${text} | BlankId: ${blankId}`}</div>
             )
           })}
-        </DraggableSolutionArea>
-      ) : null}
-
-      {/* Copied from mc-renderer.tsx */}
-      <div className="mt-2 flex">
-        <button
-          className="serlo-button-blue mr-3 h-8"
-          onClick={() => {
-            checkAnswers()
-            setShowFeedback(true)
-          }}
-        >
-          {exStrings.check}
-        </button>
-        {showFeedback && (
-          <Feedback
-            correct={[...feedbackForBlanks].every(
-              (entry) => entry[1].isCorrect
-            )}
-          />
-        )}
+        </div>
+        <div className="hidden">
+          {[...locationOfDraggables].map((entry, index) => {
+            return (
+              <div key={index}>
+                {`DraggableId: ${entry[0]} in blankId: ${entry[1]}`}
+              </div>
+            )
+          })}
+        </div>
+        <div className="hidden">
+          {draggables.map((draggable, index) => {
+            return (
+              <div key={index}>
+                {`DraggableId: ${draggable.draggableId} with text: ${draggable.text}`}
+              </div>
+            )
+          })}
+        </div>
       </div>
-
-      {/* Only debug output from here on */}
-      <div className="hidden">
-        Blanks state:
-        {blanks.map((blank, index) => (
-          <div key={index}>{JSON.stringify(blank)}</div>
-        ))}
-      </div>
-      <div className="hidden">
-        <div>State textUserTypedIntoBlank:</div>
-        {[...textUserTypedIntoBlanks].map((entry, index) => {
-          const blankId = entry[0]
-          const text = entry[1].text
-          return (
-            <div
-              className="ml-5"
-              key={index}
-            >{`Text: ${text} | BlankId: ${blankId}`}</div>
-          )
-        })}
-      </div>
-      <div className="hidden">
-        {[...locationOfDraggables].map((entry, index) => {
-          return (
-            <div key={index}>
-              {`DraggableId: ${entry[0]} in blankId: ${entry[1]}`}
-            </div>
-          )
-        })}
-      </div>
-      <div className="hidden">
-        {draggables.map((draggable, index) => {
-          return (
-            <div key={index}>
-              {`DraggableId: ${draggable.draggableId} with text: ${draggable.text}`}
-            </div>
-          )
-        })}
-      </div>
-    </div>
-    // </DndProvider>
+    </DndProvider>
   )
 
   function checkAnswers() {
