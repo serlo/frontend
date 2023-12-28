@@ -1,10 +1,4 @@
-import {
-  Editor as SlateEditor,
-  Range,
-  Transforms,
-  Element,
-  Location,
-} from 'slate'
+import { Editor as SlateEditor, Range, Transforms, Element } from 'slate'
 
 import { selectionHasElement, trimSelection } from './selection'
 
@@ -35,17 +29,19 @@ export function toggleMath(editor: SlateEditor) {
   }
 
   const trimmedSelection = trimSelection(editor)
+  if (!trimmedSelection) return
+
   Transforms.insertNodes(
     editor,
     [
       {
         type: 'math',
-        src: SlateEditor.string(editor, trimmedSelection as Location) || '',
+        src: SlateEditor.string(editor, trimmedSelection) || '',
         inline: true,
         children: [{ text: '' }],
       },
     ],
-    { at: trimmedSelection as Location }
+    { at: trimmedSelection }
   )
   // Use the previous selection to set the selection at the beginning of the math formula,
   // and then move it into the math formula to show the editor
