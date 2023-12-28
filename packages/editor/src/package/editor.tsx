@@ -32,7 +32,7 @@ export function SerloEditor({
   return (
     <InstanceDataProvider value={instanceData}>
       <LoggedInDataProvider value={loggedInData}>
-        <div className="serlo-editor-hacks mb-24 max-w-[816px] px-2">
+        <div className="serlo-editor-hacks">
           <Editor initialState={initialState ?? emptyState} {...props} />
         </div>
       </LoggedInDataProvider>
