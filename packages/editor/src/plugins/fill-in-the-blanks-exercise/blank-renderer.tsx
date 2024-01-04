@@ -1,4 +1,3 @@
-// import { useDroppable } from '@dnd-kit/core'
 import { ChangeEventHandler, useContext } from 'react'
 
 import type { FillInTheBlanksMode } from '.'
@@ -13,28 +12,26 @@ interface BlankRendererProps {
   onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
-/** Renders either an input element (where user can type into) or a drop area (where user can drop draggable answers) depending on the mode  */
+/**
+ * Renders either an input element (where user can type into)
+ * or a drop area (where user can drop draggable answers),
+ * depending on the mode
+ */
 export function BlankRenderer(props: BlankRendererProps) {
   const { blankId, forceMode, onChange } = props
 
   const context = useContext(FillInTheBlanksContext)
-  if (context === null) {
-    // blankStates was not provided by FillInTheBlanksRenderer -> cannot continue
-    return null
-  }
-  const mode = forceMode ?? context.mode
+  if (context === null) return null
 
-  const draggableSolutionInBlank = [...context.locationOfDraggables.value].find(
+  const mode = forceMode ?? context.mode
+  const draggableSolution = [...context.locationOfDraggables.value].find(
     (entry) => entry[1] === blankId
   )
-
-  const draggableIdInThisBlank = draggableSolutionInBlank
-    ? draggableSolutionInBlank[0]
-    : null
-
-  const draggableText = context.draggables.find(
-    (draggable) => draggable.draggableId === draggableIdInThisBlank
-  )?.text
+  const draggableId = draggableSolution?.[0] ?? null
+  const draggable = context.draggables.find(
+    (draggable) => draggable.draggableId === draggableId
+  )
+  const draggableText = draggable?.text ?? ''
 
   return mode === 'typing' ? (
     <BlankRendererInput
@@ -43,15 +40,9 @@ export function BlankRenderer(props: BlankRendererProps) {
       onChange={onChange}
     />
   ) : (
-    <DroppableBlank
-      blankId={blankId}
-      isDisabled={draggableIdInThisBlank !== null}
-    >
-      {draggableIdInThisBlank ? (
-        <DraggableSolution
-          text={draggableText ?? ''}
-          draggableId={draggableIdInThisBlank}
-        />
+    <DroppableBlank blankId={blankId} isDisabled={draggableId !== null}>
+      {draggableId ? (
+        <DraggableSolution text={draggableText} draggableId={draggableId} />
       ) : null}
     </DroppableBlank>
   )

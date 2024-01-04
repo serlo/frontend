@@ -23,27 +23,40 @@ export function BlankRendererInput(props: BlankRendererInputProps) {
   const isAnswerCorrect = feedback.get(blankId)?.isCorrect
   const text = context.textInBlanks.get(blankId)?.text ?? ''
 
-  // Autofocus input when the blank is created
+  // Autofocus when adding and removing a blank
   const inputRef = createRef<HTMLInputElement>()
   useEffect(() => {
+    // Focus input when the blank is added
     const input = inputRef.current
     if (input) input.focus()
+
+    // Focus editor when the blank is removed
+    return () => {
+      ReactEditor.focus(editor)
+    }
+
     // Only run on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Focus input when the blank is selected using arrow keys
-  const shouldFocusInput =
-    focused &&
-    selected &&
-    editor.selection &&
-    Range.isCollapsed(editor.selection)
   useEffect(() => {
-    const input = inputRef.current
-    if (input && document.activeElement !== input && shouldFocusInput) {
-      input.focus()
+    function handleDocumentKeydown() {
+      const input = inputRef.current
+      const shouldFocusInput =
+        input &&
+        document.activeElement !== input &&
+        focused &&
+        selected &&
+        editor.selection &&
+        Range.isCollapsed(editor.selection)
+      if (shouldFocusInput) input.focus()
     }
-  }, [inputRef, shouldFocusInput])
+
+    document.addEventListener('keydown', handleDocumentKeydown)
+
+    return () => document.removeEventListener('keydown', handleDocumentKeydown)
+  }, [editor, focused, inputRef, selected])
 
   return (
     <input
