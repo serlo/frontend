@@ -1,26 +1,29 @@
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { ChangeEventHandler, KeyboardEvent, createRef, useEffect } from 'react'
-import { Editor, Transforms } from 'slate'
-import { ReactEditor } from 'slate-react'
+import { Range, Transforms } from 'slate'
+import { ReactEditor, useSelected, useSlate, useFocused } from 'slate-react'
 
 import type { FillInTheBlanksContextType } from '../context/blank-context'
 
 interface BlankRendererInputProps {
   blankId: string
   context: FillInTheBlanksContextType
-  editor?: Editor
   onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
 /** Renders either an input element (where user can type into) or a drop area (where user can drop draggable answers) depending on the mode  */
 export function BlankRendererInput(props: BlankRendererInputProps) {
-  const { blankId, context, editor } = props
+  const { blankId, context, onChange } = props
+
+  const editor = useSlate()
+  const selected = useSelected()
+  const focused = useFocused()
 
   const feedback = context.feedbackForBlanks
   const isAnswerCorrect = feedback.get(blankId)?.isCorrect
   const text = context.textInBlanks.get(blankId)?.text ?? ''
 
-  // Autofocus input
+  // Autofocus input when the blank is created
   const inputRef = createRef<HTMLInputElement>()
   useEffect(() => {
     const input = inputRef.current
@@ -28,6 +31,19 @@ export function BlankRendererInput(props: BlankRendererInputProps) {
     // Only run on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // Focus input when the blank is selected using arrow keys
+  const shouldFocusInput =
+    focused &&
+    selected &&
+    editor.selection &&
+    Range.isCollapsed(editor.selection)
+  useEffect(() => {
+    const input = inputRef.current
+    if (input && document.activeElement !== input && shouldFocusInput) {
+      input.focus()
+    }
+  }, [inputRef, shouldFocusInput])
 
   return (
     <input
@@ -45,14 +61,14 @@ export function BlankRendererInput(props: BlankRendererInputProps) {
       value={text}
       onChange={(event) => {
         setTextUserTypedIntoBlank(event.target.value)
-        props.onChange?.(event)
+        onChange?.(event)
       }}
       onKeyDown={handleMoveOut}
     />
   )
 
   function handleMoveOut(event: KeyboardEvent<HTMLInputElement>) {
-    if (!inputRef || !inputRef.current || !editor) return
+    if (!inputRef || !inputRef.current) return
 
     const { selectionStart, selectionEnd, value } = inputRef.current
 
@@ -86,13 +102,13 @@ export function BlankRendererInput(props: BlankRendererInputProps) {
   function setTextUserTypedIntoBlank(newText: string) {
     // Copy Map object
     const newTextUserTypedIntoBlankList = new Map<string, { text: string }>(
-      context?.textUserTypedIntoBlanks.value
+      context.textUserTypedIntoBlanks.value
     )
 
     // Set new text
     newTextUserTypedIntoBlankList.set(blankId, { text: newText })
 
     // Update state
-    context?.textUserTypedIntoBlanks.set(newTextUserTypedIntoBlankList)
+    context.textUserTypedIntoBlanks.set(newTextUserTypedIntoBlankList)
   }
 }

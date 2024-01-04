@@ -1,6 +1,5 @@
 // import { useDroppable } from '@dnd-kit/core'
 import { ChangeEventHandler, useContext } from 'react'
-import { Editor } from 'slate'
 
 import type { FillInTheBlanksMode } from '.'
 import { BlankRendererInput } from './components/blank-renderer-input'
@@ -10,39 +9,37 @@ import { FillInTheBlanksContext } from './context/blank-context'
 
 interface BlankRendererProps {
   blankId: string
-  editor?: Editor
   forceMode?: FillInTheBlanksMode
   onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
 /** Renders either an input element (where user can type into) or a drop area (where user can drop draggable answers) depending on the mode  */
 export function BlankRenderer(props: BlankRendererProps) {
-  const { blankId, forceMode, editor, onChange } = props
+  const { blankId, forceMode, onChange } = props
 
-  const fillInTheBlanksContext = useContext(FillInTheBlanksContext)
-  if (fillInTheBlanksContext === null) {
+  const context = useContext(FillInTheBlanksContext)
+  if (context === null) {
     // blankStates was not provided by FillInTheBlanksRenderer -> cannot continue
     return null
   }
-  const mode = forceMode ?? fillInTheBlanksContext.mode
+  const mode = forceMode ?? context.mode
 
-  const draggableSolutionInBlank = [
-    ...fillInTheBlanksContext.locationOfDraggables.value,
-  ].find((entry) => entry[1] === blankId)
+  const draggableSolutionInBlank = [...context.locationOfDraggables.value].find(
+    (entry) => entry[1] === blankId
+  )
 
   const draggableIdInThisBlank = draggableSolutionInBlank
     ? draggableSolutionInBlank[0]
     : null
 
-  const draggableText = fillInTheBlanksContext.draggables.find(
+  const draggableText = context.draggables.find(
     (draggable) => draggable.draggableId === draggableIdInThisBlank
   )?.text
 
   return mode === 'typing' ? (
     <BlankRendererInput
       blankId={blankId}
-      context={fillInTheBlanksContext}
-      editor={editor}
+      context={context}
       onChange={onChange}
     />
   ) : (

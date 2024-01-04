@@ -85,7 +85,6 @@ export const useSlateRenderHandlers = ({
         return (
           <span {...attributes} contentEditable={false}>
             <BlankRenderer
-              editor={editor}
               blankId={element.blankId}
               forceMode="typing"
               onChange={(e) => {
