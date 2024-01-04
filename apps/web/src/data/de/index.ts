@@ -826,8 +826,8 @@ export const loggedInData = {
           description: "Die Lösung kann Text oder eine Formel sein"
         },
         textAreaExercise: {
-          title: 'Text Box Exercise',
-          description: 'A big text box for long answers. No feedback.'
+          title: "Freitext",
+          description: "Ein großes Eingabefeld"
         },
         scMcExercise: {
           title: "SC/MC Aufgabe",
@@ -895,7 +895,7 @@ export const loggedInData = {
         exercise: {
           scMcExercise: "Auswahlaufgabe",
           inputExercise: "Eingabefeld",
-          textAreaExercise: 'Text Box Exercise',
+          textAreaExercise: "Freitext",
           blanksExercise: "Lückentext Aufgabe",
           h5p: "H5P Aufgabe",
           addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
