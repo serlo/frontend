@@ -1,13 +1,17 @@
+import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useState } from 'react'
 
 import type { ArticleProps } from '.'
 import { ArticleAddModal } from './add-modal/article-add-modal'
+import { buttonClass } from './const/button-class'
 import { ArticleExercises } from './editor-renderer/article-exercises'
 import { ArticleRelatedContentSection } from './editor-renderer/article-related-content-section'
 import { ArticleSources } from './editor-renderer/article-sources'
 import { ArticleRenderer } from './renderer'
 import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
+import { FaIcon } from '@/components/fa-icon'
 
 export function ArticleEditor({ state }: ArticleProps) {
   const {
@@ -20,7 +24,8 @@ export function ArticleEditor({ state }: ArticleProps) {
   } = state
   const [modalOpen, setModalOpen] = useState(false)
 
-  const modalStrings = useEditorStrings().templatePlugins.article.addModal
+  const articleStrings = useEditorStrings().templatePlugins.article
+  const modalStrings = articleStrings.addModal
 
   return (
     <>
@@ -35,14 +40,18 @@ export function ArticleEditor({ state }: ArticleProps) {
         }
         exercisesFolder={
           <>
-            <a
-              className="serlo-link font-bold"
-              href={`/${exerciseFolder.id.value}`}
-            >
-              {exerciseFolder.title.value}
-            </a>{' '}
-            <span className="-ml-1 -mt-3 inline-block">
-              {renderButton(modalStrings.buttonExFolder, true)}
+            {exerciseFolder.id.value ? (
+              <>
+                <a
+                  className="serlo-link mr-side font-bold"
+                  href={`/${exerciseFolder.id.value}`}
+                >
+                  {exerciseFolder.title.value}
+                </a>{' '}
+              </>
+            ) : null}
+            <span className="-ml-side -mt-3 inline-block">
+              {renderExerciseFolderButton()}
             </span>
           </>
         }
@@ -76,6 +85,23 @@ export function ArticleEditor({ state }: ArticleProps) {
         onClick={() => setModalOpen(true)}
         className="mb-8 mt-4"
       />
+    )
+  }
+
+  function renderExerciseFolderButton() {
+    return exerciseFolder.id.value ? (
+      <button
+        onClick={() => {
+          exerciseFolder.id.set('')
+          exerciseFolder.title.set('')
+        }}
+        className={buttonClass}
+      >
+        <EditorTooltip text={articleStrings.removeLabel} />
+        <FaIcon icon={faTrashAlt} aria-hidden="true" />
+      </button>
+    ) : (
+      renderButton(modalStrings.buttonExFolder, true)
     )
   }
 }
