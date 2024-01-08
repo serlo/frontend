@@ -567,3 +567,9 @@ main b {
 body {
   @apply tracking-slightly-tighter;
 }
+
+/* stop body from scrolling when a modal is open */
+body.ReactModal__Body--open {
+  overflow: hidden;
+  height: 100vh;
+}
