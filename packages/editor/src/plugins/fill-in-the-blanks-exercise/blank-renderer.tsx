@@ -41,25 +41,25 @@ export function BlankRenderer(props: {
   return (
     <>
       {mode === 'typing' ? (
-        <input
-          className={cn(
-            'h-[25px] resize-none rounded-full border border-brand bg-brand-50 pl-2 pr-1',
-            isAnswerCorrect && 'border-green-500',
-            isAnswerCorrect === false && 'border-red-500'
-          )}
-          size={(textInBlank.length ?? 4) + 1}
-          spellCheck={false}
-          autoCorrect="off"
-          placeholder=""
-          type="text"
-          value={textInBlank}
-          onChange={(e) => {
-            setTextUserTypedIntoBlank(e.target.value)
-            if (props.onChange) {
-              props.onChange(e)
-            }
-          }}
-        />
+        <span className="serlo-autogrow-input" data-value={textInBlank + '_'}>
+          <input
+            className={cn(
+              'h-[25px] rounded-full border border-brand bg-brand-50',
+              isAnswerCorrect && 'border-green-500',
+              isAnswerCorrect === false && 'border-red-500'
+            )}
+            spellCheck={false}
+            autoCorrect="off"
+            placeholder=""
+            type="text"
+            size={4}
+            value={textInBlank}
+            onChange={(e) => {
+              setTextUserTypedIntoBlank(e.target.value)
+              if (props.onChange) props.onChange(e)
+            }}
+          />
+        </span>
       ) : (
         <>
           <DroppableBlank

@@ -434,6 +434,30 @@
       @apply serlo-ol text-lg;
     }
   }
+
+  /* heavily inspired by Shaw (https://css-tricks.com/auto-growing-inputs-textareas/#aa-other-ideas) 
+    this needs a data-value on the wrapping element equal to the value of the input
+  */
+  .serlo-autogrow-input {
+    display: inline-grid;
+    position: relative;
+
+    input,
+    &::after {
+      width: auto;
+      min-width: 4rem;
+      grid-area: 1 / 2;
+      padding: 0 0.75rem;
+      resize: none;
+    }
+
+    &::after {
+      content: attr(data-value) ' ';
+      visibility: hidden;
+      white-space: pre-wrap;
+      margin-left: -0.5rem;
+    }
+  }
 }
 
 /* print and pdf styles */
