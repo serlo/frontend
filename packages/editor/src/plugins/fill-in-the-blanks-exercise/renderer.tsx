@@ -8,6 +8,7 @@ import { DraggableSolution } from './components/blank-solution'
 import { DraggableSolutionArea } from './components/blank-solution-area'
 import { FillInTheBlanksContext } from './context/blank-context'
 import { Feedback } from '../sc-mc-exercise/renderer/feedback'
+import { cn } from '@/helper/cn'
 
 // TODO: Copy of type in /src/serlo-editor/plugins/text/types/text-editor.ts
 const Answer = t.type({
@@ -86,6 +87,10 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     new Map<DraggableId, BlankId>()
   )
 
+  const allBlanksHaveText = [...textInBlanks.values()].every(
+    ({ text }) => text.length > 0
+  )
+
   return (
     // Additional prop 'context={window}' prevents error with nested DndProvider components. See: https://github.com/react-dnd/react-dnd/issues/3257#issuecomment-1239254032
     // <DndProvider backend={HTML5Backend} context={window}>
@@ -131,7 +136,10 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
       {/* Copied from mc-renderer.tsx */}
       <div className="mt-2 flex">
         <button
-          className="serlo-button-blue mr-3 h-8"
+          className={cn(
+            'serlo-button-blue mr-3 h-8',
+            allBlanksHaveText ? '' : 'pointer-events-none opacity-0'
+          )}
           onClick={() => {
             checkAnswers()
             setShowFeedback(true)
