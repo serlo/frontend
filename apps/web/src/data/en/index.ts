@@ -852,6 +852,7 @@ export const loggedInData = {
           mathFormula: 'Math formula (%ctrlOrCmd% + M)',
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
           blank: 'Blank',
+          createBlank: 'Create Blank',
           bold: 'Bold (%ctrlOrCmd% + B)',
           italic: 'Italic (%ctrlOrCmd% + I)',
           noItemsFound: 'No items found',
@@ -903,7 +904,7 @@ export const loggedInData = {
         },
         textAreaExercise: {
           title: 'Text Box Exercise',
-          description: 'A big text box for long answers. No feedback.'
+          description: 'A big text box for long answers. No feedback.',
         },
         scMcExercise: {
           title: 'SC/MC Exercise',

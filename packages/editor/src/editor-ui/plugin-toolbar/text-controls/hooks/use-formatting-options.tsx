@@ -346,12 +346,12 @@ function createToolbarControls(
     // Blank (For Fill in the Blank Exercises)
     {
       name: TextEditorFormattingOption.textBlank,
-      title: textStrings.blank,
+      title: textStrings.createBlank,
       isActive: isBlankActive,
       onClick: toggleBlank,
       renderIcon: () => (
-        <span className="relative -top-0.5 rounded-lg border-2 border-current px-1 text-[10px] font-bold">
-          _
+        <span className="relative -top-0.5 ml-0.5 rounded-lg border-2 border-current px-1 py-0.25 text-[10px] font-bold">
+          {textStrings.blank}
         </span>
       ),
     },
