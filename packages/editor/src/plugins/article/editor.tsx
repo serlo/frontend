@@ -12,6 +12,7 @@ import { ArticleSources } from './editor-renderer/article-sources'
 import { ArticleRenderer } from './renderer'
 import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
 import { FaIcon } from '@/components/fa-icon'
+import { cn } from '@/helper/cn'
 
 export function ArticleEditor({ state }: ArticleProps) {
   const {
@@ -95,7 +96,7 @@ export function ArticleEditor({ state }: ArticleProps) {
           exerciseFolder.id.set('')
           exerciseFolder.title.set('')
         }}
-        className={buttonClass}
+        className={cn(buttonClass, 'serlo-tooltip-trigger')}
       >
         <EditorTooltip text={articleStrings.removeLabel} />
         <FaIcon icon={faTrashAlt} aria-hidden="true" />
