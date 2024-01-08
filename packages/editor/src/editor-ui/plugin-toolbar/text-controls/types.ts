@@ -11,6 +11,7 @@ export enum TextEditorFormattingOption {
   richTextBold = 'richTextBold',
   richTextItalic = 'richTextItalic',
   textBlank = 'textBlank',
+  separator = 'separator',
 }
 
 export type ControlButton = ActionControlButton | NestedControlButton
@@ -18,7 +19,9 @@ export type ControlButton = ActionControlButton | NestedControlButton
 interface ActionControlButton {
   name: TextEditorFormattingOption
   title: string
+  activeTitle?: string
   isActive(editor: SlateEditor): boolean
+  group: 'blank' | 'default'
   onClick(editor: SlateEditor): void
   renderIcon(editor: SlateEditor): React.ReactNode
 }
@@ -28,6 +31,7 @@ export interface NestedControlButton {
   closeMenuTitle: string
   subMenuButtons: ActionControlButton[]
   isActive(editor: SlateEditor): boolean
+  group: undefined
   renderIcon(editor: SlateEditor): React.ReactNode
   renderCloseMenuIcon(): React.ReactNode
 }

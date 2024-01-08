@@ -853,6 +853,7 @@ export const loggedInData = {
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
           blank: 'Blank',
           createBlank: 'Create Blank',
+          removeBlank: 'Remove Blank',
           bold: 'Bold (%ctrlOrCmd% + B)',
           italic: 'Italic (%ctrlOrCmd% + I)',
           noItemsFound: 'No items found',

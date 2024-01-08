@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Editor as SlateEditor } from 'slate'
 
 import { PluginToolbarTextControlButton } from './plugin-toolbar-text-control-button'
@@ -31,21 +31,32 @@ export function PluginToolbarTextControls({
       <>
         {controls.map((control, index) => {
           if (mathActive && !isMath(control)) return null
+
+          const next = controls[index + 1]
+          const showSeparator = !!next && next.group !== control.group
+
           return (
-            <PluginToolbarTextControlButton
-              active={control.isActive(editor)}
-              tooltipText={control.title}
-              onMouseDown={(event) => {
-                event.preventDefault()
-                event.stopPropagation()
-                isNestedControlButton(control)
-                  ? setSubMenu(index)
-                  : control.onClick(editor)
-              }}
-              key={index}
-            >
-              {control.renderIcon(editor)}
-            </PluginToolbarTextControlButton>
+            <Fragment key={control.title}>
+              <PluginToolbarTextControlButton
+                active={control.isActive(editor)}
+                tooltipText={
+                  control.isActive(editor) &&
+                  Object.hasOwn(control, 'activeTitle')
+                    ? control.activeTitle
+                    : control.title
+                }
+                onMouseDown={(event) => {
+                  event.preventDefault()
+                  event.stopPropagation()
+                  isNestedControlButton(control)
+                    ? setSubMenu(index)
+                    : control.onClick(editor)
+                }}
+              >
+                {control.renderIcon(editor)}
+              </PluginToolbarTextControlButton>
+              {showSeparator ? <span className="opacity-30"> | </span> : null}
+            </Fragment>
           )
         })}
       </>
@@ -72,20 +83,22 @@ export function PluginToolbarTextControls({
 
   return (
     <>
-      {subMenuControls.map((control, index) => (
-        <PluginToolbarTextControlButton
-          active={control.isActive(editor)}
-          tooltipText={control.title}
-          onMouseDown={(event) => {
-            event.preventDefault()
-            control.onClick(editor)
-            setSubMenu(undefined)
-          }}
-          key={index}
-        >
-          {control.renderIcon(editor)}
-        </PluginToolbarTextControlButton>
-      ))}
+      {subMenuControls.map((control, index) => {
+        return (
+          <PluginToolbarTextControlButton
+            active={control.isActive(editor)}
+            tooltipText={control.title}
+            onMouseDown={(event) => {
+              event.preventDefault()
+              control.onClick(editor)
+              setSubMenu(undefined)
+            }}
+            key={index}
+          >
+            {control.renderIcon(editor)}
+          </PluginToolbarTextControlButton>
+        )
+      })}
     </>
   )
 }
