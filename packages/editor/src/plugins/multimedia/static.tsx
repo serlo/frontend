@@ -45,6 +45,6 @@ export function MultimediaStaticRenderer({
         : // @ts-expect-error not sure…
           (media as MultimediaChild).state?.src
     )
-    return !src || src.length < 10
+    return !src
   }
 }
