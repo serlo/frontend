@@ -13,10 +13,11 @@ export function ExerciseNumbering({ index, href }: ExerciseNumberingProps) {
     <Link
       href={href}
       className={cn(`
-          mx-side mb-5 block h-12 w-12 rounded-full bg-brand
-          pt-1 text-center text-4xl font-bold
-          text-white hover:bg-brand-400 hover:no-underline sm:absolute sm:-ml-10
-          sm:-mt-2.5 md:-ml-14
+          relative mx-side mt-4 block h-12
+          w-12 rounded-full bg-brand px-0
+          pt-1 text-center text-4xl
+          font-bold
+          text-white hover:bg-brand-400 hover:no-underline
        `)}
     >
       {index + 1}

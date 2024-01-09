@@ -154,7 +154,13 @@ export function Topic({ data }: TopicProps) {
           const exerciseUuid = exerciseOrGroup.serloContext?.uuid
 
           return (
-            <li key={exerciseOrGroup.id ?? exerciseUuid} className="pb-10">
+            <li
+              key={exerciseOrGroup.id ?? exerciseUuid}
+              className={cn(
+                'flex flex-row flex-wrap pb-10',
+                i > 0 && 'my-block'
+              )}
+            >
               <ExerciseNumbering href={`/${exerciseUuid}`} index={i} />
               <StaticRenderer document={exerciseOrGroup} />
               {i === 1 && renderSurvey()}
