@@ -86,7 +86,6 @@ export const useSlateRenderHandlers = ({
           <span {...attributes} contentEditable={false}>
             <BlankRenderer
               blankId={element.blankId}
-              forceMode="typing"
               onChange={(e) => {
                 if (!e) return
                 const path = ReactEditor.findPath(editor, element)

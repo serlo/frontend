@@ -11,7 +11,6 @@ interface BlankRendererInputProps {
   onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
-/** Renders either an input element (where user can type into) or a drop area (where user can drop draggable answers) depending on the mode  */
 export function BlankRendererInput(props: BlankRendererInputProps) {
   const { blankId, context, onChange } = props
 
