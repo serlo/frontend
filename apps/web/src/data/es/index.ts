@@ -22,7 +22,7 @@ export const instanceData = {
       agree: "Acepta utilizar el motor de búsqueda"
     },
     footer: {
-      summaryHeading: "Serlo.org es la Wikipedia para el aprendizaje.",
+      summaryHeading: "Serlo.org es como la Wikipedia para el aprendizaje.",
       summaryText: "Somos una comunidad de visionarios que trabajan sin descanso para que todo el mundo tenga acceso gratuito a una educación excelente.",
       learnMore: "Aprende más",
       participate: "Únete a la causa",
@@ -38,8 +38,8 @@ export const instanceData = {
       exercises: "Ejercicios",
       events: "Eventos",
       unrevised: "Aún no revisado",
-      subterms: 'Subterms',
-      exercisesContent: "Ejercicios contenido"
+      subterms: "Subtérminos",
+      exercisesContent: "Contenido de Ejercicios"
     },
     entities: {
       applet: 'Applet',
@@ -54,7 +54,7 @@ export const instanceData = {
       page: "Página",
       solution: "Solución",
       taxonomyTerm: "Término de taxonomía",
-      user: "Usuario",
+      user: "Usuario/a",
       video: "Vídeo",
       exerciseFolder: "Carpeta de ejercicios",
       comment: "Comentario",
@@ -82,21 +82,21 @@ export const instanceData = {
     },
     roles: {
       donor: "Donante",
-      author: "Autor",
-      reviewer: "Revisor"
+      author: "Autor/a",
+      reviewer: "Revisor/a"
     },
     share: {
       button: "Compartir",
       title: "¡Comparte!",
       copyLink: "Copiar enlace",
-      copySuccess: "!Enlace copiado!",
+      copySuccess: "¡Enlace copiado!",
       close: "Cerrar",
       pdf: "Descargar PDF",
       pdfNoSolutions: "PDF sin soluciones"
     },
     modal: {
-      leaveNow: 'Leave now',
-      noStay: 'No, I want to stay'
+      leaveNow: "Salir ahora",
+      noStay: "No, quiero quedarme"
     },
     editOrAdd: {
       button: "Editar",
@@ -106,10 +106,10 @@ export const instanceData = {
       unrevised: "Mostrar revisiones sin revisar",
       inviteModal: {
         title: "¡Crea con nosotros!",
-        text: "Hola %break% Genial que quieras contribuir a este contenido 👍 %break% Todo el mundo puede editar, pero necesitas una cuenta para hacerlo.",
+        text: "¡Hola! %break% Genial que quieras contribuir a este contenido 👍 %break% Todo el mundo puede editar, pero necesitas una cuenta para hacerlo.",
         loginButton: "Inicie sesión",
         registerButton: "Registrar una nueva cuenta",
-        psText: "Puedes averiguar de qué manera puedes contribuir %link%..",
+        psText: "Puedes averiguar de qué manera puedes contribuir %link%.",
         psLinkText: "aquí"
       }
     },
@@ -117,7 +117,7 @@ export const instanceData = {
       readMore: "Información",
       special: "Licencia diferente",
       nonFree: "El uso de este contenido podría estar más restringido que nuestro otro contenido.",
-      appliesTo: 'Applies to'
+      appliesTo: "Aplica a"
     },
     course: {
       showPages: "Mostrar descripción del curso",
@@ -132,10 +132,10 @@ export const instanceData = {
       hide: "ocultar",
       trashedNotice: "Este contenido está marcado para su eliminación.",
       unrevisedNotice: "Este contenido no tiene ninguna revisión aceptada todavía. Por favor, utiliza este vínculo %link% para previsualizar.",
-      emptyNotice: "No hay contenido aquí. Por favor, edite o elimine.",
+      emptyNotice: "No hay contenido aquí. Por favor, edita o elimina.",
       picture: "Imagen",
       previewImage: "Previsualizar Imagen",
-      imageAltFallback: "Imágen",
+      imageAltFallback: "Imagen",
       exercisesTitle: "Ejercicios",
       moreExercises: "Puedes encontrar más ejercicios en la siguiente carpeta:",
       relatedContentTitle: "¿Todavía quieres más?",
@@ -157,7 +157,7 @@ export const instanceData = {
         hideSolution: "Ocultar la solución"
       },
       boxTypes: {
-        blank: 'Blank',
+        blank: "Blanco",
         example: "Ejemplo",
         quote: "Cita",
         approach: "Planteamiento",
@@ -184,7 +184,7 @@ export const instanceData = {
       video: "Reproducir vídeo de %provider%",
       applet: "Cargar Applet de %provider%",
       twingle: "Cargar formulario de donación",
-      audio: 'Play audio from %provider%',
+      audio: "Reproducir vídeo de %provider%",
       general: "Activar"
     },
     comments: {
@@ -204,7 +204,7 @@ export const instanceData = {
       showMoreReply: "Mostrar una respuesta más",
       showMoreReplies: "Mostrar %number% respuestas más",
       hideReplies: "Ocultar",
-      showArchived: "Mostrar  %threads% archivados",
+      showArchived: "Mostrar %threads% archivados",
       copyLink: "Copiar el vínculo del comentario",
       commentsOverviewExplanation: "Aquí puedes ver todos los comentarios que se han escrito al contenido de %instance%.serlo.org. %break% Responde a las preguntas o encuentra contenido que puedas mejorar. %break% El enlace situado encima del comentario te lleva a la entidad correspondiente.",
       edit: "Editar comentario",
@@ -344,7 +344,7 @@ export const instanceData = {
         registerTitle: "Registra tu cuenta de Serlo.org",
         passwordRequirements: "Al menos 8 caracteres, si es más largo, mejor.",
         registerIntro: "No necesitas una cuenta para aprender en serlo.org.  %break%  Si quieres hacer comentarios, o trabajar en contenidos de aprendizaje has venido al lugar adecuado.",
-        newsletterSubscription: 'Receive concise updates on our current activities in our newsletter. We use your information for sending purposes and for personal greetings. Look forward to relevant information and our annual fundraising campaign once a year. (optional)'
+        newsletterSubscription: "Recibe actualizaciones breves sobre nuestras actividades actuales en nuestro boletín. Utilizamos tus datos para el envío y para felicitaciones personales. Recibe información relevante y nuestra campaña anual de recaudación de fondos una vez al año. (opcional)"
       },
       recoverTitle: "Recupera tu cuenta",
       recoveryInstructions: "Introduce y envía tu dirección de correo electrónico. %break%  A continuación, te enviaremos un correo electrónico con un enlace de restablecimiento.",
@@ -386,10 +386,10 @@ export const instanceData = {
       messages: {
         code1010003: "Por favor, confirma esta acción al verificar que eres tú.",
         code1010001: "Iniciar sesión",
-        code1010002: 'Sign in via „Mein Bildungsraum“',
+        code1010002: "Inicia sesión a través de „Mein Bildungsraum“ (programa en Alemania)",
         code1010013: "Continuar con SSO",
         code1040001: "Registrarse",
-        code1040002: 'Register via „Mein Bildungsraum“',
+        code1040002: "Inscríbete a través de  „Mein Bildungsraum“ (programa de Alemania)",
         code1040003: "Continuar",
         code1050001: "Tus cambios han sido guardados! 🎉",
         code1060001: "Has recuperado tu cuenta con éxito. Por favor, cambia tu contraseña en los próximos minutos.",
@@ -499,8 +499,8 @@ export const loggedInData = {
     icon: 'notifications'
   }, {
     url: "[secuencia vacía]",
-    title: "Usuario",
-    icon: 'user',
+    title: "Usuario/a",
+    icon: "usuario/a",
     children: [{
       url: '/user/me',
       title: "Perfil propio"
@@ -530,7 +530,7 @@ export const loggedInData = {
       thisCoursePage: "Esta página del curso",
       addCoursePage: "Agregar página de curso",
       wholeCourse: "Curso completo",
-      moveOrCopyItems: 'Move or copy items',
+      moveOrCopyItems: "Mover o copiar elementos",
       addGroupedTextExercise: "Añade un grupo de ejercicios de texto",
       changeLicense: "Cambiar licencia",
       subscribe: "Suscribirse",
@@ -611,14 +611,14 @@ export const loggedInData = {
         anchor: {
           title: "Ancla",
           description: "Insertar un ancla.",
-          identifier: 'Identifier (e.g. "long-explanation")',
+          identifier: "Identificador (por ejemplo, \"explicación larga\")",
           anchorId: "ID del ancla"
         },
         box: {
           title: "Contenedor",
           description: "Un contenedor para ejemplos, comillas, advertencias, teoremas, notas…",
           type: "Tipo de contenedor",
-          typeTooltip: 'Choose the type of the box',
+          typeTooltip: "Elige el tipo de caja",
           titlePlaceholder: "(título opcional)",
           anchorId: "ID de Ancla (marca de posición)",
           emptyContentWarning: "Los contenedores sin contenido no se visualizarán"
@@ -644,13 +644,13 @@ export const loggedInData = {
           combineLikeTerms: "Combina términos similares",
           setEqual: "Coloca los términos iguales entre sí.",
           firstExplanation: "Primera explicación",
-          moveUpLabel: 'Move up',
-          removeRowLabel: 'Remove row'
+          moveUpLabel: "Mover hacia arriba",
+          removeRowLabel: "Eliminar fila"
         },
         geogebra: {
           title: "Aplicación GeoGebra",
           description: "Insertar el Material de la aplicación GeoGebra a través de URL o ID.",
-          chooseApplet: 'Choose Applet',
+          chooseApplet: "Elegir Applet",
           urlOrId: "URL o ID de GeoGebra"
         },
         highlight: {
@@ -659,27 +659,27 @@ export const loggedInData = {
           clickAndEnter: "Haz clic aquí e introduce tu código fuente…",
           enterHere: "Introduce tu código fuente aquí",
           language: "Idioma",
-          languageTooltip: 'Choose language for syntax highlighting',
-          showLineNumbers: 'Line numbers',
-          lineNumbersTooltip: 'Should users see line numbers?'
+          languageTooltip: "Elegir idioma para resaltado de sintaxis",
+          showLineNumbers: "Números de línea",
+          lineNumbersTooltip: "¿Deben ver los usuarios los números de línea?"
         },
         image: {
-          title: "Imágen",
+          title: "Imagen",
           description: "Subir imágenes.",
-          upload: 'Upload',
+          upload: "Subir",
           imageUrl: "URL de la imagen",
-          placeholderEmpty: 'https://example.com/image.png',
+          placeholderEmpty: "https://www.ejemplo.com/imagen.png",
           placeholderUploading: "Subiendo…",
           placeholderFailed: "Carga fallida...",
           retry: "Reintentar",
           failedUpload: "Carga fallida",
           captionPlaceholder: "Leyenda opcional",
           href: "Enlace",
-          hrefPlaceholder: "Link de la imagen",
+          hrefPlaceholder: "Vincular la imagen",
           alt: "Descripción (no es visible)",
           altPlaceholder: "Describe lo que muestra la imagen",
           maxWidth: "Ancho máximo",
-          maxWidthPlaceholder: "Introduzca el ancho máximo"
+          maxWidthPlaceholder: "Introduce la anchura máxima"
         },
         injection: {
           title: "serlo.org Contenido",
@@ -720,7 +720,7 @@ export const loggedInData = {
           title: "Filas",
           searchForTools: "Buscar herramientas…",
           duplicate: "Duplicar",
-          copyAnchorLink: 'Copy link to this element',
+          copyAnchorLink: "Copiar enlace a este elemento",
           remove: "Eliminar",
           close: "Cerrar",
           dragElement: "Arrastra el elemento dentro del documento",
@@ -750,8 +750,8 @@ export const loggedInData = {
         text: {
           title: "Texto",
           description: "Redacta el contenido usando texto enriquecido y fórmulas matemáticas.",
-          placeholder: 'Write something or add element:',
-          addButtonExplanation: 'Click to insert new element',
+          placeholder: "Escribe algo o añade algún elemento:",
+          addButtonExplanation: "Haz clic para insertar un nuevo elemento",
           quote: "Cita",
           setColor: "Elegir color",
           resetColor: "Restablecer color",
@@ -760,7 +760,7 @@ export const loggedInData = {
           heading: "Encabezado",
           headings: "Encabezados",
           link: "Vínculo (%ctrlOrCmd% + K)",
-          noElementPasteInLists: 'Sorry, pasting elements inside of lists is not allowed.',
+          noElementPasteInLists: "Lo sentimos, no está permitido pegar elementos dentro de listas.",
           linkOverlay: {
             placeholder: "https://… o /1234",
             inputLabel: "Pegar o escribir un enlace",
@@ -775,7 +775,7 @@ export const loggedInData = {
           lists: "Listas",
           mathFormula: "Fórmula matemática (%ctrlOrCmd% + M)",
           code: "Código (%ctrlOrCmd% + + + `)",
-          blank: 'Blank',
+          blank: "Blanco",
           bold: "Negrilla (%ctrlOrCmd% + B)",
           italic: "Itálica (%ctrlOrCmd% + I)",
           noItemsFound: "Elementos no encontrados",
@@ -788,7 +788,7 @@ export const loggedInData = {
             formula: "[fórmula]",
             visual: 'visual',
             latex: 'LaTeX',
-            latexEditorTitle: 'LaTeX editor',
+            latexEditorTitle: "Editor LaTeX",
             onlyLatex: "Sólo está disponible el editor LaTeX ",
             shortcuts: "Acceso directo",
             fraction: "Fracción",
@@ -800,7 +800,7 @@ export const loggedInData = {
             eG: "por ejemplo,",
             functions: "Funciones",
             displayAsBlock: "Mostrar en bloque",
-            closeMathFormulaEditor: 'Close math formula editor'
+            closeMathFormulaEditor: "Cerrar editor de fórmulas matemáticas"
           }
         },
         video: {
@@ -814,25 +814,29 @@ export const loggedInData = {
         },
         audio: {
           title: 'Audio',
-          description: 'Link to audio files on Vocaroo',
-          audioUrl: 'Enter Audio URL'
+          description: "Enlace a los archivos de audio en Vocaroo",
+          audioUrl: "Introducir la URL del vídeo"
         },
         exercise: {
           title: "Ejercicio",
-          description: 'Interactive or text based exercise'
+          description: "Ejercicio interactivo o basado en texto"
         },
         inputExercise: {
-          title: 'Input Exercise',
-          description: 'Solution can be text or math'
+          title: "Ejercicio de respuesta escrita",
+          description: "La solución puede ser texto o matemático"
+        },
+        textAreaExercise: {
+          title: "Ejercicio de cajas de texto",
+          description: "Una caja de texto grande para respuestas largas. Sin retroalimentación."
         },
         scMcExercise: {
-          title: 'SC/MC Exercise',
-          description: 'Single Choice or Multiple Choice'
+          title: "Ejercicio SC/MC",
+          description: "Opción única o múltiple"
         },
         blanksExercise: {
-          title: 'Fill In The Blanks Exercise',
-          description: 'Text with blanks',
-          placeholder: 'Write a text and add blanks'
+          title: "Ejercicio de rellenar los espacios en blanco",
+          description: "Textos con blancos",
+          placeholder: "Escribe un texto y añade espacios en blanco"
         }
       },
       templatePlugins: {
@@ -850,7 +854,7 @@ export const loggedInData = {
           moreOnTopic: "Puedes encontrar más contenido sobre este tema aquí:",
           addSource: "Añadir fuente",
           removeLabel: "Eliminar",
-          moveUpLabel: 'Move up',
+          moveUpLabel: "Mover hacia arriba",
           dragLabel: "Arrastra para cambiar el orden",
           openInTab: "Abrir en una nueva pestaña",
           sources: "Fuentes",
@@ -889,10 +893,11 @@ export const loggedInData = {
           title: "Título"
         },
         exercise: {
-          scMcExercise: 'Choice Exercise',
-          inputExercise: 'Input Exercise',
-          blanksExercise: 'Fill In The Blanks Exercise',
-          h5p: 'H5p Exercise',
+          scMcExercise: "Ejercicio de elección",
+          inputExercise: "Ejercicio de respuesta escrita",
+          textAreaExercise: "Ejercicio de cajas de texto",
+          blanksExercise: "Ejercicio de rellenar los espacios en blanco",
+          h5p: "Ejercicio h5p",
           addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
           changeInteractive: "Cambiar elemento interactivo",
           removeInteractive: "Eliminar elemento interactivo",
@@ -909,12 +914,12 @@ export const loggedInData = {
           unit: "Unidad",
           addAnswer: "Añadir respuesta",
           enterTheValue: "Introduzca el valor",
-          feedbackPlaceholder: 'Add a feedback message for this answer',
+          feedbackPlaceholder: "Añade un mensaje de retroalimentación para esta respuesta",
           yourSolution: "Tu solución",
           types: {
-            'input-string-normalized-match-challenge': "Text (exact, e.g. 'tiger')",
-            'input-number-exact-match-challenge': "Number (exact, e.g. '0.5')",
-            'input-expression-equal-match-challenge': "Mathematical expression (equivalent, e.g. '0.5' or '1/2' or '2/4'"
+            'input-string-normalized-match-challenge': "Texto (exacto, p. ej., 'tigre')",
+            'input-number-exact-match-challenge': "Número (exacto, p. ej., '0.5')",
+            'input-expression-equal-match-challenge': "Expresión matemática (solución equivaletne, por ejemplo \"0,5\" = \"1/2\" = \"2/4\")"
           }
         },
         page: {
@@ -926,8 +931,8 @@ export const loggedInData = {
           chooseType: "Elige el tipo de ejercicio",
           addAnswer: "Añadir respuesta",
           previewMode: "Vista Previa",
-          previewIsActiveHint: 'Preview mode is active',
-          previewIsDeactiveHint: 'Here you can edit'
+          previewIsActiveHint: "El modo de vista previa está activo",
+          previewIsDeactiveHint: "Aquí puedes editar"
         },
         solution: {
           optionalExplanation: "Tienes la opción de explicar la estrategia de solución aquí",
@@ -974,14 +979,14 @@ export const loggedInData = {
         enableNotifsMail: "Activar notificaciones por correo electrónico",
         switchRevision: "Cambiar a otra revisión",
         importOther: "Importar contenido de otra entidad",
-        importOtherExplanation: "Simplemente pega la url o id de otra entidad serlo.org del mismo tipo aquí para duplicar su contenido aquí. NO utilices esto para hacer copias exactas o mover contenido. Los grupos de ejercicios y cursos no están soportados (pero los ejercicios individuales y las páginas del curso si lo están).",
+        importOtherExplanation: "Simplemente pega la URL o ID de otra entidad serlo.org del mismo tipo aquí para duplicar su contenido aquí. NO utilices esto para hacer copias exactas o mover contenido. Los grupos de ejercicios y cursos no están soportados (pero los ejercicios individuales y las páginas del curso si lo están).",
         importOtherWarning: "Advertencia: ¡Esto sobrescribe todo lo que ya está presente en este editor!",
         importOtherButton: "Importar contenido",
         current: "Actual",
         author: "Autor",
         createdAt: "¿Cuándo?",
         ready: "¿Listo para guardar?",
-        anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.'
+        anchorLinkWarning: "Este enlace sólo funcionará en el frontend y para contenidos que tengan una revisión algo nueva."
       },
       taxonomy: {
         title: "Título"
@@ -1055,74 +1060,74 @@ export const loggedInData = {
     },
     ai: {
       exerciseGeneration: {
-        buttonTitleSingular: 'Generate an exercise with AI',
-        buttonTitle: 'AI generate exercise group',
-        initialModalTitle: 'Create an exercise automatically with help of AI',
-        modalTitleWithTaxonomy: 'Exercise generation with AI: ',
-        confirmCloseDescription: 'Do you want to cancel the exercise generation? Your data will be lost.',
-        summary: 'Summary',
+        buttonTitleSingular: "Generar un ejercicio con IA (Inteligencia Artificial)",
+        buttonTitle: "AI genera grupo de ejercicio",
+        initialModalTitle: "Crea un ejercicio automáticamente con ayuda de la IA",
+        modalTitleWithTaxonomy: "Generación de ejercicios con AI: ",
+        confirmCloseDescription: "¿Quieres cancelar la generación de ejercicios? Tus datos se perderán.",
+        summary: "Resumen",
         nextButton: "Siguiente",
-        nextExerciseButton: 'Next exercise',
-        previousButton: 'Previous exercise',
-        generateExerciseButton: 'Generate exercise',
-        generateExercisesButton: 'Generate exercises',
-        somethingWentWrong: 'Something went wrong. Please try again.',
-        hallucinationWarning: 'The AI can generate incorrect exercises. Please review carefully.',
+        nextExerciseButton: "Próximo ejercicio",
+        previousButton: "Ejercicio anterior",
+        generateExerciseButton: "Generar ejercicio",
+        generateExercisesButton: "Generar ejercicio",
+        somethingWentWrong: "Algo salió mal. Inténtalo de nuevo.",
+        hallucinationWarning: "La IA puede generar ejercicios incorrectos. Por favor revisa cuidadosamente.",
         topic: {
-          title: 'About which %topic% would you like to generate exercises?',
+          title: "¿Sobre qué %topic% desea generar ejercicios?",
           topic: "tema",
-          defaultLabel: 'Topic',
-          otherTopicLabel: 'Other topic',
-          customTopicPlaceholder: 'Enter custom topic'
+          defaultLabel: "Tema",
+          otherTopicLabel: "Otro tema",
+          customTopicPlaceholder: "Introduce un tema personalizado"
         },
         grade: {
-          title: 'Which %grade% are the students in?',
-          grade: 'grade',
-          label: 'Grade',
-          university: 'University'
+          title: "¿En qué %grade% están los alumnos?",
+          grade: "grado/curso",
+          label: "Grado/Curso",
+          university: "Universidad"
         },
         exerciseType: {
-          title: 'What %exerciseType% are you interested in?',
-          exerciseType: 'exercise type',
-          label: 'Exercise type',
-          subtasksTitleSummary: 'Subtasks',
-          subtasksTitle: 'Should there be subtasks?',
-          subtasksTitleExerciseGroup: 'How many subtasks should there be?',
+          title: "¿Qué  %exerciseType% te interesa?",
+          exerciseType: "tipo de ejercicio",
+          label: "Tipo de ejercicio",
+          subtasksTitleSummary: "Subtareas",
+          subtasksTitle: "¿Debe haber subtareas?",
+          subtasksTitleExerciseGroup: "¿Cuántas subtareas debería haber?",
           noSubtasks: 'No',
-          yesSubtasks: 'Yes',
+          yesSubtasks: "Si",
           subtasksLabel: "Ejercicios",
-          numberOfSubtasksPlaceholder: 'Number of subtasks',
-          chooseOption: 'Choose an option',
-          multipleChoice: 'Multiple Choice',
-          singleChoice: 'Single Choice',
+          numberOfSubtasksPlaceholder: "Número de subtareas",
+          chooseOption: "Selecciona una opción",
+          multipleChoice: "Selección Múltiple",
+          singleChoice: "Elección Única",
           inputExercise: "Ejercicio de respuesta escrita",
-          blanksExercise: 'Fill In The Blanks Exercise'
+          blanksExercise: "Ejercicio de rellenar los espacios en blanco"
         },
         difficulty: {
-          title: 'What is the %difficulty% level of the exercise and learning goal?',
-          difficulty: 'difficulty',
-          label: 'Difficulty',
-          learningGoalLabel: 'Learning goal',
-          learningGoalExample: 'Example: Students understand the basics of algebra.',
-          learningGoalPlaceholder: 'Enter learning goal',
-          chooseOption: 'Choose an option',
-          easy: 'Easy',
-          medium: 'Medium',
-          hard: 'Hard'
+          title: "¿Cuál es el nivel de %difficulty% del ejercicio y del objetivo de aprendizaje?",
+          difficulty: "dificultad",
+          label: "Dificultad",
+          learningGoalLabel: "Objetivos de aprendizaje",
+          learningGoalExample: "Ejemplo: Los estudiantes entienden los fundamentos de la algebra.",
+          learningGoalPlaceholder: "Ingresa el objetivo de aprendizaje",
+          chooseOption: "Selecciona una opción",
+          easy: "Fácil",
+          medium: "Medio",
+          hard: "Difícil"
         },
         priorKnowledge: {
-          title: 'What is the %priorKnowledge% that the students should have?',
-          priorKnowledge: 'prior knowledge',
-          label: 'Prior Knowledge',
-          example: 'Example: The students know how basic algebra works and already solved some exercises on the topic.',
-          placeholder: 'E.g., Basic arithmetic, fundamentals of algebra'
+          title: "¿Cuál es el  %priorKnowledge% que deben tener los alumnos?",
+          priorKnowledge: "conocimientos previos",
+          label: "Conocimiento previo",
+          example: "Ejemplo: Los estudiantes saben cómo funciona el algoritmo básico y ya han resuelto algunos ejercicios sobre el tema.",
+          placeholder: "E.g., Aritmética básica, fundamentos del algoritmo"
         },
         preview: {
-          loadingHeading: 'Exercise is being generated...',
-          patience: 'It can take up to two minutes',
-          publishExercise: 'Publish exercise',
-          openExerciseInEditor: 'Open in editor',
-          regenerate: 'Regenerate exercise'
+          loadingHeading: "Se está generando el ejercicio...",
+          patience: "Puede tardar hasta dos minutos",
+          publishExercise: "Publicar ejercicio",
+          openExerciseInEditor: "Abrir en el editor",
+          regenerate: "Regenerar el ejercicio"
         }
       }
     }
@@ -1131,7 +1136,7 @@ export const loggedInData = {
 export const kratosMailStrings = {
   recovery: {
     valid: {
-      subject: "👉 Acceso a tu cuenta Serlo.org",
+      subject: "👉 Accede a tu cuenta Serlo.org",
       'body.plaintext': `👋 Hola {{ .Identity.traits.username }}, 
 ¿Estás intentando acceder a tu cuenta en serlo.org? Si no es así, ignora este correo.
   
