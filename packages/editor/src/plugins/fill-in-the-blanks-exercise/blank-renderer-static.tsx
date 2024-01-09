@@ -1,10 +1,11 @@
 import { ChangeEventHandler, useContext } from 'react'
 
 import type { FillInTheBlanksMode } from '.'
-import { BlankRendererInputStatic } from './components/blank-renderer-input-static'
 import { DraggableSolution } from './components/blank-solution'
 import { DroppableBlank } from './components/droppable-blank'
 import { FillInTheBlanksContext } from './context/blank-context'
+import { setTextUserTypedIntoBlank } from './util/handlers'
+import { cn } from '@/helper/cn'
 
 interface BlankRendererStaticProps {
   blankId: string
@@ -33,11 +34,27 @@ export function BlankRendererStatic(props: BlankRendererStaticProps) {
   )
   const draggableText = draggable?.text ?? ''
 
+  const feedback = context.feedbackForBlanks
+  const isAnswerCorrect = feedback.get(blankId)?.isCorrect
+  const text = context.textInBlanks.get(blankId)?.text ?? ''
+
   return mode === 'typing' ? (
-    <BlankRendererInputStatic
-      blankId={blankId}
-      context={context}
-      onChange={onChange}
+    <input
+      className={cn(
+        'h-[25px] resize-none rounded-full border border-brand bg-brand-50 pl-2 pr-1',
+        isAnswerCorrect && 'border-green-500',
+        isAnswerCorrect === false && 'border-red-500'
+      )}
+      size={(text.length ?? 4) + 1}
+      spellCheck={false}
+      autoCorrect="off"
+      placeholder=""
+      type="text"
+      value={text}
+      onChange={(event) => {
+        setTextUserTypedIntoBlank(context, blankId, event.target.value)
+        onChange?.(event)
+      }}
     />
   ) : (
     <DroppableBlank blankId={blankId} isDisabled={draggableId !== null}>
