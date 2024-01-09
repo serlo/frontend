@@ -16,7 +16,6 @@ import {
   faListOl,
   faListUl,
   faSquareRootVariable,
-  faXmark,
 } from '@fortawesome/free-solid-svg-icons'
 import { onKeyDown as slateListsOnKeyDown } from '@prezly/slate-lists'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
@@ -274,9 +273,7 @@ function createToolbarControls(
       title: textStrings.headings,
       closeMenuTitle: textStrings.closeSubMenu,
       isActive: isAnyHeadingActive,
-      group: 'default',
       renderIcon: () => <EditorSvgIcon pathData={editorText} />,
-      renderCloseMenuIcon: () => <FaIcon icon={faXmark} />,
       subMenuButtons: ([1, 2, 3] as const).map((level) => ({
         name: TextEditorFormattingOption.headings,
         title: `${textStrings.heading} ${level}`,
@@ -293,20 +290,17 @@ function createToolbarControls(
       title: textStrings.colors,
       closeMenuTitle: textStrings.closeSubMenu,
       isActive: () => false,
-      group: 'default',
       renderIcon: (editor: SlateEditor) => {
         const colorIndex = getColorIndex(editor)
         const color = colorIndex ? textColors[colorIndex].value : 'black'
         return <ColorTextIcon color={color} />
       },
-      renderCloseMenuIcon: () => <FaIcon icon={faXmark} />,
       subMenuButtons: [
         {
           name: TextEditorFormattingOption.colors,
           title: textStrings.resetColor,
           isActive: (editor: SlateEditor) => !isAnyColorActive(editor),
           onClick: resetColor,
-          group: undefined,
           renderIcon: () => (
             <div className="m-[3px] inline-block h-[19px] w-[19px] rounded-full bg-black align-middle" />
           ),
@@ -320,7 +314,6 @@ function createToolbarControls(
             : color.name,
           isActive: isColorActive(colorIndex),
           onClick: toggleColor(colorIndex),
-          group: undefined,
           renderIcon: () => (
             <div
               className="m-[3px] inline-block h-[19px] w-[19px] rounded-full align-middle"
@@ -375,7 +368,7 @@ function createToolbarControls(
     }
   })
 
-  return allFormattingOptions.filter((option) =>
-    formattingOptions.includes(TextEditorFormattingOption[option.name])
-  )
+  return allFormattingOptions.filter(({ name }) =>
+    formattingOptions.includes(TextEditorFormattingOption[name])
+  ) as ControlButton[]
 }

@@ -1,8 +1,10 @@
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { Fragment, useState } from 'react'
 import { Editor as SlateEditor } from 'slate'
 
 import { PluginToolbarTextControlButton } from './plugin-toolbar-text-control-button'
 import type { NestedControlButton, ControlButton } from './types'
+import { FaIcon } from '@/components/fa-icon'
 
 export interface PluginToolbarTextControlsProps {
   controls: ControlButton[]
@@ -77,7 +79,7 @@ export function PluginToolbarTextControls({
       return false
     },
     renderIcon() {
-      return activeControl.renderCloseMenuIcon()
+      return <FaIcon icon={faXmark} />
     },
     onClick() {
       setSubMenu(undefined)
