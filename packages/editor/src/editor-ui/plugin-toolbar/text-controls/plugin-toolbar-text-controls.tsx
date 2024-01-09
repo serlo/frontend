@@ -24,13 +24,18 @@ export function PluginToolbarTextControls({
   const isMath = (control: ControlButton) =>
     Object.hasOwn(control, 'name') && control.name === 'math'
 
+  const isBlank = (control: ControlButton) =>
+    Object.hasOwn(control, 'name') && control.name === 'textBlank'
+
   const mathActive = controls.find(isMath)?.isActive(editor)
+  const blankActive = controls.find(isBlank)?.isActive(editor)
 
   if (typeof subMenu !== 'number') {
     return (
       <>
         {controls.map((control, index) => {
           if (mathActive && !isMath(control)) return null
+          if (blankActive && !isBlank(control)) return null
 
           const next = controls[index + 1]
           const showSeparator = !!next && next.group !== control.group
