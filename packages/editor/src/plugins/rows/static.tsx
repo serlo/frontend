@@ -9,7 +9,7 @@ export function RowsStaticRenderer({ state }: EditorRowsDocument) {
         const key = row.id ?? `${row.plugin}${index}`
 
         return (
-          <div key={key} id={row.id?.split('-')[0]} className="my-block">
+          <div key={key} id={row.id?.split('-')[0]} className="mb-block">
             <StaticRenderer document={row} />
           </div>
         )
