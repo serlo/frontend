@@ -30,7 +30,8 @@ export function BlankRenderer({ element }: BlankRendererProps) {
 
     // Focus editor when the blank is removed
     return () => {
-      ReactEditor.focus(editor)
+      // TODO: uncommented this breaks the preview mode somehow, investigate
+      // ReactEditor.focus(editor)
     }
 
     // Only run on mount

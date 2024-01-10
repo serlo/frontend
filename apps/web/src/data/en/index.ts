@@ -903,7 +903,7 @@ export const loggedInData = {
         },
         textAreaExercise: {
           title: 'Text Box Exercise',
-          description: 'A big text box for long answers. No feedback.'
+          description: 'A big text box for long answers. No feedback.',
         },
         scMcExercise: {
           title: 'SC/MC Exercise',
@@ -913,6 +913,14 @@ export const loggedInData = {
           title: 'Fill In The Blanks Exercise',
           description: 'Text with blanks',
           placeholder: 'Write a text and add blanks',
+          chooseType: 'Choose the exercise type',
+          modes: {
+            typing: 'Typing',
+            'drag-and-drop': 'Drag & Drop',
+          },
+          previewMode: 'Preview',
+          previewIsActiveHint: 'Edit the exercise again',
+          previewIsDeactiveHint: 'Preview the exercise',
         },
       },
       templatePlugins: {

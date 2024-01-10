@@ -1,16 +1,23 @@
-import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
-import { selectDocument, selectIsFocused, useAppSelector } from '@editor/store'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import {
+  selectDocument,
+  selectIsFocused,
+  selectStaticDocument,
+  useAppSelector,
+} from '@editor/store'
+import type { EditorFillInTheBlanksExerciseDocument } from '@editor/types/editor-plugins'
+import { useState } from 'react'
 
 import type { FillInTheBlanksExerciseProps, FillInTheBlanksMode } from '.'
 import { FillInTheBlanksRenderer } from './renderer'
-import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
+import { FillInTheBlanksStaticRenderer } from './static'
+import { FillInTheBlanksToolbar } from './toolbar'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function FillInTheBlanksExerciseEditor(
   props: FillInTheBlanksExerciseProps
 ) {
   const { focused } = props
+  const [previewActive, setPreviewActive] = useState(false)
 
   const isRendererTextPluginFocused = useAppSelector((storeState) => {
     return selectIsFocused(storeState, props.state.text.id)
@@ -25,29 +32,40 @@ export function FillInTheBlanksExerciseEditor(
     return selectDocument(state, props.state.text.id)
   })
 
-  if (!textPluginState) return null
+  const staticDocument = useAppSelector(
+    (storeState) =>
+      selectStaticDocument(
+        storeState,
+        props.id
+      ) as EditorFillInTheBlanksExerciseDocument
+  )
+
+  if (!textPluginState || !staticDocument) return null
 
   return (
     <div className="mb-12 mt-10 pt-4">
       {hasFocus ? (
-        // TODO: Add button to toggle between fill-in-the-blanks and drag-and-drop
-        <PluginToolbar
-          pluginType={EditorPluginType.FillInTheBlanksExercise}
-          className="!left-[21px] top-[-33px] w-[calc(100%-37px)]"
-          pluginControls={<InteractiveToolbarTools id={props.id} />}
+        <FillInTheBlanksToolbar
+          {...props}
+          previewActive={previewActive}
+          setPreviewActive={setPreviewActive}
         />
       ) : null}
-      <FillInTheBlanksRenderer
-        text={props.state.text.render({
-          config: {
-            placeholder: editorStrings.plugins.blanksExercise.placeholder,
-          },
-        })}
-        textPluginState={textPluginState}
-        mode={props.state.mode.value as FillInTheBlanksMode}
-        initialTextInBlank="correct-answer"
-      />
 
+      {previewActive ? (
+        <FillInTheBlanksStaticRenderer {...staticDocument} />
+      ) : (
+        <FillInTheBlanksRenderer
+          text={props.state.text.render({
+            config: {
+              placeholder: editorStrings.plugins.blanksExercise.placeholder,
+            },
+          })}
+          textPluginState={textPluginState}
+          mode={props.state.mode.value as FillInTheBlanksMode}
+          initialTextInBlank="correct-answer"
+        />
+      )}
       {/* Only debug views from here on */}
       <div className="hidden">{JSON.stringify(textPluginState)}</div>
     </div>
