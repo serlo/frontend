@@ -58,7 +58,6 @@ export function Topic({ data }: TopicProps) {
   const isTopic = data.taxonomyType === TaxonomyTermType.Topic
 
   const hasExercises = data.exercisesContent.length > 0
-  console.log('data.exercisesContent', data.exercisesContent)
   editorRenderers.init(createRenderers())
 
   return (
@@ -163,15 +162,7 @@ export function Topic({ data }: TopicProps) {
           if (
             exerciseOrGroup.plugin === EditorPluginType.Exercise ||
             exerciseOrGroup.plugin === TemplatePluginType.TextExerciseGroup
-            // exerciseOrGroup.plugin === 'exercise-group' ||
           ) {
-            // ? Can we simply use exerciseUuid here? Are these two always the
-            // same and both defined?
-
-            // exerciseOrGroup.id = "80e19079-3baf-40c7-b45f-24749bc3c4d6"
-            // exerciseOrGroup.uuid = 288109
-            // ! does not seem to be the case
-
             if (!exerciseOrGroupUuid) {
               return acc
             }
@@ -191,8 +182,6 @@ export function Topic({ data }: TopicProps) {
         },
         {}
       )
-
-    console.log('ExerciseNumberMapping: ', exerciseNumberMapping)
 
     return (
       <ExerciseNumberContext.Provider value={exerciseNumberMapping}>

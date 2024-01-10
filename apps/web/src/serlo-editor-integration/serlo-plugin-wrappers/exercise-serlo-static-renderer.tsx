@@ -13,6 +13,7 @@ import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-autho
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { UuidsProvider } from '@/contexts/uuids-context'
 import { ExerciseInlineType } from '@/data-types'
+import { cn } from '@/helper/cn'
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
   import(
@@ -65,11 +66,13 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
         value={{ entityId: context?.uuid, revisionId: context?.revisionId }}
       >
         <div className="-mt-block">
-          <div className="flex flex-row flex-wrap">
+          <div className={cn(renderExerciseNumber && 'flex flex-row')}>
             {/* Conditionally render ExerciseNumbering if it is available */}
             {renderExerciseNumber ? renderExerciseNumber() : null}
 
-            <ExerciseStaticRenderer {...props} />
+            <div className="flex flex-col">
+              <ExerciseStaticRenderer {...props} />
+            </div>
           </div>
         </div>
       </UuidsProvider>

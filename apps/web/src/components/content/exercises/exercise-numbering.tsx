@@ -14,7 +14,7 @@ export function ExerciseNumbering({ index, href }: ExerciseNumberingProps) {
     <Link
       href={href}
       className={cn(`
-          relative mr-side mt-4 block h-12
+          relative mr-side mt-0 block h-12
           w-12 flex-shrink-0 rounded-full bg-brand
           px-0 pt-1
           text-center

@@ -11,6 +11,7 @@ import { useContext, useEffect, useState } from 'react'
 
 import { TextExerciseGroupTypeRenderer } from './renderer'
 import { ExerciseNumberContext } from '../../../core/contexts/exercise-number-context'
+import { cn } from '@/helper/cn'
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
   import(
@@ -22,7 +23,7 @@ export function TextExerciseGroupTypeStaticRenderer(
   props: EditorTemplateExerciseGroupDocument
 ) {
   const { state, serloContext: context } = props
-  const id = context?.uuid
+  const uuid = context?.uuid
   const [loaded, setLoaded] = useState(false)
   const auth = useAuthentication()
   useEffect(() => {
@@ -42,10 +43,10 @@ export function TextExerciseGroupTypeStaticRenderer(
     }
   })
 
-  const renderExerciseNumber = id && exerciseNumbers[id]
+  const renderExerciseNumber = uuid && exerciseNumbers[uuid]
 
   return (
-    <div className="relative flex flex-row">
+    <div className={cn('relative', renderExerciseNumber && 'flex flex-row')}>
       {loaded && auth && context?.uuid ? (
         <div className="absolute -right-8">
           <AuthorToolsExercises
