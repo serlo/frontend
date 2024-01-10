@@ -1,4 +1,3 @@
-import { cn } from '@serlo/frontend/src/helper/cn'
 import {
   ChangeEventHandler,
   KeyboardEvent,
@@ -9,8 +8,8 @@ import {
 import { Range, Transforms } from 'slate'
 import { ReactEditor, useSelected, useSlate, useFocused } from 'slate-react'
 
+import { BlankRendererInput } from './components/blank-renderer-input'
 import { FillInTheBlanksContext } from './context/blank-context'
-import { setTextUserTypedIntoBlank } from './util/handlers'
 
 interface BlankRendererProps {
   blankId: string
@@ -62,28 +61,12 @@ export function BlankRenderer(props: BlankRendererProps) {
   const context = useContext(FillInTheBlanksContext)
   if (context === null) return null
 
-  const feedback = context.feedbackForBlanks
-  const isAnswerCorrect = feedback.get(blankId)?.isCorrect
-  const text = context.textInBlanks.get(blankId)?.text ?? ''
-
   return (
-    <input
+    <BlankRendererInput
       ref={inputRef}
-      className={cn(
-        'h-[25px] resize-none rounded-full border border-brand bg-brand-50 pl-2 pr-1',
-        isAnswerCorrect && 'border-green-500',
-        isAnswerCorrect === false && 'border-red-500'
-      )}
-      size={(text.length ?? 4) + 1}
-      spellCheck={false}
-      autoCorrect="off"
-      placeholder=""
-      type="text"
-      value={text}
-      onChange={(event) => {
-        setTextUserTypedIntoBlank(context, blankId, event.target.value)
-        onChange?.(event)
-      }}
+      blankId={blankId}
+      context={context}
+      onChange={onChange}
       onKeyDown={handleMoveOut}
     />
   )
