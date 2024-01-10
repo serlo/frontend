@@ -2,6 +2,8 @@
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import * as t from 'io-ts'
 import { type ReactNode, useMemo, useState } from 'react'
+// import { DndProvider } from 'react-dnd'
+// import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import type { BlankId, DraggableId, FillInTheBlanksMode } from '.'
 import { DraggableSolution } from './components/blank-solution'
@@ -73,12 +75,10 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
   }, [blanks, textUserTypedIntoBlanks, initialTextInBlank])
 
   const draggables = useMemo(() => {
-    return blanks.map((blank) => {
-      return {
-        draggableId: `solution-${blank.blankId}`,
-        text: blank.correctAnswers[0].answer,
-      }
-    })
+    return blanks.map(({ blankId, correctAnswers }) => ({
+      draggableId: `solution-${blankId}`,
+      text: correctAnswers[0].answer,
+    }))
   }, [blanks])
 
   // Maps DraggableId to the BlankId where this draggable element is currently located
@@ -169,22 +169,18 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
         })}
       </div>
       <div className="hidden">
-        {[...locationOfDraggables].map((entry, index) => {
-          return (
-            <div key={index}>
-              {`DraggableId: ${entry[0]} in blankId: ${entry[1]}`}
-            </div>
-          )
-        })}
+        {[...locationOfDraggables].map((entry, index) => (
+          <div key={index}>
+            {`DraggableId: ${entry[0]} in blankId: ${entry[1]}`}
+          </div>
+        ))}
       </div>
       <div className="hidden">
-        {draggables.map((draggable, index) => {
-          return (
-            <div key={index}>
-              {`DraggableId: ${draggable.draggableId} with text: ${draggable.text}`}
-            </div>
-          )
-        })}
+        {draggables.map((draggable, index) => (
+          <div key={index}>
+            {`DraggableId: ${draggable.draggableId} with text: ${draggable.text}`}
+          </div>
+        ))}
       </div>
     </div>
     // </DndProvider>
@@ -216,9 +212,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
 
 /** Searches for blank objects in text plugin state. They can be at varying depths. */
 function getBlanksWithinObject(obj: object): Blanks {
-  if (Blank.is(obj)) {
-    return [obj]
-  }
+  if (Blank.is(obj)) return [obj]
 
   // Recursively search this object's values for blank objects
   return Object.values(obj).reduce((blanks: Blanks, value: unknown) => {
