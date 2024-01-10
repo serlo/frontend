@@ -1,6 +1,6 @@
 import {
   ChangeEventHandler,
-  KeyboardEvent,
+  KeyboardEvent as ReactKeyboardEvent,
   createRef,
   useContext,
   useEffect,
@@ -40,8 +40,9 @@ export function BlankRenderer(props: BlankRendererProps) {
   }, [])
 
   // Focus input when the blank is selected using arrow keys
+  // + set cursor at the start if entering using right arrow key
   useEffect(() => {
-    function handleDocumentKeydown() {
+    function handleDocumentKeydown(event: KeyboardEvent) {
       const input = inputRef.current
       const shouldFocusInput =
         input &&
@@ -50,7 +51,9 @@ export function BlankRenderer(props: BlankRendererProps) {
         selected &&
         editor.selection &&
         Range.isCollapsed(editor.selection)
-      if (shouldFocusInput) input.focus()
+      if (!shouldFocusInput) return
+      input.focus()
+      if (event.key === 'ArrowRight') input.setSelectionRange(0, 0)
     }
 
     document.addEventListener('keydown', handleDocumentKeydown)
@@ -71,7 +74,7 @@ export function BlankRenderer(props: BlankRendererProps) {
     />
   )
 
-  function handleMoveOut(event: KeyboardEvent<HTMLInputElement>) {
+  function handleMoveOut(event: ReactKeyboardEvent<HTMLInputElement>) {
     if (!inputRef || !inputRef.current) return
 
     const { selectionStart, selectionEnd, value } = inputRef.current
