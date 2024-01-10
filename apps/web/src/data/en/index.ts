@@ -913,6 +913,8 @@ export const loggedInData = {
           title: 'Fill In The Blanks Exercise',
           description: 'Text with blanks',
           placeholder: 'Write a text and add blanks',
+          preview: 'Preview exercise',
+          edit: 'Edit exercise',
         },
       },
       templatePlugins: {

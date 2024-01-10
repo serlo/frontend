@@ -5,14 +5,15 @@ import type { FillInTheBlanksMode } from '.'
 import { FillInTheBlanksRenderer } from './renderer'
 
 export function FillInTheBlanksStaticRenderer(
-  state: EditorFillInTheBlanksExerciseDocument
+  props: EditorFillInTheBlanksExerciseDocument
 ) {
-  const { text } = state.state
+  const { text } = props.state
+  console.log('text in FillInTheBlanksStaticRenderer: ', text)
   return (
     <FillInTheBlanksRenderer
       text={<StaticRenderer document={text} />}
       textPluginState={text}
-      mode={state.state.mode as FillInTheBlanksMode}
+      mode={props.state.mode as FillInTheBlanksMode}
       initialTextInBlank="empty"
     />
   )
