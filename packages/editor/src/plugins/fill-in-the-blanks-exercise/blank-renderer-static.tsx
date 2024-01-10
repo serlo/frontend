@@ -1,6 +1,5 @@
-import { ChangeEventHandler, useContext } from 'react'
+import { useContext } from 'react'
 
-import type { FillInTheBlanksMode } from '.'
 import { BlankRendererInput } from './components/blank-renderer-input'
 import { DraggableSolution } from './components/blank-solution'
 import { DroppableBlank } from './components/droppable-blank'
@@ -8,8 +7,6 @@ import { FillInTheBlanksContext } from './context/blank-context'
 
 interface BlankRendererStaticProps {
   blankId: string
-  forceMode?: FillInTheBlanksMode
-  onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
 /**
@@ -17,13 +14,10 @@ interface BlankRendererStaticProps {
  * or a drop area (where user can drop draggable answers),
  * depending on the mode
  */
-export function BlankRendererStatic(props: BlankRendererStaticProps) {
-  const { blankId, forceMode, onChange } = props
-
+export function BlankRendererStatic({ blankId }: BlankRendererStaticProps) {
   const context = useContext(FillInTheBlanksContext)
   if (context === null) return null
 
-  const mode = forceMode ?? context.mode
   const draggableSolution = [...context.locationOfDraggables.value].find(
     (entry) => entry[1] === blankId
   )
@@ -33,12 +27,8 @@ export function BlankRendererStatic(props: BlankRendererStaticProps) {
   )
   const draggableText = draggable?.text ?? ''
 
-  return mode === 'typing' ? (
-    <BlankRendererInput
-      blankId={blankId}
-      context={context}
-      onChange={onChange}
-    />
+  return context.mode === 'typing' ? (
+    <BlankRendererInput blankId={blankId} context={context} />
   ) : (
     <DroppableBlank blankId={blankId} isDisabled={draggableId !== null}>
       {draggableId ? (

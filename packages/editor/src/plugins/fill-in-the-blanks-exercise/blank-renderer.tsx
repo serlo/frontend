@@ -1,5 +1,5 @@
 import {
-  ChangeEventHandler,
+  ChangeEvent,
   KeyboardEvent as ReactKeyboardEvent,
   createRef,
   useContext,
@@ -10,15 +10,13 @@ import { ReactEditor, useSelected, useSlate, useFocused } from 'slate-react'
 
 import { BlankRendererInput } from './components/blank-renderer-input'
 import { FillInTheBlanksContext } from './context/blank-context'
+import type { Blank } from '../text'
 
 interface BlankRendererProps {
-  blankId: string
-  onChange?: ChangeEventHandler<HTMLInputElement>
+  element: Blank
 }
 
-export function BlankRenderer(props: BlankRendererProps) {
-  const { blankId, onChange } = props
-
+export function BlankRenderer({ element }: BlankRendererProps) {
   const editor = useSlate()
   const selected = useSelected()
   const focused = useFocused()
@@ -67,12 +65,23 @@ export function BlankRenderer(props: BlankRendererProps) {
   return (
     <BlankRendererInput
       ref={inputRef}
-      blankId={blankId}
+      blankId={element.blankId}
       context={context}
-      onChange={onChange}
+      onChange={handleChange}
       onKeyDown={handleMoveOut}
     />
   )
+
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    const at = ReactEditor.findPath(editor, element)
+    const correctAnswers = element.correctAnswers.map((correctAnswer, i) => {
+      // First element is set to new value
+      if (i === 0) return { answer: event.target.value.trim() }
+      // Rest is copied as is
+      return { ...correctAnswer }
+    })
+    Transforms.setNodes(editor, { correctAnswers }, { at })
+  }
 
   function handleMoveOut(event: ReactKeyboardEvent<HTMLInputElement>) {
     if (!inputRef || !inputRef.current) return
