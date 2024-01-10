@@ -7,9 +7,10 @@ import { useAuthentication } from '@serlo/frontend/src/auth/use-authentication'
 import type { MoreAuthorToolsProps } from '@serlo/frontend/src/components/user-tools/foldout-author-menus/more-author-tools'
 import { ExerciseInlineType } from '@serlo/frontend/src/data-types'
 import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { TextExerciseGroupTypeRenderer } from './renderer'
+import { ExerciseNumberContext } from '../../../core/contexts/exercise-number-context'
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
   import(
@@ -21,13 +22,16 @@ export function TextExerciseGroupTypeStaticRenderer(
   props: EditorTemplateExerciseGroupDocument
 ) {
   const { state, serloContext: context } = props
+  const id = context?.uuid
   const [loaded, setLoaded] = useState(false)
   const auth = useAuthentication()
   useEffect(() => {
     setLoaded(true)
   }, [])
+  const exerciseNumbers = useContext(ExerciseNumberContext)
 
   const { content, exercises } = state
+
   if (!exercises) return null
 
   const rendered = exercises.map((exercise, index) => {
@@ -38,8 +42,10 @@ export function TextExerciseGroupTypeStaticRenderer(
     }
   })
 
+  const renderExerciseNumber = id && exerciseNumbers[id]
+
   return (
-    <div className="relative">
+    <div className="relative flex flex-row">
       {loaded && auth && context?.uuid ? (
         <div className="absolute -right-8">
           <AuthorToolsExercises
@@ -52,12 +58,18 @@ export function TextExerciseGroupTypeStaticRenderer(
           />
         </div>
       ) : null}
-      <TextExerciseGroupTypeRenderer
-        content={
-          <StaticRenderer document={content as unknown as EditorRowsDocument} />
-        }
-        exercises={rendered}
-      />
+      {/* Conditionally render ExerciseNumbering if it is available */}
+      {renderExerciseNumber ? renderExerciseNumber() : null}
+      <div className="flex flex-col">
+        <TextExerciseGroupTypeRenderer
+          content={
+            <StaticRenderer
+              document={content as unknown as EditorRowsDocument}
+            />
+          }
+          exercises={rendered}
+        />
+      </div>
     </div>
   )
 }

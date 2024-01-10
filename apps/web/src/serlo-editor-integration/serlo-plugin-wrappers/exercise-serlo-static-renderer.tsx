@@ -6,6 +6,7 @@ import type {
 import dynamic from 'next/dynamic'
 import { useContext, useEffect, useState } from 'react'
 
+import { ExerciseNumberContext } from '../../../../../packages/editor/src/core/contexts/exercise-number-context'
 import { useAuthentication } from '@/auth/use-authentication'
 import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
@@ -26,6 +27,10 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
   useEffect(() => setLoaded(true), [])
 
   const isRevisionView = useContext(RevisionViewContext)
+  const exerciseNumbers = useContext(ExerciseNumberContext)
+
+  const uuid = props.serloContext?.uuid
+  const renderExerciseNumber = uuid && exerciseNumbers[uuid]
 
   const context = props.serloContext
 
@@ -60,7 +65,12 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
         value={{ entityId: context?.uuid, revisionId: context?.revisionId }}
       >
         <div className="-mt-block">
-          <ExerciseStaticRenderer {...props} />
+          <div className="flex flex-row flex-wrap">
+            {/* Conditionally render ExerciseNumbering if it is available */}
+            {renderExerciseNumber ? renderExerciseNumber() : null}
+
+            <ExerciseStaticRenderer {...props} />
+          </div>
         </div>
       </UuidsProvider>
     </div>

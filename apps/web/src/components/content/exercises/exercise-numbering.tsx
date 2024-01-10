@@ -15,10 +15,11 @@ export function ExerciseNumbering({ index, href }: ExerciseNumberingProps) {
       href={href}
       className={cn(`
           relative mr-side mt-4 block h-12
-          w-12 rounded-full bg-brand px-0
-          pt-1 text-center
-          text-4xl
-          font-bold text-white hover:bg-brand-400
+          w-12 flex-shrink-0 rounded-full bg-brand
+          px-0 pt-1
+          text-center
+          text-4xl font-bold text-white
+          hover:bg-brand-400
           hover:no-underline
        `)}
     >

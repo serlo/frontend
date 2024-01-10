@@ -1,8 +1,9 @@
 import {
   ExerciseNumberContext,
-  RowUuidToExerciseNumberRenderer,
+  ExerciseOrGroupUuidToExerciseNumberRenderer,
 } from '@editor/core/contexts'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { editorRenderers } from '@serlo/editor/src/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
@@ -155,26 +156,38 @@ export function Topic({ data }: TopicProps) {
     if (!hasExercises || !data.exercisesContent) return null
 
     const exerciseNumberMapping =
-      data.exercisesContent.reduce<RowUuidToExerciseNumberRenderer>(
+      data.exercisesContent.reduce<ExerciseOrGroupUuidToExerciseNumberRenderer>(
         (acc, exerciseOrGroup, index) => {
-          const content = exerciseOrGroup.state.content
-          const rowsUuid =
-            typeof content !== 'string' &&
-            content.plugin === EditorPluginType.Rows &&
-            content.id
-          if (!rowsUuid) {
-            return acc
+          const exerciseOrGroupUuid = exerciseOrGroup.serloContext?.uuid
+
+          if (
+            exerciseOrGroup.plugin === EditorPluginType.Exercise ||
+            exerciseOrGroup.plugin === TemplatePluginType.TextExerciseGroup
+            // exerciseOrGroup.plugin === 'exercise-group' ||
+          ) {
+            // ? Can we simply use exerciseUuid here? Are these two always the
+            // same and both defined?
+
+            // exerciseOrGroup.id = "80e19079-3baf-40c7-b45f-24749bc3c4d6"
+            // exerciseOrGroup.uuid = 288109
+            // ! does not seem to be the case
+
+            if (!exerciseOrGroupUuid) {
+              return acc
+            }
+
+            return {
+              ...acc,
+              [exerciseOrGroupUuid]: () => (
+                <ExerciseNumbering
+                  href={`/${exerciseOrGroupUuid}`}
+                  index={index}
+                />
+              ),
+            }
           }
 
-          return {
-            ...acc,
-            [rowsUuid]: () => (
-              <ExerciseNumbering
-                href={`#${rowsUuid?.split('-')[0]}`}
-                index={index}
-              />
-            ),
-          }
+          return acc
         },
         {}
       )
