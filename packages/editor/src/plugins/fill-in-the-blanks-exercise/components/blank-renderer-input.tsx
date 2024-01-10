@@ -21,27 +21,29 @@ export const BlankRendererInput = forwardRef<
   const text = context.textInBlanks.get(blankId)?.text ?? ''
 
   return (
-    <input
-      ref={ref}
-      className={cn(
-        'h-[25px] resize-none rounded-full border border-brand bg-brand-50 pl-2 pr-1',
-        isAnswerCorrect && 'border-green-500',
-        isAnswerCorrect === false && 'border-red-500'
-      )}
-      size={(text.length ?? 4) + 1}
-      spellCheck={false}
-      autoCorrect="off"
-      placeholder=""
-      type="text"
-      value={text}
-      onChange={(event) => {
-        setTextUserTypedIntoBlank(event.target.value)
-        onChange?.(event)
-      }}
-      onKeyDown={(event) => {
-        onKeyDown?.(event)
-      }}
-    />
+    <span className="serlo-autogrow-input" data-value={text + '_'}>
+      <input
+        ref={ref}
+        className={cn(
+          'h-[25px] rounded-full border border-brand bg-brand-50',
+          isAnswerCorrect && 'border-green-500',
+          isAnswerCorrect === false && 'border-red-500'
+        )}
+        size={4}
+        spellCheck={false}
+        autoCorrect="off"
+        placeholder=""
+        type="text"
+        value={text}
+        onChange={(event) => {
+          setTextUserTypedIntoBlank(event.target.value)
+          onChange?.(event)
+        }}
+        onKeyDown={(event) => {
+          onKeyDown?.(event)
+        }}
+      />
+    </span>
   )
 
   function setTextUserTypedIntoBlank(newText: string) {
