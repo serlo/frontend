@@ -1,3 +1,8 @@
+import {
+  ExerciseNumberContext,
+  RowUuidToExerciseNumberRenderer,
+} from '@editor/core/contexts'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { editorRenderers } from '@serlo/editor/src/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
@@ -52,7 +57,7 @@ export function Topic({ data }: TopicProps) {
   const isTopic = data.taxonomyType === TaxonomyTermType.Topic
 
   const hasExercises = data.exercisesContent.length > 0
-
+  console.log('data.exercisesContent', data.exercisesContent)
   editorRenderers.init(createRenderers())
 
   return (
@@ -148,26 +153,49 @@ export function Topic({ data }: TopicProps) {
     }
 
     if (!hasExercises || !data.exercisesContent) return null
-    return (
-      <ol className="mt-12">
-        {data.exercisesContent.map((exerciseOrGroup, i) => {
-          const exerciseUuid = exerciseOrGroup.serloContext?.uuid
 
-          return (
-            <li
-              key={exerciseOrGroup.id ?? exerciseUuid}
-              className={cn(
-                'flex flex-row flex-wrap pb-10',
-                i > 0 && 'my-block'
-              )}
-            >
-              <ExerciseNumbering href={`/${exerciseUuid}`} index={i} />
-              <StaticRenderer document={exerciseOrGroup} />
-              {i === 1 && renderSurvey()}
-            </li>
-          )
-        })}
-      </ol>
+    const exerciseNumberMapping =
+      data.exercisesContent.reduce<RowUuidToExerciseNumberRenderer>(
+        (acc, exerciseOrGroup, index) => {
+          const content = exerciseOrGroup.state.content
+          const rowsUuid =
+            typeof content !== 'string' &&
+            content.plugin === EditorPluginType.Rows &&
+            content.id
+          if (!rowsUuid) {
+            return acc
+          }
+
+          return {
+            ...acc,
+            [rowsUuid]: () => (
+              <ExerciseNumbering
+                href={`#${rowsUuid?.split('-')[0]}`}
+                index={index}
+              />
+            ),
+          }
+        },
+        {}
+      )
+
+    console.log('ExerciseNumberMapping: ', exerciseNumberMapping)
+
+    return (
+      <ExerciseNumberContext.Provider value={exerciseNumberMapping}>
+        <ol className="mt-12">
+          {data.exercisesContent.map((exerciseOrGroup, index) => {
+            const exerciseUuid = exerciseOrGroup.serloContext?.uuid
+
+            return (
+              <li key={exerciseOrGroup.id ?? exerciseUuid} className="pb-10">
+                <StaticRenderer document={exerciseOrGroup} />
+                {index === 1 && renderSurvey()}
+              </li>
+            )
+          })}
+        </ol>
+      </ExerciseNumberContext.Provider>
     )
   }
 

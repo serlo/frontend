@@ -1,4 +1,5 @@
-import { Link } from '../link'
+import { Link } from '@serlo/frontend/src/components/content/link'
+
 import { cn } from '@/helper/cn'
 
 interface ExerciseNumberingProps {
@@ -13,11 +14,12 @@ export function ExerciseNumbering({ index, href }: ExerciseNumberingProps) {
     <Link
       href={href}
       className={cn(`
-          relative mx-side mt-4 block h-12
+          relative mr-side mt-4 block h-12
           w-12 rounded-full bg-brand px-0
-          pt-1 text-center text-4xl
-          font-bold
-          text-white hover:bg-brand-400 hover:no-underline
+          pt-1 text-center
+          text-4xl
+          font-bold text-white hover:bg-brand-400
+          hover:no-underline
        `)}
     >
       {index + 1}
