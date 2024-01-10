@@ -1,8 +1,8 @@
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
+import { BlankRendererStatic } from '@editor/plugins/fill-in-the-blanks-exercise/blank-renderer-static'
 import { createElement } from 'react'
 import { Descendant, Element } from 'slate'
 
-import { BlankRenderer } from '../../fill-in-the-blanks-exercise/blank-renderer'
 import { TextLeafRenderer } from '../components/text-leaf-renderer'
 import { ListElementType } from '../types/text-editor'
 
@@ -88,7 +88,7 @@ export function StaticSlate({
       return <MathRenderer {...element} />
     }
     if (element.type === 'textBlank') {
-      return <BlankRenderer blankId={element.blankId} />
+      return <BlankRendererStatic blankId={element.blankId} />
     }
 
     // unwrap block level math elements
