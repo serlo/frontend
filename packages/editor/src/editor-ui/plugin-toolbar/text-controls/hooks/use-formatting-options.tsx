@@ -235,7 +235,7 @@ function createToolbarControls(
       onClick: toggleBlank,
       group: 'blank',
       renderIcon: () => (
-        <span className="mx-1 my-0.5 rounded-lg border-2 border-current px-1.5 py-0.25 text-[13px] font-bold">
+        <span className="relative -top-0.25 mx-1 mb-1 rounded-lg border-2 border-current px-1.5 py-0.25 text-[13px] font-bold">
           {textStrings.blank}
         </span>
       ),
