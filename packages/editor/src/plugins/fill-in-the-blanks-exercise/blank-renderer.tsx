@@ -1,133 +1,117 @@
-// import { useDroppable } from '@dnd-kit/core'
-import { cn } from '@serlo/frontend/src/helper/cn'
-import { ChangeEventHandler, ReactNode, useContext } from 'react'
-import { useDrop } from 'react-dnd'
+import {
+  ChangeEvent,
+  KeyboardEvent as ReactKeyboardEvent,
+  createRef,
+  useContext,
+  useEffect,
+} from 'react'
+import { Range, Transforms } from 'slate'
+import { ReactEditor, useSelected, useSlate, useFocused } from 'slate-react'
 
-import type { BlankId, DraggableId, FillInTheBlanksMode } from '.'
-import { DraggableSolution } from './components/blank-solution'
+import { BlankRendererInput } from './components/blank-renderer-input'
 import { FillInTheBlanksContext } from './context/blank-context'
+import type { Blank } from '../text'
 
-/** Renders either an input element (where user can type into) or a drop area (where user can drop draggable answers) depending on the mode  */
-export function BlankRenderer(props: {
-  blankId: string
-  onChange?: ChangeEventHandler<HTMLInputElement>
-  forceMode?: FillInTheBlanksMode
-}) {
-  const fillInTheBlanksContext = useContext(FillInTheBlanksContext)
-  if (fillInTheBlanksContext === null) {
-    // blankStates was not provided by FillInTheBlanksRenderer -> cannot continue
-    return null
-  }
-  const feedbackForBlanks = fillInTheBlanksContext.feedbackForBlanks
-  const mode = props.forceMode ?? fillInTheBlanksContext.mode
-
-  const isAnswerCorrect = feedbackForBlanks.get(props.blankId)?.isCorrect
-
-  const textInBlank =
-    fillInTheBlanksContext.textInBlanks.get(props.blankId)?.text ?? ''
-
-  const draggableSolutionInBlank = [
-    ...fillInTheBlanksContext.locationOfDraggables.value,
-  ].find((entry) => entry[1] === props.blankId)
-
-  const draggableIdInThisBlank = draggableSolutionInBlank
-    ? draggableSolutionInBlank[0]
-    : null
-
-  const draggableText = fillInTheBlanksContext.draggables.find(
-    (draggable) => draggable.draggableId === draggableIdInThisBlank
-  )?.text
-
-  return (
-    <>
-      {mode === 'typing' ? (
-        <input
-          className={cn(
-            'h-[25px] resize-none rounded-full border border-brand bg-brand-50 pl-2 pr-1',
-            isAnswerCorrect && 'border-green-500',
-            isAnswerCorrect === false && 'border-red-500'
-          )}
-          size={(textInBlank.length ?? 4) + 1}
-          spellCheck={false}
-          autoCorrect="off"
-          placeholder=""
-          type="text"
-          value={textInBlank}
-          onChange={(e) => {
-            setTextUserTypedIntoBlank(e.target.value)
-            if (props.onChange) {
-              props.onChange(e)
-            }
-          }}
-        />
-      ) : (
-        <>
-          <DroppableBlank
-            blankId={props.blankId}
-            disable={draggableIdInThisBlank !== null}
-          >
-            {draggableIdInThisBlank ? (
-              <DraggableSolution
-                text={draggableText ?? ''}
-                draggableId={draggableIdInThisBlank}
-              />
-            ) : null}
-          </DroppableBlank>
-        </>
-      )}
-    </>
-  )
-
-  function setTextUserTypedIntoBlank(newText: string) {
-    // Copy Map object
-    const newTextUserTypedIntoBlankList = new Map<string, { text: string }>(
-      fillInTheBlanksContext?.textUserTypedIntoBlanks.value
-    )
-
-    // Set new text
-    newTextUserTypedIntoBlankList.set(props.blankId, { text: newText })
-
-    // Update state
-    fillInTheBlanksContext?.textUserTypedIntoBlanks.set(
-      newTextUserTypedIntoBlankList
-    )
-  }
+interface BlankRendererProps {
+  element: Blank
 }
 
-function DroppableBlank(props: {
-  blankId: BlankId
-  disable: boolean
-  children: ReactNode
-}) {
-  const fillInTheBlanksContext = useContext(FillInTheBlanksContext)
-  const [{ isOver }, dropRef] = useDrop({
-    accept: 'blank-solution',
-    drop: (item) => {
-      if (!fillInTheBlanksContext) return
-      const newMap = new Map<DraggableId, BlankId>(
-        fillInTheBlanksContext.locationOfDraggables.value
-      )
-      newMap.set(
-        (item as { draggableId: DraggableId }).draggableId,
-        props.blankId
-      )
-      fillInTheBlanksContext.locationOfDraggables.set(newMap)
-    },
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-    }),
-    canDrop: () => !props.disable,
-  })
+export function BlankRenderer({ element }: BlankRendererProps) {
+  const editor = useSlate()
+  const selected = useSelected()
+  const focused = useFocused()
+
+  // Autofocus when adding and removing a blank
+  const inputRef = createRef<HTMLInputElement>()
+  useEffect(() => {
+    // Focus input when the blank is added
+    const input = inputRef.current
+    if (input) input.focus()
+
+    // Focus editor when the blank is removed
+    return () => {
+      ReactEditor.focus(editor)
+    }
+
+    // Only run on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // Focus input when the blank is selected using arrow keys
+  // + set cursor at the start if entering using right arrow key
+  useEffect(() => {
+    function handleDocumentKeydown(event: KeyboardEvent) {
+      const input = inputRef.current
+      const shouldFocusInput =
+        input &&
+        document.activeElement !== input &&
+        focused &&
+        selected &&
+        editor.selection &&
+        Range.isCollapsed(editor.selection)
+      if (!shouldFocusInput) return
+      input.focus()
+      if (event.key === 'ArrowRight') input.setSelectionRange(0, 0)
+    }
+
+    document.addEventListener('keydown', handleDocumentKeydown)
+
+    return () => document.removeEventListener('keydown', handleDocumentKeydown)
+  }, [editor, focused, inputRef, selected])
+
+  const context = useContext(FillInTheBlanksContext)
+  if (context === null) return null
 
   return (
-    <span
-      className={cn(
-        'rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2',
-        isOver && !props.disable && 'bg-slate-400'
-      )}
-      ref={dropRef}
-    >
-      {props.children}
-    </span>
+    <BlankRendererInput
+      ref={inputRef}
+      blankId={element.blankId}
+      context={context}
+      onChange={handleChange}
+      onKeyDown={handleMoveOut}
+    />
   )
+
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    const at = ReactEditor.findPath(editor, element)
+    const correctAnswers = element.correctAnswers.map((correctAnswer, i) => {
+      // First element is set to new value
+      if (i === 0) return { answer: event.target.value.trim() }
+      // Rest is copied as is
+      return { ...correctAnswer }
+    })
+    Transforms.setNodes(editor, { correctAnswers }, { at })
+  }
+
+  function handleMoveOut(event: ReactKeyboardEvent<HTMLInputElement>) {
+    if (!inputRef || !inputRef.current) return
+
+    const { selectionStart, selectionEnd, value } = inputRef.current
+
+    const selectionCollapsed = selectionStart === selectionEnd
+    const caretAtRightEnd = selectionEnd === value.length
+    const caretAtLeftEnd = selectionStart === 0
+
+    // Move the selection right of the blank on arrow right
+    if (
+      event.key === 'ArrowRight' &&
+      !event.shiftKey &&
+      selectionCollapsed &&
+      caretAtRightEnd
+    ) {
+      Transforms.move(editor, { unit: 'character' })
+      ReactEditor.focus(editor)
+    }
+
+    // Move the selection left of the blank on arrow left
+    if (
+      event.key === 'ArrowLeft' &&
+      !event.shiftKey &&
+      selectionCollapsed &&
+      caretAtLeftEnd
+    ) {
+      Transforms.move(editor, { unit: 'character', reverse: true })
+      ReactEditor.focus(editor)
+    }
+  }
 }
