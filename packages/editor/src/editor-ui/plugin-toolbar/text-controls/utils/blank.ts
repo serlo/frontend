@@ -29,7 +29,7 @@ function removeBlanks(editor: SlateEditor) {
 
     const from = editor.selection.anchor.path
     const to = editor.selection.focus.path
-    const reverse = Boolean(Path.compare(from, to))
+    const reverse = Path.compare(from, to) > -1
     const nodesInSelection = [...Node.elements(editor, { from, to, reverse })]
 
     nodesInSelection.forEach((element) => {
