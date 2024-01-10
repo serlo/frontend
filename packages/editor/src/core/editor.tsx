@@ -26,7 +26,7 @@ import { ROOT } from '../store/root/constants'
 export function Editor(props: EditorProps) {
   return (
     <Provider store={store}>
-      <DndProvider backend={HTML5Backend} context={window}>
+      <DndProvider backend={HTML5Backend}>
         <HotkeysProvider
           initiallyActiveScopes={['global', 'root-up-down-enter']}
         >
