@@ -26,7 +26,7 @@ export const fillInTheBlanksExercise: EditorPlugin<FillInTheBlanksExerciseState>
 export type FillInTheBlanksExerciseState = ReturnType<typeof createState>
 
 function createState() {
-  const defaultMode: FillInTheBlanksMode = 'drag-and-drop'
+  const defaultMode: FillInTheBlanksMode = 'typing'
 
   return object({
     text: child({
