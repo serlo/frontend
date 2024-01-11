@@ -24,7 +24,7 @@ export function toggleBlank(editor: SlateEditor) {
   }
 }
 
-function removeBlanks(editor: SlateEditor) {
+export function removeBlanks(editor: SlateEditor) {
   Editor.withoutNormalizing(editor, () => {
     if (!editor.selection) return
 

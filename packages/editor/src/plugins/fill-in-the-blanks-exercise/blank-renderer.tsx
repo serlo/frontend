@@ -1,3 +1,4 @@
+import { removeBlanks } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/blank'
 import {
   ChangeEvent,
   KeyboardEvent as ReactKeyboardEvent,
@@ -89,6 +90,12 @@ export function BlankRenderer({ element }: BlankRendererProps) {
     const selectionCollapsed = selectionStart === selectionEnd
     const caretAtRightEnd = selectionEnd === value.length
     const caretAtLeftEnd = selectionStart === 0
+    const isInputEmpty = value.length === 0
+
+    if (isInputEmpty && (event.key === 'Backspace' || event.key === 'Delete')) {
+      event.preventDefault()
+      removeBlanks(editor)
+    }
 
     // Move the selection right of the blank on arrow right
     if (
