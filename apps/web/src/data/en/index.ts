@@ -912,7 +912,7 @@ export const loggedInData = {
           description: 'Single Choice or Multiple Choice',
         },
         blanksExercise: {
-          title: 'Fill In The Blanks Exercise',
+          title: 'Fill In The Blanks',
           description: 'Text with blanks',
           placeholder: 'Write a text and add blanks',
           chooseType: 'Choose the exercise type',
