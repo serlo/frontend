@@ -42,7 +42,7 @@ export const FillInTheBlanksToolbar = ({
             {blanksExerciseStrings.previewMode}{' '}
             <FaIcon icon={previewActive ? faCheckCircle : faCircle} />
           </button>
-          <label className="serlo-tooltip-trigger mr-2 text-sm">
+          <label className="serlo-custom-select serlo-tooltip-trigger relative mr-2 text-sm">
             <EditorTooltip text={blanksExerciseStrings.chooseType} />
             <select
               value={state.mode.value}
@@ -50,7 +50,8 @@ export const FillInTheBlanksToolbar = ({
                 state.mode.set(event.target.value)
               }}
               className={cn(`
-                bg-editor-primary-10 vertical-align mr-2 max-w-[13rem] cursor-pointer rounded-md
+                bg-editor-primary-10 vertical-align
+                mr-2 max-w-[13rem] cursor-pointer appearance-none rounded-md
                 !border border-gray-500 bg-transparent px-1 py-[1px] text-sm
                 transition-all hover:bg-editor-primary-200
                 focus:bg-editor-primary-200

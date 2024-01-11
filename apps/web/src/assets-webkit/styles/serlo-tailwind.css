@@ -355,6 +355,17 @@
     }
   }
 
+  /* When using appearance-none, we need to add back the caret */
+  .serlo-custom-select::after {
+    /* caret symbol */
+    content: '▼';
+    pointer-events: none;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
   .serlo-tooltip-trigger {
     @apply relative;
 
@@ -435,7 +446,7 @@
     }
   }
 
-  /* heavily inspired by Shaw (https://css-tricks.com/auto-growing-inputs-textareas/#aa-other-ideas) 
+  /* heavily inspired by Shaw (https://css-tricks.com/auto-growing-inputs-textareas/#aa-other-ideas)
     this needs a data-value on the wrapping element equal to the value of the input
   */
   .serlo-autogrow-input {
