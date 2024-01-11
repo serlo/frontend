@@ -31,6 +31,7 @@ export function PluginToolbarTextControls({
 
   const mathActive = controls.find(isMath)?.isActive(editor)
   const blankActive = controls.find(isBlank)?.isActive(editor)
+  const isSpecialMode = mathActive || blankActive
 
   if (typeof subMenu !== 'number') {
     return (
@@ -40,7 +41,8 @@ export function PluginToolbarTextControls({
           if (blankActive && !isBlank(control)) return null
 
           const next = controls.at(index + 1)
-          const showSeparator = !!next && next.group !== control.group
+          const showSeparator =
+            !isSpecialMode && !!next && next.group !== control.group
 
           return (
             <Fragment key={control.title}>

@@ -273,6 +273,7 @@ function createToolbarControls(
       title: textStrings.headings,
       closeMenuTitle: textStrings.closeSubMenu,
       isActive: isAnyHeadingActive,
+      group: 'default',
       renderIcon: () => <EditorSvgIcon pathData={editorText} />,
       subMenuButtons: ([1, 2, 3] as const).map((level) => ({
         name: TextEditorFormattingOption.headings,
@@ -290,6 +291,7 @@ function createToolbarControls(
       title: textStrings.colors,
       closeMenuTitle: textStrings.closeSubMenu,
       isActive: () => false,
+      group: 'default',
       renderIcon: (editor: SlateEditor) => {
         const colorIndex = getColorIndex(editor)
         const color = colorIndex ? textColors[colorIndex].value : 'black'
@@ -329,7 +331,7 @@ function createToolbarControls(
       title: textStrings.orderedList,
       isActive: isSelectionWithinOrderedList,
       onClick: toggleOrderedList,
-      group: 'default',
+      group: 'lists',
       renderIcon: () => <FaIcon className="h-[15px]" icon={faListOl} />,
     },
     // Unordered list
@@ -338,7 +340,7 @@ function createToolbarControls(
       title: textStrings.unorderedList,
       isActive: isSelectionWithinUnorderedList,
       onClick: toggleUnorderedList,
-      group: 'default',
+      group: 'lists',
       renderIcon: () => <FaIcon className="h-[15px]" icon={faListUl} />,
     },
     // Math
