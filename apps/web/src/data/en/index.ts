@@ -913,7 +913,7 @@ export const loggedInData = {
           title: 'Fill In The Blanks Exercise',
           description: 'Text with blanks',
           placeholder: 'Write a text and add blanks',
-          chooseType: 'Choose the exercise type',
+          chooseType: 'Choose how to solve the exercise',
           modes: {
             typing: 'Typing',
             'drag-and-drop': 'Drag & Drop',
