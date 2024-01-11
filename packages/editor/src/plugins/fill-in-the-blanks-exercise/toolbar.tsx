@@ -21,6 +21,9 @@ export const FillInTheBlanksToolbar = ({
 }) => {
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
+  // TODO: only for testing while drag & drop mode is not actually available
+  const allowModeSwitch = true
+
   return (
     <PluginToolbar
       pluginType={EditorPluginType.FillInTheBlanksExercise}
@@ -42,18 +45,20 @@ export const FillInTheBlanksToolbar = ({
             {blanksExerciseStrings.previewMode}{' '}
             <FaIcon icon={previewActive ? faCheckCircle : faCircle} />
           </button>
-          <ToolbarSelect
-            tooltipText={blanksExerciseStrings.chooseType}
-            value={state.mode.value}
-            changeValue={(value) => state.mode.set(value)}
-            options={[
-              { value: 'typing', text: blanksExerciseStrings.modes.typing },
-              {
-                value: 'drag-and-drop',
-                text: blanksExerciseStrings.modes['drag-and-drop'],
-              },
-            ]}
-          />
+          {allowModeSwitch ? (
+            <ToolbarSelect
+              tooltipText={blanksExerciseStrings.chooseType}
+              value={state.mode.value}
+              changeValue={(value) => state.mode.set(value)}
+              options={[
+                { value: 'typing', text: blanksExerciseStrings.modes.typing },
+                {
+                  value: 'drag-and-drop',
+                  text: blanksExerciseStrings.modes['drag-and-drop'],
+                },
+              ]}
+            />
+          ) : null}
         </>
       }
       pluginControls={<InteractiveToolbarTools id={id} />}
