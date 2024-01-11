@@ -29,7 +29,7 @@ export const FillInTheBlanksToolbar = ({
         <>
           <button
             onClick={() => setPreviewActive(!previewActive)}
-            className="serlo-tooltip-trigger mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+            className="line-height-[normal] vertical-align serlo-tooltip-trigger mr-2 rounded-md border border-gray-500 px-1 py-[1px] text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
           >
             <EditorTooltip
               text={
@@ -42,7 +42,7 @@ export const FillInTheBlanksToolbar = ({
             {blanksExerciseStrings.previewMode}{' '}
             <FaIcon icon={previewActive ? faCheckCircle : faCircle} />
           </button>
-          <label className="serlo-tooltip-trigger mr-2">
+          <label className="serlo-tooltip-trigger mr-2 text-sm">
             <EditorTooltip text={blanksExerciseStrings.chooseType} />
             <select
               value={state.mode.value}
@@ -50,9 +50,10 @@ export const FillInTheBlanksToolbar = ({
                 state.mode.set(event.target.value)
               }}
               className={cn(`
-                bg-editor-primary-10 mr-2 max-w-[13rem] cursor-pointer rounded-md !border
-                border-gray-500 bg-transparent px-1 py-[1px] text-sm transition-all
-                hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
+                bg-editor-primary-10 vertical-align mr-2 max-w-[13rem] cursor-pointer rounded-md
+                !border border-gray-500 bg-transparent px-1 py-[1px] text-sm
+                transition-all hover:bg-editor-primary-200
+                focus:bg-editor-primary-200
               `)}
             >
               {(['typing', 'drag-and-drop'] as const).map((mode) => (
