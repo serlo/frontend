@@ -39,7 +39,7 @@ export function PluginToolbarTextControls({
           if (mathActive && !isMath(control)) return null
           if (blankActive && !isBlank(control)) return null
 
-          const next = controls[index + 1]
+          const next = controls.at(index + 1)
           const showSeparator = !!next && next.group !== control.group
 
           return (
