@@ -54,7 +54,7 @@ function removeBlanks(editor: SlateEditor) {
   // After the blank is removed, we must refocus the editor. Without the timeout
   // it blows up and moving this code to the unmounting of the blank-renderer
   // also blows up when changing from preview to edit mode.
-  setTimeout(() => ReactEditor.focus(editor), 1)
+  setTimeout(() => ReactEditor.focus(editor))
 }
 
 function addBlank(editor: SlateEditor) {
