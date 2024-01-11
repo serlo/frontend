@@ -1,10 +1,10 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
+import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar/components/toolbar-select'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { Dispatch, SetStateAction } from 'react'
 
 import { type FillInTheBlanksExerciseProps } from '.'
@@ -42,26 +42,18 @@ export const FillInTheBlanksToolbar = ({
             {blanksExerciseStrings.previewMode}{' '}
             <FaIcon icon={previewActive ? faCheckCircle : faCircle} />
           </button>
-          <label className="serlo-tooltip-trigger relative mr-2 text-sm">
-            <EditorTooltip text={blanksExerciseStrings.chooseType} />
-            <select
-              value={state.mode.value}
-              onChange={(event) => {
-                state.mode.set(event.target.value)
-              }}
-              className={cn(`
-                bg-editor-primary-10 mr-2 max-w-[13rem] cursor-pointer rounded-md !border
-                border-gray-500 bg-transparent px-1 py-0.25 text-sm transition-all
-                hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
-              `)}
-            >
-              {(['typing', 'drag-and-drop'] as const).map((mode) => (
-                <option key={mode} value={mode}>
-                  {blanksExerciseStrings.modes[mode]}
-                </option>
-              ))}
-            </select>
-          </label>
+          <ToolbarSelect
+            tooltipText={blanksExerciseStrings.chooseType}
+            value={state.mode.value}
+            changeValue={(value) => state.mode.set(value)}
+            options={[
+              { value: 'typing', text: blanksExerciseStrings.modes.typing },
+              {
+                value: 'drag-and-drop',
+                text: blanksExerciseStrings.modes['drag-and-drop'],
+              },
+            ]}
+          />
         </>
       }
       pluginControls={<InteractiveToolbarTools id={id} />}

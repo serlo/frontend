@@ -1,10 +1,9 @@
-import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
+import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar/components/toolbar-select'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { selectDocument, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 import type { ExerciseProps } from '..'
 import type { InteractiveExerciseType } from '../editor'
@@ -24,30 +23,18 @@ export const ExerciseToolbar = ({
     : undefined
 
   const pluginSettings = currentlySelected ? (
-    <>
-      <label className="serlo-tooltip-trigger mr-2">
-        <EditorTooltip text={exTemplateStrings.changeInteractive} />
-        <select
-          onChange={({ target }) => {
-            if (interactive.defined)
-              interactive.replace(target.value as InteractiveExerciseType)
-          }}
-          className={cn(`
-                    mr-2 cursor-pointer rounded-md !border border-gray-500 bg-editor-primary-100 px-1 py-[1px] text-sm transition-all
-                  hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
-                  `)}
-          value={currentlySelected ?? ''}
-        >
-          {interactiveExerciseTypes.map((type) => {
-            return (
-              <option key={type} value={type}>
-                {exTemplateStrings[type]}
-              </option>
-            )
-          })}
-        </select>
-      </label>
-    </>
+    <ToolbarSelect
+      tooltipText={exTemplateStrings.changeInteractive}
+      value={currentlySelected ?? ''}
+      changeValue={(value) => {
+        if (interactive.defined)
+          interactive.replace(value as InteractiveExerciseType)
+      }}
+      options={interactiveExerciseTypes.map((type) => ({
+        value: type,
+        text: exTemplateStrings[type],
+      }))}
+    />
   ) : undefined
 
   return (
