@@ -29,6 +29,7 @@ import { pageLayoutPlugin } from '@serlo/editor/src/plugins/page-layout'
 import { pagePartnersPlugin } from '@serlo/editor/src/plugins/page-partners'
 import { pageTeamPlugin } from '@serlo/editor/src/plugins/page-team'
 import { pasteHackPlugin } from '@serlo/editor/src/plugins/paste-hack'
+import { rootWithOptionalsPlugin } from '@serlo/editor/src/plugins/root-with-optionals'
 import { createRowsPlugin } from '@serlo/editor/src/plugins/rows'
 import { createScMcExercisePlugin } from '@serlo/editor/src/plugins/sc-mc-exercise'
 import { createSerloTablePlugin } from '@serlo/editor/src/plugins/serlo-table'
@@ -211,6 +212,11 @@ export function createPlugins({
         },
         allowedPlugins: [EditorPluginType.Image],
       }),
+    },
+    // TODO: Remove because not needed at the moment on serlo.org, only in RLP integration.
+    {
+      type: EditorPluginType.RootWithOptionals,
+      plugin: rootWithOptionalsPlugin,
     },
 
     // Internal plugins for our content types

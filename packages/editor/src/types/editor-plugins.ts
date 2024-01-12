@@ -16,6 +16,7 @@ import type { MultimediaPluginState } from '@editor/plugins/multimedia'
 import { PageLayoutPluginState } from '@editor/plugins/page-layout'
 import { PagePartnersPluginState } from '@editor/plugins/page-partners'
 import { PageTeamPluginState } from '@editor/plugins/page-team'
+import { RootWithOptionalsState } from '@editor/plugins/root-with-optionals'
 import type { RowsPluginState } from '@editor/plugins/rows'
 import type { ScMcExercisePluginState } from '@editor/plugins/sc-mc-exercise'
 import { SerloTablePluginState } from '@editor/plugins/serlo-table'
@@ -48,6 +49,11 @@ export interface EditorAnchorDocument {
 export interface EditorArticleDocument {
   plugin: EditorPluginType.Article
   state: PrettyStaticState<ArticlePluginState>
+  id?: string
+}
+export interface EditorRootWithOptionalsDocument {
+  plugin: EditorPluginType.RootWithOptionals
+  state: PrettyStaticState<RootWithOptionalsState>
   id?: string
 }
 export interface EditorArticleIntroductionDocument {

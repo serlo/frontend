@@ -5,6 +5,7 @@ import {
 import { AnchorStaticRenderer } from '@serlo/editor/src/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@serlo/editor/src/plugins/article/static'
 import { BoxStaticRenderer } from '@serlo/editor/src/plugins/box/static'
+import { RootWithOptionalsStaticRenderer } from '@serlo/editor/src/plugins/root-with-optionals/static'
 import { RowsStaticRenderer } from '@serlo/editor/src/plugins/rows/static'
 import { SpoilerStaticRenderer } from '@serlo/editor/src/plugins/spoiler/static'
 import type { MathElement } from '@serlo/editor/src/plugins/text'
@@ -126,6 +127,11 @@ export function createRenderers(): InitRenderersArgs {
     pluginRenderers: [
       // plugins
       { type: EditorPluginType.Article, renderer: ArticleStaticRenderer },
+      // TODO: Remove because not needed at the moment on serlo.org, only in RLP integration.
+      {
+        type: EditorPluginType.RootWithOptionals,
+        renderer: RootWithOptionalsStaticRenderer,
+      },
       { type: EditorPluginType.Rows, renderer: RowsStaticRenderer },
       { type: EditorPluginType.Text, renderer: TextStaticRenderer },
       { type: EditorPluginType.Image, renderer: ImageSerloStaticRenderer },

@@ -13,7 +13,9 @@ export function RowsEditor({ state, config, id }: RowsProps) {
   const parentType = selectParentPluginType(store.getState(), id)
   const isParentTemplatePlugin = parentType?.startsWith('type-')
   const showLargeAddButton =
-    parentType === EditorPluginType.Article || isParentTemplatePlugin
+    parentType === EditorPluginType.Article ||
+    parentType === EditorPluginType.RootWithOptionals ||
+    isParentTemplatePlugin
 
   function insertRowWithSuggestionsOpen(insertIndex: number) {
     const textPluginWithSuggestions = {
