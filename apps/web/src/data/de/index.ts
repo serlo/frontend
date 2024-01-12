@@ -776,6 +776,8 @@ export const loggedInData = {
           mathFormula: "Matheformel (%ctrlOrCmd% + M)",
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
           blank: "Lücke",
+          createBlank: 'Create Blank',
+          removeBlank: 'Remove Blank',
           bold: "Fett (%ctrlOrCmd% + B)",
           italic: "Kursiv (%ctrlOrCmd% + I)",
           noItemsFound: "keine Einträge gefunden",
@@ -1101,7 +1103,6 @@ export const loggedInData = {
           multipleChoice: "Multiple-Choice",
           singleChoice: "Single-Choice",
           inputExercise: "Eingabefeld",
-          textAreaExercise: "Freitext",
           blanksExercise: "Lückentext Aufgabe"
         },
         difficulty: {
