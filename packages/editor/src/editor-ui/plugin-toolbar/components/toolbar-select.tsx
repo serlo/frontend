@@ -18,7 +18,7 @@ export function ToolbarSelect({
   dataQa,
 }: ToolbarSelectProps) {
   return (
-    <label className="serlo-tooltip-trigger relative mx-1.5 text-sm">
+    <label className="serlo-tooltip-trigger mx-1.5 text-sm">
       <EditorTooltip text={tooltipText} />
       <select
         value={value}
