@@ -3,7 +3,11 @@ import { Fragment, useState } from 'react'
 import { Editor as SlateEditor } from 'slate'
 
 import { PluginToolbarTextControlButton } from './plugin-toolbar-text-control-button'
-import type { NestedControlButton, ControlButton } from './types'
+import {
+  type NestedControlButton,
+  type ControlButton,
+  TextEditorFormattingOption,
+} from './types'
 import { FaIcon } from '@/components/fa-icon'
 
 export interface PluginToolbarTextControlsProps {
@@ -24,13 +28,16 @@ export function PluginToolbarTextControls({
   const [subMenu, setSubMenu] = useState<number>()
 
   const isMath = (control: ControlButton) =>
-    Object.hasOwn(control, 'name') && control.name === 'math'
+    Object.hasOwn(control, 'name') &&
+    control.name === TextEditorFormattingOption.math
 
   const isBlank = (control: ControlButton) =>
-    Object.hasOwn(control, 'name') && control.name === 'textBlank'
+    Object.hasOwn(control, 'name') &&
+    control.name === TextEditorFormattingOption.textBlank
 
   const mathActive = controls.find(isMath)?.isActive(editor)
-  const blankActive = controls.find(isBlank)?.isActive(editor)
+  const hasFillInTheBlanks = controls.find(isBlank)
+  const blankActive = hasFillInTheBlanks?.isActive(editor)
   const isSpecialMode = mathActive || blankActive
 
   if (typeof subMenu !== 'number') {
@@ -39,6 +46,14 @@ export function PluginToolbarTextControls({
         {controls.map((control, index) => {
           if (mathActive && !isMath(control)) return null
           if (blankActive && !isBlank(control)) return null
+          // To save space in the toolbar, we don't render the code editor
+          // within a fill-in-the-gap exercise
+          if (
+            hasFillInTheBlanks &&
+            control.name === TextEditorFormattingOption.code
+          ) {
+            return null
+          }
 
           const next = controls.at(index + 1)
           const showSeparator =
