@@ -10,7 +10,6 @@ import { DraggableSolution } from './components/blank-solution'
 import { DraggableSolutionArea } from './components/blank-solution-area'
 import { FillInTheBlanksContext } from './context/blank-context'
 import { Feedback } from '../sc-mc-exercise/renderer/feedback'
-import { cn } from '@/helper/cn'
 
 // TODO: Copy of type in /src/serlo-editor/plugins/text/types/text-editor.ts
 const Answer = t.type({
