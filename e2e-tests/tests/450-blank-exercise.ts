@@ -195,3 +195,5 @@ Scenario(
     I.seeElement('$plugin-exercise-feedback-correct')
   }
 )
+
+Scenario.todo('Tests for drag & drop mode')
