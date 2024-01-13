@@ -18,7 +18,7 @@ export function PluginToolMenu({ pluginControls }: PluginToolMenuProps) {
     <Root>
       <List>
         <Item>
-          <Trigger>
+          <Trigger data-qa="additional-toolbar-controls">
             <FaIcon className="mx-2 px-2" icon={faEllipsis} />
           </Trigger>
 

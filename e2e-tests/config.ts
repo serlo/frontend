@@ -6,7 +6,6 @@ function createConfig() {
   const useLocalAPI = process.env.FRONTEND_API == 'local'
 
   return {
-    adminUser: useLocalAPI ? 'admin' : 'Kulla',
     isCI: Boolean(process.env.CI),
     browser: process.env.BROWSER ?? 'chromium',
     frontendUrl:

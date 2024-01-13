@@ -135,18 +135,18 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
 
       {/* Copied from mc-renderer.tsx */}
       <div className="mt-2 flex">
-        <button
-          className={cn(
-            'serlo-button-blue mr-3 h-8',
-            allBlanksHaveText ? '' : 'pointer-events-none opacity-0'
-          )}
-          onClick={() => {
-            checkAnswers()
-            setShowFeedback(true)
-          }}
-        >
-          {exStrings.check}
-        </button>
+        {allBlanksHaveText ? (
+          <button
+            data-qa="plugin-exercise-check-answer-button"
+            className="serlo-button-blue mr-3 h-8"
+            onClick={() => {
+              checkAnswers()
+              setShowFeedback(true)
+            }}
+          >
+            {exStrings.check}
+          </button>
+        ) : null}
         {showFeedback && (
           <Feedback
             correct={[...feedbackForBlanks].every(

@@ -69,6 +69,7 @@ export function ScRenderer({
             selected === undefined &&
               'pointer-events-none bg-transparent text-gray-400 opacity-100'
           )}
+          data-qa="plugin-exercise-check-answer-button"
           onClick={() => {
             setShowFeedback(true)
             if (onEvaluate) onEvaluate(answers[selected ?? 0].isCorrect, 'sc')

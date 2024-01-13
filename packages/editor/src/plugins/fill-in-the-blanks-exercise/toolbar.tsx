@@ -33,6 +33,7 @@ export const FillInTheBlanksToolbar = ({
           <button
             onClick={() => setPreviewActive(!previewActive)}
             className="serlo-tooltip-trigger mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+            data-qa="plugin-blanks-exercise-preview-button"
           >
             <EditorTooltip
               text={
@@ -48,6 +49,7 @@ export const FillInTheBlanksToolbar = ({
           {allowModeSwitch ? (
             <ToolbarSelect
               tooltipText={blanksExerciseStrings.chooseType}
+              dataQa="plugin-blanks-mode-switch"
               value={state.mode.value}
               changeValue={(value) => state.mode.set(value)}
               options={[

@@ -31,6 +31,7 @@ export function DraggableSolutionArea(props: {
         'mt-5 min-h-8 w-full rounded-full bg-slate-100',
         isOver ? 'bg-slate-200' : ''
       )}
+      data-qa="blank-solution-area"
       ref={dropRef}
     >
       {props.children}

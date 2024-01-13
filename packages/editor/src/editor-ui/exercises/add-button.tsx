@@ -7,6 +7,7 @@ interface AddButtonProps {
   children: string
   title?: string
   secondary?: boolean
+  dataQa?: string
 }
 
 export function AddButton({
@@ -14,6 +15,7 @@ export function AddButton({
   onClick,
   children,
   secondary,
+  dataQa,
 }: AddButtonProps) {
   return (
     <button
@@ -25,6 +27,7 @@ export function AddButton({
           : 'serlo-button-editor-primary',
         'mr-2'
       )}
+      data-qa={dataQa}
     >
       <FaIcon icon={faPlus} /> {children}
     </button>
