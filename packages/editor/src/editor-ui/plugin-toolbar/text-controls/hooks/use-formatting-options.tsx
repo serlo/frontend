@@ -16,7 +16,6 @@ import {
   faListOl,
   faListUl,
   faSquareRootVariable,
-  faXmark,
 } from '@fortawesome/free-solid-svg-icons'
 import { onKeyDown as slateListsOnKeyDown } from '@prezly/slate-lists'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
@@ -227,12 +226,27 @@ function createToolbarControls(
   ctrlKey: string
 ): ControlButton[] {
   const allFormattingOptions = [
+    // Blank (For Fill in the Blank Exercises)
+    {
+      name: TextEditorFormattingOption.textBlank,
+      title: textStrings.createBlank,
+      activeTitle: textStrings.removeBlank,
+      isActive: isBlankActive,
+      onClick: toggleBlank,
+      group: 'blank',
+      renderIcon: () => (
+        <span className="relative -top-0.25 mx-1 mb-1 rounded-lg border-2 border-current px-1.5 py-0.25 text-[13px] font-bold">
+          {textStrings.blank}
+        </span>
+      ),
+    },
     // Bold
     {
       name: TextEditorFormattingOption.richTextBold,
       title: textStrings.bold,
       isActive: isBoldActive,
       onClick: toggleBoldMark,
+      group: 'default',
       renderIcon: () => <EditorSvgIcon pathData={editorBold} />,
     },
     // Italic
@@ -241,6 +255,7 @@ function createToolbarControls(
       title: textStrings.italic,
       isActive: isItalicActive,
       onClick: toggleItalicMark,
+      group: 'default',
       renderIcon: () => <EditorSvgIcon pathData={editorItalic} />,
     },
     // Link
@@ -249,6 +264,7 @@ function createToolbarControls(
       title: textStrings.link,
       isActive: isLinkActive,
       onClick: toggleLink,
+      group: 'default',
       renderIcon: () => <EditorSvgIcon pathData={editorLink} />,
     },
     // Headings
@@ -257,8 +273,8 @@ function createToolbarControls(
       title: textStrings.headings,
       closeMenuTitle: textStrings.closeSubMenu,
       isActive: isAnyHeadingActive,
+      group: 'default',
       renderIcon: () => <EditorSvgIcon pathData={editorText} />,
-      renderCloseMenuIcon: () => <FaIcon icon={faXmark} />,
       subMenuButtons: ([1, 2, 3] as const).map((level) => ({
         name: TextEditorFormattingOption.headings,
         title: `${textStrings.heading} ${level}`,
@@ -275,12 +291,12 @@ function createToolbarControls(
       title: textStrings.colors,
       closeMenuTitle: textStrings.closeSubMenu,
       isActive: () => false,
+      group: 'default',
       renderIcon: (editor: SlateEditor) => {
         const colorIndex = getColorIndex(editor)
         const color = colorIndex ? textColors[colorIndex].value : 'black'
         return <ColorTextIcon color={color} />
       },
-      renderCloseMenuIcon: () => <FaIcon icon={faXmark} />,
       subMenuButtons: [
         {
           name: TextEditorFormattingOption.colors,
@@ -315,6 +331,7 @@ function createToolbarControls(
       title: textStrings.orderedList,
       isActive: isSelectionWithinOrderedList,
       onClick: toggleOrderedList,
+      group: 'lists',
       renderIcon: () => <FaIcon className="h-[15px]" icon={faListOl} />,
     },
     // Unordered list
@@ -323,6 +340,7 @@ function createToolbarControls(
       title: textStrings.unorderedList,
       isActive: isSelectionWithinUnorderedList,
       onClick: toggleUnorderedList,
+      group: 'lists',
       renderIcon: () => <FaIcon className="h-[15px]" icon={faListUl} />,
     },
     // Math
@@ -331,6 +349,7 @@ function createToolbarControls(
       title: textStrings.mathFormula,
       isActive: isMathActive,
       onClick: toggleMath,
+      group: 'default',
       renderIcon: () => (
         <FaIcon className="h-[15px]" icon={faSquareRootVariable} />
       ),
@@ -341,19 +360,8 @@ function createToolbarControls(
       title: textStrings.code,
       isActive: isCodeActive,
       onClick: toggleCode,
+      group: 'default',
       renderIcon: () => <FaIcon className="h-[15px]" icon={faCode} />,
-    },
-    // Blank (For Fill in the Blank Exercises)
-    {
-      name: TextEditorFormattingOption.textBlank,
-      title: textStrings.blank,
-      isActive: isBlankActive,
-      onClick: toggleBlank,
-      renderIcon: () => (
-        <span className="relative -top-0.5 rounded-lg border-2 border-current px-1 text-[10px] font-bold">
-          _
-        </span>
-      ),
     },
   ].map((option) => {
     return {
@@ -362,7 +370,7 @@ function createToolbarControls(
     }
   })
 
-  return allFormattingOptions.filter((option) =>
-    formattingOptions.includes(TextEditorFormattingOption[option.name])
-  )
+  return allFormattingOptions.filter(({ name }) =>
+    formattingOptions.includes(TextEditorFormattingOption[name])
+  ) as ControlButton[]
 }

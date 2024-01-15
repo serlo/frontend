@@ -776,6 +776,8 @@ export const loggedInData = {
           mathFormula: "Formule mathématique (%ctrlOrCmd% + M)",
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
           blank: 'Blank',
+          createBlank: 'Create Blank',
+          removeBlank: 'Remove Blank',
           bold: "Gras (%ctrlOrCmd% + B)",
           italic: "Italique (%ctrlOrCmd% + I)",
           noItemsFound: "Aucun élément trouvé",

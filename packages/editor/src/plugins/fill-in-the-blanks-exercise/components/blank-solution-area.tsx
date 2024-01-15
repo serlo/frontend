@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 import { useDrop } from 'react-dnd'
 
+import { blankSolutionDragType } from './blank-solution'
 import type { BlankId, DraggableId } from '..'
 import { cn } from '@/helper/cn'
 
@@ -12,7 +13,7 @@ export function DraggableSolutionArea(props: {
   }
 }) {
   const [{ isOver }, dropRef] = useDrop({
-    accept: 'blank-solution',
+    accept: blankSolutionDragType,
     drop: (item: { draggableId: DraggableId }) => {
       const newMap = new Map<DraggableId, BlankId>(
         props.locationOfDraggables.value

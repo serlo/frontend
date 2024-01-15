@@ -2,12 +2,14 @@ import { useDrag } from 'react-dnd'
 
 import type { DraggableId } from '..'
 
+export const blankSolutionDragType = 'blank-solution'
+
 export function DraggableSolution(props: {
   text: string
   draggableId: DraggableId
 }) {
   const [, dragRef] = useDrag({
-    type: 'blank-solution',
+    type: blankSolutionDragType,
     item: { draggableId: props.draggableId },
   })
 
