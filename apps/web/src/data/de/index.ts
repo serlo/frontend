@@ -761,7 +761,7 @@ export const loggedInData = {
           headings: "Überschriften",
           link: 'Link (%ctrlOrCmd% + K)',
           noElementPasteInLists: "Sorry,  Elemente einfügen klappt nicht in Listen.",
-          pastingPluginNotAllowedHere: 'Sorry, pasting this plugin here is not allowed.',
+          pastingPluginNotAllowedHere: "Sorry, dieses Plugin kannst du hier nicht einfügen.",
           linkOverlay: {
             placeholder: "Suchbegriff oder \"/1234\"",
             inputLabel: "Suche einen Inhalt oder füge einen Link ein",
@@ -842,12 +842,12 @@ export const loggedInData = {
           placeholder: "Schreibe einen Text und füge Lücken ein",
           chooseType: "Wähle den Antworttyp",
           modes: {
-            typing: 'Typing',
+            typing: "Tippen",
             'drag-and-drop': 'Drag & Drop'
           },
           previewMode: "Vorschau",
-          previewIsActiveHint: 'Edit the exercise again',
-          previewIsDeactiveHint: 'Preview the exercise'
+          previewIsActiveHint: "Die Aufgabe wieder bearbeiten",
+          previewIsDeactiveHint: "Vorschau der Aufgabe anzeigen"
         }
       },
       templatePlugins: {
@@ -998,8 +998,8 @@ export const loggedInData = {
         createdAt: "Zeitstempel",
         ready: "Bereit zum Speichern?",
         anchorLinkWarning: "Dieser Link funktioniert nur im Frontend und für Inhalte, die eine etwas relativ neue akzeptierte Bearbeitung haben.",
-        pluginCopyInfo: 'You can now paste this plugin into text plugins',
-        pluginCopyButtonLabel: 'Copy plugin to clipboard'
+        pluginCopyInfo: "Du kannst das Plugin jetzt in Text-Plugins einfügen",
+        pluginCopyButtonLabel: "Plugin in die Zwischenablage kopieren"
       },
       taxonomy: {
         title: "Titel"
