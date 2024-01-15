@@ -51,7 +51,7 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       // TODO: validate somehow?
       if (!media && text.startsWith('{"plugin":"rows"')) {
         const rowsDocument = JSON.parse(text) as EditorRowsDocument
-        if (rowsDocument.state.length !== 0) return
+        if (rowsDocument.state.length !== 1) return
         const pluginDocument = rowsDocument.state.at(0)
         if (pluginDocument) {
           media = { pluginType: rowsDocument.plugin, state: rowsDocument.state }
