@@ -761,6 +761,7 @@ export const loggedInData = {
           headings: "தலைப்புகள்",
           link: 'Link (%ctrlOrCmd% + K)',
           noElementPasteInLists: 'Sorry, pasting elements inside of lists is not allowed.',
+          pastingPluginNotAllowedHere: 'Sorry, pasting this plugin here is not allowed.',
           linkOverlay: {
             placeholder: 'https://… or /1234',
             inputLabel: 'Paste or type a link',
@@ -836,9 +837,17 @@ export const loggedInData = {
           description: 'Single Choice or Multiple Choice'
         },
         blanksExercise: {
-          title: 'Fill In The Blanks Exercise',
+          title: 'Fill In The Blanks',
           description: 'Text with blanks',
-          placeholder: 'Write a text and add blanks'
+          placeholder: 'Write a text and add blanks',
+          chooseType: 'Choose the exercise type',
+          modes: {
+            typing: 'Typing',
+            'drag-and-drop': 'Drag & Drop'
+          },
+          previewMode: "முற்பார்வை",
+          previewIsActiveHint: 'Edit the exercise again',
+          previewIsDeactiveHint: 'Preview the exercise'
         }
       },
       templatePlugins: {
@@ -988,7 +997,9 @@ export const loggedInData = {
         author: "எழுத்தாளர்",
         createdAt: 'when?',
         ready: "சேமிக்கத் தயாரா?",
-        anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.'
+        anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.',
+        pluginCopyInfo: 'You can now paste this plugin into text plugins',
+        pluginCopyButtonLabel: 'Copy plugin to clipboard'
       },
       taxonomy: {
         title: "தலைப்பு"
