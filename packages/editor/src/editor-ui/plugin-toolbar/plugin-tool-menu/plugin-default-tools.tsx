@@ -14,6 +14,7 @@ import { useCallback, useContext } from 'react'
 
 import { AnchorLinkCopyTool } from './anchor-link-copy-tool'
 import { DropdownButton } from './dropdown-button'
+import { PluginCopyTool } from './plugin-copy-tool'
 
 interface PluginDefaultToolsProps {
   pluginId: string
@@ -81,6 +82,9 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
         label={pluginStrings.rows.remove}
         icon={faTrashAlt}
         dataQa="remove-plugin-button"
+      />
+      <PluginCopyTool
+        pluginId={pluginId}
       />
       {serloEntityId ? (
         <AnchorLinkCopyTool serloEntityId={serloEntityId} pluginId={pluginId} />
