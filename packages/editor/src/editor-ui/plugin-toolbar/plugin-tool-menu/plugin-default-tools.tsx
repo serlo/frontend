@@ -83,9 +83,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
         icon={faTrashAlt}
         dataQa="remove-plugin-button"
       />
-      <PluginCopyTool
-        pluginId={pluginId}
-      />
+      <PluginCopyTool pluginId={pluginId} />
       {serloEntityId ? (
         <AnchorLinkCopyTool serloEntityId={serloEntityId} pluginId={pluginId} />
       ) : null}
