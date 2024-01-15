@@ -1,4 +1,4 @@
-import { TemplatePluginType } from '@serlo/editor/src/types/template-plugin-type'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'

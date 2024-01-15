@@ -14,12 +14,12 @@ import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
-import { useLeaveConfirm } from '@serlo/frontend/src/helper/use-leave-confirm'
 import { SaveModal } from '@serlo/frontend/src/serlo-editor-integration/components/save-modal'
 import { useState } from 'react'
 
 import { ClientOnlyPortal } from './client-only-portal'
 import { entity } from '../common/common'
+import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 
 interface ToolbarMainProps {
   changes?: StateTypeReturnType<(typeof entity)['changes']>

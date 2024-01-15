@@ -776,8 +776,8 @@ export const loggedInData = {
           mathFormula: "Matheformel (%ctrlOrCmd% + M)",
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
           blank: "Lücke",
-          createBlank: 'Create Blank',
-          removeBlank: 'Remove Blank',
+          createBlank: "Lücke erstellen",
+          removeBlank: "Lücke entfernen",
           bold: "Fett (%ctrlOrCmd% + B)",
           italic: "Kursiv (%ctrlOrCmd% + I)",
           noItemsFound: "keine Einträge gefunden",
@@ -836,7 +836,7 @@ export const loggedInData = {
           description: "Single- oder Multiple Choice Aufgabe"
         },
         blanksExercise: {
-          title: "Lückentext Aufgabe",
+          title: "Lückentext",
           description: "Ein Text mit Lücken zum Ausfüllen",
           placeholder: "Schreibe einen Text und füge Lücken ein"
         }

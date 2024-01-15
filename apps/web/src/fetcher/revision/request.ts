@@ -1,6 +1,6 @@
+import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
+import { EditorExerciseDocument } from '@editor/types/editor-plugins'
 import { AuthorizationPayload } from '@serlo/authorization'
-import { parseDocumentString } from '@serlo/editor/src/static-renderer/helper/parse-document-string'
-import { EditorExerciseDocument } from '@serlo/editor/src/types/editor-plugins'
 import { request } from 'graphql-request'
 
 import { revisionQuery } from './query'

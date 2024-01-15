@@ -1,6 +1,6 @@
-import { editorRenderers } from '@serlo/editor/src/plugin/helpers/editor-renderer'
-import { InjectionStaticRenderer } from '@serlo/editor/src/plugins/injection/static'
-import { EditorPluginType } from '@serlo/editor/src/types/editor-plugin-type'
+import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
+import { InjectionStaticRenderer } from '@editor/plugins/injection/static'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useState, useEffect } from 'react'
 
 import { DisplayModes } from './display-modes'

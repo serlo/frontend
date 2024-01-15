@@ -1,14 +1,14 @@
 /* eslint-disable no-console */
 
-import { InputExerciseType } from '@serlo/editor/src/plugins/input-exercise/input-exercise-type'
-import { CustomText, MathElement } from '@serlo/editor/src/plugins/text'
-import { EditorPluginType } from '@serlo/editor/src/types/editor-plugin-type'
+import { InputExerciseType } from '@editor/plugins/input-exercise/input-exercise-type'
+import { CustomText, MathElement } from '@editor/plugins/text'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
   EditorExerciseDocument,
   EditorSolutionDocument,
   EditorTemplateExerciseGroupDocument,
-} from '@serlo/editor/src/types/editor-plugins'
-import { TemplatePluginType } from '@serlo/editor/src/types/template-plugin-type'
+} from '@editor/types/editor-plugins'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { either as E } from 'fp-ts'
 import { PathReporter } from 'io-ts/lib/PathReporter'
 

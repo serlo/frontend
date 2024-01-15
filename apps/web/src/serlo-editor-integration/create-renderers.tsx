@@ -1,16 +1,15 @@
 import {
   InitRenderersArgs,
   LinkRenderer,
-} from '@serlo/editor/src/plugin/helpers/editor-renderer'
-import { AnchorStaticRenderer } from '@serlo/editor/src/plugins/anchor/static'
-import { ArticleStaticRenderer } from '@serlo/editor/src/plugins/article/static'
-import { BoxStaticRenderer } from '@serlo/editor/src/plugins/box/static'
-import { RootWithOptionalsStaticRenderer } from '@serlo/editor/src/plugins/root-with-optionals/static'
-import { RowsStaticRenderer } from '@serlo/editor/src/plugins/rows/static'
-import { SpoilerStaticRenderer } from '@serlo/editor/src/plugins/spoiler/static'
-import type { MathElement } from '@serlo/editor/src/plugins/text'
-import { TextStaticRenderer } from '@serlo/editor/src/plugins/text/static'
-import { EditorPluginType } from '@serlo/editor/src/types/editor-plugin-type'
+} from '@editor/plugin/helpers/editor-renderer'
+import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
+import { ArticleStaticRenderer } from '@editor/plugins/article/static'
+import { BoxStaticRenderer } from '@editor/plugins/box/static'
+import { RowsStaticRenderer } from '@editor/plugins/rows/static'
+import { SpoilerStaticRenderer } from '@editor/plugins/spoiler/static'
+import type { MathElement } from '@editor/plugins/text'
+import { TextStaticRenderer } from '@editor/plugins/text/static'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type {
   EditorFillInTheBlanksExerciseDocument,
   EditorAnchorDocument,
@@ -28,8 +27,8 @@ import type {
   EditorSolutionDocument,
   EditorSpoilerDocument,
   EditorTemplateExerciseGroupDocument,
-} from '@serlo/editor/src/types/editor-plugins'
-import { TemplatePluginType } from '@serlo/editor/src/types/template-plugin-type'
+} from '@editor/types/editor-plugins'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import dynamic from 'next/dynamic'
 import { ComponentProps } from 'react'
 
@@ -43,7 +42,7 @@ import { isPrintMode } from '@/components/print-mode'
 import { MultimediaSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/multimedia-serlo-static-renderer'
 
 const EquationsStaticRenderer = dynamic<EditorEquationsDocument>(() =>
-  import('@serlo/editor/src/plugins/equations/static').then(
+  import('@editor/plugins/equations/static').then(
     (mod) => mod.EquationsStaticRenderer
   )
 )
@@ -64,28 +63,28 @@ const InputSerloStaticRenderer = dynamic<EditorInputExerciseDocument>(() =>
 )
 const FillInTheBlanksStaticRenderer =
   dynamic<EditorFillInTheBlanksExerciseDocument>(() =>
-    import('@serlo/editor/src/plugins/fill-in-the-blanks-exercise/static').then(
+    import('@editor/plugins/fill-in-the-blanks-exercise/static').then(
       (mod) => mod.FillInTheBlanksStaticRenderer
     )
   )
 const InjectionStaticRenderer = dynamic<EditorInjectionDocument>(() =>
-  import('@serlo/editor/src/plugins/injection/static').then(
+  import('@editor/plugins/injection/static').then(
     (mod) => mod.InjectionStaticRenderer
   )
 )
 
 const PageLayoutStaticRenderer = dynamic<EditorPageLayoutDocument>(() =>
-  import('@serlo/editor/src/plugins/page-layout/static').then(
+  import('@editor/plugins/page-layout/static').then(
     (mod) => mod.PageLayoutStaticRenderer
   )
 )
 const PageTeamStaticRenderer = dynamic<EditorPageTeamDocument>(() =>
-  import('@serlo/editor/src/plugins/page-team/static').then(
+  import('@editor/plugins/page-team/static').then(
     (mod) => mod.PageTeamStaticRenderer
   )
 )
 const PagePartnersStaticRenderer = dynamic<EditorPagePartnersDocument>(() =>
-  import('@serlo/editor/src/plugins/page-partners/static').then(
+  import('@editor/plugins/page-partners/static').then(
     (mod) => mod.PagePartnersStaticRenderer
   )
 )
@@ -101,23 +100,23 @@ const SolutionSerloStaticRenderer = dynamic<EditorSolutionDocument>(() =>
   ).then((mod) => mod.SolutionSerloStaticRenderer)
 )
 const SerloTableStaticRenderer = dynamic<EditorSerloTableDocument>(() =>
-  import('@serlo/editor/src/plugins/serlo-table/static').then(
+  import('@editor/plugins/serlo-table/static').then(
     (mod) => mod.SerloTableStaticRenderer
   )
 )
 const TextExerciseGroupTypeStaticRenderer =
   dynamic<EditorTemplateExerciseGroupDocument>(() =>
-    import(
-      '@serlo/editor/src/plugins/serlo-template-plugins/exercise-group/static'
-    ).then((mod) => mod.TextExerciseGroupTypeStaticRenderer)
+    import('@editor/plugins/serlo-template-plugins/exercise-group/static').then(
+      (mod) => mod.TextExerciseGroupTypeStaticRenderer
+    )
   )
 const HighlightStaticRenderer = dynamic<EditorHighlightDocument>(() =>
-  import('@serlo/editor/src/plugins/highlight/static').then(
+  import('@editor/plugins/highlight/static').then(
     (mod) => mod.HighlightStaticRenderer
   )
 )
 const StaticMath = dynamic<MathElement>(() =>
-  import('@serlo/editor/src/plugins/text/static-components/static-math').then(
+  import('@editor/plugins/text/static-components/static-math').then(
     (mod) => mod.StaticMath
   )
 )
@@ -127,11 +126,6 @@ export function createRenderers(): InitRenderersArgs {
     pluginRenderers: [
       // plugins
       { type: EditorPluginType.Article, renderer: ArticleStaticRenderer },
-      // TODO: Remove because not needed at the moment on serlo.org, only in RLP integration.
-      {
-        type: EditorPluginType.RootWithOptionals,
-        renderer: RootWithOptionalsStaticRenderer,
-      },
       { type: EditorPluginType.Rows, renderer: RowsStaticRenderer },
       { type: EditorPluginType.Text, renderer: TextStaticRenderer },
       { type: EditorPluginType.Image, renderer: ImageSerloStaticRenderer },

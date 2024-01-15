@@ -1,6 +1,6 @@
-import { parseVideoUrl } from '@serlo/editor/src/plugins/video/renderer'
-import { VideoStaticRenderer } from '@serlo/editor/src/plugins/video/static'
-import { EditorVideoDocument } from '@serlo/editor/src/types/editor-plugins'
+import { parseVideoUrl } from '@editor/plugins/video/renderer'
+import { VideoStaticRenderer } from '@editor/plugins/video/static'
+import { EditorVideoDocument } from '@editor/types/editor-plugins'
 import dynamic from 'next/dynamic'
 
 import { Lazy } from '@/components/content/lazy'

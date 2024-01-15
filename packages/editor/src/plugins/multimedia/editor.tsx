@@ -69,6 +69,7 @@ export function MultimediaEditor(props: MultimediaProps) {
     <div className="group/multimedia" data-qa="plugin-multimedia-wrapper">
       {focused ? (
         <MultimediaToolbar id={props.id}>
+          {/* overlay content */}
           <MultimediaSizeSelect
             state={state.width}
             title={multimediaStrings.chooseSize}
