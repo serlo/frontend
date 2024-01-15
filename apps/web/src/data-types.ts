@@ -1,10 +1,10 @@
-import { type AuthorizationPayload } from '@serlo/authorization'
 import type {
   AnyEditorDocument,
   EditorExerciseDocument,
   EditorRowsDocument,
   EditorTemplateExerciseGroupDocument,
-} from '@serlo/editor/src/types/editor-plugins'
+} from '@editor/types/editor-plugins'
+import { type AuthorizationPayload } from '@serlo/authorization'
 import { type CSSProperties, type FunctionComponent } from 'react'
 
 import {

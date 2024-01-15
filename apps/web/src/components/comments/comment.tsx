@@ -1,4 +1,4 @@
-import type { StaticMathProps } from '@serlo/editor/src/plugins/text/static-components/static-math'
+import type { StaticMathProps } from '@editor/plugins/text/static-components/static-math'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState } from 'react'
 
@@ -23,7 +23,7 @@ interface CommentProps {
 }
 
 const StaticMath = dynamic<StaticMathProps>(() =>
-  import('@serlo/editor/src/plugins/text/static-components/static-math').then(
+  import('@editor/plugins/text/static-components/static-math').then(
     (mod) => mod.StaticMath
   )
 )

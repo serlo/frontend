@@ -1,5 +1,5 @@
-import { editorRenderers } from '@serlo/editor/src/plugin/helpers/editor-renderer'
-import { isImageDocument } from '@serlo/editor/src/types/plugin-type-guards'
+import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
+import { isImageDocument } from '@editor/types/plugin-type-guards'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'

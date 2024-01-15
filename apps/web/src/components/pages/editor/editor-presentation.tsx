@@ -1,5 +1,5 @@
-import { editorRenderers } from '@serlo/editor/src/plugin/helpers/editor-renderer'
-import { EditorPluginType } from '@serlo/editor/src/types/editor-plugin-type'
+import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import { EditorContact } from './editor-contact'
 import { EditorFeatures } from './editor-features'
