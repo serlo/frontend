@@ -23,7 +23,7 @@ export function Breadcrumbs({
   noIcon,
 }: BreadcrumbsProps) {
   return (
-    <nav className="mx-side mt-5 sm:mb-11 sm:ml-2.5" data-qa="breadcrumbs">
+    <nav className="mt-5 sm:mb-11" data-qa="breadcrumbs">
       {data &&
         data.map((bcEntry, i) => {
           return (
@@ -34,10 +34,15 @@ export function Breadcrumbs({
   )
 
   function renderBreadcrumbEntry(bcEntry: BreadcrumbEntry, index: number) {
-    const withRightArrow = cn(`
+    const withRightArrow = cn(
+      `
       serlo-button mb-1 mr-5 py-0.5 font-normal
-      after:absolute after:ml-3 after:text-gray-300 after:content-['>'] 
-    `)
+      after:absolute after:ml-3 after:text-gray-300 after:content-['>']
+      `,
+      // Offset the padding of 8 pixels to align the breadcrumbs with the
+      // heading
+      index === 0 && '-ml-2'
+    )
 
     if (bcEntry.ellipsis) {
       return (

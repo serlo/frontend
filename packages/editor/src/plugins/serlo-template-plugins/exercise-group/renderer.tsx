@@ -15,7 +15,7 @@ export function TextExerciseGroupTypeRenderer({
   return (
     <>
       {content}
-      <ol className="mb-2.5 ml-2 bg-white pb-3.5 [counter-reset:exercises] sm:pl-12">
+      <ol className="mb-2.5 bg-white pb-3.5 [counter-reset:exercises] sm:pl-12">
         {exercises.map((exercise, index) => {
           if (!exercise) return null
           const { element, id } = exercise

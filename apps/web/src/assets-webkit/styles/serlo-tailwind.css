@@ -41,24 +41,24 @@
     @apply serlo-button bg-editor-primary-100 text-almost-black hover:bg-editor-primary-200;
   }
   .serlo-p {
-    @apply mx-side mb-block mt-0 hyphens-auto text-lg leading-cozy;
+    @apply mr-side mb-block mt-0 hyphens-auto text-lg leading-cozy;
   }
   .serlo-h1 {
-    @apply mx-side mb-9 mt-4 p-0 text-3.5xl font-bold;
+    @apply mr-side mb-9 mt-4 p-0 text-3.5xl font-bold;
   }
   .serlo-h2 {
-    @apply mx-side mb-6 mt-0 pb-1;
+    @apply mr-side mb-6 mt-0 pb-1;
     @apply hyphens-auto text-2.5xl font-bold;
     @apply border-b border-gray-300 text-gray-900;
   }
   .serlo-h3 {
-    @apply mx-side mb-8 mt-0 text-1.5xl font-bold text-gray-900;
+    @apply mr-side mb-8 mt-0 text-1.5xl font-bold text-gray-900;
   }
   .serlo-h4 {
-    @apply mx-side mb-5 mt-0 text-base-plus font-bold;
+    @apply mr-side mb-5 mt-0 text-base-plus font-bold;
   }
   .serlo-h5 {
-    @apply mx-side mb-5 mt-0;
+    @apply mr-side mb-5 mt-0;
   }
   .serlo-modal {
     @apply absolute left-1/2 -mr-[50%] max-w-[85%] -translate-x-1/2 -translate-y-1/2;
@@ -435,7 +435,7 @@
     }
   }
 
-  /* heavily inspired by Shaw (https://css-tricks.com/auto-growing-inputs-textareas/#aa-other-ideas) 
+  /* heavily inspired by Shaw (https://css-tricks.com/auto-growing-inputs-textareas/#aa-other-ideas)
     this needs a data-value on the wrapping element equal to the value of the input
   */
   .serlo-autogrow-input {
