@@ -38,7 +38,7 @@ export function PluginCopyTool({ pluginId }: PluginCopyToolProps) {
   return (
     <DropdownButton
       onClick={handleOnClick}
-      label="Copy plugin to clipboard"
+      label={editorStrings.edtrIo.pluginCopyButtonLabel}
       icon={faCopy}
       className="mt-2.5 border-t pt-2.5"
       dataQa="plugin-copy-tool-button"
