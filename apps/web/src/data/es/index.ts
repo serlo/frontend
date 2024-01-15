@@ -761,6 +761,7 @@ export const loggedInData = {
           headings: "Encabezados",
           link: "Vínculo (%ctrlOrCmd% + K)",
           noElementPasteInLists: "Lo sentimos, no está permitido pegar elementos dentro de listas.",
+          pastingPluginNotAllowedHere: 'Sorry, pasting this plugin here is not allowed.',
           linkOverlay: {
             placeholder: "https://… o /1234",
             inputLabel: "Pegar o escribir un enlace",
@@ -836,9 +837,17 @@ export const loggedInData = {
           description: "Opción única o múltiple"
         },
         blanksExercise: {
-          title: "Ejercicio de rellenar los espacios en blanco",
+          title: 'Fill In The Blanks',
           description: "Textos con blancos",
-          placeholder: "Escribe un texto y añade espacios en blanco"
+          placeholder: "Escribe un texto y añade espacios en blanco",
+          chooseType: "Elige el tipo de ejercicio",
+          modes: {
+            typing: 'Typing',
+            'drag-and-drop': 'Drag & Drop'
+          },
+          previewMode: "Vista Previa",
+          previewIsActiveHint: 'Edit the exercise again',
+          previewIsDeactiveHint: 'Preview the exercise'
         }
       },
       templatePlugins: {
@@ -988,7 +997,9 @@ export const loggedInData = {
         author: "Autor",
         createdAt: "¿Cuándo?",
         ready: "¿Listo para guardar?",
-        anchorLinkWarning: "Este enlace sólo funcionará en el frontend y para contenidos que tengan una revisión algo nueva."
+        anchorLinkWarning: "Este enlace sólo funcionará en el frontend y para contenidos que tengan una revisión algo nueva.",
+        pluginCopyInfo: 'You can now paste this plugin into text plugins',
+        pluginCopyButtonLabel: 'Copy plugin to clipboard'
       },
       taxonomy: {
         title: "Título"
