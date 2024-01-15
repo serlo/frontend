@@ -1,6 +1,6 @@
-import { InputExerciseStaticRenderer } from '@serlo/editor/src/plugins/input-exercise/static'
-import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
-import { EditorInputExerciseDocument } from '@serlo/editor/src/types/editor-plugins'
+import { InputExerciseStaticRenderer } from '@editor/plugins/input-exercise/static'
+import { StaticRenderer } from '@editor/static-renderer/static-renderer'
+import { EditorInputExerciseDocument } from '@editor/types/editor-plugins'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 

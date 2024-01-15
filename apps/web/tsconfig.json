@@ -1,6 +1,7 @@
 {
   "extends": "@serlo/typescript-config/base.json",
   "compilerOptions": {
+    "rootDir": "../..",
     "paths": {
       "@/*": ["./src/*"],
       "@editor/*": ["../../packages/editor/src/*"]

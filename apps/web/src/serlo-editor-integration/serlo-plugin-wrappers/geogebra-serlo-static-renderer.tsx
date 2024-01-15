@@ -1,6 +1,6 @@
-import { parseId } from '@serlo/editor/src/plugins/geogebra/renderer'
-import { GeogebraStaticRenderer } from '@serlo/editor/src/plugins/geogebra/static'
-import { EditorGeogebraDocument } from '@serlo/editor/src/types/editor-plugins'
+import { parseId } from '@editor/plugins/geogebra/renderer'
+import { GeogebraStaticRenderer } from '@editor/plugins/geogebra/static'
+import { EditorGeogebraDocument } from '@editor/types/editor-plugins'
 import dynamic from 'next/dynamic'
 
 import { Lazy } from '@/components/content/lazy'

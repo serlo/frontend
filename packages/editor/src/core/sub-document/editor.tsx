@@ -56,7 +56,9 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       // we overwrite it here (because it's probably because of tab navigation)
       setTimeout(() => {
         // fixes a bug in table plugin with disappearing buttons
-        if (e.target.nodeName?.toLowerCase() === 'button') return
+        if (['button', 'select'].includes(e.target.nodeName?.toLowerCase())) {
+          return
+        }
 
         // find closest document
         const target = (e.target as HTMLDivElement).closest('[data-document]')

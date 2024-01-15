@@ -776,6 +776,8 @@ export const loggedInData = {
           mathFormula: 'Math formula (%ctrlOrCmd% + M)',
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
           blank: 'Blank',
+          createBlank: 'Create Blank',
+          removeBlank: 'Remove Blank',
           bold: 'Bold (%ctrlOrCmd% + B)',
           italic: 'Italic (%ctrlOrCmd% + I)',
           noItemsFound: "உருப்படிகள் எதுவும் இல்லை",

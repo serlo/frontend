@@ -1,5 +1,5 @@
-import { parseDocumentString } from '@serlo/editor/src/static-renderer/helper/parse-document-string'
-import type { EditorRowsDocument } from '@serlo/editor/src/types/editor-plugins'
+import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
+import type { EditorRowsDocument } from '@editor/types/editor-plugins'
 import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'

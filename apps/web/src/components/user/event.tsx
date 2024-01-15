@@ -1,6 +1,6 @@
+import type { StaticMathProps } from '@editor/plugins/text/static-components/static-math'
 import { faBellSlash, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { Entity } from '@serlo/authorization'
-import type { StaticMathProps } from '@serlo/editor/src/plugins/text/static-components/static-math'
 import Tippy from '@tippyjs/react'
 import dynamic from 'next/dynamic'
 
@@ -39,7 +39,7 @@ interface EventProps {
 }
 
 const StaticMath = dynamic<StaticMathProps>(() =>
-  import('@serlo/editor/src/plugins/text/static-components/static-math').then(
+  import('@editor/plugins/text/static-components/static-math').then(
     (mod) => mod.StaticMath
   )
 )

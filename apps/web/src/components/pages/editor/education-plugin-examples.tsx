@@ -1,16 +1,16 @@
-import type { BoxType } from '@serlo/editor/src/plugins/box/renderer'
-import { BoxStaticRenderer } from '@serlo/editor/src/plugins/box/static'
-import { HighlightRenderer } from '@serlo/editor/src/plugins/highlight/renderer'
-import { SpoilerRenderer } from '@serlo/editor/src/plugins/spoiler/renderer'
-import type { StaticMathProps } from '@serlo/editor/src/plugins/text/static-components/static-math'
-import { parseDocumentString } from '@serlo/editor/src/static-renderer/helper/parse-document-string'
-import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
-import { EditorPluginType } from '@serlo/editor/src/types/editor-plugin-type'
-import type { EditorBoxDocument } from '@serlo/editor/src/types/editor-plugins'
+import type { BoxType } from '@editor/plugins/box/renderer'
+import { BoxStaticRenderer } from '@editor/plugins/box/static'
+import { HighlightRenderer } from '@editor/plugins/highlight/renderer'
+import { SpoilerRenderer } from '@editor/plugins/spoiler/renderer'
+import type { StaticMathProps } from '@editor/plugins/text/static-components/static-math'
+import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
+import { StaticRenderer } from '@editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import type { EditorBoxDocument } from '@editor/types/editor-plugins'
 import dynamic from 'next/dynamic'
 
 const StaticMath = dynamic<StaticMathProps>(() =>
-  import('@serlo/editor/src/plugins/text/static-components/static-math').then(
+  import('@editor/plugins/text/static-components/static-math').then(
     (mod) => mod.StaticMath
   )
 )
