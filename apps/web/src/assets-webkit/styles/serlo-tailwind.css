@@ -47,12 +47,12 @@
     @apply mx-side mb-9 mt-4 p-0 text-3.5xl font-bold;
   }
   .serlo-h2 {
-    @apply mx-side mb-6 mt-0 pb-1 pt-6;
+    @apply mx-side mb-6 mt-0 pb-1;
     @apply hyphens-auto text-2.5xl font-bold;
     @apply border-b border-gray-300 text-gray-900;
   }
   .serlo-h3 {
-    @apply mx-side mb-8 mt-0 pt-3 text-1.5xl font-bold text-gray-900;
+    @apply mx-side mb-8 mt-0 text-1.5xl font-bold text-gray-900;
   }
   .serlo-h4 {
     @apply mx-side mb-5 mt-0 text-base-plus font-bold;

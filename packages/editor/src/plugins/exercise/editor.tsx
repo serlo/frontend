@@ -83,7 +83,7 @@ export function ExerciseEditor(props: ExerciseProps) {
           </>
         )}
         {solution.defined ? (
-          <div className="-ml-side mt-block">
+          <div className="-ml-side">
             <nav className="flex justify-end">
               <button
                 className="serlo-button-editor-secondary serlo-tooltip-trigger relative top-7 z-20 mr-side"
