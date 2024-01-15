@@ -836,7 +836,7 @@ export const loggedInData = {
           description: "Single- oder Multiple Choice Aufgabe"
         },
         blanksExercise: {
-          title: "Lückentext Aufgabe",
+          title: "Lückentext",
           description: "Ein Text mit Lücken zum Ausfüllen",
           placeholder: "Schreibe einen Text und füge Lücken ein"
         }
