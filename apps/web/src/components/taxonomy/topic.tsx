@@ -1,13 +1,13 @@
 import {
   ExerciseNumberContext,
   ExerciseOrGroupUuidToExerciseNumberRenderer,
-} from '@editor/core/contexts'
+} from '@editor/core/contexts/exercise-number-context'
+import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
+import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { EditorRowsDocument } from '@editor/types/editor-plugins'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
-import { editorRenderers } from '@serlo/editor/src/plugin/helpers/editor-renderer'
-import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
-import { EditorRowsDocument } from '@serlo/editor/src/types/editor-plugins'
 import dynamic from 'next/dynamic'
 import { Fragment, useState } from 'react'
 import { RatingProps } from 'react-simple-star-rating'

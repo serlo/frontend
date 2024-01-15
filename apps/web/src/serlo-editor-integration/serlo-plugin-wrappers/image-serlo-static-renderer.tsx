@@ -1,5 +1,5 @@
-import { ImageStaticRenderer } from '@serlo/editor/src/plugins/image/static'
-import { EditorImageDocument } from '@serlo/editor/src/types/editor-plugins'
+import { ImageStaticRenderer } from '@editor/plugins/image/static'
+import { EditorImageDocument } from '@editor/types/editor-plugins'
 import { useRouter } from 'next/router'
 
 import { ExtraInfoIfRevisionView } from '../extra-info-if-revision-view'

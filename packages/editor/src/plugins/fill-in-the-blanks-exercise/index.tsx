@@ -39,11 +39,12 @@ function createState() {
           TextEditorFormattingOption.richTextBold,
           TextEditorFormattingOption.richTextItalic,
           TextEditorFormattingOption.textBlank,
+          TextEditorFormattingOption.math,
         ],
         isInlineChildEditor: true,
       },
     }),
-    mode: string(defaultMode), // Currently there is no method for the user to switch to 'drag-and-drop'
+    mode: string(defaultMode),
     // This could be used to store additional answers for mode drag-and-drop in the future
     // additionalDraggableAnswers: optional(list(object({ answer: string() }))),
   })

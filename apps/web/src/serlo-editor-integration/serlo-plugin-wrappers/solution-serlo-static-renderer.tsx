@@ -1,5 +1,5 @@
-import { StaticSolutionRenderer } from '@serlo/editor/src/plugins/solution/static'
-import type { EditorSolutionDocument } from '@serlo/editor/src/types/editor-plugins'
+import { StaticSolutionRenderer } from '@editor/plugins/solution/static'
+import type { EditorSolutionDocument } from '@editor/types/editor-plugins'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'

@@ -1,7 +1,7 @@
+import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { EditorRowsDocument } from '@editor/types/editor-plugins'
 import { AuthorizationPayload } from '@serlo/authorization'
-import { parseDocumentString } from '@serlo/editor/src/static-renderer/helper/parse-document-string'
-import { EditorPluginType } from '@serlo/editor/src/types/editor-plugin-type'
-import { EditorRowsDocument } from '@serlo/editor/src/types/editor-plugins'
 import { request } from 'graphql-request'
 
 import { createBreadcrumbs } from './create-breadcrumbs'

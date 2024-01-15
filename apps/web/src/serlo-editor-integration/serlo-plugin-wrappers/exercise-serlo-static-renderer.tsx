@@ -1,8 +1,8 @@
-import { ExerciseStaticRenderer } from '@serlo/editor/src/plugins/exercise/static'
+import { ExerciseStaticRenderer } from '@editor/plugins/exercise/static'
 import type {
   EditorExerciseDocument,
   EditorSolutionDocument,
-} from '@serlo/editor/src/types/editor-plugins'
+} from '@editor/types/editor-plugins'
 import dynamic from 'next/dynamic'
 import { useContext, useEffect, useState } from 'react'
 

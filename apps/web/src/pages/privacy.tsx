@@ -1,4 +1,4 @@
-import { BoxRenderer } from '@serlo/editor/src/plugins/box/renderer'
+import { BoxRenderer } from '@editor/plugins/box/renderer'
 import type { GetStaticProps } from 'next'
 
 import type { LegalData } from './legal'

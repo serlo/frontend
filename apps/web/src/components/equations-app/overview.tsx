@@ -12,7 +12,7 @@ interface OverviewProps {
 }
 
 const StaticMath = dynamic<StaticMathProps>(() =>
-  import('@serlo/editor/src/plugins/text/static-components/static-math').then(
+  import('@editor/plugins/text/static-components/static-math').then(
     (mod) => mod.StaticMath
   )
 )

@@ -1,5 +1,5 @@
-import { editorRenderers } from '@serlo/editor/src/plugin/helpers/editor-renderer'
-import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
+import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
+import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 
 import { LicenseIcons } from '../content/license/license-icons'
 import { HSpace } from '@/components/content/h-space'

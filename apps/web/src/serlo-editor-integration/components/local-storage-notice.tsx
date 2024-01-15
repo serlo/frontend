@@ -1,4 +1,4 @@
-import type { EditorProps } from '@serlo/editor/src/core'
+import type { EditorProps } from '@editor/core'
 import { Dispatch, SetStateAction } from 'react'
 import { debounce } from 'ts-debounce'
 
