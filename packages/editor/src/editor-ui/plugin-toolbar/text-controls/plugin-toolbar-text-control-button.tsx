@@ -26,7 +26,7 @@ export function PluginToolbarTextControlButton({
         active
           ? 'bg-editor-primary-200 text-almost-black shadow-menu hover:text-black'
           : '#b6b6b6 hover:text-editor-primary',
-        'b-0 m-1 h-6 w-6 cursor-pointer rounded p-0 outline-none',
+        'b-0 m-1 h-6 w-auto min-w-[1.5rem] cursor-pointer rounded p-0 outline-none',
         'serlo-tooltip-trigger'
       )}
       data-qa={`plugin-toolbar-button-${

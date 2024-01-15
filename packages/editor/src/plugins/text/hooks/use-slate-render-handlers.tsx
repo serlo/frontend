@@ -1,6 +1,6 @@
 import { selectMayManipulateSiblings, store } from '@editor/store'
 import { createElement, useCallback, useMemo } from 'react'
-import { Editor as SlateEditor, Transforms } from 'slate'
+import { Editor as SlateEditor } from 'slate'
 import { ReactEditor, RenderElementProps, RenderLeafProps } from 'slate-react'
 
 import { BlankRenderer } from '../../fill-in-the-blanks-exercise/blank-renderer'
@@ -84,31 +84,7 @@ export const useSlateRenderHandlers = ({
       if (element.type === 'textBlank') {
         return (
           <span {...attributes} contentEditable={false}>
-            <BlankRenderer
-              blankId={element.blankId}
-              forceMode="typing"
-              onChange={(e) => {
-                if (!e) return
-                const path = ReactEditor.findPath(editor, element)
-                const newCorrectAnswers = element.correctAnswers.map(
-                  (correctAnswer, i) => {
-                    // First element is set to new value
-                    if (i === 0) {
-                      return {
-                        answer: e.target.value.trim(),
-                      }
-                    }
-                    // Rest is copied as is
-                    return { ...correctAnswer }
-                  }
-                )
-                Transforms.setNodes(
-                  editor,
-                  { correctAnswers: newCorrectAnswers },
-                  { at: path }
-                )
-              }}
-            />
+            <BlankRenderer element={element} />
             {/* Because blank is a void element we need to render children here even though it will always be an empty text element. Slate will complain if this is not included here */}
             {children}
           </span>
@@ -116,7 +92,7 @@ export const useSlateRenderHandlers = ({
       }
       return <div {...attributes}>{children}</div>
     },
-    [editor, focused]
+    [focused]
   )
 
   const handleRenderLeaf = useCallback(

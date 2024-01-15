@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { Fragment, useState } from 'react'
 import { Editor as SlateEditor } from 'slate'
 
 import { PluginToolbarTextControlButton } from './plugin-toolbar-text-control-button'
 import type { NestedControlButton, ControlButton } from './types'
+import { FaIcon } from '@/components/fa-icon'
 
 export interface PluginToolbarTextControlsProps {
   controls: ControlButton[]
@@ -24,28 +26,46 @@ export function PluginToolbarTextControls({
   const isMath = (control: ControlButton) =>
     Object.hasOwn(control, 'name') && control.name === 'math'
 
+  const isBlank = (control: ControlButton) =>
+    Object.hasOwn(control, 'name') && control.name === 'textBlank'
+
   const mathActive = controls.find(isMath)?.isActive(editor)
+  const blankActive = controls.find(isBlank)?.isActive(editor)
+  const isSpecialMode = mathActive || blankActive
 
   if (typeof subMenu !== 'number') {
     return (
       <>
         {controls.map((control, index) => {
           if (mathActive && !isMath(control)) return null
+          if (blankActive && !isBlank(control)) return null
+
+          const next = controls.at(index + 1)
+          const showSeparator =
+            !isSpecialMode && !!next && next.group !== control.group
+
           return (
-            <PluginToolbarTextControlButton
-              active={control.isActive(editor)}
-              tooltipText={control.title}
-              onMouseDown={(event) => {
-                event.preventDefault()
-                event.stopPropagation()
-                isNestedControlButton(control)
-                  ? setSubMenu(index)
-                  : control.onClick(editor)
-              }}
-              key={index}
-            >
-              {control.renderIcon(editor)}
-            </PluginToolbarTextControlButton>
+            <Fragment key={control.title}>
+              <PluginToolbarTextControlButton
+                active={control.isActive(editor)}
+                tooltipText={
+                  control.isActive(editor) &&
+                  Object.hasOwn(control, 'activeTitle')
+                    ? control.activeTitle
+                    : control.title
+                }
+                onMouseDown={(event) => {
+                  event.preventDefault()
+                  event.stopPropagation()
+                  isNestedControlButton(control)
+                    ? setSubMenu(index)
+                    : control.onClick(editor)
+                }}
+              >
+                {control.renderIcon(editor)}
+              </PluginToolbarTextControlButton>
+              {showSeparator ? <span className="opacity-30"> | </span> : null}
+            </Fragment>
           )
         })}
       </>
@@ -61,7 +81,7 @@ export function PluginToolbarTextControls({
       return false
     },
     renderIcon() {
-      return activeControl.renderCloseMenuIcon()
+      return <FaIcon icon={faXmark} />
     },
     onClick() {
       setSubMenu(undefined)
@@ -72,20 +92,22 @@ export function PluginToolbarTextControls({
 
   return (
     <>
-      {subMenuControls.map((control, index) => (
-        <PluginToolbarTextControlButton
-          active={control.isActive(editor)}
-          tooltipText={control.title}
-          onMouseDown={(event) => {
-            event.preventDefault()
-            control.onClick(editor)
-            setSubMenu(undefined)
-          }}
-          key={index}
-        >
-          {control.renderIcon(editor)}
-        </PluginToolbarTextControlButton>
-      ))}
+      {subMenuControls.map((control, index) => {
+        return (
+          <PluginToolbarTextControlButton
+            active={control.isActive(editor)}
+            tooltipText={control.title}
+            onMouseDown={(event) => {
+              event.preventDefault()
+              control.onClick(editor)
+              setSubMenu(undefined)
+            }}
+            key={index}
+          >
+            {control.renderIcon(editor)}
+          </PluginToolbarTextControlButton>
+        )
+      })}
     </>
   )
 }

@@ -244,7 +244,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
     entries: [
       { title: 'Themen', id: 41107 },
       { title: 'Lehrplan', id: 50540 },
-      { title: 'Bei Serlo-Physik mitarbeiten', id: 41134 },
+      { title: 'Bei Serlo-Physik mitarbeiten', id: 253504 },
     ],
   },
   {
