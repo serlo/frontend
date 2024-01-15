@@ -65,16 +65,16 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
       <UuidsProvider
         value={{ entityId: context?.uuid, revisionId: context?.revisionId }}
       >
-        <div className="-mt-block">
-          <div className={cn(renderExerciseNumber && 'flex flex-row')}>
-            {/* Conditionally render ExerciseNumbering if it is available */}
-            {renderExerciseNumber ? renderExerciseNumber() : null}
+        {/* <div className="-mt-block"> */}
+        <div className={cn(renderExerciseNumber && 'flex flex-row')}>
+          {/* Conditionally render ExerciseNumbering if it is available */}
+          {renderExerciseNumber ? renderExerciseNumber() : null}
 
-            <div className="flex flex-col">
-              <ExerciseStaticRenderer {...props} />
-            </div>
+          <div className="flex flex-col">
+            <ExerciseStaticRenderer {...props} />
           </div>
         </div>
+        {/* </div> */}
       </UuidsProvider>
     </div>
   )

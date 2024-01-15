@@ -109,6 +109,9 @@
       @apply !mb-4 mt-2;
     }
   }
+  .serlo-ol-no-before > li:before {
+    @apply content-none !important;
+  }
   .serlo-sub-list {
     @apply m-0 bg-white py-3 pl-2.5 pr-4;
     @apply block w-auto list-none overflow-auto text-left;
