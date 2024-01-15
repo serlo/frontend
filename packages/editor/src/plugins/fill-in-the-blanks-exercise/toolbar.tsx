@@ -21,8 +21,8 @@ export const FillInTheBlanksToolbar = ({
 }) => {
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
-  // TODO: only for testing while drag & drop mode is not actually available
-  const allowModeSwitch = true
+  // set to true only for testing while (drag & drop mode is not actually working atm.)
+  const allowModeSwitch = false
 
   return (
     <PluginToolbar
