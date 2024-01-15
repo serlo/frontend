@@ -39,6 +39,7 @@ function createState() {
           TextEditorFormattingOption.richTextBold,
           TextEditorFormattingOption.richTextItalic,
           TextEditorFormattingOption.textBlank,
+          TextEditorFormattingOption.math,
         ],
         isInlineChildEditor: true,
       },

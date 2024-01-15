@@ -204,11 +204,9 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
         const trimmedBlankText =
           textInBlanks.get(blankState.blankId)?.text.trim() ?? ''
         const isCorrect = blankState.correctAnswers.some(
-          (correctAnswer) => correctAnswer.answer === trimmedBlankText
+          ({ answer }) => answer === trimmedBlankText
         )
-        newBlankAnswersCorrectList.set(blankState.blankId, {
-          isCorrect: isCorrect,
-        })
+        newBlankAnswersCorrectList.set(blankState.blankId, { isCorrect })
       })
 
       setFeedbackForBlanks(newBlankAnswersCorrectList)
