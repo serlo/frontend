@@ -7,6 +7,7 @@ import {
   Editor,
   Path,
 } from 'slate'
+import { ReactEditor } from 'slate-react'
 import { v4 as uuid_v4 } from 'uuid'
 
 import { selectionHasElement, trimSelection } from './selection'
@@ -23,7 +24,7 @@ export function toggleBlank(editor: SlateEditor) {
   }
 }
 
-function removeBlanks(editor: SlateEditor) {
+export function removeBlanks(editor: SlateEditor) {
   Editor.withoutNormalizing(editor, () => {
     if (!editor.selection) return
 
@@ -50,6 +51,10 @@ function removeBlanks(editor: SlateEditor) {
       },
     })
   })
+  // After the blank is removed, we must refocus the editor. Without the timeout
+  // it blows up and moving this code to the unmounting of the blank-renderer
+  // also blows up when changing from preview to edit mode.
+  setTimeout(() => ReactEditor.focus(editor))
 }
 
 function addBlank(editor: SlateEditor) {

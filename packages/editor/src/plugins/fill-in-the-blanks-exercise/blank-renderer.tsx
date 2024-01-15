@@ -1,3 +1,4 @@
+import { removeBlanks } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/blank'
 import {
   ChangeEvent,
   KeyboardEvent as ReactKeyboardEvent,
@@ -28,11 +29,8 @@ export function BlankRenderer({ element }: BlankRendererProps) {
     const input = inputRef.current
     if (input) input.focus()
 
-    // Focus editor when the blank is removed
-    return () => {
-      // TODO: uncommented this breaks the preview mode somehow, investigate
-      // ReactEditor.focus(editor)
-    }
+    // Editor gets refocused when the blank is removed from within
+    // text-controls/utils/blank.ts as it leads to slate errors on unmount.
 
     // Only run on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -92,6 +90,12 @@ export function BlankRenderer({ element }: BlankRendererProps) {
     const selectionCollapsed = selectionStart === selectionEnd
     const caretAtRightEnd = selectionEnd === value.length
     const caretAtLeftEnd = selectionStart === 0
+    const isInputEmpty = value.length === 0
+
+    if (isInputEmpty && (event.key === 'Backspace' || event.key === 'Delete')) {
+      event.preventDefault()
+      removeBlanks(editor)
+    }
 
     // Move the selection right of the blank on arrow right
     if (

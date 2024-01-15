@@ -1,10 +1,10 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
+import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar/components/toolbar-select'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import type { Dispatch, SetStateAction } from 'react'
 
 import type { ScMcExerciseProps } from '.'
@@ -21,8 +21,8 @@ export const ScMcExerciseToolbar = ({
 }) => {
   const scMcStrings = useEditorStrings().templatePlugins.scMcExercise
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    state.isSingleChoice.set(event.target.value === 'sc')
+  const handleChange = (value: string) => {
+    state.isSingleChoice.set(value === 'sc')
     state.isSingleChoice.value &&
       state.answers.forEach((answer) => answer.isCorrect.set(false))
   }
@@ -47,21 +47,15 @@ export const ScMcExerciseToolbar = ({
             {scMcStrings.previewMode}{' '}
             <FaIcon icon={previewActive ? faCheckCircle : faCircle} />
           </button>
-          <label className="serlo-tooltip-trigger mr-2">
-            <EditorTooltip text={scMcStrings.chooseType} />
-            <select
-              value={state.isSingleChoice.value ? 'sc' : 'mc'}
-              onChange={handleChange}
-              className={cn(`
-                bg-editor-primary-10 mr-2 max-w-[13rem] cursor-pointer rounded-md !border
-                border-gray-500 bg-transparent px-1 py-[1px] text-sm transition-all
-                hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
-              `)}
-            >
-              <option value="mc">{scMcStrings.multipleChoice}</option>
-              <option value="sc">{scMcStrings.singleChoice}</option>
-            </select>
-          </label>
+          <ToolbarSelect
+            tooltipText={scMcStrings.chooseType}
+            value={state.isSingleChoice.value ? 'sc' : 'mc'}
+            changeValue={handleChange}
+            options={[
+              { value: 'mc', text: scMcStrings.multipleChoice },
+              { value: 'sc', text: scMcStrings.singleChoice },
+            ]}
+          />
         </>
       }
       pluginControls={<InteractiveToolbarTools id={id} />}

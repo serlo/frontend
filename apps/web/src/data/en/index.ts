@@ -852,6 +852,8 @@ export const loggedInData = {
           mathFormula: 'Math formula (%ctrlOrCmd% + M)',
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
           blank: 'Blank',
+          createBlank: 'Create Blank',
+          removeBlank: 'Remove Blank',
           bold: 'Bold (%ctrlOrCmd% + B)',
           italic: 'Italic (%ctrlOrCmd% + I)',
           noItemsFound: 'No items found',
@@ -910,7 +912,7 @@ export const loggedInData = {
           description: 'Single Choice or Multiple Choice',
         },
         blanksExercise: {
-          title: 'Fill In The Blanks Exercise',
+          title: 'Fill In The Blanks',
           description: 'Text with blanks',
           placeholder: 'Write a text and add blanks',
           chooseType: 'Choose the exercise type',
