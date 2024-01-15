@@ -1,10 +1,12 @@
 import { isSelectionWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
+import { checkIsAllowedNesting } from '@editor/plugins/rows/utils/check-is-allowed-nesting'
 import {
   selectDocument,
   selectMayManipulateSiblings,
   useAppDispatch,
   store,
+  selectAncestorPluginTypes,
 } from '@editor/store'
 import type { EditorRowsDocument } from '@editor/types/editor-plugins'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
@@ -13,6 +15,7 @@ import { useCallback } from 'react'
 import { Editor as SlateEditor } from 'slate'
 
 import { insertPlugin } from '../utils/insert-plugin'
+import { shouldUseFeature } from '@/components/user/profile-experimental'
 
 interface UseEditablePasteHandlerArgs {
   editor: SlateEditor
@@ -48,13 +51,22 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
         }
       }
 
-      // TODO: validate somehow?
+      // pasting editor document string and insert as plugins
       if (!media && text.startsWith('{"plugin":"rows"')) {
         const rowsDocument = JSON.parse(text) as EditorRowsDocument
         if (rowsDocument.state.length !== 1) return
         const pluginDocument = rowsDocument.state.at(0)
-        if (pluginDocument) {
-          media = { pluginType: rowsDocument.plugin, state: rowsDocument.state }
+        const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
+        if (!pluginDocument || typesOfAncestors === null) return
+
+        if (checkIsAllowedNesting(pluginDocument.plugin, typesOfAncestors)) {
+          media = {
+            pluginType: pluginDocument.plugin,
+            state: pluginDocument.state,
+          }
+        } else {
+          event.preventDefault()
+          showToastNotice(textStrings.pastingPluginNotAllowedHere, 'warning')
         }
       }
 
