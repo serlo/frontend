@@ -35,21 +35,12 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       const text = event.clipboardData.getData('text')
       if (!files.length && !text) return
 
-      // Exit if unable to select document data or if not allowed to manipulate siblings
+      // Exit if unable to select document data
       const storeState = store.getState()
       const document = selectDocument(storeState, id)
       const mayManipulateSiblings = selectMayManipulateSiblings(storeState, id)
-      if (!document || !mayManipulateSiblings) return
-
-      // Iterate through all plugins and try to process clipboard data
+      if (!document) return
       let media
-      for (const { plugin, type } of editorPlugins.getAllWithData()) {
-        const state = plugin.onFiles?.(files) ?? plugin.onText?.(text)
-        if (state?.state) {
-          media = { state: state.state as unknown, pluginType: type }
-          break
-        }
-      }
 
       // pasting editor document string and insert as plugins
       if (
@@ -63,7 +54,10 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
         const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
         if (!pluginDocument || typesOfAncestors === null) return
 
-        if (checkIsAllowedNesting(pluginDocument.plugin, typesOfAncestors)) {
+        if (
+          mayManipulateSiblings &&
+          checkIsAllowedNesting(pluginDocument.plugin, typesOfAncestors)
+        ) {
           media = {
             pluginType: pluginDocument.plugin,
             state: pluginDocument.state,
@@ -71,6 +65,18 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
         } else {
           event.preventDefault()
           showToastNotice(textStrings.pastingPluginNotAllowedHere, 'warning')
+        }
+      }
+
+      // Exit if not allowed to manipulate siblings
+      if (!mayManipulateSiblings) return
+
+      // Iterate through all plugins and try to process clipboard data
+      for (const { plugin, type } of editorPlugins.getAllWithData()) {
+        const state = plugin.onFiles?.(files) ?? plugin.onText?.(text)
+        if (state?.state) {
+          media = { state: state.state as unknown, pluginType: type }
+          break
         }
       }
 
