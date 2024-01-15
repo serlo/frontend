@@ -56,6 +56,7 @@ export function FillInTheBlanksExerciseEditor(
         <FillInTheBlanksStaticRenderer {...staticDocument} />
       ) : (
         <FillInTheBlanksRenderer
+          isEditing
           text={props.state.text.render({
             config: {
               placeholder: editorStrings.plugins.blanksExercise.placeholder,
