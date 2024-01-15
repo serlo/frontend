@@ -1,3 +1,4 @@
+import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar/components/toolbar-select'
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
@@ -106,27 +107,25 @@ export function MathEditor(props: MathEditorProps) {
         {renderControlsPortal(
           <div
             onMouseDown={(e) => e.stopPropagation()} // stops editor from setting focus to other plugin
-            className="inline-block"
+            className="ml-3 inline-block"
           >
-            <select
-              className={cn(`
-                  ml-2 cursor-pointer rounded-md !border border-gray-500 bg-editor-primary-100
-                  px-1 py-[2px] text-base text-almost-black transition-all
-                hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
-                `)}
+            <ToolbarSelect
+              tooltipText=""
               value={isVisualMode ? 'visual' : 'latex'}
               data-qa="plugin-toolbar-math-type-switch"
-              onChange={(e) => {
+              changeValue={(value) => {
                 if (hasError) setHasError(false)
-                props.onEditorChange(e.target.value === 'visual')
+                props.onEditorChange(value === 'visual')
               }}
-            >
-              <option value="visual">{mathStrings.visual}</option>
-              <option value="latex">{mathStrings.latex}</option>
-            </select>
+              options={[
+                { value: 'visual', text: mathStrings.visual },
+                { value: 'latex', text: mathStrings.latex },
+              ]}
+            />
+
             {!disableBlock && (
               <button
-                className="mx-2 rounded-md border border-gray-500 px-1 text-base text-almost-black transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+                className="mr-2 rounded-md border border-gray-500 px-1 py-0.25 text-sm text-almost-black transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
                 onClick={() => {
                   if (props.onInlineChange) props.onInlineChange(!props.inline)
                 }}

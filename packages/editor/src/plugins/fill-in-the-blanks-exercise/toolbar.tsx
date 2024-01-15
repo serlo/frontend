@@ -5,31 +5,29 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import type { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 
-import type { ScMcExerciseProps } from '.'
+import { type FillInTheBlanksExerciseProps } from '.'
 import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
 
-export const ScMcExerciseToolbar = ({
+export const FillInTheBlanksToolbar = ({
   state,
   previewActive,
   setPreviewActive,
   id,
-}: ScMcExerciseProps & {
+}: FillInTheBlanksExerciseProps & {
   previewActive: boolean
   setPreviewActive: Dispatch<SetStateAction<boolean>>
 }) => {
-  const scMcStrings = useEditorStrings().templatePlugins.scMcExercise
+  const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
-  const handleChange = (value: string) => {
-    state.isSingleChoice.set(value === 'sc')
-    state.isSingleChoice.value &&
-      state.answers.forEach((answer) => answer.isCorrect.set(false))
-  }
+  // set to true only for testing while (drag & drop mode is not actually working atm.)
+  const allowModeSwitch = false
 
   return (
     <PluginToolbar
-      pluginType={EditorPluginType.ScMcExercise}
+      pluginType={EditorPluginType.FillInTheBlanksExercise}
+      className="!left-[21px] top-[-33px] w-[calc(100%-37px)]"
       pluginSettings={
         <>
           <button
@@ -39,23 +37,28 @@ export const ScMcExerciseToolbar = ({
             <EditorTooltip
               text={
                 previewActive
-                  ? scMcStrings.previewIsActiveHint
-                  : scMcStrings.previewIsDeactiveHint
+                  ? blanksExerciseStrings.previewIsActiveHint
+                  : blanksExerciseStrings.previewIsDeactiveHint
               }
               className="-ml-5 !pb-1"
             />
-            {scMcStrings.previewMode}{' '}
+            {blanksExerciseStrings.previewMode}{' '}
             <FaIcon icon={previewActive ? faCheckCircle : faCircle} />
           </button>
-          <ToolbarSelect
-            tooltipText={scMcStrings.chooseType}
-            value={state.isSingleChoice.value ? 'sc' : 'mc'}
-            changeValue={handleChange}
-            options={[
-              { value: 'mc', text: scMcStrings.multipleChoice },
-              { value: 'sc', text: scMcStrings.singleChoice },
-            ]}
-          />
+          {allowModeSwitch ? (
+            <ToolbarSelect
+              tooltipText={blanksExerciseStrings.chooseType}
+              value={state.mode.value}
+              changeValue={(value) => state.mode.set(value)}
+              options={[
+                { value: 'typing', text: blanksExerciseStrings.modes.typing },
+                {
+                  value: 'drag-and-drop',
+                  text: blanksExerciseStrings.modes['drag-and-drop'],
+                },
+              ]}
+            />
+          ) : null}
         </>
       }
       pluginControls={<InteractiveToolbarTools id={id} />}

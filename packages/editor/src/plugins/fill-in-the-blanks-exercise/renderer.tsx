@@ -34,10 +34,12 @@ interface FillInTheBlanksRendererProps {
   }
   mode: FillInTheBlanksMode
   initialTextInBlank: 'empty' | 'correct-answer'
+
+  isEditing?: boolean
 }
 
 export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
-  const { text, textPluginState, mode, initialTextInBlank } = props
+  const { text, textPluginState, mode, initialTextInBlank, isEditing } = props
 
   const exStrings = useInstanceData().strings.content.exercises
 
@@ -133,28 +135,32 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
         </DraggableSolutionArea>
       ) : null}
 
-      {/* Copied from mc-renderer.tsx */}
-      <div className="mt-2 flex">
-        <button
-          className={cn(
-            'serlo-button-blue mr-3 h-8',
-            allBlanksHaveText ? '' : 'pointer-events-none opacity-0'
-          )}
-          onClick={() => {
-            checkAnswers()
-            setShowFeedback(true)
-          }}
-        >
-          {exStrings.check}
-        </button>
-        {showFeedback && (
-          <Feedback
-            correct={[...feedbackForBlanks].every(
-              (entry) => entry[1].isCorrect
+      {/* Only show "Stimmt's?" during render/preview*/}
+      {!isEditing && (
+        <div className="mt-2 flex">
+          <button
+            className={cn(
+              'serlo-button-blue mr-3 h-8',
+              allBlanksHaveText && blanks.length > 0
+                ? ''
+                : 'pointer-events-none opacity-0'
             )}
-          />
-        )}
-      </div>
+            onClick={() => {
+              checkAnswers()
+              setShowFeedback(true)
+            }}
+          >
+            {exStrings.check}
+          </button>
+          {showFeedback && (
+            <Feedback
+              correct={[...feedbackForBlanks].every(
+                (entry) => entry[1].isCorrect
+              )}
+            />
+          )}
+        </div>
+      )}
 
       {/* Only debug output from here on */}
       <div className="hidden">
