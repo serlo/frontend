@@ -6,6 +6,7 @@ import {
   useAppDispatch,
   store,
 } from '@editor/store'
+import type { EditorRowsDocument } from '@editor/types/editor-plugins'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 import { useCallback } from 'react'
@@ -44,6 +45,16 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
         if (state?.state) {
           media = { state: state.state as unknown, pluginType: type }
           break
+        }
+      }
+
+      // TODO: validate somehow?
+      if (!media && text.startsWith('{"plugin":"rows"')) {
+        const rowsDocument = JSON.parse(text) as EditorRowsDocument
+        if (rowsDocument.state.length !== 0) return
+        const pluginDocument = rowsDocument.state.at(0)
+        if (pluginDocument) {
+          media = { pluginType: rowsDocument.plugin, state: rowsDocument.state }
         }
       }
 
