@@ -52,7 +52,11 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       }
 
       // pasting editor document string and insert as plugins
-      if (!media && text.startsWith('{"plugin":"rows"')) {
+      if (
+        shouldUseFeature('editorPluginCopyTool') &&
+        !media &&
+        text.startsWith('{"plugin":"rows"')
+      ) {
         const rowsDocument = JSON.parse(text) as EditorRowsDocument
         if (rowsDocument.state.length !== 1) return
         const pluginDocument = rowsDocument.state.at(0)
