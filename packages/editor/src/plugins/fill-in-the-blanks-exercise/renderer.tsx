@@ -24,6 +24,8 @@ interface FillInTheBlanksRendererProps {
 export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
   const { text, textPluginState, mode, initialTextInBlank, isEditing } = props
 
+  const [isFeedbackVisible, setIsFeedbackVisible] = useState<boolean>(false)
+
   // Maps blankId to the learner feedback after clicking solution check button
   // isCorrect === undefined -> no feedback
   const [feedbackForBlanks, setFeedbackForBlanks] = useState(
@@ -72,6 +74,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
       const newMap = new Map<DraggableId, BlankId>(locationOfDraggables)
       newMap.delete(item.draggableId)
       setLocationOfDraggables(newMap)
+      setIsFeedbackVisible(false)
     },
     [locationOfDraggables]
   )
@@ -127,6 +130,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
           <BlankCheckButton
             isVisible={shouldShowCheckButton}
             feedback={feedbackForBlanks}
+            isFeedbackVisible={isFeedbackVisible}
             onClick={checkAnswers}
           />
         ) : null}
@@ -184,6 +188,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     })
 
     setFeedbackForBlanks(newBlankAnswersCorrectList)
+    setIsFeedbackVisible(true)
   }
 
   function getTrimmedBlankText(blankId: string) {

@@ -1,42 +1,33 @@
 import { SolutionFeedback } from '@editor/editor-ui/exercises/solution-feedback'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { useState } from 'react'
 
 import { cn } from '@/helper/cn'
 
 interface BlankCheckButtonProps {
   isVisible: boolean
   feedback: Map<string, { isCorrect?: boolean | undefined }>
+  isFeedbackVisible: boolean
   onClick: () => void
 }
 
 export function BlankCheckButton(props: BlankCheckButtonProps) {
-  const { isVisible, feedback, onClick } = props
+  const { isVisible, feedback, isFeedbackVisible, onClick } = props
 
-  const exStrings = useInstanceData().strings.content.exercises
+  const exercisesStrings = useInstanceData().strings.content.exercises
 
-  // Used to show feedback when user clicked "Stimmts?" button
-  const [showFeedback, setShowFeedback] = useState<boolean>(false)
+  const className = cn(
+    'serlo-button-blue mr-3 h-8',
+    isVisible ? '' : 'pointer-events-none opacity-0'
+  )
+
+  const isCorrect = [...feedback].every((entry) => entry[1].isCorrect)
 
   return (
     <div className="mt-2 flex">
-      <button
-        className={cn(
-          'serlo-button-blue mr-3 h-8',
-          isVisible ? '' : 'pointer-events-none opacity-0'
-        )}
-        onClick={() => {
-          onClick()
-          setShowFeedback(true)
-        }}
-      >
-        {exStrings.check}
+      <button className={className} onClick={onClick}>
+        {exercisesStrings.check}
       </button>
-      {showFeedback && (
-        <SolutionFeedback
-          correct={[...feedback].every((entry) => entry[1].isCorrect)}
-        />
-      )}
+      {isFeedbackVisible ? <SolutionFeedback correct={isCorrect} /> : null}
     </div>
   )
 }
