@@ -12,11 +12,11 @@ export function DraggableSolution(props: {
   })
 
   return (
-    <div
-      className="inline-block h-full rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2"
+    <span
+      className="rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2"
       ref={dragRef}
     >
       {props.text}
-    </div>
+    </span>
   )
 }

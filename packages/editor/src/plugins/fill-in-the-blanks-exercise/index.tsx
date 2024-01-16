@@ -43,7 +43,7 @@ function createState() {
         isInlineChildEditor: true,
       },
     }),
-    mode: string(defaultMode), // Currently there is no method for the user to switch to 'drag-and-drop'
+    mode: string('drag-and-drop'), // Currently there is no method for the user to switch to 'drag-and-drop'
     // This could be used to store additional answers for mode drag-and-drop in the future
     // additionalDraggableAnswers: optional(list(object({ answer: string() }))),
   })

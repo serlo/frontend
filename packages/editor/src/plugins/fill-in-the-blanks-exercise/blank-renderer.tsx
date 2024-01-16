@@ -61,19 +61,18 @@ export function BlankRenderer(props: {
           }}
         />
       ) : (
-        <>
-          <DroppableBlank
-            blankId={props.blankId}
-            disable={draggableIdInThisBlank !== null}
-          >
-            {draggableIdInThisBlank ? (
-              <DraggableSolution
-                text={draggableText ?? ''}
-                draggableId={draggableIdInThisBlank}
-              />
-            ) : null}
-          </DroppableBlank>
-        </>
+        <DroppableBlank
+          blankId={props.blankId}
+          disable={draggableIdInThisBlank !== null}
+          isAnswerCorrect={isAnswerCorrect}
+        >
+          {draggableIdInThisBlank ? (
+            <DraggableSolution
+              text={draggableText ?? ''}
+              draggableId={draggableIdInThisBlank}
+            />
+          ) : null}
+        </DroppableBlank>
       )}
     </>
   )
@@ -97,6 +96,7 @@ export function BlankRenderer(props: {
 function DroppableBlank(props: {
   blankId: BlankId
   disable: boolean
+  isAnswerCorrect: boolean | undefined
   children: ReactNode
 }) {
   const fillInTheBlanksContext = useContext(FillInTheBlanksContext)
@@ -122,8 +122,10 @@ function DroppableBlank(props: {
   return (
     <span
       className={cn(
-        'rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2',
-        isOver && !props.disable && 'bg-slate-400'
+        'rounded-full border border-brand bg-brand-50 px-2',
+        isOver && !props.disable && 'bg-slate-400',
+        props.isAnswerCorrect && 'border-green-500',
+        props.isAnswerCorrect === false && 'border-red-500'
       )}
       ref={dropRef}
     >
