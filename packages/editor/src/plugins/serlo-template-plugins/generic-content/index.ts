@@ -14,13 +14,15 @@ const state = object({
 })
 
 export type GenericContentTypePluginState = typeof state
-export type GenericContentTypePluginProps = EditorPluginProps<GenericContentTypePluginState>
+export type GenericContentTypePluginProps =
+  EditorPluginProps<GenericContentTypePluginState>
 
 /**
- * A generic content plugin. As opposed to other content types like 'article' that must contain additional information like 'title', 'id', ... this plugin must only contain a rows plugin containing the content. There can be additional properties but they are optional.  
+ * A generic content plugin. As opposed to other content types like 'article' that must contain additional information like 'title', 'id', ... this plugin must only contain a rows plugin containing the content. There can be additional properties but they are optional.
  */
-export const genericContentTypePlugin: EditorPlugin<GenericContentTypePluginState> = {
-  Component: GenericContentTypeEditor,
-  state: state,
-  config: {},
-}
+export const genericContentTypePlugin: EditorPlugin<GenericContentTypePluginState> =
+  {
+    Component: GenericContentTypeEditor,
+    state: state,
+    config: {},
+  }
