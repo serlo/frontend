@@ -11,7 +11,6 @@ export enum EditorPluginType {
   Image = 'image',
   Injection = 'injection',
   Multimedia = 'multimedia',
-  RootWithOptionals = 'rootWithOptionals',
 
   PageLayout = 'pageLayout',
   PagePartners = 'pagePartners',
