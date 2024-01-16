@@ -1,4 +1,3 @@
-import * as t from 'io-ts'
 import { type ReactNode, useMemo, useState, useCallback } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -8,20 +7,7 @@ import { BlankCheckButton } from './components/blank-check-button'
 import { DraggableSolution } from './components/blank-solution'
 import { DraggableSolutionArea } from './components/blank-solution-area'
 import { FillInTheBlanksContext } from './context/blank-context'
-import { Blank } from '../text'
-
-// TODO: Copy of type in /src/plugins/text/types/text-editor.ts
-const Answer = t.type({
-  answer: t.string,
-})
-const Blank = t.type({
-  type: t.literal('textBlank'),
-  children: t.unknown,
-  blankId: t.string,
-  correctAnswers: t.array(Answer),
-})
-
-type Blanks = t.TypeOf<typeof Blank>[]
+import { Blank, type BlankType } from './types'
 
 interface FillInTheBlanksRendererProps {
   text: ReactNode
@@ -38,14 +24,14 @@ interface FillInTheBlanksRendererProps {
 export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
   const { text, textPluginState, mode, initialTextInBlank, isEditing } = props
 
-  // Maps blankId to the learner feedback after clicking "Stimmts?" button
+  // Maps blankId to the learner feedback after clicking solution check button
   // isCorrect === undefined -> no feedback
   const [feedbackForBlanks, setFeedbackForBlanks] = useState(
     new Map<BlankId, { isCorrect?: boolean }>()
   )
 
-  /** Array of blank elements extracted from text editor state */
-  const blanks: Blanks = useMemo(() => {
+  // Array of blank elements extracted from text editor state
+  const blanks: BlankType[] = useMemo(() => {
     return getBlanksWithinObject(textPluginState)
   }, [textPluginState])
 
@@ -215,11 +201,11 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
 }
 
 /** Searches for blank objects in text plugin state. They can be at varying depths. */
-function getBlanksWithinObject(obj: object): Blanks {
+function getBlanksWithinObject(obj: object): BlankType[] {
   if (Blank.is(obj)) return [obj]
 
   // Recursively search this object's values for blank objects
-  return Object.values(obj).reduce((blanks: Blanks, value: unknown) => {
+  return Object.values(obj).reduce((blanks: BlankType[], value: unknown) => {
     if (typeof value === 'object' && value !== null) {
       return [...blanks, ...getBlanksWithinObject(value)]
     }

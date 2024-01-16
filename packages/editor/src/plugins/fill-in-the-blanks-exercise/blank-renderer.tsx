@@ -11,10 +11,10 @@ import { ReactEditor, useSelected, useSlate, useFocused } from 'slate-react'
 
 import { BlankRendererInput } from './components/blank-renderer-input'
 import { FillInTheBlanksContext } from './context/blank-context'
-import type { Blank } from '../text'
+import type { BlankInterface } from './types'
 
 interface BlankRendererProps {
-  element: Blank
+  element: BlankInterface
 }
 
 export function BlankRenderer({ element }: BlankRendererProps) {
