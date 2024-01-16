@@ -5,7 +5,7 @@ Feature('Serlo Editor - Blank exercise')
 
 Before(popupWarningFix)
 
-const FillInTheBlanksExercise = 'blanksExercise'
+const FillInTheBlanksExerciseButton = '$add-exercise-blanksExercise'
 
 const initialTextPluginCount = 1
 
@@ -13,7 +13,7 @@ Scenario('Create and remove fill in the gap exercise', async ({ I }) => {
   I.amOnPage('/entity/create/Exercise/23869')
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
-  I.click(`$add-exercise-${FillInTheBlanksExercise}`)
+  I.click(FillInTheBlanksExerciseButton)
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.click(locate('$plugin-text-editor').last())
@@ -31,7 +31,7 @@ Scenario(
     I.amOnPage('/entity/create/Exercise/23869')
 
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
-    I.click(`$add-exercise-${FillInTheBlanksExercise}`)
+    I.click(FillInTheBlanksExerciseButton)
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
     I.pressKey(['CommandOrControl', 'Z'])
@@ -44,7 +44,7 @@ Scenario('Create and remove gaps through toolbar', async ({ I }) => {
   I.amOnPage('/entity/create/Exercise/23869')
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
-  I.click(`$add-exercise-${FillInTheBlanksExercise}`)
+  I.click(FillInTheBlanksExerciseButton)
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.click(locate('$plugin-text-editor').last())
@@ -53,15 +53,15 @@ Scenario('Create and remove gaps through toolbar', async ({ I }) => {
   I.say('Select last word with keyboard and create gap')
   I.pressKey(['CommandOrControl', 'Shift', 'ArrowLeft'])
 
-  I.seeElement('$plugin-toolbar-button-create-blank')
-  I.dontSeeElement('$plugin-toolbar-button-remove-blank')
-  I.click('$plugin-toolbar-button-create-blank')
-  I.seeElement('$plugin-toolbar-button-remove-blank')
-  I.dontSeeElement('$plugin-toolbar-button-create-blank')
+  I.seeElement('$plugin-toolbar-button-lücke-erstellen')
+  I.dontSeeElement('$plugin-toolbar-button-lücke-entfernen')
+  I.click('$plugin-toolbar-button-lücke-erstellen')
+  I.seeElement('$plugin-toolbar-button-lücke-entfernen')
+  I.dontSeeElement('$plugin-toolbar-button-lücke-erstellen')
 
   I.seeNumberOfElements('$blank-input', 1)
-  I.click('$plugin-toolbar-button-remove-blank')
-  I.dontSeeElement('$plugin-toolbar-button-remove-blank')
+  I.click('$plugin-toolbar-button-lücke-entfernen')
+  I.dontSeeElement('$plugin-toolbar-button-lücke-entfernen')
   I.dontSeeElement('$blank-input')
 })
 
@@ -69,14 +69,14 @@ Scenario('Create a blank gap and type in it', async ({ I }) => {
   I.amOnPage('/entity/create/Exercise/23869')
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
-  I.click(`$add-exercise-${FillInTheBlanksExercise}`)
+  I.click(FillInTheBlanksExerciseButton)
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.click(locate('$plugin-text-editor').last())
   I.say('Create an empty gap then type in it')
 
   I.type('No gap here ')
-  I.click('$plugin-toolbar-button-create-blank')
+  I.click('$plugin-toolbar-button-lücke-erstellen')
   I.seeNumberOfElements('$blank-input', 1)
   const GapContent = 'gap content'
   I.type(GapContent)
@@ -87,20 +87,20 @@ Scenario('Create and delete gaps with backspace/del', async ({ I }) => {
   I.amOnPage('/entity/create/Exercise/23869')
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
-  I.click(`$add-exercise-${FillInTheBlanksExercise}`)
+  I.click(FillInTheBlanksExerciseButton)
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.click(locate('$plugin-text-editor').last())
   I.type('No gap here ')
 
   I.say('Create a gap, then delete it with backspace')
-  I.click('$plugin-toolbar-button-create-blank')
+  I.click('$plugin-toolbar-button-lücke-erstellen')
   I.seeNumberOfElements('$blank-input', 1)
   I.pressKey('Backspace')
   I.dontSeeElement('$blank-input')
 
   I.say('Create a gap, then delete it with del')
-  I.click('$plugin-toolbar-button-create-blank')
+  I.click('$plugin-toolbar-button-lücke-erstellen')
   I.seeNumberOfElements('$blank-input', 1)
   I.pressKey('Delete')
   I.dontSeeElement('$blank-input')
@@ -112,7 +112,7 @@ Scenario('Adding a gap before any text gets focused', async ({ I }) => {
   I.amOnPage('/entity/create/Exercise/23869')
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
-  I.click(`$add-exercise-${FillInTheBlanksExercise}`)
+  I.click(FillInTheBlanksExerciseButton)
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.click(locate('$plugin-text-editor').last())
@@ -120,7 +120,7 @@ Scenario('Adding a gap before any text gets focused', async ({ I }) => {
   // If we uncomment this, the test passes
   // I.type('Some text')
 
-  I.click('$plugin-toolbar-button-create-blank')
+  I.click('$plugin-toolbar-button-lücke-erstellen')
   I.seeNumberOfElements('$blank-input', 1)
   const isBlankInputFocused = await I.executeScript(() => {
     const blankInput = document.querySelector("[data-qa='blank-input']")
@@ -140,14 +140,14 @@ Scenario(
     I.amOnPage('/entity/create/Exercise/23869')
 
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
-    I.click(`$add-exercise-${FillInTheBlanksExercise}`)
+    I.click(FillInTheBlanksExerciseButton)
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
     I.click(locate('$plugin-text-editor').last())
     I.type('No gap here ')
 
     I.say('Create two gaps')
-    I.click('$plugin-toolbar-button-create-blank')
+    I.click('$plugin-toolbar-button-lücke-erstellen')
     I.seeNumberOfElements('$blank-input', 1)
     I.type('first')
 
@@ -156,7 +156,7 @@ Scenario(
     // add non gapped text with surrounding space
     I.type(' and ')
 
-    I.click('$plugin-toolbar-button-create-blank')
+    I.click('$plugin-toolbar-button-lücke-erstellen')
     I.type('second')
     I.seeNumberOfElements('$blank-input', 2)
 
