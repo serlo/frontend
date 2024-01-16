@@ -2,38 +2,34 @@ import { ReactNode } from 'react'
 import { useDrop } from 'react-dnd'
 
 import { blankSolutionDragType } from './blank-solution'
-import type { BlankId, DraggableId } from '..'
+import type { DraggableId } from '..'
 import { cn } from '@/helper/cn'
 
-export function DraggableSolutionArea(props: {
+interface DraggableSolutionAreaProps {
   children: ReactNode
-  locationOfDraggables: {
-    value: Map<DraggableId, BlankId>
-    set: React.Dispatch<React.SetStateAction<Map<DraggableId, BlankId>>>
-  }
-}) {
+  onDrop: (item: { draggableId: DraggableId }) => void
+}
+
+export function DraggableSolutionArea(props: DraggableSolutionAreaProps) {
+  const { onDrop, children } = props
+
   const [{ isOver }, dropRef] = useDrop({
     accept: blankSolutionDragType,
-    drop: (item: { draggableId: DraggableId }) => {
-      const newMap = new Map<DraggableId, BlankId>(
-        props.locationOfDraggables.value
-      )
-      newMap.delete(item.draggableId)
-      props.locationOfDraggables.set(newMap)
-    },
+    drop: onDrop,
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
   })
+
   return (
     <div
       className={cn(
-        'mt-5 min-h-8 w-full rounded-full bg-slate-100',
+        'mt-5 flex min-h-8 w-full items-stretch rounded-full bg-slate-100',
         isOver ? 'bg-slate-200' : ''
       )}
       ref={dropRef}
     >
-      {props.children}
+      {children}
     </div>
   )
 }
