@@ -137,7 +137,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
       {/* Only show "Stimmt's?" during render/preview*/}
       {!isEditing && (
         <div className="mt-2 flex">
-          {allBlanksHaveText ? (
+          {allBlanksHaveText && blanks.length > 0 ? (
             <button
               data-qa="plugin-exercise-check-answer-button"
               className="serlo-button-blue mr-3 h-8"

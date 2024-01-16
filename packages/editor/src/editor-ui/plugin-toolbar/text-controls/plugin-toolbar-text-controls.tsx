@@ -46,14 +46,6 @@ export function PluginToolbarTextControls({
         {controls.map((control, index) => {
           if (mathActive && !isMath(control)) return null
           if (blankActive && !isBlank(control)) return null
-          // To save space in the toolbar, we don't render the code editor
-          // within a fill-in-the-gap exercise
-          if (
-            hasFillInTheBlanks &&
-            control.name === TextEditorFormattingOption.code
-          ) {
-            return null
-          }
 
           const next = controls.at(index + 1)
           const showSeparator =

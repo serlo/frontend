@@ -5,8 +5,6 @@ Feature('Serlo Editor - Blank exercise')
 
 Before(popupWarningFix)
 
-// TODO ideally import from
-// editor/src/types/editor-plugin-type.ts/EditorPluginType.FillInTheBlanksExercise
 const FillInTheBlanksExercise = 'blanksExercise'
 
 const initialTextPluginCount = 1
@@ -18,8 +16,6 @@ Scenario('Create and remove fill in the gap exercise', async ({ I }) => {
   I.click(`$add-exercise-${FillInTheBlanksExercise}`)
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
-  // I.click('$plugin-text-leaf-element')
-  // I.click('Schreibe einen Text und füge Lücken ein')
   I.click(locate('$plugin-text-editor').last())
 
   I.type('This is a test')
