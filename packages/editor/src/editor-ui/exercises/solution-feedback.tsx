@@ -1,13 +1,15 @@
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import type { ReactNode } from 'react'
 
-export interface FeedbackProps {
+export interface SolutionFeedbackProps {
   correct: boolean
   children?: ReactNode
   missedSome?: boolean
 }
 
-export function Feedback({ children, correct, missedSome }: FeedbackProps) {
+export function SolutionFeedback(props: SolutionFeedbackProps) {
+  const { children, correct, missedSome } = props
+
   const exStrings = useInstanceData().strings.content.exercises
   const fallbackString =
     exStrings[correct ? 'correct' : missedSome ? 'missedSome' : 'wrong']

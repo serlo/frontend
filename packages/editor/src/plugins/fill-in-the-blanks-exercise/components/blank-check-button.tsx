@@ -1,8 +1,7 @@
+import { SolutionFeedback } from '@editor/editor-ui/exercises/solution-feedback'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { useState } from 'react'
 
-// TODO: Shouldn't import this from another plugin
-import { Feedback } from '../../sc-mc-exercise/renderer/feedback'
 import { cn } from '@/helper/cn'
 
 interface BlankCheckButtonProps {
@@ -34,7 +33,7 @@ export function BlankCheckButton(props: BlankCheckButtonProps) {
         {exStrings.check}
       </button>
       {showFeedback && (
-        <Feedback
+        <SolutionFeedback
           correct={[...feedback].every((entry) => entry[1].isCorrect)}
         />
       )}
