@@ -1,3 +1,4 @@
+import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
@@ -5,7 +6,6 @@ import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { useState } from 'react'
 
-import { Feedback } from './feedback'
 import type { ScMcExerciseRendererProps } from './renderer'
 
 export function McRenderer({
@@ -88,7 +88,7 @@ export function McRenderer({
           {exStrings.check}
         </button>
         {showFeedback && (
-          <Feedback correct={allCorrect} missedSome={missedSome} />
+          <ExerciseFeedback correct={allCorrect} missedSome={missedSome} />
         )}
       </div>
     </div>
