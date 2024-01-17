@@ -27,7 +27,7 @@ export function BlankRendererStatic({ blankId }: BlankRendererStaticProps) {
   )
   const draggableText = draggable?.text ?? ''
 
-  const feedback = context.feedbackForBlanks
+  const feedback = context.feedbackForBlanks.value
   const isAnswerCorrect = feedback.get(blankId)?.isCorrect
 
   return context.mode === 'typing' ? (

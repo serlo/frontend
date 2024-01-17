@@ -1,5 +1,6 @@
 import { ChangeEventHandler, KeyboardEventHandler, forwardRef } from 'react'
 
+import { BlankId } from '..'
 import { FillInTheBlanksContextType } from '../context/blank-context'
 import { cn } from '@/helper/cn'
 
@@ -56,5 +57,10 @@ export const BlankRendererInput = forwardRef<
 
     // Update state
     context.textUserTypedIntoBlanks.set(newTextUserTypedIntoBlankList)
+
+    // Reset feedback state
+    context.feedbackForBlanks.set(
+      new Map<BlankId, { isCorrect: boolean | undefined }>()
+    )
   }
 })

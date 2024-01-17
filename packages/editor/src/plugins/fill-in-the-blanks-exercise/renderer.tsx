@@ -108,7 +108,10 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
         <FillInTheBlanksContext.Provider
           value={{
             mode,
-            feedbackForBlanks,
+            feedbackForBlanks: {
+              value: feedbackForBlanks,
+              set: setFeedbackForBlanks,
+            },
             textInBlanks,
             textUserTypedIntoBlanks: {
               value: textUserTypedIntoBlanks,
