@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 
-import { BlankRendererInput } from './components/blank-renderer-input'
 import { BlankDraggableAnswer } from './components/blank-draggable-answer'
+import { BlankRendererInput } from './components/blank-renderer-input'
 import { DroppableBlank } from './components/droppable-blank'
 import { FillInTheBlanksContext } from './context/blank-context'
 
