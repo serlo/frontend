@@ -1,6 +1,5 @@
+import { DndWrapper } from '@editor/core/components/dnd-wrapper'
 import { type ReactNode, useMemo, useState, useCallback } from 'react'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import type { BlankId, DraggableId, FillInTheBlanksMode } from '.'
 import { BlankCheckButton } from './components/blank-check-button'
@@ -97,8 +96,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
   ])
 
   return (
-    // Additional prop 'context={window}' prevents error with nested DndProvider components. See: https://github.com/react-dnd/react-dnd/issues/3257#issuecomment-1239254032
-    <DndProvider backend={HTML5Backend} context={window}>
+    <DndWrapper>
       <div className="mx-side mb-block leading-[30px] [&>p]:leading-[30px]">
         <FillInTheBlanksContext.Provider
           value={{
@@ -173,7 +171,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
           ))}
         </div>
       </div>
-    </DndProvider>
+    </DndWrapper>
   )
 
   function checkAnswers() {
