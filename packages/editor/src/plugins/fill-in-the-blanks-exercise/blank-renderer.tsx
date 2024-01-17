@@ -26,8 +26,7 @@ export function BlankRenderer({ element }: BlankRendererProps) {
   const inputRef = createRef<HTMLInputElement>()
   useEffect(() => {
     // Focus input when the blank is added
-    const input = inputRef.current
-    if (input) input.focus()
+    setTimeout(() => inputRef.current?.focus())
 
     // Editor gets refocused when the blank is removed from within
     // text-controls/utils/blank.ts as it leads to slate errors on unmount.

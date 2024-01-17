@@ -69,5 +69,5 @@ function addBlank(editor: SlateEditor) {
     children: [{ text: '' }],
   }
 
-  Transforms.insertNodes(editor, newBlankNode, { at: selection })
+  Transforms.insertNodes(editor, newBlankNode)
 }
