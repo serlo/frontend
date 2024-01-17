@@ -4,8 +4,8 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import type { BlankId, DraggableId, FillInTheBlanksMode } from '.'
 import { BlankCheckButton } from './components/blank-check-button'
-import { DraggableSolution } from './components/blank-solution'
-import { DraggableSolutionArea } from './components/blank-solution-area'
+import { BlankDraggableAnswer } from './components/blank-draggable-answer'
+import { BlankDraggableArea } from './components/blank-draggable-area'
 import { FillInTheBlanksContext } from './context/blank-context'
 import { Blank, type BlankType } from './types'
 
@@ -74,6 +74,9 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
       const newMap = new Map<DraggableId, BlankId>(locationOfDraggables)
       newMap.delete(item.draggableId)
       setLocationOfDraggables(newMap)
+      setFeedbackForBlanks(
+        new Map<BlankId, { isCorrect: boolean | undefined }>()
+      )
       setIsFeedbackVisible(false)
     },
     [locationOfDraggables]
@@ -117,13 +120,13 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
         </FillInTheBlanksContext.Provider>
 
         {mode === 'drag-and-drop' ? (
-          <DraggableSolutionArea onDrop={handleDraggableAreaDrop}>
+          <BlankDraggableArea onDrop={handleDraggableAreaDrop}>
             {draggables.map((draggable, index) =>
               locationOfDraggables.get(draggable.draggableId) ? null : (
-                <DraggableSolution key={index} {...draggable} />
+                <BlankDraggableAnswer key={index} {...draggable} />
               )
             )}
-          </DraggableSolutionArea>
+          </BlankDraggableArea>
         ) : null}
 
         {!isEditing ? (

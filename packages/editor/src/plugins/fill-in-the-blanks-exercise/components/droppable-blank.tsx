@@ -1,7 +1,7 @@
 import { ReactNode, useContext } from 'react'
 import { useDrop } from 'react-dnd'
 
-import { blankSolutionDragType } from './blank-solution'
+import { blankDraggableAnswerDragType } from './blank-draggable-answer'
 import type { BlankId, DraggableId } from '..'
 import { FillInTheBlanksContext } from '../context/blank-context'
 import { cn } from '@/helper/cn'
@@ -18,7 +18,7 @@ export function DroppableBlank(props: DroppableBlankProps) {
   const fillInTheBlanksContext = useContext(FillInTheBlanksContext)
 
   const [{ isOver }, dropRef] = useDrop({
-    accept: blankSolutionDragType,
+    accept: blankDraggableAnswerDragType,
     drop: ({ draggableId }: { draggableId: DraggableId }) => {
       if (!fillInTheBlanksContext) return
       const newMap = new Map<DraggableId, BlankId>(

@@ -3,19 +3,19 @@ import { useDrag } from 'react-dnd'
 import type { DraggableId } from '..'
 import { cn } from '@/helper/cn'
 
-export const blankSolutionDragType = 'blank-solution'
+export const blankDraggableAnswerDragType = 'blank-solution'
 
-interface DraggableSolutionProps {
+interface BlankDraggableAnswerProps {
   text: string
   draggableId: DraggableId
   isAnswerCorrect?: boolean
 }
 
-export function DraggableSolution(props: DraggableSolutionProps) {
+export function BlankDraggableAnswer(props: BlankDraggableAnswerProps) {
   const { draggableId, text, isAnswerCorrect } = props
 
   const [, dragRef] = useDrag({
-    type: blankSolutionDragType,
+    type: blankDraggableAnswerDragType,
     item: { draggableId },
   })
 

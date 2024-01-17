@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 
 import { BlankRendererInput } from './components/blank-renderer-input'
-import { DraggableSolution } from './components/blank-solution'
+import { BlankDraggableAnswer } from './components/blank-draggable-answer'
 import { DroppableBlank } from './components/droppable-blank'
 import { FillInTheBlanksContext } from './context/blank-context'
 
@@ -39,7 +39,7 @@ export function BlankRendererStatic({ blankId }: BlankRendererStaticProps) {
   ) : (
     <DroppableBlank blankId={blankId} isDisabled={draggableId !== null}>
       {draggableId ? (
-        <DraggableSolution
+        <BlankDraggableAnswer
           text={draggableText}
           draggableId={draggableId}
           isAnswerCorrect={isAnswerCorrect}
