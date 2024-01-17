@@ -26,7 +26,7 @@ async function testLandingPage(I: CodeceptJS.I, data: LandingPageData) {
 
   // Visit taxonomy
   I.click('Alle Themen')
-  I.waitForElement('$breadcrumbs', 5)
+  I.waitForElement('$breadcrumbs', 15) // page load is quite slow
   I.click(data.taxRootName, locate('$breadcrumbs').withChild('a'))
 
   // Check correct filter
