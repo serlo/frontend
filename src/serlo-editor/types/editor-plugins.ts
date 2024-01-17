@@ -26,6 +26,7 @@ import type { RowsPluginState } from '@/serlo-editor/plugins/rows'
 import type { ScMcExercisePluginState } from '@/serlo-editor/plugins/sc-mc-exercise'
 import { SerloTablePluginState } from '@/serlo-editor/plugins/serlo-table'
 import { TextExerciseGroupTypePluginState } from '@/serlo-editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
+import type { GenericContentTypePluginState } from '@/serlo-editor/plugins/serlo-template-plugins/generic-content'
 import type { SpoilerPluginState } from '@/serlo-editor/plugins/spoiler'
 import type {
   TextEditorState,
@@ -215,6 +216,11 @@ export interface EditorTemplateExerciseGroupDocument {
     unrevisedRevisions?: number
     license?: License
   }
+}
+export interface EditorTemplateGenericContentDocument {
+  plugin: TemplatePluginType.GenericContent
+  state: PrettyStaticState<GenericContentTypePluginState>
+  id?: string
 }
 
 export type SupportedEditorDocument =
