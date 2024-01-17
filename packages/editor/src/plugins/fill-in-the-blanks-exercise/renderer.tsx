@@ -57,11 +57,18 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
   }, [blanks, textUserTypedIntoBlanks, initialTextInBlank])
 
   const draggables = useMemo(() => {
-    return blanks.map(({ blankId, correctAnswers }) => ({
+    const sorted = blanks.map(({ blankId, correctAnswers }) => ({
       draggableId: `solution-${blankId}`,
       text: correctAnswers[0].answer,
     }))
-  }, [blanks])
+    if (isEditing) return sorted
+
+    const shuffled = sorted
+      .map((value) => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value)
+    return shuffled
+  }, [blanks, isEditing])
 
   // Maps DraggableId to the BlankId where this draggable element is currently located
   const [locationOfDraggables, setLocationOfDraggables] = useState(
