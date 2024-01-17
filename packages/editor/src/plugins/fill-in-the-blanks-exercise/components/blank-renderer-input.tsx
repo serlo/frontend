@@ -1,11 +1,13 @@
 import { ChangeEventHandler, KeyboardEventHandler, forwardRef } from 'react'
 
+import { BlankId } from '..'
 import { FillInTheBlanksContextType } from '../context/blank-context'
 import { cn } from '@/helper/cn'
 
 interface BlankRendererInputProps {
   blankId: string
   context: FillInTheBlanksContextType
+  isAnswerCorrect?: boolean
   onChange?: ChangeEventHandler<HTMLInputElement>
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>
 }
@@ -14,10 +16,8 @@ export const BlankRendererInput = forwardRef<
   HTMLInputElement,
   BlankRendererInputProps
 >(function BlankRendererInput(props, ref) {
-  const { blankId, context, onChange, onKeyDown } = props
+  const { blankId, context, isAnswerCorrect, onChange, onKeyDown } = props
 
-  const feedback = context.feedbackForBlanks
-  const isAnswerCorrect = feedback.get(blankId)?.isCorrect
   const text = context.textInBlanks.get(blankId)?.text ?? ''
 
   return (
@@ -58,5 +58,10 @@ export const BlankRendererInput = forwardRef<
 
     // Update state
     context.textUserTypedIntoBlanks.set(newTextUserTypedIntoBlankList)
+
+    // Reset feedback state
+    context.feedbackForBlanks.set(
+      new Map<BlankId, { isCorrect: boolean | undefined }>()
+    )
   }
 })

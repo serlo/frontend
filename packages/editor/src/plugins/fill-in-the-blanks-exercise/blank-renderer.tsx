@@ -11,10 +11,10 @@ import { ReactEditor, useSelected, useSlate, useFocused } from 'slate-react'
 
 import { BlankRendererInput } from './components/blank-renderer-input'
 import { FillInTheBlanksContext } from './context/blank-context'
-import type { Blank } from '../text'
+import type { BlankInterface } from './types'
 
 interface BlankRendererProps {
-  element: Blank
+  element: BlankInterface
 }
 
 export function BlankRenderer({ element }: BlankRendererProps) {
@@ -26,8 +26,7 @@ export function BlankRenderer({ element }: BlankRendererProps) {
   const inputRef = createRef<HTMLInputElement>()
   useEffect(() => {
     // Focus input when the blank is added
-    const input = inputRef.current
-    if (input) input.focus()
+    setTimeout(() => inputRef.current?.focus())
 
     // Editor gets refocused when the blank is removed from within
     // text-controls/utils/blank.ts as it leads to slate errors on unmount.

@@ -15,7 +15,7 @@ export const features = {
     cookieName: 'useEditorPluginCopyTool',
     isActive: false,
     activeInDev: true,
-    hideInProduction: true,
+    hideInProduction: false,
   },
   editorAnchorLinkCopyTool: {
     cookieName: 'useEditorAnchorLinkCopyTool',

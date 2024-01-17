@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 
+import { BlankDraggableAnswer } from './components/blank-draggable-answer'
 import { BlankRendererInput } from './components/blank-renderer-input'
-import { DraggableSolution } from './components/blank-solution'
 import { DroppableBlank } from './components/droppable-blank'
 import { FillInTheBlanksContext } from './context/blank-context'
 
@@ -27,12 +27,23 @@ export function BlankRendererStatic({ blankId }: BlankRendererStaticProps) {
   )
   const draggableText = draggable?.text ?? ''
 
+  const feedback = context.feedbackForBlanks.value
+  const isAnswerCorrect = feedback.get(blankId)?.isCorrect
+
   return context.mode === 'typing' ? (
-    <BlankRendererInput blankId={blankId} context={context} />
+    <BlankRendererInput
+      blankId={blankId}
+      context={context}
+      isAnswerCorrect={isAnswerCorrect}
+    />
   ) : (
     <DroppableBlank blankId={blankId} isDisabled={draggableId !== null}>
       {draggableId ? (
-        <DraggableSolution text={draggableText} draggableId={draggableId} />
+        <BlankDraggableAnswer
+          text={draggableText}
+          draggableId={draggableId}
+          isAnswerCorrect={isAnswerCorrect}
+        />
       ) : null}
     </DroppableBlank>
   )

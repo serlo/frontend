@@ -20,6 +20,7 @@ import type { RowsPluginState } from '@editor/plugins/rows'
 import type { ScMcExercisePluginState } from '@editor/plugins/sc-mc-exercise'
 import { SerloTablePluginState } from '@editor/plugins/serlo-table'
 import { TextExerciseGroupTypePluginState } from '@editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
+import { GenericContentTypePluginState } from '@editor/plugins/serlo-template-plugins/generic-content'
 import type { SolutionPluginState } from '@editor/plugins/solution'
 import { SpoilerPluginState } from '@editor/plugins/spoiler'
 import type {
@@ -216,6 +217,11 @@ export interface EditorTemplateExerciseGroupDocument {
     unrevisedRevisions?: number
     license?: License
   }
+}
+export interface EditorTemplateGenericContentDocument {
+  plugin: TemplatePluginType.GenericContent
+  state: PrettyStaticState<GenericContentTypePluginState>
+  id?: string
 }
 
 export type SupportedEditorDocument =
