@@ -1,4 +1,4 @@
-import { SolutionFeedback } from '@editor/editor-ui/exercises/solution-feedback'
+import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
@@ -81,9 +81,9 @@ export function ScRenderer({
               : exStrings.chooseOption}
         </button>
         {showFeedback && selected !== undefined && answers[selected] ? (
-          <SolutionFeedback correct={answers[selected].isCorrect}>
+          <ExerciseFeedback correct={answers[selected].isCorrect}>
             {answers[selected].feedback}
-          </SolutionFeedback>
+          </ExerciseFeedback>
         ) : null}
       </div>
     </div>

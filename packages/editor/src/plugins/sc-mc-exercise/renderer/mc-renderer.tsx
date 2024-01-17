@@ -1,4 +1,4 @@
-import { SolutionFeedback } from '@editor/editor-ui/exercises/solution-feedback'
+import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
@@ -88,7 +88,7 @@ export function McRenderer({
           {exStrings.check}
         </button>
         {showFeedback && (
-          <SolutionFeedback correct={allCorrect} missedSome={missedSome} />
+          <ExerciseFeedback correct={allCorrect} missedSome={missedSome} />
         )}
       </div>
     </div>

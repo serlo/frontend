@@ -7,7 +7,7 @@ export interface SolutionFeedbackProps {
   missedSome?: boolean
 }
 
-export function SolutionFeedback(props: SolutionFeedbackProps) {
+export function ExerciseFeedback(props: SolutionFeedbackProps) {
   const { children, correct, missedSome } = props
 
   const exStrings = useInstanceData().strings.content.exercises

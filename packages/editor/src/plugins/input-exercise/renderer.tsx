@@ -1,4 +1,4 @@
-import { SolutionFeedback } from '@editor/editor-ui/exercises/solution-feedback'
+import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import type A from 'algebra.js'
@@ -79,9 +79,9 @@ export function InputExerciseRenderer({
           </button>
         ) : null}
         {feedback && value ? (
-          <SolutionFeedback correct={feedback.correct}>
+          <ExerciseFeedback correct={feedback.correct}>
             {feedback.message}
-          </SolutionFeedback>
+          </ExerciseFeedback>
         ) : null}
       </div>
     </div>

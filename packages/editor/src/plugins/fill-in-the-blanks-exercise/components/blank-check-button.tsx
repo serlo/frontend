@@ -1,4 +1,4 @@
-import { SolutionFeedback } from '@editor/editor-ui/exercises/solution-feedback'
+import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 
 import { cn } from '@/helper/cn'
@@ -27,7 +27,7 @@ export function BlankCheckButton(props: BlankCheckButtonProps) {
       <button className={className} onClick={onClick}>
         {exercisesStrings.check}
       </button>
-      {isFeedbackVisible ? <SolutionFeedback correct={isCorrect} /> : null}
+      {isFeedbackVisible ? <ExerciseFeedback correct={isCorrect} /> : null}
     </div>
   )
 }
