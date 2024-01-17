@@ -1,5 +1,6 @@
 import { isSelectionWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
+import { onCaptionPasteHandler } from '@editor/plugins/image/utils/on-caption-paste-handler'
 import { checkIsAllowedNesting } from '@editor/plugins/rows/utils/check-is-allowed-nesting'
 import {
   selectDocument,
@@ -17,7 +18,7 @@ import { Editor as SlateEditor } from 'slate'
 import { insertPlugin } from '../utils/insert-plugin'
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 
-interface UseEditablePasteHandlerArgs {
+export interface UseEditablePasteHandlerArgs {
   editor: SlateEditor
   id: string
 }
@@ -40,8 +41,11 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       const document = selectDocument(storeState, id)
       const mayManipulateSiblings = selectMayManipulateSiblings(storeState, id)
       if (!document) return
-      let media
 
+      // special case: pasting in image caption
+      onCaptionPasteHandler({ event, document, files, text, id, dispatch })
+
+      let media
       // pasting editor document string and insert as plugins
       if (
         shouldUseFeature('editorPluginCopyTool') &&
