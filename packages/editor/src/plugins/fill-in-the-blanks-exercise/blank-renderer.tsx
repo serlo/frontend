@@ -26,7 +26,6 @@ export function BlankRenderer({ element }: BlankRendererProps) {
   const inputRef = createRef<HTMLInputElement>()
   useEffect(() => {
     // Focus input when the blank is added
-    const input = inputRef.current
     setTimeout(() => inputRef.current?.focus())
 
     // Editor gets refocused when the blank is removed from within
