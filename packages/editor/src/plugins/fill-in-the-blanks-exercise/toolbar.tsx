@@ -46,6 +46,7 @@ export const FillInTheBlanksToolbar = ({
           <ToolbarSelect
             tooltipText={blanksExerciseStrings.chooseType}
             value={state.mode.value}
+            dataQa="plugin-blanks-mode-switch"
             changeValue={(value) => state.mode.set(value)}
             options={[
               { value: 'typing', text: blanksExerciseStrings.modes.typing },

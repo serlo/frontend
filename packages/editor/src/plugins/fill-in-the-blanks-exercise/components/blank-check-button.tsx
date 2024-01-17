@@ -24,7 +24,11 @@ export function BlankCheckButton(props: BlankCheckButtonProps) {
 
   return (
     <div className="mt-2 flex">
-      <button className={className} onClick={onClick}>
+      <button
+        className={className}
+        onClick={onClick}
+        data-qa="plugin-exercise-check-answer-button"
+      >
         {exercisesStrings.check}
       </button>
       {isFeedbackVisible ? <ExerciseFeedback correct={isCorrect} /> : null}
