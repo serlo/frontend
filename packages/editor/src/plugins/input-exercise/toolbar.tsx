@@ -1,5 +1,6 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
+import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar/components/toolbar-select'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
@@ -43,24 +44,15 @@ export const InputExerciseToolbar = ({
             {scMcStrings.previewMode}{' '}
             <FaIcon icon={previewActive ? faCheckCircle : faCircle} />
           </button>
-          <label className="serlo-tooltip-trigger mr-2">
-            <EditorTooltip text={inputExStrings.chooseType} />
-            <select
-              value={state.type.value}
-              onChange={(event) => state.type.set(event.target.value)}
-              className={cn(`
-                bg-editor-primary-10 mr-2 max-w-[13rem] cursor-pointer rounded-md !border
-                border-gray-500 bg-transparent px-1 py-[1px] text-sm transition-all
-                hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
-              `)}
-            >
-              {Object.values(InputExerciseType).map((exerciseType) => (
-                <option key={exerciseType} value={exerciseType}>
-                  {inputExStrings.types[exerciseType]}
-                </option>
-              ))}
-            </select>
-          </label>
+          <ToolbarSelect
+            tooltipText={inputExStrings.chooseType}
+            value={state.type.value}
+            changeValue={(value) => state.type.set(value)}
+            options={Object.values(InputExerciseType).map((exerciseType) => ({
+              value: exerciseType,
+              text: inputExStrings.types[exerciseType],
+            }))}
+          />
           <label className="serlo-tooltip-trigger">
             <EditorTooltip text={inputExStrings.unit} />
             <input

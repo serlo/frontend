@@ -1,10 +1,10 @@
-import { MultimediaStaticRenderer } from '@serlo/editor/src/plugins/multimedia/static'
-import { StaticRenderer } from '@serlo/editor/src/static-renderer/static-renderer'
-import { EditorPluginType } from '@serlo/editor/src/types/editor-plugin-type'
+import { MultimediaStaticRenderer } from '@editor/plugins/multimedia/static'
+import { StaticRenderer } from '@editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
   EditorImageDocument,
   EditorMultimediaDocument,
-} from '@serlo/editor/src/types/editor-plugins'
+} from '@editor/types/editor-plugins'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 

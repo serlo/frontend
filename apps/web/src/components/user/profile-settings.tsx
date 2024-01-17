@@ -1,4 +1,4 @@
-import { SpoilerRenderer } from '@serlo/editor/src/plugins/spoiler/renderer'
+import { SpoilerRenderer } from '@editor/plugins/spoiler/renderer'
 
 import { ProfileDescriptionEditor } from './profile-description-editor'
 import { ProfileExperimental } from './profile-experimental'

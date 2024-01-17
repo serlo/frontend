@@ -1,4 +1,4 @@
-import { TemplatePluginType } from '@serlo/editor/src/types/template-plugin-type'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 import { InstanceData, UuidType } from '@/data-types'
 

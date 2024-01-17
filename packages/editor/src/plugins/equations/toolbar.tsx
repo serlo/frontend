@@ -1,8 +1,8 @@
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
+import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar/components/toolbar-select'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 import type { EquationsProps } from '.'
 import { TransformationTarget } from './editor/editor-renderer'
@@ -14,22 +14,21 @@ export const EquationsToolbar = ({ id, state }: EquationsProps) => {
     <PluginToolbar
       pluginType={EditorPluginType.Equations}
       pluginSettings={
-        <select
-          onChange={(e) => state.transformationTarget.set(e.target.value)}
-          className={cn(`
-                mr-2 cursor-pointer rounded-md !border border-gray-500
-              bg-editor-primary-100 px-1 py-[1px] text-sm transition-all
-              hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
-              `)}
+        <ToolbarSelect
+          tooltipText=""
           value={state.transformationTarget.value}
-        >
-          <option value={TransformationTarget.Equation}>
-            {equationsStrings.transformationOfEquations}
-          </option>
-          <option value={TransformationTarget.Term}>
-            {equationsStrings.transformationOfTerms}
-          </option>
-        </select>
+          changeValue={(value) => state.transformationTarget.set(value)}
+          options={[
+            {
+              value: TransformationTarget.Equation,
+              text: equationsStrings.transformationOfEquations,
+            },
+            {
+              value: TransformationTarget.Term,
+              text: equationsStrings.transformationOfTerms,
+            },
+          ]}
+        />
       }
       pluginControls={<PluginDefaultTools pluginId={id} />}
     />

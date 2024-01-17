@@ -1,5 +1,5 @@
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
-import { EditorFillInTheBlanksExerciseDocument } from '@editor/types/editor-plugins'
+import type { EditorFillInTheBlanksExerciseDocument } from '@editor/types/editor-plugins'
 
 import type { FillInTheBlanksMode } from '.'
 import { FillInTheBlanksRenderer } from './renderer'

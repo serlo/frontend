@@ -1,9 +1,9 @@
-import { extractStringFromTextDocument } from '@serlo/editor/src/plugins/text/utils/static-extract-text'
+import { extractStringFromTextDocument } from '@editor/plugins/text/utils/static-extract-text'
 import {
   EditorExerciseDocument,
   EditorRowsDocument,
   EditorTemplateExerciseGroupDocument,
-} from '@serlo/editor/src/types/editor-plugins'
+} from '@editor/types/editor-plugins'
 
 import { InstanceData } from '@/data-types'
 import { getTranslatedType } from '@/helper/get-translated-type'

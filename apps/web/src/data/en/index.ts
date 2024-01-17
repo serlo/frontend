@@ -836,6 +836,8 @@ export const loggedInData = {
           link: 'Link (%ctrlOrCmd% + K)',
           noElementPasteInLists:
             'Sorry, pasting elements inside of lists is not allowed.',
+          pastingPluginNotAllowedHere:
+            'Sorry, pasting this plugin here is not allowed.',
           linkOverlay: {
             placeholder: 'https://… or /1234',
             inputLabel: 'Paste or type a link',
@@ -912,9 +914,17 @@ export const loggedInData = {
           description: 'Single Choice or Multiple Choice',
         },
         blanksExercise: {
-          title: 'Fill In The Blanks Exercise',
+          title: 'Fill In The Blanks',
           description: 'Text with blanks',
           placeholder: 'Write a text and add blanks',
+          chooseType: 'Choose the exercise type',
+          modes: {
+            typing: 'Typing',
+            'drag-and-drop': 'Drag & Drop',
+          },
+          previewMode: 'Preview',
+          previewIsActiveHint: 'Edit the exercise again',
+          previewIsDeactiveHint: 'Preview the exercise',
         },
       },
       templatePlugins: {
@@ -1076,6 +1086,8 @@ export const loggedInData = {
         ready: 'Ready to save?',
         anchorLinkWarning:
           'This link will only work in the frontend and for content that has a somewhat new revision.',
+        pluginCopyInfo: 'You can now paste this plugin into text plugins',
+        pluginCopyButtonLabel: 'Copy plugin to clipboard',
       },
       taxonomy: {
         title: 'Title',

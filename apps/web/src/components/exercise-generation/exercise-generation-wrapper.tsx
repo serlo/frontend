@@ -1,4 +1,4 @@
-import { EditorProps } from '@serlo/editor/src/core'
+import { EditorProps } from '@editor/core'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 

@@ -1,7 +1,7 @@
+import type { StateTypeReturnType } from '@editor/plugin'
+import { entity } from '@editor/plugins/serlo-template-plugins/common/common'
+import { useHandleSave } from '@editor/plugins/serlo-template-plugins/helpers/use-handle-save'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import type { StateTypeReturnType } from '@serlo/editor/src/plugin'
-import { entity } from '@serlo/editor/src/plugins/serlo-template-plugins/common/common'
-import { useHandleSave } from '@serlo/editor/src/plugins/serlo-template-plugins/helpers/use-handle-save'
 import { useContext, useEffect, useState } from 'react'
 
 import { LocalStorageButton } from './local-storage-button'
