@@ -27,12 +27,23 @@ export function BlankRendererStatic({ blankId }: BlankRendererStaticProps) {
   )
   const draggableText = draggable?.text ?? ''
 
+  const feedback = context.feedbackForBlanks
+  const isAnswerCorrect = feedback.get(blankId)?.isCorrect
+
   return context.mode === 'typing' ? (
-    <BlankRendererInput blankId={blankId} context={context} />
+    <BlankRendererInput
+      blankId={blankId}
+      context={context}
+      isAnswerCorrect={isAnswerCorrect}
+    />
   ) : (
     <DroppableBlank blankId={blankId} isDisabled={draggableId !== null}>
       {draggableId ? (
-        <DraggableSolution text={draggableText} draggableId={draggableId} />
+        <DraggableSolution
+          text={draggableText}
+          draggableId={draggableId}
+          isAnswerCorrect={isAnswerCorrect}
+        />
       ) : null}
     </DroppableBlank>
   )
