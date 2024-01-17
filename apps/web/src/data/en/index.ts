@@ -1034,6 +1034,7 @@ export const loggedInData = {
           showSolution: 'Show solution',
           hideSolution: 'Hide solution',
           changeLicense: 'Change license',
+          addPrerequisite: 'Add link',
         },
         textExerciseGroup: {
           removeExercise: 'Remove exercise',

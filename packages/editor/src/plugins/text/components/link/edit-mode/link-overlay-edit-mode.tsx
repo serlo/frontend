@@ -19,7 +19,8 @@ import { getCleanUrl } from '../../../utils/link'
 interface LinkOverlayEditModeProps {
   isSerloLinkSearchActive: boolean
   value: string
-  setHref: (href: string) => void
+  setHref: (href: string, title?: string) => void
+  setTitle?: (title: string) => void
   removeLink: () => void
   shouldFocus: boolean
   quickbarData: QuickbarData | null
@@ -60,9 +61,10 @@ export function LinkOverlayEditMode({
     const activeIndex = index ?? selectedIndex
     if (activeIndex < 0 || activeIndex > results.length) return
 
-    const href =
-      activeIndex < results.length ? `/${results[activeIndex].entry.id}` : query
+    const hasResult = activeIndex < results.length
+    const href = hasResult ? `/${results[activeIndex].entry.id}` : query
     const cleanUrl = getCleanUrl(href, lang)
+    const title = hasResult ? results[activeIndex].entry.title : undefined
 
     if (
       cleanUrl.startsWith('/') ||
@@ -70,7 +72,7 @@ export function LinkOverlayEditMode({
       cleanUrl.startsWith('http://') ||
       cleanUrl.startsWith('https://')
     ) {
-      setHref(cleanUrl)
+      setHref(cleanUrl, title)
     } else {
       showToastNotice(overlayStrings.invalidLinkWarning, 'warning', 5000)
     }

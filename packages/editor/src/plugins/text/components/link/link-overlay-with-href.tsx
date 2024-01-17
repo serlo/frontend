@@ -18,7 +18,7 @@ export function LinkOverlayWithHref({
 }: {
   value: string
   removeLink: () => void
-  setIsEditMode: (mode: boolean) => void
+  setIsEditMode?: (mode: boolean) => void
   quickbarData: QuickbarData | null
 }) {
   const serloId =
@@ -50,17 +50,19 @@ export function LinkOverlayWithHref({
           className="!-ml-1 !pb-2"
         />
       </a>
-      <button
-        onClick={() => setIsEditMode(true)}
-        className="serlo-button-editor-secondary serlo-tooltip-trigger ml-4 h-10 w-10"
-        data-qa="edit-link-button"
-      >
-        <FaIcon icon={faPencilAlt} />
-        <EditorTooltip
-          text={textStrings.linkOverlay.edit}
-          className="!-ml-2 !pb-2"
-        />
-      </button>
+      {setIsEditMode ? (
+        <button
+          onClick={() => setIsEditMode(true)}
+          className="serlo-button-editor-secondary serlo-tooltip-trigger ml-4 h-10 w-10"
+          data-qa="edit-link-button"
+        >
+          <FaIcon icon={faPencilAlt} />
+          <EditorTooltip
+            text={textStrings.linkOverlay.edit}
+            className="!-ml-2 !pb-2"
+          />
+        </button>
+      ) : null}
       <button
         onClick={removeLink}
         className="serlo-button-editor-secondary serlo-tooltip-trigger ml-2 h-10 w-10"
