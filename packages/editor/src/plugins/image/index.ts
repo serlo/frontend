@@ -46,12 +46,16 @@ export function createImagePlugin(
       // could maybe be used for all image urls in the future
       if (value.startsWith('![](https://cdn.mathpix.com')) {
         const imageUrl = value.substring(4, value.length - 1)
+        const proxyUrl = '/api/frontend/mathpix-image-proxy?imageUrl='
+
         try {
-          const response = await fetch(imageUrl)
+          const response = await fetch(proxyUrl + imageUrl)
           const blob = await response.blob()
-          console.log(blob)
           const imagePlugin = editorPlugins.getByType('image')
-          if (imagePlugin.onFiles) imagePlugin.onFiles([new File([blob], '')])
+          if (imagePlugin.onFiles)
+            imagePlugin.onFiles([
+              new File([blob], `image.${blob.type.split('/')[1]}`),
+            ])
         } catch (err) {
           // eslint-disable-next-line no-console
           console.error(err)

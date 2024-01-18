@@ -43,7 +43,7 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       if (!document) return
 
       // special case: pasting in image caption
-      captionPasteHandler({ event, files, text, id, dispatch })
+      void captionPasteHandler({ event, files, text, id, dispatch })
 
       let media
       // pasting editor document string and insert as plugins
