@@ -45,6 +45,11 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       // special case: pasting in image caption
       void captionPasteHandler({ event, files, text, id, dispatch })
 
+      // temporary hack to handle async onText
+      if (text.startsWith('![](https://cdn.mathpix.com')) {
+        event.preventDefault()
+      }
+
       let media
       // pasting editor document string and insert as plugins
       if (

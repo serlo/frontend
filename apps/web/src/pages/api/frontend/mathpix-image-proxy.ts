@@ -13,7 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    const response = await fetch(imageUrl)
+    const response = await fetch(decodeURIComponent(imageUrl))
 
     if (response.ok) {
       const data = await response.arrayBuffer()

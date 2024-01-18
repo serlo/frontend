@@ -49,13 +49,17 @@ export function createImagePlugin(
         const proxyUrl = '/api/frontend/mathpix-image-proxy?imageUrl='
 
         try {
-          const response = await fetch(proxyUrl + imageUrl)
+          const response = await fetch(proxyUrl + encodeURIComponent(imageUrl))
           const blob = await response.blob()
+          const { type } = blob
           const imagePlugin = editorPlugins.getByType('image')
-          if (imagePlugin.onFiles)
-            imagePlugin.onFiles([
-              new File([blob], `image.${blob.type.split('/')[1]}`),
+          if (imagePlugin.onFiles) {
+            return imagePlugin.onFiles([
+              new File([blob], `image.${blob.type.split('/')[1]}`, {
+                type,
+              }),
             ])
+          }
         } catch (err) {
           // eslint-disable-next-line no-console
           console.error(err)
