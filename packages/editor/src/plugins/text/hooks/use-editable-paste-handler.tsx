@@ -16,6 +16,7 @@ import { useCallback } from 'react'
 import { Editor as SlateEditor } from 'slate'
 
 import { insertPlugin } from '../utils/insert-plugin'
+import { mathpixPasteHandler } from '../utils/mathpix-paste-handler'
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 
 export interface UseEditablePasteHandlerArgs {
@@ -44,6 +45,8 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
 
       // special case: pasting in image caption
       captionPasteHandler({ event, files, text, id, dispatch })
+
+      mathpixPasteHandler({ event, editor, text })
 
       let media
       // pasting editor document string and insert as plugins
