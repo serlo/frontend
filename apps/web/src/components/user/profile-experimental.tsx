@@ -100,6 +100,20 @@ export function ProfileExperimental() {
         </div>
       ) : null}
       <hr className="mx-side -mt-2 mb-4" />
+      {shouldBeVisible('editorPluginCopyTool') ? (
+        <div>
+          <h3 className="serlo-h3 mb-3">
+            {renderFeatureButton('editorPluginCopyTool')} Editor: Plugin Copy Tool
+          </h3>
+          <p className="serlo-p">
+            In der Editor-Toolbar der Plugins kannst du das Plugin in die Zwischenablage
+            kopieren und im gleichen oder einem anderen Editor Content eingefügt werden.
+            Zum einfügen einfach ein Text-Plugin auswählen und STRG/CMD+V oder rechtsklick->einfügen
+            benutzen. Wenn das Plugin an der Stelle erlaubt ist, erscheint es direkt.
+          </p>
+        </div>
+      ) : null}
+      <hr className="mx-side -mt-2 mb-4" />
       {shouldBeVisible('editorAnchorLinkCopyTool') ? (
         <div>
           <h3 className="serlo-h3 mb-3">
