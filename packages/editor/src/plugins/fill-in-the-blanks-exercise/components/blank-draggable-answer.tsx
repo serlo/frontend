@@ -26,7 +26,7 @@ export function BlankDraggableAnswer(props: BlankDraggableAnswerProps) {
         'cursor-grab rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2',
         isAnswerCorrect && 'border-green-500',
         isAnswerCorrect === false && 'border-red-500',
-        isPending && 'mr-1'
+        isPending && 'mr-2'
       )}
       ref={dragRef}
     >
