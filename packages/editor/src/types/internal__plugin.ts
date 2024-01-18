@@ -30,7 +30,7 @@ export interface EditorPlugin<
    *
    * @param text - The pasted text
    */
-  onText?(text: string): void | { state?: StateTypeStaticType<S> }
+  onText?(text: string): Promise<void | { state?: StateTypeStaticType<S> }>
 
   /**
    * May be provided to let the plugin respond to file [`paste` events](https://developer.mozilla.org/docs/Web/API/Element/paste_event)

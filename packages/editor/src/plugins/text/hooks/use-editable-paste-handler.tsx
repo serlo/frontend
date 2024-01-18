@@ -30,7 +30,7 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
   const textStrings = useEditorStrings().plugins.text
 
   return useCallback(
-    (event: React.ClipboardEvent) => {
+    async (event: React.ClipboardEvent) => {
       // Exit if no files or text in clipboard data
       const files = Array.from(event.clipboardData.files)
       const text = event.clipboardData.getData('text')
@@ -77,7 +77,7 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
 
       // Iterate through all plugins and try to process clipboard data
       for (const { plugin, type } of editorPlugins.getAllWithData()) {
-        const state = plugin.onFiles?.(files) ?? plugin.onText?.(text)
+        const state = plugin.onFiles?.(files) ?? (await plugin.onText?.(text))
         if (state?.state) {
           media = { state: state.state as unknown, pluginType: type }
           break
