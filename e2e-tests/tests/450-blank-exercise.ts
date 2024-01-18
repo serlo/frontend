@@ -106,8 +106,6 @@ Scenario('Create and delete gaps with backspace/del', async ({ I }) => {
   I.dontSeeElement('$blank-input')
 })
 
-// This one is failing currently. The focus gets placed to the left side of the
-// gap.
 Scenario('Adding a gap before any text gets focused', async ({ I }) => {
   I.amOnPage('/entity/create/Exercise/23869')
 
@@ -116,9 +114,6 @@ Scenario('Adding a gap before any text gets focused', async ({ I }) => {
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.click(locate('$plugin-text-editor').last())
-
-  // If we uncomment this, the test passes
-  // I.type('Some text')
 
   I.click('$plugin-toolbar-button-lücke-erstellen')
   I.seeNumberOfElements('$blank-input', 1)

@@ -1,8 +1,6 @@
 import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 
-import { cn } from '@/helper/cn'
-
 interface BlankCheckButtonProps {
   isVisible: boolean
   feedback: Map<string, { isCorrect?: boolean | undefined }>
@@ -15,17 +13,14 @@ export function BlankCheckButton(props: BlankCheckButtonProps) {
 
   const exercisesStrings = useInstanceData().strings.content.exercises
 
-  const className = cn(
-    'serlo-button-blue mr-3 h-8',
-    isVisible ? '' : 'pointer-events-none opacity-0'
-  )
+  if (!isVisible) return null
 
   const isCorrect = [...feedback].every((entry) => entry[1].isCorrect)
 
   return (
     <div className="mt-2 flex">
       <button
-        className={className}
+        className="serlo-button-blue mr-3 h-8"
         onClick={onClick}
         data-qa="plugin-exercise-check-answer-button"
       >
