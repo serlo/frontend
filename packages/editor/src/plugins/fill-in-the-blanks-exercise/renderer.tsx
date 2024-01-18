@@ -131,7 +131,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
           <BlankDraggableArea onDrop={handleDraggableAreaDrop}>
             {draggables.map((draggable, index) =>
               locationOfDraggables.get(draggable.draggableId) ? null : (
-                <BlankDraggableAnswer key={index} {...draggable} />
+                <BlankDraggableAnswer key={index} isPending {...draggable} />
               )
             )}
           </BlankDraggableArea>
