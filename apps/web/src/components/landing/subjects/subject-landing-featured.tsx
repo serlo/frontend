@@ -20,22 +20,18 @@ const maxOnMobile = 4
 
 export function SubjectLandingFeatured({
   subject,
-  customContent,
 }: {
   subject: deSubjectLandingSubjects
-  customContent?: FeaturedContentData[]
 }) {
   const { strings } = useInstanceData()
 
   const [content, setContent] = useState<FeaturedContentData[]>(
-    (customContent ?? featuredContent[subject]).slice(0, 6)
+    featuredContent[subject].slice(0, 6)
   )
 
   useEffect(() => {
-    setContent(
-      shuffleArray(customContent ?? featuredContent[subject]).slice(0, 6)
-    )
-  }, [subject, customContent])
+    setContent(shuffleArray(featuredContent[subject]).slice(0, 6))
+  }, [subject])
 
   return (
     <div
