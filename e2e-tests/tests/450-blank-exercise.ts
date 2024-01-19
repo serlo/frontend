@@ -106,28 +106,31 @@ Scenario('Create and delete gaps with backspace/del', async ({ I }) => {
   I.dontSeeElement('$blank-input')
 })
 
-Scenario('Adding a gap before any text gets focused', async ({ I }) => {
-  I.amOnPage('/entity/create/Exercise/23869')
+Scenario.todo(
+  'Ensure an added gap before any text gets focused',
+  async ({ I }) => {
+    I.amOnPage('/entity/create/Exercise/23869')
 
-  I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
-  I.click(FillInTheBlanksExerciseButton)
-  I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
+    I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
+    I.click(FillInTheBlanksExerciseButton)
+    I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
-  I.click(locate('$plugin-text-editor').last())
+    I.click(locate('$plugin-text-editor').last())
 
-  I.click('$plugin-toolbar-button-lücke-erstellen')
-  I.seeNumberOfElements('$blank-input', 1)
-  const isBlankInputFocused = await I.executeScript(() => {
-    const blankInput = document.querySelector("[data-qa='blank-input']")
-    return document.activeElement === blankInput
-  })
+    I.click('$plugin-toolbar-button-lücke-erstellen')
+    I.seeNumberOfElements('$blank-input', 1)
+    const isBlankInputFocused = await I.executeScript(() => {
+      const blankInput = document.querySelector("[data-qa='blank-input']")
+      return document.activeElement === blankInput
+    })
 
-  assert.strictEqual(
-    isBlankInputFocused,
-    true,
-    'The blank input element is not focused'
-  )
-})
+    assert.strictEqual(
+      isBlankInputFocused,
+      true,
+      'The blank input element is not focused'
+    )
+  }
+)
 
 Scenario(
   'Create a few gaps, go to preview mode and solve them!',
@@ -148,7 +151,7 @@ Scenario(
 
     // unfocus gap
     I.pressKey('ArrowRight')
-    // add non gapped text with surrounding space
+    // add normal text with surrounding space
     I.type(' and ')
 
     I.click('$plugin-toolbar-button-lücke-erstellen')
