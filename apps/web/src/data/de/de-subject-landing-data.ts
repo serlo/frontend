@@ -741,12 +741,4 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
       img: 'https://assets.serlo.org/5badc0229f088_b9d90bd48f5907374333f8e554d7aed538650328.png',
     },
   ],
-  examsMathe: [
-    {
-      title: 'Nullstellen berechnen',
-      type: UuidType.Article,
-      url: '/mathe/1531/nullstellen-berechnen',
-      img: 'https://assets.serlo.org/61377aba9f512_2314df750800a18c49d3e0d778662e64a84b72c0.svg',
-    },
-  ],
 }
