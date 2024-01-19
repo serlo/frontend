@@ -103,7 +103,7 @@ export function MathExamsLanding() {
         </section>
 
         {/* Hier vielleicht eher eine Tabelle? */}
-        <section className="themen text-center">
+        <section className="themen relative -left-side w-[calc(100%+32px)] text-center">
           {/* <h2 className="-mt-4 text-2xl font-extrabold tracking-tight">
             <span>Nach Schulart (Bayern)</span>
           </h2>
