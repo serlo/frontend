@@ -66,8 +66,8 @@ export const deSubjectLandingData = {
 export interface FeaturedContentData {
   title: string
   type: UuidType | TaxonomyTermType
-  url: `/${string}`
-  img: `https://${string}.serlo.org/${string}`
+  url: string
+  img?: string
 }
 
 // Will probably be fetched dynamically in the future:
@@ -739,6 +739,14 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
       type: UuidType.Article,
       url: '/lerntipps/119275/übersicht',
       img: 'https://assets.serlo.org/5badc0229f088_b9d90bd48f5907374333f8e554d7aed538650328.png',
+    },
+  ],
+  examsMathe: [
+    {
+      title: 'Nullstellen berechnen',
+      type: UuidType.Article,
+      url: '/mathe/1531/nullstellen-berechnen',
+      img: 'https://assets.serlo.org/61377aba9f512_2314df750800a18c49d3e0d778662e64a84b72c0.svg',
     },
   ],
 }
