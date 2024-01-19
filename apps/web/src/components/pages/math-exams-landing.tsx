@@ -1,4 +1,4 @@
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope } from '@fortawesome/free-regular-svg-icons'
 import { useEffect, useMemo, useState } from 'react'
 
 import { Link } from '../content/link'
@@ -6,14 +6,20 @@ import { FaIcon } from '../fa-icon'
 import { HeadTags } from '../head-tags'
 import { FooterNew } from '../landing/rework/footer-new'
 import { SubjectIcon } from '../landing/rework/subject-icon'
-import { SubjectLandingFeatured } from '../landing/subjects/subject-landing-featured'
 import { Header } from '../navigation/header/header'
 import { Quickbar, QuickbarData, quickbarUrl } from '../navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
-import { Instance, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { cn } from '@/helper/cn'
 import { serloDomain } from '@/helper/urls/serlo-domain'
+
+const schoolTypes = [
+  'Mittelschule (Hauptschule)',
+  'Realschule',
+  'Gymnasium',
+  'FOS & BOS',
+] as const
 
 export function MathExamsLanding() {
   const [quickbarData, setQuickbarData] = useState<QuickbarData | undefined>(
@@ -29,22 +35,16 @@ export function MathExamsLanding() {
     }
   }, [quickbarData])
 
-  const hotExamTaxonomies = useMemo(() => {
-    return mathExamTaxonomies
-      .map(({ id }) => {
-        return quickbarData?.find((entry) => entry.id === String(id))
+  const featuredTaxonomies = useMemo(() => {
+    const getCount = (inputId: number) => {
+      return quickbarData?.find(({ id }) => id === String(inputId))?.count ?? 0
+    }
+    if (!quickbarData) return []
+    return [...mathExamTaxonomies]
+      .sort((a, b) => {
+        return getCount(b.id) - getCount(a.id)
       })
-      .filter(Boolean)
-      .sort((a, b) => b!.count - a!.count)
       .slice(0, 6)
-      .map((entry) => {
-        return {
-          title: entry!.title,
-          type: TaxonomyTermType.Topic,
-          url: `/${entry!.id}`,
-          img: '',
-        }
-      })
   }, [quickbarData])
 
   const { lang } = useInstanceData()
@@ -59,7 +59,7 @@ export function MathExamsLanding() {
         }}
       />
       <Header />
-      <main id="content" className="text-almost-black">
+      <main id="content" className="mx-side text-almost-black">
         <section
           className={cn(`
             mx-auto mt-16 max-w-3xl
@@ -92,7 +92,7 @@ export function MathExamsLanding() {
 
         <section className="mx-auto mt-10 max-w-3xl text-center sm:mt-16 sm:text-left">
           <h2 className="mb-2 text-lg font-bold text-almost-black">
-            Finde deine Prüfungen
+            Suche nach Prüfungen
           </h2>
 
           <Quickbar
@@ -103,44 +103,74 @@ export function MathExamsLanding() {
         </section>
 
         {/* Hier vielleicht eher eine Tabelle? */}
-        {/* <section className="themen text-center">
-          <p className="mb-12 mt-4 text-3xl font-extrabold tracking-tight">
-            <span>Was kommt als nächstes dran?</span>
-          </p>
-          <SubjectLandingTopicOverview subterms={subterms} subject={subject} />
-        </section> */}
-
-        {/* Evtl. Link zum Lerntipps bereich + Discord */}
-
-        <section className="mb-8 mt-20 text-center">
+        <section className="themen text-center">
+          {/* <h2 className="-mt-4 text-2xl font-extrabold tracking-tight">
+            <span>Nach Schulart (Bayern)</span>
+          </h2>
+          <nav className="mx-auto mt-2 flex max-w-xl justify-center text-center">
+            {schoolTypes.map(renderSchoolButton)}
+          </nav> */}
+          {/* <SubjectLandingTopicOverview subterms={subterms} subject={subject} /> */}
           <h2
             className={cn(`
               mx-auto mt-3 max-w-2xl
               pb-10 text-3xl font-extrabold tracking-tight
             `)}
           >
-            <span className="pb-2">Beliebte Inhalte</span>
+            <span className="pb-2">Beliebte Inhalte 🔥</span>
           </h2>
 
-          {/* make custom version with school type instead of entity type */}
-          <SubjectLandingFeatured
-            subject="mathe"
-            customContent={hotExamTaxonomies}
-          />
+          <div
+            className={cn(`
+              mx-auto flex w-full
+              flex-wrap items-stretch justify-around
+              px-side pb-6 sm:max-w-3xl lg:max-w-max
+            `)}
+          >
+            {featuredTaxonomies.map(renderFeaturedBox)}
+          </div>
+        </section>
+
+        {/* <section className="mb-8 mt-20 text-center">
+        
+        </section> */}
+
+        <section className="mb-24 mt-20 justify-around sm:flex">
+          <div className="sm:px-side">
+            <h2 className="mx-side mt-3 max-w-2xl pb-6 text-2xl font-extrabold tracking-tight sm:mx-auto">
+              😵‍💫 Könnte besser laufen?
+            </h2>
+
+            <p className="mx-side max-w-xl text-xl leading-cozy text-almost-black sm:mx-auto">
+              Wir haben einen ganzen{' '}
+              <Link href="/lerntipps">Bereich mit Lerntipps</Link> für dich.
+            </p>
+            <p className="mx-side my-3 max-w-xl text-xl leading-cozy text-almost-black sm:mx-auto">
+              Oder schau in unserem{' '}
+              <Link href="https://discord.com/invite/HyPx9jVq5G">
+                Discord-Server
+              </Link>{' '}
+              vorbei für Austausch rund ums Thema Abschlussprüfungen.
+            </p>
+          </div>
+          <div className="mt-12 sm:mt-0 sm:px-side">
+            <h2 className="mx-side mt-3 max-w-2xl pb-6 text-2xl font-extrabold tracking-tight sm:mx-auto">
+              😶‍🌫️ Nicht die richtige Aufgabe dabei?
+            </h2>
+            <p className="mx-side max-w-xl text-xl leading-cozy text-almost-black sm:mx-auto">
+              Wenn Aufgaben zu Deinem Bundesland oder Deiner Schulform fehlen,
+              sag uns gern kurz über{' '}
+              <a className="serlo-link" href="mailto:de@serlo.org">
+                de@serlo.org <FaIcon icon={faEnvelope} />
+              </a>{' '}
+              bescheid oder hilf unserer{' '}
+              <Link href="/community">Autor*innencommunity</Link> die Aufgaben
+              zu erstellen.
+            </p>
+          </div>
         </section>
 
         <section className="bg-blueWave bg-100% pt-24 text-center">
-          <p className="mx-auto max-w-xl text-xl leading-cozy text-almost-black">
-            Wenn Aufgaben zu Deinem Bundesland oder Deiner Schulform fehlen,
-            schreib uns einfach über{' '}
-            <a className="serlo-link" href="mailto:de@serlo.org">
-              de@serlo.org <FaIcon icon={faEnvelope} />
-            </a>{' '}
-            oder erstelle als Teil unserer{' '}
-            <Link href="/community">Autor*innencommunity</Link> eigenständig
-            Aufgaben mit Lösungen.
-          </p>
-
           {/* Banner für Autor*innengewinnung? */}
         </section>
       </main>
@@ -190,70 +220,92 @@ export function MathExamsLanding() {
   }
 }
 
-const mathExamTaxonomies = [
+interface MathExamTaxonomy {
+  id: number
+  title: string
+  school: (typeof schoolTypes)[number]
+}
+
+const mathExamTaxonomies: MathExamTaxonomy[] = [
   {
     id: 220418,
     title: 'Jahrgangsstufentest Mathematik',
+    school: 'Mittelschule (Hauptschule)',
   },
   {
     id: 75678,
     title: 'Quali Abschlussprüfungen mit Lösung',
+    school: 'Mittelschule (Hauptschule)',
   },
   {
     id: 247427,
     title: 'Mittlerer Schulabschluss an der Mittelschule',
+    school: 'Mittelschule (Hauptschule)',
   },
   {
     id: 219731,
     title: 'Jahrgangsstufentest ',
+    school: 'Realschule',
   },
   {
     id: 220404,
     title: 'Grundwissenstest 7. Klasse',
+    school: 'Realschule',
   },
   {
     id: 220648,
     title: 'Jahrgangsstufentest 8. Klasse',
+    school: 'Realschule',
   },
   {
     id: 220649,
     title: 'Jahrgangsstufentest 8. Klasse',
+    school: 'Realschule',
   },
   {
     id: 220680,
     title: 'Grundwissentest 9. Klasse',
+    school: 'Realschule',
   },
   {
     id: 220681,
     title: 'Grundwissentest 9. Klasse',
+    school: 'Realschule',
   },
   {
     id: 75049,
     title: 'Abschlussprüfungen mit Lösung, Zweig I',
+    school: 'Realschule',
   },
   {
     id: 76750,
     title: 'Abschlussprüfungen mit Lösungen, Zweig II und III',
+    school: 'Realschule',
   },
   {
     id: 219775,
     title: 'Jahrgangsstufentest 8. Klasse - BMT 8',
+    school: 'Gymnasium',
   },
   {
     id: 219737,
     title: 'Jahrgangsstufentest 10. Klasse - BMT 10',
+    school: 'Gymnasium',
   },
   {
     id: 20852,
     title: 'Abiturprüfungen mit Lösung',
+    school: 'Gymnasium',
   },
   {
     id: 91252,
     title: 'Fachhochschulreife',
+    school: 'FOS & BOS',
   },
   {
     id: 91253,
     title: 'Fachgebundene Hochschulreife',
+    school: 'FOS & BOS',
   },
 ]
 
@@ -281,3 +333,55 @@ async function fetchQuickbarData() {
 
   return filteredData
 }
+
+const maxOnMobile = 4
+
+function renderFeaturedBox(data: MathExamTaxonomy, index: number) {
+  return (
+    <Link
+      key={data.title}
+      className={cn(
+        `
+            group relative mx-2
+            mb-4 box-border
+            w-36 rounded p-2.5
+            text-left leading-cozy text-brand transition-all 
+            hover:text-almost-black hover:no-underline hover:shadow-menu
+            mobile:w-52 lg:w-44 xl:w-48
+          `,
+        index >= maxOnMobile ? 'hidden mobile:block' : ''
+      )}
+      href={`${data.id}`}
+    >
+      <h4 className="mx-0 mb-14 mt-1 hyphens-auto break-normal text-xl font-bold">
+        {data.title}
+      </h4>
+      <span className="font-sm absolute bottom-2 mt-1 block text-brand-400">
+        {data.school}
+      </span>
+    </Link>
+  )
+}
+
+// function renderSchoolButton(title: string) {
+//   return (
+//     <button
+//       key={title}
+//       className={cn(
+//         `
+//           m-2 flex w-60 justify-center
+//           rounded-xl p-2 font-bold
+//           text-brand shadow-menu transition-colors hover:bg-brand/5
+//         `
+//         // isActive ? 'bg-brand/10 text-black hover:bg-brand/10' : '',
+//         // src ? '' : 'pl-16'
+//       )}
+//       onClick={() =>
+//         // isExtraTerm ? router.push(term.href) : onMenuClick(index)
+//         console.log('todo')
+//       }
+//     >
+//       {title}
+//     </button>
+//   )
+// }
