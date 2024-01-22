@@ -27,6 +27,7 @@ export function BlankDraggableArea(props: BlankDraggableAreaProps) {
         'mt-5 flex min-h-8 w-full items-stretch rounded-full bg-slate-100',
         isOver ? 'bg-slate-200' : ''
       )}
+      data-qa="blank-solution-area"
       ref={dropRef}
     >
       {children}
