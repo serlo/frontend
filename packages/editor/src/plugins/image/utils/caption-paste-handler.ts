@@ -14,7 +14,7 @@ import type { ImageProps } from '..'
  * Handles the "paste" event of the Image plugin caption input field.
  * If a URL or an image file are pasted, update the "src" property of the Image plugin.
  */
-export function captionPasteHandler({
+export async function captionPasteHandler({
   event,
   files,
   text,
@@ -31,7 +31,7 @@ export function captionPasteHandler({
   if (parentType !== EditorPluginType.Image) return
 
   const plugin = editorPlugins.getByType(parentType)
-  const state = plugin.onFiles?.(files) ?? plugin.onText?.(text)
+  const state = plugin.onFiles?.(files) ?? (await plugin.onText?.(text))
   if (!state?.state) return
 
   const src = (state.state as ImageProps['state']).src

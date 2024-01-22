@@ -74,6 +74,7 @@ export function ExerciseEditor(props: ExerciseProps) {
                     key={type}
                     onClick={() => interactive.create({ plugin: type })}
                     secondary
+                    dataQa={`add-exercise-${type}`}
                   >
                     {exTemplateStrings[type]}
                   </AddButton>

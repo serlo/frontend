@@ -1,3 +1,4 @@
+import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
@@ -5,7 +6,6 @@ import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { useState } from 'react'
 
-import { Feedback } from './feedback'
 import type { ScMcExerciseRendererProps } from './renderer'
 
 export function ScRenderer({
@@ -69,6 +69,7 @@ export function ScRenderer({
             selected === undefined &&
               'pointer-events-none bg-transparent text-gray-400 opacity-100'
           )}
+          data-qa="plugin-exercise-check-answer-button"
           onClick={() => {
             setShowFeedback(true)
             if (onEvaluate) onEvaluate(answers[selected ?? 0].isCorrect, 'sc')
@@ -81,9 +82,9 @@ export function ScRenderer({
               : exStrings.chooseOption}
         </button>
         {showFeedback && selected !== undefined && answers[selected] ? (
-          <Feedback correct={answers[selected].isCorrect}>
+          <ExerciseFeedback correct={answers[selected].isCorrect}>
             {answers[selected].feedback}
-          </Feedback>
+          </ExerciseFeedback>
         ) : null}
       </div>
     </div>
