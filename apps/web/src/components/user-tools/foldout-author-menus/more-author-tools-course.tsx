@@ -4,6 +4,10 @@ import { List, Item, Trigger, Content } from '@radix-ui/react-navigation-menu'
 import { AuthorTools, Tool } from './author-tools'
 import type { MoreAuthorToolsProps } from './more-author-tools'
 import { UserToolsItem } from '../user-tools-item'
+import {
+  preventHover,
+  useNavMenuTriggerFix,
+} from '@/components/navigation/header/menu/use-nav-menu-trigger-fix'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 
@@ -11,6 +15,8 @@ export function MoreAuthorToolsCourse({
   data,
   aboveContent,
 }: MoreAuthorToolsProps) {
+  const triggerFix = useNavMenuTriggerFix()
+
   const loggedInData = useLoggedInData()
 
   if (!data || !loggedInData) return null
@@ -33,7 +39,7 @@ export function MoreAuthorToolsCourse({
     if (!data || !loggedInData) return null
     return (
       <Item>
-        <Trigger>
+        <Trigger {...triggerFix}>
           <UserToolsItem
             title={
               wholeCourse
@@ -45,7 +51,7 @@ export function MoreAuthorToolsCourse({
           />
         </Trigger>
 
-        <Content>
+        <Content onPointerEnter={preventHover}>
           <List className="absolute right-0 z-50 w-56 pt-2 lg:bottom-0 lg:right-48">
             <div className="serlo-sub-list-hover">
               <AuthorTools
