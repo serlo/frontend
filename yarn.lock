@@ -4896,6 +4896,7 @@ __metadata:
     "@types/uuid": ^9.0.5
     "@typescript-eslint/eslint-plugin": ^6.7.5
     "@typescript-eslint/parser": ^6.7.5
+    "@vercel/edge": ^1.1.1
     algebra.js: ^0.2.6
     array-move: ^4.0.0
     autoprefixer: ^10.4.16
@@ -5911,6 +5912,13 @@ __metadata:
   version: 1.2.0
   resolution: "@ungap/structured-clone@npm:1.2.0"
   checksum: 4f656b7b4672f2ce6e272f2427d8b0824ed11546a601d8d5412b9d7704e83db38a8d9f402ecdf2b9063fc164af842ad0ec4a55819f621ed7e7ea4d1efcc74524
+  languageName: node
+  linkType: hard
+
+"@vercel/edge@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@vercel/edge@npm:1.1.1"
+  checksum: c1d852206fabdebe86dc3c6933e89110581e58e57dd04a5ff03912458894a5eef7b739052da16584844e3c2fc3de9df254580a615bf6076946b6a8a3dc073366
   languageName: node
   linkType: hard
 
