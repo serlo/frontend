@@ -2,7 +2,7 @@ import { MouseEventHandler, PointerEventHandler, useMemo } from 'react'
 
 // see https://github.com/radix-ui/primitives/issues/1630
 // and https://github.com/radix-ui/primitives/issues/2326
-//for the problem and differen solutions
+// for the problem and different solutions
 
 export function useNavMenuTriggerFix() {
   return useMemo(() => {
