@@ -117,7 +117,7 @@ export function MathExamsLanding() {
               pb-10 text-3xl font-extrabold tracking-tight
             `)}
           >
-            <span className="pb-2">Beliebte Inhalte 🔥</span>
+            <span className="pb-2">Beliebte Prüfungen 🔥</span>
           </h2>
 
           <div
