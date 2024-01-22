@@ -36,7 +36,7 @@ export default function handler(request: Request) {
   return new Response(
     `<h1>${
       regionName
-        ? `Du bist wahrscheinlich grade in ${regionName}, oder?`
+        ? `Schön in ${regionName}, aber warst du schon mal auf <a href="https://serlo.org">serlo.org</a>?`
         : 'Ich weiß nicht in welchem Bundesland du bist 🤷'
     }</h1>`,
     {
