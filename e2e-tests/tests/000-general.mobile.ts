@@ -59,6 +59,7 @@ Scenario('Main Menu @mobile', async ({ I }) => {
   I.see('Zusammenarbeit', 'nav[aria-label="Main"]')
 
   // and close
+  I.wait(1) // entry can't be closed immediately after it's been opened
   I.click('Mitmachen', 'nav[aria-label="Main"]')
   I.dontSee('Überprüfe Bearbeitungen', 'nav[aria-label="Main"]')
 
