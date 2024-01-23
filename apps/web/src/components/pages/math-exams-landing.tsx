@@ -97,7 +97,7 @@ export function MathExamsLanding() {
 
           <Quickbar
             subject="mathe"
-            className="max-w-sm sm:-ml-1 sm:px-0 md:max-w-2xl md:pr-4"
+            className="mx-auto max-w-sm sm:-ml-1 sm:px-0 md:max-w-2xl md:pr-4"
             customData={quickbarData}
           />
         </section>
@@ -202,7 +202,7 @@ export function MathExamsLanding() {
   function renderIcon() {
     return (
       <>
-        <div className="landing-subjects group mx-auto -mt-3">
+        <div className="landing-subjects group mx-auto mt-2 sm:-mt-3">
           <SubjectIcon subject="mathe" />
         </div>
         <style jsx global>{`
