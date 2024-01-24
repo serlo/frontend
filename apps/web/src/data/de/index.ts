@@ -761,6 +761,7 @@ export const loggedInData = {
           headings: "Überschriften",
           link: 'Link (%ctrlOrCmd% + K)',
           noElementPasteInLists: "Sorry,  Elemente einfügen klappt nicht in Listen.",
+          pastingPluginNotAllowedHere: "Sorry, dieses Plugin kannst du hier nicht einfügen.",
           linkOverlay: {
             placeholder: "Suchbegriff oder \"/1234\"",
             inputLabel: "Suche einen Inhalt oder füge einen Link ein",
@@ -776,8 +777,8 @@ export const loggedInData = {
           mathFormula: "Matheformel (%ctrlOrCmd% + M)",
           code: 'Code (%ctrlOrCmd% + ⇧ + `)',
           blank: "Lücke",
-          createBlank: 'Create Blank',
-          removeBlank: 'Remove Blank',
+          createBlank: "Lücke erstellen",
+          removeBlank: "Lücke entfernen",
           bold: "Fett (%ctrlOrCmd% + B)",
           italic: "Kursiv (%ctrlOrCmd% + I)",
           noItemsFound: "keine Einträge gefunden",
@@ -836,9 +837,17 @@ export const loggedInData = {
           description: "Single- oder Multiple Choice Aufgabe"
         },
         blanksExercise: {
-          title: "Lückentext Aufgabe",
+          title: "Lückentext",
           description: "Ein Text mit Lücken zum Ausfüllen",
-          placeholder: "Schreibe einen Text und füge Lücken ein"
+          placeholder: "Schreibe einen Text und füge Lücken ein",
+          chooseType: "Wähle den Antworttyp",
+          modes: {
+            typing: "Tippen",
+            'drag-and-drop': 'Drag & Drop'
+          },
+          previewMode: "Vorschau",
+          previewIsActiveHint: "Die Aufgabe wieder bearbeiten",
+          previewIsDeactiveHint: "Vorschau der Aufgabe anzeigen"
         }
       },
       templatePlugins: {
@@ -988,7 +997,9 @@ export const loggedInData = {
         author: "Autor*in",
         createdAt: "Zeitstempel",
         ready: "Bereit zum Speichern?",
-        anchorLinkWarning: "Dieser Link funktioniert nur im Frontend und für Inhalte, die eine etwas relativ neue akzeptierte Bearbeitung haben."
+        anchorLinkWarning: "Dieser Link funktioniert nur im Frontend und für Inhalte, die eine etwas relativ neue akzeptierte Bearbeitung haben.",
+        pluginCopyInfo: "Du kannst das Plugin jetzt in Text-Plugins einfügen",
+        pluginCopyButtonLabel: "Plugin in die Zwischenablage kopieren"
       },
       taxonomy: {
         title: "Titel"

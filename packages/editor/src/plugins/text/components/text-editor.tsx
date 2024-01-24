@@ -54,7 +54,7 @@ export function TextEditor(props: TextEditorProps) {
       // Fast Refresh will rerun useMemo and create a new editor instance,
       // but <Slate /> is confused by it
       // Generate a unique key per editor instance and set it on the component
-      // to syncronize rerendering
+      // to synchronize rerendering
       editorKey: v4(),
     }
   }, [createTextEditor])

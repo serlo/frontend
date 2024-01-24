@@ -1,4 +1,4 @@
-import type { Blank } from '@editor/plugins/text'
+import { BlankInterface as Blank } from '@editor/plugins/fill-in-the-blanks-exercise/types'
 import {
   Editor as SlateEditor,
   Element,
@@ -69,5 +69,5 @@ function addBlank(editor: SlateEditor) {
     children: [{ text: '' }],
   }
 
-  Transforms.insertNodes(editor, newBlankNode, { at: selection })
+  Transforms.insertNodes(editor, newBlankNode)
 }

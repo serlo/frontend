@@ -836,6 +836,8 @@ export const loggedInData = {
           link: 'Link (%ctrlOrCmd% + K)',
           noElementPasteInLists:
             'Sorry, pasting elements inside of lists is not allowed.',
+          pastingPluginNotAllowedHere:
+            'Sorry, pasting this plugin here is not allowed.',
           linkOverlay: {
             placeholder: 'https://… or /1234',
             inputLabel: 'Paste or type a link',
@@ -1084,6 +1086,8 @@ export const loggedInData = {
         ready: 'Ready to save?',
         anchorLinkWarning:
           'This link will only work in the frontend and for content that has a somewhat new revision.',
+        pluginCopyInfo: 'You can now paste this plugin into text plugins',
+        pluginCopyButtonLabel: 'Copy plugin to clipboard',
       },
       taxonomy: {
         title: 'Title',

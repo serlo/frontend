@@ -1,19 +1,25 @@
 import { isSelectionWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
+import { captionPasteHandler } from '@editor/plugins/image/utils/caption-paste-handler'
+import { checkIsAllowedNesting } from '@editor/plugins/rows/utils/check-is-allowed-nesting'
 import {
   selectDocument,
   selectMayManipulateSiblings,
   useAppDispatch,
   store,
+  selectAncestorPluginTypes,
 } from '@editor/store'
+import type { EditorRowsDocument } from '@editor/types/editor-plugins'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 import { useCallback } from 'react'
 import { Editor as SlateEditor } from 'slate'
 
 import { insertPlugin } from '../utils/insert-plugin'
+import { mathpixPasteHandler } from '../utils/mathpix-paste-handler'
+import { shouldUseFeature } from '@/components/user/profile-experimental'
 
-interface UseEditablePasteHandlerArgs {
+export interface UseEditablePasteHandlerArgs {
   editor: SlateEditor
   id: string
 }
@@ -25,22 +31,62 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
   const textStrings = useEditorStrings().plugins.text
 
   return useCallback(
-    (event: React.ClipboardEvent) => {
+    async (event: React.ClipboardEvent) => {
       // Exit if no files or text in clipboard data
       const files = Array.from(event.clipboardData.files)
       const text = event.clipboardData.getData('text')
       if (!files.length && !text) return
 
-      // Exit if unable to select document data or if not allowed to manipulate siblings
+      // Exit if unable to select document data
       const storeState = store.getState()
       const document = selectDocument(storeState, id)
       const mayManipulateSiblings = selectMayManipulateSiblings(storeState, id)
-      if (!document || !mayManipulateSiblings) return
+      if (!document) return
+
+      // special case: pasting in image caption
+      void captionPasteHandler({ event, files, text, id, dispatch })
+
+      // temporary hack to handle async onText
+      if (text.startsWith('![](https://cdn.mathpix.com')) {
+        event.preventDefault()
+      }
+
+      mathpixPasteHandler({ event, editor, text })
+
+      let media
+      // pasting editor document string and insert as plugins
+      if (
+        shouldUseFeature('editorPluginCopyTool') &&
+        !media &&
+        text.startsWith('{"plugin":"rows"')
+      ) {
+        const rowsDocument = JSON.parse(text) as EditorRowsDocument
+        if (rowsDocument.state.length !== 1) return
+        const pluginDocument = rowsDocument.state.at(0)
+        const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
+        if (!pluginDocument || typesOfAncestors === null) return
+
+        if (
+          mayManipulateSiblings &&
+          checkIsAllowedNesting(pluginDocument.plugin, typesOfAncestors)
+        ) {
+          event.preventDefault() // extra prevent for firefox to make it work 🤷
+          media = {
+            pluginType: pluginDocument.plugin,
+            state: pluginDocument.state,
+          }
+        } else {
+          event.preventDefault()
+          showToastNotice(textStrings.pastingPluginNotAllowedHere, 'warning')
+        }
+      }
+
+      // Exit if not allowed to manipulate siblings
+      if (!mayManipulateSiblings) return
 
       // Iterate through all plugins and try to process clipboard data
-      let media
       for (const { plugin, type } of editorPlugins.getAllWithData()) {
-        const state = plugin.onFiles?.(files) ?? plugin.onText?.(text)
+        const state = plugin.onFiles?.(files) ?? (await plugin.onText?.(text))
         if (state?.state) {
           media = { state: state.state as unknown, pluginType: type }
           break

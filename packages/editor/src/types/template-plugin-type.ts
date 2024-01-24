@@ -10,4 +10,5 @@ export enum TemplatePluginType {
   TextExerciseGroup = 'type-text-exercise-group',
   Video = 'type-video',
   User = 'type-user',
+  GenericContent = 'type-generic-content',
 }

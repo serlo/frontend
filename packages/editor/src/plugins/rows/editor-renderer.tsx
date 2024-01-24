@@ -149,15 +149,10 @@ export function EditorRowRenderer({
         case NativeTypes.URL: {
           const urls: string[] = monitor.getItem<{ urls: string[] }>().urls
           const text = urls[0]
-          plugins.find(({ type, plugin }) => {
-            // eslint-disable-next-line @typescript-eslint/unbound-method
-            const { onText } = plugin
-            if (typeof onText === 'function') {
-              const result = onText(text)
-              if (result !== undefined) {
-                handleResult(type, result)
-                return true
-              }
+          plugins.forEach(async ({ type, plugin }) => {
+            if (typeof plugin.onText === 'function') {
+              const result = await plugin.onText(text)
+              if (result !== undefined) handleResult(type, result)
             }
           })
           break

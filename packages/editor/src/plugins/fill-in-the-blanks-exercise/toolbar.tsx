@@ -21,18 +21,16 @@ export const FillInTheBlanksToolbar = ({
 }) => {
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
-  // set to true only for testing while (drag & drop mode is not actually working atm.)
-  const allowModeSwitch = false
-
   return (
     <PluginToolbar
       pluginType={EditorPluginType.FillInTheBlanksExercise}
-      className="!left-[21px] top-[-33px] w-[calc(100%-37px)]"
+      className="!left-[-9px] top-[-33px] w-[calc(100%+25px)]"
       pluginSettings={
         <>
           <button
             onClick={() => setPreviewActive(!previewActive)}
             className="serlo-tooltip-trigger mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+            data-qa="plugin-blanks-exercise-preview-button"
           >
             <EditorTooltip
               text={
@@ -45,20 +43,19 @@ export const FillInTheBlanksToolbar = ({
             {blanksExerciseStrings.previewMode}{' '}
             <FaIcon icon={previewActive ? faCheckCircle : faCircle} />
           </button>
-          {allowModeSwitch ? (
-            <ToolbarSelect
-              tooltipText={blanksExerciseStrings.chooseType}
-              value={state.mode.value}
-              changeValue={(value) => state.mode.set(value)}
-              options={[
-                { value: 'typing', text: blanksExerciseStrings.modes.typing },
-                {
-                  value: 'drag-and-drop',
-                  text: blanksExerciseStrings.modes['drag-and-drop'],
-                },
-              ]}
-            />
-          ) : null}
+          <ToolbarSelect
+            tooltipText={blanksExerciseStrings.chooseType}
+            value={state.mode.value}
+            dataQa="plugin-blanks-mode-switch"
+            changeValue={(value) => state.mode.set(value)}
+            options={[
+              { value: 'typing', text: blanksExerciseStrings.modes.typing },
+              {
+                value: 'drag-and-drop',
+                text: blanksExerciseStrings.modes['drag-and-drop'],
+              },
+            ]}
+          />
         </>
       }
       pluginControls={<InteractiveToolbarTools id={id} />}

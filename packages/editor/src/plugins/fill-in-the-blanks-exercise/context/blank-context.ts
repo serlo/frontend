@@ -4,7 +4,12 @@ import type { BlankId, DraggableId, FillInTheBlanksMode } from '..'
 
 export interface FillInTheBlanksContextType {
   mode: FillInTheBlanksMode
-  feedbackForBlanks: Map<BlankId, { isCorrect?: boolean }>
+  feedbackForBlanks: {
+    value: Map<BlankId, { isCorrect?: boolean }>
+    set: React.Dispatch<
+      React.SetStateAction<Map<BlankId, { isCorrect?: boolean }>>
+    >
+  }
   textInBlanks: Map<BlankId, { text: string }>
   textUserTypedIntoBlanks: {
     value: Map<BlankId, { text: string }>
