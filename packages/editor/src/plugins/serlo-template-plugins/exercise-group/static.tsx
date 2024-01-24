@@ -1,8 +1,10 @@
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import {
+  EditorExerciseDocument,
   EditorRowsDocument,
   EditorTemplateExerciseGroupDocument,
 } from '@editor/types/editor-plugins'
+import { isBoxDocument, isRowsDocument } from '@editor/types/plugin-type-guards'
 import { useAuthentication } from '@serlo/frontend/src/auth/use-authentication'
 import type { MoreAuthorToolsProps } from '@serlo/frontend/src/components/user-tools/foldout-author-menus/more-author-tools'
 import { ExerciseInlineType } from '@serlo/frontend/src/data-types'
@@ -21,23 +23,26 @@ export function TextExerciseGroupTypeStaticRenderer(
   props: EditorTemplateExerciseGroupDocument
 ) {
   const { state, serloContext: context } = props
-  const [loaded, setLoaded] = useState(false)
   const auth = useAuthentication()
-  useEffect(() => {
-    setLoaded(true)
-  }, [])
+  const [loaded, setLoaded] = useState(false)
+  useEffect(() => setLoaded(true), [])
 
   const { content, exercises } = state
   if (!exercises) return null
 
-  const rendered = exercises.map((exercise, index) => {
+  const renderedExercises = exercises.map((exercise, index) => {
     const id = `${exercise.id ?? exercise.serloContext?.uuid ?? index}`
+
+    const { document, beforeContent } = extraExamsTasksHack(exercise)
+
     return {
       id,
-      element: <StaticRenderer document={exercise} />,
+      element: <StaticRenderer document={document} />,
+      beforeContent,
     }
   })
 
+  const rowsContent = content as unknown as EditorRowsDocument
   return (
     <div className="relative">
       {loaded && auth && context?.uuid ? (
@@ -53,11 +58,43 @@ export function TextExerciseGroupTypeStaticRenderer(
         </div>
       ) : null}
       <TextExerciseGroupTypeRenderer
-        content={
-          <StaticRenderer document={content as unknown as EditorRowsDocument} />
-        }
-        exercises={rendered}
+        content={<StaticRenderer document={rowsContent} />}
+        exercises={renderedExercises}
       />
     </div>
   )
+}
+
+// quick and ugly hack to give authors a way to add intermediate task in exercise groups
+// if you add a box with the title "Aufgabenstellung" in a grouped exercise it's content
+// will be displayed before the exercise
+function extraExamsTasksHack(exercise: EditorExerciseDocument) {
+  if (
+    isRowsDocument(exercise.state.content) &&
+    isBoxDocument(exercise.state.content.state[0])
+  ) {
+    const boxPlugin = exercise.state.content.state[0]
+
+    if (JSON.stringify(boxPlugin.state.title).includes('Aufgabenstellung')) {
+      // remove box from exercise document and insert it before the task
+      return {
+        document: {
+          ...exercise,
+          state: {
+            ...exercise.state,
+            content: {
+              ...exercise.state.content,
+              state: exercise.state.content.state.slice(1),
+            },
+          },
+        },
+        beforeContent: (
+          <div className="-ml-14">
+            <StaticRenderer document={boxPlugin.state.content} />
+          </div>
+        ),
+      }
+    }
+  }
+  return { document: exercise, beforeContent: undefined }
 }

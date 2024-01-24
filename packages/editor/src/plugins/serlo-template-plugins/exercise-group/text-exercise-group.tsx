@@ -35,13 +35,12 @@ export const textExerciseGroupTypeState = entityType(
   {
     ...entity,
     content: editorContent(EditorPluginType.Rows),
-    cohesive: boolean(false),
     /* cohesive field would indicate whether the children of a grouped exercise are cohesive
     this field might be used in the future, but currently it has no effect and can not be changed
     */
+    cohesive: boolean(false),
   },
   {
-    // I think this is not correct because it meant for strings?
     'grouped-text-exercise': list(serializedChild('type-text-exercise')),
   }
 )
