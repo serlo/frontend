@@ -1,5 +1,6 @@
 import { DndWrapper } from '@editor/core/components/dnd-wrapper'
 import { type ReactNode, useMemo, useState, useCallback } from 'react'
+import { v4 as uuid_v4 } from 'uuid'
 
 import type {
   BlankId,
@@ -23,7 +24,9 @@ interface FillInTheBlanksRendererProps {
   }
   mode: FillInTheBlanksMode
   initialTextInBlank: 'empty' | 'correct-answer'
-  additionalDraggableAnswers: FillInTheBlanksExerciseProps['state']['additionalDraggableAnswers']
+  additionalDraggableAnswers:
+    | FillInTheBlanksExerciseProps['state']['additionalDraggableAnswers']
+    | Array<{ answer: string }>
   isEditing?: boolean
 }
 
@@ -77,12 +80,17 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     }))
     if (isEditing) return sorted
 
-    const shuffled = sorted
-      .map((value) => ({ value, sort: Math.random() }))
+    const dummyAnswers = additionalDraggableAnswers.map(({ answer }) => ({
+      draggableId: uuid_v4(),
+      text: typeof answer === 'string' ? answer : answer.value,
+    }))
+    const withDummyAnswers = [...sorted, ...dummyAnswers]
+    const shuffled = withDummyAnswers
+      .map((draggable) => ({ draggable, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
-      .map(({ value }) => value)
+      .map(({ draggable }) => draggable)
     return shuffled
-  }, [blanks, isEditing])
+  }, [additionalDraggableAnswers, blanks, isEditing])
 
   // Maps DraggableId to the BlankId where this draggable element is currently located
   const [locationOfDraggables, setLocationOfDraggables] = useState(
@@ -107,14 +115,8 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     if (mode === 'typing') {
       return [...textInBlanks.values()].every(({ text }) => text.length > 0)
     }
-    return draggables.length === locationOfDraggables.size
-  }, [
-    blanks.length,
-    draggables.length,
-    locationOfDraggables.size,
-    mode,
-    textInBlanks,
-  ])
+    return blanks.length === locationOfDraggables.size
+  }, [blanks.length, locationOfDraggables.size, mode, textInBlanks])
 
   return (
     <DndWrapper>
@@ -153,7 +155,9 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
 
         {mode === 'drag-and-drop' && isEditing ? (
           <BlankDraggableDummyArea
-            additionalDraggableAnswers={additionalDraggableAnswers}
+            additionalDraggableAnswers={
+              additionalDraggableAnswers as FillInTheBlanksExerciseProps['state']['additionalDraggableAnswers']
+            }
           />
         ) : null}
 

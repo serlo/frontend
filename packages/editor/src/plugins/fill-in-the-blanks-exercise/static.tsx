@@ -14,6 +14,7 @@ export function FillInTheBlanksStaticRenderer(
       textPluginState={text}
       mode={state.state.mode as FillInTheBlanksMode}
       initialTextInBlank="empty"
+      additionalDraggableAnswers={state.state.additionalDraggableAnswers}
     />
   )
 }
