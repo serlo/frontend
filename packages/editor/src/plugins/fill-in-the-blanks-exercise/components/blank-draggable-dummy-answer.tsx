@@ -1,4 +1,5 @@
-import { faPencil, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faTrashCan } from '@fortawesome/free-regular-svg-icons'
+import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import {
   ChangeEventHandler,
@@ -33,7 +34,7 @@ export function BlankDraggableDummyAnswer(
   return isInEditMode ? (
     <span className="serlo-autogrow-input mb-1 mr-2" data-value={text + '_'}>
       <input
-        className="rounded-full border border-orange bg-editor-primary-100 outline-none"
+        className="border-red-temp rounded-full border bg-editor-primary-100 outline-none"
         ref={inputRef}
         value={text}
         autoFocus
@@ -72,12 +73,15 @@ export function BlankDraggableDummyAnswer(
             !isInHoverMode && 'opacity-0'
           )}
         >
-          <FaIcon icon={faPencil} />
+          <FaIcon icon={faPencil} className="text-sm" />
         </span>
       </button>
       {isInHoverMode ? (
-        <button className="ml-2 rounded-full bg-orange px-2" onClick={onRemove}>
-          <FaIcon icon={faTrashAlt} />
+        <button
+          className="bg-red-temp ml-2 rounded-full px-2"
+          onClick={onRemove}
+        >
+          <FaIcon icon={faTrashCan} className="text-sm" />
         </button>
       ) : null}
     </div>
