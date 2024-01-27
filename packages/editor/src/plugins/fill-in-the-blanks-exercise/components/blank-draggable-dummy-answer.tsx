@@ -34,7 +34,7 @@ export function BlankDraggableDummyAnswer(
   return isInEditMode ? (
     <span className="serlo-autogrow-input mb-1 mr-2" data-value={text + '_'}>
       <input
-        className="border-red-temp rounded-full border bg-editor-primary-100 outline-none"
+        className="rounded-full border border-red-temp bg-editor-primary-100 outline-none"
         ref={inputRef}
         value={text}
         autoFocus
@@ -78,7 +78,7 @@ export function BlankDraggableDummyAnswer(
       </button>
       {isInHoverMode ? (
         <button
-          className="bg-red-temp ml-2 rounded-full px-2"
+          className="ml-2 rounded-full bg-red-temp px-2"
           onClick={onRemove}
         >
           <FaIcon icon={faTrashCan} className="text-sm" />
