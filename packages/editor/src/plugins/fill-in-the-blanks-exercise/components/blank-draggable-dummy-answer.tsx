@@ -26,7 +26,6 @@ export function BlankDraggableDummyAnswer(
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  // TODO: This also focuses the input on page load, that shouldn't happen
   useEffect(() => {
     setIsInEditMode(true)
   }, [])
