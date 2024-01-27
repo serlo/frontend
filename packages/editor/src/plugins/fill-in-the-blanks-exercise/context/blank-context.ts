@@ -23,7 +23,6 @@ export interface FillInTheBlanksContextType {
     value: Map<DraggableId, BlankId>
     set: React.Dispatch<React.SetStateAction<Map<DraggableId, BlankId>>>
   }
-  dummyDraggables: string[]
 }
 
 // Used to pass state to BlankRenderer from FillInTheBlanksRenderer

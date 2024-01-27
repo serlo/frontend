@@ -1,11 +1,5 @@
 import { DndWrapper } from '@editor/core/components/dnd-wrapper'
-import {
-  type ReactNode,
-  useMemo,
-  useState,
-  useCallback,
-  ChangeEvent,
-} from 'react'
+import { type ReactNode, useMemo, useState, useCallback } from 'react'
 
 import type {
   BlankId,
@@ -16,7 +10,6 @@ import type {
 import { BlankCheckButton } from './components/blank-check-button'
 import { BlankDraggableAnswer } from './components/blank-draggable-answer'
 import { BlankDraggableArea } from './components/blank-draggable-area'
-import { BlankDraggableDummyAnswer } from './components/blank-draggable-dummy-answer'
 import { BlankDraggableDummyArea } from './components/blank-draggable-dummy-area'
 import { FillInTheBlanksContext } from './context/blank-context'
 import { Blank, type BlankType } from './types'
@@ -91,11 +84,6 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     return shuffled
   }, [blanks, isEditing])
 
-  const dummyDraggables = useMemo(() => {
-    if (!additionalDraggableAnswers?.defined) return []
-    return additionalDraggableAnswers.map(({ answer }) => answer.value)
-  }, [additionalDraggableAnswers])
-
   // Maps DraggableId to the BlankId where this draggable element is currently located
   const [locationOfDraggables, setLocationOfDraggables] = useState(
     new Map<DraggableId, BlankId>()
@@ -112,24 +100,6 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
       setIsFeedbackVisible(false)
     },
     [locationOfDraggables]
-  )
-
-  const handleAddDummyAnswer = useCallback(() => {
-    if (!additionalDraggableAnswers?.defined) {
-      additionalDraggableAnswers.create([{ answer: '' }])
-      return
-    }
-    additionalDraggableAnswers.insert(additionalDraggableAnswers.length, {
-      answer: '',
-    })
-  }, [additionalDraggableAnswers])
-
-  const handleDummyAnswerChange = useCallback(
-    (text: string, index: number) => {
-      if (!additionalDraggableAnswers.defined) return
-      additionalDraggableAnswers[index].answer.set(text)
-    },
-    [additionalDraggableAnswers]
   )
 
   const shouldShowCheckButton = useMemo(() => {
@@ -166,7 +136,6 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
               value: locationOfDraggables,
               set: setLocationOfDraggables,
             },
-            dummyDraggables,
           }}
         >
           {text}
@@ -184,18 +153,8 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
 
         {mode === 'drag-and-drop' && isEditing ? (
           <BlankDraggableDummyArea
-            onAddDummyAnswerButtonClick={handleAddDummyAnswer}
-          >
-            {dummyDraggables.map((answer, index) => (
-              <BlankDraggableDummyAnswer
-                key={index}
-                text={answer}
-                onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                  handleDummyAnswerChange(event.target.value, index)
-                }}
-              />
-            ))}
-          </BlankDraggableDummyArea>
+            additionalDraggableAnswers={additionalDraggableAnswers}
+          />
         ) : null}
 
         {!isEditing ? (
