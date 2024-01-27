@@ -19,9 +19,7 @@ export function BlankDraggableDummyArea(props: BlankDraggableDummyAreaProps) {
   )
 
   function handleDummyAnswerAdd() {
-    additionalDraggableAnswers.insert(additionalDraggableAnswers.length, {
-      answer: '',
-    })
+    additionalDraggableAnswers.insert()
   }
 
   function handleRemoveDummyAnswer(index: number) {
