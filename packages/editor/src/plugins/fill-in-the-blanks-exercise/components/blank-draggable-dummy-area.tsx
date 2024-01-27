@@ -1,6 +1,5 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { type ChangeEvent, useMemo, useCallback } from 'react'
 
 import { BlankDraggableDummyAnswer } from './blank-draggable-dummy-answer'
 import type { FillInTheBlanksExerciseProps } from '..'
@@ -15,29 +14,23 @@ export function BlankDraggableDummyArea(props: BlankDraggableDummyAreaProps) {
 
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
-  const dummyDraggables = useMemo(() => {
-    return additionalDraggableAnswers.map(({ answer }) => answer.value)
-  }, [additionalDraggableAnswers])
+  const dummyDraggables = additionalDraggableAnswers.map(
+    ({ answer }) => answer.value
+  )
 
-  const handleDummyAnswerAdd = useCallback(() => {
+  function handleDummyAnswerAdd() {
     additionalDraggableAnswers.insert(additionalDraggableAnswers.length, {
       answer: '',
     })
-  }, [additionalDraggableAnswers])
+  }
 
-  const handleRemoveDummyAnswer = useCallback(
-    (index: number) => {
-      additionalDraggableAnswers.remove(index)
-    },
-    [additionalDraggableAnswers]
-  )
+  function handleRemoveDummyAnswer(index: number) {
+    additionalDraggableAnswers.remove(index)
+  }
 
-  const handleDummyAnswerChange = useCallback(
-    (text: string, index: number) => {
-      additionalDraggableAnswers[index].answer.set(text)
-    },
-    [additionalDraggableAnswers]
-  )
+  function handleDummyAnswerChange(text: string, index: number) {
+    additionalDraggableAnswers[index].answer.set(text)
+  }
 
   return (
     <div className="mt-8 px-4">
@@ -47,7 +40,7 @@ export function BlankDraggableDummyArea(props: BlankDraggableDummyAreaProps) {
           <BlankDraggableDummyAnswer
             key={index}
             text={answer}
-            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+            onChange={(event) => {
               handleDummyAnswerChange(event.target.value, index)
             }}
             onRemove={() => {
