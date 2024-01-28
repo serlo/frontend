@@ -14,24 +14,25 @@ export function BlankDraggableDummyPreview(
   const { text, switchToEditMode, onRemove } = props
 
   return (
-    <button
-      className={cn(
-        'relative mb-1 mr-2 flex h-full min-h-8 min-w-[80px] items-center rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2',
-        text.length > 0 ? 'justify-around' : 'justify-end'
-      )}
-      onClick={switchToEditMode}
-      onFocus={switchToEditMode}
-    >
-      {text}
+    <div className="relative mb-1 mr-2 flex ">
       <button
-        className={cn(
-          'rounded-full px-1 pb-1 leading-4 hover:bg-editor-primary-200',
-          text.length > 0 && 'ml-1'
-        )}
-        onClick={onRemove}
+        className="min-h-8 min-w-[80px] rounded-full border border-editor-primary-300 bg-editor-primary-100 pl-2 pr-6"
+        onClick={switchToEditMode}
+        onFocus={switchToEditMode}
       >
-        x
+        {text}
       </button>
-    </button>
+      <div className="absolute bottom-0 right-1 top-0">
+        <button
+          className={cn(
+            'rounded-full px-1 pb-1 leading-4 hover:bg-editor-primary-200',
+            text.length > 0 && 'ml-1'
+          )}
+          onClick={onRemove}
+        >
+          x
+        </button>
+      </div>
+    </div>
   )
 }
