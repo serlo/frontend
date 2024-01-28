@@ -925,8 +925,8 @@ export const loggedInData = {
           previewMode: 'Preview',
           previewIsActiveHint: 'Edit the exercise again',
           previewIsDeactiveHint: 'Preview the exercise',
-          dummyAnswers: 'Dummy answers',
-          addDummyAnswer: 'Add a dummy answer',
+          dummyAnswers: 'Extra incorrect answers',
+          addDummyAnswer: 'Add an incorrect answer',
         },
       },
       templatePlugins: {
