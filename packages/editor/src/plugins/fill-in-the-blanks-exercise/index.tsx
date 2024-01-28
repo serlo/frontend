@@ -46,7 +46,7 @@ function createState() {
       },
     }),
     mode: string(defaultMode),
-    additionalDraggableAnswers: list(object({ answer: string() })),
+    extraDraggableAnswers: list(object({ answer: string() })),
   })
 }
 

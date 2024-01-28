@@ -24,8 +24,8 @@ interface FillInTheBlanksRendererProps {
   }
   mode: FillInTheBlanksMode
   initialTextInBlank: 'empty' | 'correct-answer'
-  additionalDraggableAnswers:
-    | FillInTheBlanksExerciseProps['state']['additionalDraggableAnswers']
+  extraDraggableAnswers:
+    | FillInTheBlanksExerciseProps['state']['extraDraggableAnswers']
     | Array<{ answer: string }>
   isEditing?: boolean
 }
@@ -35,7 +35,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     text,
     textPluginState,
     mode,
-    additionalDraggableAnswers,
+    extraDraggableAnswers,
     initialTextInBlank,
     isEditing,
   } = props
@@ -80,7 +80,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     }))
     if (isEditing) return sorted
 
-    const dummyAnswers = additionalDraggableAnswers.map(({ answer }) => ({
+    const dummyAnswers = extraDraggableAnswers.map(({ answer }) => ({
       draggableId: uuid_v4(),
       text: typeof answer === 'string' ? answer : answer.value,
     }))
@@ -90,7 +90,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
       .sort((a, b) => a.sort - b.sort)
       .map(({ draggable }) => draggable)
     return shuffled
-  }, [additionalDraggableAnswers, blanks, isEditing])
+  }, [extraDraggableAnswers, blanks, isEditing])
 
   // Maps DraggableId to the BlankId where this draggable element is currently located
   const [locationOfDraggables, setLocationOfDraggables] = useState(
@@ -155,8 +155,8 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
 
         {mode === 'drag-and-drop' && isEditing ? (
           <BlankDraggableDummyArea
-            additionalDraggableAnswers={
-              additionalDraggableAnswers as FillInTheBlanksExerciseProps['state']['additionalDraggableAnswers']
+            extraDraggableAnswers={
+              extraDraggableAnswers as FillInTheBlanksExerciseProps['state']['extraDraggableAnswers']
             }
           />
         ) : null}

@@ -7,19 +7,17 @@ import type { FillInTheBlanksExerciseProps } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface BlankDraggableDummyAreaProps {
-  additionalDraggableAnswers: FillInTheBlanksExerciseProps['state']['additionalDraggableAnswers']
+  extraDraggableAnswers: FillInTheBlanksExerciseProps['state']['extraDraggableAnswers']
 }
 
 export function BlankDraggableDummyArea(props: BlankDraggableDummyAreaProps) {
-  const { additionalDraggableAnswers } = props
+  const { extraDraggableAnswers } = props
 
   const [hoveredAnswer, setHoveredAnswer] = useState<number | null>(null)
 
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
-  const dummyDraggables = additionalDraggableAnswers.map(
-    ({ answer }) => answer.value
-  )
+  const dummyValues = extraDraggableAnswers.map(({ answer }) => answer.value)
 
   return (
     <div className="mt-8 px-4">
@@ -32,7 +30,7 @@ export function BlankDraggableDummyArea(props: BlankDraggableDummyAreaProps) {
           }, 300)
         }}
       >
-        {dummyDraggables.map((answer, index) => (
+        {dummyValues.map((answer, index) => (
           <BlankDraggableDummyAnswer
             key={index}
             text={answer}
@@ -41,17 +39,17 @@ export function BlankDraggableDummyArea(props: BlankDraggableDummyAreaProps) {
               setHoveredAnswer(index)
             }}
             onChange={(event) => {
-              additionalDraggableAnswers[index].answer.set(event.target.value)
+              extraDraggableAnswers[index].answer.set(event.target.value)
             }}
             onRemove={() => {
-              additionalDraggableAnswers.remove(index)
+              extraDraggableAnswers.remove(index)
             }}
           />
         ))}
       </div>
       <button
         onMouseDown={() => {
-          additionalDraggableAnswers.insert()
+          extraDraggableAnswers.insert()
         }}
         className="serlo-button-editor-secondary mt-3"
       >

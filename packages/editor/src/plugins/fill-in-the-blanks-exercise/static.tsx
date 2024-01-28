@@ -5,7 +5,7 @@ import type { FillInTheBlanksMode } from '.'
 import { FillInTheBlanksRenderer } from './renderer'
 
 export function FillInTheBlanksStaticRenderer({
-  state: { text, mode, additionalDraggableAnswers },
+  state: { text, mode, extraDraggableAnswers },
 }: EditorFillInTheBlanksExerciseDocument) {
   return (
     <FillInTheBlanksRenderer
@@ -13,7 +13,7 @@ export function FillInTheBlanksStaticRenderer({
       textPluginState={text}
       mode={mode as FillInTheBlanksMode}
       initialTextInBlank="empty"
-      additionalDraggableAnswers={additionalDraggableAnswers}
+      extraDraggableAnswers={extraDraggableAnswers}
     />
   )
 }
