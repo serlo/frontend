@@ -1,5 +1,6 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
+import { useState } from 'react'
 
 import { BlankDraggableDummyAnswer } from './blank-draggable-dummy-answer'
 import type { FillInTheBlanksExerciseProps } from '..'
@@ -12,43 +13,46 @@ interface BlankDraggableDummyAreaProps {
 export function BlankDraggableDummyArea(props: BlankDraggableDummyAreaProps) {
   const { additionalDraggableAnswers } = props
 
+  const [hoveredAnswer, setHoveredAnswer] = useState<number | null>(null)
+
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
   const dummyDraggables = additionalDraggableAnswers.map(
     ({ answer }) => answer.value
   )
 
-  function handleDummyAnswerAdd() {
-    additionalDraggableAnswers.insert()
-  }
-
-  function handleRemoveDummyAnswer(index: number) {
-    additionalDraggableAnswers.remove(index)
-  }
-
-  function handleDummyAnswerChange(text: string, index: number) {
-    additionalDraggableAnswers[index].answer.set(text)
-  }
-
   return (
     <div className="mt-8 px-4">
       {blanksExerciseStrings.dummyAnswers}:
-      <div className="flex min-h-8 flex-wrap items-stretch">
+      <div
+        className="flex flex-wrap"
+        onMouseLeave={() => {
+          setTimeout(() => {
+            setHoveredAnswer(null)
+          }, 300)
+        }}
+      >
         {dummyDraggables.map((answer, index) => (
           <BlankDraggableDummyAnswer
             key={index}
             text={answer}
+            isInHoverMode={hoveredAnswer === index}
+            onMouseEnter={() => {
+              setHoveredAnswer(index)
+            }}
             onChange={(event) => {
-              handleDummyAnswerChange(event.target.value, index)
+              additionalDraggableAnswers[index].answer.set(event.target.value)
             }}
             onRemove={() => {
-              handleRemoveDummyAnswer(index)
+              additionalDraggableAnswers.remove(index)
             }}
           />
         ))}
       </div>
       <button
-        onMouseDown={handleDummyAnswerAdd}
+        onMouseDown={() => {
+          additionalDraggableAnswers.insert()
+        }}
         className="serlo-button-editor-secondary mt-3"
       >
         <FaIcon icon={faPlus} /> {blanksExerciseStrings.addDummyAnswer}

@@ -1,12 +1,14 @@
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons'
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useState, type MouseEventHandler } from 'react'
+import type { MouseEventHandler } from 'react'
 
 import { cn } from '@/helper/cn'
 
 interface BlankDraggableDummyPreviewProps {
   text: string
+  isInHoverMode: boolean
+  onMouseEnter: MouseEventHandler
   onClick: MouseEventHandler
   onRemove: MouseEventHandler
 }
@@ -14,26 +16,10 @@ interface BlankDraggableDummyPreviewProps {
 export function BlankDraggableDummyPreview(
   props: BlankDraggableDummyPreviewProps
 ) {
-  const { text, onClick, onRemove } = props
-
-  const [isInHoverMode, setIsInHoverMode] = useState(false)
-
-  function handleMouseEnter() {
-    setIsInHoverMode(true)
-  }
-
-  function handleMouseLeave() {
-    setTimeout(() => {
-      setIsInHoverMode(false)
-    }, 300)
-  }
+  const { text, isInHoverMode, onMouseEnter, onClick, onRemove } = props
 
   return (
-    <div
-      className="mb-1 mr-2 flex"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <div className="mb-1 mr-2 flex min-h-8" onMouseEnter={onMouseEnter}>
       <button
         className={cn(
           'relative h-full rounded-full border border-editor-primary-300 bg-editor-primary-100',

@@ -10,6 +10,8 @@ import { BlankDraggableDummyPreview } from './blank-draggable-dummy-preview'
 
 interface BlankDraggableDummyAnswerProps {
   text: string
+  isInHoverMode: boolean
+  onMouseEnter: MouseEventHandler
   onChange: ChangeEventHandler<HTMLInputElement>
   onRemove: MouseEventHandler
 }
@@ -17,7 +19,7 @@ interface BlankDraggableDummyAnswerProps {
 export function BlankDraggableDummyAnswer(
   props: BlankDraggableDummyAnswerProps
 ) {
-  const { text, onChange, onRemove } = props
+  const { text, isInHoverMode, onMouseEnter, onChange, onRemove } = props
 
   const [isInEditMode, setIsInEditMode] = useState(false)
 
@@ -42,6 +44,8 @@ export function BlankDraggableDummyAnswer(
   ) : (
     <BlankDraggableDummyPreview
       text={text}
+      isInHoverMode={isInHoverMode}
+      onMouseEnter={onMouseEnter}
       onClick={handlePreviewClick}
       onRemove={onRemove}
     />
