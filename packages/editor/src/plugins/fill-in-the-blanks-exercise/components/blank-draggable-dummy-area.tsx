@@ -18,22 +18,26 @@ export function BlankDraggableDummyArea(props: BlankDraggableDummyAreaProps) {
 
   return (
     <div className="mt-8 px-4">
-      {blanksExerciseStrings.dummyAnswers}:
-      <div className="flex flex-wrap">
-        {dummyValues.map((answer, index) => (
-          <BlankDraggableDummyAnswer
-            key={index}
-            text={answer}
-            onChange={(event) => {
-              extraDraggableAnswers[index].answer.set(event.target.value)
-            }}
-            onRemove={(event) => {
-              event.stopPropagation()
-              extraDraggableAnswers.remove(index)
-            }}
-          />
-        ))}
-      </div>
+      {dummyValues.length > 0 ? (
+        <>
+          {blanksExerciseStrings.dummyAnswers}:
+          <div className="flex flex-wrap">
+            {dummyValues.map((answer, index) => (
+              <BlankDraggableDummyAnswer
+                key={index}
+                text={answer}
+                onChange={(event) => {
+                  extraDraggableAnswers[index].answer.set(event.target.value)
+                }}
+                onRemove={(event) => {
+                  event.stopPropagation()
+                  extraDraggableAnswers.remove(index)
+                }}
+              />
+            ))}
+          </div>
+        </>
+      ) : null}
       <button
         onMouseDown={() => {
           extraDraggableAnswers.insert()
