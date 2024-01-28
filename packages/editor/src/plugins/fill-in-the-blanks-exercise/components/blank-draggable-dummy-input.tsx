@@ -12,7 +12,7 @@ export function BlankDraggableDummyInput(props: BlankDraggableDummyInputProps) {
   return (
     <span className="serlo-autogrow-input mb-1 mr-2" data-value={text + '_'}>
       <input
-        className="rounded-full border border-red-temp bg-editor-primary-100 outline-none"
+        className="rounded-full border border-red-400 bg-editor-primary-100 outline-none"
         value={text}
         autoFocus
         size={4}

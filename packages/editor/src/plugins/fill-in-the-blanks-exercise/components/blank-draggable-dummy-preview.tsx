@@ -40,7 +40,7 @@ export function BlankDraggableDummyPreview(
 
       {isInHoverMode ? (
         <button
-          className="ml-2 rounded-full bg-red-temp px-2"
+          className="ml-2 rounded-full bg-red-400 px-2"
           onClick={onRemove}
         >
           <FaIcon icon={faTrashCan} className="text-sm" />

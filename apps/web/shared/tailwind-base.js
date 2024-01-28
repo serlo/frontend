@@ -63,10 +63,6 @@ export default {
         red: {
           DEFAULT: colors.red[900],
           100: colors.red[100],
-          // This color is present in the design for fill-in-the-blanks exercise,
-          // dummy drag-and-drop answers feature. For now, it's just a temporary
-          // variable used in staging testing.
-          temp: '#ff8686',
         },
       },
       borderWidth: {
