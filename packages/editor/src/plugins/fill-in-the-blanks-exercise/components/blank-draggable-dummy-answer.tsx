@@ -25,24 +25,20 @@ export function BlankDraggableDummyAnswer(
     setIsInEditMode(true)
   }, [])
 
-  function handleInputBlur() {
-    setIsInEditMode(false)
-  }
-
-  function handlePreviewClick() {
-    setIsInEditMode(true)
-  }
-
   return isInEditMode ? (
     <BlankDraggableDummyInput
       text={text}
-      onBlur={handleInputBlur}
+      onBlur={() => {
+        setIsInEditMode(false)
+      }}
       onChange={onChange}
     />
   ) : (
     <BlankDraggableDummyPreview
       text={text}
-      onClick={handlePreviewClick}
+      switchToEditMode={() => {
+        setIsInEditMode(true)
+      }}
       onRemove={onRemove}
     />
   )
