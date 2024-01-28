@@ -1,14 +1,9 @@
-import { faTrashCan } from '@fortawesome/free-regular-svg-icons'
-import { faPencil } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import type { MouseEventHandler } from 'react'
 
 import { cn } from '@/helper/cn'
 
 interface BlankDraggableDummyPreviewProps {
   text: string
-  isInHoverMode: boolean
-  onMouseEnter: MouseEventHandler
   onClick: MouseEventHandler
   onRemove: MouseEventHandler
 }
@@ -16,36 +11,26 @@ interface BlankDraggableDummyPreviewProps {
 export function BlankDraggableDummyPreview(
   props: BlankDraggableDummyPreviewProps
 ) {
-  const { text, isInHoverMode, onMouseEnter, onClick, onRemove } = props
+  const { text, onClick, onRemove } = props
 
   return (
-    <div className="mb-1 mr-2 flex min-h-8" onMouseEnter={onMouseEnter}>
+    <button
+      className={cn(
+        'relative mb-1 mr-2 flex h-full min-h-8 min-w-[80px] items-center rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2',
+        text.length > 0 ? 'justify-around' : 'justify-end'
+      )}
+      onClick={onClick}
+    >
+      {text}
       <button
         className={cn(
-          'relative h-full rounded-full border border-editor-primary-300 bg-editor-primary-100',
-          text.length < 1 ? 'px-8' : 'px-2'
+          'rounded-full px-1 pb-1 leading-4 hover:bg-editor-primary-200',
+          text.length > 0 && 'ml-1'
         )}
-        onClick={onClick}
+        onClick={onRemove}
       >
-        <span className={cn(isInHoverMode && 'opacity-20')}>{text}</span>
-        <span
-          className={cn(
-            'absolute bottom-0 left-0 right-0 top-0 text-center',
-            !isInHoverMode && 'opacity-0'
-          )}
-        >
-          <FaIcon icon={faPencil} className="text-sm" />
-        </span>
+        x
       </button>
-
-      {isInHoverMode ? (
-        <button
-          className="ml-2 rounded-full bg-red-400 px-2"
-          onClick={onRemove}
-        >
-          <FaIcon icon={faTrashCan} className="text-sm" />
-        </button>
-      ) : null}
-    </div>
+    </button>
   )
 }

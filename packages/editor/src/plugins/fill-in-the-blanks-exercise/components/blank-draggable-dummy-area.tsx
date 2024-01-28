@@ -1,6 +1,5 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useState } from 'react'
 
 import { BlankDraggableDummyAnswer } from './blank-draggable-dummy-answer'
 import type { FillInTheBlanksExerciseProps } from '..'
@@ -13,8 +12,6 @@ interface BlankDraggableDummyAreaProps {
 export function BlankDraggableDummyArea(props: BlankDraggableDummyAreaProps) {
   const { extraDraggableAnswers } = props
 
-  const [hoveredAnswer, setHoveredAnswer] = useState<number | null>(null)
-
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
   const dummyValues = extraDraggableAnswers.map(({ answer }) => answer.value)
@@ -22,26 +19,16 @@ export function BlankDraggableDummyArea(props: BlankDraggableDummyAreaProps) {
   return (
     <div className="mt-8 px-4">
       {blanksExerciseStrings.dummyAnswers}:
-      <div
-        className="flex flex-wrap"
-        onMouseLeave={() => {
-          setTimeout(() => {
-            setHoveredAnswer(null)
-          }, 300)
-        }}
-      >
+      <div className="flex flex-wrap">
         {dummyValues.map((answer, index) => (
           <BlankDraggableDummyAnswer
             key={index}
             text={answer}
-            isInHoverMode={hoveredAnswer === index}
-            onMouseEnter={() => {
-              setHoveredAnswer(index)
-            }}
             onChange={(event) => {
               extraDraggableAnswers[index].answer.set(event.target.value)
             }}
-            onRemove={() => {
+            onRemove={(event) => {
+              event.stopPropagation()
               extraDraggableAnswers.remove(index)
             }}
           />
