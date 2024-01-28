@@ -1,13 +1,13 @@
-import type { ChangeEventHandler, FocusEventHandler } from 'react'
+import type { ChangeEventHandler } from 'react'
 
 interface BlankDraggableDummyInputProps {
   text: string
-  onBlur: FocusEventHandler
+  swtichToPreviewMode: () => void
   onChange: ChangeEventHandler<HTMLInputElement>
 }
 
 export function BlankDraggableDummyInput(props: BlankDraggableDummyInputProps) {
-  const { text, onBlur, onChange } = props
+  const { text, swtichToPreviewMode, onChange } = props
 
   return (
     <span className="serlo-autogrow-input mb-1 mr-2" data-value={text + '_'}>
@@ -16,8 +16,14 @@ export function BlankDraggableDummyInput(props: BlankDraggableDummyInputProps) {
         value={text}
         autoFocus
         size={4}
-        onBlur={onBlur}
+        onBlur={swtichToPreviewMode}
         onChange={onChange}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault()
+            swtichToPreviewMode()
+          }
+        }}
       />
     </span>
   )

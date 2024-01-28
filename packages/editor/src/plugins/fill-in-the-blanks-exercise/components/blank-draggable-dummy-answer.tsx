@@ -28,7 +28,7 @@ export function BlankDraggableDummyAnswer(
   return isInEditMode ? (
     <BlankDraggableDummyInput
       text={text}
-      onBlur={() => {
+      swtichToPreviewMode={() => {
         setIsInEditMode(false)
       }}
       onChange={onChange}
