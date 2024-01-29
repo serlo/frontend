@@ -27,7 +27,7 @@ export function BlankDraggableDummyAnswer(
     <div className="relative">
       <span className="serlo-autogrow-input mb-1 mr-2" data-value={text + '_ '}>
         <input
-          className="serlo-input-font-reset w-3/4 !min-w-[80px] rounded-full border border-editor-primary bg-editor-primary-100 outline-2 outline-offset-0 outline-transparent focus:outline focus:outline-editor-primary"
+          className="serlo-input-font-reset w-3/4 !min-w-[80px] rounded-full border border-brand bg-brand-50 focus:border-transparent focus:outline focus:outline-red-400"
           value={text}
           autoFocus
           size={4}

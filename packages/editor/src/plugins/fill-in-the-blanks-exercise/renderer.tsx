@@ -138,6 +138,10 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
               value: locationOfDraggables,
               set: setLocationOfDraggables,
             },
+            isFeedbackVisible: {
+              value: isFeedbackVisible,
+              set: setIsFeedbackVisible,
+            },
           }}
         >
           {text}
@@ -147,7 +151,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
           <BlankDraggableArea onDrop={handleDraggableAreaDrop}>
             {draggables.map((draggable, index) =>
               locationOfDraggables.get(draggable.draggableId) ? null : (
-                <BlankDraggableAnswer key={index} isPending {...draggable} />
+                <BlankDraggableAnswer key={index} {...draggable} />
               )
             )}
           </BlankDraggableArea>
