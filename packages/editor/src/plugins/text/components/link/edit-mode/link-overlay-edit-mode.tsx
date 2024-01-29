@@ -21,7 +21,7 @@ interface LinkOverlayEditModeProps {
   value: string
   setHref: (href: string, title?: string) => void
   setTitle?: (title: string) => void
-  removeLink: () => void
+  removeLink?: () => void
   shouldFocus: boolean
   quickbarData: QuickbarData | null
 }
@@ -82,7 +82,7 @@ export function LinkOverlayEditMode({
     {
       if (e.key === 'Escape') {
         if (query) setQuery('')
-        else removeLink()
+        else if (removeLink) removeLink()
       }
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter') {
         if (e.key === 'ArrowDown' && selectedIndex < results.length) {

@@ -38,12 +38,10 @@ export function SolutionEditor({ state, focused }: SolutionProps) {
         // eslint-disable-next-line no-console
         .catch(console.error)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [quickbarData])
+  }, [isSerloLinkSearchActive, quickbarData])
 
   useEffect(() => {
     if (!focused) setShowPrerequisiteLinkTool(false)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focused])
 
   return (
@@ -129,7 +127,6 @@ export function SolutionEditor({ state, focused }: SolutionProps) {
                     alias: undefined,
                   })
                 }}
-                removeLink={() => {}} //
                 value=""
                 shouldFocus
                 quickbarData={quickbarData}

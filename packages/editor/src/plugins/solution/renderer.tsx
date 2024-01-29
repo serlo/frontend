@@ -43,7 +43,7 @@ export function SolutionRenderer({
       {visible ? (
         <div className="serlo-solution-box">
           {visible === 'solution' ? renderSolutionContent() : null}
-          {visible === 'strategy' && strategy ? strategy : null}
+          {visible === 'strategy' ? strategy : null}
         </div>
       ) : null}
     </>
