@@ -847,7 +847,10 @@ export const loggedInData = {
           },
           previewMode: "पूर्वावलोकन",
           previewIsActiveHint: 'Edit the exercise again',
-          previewIsDeactiveHint: 'Preview the exercise'
+          previewIsDeactiveHint: 'Preview the exercise',
+          dummyAnswers: 'Extra incorrect answers',
+          addDummyAnswer: 'Add an incorrect answer',
+          removeDummyAnswer: 'Remove extra answer'
         }
       },
       templatePlugins: {
