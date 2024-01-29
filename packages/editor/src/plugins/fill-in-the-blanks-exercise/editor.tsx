@@ -63,6 +63,7 @@ export function FillInTheBlanksExerciseEditor(
             },
           })}
           textPluginState={textPluginState}
+          extraDraggableAnswers={props.state.extraDraggableAnswers}
           mode={props.state.mode.value as FillInTheBlanksMode}
           initialTextInBlank="correct-answer"
         />
