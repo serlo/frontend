@@ -2,30 +2,34 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useRef } from 'react'
 
-import { BlankDraggableDummyAnswer } from './blank-draggable-dummy-answer'
+import { ExtraIncorrectAnswer } from './extra-incorrect-answer'
 import type { FillInTheBlanksExerciseProps } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
-interface BlankDraggableDummyAreaProps {
+interface ExtraIncorrectAnswersAreaProps {
   extraDraggableAnswers: FillInTheBlanksExerciseProps['state']['extraDraggableAnswers']
 }
 
-export function BlankDraggableDummyArea(props: BlankDraggableDummyAreaProps) {
+export function ExtraIncorrectAnswersArea(
+  props: ExtraIncorrectAnswersAreaProps
+) {
   const { extraDraggableAnswers } = props
 
   const areaRef = useRef<HTMLDivElement>(null)
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
-  const dummyValues = extraDraggableAnswers.map(({ answer }) => answer.value)
+  const incorrectAnswers = extraDraggableAnswers.map(
+    ({ answer }) => answer.value
+  )
 
   return (
     <div className="mt-8 px-4" ref={areaRef}>
-      {dummyValues.length > 0 ? (
+      {incorrectAnswers.length > 0 ? (
         <>
           {blanksExerciseStrings.dummyAnswers}:
           <div className="mb-3 mt-1 flex flex-wrap gap-2">
-            {dummyValues.map((answer, index) => (
-              <BlankDraggableDummyAnswer
+            {incorrectAnswers.map((answer, index) => (
+              <ExtraIncorrectAnswer
                 key={index}
                 text={answer}
                 onChange={(event) => {

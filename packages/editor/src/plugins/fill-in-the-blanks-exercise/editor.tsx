@@ -8,7 +8,7 @@ import type { EditorFillInTheBlanksExerciseDocument } from '@editor/types/editor
 import { useState } from 'react'
 
 import type { FillInTheBlanksExerciseProps, FillInTheBlanksMode } from '.'
-import { BlankDraggableDummyArea } from './components/blank-draggable-dummy-area'
+import { ExtraIncorrectAnswersArea } from './components/extra-incorrect-answers-area'
 import { FillInTheBlanksRenderer } from './renderer'
 import { FillInTheBlanksStaticRenderer } from './static'
 import { FillInTheBlanksToolbar } from './toolbar'
@@ -72,7 +72,7 @@ export function FillInTheBlanksExerciseEditor(
           />
 
           {mode.value === 'drag-and-drop' ? (
-            <BlankDraggableDummyArea
+            <ExtraIncorrectAnswersArea
               extraDraggableAnswers={extraDraggableAnswers}
             />
           ) : null}

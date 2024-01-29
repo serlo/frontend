@@ -10,16 +10,14 @@ import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 
-interface BlankDraggableDummyAnswerProps {
+interface ExtraIncorrectAnswerProps {
   text: string
   onChange: ChangeEventHandler<HTMLInputElement>
   onKeyDown: KeyboardEventHandler
   onRemoveClick: MouseEventHandler
 }
 
-export function BlankDraggableDummyAnswer(
-  props: BlankDraggableDummyAnswerProps
-) {
+export function ExtraIncorrectAnswer(props: ExtraIncorrectAnswerProps) {
   const { text, onChange, onKeyDown, onRemoveClick } = props
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 

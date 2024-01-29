@@ -79,12 +79,12 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     }))
     if (isEditing) return sorted
 
-    const dummyAnswers = extraDraggableAnswers.map(({ answer }) => ({
+    const extraIncorrectAnswers = extraDraggableAnswers.map(({ answer }) => ({
       draggableId: uuid_v4(),
       text: typeof answer === 'string' ? answer : answer.value,
     }))
-    const withDummyAnswers = [...sorted, ...dummyAnswers]
-    const shuffled = withDummyAnswers
+    const withExtraIncorrectAnswers = [...sorted, ...extraIncorrectAnswers]
+    const shuffled = withExtraIncorrectAnswers
       .map((draggable) => ({ draggable, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
       .map(({ draggable }) => draggable)
