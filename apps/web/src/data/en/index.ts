@@ -163,8 +163,8 @@ export const instanceData = {
         yourAnswer: 'Your answer…',
         chooseOption: 'Click on one of the options.',
         printModeChooseOption: 'Check one of the options.',
-        showSolution: 'Show solution',
-        hideSolution: 'Hide solution',
+        strategy: 'Strategy',
+        solution: 'Solution',
       },
       boxTypes: {
         blank: 'Blank',
@@ -1037,6 +1037,7 @@ export const loggedInData = {
           showSolution: 'Show solution',
           hideSolution: 'Hide solution',
           changeLicense: 'Change license',
+          addPrerequisite: 'Add link',
         },
         textExerciseGroup: {
           removeExercise: 'Remove exercise',
