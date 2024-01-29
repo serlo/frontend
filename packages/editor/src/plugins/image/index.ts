@@ -1,3 +1,4 @@
+import { editorPlugins } from '@editor/package'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 
@@ -39,7 +40,32 @@ export function createImagePlugin(
     Component: ImageEditor,
     config,
     state: imageState,
-    onText(value) {
+    async onText(value) {
+      // ==================
+      // experimental feature: upload directly when pasting url from mathpix
+      // could maybe be used for all image urls in the future
+      if (value.startsWith('![](https://cdn.mathpix.com')) {
+        const imageUrl = value.substring(4, value.length - 1)
+        const proxyUrl = '/api/frontend/mathpix-image-proxy?imageUrl='
+
+        try {
+          const response = await fetch(proxyUrl + encodeURIComponent(imageUrl))
+          const blob = await response.blob()
+          const { type } = blob
+          const imagePlugin = editorPlugins.getByType('image')
+          if (imagePlugin.onFiles) {
+            return imagePlugin.onFiles([
+              new File([blob], `image.${blob.type.split('/')[1]}`, {
+                type,
+              }),
+            ])
+          }
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error(err)
+        }
+      }
+      // ==================
       if (/\.(gif|jpe?g|png|svg|webp)$/.test(value.toLowerCase())) {
         return {
           state: {

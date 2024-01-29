@@ -7,8 +7,8 @@ import {
 import { default as NextLink } from 'next/link'
 
 import { Icon } from './icon'
-import { preventHover } from './prevent-hover'
 import { SubContent } from './sub-content'
+import { useNavMenuTriggerFix } from './use-nav-menu-trigger-fix'
 import { FaIcon } from '@/components/fa-icon'
 import type { HeaderLinkData } from '@/data-types'
 import { cn } from '@/helper/cn'
@@ -32,6 +32,8 @@ export interface ItemProps {
 
 export function Item({ link, elementAsIcon, className }: ItemProps) {
   const hasChildren = link.children !== undefined
+
+  const triggerFix = useNavMenuTriggerFix()
 
   const textAndIcon = (
     <>
@@ -76,8 +78,7 @@ export function Item({ link, elementAsIcon, className }: ItemProps) {
       <>
         <Trigger
           className={'serlo-header-navtrigger ' + styledLinkCls}
-          onPointerMove={preventHover}
-          onPointerLeave={preventHover}
+          {...triggerFix}
         >
           {textAndIcon}&nbsp;
           <FaIcon icon={faCaretDown} />

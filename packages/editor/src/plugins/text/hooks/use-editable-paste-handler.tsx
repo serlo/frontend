@@ -16,6 +16,7 @@ import { useCallback } from 'react'
 import { Editor as SlateEditor } from 'slate'
 
 import { insertPlugin } from '../utils/insert-plugin'
+import { mathpixPasteHandler } from '../utils/mathpix-paste-handler'
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 
 export interface UseEditablePasteHandlerArgs {
@@ -30,7 +31,7 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
   const textStrings = useEditorStrings().plugins.text
 
   return useCallback(
-    (event: React.ClipboardEvent) => {
+    async (event: React.ClipboardEvent) => {
       // Exit if no files or text in clipboard data
       const files = Array.from(event.clipboardData.files)
       const text = event.clipboardData.getData('text')
@@ -43,7 +44,14 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       if (!document) return
 
       // special case: pasting in image caption
-      captionPasteHandler({ event, files, text, id, dispatch })
+      void captionPasteHandler({ event, files, text, id, dispatch })
+
+      // temporary hack to handle async onText
+      if (text.startsWith('![](https://cdn.mathpix.com')) {
+        event.preventDefault()
+      }
+
+      mathpixPasteHandler({ event, editor, text })
 
       let media
       // pasting editor document string and insert as plugins
@@ -62,6 +70,7 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
           mayManipulateSiblings &&
           checkIsAllowedNesting(pluginDocument.plugin, typesOfAncestors)
         ) {
+          event.preventDefault() // extra prevent for firefox to make it work 🤷
           media = {
             pluginType: pluginDocument.plugin,
             state: pluginDocument.state,
@@ -77,7 +86,7 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
 
       // Iterate through all plugins and try to process clipboard data
       for (const { plugin, type } of editorPlugins.getAllWithData()) {
-        const state = plugin.onFiles?.(files) ?? plugin.onText?.(text)
+        const state = plugin.onFiles?.(files) ?? (await plugin.onText?.(text))
         if (state?.state) {
           media = { state: state.state as unknown, pluginType: type }
           break
