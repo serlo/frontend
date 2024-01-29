@@ -848,9 +848,9 @@ export const loggedInData = {
           previewMode: "Vorschau",
           previewIsActiveHint: "Die Aufgabe wieder bearbeiten",
           previewIsDeactiveHint: "Vorschau der Aufgabe anzeigen",
-          dummyAnswers: 'Extra incorrect answers',
-          addDummyAnswer: 'Add an incorrect answer',
-          removeDummyAnswer: 'Remove extra answer'
+          dummyAnswers: "Falsche Antwortmöglichkeiten",
+          addDummyAnswer: "Falsche Antwort hinzufügen",
+          removeDummyAnswer: "Falsche Antwort entfernen"
         }
       },
       templatePlugins: {
