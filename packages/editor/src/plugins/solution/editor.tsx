@@ -115,7 +115,7 @@ export function SolutionEditor({ state, focused }: SolutionProps) {
               />
             ) : (
               <LinkOverlayEditMode
-                isSerloLinkSearchActive //
+                isSerloLinkSearchActive
                 setHref={(href, title) => {
                   if (!title) {
                     showToastNotice('Please choose an existing serlo content')
