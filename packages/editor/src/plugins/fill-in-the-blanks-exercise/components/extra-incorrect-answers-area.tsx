@@ -23,11 +23,11 @@ export function ExtraIncorrectAnswersArea(
   )
 
   return (
-    <div className="mt-8 px-4" ref={areaRef}>
+    <div className="mt-8 px-8" ref={areaRef}>
       {incorrectAnswers.length > 0 ? (
         <>
           {blanksExerciseStrings.dummyAnswers}:
-          <div className="mb-3 mt-1 flex flex-wrap gap-2">
+          <div className="mb-4 mt-1 flex flex-wrap gap-2">
             {incorrectAnswers.map((answer, index) => (
               <ExtraIncorrectAnswer
                 key={index}

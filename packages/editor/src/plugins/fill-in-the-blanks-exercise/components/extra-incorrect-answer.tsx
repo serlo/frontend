@@ -23,7 +23,7 @@ export function ExtraIncorrectAnswer(props: ExtraIncorrectAnswerProps) {
 
   return (
     <div className="relative">
-      <span className="serlo-autogrow-input" data-value={text + '__'}>
+      <span className="serlo-autogrow-input" data-value={text + '_ '}>
         <input
           className="serlo-input-font-reset w-3/4 !min-w-[80px] rounded-full border border-brand bg-brand-50 focus:border-transparent focus:outline focus:outline-red-400"
           value={text}
@@ -35,7 +35,7 @@ export function ExtraIncorrectAnswer(props: ExtraIncorrectAnswerProps) {
       </span>
       <button
         className={cn(
-          `serlo-tooltip-trigger absolute right-1 top-0 h-full w-6 rounded-full px-1 py-0.5 leading-none text-black
+          `serlo-tooltip-trigger absolute right-1 top-[1px] h-6 w-6 rounded-full px-1 py-0.5 leading-none text-black
           opacity-50 hover:bg-editor-primary-200 hover:opacity-100 focus:bg-editor-primary-200 focus:opacity-100`
         )}
         onClick={onRemoveClick}
