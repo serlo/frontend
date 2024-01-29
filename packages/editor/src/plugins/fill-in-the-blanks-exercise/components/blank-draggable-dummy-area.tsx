@@ -31,6 +31,11 @@ export function BlankDraggableDummyArea(props: BlankDraggableDummyAreaProps) {
                 onChange={(event) => {
                   extraDraggableAnswers[index].answer.set(event.target.value)
                 }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    extraDraggableAnswers.insert()
+                  }
+                }}
                 onRemoveClick={() => {
                   extraDraggableAnswers.remove(index)
                   // focus new last input to make sure we don't loose focus

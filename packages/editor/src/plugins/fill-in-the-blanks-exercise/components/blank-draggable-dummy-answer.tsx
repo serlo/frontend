@@ -1,6 +1,10 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
-import { type ChangeEventHandler, type MouseEventHandler } from 'react'
+import {
+  KeyboardEventHandler,
+  type ChangeEventHandler,
+  type MouseEventHandler,
+} from 'react'
 
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -9,13 +13,14 @@ import { cn } from '@/helper/cn'
 interface BlankDraggableDummyAnswerProps {
   text: string
   onChange: ChangeEventHandler<HTMLInputElement>
+  onKeyDown: KeyboardEventHandler
   onRemoveClick: MouseEventHandler
 }
 
 export function BlankDraggableDummyAnswer(
   props: BlankDraggableDummyAnswerProps
 ) {
-  const { text, onChange, onRemoveClick } = props
+  const { text, onChange, onKeyDown, onRemoveClick } = props
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
   return (
@@ -27,6 +32,7 @@ export function BlankDraggableDummyAnswer(
           autoFocus
           size={4}
           onChange={onChange}
+          onKeyDown={onKeyDown}
         />
       </span>
       <button
