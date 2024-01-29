@@ -151,8 +151,8 @@ export const instanceData = {
         answer: "Antwort",
         check: "Stimmt's?",
         yourAnswer: "Deine Antwort…",
-        chooseOption: "Klicke auf eine der Optionen",
-        printModeChooseOption: "Kreuze eine der Optionen an",
+        chooseOption: "Klicke auf eine der Optionen.",
+        printModeChooseOption: "Kreuze eine der Optionen an.",
         showSolution: "Lösung anzeigen",
         hideSolution: "Lösung ausblenden"
       },
