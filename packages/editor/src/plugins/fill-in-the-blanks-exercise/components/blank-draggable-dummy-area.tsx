@@ -1,5 +1,6 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
+import { useRef } from 'react'
 
 import { BlankDraggableDummyAnswer } from './blank-draggable-dummy-answer'
 import type { FillInTheBlanksExerciseProps } from '..'
@@ -29,8 +30,7 @@ export function BlankDraggableDummyArea(props: BlankDraggableDummyAreaProps) {
                 onChange={(event) => {
                   extraDraggableAnswers[index].answer.set(event.target.value)
                 }}
-                onRemove={(event) => {
-                  event.stopPropagation()
+                onRemoveClick={() => {
                   extraDraggableAnswers.remove(index)
                 }}
               />
