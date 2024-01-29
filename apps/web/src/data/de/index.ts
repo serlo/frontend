@@ -847,7 +847,10 @@ export const loggedInData = {
           },
           previewMode: "Vorschau",
           previewIsActiveHint: "Die Aufgabe wieder bearbeiten",
-          previewIsDeactiveHint: "Vorschau der Aufgabe anzeigen"
+          previewIsDeactiveHint: "Vorschau der Aufgabe anzeigen",
+          dummyAnswers: 'Extra incorrect answers',
+          addDummyAnswer: 'Add an incorrect answer',
+          removeDummyAnswer: 'Remove extra answer'
         }
       },
       templatePlugins: {
