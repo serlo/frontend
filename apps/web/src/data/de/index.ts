@@ -151,8 +151,8 @@ export const instanceData = {
         answer: "Antwort",
         check: "Stimmt's?",
         yourAnswer: "Deine Antwort…",
-        chooseOption: "Klicke auf eine der Optionen",
-        printModeChooseOption: "Kreuze eine der Optionen an",
+        chooseOption: "Klicke auf eine der Optionen.",
+        printModeChooseOption: "Kreuze eine der Optionen an.",
         showSolution: "Lösung anzeigen",
         hideSolution: "Lösung ausblenden"
       },
@@ -847,7 +847,10 @@ export const loggedInData = {
           },
           previewMode: "Vorschau",
           previewIsActiveHint: "Die Aufgabe wieder bearbeiten",
-          previewIsDeactiveHint: "Vorschau der Aufgabe anzeigen"
+          previewIsDeactiveHint: "Vorschau der Aufgabe anzeigen",
+          dummyAnswers: "Falsche Antwortmöglichkeiten",
+          addDummyAnswer: "Falsche Antwort hinzufügen",
+          removeDummyAnswer: "Falsche Antwort entfernen"
         }
       },
       templatePlugins: {

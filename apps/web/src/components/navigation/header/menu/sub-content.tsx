@@ -1,8 +1,8 @@
 import { Content, List } from '@radix-ui/react-navigation-menu'
 
-import { preventHover } from './prevent-hover'
 import { SubItem } from './sub-item'
 import { SubParticipateMega } from './sub-participate-mega'
+import { preventHover } from './use-nav-menu-trigger-fix'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { HeaderLinkData } from '@/data-types'
 import { cn } from '@/helper/cn'
@@ -28,7 +28,6 @@ export function SubContent({ subItems, parent }: SubContentProps) {
         (isLast || isParticipate) && 'md:right-0'
       )}
       onPointerEnter={preventHover}
-      onPointerLeave={preventHover}
     >
       {isParticipateMega ? (
         <SubParticipateMega subItems={subItems} parent={parent} />

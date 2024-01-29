@@ -37,8 +37,8 @@ export function DroppableBlank(props: DroppableBlankProps) {
     <span
       className={cn(
         !children &&
-          'rounded-full border border-editor-primary-300 bg-editor-primary-100 px-6 text-editor-primary-100',
-        isOver && !isDisabled && 'bg-slate-400'
+          'rounded-full border border-brand bg-brand-50 px-6 text-brand-50',
+        isOver && !isDisabled && 'bg-slate-400 text-slate-400'
       )}
       ref={dropRef}
     >

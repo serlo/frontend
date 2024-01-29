@@ -1,10 +1,17 @@
 import { DndWrapper } from '@editor/core/components/dnd-wrapper'
 import { type ReactNode, useMemo, useState, useCallback } from 'react'
+import { v4 as uuid_v4 } from 'uuid'
 
-import type { BlankId, DraggableId, FillInTheBlanksMode } from '.'
+import type {
+  BlankId,
+  DraggableId,
+  FillInTheBlanksExerciseProps,
+  FillInTheBlanksMode,
+} from '.'
 import { BlankCheckButton } from './components/blank-check-button'
 import { BlankDraggableAnswer } from './components/blank-draggable-answer'
 import { BlankDraggableArea } from './components/blank-draggable-area'
+import { BlankDraggableDummyArea } from './components/blank-draggable-dummy-area'
 import { FillInTheBlanksContext } from './context/blank-context'
 import { Blank, type BlankType } from './types'
 
@@ -17,11 +24,21 @@ interface FillInTheBlanksRendererProps {
   }
   mode: FillInTheBlanksMode
   initialTextInBlank: 'empty' | 'correct-answer'
+  extraDraggableAnswers:
+    | FillInTheBlanksExerciseProps['state']['extraDraggableAnswers']
+    | Array<{ answer: string }>
   isEditing?: boolean
 }
 
 export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
-  const { text, textPluginState, mode, initialTextInBlank, isEditing } = props
+  const {
+    text,
+    textPluginState,
+    mode,
+    extraDraggableAnswers,
+    initialTextInBlank,
+    isEditing,
+  } = props
 
   const [isFeedbackVisible, setIsFeedbackVisible] = useState<boolean>(false)
 
@@ -63,12 +80,17 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     }))
     if (isEditing) return sorted
 
-    const shuffled = sorted
-      .map((value) => ({ value, sort: Math.random() }))
+    const dummyAnswers = extraDraggableAnswers.map(({ answer }) => ({
+      draggableId: uuid_v4(),
+      text: typeof answer === 'string' ? answer : answer.value,
+    }))
+    const withDummyAnswers = [...sorted, ...dummyAnswers]
+    const shuffled = withDummyAnswers
+      .map((draggable) => ({ draggable, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
-      .map(({ value }) => value)
+      .map(({ draggable }) => draggable)
     return shuffled
-  }, [blanks, isEditing])
+  }, [extraDraggableAnswers, blanks, isEditing])
 
   // Maps DraggableId to the BlankId where this draggable element is currently located
   const [locationOfDraggables, setLocationOfDraggables] = useState(
@@ -93,14 +115,8 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     if (mode === 'typing') {
       return [...textInBlanks.values()].every(({ text }) => text.length > 0)
     }
-    return draggables.length === locationOfDraggables.size
-  }, [
-    blanks.length,
-    draggables.length,
-    locationOfDraggables.size,
-    mode,
-    textInBlanks,
-  ])
+    return blanks.length === locationOfDraggables.size
+  }, [blanks.length, locationOfDraggables.size, mode, textInBlanks])
 
   return (
     <DndWrapper>
@@ -122,6 +138,10 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
               value: locationOfDraggables,
               set: setLocationOfDraggables,
             },
+            isFeedbackVisible: {
+              value: isFeedbackVisible,
+              set: setIsFeedbackVisible,
+            },
           }}
         >
           {text}
@@ -131,10 +151,18 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
           <BlankDraggableArea onDrop={handleDraggableAreaDrop}>
             {draggables.map((draggable, index) =>
               locationOfDraggables.get(draggable.draggableId) ? null : (
-                <BlankDraggableAnswer key={index} isPending {...draggable} />
+                <BlankDraggableAnswer key={index} {...draggable} />
               )
             )}
           </BlankDraggableArea>
+        ) : null}
+
+        {mode === 'drag-and-drop' && isEditing ? (
+          <BlankDraggableDummyArea
+            extraDraggableAnswers={
+              extraDraggableAnswers as FillInTheBlanksExerciseProps['state']['extraDraggableAnswers']
+            }
+          />
         ) : null}
 
         {!isEditing ? (

@@ -10,6 +10,10 @@ import {
 import { AuthorTools, Tool } from './author-tools'
 import type { MoreAuthorToolsProps } from './more-author-tools'
 import { FaIcon } from '@/components/fa-icon'
+import {
+  preventHover,
+  useNavMenuTriggerFix,
+} from '@/components/navigation/header/menu/use-nav-menu-trigger-fix'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { ExerciseInlineType, UuidType } from '@/data-types'
@@ -17,6 +21,8 @@ import { cn } from '@/helper/cn'
 import { getTranslatedType } from '@/helper/get-translated-type'
 
 export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
+  const triggerFix = useNavMenuTriggerFix()
+
   const loggedInData = useLoggedInData()
   const { strings } = useInstanceData()
   if (!data || !loggedInData) return null
@@ -43,10 +49,11 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
               p-0 text-center text-base leading-8
               text-brandgreen hover:bg-brandgreen hover:text-white sm:inline-block
             `)}
+            {...triggerFix}
           >
             <FaIcon icon={faTools} />
           </Trigger>
-          <Content>
+          <Content onPointerEnter={preventHover}>
             <List className="absolute right-0 top-0 z-30 w-56 pt-2">
               <div className="serlo-sub-list-hover">
                 <li className="ml-2 font-bold">{type}</li>

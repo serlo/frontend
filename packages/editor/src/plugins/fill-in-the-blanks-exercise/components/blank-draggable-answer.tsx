@@ -8,12 +8,11 @@ export const blankDraggableAnswerDragType = 'blank-solution'
 interface BlankDraggableAnswerProps {
   text: string
   draggableId: DraggableId
-  isPending?: boolean
   isAnswerCorrect?: boolean
 }
 
 export function BlankDraggableAnswer(props: BlankDraggableAnswerProps) {
-  const { draggableId, text, isPending, isAnswerCorrect } = props
+  const { draggableId, text, isAnswerCorrect } = props
 
   const [, dragRef] = useDrag({
     type: blankDraggableAnswerDragType,
@@ -23,10 +22,9 @@ export function BlankDraggableAnswer(props: BlankDraggableAnswerProps) {
   return (
     <span
       className={cn(
-        'cursor-grab rounded-full border border-editor-primary-300 bg-editor-primary-100 px-2',
+        'cursor-grab rounded-full border border-brand bg-brand-50 px-2',
         isAnswerCorrect && 'border-green-500',
-        isAnswerCorrect === false && 'border-red-500',
-        isPending && 'mr-2'
+        isAnswerCorrect === false && 'border-red-500'
       )}
       ref={dragRef}
     >

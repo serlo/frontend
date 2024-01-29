@@ -5,6 +5,7 @@ import {
   object,
   child,
   string,
+  list,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
@@ -45,8 +46,7 @@ function createState() {
       },
     }),
     mode: string(defaultMode),
-    // This could be used to store additional answers for mode drag-and-drop in the future
-    // additionalDraggableAnswers: optional(list(object({ answer: string() }))),
+    extraDraggableAnswers: list(object({ answer: string() })),
   })
 }
 
