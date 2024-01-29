@@ -11,7 +11,6 @@ import type {
 import { BlankCheckButton } from './components/blank-check-button'
 import { BlankDraggableAnswer } from './components/blank-draggable-answer'
 import { BlankDraggableArea } from './components/blank-draggable-area'
-import { BlankDraggableDummyArea } from './components/blank-draggable-dummy-area'
 import { FillInTheBlanksContext } from './context/blank-context'
 import { Blank, type BlankType } from './types'
 
@@ -155,14 +154,6 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
               )
             )}
           </BlankDraggableArea>
-        ) : null}
-
-        {mode === 'drag-and-drop' && isEditing ? (
-          <BlankDraggableDummyArea
-            extraDraggableAnswers={
-              extraDraggableAnswers as FillInTheBlanksExerciseProps['state']['extraDraggableAnswers']
-            }
-          />
         ) : null}
 
         {!isEditing ? (

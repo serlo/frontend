@@ -23,7 +23,7 @@ export function BlankDraggableDummyArea(props: BlankDraggableDummyAreaProps) {
       {dummyValues.length > 0 ? (
         <>
           {blanksExerciseStrings.dummyAnswers}:
-          <div className="flex flex-wrap">
+          <div className="mb-3 mt-1 flex flex-wrap gap-2">
             {dummyValues.map((answer, index) => (
               <BlankDraggableDummyAnswer
                 key={index}
@@ -53,7 +53,7 @@ export function BlankDraggableDummyArea(props: BlankDraggableDummyAreaProps) {
         onClick={() => {
           extraDraggableAnswers.insert()
         }}
-        className="serlo-button-editor-secondary mt-3"
+        className="serlo-button-editor-secondary"
       >
         <FaIcon icon={faPlus} /> {blanksExerciseStrings.addDummyAnswer}
       </button>
