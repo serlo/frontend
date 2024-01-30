@@ -2,12 +2,7 @@ import { DndWrapper } from '@editor/core/components/dnd-wrapper'
 import { type ReactNode, useMemo, useState, useCallback } from 'react'
 import { v4 as uuid_v4 } from 'uuid'
 
-import type {
-  BlankId,
-  DraggableId,
-  FillInTheBlanksExerciseProps,
-  FillInTheBlanksMode,
-} from '.'
+import type { BlankId, DraggableId, FillInTheBlanksMode } from '.'
 import { BlankCheckButton } from './components/blank-check-button'
 import { BlankDraggableAnswer } from './components/blank-draggable-answer'
 import { BlankDraggableArea } from './components/blank-draggable-area'
@@ -23,9 +18,7 @@ interface FillInTheBlanksRendererProps {
   }
   mode: FillInTheBlanksMode
   initialTextInBlank: 'empty' | 'correct-answer'
-  extraDraggableAnswers:
-    | FillInTheBlanksExerciseProps['state']['extraDraggableAnswers']
-    | Array<{ answer: string }>
+  extraDraggableAnswers: Array<{ answer: string }>
   isEditing?: boolean
 }
 
@@ -79,10 +72,11 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     }))
     if (isEditing) return sorted
 
-    const extraIncorrectAnswers = extraDraggableAnswers.map(({ answer }) => ({
-      draggableId: uuid_v4(),
-      text: typeof answer === 'string' ? answer : answer.value,
-    }))
+    const extraIncorrectAnswers =
+      extraDraggableAnswers?.map(({ answer }) => ({
+        draggableId: uuid_v4(),
+        text: answer,
+      })) ?? []
     const withExtraIncorrectAnswers = [...sorted, ...extraIncorrectAnswers]
     const shuffled = withExtraIncorrectAnswers
       .map((draggable) => ({ draggable, sort: Math.random() }))
