@@ -30,11 +30,16 @@ export function BlankRendererStatic({ blankId }: BlankRendererStaticProps) {
   const feedback = context.feedbackForBlanks.value
   const isAnswerCorrect = feedback.get(blankId)?.isCorrect
 
+  function handleChange() {
+    context?.isFeedbackVisible.set(false)
+  }
+
   return context.mode === 'typing' ? (
     <BlankRendererInput
       blankId={blankId}
       context={context}
       isAnswerCorrect={isAnswerCorrect}
+      onChange={handleChange}
     />
   ) : (
     <DroppableBlank blankId={blankId} isDisabled={draggableId !== null}>

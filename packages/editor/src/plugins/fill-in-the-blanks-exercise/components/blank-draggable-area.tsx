@@ -24,7 +24,7 @@ export function BlankDraggableArea(props: BlankDraggableAreaProps) {
   return (
     <div
       className={cn(
-        'mt-5 flex min-h-8 w-full items-stretch rounded-full bg-slate-100',
+        'mx-side mb-6 mt-side flex min-h-8 flex-wrap items-stretch gap-2 rounded-xl bg-slate-100 p-side',
         isOver ? 'bg-slate-200' : ''
       )}
       data-qa="blank-solution-area"
