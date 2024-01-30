@@ -18,7 +18,7 @@ interface FillInTheBlanksRendererProps {
   }
   mode: FillInTheBlanksMode
   initialTextInBlank: 'empty' | 'correct-answer'
-  extraDraggableAnswers: Array<{ answer: string }>
+  extraDraggableAnswers?: Array<{ answer: string }>
   isEditing?: boolean
 }
 
