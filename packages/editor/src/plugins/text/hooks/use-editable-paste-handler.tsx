@@ -70,6 +70,7 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
           mayManipulateSiblings &&
           checkIsAllowedNesting(pluginDocument.plugin, typesOfAncestors)
         ) {
+          event.preventDefault() // extra prevent for firefox to make it work 🤷
           media = {
             pluginType: pluginDocument.plugin,
             state: pluginDocument.state,

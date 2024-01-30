@@ -153,8 +153,8 @@ export const instanceData = {
         yourAnswer: "உங்கள் பதில்:",
         chooseOption: 'Click on one of the options.',
         printModeChooseOption: 'Check one of the options.',
-        showSolution: "விடையைக் காட்டு",
-        hideSolution: "விடையை மறைக்கவும்"
+        strategy: 'Strategy',
+        solution: "தீர்வு"
       },
       boxTypes: {
         blank: 'Blank',
@@ -847,7 +847,10 @@ export const loggedInData = {
           },
           previewMode: "முற்பார்வை",
           previewIsActiveHint: 'Edit the exercise again',
-          previewIsDeactiveHint: 'Preview the exercise'
+          previewIsDeactiveHint: 'Preview the exercise',
+          dummyAnswers: 'Extra incorrect answers',
+          addDummyAnswer: 'Add an incorrect answer',
+          removeDummyAnswer: 'Remove extra answer'
         }
       },
       templatePlugins: {
@@ -952,7 +955,8 @@ export const loggedInData = {
           linkTitle: 'Title of the link',
           showSolution: "விடையைக் காட்டு",
           hideSolution: "விடையை மறைக்கவும்",
-          changeLicense: "உத்தரவு மாற்றுதல்"
+          changeLicense: "உத்தரவு மாற்றுதல்",
+          addPrerequisite: 'Add link'
         },
         textExerciseGroup: {
           removeExercise: 'Remove exercise',

@@ -29,6 +29,7 @@ export const BlankRendererInput = forwardRef<
           isAnswerCorrect && 'border-green-500',
           isAnswerCorrect === false && 'border-red-500'
         )}
+        data-qa="blank-input"
         size={4}
         spellCheck={false}
         autoCorrect="off"

@@ -151,10 +151,10 @@ export const instanceData = {
         answer: "Antwort",
         check: "Stimmt's?",
         yourAnswer: "Deine Antwort…",
-        chooseOption: "Klicke auf eine der Optionen",
-        printModeChooseOption: "Kreuze eine der Optionen an",
-        showSolution: "Lösung anzeigen",
-        hideSolution: "Lösung ausblenden"
+        chooseOption: "Klicke auf eine der Optionen.",
+        printModeChooseOption: "Kreuze eine der Optionen an.",
+        strategy: "Strategie",
+        solution: "Lösung"
       },
       boxTypes: {
         blank: "Blanko",
@@ -847,7 +847,10 @@ export const loggedInData = {
           },
           previewMode: "Vorschau",
           previewIsActiveHint: "Die Aufgabe wieder bearbeiten",
-          previewIsDeactiveHint: "Vorschau der Aufgabe anzeigen"
+          previewIsDeactiveHint: "Vorschau der Aufgabe anzeigen",
+          dummyAnswers: "Falsche Antwortmöglichkeiten",
+          addDummyAnswer: "Falsche Antwort hinzufügen",
+          removeDummyAnswer: "Falsche Antwort entfernen"
         }
       },
       templatePlugins: {
@@ -952,7 +955,8 @@ export const loggedInData = {
           linkTitle: "Titel der Verlinkung",
           showSolution: "Lösung anzeigen",
           hideSolution: "Lösung ausblenden",
-          changeLicense: "Lizenz ändern"
+          changeLicense: "Lizenz ändern",
+          addPrerequisite: "Link hinzufügen"
         },
         textExerciseGroup: {
           removeExercise: "Teilaufgabe entfernen",

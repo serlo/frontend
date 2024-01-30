@@ -51,11 +51,11 @@ const videoClassName = cn(
 )
 
 export function parseVideoUrl(
-  checkSrc: string,
+  inputSrc: string,
   lang?: Instance
 ): [string, VideoType | undefined] {
   const videoRegex = /^(https?:\/\/)?(.*?vimeo\.com\/)(.+)/
-  const vimeo = videoRegex.exec(checkSrc)
+  const vimeo = videoRegex.exec(inputSrc)
   if (vimeo)
     return [
       `https://player.vimeo.com/video/${vimeo[3]}?autoplay=1`,
@@ -63,20 +63,21 @@ export function parseVideoUrl(
     ]
 
   const wikimediaRegex = /^(https?:\/\/)?(.*?upload\.wikimedia\.org\/)(.+)/
-  const wikimedia = wikimediaRegex.exec(checkSrc)
-  if (wikimedia) return [checkSrc, VideoType.WikimediaCommons]
+  const wikimedia = wikimediaRegex.exec(inputSrc)
+  if (wikimedia) return [inputSrc, VideoType.WikimediaCommons]
 
   const youtubeRegex =
     /^(https?:\/\/)?(.*?youtube\.com\/watch\?(.*&)?v=|.*?youtu\.be\/)([a-zA-Z0-9_-]{11})/
-  const youtube = youtubeRegex.exec(checkSrc)
+  const youtube = youtubeRegex.exec(inputSrc)
   if (youtube) {
-    const path = youtube[4]
-    const videoId = encodeURIComponent(path.split('&', 1)[0])
-    const useSubtitles = path.indexOf('cc_load_policy=1') > 0
+    const videoId = encodeURIComponent(youtube[4])
+    const url = new URL(inputSrc)
+    const timestamp = parseInt(url.searchParams.get('t') ?? '')
+    const useSubtitles = url.search.includes('cc_load_policy=1')
     const iframeSrc = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&html5=1${
       useSubtitles ? `&cc_lang_pref=${lang ?? 'de'}&cc_load_policy=1` : ''
-    }`
+    }${isNaN(timestamp) ? '' : `&start=${timestamp}`}`
     return [iframeSrc, VideoType.YouTube]
   }
-  return [checkSrc, undefined]
+  return [inputSrc, undefined]
 }

@@ -1,12 +1,9 @@
-const useLocalAPI = process.env.FRONTEND_API == 'local'
+import config from './config'
 
+const { isCI, browser, frontendUrl } = config
+
+const useLocalAPI = process.env.FRONTEND_API == 'local'
 export const adminUser = useLocalAPI ? 'admin' : 'Kulla'
-const isCI = Boolean(process.env.CI)
-const browser = process.env.BROWSER ?? 'chromium'
-const frontendUrl =
-  process.env.FRONTEND_URL ?? useLocalAPI
-    ? 'http://localhost:3000'
-    : 'https://de.serlo-staging.dev'
 
 const isChromium = browser === 'chromium'
 

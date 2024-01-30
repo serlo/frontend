@@ -204,9 +204,9 @@ Scenario('Toggle Solution', ({ I }) => {
   I.amOnPage('/37779')
   I.see('Die Klasse 8a')
   I.dontSee('Für diese Aufgabe benötigst Du')
-  I.click('Lösung anzeigen')
+  I.click('Lösung')
   I.see('Für diese Aufgabe benötigst Du')
-  I.click('Lösung ausblenden')
+  I.click('Lösung')
   I.dontSee('Für diese Aufgabe benötigst Du')
 })
 
@@ -338,7 +338,7 @@ Scenario('Course', ({ I }) => {
   I.click('Kursübersicht')
   I.see('Zusammenfassung')
   I.click('Weiterführende Übungen')
-  I.see('Lösung anzeigen')
+  I.see('Lösung')
 })
 
 Scenario('Comments', ({ I }) => {
@@ -350,7 +350,7 @@ Scenario('Comments', ({ I }) => {
 
   // In exercise
   I.amOnPage('/37296')
-  I.click('Lösung anzeigen')
+  I.click('Lösung')
   I.scrollTo('#comment-area-begin-scrollpoint')
   I.see('Ich weiß nicht, ob es vom Computer')
 })

@@ -2,7 +2,7 @@ import { removeBlanks } from '@editor/editor-ui/plugin-toolbar/text-controls/uti
 import {
   ChangeEvent,
   KeyboardEvent as ReactKeyboardEvent,
-  createRef,
+  useRef,
   useContext,
   useEffect,
 } from 'react'
@@ -23,17 +23,11 @@ export function BlankRenderer({ element }: BlankRendererProps) {
   const focused = useFocused()
 
   // Autofocus when adding and removing a blank
-  const inputRef = createRef<HTMLInputElement>()
+  const inputRef = useRef<HTMLInputElement | null>(null)
   useEffect(() => {
     // Focus input when the blank is added
     setTimeout(() => inputRef.current?.focus())
-
-    // Editor gets refocused when the blank is removed from within
-    // text-controls/utils/blank.ts as it leads to slate errors on unmount.
-
-    // Only run on mount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [inputRef])
 
   // Focus input when the blank is selected using arrow keys
   // + set cursor at the start if entering using right arrow key
