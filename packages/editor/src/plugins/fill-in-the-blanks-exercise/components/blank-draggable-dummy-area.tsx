@@ -16,11 +16,13 @@ export function BlankDraggableDummyArea(props: BlankDraggableDummyAreaProps) {
   const areaRef = useRef<HTMLDivElement>(null)
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
-  const dummyValues = extraDraggableAnswers.map(({ answer }) => answer.value)
+  const dummyValues = extraDraggableAnswers.defined
+    ? extraDraggableAnswers.map(({ answer }) => answer.value)
+    : []
 
   return (
     <div className="mt-8 px-4" ref={areaRef}>
-      {dummyValues.length > 0 ? (
+      {dummyValues.length > 0 && extraDraggableAnswers.defined ? (
         <>
           {blanksExerciseStrings.dummyAnswers}:
           <div className="flex flex-wrap">
@@ -37,7 +39,12 @@ export function BlankDraggableDummyArea(props: BlankDraggableDummyAreaProps) {
                   }
                 }}
                 onRemoveClick={() => {
-                  extraDraggableAnswers.remove(index)
+                  if (!extraDraggableAnswers.defined) return
+
+                  extraDraggableAnswers.set((currentList) =>
+                    currentList.filter((_, itemIndex) => itemIndex !== index)
+                  )
+
                   // focus new last input to make sure we don't loose focus
                   const allInputs = areaRef.current?.querySelectorAll('input')
                   if (allInputs) {
@@ -51,7 +58,11 @@ export function BlankDraggableDummyArea(props: BlankDraggableDummyAreaProps) {
       ) : null}
       <button
         onClick={() => {
-          extraDraggableAnswers.insert()
+          if (extraDraggableAnswers.defined) {
+            extraDraggableAnswers.insert()
+          } else {
+            extraDraggableAnswers.create([{ answer: '' }])
+          }
         }}
         className="serlo-button-editor-secondary mt-3"
       >

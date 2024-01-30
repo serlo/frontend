@@ -24,7 +24,7 @@ interface FillInTheBlanksRendererProps {
   }
   mode: FillInTheBlanksMode
   initialTextInBlank: 'empty' | 'correct-answer'
-  extraDraggableAnswers:
+  extraDraggableAnswers?:
     | FillInTheBlanksExerciseProps['state']['extraDraggableAnswers']
     | Array<{ answer: string }>
   isEditing?: boolean
@@ -39,6 +39,8 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     initialTextInBlank,
     isEditing,
   } = props
+
+  console.log(extraDraggableAnswers)
 
   const [isFeedbackVisible, setIsFeedbackVisible] = useState<boolean>(false)
 
@@ -80,10 +82,14 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     }))
     if (isEditing) return sorted
 
-    const dummyAnswers = extraDraggableAnswers.map(({ answer }) => ({
-      draggableId: uuid_v4(),
-      text: typeof answer === 'string' ? answer : answer.value,
-    }))
+    const dummyAnswers = extraDraggableAnswers
+      ? extraDraggableAnswers.map(({ answer }) => {
+          return {
+            draggableId: uuid_v4(),
+            text: typeof answer === 'string' ? answer : answer.value,
+          }
+        })
+      : []
     const withDummyAnswers = [...sorted, ...dummyAnswers]
     const shuffled = withDummyAnswers
       .map((draggable) => ({ draggable, sort: Math.random() }))
