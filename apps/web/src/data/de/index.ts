@@ -153,7 +153,7 @@ export const instanceData = {
         yourAnswer: "Deine Antwort…",
         chooseOption: "Klicke auf eine der Optionen.",
         printModeChooseOption: "Kreuze eine der Optionen an.",
-        strategy: 'Strategy',
+        strategy: "Strategie",
         solution: "Lösung"
       },
       boxTypes: {
@@ -956,7 +956,7 @@ export const loggedInData = {
           showSolution: "Lösung anzeigen",
           hideSolution: "Lösung ausblenden",
           changeLicense: "Lizenz ändern",
-          addPrerequisite: 'Add link'
+          addPrerequisite: "Link hinzufügen"
         },
         textExerciseGroup: {
           removeExercise: "Teilaufgabe entfernen",
