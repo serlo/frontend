@@ -8,6 +8,7 @@ import type { EditorFillInTheBlanksExerciseDocument } from '@editor/types/editor
 import { useState } from 'react'
 
 import type { FillInTheBlanksExerciseProps, FillInTheBlanksMode } from '.'
+import { ExtraIncorrectAnswersArea } from './components/extra-incorrect-answers-area'
 import { FillInTheBlanksRenderer } from './renderer'
 import { FillInTheBlanksStaticRenderer } from './static'
 import { FillInTheBlanksToolbar } from './toolbar'
@@ -16,11 +17,12 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 export function FillInTheBlanksExerciseEditor(
   props: FillInTheBlanksExerciseProps
 ) {
-  const { focused } = props
+  const { focused, id, state } = props
+  const { text, mode, extraDraggableAnswers } = state
   const [previewActive, setPreviewActive] = useState(false)
 
   const isRendererTextPluginFocused = useAppSelector((storeState) => {
-    return selectIsFocused(storeState, props.state.text.id)
+    return selectIsFocused(storeState, text.id)
   })
 
   const editorStrings = useEditorStrings()
@@ -29,14 +31,14 @@ export function FillInTheBlanksExerciseEditor(
 
   // Rerender if text plugin state changes
   const textPluginState = useAppSelector((state) => {
-    return selectDocument(state, props.state.text.id)
+    return selectDocument(state, text.id)
   })
 
   const staticDocument = useAppSelector(
     (storeState) =>
       selectStaticDocument(
         storeState,
-        props.id
+        id
       ) as EditorFillInTheBlanksExerciseDocument
   )
 
@@ -55,18 +57,26 @@ export function FillInTheBlanksExerciseEditor(
       {previewActive ? (
         <FillInTheBlanksStaticRenderer {...staticDocument} />
       ) : (
-        <FillInTheBlanksRenderer
-          isEditing
-          text={props.state.text.render({
-            config: {
-              placeholder: editorStrings.plugins.blanksExercise.placeholder,
-            },
-          })}
-          textPluginState={textPluginState}
-          extraDraggableAnswers={props.state.extraDraggableAnswers}
-          mode={props.state.mode.value as FillInTheBlanksMode}
-          initialTextInBlank="correct-answer"
-        />
+        <>
+          <FillInTheBlanksRenderer
+            isEditing
+            text={text.render({
+              config: {
+                placeholder: editorStrings.plugins.blanksExercise.placeholder,
+              },
+            })}
+            textPluginState={textPluginState}
+            extraDraggableAnswers={staticDocument.state.extraDraggableAnswers}
+            mode={mode.value as FillInTheBlanksMode}
+            initialTextInBlank="correct-answer"
+          />
+
+          {mode.value === 'drag-and-drop' ? (
+            <ExtraIncorrectAnswersArea
+              extraDraggableAnswers={extraDraggableAnswers}
+            />
+          ) : null}
+        </>
       )}
       {/* Only debug views from here on */}
       <div className="hidden">{JSON.stringify(textPluginState)}</div>

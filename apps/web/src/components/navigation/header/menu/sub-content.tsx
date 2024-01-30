@@ -28,6 +28,7 @@ export function SubContent({ subItems, parent }: SubContentProps) {
         (isLast || isParticipate) && 'md:right-0'
       )}
       onPointerEnter={preventHover}
+      onPointerLeave={preventHover}
     >
       {isParticipateMega ? (
         <SubParticipateMega subItems={subItems} parent={parent} />

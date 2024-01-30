@@ -1,20 +1,48 @@
-import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
+import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { IsSerloContext } from '@serlo/frontend/src/serlo-editor-integration/context/is-serlo-context'
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import type { SolutionProps } from '.'
 import { SolutionRenderer } from './renderer'
 import { SerloLicenseChooser } from './serlo-license-chooser'
-import { InlineInput } from '../../plugin/helpers/inline-input'
-import { InlineSettings } from '../../plugin/helpers/inline-settings'
-import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
+import { LinkOverlayEditMode } from '../text/components/link/edit-mode/link-overlay-edit-mode'
+import { LinkOverlayWithHref } from '../text/components/link/link-overlay-with-href'
+import {
+  QuickbarData,
+  fetchQuickbarData,
+} from '@/components/navigation/quickbar'
+import { useInstanceData } from '@/contexts/instance-context'
+import { Instance } from '@/fetcher/graphql-types/operations'
+import { showToastNotice } from '@/helper/show-toast-notice'
+
+const linkOverlayWrapperWidth = 460
 
 export function SolutionEditor({ state, focused }: SolutionProps) {
   const { prerequisite, strategy, licenseId } = state
   const solutionStrings = useEditorStrings().templatePlugins.solution
+  const { lang: instance } = useInstanceData()
   const isSerlo = useContext(IsSerloContext) // only on serlo
+  const [quickbarData, setQuickbarData] = useState<QuickbarData | null>(null)
+  const [showPrerequisiteLinkTool, setShowPrerequisiteLinkTool] =
+    useState<boolean>(false)
+
+  const isSerloLinkSearchActive =
+    useContext(IsSerloContext) && instance === Instance.De
+
+  useEffect(() => {
+    if (!isSerloLinkSearchActive) return
+    if (!quickbarData) {
+      fetchQuickbarData()
+        .then((fetchedData) => fetchedData && setQuickbarData(fetchedData))
+        // eslint-disable-next-line no-console
+        .catch(console.error)
+    }
+  }, [isSerloLinkSearchActive, quickbarData])
+
+  useEffect(() => {
+    if (!focused) setShowPrerequisiteLinkTool(false)
+  }, [focused])
 
   return (
     <SolutionRenderer
@@ -37,58 +65,76 @@ export function SolutionEditor({ state, focused }: SolutionProps) {
   )
 
   function renderPrerequisiteContent() {
-    const hasId = prerequisite.defined && prerequisite.id.value
-
     return (
       <>
-        {focused ? (
-          <InlineSettings
-            onDelete={() => {
-              if (prerequisite.defined) prerequisite.remove()
+        {showPrerequisiteLinkTool ? renderPrequisiteTool() : null}
+        {prerequisite.defined ? (
+          <a
+            className="serlo-link"
+            href={`/${prerequisite.id.value}`}
+            onClick={(event) => {
+              event.preventDefault()
+              setShowPrerequisiteLinkTool(true)
             }}
-            position="below"
           >
-            <InlineSettingsInput
-              value={hasId ? `/${prerequisite.id.value}` : ''}
-              placeholder={solutionStrings.idArticle}
-              onChange={(event) => {
-                const newValue = event.target.value.replace(/[^0-9]/g, '')
-                if (prerequisite.defined) {
-                  prerequisite.id.set(newValue)
-                } else {
+            {prerequisite.title.value}
+          </a>
+        ) : (
+          <SerloAddButton
+            text={solutionStrings.addPrerequisite}
+            onClick={() => setShowPrerequisiteLinkTool(true)}
+            className="mb-8 mt-4"
+          />
+        )}
+      </>
+    )
+  }
+
+  function renderPrequisiteTool() {
+    return (
+      <div
+        className="absolute bottom-0 left-0 right-0 top-0"
+        onClick={() => setShowPrerequisiteLinkTool(false)}
+      >
+        <div
+          className="absolute left-12 top-28 z-[95] whitespace-nowrap"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div
+            className="w-[460px] rounded bg-white text-start not-italic shadow-menu"
+            style={{ width: `${linkOverlayWrapperWidth}px` }}
+          >
+            {prerequisite.defined ? (
+              <LinkOverlayWithHref
+                value={prerequisite.defined ? `/${prerequisite.id.value}` : ''}
+                removeLink={() => {
+                  prerequisite.remove()
+                  setShowPrerequisiteLinkTool(false)
+                }}
+                quickbarData={quickbarData}
+              />
+            ) : (
+              <LinkOverlayEditMode
+                isSerloLinkSearchActive
+                setHref={(href, title) => {
+                  if (!title) {
+                    showToastNotice('Please choose an existing serlo content')
+                    return
+                  }
                   prerequisite.create({
-                    id: newValue,
-                    title: '',
+                    id: href.replace('/', ''),
+                    title,
                     alias: undefined,
                   })
-                }
-              }}
-            />
-            <a
-              target="_blank"
-              href={hasId ? `/${prerequisite.id.value}` : ''}
-              rel="noopener noreferrer"
-            >
-              <span title={solutionStrings.openArticleTab} className="ml-2.5">
-                <FaIcon icon={faUpRightFromSquare} />
-              </span>
-            </a>
-          </InlineSettings>
-        ) : null}
-        <a className="serlo-link">
-          <InlineInput
-            value={prerequisite.defined ? prerequisite.title.value : ''}
-            onChange={(value) => {
-              if (prerequisite.defined) {
-                prerequisite.title.set(value)
-              } else {
-                prerequisite.create({ id: '', title: value, alias: undefined })
-              }
-            }}
-            placeholder={solutionStrings.linkTitle}
-          />
-        </a>
-      </>
+                }}
+                value=""
+                shouldFocus
+                quickbarData={quickbarData}
+              />
+            )}
+          </div>
+        </div>
+      </div>
     )
   }
 }
