@@ -11,7 +11,6 @@ import type {
 import { BlankCheckButton } from './components/blank-check-button'
 import { BlankDraggableAnswer } from './components/blank-draggable-answer'
 import { BlankDraggableArea } from './components/blank-draggable-area'
-import { BlankDraggableDummyArea } from './components/blank-draggable-dummy-area'
 import { FillInTheBlanksContext } from './context/blank-context'
 import { Blank, type BlankType } from './types'
 
@@ -80,12 +79,12 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     }))
     if (isEditing) return sorted
 
-    const dummyAnswers = extraDraggableAnswers.map(({ answer }) => ({
+    const extraIncorrectAnswers = extraDraggableAnswers.map(({ answer }) => ({
       draggableId: uuid_v4(),
       text: typeof answer === 'string' ? answer : answer.value,
     }))
-    const withDummyAnswers = [...sorted, ...dummyAnswers]
-    const shuffled = withDummyAnswers
+    const withExtraIncorrectAnswers = [...sorted, ...extraIncorrectAnswers]
+    const shuffled = withExtraIncorrectAnswers
       .map((draggable) => ({ draggable, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
       .map(({ draggable }) => draggable)
@@ -155,14 +154,6 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
               )
             )}
           </BlankDraggableArea>
-        ) : null}
-
-        {mode === 'drag-and-drop' && isEditing ? (
-          <BlankDraggableDummyArea
-            extraDraggableAnswers={
-              extraDraggableAnswers as FillInTheBlanksExerciseProps['state']['extraDraggableAnswers']
-            }
-          />
         ) : null}
 
         {!isEditing ? (
