@@ -18,7 +18,7 @@ export function AudioRenderer({ src, type }: AudioRendererProps) {
 
   if (!type) {
     return (
-      <div className="mx-side text-center print:hidden">
+      <div className="mr-side text-center print:hidden">
         <FaIcon icon={faFilm} className="h-16" />
         <p className="serlo-p text-almost-black">
           {src ? `${strings.content.loadingAudioFailed}: ${src}` : ''}

@@ -43,7 +43,7 @@ export const ImageToolbar = (
                 {editorStrings.edtrIo.settings}: {imageStrings.title}
               </h3>
 
-              <div className="mx-side mb-3">
+              <div className="mb-3 mr-side">
                 <SettingsModalControls state={props.state} />
               </div>
             </ModalWithCloseButton>

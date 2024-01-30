@@ -39,13 +39,13 @@ export function MetaBar({
   const date = new Date(timestamp)
 
   return (
-    <div className="mx-side mb-2 flex justify-between">
+    <div className="mb-2 mr-side flex justify-between">
       <UserLink
         user={user}
         withIcon
         className={cn(`
           serlo-button -ml-1 flex items-center
-          pl-1 text-lg font-bold text-brand 
+          pl-1 text-lg font-bold text-brand
           hover:bg-brand-200 hover:text-brand hover:no-underline
         `)}
       />

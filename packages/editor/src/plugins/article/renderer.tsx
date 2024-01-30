@@ -27,7 +27,7 @@ export function ArticleRenderer({
 
   return (
     <>
-      <div className="[&>div]:mx-side [&>div]:rounded-xl [&>div]:border-3 [&>div]:border-brand-50 [&>div]:py-5 ">
+      <div className="[&>div]:mr-side [&>div]:rounded-xl [&>div]:border-3 [&>div]:border-brand-50 [&>div]:py-5 ">
         {introduction}
       </div>
       {content}

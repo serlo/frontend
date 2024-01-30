@@ -104,7 +104,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
 
   return (
     <DndWrapper>
-      <div className="mx-side mb-block leading-[30px] [&>p]:leading-[30px]">
+      <div className="mb-block mr-side leading-[30px] [&>p]:leading-[30px]">
         <FillInTheBlanksContext.Provider
           value={{
             mode,

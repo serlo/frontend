@@ -18,7 +18,7 @@ export function SpoilerRenderer({
   return (
     <div
       className={cn(
-        'mb-block flex flex-col rounded-xl border-3 mobile:mx-side',
+        'mb-block flex flex-col rounded-xl border-3',
         '[&>div.my-block:first-of-type]:mt-5',
         isOpen ? 'border-brand-200' : 'border-brand-100'
       )}

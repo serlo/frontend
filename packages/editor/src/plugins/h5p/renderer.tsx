@@ -21,7 +21,7 @@ export function H5pRenderer({ url }: H5pRendererProps) {
   const src = `/api/frontend/lumi/embed/${id}`
 
   return (
-    <div className="mx-side mb-block">
+    <div className="mb-block mr-side">
       <iframe
         src={src}
         width="727"

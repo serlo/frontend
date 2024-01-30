@@ -134,7 +134,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           'outline-none',
           isInlineChildEditor || isTemplatePlugin
             ? ''
-            : 'plugin-wrapper-container relative -ml-[7px] mb-6 min-h-[10px] pl-[5px]'
+            : 'plugin-wrapper-container relative mb-6 min-h-[10px]'
         )}
         onMouseDown={handleMouseDown}
         onFocus={handleFocus}

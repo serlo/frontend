@@ -209,9 +209,9 @@ export function TextEditor(props: TextEditorProps) {
             ? config.placeholder ?? textStrings.placeholder
             : undefined
         }
-        // `[&>[data-slate-node]]:mx-side` fixes placeholder position in safari
+        // `[&>[data-slate-node]]:mr-side` fixes placeholder position in safari
         // `outline-none` removes the ugly outline present in Slate v0.94.1
-        className="outline-none [&>[data-slate-node]]:mx-side"
+        className="outline-none [&>[data-slate-node]]:mr-side"
         data-qa="plugin-text-editor"
       />
 

@@ -52,7 +52,7 @@ export function BoxRenderer({ boxType, title, anchorId, children }: BoxProps) {
       id={anchorId}
       className={cn(
         `
-          serlo-box relative mx-side mb-6 
+          serlo-box relative mb-6 mr-side
           rounded-xl border-3 pb-2 pt-[2px]
           [&>div.my-block]:first:mt-3.5
           [&>div.my-block]:last:mb-3.5

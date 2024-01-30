@@ -34,7 +34,7 @@ export function GeogebraEditor(props: GeogebraProps) {
         </EmbedWrapper>
       ) : (
         <div
-          className="mx-side cursor-pointer rounded-lg bg-editor-primary-50 py-32 text-center"
+          className="mr-side cursor-pointer rounded-lg bg-editor-primary-50 py-32 text-center"
           data-qa="plugin-geogebra-placeholder"
           onClick={() => setShowSettingsModal(true)}
         >

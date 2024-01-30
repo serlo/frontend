@@ -44,10 +44,10 @@ export function InputExerciseRenderer({
   }
 
   return (
-    <div className="mx-side mb-7">
+    <div className="mr-sid4 mb-2">
       <input
         className={cn(`
-            serlo-input-font-reset mb-5
+            serlo-input-font-reset mb-2
             rounded-3xl border-3 border-brand-400 px-3
             py-2 font-bold text-brand placeholder-brand focus:border-brand focus:bg-white
             focus:text-brand focus:placeholder-opacity-0 focus:opacity-100 focus:outline-none

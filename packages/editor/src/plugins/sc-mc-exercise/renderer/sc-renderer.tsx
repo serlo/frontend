@@ -20,7 +20,7 @@ export function ScRenderer({
   const exStrings = useInstanceData().strings.content.exercises
 
   return (
-    <div className="mx-side mb-block">
+    <div className="mb-block mr-side">
       <ul className="unstyled-list m-0 flex list-none flex-col flex-wrap overflow-auto p-0">
         {answers.map((answer, i) => {
           const id = `${idBase}${i}`

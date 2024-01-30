@@ -7,21 +7,26 @@ import type { ConnectDragSource } from 'react-dnd'
 
 interface RowDragButtonProps {
   drag: ConnectDragSource
+  isMultimediaPlugin: boolean
 }
 
-export function RowDragButton({ drag }: RowDragButtonProps) {
+export function RowDragButton({
+  drag,
+  isMultimediaPlugin,
+}: RowDragButtonProps) {
   const editorStrings = useEditorStrings()
 
   return (
     <div
       className={cn(
         'rows-tools',
-        'absolute left-2 z-[22] rounded-l-md bg-white bg-opacity-70 opacity-0 transition-opacity'
+        'absolute -left-12 top-0 z-[22] rounded-l-md bg-white bg-opacity-70 opacity-0 transition-opacity',
+        isMultimediaPlugin && '!-top-10 -left-5'
       )}
     >
       <button
         className={cn(`
-            serlo-tooltip-trigger -mt-[3px] mb-1.5 cursor-grab select-none
+            serlo-tooltip-trigger cursor-grab select-none
             border-0 bg-none active:cursor-grabbing
         `)}
         ref={drag}
@@ -32,12 +37,12 @@ export function RowDragButton({ drag }: RowDragButtonProps) {
         />
         <div
           className={cn(`
-              serlo-button-editor-primary rounded-full bg-transparent px-1.5
-              py-0.5 text-almost-black hover:bg-editor-primary-200
+              serlo-button-editor-primary rounded-full bg-transparent
+              px-3 py-2 text-almost-black hover:bg-editor-primary-200
           `)}
           aria-hidden="true"
         >
-          <FaIcon icon={faGripVertical} />
+          <FaIcon icon={faGripVertical} className="!m-0 align-top" />
         </div>
       </button>
     </div>

@@ -43,7 +43,7 @@ export function HighlightEditor(props: HighlightProps) {
   }
 
   return (
-    <div className="mx-side">
+    <div className="mr-side">
       {focused && <HighlightToolbar {...props} />}
       <textarea
         value={state.code.value}

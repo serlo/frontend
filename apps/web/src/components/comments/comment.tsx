@@ -86,7 +86,9 @@ export function Comment({
       id={`comment-${id}`}
       className={cn(
         'pb-0.5 pt-1 transition-colors duration-700 ease-out',
-        isParent ? '' : 'mb-5 ml-4 mt-8 border-l-6 border-brand-200 pb-0.5'
+        isParent
+          ? ''
+          : 'mb-5 ml-4 mt-8 border-l-6 border-brand-200 pb-0.5 pl-side'
       )}
     >
       <MetaBar

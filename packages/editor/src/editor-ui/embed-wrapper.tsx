@@ -49,7 +49,7 @@ export function EmbedWrapper({
     <div
       className={cn(
         `
-          group relative mx-side mb-block block
+          group relative mb-block mr-side block
           cursor-pointer bg-cover bg-center [contain:content]
           `,
         className

@@ -25,7 +25,7 @@ export function EquationsRenderer({
   transformationTarget,
 }: EquationsRendererProps) {
   return (
-    <div className="mx-side mb-7 overflow-x-auto py-2.5">
+    <div className="mb-7 mr-side overflow-x-auto py-2.5">
       <table>
         <tbody className="whitespace-nowrap">
           {renderFirstExplanation()}
@@ -65,7 +65,7 @@ export function EquationsRenderer({
           <tr className="text-brandgreen-darker whitespace-normal">
             <td />
             {renderDownArrow()}
-            <td colSpan={2} className="relative -left-side px-1 pb-3 pt-1">
+            <td colSpan={2} className="relative px-1 pb-3 pt-1">
               {step.explanation}
             </td>
           </tr>
@@ -95,7 +95,7 @@ export function EquationsRenderer({
     return (
       <>
         <tr className="text-brandgreen-darker whitespace-normal text-center">
-          <td className="relative -left-side pb-4" colSpan={3}>
+          <td className="relative pb-4" colSpan={3}>
             {firstExplanation}
           </td>
         </tr>

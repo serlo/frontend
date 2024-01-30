@@ -64,7 +64,7 @@ export function SolutionRenderer({
     return (
       <button
         className={cn(
-          'serlo-button-blue-transparent mb-4 ml-side mr-auto pr-2 text-base',
+          'serlo-button-blue-transparent mb-4 mr-auto pr-2 text-base',
           solutionVisible && 'bg-brand text-white'
         )}
         onClick={() => {

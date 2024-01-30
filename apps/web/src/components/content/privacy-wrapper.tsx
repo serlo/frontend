@@ -77,7 +77,7 @@ export function PrivacyWrapper({
     <div
       className={cn(
         className,
-        !isTwingle && 'mx-side',
+        !isTwingle && 'mr-side',
         `
           group relative mb-block block cursor-pointer
           bg-cover bg-center [contain:content]
