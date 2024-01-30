@@ -9,6 +9,7 @@ import {
 import { Range, Transforms } from 'slate'
 import { ReactEditor, useSelected, useSlate, useFocused } from 'slate-react'
 
+import { BlankControls } from './components/blank-controls'
 import { BlankRendererInput } from './components/blank-renderer-input'
 import { FillInTheBlanksContext } from './context/blank-context'
 import type { BlankInterface } from './types'
@@ -55,24 +56,25 @@ export function BlankRenderer({ element }: BlankRendererProps) {
   if (context === null) return null
 
   return (
-    <BlankRendererInput
-      ref={inputRef}
-      blankId={element.blankId}
-      context={context}
-      onChange={handleChange}
-      onKeyDown={handleMoveOut}
-    />
+    <>
+      <BlankRendererInput
+        ref={inputRef}
+        blankId={element.blankId}
+        context={context}
+        onChange={handleChange}
+        onKeyDown={handleMoveOut}
+      />
+      <BlankControls
+        isBlankFocused={document.activeElement === inputRef.current}
+        correctAnswers={element.correctAnswers.map(({ answer }) => answer)}
+        onAlternativeAnswerAdd={handleAlternativeAnswerAdd}
+        onAlternativeAnswerChange={handleCorrectAnswerChange}
+      />
+    </>
   )
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    const at = ReactEditor.findPath(editor, element)
-    const correctAnswers = element.correctAnswers.map((correctAnswer, i) => {
-      // First element is set to new value
-      if (i === 0) return { answer: event.target.value.trim() }
-      // Rest is copied as is
-      return { ...correctAnswer }
-    })
-    Transforms.setNodes(editor, { correctAnswers }, { at })
+    handleCorrectAnswerChange(0, event.target.value)
   }
 
   function handleMoveOut(event: ReactKeyboardEvent<HTMLInputElement>) {
@@ -111,5 +113,22 @@ export function BlankRenderer({ element }: BlankRendererProps) {
       Transforms.move(editor, { unit: 'character', reverse: true })
       ReactEditor.focus(editor)
     }
+  }
+
+  function handleAlternativeAnswerAdd() {
+    const at = ReactEditor.findPath(editor, element)
+    const correctAnswers = [...element.correctAnswers, { answer: '' }]
+    Transforms.setNodes(editor, { correctAnswers }, { at })
+  }
+
+  function handleCorrectAnswerChange(targetIndex: number, newValue: string) {
+    const at = ReactEditor.findPath(editor, element)
+    const correctAnswers = element.correctAnswers.map((correctAnswer, i) => {
+      // Changed element is set to new value
+      if (i === targetIndex) return { answer: newValue.trim() }
+      // Rest is copied as is
+      return { ...correctAnswer }
+    })
+    Transforms.setNodes(editor, { correctAnswers }, { at })
   }
 }
