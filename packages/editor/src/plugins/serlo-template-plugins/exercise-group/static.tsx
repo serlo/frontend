@@ -61,7 +61,7 @@ export function TextExerciseGroupTypeStaticRenderer(
       ) : null}
       {/* Conditionally render ExerciseNumbering if it is available */}
       {renderExerciseNumber ? renderExerciseNumber() : null}
-      <div className="flex flex-col">
+      <div className="flex flex-grow flex-col">
         <TextExerciseGroupTypeRenderer
           content={
             <StaticRenderer

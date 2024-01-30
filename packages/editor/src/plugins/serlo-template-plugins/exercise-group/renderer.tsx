@@ -8,10 +8,6 @@ export interface TextExerciseGroupTypeRendererProps {
   } | null)[]
 }
 
-function indexToLetter(index: number) {
-  return String.fromCharCode('a'.charCodeAt(0) + index)
-}
-
 export function TextExerciseGroupTypeRenderer({
   content,
   exercises,
@@ -31,9 +27,6 @@ export function TextExerciseGroupTypeRenderer({
                 mt-6 flex flex-row [&>div]:border-none
               `)}
             >
-              <span className="mr-2 h-6 w-6 flex-shrink-0 rounded-full bg-brand-150 text-center text-xl font-bold leading-6 text-brand-700">
-                {indexToLetter(index)}
-              </span>
               {element}
             </li>
           )
