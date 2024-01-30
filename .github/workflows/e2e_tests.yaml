@@ -14,10 +14,10 @@ jobs:
       run:
         working-directory: ./e2e-tests
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
-      - uses: actions/checkout@v3
+          node-version: 20
+      - uses: actions/checkout@v4
       - run: yarn
       - run: yarn playwright install --with-deps chromium
       - uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
@@ -26,7 +26,7 @@ jobs:
           max_timeout: 1200
           check_interval: 20
       - run: yarn e2e-workers
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: e2e-screenshots-on-fail

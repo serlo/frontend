@@ -26,12 +26,12 @@ jobs:
   analyze:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Install dependencies
         uses: bahmutov/npm-install@v1
@@ -46,7 +46,7 @@ jobs:
       #     run_install: true
 
       - name: Restore next build
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: restore-build-cache
         env:
           cache-name: cache-next-build
@@ -67,13 +67,13 @@ jobs:
         run: cd apps/web && npx -p nextjs-bundle-analysis report
 
       - name: Upload bundle
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: bundle
           path: apps/web/.next/analyze/__bundle_analysis.json
 
       - name: Download base branch bundle stats
-        uses: dawidd6/action-download-artifact@v2
+        uses: dawidd6/action-download-artifact@v4
         if: success() && github.event.number
         with:
           workflow: nextjs_bundle_analysis.yml
@@ -107,7 +107,7 @@ jobs:
           echo EOF >> $GITHUB_OUTPUT
 
       - name: Find Comment
-        uses: peter-evans/find-comment@v2
+        uses: peter-evans/find-comment@v3
         if: success() && github.event.number
         id: fc
         with:
@@ -115,14 +115,14 @@ jobs:
           body-includes: '<!-- __NEXTJS_BUNDLE_@serlo/frontend -->'
 
       - name: Create Comment
-        uses: peter-evans/create-or-update-comment@v2
+        uses: peter-evans/create-or-update-comment@v4
         if: success() && github.event.number && steps.fc.outputs.comment-id == 0
         with:
           issue-number: ${{ github.event.number }}
           body: ${{ steps.get-comment-body.outputs.body }}
 
       - name: Update Comment
-        uses: peter-evans/create-or-update-comment@v2
+        uses: peter-evans/create-or-update-comment@v4
         if: success() && github.event.number && steps.fc.outputs.comment-id != 0
         with:
           issue-number: ${{ github.event.number }}
