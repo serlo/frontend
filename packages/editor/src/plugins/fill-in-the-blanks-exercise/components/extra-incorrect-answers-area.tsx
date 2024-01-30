@@ -18,13 +18,13 @@ export function ExtraIncorrectAnswersArea(
   const areaRef = useRef<HTMLDivElement>(null)
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
-  const incorrectAnswers = extraDraggableAnswers.map(
-    ({ answer }) => answer.value
-  )
+  const incorrectAnswers = extraDraggableAnswers.defined
+    ? extraDraggableAnswers.map(({ answer }) => answer.value)
+    : []
 
   return (
     <div className="mt-8 px-8" ref={areaRef}>
-      {incorrectAnswers.length > 0 ? (
+      {incorrectAnswers.length > 0 && extraDraggableAnswers.defined ? (
         <>
           {blanksExerciseStrings.dummyAnswers}:
           <div className="mb-4 mt-1 flex flex-wrap gap-2">
@@ -41,7 +41,12 @@ export function ExtraIncorrectAnswersArea(
                   }
                 }}
                 onRemoveClick={() => {
-                  extraDraggableAnswers.remove(index)
+                  if (!extraDraggableAnswers.defined) return
+                  // the editor overwrites the remove function of the `list()` if it's inside a `optional()`
+                  // so this is a little helper to remove the value at the index
+                  extraDraggableAnswers.set((currentList) =>
+                    currentList.filter((_, itemIndex) => itemIndex !== index)
+                  )
                   // focus new last input to make sure we don't loose focus
                   const allInputs = areaRef.current?.querySelectorAll('input')
                   if (allInputs) {
@@ -55,7 +60,11 @@ export function ExtraIncorrectAnswersArea(
       ) : null}
       <button
         onClick={() => {
-          extraDraggableAnswers.insert()
+          if (extraDraggableAnswers.defined) {
+            extraDraggableAnswers.insert()
+          } else {
+            extraDraggableAnswers.create([{ answer: '' }])
+          }
         }}
         className="serlo-button-editor-secondary"
       >
