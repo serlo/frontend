@@ -16,23 +16,19 @@ export function useNavMenuTriggerFix() {
       // make sure click directly after hover closes menu again
       onClick: preventMouseClick,
       onPointerEnter: () => {
-        if (hasTouchSupportAndSmallScreen()) return
+        if (isSmallScreen()) return
         if (clickDisabled) clearTimeout(clickDisabled)
         clickDisabled = setTimeout(() => (clickDisabled = false), 1000)
       },
       // disable hover completely on small screens with touch support
+      onPointerLeave: preventHover,
       onPointerMove: preventHover,
     }
   }, [])
 }
 
-function hasTouchSupportAndSmallScreen() {
-  return (
-    ('ontouchstart' in window || navigator.maxTouchPoints > 0) &&
-    window.innerWidth < 1024
-  )
-}
+const isSmallScreen = () => window.innerWidth < 1024
 
 export const preventHover: PointerEventHandler = (event) => {
-  if (hasTouchSupportAndSmallScreen()) event.preventDefault()
+  if (isSmallScreen()) event.preventDefault()
 }

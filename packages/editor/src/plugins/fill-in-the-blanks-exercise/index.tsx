@@ -6,6 +6,7 @@ import {
   child,
   string,
   list,
+  optional,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
@@ -46,7 +47,7 @@ function createState() {
       },
     }),
     mode: string(defaultMode),
-    extraDraggableAnswers: list(object({ answer: string() })),
+    extraDraggableAnswers: optional(list(object({ answer: string() }))),
   })
 }
 
