@@ -851,10 +851,10 @@ export const loggedInData = {
           dummyAnswers: "Falsche Antwortmöglichkeiten",
           addDummyAnswer: "Falsche Antwort hinzufügen",
           removeDummyAnswer: "Falsche Antwort entfernen",
-          addAlternativeAnswer: 'Add an alternative answer',
-          removeAlternativeAnswer: 'Remove alternative answer',
-          alternativeAnswers: 'Alternative answers',
-          acceptMathEquivalents: 'Accept all equivalent mathematical values'
+          addAlternativeAnswer: "Alternative Antwort hinzufügen",
+          removeAlternativeAnswer: "Alternative Antwort entfernen",
+          alternativeAnswers: "Alternative Antworten",
+          acceptMathEquivalents: "Mathematisch gleichwertige Ausdrücke als gültige Antwort"
         }
       },
       templatePlugins: {
