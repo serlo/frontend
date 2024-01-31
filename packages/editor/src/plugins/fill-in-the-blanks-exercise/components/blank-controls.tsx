@@ -81,7 +81,7 @@ export function BlankControls(props: BlankControlsProps) {
     wrapper.current.style.top = `${anchorRect.bottom + 6 - offsetRect.top}px`
   }, [editor, selectedElement])
 
-  function onAdd() {
+  function handleAddButtonClick() {
     onAlternativeAnswerAdd()
     setTimeout(() => input.current?.focus(), 10)
   }
@@ -95,7 +95,10 @@ export function BlankControls(props: BlankControlsProps) {
         style={{ width: `${wrapperWidth}px` }}
       >
         {correctAnswers.length === 1 ? (
-          <button onClick={onAdd} className="serlo-button-editor-secondary">
+          <button
+            onClick={handleAddButtonClick}
+            className="serlo-button-editor-secondary"
+          >
             <FaIcon icon={faPlus} />{' '}
             {blanksExerciseStrings.addAlternativeAnswer}
           </button>
@@ -104,7 +107,9 @@ export function BlankControls(props: BlankControlsProps) {
           <div>
             <div>{blanksExerciseStrings.alternativeAnswers}</div>
             {correctAnswers.map((answer, index) => {
-              if (index === 0) return null
+              const isAnswerFromBlankInput = index === 0
+              if (isAnswerFromBlankInput) return null
+
               return (
                 <span
                   key={index}
@@ -120,13 +125,16 @@ export function BlankControls(props: BlankControlsProps) {
                       onAlternativeAnswerChange(index, event.target.value)
                     }}
                     onKeyDown={(event) => {
-                      if (event.key === 'Enter') onAdd()
+                      if (event.key === 'Enter') handleAddButtonClick()
                     }}
                   />
                 </span>
               )
             })}
-            <button onClick={onAdd} className="serlo-button-editor-primary">
+            <button
+              onClick={handleAddButtonClick}
+              className="serlo-button-editor-primary"
+            >
               <FaIcon icon={faPlus} />
             </button>
           </div>
