@@ -9,6 +9,7 @@ export const Blank = t.type({
   children: t.unknown,
   blankId: t.string,
   correctAnswers: t.array(Answer),
+  acceptMathEquivalents: t.boolean,
   // Here we could specify incorrect answers for this blank with specific learner feedback
   // incorrectAnswers?: Answer[]
   // Here we could add a default feedback for the learner

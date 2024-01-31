@@ -2,8 +2,9 @@ import {
   getBlankElement,
   isBlankActive,
 } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/blank'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useRef, useState } from 'react'
+import { faSquare } from '@fortawesome/free-regular-svg-icons'
+import { faCheckSquare, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { useEffect, useRef, useState, useMemo } from 'react'
 import { Range } from 'slate'
 import { ReactEditor, useSlate } from 'slate-react'
 
@@ -17,18 +18,22 @@ const wrapperWidth = 320
 interface BlankControlsProps {
   blankId: string
   correctAnswers: string[]
+  acceptMathEquivalents?: boolean
   onAlternativeAnswerAdd: () => void
   onAlternativeAnswerChange: (targetIndex: number, newValue: string) => void
   onAlternativeAnswerRemove: (targetIndex: number) => void
+  onAcceptMathEquivalentsChange: () => void
 }
 
 export function BlankControls(props: BlankControlsProps) {
   const {
     blankId,
     correctAnswers,
+    acceptMathEquivalents,
     onAlternativeAnswerAdd,
     onAlternativeAnswerChange,
     onAlternativeAnswerRemove,
+    onAcceptMathEquivalentsChange,
   } = props
   const [selectedElement, setSelectedElement] = useState<Blank | null>(null)
 
@@ -87,6 +92,11 @@ export function BlankControls(props: BlankControlsProps) {
     }px`
   }, [editor, selectedElement])
 
+  const isBlankAnswerAlphabetical = useMemo(() => {
+    if (correctAnswers[0].length === 0) return true
+    return /^[a-zA-Z]+$/.test(correctAnswers[0])
+  }, [correctAnswers])
+
   function handleAlternativeAnswerAdd() {
     onAlternativeAnswerAdd()
     setTimeout(() => {
@@ -116,6 +126,27 @@ export function BlankControls(props: BlankControlsProps) {
         className="w-[460px] rounded bg-white p-side text-start not-italic shadow-menu"
         style={{ width: `${wrapperWidth}px` }}
       >
+        {isBlankAnswerAlphabetical ? null : (
+          <div className="mb-6 flex">
+            <input
+              className="w-0.25 opacity-0"
+              id={'acceptMathEquivalentCheckbox_' + blankId}
+              type="checkbox"
+              checked={acceptMathEquivalents || false}
+              onChange={onAcceptMathEquivalentsChange}
+            />
+            <label
+              className="text-wrap flex cursor-pointer items-center text-sm"
+              htmlFor={'acceptMathEquivalentCheckbox_' + blankId}
+            >
+              <FaIcon
+                icon={acceptMathEquivalents ? faCheckSquare : faSquare}
+                className="mr-1.5 text-xl text-editor-primary"
+              />
+              {blanksExerciseStrings.acceptMathEquivalents}
+            </label>
+          </div>
+        )}
         {correctAnswers.length <= 1 ? (
           <button
             onClick={handleAlternativeAnswerAdd}

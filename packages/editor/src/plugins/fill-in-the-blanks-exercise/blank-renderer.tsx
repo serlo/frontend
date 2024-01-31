@@ -21,7 +21,7 @@ interface BlankRendererProps {
 
 export function BlankRenderer(props: BlankRendererProps) {
   const { element, focused } = props
-  const { blankId, correctAnswers } = element
+  const { blankId, correctAnswers, acceptMathEquivalents } = element
 
   const editor = useSlate()
   const selected = useSelected()
@@ -72,9 +72,11 @@ export function BlankRenderer(props: BlankRendererProps) {
         <BlankControls
           blankId={blankId}
           correctAnswers={correctAnswers.map(({ answer }) => answer)}
+          acceptMathEquivalents={acceptMathEquivalents}
           onAlternativeAnswerAdd={handleAlternativeAnswerAdd}
           onAlternativeAnswerChange={handleCorrectAnswerChange}
           onAlternativeAnswerRemove={handleAlternativeAnswerRemove}
+          onAcceptMathEquivalentsChange={handleAcceptMathEquivalentsChange}
         />
       ) : null}
     </>
@@ -141,5 +143,13 @@ export function BlankRenderer(props: BlankRendererProps) {
   function setCorrectAnswers(correctAnswers: Array<{ answer: string }>) {
     const at = ReactEditor.findPath(editor, element)
     Transforms.setNodes(editor, { correctAnswers }, { at })
+  }
+
+  function handleAcceptMathEquivalentsChange() {
+    Transforms.setNodes(
+      editor,
+      { acceptMathEquivalents: !acceptMathEquivalents },
+      { at: ReactEditor.findPath(editor, element) }
+    )
   }
 }

@@ -205,9 +205,13 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
 
     blanks.forEach((blankState) => {
       const trimmedBlankText = getTrimmedBlankText(blankState.blankId)
-      const isCorrect = blankState.correctAnswers.some(
-        ({ answer }) => answer === trimmedBlankText
-      )
+      const isCorrect = blankState.correctAnswers.some(({ answer }) => {
+        if (!blankState.acceptMathEquivalents) {
+          return answer === trimmedBlankText
+        }
+
+        // TODO: Check for mathematical equivalents here
+      })
       newBlankAnswersCorrectList.set(blankState.blankId, { isCorrect })
     })
 

@@ -75,6 +75,7 @@ function addBlank(editor: SlateEditor) {
     type: 'textBlank',
     blankId: uuid_v4(),
     correctAnswers: [{ answer: SlateEditor.string(editor, selection).trim() }],
+    acceptMathEquivalents: false,
     children: [{ text: '' }],
   }
 
