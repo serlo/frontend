@@ -19,7 +19,10 @@ interface BlankRendererProps {
   focused: boolean
 }
 
-export function BlankRenderer({ element, focused }: BlankRendererProps) {
+export function BlankRenderer(props: BlankRendererProps) {
+  const { element, focused } = props
+  const { blankId, correctAnswers } = element
+
   const editor = useSlate()
   const selected = useSelected()
   const slateFocused = useFocused()
@@ -60,15 +63,15 @@ export function BlankRenderer({ element, focused }: BlankRendererProps) {
     <>
       <BlankRendererInput
         ref={inputRef}
-        blankId={element.blankId}
+        blankId={blankId}
         context={context}
         onChange={handleChange}
         onKeyDown={handleMoveOut}
       />
       {focused && context.mode === 'typing' ? (
         <BlankControls
-          blankId={element.blankId}
-          correctAnswers={element.correctAnswers.map(({ answer }) => answer)}
+          blankId={blankId}
+          correctAnswers={correctAnswers.map(({ answer }) => answer)}
           onAlternativeAnswerAdd={handleAlternativeAnswerAdd}
           onAlternativeAnswerChange={handleCorrectAnswerChange}
           onAlternativeAnswerRemove={handleAlternativeAnswerRemove}
@@ -120,27 +123,23 @@ export function BlankRenderer({ element, focused }: BlankRendererProps) {
   }
 
   function handleAlternativeAnswerAdd() {
-    const at = ReactEditor.findPath(editor, element)
-    const correctAnswers = [...element.correctAnswers, { answer: '' }]
-    Transforms.setNodes(editor, { correctAnswers }, { at })
+    setCorrectAnswers([...correctAnswers, { answer: '' }])
   }
 
   function handleCorrectAnswerChange(targetIndex: number, newValue: string) {
-    const at = ReactEditor.findPath(editor, element)
-    const correctAnswers = element.correctAnswers.map((correctAnswer, i) => {
-      // Changed element is set to new value
-      if (i === targetIndex) return { answer: newValue.trim() }
-      // Rest is copied as is
-      return { ...correctAnswer }
-    })
-    Transforms.setNodes(editor, { correctAnswers }, { at })
+    setCorrectAnswers(
+      correctAnswers.map(({ answer }, i) => ({
+        answer: i === targetIndex ? newValue.trim() : answer,
+      }))
+    )
   }
 
   function handleAlternativeAnswerRemove(targetIndex: number) {
+    setCorrectAnswers(correctAnswers.filter((_, i) => i !== targetIndex))
+  }
+
+  function setCorrectAnswers(correctAnswers: Array<{ answer: string }>) {
     const at = ReactEditor.findPath(editor, element)
-    const correctAnswers = element.correctAnswers.filter(
-      (_, i) => i !== targetIndex
-    )
     Transforms.setNodes(editor, { correctAnswers }, { at })
   }
 }
