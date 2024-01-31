@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Range } from 'slate'
 import { ReactEditor, useSlate } from 'slate-react'
 
+import { AlternativeAnswer } from './alternative-answer'
 import type { BlankInterface as Blank } from '../types'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -18,6 +19,7 @@ interface BlankControlsProps {
   correctAnswers: string[]
   onAlternativeAnswerAdd: () => void
   onAlternativeAnswerChange: (targetIndex: number, newValue: string) => void
+  onAlternativeAnswerRemove: (targetIndex: number) => void
 }
 
 export function BlankControls(props: BlankControlsProps) {
@@ -26,6 +28,7 @@ export function BlankControls(props: BlankControlsProps) {
     correctAnswers,
     onAlternativeAnswerAdd,
     onAlternativeAnswerChange,
+    onAlternativeAnswerRemove,
   } = props
   const [selectedElement, setSelectedElement] = useState<Blank | null>(null)
 
@@ -94,51 +97,45 @@ export function BlankControls(props: BlankControlsProps) {
         className="w-[460px] rounded bg-white p-side text-start not-italic shadow-menu"
         style={{ width: `${wrapperWidth}px` }}
       >
-        {correctAnswers.length === 1 ? (
+        {correctAnswers.length <= 1 ? (
           <button
             onClick={handleAddButtonClick}
-            className="serlo-button-editor-secondary"
+            className="serlo-button-editor-primary text-sm font-normal"
           >
-            <FaIcon icon={faPlus} />{' '}
+            <FaIcon className="mr-1" icon={faPlus} />
             {blanksExerciseStrings.addAlternativeAnswer}
           </button>
-        ) : null}
-        {correctAnswers.length > 1 ? (
+        ) : (
           <div>
-            <div>{blanksExerciseStrings.alternativeAnswers}</div>
-            {correctAnswers.map((answer, index) => {
-              const isAnswerFromBlankInput = index === 0
-              if (isAnswerFromBlankInput) return null
+            <div className="mb-4 text-sm font-bold">
+              {blanksExerciseStrings.alternativeAnswers}
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              {correctAnswers.map((answer, index) => {
+                const isAnswerFromBlankInput = index === 0
+                if (isAnswerFromBlankInput) return null
 
-              return (
-                <span
-                  key={index}
-                  className="serlo-autogrow-input"
-                  data-value={answer + '_ '}
-                >
-                  <input
+                return (
+                  <AlternativeAnswer
+                    key={index}
+                    answer={answer}
+                    index={index}
                     ref={input}
-                    className="serlo-input-font-reset w-3/4 !min-w-[80px] rounded-full border border-brand bg-brand-50"
-                    value={answer}
-                    size={4}
-                    onChange={(event) => {
-                      onAlternativeAnswerChange(index, event.target.value)
-                    }}
-                    onKeyDown={(event) => {
-                      if (event.key === 'Enter') handleAddButtonClick()
-                    }}
+                    onAdd={handleAddButtonClick}
+                    onChange={onAlternativeAnswerChange}
+                    onRemove={onAlternativeAnswerRemove}
                   />
-                </span>
-              )
-            })}
-            <button
-              onClick={handleAddButtonClick}
-              className="serlo-button-editor-primary"
-            >
-              <FaIcon icon={faPlus} />
-            </button>
+                )
+              })}
+              <button
+                onClick={handleAddButtonClick}
+                className="serlo-button-editor-primary h-5 w-5 px-1 py-0 text-xs"
+              >
+                <FaIcon icon={faPlus} />
+              </button>
+            </div>
           </div>
-        ) : null}
+        )}
       </div>
     </div>
   )

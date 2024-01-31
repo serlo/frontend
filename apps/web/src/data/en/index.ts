@@ -929,6 +929,7 @@ export const loggedInData = {
           addDummyAnswer: 'Add an incorrect answer',
           removeDummyAnswer: 'Remove extra answer',
           addAlternativeAnswer: 'Add an alternative answer',
+          removeAlternativeAnswer: 'Remove alternative answer',
           alternativeAnswers: 'Alternative answers',
           acceptMathEquivalents: 'Accept all equivalent mathematical values',
         },

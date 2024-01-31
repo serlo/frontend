@@ -71,6 +71,7 @@ export function BlankRenderer({ element, focused }: BlankRendererProps) {
           correctAnswers={element.correctAnswers.map(({ answer }) => answer)}
           onAlternativeAnswerAdd={handleAlternativeAnswerAdd}
           onAlternativeAnswerChange={handleCorrectAnswerChange}
+          onAlternativeAnswerRemove={handleAlternativeAnswerRemove}
         />
       ) : null}
     </>
@@ -132,6 +133,14 @@ export function BlankRenderer({ element, focused }: BlankRendererProps) {
       // Rest is copied as is
       return { ...correctAnswer }
     })
+    Transforms.setNodes(editor, { correctAnswers }, { at })
+  }
+
+  function handleAlternativeAnswerRemove(targetIndex: number) {
+    const at = ReactEditor.findPath(editor, element)
+    const correctAnswers = element.correctAnswers.filter(
+      (_, i) => i !== targetIndex
+    )
     Transforms.setNodes(editor, { correctAnswers }, { at })
   }
 }
