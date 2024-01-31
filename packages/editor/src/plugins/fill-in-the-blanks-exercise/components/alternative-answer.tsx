@@ -35,6 +35,7 @@ export const AlternativeAnswer = forwardRef<
           }}
           onKeyDown={(event) => {
             if (event.key === 'Enter') onAdd()
+            if (event.key === 'Backspace' && answer === '') onRemove(index)
           }}
         />
       </span>
