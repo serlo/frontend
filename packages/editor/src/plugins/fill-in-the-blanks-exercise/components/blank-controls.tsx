@@ -81,6 +81,11 @@ export function BlankControls(props: BlankControlsProps) {
     wrapper.current.style.top = `${anchorRect.bottom + 6 - offsetRect.top}px`
   }, [editor, selectedElement])
 
+  function onAdd() {
+    onAlternativeAnswerAdd()
+    setTimeout(() => input.current?.focus(), 10)
+  }
+
   if (!selectedElement) return null
 
   return (
@@ -90,10 +95,7 @@ export function BlankControls(props: BlankControlsProps) {
         style={{ width: `${wrapperWidth}px` }}
       >
         {correctAnswers.length === 1 ? (
-          <button
-            onClick={onAlternativeAnswerAdd}
-            className="serlo-button-editor-secondary"
-          >
+          <button onClick={onAdd} className="serlo-button-editor-secondary">
             <FaIcon icon={faPlus} />{' '}
             {blanksExerciseStrings.addAlternativeAnswer}
           </button>
@@ -118,16 +120,13 @@ export function BlankControls(props: BlankControlsProps) {
                       onAlternativeAnswerChange(index, event.target.value)
                     }}
                     onKeyDown={(event) => {
-                      if (event.key === 'Enter') onAlternativeAnswerAdd()
+                      if (event.key === 'Enter') onAdd()
                     }}
                   />
                 </span>
               )
             })}
-            <button
-              onClick={onAlternativeAnswerAdd}
-              className="serlo-button-editor-primary"
-            >
+            <button onClick={onAdd} className="serlo-button-editor-primary">
               <FaIcon icon={faPlus} />
             </button>
           </div>
