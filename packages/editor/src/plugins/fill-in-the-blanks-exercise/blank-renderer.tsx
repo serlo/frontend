@@ -65,7 +65,7 @@ export function BlankRenderer({ element, focused }: BlankRendererProps) {
         onChange={handleChange}
         onKeyDown={handleMoveOut}
       />
-      {focused ? (
+      {focused && context.mode === 'typing' ? (
         <BlankControls
           blankId={element.blankId}
           correctAnswers={element.correctAnswers.map(({ answer }) => answer)}
