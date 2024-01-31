@@ -65,7 +65,6 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
   /** Maps blankId to the text that should be displayed in the blank.  */
   const textInBlanks = useMemo(() => {
     const newMap = new Map<BlankId, { text: string }>()
-    console.log(blanks)
     blanks.forEach((blankState) => {
       const firstCorrectAnswer = blankState.correctAnswers.at(0)?.answer ?? ''
       newMap.set(blankState.blankId, {
