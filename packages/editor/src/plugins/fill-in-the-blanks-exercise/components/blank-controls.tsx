@@ -7,14 +7,14 @@ import { useEffect, useRef, useState } from 'react'
 import { Range } from 'slate'
 import { ReactEditor, useSlate } from 'slate-react'
 
-import type { BlankInterface as Blank } from '../types'
+import type { BlankInterface } from '../types'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 const wrapperWidth = 320
 
 interface BlankControlsProps {
-  isBlankFocused: boolean
+  blankId: string
   correctAnswers: string[]
   onAlternativeAnswerAdd: () => void
   onAlternativeAnswerChange: (targetIndex: number, newValue: string) => void
@@ -22,13 +22,14 @@ interface BlankControlsProps {
 
 export function BlankControls(props: BlankControlsProps) {
   const {
-    isBlankFocused,
+    blankId,
     correctAnswers,
     onAlternativeAnswerAdd,
     onAlternativeAnswerChange,
   } = props
-
-  const [element, setElement] = useState<Blank | null>(null)
+  const [selectedElement, setSelectedElement] = useState<BlankInterface | null>(
+    null
+  )
 
   const editor = useSlate()
   const { selection } = editor
@@ -38,27 +39,35 @@ export function BlankControls(props: BlankControlsProps) {
 
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
+  // const isBlankFocused = document.activeElement === blankRef.current
+  // console.log(document.activeElement)
+
+  // console.log({ selection })
+  // const isCollapsed = selection && Range.isCollapsed(selection)
+  // console.log({ isCollapsed })
+
   // Setting the element to serve as an anchor for overlay positioning
   useEffect(() => {
     if (!selection) return
 
     const isCollapsed = selection && Range.isCollapsed(selection)
-
     if (isCollapsed && isBlankActive(editor)) {
       const blankElement = getBlankElement(editor) || null
-      setElement(blankElement)
+      setSelectedElement(
+        blankElement?.blankId === blankId ? blankElement : null
+      )
     } else {
-      setElement(null)
+      setSelectedElement(null)
     }
-  }, [selection, editor])
+  }, [selection, editor, blankId])
 
   // Positioning of the overlay relative to the anchor
   useEffect(() => {
-    if (!wrapper.current || !element) return
+    if (!wrapper.current || !selectedElement) return
 
     const anchorRect = ReactEditor.toDOMNode(
       editor,
-      element
+      selectedElement
     )?.getBoundingClientRect()
 
     const parentRect = wrapper.current
@@ -79,9 +88,9 @@ export function BlankControls(props: BlankControlsProps) {
       (overlap > 0 ? fallbackBoundingLeft : boundingLeft) - offsetRect.left - 5
     }px`
     wrapper.current.style.top = `${anchorRect.bottom + 6 - offsetRect.top}px`
-  }, [editor, element])
+  }, [editor, selectedElement])
 
-  if (!isBlankFocused && document.activeElement !== input.current) return null
+  if (!selectedElement) return null
 
   return (
     <div ref={wrapper} className="absolute z-[95] whitespace-nowrap">
@@ -113,7 +122,6 @@ export function BlankControls(props: BlankControlsProps) {
                     ref={input}
                     className="serlo-input-font-reset w-3/4 !min-w-[80px] rounded-full border border-brand bg-brand-50"
                     value={answer}
-                    autoFocus
                     size={4}
                     onChange={(event) => {
                       onAlternativeAnswerChange(index, event.target.value)

@@ -16,12 +16,13 @@ import type { BlankInterface } from './types'
 
 interface BlankRendererProps {
   element: BlankInterface
+  focused: boolean
 }
 
-export function BlankRenderer({ element }: BlankRendererProps) {
+export function BlankRenderer({ element, focused }: BlankRendererProps) {
   const editor = useSlate()
   const selected = useSelected()
-  const focused = useFocused()
+  const slateFocused = useFocused()
 
   // Autofocus when adding and removing a blank
   const inputRef = useRef<HTMLInputElement | null>(null)
@@ -38,7 +39,7 @@ export function BlankRenderer({ element }: BlankRendererProps) {
       const shouldFocusInput =
         input &&
         document.activeElement !== input &&
-        focused &&
+        slateFocused &&
         selected &&
         editor.selection &&
         Range.isCollapsed(editor.selection)
@@ -50,7 +51,7 @@ export function BlankRenderer({ element }: BlankRendererProps) {
     document.addEventListener('keydown', handleDocumentKeydown)
 
     return () => document.removeEventListener('keydown', handleDocumentKeydown)
-  }, [editor, focused, inputRef, selected])
+  }, [editor, slateFocused, inputRef, selected])
 
   const context = useContext(FillInTheBlanksContext)
   if (context === null) return null
@@ -64,12 +65,14 @@ export function BlankRenderer({ element }: BlankRendererProps) {
         onChange={handleChange}
         onKeyDown={handleMoveOut}
       />
-      <BlankControls
-        isBlankFocused={document.activeElement === inputRef.current}
-        correctAnswers={element.correctAnswers.map(({ answer }) => answer)}
-        onAlternativeAnswerAdd={handleAlternativeAnswerAdd}
-        onAlternativeAnswerChange={handleCorrectAnswerChange}
-      />
+      {focused ? (
+        <BlankControls
+          blankId={element.blankId}
+          correctAnswers={element.correctAnswers.map(({ answer }) => answer)}
+          onAlternativeAnswerAdd={handleAlternativeAnswerAdd}
+          onAlternativeAnswerChange={handleCorrectAnswerChange}
+        />
+      ) : null}
     </>
   )
 
