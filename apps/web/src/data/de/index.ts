@@ -850,7 +850,11 @@ export const loggedInData = {
           previewIsDeactiveHint: "Vorschau der Aufgabe anzeigen",
           dummyAnswers: "Falsche Antwortmöglichkeiten",
           addDummyAnswer: "Falsche Antwort hinzufügen",
-          removeDummyAnswer: "Falsche Antwort entfernen"
+          removeDummyAnswer: "Falsche Antwort entfernen",
+          addAlternativeAnswer: 'Add an alternative answer',
+          removeAlternativeAnswer: 'Remove alternative answer',
+          alternativeAnswers: 'Alternative answers',
+          acceptMathEquivalents: 'Accept all equivalent mathematical values'
         }
       },
       templatePlugins: {
