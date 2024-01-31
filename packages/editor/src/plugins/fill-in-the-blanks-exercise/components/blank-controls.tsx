@@ -35,8 +35,8 @@ export function BlankControls(props: BlankControlsProps) {
   const editor = useSlate()
   const { selection } = editor
 
-  const wrapper = useRef<HTMLDivElement>(null)
-  const input = useRef<HTMLInputElement>(null)
+  const overlayWrapper = useRef<HTMLDivElement>(null)
+  const inputsWrapper = useRef<HTMLInputElement>(null)
 
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
@@ -57,18 +57,19 @@ export function BlankControls(props: BlankControlsProps) {
 
   // Positioning of the overlay relative to the anchor
   useEffect(() => {
-    if (!wrapper.current || !selectedElement) return
+    if (!overlayWrapper.current || !selectedElement) return
 
     const anchorRect = ReactEditor.toDOMNode(
       editor,
       selectedElement
     )?.getBoundingClientRect()
 
-    const parentRect = wrapper.current
+    const parentRect = overlayWrapper.current
       .closest('.rows-editor-renderer-container')
       ?.getBoundingClientRect()
 
-    const offsetRect = wrapper.current.offsetParent?.getBoundingClientRect()
+    const offsetRect =
+      overlayWrapper.current.offsetParent?.getBoundingClientRect()
 
     if (!anchorRect || !parentRect || !offsetRect) return
 
@@ -78,28 +79,46 @@ export function BlankControls(props: BlankControlsProps) {
     const overlap = boundingWrapperRight - parentRect.right
     const fallbackBoundingLeft = boundingLeft - overlap // wrapper ends at editor's right
 
-    wrapper.current.style.left = `${
+    overlayWrapper.current.style.left = `${
       (overlap > 0 ? fallbackBoundingLeft : boundingLeft) - offsetRect.left - 5
     }px`
-    wrapper.current.style.top = `${anchorRect.bottom + 6 - offsetRect.top}px`
+    overlayWrapper.current.style.top = `${
+      anchorRect.bottom + 6 - offsetRect.top
+    }px`
   }, [editor, selectedElement])
 
-  function handleAddButtonClick() {
+  function handleAlternativeAnswerAdd() {
     onAlternativeAnswerAdd()
-    setTimeout(() => input.current?.focus(), 10)
+    setTimeout(() => {
+      const inputs = inputsWrapper.current?.querySelectorAll('input')
+      inputs?.[inputs.length - 1].focus()
+    }, 10)
+  }
+
+  function handleAlternativeAnswerRemove(index: number) {
+    onAlternativeAnswerRemove(index)
+    setTimeout(() => {
+      const inputs = inputsWrapper.current?.querySelectorAll('input')
+      if (!inputs) return
+      // At index 0 is the answer from the blank input, which is not included in `inputs` constant, therefore indexing is shifted
+      const previousInput = inputs[index - 2]
+      if (previousInput) return previousInput.focus()
+      const nextInput = inputs[index - 1]
+      if (nextInput) nextInput.focus()
+    }, 10)
   }
 
   if (!selectedElement) return null
 
   return (
-    <div ref={wrapper} className="absolute z-[95] whitespace-nowrap">
+    <div ref={overlayWrapper} className="absolute z-[95] whitespace-nowrap">
       <div
         className="w-[460px] rounded bg-white p-side text-start not-italic shadow-menu"
         style={{ width: `${wrapperWidth}px` }}
       >
         {correctAnswers.length <= 1 ? (
           <button
-            onClick={handleAddButtonClick}
+            onClick={handleAlternativeAnswerAdd}
             className="serlo-button-editor-primary text-sm font-normal"
           >
             <FaIcon className="mr-1" icon={faPlus} />
@@ -110,7 +129,10 @@ export function BlankControls(props: BlankControlsProps) {
             <div className="mb-4 text-sm font-bold">
               {blanksExerciseStrings.alternativeAnswers}
             </div>
-            <div className="flex flex-wrap items-center gap-2">
+            <div
+              className="flex flex-wrap items-center gap-2"
+              ref={inputsWrapper}
+            >
               {correctAnswers.map((answer, index) => {
                 const isAnswerFromBlankInput = index === 0
                 if (isAnswerFromBlankInput) return null
@@ -120,15 +142,14 @@ export function BlankControls(props: BlankControlsProps) {
                     key={index}
                     answer={answer}
                     index={index}
-                    ref={input}
-                    onAdd={handleAddButtonClick}
+                    onAdd={handleAlternativeAnswerAdd}
                     onChange={onAlternativeAnswerChange}
-                    onRemove={onAlternativeAnswerRemove}
+                    onRemove={handleAlternativeAnswerRemove}
                   />
                 )
               })}
               <button
-                onClick={handleAddButtonClick}
+                onClick={handleAlternativeAnswerAdd}
                 className="serlo-button-editor-primary h-5 w-5 px-1 py-0 text-xs"
               >
                 <FaIcon icon={faPlus} />
