@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Range } from 'slate'
 import { ReactEditor, useSlate } from 'slate-react'
 
-import type { BlankInterface } from '../types'
+import type { BlankInterface as Blank } from '../types'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
@@ -27,9 +27,7 @@ export function BlankControls(props: BlankControlsProps) {
     onAlternativeAnswerAdd,
     onAlternativeAnswerChange,
   } = props
-  const [selectedElement, setSelectedElement] = useState<BlankInterface | null>(
-    null
-  )
+  const [selectedElement, setSelectedElement] = useState<Blank | null>(null)
 
   const editor = useSlate()
   const { selection } = editor
@@ -38,13 +36,6 @@ export function BlankControls(props: BlankControlsProps) {
   const input = useRef<HTMLInputElement>(null)
 
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
-
-  // const isBlankFocused = document.activeElement === blankRef.current
-  // console.log(document.activeElement)
-
-  // console.log({ selection })
-  // const isCollapsed = selection && Range.isCollapsed(selection)
-  // console.log({ isCollapsed })
 
   // Setting the element to serve as an anchor for overlay positioning
   useEffect(() => {
