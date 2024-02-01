@@ -4,22 +4,8 @@ import { NextResponse, type NextRequest } from 'next/server'
 import type { Region } from '@/components/landing/exams/exams-finder/exams-finder'
 
 const regionMapping = {
-  //   BW: 'Baden-Württemberg',
-  BY: 'Bayern',
-  //   BE: 'Berlin',
-  //   BB: 'Brandenburg',
-  //   HB: 'Bremen',
-  //   HH: 'Hamburg',
-  //   HE: 'Hessen',
-  //   MV: 'Mecklenburg-Vorpommern',
-  NI: 'Niedersachsen',
-  //   NW: 'Nordrhein-Westfalen',
-  //   RP: 'Rheinland-Pfalz',
-  //   SL: 'Saarland',
-  //   SN: 'Sachsen',
-  //   ST: 'Sachsen-Anhalt',
-  //   SH: 'Schleswig-Holstein',
-  //   TH: 'Thüringen',
+  BY: 'bayern',
+  NI: 'niedersachsen',
 } as const
 
 export function middleware(request: NextRequest) {
