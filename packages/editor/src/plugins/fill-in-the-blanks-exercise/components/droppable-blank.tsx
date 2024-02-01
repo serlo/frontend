@@ -8,12 +8,11 @@ import { cn } from '@/helper/cn'
 
 interface DroppableBlankProps {
   blankId: BlankId
-  isDisabled: boolean
   children: ReactNode
 }
 
 export function DroppableBlank(props: DroppableBlankProps) {
-  const { blankId, isDisabled, children } = props
+  const { blankId, children } = props
 
   const fillInTheBlanksContext = useContext(FillInTheBlanksContext)
 
@@ -22,7 +21,9 @@ export function DroppableBlank(props: DroppableBlankProps) {
     drop: ({ draggableId }: { draggableId: DraggableId }) => {
       if (!fillInTheBlanksContext) return
       const newMap = new Map<DraggableId, BlankId>(
-        fillInTheBlanksContext.locationOfDraggables.value
+        [...fillInTheBlanksContext.locationOfDraggables.value].filter(
+          (item) => item[1] !== blankId
+        )
       )
       newMap.set(draggableId, blankId)
       fillInTheBlanksContext.locationOfDraggables.set(newMap)
@@ -30,19 +31,21 @@ export function DroppableBlank(props: DroppableBlankProps) {
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
-    canDrop: () => !isDisabled,
   })
 
   return (
     <span
       className={cn(
-        !children &&
-          'rounded-full border border-brand bg-brand-50 px-6 text-brand-50',
-        isOver && !isDisabled && 'bg-slate-400 text-slate-400'
+        'relative rounded-full border',
+        !children && 'border-brand bg-brand-50 px-6 text-brand-50',
+        isOver && 'bg-slate-400 text-slate-400'
       )}
       ref={dropRef}
     >
       {children || '_'}
+      {children && isOver ? (
+        <span className="absolute bottom-0 left-[1px] right-[1px] top-0 block rounded-full bg-slate-400 opacity-80"></span>
+      ) : null}
     </span>
   )
 }
