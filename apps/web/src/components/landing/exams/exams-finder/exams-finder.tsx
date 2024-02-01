@@ -286,7 +286,7 @@ export function ExamsFinder({
           onChange={(e) => {
             handleRegionChange(e.target.value as Region)
           }}
-          className="mx-0.5 min-w-[10rem] rounded-lg bg-transparent px-0.5 text-brand outline-none focus-visible:outline-inherit"
+          className="mx-0.5 min-w-[12rem] rounded-lg bg-transparent px-0.5 text-brand outline-none focus-visible:outline-inherit"
         >
           {Object.entries(regions).map(([regionKey, regionValue]) => {
             return (
@@ -333,7 +333,7 @@ export function ExamsFinder({
           onChange={(e) => {
             setSchoolType(e.target.value as SchoolType)
           }}
-          className="mx-0.5 min-w-[10rem] rounded-lg bg-transparent px-0.5 text-brand outline-none focus-visible:outline-inherit"
+          className="mx-0.5 min-w-[12rem] rounded-lg bg-transparent px-0.5 text-brand outline-none focus-visible:outline-inherit"
         >
           {Object.entries(schoolTypesWithExamsByRegion[region]).map(
             ([schoolTypeKey, { title }]) => {
