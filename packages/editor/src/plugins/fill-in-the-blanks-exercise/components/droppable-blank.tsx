@@ -42,6 +42,11 @@ export function DroppableBlank(props: DroppableBlankProps) {
       }
 
       context.locationOfDraggables.set(newMap)
+
+      context.isFeedbackVisible.set(false)
+      context.feedbackForBlanks.set(
+        new Map<BlankId, { isCorrect: boolean | undefined }>()
+      )
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
