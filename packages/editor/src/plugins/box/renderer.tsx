@@ -65,7 +65,7 @@ export function BoxRenderer({ boxType, title, anchorId, children }: BoxProps) {
           {isBlank ? null : (
             <span
               className={cn(
-                title && !isBlank ? 'mr-1.5' : '',
+                title ? 'mr-4' : '',
                 isAttention ? 'text-orange' : 'text-brand'
               )}
             >
