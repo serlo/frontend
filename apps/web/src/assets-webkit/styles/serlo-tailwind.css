@@ -70,18 +70,20 @@
   }
   .serlo-th {
     @apply border-b-3 border-r-3 border-brand-200 bg-brand-100 p-1.5 pl-3 text-left;
-    > p.serlo-p, > div .serlo-p {
+    > p.serlo-p,
+    > div .serlo-p {
       @apply mx-side;
     }
   }
   .serlo-td {
     @apply border-b-3 border-r-3 border-brand-200 p-1.5 align-top;
-    > p.serlo-p, > div .serlo-p {
+    > p.serlo-p,
+    > div .serlo-p {
       @apply mx-side;
     }
   }
   .serlo-ul {
-    @apply mr-side mb-block mt-4 list-none pl-5;
+    @apply mb-block mr-side mt-4 list-none pl-5;
 
     & > li:before {
       @apply absolute bg-brand-400 content-['_'];
@@ -96,7 +98,7 @@
     }
   }
   .serlo-ol {
-    @apply mr-side mb-block mt-0 list-none pl-6 [counter-reset:list-counter];
+    @apply mb-block mr-side mt-0 list-none pl-6 [counter-reset:list-counter];
 
     & > li:before {
       @apply absolute content-[counter(list-counter)] [counter-increment:list-counter];
@@ -118,7 +120,7 @@
     @apply content-none !important;
   } */
   .serlo-ol-no-before {
-    @apply mr-side mb-block mt-0 list-none [counter-reset:list-counter];
+    @apply mb-block mr-side mt-0 list-none [counter-reset:list-counter];
 
     & > li:before {
       @apply content-[counter(list-counter)] [counter-increment:list-counter];
@@ -155,7 +157,7 @@
     @apply pb-3.5 pt-6;
   }
   .serlo-solution-box {
-    @apply mr-side mb-block border-l-8 border-brand-200 py-2.5 pl-side;
+    @apply mb-block mr-side border-l-8 border-brand-200 py-2.5 pl-side;
   }
   .serlo-image-centered {
     @apply mb-block px-4 text-center;
@@ -485,7 +487,6 @@
     }
   }
 
-
   .offset-border::before {
     content: '';
     @apply absolute inset-y-0 border-l-2 border-transparent;
@@ -504,22 +505,10 @@
   .offset-border:focus-within:hover::before {
     @apply border-gray-400;
   }
-  .explanation-wrapper [role="textbox"],
-  .explanation-wrapper [data-slate-editor="true"] {
+  .explanation-wrapper [role='textbox'],
+  .explanation-wrapper [data-slate-editor='true'] {
     @apply pl-side;
   }
-
-
-  /* Failed experimentation to offset the left padding with margin-left! Does
-  not work for nested row plugins  */
-  /* .rows-editor-renderer-container {
-    padding-left: 16px;
-  } */
-
-  /* Nested rows */
-  /* .rows-editor-renderer-container .rows-editor-renderer-container {
-    margin-left: -16px;
-  } */
 }
 
 /* print and pdf styles */

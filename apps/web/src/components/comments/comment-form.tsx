@@ -64,7 +64,7 @@ export function CommentForm({
       className={cn(
         !isEditing && 'bg-brandgreen-50',
         `
-          mr-side mb-7 mt-4 flex items-center rounded-2xl
+          mb-7 mr-side mt-4 flex items-center rounded-2xl
           border-2 border-brandgreen-50 py-1 transition-colors duration-200
           ease-in focus-within:border-brandgreen-muted
         `
