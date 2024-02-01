@@ -1,7 +1,7 @@
 import { FaIcon } from '@editor/package'
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 
 import { Link } from '@/components/content/link'
 import { cn } from '@/helper/cn'
@@ -231,12 +231,16 @@ export const schoolTypesWithExamsByRegion: Record<
 } as const
 
 interface ExamsFinderProps {
-  initRegion?: Region
+  region: Region
+  setRegion: Dispatch<SetStateAction<Region>>
   initSchoolType?: SchoolType
 }
 
-export function ExamsFinder({ initRegion, initSchoolType }: ExamsFinderProps) {
-  const [region, setRegion] = useState<Region>(initRegion ?? 'bayern')
+export function ExamsFinder({
+  region,
+  setRegion,
+  initSchoolType,
+}: ExamsFinderProps) {
   const [schoolType, setSchoolType] = useState<SchoolType | undefined>(
     initSchoolType
   )

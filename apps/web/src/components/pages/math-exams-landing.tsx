@@ -1,10 +1,11 @@
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons'
+import { useState } from 'react'
 
 import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
 import { HeadTags } from '../head-tags'
 import { ExamsCompleteList } from '../landing/exams/exams-finder/exams-complete-list'
-import { ExamsFinder } from '../landing/exams/exams-finder/exams-finder'
+import { ExamsFinder, Region } from '../landing/exams/exams-finder/exams-finder'
 import { FooterNew } from '../landing/rework/footer-new'
 import { SubjectIcon } from '../landing/rework/subject-icon'
 import { Header } from '../navigation/header/header'
@@ -15,7 +16,8 @@ import { cn } from '@/helper/cn'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 import type { RegionData } from '@/pages/mathe-pruefungen/[region]'
 
-export function MathExamsLanding({ region }: RegionData) {
+export function MathExamsLanding({ region: initRegion }: RegionData) {
+  const [region, setRegion] = useState<Region>(initRegion ?? 'bayern')
   const { lang } = useInstanceData()
   if (lang !== Instance.De) return null
 
@@ -62,7 +64,7 @@ export function MathExamsLanding({ region }: RegionData) {
             <h2 className={cn(`pb-6 text-lg font-extrabold tracking-tight`)}>
               Finde deine Prüfung 🔎
             </h2>
-            <ExamsFinder initRegion={region} />
+            <ExamsFinder region={region} setRegion={setRegion} />
           </div>
         </section>
 
