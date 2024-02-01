@@ -226,7 +226,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
 
         // The submission is NOT identical to the solution, AND
         // `acceptMathEquivalents` is off, so the submission is incorrect.
-        if (!blankState.acceptMathEquivalents) return false
+        if (blankState.acceptMathEquivalents === false) return false
 
         // The `acceptMathEquivalents` setting is on, so first normalize both
         // submission and solution. If either of them are invalid mathematical

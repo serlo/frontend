@@ -5,6 +5,7 @@ import {
   useRef,
   useContext,
   useEffect,
+  useMemo,
 } from 'react'
 import { Range, Transforms } from 'slate'
 import { ReactEditor, useSelected, useSlate, useFocused } from 'slate-react'
@@ -21,11 +22,19 @@ interface BlankRendererProps {
 
 export function BlankRenderer(props: BlankRendererProps) {
   const { element, focused } = props
-  const { blankId, correctAnswers, acceptMathEquivalents } = element
+  const { blankId, correctAnswers } = element
 
   const editor = useSlate()
   const selected = useSelected()
   const slateFocused = useFocused()
+
+  // The `acceptMathEquivalents` setting is on by default. However,
+  // some blanks in the DB are missing this property altogether, so
+  // we assume that `undefined` equalst to `true`.
+  const acceptMathEquivalents = useMemo(() => {
+    if (element.acceptMathEquivalents === undefined) return true
+    return element.acceptMathEquivalents
+  }, [element.acceptMathEquivalents])
 
   // Autofocus when adding and removing a blank
   const inputRef = useRef<HTMLInputElement | null>(null)
