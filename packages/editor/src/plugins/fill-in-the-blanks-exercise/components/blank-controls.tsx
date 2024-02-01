@@ -1,13 +1,14 @@
+import { AutogrowInput } from '@editor/editor-ui/autogrow-input'
 import {
   getBlankElement,
   isBlankActive,
 } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/blank'
+import { RemovableInputWrapper } from '@editor/editor-ui/removable-input-wrapper'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState } from 'react'
 import { Range } from 'slate'
 import { ReactEditor, useSlate } from 'slate-react'
 
-import { AlternativeAnswer } from './alternative-answer'
 import type { BlankInterface as Blank } from '../types'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -138,14 +139,28 @@ export function BlankControls(props: BlankControlsProps) {
                 if (isAnswerFromBlankInput) return null
 
                 return (
-                  <AlternativeAnswer
+                  <RemovableInputWrapper
                     key={index}
-                    answer={answer}
-                    index={index}
-                    onAdd={handleAlternativeAnswerAdd}
-                    onChange={onAlternativeAnswerChange}
-                    onRemove={handleAlternativeAnswerRemove}
-                  />
+                    tooltipText={blanksExerciseStrings.removeAlternativeAnswer}
+                    onRemoveClick={() => {
+                      handleAlternativeAnswerRemove(index)
+                    }}
+                  >
+                    <AutogrowInput
+                      value={answer}
+                      onChange={(event) => {
+                        onAlternativeAnswerChange(index, event.target.value)
+                      }}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter') {
+                          handleAlternativeAnswerAdd()
+                        }
+                        if (event.key === 'Backspace' && answer === '') {
+                          handleAlternativeAnswerRemove(index)
+                        }
+                      }}
+                    />
+                  </RemovableInputWrapper>
                 )
               })}
               <button

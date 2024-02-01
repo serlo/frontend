@@ -1,8 +1,9 @@
+import { AutogrowInput } from '@editor/editor-ui/autogrow-input'
+import { RemovableInputWrapper } from '@editor/editor-ui/removable-input-wrapper'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useRef } from 'react'
 
-import { ExtraIncorrectAnswer } from './extra-incorrect-answer'
 import type { FillInTheBlanksExerciseProps } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
@@ -15,57 +16,72 @@ export function ExtraIncorrectAnswersArea(
 ) {
   const { extraDraggableAnswers } = props
 
-  const areaRef = useRef<HTMLDivElement>(null)
+  const areaWrapper = useRef<HTMLDivElement>(null)
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
   const incorrectAnswers = extraDraggableAnswers.defined
     ? extraDraggableAnswers.map(({ answer }) => answer.value)
     : []
 
+  function handleExtraIncorrectAnswerAdd() {
+    if (extraDraggableAnswers.defined) {
+      extraDraggableAnswers.insert()
+    } else {
+      extraDraggableAnswers.create([{ answer: '' }])
+    }
+    setTimeout(() => {
+      const inputs = areaWrapper.current?.querySelectorAll('input')
+      inputs?.[inputs.length - 1].focus()
+    }, 10)
+  }
+
+  function handleExtraIncorrectAnswerRemove(index: number) {
+    if (!extraDraggableAnswers.defined) return
+    // The editor overwrites the remove function of a `list` if
+    // it's inside a `optional`. This removes the value at the index
+    extraDraggableAnswers.set((currentList) =>
+      currentList.filter((_, itemIndex) => itemIndex !== index)
+    )
+    // Focus new last input to persist focus
+    const allInputs = areaWrapper.current?.querySelectorAll('input')
+    if (allInputs) {
+      void [...allInputs]?.at(-2)?.focus()
+    }
+  }
+
   return (
-    <div className="mt-8 px-8" ref={areaRef}>
+    <div className="mt-8 px-8" ref={areaWrapper}>
       {incorrectAnswers.length > 0 && extraDraggableAnswers.defined ? (
         <>
           {blanksExerciseStrings.dummyAnswers}:
           <div className="mb-4 mt-1 flex flex-wrap gap-2">
             {incorrectAnswers.map((answer, index) => (
-              <ExtraIncorrectAnswer
+              <RemovableInputWrapper
                 key={index}
-                text={answer}
-                onChange={(event) => {
-                  extraDraggableAnswers[index].answer.set(event.target.value)
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    extraDraggableAnswers.insert()
-                  }
-                }}
+                tooltipText={blanksExerciseStrings.removeDummyAnswer}
                 onRemoveClick={() => {
-                  if (!extraDraggableAnswers.defined) return
-                  // the editor overwrites the remove function of the `list()` if it's inside a `optional()`
-                  // so this is a little helper to remove the value at the index
-                  extraDraggableAnswers.set((currentList) =>
-                    currentList.filter((_, itemIndex) => itemIndex !== index)
-                  )
-                  // focus new last input to make sure we don't loose focus
-                  const allInputs = areaRef.current?.querySelectorAll('input')
-                  if (allInputs) {
-                    void [...allInputs]?.at(-2)?.focus()
-                  }
+                  handleExtraIncorrectAnswerRemove(index)
                 }}
-              />
+              >
+                <AutogrowInput
+                  value={answer}
+                  className="focus:border-red-400 focus:outline-red-400"
+                  onChange={(event) => {
+                    extraDraggableAnswers[index].answer.set(event.target.value)
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      extraDraggableAnswers.insert()
+                    }
+                  }}
+                />
+              </RemovableInputWrapper>
             ))}
           </div>
         </>
       ) : null}
       <button
-        onClick={() => {
-          if (extraDraggableAnswers.defined) {
-            extraDraggableAnswers.insert()
-          } else {
-            extraDraggableAnswers.create([{ answer: '' }])
-          }
-        }}
+        onClick={handleExtraIncorrectAnswerAdd}
         className="serlo-button-editor-secondary"
       >
         <FaIcon icon={faPlus} /> {blanksExerciseStrings.addDummyAnswer}

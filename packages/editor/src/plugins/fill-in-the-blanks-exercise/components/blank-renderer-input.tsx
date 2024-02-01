@@ -1,3 +1,4 @@
+import { AutogrowInput } from '@editor/editor-ui/autogrow-input'
 import { ChangeEventHandler, KeyboardEventHandler, forwardRef } from 'react'
 
 import { BlankId } from '..'
@@ -21,30 +22,22 @@ export const BlankRendererInput = forwardRef<
   const text = context.textInBlanks.get(blankId)?.text ?? ''
 
   return (
-    <span className="serlo-autogrow-input" data-value={text + '_'}>
-      <input
-        ref={ref}
-        className={cn(
-          'h-[25px] rounded-full border border-brand bg-brand-50',
-          isAnswerCorrect && 'border-green-500',
-          isAnswerCorrect === false && 'border-red-500'
-        )}
-        data-qa="blank-input"
-        size={4}
-        spellCheck={false}
-        autoCorrect="off"
-        placeholder=""
-        type="text"
-        value={text}
-        onChange={(event) => {
-          setTextUserTypedIntoBlank(event.target.value)
-          onChange?.(event)
-        }}
-        onKeyDown={(event) => {
-          onKeyDown?.(event)
-        }}
-      />
-    </span>
+    <AutogrowInput
+      ref={ref}
+      value={text}
+      className={cn(
+        'h-[25px]',
+        isAnswerCorrect && 'border-green-500 focus:outline-green-500',
+        isAnswerCorrect === false && 'border-red-400 focus:outline-red-400'
+      )}
+      onChange={(event) => {
+        setTextUserTypedIntoBlank(event.target.value)
+        onChange?.(event)
+      }}
+      onKeyDown={(event) => {
+        onKeyDown?.(event)
+      }}
+    />
   )
 
   function setTextUserTypedIntoBlank(newText: string) {
