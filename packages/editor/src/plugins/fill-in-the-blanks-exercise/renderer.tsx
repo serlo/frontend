@@ -217,19 +217,31 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
 
     blanks.forEach((blankState) => {
       const trimmedBlankText = getTrimmedBlankText(blankState.blankId)
-      const isCorrect = blankState.correctAnswers.some(({ answer }) => {
-        if (!blankState.acceptMathEquivalents) {
-          return answer === trimmedBlankText
-        }
 
+      // Go through all solutions and evaluate the submission against them
+      const isCorrect = blankState.correctAnswers.some(({ answer }) => {
+        // The submission is identical to the solution, so it's correct
+        // regardless of the `acceptMathEquivalents` setting.
+        if (answer === trimmedBlankText) return true
+
+        // The submission is NOT identical to the solution, AND
+        // `acceptMathEquivalents` is off, so the submission is incorrect.
+        if (!blankState.acceptMathEquivalents) return false
+
+        // The `acceptMathEquivalents` setting is on, so first normalize both
+        // submission and solution. If either of them are invalid mathematical
+        // expressions, the submission is incorrect.
         const solution = normalize(answer)
         const submission = normalize(trimmedBlankText)
-        return (
-          (solution as A.Expression)
-            .subtract(submission as A.Expression)
-            .toString() === '0'
-        )
+        if (!solution || !submission) return false
+
+        // Both submission and solution are valid mathematical expressions.
+        // Using algebra.js, subtract the submission from the solution, and
+        // if the result of the subtraction is 0, submission and solution are
+        // mathematical equivalents, therefore the submission is correct.
+        return solution.subtract(submission).toString() === '0'
       })
+
       newBlankAnswersCorrectList.set(blankState.blankId, { isCorrect })
     })
 
@@ -252,7 +264,14 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
 
   function normalize(value: string) {
     const _value = collapseWhitespace(value)
-    return AlgebraJs ? AlgebraJs.parse(normalizeNumber(_value)) : undefined
+    // algebra.js throws an error if an invalid mathematical expression
+    // is passed to its `parse` method. In this case, return `undefined`
+    // as the result of the normalization.
+    try {
+      return AlgebraJs?.parse(normalizeNumber(_value)) as A.Expression
+    } catch {
+      return undefined
+    }
   }
 
   function collapseWhitespace(val: string): string {
