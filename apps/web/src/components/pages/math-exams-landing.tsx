@@ -1,52 +1,20 @@
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons'
-import { useEffect, useMemo, useState } from 'react'
 
 import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
 import { HeadTags } from '../head-tags'
+import { ExamsFinder } from '../landing/exams/exams-finder/exams-finder'
 import { FooterNew } from '../landing/rework/footer-new'
 import { SubjectIcon } from '../landing/rework/subject-icon'
 import { Header } from '../navigation/header/header'
-import { Quickbar, QuickbarData, quickbarUrl } from '../navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { cn } from '@/helper/cn'
 import { serloDomain } from '@/helper/urls/serlo-domain'
+import type { RegionData } from '@/pages/mathe-pruefungen/[region]'
 
-const schoolTypes = [
-  'Mittelschule (Hauptschule)',
-  'Realschule',
-  'Gymnasium',
-  'FOS & BOS',
-] as const
-
-export function MathExamsLanding() {
-  const [quickbarData, setQuickbarData] = useState<QuickbarData | undefined>(
-    undefined
-  )
-
-  useEffect(() => {
-    if (!quickbarData) {
-      fetchQuickbarData()
-        .then((fetchedData) => fetchedData && setQuickbarData(fetchedData))
-        // eslint-disable-next-line no-console
-        .catch(console.error)
-    }
-  }, [quickbarData])
-
-  const featuredTaxonomies = useMemo(() => {
-    const getCount = (inputId: number) => {
-      return quickbarData?.find(({ id }) => id === String(inputId))?.count ?? 0
-    }
-    if (!quickbarData) return []
-    return [...mathExamTaxonomies]
-      .sort((a, b) => {
-        return getCount(b.id) - getCount(a.id)
-      })
-      .slice(0, 6)
-  }, [quickbarData])
-
+export function MathExamsLanding({ region }: RegionData) {
   const { lang } = useInstanceData()
   if (lang !== Instance.De) return null
 
@@ -62,9 +30,7 @@ export function MathExamsLanding() {
       <main id="content" className="mx-side text-almost-black">
         <section
           className={cn(`
-            mx-auto mt-16 max-w-3xl
-            text-center sm:flex
-            sm:text-left md:mt-14
+            mx-auto mt-16 max-w-3xl text-center sm:flex sm:text-left md:mt-14
           `)}
         >
           <div>
@@ -90,50 +56,14 @@ export function MathExamsLanding() {
           {renderIcon()}
         </section>
 
-        <section className="mx-auto mt-10 max-w-3xl text-center sm:mt-16 sm:text-left">
-          <h2 className="mb-2 text-lg font-bold text-almost-black">
-            Suche nach Prüfungen
-          </h2>
-
-          <Quickbar
-            subject="mathe"
-            className="mx-auto max-w-sm sm:-ml-1 sm:px-0 md:max-w-2xl md:pr-4"
-            customData={quickbarData}
-          />
-        </section>
-
-        {/* Hier vielleicht eher eine Tabelle? */}
-        <section className="themen relative -left-side w-[calc(100%+32px)] text-center">
-          {/* <h2 className="-mt-4 text-2xl font-extrabold tracking-tight">
-            <span>Nach Schulart (Bayern)</span>
-          </h2>
-          <nav className="mx-auto mt-2 flex max-w-xl justify-center text-center">
-            {schoolTypes.map(renderSchoolButton)}
-          </nav> */}
-          {/* <SubjectLandingTopicOverview subterms={subterms} subject={subject} /> */}
-          <h2
-            className={cn(`
-              mx-auto mt-3 max-w-2xl
-              pb-10 text-3xl font-extrabold tracking-tight
-            `)}
-          >
-            <span className="pb-2">Beliebte Prüfungen 🔥</span>
-          </h2>
-
-          <div
-            className={cn(`
-              mx-auto flex w-full
-              flex-wrap items-stretch justify-around
-              px-side pb-6 sm:max-w-3xl lg:max-w-max
-            `)}
-          >
-            {featuredTaxonomies.map(renderFeaturedBox)}
+        <section className="themen relative -left-side min-h-[28rem] w-[calc(100%+32px)] px-side text-center">
+          <div className="mx-auto mb-12 max-w-3xl text-left">
+            <h2 className={cn(`pb-6 text-lg font-extrabold tracking-tight`)}>
+              Finde deine Prüfung 🔎
+            </h2>
+            <ExamsFinder initRegion={region} />
           </div>
         </section>
-
-        {/* <section className="mb-8 mt-20 text-center">
-        
-        </section> */}
 
         <section className="mb-24 mt-20 justify-around sm:flex">
           <div className="sm:px-side">
@@ -219,169 +149,3 @@ export function MathExamsLanding() {
     )
   }
 }
-
-interface MathExamTaxonomy {
-  id: number
-  title: string
-  school: (typeof schoolTypes)[number]
-}
-
-const mathExamTaxonomies: MathExamTaxonomy[] = [
-  {
-    id: 220418,
-    title: 'Jahrgangsstufentest Mathematik',
-    school: 'Mittelschule (Hauptschule)',
-  },
-  {
-    id: 75678,
-    title: 'Quali Abschlussprüfungen mit Lösung',
-    school: 'Mittelschule (Hauptschule)',
-  },
-  {
-    id: 247427,
-    title: 'Mittlerer Schulabschluss an der Mittelschule',
-    school: 'Mittelschule (Hauptschule)',
-  },
-  {
-    id: 219731,
-    title: 'Jahrgangsstufentest ',
-    school: 'Realschule',
-  },
-  {
-    id: 220404,
-    title: 'Grundwissenstest 7. Klasse',
-    school: 'Realschule',
-  },
-  {
-    id: 220648,
-    title: 'Jahrgangsstufentest 8. Klasse',
-    school: 'Realschule',
-  },
-  {
-    id: 220649,
-    title: 'Jahrgangsstufentest 8. Klasse',
-    school: 'Realschule',
-  },
-  {
-    id: 220680,
-    title: 'Grundwissentest 9. Klasse',
-    school: 'Realschule',
-  },
-  {
-    id: 220681,
-    title: 'Grundwissentest 9. Klasse',
-    school: 'Realschule',
-  },
-  {
-    id: 75049,
-    title: 'Abschlussprüfungen mit Lösung, Zweig I',
-    school: 'Realschule',
-  },
-  {
-    id: 76750,
-    title: 'Abschlussprüfungen mit Lösungen, Zweig II und III',
-    school: 'Realschule',
-  },
-  {
-    id: 219775,
-    title: 'Jahrgangsstufentest 8. Klasse - BMT 8',
-    school: 'Gymnasium',
-  },
-  {
-    id: 219737,
-    title: 'Jahrgangsstufentest 10. Klasse - BMT 10',
-    school: 'Gymnasium',
-  },
-  {
-    id: 20852,
-    title: 'Abiturprüfungen mit Lösung',
-    school: 'Gymnasium',
-  },
-  {
-    id: 91252,
-    title: 'Fachhochschulreife',
-    school: 'FOS & BOS',
-  },
-  {
-    id: 91253,
-    title: 'Fachgebundene Hochschulreife',
-    school: 'FOS & BOS',
-  },
-]
-
-async function fetchQuickbarData() {
-  const req = await fetch(quickbarUrl)
-  const data = (await req.json()) as QuickbarData
-
-  data.forEach((entry) => {
-    entry.pathLower = entry.path.map((x) => x.toLowerCase())
-    entry.titleLower = entry.title.toLowerCase()
-  })
-
-  const filteredData = data.filter((entry) => {
-    // not math
-    if (!entry.root?.toLowerCase().startsWith('mathe')) return false
-
-    if (mathExamTaxonomies.some((tax) => String(tax.id) === entry.id)) {
-      return true
-    }
-    // check pathLower array against taxonomy array titles
-    return entry.pathLower.some((pathTitle) =>
-      mathExamTaxonomies.some((tax) => tax.title.toLowerCase() === pathTitle)
-    )
-  })
-
-  return filteredData
-}
-
-const maxOnMobile = 4
-
-function renderFeaturedBox(data: MathExamTaxonomy, index: number) {
-  return (
-    <Link
-      key={data.title}
-      className={cn(
-        `
-            group relative mx-2
-            mb-4 box-border
-            w-36 rounded p-2.5
-            text-left leading-cozy text-brand transition-all 
-            hover:text-almost-black hover:no-underline hover:shadow-menu
-            mobile:w-52 lg:w-44 xl:w-48
-          `,
-        index >= maxOnMobile ? 'hidden mobile:block' : ''
-      )}
-      href={`${data.id}`}
-    >
-      <h4 className="mx-0 mb-14 mt-1 hyphens-auto break-normal text-xl font-bold">
-        {data.title}
-      </h4>
-      <span className="font-sm absolute bottom-2 mt-1 block text-brand-400">
-        {data.school}
-      </span>
-    </Link>
-  )
-}
-
-// function renderSchoolButton(title: string) {
-//   return (
-//     <button
-//       key={title}
-//       className={cn(
-//         `
-//           m-2 flex w-60 justify-center
-//           rounded-xl p-2 font-bold
-//           text-brand shadow-menu transition-colors hover:bg-brand/5
-//         `
-//         // isActive ? 'bg-brand/10 text-black hover:bg-brand/10' : '',
-//         // src ? '' : 'pl-16'
-//       )}
-//       onClick={() =>
-//         // isExtraTerm ? router.push(term.href) : onMenuClick(index)
-//         console.log('todo')
-//       }
-//     >
-//       {title}
-//     </button>
-//   )
-// }
