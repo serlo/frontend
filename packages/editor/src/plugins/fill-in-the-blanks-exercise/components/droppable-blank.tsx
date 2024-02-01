@@ -20,12 +20,26 @@ export function DroppableBlank(props: DroppableBlankProps) {
     accept: blankDraggableAnswerDragType,
     drop: ({ draggableId }: { draggableId: DraggableId }) => {
       if (!fillInTheBlanksContext) return
+      const originBlank: BlankId | null =
+        [...fillInTheBlanksContext.locationOfDraggables.value].find(
+          (item) => item[0] === draggableId
+        )?.[1] ?? null
+      let replacedDraggableId: DraggableId | null = null
       const newMap = new Map<DraggableId, BlankId>(
         [...fillInTheBlanksContext.locationOfDraggables.value].filter(
-          (item) => item[1] !== blankId
+          (item) => {
+            if (item[1] === blankId) {
+              replacedDraggableId = item[0]
+              return false
+            }
+            return true
+          }
         )
       )
       newMap.set(draggableId, blankId)
+      if (originBlank && replacedDraggableId) {
+        newMap.set(replacedDraggableId, originBlank)
+      }
       fillInTheBlanksContext.locationOfDraggables.set(newMap)
     },
     collect: (monitor) => ({
