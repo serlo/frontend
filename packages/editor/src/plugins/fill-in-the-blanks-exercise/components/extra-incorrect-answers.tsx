@@ -7,13 +7,11 @@ import { useRef } from 'react'
 import type { FillInTheBlanksExerciseProps } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
-interface ExtraIncorrectAnswersAreaProps {
+interface ExtraIncorrectAnswersProps {
   extraDraggableAnswers: FillInTheBlanksExerciseProps['state']['extraDraggableAnswers']
 }
 
-export function ExtraIncorrectAnswersArea(
-  props: ExtraIncorrectAnswersAreaProps
-) {
+export function ExtraIncorrectAnswers(props: ExtraIncorrectAnswersProps) {
   const { extraDraggableAnswers } = props
 
   const areaWrapper = useRef<HTMLDivElement>(null)
