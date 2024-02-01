@@ -1,6 +1,8 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 
+import { cn } from '@/helper/cn'
+
 interface SerloAddButtonProps {
   onClick: () => void
   className?: string
@@ -16,9 +18,10 @@ export function SerloAddButton({
 }: SerloAddButtonProps) {
   return (
     <button
-      className={`serlo-button-editor-secondary ml-side text-base leading-browser ${
-        className ?? ''
-      }`}
+      className={cn(
+        'serlo-button-editor-secondary ml-side text-base leading-browser',
+        className && className
+      )}
       onClick={onClick}
     >
       {noIcon ? null : <FaIcon icon={faPlus} />} {text}

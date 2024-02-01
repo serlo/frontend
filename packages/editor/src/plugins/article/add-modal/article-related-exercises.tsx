@@ -159,6 +159,7 @@ export function ArticleRelatedExercises({
           state={`/${id}`}
         />
         <SerloAddButton
+          className="!ml-0"
           text={articleStrings.addModal.buttonAddType.replace(
             '%type%',
             getTranslatedType(strings, __typename)
