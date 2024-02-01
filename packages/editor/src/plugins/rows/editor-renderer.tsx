@@ -192,23 +192,22 @@ export function EditorRowRenderer({
       <div
         ref={container}
         className={cn(
-          // '-pl-4',
           'relative',
           'rows-editor-renderer-container',
-          'border-l-2 border-transparent',
+          'transition-colors',
           shouldShowBorder &&
             `
-            transition-colors
+            offset-border
             focus-within:border-gray-400
-            hover:!border-gray-200
-            hover:focus-within:!border-gray-400
+            hover:border-gray-200
+            hover:focus-within:border-gray-400
             [&:has(.rows-editor-renderer-container:focus-within)]:border-transparent
-            [&:hover:has(.rows-editor-renderer-container:focus-within)]:!border-gray-200
-            `,
+            [&:hover:has(.rows-editor-renderer-container:focus-within)]:border-gray-200
+          `,
           `
-          [&:focus-within>.rows-tools]:opacity-100
-          [&:has(.rows-editor-renderer-container:focus-within)>.rows-tools]:opacity-0
-          [&:hover>.rows-tools]:!opacity-100
+            [&:focus-within>.rows-tools]:opacity-100
+            [&:has(.rows-editor-renderer-container:focus-within)>.rows-tools]:opacity-0
+            [&:hover>.rows-tools]:opacity-100
           `
         )}
       >

@@ -60,7 +60,7 @@ export function BoxRenderer({ boxType, title, anchorId, children }: BoxProps) {
         isAttention ? 'border-red-100' : 'border-brand-200'
       )}
     >
-      <figcaption className="px-side pt-2.5 text-lg">
+      <figcaption className="px-side py-2.5 text-lg">
         <a className="!no-underline">
           {isBlank ? null : (
             <span
@@ -77,7 +77,11 @@ export function BoxRenderer({ boxType, title, anchorId, children }: BoxProps) {
         </a>
       </figcaption>
 
-      {boxType === 'quote' ? <blockquote>{children}</blockquote> : children}
+      {boxType === 'quote' ? (
+        <blockquote>{children}</blockquote>
+      ) : (
+        <div className="pl-side">{children} </div>
+      )}
     </figure>
   )
 }

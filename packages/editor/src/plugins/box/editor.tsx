@@ -65,8 +65,6 @@ export function BoxEditor(props: BoxProps) {
           '[&>figure>figcaption]:!mb-9',
           // toolbar finetuning
           `
-            [&_.plugin-toolbar]:ml-[-2px]
-            [&_.plugin-toolbar]:mr-[-16px]
             [&_.plugin-toolbar]:rounded-none
             [&_.rows-child:first-child_.plugin-toolbar:before]:hidden
           `
@@ -78,7 +76,7 @@ export function BoxEditor(props: BoxProps) {
           boxType={typedValue}
           title={
             <div
-              className="-ml-1 inline-block max-h-6 min-w-[15rem] font-bold"
+              className="inline-block max-h-6 min-w-[15rem] font-bold"
               data-qa="plugin-box-title"
             >
               {title.render(titleConfig)}
@@ -86,7 +84,7 @@ export function BoxEditor(props: BoxProps) {
           }
           anchorId={anchorId.value}
         >
-          <div className="-ml-3 px-side" data-qa="plugin-box-content">
+          <div data-qa="plugin-box-content" className="w-full">
             {content.render()}
           </div>
         </BoxRenderer>

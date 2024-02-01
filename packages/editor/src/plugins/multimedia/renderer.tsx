@@ -30,6 +30,7 @@ export function MultimediaRenderer({
         {media}
       </div>
       {/* 1px margin fixes mistery bug in firefox */}
+      {/* pl-side is applied in serlo-tailwind.css to the child elements */}
       <div className="explanation-wrapper ml-[1px] pt-0 [&_div.my-block:last-child]:mb-0 [&_div.my-block]:mt-0">
         {explanation}
       </div>

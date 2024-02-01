@@ -18,8 +18,8 @@ export function SpoilerRenderer({
   return (
     <div
       className={cn(
-        'mb-block flex flex-col rounded-xl border-3',
-        '[&>div.my-block:first-of-type]:mt-5',
+        'mb-block flex flex-col justify-start rounded-xl border-3',
+        // '[&>div.my-block:first-of-type]:mt-5',
         isOpen ? 'border-brand-200' : 'border-brand-100'
       )}
     >
@@ -27,8 +27,9 @@ export function SpoilerRenderer({
         onClick={() => setOpen(!open)}
         className={cn(
           `
-            serlo-input-font-reset z-10 m-0 border-none px-side py-2.5
-            text-left text-lg leading-normal text-almost-black transition-colors
+            serlo-input-font-reset z-10 m-0 mb-4 border-none px-side
+            py-2.5 text-left text-lg leading-normal text-almost-black
+            transition-colors
           `,
           isOpen ? 'bg-brand-200' : 'bg-brand-100'
         )}
@@ -39,7 +40,7 @@ export function SpoilerRenderer({
         </span>
       </button>
 
-      {isOpen ? content : null}
+      {isOpen ? <div className="pl-side">{content}</div> : null}
     </div>
   )
 }

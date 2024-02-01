@@ -20,8 +20,8 @@ export function RowDragButton({
     <div
       className={cn(
         'rows-tools',
-        'absolute -left-12 top-0 z-[22] rounded-l-md bg-white bg-opacity-70 opacity-0 transition-opacity',
-        isMultimediaPlugin && '!-top-10 -left-5'
+        'absolute -left-14 top-0 z-[22] rounded-l-md bg-white bg-opacity-70 opacity-0 transition-opacity',
+        isMultimediaPlugin && '!-left-5 !-top-10'
       )}
     >
       <button

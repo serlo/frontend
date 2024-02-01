@@ -485,6 +485,31 @@
     }
   }
 
+
+  .offset-border::before {
+    content: '';
+    @apply absolute inset-y-0 border-l-2 border-transparent;
+    /* Offset the border negatively to the left side */
+    @apply -left-side;
+    pointer-events: none;
+    /* Unsure if we should have this (just in case) */
+    /* z-index: 10; */
+  }
+  .offset-border:focus-within::before {
+    @apply border-gray-400;
+  }
+  .offset-border:hover::before {
+    @apply border-gray-200;
+  }
+  .offset-border:focus-within:hover::before {
+    @apply border-gray-400;
+  }
+  .explanation-wrapper [role="textbox"],
+  .explanation-wrapper [data-slate-editor="true"] {
+    @apply pl-side;
+  }
+
+
   /* Failed experimentation to offset the left padding with margin-left! Does
   not work for nested row plugins  */
   /* .rows-editor-renderer-container {

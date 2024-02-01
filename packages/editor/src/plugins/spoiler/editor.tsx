@@ -18,8 +18,6 @@ export function SpoilerEditor(props: SpoilerProps) {
         className={cn(
           focused && '[&>div]:rounded-t-none',
           `
-            [&>div>div]:mt-4
-            [&_.plugin-toolbar]:ml-[2px]
             [&_.plugin-toolbar]:rounded-none
             [&_.rows-child:first-child_.plugin-toolbar:before]:hidden
           `
@@ -48,7 +46,7 @@ export function SpoilerEditor(props: SpoilerProps) {
       <PluginToolbar
         pluginType={EditorPluginType.Spoiler}
         pluginControls={<PluginDefaultTools pluginId={id} />}
-        className="!left-[21px] top-[-33px] w-[calc(100%-37px)]"
+        className="top-[-33px]"
       />
     )
   }
