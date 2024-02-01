@@ -14,33 +14,34 @@ interface DroppableBlankProps {
 export function DroppableBlank(props: DroppableBlankProps) {
   const { blankId, children } = props
 
-  const fillInTheBlanksContext = useContext(FillInTheBlanksContext)
+  const context = useContext(FillInTheBlanksContext)
 
   const [{ isOver }, dropRef] = useDrop({
     accept: blankDraggableAnswerDragType,
     drop: ({ draggableId }: { draggableId: DraggableId }) => {
-      if (!fillInTheBlanksContext) return
-      const originBlank: BlankId | null =
-        [...fillInTheBlanksContext.locationOfDraggables.value].find(
-          (item) => item[0] === draggableId
-        )?.[1] ?? null
-      let replacedDraggableId: DraggableId | null = null
+      if (!context) return
+
+      let originDragBlank, replacedDraggableId
+
       const newMap = new Map<DraggableId, BlankId>(
-        [...fillInTheBlanksContext.locationOfDraggables.value].filter(
-          (item) => {
-            if (item[1] === blankId) {
-              replacedDraggableId = item[0]
-              return false
-            }
-            return true
-          }
-        )
+        // Filtering logic for replacing/swapping already filled blanks
+        [...context.locationOfDraggables.value].filter((item) => {
+          // If the dropped draggable is found in one of the blanks, save that blank's ID
+          if (item[0] === draggableId) originDragBlank = item[1]
+          // If the target blank already has a draggable, save the replaced draggable's ID
+          if (item[1] === blankId) replacedDraggableId = item[0]
+          // Remove the replaced draggable from the map
+          return item[1] !== blankId
+        })
       )
+
       newMap.set(draggableId, blankId)
-      if (originBlank && replacedDraggableId) {
-        newMap.set(replacedDraggableId, originBlank)
+
+      if (originDragBlank && replacedDraggableId) {
+        newMap.set(replacedDraggableId, originDragBlank)
       }
-      fillInTheBlanksContext.locationOfDraggables.set(newMap)
+
+      context.locationOfDraggables.set(newMap)
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
