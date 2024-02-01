@@ -3,6 +3,7 @@ import { faEnvelope } from '@fortawesome/free-regular-svg-icons'
 import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
 import { HeadTags } from '../head-tags'
+import { ExamsCompleteList } from '../landing/exams/exams-finder/exams-complete-list'
 import { ExamsFinder } from '../landing/exams/exams-finder/exams-finder'
 import { FooterNew } from '../landing/rework/footer-new'
 import { SubjectIcon } from '../landing/rework/subject-icon'
@@ -100,7 +101,9 @@ export function MathExamsLanding({ region }: RegionData) {
           </div>
         </section>
 
-        <section className="bg-blueWave bg-100% pt-24 text-center">
+        <section className="relative -left-side w-[calc(100%+32px)] bg-blueWave bg-100% pt-24 text-center">
+          <ExamsCompleteList region={region} />
+
           {/* Banner für Autor*innengewinnung? */}
         </section>
       </main>

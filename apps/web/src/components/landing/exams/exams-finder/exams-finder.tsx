@@ -45,12 +45,22 @@ const schoolTypes = [
   'fos-bos',
 ] as const
 
-type Region = keyof typeof regions
-type SchoolType = (typeof schoolTypes)[number]
+export type Region = keyof typeof regions
+export type SchoolType = (typeof schoolTypes)[number]
 
-const schoolTypesWithExamsByRegion: Record<
+export const schoolTypesWithExamsByRegion: Record<
   Region,
-  Record<SchoolType, { title: string; exams: { title: string; url: string }[] }>
+  Record<
+    SchoolType,
+    {
+      title: string
+      exams: {
+        title: string
+        url: string
+        years: { title: string; url: string }[]
+      }[]
+    }
+  >
 > = {
   bayern: {
     mittelschule: {
@@ -59,10 +69,22 @@ const schoolTypesWithExamsByRegion: Record<
         {
           title: 'Quali',
           url: '/mathe/75678/quali-abschlusspr%C3%BCfungen-mit-l%C3%B6sung',
+          years: [
+            { title: '2023', url: '/mathe/290075/2023' },
+            { title: '2022', url: '/mathe/261569/2022' },
+            { title: '2021', url: '/mathe/226922/2021' },
+            { title: '2020', url: '/mathe/178169/2020' },
+          ],
         },
         {
           title: 'Mittlerer Schulabschluss',
           url: '/mathe/247427/mittlerer-schulabschluss-an-der-mittelschule',
+          years: [
+            { title: '2023', url: '/mathe/293322/2023' },
+            { title: '2022', url: '/mathe/261415/2022' },
+            { title: '2021', url: '/mathe/247428/2021' },
+            { title: '2020', url: '/mathe/247429/2020' },
+          ],
         },
       ],
     },
@@ -72,10 +94,32 @@ const schoolTypesWithExamsByRegion: Record<
         {
           title: 'Abschluss Zweig I',
           url: '/mathe/75049/abschlusspr%C3%BCfungen-mit-l%C3%B6sung-zweig-i',
+          years: [
+            { title: '2023', url: '/mathe/288940/2023' },
+            { title: '2022', url: '/mathe/272196/2022' },
+            { title: '2021', url: '/mathe/232930/2021' },
+            { title: '2020', url: '/mathe/180388/2020' },
+            { title: '2019', url: '/mathe/146968/2019' },
+            { title: '2018', url: '/mathe/146967/2018' },
+            { title: '2017', url: '/mathe/95100/2017' },
+            { title: '2016', url: '/mathe/75548/2016' },
+            { title: '2015', url: '/mathe/75050/2015' },
+          ],
         },
         {
           title: 'Abschluss Zweig II & III',
           url: '/mathe/76750/abschlusspr%C3%BCfungen-mit-l%C3%B6sungen-zweig-ii-und-iii',
+          years: [
+            { title: '2023', url: '/mathe/288945/2023' },
+            { title: '2022', url: '/mathe/272224/2022' },
+            { title: '2021', url: '/mathe/234076/2021' },
+            { title: '2020', url: '/mathe/180403/2020' },
+            { title: '2019', url: '/mathe/146981/2019' },
+            { title: '2018', url: '/mathe/139217/2018' },
+            { title: '2017', url: '/mathe/94502/2017' },
+            { title: '2016', url: '/mathe/76714/2016' },
+            { title: '2015', url: '/mathe/76717/2015' },
+          ],
         },
       ],
     },
@@ -85,6 +129,52 @@ const schoolTypesWithExamsByRegion: Record<
         {
           title: 'Abitur',
           url: '/mathe/20852/abiturpr%C3%BCfungen-mit-l%C3%B6sung',
+          years: [
+            {
+              title: '2023',
+              url: '/mathe/274629/mathematik-abitur-bayern-2023',
+            },
+            {
+              title: '2022',
+              url: '/mathe/248460/mathematik-abitur-bayern-2022',
+            },
+            {
+              title: '2021',
+              url: '/mathe/231486/mathematik-abitur-bayern-2021',
+            },
+            {
+              title: '2020',
+              url: '/mathe/179851/mathematik-abitur-bayern-2020',
+            },
+            {
+              title: '2019',
+              url: '/mathe/137533/mathematik-abitur-bayern-2019',
+            },
+            {
+              title: '2018',
+              url: '/mathe/106725/mathematik-abitur-bayern-2018',
+            },
+            {
+              title: '2017',
+              url: '/mathe/76975/mathematik-abitur-bayern-2017',
+            },
+            {
+              title: '2016',
+              url: '/mathe/70296/mathematik-abitur-bayern-2016',
+            },
+            {
+              title: '2015',
+              url: '/mathe/70295/mathematik-abitur-bayern-2015',
+            },
+            {
+              title: '2015',
+              url: '/mathe/70304/mathematik-abitur-bayern-2014',
+            },
+            {
+              title: '2015',
+              url: '/mathe/21007/mathematik-abitur-bayern-2013',
+            },
+          ],
         },
       ],
     },
@@ -94,10 +184,26 @@ const schoolTypesWithExamsByRegion: Record<
         {
           title: 'Fachhochschulreife',
           url: '/mathe/91252/fachhochschulreife',
+          years: [
+            { title: '2015', url: '/mathe/262133/2022' },
+            { title: '2015', url: '/mathe/253867/2021' },
+            { title: '2015', url: '/mathe/201338/2020' },
+            { title: '2015', url: '/mathe/201337/2019' },
+            { title: '2015', url: '/mathe/186715/2018' },
+            { title: '2015', url: '/mathe/91264/2017' },
+            { title: '2015', url: '/mathe/91265/2016' },
+          ],
         },
         {
           title: 'Fachgebundene Hochschulreife',
           url: '/mathe/91253/fachgebundene-hochschulreife',
+          years: [
+            { title: '2015', url: '/mathe/201339/2020' },
+            { title: '2015', url: '/mathe/201340/2019' },
+            { title: '2015', url: '/mathe/201341/2018' },
+            { title: '2015', url: '/mathe/91266/2017' },
+            { title: '2015', url: '/mathe/91267/2016' },
+          ],
         },
       ],
     },
@@ -110,10 +216,12 @@ const schoolTypesWithExamsByRegion: Record<
         {
           title: 'Quali',
           url: '/mathe/75678/quali-abschlusspr%C3%BCfungen-mit-l%C3%B6sung',
+          years: [],
         },
         {
           title: 'Mittlerer Schulabschluss',
           url: '/mathe/247427/mittlerer-schulabschluss-an-der-mittelschule',
+          years: [],
         },
       ],
     },
