@@ -8,7 +8,7 @@ import { cn } from '@/helper/cn'
 interface RemovableInputWrapperProps {
   tooltipText?: string
   children: ReactNode
-  onRemoveClick?: MouseEventHandler
+  onRemoveClick: MouseEventHandler
 }
 
 export function RemovableInputWrapper(props: RemovableInputWrapperProps) {
