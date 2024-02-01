@@ -207,6 +207,7 @@ export function EditorRowRenderer({
           `
             [&:focus-within>.rows-tools]:opacity-100
             [&:has(.rows-editor-renderer-container:focus-within)>.rows-tools]:opacity-0
+            [&:has(.serlo-table)]:border-transparent
             [&:hover>.rows-tools]:opacity-100
           `
         )}
