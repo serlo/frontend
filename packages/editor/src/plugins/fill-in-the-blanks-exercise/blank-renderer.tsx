@@ -65,6 +65,13 @@ export function BlankRenderer(props: BlankRendererProps) {
     return () => document.removeEventListener('keydown', handleDocumentKeydown)
   }, [editor, slateFocused, inputRef, selected])
 
+  // remove empty blanks when plugin looses focus
+  useEffect(() => {
+    if (!focused && !correctAnswers[0].answer.trim().length) {
+      removeBlanks(editor)
+    }
+  }, [focused, editor, correctAnswers])
+
   const context = useContext(FillInTheBlanksContext)
   if (context === null) return null
 
