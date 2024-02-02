@@ -5,7 +5,11 @@ import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
 import { HeadTags } from '../head-tags'
 import { ExamsCompleteList } from '../landing/exams/exams-finder/exams-complete-list'
-import { ExamsFinder, Region } from '../landing/exams/exams-finder/exams-finder'
+import {
+  ExamsFinder,
+  Region,
+  regions,
+} from '../landing/exams/exams-finder/exams-finder'
 import { FooterNew } from '../landing/rework/footer-new'
 import { SubjectIcon } from '../landing/rework/subject-icon'
 import { Header } from '../navigation/header/header'
@@ -44,8 +48,11 @@ export function MathExamsLanding({ region: initRegion }: RegionData) {
                 tracking-tight sm:text-6xl
               `)}
             >
-              <span className="serlo-underlined inline-block w-min max-w-[27rem] !whitespace-normal pb-3">
-                Mathe Prüfungen
+              <span className="inline-block w-min max-w-[27rem] !whitespace-normal pb-3">
+                Mathe Prüfungen{' '}
+                <span className="serlo-underlined">
+                  {regions[region].title}
+                </span>
               </span>
             </h1>
             <p className="text-2xl leading-cozy text-almost-black">
