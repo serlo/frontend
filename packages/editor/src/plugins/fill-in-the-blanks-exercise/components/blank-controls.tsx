@@ -127,25 +127,19 @@ export function BlankControls(props: BlankControlsProps) {
         style={{ width: `${wrapperWidth}px` }}
       >
         {isBlankAnswerAlphabetical ? null : (
-          <div className="mb-6 flex">
+          <label className="text-wrap mb-6 flex cursor-pointer items-center text-sm">
             <input
               className="w-0.25 opacity-0"
-              id={'acceptMathEquivalentCheckbox_' + blankId}
               type="checkbox"
               checked={acceptMathEquivalents || false}
               onChange={onAcceptMathEquivalentsChange}
             />
-            <label
-              className="text-wrap flex cursor-pointer items-center text-sm"
-              htmlFor={'acceptMathEquivalentCheckbox_' + blankId}
-            >
-              <FaIcon
-                icon={acceptMathEquivalents ? faCheckSquare : faSquare}
-                className="mr-1.5 text-xl text-editor-primary"
-              />
-              {blanksExerciseStrings.acceptMathEquivalents}
-            </label>
-          </div>
+            <FaIcon
+              icon={acceptMathEquivalents ? faCheckSquare : faSquare}
+              className="mr-1.5 text-xl text-editor-primary"
+            />
+            {blanksExerciseStrings.acceptMathEquivalents}
+          </label>
         )}
         {correctAnswers.length <= 1 ? (
           <button
