@@ -28,9 +28,9 @@ export function BlankRenderer(props: BlankRendererProps) {
   const selected = useSelected()
   const slateFocused = useFocused()
 
-  // The `acceptMathEquivalents` setting is on by default. However,
-  // some blanks in the DB are missing this property altogether, so
-  // we assume that `undefined` equalst to `true`.
+  // The `acceptMathEquivalents` setting is on by default.
+  // However, some blanks in the DB are missing this property altogether,
+  // so we set it to `true` if it is `undefined`.
   const acceptMathEquivalents = useMemo(() => {
     if (element.acceptMathEquivalents === undefined) return true
     return element.acceptMathEquivalents
