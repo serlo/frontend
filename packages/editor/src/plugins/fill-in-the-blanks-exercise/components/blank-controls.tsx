@@ -121,13 +121,13 @@ export function BlankControls(props: BlankControlsProps) {
   if (!selectedElement) return null
 
   return (
-    <div ref={overlayWrapper} className="absolute z-[95] whitespace-nowrap">
+    <div ref={overlayWrapper} className="absolute z-[95]">
       <div
         className="w-[460px] rounded bg-white p-side text-start not-italic shadow-menu"
         style={{ width: `${wrapperWidth}px` }}
       >
         {isBlankAnswerAlphabetical ? null : (
-          <label className="text-wrap mb-6 flex cursor-pointer items-center text-sm">
+          <label className="items-top mb-6 flex cursor-pointer text-sm">
             <input
               className="w-0.25 opacity-0"
               type="checkbox"
@@ -136,7 +136,7 @@ export function BlankControls(props: BlankControlsProps) {
             />
             <FaIcon
               icon={acceptMathEquivalents ? faCheckSquare : faSquare}
-              className="mr-1.5 text-xl text-editor-primary"
+              className="mr-[7px] mt-[3px] text-xl text-editor-primary"
             />
             {blanksExerciseStrings.acceptMathEquivalents}
           </label>
