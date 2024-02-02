@@ -76,6 +76,7 @@ export function BlankRenderer(props: BlankRendererProps) {
         context={context}
         onChange={handleChange}
         onKeyDown={handleMoveOut}
+        onBlur={handleBlur}
       />
       {focused && context.mode === 'typing' ? (
         <BlankControls
@@ -132,6 +133,10 @@ export function BlankRenderer(props: BlankRendererProps) {
       Transforms.move(editor, { unit: 'character', reverse: true })
       ReactEditor.focus(editor)
     }
+  }
+
+  function handleBlur() {
+    handleCorrectAnswerChange(0, correctAnswers[0].answer.trim())
   }
 
   function handleAlternativeAnswerAdd() {

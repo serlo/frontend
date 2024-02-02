@@ -11,13 +11,15 @@ interface BlankRendererInputProps {
   isAnswerCorrect?: boolean
   onChange?: ChangeEventHandler<HTMLInputElement>
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>
+  onBlur?: () => void
 }
 
 export const BlankRendererInput = forwardRef<
   HTMLInputElement,
   BlankRendererInputProps
 >(function BlankRendererInput(props, ref) {
-  const { blankId, context, isAnswerCorrect, onChange, onKeyDown } = props
+  const { blankId, context, isAnswerCorrect, onChange, onKeyDown, onBlur } =
+    props
 
   const text = context.textInBlanks.get(blankId)?.text ?? ''
 
@@ -36,6 +38,10 @@ export const BlankRendererInput = forwardRef<
       }}
       onKeyDown={(event) => {
         onKeyDown?.(event)
+      }}
+      onBlur={() => {
+        setTextUserTypedIntoBlank(text.trim())
+        onBlur?.()
       }}
     />
   )
