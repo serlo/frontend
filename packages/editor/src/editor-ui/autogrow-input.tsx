@@ -12,7 +12,7 @@ export const AutogrowInput = forwardRef<
   HTMLInputElement,
   ComponentProps<'input'>
 >(function AutogrowInput(props, ref) {
-  const { value, size, className, onChange, onKeyDown, onBlur } = props
+  const { value, size, className, onChange, ...rest } = props
 
   const localRef = useRef<HTMLInputElement | null>(null)
   const [cursor, setCursor] = useState<number | null>(null)
@@ -45,8 +45,7 @@ export const AutogrowInput = forwardRef<
           setCursor(event.target.selectionStart)
           onChange?.(event)
         }}
-        onKeyDown={onKeyDown}
-        onBlur={onBlur}
+        {...rest}
       />
     </span>
   )
