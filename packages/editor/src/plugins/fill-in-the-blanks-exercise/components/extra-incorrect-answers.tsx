@@ -72,6 +72,11 @@ export function ExtraIncorrectAnswers(props: ExtraIncorrectAnswersProps) {
                       extraDraggableAnswers.insert()
                     }
                   }}
+                  onBlur={() => {
+                    extraDraggableAnswers.forEach(({ answer }) => {
+                      answer.set(answer.value.trim())
+                    })
+                  }}
                 />
               </RemovableInputWrapper>
             ))}
