@@ -152,7 +152,9 @@ export function BlankRenderer(props: BlankRendererProps) {
 
   function handleAlternativeAnswerBlur() {
     setCorrectAnswers(
-      correctAnswers.map(({ answer }) => ({ answer: answer.trim() }))
+      correctAnswers
+        .map(({ answer }) => ({ answer: answer.trim() }))
+        .filter(({ answer }) => answer.length > 0)
     )
   }
 
