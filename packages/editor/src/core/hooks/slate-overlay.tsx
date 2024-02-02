@@ -1,26 +1,25 @@
-import { useEffect, useRef } from 'react'
+import type { CustomElement } from '@editor/plugins/text'
+import { ReactNode, useEffect, useRef } from 'react'
 import { ReactEditor, useSlate } from 'slate-react'
 
-import type { Link } from '../../types/text-editor'
+interface SlateOverlayProps {
+  width: number
+  anchor: CustomElement
+  children: ReactNode
+}
 
-const wrapperWidth = 460
-
-export function LinkOverlay({
-  children,
-  element,
-}: {
-  children: React.ReactNode
-  element: Link
-}) {
+export function SlateOverlay(props: SlateOverlayProps) {
+  const { width, anchor, children } = props
   const editor = useSlate()
   const wrapper = useRef<HTMLDivElement>(null)
 
+  // Positioning of the overlay relative to the anchor
   useEffect(() => {
-    if (!wrapper.current) return
+    if (!wrapper.current || !anchor) return
 
     const anchorRect = ReactEditor.toDOMNode(
       editor,
-      element
+      anchor
     )?.getBoundingClientRect()
 
     const parentRect = wrapper.current
@@ -33,7 +32,7 @@ export function LinkOverlay({
 
     const boundingLeft = anchorRect.left - 2 // wrapper starts at anchor's left
 
-    const boundingWrapperRight = boundingLeft + wrapperWidth
+    const boundingWrapperRight = boundingLeft + width
     const overlap = boundingWrapperRight - parentRect.right
     const fallbackBoundingLeft = boundingLeft - overlap // wrapper ends at editor's right
 
@@ -41,13 +40,13 @@ export function LinkOverlay({
       (overlap > 0 ? fallbackBoundingLeft : boundingLeft) - offsetRect.left - 5
     }px`
     wrapper.current.style.top = `${anchorRect.bottom + 6 - offsetRect.top}px`
-  }, [editor, element])
+  }, [editor, anchor, width])
 
   return (
-    <div ref={wrapper} className="absolute z-[95] whitespace-nowrap">
+    <div ref={wrapper} className="absolute z-[95]">
       <div
-        className="w-[460px] rounded bg-white text-start not-italic shadow-menu"
-        style={{ width: `${wrapperWidth}px` }}
+        className="rounded bg-white text-start not-italic shadow-menu"
+        style={{ width: `${width}px` }}
       >
         {children}
       </div>

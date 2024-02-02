@@ -1,3 +1,4 @@
+import { SlateOverlay } from '@editor/core/hooks/slate-overlay'
 import { AutogrowInput } from '@editor/editor-ui/autogrow-input'
 import {
   getBlankElement,
@@ -8,7 +9,7 @@ import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faCheckSquare, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState, useMemo } from 'react'
 import { Range } from 'slate'
-import { ReactEditor, useSlate } from 'slate-react'
+import { useSlate } from 'slate-react'
 
 import type { BlankInterface as Blank } from '../types'
 import { FaIcon } from '@/components/fa-icon'
@@ -41,7 +42,6 @@ export function BlankControls(props: BlankControlsProps) {
   const editor = useSlate()
   const { selection } = editor
 
-  const overlayWrapper = useRef<HTMLDivElement>(null)
   const inputsWrapper = useRef<HTMLInputElement>(null)
 
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
@@ -60,38 +60,6 @@ export function BlankControls(props: BlankControlsProps) {
       setSelectedElement(null)
     }
   }, [selection, editor, blankId])
-
-  // Positioning of the overlay relative to the anchor
-  useEffect(() => {
-    if (!overlayWrapper.current || !selectedElement) return
-
-    const anchorRect = ReactEditor.toDOMNode(
-      editor,
-      selectedElement
-    )?.getBoundingClientRect()
-
-    const parentRect = overlayWrapper.current
-      .closest('.rows-editor-renderer-container')
-      ?.getBoundingClientRect()
-
-    const offsetRect =
-      overlayWrapper.current.offsetParent?.getBoundingClientRect()
-
-    if (!anchorRect || !parentRect || !offsetRect) return
-
-    const boundingLeft = anchorRect.left - 2 // wrapper starts at anchor's left
-
-    const boundingWrapperRight = boundingLeft + wrapperWidth
-    const overlap = boundingWrapperRight - parentRect.right
-    const fallbackBoundingLeft = boundingLeft - overlap // wrapper ends at editor's right
-
-    overlayWrapper.current.style.left = `${
-      (overlap > 0 ? fallbackBoundingLeft : boundingLeft) - offsetRect.left - 5
-    }px`
-    overlayWrapper.current.style.top = `${
-      anchorRect.bottom + 6 - offsetRect.top
-    }px`
-  }, [editor, selectedElement])
 
   const isBlankAnswerAlphabetical = useMemo(() => {
     if (correctAnswers[0].length === 0) return true
@@ -122,11 +90,8 @@ export function BlankControls(props: BlankControlsProps) {
   if (!selectedElement) return null
 
   return (
-    <div ref={overlayWrapper} className="absolute z-[95]">
-      <div
-        className="w-[460px] rounded bg-white p-side text-start not-italic shadow-menu"
-        style={{ width: `${wrapperWidth}px` }}
-      >
+    <SlateOverlay width={wrapperWidth} anchor={selectedElement}>
+      <div className="p-side">
         {isBlankAnswerAlphabetical ? null : (
           <label className="items-top mb-6 flex cursor-pointer text-sm">
             <input
@@ -199,6 +164,6 @@ export function BlankControls(props: BlankControlsProps) {
           </div>
         )}
       </div>
-    </div>
+    </SlateOverlay>
   )
 }
