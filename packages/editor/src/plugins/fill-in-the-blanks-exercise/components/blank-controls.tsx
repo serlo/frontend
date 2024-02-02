@@ -23,6 +23,7 @@ interface BlankControlsProps {
   onAlternativeAnswerAdd: () => void
   onAlternativeAnswerChange: (targetIndex: number, newValue: string) => void
   onAlternativeAnswerRemove: (targetIndex: number) => void
+  onAlternativeAnswerBlur: () => void
   onAcceptMathEquivalentsChange: () => void
 }
 
@@ -34,6 +35,7 @@ export function BlankControls(props: BlankControlsProps) {
     onAlternativeAnswerAdd,
     onAlternativeAnswerChange,
     onAlternativeAnswerRemove,
+    onAlternativeAnswerBlur,
     onAcceptMathEquivalentsChange,
   } = props
   const [selectedElement, setSelectedElement] = useState<Blank | null>(null)
@@ -185,6 +187,7 @@ export function BlankControls(props: BlankControlsProps) {
                           handleAlternativeAnswerRemove(index)
                         }
                       }}
+                      onBlur={onAlternativeAnswerBlur}
                     />
                   </RemovableInputWrapper>
                 )
