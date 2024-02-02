@@ -1,5 +1,6 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons'
+import { useLayoutEffect, useRef, useState } from 'react'
 
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -16,6 +17,18 @@ interface AlternativeAnswerProps {
 
 export function AlternativeAnswer(props: AlternativeAnswerProps) {
   const { answer, index, onAdd, onChange, onRemove, onBlur } = props
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const [selection, setSelection] = useState<
+    [number | null, number | null] | null
+  >(null)
+
+  useLayoutEffect(() => {
+    if (selection && inputRef.current) {
+      ;[inputRef.current.selectionStart, inputRef.current.selectionEnd] =
+        selection
+    }
+  }, [selection, answer])
 
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
@@ -23,10 +36,14 @@ export function AlternativeAnswer(props: AlternativeAnswerProps) {
     <div key={index} className="relative">
       <span className="serlo-autogrow-input" data-value={answer + '_ '}>
         <input
+          ref={inputRef}
           className="serlo-input-font-reset w-3/4 !min-w-[80px] rounded-full border border-brand bg-brand-50 focus:outline focus:outline-1"
           value={answer}
           size={4}
-          onChange={(e) => onChange(index, e.target.value)}
+          onChange={(e) => {
+            onChange(index, e.target.value)
+            setSelection([e.target.selectionStart, e.target.selectionEnd])
+          }}
           onKeyDown={(event) => {
             if (event.key === 'Enter') onAdd()
             if (event.key === 'Backspace' && answer === '') onRemove(index)
