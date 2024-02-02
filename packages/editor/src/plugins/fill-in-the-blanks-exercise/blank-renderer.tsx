@@ -140,7 +140,7 @@ export function BlankRenderer(props: BlankRendererProps) {
   function handleCorrectAnswerChange(targetIndex: number, newValue: string) {
     setCorrectAnswers(
       correctAnswers.map(({ answer }, i) => ({
-        answer: i === targetIndex ? newValue.trim() : answer,
+        answer: i === targetIndex ? newValue : answer,
       }))
     )
   }
