@@ -85,6 +85,7 @@ export function BlankRenderer(props: BlankRendererProps) {
           onAlternativeAnswerAdd={handleAlternativeAnswerAdd}
           onAlternativeAnswerChange={handleCorrectAnswerChange}
           onAlternativeAnswerRemove={handleAlternativeAnswerRemove}
+          onAlternativeAnswerBlur={handleAlternativeAnswerBlur}
           onAcceptMathEquivalentsChange={handleAcceptMathEquivalentsChange}
         />
       ) : null}
@@ -140,13 +141,19 @@ export function BlankRenderer(props: BlankRendererProps) {
   function handleCorrectAnswerChange(targetIndex: number, newValue: string) {
     setCorrectAnswers(
       correctAnswers.map(({ answer }, i) => ({
-        answer: i === targetIndex ? newValue.trim() : answer,
+        answer: i === targetIndex ? newValue : answer,
       }))
     )
   }
 
   function handleAlternativeAnswerRemove(targetIndex: number) {
     setCorrectAnswers(correctAnswers.filter((_, i) => i !== targetIndex))
+  }
+
+  function handleAlternativeAnswerBlur() {
+    setCorrectAnswers(
+      correctAnswers.map(({ answer }) => ({ answer: answer.trim() }))
+    )
   }
 
   function setCorrectAnswers(correctAnswers: Array<{ answer: string }>) {
