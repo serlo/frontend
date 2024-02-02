@@ -5,6 +5,7 @@ import {
   useRef,
   useContext,
   useEffect,
+  useMemo,
 } from 'react'
 import { Range, Transforms } from 'slate'
 import { ReactEditor, useSelected, useSlate, useFocused } from 'slate-react'
@@ -26,6 +27,14 @@ export function BlankRenderer(props: BlankRendererProps) {
   const editor = useSlate()
   const selected = useSelected()
   const slateFocused = useFocused()
+
+  // The `acceptMathEquivalents` setting is on by default.
+  // However, some blanks in the DB are missing this property altogether,
+  // so we set it to `true` if it is `undefined`.
+  const acceptMathEquivalents = useMemo(() => {
+    if (element.acceptMathEquivalents === undefined) return true
+    return element.acceptMathEquivalents
+  }, [element.acceptMathEquivalents])
 
   // Autofocus when adding and removing a blank
   const inputRef = useRef<HTMLInputElement | null>(null)
@@ -72,9 +81,11 @@ export function BlankRenderer(props: BlankRendererProps) {
         <BlankControls
           blankId={blankId}
           correctAnswers={correctAnswers.map(({ answer }) => answer)}
+          acceptMathEquivalents={acceptMathEquivalents}
           onAlternativeAnswerAdd={handleAlternativeAnswerAdd}
           onAlternativeAnswerChange={handleCorrectAnswerChange}
           onAlternativeAnswerRemove={handleAlternativeAnswerRemove}
+          onAcceptMathEquivalentsChange={handleAcceptMathEquivalentsChange}
         />
       ) : null}
     </>
@@ -141,5 +152,13 @@ export function BlankRenderer(props: BlankRendererProps) {
   function setCorrectAnswers(correctAnswers: Array<{ answer: string }>) {
     const at = ReactEditor.findPath(editor, element)
     Transforms.setNodes(editor, { correctAnswers }, { at })
+  }
+
+  function handleAcceptMathEquivalentsChange() {
+    Transforms.setNodes(
+      editor,
+      { acceptMathEquivalents: !acceptMathEquivalents },
+      { at: ReactEditor.findPath(editor, element) }
+    )
   }
 }
