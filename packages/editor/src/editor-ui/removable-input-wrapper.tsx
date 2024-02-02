@@ -15,11 +15,11 @@ export function RemovableInputWrapper(props: RemovableInputWrapperProps) {
   const { children, tooltipText, onRemoveClick } = props
 
   return (
-    <div className="relative leading-3">
+    <div className="relative flex items-center">
       {children}
       <button
         className={cn(
-          `serlo-tooltip-trigger absolute right-1 top-[1px] h-6 w-6 rounded-full px-1 py-0.5 leading-none text-black
+          `serlo-tooltip-trigger absolute right-1 h-6 w-6 rounded-full px-1 py-0.5 leading-none text-black
           opacity-50 hover:bg-editor-primary-200 hover:opacity-100 focus:bg-editor-primary-200 focus:opacity-100`
         )}
         onClick={onRemoveClick}

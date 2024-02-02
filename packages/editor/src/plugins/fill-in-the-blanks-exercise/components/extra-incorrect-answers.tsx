@@ -63,7 +63,7 @@ export function ExtraIncorrectAnswers(props: ExtraIncorrectAnswersProps) {
               >
                 <AutogrowInput
                   value={answer}
-                  className="focus:border-red-400 focus:outline-red-400"
+                  className="serlo-input-font-reset focus:border-red-400 focus:outline-red-400"
                   onChange={(event) => {
                     extraDraggableAnswers[index].answer.set(event.target.value)
                   }}

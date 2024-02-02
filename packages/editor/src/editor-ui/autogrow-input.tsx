@@ -22,7 +22,7 @@ export const AutogrowInput = forwardRef<HTMLInputElement, AutogrowInputProps>(
         <input
           ref={ref}
           className={cn(
-            `serlo-input-font-reset w-3/4 !min-w-[80px] rounded-full border border-brand bg-brand-50 focus:outline focus:outline-1`,
+            `w-3/4 !min-w-[80px] rounded-full border border-brand bg-brand-50 focus:outline focus:outline-1`,
             className
           )}
           value={value}

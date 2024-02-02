@@ -148,6 +148,7 @@ export function BlankControls(props: BlankControlsProps) {
                   >
                     <AutogrowInput
                       value={answer}
+                      className="serlo-input-font-reset"
                       onChange={(event) => {
                         onAlternativeAnswerChange(index, event.target.value)
                       }}
