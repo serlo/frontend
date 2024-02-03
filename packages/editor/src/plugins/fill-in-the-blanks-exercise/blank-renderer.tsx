@@ -65,6 +65,13 @@ export function BlankRenderer(props: BlankRendererProps) {
     return () => document.removeEventListener('keydown', handleDocumentKeydown)
   }, [editor, slateFocused, inputRef, selected])
 
+  // remove empty blanks when plugin looses focus
+  useEffect(() => {
+    if (!focused && !correctAnswers[0].answer.trim().length) {
+      removeBlanks(editor)
+    }
+  }, [focused, editor, correctAnswers])
+
   const context = useContext(FillInTheBlanksContext)
   if (context === null) return null
 
@@ -76,6 +83,7 @@ export function BlankRenderer(props: BlankRendererProps) {
         context={context}
         onChange={handleChange}
         onKeyDown={handleMoveOut}
+        onBlur={handleBlur}
       />
       {focused && context.mode === 'typing' ? (
         <BlankControls
@@ -134,6 +142,10 @@ export function BlankRenderer(props: BlankRendererProps) {
     }
   }
 
+  function handleBlur() {
+    handleCorrectAnswerChange(0, correctAnswers[0].answer.trim())
+  }
+
   function handleAlternativeAnswerAdd() {
     setCorrectAnswers([...correctAnswers, { answer: '' }])
   }
@@ -152,7 +164,9 @@ export function BlankRenderer(props: BlankRendererProps) {
 
   function handleAlternativeAnswerBlur() {
     setCorrectAnswers(
-      correctAnswers.map(({ answer }) => ({ answer: answer.trim() }))
+      correctAnswers
+        .map(({ answer }) => ({ answer: answer.trim() }))
+        .filter(({ answer }) => answer.length > 0)
     )
   }
 
