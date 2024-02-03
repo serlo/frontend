@@ -1,13 +1,15 @@
+import { AutogrowInput } from '@editor/editor-ui/autogrow-input'
 import {
   getBlankElement,
   isBlankActive,
 } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/blank'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useRef, useState } from 'react'
+import { RemovableInputWrapper } from '@editor/editor-ui/removable-input-wrapper'
+import { faSquare } from '@fortawesome/free-regular-svg-icons'
+import { faCheckSquare, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { useEffect, useRef, useState, useMemo } from 'react'
 import { Range } from 'slate'
 import { ReactEditor, useSlate } from 'slate-react'
 
-import { AlternativeAnswer } from './alternative-answer'
 import type { BlankInterface as Blank } from '../types'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -17,18 +19,24 @@ const wrapperWidth = 320
 interface BlankControlsProps {
   blankId: string
   correctAnswers: string[]
+  acceptMathEquivalents?: boolean
   onAlternativeAnswerAdd: () => void
   onAlternativeAnswerChange: (targetIndex: number, newValue: string) => void
   onAlternativeAnswerRemove: (targetIndex: number) => void
+  onAlternativeAnswerBlur: () => void
+  onAcceptMathEquivalentsChange: () => void
 }
 
 export function BlankControls(props: BlankControlsProps) {
   const {
     blankId,
     correctAnswers,
+    acceptMathEquivalents,
     onAlternativeAnswerAdd,
     onAlternativeAnswerChange,
     onAlternativeAnswerRemove,
+    onAlternativeAnswerBlur,
+    onAcceptMathEquivalentsChange,
   } = props
   const [selectedElement, setSelectedElement] = useState<Blank | null>(null)
 
@@ -87,6 +95,11 @@ export function BlankControls(props: BlankControlsProps) {
     }px`
   }, [editor, selectedElement])
 
+  const isBlankAnswerAlphabetical = useMemo(() => {
+    if (correctAnswers[0].length === 0) return true
+    return /^[a-zA-Z]+$/.test(correctAnswers[0])
+  }, [correctAnswers])
+
   function handleAlternativeAnswerAdd() {
     onAlternativeAnswerAdd()
     setTimeout(() => {
@@ -111,11 +124,26 @@ export function BlankControls(props: BlankControlsProps) {
   if (!selectedElement) return null
 
   return (
-    <div ref={overlayWrapper} className="absolute z-[95] whitespace-nowrap">
+    <div ref={overlayWrapper} className="absolute z-[95]">
       <div
         className="w-[460px] rounded bg-white p-side text-start not-italic shadow-menu"
         style={{ width: `${wrapperWidth}px` }}
       >
+        {isBlankAnswerAlphabetical ? null : (
+          <label className="items-top mb-6 flex cursor-pointer text-sm">
+            <input
+              className="w-0.25 opacity-0"
+              type="checkbox"
+              checked={acceptMathEquivalents || false}
+              onChange={onAcceptMathEquivalentsChange}
+            />
+            <FaIcon
+              icon={acceptMathEquivalents ? faCheckSquare : faSquare}
+              className="mr-[7px] mt-[3px] text-xl text-editor-primary"
+            />
+            {blanksExerciseStrings.acceptMathEquivalents}
+          </label>
+        )}
         {correctAnswers.length <= 1 ? (
           <button
             onClick={handleAlternativeAnswerAdd}
@@ -138,14 +166,30 @@ export function BlankControls(props: BlankControlsProps) {
                 if (isAnswerFromBlankInput) return null
 
                 return (
-                  <AlternativeAnswer
+                  <RemovableInputWrapper
                     key={index}
-                    answer={answer}
-                    index={index}
-                    onAdd={handleAlternativeAnswerAdd}
-                    onChange={onAlternativeAnswerChange}
-                    onRemove={handleAlternativeAnswerRemove}
-                  />
+                    tooltipText={blanksExerciseStrings.removeAlternativeAnswer}
+                    onRemoveClick={() => {
+                      handleAlternativeAnswerRemove(index)
+                    }}
+                  >
+                    <AutogrowInput
+                      value={answer}
+                      className="serlo-input-font-reset"
+                      onChange={(event) => {
+                        onAlternativeAnswerChange(index, event.target.value)
+                      }}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter') {
+                          handleAlternativeAnswerAdd()
+                        }
+                        if (event.key === 'Backspace' && answer === '') {
+                          handleAlternativeAnswerRemove(index)
+                        }
+                      }}
+                      onBlur={onAlternativeAnswerBlur}
+                    />
+                  </RemovableInputWrapper>
                 )
               })}
               <button

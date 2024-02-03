@@ -8,41 +8,64 @@ import { cn } from '@/helper/cn'
 
 interface DroppableBlankProps {
   blankId: BlankId
-  isDisabled: boolean
   children: ReactNode
 }
 
 export function DroppableBlank(props: DroppableBlankProps) {
-  const { blankId, isDisabled, children } = props
+  const { blankId, children } = props
 
-  const fillInTheBlanksContext = useContext(FillInTheBlanksContext)
+  const context = useContext(FillInTheBlanksContext)
 
   const [{ isOver }, dropRef] = useDrop({
     accept: blankDraggableAnswerDragType,
     drop: ({ draggableId }: { draggableId: DraggableId }) => {
-      if (!fillInTheBlanksContext) return
+      if (!context) return
+
+      let originDragBlank, replacedDraggableId
+
       const newMap = new Map<DraggableId, BlankId>(
-        fillInTheBlanksContext.locationOfDraggables.value
+        // Filtering logic for replacing/swapping already filled blanks
+        [...context.locationOfDraggables.value].filter((item) => {
+          // If the dropped draggable is found in one of the blanks, save that blank's ID
+          if (item[0] === draggableId) originDragBlank = item[1]
+          // If the target blank already has a draggable, save the replaced draggable's ID
+          if (item[1] === blankId) replacedDraggableId = item[0]
+          // Remove the replaced draggable from the map
+          return item[1] !== blankId
+        })
       )
+
       newMap.set(draggableId, blankId)
-      fillInTheBlanksContext.locationOfDraggables.set(newMap)
+
+      if (originDragBlank && replacedDraggableId) {
+        newMap.set(replacedDraggableId, originDragBlank)
+      }
+
+      context.locationOfDraggables.set(newMap)
+
+      context.isFeedbackVisible.set(false)
+      context.feedbackForBlanks.set(
+        new Map<BlankId, { isCorrect: boolean | undefined }>()
+      )
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
-    canDrop: () => !isDisabled,
   })
 
   return (
     <span
       className={cn(
-        !children &&
-          'rounded-full border border-brand bg-brand-50 px-6 text-brand-50',
-        isOver && !isDisabled && 'bg-slate-400 text-slate-400'
+        'relative rounded-full border',
+        !children && 'border-brand bg-brand-50 px-6 text-brand-50',
+        isOver && 'bg-slate-400 text-slate-400'
       )}
       ref={dropRef}
     >
       {children || '_'}
+      {children && isOver ? (
+        <span className="absolute bottom-0 left-[1px] right-[1px] top-0 block rounded-full bg-slate-400 opacity-80"></span>
+      ) : null}
     </span>
   )
 }
