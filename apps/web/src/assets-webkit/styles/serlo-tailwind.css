@@ -180,7 +180,7 @@
   li.serlo-grouped-exercise-wrapper::before {
     content: counter(exercises, lower-alpha);
     @apply flex justify-center align-middle;
-    @apply mr-side mb-2.5 h-7 w-7 rounded-full;
+    @apply mb-2.5 mr-side h-7 w-7 rounded-full;
     @apply bg-brand-200 text-xl font-bold text-brand;
   }
   .serlo-responsive-margin {
