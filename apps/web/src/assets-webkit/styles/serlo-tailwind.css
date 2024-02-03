@@ -114,12 +114,7 @@
       @apply !mb-4 mt-2;
     }
   }
-  /* no-before is actually "no-absolute-before" now. Hoping to migrate all of
-  serlo-ol to it */
-  /* .serlo-ol-no-before > li:before {
-    @apply content-none !important;
-  } */
-  .serlo-ol-no-before {
+  .serlo-ol-no-absolute-before {
     @apply mb-block mr-side mt-0 list-none [counter-reset:list-counter];
 
     & > li:before {
@@ -185,8 +180,7 @@
   li.serlo-grouped-exercise-wrapper::before {
     content: counter(exercises, lower-alpha);
     @apply flex justify-center align-middle;
-    @apply mx-side mb-2.5 h-7 w-7 rounded-full;
-    @apply sm:absolute sm:-ml-10 sm:-mt-1;
+    @apply mr-side mb-2.5 h-7 w-7 rounded-full;
     @apply bg-brand-200 text-xl font-bold text-brand;
   }
   .serlo-responsive-margin {
