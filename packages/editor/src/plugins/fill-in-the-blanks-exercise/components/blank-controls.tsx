@@ -7,7 +7,6 @@ import { RemovableInputWrapper } from '@editor/editor-ui/removable-input-wrapper
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faCheckSquare, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState, useMemo } from 'react'
-import { Range } from 'slate'
 import { ReactEditor, useSlate } from 'slate-react'
 
 import type { BlankInterface as Blank } from '../types'
@@ -50,10 +49,7 @@ export function BlankControls(props: BlankControlsProps) {
 
   // Setting the element to serve as an anchor for overlay positioning
   useEffect(() => {
-    if (!selection) return
-
-    const isCollapsed = selection && Range.isCollapsed(selection)
-    if (isCollapsed && isBlankActive(editor)) {
+    if (isBlankActive(editor)) {
       const blankElement = getBlankElement(editor) || null
       setSelectedElement(
         blankElement?.blankId === blankId ? blankElement : null
