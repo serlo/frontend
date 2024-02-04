@@ -1,5 +1,5 @@
-import { SlateOverlay } from '@editor/editor-ui/slate-overlay'
 import { useFormattingOptions } from '@editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
+import { SlateOverlay } from '@editor/editor-ui/slate-overlay'
 import type { EditorPluginProps } from '@editor/plugin'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import React, { useMemo, useEffect, useCallback } from 'react'
