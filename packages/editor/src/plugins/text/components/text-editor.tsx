@@ -1,4 +1,4 @@
-import { SlateOverlay } from '@editor/core/hooks/slate-overlay'
+import { SlateOverlay } from '@editor/editor-ui/slate-overlay'
 import { useFormattingOptions } from '@editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import type { EditorPluginProps } from '@editor/plugin'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'

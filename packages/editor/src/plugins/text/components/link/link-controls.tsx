@@ -1,8 +1,8 @@
-import { SlateOverlay } from '@editor/core/hooks/slate-overlay'
 import {
   getLinkElement,
   isLinkActive,
 } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/link'
+import { SlateOverlay } from '@editor/editor-ui/slate-overlay'
 import {
   QuickbarData,
   fetchQuickbarData,

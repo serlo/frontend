@@ -1,10 +1,10 @@
-import { SlateOverlay } from '@editor/core/hooks/slate-overlay'
 import { AutogrowInput } from '@editor/editor-ui/autogrow-input'
 import {
   getBlankElement,
   isBlankActive,
 } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/blank'
 import { RemovableInputWrapper } from '@editor/editor-ui/removable-input-wrapper'
+import { SlateOverlay } from '@editor/editor-ui/slate-overlay'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faCheckSquare, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState, useMemo } from 'react'
