@@ -32,6 +32,7 @@ export const BlankRendererInput = forwardRef<
         isAnswerCorrect && 'border-green-500 focus:outline-green-500',
         isAnswerCorrect === false && 'border-red-400 focus:outline-red-400'
       )}
+      data-qa="blank-input"
       onChange={(event) => {
         setTextUserTypedIntoBlank(event.target.value)
         onChange?.(event)
