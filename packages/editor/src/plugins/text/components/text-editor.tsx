@@ -1,5 +1,5 @@
+import { SlateOverlay } from '@editor/core/hooks/slate-overlay'
 import { useFormattingOptions } from '@editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
-import { SlateHoverOverlay } from '@editor/editor-ui/slate-hover-overlay'
 import type { EditorPluginProps } from '@editor/plugin'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import React, { useMemo, useEffect, useCallback } from 'react'
@@ -218,9 +218,9 @@ export function TextEditor(props: TextEditorProps) {
       {focused ? <LinkControls /> : null}
 
       {showSuggestions ? (
-        <SlateHoverOverlay position="below">
+        <SlateOverlay width={620}>
           <Suggestions {...suggestionsProps} />
-        </SlateHoverOverlay>
+        </SlateOverlay>
       ) : null}
     </Slate>
   )

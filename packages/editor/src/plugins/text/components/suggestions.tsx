@@ -26,7 +26,7 @@ export const Suggestions = ({
   }
 
   return (
-    <div ref={suggestionsRef} className="max-h-[387px] max-w-[620px]">
+    <div ref={suggestionsRef} className="max-h-[387px]">
       {options.map(({ pluginType, title, description, icon }, index) => {
         return (
           <div

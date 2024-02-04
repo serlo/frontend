@@ -4,7 +4,7 @@ import { ReactEditor, useSlate } from 'slate-react'
 
 interface SlateOverlayProps {
   width: number
-  anchor: CustomElement
+  anchor?: CustomElement
   children: ReactNode
 }
 
@@ -15,12 +15,9 @@ export function SlateOverlay(props: SlateOverlayProps) {
 
   // Positioning of the overlay relative to the anchor
   useEffect(() => {
-    if (!wrapper.current || !anchor) return
+    if (!wrapper.current) return
 
-    const anchorRect = ReactEditor.toDOMNode(
-      editor,
-      anchor
-    )?.getBoundingClientRect()
+    const anchorRect = getAnchorRect(editor, anchor)
 
     const parentRect = wrapper.current
       .closest('.rows-editor-renderer-container')
@@ -45,11 +42,24 @@ export function SlateOverlay(props: SlateOverlayProps) {
   return (
     <div ref={wrapper} className="absolute z-[95]">
       <div
-        className="rounded bg-white text-start not-italic shadow-menu"
+        className="overflow-auto rounded bg-white text-start not-italic shadow-menu"
         style={{ width: `${width}px` }}
       >
         {children}
       </div>
     </div>
   )
+}
+
+// If provided an anchor element, returns its size and position (DOMRect).
+// Otherwise, checks for native DOM selection, and provides a DOMRect based on it.
+function getAnchorRect(editor: ReactEditor, anchor: CustomElement | undefined) {
+  if (anchor) {
+    return ReactEditor.toDOMNode(editor, anchor)?.getBoundingClientRect()
+  }
+
+  const nativeDomSelection = window.getSelection()
+  if (nativeDomSelection && nativeDomSelection.rangeCount > 0) {
+    return nativeDomSelection.getRangeAt(0).getBoundingClientRect()
+  }
 }
