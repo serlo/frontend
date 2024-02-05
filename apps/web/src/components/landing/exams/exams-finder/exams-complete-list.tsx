@@ -46,6 +46,22 @@ export function ExamsCompleteList({ region }: { region: Region }) {
           )
         })}
       </div>
+
+      <h2 className="mt-12 pb-12 text-2xl font-extrabold leading-10">
+        Andere Bundesländer: <br />
+        {region === 'bayern' ? (
+          // using regular links to make sure region and school state resets
+          // eslint-disable-next-line @next/next/no-html-link-for-pages
+          <a className="serlo-link" href="/mathe-pruefungen/niedersachsen">
+            Abschlussprüfungen für Niedersachsen
+          </a>
+        ) : (
+          // eslint-disable-next-line @next/next/no-html-link-for-pages
+          <a className="serlo-link" href="/mathe-pruefungen/bayern">
+            Abschlussprüfungen für Bayern
+          </a>
+        )}
+      </h2>
     </>
   )
 }
