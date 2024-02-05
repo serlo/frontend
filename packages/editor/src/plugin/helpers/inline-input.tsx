@@ -41,11 +41,7 @@ export function InlineInput(props: {
     >
       <Editable
         placeholder={placeholder}
-        onFocus={() => {
-          setTimeout(() => {
-            if (props.onFocus) props.onFocus()
-          })
-        }}
+        onFocus={() => setTimeout(() => props.onFocus?.())}
       />
     </Slate>
   )
