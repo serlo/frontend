@@ -1,7 +1,7 @@
 import { geolocation } from '@vercel/edge'
 import { NextResponse, type NextRequest } from 'next/server'
 
-import type { Region } from '@/components/landing/exams/exams-finder/exams-finder'
+import type { SupportedRegion } from '@/components/landing/exams/exams-finder/exams-finder'
 
 const regionMapping = {
   BY: 'bayern',
@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
 
   const regionName = countryRegion
     ? //@ts-expect-error good enough
-      (regionMapping[countryRegion] as Region | undefined)
+      (regionMapping[countryRegion] as SupportedRegion | undefined)
     : 'bayern'
 
   return NextResponse.redirect(

@@ -7,7 +7,7 @@ import { HeadTags } from '../head-tags'
 import { ExamsCompleteList } from '../landing/exams/exams-finder/exams-complete-list'
 import {
   ExamsFinder,
-  Region,
+  SupportedRegion,
   regions,
 } from '../landing/exams/exams-finder/exams-finder'
 import { FooterNew } from '../landing/rework/footer-new'
@@ -21,7 +21,7 @@ import { serloDomain } from '@/helper/urls/serlo-domain'
 import type { RegionData } from '@/pages/mathe-pruefungen/[region]'
 
 export function MathExamsLanding({ region: initRegion }: RegionData) {
-  const [region, setRegion] = useState<Region>(initRegion ?? 'bayern')
+  const [region, setRegion] = useState<SupportedRegion>(initRegion ?? 'bayern')
   const { lang } = useInstanceData()
   if (lang !== Instance.De) return null
 

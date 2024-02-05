@@ -1,11 +1,14 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import {
+  SupportedRegion,
+  regions,
+} from '@/components/landing/exams/exams-finder/exams-finder'
 import { MathExamsLanding } from '@/components/pages/math-exams-landing'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-export const supportedRegions = ['bayern', 'niedersachsen'] as const
-export type SupportedRegion = (typeof supportedRegions)[number]
+export const supportedRegions = Object.keys(regions)
 export interface RegionData {
   region: SupportedRegion
 }

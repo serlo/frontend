@@ -28,11 +28,11 @@ const schoolTypes = [
   'fos-bos',
 ] as const
 
-export type Region = keyof typeof regions
+export type SupportedRegion = keyof typeof regions
 export type SchoolType = (typeof schoolTypes)[number]
 
 export const schoolTypesWithExamsByRegion: Record<
-  Region,
+  SupportedRegion,
   Record<
     SchoolType,
     {
@@ -214,8 +214,8 @@ export const schoolTypesWithExamsByRegion: Record<
 } as const
 
 interface ExamsFinderProps {
-  region: Region
-  setRegion: Dispatch<SetStateAction<Region>>
+  region: SupportedRegion
+  setRegion: Dispatch<SetStateAction<SupportedRegion>>
   initSchoolType?: SchoolType
 }
 
@@ -230,7 +230,7 @@ export function ExamsFinder({
 
   const router = useRouter()
 
-  function handleRegionChange(newRegion: Region) {
+  function handleRegionChange(newRegion: SupportedRegion) {
     setRegion(newRegion)
     void router.push(
       router.pathname.replace('[region]', newRegion),
@@ -267,7 +267,7 @@ export function ExamsFinder({
         <select
           value={region}
           onChange={(e) => {
-            handleRegionChange(e.target.value as Region)
+            handleRegionChange(e.target.value as SupportedRegion)
           }}
           className="mx-0.5 min-w-[12rem] rounded-lg bg-transparent px-0.5 text-brand outline-none focus-visible:outline-inherit"
         >

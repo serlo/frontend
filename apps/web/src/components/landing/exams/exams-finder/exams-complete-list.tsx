@@ -1,9 +1,13 @@
 import { Fragment } from 'react'
 
-import { Region, regions, schoolTypesWithExamsByRegion } from './exams-finder'
+import {
+  SupportedRegion,
+  regions,
+  schoolTypesWithExamsByRegion,
+} from './exams-finder'
 import { Link } from '@/components/content/link'
 
-export function ExamsCompleteList({ region }: { region: Region }) {
+export function ExamsCompleteList({ region }: { region: SupportedRegion }) {
   const schoolTypesWithData = Object.entries(
     schoolTypesWithExamsByRegion[region]
   )
