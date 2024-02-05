@@ -42,7 +42,7 @@ export function SlateOverlay(props: SlateOverlayProps) {
   return (
     <div ref={wrapper} className="absolute z-[95]">
       <div
-        className="overflow-auto rounded bg-white text-start not-italic shadow-menu"
+        className="rounded bg-white text-start not-italic shadow-menu"
         style={{ width: `${width}px` }}
       >
         {children}

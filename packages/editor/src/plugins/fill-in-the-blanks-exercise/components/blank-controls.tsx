@@ -24,6 +24,7 @@ interface BlankControlsProps {
   onAlternativeAnswerAdd: () => void
   onAlternativeAnswerChange: (targetIndex: number, newValue: string) => void
   onAlternativeAnswerRemove: (targetIndex: number) => void
+  onAlternativeAnswerBlur: () => void
   onAcceptMathEquivalentsChange: () => void
 }
 
@@ -35,6 +36,7 @@ export function BlankControls(props: BlankControlsProps) {
     onAlternativeAnswerAdd,
     onAlternativeAnswerChange,
     onAlternativeAnswerRemove,
+    onAlternativeAnswerBlur,
     onAcceptMathEquivalentsChange,
   } = props
   const [selectedElement, setSelectedElement] = useState<Blank | null>(null)
@@ -91,7 +93,14 @@ export function BlankControls(props: BlankControlsProps) {
 
   return (
     <SlateOverlay width={wrapperWidth} anchor={selectedElement}>
-      <div className="p-side">
+      <div
+        className="p-side"
+        onClick={(event) => {
+          if (event.detail === 3) {
+            event.stopPropagation()
+          }
+        }}
+      >
         {isBlankAnswerAlphabetical ? null : (
           <label className="items-top mb-6 flex cursor-pointer text-sm">
             <input
@@ -150,6 +159,7 @@ export function BlankControls(props: BlankControlsProps) {
                           handleAlternativeAnswerRemove(index)
                         }
                       }}
+                      onBlur={onAlternativeAnswerBlur}
                     />
                   </RemovableInputWrapper>
                 )
