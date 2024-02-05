@@ -154,7 +154,7 @@ export const instanceData = {
         chooseOption: "Klicke auf eine der Optionen.",
         printModeChooseOption: "Kreuze eine der Optionen an.",
         strategy: "Strategie",
-        solution: "Lösung"
+        solution: "Lösungsvorschlag"
       },
       boxTypes: {
         blank: "Blanko",
