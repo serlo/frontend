@@ -83,7 +83,6 @@ export function ArticleSources({ sources }: ArticleSourcesProps) {
           <button onClick={() => sources.remove(index)} className={buttonClass}>
             <EditorTooltip text={articleStrings.removeLabel} />
             <FaIcon icon={faTrashAlt} />
-            {index}
           </button>
         </div>
       </li>
