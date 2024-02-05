@@ -4,11 +4,14 @@ import { InlineSettings } from '@editor/plugin/helpers/inline-settings'
 import { InlineSettingsInput } from '@editor/plugin/helpers/inline-settings-input'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import {
+  faCircleArrowUp,
   faTrashAlt,
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { useMemo, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 import type { ArticleProps } from '..'
 import { buttonClass } from '../const/button-class'
@@ -20,6 +23,15 @@ interface ArticleSourcesProps {
 export function ArticleSources({ sources }: ArticleSourcesProps) {
   const articleStrings = useEditorStrings().templatePlugins.article
 
+  // generating new unique ids when sources are added or removed
+  // or the order changes. Not the nicest solution, but fixes the bugs for now
+  // the whole sources-feature will hopefully be improved (data stucture, UX and code) at some point
+  const [sortUpdated, setSortUpdated] = useState(0)
+  const sourcesWrappedWithId = useMemo(() => {
+    return sources.map((source) => ({ id: uuidv4(), source }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sources.length, sortUpdated])
+
   return (
     <>
       <SerloAddButton
@@ -28,20 +40,20 @@ export function ArticleSources({ sources }: ArticleSourcesProps) {
         className="mb-2 mt-0"
       />
       <ul className="serlo-ul mb-4 mt-2 text-lg">
-        {sources.map(renderEditableSource)}
+        {sourcesWrappedWithId.map(renderEditableSource)}
       </ul>
     </>
   )
 
   function renderEditableSource(
-    source: ArticleSourcesProps['sources'][number],
+    {
+      id,
+      source,
+    }: { source: ArticleSourcesProps['sources'][number]; id: string },
     index: number
   ) {
-    // key={index} results in items that can not be reordered. this is an existing bug
-    // using href or title in the key breaks editing currently
-    // so we probably need to add a unique id when initializing the sources?
     return (
-      <li key={index} className="group flex">
+      <li key={id} className="group flex">
         <div className="flex-grow">
           <span>
             <span className="hidden group-focus-within:inline">
@@ -75,19 +87,22 @@ export function ArticleSources({ sources }: ArticleSourcesProps) {
           </span>
         </div>
         <div>
-          {/* temporarily removed due to bug */}
-          {/* {index === 0 ? null : (
+          {index === 0 ? null : (
             <button
-              onClick={() => sources.move(index, index - 1)}
-              className={buttonClass}
+              onClick={() => {
+                sources.move(index, index - 1)
+                setSortUpdated(sortUpdated + 1)
+              }}
+              className={buttonClass + ' relative'}
             >
               <EditorTooltip text={articleStrings.moveUpLabel} />
               <FaIcon icon={faCircleArrowUp} />
             </button>
-          )} */}
+          )}
           <button onClick={() => sources.remove(index)} className={buttonClass}>
             <EditorTooltip text={articleStrings.removeLabel} />
             <FaIcon icon={faTrashAlt} />
+            {index}
           </button>
         </div>
       </li>
