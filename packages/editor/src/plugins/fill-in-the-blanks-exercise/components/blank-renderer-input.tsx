@@ -1,4 +1,5 @@
-import { ChangeEventHandler, KeyboardEventHandler, forwardRef } from 'react'
+import { AutogrowInput } from '@editor/editor-ui/autogrow-input'
+import { type ComponentProps, forwardRef } from 'react'
 
 import { BlankId } from '..'
 import { FillInTheBlanksContextType } from '../context/blank-context'
@@ -8,43 +9,37 @@ interface BlankRendererInputProps {
   blankId: string
   context: FillInTheBlanksContextType
   isAnswerCorrect?: boolean
-  onChange?: ChangeEventHandler<HTMLInputElement>
-  onKeyDown?: KeyboardEventHandler<HTMLInputElement>
 }
 
 export const BlankRendererInput = forwardRef<
   HTMLInputElement,
-  BlankRendererInputProps
+  BlankRendererInputProps & ComponentProps<'input'>
 >(function BlankRendererInput(props, ref) {
-  const { blankId, context, isAnswerCorrect, onChange, onKeyDown } = props
+  const { blankId, context, isAnswerCorrect, onChange, onKeyDown, onBlur } =
+    props
 
   const text = context.textInBlanks.get(blankId)?.text ?? ''
 
   return (
-    <span className="serlo-autogrow-input" data-value={text + '_'}>
-      <input
-        ref={ref}
-        className={cn(
-          'h-[25px] rounded-full border border-brand bg-brand-50',
-          isAnswerCorrect && 'border-green-500',
-          isAnswerCorrect === false && 'border-red-500'
-        )}
-        data-qa="blank-input"
-        size={4}
-        spellCheck={false}
-        autoCorrect="off"
-        placeholder=""
-        type="text"
-        value={text}
-        onChange={(event) => {
-          setTextUserTypedIntoBlank(event.target.value)
-          onChange?.(event)
-        }}
-        onKeyDown={(event) => {
-          onKeyDown?.(event)
-        }}
-      />
-    </span>
+    <AutogrowInput
+      ref={ref}
+      value={text}
+      className={cn(
+        'h-[25px]',
+        isAnswerCorrect && 'border-green-500 focus:outline-green-500',
+        isAnswerCorrect === false && 'border-red-400 focus:outline-red-400'
+      )}
+      data-qa="blank-input"
+      onChange={(event) => {
+        setTextUserTypedIntoBlank(event.target.value)
+        onChange?.(event)
+      }}
+      onKeyDown={onKeyDown}
+      onBlur={(event) => {
+        setTextUserTypedIntoBlank(text.trim())
+        onBlur?.(event)
+      }}
+    />
   )
 
   function setTextUserTypedIntoBlank(newText: string) {

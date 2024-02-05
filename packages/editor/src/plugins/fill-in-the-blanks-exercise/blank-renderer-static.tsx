@@ -42,7 +42,7 @@ export function BlankRendererStatic({ blankId }: BlankRendererStaticProps) {
       onChange={handleChange}
     />
   ) : (
-    <DroppableBlank blankId={blankId} isDisabled={draggableId !== null}>
+    <DroppableBlank blankId={blankId}>
       {draggableId ? (
         <BlankDraggableAnswer
           text={draggableText}
