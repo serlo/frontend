@@ -128,6 +128,11 @@ export function BlankControls(props: BlankControlsProps) {
       <div
         className="w-[460px] rounded bg-white p-side text-start not-italic shadow-menu"
         style={{ width: `${wrapperWidth}px` }}
+        onClick={(event) => {
+          if (event.detail === 3) {
+            event.stopPropagation()
+          }
+        }}
       >
         {isBlankAnswerAlphabetical ? null : (
           <label className="items-top mb-6 flex cursor-pointer text-sm">
