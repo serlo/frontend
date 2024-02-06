@@ -1,6 +1,11 @@
 import { DndWrapper } from '@editor/core/components/dnd-wrapper'
-import { evaluate } from 'mathjs'
-import { type ReactNode, useMemo, useState, useCallback } from 'react'
+import {
+  type ReactNode,
+  useMemo,
+  useState,
+  useCallback,
+  useEffect,
+} from 'react'
 import { v4 as uuid_v4 } from 'uuid'
 
 import type { BlankId, DraggableId, FillInTheBlanksMode } from '.'
@@ -9,6 +14,8 @@ import { BlankDraggableAnswer } from './components/blank-draggable-answer'
 import { BlankDraggableArea } from './components/blank-draggable-area'
 import { FillInTheBlanksContext } from './context/blank-context'
 import { Blank, type BlankType } from './types'
+
+type MathjsImport = typeof import('mathjs')
 
 interface FillInTheBlanksRendererProps {
   text: ReactNode
@@ -50,6 +57,9 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
   const [textUserTypedIntoBlanks, setTextUserTypedIntoBlanks] = useState(
     new Map<BlankId, { text: string }>()
   )
+
+  const [mathjs, setMathjs] = useState<MathjsImport | null>(null)
+  useEffect(() => void import('mathjs').then((math) => setMathjs(math)), [])
 
   /** Maps blankId to the text that should be displayed in the blank.  */
   const textInBlanks = useMemo(() => {
@@ -256,7 +266,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     // mathjs throws when certain symbols are passed to its `evaluate` method.
     // In this case, return `undefined` as the result of the normalization.
     try {
-      return evaluate(normalizeNumber(_value)) as number
+      return mathjs?.evaluate(normalizeNumber(_value)) as number
     } catch {
       return undefined
     }

@@ -1,10 +1,11 @@
 import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { evaluate } from 'mathjs'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { InputExerciseType } from './input-exercise-type'
+
+type MathjsImport = typeof import('mathjs')
 
 interface InputExersiseRendererProps {
   type: string
@@ -31,6 +32,9 @@ export function InputExerciseRenderer({
   const [feedback, setFeedback] = useState<FeedbackData | null>(null)
   const [value, setValue] = useState('')
   const exStrings = useInstanceData().strings.content.exercises
+
+  const [mathjs, setMathjs] = useState<MathjsImport | null>(null)
+  useEffect(() => void import('mathjs').then((math) => setMathjs(math)), [])
 
   function handleEvaluate() {
     const feedbackData = checkAnswer()
@@ -114,7 +118,7 @@ export function InputExerciseRenderer({
       case InputExerciseType.NumberExact:
         return Number(normalizeNumber(_value).replace(/\s/g, ''))
       case InputExerciseType.ExpressionEqual:
-        return Number(evaluate(normalizeNumber(_value)))
+        return Number(mathjs?.evaluate(normalizeNumber(_value)))
       case InputExerciseType.StringNormalized:
         return Number(_value.toUpperCase())
     }
