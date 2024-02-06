@@ -4,7 +4,7 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 import type { ExerciseGroupProps } from '.'
-import { TextExerciseGroupTypeRenderer } from '../serlo-template-plugins/exercise-group/renderer'
+import { ExerciseGroupRenderer } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 
 export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
@@ -15,9 +15,9 @@ export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
   // TODO: AI button
   return (
     <>
-      <TextExerciseGroupTypeRenderer
+      <ExerciseGroupRenderer
         content={<>{content.render()}</>}
-        createdExercises={exercises.map((exercise, index) => {
+        exercises={exercises.map((exercise, index) => {
           return {
             id: exercise.id,
             element: (
