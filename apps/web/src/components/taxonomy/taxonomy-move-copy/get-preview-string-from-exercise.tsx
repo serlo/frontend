@@ -1,9 +1,11 @@
 import { extractStringFromTextDocument } from '@editor/plugins/text/utils/static-extract-text'
 import {
+  AnyEditorDocument,
   EditorExerciseDocument,
   EditorRowsDocument,
   EditorTemplateExerciseGroupDocument,
 } from '@editor/types/editor-plugins'
+import { isRowsDocument } from '@editor/types/plugin-type-guards'
 
 import { InstanceData } from '@/data-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
@@ -14,7 +16,9 @@ export function getPreviewStringFromExercise(
 ) {
   const typeString = getTranslatedType(strings, document.plugin)
 
-  const rows = document.state.content as EditorRowsDocument
+  const rows = isRowsDocument(document.state.content as AnyEditorDocument)
+    ? (document.state.content as EditorRowsDocument)
+    : undefined
 
   const titleString = rows?.state.map(extractStringFromTextDocument).join(' ')
 
