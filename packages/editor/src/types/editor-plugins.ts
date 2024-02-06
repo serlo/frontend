@@ -5,6 +5,7 @@ import { AudioPluginState } from '@editor/plugins/audio'
 import { BoxPluginState } from '@editor/plugins/box'
 import { EquationsPluginState } from '@editor/plugins/equations'
 import type { ExercisePluginState } from '@editor/plugins/exercise'
+import { ExerciseGroupPluginState } from '@editor/plugins/exercise-group'
 import { FillInTheBlanksExerciseState } from '@editor/plugins/fill-in-the-blanks-exercise'
 import type { GeogebraPluginState } from '@editor/plugins/geogebra'
 import { H5pPluginState } from '@editor/plugins/h5p'
@@ -201,12 +202,28 @@ export interface EditorH5PDocument {
   id?: string
 }
 
+export interface EditorExerciseGroupDocument {
+  plugin: EditorPluginType.ExerciseGroup
+  state: PrettyStaticState<ExerciseGroupPluginState>
+  id?: string
+
+  // additional data for serlo, not part of normal state
+  serloContext?: {
+    uuid?: number
+    revisionId?: number
+    trashed?: boolean
+    grouped?: boolean
+    unrevisedRevisions?: number
+    licenseId?: number
+  }
+}
+
 // Template Plugins
 export interface EditorTemplateExerciseGroupDocument {
   plugin: TemplatePluginType.TextExerciseGroup
   state: PrettyStaticState<TextExerciseGroupTypePluginState> & {
     // extra field that is not actually part of the state until we move solutions into exercises
-    exercises: EditorExerciseDocument[]
+    createdExercises: EditorExerciseDocument[]
   }
   id?: string
 
