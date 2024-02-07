@@ -247,13 +247,8 @@ export function createRenderers(): InitRenderersArgs {
         type: TemplatePluginType.TextExerciseGroup,
         renderer: TextExerciseGroupTypeStaticRenderer,
       },
-      {
-        type: 'exercise-group',
-        renderer: TextExerciseGroupTypeStaticRenderer,
-      },
       // { type: TemplatePluginType.User, renderer: userTypePlugin },
       // { type: TemplatePluginType.Video, renderer: videoTypePlugin },
-
       {
         type: EditorPluginType.Unsupported,
         renderer: (state: unknown) => {
