@@ -124,6 +124,7 @@ export function convertAiGeneratedScExerciseToEditorDocument(
         },
         interactive,
         solution,
+        licenseId: undefined,
       },
       // doesn't have an id yet
       id: undefined,
