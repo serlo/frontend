@@ -223,7 +223,7 @@ export interface EditorTemplateExerciseGroupDocument {
   plugin: TemplatePluginType.TextExerciseGroup
   state: PrettyStaticState<TextExerciseGroupTypePluginState> & {
     // extra field that is not actually part of the state until we move solutions into exercises
-    createdExercises: EditorExerciseDocument[]
+    exercises: EditorExerciseDocument[]
   }
   id?: string
 
