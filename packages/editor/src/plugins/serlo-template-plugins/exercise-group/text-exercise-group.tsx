@@ -34,7 +34,7 @@ import { ToolbarMain } from '../toolbar-main/toolbar-main'
 export const textExerciseGroupTypeState = entityType(
   {
     ...entity,
-    content: editorContent(EditorPluginType.Rows),
+    content: editorContent(EditorPluginType.ExerciseGroup),
     /* cohesive field would indicate whether the children of a grouped exercise are cohesive
     this field might be used in the future, but currently it has no effect and can not be changed
     */
@@ -83,11 +83,26 @@ function TextExerciseGroupTypeEditor(
   if (staticState.content.startsWith('{"plugin":"rows"')) {
     return renderLegacyExerciseGroupEditor()
   }
+
   return (
-    <article className="exercisegroup mt-32">
-      {content.render()}
-      <ToolbarMain showSubscriptionOptions {...props.state} />
-    </article>
+    <>
+      <div className="absolute right-0 -mt-20 mr-side flex">
+        {canUseAiFeatures && isCreatingNewExerciseGroup ? (
+          <AiExerciseGenerationButton />
+        ) : null}
+        &nbsp;
+        <ContentLoaders
+          id={id.value}
+          currentRevision={revision.value}
+          onSwitchRevision={replaceOwnState}
+          entityType={UuidType.ExerciseGroup}
+        />
+      </div>
+      <article className="exercisegroup mt-32">
+        {content.render()}
+        <ToolbarMain showSubscriptionOptions {...props.state} />
+      </article>
+    </>
   )
 
   function renderLegacyExerciseGroupEditor() {
@@ -97,6 +112,7 @@ function TextExerciseGroupTypeEditor(
           {canUseAiFeatures && isCreatingNewExerciseGroup ? (
             <AiExerciseGenerationButton />
           ) : null}
+          &nbsp;
           <ContentLoaders
             id={id.value}
             currentRevision={revision.value}
