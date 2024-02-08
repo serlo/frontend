@@ -123,7 +123,6 @@ export function InjectionStaticRenderer({
         .then((data: { data: InjectionOnlyContentQuery }) => {
           if (!data.data?.uuid) throw new Error('not found')
           const uuid = data.data.uuid
-
           if (
             uuid.__typename === 'Article' ||
             uuid.__typename === 'TaxonomyTerm' ||
@@ -150,7 +149,6 @@ export function InjectionStaticRenderer({
                 licenseId: uuid.license.id,
               },
             }
-
             setContent([
               { ...JSON.parse(uuid.currentRevision.content), exerciseContext },
             ])
@@ -254,9 +252,6 @@ const query = gql`
     uuid(alias: { path: $path, instance: de }) {
       __typename
       ... on Exercise {
-        ...injectionExercise
-      }
-      ... on GroupedExercise {
         ...injectionExercise
       }
       ... on ExerciseGroup {
