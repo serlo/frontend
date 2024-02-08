@@ -6,9 +6,12 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
+import { useContext } from 'react'
 
 import type { ExerciseProps } from '.'
 import { ExerciseToolbar } from './toolbar/toolbar'
+import { SerloLicenseChooser } from '../solution/serlo-license-chooser'
+import { IsSerloContext } from '@/serlo-editor-integration/context/is-serlo-context'
 
 const allInteractiveExerciseTypes = [
   EditorPluginType.ScMcExercise,
@@ -23,7 +26,8 @@ export type InteractiveExerciseType =
 
 export function ExerciseEditor(props: ExerciseProps) {
   const { state, focused } = props
-  const { content, interactive, solution } = state
+  const { content, interactive, solution, licenseId } = state
+  const isSerlo = useContext(IsSerloContext) // only on serlo
 
   const interactiveExerciseTypes = allInteractiveExerciseTypes.filter((type) =>
     editorPlugins.getAllWithData().some((plugin) => plugin.type === type)
@@ -40,6 +44,12 @@ export function ExerciseEditor(props: ExerciseProps) {
         focused && '!border-gray-100'
       )}
     >
+      {isSerlo ? (
+        <SerloLicenseChooser
+          licenseId={licenseId}
+          className="!-top-[30px] !right-10"
+        />
+      ) : null}
       {focused ? (
         <ExerciseToolbar
           {...props}

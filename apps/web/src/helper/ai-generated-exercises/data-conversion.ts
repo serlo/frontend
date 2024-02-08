@@ -364,13 +364,10 @@ export function transformEditorDataToExerciseGroup(
       changes: '[KI generiert]: ',
       revision: 0,
       cohesive: false,
-      // Heading of whole exercise group
       //@ts-expect-error ignoring this while exercise group migration is going on
       content: JSON.stringify(
         createExerciseGroupDocument(editorData.heading, editorData.exercises)
       ),
-      'grouped-text-exercise': [],
-      exercises: [],
     },
   }
 
