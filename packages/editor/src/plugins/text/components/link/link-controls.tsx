@@ -2,6 +2,7 @@ import {
   getLinkElement,
   isLinkActive,
 } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/link'
+import { SlateOverlay } from '@editor/editor-ui/slate-overlay'
 import {
   QuickbarData,
   fetchQuickbarData,
@@ -14,9 +15,10 @@ import { Range, Transforms } from 'slate'
 import { ReactEditor, useSlate } from 'slate-react'
 
 import { LinkOverlayEditMode } from './edit-mode/link-overlay-edit-mode'
-import { LinkOverlay } from './link-overlay'
 import { LinkOverlayWithHref } from './link-overlay-with-href'
 import type { Link } from '../../types/text-editor'
+
+const wrapperWidth = 460
 
 export function LinkControls() {
   const [element, setElement] = useState<Link | null>(null)
@@ -81,7 +83,7 @@ export function LinkControls() {
   const shouldFocus = isEditMode && element.children[0].text.trim() !== ''
 
   return (
-    <LinkOverlay element={element}>
+    <SlateOverlay width={wrapperWidth} anchor={element}>
       {isEditMode ? (
         <LinkOverlayEditMode
           isSerloLinkSearchActive={isSerloLinkSearchActive}
@@ -99,6 +101,6 @@ export function LinkControls() {
           quickbarData={quickbarData}
         />
       )}
-    </LinkOverlay>
+    </SlateOverlay>
   )
 }

@@ -1,5 +1,4 @@
 import { DndWrapper } from '@editor/core/components/dnd-wrapper'
-import type A from 'algebra.js'
 import {
   type ReactNode,
   useMemo,
@@ -16,7 +15,7 @@ import { BlankDraggableArea } from './components/blank-draggable-area'
 import { FillInTheBlanksContext } from './context/blank-context'
 import { Blank, type BlankType } from './types'
 
-type AlgebraJSImport = typeof import('algebra.js')
+type MathjsImport = typeof import('mathjs')
 
 interface FillInTheBlanksRendererProps {
   text: ReactNode
@@ -49,9 +48,6 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     new Map<BlankId, { isCorrect?: boolean }>()
   )
 
-  const [AlgebraJs, setAlgebraJs] = useState<AlgebraJSImport | null>(null)
-  useEffect(() => void import('algebra.js').then((A) => setAlgebraJs(A)), [])
-
   // Array of blank elements extracted from text editor state
   const blanks: BlankType[] = useMemo(() => {
     return getBlanksWithinObject(textPluginState)
@@ -61,6 +57,9 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
   const [textUserTypedIntoBlanks, setTextUserTypedIntoBlanks] = useState(
     new Map<BlankId, { text: string }>()
   )
+
+  const [mathjs, setMathjs] = useState<MathjsImport | null>(null)
+  useEffect(() => void import('mathjs').then((math) => setMathjs(math)), [])
 
   /** Maps blankId to the text that should be displayed in the blank.  */
   const textInBlanks = useMemo(() => {
@@ -237,10 +236,9 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
         if (!solution || !submission) return false
 
         // Both submission and solution are valid mathematical expressions.
-        // Using algebra.js, subtract the submission from the solution, and
-        // if the result of the subtraction is 0, submission and solution are
-        // mathematical equivalents, therefore the submission is correct.
-        return solution.subtract(submission).toString() === '0'
+        // Subtract the submission from the solution. If the result is 0,
+        // submission and solution are mathematical equivalents.
+        return solution - submission === 0
       })
 
       newBlankAnswersCorrectList.set(blankState.blankId, { isCorrect })
@@ -265,11 +263,10 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
 
   function normalize(value: string) {
     const _value = collapseWhitespace(value)
-    // algebra.js throws an error if an invalid mathematical expression
-    // is passed to its `parse` method. In this case, return `undefined`
-    // as the result of the normalization.
+    // mathjs throws when certain symbols are passed to its `evaluate` method.
+    // In this case, return `undefined` as the result of the normalization.
     try {
-      return AlgebraJs?.parse(normalizeNumber(_value)) as A.Expression
+      return mathjs?.evaluate(normalizeNumber(_value)) as number
     } catch {
       return undefined
     }
