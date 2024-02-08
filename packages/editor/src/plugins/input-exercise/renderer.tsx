@@ -1,10 +1,11 @@
 import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import type A from 'algebra.js'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { InputExerciseType } from './input-exercise-type'
+
+type MathjsImport = typeof import('mathjs')
 
 interface InputExersiseRendererProps {
   type: string
@@ -22,8 +23,6 @@ interface FeedbackData {
   message: JSX.Element
 }
 
-type AlgebraJSImport = typeof import('algebra.js')
-
 export function InputExerciseRenderer({
   type,
   unit,
@@ -32,12 +31,12 @@ export function InputExerciseRenderer({
 }: InputExersiseRendererProps) {
   const [feedback, setFeedback] = useState<FeedbackData | null>(null)
   const [value, setValue] = useState('')
-  const [AlgebraJs, setAlgebraJs] = useState<AlgebraJSImport | null>(null)
   const exStrings = useInstanceData().strings.content.exercises
 
-  useEffect(() => void import('algebra.js').then((A) => setAlgebraJs(A)), [])
+  const [mathjs, setMathjs] = useState<MathjsImport | null>(null)
+  useEffect(() => void import('mathjs').then((math) => setMathjs(math)), [])
 
-  function evaluate() {
+  function handleEvaluate() {
     const feedbackData = checkAnswer()
     if (onEvaluate) onEvaluate(feedbackData.correct, value)
     setFeedback(feedbackData)
@@ -60,24 +59,22 @@ export function InputExerciseRenderer({
           setFeedback(null)
         }}
         onKeyDown={(e) => {
-          if (e.key === 'Enter') evaluate()
+          if (e.key === 'Enter') handleEvaluate()
         }}
         placeholder={exStrings.yourAnswer}
       />{' '}
       {unit}
       <br />
       <div className="mt-4 flex">
-        {AlgebraJs ? (
-          <button
-            className={cn(
-              'serlo-button-blue h-8',
-              value === '' && 'pointer-events-none opacity-0'
-            )}
-            onClick={evaluate}
-          >
-            {exStrings.check}
-          </button>
-        ) : null}
+        <button
+          className={cn(
+            'serlo-button-blue h-8',
+            value === '' && 'pointer-events-none opacity-0'
+          )}
+          onClick={handleEvaluate}
+        >
+          {exStrings.check}
+        </button>
         {feedback && value ? (
           <ExerciseFeedback correct={feedback.correct}>
             {feedback.message}
@@ -92,13 +89,10 @@ export function InputExerciseRenderer({
       try {
         const solution = normalize(answer.value)
         const submission = normalize(value)
+        if (!solution || !submission) return false
 
         if (type === 'input-expression-equal-match-challenge' && solution) {
-          return (
-            (solution as A.Expression)
-              .subtract(submission as A.Expression)
-              .toString() === '0'
-          )
+          return solution - submission === 0
         }
         return solution === submission
       } catch (e) {
@@ -122,11 +116,11 @@ export function InputExerciseRenderer({
     const _value = collapseWhitespace(value)
     switch (type) {
       case InputExerciseType.NumberExact:
-        return normalizeNumber(_value).replace(/\s/g, '')
+        return Number(normalizeNumber(_value).replace(/\s/g, ''))
       case InputExerciseType.ExpressionEqual:
-        return AlgebraJs ? AlgebraJs.parse(normalizeNumber(_value)) : undefined
+        return Number(mathjs?.evaluate(normalizeNumber(_value)))
       case InputExerciseType.StringNormalized:
-        return _value.toUpperCase()
+        return Number(_value.toUpperCase())
     }
   }
 
