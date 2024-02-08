@@ -609,7 +609,6 @@ export const loggedInData = {
       confirmTrash: 'Are you sure you want to delete this content?',
       restoreContent: 'Restore from trash',
       sortCoursePages: 'Sort course pages',
-      sortGroupedExercises: 'Sort grouped Exercises',
       edit: 'Edit',
       editTax: 'Edit Title & Text',
       unrevisedEdit: 'Show unrevised revisions',

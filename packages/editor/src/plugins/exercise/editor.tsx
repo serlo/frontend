@@ -33,7 +33,8 @@ export function ExerciseEditor(props: ExerciseProps) {
     editorPlugins.getAllWithData().some((plugin) => plugin.type === type)
   )
 
-  const exTemplateStrings = useEditorStrings().templatePlugins.exercise
+  const templateStrings = useEditorStrings().templatePlugins
+  const exTemplateStrings = templateStrings.exercise
   const exPluginStrings = useEditorStrings().plugins.exercise
 
   return (
@@ -47,7 +48,7 @@ export function ExerciseEditor(props: ExerciseProps) {
       {isSerlo ? (
         <SerloLicenseChooser
           licenseId={licenseId}
-          className="!-top-[30px] !right-10"
+          className="!right-[84px] !top-[-30px]"
         />
       ) : null}
       {focused ? (
