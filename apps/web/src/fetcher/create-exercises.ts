@@ -42,24 +42,17 @@ export function createExerciseGroup(
 ): EditorTemplateExerciseGroupDocument | undefined {
   if (!uuid.currentRevision?.content) return undefined
 
-  const exercises = uuid.exercises
-    .map(createExercise)
-    .filter(
-      (exercise) => exercise && !exercise.serloContext?.trashed
-    ) as EditorExerciseDocument[]
-
   return {
     plugin: TemplatePluginType.TextExerciseGroup,
     state: {
       // @ts-expect-error not sure why string is expected here
       content: parseDocumentString(uuid.currentRevision.content),
-      exercises,
     },
     serloContext: {
       uuid: uuid.id,
       trashed: uuid.trashed,
       unrevisedRevisions: uuid.revisions.totalCount,
-      license: uuid.license,
+      licenseId: uuid.license.id,
     },
   }
 }

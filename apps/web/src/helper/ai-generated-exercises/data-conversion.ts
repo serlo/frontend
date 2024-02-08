@@ -5,6 +5,7 @@ import { CustomText, MathElement } from '@editor/plugins/text'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
   EditorExerciseDocument,
+  EditorExerciseGroupDocument,
   EditorSolutionDocument,
   EditorTemplateExerciseGroupDocument,
 } from '@editor/types/editor-plugins'
@@ -141,7 +142,7 @@ function createExerciseHeadingTextDocument(text: string) {
 function createExerciseGroupDocument(
   heading: string,
   exercises: EditorExerciseDocument[]
-) {
+): EditorExerciseGroupDocument {
   return {
     plugin: EditorPluginType.ExerciseGroup,
     state: {
@@ -150,6 +151,7 @@ function createExerciseGroupDocument(
         state: [createExerciseHeadingTextDocument(heading)],
       },
       exercises,
+      cohesive: false,
     },
   }
 }
