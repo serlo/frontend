@@ -17,6 +17,7 @@ import { audioPlugin } from '@editor/plugins/audio'
 import { createBoxPlugin } from '@editor/plugins/box'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
+import { exerciseGroupPlugin } from '@editor/plugins/exercise-group'
 import { fillInTheBlanksExercise } from '@editor/plugins/fill-in-the-blanks-exercise'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { H5pPlugin } from '@editor/plugins/h5p'
@@ -170,6 +171,11 @@ export function createPlugins({
     // Exercises etc.
     // ===================================================
 
+    {
+      type: EditorPluginType.ExerciseGroup,
+      plugin: exerciseGroupPlugin,
+      visibleInSuggestions: !isProduction,
+    },
     {
       type: EditorPluginType.Exercise,
       plugin: exercisePlugin,

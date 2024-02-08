@@ -24,6 +24,7 @@ export enum EditorPluginType {
   Text = 'text',
   Video = 'video',
 
+  ExerciseGroup = 'exerciseGroup',
   Exercise = 'exercise',
   ScMcExercise = 'scMcExercise',
   InputExercise = 'inputExercise',
