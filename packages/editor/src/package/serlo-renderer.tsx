@@ -8,20 +8,19 @@ import type { InstanceData, LoggedInData } from '@/data-types'
 export interface SerloRendererProps {
   instanceData: InstanceData
   loggedInData: LoggedInData
-  documentState: AnyEditorDocument | AnyEditorDocument[]
+  document?: AnyEditorDocument | AnyEditorDocument[]
 }
 
 export function SerloRenderer({
   instanceData,
   loggedInData,
-  documentState,
   ...props
 }: SerloRendererProps) {
   return (
     <InstanceDataProvider value={instanceData}>
       <LoggedInDataProvider value={loggedInData}>
         <div className="serlo-editor-hacks">
-          <StaticRenderer document={documentState} {...props} />
+          <StaticRenderer {...props} />
         </div>
       </LoggedInDataProvider>
     </InstanceDataProvider>
