@@ -1,8 +1,6 @@
+import { EditorPluginType } from '@editor/package'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
-import {
-  EditorRowsDocument,
-  EditorTemplateExerciseGroupDocument,
-} from '@editor/types/editor-plugins'
+import { EditorTemplateExerciseGroupDocument } from '@editor/types/editor-plugins'
 import { useAuthentication } from '@serlo/frontend/src/auth/use-authentication'
 import type { MoreAuthorToolsProps } from '@serlo/frontend/src/components/user-tools/foldout-author-menus/more-author-tools'
 import { ExerciseInlineType } from '@serlo/frontend/src/data-types'
@@ -28,6 +26,30 @@ export function TextExerciseGroupTypeStaticRenderer(
   }, [])
 
   const { content, exercises } = state
+
+  // new renderer
+  if (content.plugin === EditorPluginType.ExerciseGroup) {
+    return (
+      <div className="relative">
+        {loaded && auth && context?.uuid ? (
+          <div className="absolute -right-8">
+            <AuthorToolsExercises
+              data={{
+                type: ExerciseInlineType.ExerciseGroup,
+                id: context?.uuid,
+                trashed: context?.trashed,
+                unrevisedRevisions: context?.unrevisedRevisions,
+              }}
+            />
+          </div>
+        ) : null}
+        <StaticRenderer document={content} />
+      </div>
+    )
+  }
+
+  // old renderer
+
   if (!exercises) return null
 
   const rendered = exercises.map((exercise, index) => {
@@ -53,9 +75,7 @@ export function TextExerciseGroupTypeStaticRenderer(
         </div>
       ) : null}
       <TextExerciseGroupTypeRenderer
-        content={
-          <StaticRenderer document={content as unknown as EditorRowsDocument} />
-        }
+        content={<StaticRenderer document={content} />}
         exercises={rendered}
       />
     </div>
