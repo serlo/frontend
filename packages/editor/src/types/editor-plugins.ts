@@ -158,7 +158,7 @@ export interface EditorSolutionDocument {
     exerciseId?: number
     trashed?: boolean
     unrevisedRevisions?: number
-    license?: License
+    licenseId?: number
   }
 }
 export interface EditorSerloTableDocument {
@@ -233,7 +233,7 @@ export interface EditorTemplateExerciseGroupDocument {
     uuid?: number
     trashed?: boolean
     unrevisedRevisions?: number
-    license?: License
+    licenseId?: number
   }
 }
 export interface EditorTemplateGenericContentDocument {
