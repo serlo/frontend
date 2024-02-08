@@ -36,7 +36,7 @@ export function ExternalRevisionLoader<T>({
   const { strings } = useInstanceData()
   const editorStrings = useEditorStrings()
 
-  const exerciseTypes = [UuidType.Exercise, UuidType.GroupedExercise]
+  const exerciseTypes = [UuidType.Exercise]
   const supportedEntityTypes = exerciseTypes.includes(entityType)
     ? exerciseTypes
     : [entityType]

@@ -57,7 +57,6 @@ export const instanceData = {
       exercise: 'Exercise',
       exerciseGroup: 'Exercise Group',
       topic: 'Folder',
-      groupedExercise: 'Grouped Exercise',
       page: 'Page',
       solution: 'Solution',
       taxonomyTerm: 'Taxonomy Term',

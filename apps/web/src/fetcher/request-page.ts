@@ -24,7 +24,6 @@ import { dataQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData, UuidRevType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
-import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
 // ALWAYS start alias with slash
@@ -52,7 +51,6 @@ export async function requestPage(
     uuid.__typename === UuidRevType.Video ||
     uuid.__typename === UuidRevType.Event ||
     uuid.__typename === UuidRevType.Applet ||
-    uuid.__typename === UuidRevType.GroupedExercise ||
     uuid.__typename === UuidRevType.Exercise ||
     uuid.__typename === UuidRevType.ExerciseGroup ||
     uuid.__typename === UuidRevType.Course
@@ -152,10 +150,7 @@ export async function requestPage(
     }
   }
 
-  if (
-    uuid.__typename === UuidType.Exercise ||
-    uuid.__typename === UuidType.GroupedExercise
-  ) {
+  if (uuid.__typename === UuidType.Exercise) {
     const exercise = createExercise(uuid)
     return {
       kind: 'single-entity',
@@ -169,23 +164,10 @@ export async function requestPage(
         isUnrevised: !uuid.currentRevision,
       },
       newsletterPopup: false,
-      breadcrumbsData:
-        uuid.__typename === UuidType.GroupedExercise
-          ? [
-              {
-                label:
-                  getInstanceDataByLang(instance).strings.entities
-                    .exerciseGroup,
-                url: uuid.exerciseGroup?.alias,
-              },
-            ]
-          : breadcrumbsData,
+      breadcrumbsData,
       metaData: {
         title,
-        contentType:
-          uuid.__typename === UuidType.Exercise
-            ? 'text-exercise'
-            : 'groupedexercise',
+        contentType: 'text-exercise',
         metaImage,
         metaDescription: getMetaDescription(exercise?.state.content),
       },
@@ -221,6 +203,14 @@ export async function requestPage(
       cacheKey,
       authorization,
     }
+  }
+
+  // TODO: remove after migration, api changes and codegen
+  if (
+    uuid.__typename === 'GroupedExerciseRevision' ||
+    uuid.__typename === 'GroupedExercise'
+  ) {
+    return { kind: 'not-found' }
   }
 
   const content = (await prettifyLinksInState(

@@ -57,7 +57,6 @@ export const entityIconMapping = {
   exercisegroup: faFile,
   folder: faFolderOpen,
   exercisefolder: faFolderOpen,
-  groupedexercise: faFile,
   page: faFile,
   taxonomyterm: faFolderOpen,
   user: faUser,

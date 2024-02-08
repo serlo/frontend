@@ -8,8 +8,8 @@ import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { MainUuidType } from './query-types'
 
 type BareExercise = Omit<
-  Extract<MainUuidType, { __typename: 'Exercise' | 'GroupedExercise' }>,
-  'exerciseGroup' | '__typename' | 'instance'
+  Extract<MainUuidType, { __typename: 'Exercise' }>,
+  '__typename' | 'instance' | 'taxonomyTerms'
 >
 
 export function createExercise(

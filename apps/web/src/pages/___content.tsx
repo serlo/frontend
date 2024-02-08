@@ -14,7 +14,7 @@ const entities = [
   ['TaxonomyTerm (lvl)', 1386],
   ['Exercise', 54210],
   ['ExerciseGroup', 53205],
-  ['GroupedExercise', 53209],
+  ['GroupedExercise', 53209], // TODO: remove after migration
   ['Course', 51979],
   ['Event', 145590],
 ]

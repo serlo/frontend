@@ -39,13 +39,6 @@ export type SetEntityInputTypes =
   | SetExerciseGroupInput
   | SetVideoInput
 
-type TextGroupedExerciseSerilizedState = Omit<
-  TextExerciseSerializedState,
-  '__typename'
-> & {
-  __typename: 'GroupedExercise'
-}
-
 export type SupportedTypesSerializedState =
   | AppletSerializedState
   | ArticleSerializedState
@@ -55,7 +48,6 @@ export type SupportedTypesSerializedState =
   | TextExerciseSerializedState
   | TextExerciseGroupSerializedState
   | VideoSerializedState
-  | TextGroupedExerciseSerilizedState
 
 export type SetEntityMutationData = SupportedTypesSerializedState & OnSaveData
 export type AddPageRevisionMutationData = PageSerializedState & {
@@ -80,4 +72,3 @@ export type ChildFieldsData =
   | CoursePageSerializedState
   | TextExerciseGroupSerializedState
   | TextExerciseSerializedState
-  | TextGroupedExerciseSerilizedState

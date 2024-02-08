@@ -38,7 +38,6 @@ export function convertEditorResponseToState(
     CoursePage: { convert: convertCoursePage },
     Event: { convert: convertEvent },
     Page: { convert: convertPage },
-    GroupedExercise: { convert: convertTextExercise },
     Exercise: { convert: convertTextExercise },
     ExerciseGroup: { convert: convertTextExerciseGroup },
     User: { convert: convertUser },

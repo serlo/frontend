@@ -3,8 +3,8 @@ import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
   AnyEditorDocument,
+  EditorExerciseGroupDocument,
   EditorInjectionDocument,
-  EditorRowsDocument,
 } from '@editor/types/editor-plugins'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { endpoint } from '@serlo/frontend/src/api/endpoint'
@@ -57,27 +57,10 @@ export interface InjectionOnlyContentQuery {
           __typename?: 'ExerciseGroupRevision'
           content: string
         } | null
-        exercises: Array<{
-          __typename?: 'GroupedExercise'
-          currentRevision?: {
-            __typename?: 'GroupedExerciseRevision'
-            content: string
-          } | null
-          license: { __typename?: 'License'; id: number }
-        }>
         license: { __typename?: 'License'; id: number }
       }
     | { __typename: 'ExerciseGroupRevision' }
     | { __typename: 'ExerciseRevision' }
-    | {
-        __typename: 'GroupedExercise'
-        currentRevision?: {
-          __typename?: 'GroupedExerciseRevision'
-          content: string
-        } | null
-        license: { __typename?: 'License'; id: number }
-      }
-    | { __typename: 'GroupedExerciseRevision' }
     | { __typename: 'Page' }
     | { __typename: 'PageRevision' }
     | { __typename: 'TaxonomyTerm'; alias: string; title: string }
@@ -140,10 +123,7 @@ export function InjectionStaticRenderer({
             throw new Error('no accepted revision')
           }
 
-          if (
-            uuid.__typename === 'GroupedExercise' ||
-            uuid.__typename === 'Exercise'
-          ) {
+          if (uuid.__typename === 'Exercise') {
             const exerciseContext = {
               serloContext: {
                 licenseId: uuid.license.id,
@@ -156,19 +136,6 @@ export function InjectionStaticRenderer({
           }
 
           if (uuid.__typename === 'ExerciseGroup') {
-            const exercises = uuid.exercises.map((exercise) => {
-              if (!exercise.currentRevision?.content) return []
-
-              const exerciseContentAndContext = {
-                ...parseDocumentString(exercise.currentRevision?.content),
-                serloContext: {
-                  licenseId: uuid.license.id,
-                },
-              }
-
-              return exercise.currentRevision ? [exerciseContentAndContext] : []
-            })
-
             setContent([
               {
                 plugin: TemplatePluginType.TextExerciseGroup,
@@ -176,8 +143,10 @@ export function InjectionStaticRenderer({
                 state: {
                   content: parseDocumentString(
                     uuid.currentRevision.content
-                  ) as EditorRowsDocument,
-                  exercises,
+                  ) as EditorExerciseGroupDocument,
+                  serloContect: {
+                    licenseId: uuid.license.id,
+                  },
                 },
               },
             ])

@@ -106,7 +106,6 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
   const noComments =
     page.kind === 'single-entity' &&
     (page.entityData.typename === UuidType.Page ||
-      page.entityData.typename === UuidType.GroupedExercise ||
       page.entityData.typename === UuidType.Exercise)
 
   return (
@@ -199,10 +198,6 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
         isTaxonomy={
           page.kind !== 'single-entity' &&
           !(page.metaData?.contentType === 'topic-folder')
-        }
-        asBackButton={
-          page.kind === 'single-entity' &&
-          page.entityData.typename === UuidType.GroupedExercise
         }
       />
     )

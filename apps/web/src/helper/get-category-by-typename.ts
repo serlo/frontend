@@ -10,8 +10,7 @@ export function getCategoryByTypename(typename?: string) {
         : typename === UuidType.Applet
           ? 'applets'
           : typename === UuidType.Exercise ||
-              typename === UuidType.ExerciseGroup ||
-              typename === UuidType.GroupedExercise
+              typename === UuidType.ExerciseGroup
             ? 'exercises'
             : typename === UuidType.Event
               ? 'events'
