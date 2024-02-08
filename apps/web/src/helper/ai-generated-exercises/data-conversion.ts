@@ -39,7 +39,12 @@ export interface ExercisePreviewFromAi {
 export function convertAiGeneratedScExerciseToEditorDocument(
   input: ExpectedLLMOutputType | null
 ): ExercisePreviewFromAi {
-  if (!input) return { exercises: [], heading: '' }
+  if (!input) {
+    return {
+      exercises: [],
+      heading: '',
+    }
+  }
 
   const decodedExercises = LLMOutputDecoder.decode(input)
 
@@ -102,7 +107,7 @@ export function convertAiGeneratedScExerciseToEditorDocument(
             // separately as the heading of the whole exercise group! No need to
             // have it twice.
             ...(exercises.length === 1
-              ? [createExerciseHeadingTextDocument(heading)]
+              ? [createExerciseHeadingInEditor(heading)]
               : []),
             {
               plugin: EditorPluginType.Text,
@@ -131,26 +136,18 @@ export function convertAiGeneratedScExerciseToEditorDocument(
   return { exercises: exerciseDocuments, heading }
 }
 
-function createExerciseHeadingTextDocument(text: string) {
+function createExerciseHeadingInEditor(heading: string) {
   return {
     plugin: EditorPluginType.Text,
-    state: [{ type: 'h', children: [{ text }], level: 3 }],
-  }
-}
-
-function createExerciseGroupDocument(
-  heading: string,
-  exercises: EditorExerciseDocument[]
-) {
-  return {
-    plugin: EditorPluginType.ExerciseGroup,
-    state: {
-      content: {
-        plugin: EditorPluginType.Rows,
-        state: [createExerciseHeadingTextDocument(heading)],
+    // ! This needs to be rendered semantically as h1, however we want the
+    // size of h3 because it looks better
+    state: [
+      {
+        type: 'h',
+        level: 3,
+        children: convertStringToMathOrTextNodes(heading),
       },
-      exercises,
-    },
+    ],
   }
 }
 
@@ -354,6 +351,19 @@ export function transformEditorDataToExerciseGroup(
   editorData: ExercisePreviewFromAi,
   license: LicenseData
 ): EditorTemplateExerciseGroupDocument {
+  const exercisesTransformed = editorData.exercises.map<
+    EditorTemplateExerciseGroupDocument['state']['grouped-text-exercise'][0]
+  >((exercise) => ({
+    id: 0,
+    license,
+    changes: '[KI generiert]: ',
+    revision: 0,
+    content: JSON.stringify({
+      plugin: EditorPluginType.Exercise,
+      state: exercise.state,
+    }),
+  }))
+
   const exerciseGroup: EditorTemplateExerciseGroupDocument = {
     plugin: TemplatePluginType.TextExerciseGroup,
     state: {
@@ -364,9 +374,10 @@ export function transformEditorDataToExerciseGroup(
       cohesive: false,
       // Heading of whole exercise group
       content: JSON.stringify(
-        createExerciseGroupDocument(editorData.heading, editorData.exercises)
+        createExerciseHeadingInEditor(editorData.heading)
       ),
-      'grouped-text-exercise': [],
+      'grouped-text-exercise': exercisesTransformed,
+      // ? What is the difference between grouped-text-exercise and exercises?
       exercises: [],
     },
   }

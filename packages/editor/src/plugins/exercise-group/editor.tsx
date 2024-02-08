@@ -12,6 +12,7 @@ export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
 
   const exGroupStrings = useEditorStrings().templatePlugins.textExerciseGroup
 
+  // TODO: AI button
   return (
     <>
       <ExerciseGroupRenderer
