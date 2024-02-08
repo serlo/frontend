@@ -1,4 +1,5 @@
 export { SerloEditor, type SerloEditorProps } from './editor'
+export { SerloRenderer, type SerloRendererProps } from './serlo-renderer'
 
 export { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 export { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
