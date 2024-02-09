@@ -46,12 +46,11 @@ export const InjectionToolbar = ({
                   autoFocus
                   label={`${injectionStrings.serloId}: `}
                   placeholder={injectionStrings.placeholder}
-                  inputMode="numeric"
-                  pattern="\d+"
                   value={state.value}
-                  onChange={(e) =>
-                    state.set(e.target.value.replace(/[^0-9]/g, ''))
-                  }
+                  onChange={(e) => {
+                    // TODO: make pasting a serlo url a working method
+                    state.set(e.target.value.replace(/[^0-9a-zA-Z#]/g, ''))
+                  }}
                   width="100%"
                   inputWidth="100%"
                   className="block"
