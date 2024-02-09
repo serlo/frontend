@@ -44,12 +44,12 @@ export function checkIsAllowedNesting(
   if (pluginType === EditorPluginType.Exercise) {
     // never allow exercises in solutions
     if (typesOfAncestors.includes(EditorPluginType.Solution)) return false
-
+    return true
     const rootPlugin = typesOfAncestors[0]
     if (
       // serlo template plugins start with "type-…"
       // so we use this to not hide exercises in edusharing and /___editor_preview
-      rootPlugin.startsWith('type-') &&
+      // rootPlugin.startsWith('type-') &&
       rootPlugin !== TemplatePluginType.Article &&
       rootPlugin !== TemplatePluginType.CoursePage
     ) {

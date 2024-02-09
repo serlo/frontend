@@ -203,7 +203,10 @@ export function createPlugins({
 
     // Special plugins, never visible in suggestions
     // ===================================================
-    { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
+    {
+      type: EditorPluginType.Rows,
+      plugin: createRowsPlugin(),
+    },
     { type: EditorPluginType.Unsupported, plugin: unsupportedPlugin },
     { type: EditorPluginType.Article, plugin: articlePlugin },
     {

@@ -17,6 +17,7 @@ function createRowsState(content: ChildStateTypeConfig) {
 const defaultConfig = {
   content: { plugin: EditorPluginType.Text },
   parentType: ROOT,
+  allowedPlugins: [EditorPluginType.Exercise, EditorPluginType.Rows],
 }
 
 export function createRowsPlugin(

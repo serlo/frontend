@@ -2,16 +2,13 @@ import {
   type EditorPlugin,
   type EditorPluginProps,
   string,
+  child,
 } from '@editor/plugin'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { UuidType } from '@serlo/frontend/src/data-types'
 
-import {
-  editorContent,
-  entity,
-  entityType,
-  headerInputClasses,
-} from './common/common'
+import { entity, entityType, headerInputClasses } from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 
@@ -19,12 +16,27 @@ export const eventTypeState = entityType(
   {
     ...entity,
     title: string(),
-    content: editorContent(),
+    // content: editorContent(EditorPluginType.Rows),
+    content: child({
+      plugin: EditorPluginType.Rows,
+      config: {
+        allowedPlugins: [EditorPluginType.Exercise, EditorPluginType.Rows],
+      },
+    }),
     meta_title: string(),
     meta_description: string(),
   },
   {}
 )
+
+//  content: child({
+//       plugin: EditorPluginType.Rows,
+//       ...(config.allowedPlugins !== undefined && {
+//         config: {
+//           allowedPlugins: config.allowedPlugins,
+//         },
+//       }),
+//     }),
 
 export type EventTypePluginState = typeof eventTypeState
 
