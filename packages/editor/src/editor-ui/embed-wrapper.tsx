@@ -26,20 +26,20 @@ export function EmbedWrapper({
   type,
   embedUrl,
 }: EmbedWrapperProps) {
-  const [showIframe, setShowIframe] = useState(false)
+  const [showContent, setShowContent] = useState(false)
 
   useEffect(() => {
-    setShowIframe(false)
+    setShowContent(false)
   }, [embedUrl])
 
   const { strings } = useInstanceData()
 
   const confirmLoad = () => {
-    if (!showIframe) setShowIframe(true)
+    if (!showContent) setShowContent(true)
   }
 
   function onKeyDown(e: KeyboardEvent<HTMLButtonElement>) {
-    if (!showIframe && (e.key === 'Enter' || e.key === ' ')) {
+    if (!showContent && (e.key === 'Enter' || e.key === ' ')) {
       e.preventDefault()
       confirmLoad()
     }
@@ -55,8 +55,7 @@ export function EmbedWrapper({
         className
       )}
     >
-      {renderPlaceholder()}
-      {showIframe && children}
+      {showContent ? children : renderPlaceholder()}
     </div>
   )
 
@@ -83,8 +82,8 @@ export function EmbedWrapper({
             onKeyDown={onKeyDown}
           >
             <FaIcon
-              className={cn('py-0.5', showIframe && 'animate-spin-slow')}
-              icon={showIframe ? faSpinner : entityIconMapping[type]}
+              className={cn('py-0.5', showContent && 'animate-spin-slow')}
+              icon={showContent ? faSpinner : entityIconMapping[type]}
             />{' '}
             {strings.embed.general}
           </button>

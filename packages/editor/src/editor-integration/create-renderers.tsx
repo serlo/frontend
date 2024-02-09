@@ -20,6 +20,7 @@ import { SpoilerStaticRenderer } from '@editor/plugins/spoiler/static'
 import type { MathElement } from '@editor/plugins/text'
 import { TextStaticRenderer } from '@editor/plugins/text/static'
 import { StaticMath } from '@editor/plugins/text/static-components/static-math'
+import { TextAreaExerciseStaticRenderer } from '@editor/plugins/text-area-exercise/static'
 import { VideoStaticRenderer } from '@editor/plugins/video/static'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { ComponentProps } from 'react'
@@ -80,6 +81,10 @@ export function createRenderers(): InitRenderersArgs {
       {
         type: EditorPluginType.FillInTheBlanksExercise,
         renderer: FillInTheBlanksStaticRenderer,
+      },
+      {
+        type: EditorPluginType.TextAreaExercise,
+        renderer: TextAreaExerciseStaticRenderer,
       },
       {
         type: EditorPluginType.Unsupported,

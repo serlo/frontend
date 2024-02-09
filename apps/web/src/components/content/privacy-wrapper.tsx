@@ -33,7 +33,7 @@ export function PrivacyWrapper({
   twingleCallback,
   onLoad,
 }: PrivacyWrapperProps) {
-  const [showIframe, setShowIframe] = useState(false)
+  const [showContent, setShowContent] = useState(false)
   const isTwingle = provider === ExternalProvider.Twingle
   const { checkConsent, giveConsent } = useConsent()
   const [consentGiven, setConsentGiven] = useState(false)
@@ -44,13 +44,13 @@ export function PrivacyWrapper({
     giveConsent(provider)
     setConsentGiven(true)
     if (onLoad) onLoad()
-    if (showIframe) return
+    if (showContent) return
     if (isTwingle && twingleCallback) twingleCallback()
-    setShowIframe(true)
+    setShowContent(true)
   }
 
   function onKeyDown(e: KeyboardEvent<HTMLButtonElement>) {
-    if (!showIframe && (e.key === 'Enter' || e.key === ' ')) {
+    if (!showContent && (e.key === 'Enter' || e.key === ' ')) {
       e.preventDefault()
       confirmLoad()
     }
@@ -61,12 +61,12 @@ export function PrivacyWrapper({
     if (isTwingle && twingleCallback && consentGiven) {
       confirmLoad()
     }
-    setConsentGiven(consentGiven)
+    setConsentGiven((consentGiven) => consentGiven)
 
     // If we already have the consent (in localstorage, we can show the iframe
     // immediately)
     if (consentGiven && provider === ExternalProvider.Vocaroo) {
-      setShowIframe(true)
+      setShowContent(true)
     }
 
     // only run on first load
@@ -84,8 +84,7 @@ export function PrivacyWrapper({
         `
       )}
     >
-      {renderPlaceholder()}
-      {showIframe && children}
+      {showContent ? children : renderPlaceholder()}
     </div>
   )
 
@@ -95,8 +94,8 @@ export function PrivacyWrapper({
       provider: provider,
     })
 
-    if (showIframe && provider === ExternalProvider.Vocaroo) return null
-    if (isTwingle && showIframe) return null
+    if (showContent && provider === ExternalProvider.Vocaroo) return null
+    if (isTwingle && showContent) return null
 
     const previewImageUrl = isTwingle
       ? '/_assets/img/donations-form.png'
@@ -145,9 +144,9 @@ export function PrivacyWrapper({
             onKeyDown={onKeyDown}
           >
             <FaIcon
-              className={cn('py-0.5', showIframe && 'animate-spin-slow')}
+              className={cn('py-0.5', showContent && 'animate-spin-slow')}
               icon={
-                showIframe
+                showContent
                   ? faSpinner
                   : type === 'twingle'
                     ? faHeart
