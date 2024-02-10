@@ -71,7 +71,7 @@ export function createRenderers(): InitRenderersArgs {
       { type: EditorPluginType.H5p, renderer: H5pStaticRenderer },
       {
         type: EditorPluginType.InputExercise,
-        renderer: H5pStaticRenderer,
+        renderer: InputExerciseStaticRenderer,
       },
       {
         type: EditorPluginType.ScMcExercise,
