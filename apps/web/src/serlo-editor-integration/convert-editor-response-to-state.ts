@@ -218,6 +218,7 @@ export function convertEditorResponseToState(
         revision,
         changes: '',
         title,
+        // @ts-expect-error mockup
         content: serializeStaticDocument(parseStaticString(content)),
         meta_title,
         meta_description,
