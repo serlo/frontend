@@ -1,3 +1,4 @@
+import { isSelectionWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { AllowedChildPlugins } from '@editor/plugins/rows'
 import { checkIsAllowedNesting } from '@editor/plugins/rows/utils/check-is-allowed-nesting'
@@ -75,7 +76,8 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     !isInlineChildEditor &&
     focused &&
     text.startsWith('/') &&
-    filteredOptions.length > 0
+    filteredOptions.length > 0 &&
+    !isSelectionWithinList(editor)
 
   const { enableScope, disableScope } = useHotkeysContext()
 
