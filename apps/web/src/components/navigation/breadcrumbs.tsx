@@ -23,10 +23,7 @@ export function Breadcrumbs({
   noIcon,
 }: BreadcrumbsProps) {
   return (
-    <nav
-      className="mx-side mt-5 sm:mb-11 sm:ml-2.5 md:mb-16"
-      data-qa="breadcrumbs"
-    >
+    <nav className="mx-side mt-5 sm:ml-2.5" data-qa="breadcrumbs">
       {data &&
         data.map((bcEntry, i) => {
           return (
