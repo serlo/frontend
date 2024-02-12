@@ -165,8 +165,6 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
       return
     }
 
-    editor.deleteBackward('block')
-
     // split the text-plugin and insert selected new plugin
     setTimeout(() => {
       insertPlugin({ pluginType, editor, id, dispatch })
