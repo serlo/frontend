@@ -11,10 +11,11 @@ import type { MathElement } from '@editor/plugins/text'
 import { TextStaticRenderer } from '@editor/plugins/text/static'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type {
-  EditorFillInTheBlanksExerciseDocument,
   EditorAnchorDocument,
   EditorEquationsDocument,
   EditorExerciseDocument,
+  EditorExerciseGroupDocument,
+  EditorFillInTheBlanksExerciseDocument,
   EditorH5PDocument,
   EditorHighlightDocument,
   EditorInjectionDocument,
@@ -27,7 +28,7 @@ import type {
   EditorSolutionDocument,
   EditorSpoilerDocument,
   EditorTemplateExerciseGroupDocument,
-  EditorExerciseGroupDocument,
+  EditorTermMatchingDocument,
 } from '@editor/types/editor-plugins'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import dynamic from 'next/dynamic'
@@ -68,6 +69,11 @@ const FillInTheBlanksStaticRenderer =
       (mod) => mod.FillInTheBlanksStaticRenderer
     )
   )
+const TermMatchingStaticRenderer = dynamic<EditorTermMatchingDocument>(() =>
+  import('@editor/plugins/term-matching/static').then(
+    (mod) => mod.TermMatchingStaticRenderer
+  )
+)
 const InjectionStaticRenderer = dynamic<EditorInjectionDocument>(() =>
   import('@editor/plugins/injection/static').then(
     (mod) => mod.InjectionStaticRenderer
@@ -228,6 +234,10 @@ export function createRenderers(): InitRenderersArgs {
       {
         type: EditorPluginType.FillInTheBlanksExercise,
         renderer: FillInTheBlanksStaticRenderer,
+      },
+      {
+        type: EditorPluginType.TermMatchingExercise,
+        renderer: TermMatchingStaticRenderer,
       },
       {
         type: EditorPluginType.Solution,

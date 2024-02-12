@@ -24,10 +24,11 @@ import { TextExerciseGroupTypePluginState } from '@editor/plugins/serlo-template
 import { GenericContentTypePluginState } from '@editor/plugins/serlo-template-plugins/generic-content'
 import type { SolutionPluginState } from '@editor/plugins/solution'
 import { SpoilerPluginState } from '@editor/plugins/spoiler'
+import { TermMatchingPluginState } from '@editor/plugins/term-matching'
 import type {
-  TextEditorState,
   CustomElement,
   CustomText,
+  TextEditorState,
 } from '@editor/plugins/text'
 import { TextAreaExercisePluginState } from '@editor/plugins/text-area-exercise'
 import type { UnsupportedPluginState } from '@editor/plugins/unsupported'
@@ -135,6 +136,11 @@ export interface EditorScMcExerciseDocument {
 export interface EditorFillInTheBlanksExerciseDocument {
   plugin: EditorPluginType.FillInTheBlanksExercise
   state: PrettyStaticState<FillInTheBlanksExerciseState>
+  id?: string
+}
+export interface EditorTermMatchingDocument {
+  plugin: EditorPluginType.TermMatchingExercise
+  state: PrettyStaticState<TermMatchingPluginState>
   id?: string
 }
 export interface EditorSpoilerDocument {
@@ -254,6 +260,7 @@ export type SupportedEditorDocument =
   | EditorSerloInjectionDocument
   | EditorMultimediaDocument
   | EditorSpoilerDocument
+  | EditorTermMatchingDocument
   | EditorBoxDocument
   | EditorImageDocument
   | EditorTextDocument

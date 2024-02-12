@@ -30,6 +30,7 @@ export enum EditorPluginType {
   InputExercise = 'inputExercise',
   TextAreaExercise = 'textAreaExercise',
   FillInTheBlanksExercise = 'blanksExercise',
+  TermMatchingExercise = 'termMatchingExercise',
   Solution = 'solution',
 
   Unsupported = 'unsupported',

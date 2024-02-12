@@ -46,6 +46,7 @@ import { userTypePlugin } from '@editor/plugins/serlo-template-plugins/user'
 import { videoTypePlugin } from '@editor/plugins/serlo-template-plugins/video'
 import { solutionPlugin } from '@editor/plugins/solution'
 import { createSpoilerPlugin } from '@editor/plugins/spoiler'
+import { termMatchingPlugin } from '@editor/plugins/term-matching'
 import { createTextPlugin } from '@editor/plugins/text'
 import { unsupportedPlugin } from '@editor/plugins/unsupported'
 import { videoPlugin } from '@editor/plugins/video'
@@ -53,7 +54,7 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 import { shouldUseFeature } from '@/components/user/profile-experimental'
-import { type LoggedInData, UuidType } from '@/data-types'
+import { UuidType, type LoggedInData } from '@/data-types'
 import { isProduction } from '@/helper/is-production'
 
 export function createPlugins({
@@ -199,6 +200,13 @@ export function createPlugins({
     {
       type: EditorPluginType.FillInTheBlanksExercise,
       plugin: fillInTheBlanksExercise,
+    },
+    {
+      type: EditorPluginType.TermMatchingExercise,
+      plugin: termMatchingPlugin,
+      visibleInSuggestions: true,
+      // @FIXME
+      icon: <IconAudio />,
     },
 
     // Special plugins, never visible in suggestions
