@@ -1,4 +1,5 @@
 import {
+  BlankAnswerDragItem,
   blankDraggableAnswerDragType,
   dragAnswerStyle,
 } from '@editor/plugins/fill-in-the-blanks-exercise/components/blank-draggable-answer'
@@ -6,12 +7,9 @@ import { useDragLayer } from 'react-dnd'
 
 import { cn } from '@/helper/cn'
 
-interface DragItem {
+interface DragItem extends BlankAnswerDragItem {
   type: string
   id: string
-  draggableId: string
-
-  text: string
 }
 
 export function CustomDragLayer() {
