@@ -39,26 +39,6 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
     }
   }, [editor, state.value, id])
 
-  const handleEditorChange = useCallback(
-    (newValue: Descendant[]) => {
-      const isAstChange = editor.operations.some(
-        ({ type }) => type !== 'set_selection'
-      )
-      const storeEntry = instanceStateStore[id]
-
-      if (isAstChange) {
-        storeEntry.value = newValue
-        state.set(
-          { value: newValue, selection: editor.selection },
-          ({ value }) => ({ value, selection: storeEntry.selection })
-        )
-      }
-
-      storeEntry.selection = editor.selection
-    },
-    [editor.operations, editor.selection, state, id]
-  )
-
   useEffect(() => {
     const storeEntry = instanceStateStore[id]
     if (focused && storeEntry.needRefocus > 0) {
@@ -85,8 +65,23 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
     }
   }, [focused, id, editor])
 
-  return {
-    previousSelection: instanceStateStore[id].selection,
-    handleEditorChange,
-  }
+  return useCallback(
+    (newValue: Descendant[]) => {
+      const isAstChange = editor.operations.some(
+        ({ type }) => type !== 'set_selection'
+      )
+      const storeEntry = instanceStateStore[id]
+
+      if (isAstChange) {
+        storeEntry.value = newValue
+        state.set(
+          { value: newValue, selection: editor.selection },
+          ({ value }) => ({ value, selection: storeEntry.selection })
+        )
+      }
+
+      storeEntry.selection = editor.selection
+    },
+    [editor.operations, editor.selection, state, id]
+  )
 }
