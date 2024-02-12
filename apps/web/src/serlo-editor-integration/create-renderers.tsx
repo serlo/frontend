@@ -27,6 +27,7 @@ import type {
   EditorSolutionDocument,
   EditorSpoilerDocument,
   EditorTemplateExerciseGroupDocument,
+  EditorExerciseGroupDocument,
 } from '@editor/types/editor-plugins'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import dynamic from 'next/dynamic'
@@ -104,6 +105,11 @@ const SerloTableStaticRenderer = dynamic<EditorSerloTableDocument>(() =>
     (mod) => mod.SerloTableStaticRenderer
   )
 )
+const ExerciseGroupStaticRenderer = dynamic<EditorExerciseGroupDocument>(() =>
+  import('@editor/plugins/exercise-group/static').then(
+    (mod) => mod.ExerciseGroupStaticRenderer
+  )
+)
 const TextExerciseGroupTypeStaticRenderer =
   dynamic<EditorTemplateExerciseGroupDocument>(() =>
     import('@editor/plugins/serlo-template-plugins/exercise-group/static').then(
@@ -179,20 +185,6 @@ export function createRenderers(): InitRenderersArgs {
           )
         },
       },
-
-      // only for pages
-      { type: EditorPluginType.PageLayout, renderer: PageLayoutStaticRenderer },
-      { type: EditorPluginType.PageTeam, renderer: PageTeamStaticRenderer },
-      {
-        type: EditorPluginType.PagePartners,
-        renderer: PagePartnersStaticRenderer,
-      },
-
-      // exercises
-      {
-        type: EditorPluginType.Exercise,
-        renderer: ExerciseSerloStaticRenderer,
-      },
       {
         type: EditorPluginType.Highlight,
         renderer: (props: EditorHighlightDocument) => {
@@ -205,6 +197,24 @@ export function createRenderers(): InitRenderersArgs {
             </>
           )
         },
+      },
+
+      // only for pages
+      { type: EditorPluginType.PageLayout, renderer: PageLayoutStaticRenderer },
+      { type: EditorPluginType.PageTeam, renderer: PageTeamStaticRenderer },
+      {
+        type: EditorPluginType.PagePartners,
+        renderer: PagePartnersStaticRenderer,
+      },
+
+      // exercises
+      {
+        type: EditorPluginType.ExerciseGroup,
+        renderer: ExerciseGroupStaticRenderer,
+      },
+      {
+        type: EditorPluginType.Exercise,
+        renderer: ExerciseSerloStaticRenderer,
       },
       { type: EditorPluginType.H5p, renderer: H5pSerloStaticRenderer },
       {
@@ -237,13 +247,8 @@ export function createRenderers(): InitRenderersArgs {
         type: TemplatePluginType.TextExerciseGroup,
         renderer: TextExerciseGroupTypeStaticRenderer,
       },
-      {
-        type: 'exercise-group',
-        renderer: TextExerciseGroupTypeStaticRenderer,
-      },
       // { type: TemplatePluginType.User, renderer: userTypePlugin },
       // { type: TemplatePluginType.Video, renderer: videoTypePlugin },
-
       {
         type: EditorPluginType.Unsupported,
         renderer: (state: unknown) => {

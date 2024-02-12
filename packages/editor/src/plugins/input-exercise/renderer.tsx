@@ -33,6 +33,7 @@ export function InputExerciseRenderer({
   const [value, setValue] = useState('')
   const exStrings = useInstanceData().strings.content.exercises
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [mathjs, setMathjs] = useState<MathjsImport | null>(null)
   useEffect(() => void import('mathjs').then((math) => setMathjs(math)), [])
 
@@ -91,7 +92,11 @@ export function InputExerciseRenderer({
         const submission = normalize(value)
         if (!solution || !submission) return false
 
-        if (type === 'input-expression-equal-match-challenge' && solution) {
+        if (
+          type === 'input-expression-equal-match-challenge' &&
+          typeof solution === 'number' &&
+          typeof submission === 'number'
+        ) {
           return solution - submission === 0
         }
         return solution === submission
@@ -116,11 +121,12 @@ export function InputExerciseRenderer({
     const _value = collapseWhitespace(value)
     switch (type) {
       case InputExerciseType.NumberExact:
-        return Number(normalizeNumber(_value).replace(/\s/g, ''))
+        return normalizeNumber(_value).replace(/\s/g, '')
       case InputExerciseType.ExpressionEqual:
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
         return Number(mathjs?.evaluate(normalizeNumber(_value)))
       case InputExerciseType.StringNormalized:
-        return Number(_value.toUpperCase())
+        return _value.toUpperCase()
     }
   }
 

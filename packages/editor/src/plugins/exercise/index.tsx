@@ -4,6 +4,7 @@ import {
   child,
   object,
   optional,
+  number,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
@@ -23,6 +24,7 @@ const exerciseState = object({
     })
   ),
   solution: optional(child({ plugin: EditorPluginType.Solution })),
+  licenseId: optional(number()),
 })
 
 export type ExercisePluginState = typeof exerciseState

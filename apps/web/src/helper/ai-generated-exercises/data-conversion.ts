@@ -124,6 +124,7 @@ export function convertAiGeneratedScExerciseToEditorDocument(
         },
         interactive,
         solution,
+        licenseId: undefined,
       },
       // doesn't have an id yet
       id: undefined,
@@ -372,6 +373,7 @@ export function transformEditorDataToExerciseGroup(
       revision: 0,
       cohesive: false,
       // Heading of whole exercise group
+      //@ts-expect-error ignoring this while exercise group migration is going on
       content: JSON.stringify(
         createExerciseHeadingInEditor(editorData.heading)
       ),

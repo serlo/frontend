@@ -12,16 +12,20 @@ import { GeogebraStaticRenderer } from '@editor/plugins/geogebra/static'
 import { H5pStaticRenderer } from '@editor/plugins/h5p/static'
 import { HighlightStaticRenderer } from '@editor/plugins/highlight/static'
 import { ImageStaticRenderer } from '@editor/plugins/image/static'
+import { InputExerciseStaticRenderer } from '@editor/plugins/input-exercise/static'
 import { MultimediaStaticRenderer } from '@editor/plugins/multimedia/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
 import { ScMcExerciseStaticRenderer } from '@editor/plugins/sc-mc-exercise/static'
 import { SerloTableStaticRenderer } from '@editor/plugins/serlo-table/static'
+import { GenericContentTypeStaticRenderer } from '@editor/plugins/serlo-template-plugins/generic-content/static'
 import { SpoilerStaticRenderer } from '@editor/plugins/spoiler/static'
 import type { MathElement } from '@editor/plugins/text'
 import { TextStaticRenderer } from '@editor/plugins/text/static'
 import { StaticMath } from '@editor/plugins/text/static-components/static-math'
+import { TextAreaExerciseStaticRenderer } from '@editor/plugins/text-area-exercise/static'
 import { VideoStaticRenderer } from '@editor/plugins/video/static'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { ComponentProps } from 'react'
 
 import { Lazy } from '@/components/content/lazy'
@@ -71,7 +75,7 @@ export function createRenderers(): InitRenderersArgs {
       { type: EditorPluginType.H5p, renderer: H5pStaticRenderer },
       {
         type: EditorPluginType.InputExercise,
-        renderer: H5pStaticRenderer,
+        renderer: InputExerciseStaticRenderer,
       },
       {
         type: EditorPluginType.ScMcExercise,
@@ -82,12 +86,20 @@ export function createRenderers(): InitRenderersArgs {
         renderer: FillInTheBlanksStaticRenderer,
       },
       {
+        type: EditorPluginType.TextAreaExercise,
+        renderer: TextAreaExerciseStaticRenderer,
+      },
+      {
         type: EditorPluginType.Unsupported,
         renderer: (state: unknown) => {
           // eslint-disable-next-line no-console
           console.warn('unsupported renderer: ', state)
           return null
         },
+      },
+      {
+        type: TemplatePluginType.GenericContent,
+        renderer: GenericContentTypeStaticRenderer,
       },
     ],
     mathRenderer: (element: MathElement) =>
