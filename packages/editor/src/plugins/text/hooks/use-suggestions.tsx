@@ -165,9 +165,11 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
       return
     }
 
-    // split the text-plugin and insert selected new plugin
+    // Split the text-plugin and insert selected new plugin,
+    // then remove the leftover empty line.
     setTimeout(() => {
       insertPlugin({ pluginType, editor, id, dispatch })
+      editor.deleteBackward('block')
     })
   }
 
