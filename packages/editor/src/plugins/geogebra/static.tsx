@@ -3,5 +3,5 @@ import { EditorGeogebraDocument } from '@editor/types/editor-plugins'
 
 export function GeogebraStaticRenderer({ state: id }: EditorGeogebraDocument) {
   const { url, cleanId } = parseId(id)
-  return <GeogebraRenderer url={url} id={cleanId} />
+  return <GeogebraRenderer url={url} geogebraId={cleanId} />
 }
