@@ -5,6 +5,7 @@ on:
     branches:
       - staging
       - editor-package-vite
+      - temp-editor-package-release
 
 jobs:
   build-and-publish:
