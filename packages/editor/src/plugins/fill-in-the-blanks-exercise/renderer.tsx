@@ -1,4 +1,3 @@
-// import { DndWrapper } from '@editor/core/components/dnd-wrapper'
 import dynamic from 'next/dynamic'
 import {
   type ReactNode,
