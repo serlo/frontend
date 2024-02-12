@@ -1,4 +1,4 @@
-import { extractStringFromTextDocument } from '@editor/plugins/text/utils/static-extract-text'
+import { extractStringFromRowsTextAndMultimedia } from '@editor/plugins/text/utils/static-extract-text'
 import {
   AnyEditorDocument,
   EditorExerciseDocument,
@@ -20,7 +20,7 @@ export function getPreviewStringFromExercise(
     ? (document.state.content as EditorRowsDocument)
     : undefined
 
-  const titleString = rows?.state.map(extractStringFromTextDocument).join(' ')
+  const titleString = extractStringFromRowsTextAndMultimedia(rows)
 
   if (!titleString || titleString.trim().length < 3) return typeString
 

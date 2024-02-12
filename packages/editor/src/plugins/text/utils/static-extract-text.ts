@@ -16,18 +16,29 @@ export function extractDescendant(node: Descendant): string {
 export function extractStringFromTextDocument(
   document?: AnyEditorDocument
 ): string {
-  if (
-    document &&
-    isMultimediaDocument(document) &&
-    isRowsDocument(document.state.explanation)
-  ) {
-    return document.state.explanation.state
-      .map(extractStringFromTextDocument)
-      .join(' ')
-      .trim()
-  }
   if (document && isTextDocument(document) && document.state.length > 0) {
     return document.state.map(extractDescendant).join(' ').trim()
   }
+  return ''
+}
+
+export function extractStringFromRowsTextAndMultimedia(
+  document?: AnyEditorDocument
+): string {
+  if (document) {
+    if (isRowsDocument(document)) {
+      return document.state
+        .map(extractStringFromRowsTextAndMultimedia)
+        .join(' ')
+        .trim()
+    }
+
+    if (isMultimediaDocument(document)) {
+      return extractStringFromRowsTextAndMultimedia(document.state.explanation)
+    }
+
+    return extractStringFromTextDocument(document)
+  }
+
   return ''
 }
