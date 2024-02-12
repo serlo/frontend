@@ -74,6 +74,7 @@
     "react-diff-viewer": "^3.1.1",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
+    "react-dnd-touch-backend": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-hotkeys-hook": "^4.4.1",
     "react-lazyload": "^3.2.0",
