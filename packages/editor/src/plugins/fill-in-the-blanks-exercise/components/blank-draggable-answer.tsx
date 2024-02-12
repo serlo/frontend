@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useDrag } from 'react-dnd'
 
 import type { DraggableId } from '..'
@@ -11,18 +12,31 @@ interface BlankDraggableAnswerProps {
   isAnswerCorrect?: boolean
 }
 
+export interface BlankAnswerDragItem {
+  draggableId: DraggableId
+  text: string
+}
+
+export const dragAnswerStyle =
+  'cursor-grab rounded-full border border-brand bg-brand-50 px-2'
+
 export function BlankDraggableAnswer(props: BlankDraggableAnswerProps) {
   const { draggableId, text, isAnswerCorrect } = props
 
+  const dragItem = useMemo<BlankAnswerDragItem>(
+    () => ({ draggableId, text }),
+    [draggableId, text]
+  )
+
   const [, dragRef] = useDrag({
     type: blankDraggableAnswerDragType,
-    item: { draggableId },
+    item: dragItem,
   })
 
   return (
     <span
       className={cn(
-        'cursor-grab rounded-full border border-brand bg-brand-50 px-2',
+        dragAnswerStyle,
         isAnswerCorrect && 'border-green-500',
         isAnswerCorrect === false && 'border-red-500'
       )}
