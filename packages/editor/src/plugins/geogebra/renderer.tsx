@@ -1,12 +1,18 @@
 import { cn } from '@serlo/frontend/src/helper/cn'
 import Script from 'next/script'
+import { useState } from 'react'
+import { v4 as uuid_v4 } from 'uuid'
 
 export interface GeogebraRendererProps {
-  id: string
+  geogebraId: string
   url: string
 }
 
-export function GeogebraRenderer({ id, url }: GeogebraRendererProps) {
+export function GeogebraRenderer({ geogebraId, url }: GeogebraRendererProps) {
+  const [uuid] = useState(uuid_v4())
+  const elementId = `ggb-element-${uuid}`
+  const containerId = `${elementId}-container`
+
   return (
     <>
       <Script
@@ -18,7 +24,7 @@ export function GeogebraRenderer({ id, url }: GeogebraRendererProps) {
             showToolBar: false,
             showAlgebraInput: false,
             showMenuBar: false,
-            material_id: id,
+            material_id: geogebraId,
             showResetIcon: true,
             enableLabelDrags: false,
             enableShiftDragZoom: false,
@@ -29,24 +35,27 @@ export function GeogebraRenderer({ id, url }: GeogebraRendererProps) {
             useBrowserForJS: false,
             enableFileFeatures: false,
             borderColor: 'transparent',
-            scaleContainerClass: `geogebra-scaler-${id}`,
+            scaleContainerClass: containerId,
           }
 
-          if (Object.hasOwn(global, 'GGBApplet')) {
+          // deployggb.js will define 'GGBApplet' on the global object. We use 'globalThis' instead of 'global' or 'window' for compatibility.
+          // https://javascript.info/global-object
+          // Using 'global' lead to error 'global not defined' in editor package when using vite.
+          if (Object.hasOwn(globalThis, 'GGBApplet')) {
             //@ts-expect-error no types for Geogebra script
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-            const applet = new window.GGBApplet(params, true)
+            const applet = new globalThis.GGBApplet(params, true)
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-            applet.inject(`ggb-element-${id}`)
+            applet.inject(elementId)
           }
         }}
       />
       <div
-        className={cn(`geogebra-scaler-${id} absolute top-0 flex h-full w-full
-        items-center justify-center
-        overflow-hidden rounded-xl bg-brand-50 p-0`)}
+        className={cn(
+          `${containerId} absolute top-0 flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-brand-50 p-0`
+        )}
       >
-        {url ? <div id={`ggb-element-${id}`} className="mx-auto"></div> : null}
+        {url ? <div id={`${elementId}`} className="mx-auto"></div> : null}
       </div>
     </>
   )
