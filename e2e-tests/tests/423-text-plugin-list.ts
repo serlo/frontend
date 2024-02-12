@@ -4,7 +4,7 @@ Feature('Serlo Editor - Text plugin - list')
 
 Before(popupWarningFix)
 
-Scenario('Unordered list shortcuts (indentation missing)', async ({ I }) => {
+Scenario('Unordered list shortcuts', ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
   I.say('Add a new text plugin and delete the backslash')
@@ -49,7 +49,7 @@ Scenario('Unordered list shortcuts (indentation missing)', async ({ I }) => {
   })
 })
 
-Scenario('Ordered list shortcuts', async ({ I }) => {
+Scenario('Ordered list shortcuts', ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
   I.say('Add a new text plugin and delete the backslash')
@@ -94,3 +94,56 @@ Scenario('Ordered list shortcuts', async ({ I }) => {
     css: '.serlo-editor-hacks div[data-slate-editor="true"] ol:not(.unstyled-list)',
   })
 })
+
+Scenario("Don't show suggestions when '/' is inside of a list", ({ I }) => {
+  I.amOnPage('/entity/create/Article/1377')
+
+  I.say('Add a new text plugin, check for suggestions, delete the backslash')
+  I.click('$add-new-plugin-row-button')
+  I.see('Schreibe Text und Matheformeln, und formatiere sie.')
+  I.pressKey('Backspace')
+
+  I.say(
+    'Create an unordered list, type in a backslash, check that suggestions are not showing'
+  )
+  I.type('- Some text')
+  I.see('Some text', 'ul')
+  I.pressKey('Enter')
+  I.type('/')
+  I.dontSee('Schreibe Text und Matheformeln, und formatiere sie.')
+})
+
+Scenario.only(
+  'Inserting a plugin right after a list using suggestions',
+  ({ I }) => {
+    I.amOnPage('/entity/create/Article/1377')
+
+    I.say('Add a new text plugin and delete the backslash')
+    I.click('$add-new-plugin-row-button')
+    I.pressKey('Backspace')
+
+    I.say('Create an unordered list and add multiple list items')
+    I.type('- Some text')
+    I.see('Some text', 'ul')
+    I.pressKey('Enter')
+    I.type('Some more text')
+    I.see('Some more text', 'ul')
+    I.pressKey('Enter')
+    I.type('Some more extra text')
+    I.see('Some more extra text', 'ul')
+
+    I.say('Exit the list using double Enter')
+    I.pressKey('Enter')
+    I.pressKey('Enter')
+
+    I.say('Add a Spoiler plugin using suggestions')
+    I.type('/Spo')
+    I.pressKey('Enter')
+    I.seeElement(locate('input').withAttr({ placeholder: 'Titel eingeben' }))
+
+    I.say('Check that the list still exists')
+    I.see('Some text', 'ul')
+    I.see('Some more text', 'ul')
+    I.see('Some more extra text', 'ul')
+  }
+)
