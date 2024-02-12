@@ -1,4 +1,5 @@
-import { DndWrapper } from '@editor/core/components/dnd-wrapper'
+// import { DndWrapper } from '@editor/core/components/dnd-wrapper'
+import dynamic from 'next/dynamic'
 import {
   type ReactNode,
   useMemo,
@@ -14,6 +15,11 @@ import { BlankDraggableAnswer } from './components/blank-draggable-answer'
 import { BlankDraggableArea } from './components/blank-draggable-area'
 import { FillInTheBlanksContext } from './context/blank-context'
 import { Blank, type BlankType } from './types'
+
+const DndWrapper = dynamic(
+  () => import('@editor/core/components/dnd-wrapper').then((x) => x.DndWrapper),
+  { ssr: false }
+)
 
 type MathjsImport = typeof import('mathjs')
 
