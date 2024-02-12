@@ -19,12 +19,14 @@ import {
 import { createRowsPlugin } from '@editor/plugins/rows'
 import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
 import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
+import { genericContentTypePlugin } from '@editor/plugins/serlo-template-plugins/generic-content'
 import { solutionPlugin } from '@editor/plugins/solution'
 import { createSpoilerPlugin } from '@editor/plugins/spoiler'
 import { createTextPlugin } from '@editor/plugins/text'
 import { textAreaExercisePlugin } from '@editor/plugins/text-area-exercise'
 import { unsupportedPlugin } from '@editor/plugins/unsupported'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 import { type LoggedInData } from '@/data-types'
 
@@ -80,7 +82,6 @@ export function createBasicPlugins({
       visibleInSuggestions: true,
       icon: <IconTable />,
     },
-    // TODO: Deactivate for RLP
     {
       type: EditorPluginType.Geogebra,
       plugin: geoGebraPlugin,
@@ -129,5 +130,9 @@ export function createBasicPlugins({
     // ===================================================
     { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
     { type: EditorPluginType.Unsupported, plugin: unsupportedPlugin },
+    {
+      type: TemplatePluginType.GenericContent,
+      plugin: genericContentTypePlugin,
+    },
   ]
 }
