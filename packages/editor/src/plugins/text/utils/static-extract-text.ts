@@ -1,9 +1,5 @@
 import { AnyEditorDocument } from '@editor/types/editor-plugins'
-import {
-  isMultimediaDocument,
-  isRowsDocument,
-  isTextDocument,
-} from '@editor/types/plugin-type-guards'
+import { isTextDocument } from '@editor/types/plugin-type-guards'
 import type { Descendant } from 'slate'
 
 export function extractDescendant(node: Descendant): string {
@@ -19,26 +15,5 @@ export function extractStringFromTextDocument(
   if (document && isTextDocument(document) && document.state.length > 0) {
     return document.state.map(extractDescendant).join(' ').trim()
   }
-  return ''
-}
-
-export function extractStringFromRowsTextAndMultimedia(
-  document?: AnyEditorDocument
-): string {
-  if (document) {
-    if (isRowsDocument(document)) {
-      return document.state
-        .map(extractStringFromRowsTextAndMultimedia)
-        .join(' ')
-        .trim()
-    }
-
-    if (isMultimediaDocument(document)) {
-      return extractStringFromRowsTextAndMultimedia(document.state.explanation)
-    }
-
-    return extractStringFromTextDocument(document)
-  }
-
   return ''
 }
