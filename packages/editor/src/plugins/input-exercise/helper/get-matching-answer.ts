@@ -1,6 +1,6 @@
-import { normalizeValue } from './normalize-value.js'
-import { InputExerciseType } from '../input-exercise-type.js'
-import { type InputExerciseAnswer, type MathjsImport } from '../renderer.jsx'
+import { normalizeValue } from './normalize-value'
+import { InputExerciseType } from '../input-exercise-type'
+import { type InputExerciseAnswer, type MathjsImport } from '../renderer'
 
 export function getMatchingAnswer(
   answers: InputExerciseAnswer[],
