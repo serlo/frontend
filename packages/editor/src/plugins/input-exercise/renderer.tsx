@@ -71,6 +71,7 @@ export function InputExerciseRenderer({
           setValue(e.target.value)
           setFeedback(null)
         }}
+        data-qa="plugin-input-exercise-input"
         onKeyDown={(e) => {
           if (e.key === 'Enter') handleEvaluate()
         }}

@@ -82,3 +82,33 @@ Scenario('Check picture in scmc exercise', ({ I }) => {
     'https://assets.serlo.org/legacy/56ebffb3bb393_1fe5b83b4ff8aae9bbc0026f127423c166e1ce93.png'
   )
 })
+
+Scenario('Interact with input exercise', ({ I }) => {
+  I.amOnPage('/286551')
+  I.see('exact number match')
+  I.see('Unit')
+
+  I.see("Stimmt's", 'button.opacity-0') // button is hidden
+
+  I.click('$plugin-input-exercise-input')
+  I.type('1')
+  I.click("Stimmt's")
+  I.see('🎉')
+  I.see('Superb feedback')
+
+  I.click('$plugin-input-exercise-input')
+  I.pressKey('Backspace')
+  I.dontSee('feedback')
+  I.see("Stimmt's", 'button.opacity-0') // button is hidden
+  I.type('2')
+  I.pressKey('Enter')
+  I.see('✋')
+  I.see('Handy feedback')
+
+  // generic feedback
+  I.pressKey('Backspace')
+  I.type('something')
+  I.pressKey('Enter')
+  I.see('✋')
+  I.see('Leider nicht richtig')
+})
