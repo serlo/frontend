@@ -40,8 +40,10 @@ export function CustomDragLayer() {
           </div>
         )
       default: {
-        // eslint-disable-next-line no-console
-        console.warn('Trying to render an unknown drag type!', { itemType })
+        // Trying to render an unknown drag type. This is the case when handling
+        // the preview within the component that calls `useDrag`. For mobile
+        // support of a preview, it's better to use the `use-empty-preview` hook
+        // and render the preview here.
         return null
       }
     }
