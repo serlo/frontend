@@ -1,6 +1,6 @@
 import { getMatchingAnswer } from '@editor/plugins/input-exercise/helper/get-matching-answer'
 import { InputExerciseType } from '@editor/plugins/input-exercise/input-exercise-type'
-import mathjs from 'mathjs'
+import { evaluate } from 'mathjs'
 
 const answers = [
   {
@@ -40,7 +40,7 @@ function getStringNormalizedAnswer(value: string) {
     answers,
     value,
     InputExerciseType.StringNormalized,
-    mathjs.evaluate
+    evaluate
   )
 }
 
