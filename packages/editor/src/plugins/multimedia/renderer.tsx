@@ -22,9 +22,10 @@ export function MultimediaRenderer({
       <div
         onClick={onClick}
         className={cn(
-          'media-wrapper relative z-10 mobile:float-right mobile:-mb-1 mobile:ml-2 mobile:mt-1',
+          'media-wrapper relative z-10 mobile:float-right mobile:-mb-1 mobile:ml-2',
           widthClass,
-          extraImageClass
+          extraImageClass,
+          'mt-8 mobileExt:mt-0'
         )}
       >
         {media}
