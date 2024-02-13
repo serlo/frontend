@@ -3,7 +3,7 @@ import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { useEffect, useState } from 'react'
 
-import { getCorrectAnswers } from './helper/get-correct-answers'
+import { getMatchingAnswer } from './helper/get-matching-answer'
 import { InputExerciseType } from './input-exercise-type'
 
 export type MathjsImport = typeof import('mathjs')
@@ -42,11 +42,9 @@ export function InputExerciseRenderer({
   function handleEvaluate() {
     if (!mathjs) return
 
-    const correctAnswers = getCorrectAnswers(answers, value, type, mathjs)
-
-    const hasCorrectAnswer =
-      !!correctAnswers.length && correctAnswers[0].isCorrect
-    const customFeedbackNode = correctAnswers[0]?.feedback ?? null
+    const answer = getMatchingAnswer(answers, value, type, mathjs)
+    const hasCorrectAnswer = !!answer?.isCorrect
+    const customFeedbackNode = answer?.feedback ?? null
 
     if (onEvaluate) onEvaluate(hasCorrectAnswer, value)
     setFeedback({

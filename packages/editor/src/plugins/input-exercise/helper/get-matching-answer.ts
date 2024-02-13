@@ -2,12 +2,12 @@ import { normalizeValue } from './normalize-value.js'
 import { InputExerciseType } from '../input-exercise-type.js'
 import { type InputExerciseAnswer, type MathjsImport } from '../renderer.jsx'
 
-export function getCorrectAnswers(
+export function getMatchingAnswer(
   answers: InputExerciseAnswer[],
   value: string,
   type: InputExerciseType,
   mathjs: MathjsImport
-): InputExerciseAnswer[] {
+): InputExerciseAnswer | undefined {
   const filteredAnswers = answers.filter((answer) => {
     try {
       const solution = normalizeValue(answer.value, type, mathjs)
@@ -27,5 +27,5 @@ export function getCorrectAnswers(
     }
   })
 
-  return filteredAnswers
+  return filteredAnswers.length > 0 ? filteredAnswers[0] : undefined
 }
