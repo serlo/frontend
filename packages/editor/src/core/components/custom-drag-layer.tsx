@@ -49,9 +49,7 @@ export function CustomDragLayer() {
 
   return (
     <div className="pointer-events-none fixed left-0 top-0 z-50">
-      <div style={{ transform }} className="">
-        {renderItem()}
-      </div>
+      <div style={{ transform }}>{renderItem()}</div>
     </div>
   )
 }
