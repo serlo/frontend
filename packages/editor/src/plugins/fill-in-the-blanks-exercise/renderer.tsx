@@ -129,6 +129,19 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     return blanks.length === locationOfDraggables.size
   }, [blanks.length, locationOfDraggables.size, mode, textInBlanks])
 
+  // replace with 'use client' directive once it leaves Canary, see
+  // https://react.dev/reference/react/use-client
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  if (!isClient) {
+    // Render nothing until the component is mounted client-side
+    return null
+  }
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <DndWrapper>
