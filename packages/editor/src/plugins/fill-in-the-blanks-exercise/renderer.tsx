@@ -17,7 +17,7 @@ import { Blank, type BlankType } from './types'
 
 type MathjsImport = typeof import('mathjs')
 
-interface FillInTheBlanksRendererProps {
+export interface FillInTheBlanksRendererProps {
   text: ReactNode
   textPluginState: {
     plugin: string
@@ -28,6 +28,7 @@ interface FillInTheBlanksRendererProps {
   initialTextInBlank: 'empty' | 'correct-answer'
   extraDraggableAnswers?: Array<{ answer: string }>
   isEditing?: boolean
+  onEvaluate?: (correct: boolean) => void
 }
 
 export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
@@ -38,6 +39,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     extraDraggableAnswers,
     initialTextInBlank,
     isEditing,
+    onEvaluate,
   } = props
 
   const [isFeedbackVisible, setIsFeedbackVisible] = useState<boolean>(false)
@@ -243,6 +245,12 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
 
       newBlankAnswersCorrectList.set(blankState.blankId, { isCorrect })
     })
+
+    if (onEvaluate) {
+      onEvaluate(
+        [...newBlankAnswersCorrectList].every((entry) => entry[1].isCorrect)
+      )
+    }
 
     setFeedbackForBlanks(newBlankAnswersCorrectList)
     setIsFeedbackVisible(true)
