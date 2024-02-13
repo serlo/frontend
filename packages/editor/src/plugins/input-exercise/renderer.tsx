@@ -42,7 +42,7 @@ export function InputExerciseRenderer({
   function handleEvaluate() {
     if (!mathjs) return
 
-    const answer = getMatchingAnswer(answers, value, type, mathjs)
+    const answer = getMatchingAnswer(answers, value, type, mathjs.evaluate)
     const hasCorrectAnswer = !!answer?.isCorrect
     const customFeedbackNode = answer?.feedback ?? null
 

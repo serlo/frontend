@@ -4,7 +4,7 @@ import { type MathjsImport } from '../renderer'
 export function normalizeValue(
   value: string,
   type: InputExerciseType,
-  mathjs: MathjsImport
+  mathjsEvaluate: MathjsImport['evaluate']
 ) {
   const _value = collapseWhitespace(value)
   switch (type) {
@@ -12,7 +12,7 @@ export function normalizeValue(
       return normalizeNumber(_value).replace(/\s/g, '')
     case InputExerciseType.ExpressionEqual:
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-      return Number(mathjs?.evaluate(normalizeNumber(_value)))
+      return Number(mathjsEvaluate(normalizeNumber(_value)))
     case InputExerciseType.StringNormalized:
       return _value.toUpperCase()
   }

@@ -40,71 +40,100 @@ const answers = [
   },
 ]
 
-function getNumberExactAnswer(value: string) {
+function getExpressionEqualAnswer(value: string) {
   return getMatchingAnswer(
     answers,
     value,
-    InputExerciseType.NumberExact,
+    InputExerciseType.ExpressionEqual,
     evaluate
   )
 }
 
-describe('input-exercise-plugin: getMatchingAnswer (NumberExact)', () => {
+describe('input-exercise-plugin: getMatchingAnswer (ExpressionEqual)', () => {
   test('correct value matching answer', () => {
-    const answer = getNumberExactAnswer('1')
+    const answer = getExpressionEqualAnswer('1')
     expect(!!answer).toBe(true)
     expect(answer?.value).toBe('1')
   })
 
   test('value matching incorrect but existing answer', () => {
-    const answer = getNumberExactAnswer('2')
+    const answer = getExpressionEqualAnswer('2')
     expect(!!answer).toBe(true)
     expect(answer?.value).toBe('2')
   })
 
   test('incorrect value not matching existing answer', () => {
-    const answer = getNumberExactAnswer('333')
+    const answer = getExpressionEqualAnswer('333')
     expect(answer).toBe(undefined)
   })
 
   test('correct value matching answer with dot', () => {
-    const answer = getNumberExactAnswer('4.0')
+    const answer = getExpressionEqualAnswer('4.0')
     expect(!!answer).toBe(true)
     expect(answer?.value).toBe('4.0')
   })
 
   test('correct value with comma still matches answer with dot', () => {
-    const answer = getNumberExactAnswer('4,0')
+    const answer = getExpressionEqualAnswer('4,0')
     expect(!!answer).toBe(true)
     expect(answer?.value).toBe('4.0')
   })
 
   test('correct value without decimal place does not match answer with decimal place', () => {
-    const answer = getNumberExactAnswer('4')
-    expect(answer).toBe(undefined)
+    const answer = getExpressionEqualAnswer('4')
+    expect(!!answer).toBe(true)
+    expect(answer?.value).toBe('4.0')
   })
 
   test('correct value matching answer with comma', () => {
-    const answer = getNumberExactAnswer('4,1')
+    const answer = getExpressionEqualAnswer('4,1')
     expect(!!answer).toBe(true)
     expect(answer?.value).toBe('4,1')
   })
 
   test('correct value with dot still matches answer with comma', () => {
-    const answer = getNumberExactAnswer('4.1')
+    const answer = getExpressionEqualAnswer('4.1')
     expect(!!answer).toBe(true)
     expect(answer?.value).toBe('4,1')
   })
 
-  // … curious but probably okay
-  test('value with string', () => {
-    const answer = getNumberExactAnswer('answer')
+  test('formulas get parsed to match correct answer', () => {
+    const answer = getExpressionEqualAnswer('10 / 10')
     expect(!!answer).toBe(true)
-    expect(answer?.value).toBe('answer')
+    expect(answer?.value).toBe('1')
+  })
+
+  test('formulas get parsed to match correct answer', () => {
+    const answer = getExpressionEqualAnswer('10/10')
+    expect(!!answer).toBe(true)
+    expect(answer?.value).toBe('1')
+  })
+
+  test('formulas get parsed to match correct answer', () => {
+    const answer = getExpressionEqualAnswer('10 - 9')
+    expect(!!answer).toBe(true)
+    expect(answer?.value).toBe('1')
+  })
+
+  test('formulas get parsed to match correct answer', () => {
+    const answer = getExpressionEqualAnswer('0.5*2')
+    expect(!!answer).toBe(true)
+    expect(answer?.value).toBe('1')
+  })
+
+  test('formulas get parsed to match correct answer', () => {
+    const answer = getExpressionEqualAnswer('0,5*2')
+    expect(!!answer).toBe(true)
+    expect(answer?.value).toBe('1')
+  })
+
+  // … just curious
+  test('value with string', () => {
+    const answer = getExpressionEqualAnswer('answer')
+    expect(answer).toBe(undefined)
   })
   test('dot as value', () => {
-    const answer = getNumberExactAnswer('.')
-    expect(!!answer).toBe(true)
-    expect(answer?.value).toBe('.')
+    const answer = getExpressionEqualAnswer('.')
+    expect(answer).toBe(undefined)
   })
 })

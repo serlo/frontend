@@ -6,12 +6,12 @@ export function getMatchingAnswer(
   answers: InputExerciseAnswer[],
   value: string,
   type: InputExerciseType,
-  mathjs: MathjsImport
+  mathjsEvaluate: MathjsImport['evaluate']
 ): InputExerciseAnswer | undefined {
   const filteredAnswers = answers.filter((answer) => {
     try {
-      const solution = normalizeValue(answer.value, type, mathjs)
-      const submission = normalizeValue(value, type, mathjs)
+      const solution = normalizeValue(answer.value, type, mathjsEvaluate)
+      const submission = normalizeValue(value, type, mathjsEvaluate)
       if (!solution || !submission) return false
 
       if (

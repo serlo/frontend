@@ -40,7 +40,7 @@ function getStringNormalizedAnswer(value: string) {
     answers,
     value,
     InputExerciseType.StringNormalized,
-    mathjs
+    mathjs.evaluate
   )
 }
 
