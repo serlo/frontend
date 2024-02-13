@@ -32,7 +32,7 @@ export function getPreviewStringFromExercise(
   }"`
 }
 
-export function extractStringFromRowsTextAndMultimedia(
+function extractStringFromRowsTextAndMultimedia(
   document?: AnyEditorDocument
 ): string {
   if (document) {
