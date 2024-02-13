@@ -1,3 +1,4 @@
+import { useEmptyPreview } from '@editor/core/helpers/use-empty-preview'
 import { useMemo } from 'react'
 import { useDrag } from 'react-dnd'
 
@@ -28,10 +29,11 @@ export function BlankDraggableAnswer(props: BlankDraggableAnswerProps) {
     [draggableId, text]
   )
 
-  const [, dragRef] = useDrag({
+  const [, dragRef, preview] = useDrag({
     type: blankDraggableAnswerDragType,
     item: dragItem,
   })
+  useEmptyPreview(preview)
 
   return (
     <span

@@ -6,6 +6,7 @@ import {
 import { useDragLayer } from 'react-dnd'
 
 import { cn } from '@/helper/cn'
+// import { usePreview } from 'react-dnd-multi-backend'
 
 interface DragItem extends BlankAnswerDragItem {
   type: string
@@ -49,9 +50,41 @@ export function CustomDragLayer() {
 
   return (
     <div className="pointer-events-none fixed left-0 top-0 z-50">
-      <div style={{ transform }} className="transition-transform">
+      <div style={{ transform }} className="">
         {renderItem()}
       </div>
     </div>
   )
 }
+
+// export function Preview() {
+//   const preview = usePreview()
+//   if (!preview.display) {
+//     return null
+//   }
+//   const { itemType, item, style, ref } = preview
+
+//   function renderItem() {
+//     switch (itemType) {
+//       case blankDraggableAnswerDragType:
+//         return (
+//           <div className={cn('rounded p-2 shadow', dragAnswerStyle)}>
+//             {(item as DragItem)?.text}
+//           </div>
+//         )
+//       default: {
+//         // eslint-disable-next-line no-console
+//         console.warn('Trying to render an unknown drag type!', { itemType })
+//         return null
+//       }
+//     }
+//   }
+
+//   return (
+//     <div className="pointer-events-none fixed left-0 top-0 z-50">
+//       <div style={style} className="transition-transform">
+//         {renderItem()}
+//       </div>
+//     </div>
+//   )
+// }
