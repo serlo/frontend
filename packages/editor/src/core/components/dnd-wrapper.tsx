@@ -1,3 +1,4 @@
+'use client'
 import { HTML5toTouch } from 'rdndmb-html5-to-touch'
 import { ReactNode } from 'react'
 import { DndProvider } from 'react-dnd-multi-backend'
