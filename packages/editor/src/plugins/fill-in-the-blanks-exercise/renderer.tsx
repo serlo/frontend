@@ -1,5 +1,6 @@
-import dynamic from 'next/dynamic'
 import {
+  lazy,
+  Suspense,
   type ReactNode,
   useMemo,
   useState,
@@ -15,9 +16,10 @@ import { BlankDraggableArea } from './components/blank-draggable-area'
 import { FillInTheBlanksContext } from './context/blank-context'
 import { Blank, type BlankType } from './types'
 
-const DndWrapper = dynamic(
-  () => import('@editor/core/components/dnd-wrapper').then((x) => x.DndWrapper),
-  { ssr: false }
+const DndWrapper = lazy(() =>
+  import('@editor/core/components/dnd-wrapper').then((module) => ({
+    default: module.DndWrapper,
+  }))
 )
 
 type MathjsImport = typeof import('mathjs')
@@ -128,89 +130,91 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
   }, [blanks.length, locationOfDraggables.size, mode, textInBlanks])
 
   return (
-    <DndWrapper>
-      <div className="mx-side mb-block leading-[30px] [&>p]:leading-[30px]">
-        <FillInTheBlanksContext.Provider
-          value={{
-            mode,
-            feedbackForBlanks: {
-              value: feedbackForBlanks,
-              set: setFeedbackForBlanks,
-            },
-            textInBlanks,
-            textUserTypedIntoBlanks: {
-              value: textUserTypedIntoBlanks,
-              set: setTextUserTypedIntoBlanks,
-            },
-            draggables,
-            locationOfDraggables: {
-              value: locationOfDraggables,
-              set: setLocationOfDraggables,
-            },
-            isFeedbackVisible: {
-              value: isFeedbackVisible,
-              set: setIsFeedbackVisible,
-            },
-          }}
-        >
-          {text}
-        </FillInTheBlanksContext.Provider>
+    <Suspense fallback={<div>Loading...</div>}>
+      <DndWrapper>
+        <div className="mx-side mb-block leading-[30px] [&>p]:leading-[30px]">
+          <FillInTheBlanksContext.Provider
+            value={{
+              mode,
+              feedbackForBlanks: {
+                value: feedbackForBlanks,
+                set: setFeedbackForBlanks,
+              },
+              textInBlanks,
+              textUserTypedIntoBlanks: {
+                value: textUserTypedIntoBlanks,
+                set: setTextUserTypedIntoBlanks,
+              },
+              draggables,
+              locationOfDraggables: {
+                value: locationOfDraggables,
+                set: setLocationOfDraggables,
+              },
+              isFeedbackVisible: {
+                value: isFeedbackVisible,
+                set: setIsFeedbackVisible,
+              },
+            }}
+          >
+            {text}
+          </FillInTheBlanksContext.Provider>
 
-        {mode === 'drag-and-drop' ? (
-          <BlankDraggableArea onDrop={handleDraggableAreaDrop}>
-            {draggables.map((draggable, index) =>
-              locationOfDraggables.get(draggable.draggableId) ? null : (
-                <BlankDraggableAnswer key={index} {...draggable} />
+          {mode === 'drag-and-drop' ? (
+            <BlankDraggableArea onDrop={handleDraggableAreaDrop}>
+              {draggables.map((draggable, index) =>
+                locationOfDraggables.get(draggable.draggableId) ? null : (
+                  <BlankDraggableAnswer key={index} {...draggable} />
+                )
+              )}
+            </BlankDraggableArea>
+          ) : null}
+
+          {!isEditing ? (
+            <BlankCheckButton
+              isVisible={shouldShowCheckButton}
+              feedback={feedbackForBlanks}
+              isFeedbackVisible={isFeedbackVisible}
+              onClick={checkAnswers}
+            />
+          ) : null}
+
+          {/* Only debug output from here on */}
+          <div className="hidden">
+            Blanks state:
+            {blanks.map((blank, index) => (
+              <div key={index}>{JSON.stringify(blank)}</div>
+            ))}
+          </div>
+          <div className="hidden">
+            <div>State textUserTypedIntoBlank:</div>
+            {[...textUserTypedIntoBlanks].map((entry, index) => {
+              const blankId = entry[0]
+              const text = entry[1].text
+              return (
+                <div
+                  className="ml-5"
+                  key={index}
+                >{`Text: ${text} | BlankId: ${blankId}`}</div>
               )
-            )}
-          </BlankDraggableArea>
-        ) : null}
-
-        {!isEditing ? (
-          <BlankCheckButton
-            isVisible={shouldShowCheckButton}
-            feedback={feedbackForBlanks}
-            isFeedbackVisible={isFeedbackVisible}
-            onClick={checkAnswers}
-          />
-        ) : null}
-
-        {/* Only debug output from here on */}
-        <div className="hidden">
-          Blanks state:
-          {blanks.map((blank, index) => (
-            <div key={index}>{JSON.stringify(blank)}</div>
-          ))}
+            })}
+          </div>
+          <div className="hidden">
+            {[...locationOfDraggables].map((entry, index) => (
+              <div key={index}>
+                {`DraggableId: ${entry[0]} in blankId: ${entry[1]}`}
+              </div>
+            ))}
+          </div>
+          <div className="hidden">
+            {draggables.map((draggable, index) => (
+              <div key={index}>
+                {`DraggableId: ${draggable.draggableId} with text: ${draggable.text}`}
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="hidden">
-          <div>State textUserTypedIntoBlank:</div>
-          {[...textUserTypedIntoBlanks].map((entry, index) => {
-            const blankId = entry[0]
-            const text = entry[1].text
-            return (
-              <div
-                className="ml-5"
-                key={index}
-              >{`Text: ${text} | BlankId: ${blankId}`}</div>
-            )
-          })}
-        </div>
-        <div className="hidden">
-          {[...locationOfDraggables].map((entry, index) => (
-            <div key={index}>
-              {`DraggableId: ${entry[0]} in blankId: ${entry[1]}`}
-            </div>
-          ))}
-        </div>
-        <div className="hidden">
-          {draggables.map((draggable, index) => (
-            <div key={index}>
-              {`DraggableId: ${draggable.draggableId} with text: ${draggable.text}`}
-            </div>
-          ))}
-        </div>
-      </div>
-    </DndWrapper>
+      </DndWrapper>
+    </Suspense>
   )
 
   function checkAnswers() {
