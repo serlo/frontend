@@ -34,7 +34,7 @@ export function CellTypeSwitch(props: CellTypeSwitchProps) {
   if (!document || isHead || !isFocused || !isClear) return null
 
   return (
-    <>
+    <div className="absolute -mt-5 flex">
       {document.plugin === EditorPluginType.Text ? null : (
         <CellTypeSwitchButton
           title={tableStrings.convertToText}
@@ -64,6 +64,6 @@ export function CellTypeSwitch(props: CellTypeSwitchProps) {
           }}
         />
       )}
-    </>
+    </div>
   )
 }

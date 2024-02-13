@@ -15,7 +15,7 @@ export function CellTypeSwitchButton(props: CellTypeSwitchButtonProps) {
     <button
       onMouseDown={(e) => e.stopPropagation()} // hack to stop editor from stealing events
       onClick={onClick}
-      className="serlo-button-editor-secondary absolute -mt-5 ml-3.5 block px-1 pb-0.25 pt-[3px] text-sm"
+      className="serlo-button-editor-secondary ml-1 block px-1 pb-0.25 pt-[3px] text-sm"
       title={title}
     >
       <FaIcon icon={icon} />
