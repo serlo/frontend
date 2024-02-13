@@ -808,6 +808,7 @@ export const loggedInData = {
           columnAndRowHeaders: 'Column and row headers',
           convertToText: 'Convert to text',
           convertToImage: 'Convert to image',
+          convertToBlank: 'Convert to blank',
           row: 'row',
           column: 'column',
           addType: 'Add %type%',

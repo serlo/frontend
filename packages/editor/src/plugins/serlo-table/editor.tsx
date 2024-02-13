@@ -16,8 +16,7 @@ import { cn } from '@serlo/frontend/src/helper/cn'
 import { KeyboardEvent, useState } from 'react'
 
 import type { SerloTableProps } from '.'
-import { CellSwitchButton } from './cell-switch-button'
-import { useAreImagesDisabledInTable } from './contexts/are-images-disabled-in-table-context'
+import { CellTypeSwitch } from './components/cell-type-switch'
 import { SerloTableRenderer, TableType } from './renderer'
 import { SerloTableToolbar } from './toolbar'
 import { getTableType } from './utils/get-table-type'
@@ -37,6 +36,7 @@ const cellTextFormattingOptions = [
   TextEditorFormattingOption.math,
   TextEditorFormattingOption.richTextBold,
   TextEditorFormattingOption.richTextItalic,
+  TextEditorFormattingOption.textBlank,
 ]
 
 const newCell = { content: { plugin: EditorPluginType.Text } }
@@ -49,8 +49,6 @@ export function SerloTableEditor(props: SerloTableProps) {
   const dispatch = useAppDispatch()
   const focusedElement = useAppSelector(selectFocused)
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
-
-  const areImagesDisabled = useAreImagesDisabledInTable()
 
   const tableStrings = useEditorStrings().plugins.serloTable
 
@@ -134,13 +132,12 @@ export function SerloTableEditor(props: SerloTableProps) {
                     : cellTextFormattingOptions,
                 } as TextEditorConfig,
               })}
-              {props.config.allowImageInTableCells && !areImagesDisabled ? (
-                <CellSwitchButton
-                  cell={cell}
-                  isHead={isHead}
-                  isClear={isClear}
-                />
-              ) : null}
+              <CellTypeSwitch
+                cell={cell}
+                isHead={isHead}
+                isClear={isClear}
+                allowImageInTableCells={props.config.allowImageInTableCells}
+              />
             </div>
           )
         }),
