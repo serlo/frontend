@@ -1,5 +1,10 @@
+import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
-import { selectStaticDocument, useAppSelector } from '@editor/store'
+import {
+  selectIsFocused,
+  selectStaticDocument,
+  useAppSelector,
+} from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { EditorFillInTheBlanksExerciseDocument } from '@editor/types/editor-plugins'
 import { useMemo, useState } from 'react'
@@ -38,6 +43,10 @@ export function FillInTheBlanksExerciseEditor(
   const [previewActive, setPreviewActive] = useState(false)
 
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
+
+  const isChildPluginFocused = useAppSelector((storeState) =>
+    selectIsFocused(storeState, childPlugin.id)
+  )
 
   // Rerender if text plugin state changes
   const childPluginState = useAppSelector((state) => {
@@ -96,7 +105,18 @@ export function FillInTheBlanksExerciseEditor(
         <div className="relative z-0 mt-12">
           <FillInTheBlanksRenderer
             isEditing
-            childPlugin={childPlugin.render({ config: childPluginConfig })}
+            childPlugin={
+              <>
+                {isChildPluginFocused ? (
+                  <PluginToolbar
+                    pluginType={EditorPluginType.Text}
+                    className="!-top-12 !left-0"
+                    noWhiteShadow
+                  />
+                ) : null}
+                {childPlugin.render({ config: childPluginConfig })}
+              </>
+            }
             childPluginState={childPluginState}
             extraDraggableAnswers={staticDocument.state.extraDraggableAnswers}
             mode={mode.value as FillInTheBlanksMode}
