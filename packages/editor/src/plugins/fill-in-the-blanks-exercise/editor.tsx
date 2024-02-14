@@ -1,8 +1,4 @@
-import {
-  selectDocument,
-  selectStaticDocument,
-  useAppSelector,
-} from '@editor/store'
+import { selectStaticDocument, useAppSelector } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { EditorFillInTheBlanksExerciseDocument } from '@editor/types/editor-plugins'
 import { useEffect, useState } from 'react'
@@ -32,7 +28,7 @@ export function FillInTheBlanksExerciseEditor(
 
   // Rerender if text plugin state changes
   const textPluginState = useAppSelector((state) => {
-    return selectDocument(state, text.id)
+    return selectStaticDocument(state, text.id)
   })
 
   const staticDocument = useAppSelector(
