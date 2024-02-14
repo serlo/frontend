@@ -30,12 +30,6 @@ export function FillInTheBlanksExerciseEditor(
   // TODO: update focus within check to include table
   const hasFocus = true // focused || isRendererTextPluginFocused
 
-  // test with table
-  useEffect(() => {
-    text.replace(EditorPluginType.SerloTable)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   // Rerender if text plugin state changes
   const textPluginState = useAppSelector((state) => {
     return selectDocument(state, text.id)
@@ -48,6 +42,14 @@ export function FillInTheBlanksExerciseEditor(
         id
       ) as EditorFillInTheBlanksExerciseDocument
   )
+
+  // test with table
+  useEffect(() => {
+    if (textPluginState?.plugin !== EditorPluginType.SerloTable) {
+      text.replace(EditorPluginType.SerloTable)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (!textPluginState || !staticDocument) return null
 
