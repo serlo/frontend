@@ -1,7 +1,11 @@
-import { selectStaticDocument, useAppSelector } from '@editor/store'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import type { EditorPluginType } from '@editor/package'
+import {
+  selectIsFocused,
+  selectStaticDocument,
+  useAppSelector,
+} from '@editor/store'
 import type { EditorFillInTheBlanksExerciseDocument } from '@editor/types/editor-plugins'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import type { FillInTheBlanksExerciseProps, FillInTheBlanksMode } from '.'
 import { ExtraIncorrectAnswers } from './components/extra-incorrect-answers'
@@ -13,22 +17,21 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 export function FillInTheBlanksExerciseEditor(
   props: FillInTheBlanksExerciseProps
 ) {
-  const { id, state } = props
-  const { text, mode, extraDraggableAnswers } = state
+  const { focused, id, state } = props
+  const { childPlugin, mode, extraDraggableAnswers } = state
   const [previewActive, setPreviewActive] = useState(false)
 
-  // const isRendererTextPluginFocused = useAppSelector((storeState) => {
-  //   return selectIsFocused(storeState, text.id)
-  // })
+  const isChildPluginFocused = useAppSelector((storeState) =>
+    selectIsFocused(storeState, childPlugin.id)
+  )
 
   const editorStrings = useEditorStrings()
 
-  // TODO: update focus within check to include table
-  const hasFocus = true // focused || isRendererTextPluginFocused
+  const hasFocus = focused || isChildPluginFocused
 
   // Rerender if text plugin state changes
-  const textPluginState = useAppSelector((state) => {
-    return selectStaticDocument(state, text.id)
+  const childPluginState = useAppSelector((state) => {
+    return selectStaticDocument(state, childPlugin.id)
   })
 
   const staticDocument = useAppSelector(
@@ -39,15 +42,7 @@ export function FillInTheBlanksExerciseEditor(
       ) as EditorFillInTheBlanksExerciseDocument
   )
 
-  // test with table
-  useEffect(() => {
-    if (textPluginState?.plugin !== EditorPluginType.SerloTable) {
-      text.replace(EditorPluginType.SerloTable)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  if (!textPluginState || !staticDocument) return null
+  if (!childPluginState || !staticDocument) return null
 
   return (
     <div className="mb-12 mt-10 pt-4">
@@ -56,6 +51,7 @@ export function FillInTheBlanksExerciseEditor(
           {...props}
           previewActive={previewActive}
           setPreviewActive={setPreviewActive}
+          childPluginType={childPluginState.plugin as EditorPluginType}
         />
       ) : null}
 
@@ -65,12 +61,12 @@ export function FillInTheBlanksExerciseEditor(
         <div className="relative z-0 mt-12">
           <FillInTheBlanksRenderer
             isEditing
-            text={text.render({
+            childPlugin={childPlugin.render({
               config: {
                 placeholder: editorStrings.plugins.blanksExercise.placeholder,
               },
             })}
-            textPluginState={textPluginState}
+            childPluginState={childPluginState}
             extraDraggableAnswers={staticDocument.state.extraDraggableAnswers}
             mode={mode.value as FillInTheBlanksMode}
             initialTextInBlank="correct-answer"
@@ -84,7 +80,7 @@ export function FillInTheBlanksExerciseEditor(
         </div>
       )}
       {/* Only debug views from here on */}
-      <div className="hidden">{JSON.stringify(textPluginState)}</div>
+      <div className="hidden">{JSON.stringify(childPluginState)}</div>
     </div>
   )
 }

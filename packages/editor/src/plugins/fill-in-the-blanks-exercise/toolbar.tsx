@@ -11,13 +11,15 @@ import { type FillInTheBlanksExerciseProps } from '.'
 import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
 
 export const FillInTheBlanksToolbar = ({
+  id,
   state,
   previewActive,
   setPreviewActive,
-  id,
+  childPluginType,
 }: FillInTheBlanksExerciseProps & {
   previewActive: boolean
   setPreviewActive: Dispatch<SetStateAction<boolean>>
+  childPluginType: EditorPluginType
 }) => {
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
@@ -54,6 +56,16 @@ export const FillInTheBlanksToolbar = ({
                 value: 'drag-and-drop',
                 text: blanksExerciseStrings.modes['drag-and-drop'],
               },
+            ]}
+          />
+          <ToolbarSelect
+            tooltipText={blanksExerciseStrings.chooseType}
+            value={childPluginType}
+            dataQa="plugin-blanks-mode-switch"
+            changeValue={(value) => state.childPlugin.replace(value)}
+            options={[
+              { value: EditorPluginType.Text, text: 'Text' },
+              { value: EditorPluginType.SerloTable, text: 'Table' },
             ]}
           />
         </>

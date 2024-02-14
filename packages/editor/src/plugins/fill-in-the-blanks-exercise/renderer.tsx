@@ -18,8 +18,8 @@ import { Blank, type BlankType } from './types'
 type MathjsImport = typeof import('mathjs')
 
 export interface FillInTheBlanksRendererProps {
-  text: ReactNode
-  textPluginState: {
+  childPlugin: ReactNode
+  childPluginState: {
     plugin: string
     state?: unknown
     id?: string | undefined
@@ -33,8 +33,8 @@ export interface FillInTheBlanksRendererProps {
 
 export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
   const {
-    text,
-    textPluginState,
+    childPlugin,
+    childPluginState,
     mode,
     extraDraggableAnswers,
     initialTextInBlank,
@@ -52,8 +52,8 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
 
   // Array of blank elements extracted from text editor state
   const blanks: BlankType[] = useMemo(() => {
-    return getBlanksWithinObject(textPluginState)
-  }, [textPluginState])
+    return getBlanksWithinObject(childPluginState)
+  }, [childPluginState])
 
   // Maps blankId to the text entered by the user. Modified when user types into a blank and causes rerender.
   const [textUserTypedIntoBlanks, setTextUserTypedIntoBlanks] = useState(
@@ -124,6 +124,14 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     return blanks.length === locationOfDraggables.size
   }, [blanks.length, locationOfDraggables.size, mode, textInBlanks])
 
+  // Clear the blanks state when the type of the child plugin changes
+  useEffect(() => {
+    setTextUserTypedIntoBlanks(new Map<BlankId, { text: string }>())
+    setLocationOfDraggables(new Map<DraggableId, BlankId>())
+    setFeedbackForBlanks(new Map<BlankId, { isCorrect: boolean | undefined }>())
+    setIsFeedbackVisible(false)
+  }, [childPluginState.plugin])
+
   return (
     <DndWrapper>
       <div className="mx-side mb-block leading-[30px] [&>p]:leading-[30px]">
@@ -150,7 +158,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
             },
           }}
         >
-          {text}
+          {childPlugin}
         </FillInTheBlanksContext.Provider>
 
         {mode === 'drag-and-drop' ? (
