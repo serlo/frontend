@@ -1,11 +1,11 @@
-import type { EditorPluginType } from '@editor/package'
 import {
   selectIsFocused,
   selectStaticDocument,
   useAppSelector,
 } from '@editor/store'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { EditorFillInTheBlanksExerciseDocument } from '@editor/types/editor-plugins'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import type { FillInTheBlanksExerciseProps, FillInTheBlanksMode } from '.'
 import { ExtraIncorrectAnswers } from './components/extra-incorrect-answers'
@@ -25,7 +25,7 @@ export function FillInTheBlanksExerciseEditor(
     selectIsFocused(storeState, childPlugin.id)
   )
 
-  const editorStrings = useEditorStrings()
+  const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
   const hasFocus = focused || isChildPluginFocused
 
@@ -41,6 +41,13 @@ export function FillInTheBlanksExerciseEditor(
         id
       ) as EditorFillInTheBlanksExerciseDocument
   )
+
+  const childPluginConfig = useMemo(() => {
+    if (childPluginState.plugin === EditorPluginType.Text)
+      return { placeholder: blanksExerciseStrings.placeholder }
+    if (childPluginState.plugin === EditorPluginType.SerloTable)
+      return { allowBlanks: true }
+  }, [childPluginState.plugin, blanksExerciseStrings.placeholder])
 
   if (!childPluginState || !staticDocument) return null
 
@@ -61,11 +68,7 @@ export function FillInTheBlanksExerciseEditor(
         <div className="relative z-0 mt-12">
           <FillInTheBlanksRenderer
             isEditing
-            childPlugin={childPlugin.render({
-              config: {
-                placeholder: editorStrings.plugins.blanksExercise.placeholder,
-              },
-            })}
+            childPlugin={childPlugin.render({ config: childPluginConfig })}
             childPluginState={childPluginState}
             extraDraggableAnswers={staticDocument.state.extraDraggableAnswers}
             mode={mode.value as FillInTheBlanksMode}

@@ -28,6 +28,7 @@ const tableState = object({
 
 const defaultConfig: SerloTableConfig = {
   allowImageInTableCells: true,
+  allowBlanks: false,
 }
 
 export function createSerloTablePlugin(
@@ -48,4 +49,5 @@ export type SerloTableProps = EditorPluginProps<
 
 export interface SerloTableConfig {
   allowImageInTableCells: boolean // Used in https://github.com/serlo/serlo-editor-for-edusharing
+  allowBlanks: boolean
 }

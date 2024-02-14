@@ -37,7 +37,6 @@ const cellTextFormattingOptions = [
   TextEditorFormattingOption.math,
   TextEditorFormattingOption.richTextBold,
   TextEditorFormattingOption.richTextItalic,
-  TextEditorFormattingOption.textBlank, // TODO: only show within blanks exercise
 ]
 
 const newCell = { content: { plugin: EditorPluginType.Text } }
@@ -96,6 +95,14 @@ export function SerloTableEditor(props: SerloTableProps) {
             store.getState(),
             cell.content.id
           )
+          const formattingOptions = [
+            ...(isHead
+              ? headerTextFormattingOptions
+              : cellTextFormattingOptions),
+            ...(props.config.allowBlanks
+              ? [TextEditorFormattingOption.textBlank]
+              : []),
+          ]
 
           const onKeyUpHandler = (e: KeyboardEvent<HTMLDivElement>) => {
             // hack: redraw when isEmpty changes. (onKeyUp bc. keyDown is captured for some keys)
@@ -130,9 +137,7 @@ export function SerloTableEditor(props: SerloTableProps) {
                 config: {
                   isInlineChildEditor: true,
                   placeholder: '',
-                  formattingOptions: isHead
-                    ? headerTextFormattingOptions
-                    : cellTextFormattingOptions,
+                  formattingOptions,
                 } as TextEditorConfig,
               })}
               {props.config.allowImageInTableCells && !areImagesDisabled ? (
