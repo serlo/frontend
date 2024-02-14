@@ -37,6 +37,7 @@ const cellTextFormattingOptions = [
   TextEditorFormattingOption.math,
   TextEditorFormattingOption.richTextBold,
   TextEditorFormattingOption.richTextItalic,
+  TextEditorFormattingOption.textBlank, // TODO: only show within blanks exercise
 ]
 
 const newCell = { content: { plugin: EditorPluginType.Text } }

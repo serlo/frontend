@@ -1,11 +1,11 @@
 import {
   selectDocument,
-  selectIsFocused,
   selectStaticDocument,
   useAppSelector,
 } from '@editor/store'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { EditorFillInTheBlanksExerciseDocument } from '@editor/types/editor-plugins'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import type { FillInTheBlanksExerciseProps, FillInTheBlanksMode } from '.'
 import { ExtraIncorrectAnswers } from './components/extra-incorrect-answers'
@@ -17,17 +17,24 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 export function FillInTheBlanksExerciseEditor(
   props: FillInTheBlanksExerciseProps
 ) {
-  const { focused, id, state } = props
+  const { id, state } = props
   const { text, mode, extraDraggableAnswers } = state
   const [previewActive, setPreviewActive] = useState(false)
 
-  const isRendererTextPluginFocused = useAppSelector((storeState) => {
-    return selectIsFocused(storeState, text.id)
-  })
+  // const isRendererTextPluginFocused = useAppSelector((storeState) => {
+  //   return selectIsFocused(storeState, text.id)
+  // })
 
   const editorStrings = useEditorStrings()
 
-  const hasFocus = focused || isRendererTextPluginFocused
+  // TODO: update focus within check to include table
+  const hasFocus = true // focused || isRendererTextPluginFocused
+
+  // test with table
+  useEffect(() => {
+    text.replace(EditorPluginType.SerloTable)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // Rerender if text plugin state changes
   const textPluginState = useAppSelector((state) => {
@@ -57,7 +64,7 @@ export function FillInTheBlanksExerciseEditor(
       {previewActive ? (
         <FillInTheBlanksStaticRenderer {...staticDocument} />
       ) : (
-        <>
+        <div className="relative z-0 mt-12">
           <FillInTheBlanksRenderer
             isEditing
             text={text.render({
@@ -76,7 +83,7 @@ export function FillInTheBlanksExerciseEditor(
               extraDraggableAnswers={extraDraggableAnswers}
             />
           ) : null}
-        </>
+        </div>
       )}
       {/* Only debug views from here on */}
       <div className="hidden">{JSON.stringify(textPluginState)}</div>
