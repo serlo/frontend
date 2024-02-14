@@ -10,11 +10,12 @@ import { DropdownButton } from './dropdown-button'
 
 interface PluginCopyToolProps {
   pluginId: string
+  noSeparator?: boolean
 }
 /**
  * experimental plugin to copy plugin's editor state to the clipboard
  */
-export function PluginCopyTool({ pluginId }: PluginCopyToolProps) {
+export function PluginCopyTool({ pluginId, noSeparator }: PluginCopyToolProps) {
   const editorStrings = useEditorStrings()
   const { strings } = useInstanceData()
 
@@ -40,7 +41,7 @@ export function PluginCopyTool({ pluginId }: PluginCopyToolProps) {
       onClick={handleOnClick}
       label={editorStrings.edtrIo.pluginCopyButtonLabel}
       icon={faCopy}
-      className="mt-2.5 border-t pt-2.5"
+      className={noSeparator ? '' : 'mt-2.5 border-t pt-2.5'}
       dataQa="plugin-copy-tool-button"
     />
   )
