@@ -26,7 +26,7 @@ export const FillInTheBlanksToolbar = ({
   return (
     <PluginToolbar
       pluginType={EditorPluginType.FillInTheBlanksExercise}
-      className="!left-[-9px] top-[-33px] w-[calc(100%+25px)]"
+      className="top-[-33px]"
       pluginSettings={
         <>
           <button

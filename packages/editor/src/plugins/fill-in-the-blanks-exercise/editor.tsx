@@ -1,9 +1,5 @@
 import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
-import {
-  selectIsFocused,
-  selectStaticDocument,
-  useAppSelector,
-} from '@editor/store'
+import { selectStaticDocument, useAppSelector } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { EditorFillInTheBlanksExerciseDocument } from '@editor/types/editor-plugins'
 import { useMemo, useState } from 'react'
@@ -14,6 +10,7 @@ import { FillInTheBlanksRenderer } from './renderer'
 import { FillInTheBlanksStaticRenderer } from './static'
 import { FillInTheBlanksToolbar } from './toolbar'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { cn } from '@/helper/cn'
 
 const headerTextFormattingOptions = [
   TextEditorFormattingOption.code,
@@ -40,13 +37,7 @@ export function FillInTheBlanksExerciseEditor(
   const { childPlugin, mode, extraDraggableAnswers } = state
   const [previewActive, setPreviewActive] = useState(false)
 
-  const isChildPluginFocused = useAppSelector((storeState) =>
-    selectIsFocused(storeState, childPlugin.id)
-  )
-
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
-
-  const hasFocus = focused || isChildPluginFocused
 
   // Rerender if text plugin state changes
   const childPluginState = useAppSelector((state) => {
@@ -71,15 +62,33 @@ export function FillInTheBlanksExerciseEditor(
   if (!childPluginState || !staticDocument) return null
 
   return (
-    <div className="mb-12 mt-10 pt-4">
-      {hasFocus ? (
+    <div
+      className={cn(
+        'group/blanks-exercise mb-12 mt-10 pb-6 pt-4',
+        'rounded-b-xl border-3 border-transparent focus-within:rounded-tl-xl focus-within:border-gray-100',
+        focused && '!border-gray-100'
+      )}
+      data-qa="plugin-fill-in-the-blanks-exercise"
+    >
+      {focused ? (
         <FillInTheBlanksToolbar
           {...props}
           previewActive={previewActive}
           setPreviewActive={setPreviewActive}
           childPluginType={childPluginState.plugin as EditorPluginType}
         />
-      ) : null}
+      ) : (
+        <button
+          className={cn(`
+            absolute right-0 top-[-23px] z-[22] hidden h-6 rounded-t-md bg-gray-100
+            px-2 pt-0.5 text-sm font-bold
+            hover:bg-editor-primary-100 group-focus-within/blanks-exercise:block
+          `)}
+          data-qa="plugin-exercise-parent-button"
+        >
+          {blanksExerciseStrings.title}
+        </button>
+      )}
 
       {previewActive ? (
         <FillInTheBlanksStaticRenderer {...staticDocument} />
