@@ -28,6 +28,7 @@ import type {
   EditorSpoilerDocument,
   EditorTemplateExerciseGroupDocument,
   EditorExerciseGroupDocument,
+  EditorBlanksTableDocument,
 } from '@editor/types/editor-plugins'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import dynamic from 'next/dynamic'
@@ -68,6 +69,11 @@ const FillInTheBlanksSerloStaticRenderer =
       '@/serlo-editor-integration/serlo-plugin-wrappers/fill-in-the-blanks-serlo-static-renderer'
     ).then((mod) => mod.FillInTheBlanksSerloStaticRenderer)
   )
+const BlanksTableSerloStaticRenderer = dynamic<EditorBlanksTableDocument>(() =>
+  import(
+    '@/serlo-editor-integration/serlo-plugin-wrappers/blanks-table-serlo-static-renderer'
+  ).then((mod) => mod.BlanksTableSerloStaticRenderer)
+)
 const InjectionStaticRenderer = dynamic<EditorInjectionDocument>(() =>
   import('@editor/plugins/injection/static').then(
     (mod) => mod.InjectionStaticRenderer
@@ -228,6 +234,10 @@ export function createRenderers(): InitRenderersArgs {
       {
         type: EditorPluginType.FillInTheBlanksExercise,
         renderer: FillInTheBlanksSerloStaticRenderer,
+      },
+      {
+        type: EditorPluginType.BlanksTable,
+        renderer: BlanksTableSerloStaticRenderer,
       },
       {
         type: EditorPluginType.Solution,

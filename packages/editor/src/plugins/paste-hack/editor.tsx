@@ -29,6 +29,7 @@ const StateDecoder = t.strict({
         t.literal(EditorPluginType.Video),
         t.literal(EditorPluginType.Audio),
         t.literal(EditorPluginType.SerloTable),
+        t.literal(EditorPluginType.BlanksTable),
         t.literal(EditorPluginType.Highlight),
         t.literal(EditorPluginType.Injection),
         t.literal(EditorPluginType.Multimedia),

@@ -14,6 +14,7 @@ import type { PluginsWithData } from '@editor/plugin/helpers/editor-plugins'
 import { anchorPlugin } from '@editor/plugins/anchor'
 import { articlePlugin } from '@editor/plugins/article'
 import { audioPlugin } from '@editor/plugins/audio'
+import { createBlanksTablePlugin } from '@editor/plugins/blanks-table'
 import { createBoxPlugin } from '@editor/plugins/box'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
@@ -95,6 +96,12 @@ export function createPlugins({
       plugin: createBoxPlugin({}),
       visibleInSuggestions: true,
       icon: <IconBox />,
+    },
+    {
+      type: EditorPluginType.BlanksTable,
+      plugin: createBlanksTablePlugin(),
+      visibleInSuggestions: true,
+      icon: <IconTable />,
     },
     {
       type: EditorPluginType.SerloTable,

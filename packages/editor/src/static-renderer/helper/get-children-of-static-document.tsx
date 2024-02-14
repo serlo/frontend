@@ -51,6 +51,8 @@ export function getChildrenOfStaticDocument(
   // ignoring for now
   // Equations
   // SerloTable
+  // BlanksTable
   // ScMcExercise
   // InputExercise
+  // BlanksExercise
 }

@@ -3,6 +3,7 @@ export enum EditorPluginType {
   Article = 'article',
   Audio = 'audio',
   ArticleIntroduction = 'articleIntroduction',
+  BlanksTable = 'blanksTable',
   Box = 'box',
   Equations = 'equations',
   Geogebra = 'geogebra',

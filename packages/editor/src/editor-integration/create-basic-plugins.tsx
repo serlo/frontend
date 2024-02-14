@@ -6,6 +6,7 @@ import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedi
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
+import { createBlanksTablePlugin } from '@editor/plugins/blanks-table'
 import { createBoxPlugin } from '@editor/plugins/box'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
@@ -79,6 +80,12 @@ export function createBasicPlugins({
     {
       type: EditorPluginType.SerloTable,
       plugin: createSerloTablePlugin({ allowImageInTableCells }),
+      visibleInSuggestions: true,
+      icon: <IconTable />,
+    },
+    {
+      type: EditorPluginType.BlanksTable,
+      plugin: createBlanksTablePlugin(),
       visibleInSuggestions: true,
       icon: <IconTable />,
     },

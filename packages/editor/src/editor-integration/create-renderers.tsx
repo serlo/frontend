@@ -4,6 +4,7 @@ import {
 } from '@editor/plugin/helpers/editor-renderer'
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
+import { BlanksTableStaticRenderer } from '@editor/plugins/blanks-table/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
 import { EquationsStaticRenderer } from '@editor/plugins/equations/static'
 import { ExerciseStaticRenderer } from '@editor/plugins/exercise/static'
@@ -48,6 +49,10 @@ export function createRenderers(): InitRenderersArgs {
         renderer: SpoilerStaticRenderer,
       },
       { type: EditorPluginType.Box, renderer: BoxStaticRenderer },
+      {
+        type: EditorPluginType.BlanksTable,
+        renderer: BlanksTableStaticRenderer,
+      },
       { type: EditorPluginType.SerloTable, renderer: SerloTableStaticRenderer },
       { type: EditorPluginType.Equations, renderer: EquationsStaticRenderer },
       {

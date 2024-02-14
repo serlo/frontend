@@ -682,6 +682,21 @@ export const loggedInData = {
           identifier: 'Identifier (e.g. "long-explanation")',
           anchorId: 'ID of the anchor',
         },
+        blanksTable: {
+          title: 'Blanks Table',
+          description: 'Create tables with blanks',
+          mode: 'Mode',
+          columnHeaders: 'Only column headers',
+          rowHeaders: 'Only row headers',
+          columnAndRowHeaders: 'Column and row headers',
+          row: 'row',
+          column: 'column',
+          addType: 'Add %type%',
+          addTypeBefore: 'Add %type% before',
+          deleteType: 'Delete %type%',
+          confirmDelete:
+            'Are you sure you want to delete this %type% and the content in it?',
+        },
         box: {
           title: 'Container',
           description:

@@ -14,7 +14,10 @@ export function checkIsAllowedNesting(
   }
 
   // Restrict Box->Multimedia->Table nesting
-  if (pluginType === EditorPluginType.SerloTable) {
+  if (
+    pluginType === EditorPluginType.SerloTable ||
+    pluginType === EditorPluginType.BlanksTable
+  ) {
     const multimediaAncestorIndex = typesOfAncestors.findLastIndex(
       (ancestorType) => ancestorType === EditorPluginType.Multimedia
     )

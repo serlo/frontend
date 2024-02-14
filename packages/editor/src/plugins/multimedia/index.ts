@@ -29,6 +29,7 @@ const defaultConfig: MultimediaConfig = {
         EditorPluginType.Equations,
         EditorPluginType.Image,
         EditorPluginType.SerloTable,
+        EditorPluginType.BlanksTable,
       ],
     },
   },

@@ -39,6 +39,7 @@ const defaultAllowedPlugins: (EditorPluginType | string)[] = [
   EditorPluginType.Equations,
   EditorPluginType.Multimedia,
   EditorPluginType.SerloTable,
+  EditorPluginType.BlanksTable,
   EditorPluginType.Highlight,
 ]
 

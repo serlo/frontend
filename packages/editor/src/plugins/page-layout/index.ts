@@ -11,6 +11,7 @@ import { PageLayoutEditor } from './editor'
 
 const allowedPlugins = [
   EditorPluginType.Text,
+  EditorPluginType.BlanksTable,
   EditorPluginType.Box,
   EditorPluginType.Geogebra,
   EditorPluginType.Highlight,

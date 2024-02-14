@@ -2,6 +2,7 @@ import type { PrettyStaticState } from '@editor/plugin'
 import type { AnchorPluginState } from '@editor/plugins/anchor'
 import type { ArticlePluginState } from '@editor/plugins/article'
 import { AudioPluginState } from '@editor/plugins/audio'
+import { BlanksTablePluginState } from '@editor/plugins/blanks-table'
 import { BoxPluginState } from '@editor/plugins/box'
 import { EquationsPluginState } from '@editor/plugins/equations'
 import type { ExercisePluginState } from '@editor/plugins/exercise'
@@ -166,6 +167,11 @@ export interface EditorSerloTableDocument {
   state: PrettyStaticState<SerloTablePluginState>
   id?: string
 }
+export interface EditorBlanksTableDocument {
+  plugin: EditorPluginType.BlanksTable
+  state: PrettyStaticState<BlanksTablePluginState>
+  id?: string
+}
 export interface EditorTextDocument {
   plugin: EditorPluginType.Text
   state: PrettyStaticState<TextEditorState>
@@ -250,6 +256,7 @@ export type SupportedEditorDocument =
   | EditorVideoDocument
   | EditorAudioDocument
   | EditorSerloTableDocument
+  | EditorBlanksTableDocument
   | EditorHighlightDocument
   | EditorSerloInjectionDocument
   | EditorMultimediaDocument

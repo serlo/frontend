@@ -30,6 +30,7 @@ const pluginsWithOwnBorder = [
   EditorPluginType.Geogebra,
   EditorPluginType.Highlight,
   EditorPluginType.SerloTable,
+  EditorPluginType.BlanksTable,
   EditorPluginType.Spoiler,
   EditorPluginType.Video,
 ]
