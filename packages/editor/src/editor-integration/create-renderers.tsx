@@ -18,6 +18,7 @@ import { RowsStaticRenderer } from '@editor/plugins/rows/static'
 import { ScMcExerciseStaticRenderer } from '@editor/plugins/sc-mc-exercise/static'
 import { SerloTableStaticRenderer } from '@editor/plugins/serlo-table/static'
 import { GenericContentTypeStaticRenderer } from '@editor/plugins/serlo-template-plugins/generic-content/static'
+import { StaticSolutionRenderer } from '@editor/plugins/solution/static'
 import { SpoilerStaticRenderer } from '@editor/plugins/spoiler/static'
 import type { MathElement } from '@editor/plugins/text'
 import { TextStaticRenderer } from '@editor/plugins/text/static'
@@ -67,6 +68,10 @@ export function createRenderers(): InitRenderersArgs {
       {
         type: EditorPluginType.Exercise,
         renderer: ExerciseStaticRenderer,
+      },
+      {
+        type: EditorPluginType.Solution,
+        renderer: StaticSolutionRenderer,
       },
       {
         type: EditorPluginType.Highlight,

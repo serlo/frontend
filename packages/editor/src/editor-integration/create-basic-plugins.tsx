@@ -9,6 +9,7 @@ import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
 import { createBoxPlugin } from '@editor/plugins/box'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
+import { fillInTheBlanksExercise } from '@editor/plugins/fill-in-the-blanks-exercise'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
@@ -124,7 +125,14 @@ export function createBasicPlugins({
         },
       }),
     },
-    { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
+    {
+      type: EditorPluginType.ScMcExercise,
+      plugin: createScMcExercisePlugin(),
+    },
+    {
+      type: EditorPluginType.FillInTheBlanksExercise,
+      plugin: fillInTheBlanksExercise,
+    },
 
     // Special plugins, never visible in suggestions
     // ===================================================
