@@ -49,5 +49,5 @@ export type SerloTableProps = EditorPluginProps<
 
 export interface SerloTableConfig {
   allowImageInTableCells: boolean // Used in https://github.com/serlo/serlo-editor-for-edusharing
-  allowBlanks: boolean
+  allowBlanks?: boolean
 }
