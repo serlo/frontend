@@ -13,7 +13,7 @@ import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { KeyboardEvent, useState } from 'react'
+import { KeyboardEvent, useContext, useState } from 'react'
 
 import type { SerloTableProps } from '.'
 import { CellSwitchButton } from './cell-switch-button'
@@ -21,6 +21,7 @@ import { useAreImagesDisabledInTable } from './contexts/are-images-disabled-in-t
 import { SerloTableRenderer, TableType } from './renderer'
 import { SerloTableToolbar } from './toolbar'
 import { getTableType } from './utils/get-table-type'
+import { FillInTheBlanksContext } from '../fill-in-the-blanks-exercise/context/blank-context'
 import { TextEditorConfig } from '../text'
 import { instanceStateStore } from '../text/utils/instance-state-store'
 
@@ -37,7 +38,6 @@ const cellTextFormattingOptions = [
   TextEditorFormattingOption.math,
   TextEditorFormattingOption.richTextBold,
   TextEditorFormattingOption.richTextItalic,
-  TextEditorFormattingOption.textBlank, // TODO: only show within blanks exercise
 ]
 
 const newCell = { content: { plugin: EditorPluginType.Text } }
@@ -52,6 +52,11 @@ export function SerloTableEditor(props: SerloTableProps) {
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
 
   const areImagesDisabled = useAreImagesDisabledInTable()
+  const isInsideBlanksExercise = useContext(FillInTheBlanksContext)
+  const cellTextFormattingOptionsWithBlank = [
+    ...cellTextFormattingOptions,
+    ...(isInsideBlanksExercise ? [TextEditorFormattingOption.textBlank] : []),
+  ]
 
   const tableStrings = useEditorStrings().plugins.serloTable
 
@@ -132,7 +137,7 @@ export function SerloTableEditor(props: SerloTableProps) {
                   placeholder: '',
                   formattingOptions: isHead
                     ? headerTextFormattingOptions
-                    : cellTextFormattingOptions,
+                    : cellTextFormattingOptionsWithBlank,
                 } as TextEditorConfig,
               })}
               {props.config.allowImageInTableCells && !areImagesDisabled ? (
