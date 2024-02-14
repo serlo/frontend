@@ -1,3 +1,4 @@
+import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
 import {
   selectIsFocused,
   selectStaticDocument,
@@ -13,6 +14,24 @@ import { FillInTheBlanksRenderer } from './renderer'
 import { FillInTheBlanksStaticRenderer } from './static'
 import { FillInTheBlanksToolbar } from './toolbar'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+
+const headerTextFormattingOptions = [
+  TextEditorFormattingOption.code,
+  TextEditorFormattingOption.links,
+  TextEditorFormattingOption.math,
+  TextEditorFormattingOption.textBlank,
+]
+
+const cellTextFormattingOptions = [
+  TextEditorFormattingOption.code,
+  TextEditorFormattingOption.colors,
+  TextEditorFormattingOption.links,
+  TextEditorFormattingOption.lists,
+  TextEditorFormattingOption.math,
+  TextEditorFormattingOption.richTextBold,
+  TextEditorFormattingOption.richTextItalic,
+  TextEditorFormattingOption.textBlank,
+]
 
 export function FillInTheBlanksExerciseEditor(
   props: FillInTheBlanksExerciseProps
@@ -46,7 +65,7 @@ export function FillInTheBlanksExerciseEditor(
     if (childPluginState.plugin === EditorPluginType.Text)
       return { placeholder: blanksExerciseStrings.placeholder }
     if (childPluginState.plugin === EditorPluginType.SerloTable)
-      return { allowBlanks: true }
+      return { headerTextFormattingOptions, cellTextFormattingOptions }
   }, [childPluginState.plugin, blanksExerciseStrings.placeholder])
 
   if (!childPluginState || !staticDocument) return null
