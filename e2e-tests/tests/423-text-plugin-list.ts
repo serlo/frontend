@@ -113,37 +113,34 @@ Scenario("Don't show suggestions when '/' is inside of a list", ({ I }) => {
   I.dontSee('Schreibe Text und Matheformeln, und formatiere sie.')
 })
 
-Scenario.only(
-  'Inserting a plugin right after a list using suggestions',
-  ({ I }) => {
-    I.amOnPage('/entity/create/Article/1377')
+Scenario('Inserting a plugin right after a list using suggestions', ({ I }) => {
+  I.amOnPage('/entity/create/Article/1377')
 
-    I.say('Add a new text plugin and delete the backslash')
-    I.click('$add-new-plugin-row-button')
-    I.pressKey('Backspace')
+  I.say('Add a new text plugin and delete the backslash')
+  I.click('$add-new-plugin-row-button')
+  I.pressKey('Backspace')
 
-    I.say('Create an unordered list and add multiple list items')
-    I.type('- Some text')
-    I.see('Some text', 'ul')
-    I.pressKey('Enter')
-    I.type('Some more text')
-    I.see('Some more text', 'ul')
-    I.pressKey('Enter')
-    I.type('Some more extra text')
-    I.see('Some more extra text', 'ul')
+  I.say('Create an unordered list and add multiple list items')
+  I.type('- Some text')
+  I.see('Some text', 'ul')
+  I.pressKey('Enter')
+  I.type('Some more text')
+  I.see('Some more text', 'ul')
+  I.pressKey('Enter')
+  I.type('Some more extra text')
+  I.see('Some more extra text', 'ul')
 
-    I.say('Exit the list using double Enter')
-    I.pressKey('Enter')
-    I.pressKey('Enter')
+  I.say('Exit the list using double Enter')
+  I.pressKey('Enter')
+  I.pressKey('Enter')
 
-    I.say('Add a Spoiler plugin using suggestions')
-    I.type('/Spo')
-    I.pressKey('Enter')
-    I.seeElement(locate('input').withAttr({ placeholder: 'Titel eingeben' }))
+  I.say('Add a Spoiler plugin using suggestions')
+  I.type('/Spo')
+  I.pressKey('Enter')
+  I.seeElement(locate('input').withAttr({ placeholder: 'Titel eingeben' }))
 
-    I.say('Check that the list still exists')
-    I.see('Some text', 'ul')
-    I.see('Some more text', 'ul')
-    I.see('Some more extra text', 'ul')
-  }
-)
+  I.say('Check that the list still exists')
+  I.see('Some text', 'ul')
+  I.see('Some more text', 'ul')
+  I.see('Some more extra text', 'ul')
+})
