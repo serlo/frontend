@@ -33,21 +33,19 @@ export const ImageToolbar = (
           >
             {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
           </button>
-          {showSettingsModal ? (
-            <ModalWithCloseButton
-              isOpen={showSettingsModal}
-              onCloseClick={() => setShowSettingsModal(false)}
-              className="top-8 max-w-xl translate-y-0 sm:top-1/3"
-            >
-              <h3 className="serlo-h3 mt-4">
-                {editorStrings.edtrIo.settings}: {imageStrings.title}
-              </h3>
+          <ModalWithCloseButton
+            isOpen={showSettingsModal}
+            onCloseClick={() => setShowSettingsModal(false)}
+            className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+          >
+            <h3 className="serlo-h3 mt-4">
+              {editorStrings.edtrIo.settings}: {imageStrings.title}
+            </h3>
 
-              <div className="mx-side mb-3">
-                <SettingsModalControls state={props.state} />
-              </div>
-            </ModalWithCloseButton>
-          ) : null}
+            <div className="mx-side mb-3">
+              <SettingsModalControls state={props.state} />
+            </div>
+          </ModalWithCloseButton>
 
           <UploadButton {...props} />
         </>

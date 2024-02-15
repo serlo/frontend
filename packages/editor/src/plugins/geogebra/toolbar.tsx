@@ -33,8 +33,6 @@ export const GeogebraToolbar = ({
           >
             {geogebraStrings.chooseApplet} <FaIcon icon={faPencilAlt} />
           </button>
-          {/* In the future we want a popovers per setting, but this is faster for now */}
-
           <ModalWithCloseButton
             isOpen={showSettingsModal}
             onCloseClick={() => setShowSettingsModal(false)}
