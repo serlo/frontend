@@ -154,26 +154,43 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
           <FaIcon icon={faTimes} className="text-2xl text-white"></FaIcon>
         </button>
         <div className="flex flex-row justify-center">
-          <div className="cursor-pointer ">
-            <div className="mt-5">
-              <p>
-                <button className="text-3xl">Einhorn der Mathematik</button>
-              </p>
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+          <a
+            href="/mathe/298181/einhorn-der-mathematik-%C3%BCbersicht-aller-episoden"
+            className="group"
+          >
+            <div>
+              <div className="mt-10">
+                <p>
+                  <button className="text-3xl">
+                    Internationaler Tag der Mathematik
+                  </button>
+                </p>
 
-              <p className="mt-4 max-w-65">
-                Wir feiern den Tag der Mathematik! Erlebe einmal Mathematik von
-                einer unterhaltsamen Seite mit dem Einhorn.
-              </p>
+                <p className="mt-3 max-w-[400px] text-lg">
+                  Feiere zusammen mit uns diesen Tag und erlebe die Mathematik
+                  von einer spielerischen Seite.
+                </p>
+                <p className="mt-4">
+                  <button className="rounded-full bg-pink-600 px-4 py-2 font-bold text-white transition-colors group-hover:bg-pink-500">
+                    Zum Einhorn der Mathematik
+                  </button>
+                </p>
+              </div>
             </div>
-          </div>
-          <div>
-            {/* eslint-disable-next-line @next/next/no-img-element*/}
-            <img
-              src="https://assets.serlo.org/e16a66c0-c26b-11ee-b6d8-a1dea02dc7c7/einhorndermathematikC3BCbersichtallerepisoden.png"
-              alt="Einhorn der Mathematik"
-              className="my-8 ml-8 h-32"
-            />
-          </div>
+          </a>
+
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+          <a href="/mathe/298181/einhorn-der-mathematik-%C3%BCbersicht-aller-episoden">
+            <div>
+              {/* eslint-disable-next-line @next/next/no-img-element*/}
+              <img
+                src="https://assets.serlo.org/e16a66c0-c26b-11ee-b6d8-a1dea02dc7c7/einhorndermathematikC3BCbersichtallerepisoden.png"
+                alt="Einhorn der Mathematik"
+                className="mb-10 ml-8 mt-14 h-36"
+              />
+            </div>
+          </a>
         </div>
       </div>
       {page.secondaryMenuData && (
