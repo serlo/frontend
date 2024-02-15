@@ -146,6 +146,36 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
           </div>
         </div>
       )}
+      <div className="relatie fixed bottom-0 left-0 right-0 z-[200] border-t-2 border-gray-300 bg-brand-50">
+        <button
+          className="serlo-button-blue absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full"
+          onClick={() => {}}
+        >
+          <FaIcon icon={faTimes} className="text-2xl text-white"></FaIcon>
+        </button>
+        <div className="flex flex-row justify-center">
+          <div className="cursor-pointer ">
+            <div className="mt-5">
+              <p>
+                <button className="text-3xl">Einhorn der Mathematik</button>
+              </p>
+
+              <p className="mt-4 max-w-65">
+                Wir feiern den Tag der Mathematik! Erlebe einmal Mathematik von
+                einer unterhaltsamen Seite mit dem Einhorn.
+              </p>
+            </div>
+          </div>
+          <div>
+            {/* eslint-disable-next-line @next/next/no-img-element*/}
+            <img
+              src="https://assets.serlo.org/e16a66c0-c26b-11ee-b6d8-a1dea02dc7c7/einhorndermathematikC3BCbersichtallerepisoden.png"
+              alt="Einhorn der Mathematik"
+              className="my-8 ml-8 h-32"
+            />
+          </div>
+        </div>
+      </div>
       {page.secondaryMenuData && (
         <SecondaryMenu data={page.secondaryMenuData} />
       )}
