@@ -87,7 +87,7 @@ export const licenses: LicenseData[] = [
   {
     id: 26,
     title:
-      'Dieses Werk wurde vom Kultusministerium Niedersachsen zur Verfügung gestellt',
+      'Dieses Werk wurde vom Kultusministerium Niedersachsen zur Verfügung gestellt --- Die Lösungsvorschläge dagegen sind NICHT vom Land Niedersachsen.',
     shortTitle: 'Niedersächsisches Kultusministerium',
     url: 'https://aba-aufgaben.nibis.de',
     agreement: `Mit dem Speichern dieser Seite versicherst du, dass du in deinem Beitrag (damit sind auch Änderungen gemeint) die Aufgabenstellung vom Land Niedersachsen nicht inhaltlich verändert hast, keine Rechte Dritter verletzt und dich an die <a href="https://aba-aufgaben.nibis.de/">Nutzungsbedingungen</a> gehalten hast.`,

@@ -55,9 +55,10 @@ export function ExerciseLicenseNotice({
     strings.license.appliesTo
   }: ${typeString})`
 
-  const tooltipExplanation = isCreativeCommons
-    ? explanation
-    : `${explanation} –– ${strings.license.nonFree}`
+  const tooltipExplanation =
+    isCreativeCommons || explanation.includes('---')
+      ? explanation
+      : `${explanation} --- ${strings.license.nonFree}`
 
   return (
     <>
