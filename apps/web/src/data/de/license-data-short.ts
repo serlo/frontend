@@ -84,4 +84,12 @@ export const licenses: LicenseData[] = [
 
     agreement: `Mit dem Speichern dieser Seite versichere ich, dass ich die Veränderung des Inhalts selbst verfasst habe bzw. dass meine Änderungen keine fremden Rechte verletzen. Ich willige ein, meinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/terms">Nutzungsbedingungen</a> festlegen darf. Let's go 🤘`,
   },
+  {
+    id: 26,
+    title:
+      'Dieses Werk wurde vom Kultusministerium Niedersachsen zur Verfügung gestellt',
+    shortTitle: 'Niedersächsisches Kultusministerium',
+    url: 'https://aba-aufgaben.nibis.de',
+    agreement: `Mit dem Speichern dieser Seite versicherst du, dass du in deinem Beitrag (damit sind auch Änderungen gemeint) die Aufgabenstellung vom Land Niedersachsen nicht inhaltlich verändert hast, keine Rechte Dritter verletzt und dich an die <a href="https://aba-aufgaben.nibis.de/">Nutzungsbedingungen</a> gehalten hast.`,
+  },
 ]
