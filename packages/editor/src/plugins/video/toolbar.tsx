@@ -39,42 +39,39 @@ export const VideoToolbar = ({
           >
             {videoStrings.videoDescription} <FaIcon icon={faPencilAlt} />
           </button>
-          {/* In the future we want a popovers per setting, but this is faster for now */}
-          {showSettingsModal ? (
-            <ModalWithCloseButton
-              isOpen={!!showSettingsModal}
-              onCloseClick={() => setShowSettingsModal(false)}
-              className="top-8 max-w-xl translate-y-0 sm:top-1/3"
-            >
-              <h3 className="serlo-h3 mt-4">{videoStrings.title}</h3>
+          <ModalWithCloseButton
+            isOpen={!!showSettingsModal}
+            onCloseClick={() => setShowSettingsModal(false)}
+            className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+          >
+            <h3 className="serlo-h3 mt-4">{videoStrings.title}</h3>
 
-              <div className="mx-side mb-3">
-                <EditorInput
-                  autoFocus={showSettingsModal === 'url'}
-                  label={`${videoStrings.videoUrl}: `}
-                  value={state.src.value}
-                  onChange={(e) => {
-                    state.src.set(e.target.value)
-                  }}
-                  inputWidth="100%"
-                  width="100%"
-                  placeholder="(YouTube, Wikimedia Commons, Vimeo)"
-                  className="block"
-                />
-              </div>
-              <div className="mx-side mb-3">
-                <EditorInput
-                  autoFocus={showSettingsModal === 'description'}
-                  label={`${videoStrings.videoDescription}: `}
-                  value={state.alt.value}
-                  onChange={(e) => state.alt.set(e.target.value)}
-                  width="100%"
-                  inputWidth="100%"
-                  className="block"
-                />
-              </div>
-            </ModalWithCloseButton>
-          ) : null}
+            <div className="mx-side mb-3">
+              <EditorInput
+                autoFocus={showSettingsModal === 'url'}
+                label={`${videoStrings.videoUrl}: `}
+                value={state.src.value}
+                onChange={(e) => {
+                  state.src.set(e.target.value)
+                }}
+                inputWidth="100%"
+                width="100%"
+                placeholder="(YouTube, Wikimedia Commons, Vimeo)"
+                className="block"
+              />
+            </div>
+            <div className="mx-side mb-3">
+              <EditorInput
+                autoFocus={showSettingsModal === 'description'}
+                label={`${videoStrings.videoDescription}: `}
+                value={state.alt.value}
+                onChange={(e) => state.alt.set(e.target.value)}
+                width="100%"
+                inputWidth="100%"
+                className="block"
+              />
+            </div>
+          </ModalWithCloseButton>
         </>
       }
       pluginControls={<PluginDefaultTools pluginId={id} />}

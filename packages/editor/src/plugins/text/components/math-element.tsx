@@ -11,10 +11,7 @@ import {
   useSelected,
 } from 'slate-react'
 
-/* eslint-disable import/no-unassigned-import */
-import 'katex/contrib/mhchem'
-
-import { MathFormula } from './math-formula'
+import { StaticMath } from '../static-components/static-math'
 import type {
   MathElement as MathElementType,
   Paragraph,
@@ -53,11 +50,10 @@ export function MathElement({
   if (!shouldShowMathEditor) {
     return (
       <>
-        <KaTeXStyles />
         {/* Slate void elements need to set attributes and contentEditable={false}
           See: https://docs.slatejs.org/api/nodes/element#rendering-void-elements */}
         <span {...attributes} contentEditable={false}>
-          <MathFormula element={element} />
+          <StaticMath src={element.src} inline={element.inline} type="math" />
           {children}
         </span>
       </>

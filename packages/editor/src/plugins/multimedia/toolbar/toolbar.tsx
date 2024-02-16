@@ -28,20 +28,18 @@ export const MultimediaToolbar = ({ id, children }: MultimediaToolbarProps) => {
           >
             {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
           </button>
-          {showSettingsModal ? (
-            <ModalWithCloseButton
-              isOpen={showSettingsModal}
-              onCloseClick={() => setShowSettingsModal(false)}
-              className="top-8 max-w-xl translate-y-0 sm:top-1/3"
-            >
-              <h3 className="serlo-h3 mt-4">
-                {editorStrings.edtrIo.settings}:{' '}
-                {editorStrings.plugins.multimedia.title}
-              </h3>
+          <ModalWithCloseButton
+            isOpen={showSettingsModal}
+            onCloseClick={() => setShowSettingsModal(false)}
+            className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+          >
+            <h3 className="serlo-h3 mt-4">
+              {editorStrings.edtrIo.settings}:{' '}
+              {editorStrings.plugins.multimedia.title}
+            </h3>
 
-              <div className="mx-side mb-3">{children}</div>
-            </ModalWithCloseButton>
-          ) : null}
+            <div className="mx-side mb-3">{children}</div>
+          </ModalWithCloseButton>
         </>
       }
       pluginControls={<PluginDefaultTools pluginId={id} />}
