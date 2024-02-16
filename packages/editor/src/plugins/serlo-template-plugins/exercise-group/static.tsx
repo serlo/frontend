@@ -1,5 +1,5 @@
-import { EditorPluginType } from '@editor/package'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { EditorTemplateExerciseGroupDocument } from '@editor/types/editor-plugins'
 import { useAuthentication } from '@serlo/frontend/src/auth/use-authentication'
 import type { MoreAuthorToolsProps } from '@serlo/frontend/src/components/user-tools/foldout-author-menus/more-author-tools'

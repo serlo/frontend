@@ -20,6 +20,7 @@ Scenario('Create and remove fill in the gap exercise', async ({ I }) => {
 
   I.type('This is a test')
 
+  I.click('$plugin-blanks-exercise-parent-button')
   I.click('$additional-toolbar-controls')
   I.click('$remove-plugin-button')
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
@@ -159,6 +160,7 @@ Scenario(
     I.seeNumberOfElements('$blank-input', 2)
 
     I.say('Change mode to preview and solve them incorrectly')
+    I.click('$plugin-blanks-exercise-parent-button')
     I.click('$plugin-blanks-exercise-preview-button')
     I.seeNumberOfElements('$blank-input', 2)
     I.click(locate('$blank-input').first())

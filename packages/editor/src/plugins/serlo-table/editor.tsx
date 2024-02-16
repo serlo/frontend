@@ -1,5 +1,4 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
 import {
   store,
   selectFocused,
@@ -23,21 +22,6 @@ import { SerloTableToolbar } from './toolbar'
 import { getTableType } from './utils/get-table-type'
 import { TextEditorConfig } from '../text'
 import { instanceStateStore } from '../text/utils/instance-state-store'
-
-const headerTextFormattingOptions = [
-  TextEditorFormattingOption.code,
-  TextEditorFormattingOption.links,
-  TextEditorFormattingOption.math,
-]
-const cellTextFormattingOptions = [
-  TextEditorFormattingOption.code,
-  TextEditorFormattingOption.colors,
-  TextEditorFormattingOption.links,
-  TextEditorFormattingOption.lists,
-  TextEditorFormattingOption.math,
-  TextEditorFormattingOption.richTextBold,
-  TextEditorFormattingOption.richTextItalic,
-]
 
 const newCell = { content: { plugin: EditorPluginType.Text } }
 
@@ -130,8 +114,8 @@ export function SerloTableEditor(props: SerloTableProps) {
                   isInlineChildEditor: true,
                   placeholder: '',
                   formattingOptions: isHead
-                    ? headerTextFormattingOptions
-                    : cellTextFormattingOptions,
+                    ? props.config.headerTextFormattingOptions
+                    : props.config.cellTextFormattingOptions,
                 } as TextEditorConfig,
               })}
               {props.config.allowImageInTableCells && !areImagesDisabled ? (
