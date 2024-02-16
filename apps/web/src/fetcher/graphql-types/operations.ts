@@ -26,6 +26,7 @@ export interface AbstractEntity {
   id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
+  licenseId: Scalars['Int']['output'];
   subject?: Maybe<Subject>;
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
@@ -84,6 +85,7 @@ export interface AbstractExercise {
   id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
+  licenseId: Scalars['Int']['output'];
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
 }
@@ -148,6 +150,7 @@ export interface AbstractRepository {
   id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
+  licenseId: Scalars['Int']['output'];
   threads: ThreadsConnection;
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
@@ -212,6 +215,7 @@ export interface AbstractTaxonomyTermChild {
   id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
+  licenseId: Scalars['Int']['output'];
   taxonomyTerms: TaxonomyTermConnection;
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
@@ -299,6 +303,7 @@ export interface Applet extends AbstractEntity, AbstractRepository, AbstractTaxo
   id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
+  licenseId: Scalars['Int']['output'];
   revisions: AppletRevisionConnection;
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
@@ -398,6 +403,7 @@ export interface Article extends AbstractEntity, AbstractRepository, AbstractTax
   id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
+  licenseId: Scalars['Int']['output'];
   revisions: ArticleRevisionConnection;
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
@@ -565,6 +571,7 @@ export interface Course extends AbstractEntity, AbstractRepository, AbstractTaxo
   id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
+  licenseId: Scalars['Int']['output'];
   pages: Array<CoursePage>;
   revisions: CourseRevisionConnection;
   subject?: Maybe<Subject>;
@@ -627,6 +634,7 @@ export interface CoursePage extends AbstractEntity, AbstractRepository, Abstract
   id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
+  licenseId: Scalars['Int']['output'];
   revisions: CoursePageRevisionConnection;
   subject?: Maybe<Subject>;
   threads: ThreadsConnection;
@@ -996,6 +1004,7 @@ export interface Event extends AbstractEntity, AbstractRepository, AbstractTaxon
   id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
+  licenseId: Scalars['Int']['output'];
   revisions: EventRevisionConnection;
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
@@ -1107,6 +1116,7 @@ export interface Exercise extends AbstractEntity, AbstractExercise, AbstractRepo
   id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
+  licenseId: Scalars['Int']['output'];
   revisions: ExerciseRevisionConnection;
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
@@ -1162,6 +1172,7 @@ export interface ExerciseGroup extends AbstractEntity, AbstractRepository, Abstr
   id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
+  licenseId: Scalars['Int']['output'];
   revisions: ExerciseGroupRevisionConnection;
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
@@ -1316,6 +1327,7 @@ export interface GroupedExercise extends AbstractEntity, AbstractExercise, Abstr
   id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
+  licenseId: Scalars['Int']['output'];
   revisions: GroupedExerciseRevisionConnection;
   subject?: Maybe<Subject>;
   threads: ThreadsConnection;
@@ -1574,6 +1586,7 @@ export interface Page extends AbstractRepository, AbstractUuid, InstanceAware, T
   id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
+  licenseId: Scalars['Int']['output'];
   revisions: PageRevisionConnection;
   threads: ThreadsConnection;
   title: Scalars['String']['output'];
@@ -2671,6 +2684,7 @@ export interface Video extends AbstractEntity, AbstractRepository, AbstractTaxon
   id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
+  licenseId: Scalars['Int']['output'];
   revisions: VideoRevisionConnection;
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
