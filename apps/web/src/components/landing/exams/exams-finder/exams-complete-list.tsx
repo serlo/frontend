@@ -17,12 +17,12 @@ export function ExamsCompleteList({ region }: { region: SupportedRegion }) {
       <h2 className="mb-6 text-2xl font-extrabold">
         Alle Mathe-Abschlussprüfungen für {regions[region].title}
       </h2>
-      <div className="mx-auto flex max-w-6xl flex-wrap justify-around text-left">
+      <div className="mx-auto max-w-6xl justify-around text-left sm:flex sm:flex-wrap">
         {schoolTypesWithData.map(([schoolTypeKey, { title, exams }]) => {
           return (
             <div
               key={schoolTypeKey}
-              className="mx-4 mt-6 min-w-[10rem] text-lg sm:min-w-[14rem]"
+              className="mx-4 mt-6 min-w-[10rem] text-lg sm:min-w-[17rem] md:min-w-[14rem]"
             >
               <h2 className="mb-2 font-bold">{title}</h2>
               {exams.map((exam) => {
