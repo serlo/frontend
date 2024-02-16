@@ -49,7 +49,7 @@ export interface InjectionOnlyContentQuery {
           __typename?: 'ExerciseRevision'
           content: string
         } | null
-        license: { __typename?: 'License'; id: number }
+        licenseId: number
       }
     | {
         __typename: 'ExerciseGroup'
@@ -63,9 +63,9 @@ export interface InjectionOnlyContentQuery {
             __typename?: 'GroupedExerciseRevision'
             content: string
           } | null
-          license: { __typename?: 'License'; id: number }
+          licenseId: number
         }>
-        license: { __typename?: 'License'; id: number }
+        licenseId: number
       }
     | { __typename: 'ExerciseGroupRevision' }
     | { __typename: 'ExerciseRevision' }
@@ -75,7 +75,7 @@ export interface InjectionOnlyContentQuery {
           __typename?: 'GroupedExerciseRevision'
           content: string
         } | null
-        license: { __typename?: 'License'; id: number }
+        licenseId: number
       }
     | { __typename: 'GroupedExerciseRevision' }
     | { __typename: 'Page' }
@@ -147,7 +147,7 @@ export function InjectionStaticRenderer({
           ) {
             const exerciseContext = {
               serloContext: {
-                licenseId: uuid.license.id,
+                licenseId: uuid.licenseId,
               },
             }
 
@@ -164,7 +164,7 @@ export function InjectionStaticRenderer({
               const exerciseContentAndContext = {
                 ...parseDocumentString(exercise.currentRevision?.content),
                 serloContext: {
-                  licenseId: uuid.license.id,
+                  licenseId: uuid.licenseId,
                 },
               }
 
@@ -260,7 +260,7 @@ const query = gql`
         ...injectionExercise
       }
       ... on ExerciseGroup {
-        ...injectionLicense
+        licenseId
         currentRevision {
           content
         }
@@ -302,15 +302,9 @@ const query = gql`
   }
 
   fragment injectionExercise on AbstractExercise {
-    ...injectionLicense
+    licenseId
     currentRevision {
       content
-    }
-  }
-
-  fragment injectionLicense on AbstractRepository {
-    license {
-      id
     }
   }
 `
