@@ -62,7 +62,7 @@ export const FillInTheBlanksToolbar = ({
             tooltipText={blanksExerciseStrings.chooseType}
             value={childPluginType}
             dataQa="plugin-blanks-mode-switch"
-            changeValue={(value) => state.childPlugin.replace(value)}
+            changeValue={(value) => state.text.replace(value)}
             options={[
               { value: EditorPluginType.Text, text: 'Text' },
               { value: EditorPluginType.SerloTable, text: 'Table' },

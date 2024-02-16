@@ -31,7 +31,8 @@ function createState() {
   const defaultMode: FillInTheBlanksMode = 'typing'
 
   return object({
-    childPlugin: child({
+    // text can also be a table plugin
+    text: child({
       plugin: EditorPluginType.Text,
       config: {
         formattingOptions: [

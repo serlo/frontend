@@ -39,7 +39,7 @@ export function FillInTheBlanksExerciseEditor(
   props: FillInTheBlanksExerciseProps
 ) {
   const { focused, id, state } = props
-  const { childPlugin, mode, extraDraggableAnswers } = state
+  const { text: childPlugin, mode, extraDraggableAnswers } = state
   const [previewActive, setPreviewActive] = useState(false)
 
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
