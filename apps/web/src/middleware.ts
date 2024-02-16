@@ -17,10 +17,10 @@ export function middleware(request: NextRequest) {
     : 'bayern'
 
   return NextResponse.redirect(
-    new URL('/mathe-pruefungen/' + regionName, request.url)
+    new URL('/pruefungen/' + regionName, request.url)
   )
 }
 
 export const config = {
-  matcher: '/mathe-pruefungen',
+  matcher: '/pruefungen',
 }

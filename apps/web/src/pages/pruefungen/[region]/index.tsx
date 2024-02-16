@@ -27,7 +27,6 @@ export default renderedPageNoHooks<RegionData>(({ region }) => {
 export const getStaticProps: GetStaticProps<RegionData> = async (context) => {
   if (context.locale !== 'de') return { notFound: true }
   if (isProduction) return { notFound: true }
-  if (isProduction) return { notFound: true }
 
   const region = context.params?.region as SupportedRegion
   if (!supportedRegions.includes(region)) return { notFound: true }
