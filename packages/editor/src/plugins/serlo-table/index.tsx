@@ -1,3 +1,4 @@
+import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -10,6 +11,22 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import { SerloTableEditor } from './editor'
 import { TableType } from './renderer'
+
+const headerTextFormattingOptions = [
+  TextEditorFormattingOption.code,
+  TextEditorFormattingOption.links,
+  TextEditorFormattingOption.math,
+]
+
+const cellTextFormattingOptions = [
+  TextEditorFormattingOption.code,
+  TextEditorFormattingOption.colors,
+  TextEditorFormattingOption.links,
+  TextEditorFormattingOption.lists,
+  TextEditorFormattingOption.math,
+  TextEditorFormattingOption.richTextBold,
+  TextEditorFormattingOption.richTextItalic,
+]
 
 const tableState = object({
   rows: list(
@@ -28,6 +45,8 @@ const tableState = object({
 
 const defaultConfig: SerloTableConfig = {
   allowImageInTableCells: true,
+  headerTextFormattingOptions,
+  cellTextFormattingOptions,
 }
 
 export function createSerloTablePlugin(
@@ -48,4 +67,6 @@ export type SerloTableProps = EditorPluginProps<
 
 export interface SerloTableConfig {
   allowImageInTableCells: boolean // Used in https://github.com/serlo/serlo-editor-for-edusharing
+  headerTextFormattingOptions?: TextEditorFormattingOption[]
+  cellTextFormattingOptions?: TextEditorFormattingOption[]
 }

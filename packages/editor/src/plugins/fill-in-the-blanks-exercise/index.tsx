@@ -31,7 +31,7 @@ function createState() {
   const defaultMode: FillInTheBlanksMode = 'typing'
 
   return object({
-    text: child({
+    childPlugin: child({
       plugin: EditorPluginType.Text,
       config: {
         formattingOptions: [

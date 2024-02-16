@@ -8,15 +8,15 @@ import {
 } from './renderer'
 
 export function FillInTheBlanksStaticRenderer({
-  state: { text, mode, extraDraggableAnswers },
+  state: { childPlugin, mode, extraDraggableAnswers },
   onEvaluate,
 }: EditorFillInTheBlanksExerciseDocument & {
   onEvaluate?: FillInTheBlanksRendererProps['onEvaluate']
 }) {
   return (
     <FillInTheBlanksRenderer
-      text={<StaticRenderer document={text} />}
-      textPluginState={text}
+      childPlugin={<StaticRenderer document={childPlugin} />}
+      childPluginState={childPlugin}
       mode={mode as FillInTheBlanksMode}
       initialTextInBlank="empty"
       extraDraggableAnswers={extraDraggableAnswers}
