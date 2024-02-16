@@ -8,7 +8,7 @@ import {
 } from './renderer'
 
 export function FillInTheBlanksStaticRenderer({
-  state: { childPlugin, mode, extraDraggableAnswers },
+  state: { text: childPlugin, mode, extraDraggableAnswers },
   onEvaluate,
 }: EditorFillInTheBlanksExerciseDocument & {
   onEvaluate?: FillInTheBlanksRendererProps['onEvaluate']
