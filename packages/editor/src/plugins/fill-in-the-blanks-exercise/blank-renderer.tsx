@@ -5,22 +5,36 @@ import {
   useRef,
   useContext,
   useEffect,
+  useMemo,
 } from 'react'
 import { Range, Transforms } from 'slate'
 import { ReactEditor, useSelected, useSlate, useFocused } from 'slate-react'
 
+import { BlankControls } from './components/blank-controls'
 import { BlankRendererInput } from './components/blank-renderer-input'
 import { FillInTheBlanksContext } from './context/blank-context'
 import type { BlankInterface } from './types'
 
 interface BlankRendererProps {
   element: BlankInterface
+  focused: boolean
 }
 
-export function BlankRenderer({ element }: BlankRendererProps) {
+export function BlankRenderer(props: BlankRendererProps) {
+  const { element, focused } = props
+  const { blankId, correctAnswers } = element
+
   const editor = useSlate()
   const selected = useSelected()
-  const focused = useFocused()
+  const slateFocused = useFocused()
+
+  // The `acceptMathEquivalents` setting is on by default.
+  // However, some blanks in the DB are missing this property altogether,
+  // so we set it to `true` if it is `undefined`.
+  const acceptMathEquivalents = useMemo(() => {
+    if (element.acceptMathEquivalents === undefined) return true
+    return element.acceptMathEquivalents
+  }, [element.acceptMathEquivalents])
 
   // Autofocus when adding and removing a blank
   const inputRef = useRef<HTMLInputElement | null>(null)
@@ -37,7 +51,7 @@ export function BlankRenderer({ element }: BlankRendererProps) {
       const shouldFocusInput =
         input &&
         document.activeElement !== input &&
-        focused &&
+        slateFocused &&
         selected &&
         editor.selection &&
         Range.isCollapsed(editor.selection)
@@ -49,30 +63,45 @@ export function BlankRenderer({ element }: BlankRendererProps) {
     document.addEventListener('keydown', handleDocumentKeydown)
 
     return () => document.removeEventListener('keydown', handleDocumentKeydown)
-  }, [editor, focused, inputRef, selected])
+  }, [editor, slateFocused, inputRef, selected])
+
+  // remove empty blanks when plugin looses focus
+  useEffect(() => {
+    if (!focused && !correctAnswers[0].answer.trim().length) {
+      removeBlanks(editor)
+    }
+  }, [focused, editor, correctAnswers])
 
   const context = useContext(FillInTheBlanksContext)
   if (context === null) return null
 
   return (
-    <BlankRendererInput
-      ref={inputRef}
-      blankId={element.blankId}
-      context={context}
-      onChange={handleChange}
-      onKeyDown={handleMoveOut}
-    />
+    <>
+      <BlankRendererInput
+        ref={inputRef}
+        blankId={blankId}
+        context={context}
+        onChange={handleChange}
+        onKeyDown={handleMoveOut}
+        onBlur={handleBlur}
+      />
+      {focused && context.mode === 'typing' ? (
+        <BlankControls
+          blankId={blankId}
+          correctAnswers={correctAnswers.map(({ answer }) => answer)}
+          acceptMathEquivalents={acceptMathEquivalents}
+          onAlternativeAnswerAdd={handleAlternativeAnswerAdd}
+          onAlternativeAnswerChange={handleCorrectAnswerChange}
+          onAlternativeAnswerRemove={handleAlternativeAnswerRemove}
+          onAlternativeAnswerBlur={handleAlternativeAnswerBlur}
+          onAcceptMathEquivalentsChange={handleAcceptMathEquivalentsChange}
+        />
+      ) : null}
+    </>
   )
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    const at = ReactEditor.findPath(editor, element)
-    const correctAnswers = element.correctAnswers.map((correctAnswer, i) => {
-      // First element is set to new value
-      if (i === 0) return { answer: event.target.value.trim() }
-      // Rest is copied as is
-      return { ...correctAnswer }
-    })
-    Transforms.setNodes(editor, { correctAnswers }, { at })
+    handleCorrectAnswerChange(0, event.target.value)
   }
 
   function handleMoveOut(event: ReactKeyboardEvent<HTMLInputElement>) {
@@ -111,5 +140,46 @@ export function BlankRenderer({ element }: BlankRendererProps) {
       Transforms.move(editor, { unit: 'character', reverse: true })
       ReactEditor.focus(editor)
     }
+  }
+
+  function handleBlur() {
+    handleCorrectAnswerChange(0, correctAnswers[0].answer.trim())
+  }
+
+  function handleAlternativeAnswerAdd() {
+    setCorrectAnswers([...correctAnswers, { answer: '' }])
+  }
+
+  function handleCorrectAnswerChange(targetIndex: number, newValue: string) {
+    setCorrectAnswers(
+      correctAnswers.map(({ answer }, i) => ({
+        answer: i === targetIndex ? newValue : answer,
+      }))
+    )
+  }
+
+  function handleAlternativeAnswerRemove(targetIndex: number) {
+    setCorrectAnswers(correctAnswers.filter((_, i) => i !== targetIndex))
+  }
+
+  function handleAlternativeAnswerBlur() {
+    setCorrectAnswers(
+      correctAnswers
+        .map(({ answer }) => ({ answer: answer.trim() }))
+        .filter(({ answer }) => answer.length > 0)
+    )
+  }
+
+  function setCorrectAnswers(correctAnswers: Array<{ answer: string }>) {
+    const at = ReactEditor.findPath(editor, element)
+    Transforms.setNodes(editor, { correctAnswers }, { at })
+  }
+
+  function handleAcceptMathEquivalentsChange() {
+    Transforms.setNodes(
+      editor,
+      { acceptMathEquivalents: !acceptMathEquivalents },
+      { at: ReactEditor.findPath(editor, element) }
+    )
   }
 }

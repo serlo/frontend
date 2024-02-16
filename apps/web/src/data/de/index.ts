@@ -154,7 +154,7 @@ export const instanceData = {
         chooseOption: "Klicke auf eine der Optionen.",
         printModeChooseOption: "Kreuze eine der Optionen an.",
         strategy: "Strategie",
-        solution: "Lösung"
+        solution: "Lösungsvorschlag"
       },
       boxTypes: {
         blank: "Blanko",
@@ -850,7 +850,11 @@ export const loggedInData = {
           previewIsDeactiveHint: "Vorschau der Aufgabe anzeigen",
           dummyAnswers: "Falsche Antwortmöglichkeiten",
           addDummyAnswer: "Falsche Antwort hinzufügen",
-          removeDummyAnswer: "Falsche Antwort entfernen"
+          removeDummyAnswer: "Falsche Antwort entfernen",
+          addAlternativeAnswer: "Alternative Antwort hinzufügen",
+          removeAlternativeAnswer: "Alternative Antwort entfernen",
+          alternativeAnswers: "Alternative Antworten",
+          acceptMathEquivalents: "Mathematisch gleichwertige Ausdrücke als gültige Antwort"
         }
       },
       templatePlugins: {

@@ -36,15 +36,13 @@ export const PageLayoutToolbar = ({
           >
             {pageLayoutStrings.chooseRatio} <FaIcon icon={faPencilAlt} />
           </button>
-          {showSettingsModal ? (
-            <ModalWithCloseButton
-              isOpen={showSettingsModal}
-              onCloseClick={() => setShowSettingsModal(false)}
-              className="top-8 max-w-xl translate-y-0 sm:top-1/3"
-            >
-              <LayoutChooser {...state} />
-            </ModalWithCloseButton>
-          ) : null}
+          <ModalWithCloseButton
+            isOpen={showSettingsModal}
+            onCloseClick={() => setShowSettingsModal(false)}
+            className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+          >
+            <LayoutChooser {...state} />
+          </ModalWithCloseButton>
         </>
       }
     />

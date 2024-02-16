@@ -8,7 +8,7 @@ export interface ExerciseSubmissionData {
   path: string
   entityId?: number
   revisionId?: number
-  type: 'sc' | 'mc' | 'input' | 'h5p' | 'text' | 'ival'
+  type: 'sc' | 'mc' | 'input' | 'h5p' | 'text' | 'ival' | 'blanks'
   result: 'correct' | 'wrong' | 'open' | string
 }
 

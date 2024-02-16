@@ -1541,6 +1541,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.23.9":
+  version: 7.23.9
+  resolution: "@babel/runtime@npm:7.23.9"
+  dependencies:
+    regenerator-runtime: ^0.14.0
+  checksum: 6bbebe8d27c0c2dd275d1ac197fc1a6c00e18dab68cc7aaff0adc3195b45862bae9c4cc58975629004b0213955b2ed91e99eccb3d9b39cabea246c657323d667
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.18.10, @babel/template@npm:^7.22.15, @babel/template@npm:^7.3.3":
   version: 7.22.15
   resolution: "@babel/template@npm:7.22.15"
@@ -4401,6 +4410,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-dnd/asap@npm:^4.0.0":
+  version: 4.0.1
+  resolution: "@react-dnd/asap@npm:4.0.1"
+  checksum: 757db3b5c436a95383b74f187f503321092909401ce9665d9cc1999308a44de22809bf8dbe82c9126bd73b72dd6665bbc4a788e864fc3c243c59f65057a4f87f
+  languageName: node
+  linkType: hard
+
 "@react-dnd/asap@npm:^5.0.1":
   version: 5.0.2
   resolution: "@react-dnd/asap@npm:5.0.2"
@@ -4408,10 +4424,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-dnd/invariant@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@react-dnd/invariant@npm:2.0.0"
+  checksum: ef1e989920d70b15c80dccb01af9b598081d76993311aa22d2e9a3ec41d10a88540eeec4b4de7a8b2a2ea52dfc3495ab45e39192c2d27795a9258bd6b79d000e
+  languageName: node
+  linkType: hard
+
 "@react-dnd/invariant@npm:^4.0.1":
   version: 4.0.2
   resolution: "@react-dnd/invariant@npm:4.0.2"
   checksum: 594f6d78896c19bb8f023e101334fd91a9fdff686117bd8e830ba53737ec0a6042dab66971d3d63c7afbc622103909aff7a64c5c6767e0aa8d9561fd42705016
+  languageName: node
+  linkType: hard
+
+"@react-dnd/shallowequal@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@react-dnd/shallowequal@npm:2.0.0"
+  checksum: b5bbdc795d65945bb7ba2322bed5cf8d4c6fe91dced98c3b10e3d16822c438f558751135ff296f8d1aa1eaa9d0037dacab2b522ca5eb812175123b9996966dcb
   languageName: node
   linkType: hard
 
@@ -4714,7 +4744,6 @@ __metadata:
     "@svgr/webpack": ^8.1.0
     "@tailwindcss/typography": ^0.5.10
     "@tippyjs/react": ^4.2.6
-    "@types/algebra.js": ^0.2.2
     "@types/escape-html": ^1.0.2
     "@types/iframe-resizer": ^3.5.10
     "@types/jest": ^29.5.5
@@ -4728,6 +4757,7 @@ __metadata:
     "@types/ramda": ^0.29.6
     "@types/react": ^18.0.25
     "@types/react-beautiful-dnd": ^13.1.5
+    "@types/react-dnd-multi-backend": ^6.0.6
     "@types/react-dom": ^18.0.8
     "@types/react-lazyload": ^3.2.1
     "@types/react-modal": ^3.16.1
@@ -4738,7 +4768,6 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^6.7.5
     "@typescript-eslint/parser": ^6.7.5
     "@vitejs/plugin-react": ^4.2.0
-    algebra.js: ^0.2.6
     array-move: ^4.0.0
     autoprefixer: ^10.4.16
     babel-jest: ^29.7.0
@@ -4767,6 +4796,7 @@ __metadata:
     js-cookie: ^3.0.5
     json-diff: ^1.0.6
     katex: ^0.16.9
+    mathjs: ^12.3.1
     micromark: ^4.0.0
     msw: ^0.47.4
     next: ^13.5.4
@@ -4783,10 +4813,13 @@ __metadata:
     prop-types: ^15.8.1
     qrcode.react: ^3.1.0
     ramda: ^0.29.1
+    rdndmb-html5-to-touch: ^8.0.3
     react: ^18.2.0
     react-diff-viewer: ^3.1.1
     react-dnd: ^16.0.1
     react-dnd-html5-backend: ^16.0.1
+    react-dnd-multi-backend: ^8.0.3
+    react-dnd-touch-backend: ^16.0.1
     react-dom: ^18.2.0
     react-hotkeys-hook: ^4.4.1
     react-is: ^18.2.0
@@ -4872,7 +4905,6 @@ __metadata:
     "@svgr/webpack": ^8.1.0
     "@tailwindcss/typography": ^0.5.10
     "@tippyjs/react": ^4.2.6
-    "@types/algebra.js": ^0.2.2
     "@types/canvas-confetti": ^1.6.4
     "@types/escape-html": ^1.0.2
     "@types/iframe-resizer": ^3.5.10
@@ -4887,6 +4919,7 @@ __metadata:
     "@types/ramda": ^0.29.6
     "@types/react": ^18.0.25
     "@types/react-beautiful-dnd": ^13.1.5
+    "@types/react-dnd-multi-backend": ^6.0.6
     "@types/react-dom": ^18.0.8
     "@types/react-lazyload": ^3.2.1
     "@types/react-modal": ^3.16.1
@@ -4897,7 +4930,6 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^6.7.5
     "@typescript-eslint/parser": ^6.7.5
     "@vercel/edge": ^1.1.1
-    algebra.js: ^0.2.6
     array-move: ^4.0.0
     autoprefixer: ^10.4.16
     babel-jest: ^29.7.0
@@ -4926,6 +4958,7 @@ __metadata:
     js-cookie: ^3.0.5
     json-diff: ^1.0.6
     katex: ^0.16.9
+    mathjs: ^12.3.1
     mathlive: ^0.98.4
     micromark: ^4.0.0
     msw: ^0.47.4
@@ -4943,10 +4976,13 @@ __metadata:
     prop-types: ^15.8.1
     qrcode.react: ^3.1.0
     ramda: ^0.29.1
+    rdndmb-html5-to-touch: ^8.0.3
     react: ^18.2.0
     react-diff-viewer: ^3.1.1
     react-dnd: ^16.0.1
     react-dnd-html5-backend: ^16.0.1
+    react-dnd-multi-backend: ^8.0.3
+    react-dnd-touch-backend: ^16.0.1
     react-dom: ^18.2.0
     react-hotkeys-hook: ^4.4.1
     react-is: ^18.2.0
@@ -5283,13 +5319,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/algebra.js@npm:^0.2.2":
-  version: 0.2.4
-  resolution: "@types/algebra.js@npm:0.2.4"
-  checksum: 0e435124840153776ce954cfa85adde642857c12d8c447960f6fe22d56cf9146425e0c83a52844d52f8f9fdc39c626a15dba2a3d7bfab4ed9f502783c272283b
-  languageName: node
-  linkType: hard
-
 "@types/argparse@npm:1.0.38":
   version: 1.0.38
   resolution: "@types/argparse@npm:1.0.38"
@@ -5617,6 +5646,18 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: 62228144795614daf23d10e6a5ffb59a2b5f6dc13a753f69a81f8e5dd0f96e4d5c97db2016d2e782da3ff2b516b70cb36dfa3b95d6c10f4c9e342f871fc1a516
+  languageName: node
+  linkType: hard
+
+"@types/react-dnd-multi-backend@npm:^6.0.6":
+  version: 6.0.6
+  resolution: "@types/react-dnd-multi-backend@npm:6.0.6"
+  dependencies:
+    "@types/react": "*"
+    dnd-core: ^10.0.2
+    react-dnd: ^10.0.2
+    react-dnd-touch-backend: ^10.0.2
+  checksum: 5774db86445681536ae3e35e2a33afe6231ef891c89c70191043a053bb7197f49424a3d962d04ab0b13ec31326d7a46a14d7813c3d9bf427e04e400ea6abbbce
   languageName: node
   linkType: hard
 
@@ -6204,13 +6245,6 @@ __metadata:
     json-schema-traverse: ^0.4.1
     uri-js: ^4.2.2
   checksum: 874972efe5c4202ab0a68379481fbd3d1b5d0a7bd6d3cc21d40d3536ebff3352a2a1fabb632d4fd2cc7fe4cbdcd5ed6782084c9bbf7f32a1536d18f9da5007d4
-  languageName: node
-  linkType: hard
-
-"algebra.js@npm:^0.2.6":
-  version: 0.2.6
-  resolution: "algebra.js@npm:0.2.6"
-  checksum: 81ddcc1854248b0dfbbe113bae1caf2acbf02a17a3df15bf34543fa8772d3efd6f2854cc4cc9fc1a8e881efd7e454fcc9d90ed2f443a0d193f7c114588b2f1aa
   languageName: node
   linkType: hard
 
@@ -8244,6 +8278,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dnd-core@npm:^10.0.2":
+  version: 10.0.2
+  resolution: "dnd-core@npm:10.0.2"
+  dependencies:
+    "@react-dnd/asap": ^4.0.0
+    "@react-dnd/invariant": ^2.0.0
+    redux: ^4.0.4
+  checksum: 58771aef103219eccc3a4f1695b6993edad0a922bd50cb66faaf706da69c5fd9dbc59fa786d2581b9adfad09ff1b63994ff6619f54f7ee8ee855e2ad01ae5be6
+  languageName: node
+  linkType: hard
+
 "dnd-core@npm:^16.0.1":
   version: 16.0.1
   resolution: "dnd-core@npm:16.0.1"
@@ -8252,6 +8297,15 @@ __metadata:
     "@react-dnd/invariant": ^4.0.1
     redux: ^4.2.0
   checksum: b7d3ef4664f433af796f440ddd27ad9d7fef0205f26c4b7c0af6ebf612ffa9b33e64d095d3e79190c4baaed34aa36570f321ebe0d2cc8ff1031ff158a0907b3f
+  languageName: node
+  linkType: hard
+
+"dnd-multi-backend@npm:^8.0.3":
+  version: 8.0.3
+  resolution: "dnd-multi-backend@npm:8.0.3"
+  peerDependencies:
+    dnd-core: ^16.0.1
+  checksum: f4e07ec7a119962def2c23ee4680a48dcaad67f2e1685cb33c68d72218444fc8b993958b4764ca70a4e35a5d5d733a68df739dc32268423210ccf82769f21857
   languageName: node
   linkType: hard
 
@@ -8673,6 +8727,13 @@ __metadata:
   version: 3.1.1
   resolution: "escalade@npm:3.1.1"
   checksum: a3e2a99f07acb74b3ad4989c48ca0c3140f69f923e56d0cba0526240ee470b91010f9d39001f2a4a313841d237ede70a729e92125191ba5d21e74b106800b133
+  languageName: node
+  linkType: hard
+
+"escape-latex@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "escape-latex@npm:1.2.0"
+  checksum: 73a787319f0965ecb8244bb38bf3a3cba872f0b9a5d3da8821140e9f39fe977045dc953a62b1a2bed4d12bfccbe75a7d8ec786412bf00739eaa2f627d0a8e0d6
   languageName: node
   linkType: hard
 
@@ -9423,6 +9484,13 @@ __metadata:
   version: 2.16.1
   resolution: "fp-ts@npm:2.16.1"
   checksum: 94e8bb1d037fdc44414ac93bbabecc3f94fb798d6564e77427ae2ecfa0f77681ec35968598d7b0cbf8274566469c7b42e8727390eb889e1121c199341939c2a3
+  languageName: node
+  linkType: hard
+
+"fraction.js@npm:4.3.4":
+  version: 4.3.4
+  resolution: "fraction.js@npm:4.3.4"
+  checksum: 26fdecf114e3b693c760d3b2d5447f8ba9e815991ca7c7cdb930156780793b87f10936979a890b389676d960d7cd026273da9a44a6e20c12e3c4fd282a026ed3
   languageName: node
   linkType: hard
 
@@ -11073,6 +11141,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"javascript-natural-sort@npm:^0.7.1":
+  version: 0.7.1
+  resolution: "javascript-natural-sort@npm:0.7.1"
+  checksum: 161e2c512cc7884bc055a582c6645d9032cab88497a76123d73cb23bfb03d97a04cf7772ecdb8bd3366fc07192c2f996366f479f725c23ef073fffe03d6a586a
+  languageName: node
+  linkType: hard
+
 "jest-changed-files@npm:^27.5.1":
   version: 27.5.1
   resolution: "jest-changed-files@npm:27.5.1"
@@ -12454,6 +12529,25 @@ __metadata:
   bin:
     markdown-it: bin/markdown-it.js
   checksum: 890555711c1c00fa03b936ca2b213001a3b9b37dea140d8445ae4130ce16628392aad24b12e2a0a9935336ca5951f2957a38f4e5309a2e38eab44e25ff32a41e
+  languageName: node
+  linkType: hard
+
+"mathjs@npm:^12.3.1":
+  version: 12.3.1
+  resolution: "mathjs@npm:12.3.1"
+  dependencies:
+    "@babel/runtime": ^7.23.9
+    complex.js: ^2.1.1
+    decimal.js: ^10.4.3
+    escape-latex: ^1.2.0
+    fraction.js: 4.3.4
+    javascript-natural-sort: ^0.7.1
+    seedrandom: ^3.0.5
+    tiny-emitter: ^2.1.0
+    typed-function: ^4.1.1
+  bin:
+    mathjs: bin/cli.js
+  checksum: 330edf5d20267b2d763c80738613cc39eaf71e3bef8bf28e5732f45c3bcf66ab5857ea8b83347b7447f8e325c80c98c68ebc2ea584cf008c273fa1cd924dc33f
   languageName: node
   linkType: hard
 
@@ -14552,6 +14646,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rdndmb-html5-to-touch@npm:^8.0.3":
+  version: 8.0.3
+  resolution: "rdndmb-html5-to-touch@npm:8.0.3"
+  dependencies:
+    dnd-multi-backend: ^8.0.3
+    react-dnd-html5-backend: ^16.0.1
+    react-dnd-touch-backend: ^16.0.1
+  checksum: b245145cc3a59d8e7f629f7c681a1a49a9c2c6ef9a2622de715920cc409ecdb81119dc1745b0262859f4adf5becb4599f2effddbb87ec62e83e19d881b88f0c7
+  languageName: node
+  linkType: hard
+
 "react-diff-viewer@npm:^3.1.1":
   version: 3.1.1
   resolution: "react-diff-viewer@npm:3.1.1"
@@ -14575,6 +14680,66 @@ __metadata:
   dependencies:
     dnd-core: ^16.0.1
   checksum: e2368bf85d5632a5cd867b743feb54c9052d909ea5331608860fa455edf3c633ac791f5b338e3db29b19ea8670c0ba5fb43c9c1c2510760bea030811d726cdfa
+  languageName: node
+  linkType: hard
+
+"react-dnd-multi-backend@npm:^8.0.3":
+  version: 8.0.3
+  resolution: "react-dnd-multi-backend@npm:8.0.3"
+  dependencies:
+    dnd-multi-backend: ^8.0.3
+    react-dnd-preview: ^8.0.3
+  peerDependencies:
+    dnd-core: ^16.0.1
+    react: ^16.14.0 || ^17.0.2 || ^18.0.0
+    react-dnd: ^16.0.1
+    react-dom: ^16.14.0 || ^17.0.2 || ^18.0.0
+  checksum: 75a78c4a42d6f5db1ee5bf0b5a9aaf4baa08ab07942f4193768c260e365504aa028ac08722e8abe960e1c40dd2f4e97d04ff4323bb31cde6ee1f9f6d0fa16698
+  languageName: node
+  linkType: hard
+
+"react-dnd-preview@npm:^8.0.3":
+  version: 8.0.3
+  resolution: "react-dnd-preview@npm:8.0.3"
+  peerDependencies:
+    react: ^16.14.0 || ^17.0.2 || ^18.0.0
+    react-dnd: ^16.0.1
+  checksum: 39eef618faa028a5b731012c27c31e9e07fa307b82ce51aeeb7ca312a65e419947173bbe4a02742db934f5e23a9fe02213ab569ef1d99ad83043adafc9456072
+  languageName: node
+  linkType: hard
+
+"react-dnd-touch-backend@npm:^10.0.2":
+  version: 10.0.2
+  resolution: "react-dnd-touch-backend@npm:10.0.2"
+  dependencies:
+    "@react-dnd/invariant": ^2.0.0
+    dnd-core: ^10.0.2
+  checksum: 62f8ad66376b8e84a33fe072e3849fa734c411025ecd17908eb4173c93ce78763b5ba92d4e71455ba99a23c94c5153186682470c7921be2b9496e7484bc760e6
+  languageName: node
+  linkType: hard
+
+"react-dnd-touch-backend@npm:^16.0.1":
+  version: 16.0.1
+  resolution: "react-dnd-touch-backend@npm:16.0.1"
+  dependencies:
+    "@react-dnd/invariant": ^4.0.1
+    dnd-core: ^16.0.1
+  checksum: 5362c5f4266e3655d02c716f341dc55c61fae53e12eb3b239245bafb7a3f3cdb953e27e187e8dcb9d86c01bc738853d764d7c85b87104a49a8a8f1ecc4d35755
+  languageName: node
+  linkType: hard
+
+"react-dnd@npm:^10.0.2":
+  version: 10.0.2
+  resolution: "react-dnd@npm:10.0.2"
+  dependencies:
+    "@react-dnd/shallowequal": ^2.0.0
+    "@types/hoist-non-react-statics": ^3.3.1
+    dnd-core: ^10.0.2
+    hoist-non-react-statics: ^3.3.0
+  peerDependencies:
+    react: ">= 16.8"
+    react-dom: ">= 16.8"
+  checksum: 4ce085a4b09bed8453b50403669495332cd273a892ec8ae0037ad37102afdaf04fbade55b6b1db88f0b21149b7fe7cafceeba697bb0c9aa73244baa8464c963b
   languageName: node
   linkType: hard
 
@@ -15459,6 +15624,13 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   version: 1.1.0
   resolution: "scuid@npm:1.1.0"
   checksum: cd094ac3718b0070a222f9a499b280c698fdea10268cc163fa244421099544c1766dd893fdee0e2a8eba5d53ab9d0bcb11067bedff166665030fa6fda25a096b
+  languageName: node
+  linkType: hard
+
+"seedrandom@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "seedrandom@npm:3.0.5"
+  checksum: 728b56bc3bc1b9ddeabd381e449b51cb31bdc0aa86e27fcd0190cea8c44613d5bcb2f6bb63ed79f78180cbe791c20b8ec31a9627f7b7fc7f476fd2bdb7e2da9f
   languageName: node
   linkType: hard
 
@@ -16464,6 +16636,13 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
+"tiny-emitter@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "tiny-emitter@npm:2.1.0"
+  checksum: fbcfb5145751a0e3b109507a828eb6d6d4501352ab7bb33eccef46e22e9d9ad3953158870a6966a59e57ab7c3f9cfac7cab8521db4de6a5e757012f4677df2dd
+  languageName: node
+  linkType: hard
+
 "tiny-invariant@npm:1.0.6":
   version: 1.0.6
   resolution: "tiny-invariant@npm:1.0.6"
@@ -16812,6 +16991,13 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
     for-each: ^0.3.3
     is-typed-array: ^1.1.9
   checksum: 2228febc93c7feff142b8c96a58d4a0d7623ecde6c7a24b2b98eb3170e99f7c7eff8c114f9b283085cd59dcd2bd43aadf20e25bba4b034a53c5bb292f71f8956
+  languageName: node
+  linkType: hard
+
+"typed-function@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "typed-function@npm:4.1.1"
+  checksum: ac9619d96c70f5023fee9fa393560ebc91080b0bbdd1e4ec5d924a56db77cee49b78d9e897c17935ed58000eee104bc9b59f29c1a5c86bcc2a3e58ff8449aff5
   languageName: node
   linkType: hard
 

@@ -3,6 +3,9 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { EditorRowsDocument } from '@editor/types/editor-plugins'
 
 export function RowsStaticRenderer({ state }: EditorRowsDocument) {
+  // handle malformed documents, fix for https://github.com/serlo/frontend/issues/3391
+  if (!state) return null
+
   return (
     <>
       {state.map((row, index) => {

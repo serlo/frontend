@@ -154,7 +154,7 @@ export const instanceData = {
         chooseOption: 'Click on one of the options.',
         printModeChooseOption: 'Check one of the options.',
         strategy: 'Strategy',
-        solution: "தீர்வு"
+        solution: 'Proposed Solution'
       },
       boxTypes: {
         blank: 'Blank',
@@ -850,7 +850,11 @@ export const loggedInData = {
           previewIsDeactiveHint: 'Preview the exercise',
           dummyAnswers: 'Extra incorrect answers',
           addDummyAnswer: 'Add an incorrect answer',
-          removeDummyAnswer: 'Remove extra answer'
+          removeDummyAnswer: 'Remove extra answer',
+          addAlternativeAnswer: 'Add an alternative answer',
+          removeAlternativeAnswer: 'Remove alternative answer',
+          alternativeAnswers: 'Alternative answers',
+          acceptMathEquivalents: 'Accept all equivalent mathematical values'
         }
       },
       templatePlugins: {

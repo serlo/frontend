@@ -35,13 +35,12 @@ export const textExerciseGroupTypeState = entityType(
   {
     ...entity,
     content: editorContent(EditorPluginType.Rows),
-    cohesive: boolean(false),
     /* cohesive field would indicate whether the children of a grouped exercise are cohesive
     this field might be used in the future, but currently it has no effect and can not be changed
     */
+    cohesive: boolean(false),
   },
   {
-    // I think this is not correct because it meant for strings?
     'grouped-text-exercise': list(serializedChild('type-text-exercise')),
   }
 )
@@ -81,55 +80,67 @@ function TextExerciseGroupTypeEditor(
     'grouped-text-exercise'
   ] as PrettyStaticState<TextExerciseTypePluginState>[]
 
+  if (staticState.content.startsWith('{"plugin":"rows"')) {
+    return renderLegacyExerciseGroupEditor()
+  }
   return (
-    <>
-      <div className="absolute right-0 -mt-20 mr-side flex">
-        {canUseAiFeatures && isCreatingNewExerciseGroup ? (
-          <AiExerciseGenerationButton />
-        ) : null}
-        <ContentLoaders
-          id={id.value}
-          currentRevision={revision.value}
-          onSwitchRevision={replaceOwnState}
-          entityType={UuidType.ExerciseGroup}
-        />
-      </div>
-      <article className="exercisegroup mt-32">
-        <TextExerciseGroupTypeRenderer
-          content={<>{content.render()}</>}
-          exercises={children.map((child, index) => {
-            return {
-              id: child.id,
-              element: (
-                <>
-                  <nav className="flex justify-end">
-                    <button
-                      className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
-                      onClick={() => children.remove(index)}
-                    >
-                      <EditorTooltip text={exGroupStrings.removeExercise} />
-                      <FaIcon icon={faTrashAlt} />
-                    </button>
-                    <ContentLoaders
-                      id={staticExercises[index].id}
-                      currentRevision={staticExercises[index].revision}
-                      onSwitchRevision={(data) =>
-                        child.replace(TemplatePluginType.TextExercise, data)
-                      }
-                      entityType={UuidType.GroupedExercise}
-                    />
-                  </nav>
-                  {child.render()}
-                </>
-              ),
-            }
-          })}
-        />
-        <AddButton onClick={() => children.insert()}>
-          {exGroupStrings.addExercise}
-        </AddButton>
-        <ToolbarMain showSubscriptionOptions {...props.state} />
-      </article>
-    </>
+    <article className="exercisegroup mt-32">
+      {content.render()}
+      <ToolbarMain showSubscriptionOptions {...props.state} />
+    </article>
   )
+
+  function renderLegacyExerciseGroupEditor() {
+    return (
+      <>
+        <div className="absolute right-0 -mt-20 mr-side flex">
+          {canUseAiFeatures && isCreatingNewExerciseGroup ? (
+            <AiExerciseGenerationButton />
+          ) : null}
+          <ContentLoaders
+            id={id.value}
+            currentRevision={revision.value}
+            onSwitchRevision={replaceOwnState}
+            entityType={UuidType.ExerciseGroup}
+          />
+        </div>
+        <article className="exercisegroup mt-32">
+          <TextExerciseGroupTypeRenderer
+            content={<>{content.render()}</>}
+            exercises={children.map((child, index) => {
+              return {
+                id: child.id,
+                element: (
+                  <>
+                    <nav className="flex justify-end">
+                      <button
+                        className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
+                        onClick={() => children.remove(index)}
+                      >
+                        <EditorTooltip text={exGroupStrings.removeExercise} />
+                        <FaIcon icon={faTrashAlt} />
+                      </button>
+                      <ContentLoaders
+                        id={staticExercises[index].id}
+                        currentRevision={staticExercises[index].revision}
+                        onSwitchRevision={(data) =>
+                          child.replace(TemplatePluginType.TextExercise, data)
+                        }
+                        entityType={UuidType.GroupedExercise}
+                      />
+                    </nav>
+                    {child.render()}
+                  </>
+                ),
+              }
+            })}
+          />
+          <AddButton onClick={() => children.insert()}>
+            {exGroupStrings.addExercise}
+          </AddButton>
+          <ToolbarMain showSubscriptionOptions {...props.state} />
+        </article>
+      </>
+    )
+  }
 }

@@ -12,8 +12,17 @@ import { v4 as uuid_v4 } from 'uuid'
 
 import { selectionHasElement, trimSelection } from './selection'
 
+function matchBlanks(node: Node) {
+  return Element.isElement(node) && node.type === 'textBlank'
+}
+
 export function isBlankActive(editor: SlateEditor) {
   return selectionHasElement((e) => e.type === 'textBlank', editor)
+}
+
+export function getBlankElement(editor: SlateEditor): Blank | undefined {
+  const [match] = Array.from(SlateEditor.nodes(editor, { match: matchBlanks }))
+  return match && (match[0] as Blank)
 }
 
 export function toggleBlank(editor: SlateEditor) {
@@ -66,6 +75,7 @@ function addBlank(editor: SlateEditor) {
     type: 'textBlank',
     blankId: uuid_v4(),
     correctAnswers: [{ answer: SlateEditor.string(editor, selection).trim() }],
+    acceptMathEquivalents: true,
     children: [{ text: '' }],
   }
 

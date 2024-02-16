@@ -88,25 +88,23 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
       <section itemProp="articleBody">{content.render()}</section>
 
       <ToolbarMain showSubscriptionOptions {...props.state} />
-      {showSettingsModal ? (
-        <ModalWithCloseButton
-          isOpen={showSettingsModal}
-          onCloseClick={() => setShowSettingsModal(false)}
-          className="top-8 max-w-xl translate-y-0 sm:top-1/3"
-        >
-          <div className="mx-side mb-3 mt-12">
-            <SettingsTextarea
-              label={articleStrings.seoTitle}
-              state={meta_title}
-              autoFocus
-            />
-            <SettingsTextarea
-              label={articleStrings.seoDesc}
-              state={meta_description}
-            />
-          </div>
-        </ModalWithCloseButton>
-      ) : null}
+      <ModalWithCloseButton
+        isOpen={showSettingsModal}
+        onCloseClick={() => setShowSettingsModal(false)}
+        className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+      >
+        <div className="mx-side mb-3 mt-12">
+          <SettingsTextarea
+            label={articleStrings.seoTitle}
+            state={meta_title}
+            autoFocus
+          />
+          <SettingsTextarea
+            label={articleStrings.seoDesc}
+            state={meta_description}
+          />
+        </div>
+      </ModalWithCloseButton>
     </>
   )
 }

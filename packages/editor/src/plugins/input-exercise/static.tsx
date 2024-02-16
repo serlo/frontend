@@ -1,6 +1,7 @@
 import { EditorInputExerciseDocument } from '@editor/types/editor-plugins'
 import type { Element } from 'slate'
 
+import type { InputExerciseType } from './input-exercise-type'
 import { InputExerciseRenderer } from './renderer'
 import { StaticSlate } from '../text/static-components/static-slate'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
@@ -24,7 +25,7 @@ export function InputExerciseStaticRenderer({
 
   return (
     <InputExerciseRenderer
-      type={state.type}
+      type={state.type as InputExerciseType}
       unit={state.unit}
       answers={answers}
       onEvaluate={onEvaluate}

@@ -9,6 +9,7 @@ import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
 import { createBoxPlugin } from '@editor/plugins/box'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
+import { fillInTheBlanksExercise } from '@editor/plugins/fill-in-the-blanks-exercise'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
@@ -19,12 +20,14 @@ import {
 import { createRowsPlugin } from '@editor/plugins/rows'
 import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
 import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
+import { genericContentTypePlugin } from '@editor/plugins/serlo-template-plugins/generic-content'
 import { solutionPlugin } from '@editor/plugins/solution'
 import { createSpoilerPlugin } from '@editor/plugins/spoiler'
 import { createTextPlugin } from '@editor/plugins/text'
 import { textAreaExercisePlugin } from '@editor/plugins/text-area-exercise'
 import { unsupportedPlugin } from '@editor/plugins/unsupported'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 import { type LoggedInData } from '@/data-types'
 
@@ -80,7 +83,6 @@ export function createBasicPlugins({
       visibleInSuggestions: true,
       icon: <IconTable />,
     },
-    // TODO: Deactivate for RLP
     {
       type: EditorPluginType.Geogebra,
       plugin: geoGebraPlugin,
@@ -123,11 +125,22 @@ export function createBasicPlugins({
         },
       }),
     },
-    { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
+    {
+      type: EditorPluginType.ScMcExercise,
+      plugin: createScMcExercisePlugin(),
+    },
+    {
+      type: EditorPluginType.FillInTheBlanksExercise,
+      plugin: fillInTheBlanksExercise,
+    },
 
     // Special plugins, never visible in suggestions
     // ===================================================
     { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
     { type: EditorPluginType.Unsupported, plugin: unsupportedPlugin },
+    {
+      type: TemplatePluginType.GenericContent,
+      plugin: genericContentTypePlugin,
+    },
   ]
 }
