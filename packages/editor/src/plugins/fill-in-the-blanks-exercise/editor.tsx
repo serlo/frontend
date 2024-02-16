@@ -93,7 +93,7 @@ export function FillInTheBlanksExerciseEditor(
             px-2 pt-0.5 text-sm font-bold
             hover:bg-editor-primary-100 group-focus-within/blanks-exercise:block
           `)}
-          data-qa="plugin-exercise-parent-button"
+          data-qa="plugin-blanks-exercise-parent-button"
         >
           {blanksExerciseStrings.title}
         </button>
