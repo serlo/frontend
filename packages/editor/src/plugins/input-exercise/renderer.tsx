@@ -3,22 +3,25 @@ import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { useEffect, useState } from 'react'
 
+import { getMatchingAnswer } from './helper/get-matching-answer'
 import { InputExerciseType } from './input-exercise-type'
 
-type MathjsImport = typeof import('mathjs')
+export type MathjsImport = typeof import('mathjs')
+
+export interface InputExerciseAnswer {
+  value: string
+  isCorrect: boolean
+  feedback: JSX.Element | null
+}
 
 interface InputExersiseRendererProps {
-  type: string
+  type: InputExerciseType
   unit: string
-  answers: {
-    value: string
-    isCorrect: boolean
-    feedback: JSX.Element | null
-  }[]
+  answers: InputExerciseAnswer[]
   onEvaluate?: (correct: boolean, val: string) => void
 }
 
-interface FeedbackData {
+export interface FeedbackData {
   correct: boolean
   message: JSX.Element
 }
@@ -37,9 +40,19 @@ export function InputExerciseRenderer({
   useEffect(() => void import('mathjs').then((math) => setMathjs(math)), [])
 
   function handleEvaluate() {
-    const feedbackData = checkAnswer()
-    if (onEvaluate) onEvaluate(feedbackData.correct, value)
-    setFeedback(feedbackData)
+    if (!mathjs) return
+
+    const answer = getMatchingAnswer(answers, value, type, mathjs.evaluate)
+    const hasCorrectAnswer = !!answer?.isCorrect
+    const customFeedbackNode = answer?.feedback ?? null
+
+    if (onEvaluate) onEvaluate(hasCorrectAnswer, value)
+    setFeedback({
+      correct: hasCorrectAnswer,
+      message: customFeedbackNode ?? (
+        <>{exStrings[hasCorrectAnswer ? 'correct' : 'wrong']}</>
+      ),
+    })
   }
 
   return (
@@ -58,6 +71,7 @@ export function InputExerciseRenderer({
           setValue(e.target.value)
           setFeedback(null)
         }}
+        data-qa="plugin-input-exercise-input"
         onKeyDown={(e) => {
           if (e.key === 'Enter') handleEvaluate()
         }}
@@ -83,52 +97,4 @@ export function InputExerciseRenderer({
       </div>
     </div>
   )
-
-  function checkAnswer(): FeedbackData {
-    const filteredAnswers = answers.filter((answer) => {
-      try {
-        const solution = normalize(answer.value)
-        const submission = normalize(value)
-        if (!solution || !submission) return false
-
-        if (type === 'input-expression-equal-match-challenge' && solution) {
-          return solution - submission === 0
-        }
-        return solution === submission
-      } catch (e) {
-        return false
-      }
-    })
-    const customFeedbackNode = filteredAnswers[0]?.feedback ?? null
-
-    const hasCorrectAnswer =
-      filteredAnswers.length > 0 && filteredAnswers[0].isCorrect
-
-    return {
-      correct: hasCorrectAnswer,
-      message: customFeedbackNode ?? (
-        <>{exStrings[hasCorrectAnswer ? 'correct' : 'wrong']}</>
-      ),
-    }
-  }
-
-  function normalize(value: string) {
-    const _value = collapseWhitespace(value)
-    switch (type) {
-      case InputExerciseType.NumberExact:
-        return Number(normalizeNumber(_value).replace(/\s/g, ''))
-      case InputExerciseType.ExpressionEqual:
-        return Number(mathjs?.evaluate(normalizeNumber(_value)))
-      case InputExerciseType.StringNormalized:
-        return Number(_value.toUpperCase())
-    }
-  }
-
-  function collapseWhitespace(val: string): string {
-    return val.replace(/[\s\xa0]+/g, ' ').trim()
-  }
-
-  function normalizeNumber(val: string) {
-    return val.replace(/,/g, '.').replace(/^[+]/, '')
-  }
 }

@@ -29,38 +29,32 @@ export function SerloLicenseChooser({ licenseId }: SerloLicenseChooserProps) {
           <FaIcon icon={faCreativeCommons} />
         </button>
       </div>
-      {showLicenseModal ? (
-        <ModalWithCloseButton
-          isOpen={showLicenseModal}
-          onCloseClick={() => setShowLicenseModal(false)}
-          className="top-8 max-w-xl translate-y-0 sm:top-1/3"
-        >
-          <h3 className="serlo-h3 mt-4">{solutionStrings.changeLicense}:</h3>
+      <ModalWithCloseButton
+        isOpen={showLicenseModal}
+        onCloseClick={() => setShowLicenseModal(false)}
+        className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+      >
+        <h3 className="serlo-h3 mt-4">{solutionStrings.changeLicense}:</h3>
 
-          <div className="mx-side mb-3">
-            <select
-              className="serlo-button-light serlo-input-font-reset max-w-md"
-              onChange={(e) => {
-                if (licenseId.defined) licenseId.set(parseInt(e.target.value))
-                else licenseId.create(parseInt(e.target.value))
-              }}
-              value={licenseId.defined ? licenseId.value : undefined}
-            >
-              {licenses.map(({ id, title }) => {
-                return (
-                  <option
-                    className="bg-brand-200 text-brand"
-                    key={id}
-                    value={id}
-                  >
-                    {id} {title}
-                  </option>
-                )
-              })}
-            </select>
-          </div>
-        </ModalWithCloseButton>
-      ) : null}
+        <div className="mx-side mb-3">
+          <select
+            className="serlo-button-light serlo-input-font-reset max-w-md"
+            onChange={(e) => {
+              if (licenseId.defined) licenseId.set(parseInt(e.target.value))
+              else licenseId.create(parseInt(e.target.value))
+            }}
+            value={licenseId.defined ? licenseId.value : undefined}
+          >
+            {licenses.map(({ id, title }) => {
+              return (
+                <option className="bg-brand-200 text-brand" key={id} value={id}>
+                  {id} {title}
+                </option>
+              )
+            })}
+          </select>
+        </div>
+      </ModalWithCloseButton>
     </>
   )
 }

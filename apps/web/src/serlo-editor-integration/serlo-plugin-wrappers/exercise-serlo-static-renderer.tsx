@@ -59,9 +59,7 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
       <UuidsProvider
         value={{ entityId: context?.uuid, revisionId: context?.revisionId }}
       >
-        <div className="-mt-block">
-          <ExerciseStaticRenderer {...props} />
-        </div>
+        <ExerciseStaticRenderer {...props} />
       </UuidsProvider>
     </div>
   )

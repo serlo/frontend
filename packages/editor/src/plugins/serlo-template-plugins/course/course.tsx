@@ -119,21 +119,19 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
         </div>
         <ToolbarMain showSubscriptionOptions {...props.state} />
       </article>
-      {showSettingsModal ? (
-        <ModalWithCloseButton
-          isOpen={showSettingsModal}
-          onCloseClick={() => setShowSettingsModal(false)}
-          className="max-w-xl"
-        >
-          <div className="mx-side mb-3 mt-12">
-            <SettingsTextarea
-              autoFocus
-              label={courseStrings.seoDesc}
-              state={meta_description}
-            />
-          </div>
-        </ModalWithCloseButton>
-      ) : null}
+      <ModalWithCloseButton
+        isOpen={showSettingsModal}
+        onCloseClick={() => setShowSettingsModal(false)}
+        className="max-w-xl"
+      >
+        <div className="mx-side mb-3 mt-12">
+          <SettingsTextarea
+            autoFocus
+            label={courseStrings.seoDesc}
+            state={meta_description}
+          />
+        </div>
+      </ModalWithCloseButton>
     </>
   )
 

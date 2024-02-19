@@ -57,32 +57,29 @@ export const AudioToolbar = ({
           >
             {audioStrings.audioUrl} <FaIcon icon={faPencilAlt} />
           </button>
-          {/* In the future we want a popovers per setting, but this is faster for now */}
-          {showSettingsModal ? (
-            <ModalWithCloseButton
-              isOpen={showSettingsModal}
-              onCloseClick={() => setShowSettingsModal(false)}
-              className="top-8 max-w-xl translate-y-0 sm:top-1/3"
-            >
-              <h3 className="serlo-h3 mt-4">{audioStrings.title}</h3>
+          <ModalWithCloseButton
+            isOpen={showSettingsModal}
+            onCloseClick={() => setShowSettingsModal(false)}
+            className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+          >
+            <h3 className="serlo-h3 mt-4">{audioStrings.title}</h3>
 
-              <div className="mx-side mb-3">
-                <EditorInput
-                  autoFocus
-                  label={`${audioStrings.audioUrl}: `}
-                  value={state.src.value}
-                  onChange={(e) => {
-                    state.src.set(e.target.value)
-                  }}
-                  inputWidth="100%"
-                  width="100%"
-                  onKeyDown={handleInputEnter}
-                  placeholder="voca.ro/audio-id"
-                  className="block"
-                />
-              </div>
-            </ModalWithCloseButton>
-          ) : null}
+            <div className="mx-side mb-3">
+              <EditorInput
+                autoFocus
+                label={`${audioStrings.audioUrl}: `}
+                value={state.src.value}
+                onChange={(e) => {
+                  state.src.set(e.target.value)
+                }}
+                inputWidth="100%"
+                width="100%"
+                onKeyDown={handleInputEnter}
+                placeholder="voca.ro/audio-id"
+                className="block"
+              />
+            </div>
+          </ModalWithCloseButton>
         </>
       }
       pluginControls={<PluginDefaultTools pluginId={id} />}

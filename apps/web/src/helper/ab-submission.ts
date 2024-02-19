@@ -7,7 +7,16 @@ export interface ABSubmissionData {
   topicId: number
   group: string
   experiment: string
-  type: 'sc' | 'mc' | 'input' | 'h5p' | 'text' | 'ival' | 'rating' | 'visit'
+  type:
+    | 'sc'
+    | 'mc'
+    | 'input'
+    | 'h5p'
+    | 'text'
+    | 'ival'
+    | 'rating'
+    | 'visit'
+    | 'blanks'
   result: 'correct' | 'wrong' | 'open' | string
 }
 
