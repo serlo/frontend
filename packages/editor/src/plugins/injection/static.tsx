@@ -234,7 +234,10 @@ export function InjectionStaticRenderer({
       <InfoPanel>
         {strings.errors.defaultMessage}{' '}
         <small className="float-right mt-0.5">
-          <a className="serlo-link" href={`${cleanedHref}#${hash}`}>
+          <a
+            className="serlo-link"
+            href={`${cleanedHref}${hash ? `#${hash}` : ''}`}
+          >
             Link
           </a>
         </small>
