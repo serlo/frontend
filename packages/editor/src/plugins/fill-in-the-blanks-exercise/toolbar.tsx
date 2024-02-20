@@ -21,7 +21,8 @@ export const FillInTheBlanksToolbar = ({
   setPreviewActive: Dispatch<SetStateAction<boolean>>
   childPluginType: EditorPluginType
 }) => {
-  const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
+  const pluginsStrings = useEditorStrings().plugins
+  const blanksExerciseStrings = pluginsStrings.blanksExercise
 
   return (
     <PluginToolbar
@@ -64,8 +65,14 @@ export const FillInTheBlanksToolbar = ({
             dataQa="plugin-blanks-mode-switch"
             changeValue={(value) => state.text.replace(value)}
             options={[
-              { value: EditorPluginType.Text, text: 'Text' },
-              { value: EditorPluginType.SerloTable, text: 'Table' },
+              {
+                value: EditorPluginType.Text,
+                text: pluginsStrings.text.title,
+              },
+              {
+                value: EditorPluginType.SerloTable,
+                text: pluginsStrings.serloTable.title,
+              },
             ]}
           />
         </>
