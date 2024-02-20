@@ -1,4 +1,5 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import Cookies from 'js-cookie'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { type ReactNode, useEffect, useState } from 'react'
@@ -105,8 +106,10 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
           <div className="flex flex-row justify-center">
             {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a
-              href="/mathe/298181/einhorn-der-mathematik-%C3%BCbersicht-aller-episoden"
+              href="https://einhorn.arrrg.de/"
+              target="_blank"
               className="group"
+              rel="noreferrer"
             >
               <div>
                 <div className="ml-2 mt-2 mobileExt:mt-6 sm:mt-10">
@@ -235,35 +238,29 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       return
     }
 
-    setSurvey(true)
-
-    /*
-    // pop-up already shown - but only for production
-    if (Cookies.get('serlo-survey-beta-123-shown')) {
+    // pop-up already shown
+    if (Cookies.get('serlo-international-day-of-mathematics-banner')) {
       return
     }
 
-    const startDate = new Date('2023-07-22T00:00:00+02:00')
-    const endDate = new Date('2023-07-24T00:00:00+02:00')
+    const startDate = new Date('2024-03-14T00:00:00+02:00')
+    const endDate = new Date('2024-03-15T00:00:00+02:00')
 
     // pop-up will vanish after survey run
     if (Date.now() > endDate.getTime()) {
       return
     }
 
-    if (isProduction) {
-      // don't show in production before the start date
-      if (Date.now() < startDate.getTime()) {
-        return
-      }
+    // don't show before the start date
+    if (Date.now() < startDate.getTime()) {
+      return
     }
 
-    if (isProduction) {
-      Cookies.set('serlo-survey-beta-123-shown', '1', {
-        expires: 7,
-        sameSite: 'Lax',
-      })
-    }
-    */
+    Cookies.set('serlo-international-day-of-mathematics-banner', '1', {
+      expires: 2,
+      sameSite: 'Lax',
+    })
+
+    setSurvey(true)
   }
 }
