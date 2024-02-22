@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
 import { TextExerciseGroupTypeRenderer } from './renderer'
+import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
   import(
@@ -33,6 +34,11 @@ export function TextExerciseGroupTypeStaticRenderer(
       <div className="relative">
         {loaded && auth && context?.uuid ? (
           <div className="absolute -right-8">
+            {context?.licenseId ? (
+              <div className="ml-1">
+                <ExerciseLicenseNotice exerciseLicenseId={context?.licenseId} />
+              </div>
+            ) : null}
             <AuthorToolsExercises
               data={{
                 type: ExerciseInlineType.ExerciseGroup,
@@ -64,6 +70,11 @@ export function TextExerciseGroupTypeStaticRenderer(
     <div className="relative">
       {loaded && auth && context?.uuid ? (
         <div className="absolute -right-8">
+          {context?.licenseId ? (
+            <div className="ml-1">
+              <ExerciseLicenseNotice exerciseLicenseId={context?.licenseId} />
+            </div>
+          ) : null}
           <AuthorToolsExercises
             data={{
               type: ExerciseInlineType.ExerciseGroup,
