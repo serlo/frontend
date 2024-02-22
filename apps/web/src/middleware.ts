@@ -14,10 +14,10 @@ export function middleware(request: NextRequest) {
   const regionName = countryRegion
     ? //@ts-expect-error good enough
       (regionMapping[countryRegion] as SupportedRegion | undefined)
-    : 'bayern'
+    : undefined
 
   return NextResponse.redirect(
-    new URL('/pruefungen/' + regionName, request.url)
+    new URL('/pruefungen/' + regionName ?? 'bayern', request.url)
   )
 }
 
