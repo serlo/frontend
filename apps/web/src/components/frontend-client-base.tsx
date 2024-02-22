@@ -33,8 +33,8 @@ export interface FrontendClientBaseProps {
   loadLoggedInData?: boolean
 }
 
-Router.events.on('routeChangeStart', () => {
-  NProgress.start()
+Router.events.on('routeChangeStart', (_url, { shallow }) => {
+  if (!shallow) NProgress.start()
 })
 Router.events.on('routeChangeComplete', (url, { shallow }) => {
   NProgress.done()
