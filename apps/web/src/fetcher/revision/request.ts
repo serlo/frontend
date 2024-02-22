@@ -61,7 +61,7 @@ export async function requestRevision(
       ? [
           createExercise({
             ...uuid,
-            license: uuid.repository.license,
+            licenseId: uuid.repository.licenseId,
             currentRevision: {
               content: uuid.content,
               id: uuid.id,
@@ -77,7 +77,7 @@ export async function requestRevision(
         ? [
             createExercise({
               ...uuid,
-              license: uuid.repository.license,
+              licenseId: uuid.repository.licenseId,
               currentRevision: uuid.repository.currentRevision,
               revisions: { totalCount: 0 },
             }),
