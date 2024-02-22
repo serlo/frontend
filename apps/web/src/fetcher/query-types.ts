@@ -8,8 +8,6 @@ import type {
 
 export type MainUuidType = NonNullable<MainUuidQuery['uuid']>
 
-export type License = Extract<MainUuidType, { license: any }>['license']
-
 export type User = Extract<UserUuidQuery['uuid'], { __typename: 'User' }>
 
 export type Revisions = Extract<RevisionsQuery['uuid'], { revisions: any }>
