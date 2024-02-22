@@ -22,6 +22,7 @@ export function TextExerciseGroupTypeRenderer({
           return (
             <li
               key={id ?? index}
+              id={id?.split('-')[0]}
               className={cn(`
                 serlo-exercise-wrapper serlo-grouped-exercise-wrapper
                 mt-6 pt-2 [&>div]:border-none

@@ -3,8 +3,8 @@ import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
   AnyEditorDocument,
+  EditorExerciseGroupDocument,
   EditorInjectionDocument,
-  EditorRowsDocument,
 } from '@editor/types/editor-plugins'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { endpoint } from '@serlo/frontend/src/api/endpoint'
@@ -101,10 +101,15 @@ export function InjectionStaticRenderer({
     AnyEditorDocument[] | 'loading' | 'error'
   >('loading')
   const { strings } = useInstanceData()
-  const cleanedHref = href?.startsWith('/') ? href : `/${href}`
+  const [base, hash] = href.split('#')
+  const cleanedHref = base
+    ? base.startsWith('/')
+      ? base
+      : `/${base}`
+    : undefined
 
   useEffect(() => {
-    if (!href) return
+    if (!cleanedHref) return
 
     try {
       void fetch(endpoint, {
@@ -158,29 +163,24 @@ export function InjectionStaticRenderer({
           }
 
           if (uuid.__typename === 'ExerciseGroup') {
-            const exercises = uuid.exercises.map((exercise) => {
-              if (!exercise.currentRevision?.content) return []
+            const content = parseDocumentString(
+              uuid.currentRevision.content
+            ) as EditorExerciseGroupDocument
 
-              const exerciseContentAndContext = {
-                ...parseDocumentString(exercise.currentRevision?.content),
-                serloContext: {
-                  licenseId: uuid.licenseId,
-                },
+            // use id in hash to load one exercise out of the group
+            if (hash) {
+              const exercise = content.state.exercises.find(
+                (exercise) => exercise.id?.startsWith(hash)
+              )
+              if (exercise) {
+                setContent([exercise])
+                return
               }
-
-              return exercise.currentRevision ? [exerciseContentAndContext] : []
-            })
-
+            }
             setContent([
               {
                 plugin: TemplatePluginType.TextExerciseGroup,
-                id: undefined,
-                state: {
-                  content: parseDocumentString(
-                    uuid.currentRevision.content
-                  ) as EditorRowsDocument,
-                  exercises,
-                },
+                state: { content },
               },
             ])
             return
@@ -217,16 +217,16 @@ export function InjectionStaticRenderer({
           throw new Error('unknown entity type')
         })
         .catch((e) => {
-          triggerSentry({ message: String(e), data: { href } })
+          triggerSentry({ message: String(e), data: { cleanedHref } })
           setContent('error')
         })
     } catch (e) {
-      triggerSentry({ message: String(e), data: { href } })
+      triggerSentry({ message: String(e), data: { cleanedHref } })
       setContent('error')
     }
-  }, [cleanedHref, href])
+  }, [cleanedHref, hash])
 
-  if (!href) return null
+  if (!cleanedHref) return null
 
   if (content === 'loading') return <LoadingSpinner />
   if (content === 'error') {
@@ -234,7 +234,10 @@ export function InjectionStaticRenderer({
       <InfoPanel>
         {strings.errors.defaultMessage}{' '}
         <small className="float-right mt-0.5">
-          <a className="serlo-link" href={cleanedHref}>
+          <a
+            className="serlo-link"
+            href={`${cleanedHref}${hash ? `#${hash}` : ''}`}
+          >
             Link
           </a>
         </small>
