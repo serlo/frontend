@@ -37,7 +37,7 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
   const oldEntityId = context?.uuid ?? Number(props.id?.split('-')[0])
   const entityId = isNaN(oldEntityId)
     ? // construct fake but persisting entityId just for evaluation
-      Number(props.id?.replace(/[^0-9]/g, ''))
+      Number(props.id?.replace(/[^0-9]/g, '').substring(0, 8))
     : oldEntityId
 
   return (
