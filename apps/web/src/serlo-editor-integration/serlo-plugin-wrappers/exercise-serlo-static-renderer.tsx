@@ -34,7 +34,11 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
 
   // when we moved the groupedExercises into the exercises state we used the old entity uuid as editor id
   // e.g. `3743-exercise-child`. This way we can use the entity ids in injections and for exercise analytics
-  const entityId = context?.uuid ?? Number(props.id?.split('-')[0])
+  const oldEntityId = context?.uuid ?? Number(props.id?.split('-')[0])
+  const entityId = isNaN(oldEntityId)
+    ? // construct fake but persisting entityId just for evaluation
+      Number(props.id?.replace(/[^0-9]/g, '').substring(0, 8))
+    : oldEntityId
 
   return (
     <div className="relative">
