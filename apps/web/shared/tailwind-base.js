@@ -18,6 +18,7 @@ const sunflowerColors = {
   100: '#fff1db',
   50: '#fff9f0',
 }
+const newGreen = '#2fceb1'
 
 export default {
   theme: {
@@ -49,9 +50,13 @@ export default {
           // 900: '#45570c',
           muted: '#cfe097',
         },
+        newgreen: {
+          DEFAULT: newGreen,
+          600: '#6cddc9',
+          700: newGreen,
+        },
         gray: colors.neutral,
         berry: '#857189',
-        newgreen: '#2fceb1',
         'editor-primary': sunflowerColors,
         'almost-black': '#404040',
         yellow: sunflowerColors,

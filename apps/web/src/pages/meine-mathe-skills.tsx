@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-before-interactive-script-outside-document */
 import { NextPage } from 'next'
 
+import { NumberLineWrapper } from '@/components/content/exercises/number-line/number-line-wrapper'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
 
@@ -19,6 +20,8 @@ const ContentPage: NextPage = () => {
         }}
       />
       <div>Test</div>
+
+      <NumberLineWrapper />
     </FrontendClientBase>
   )
 }
