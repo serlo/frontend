@@ -39,13 +39,13 @@ export function ExerciseGroupStaticRenderer(
 
   return (
     <div className="relative">
-      {loaded && auth && context?.uuid ? (
-        <div className="absolute -right-8">
-          {context?.licenseId ? (
-            <div className="ml-1">
-              <ExerciseLicenseNotice exerciseLicenseId={context?.licenseId} />
-            </div>
-          ) : null}
+      <div className="absolute -right-8">
+        {context?.licenseId ? (
+          <div className="ml-1">
+            <ExerciseLicenseNotice exerciseLicenseId={context?.licenseId} />
+          </div>
+        ) : null}
+        {loaded && auth && context?.uuid ? (
           <AuthorToolsExercises
             data={{
               type: ExerciseInlineType.ExerciseGroup,
@@ -54,8 +54,8 @@ export function ExerciseGroupStaticRenderer(
               unrevisedRevisions: context?.unrevisedRevisions,
             }}
           />
-        </div>
-      ) : null}
+        ) : null}
+      </div>
       <ExerciseGroupRenderer
         content={
           <StaticRenderer document={content as unknown as EditorRowsDocument} />
