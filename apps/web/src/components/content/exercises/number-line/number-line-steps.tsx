@@ -3,8 +3,8 @@ import { cn } from '@/helper/cn'
 export function NumberLineSteps({ stepAmount }: { stepAmount: number }) {
   return (
     <div className="relative flex items-center justify-between">
-      <div className="bg-newgreen-600 absolute -left-4 -right-10 top-[17px] h-[3px]"></div>
-      <div className="border-l-newgreen-600 absolute -right-12 h-0 w-0 border-y-8 border-l-[16px] border-y-transparent"></div>
+      <div className="absolute -left-4 -right-10 top-[17px] h-[3px] bg-newgreen-600"></div>
+      <div className="absolute -right-12 h-0 w-0 border-y-8 border-l-[16px] border-y-transparent border-l-newgreen-600"></div>
 
       {Array.from({ length: stepAmount + 1 }).map((_, i) => {
         const extraClasses =
