@@ -11,13 +11,21 @@ import { cn } from '@/helper/cn'
 const exampleValues = [
   // searchedValue, labeledValue, maxValue
   [9000, 6000, 12000],
+  [3000, 6000, 12000],
+  [12000, 6000, 12000],
+  [9000, 12000, 12000],
+  [3000, 12000, 12000],
+  [6000, 12000, 12000],
   [6000, 8000, 8000],
-  [120, 200, 400],
-  [130, 400, 400],
+  [2000, 8000, 8000],
+  [4000, 8000, 8000],
+  [8000, 4000, 8000],
+  [2000, 4000, 8000],
+  [6000, 4000, 8000],
 ]
 
-function getExampleIndex() {
-  return Math.floor(Math.random() * exampleValues.length)
+function helperChooseRandomly<T>(arr: T[]) {
+  return arr[Math.floor(Math.random() * arr.length)]
 }
 
 /*
@@ -26,8 +34,9 @@ function getExampleIndex() {
 export function NumberLineWrapper() {
   const [selectedValue, setSelectedValue] = useState(-1) // move outside for actual exercise
 
-  const [exampleIndex, setExampleIndex] = useState(0)
-  const [searchedValue, labeledValue, maxValue] = exampleValues[exampleIndex]
+  const [[searchedValue, labeledValue, maxValue], setValues] = useState([
+    0, 0, 0,
+  ])
 
   const [isChecked, setIsChecked] = useState(false)
 
@@ -51,7 +60,25 @@ export function NumberLineWrapper() {
   }
 
   function newExercise() {
-    setExampleIndex(getExampleIndex())
+    const kind = helperChooseRandomly([0, 1, 2, 3])
+    if (kind === 0 || kind === 1) {
+      // basic, max value fixed to 40 or 400, exact choice
+      const factor = kind === 1 ? 10 : 1
+      const label = helperChooseRandomly([20, 40])
+      const searchValues = []
+      for (let i = 10; i < 40; i++) {
+        if (i !== 20) {
+          searchValues.push(i)
+        }
+      }
+      setValues([
+        helperChooseRandomly(searchValues) * factor,
+        label * factor,
+        40 * factor,
+      ])
+    } else {
+      setValues(helperChooseRandomly(exampleValues) as [number, number, number])
+    }
     setSelectedValue(0)
     setIsChecked(false)
   }
