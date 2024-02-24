@@ -96,7 +96,7 @@ export function NumberLineExercise() {
 
   return (
     <div className="relative mx-4 my-16 max-w-lg bg-white">
-      <h2 className="mx-4 block pb-8 text-left text-2xl font-bold">
+      <h2 className="pb-8 text-left text-2xl font-bold">
         Wo ist die <span className="text-newgreen">{searchedValue}</span>?
       </h2>
 

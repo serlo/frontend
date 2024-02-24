@@ -58,10 +58,10 @@ function Content() {
             </li>
             <li>
               <Link
-                href="/meine-mathe-skills/5/zahlen-finden"
+                href="/meine-mathe-skills/5/potenzieren"
                 className="serlo-link"
               >
-                Zahlenstrahl – Level 2
+                Potenzieren (wip)
               </Link>
             </li>
           </ul>

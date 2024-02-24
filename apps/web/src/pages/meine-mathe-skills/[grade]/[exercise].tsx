@@ -5,6 +5,7 @@ import { MathSkillsHeader } from '@/components/content/exercises/math-skills-hea
 import { NumberLineExercise } from '@/components/content/exercises/number-line-exercise/number-line-exercise'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
+import { NumberInputExercise } from '@/components/content/exercises/number-input-exercise/number-input-exercise'
 
 const ContentPage: NextPage = () => {
   const router = useRouter()
@@ -31,16 +32,31 @@ function Content() {
   const router = useRouter()
   const exercise = String(router.query.exercise)
 
-  if (!exercise || exercise !== 'zahlen-finden') return null
+  if (!exercise) return null
 
-  return (
-    <>
-      <MathSkillsHeader />
-      <div className="min-h-[70vh] sm:mx-auto sm:max-w-xl">
-        <NumberLineExercise />
-      </div>
-    </>
-  )
+  if (exercise === 'zahlen-finden') {
+    return (
+      <>
+        <MathSkillsHeader />
+        <div className="min-h-[70vh] sm:mx-auto sm:max-w-xl">
+          <NumberLineExercise />
+        </div>
+      </>
+    )
+  }
+
+  if (exercise === 'potenzieren') {
+    return (
+      <>
+        <MathSkillsHeader />
+        <div className="min-h-[70vh] sm:mx-auto sm:max-w-xl">
+          <NumberInputExercise />
+        </div>
+      </>
+    )
+  }
+
+  return null
 }
 
 export default ContentPage
