@@ -1,14 +1,11 @@
 import { FaIcon } from '@editor/package'
-import {
-  faAngleLeft,
-  faAngleRight,
-  faAnglesLeft,
-  faAnglesRight,
-} from '@fortawesome/free-solid-svg-icons'
+import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
 import * as confetti from 'canvas-confetti' // why is this throwing warnings? sigh ..
 import { useEffect, useState } from 'react'
 
+import { ArrowButtonNavigation } from './arrow-button-navigation'
 import { NumberLine } from './number-line'
+import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 // randomize or create a lot more
@@ -33,118 +30,115 @@ export function NumberLineWrapper() {
   const [exampleIndex, setExampleIndex] = useState(0)
   const [searchedValue, labeledValue, maxValue] = exampleValues[exampleIndex]
 
+  const [isChecked, setIsChecked] = useState(false)
+
+  const isCorrect = selectedValue === searchedValue
+
   const onCheck = () => {
+    if (isChecked || selectedValue === 0) return
+
     console.log({ selectedValue })
     console.log({ searchedValue })
-    if (selectedValue === searchedValue) {
-      try {
-        void confetti.default({ origin: { x: 0, y: 0.4 }, angle: 45 })
-      } catch (e) {
-        // don't care
-      }
-      return
+    if (isCorrect) {
+      void confetti.default()
+    } else {
+      const element = document.getElementById('number-line')?.parentElement
+      element?.classList.add('animate-shake')
+      setTimeout(() => {
+        element?.classList.remove('animate-shake')
+      }, 1000)
     }
-    showToastNotice('Leider nicht! 🎉')
+    setIsChecked(true)
   }
 
-  useEffect(() => setExampleIndex(getExampleIndex()), [])
+  function newExercise() {
+    setExampleIndex(getExampleIndex())
+    setSelectedValue(0)
+    setIsChecked(false)
+  }
+
+  useEffect(newExercise, [])
 
   useEffect(() => {
     const keyEventHandler = (e: KeyboardEvent) => {
-      if (e.key === 'Enter') onCheck()
+      if (e.key === 'Enter') isChecked ? newExercise() : onCheck()
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        document.getElementById('number-line')?.focus()
+      }
     }
 
     document.addEventListener('keydown', keyEventHandler)
     return () => document.removeEventListener('keydown', keyEventHandler)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedValue, searchedValue])
+  }, [selectedValue, searchedValue, isChecked])
 
   return (
     <div className="relative mx-12 my-12 max-w-lg">
-      <nav className="absolute -top-2 right-0 z-30">
-        <button
-          onClick={() => {
-            changeValueBySteps(-5)
-          }}
-          type="button"
-          className="serlo-button-light me-2 inline-flex items-center rounded-full p-2.5"
+      <h2 className="block pb-8 text-left text-2xl font-bold">
+        Wo ist die <span className="text-newgreen">{searchedValue}</span>?
+      </h2>
+
+      <button
+        className="group serlo-button-light absolute -right-9 top-0 z-50 flex h-9 items-center"
+        onClick={newExercise}
+      >
+        <span
+          className={cn(
+            'inline-block h-0 w-0 overflow-clip text-sm',
+            'group-hover:ml-1 group-hover:mr-2 group-hover:h-auto group-hover:w-auto',
+            'group-focus-visible:ml-1 group-focus-visible:mr-2 group-focus-visible:h-auto group-focus-visible:w-auto'
+          )}
         >
-          <FaIcon icon={faAnglesLeft} />
-          <span className="sr-only">
-            Position mehrere Schritte nach links verschieben
-          </span>
-        </button>
-        <button
-          onClick={() => {
-            changeValueBySteps(-1)
-          }}
-          type="button"
-          className="serlo-button-light me-2 inline-flex items-center rounded-full p-2.5"
-        >
-          <FaIcon icon={faAngleLeft} className="aspect-square" />
-          <span className="sr-only">
-            Position einen Schritt nach links verschieben
-          </span>
-        </button>
-        <button
-          onClick={() => {
-            changeValueBySteps(1)
-          }}
-          type="button"
-          className="serlo-button-light me-2 inline-flex items-center rounded-full p-2.5"
-        >
-          <FaIcon icon={faAngleRight} className="aspect-square" />
-          <span className="sr-only">
-            Position einen Schritt nach links verschieben
-          </span>
-        </button>
-        <button
-          onClick={() => {
-            changeValueBySteps(5)
-          }}
-          type="button"
-          className="serlo-button-light me-2 inline-flex items-center rounded-full p-2.5"
-        >
-          <FaIcon icon={faAnglesRight} />
-          <span className="sr-only">
-            Position mehrerer Schritte nach rechts verschieben
-          </span>
-        </button>
-      </nav>
+          Andere Aufgabe
+        </span>
+        <FaIcon icon={faArrowsRotate} />
+      </button>
+
       <NumberLine
         selectedValue={selectedValue}
         setSelectedValue={setSelectedValue}
         maxValue={maxValue}
         labeledValue={labeledValue}
         searchedValue={searchedValue}
+        isChecked={isChecked}
+        isCorrect={isCorrect}
       />
 
-      <div className="flex justify-between">
-        {selectedValue < 0 ? (
-          'Klicke auf den Zeitstrahl oder benutze die Pfeilbuttons'
+      <div className="flex h-3 justify-between">
+        {isChecked ? (
+          <p>
+            {isCorrect ? (
+              'Sehr gut gemacht 👌'
+            ) : (
+              <>
+                Leider nicht richtig.
+                <br />
+                Du hast die Zahl <b>{selectedValue}</b> ausgewählt.
+              </>
+            )}
+          </p>
         ) : (
-          <button className="serlo-button-green" onClick={onCheck}>
-            Überprüfen
+          <ArrowButtonNavigation
+            selectedValue={selectedValue}
+            setSelectedValue={setSelectedValue}
+            maxValue={maxValue}
+          />
+        )}
+        {selectedValue === 0 ? (
+          <div className="-mr-8 block text-right text-gray-500">
+            Klicke auf den Zeitstrahl
+            <br />
+            oder benutze die Pfeilbuttons
+          </div>
+        ) : (
+          <button
+            className="serlo-button-blue -mr-10 mt-1.5 h-8"
+            onClick={isChecked ? newExercise : onCheck}
+          >
+            {isChecked ? 'Nächste Aufgabe' : 'Überprüfen'}
           </button>
         )}
-
-        <button
-          className="serlo-button-light"
-          onClick={() => {
-            setExampleIndex(getExampleIndex())
-            setSelectedValue(0)
-          }}
-        >
-          Neue Aufgabe
-        </button>
       </div>
     </div>
   )
-
-  function changeValueBySteps(steps: number) {
-    const newValue = selectedValue + steps * (maxValue / 40)
-    const limitedValue =
-      newValue < 0 ? 0 : newValue > maxValue ? maxValue : newValue
-    setSelectedValue(limitedValue)
-  }
 }

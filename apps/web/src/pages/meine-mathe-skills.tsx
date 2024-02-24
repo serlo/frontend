@@ -19,9 +19,9 @@ const ContentPage: NextPage = () => {
           metaDescription: 'Zeige deine mathematischen Skills',
         }}
       />
-      <div>Test</div>
-
-      <NumberLineWrapper />
+      <div className="mx-auto max-w-xl py-5">
+        <NumberLineWrapper />
+      </div>
     </FrontendClientBase>
   )
 }

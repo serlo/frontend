@@ -7,9 +7,10 @@ interface NumberLineProps {
   maxValue: number // highest value of number line
   labeledValue: number
   selectedValue: number
-  setSelectedValue: Dispatch<SetStateAction<number>>
   searchedValue: number
-  showAllLabels?: boolean
+  setSelectedValue: Dispatch<SetStateAction<number>>
+  isChecked?: boolean
+  isCorrect?: boolean
 }
 
 const stepAmount = 40
@@ -17,18 +18,16 @@ const stepAmount = 40
 export function NumberLine({
   maxValue,
   labeledValue,
-  showAllLabels,
+  isChecked,
   selectedValue,
   setSelectedValue,
   searchedValue,
+  isCorrect,
 }: NumberLineProps) {
   const step = maxValue / 40
 
   return (
     <div className="relative mb-12">
-      <label className="block pb-4 text-xl font-bold" htmlFor="number-line">
-        Wo ist die {searchedValue}?
-      </label>
       <input
         id="number-line"
         type="range"
@@ -36,25 +35,25 @@ export function NumberLine({
         onChange={({ currentTarget }) =>
           setSelectedValue(parseInt(currentTarget.value))
         }
+        disabled={isChecked}
         min={0}
         max={maxValue}
         step={step}
         className={cn(
-          'z-20 h-16 w-full cursor-pointer appearance-none',
+          'z-20 h-20 w-full cursor-pointer appearance-none',
           'overflow-visible rounded-md p-4 outline-dotted outline-2 outline-transparent focus-visible:outline-brand-400',
-          '[&::-webkit-slider-thumb]:appearance-none',
-          '[&::-webkit-slider-thumb]:w-[3px]',
-          '[&::-webkit-slider-thumb]:h-20',
-          '[&::-webkit-slider-thumb]:bg-red-600',
-          '[&::-moz-range-thumb]:appearance-none',
-          '[&::-moz-range-thumb]:w-[3px]',
-          '[&::-moz-range-thumb]:h-20',
-          '[&::-moz-range-thumb]:bg-red-600',
-          '[&::-moz-range-thumb]:border-none'
+          '[&::-webkit-slider-thumb]:opacity-0',
+          '[&::-moz-range-thumb]:opacity-0'
         )}
       />
       <div className="pointer-events-none absolute -bottom-5 w-full px-4">
-        <NumberLineSteps stepAmount={stepAmount} />
+        <NumberLineSteps
+          stepAmount={stepAmount}
+          selectedStep={selectedValue / step}
+          searchedStep={searchedValue / step}
+          isCorrect={isCorrect}
+          isChecked={isChecked}
+        />
         {renderLabels()}
       </div>
     </div>
@@ -65,7 +64,7 @@ export function NumberLine({
       <div className="relative flex items-center justify-between pb-6 text-xs">
         {Array.from({ length: 5 }).map((_, i) => {
           const value = step * i * 10
-          const showLabel = showAllLabels
+          const showLabel = isChecked
             ? true
             : 0 === value
               ? true
@@ -74,7 +73,7 @@ export function NumberLine({
           return (
             <div
               key={i}
-              className="relative text-center text-base text-gray-500"
+              className="relative text-center text-base text-gray-700"
             >
               {showLabel ? (
                 <b className="absolute -ml-40 w-80">{value}</b>
