@@ -1,4 +1,3 @@
-import * as confetti from 'canvas-confetti' // why is this throwing warnings? sigh ..
 import { useEffect, useState } from 'react'
 
 import { NumberKeyboard } from './number-keyboard'
@@ -15,15 +14,14 @@ export function NumberInputExercise() {
 
   function onCheck() {
     if (!inputValue) return
-    if (isCorrect) {
-      void confetti.default()
-    } else {
-      const element = document.getElementById('number-input')
-      element?.classList.add('animate-shake')
-      setTimeout(() => {
-        element?.classList.remove('animate-shake')
-      }, 1000)
-    }
+
+    const animationClass = isCorrect ? 'animate-nod' : 'animate-shake'
+    const element = document.getElementById('number-input')
+    element?.classList.add(animationClass)
+    setTimeout(() => {
+      element?.classList.remove(animationClass)
+    }, 1000)
+
     setIsChecked(true)
   }
 
@@ -62,7 +60,9 @@ export function NumberInputExercise() {
           type="number"
           className={cn(
             'ml-0.5 w-32 rounded-lg bg-[#d8f5ef] p-2 text-2xl ',
-            'outline-dotted outline-2 outline-transparent focus-visible:outline-newgreen'
+            'outline-dotted outline-2 outline-transparent focus-visible:outline-newgreen',
+            isChecked && isCorrect && 'bg-newgreen-600',
+            isChecked && !isCorrect && 'bg-red-100'
           )}
         />
       </div>
@@ -77,7 +77,7 @@ export function NumberInputExercise() {
                 <>
                   Leider nicht richtig.
                   <br />
-                  Du hast die Zahl <b>{inputValue}</b> ausgewählt.
+                  Die richtige Antwort wäre <b>{correctValue}</b> gewesen.
                 </>
               )}
             </p>
