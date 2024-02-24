@@ -2,7 +2,7 @@
 import { NextPage } from 'next'
 import { useState } from 'react'
 
-import { NumberLineWrapper } from '@/components/content/exercises/number-line/number-line-wrapper'
+import { NumberLineExercise } from '@/components/content/exercises/number-line-exercise/number-line-exercise'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
 
@@ -98,8 +98,8 @@ function Content() {
     return (
       <>
         {renderHeader()}
-        <div className="mx-auto max-w-xl py-5">
-          <NumberLineWrapper />
+        <div className="min-h-[70vh] sm:mx-auto sm:max-w-xl">
+          <NumberLineExercise />
         </div>
       </>
     )

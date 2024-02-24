@@ -12,7 +12,7 @@ export function ArrowButtonNavigation({
   setSelectedValue: Dispatch<SetStateAction<number>>
 }) {
   return (
-    <nav className="min-w-180">
+    <nav className="text-center sm:min-w-180">
       {renderButton(
         'I<',
         'Position mehrere Schritte nach links verschieben',
