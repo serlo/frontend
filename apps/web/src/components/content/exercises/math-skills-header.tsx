@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 
 import { Link } from '../link'
+import { cn } from '@/helper/cn'
 
 export function MathSkillsHeader() {
   const router = useRouter()
@@ -11,7 +12,10 @@ export function MathSkillsHeader() {
     <div className="flex h-14 items-center justify-between bg-yellow-100 px-4 text-center">
       <Link
         href="/meine-mathe-skills"
-        className="block cursor-pointer text-2xl text-almost-black"
+        className={cn(
+          'block cursor-pointer text-2xl text-almost-black',
+          isExercise ? '' : 'w-full text-center'
+        )}
       >
         Meine Mathe Skills
       </Link>

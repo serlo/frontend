@@ -29,9 +29,14 @@ function Content() {
   return (
     <>
       <MathSkillsHeader />
-      <div className="justify-center sm:flex">
-        <div className="my-10 text-lg leading-loose">
-          Mein Geheimnis?
+      <div className="mx-4 justify-center sm:mt-10 sm:flex sm:flex-row-reverse">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/_assets/img/exercise/smart-hippo.svg"
+          className="mx-auto mt-5 w-48 p-4 sm:mx-0 sm:mt-0"
+        />
+        <div className="mx-auto mb-6 mt-4 max-w-md text-lg sm:mx-0 sm:leading-loose">
+          <b>Mein Geheimnis?</b>
           <br />
           Ich liebe es, Dinge zu können und das auch zu Zeigen.
           <br /> Das können auch kleine Sachen sein.
@@ -40,13 +45,11 @@ function Content() {
           <br />
           <i>Schritt für Schritt.</i>
         </div>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/_assets/img/exercise/smart-hippo.svg" className="w-48 p-4" />
       </div>
-      <div className="mt-16 flex justify-center text-2xl font-bold">
+      <div className="mx-4 mt-16 text-2xl font-bold mobile:flex mobile:justify-center">
         <h2>In welche Klasse gehst du?</h2>
       </div>
-      <div className="mt-10 flex justify-center text-2xl font-bold">
+      <div className="mt-6 flex justify-center text-2xl font-bold sm:mt-8">
         <Link
           href="/meine-mathe-skills/5"
           className="flex h-36 w-36 items-center justify-center rounded-full bg-brand-600 text-center  text-white !no-underline transition-colors hover:bg-brand-500	"
