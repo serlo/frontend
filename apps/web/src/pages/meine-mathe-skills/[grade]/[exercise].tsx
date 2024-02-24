@@ -2,10 +2,10 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
 import { MathSkillsHeader } from '@/components/content/exercises/math-skills-header'
+import { NumberInputExercise } from '@/components/content/exercises/number-input-exercise/number-input-exercise'
 import { NumberLineExercise } from '@/components/content/exercises/number-line-exercise/number-line-exercise'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
-import { NumberInputExercise } from '@/components/content/exercises/number-input-exercise/number-input-exercise'
 
 const ContentPage: NextPage = () => {
   const router = useRouter()
