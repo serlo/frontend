@@ -45,8 +45,6 @@ export function NumberLineExercise() {
   const onCheck = () => {
     if (isChecked || selectedValue === 0) return
 
-    console.log({ selectedValue })
-    console.log({ searchedValue })
     if (isCorrect) {
       void confetti.default()
     } else {
@@ -97,7 +95,7 @@ export function NumberLineExercise() {
   }, [selectedValue, searchedValue, isChecked])
 
   return (
-    <div className="relative mx-4 my-12 max-w-lg bg-white">
+    <div className="relative mx-4 my-16 max-w-lg bg-white">
       <h2 className="mx-4 block pb-8 text-left text-2xl font-bold">
         Wo ist die <span className="text-newgreen">{searchedValue}</span>?
       </h2>
@@ -128,7 +126,7 @@ export function NumberLineExercise() {
         </div>
       </div>
 
-      <div className="h-3 justify-between sm:flex">
+      <div className="h-3 justify-between text-center sm:flex sm:text-left">
         {isChecked ? (
           <p>
             {isCorrect ? (
