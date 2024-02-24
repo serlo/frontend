@@ -46,7 +46,7 @@ export function NumberLineSteps({
               <div
                 className={cn(
                   'absolute -left-[19px] -top-7 h-10 w-10 rounded-full  pt-[7px] text-center text-lg shadow-menu',
-                  isCorrect || isSearched
+                  isChecked && (isCorrect || isSearched)
                     ? 'bg-newgreen text-white'
                     : isChecked
                       ? 'bg-red-300 text-white'

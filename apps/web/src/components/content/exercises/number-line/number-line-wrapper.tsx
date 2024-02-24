@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react'
 import { ArrowButtonNavigation } from './arrow-button-navigation'
 import { NumberLine } from './number-line'
 import { cn } from '@/helper/cn'
-import { showToastNotice } from '@/helper/show-toast-notice'
 
 // randomize or create a lot more
 const exampleValues = [
