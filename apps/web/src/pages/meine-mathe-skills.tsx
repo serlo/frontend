@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-before-interactive-script-outside-document */
 import { NextPage } from 'next'
 
+import { NumberLineWrapper } from '@/components/content/exercises/number-line/number-line-wrapper'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
 
@@ -18,7 +19,9 @@ const ContentPage: NextPage = () => {
           metaDescription: 'Zeige deine mathematischen Skills',
         }}
       />
-      <div>Test</div>
+      <div className="mx-auto max-w-xl py-5">
+        <NumberLineWrapper />
+      </div>
     </FrontendClientBase>
   )
 }

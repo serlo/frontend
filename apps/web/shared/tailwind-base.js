@@ -18,6 +18,7 @@ const sunflowerColors = {
   100: '#fff1db',
   50: '#fff9f0',
 }
+const newGreen = '#2fceb1'
 
 export default {
   theme: {
@@ -49,9 +50,13 @@ export default {
           // 900: '#45570c',
           muted: '#cfe097',
         },
+        newgreen: {
+          DEFAULT: newGreen,
+          600: '#6cddc9',
+          700: newGreen,
+        },
         gray: colors.neutral,
         berry: '#857189',
-        newgreen: '#2fceb1',
         'editor-primary': sunflowerColors,
         'almost-black': '#404040',
         yellow: sunflowerColors,
@@ -76,6 +81,17 @@ export default {
       animation: {
         'spin-fast': 'spin 400ms linear infinite',
         'spin-slow': 'spin 2s linear infinite',
+        shake: 'shake 1s ease-in-out',
+      },
+      keyframes: {
+        shake: {
+          '0%': { transform: 'translateX(0)' },
+          '6.5%': { transform: 'translateX(6px) rotateY(9deg)' },
+          '16.5%': { transform: 'translateX(-5px) rotateY(-7deg)' },
+          '31.5%': { transform: 'translateX(3px) rotateY(5deg)' },
+          '43.5%': { transform: 'translateX(-2px) rotateY(-3deg)' },
+          '50%': { transform: 'translateX(0)' },
+        },
       },
       borderRadius: {
         '4xl': '4rem',
