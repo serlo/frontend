@@ -61,7 +61,7 @@ function Content() {
                 href="/meine-mathe-skills/5/potenzieren"
                 className="serlo-link"
               >
-                Potenzieren (wip)
+                Potenzieren
               </Link>
             </li>
           </ul>

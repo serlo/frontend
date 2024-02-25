@@ -3,14 +3,23 @@ import { useEffect, useState } from 'react'
 import { NumberKeyboard } from './number-keyboard'
 import { NewExerciseButton } from '../number-line-exercise/new-exercise-button'
 import { cn } from '@/helper/cn'
+import { randomIntBetween } from '@/helper/random-int-between'
+
+function generator() {
+  const base = randomIntBetween(0, 12)
+  const powerLimit = base === 10 ? 6 : base > 4 ? 2 : 8 - base * 1.2
+  const power = randomIntBetween(1, powerLimit)
+  return { base, power }
+}
 
 export function NumberInputExercise() {
   const [inputValue, setInputValue] = useState('')
   const [isChecked, setIsChecked] = useState(false)
+  const [{ base, power }, setExponent] = useState({ base: 0, power: 1 })
 
-  const correctValue = '16'
+  const correctValue = Math.pow(base, power)
 
-  const isCorrect = correctValue === inputValue
+  const isCorrect = correctValue === parseInt(inputValue)
 
   function onCheck() {
     if (!inputValue) return
@@ -26,6 +35,7 @@ export function NumberInputExercise() {
   }
 
   function makeNewExercise() {
+    setExponent(generator())
     setInputValue('')
     setIsChecked(false)
     setTimeout(() => {
@@ -49,7 +59,8 @@ export function NumberInputExercise() {
       <NewExerciseButton makeNewExercise={makeNewExercise} />
       <div className="ml-0.5 text-2xl font-bold" id="number-input">
         <span className="text-newgreen">
-          2<sup className="ml-0.5">4</sup>
+          {base}
+          <sup className="ml-0.5">{power}</sup>
         </span>
         {' = '}
         <input
