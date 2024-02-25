@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { NumberKeyboard } from './number-keyboard'
 import { NewExerciseButton } from '../number-line-exercise/new-exercise-button'
+import { feedbackAnimation } from '../utils/feedback-animation'
 import { cn } from '@/helper/cn'
 import { randomIntBetween } from '@/helper/random-int-between'
 
@@ -23,14 +24,7 @@ export function NumberInputExercise() {
 
   function onCheck() {
     if (!inputValue) return
-
-    const animationClass = isCorrect
-      ? 'motion-safe:animate-jump'
-      : 'motion-safe:animate-shake'
-    const element = document.getElementById('number-input')
-    element?.classList.add(animationClass)
-    setTimeout(() => element?.classList.remove(animationClass), 1000)
-
+    feedbackAnimation(isCorrect, document.getElementById('number-input'))
     setIsChecked(true)
   }
 

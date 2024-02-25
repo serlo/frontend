@@ -5,6 +5,7 @@ import { ArrowButtonNavigation } from './arrow-button-navigation.jsx'
 import { NewExerciseButton } from './new-exercise-button.jsx'
 import { NumberLabels } from './number-labels.jsx'
 import { RangeInputOverlay } from './range-input-overlay.jsx'
+import { feedbackAnimation } from '../utils/feedback-animation.js'
 import { getIntRange } from '@/helper/get-int-range'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -40,15 +41,7 @@ export function NumberLineExercise() {
 
   const onCheck = () => {
     if (isChecked || selectedValue === 0) return
-
-    const animationClass = isCorrect
-      ? 'motion-safe:animate-jump'
-      : 'motion-safe:animate-shake'
-    const element = document.getElementById('number-line')?.parentElement
-
-    element?.classList.add(animationClass)
-    setTimeout(() => element?.classList.remove(animationClass), 1000)
-
+    feedbackAnimation(isCorrect, document.getElementById('number-line-wrapper'))
     setIsChecked(true)
   }
 
@@ -76,7 +69,7 @@ export function NumberLineExercise() {
     const keyEventHandler = (e: KeyboardEvent) => {
       if (e.key === 'Enter') isChecked ? makeNewExercise() : onCheck()
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-        document.getElementById('number-line')?.focus()
+        document.getElementById('number-line-input')?.focus()
       }
     }
 
@@ -93,7 +86,7 @@ export function NumberLineExercise() {
 
       <NewExerciseButton makeNewExercise={makeNewExercise} />
 
-      <div className="relative">
+      <div className="relative" id="number-line-wrapper">
         <ActualRangeInput
           selectedValue={selectedValue}
           setSelectedValue={setSelectedValue}

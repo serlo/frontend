@@ -29,7 +29,7 @@ export function ActualRangeInput({
         p-4 outline-dotted outline-2 outline-transparent focus-visible:outline-brand-400
         [&::-moz-range-thumb]:opacity-0 [&::-webkit-slider-thumb]:opacity-0`
       )}
-      id="number-line"
+      id="number-line-input"
       type="range"
       value={selectedValue}
       onChange={onChange}
