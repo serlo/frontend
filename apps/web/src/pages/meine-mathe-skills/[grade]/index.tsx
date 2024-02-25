@@ -64,6 +64,11 @@ function Content() {
                 Zahlenstrahl – Level 1
               </Link>
             </li>
+          </ul>
+        </div>
+        <div className="ml-4 w-72 rounded-lg bg-brand-100 p-5">
+          <h3 className="pb-2 text-xl font-bold">Rechnen in ℕ</h3>
+          <ul className="mt-1 text-lg">
             <li>
               <Link
                 href="/meine-mathe-skills/klasse5/potenzieren"
