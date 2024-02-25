@@ -49,7 +49,9 @@ export function NumberInputExercise() {
 
   return (
     <div className="relative mx-4 my-16 max-w-lg bg-white">
-      <h2 className="pb-6 text-left text-2xl font-bold">Rechne aus:</h2>
+      <h2 className="pb-6 text-left text-2xl font-bold">
+        Berechne den Potenzwert:
+      </h2>
       <NewExerciseButton makeNewExercise={makeNewExercise} />
       <div className="ml-0.5 text-2xl font-bold" id="number-input">
         <span className="text-newgreen">
