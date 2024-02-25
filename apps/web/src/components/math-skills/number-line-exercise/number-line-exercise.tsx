@@ -11,22 +11,6 @@ import { randomItemFromArray } from '@/helper/random-item-from-array'
 
 // layout support up to 6 digits
 
-const exampleValues = [
-  // searchedValue, labeledPos, maxValue
-  [9000, 0.5, 12000],
-  [3000, 0.75, 12000],
-  [12000, 0.25, 12000],
-  [9000, 0.25, 12000],
-  [3000, 0.5, 12000],
-  [6000, 0.5, 12000],
-  [6000, 1, 8000],
-  [2000, 1, 8000],
-  [4000, 1, 8000],
-  [8000, 0.5, 8000],
-  [2000, 0.25, 8000],
-  [6000, 0.75, 8000],
-]
-
 export function NumberLineExercise() {
   const [selectedValue, setSelectedValue] = useState(-1) // move outside for actual exercise
 
@@ -46,18 +30,25 @@ export function NumberLineExercise() {
   }
 
   function makeNewExercise() {
-    const kind = randomItemFromArray([0, 1, 2, 3])
-    if (kind === 0 || kind === 1) {
-      // basic, maxVal fixed to 40 or 400, exact choice
-      const step = kind === 1 ? 10 : 1
-      const maxVal = step * 40
+    const kind = randomItemFromArray([0, 1])
+    if (kind === 0) {
+      const maxVal = 40
 
-      const searchValues = getIntRange(10, 39, [20])
-      const searchedVal = randomItemFromArray(searchValues) * step
       const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
+      const searchValues = getIntRange(10, 39, [labeledPos * 40])
+      const searchedVal = randomItemFromArray(searchValues)
       setValues([searchedVal, labeledPos, maxVal])
     } else {
-      setValues(randomItemFromArray(exampleValues) as [number, number, number])
+      const maxVal = randomItemFromArray([8000, 12000, 16000, 20000])
+      const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
+      const possibleSearchValues = [
+        maxVal / 4,
+        maxVal / 2,
+        (maxVal / 4) * 3,
+        maxVal,
+      ].filter((val) => val !== maxVal * labeledPos)
+      const searchedVal = randomItemFromArray(possibleSearchValues)
+      setValues([searchedVal, labeledPos, maxVal])
     }
     setSelectedValue(0)
     setIsChecked(false)
