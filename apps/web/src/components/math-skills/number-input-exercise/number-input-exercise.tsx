@@ -8,7 +8,7 @@ import { randomIntBetween } from '@/helper/random-int-between'
 
 function generator() {
   const base = randomIntBetween(0, 12)
-  const powerLimit = base === 10 ? 6 : base > 4 ? 2 : 8 - base * 1.2
+  const powerLimit = Math.floor(base === 10 ? 6 : base > 4 ? 2 : 8 - base * 1.2)
   const power = randomIntBetween(1, powerLimit)
   return { base, power }
 }
