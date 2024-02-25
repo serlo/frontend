@@ -130,7 +130,7 @@ export function NumberLineExercise() {
             maxValue={maxValue}
           />
         )}
-        <div className="mt-6 text-center text-gray-500 sm:text-right">
+        <div className="mt-6 text-center text-gray-500 sm:mt-0 sm:text-right">
           {selectedValue === 0 ? (
             <>
               Klicke auf den Zeitstrahl

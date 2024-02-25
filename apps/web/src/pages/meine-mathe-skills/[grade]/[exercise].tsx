@@ -1,11 +1,11 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
+import { FrontendClientBase } from '@/components/frontend-client-base'
+import { HeadTags } from '@/components/head-tags'
 import { MathSkillsHeader } from '@/components/math-skills/math-skills-header'
 import { NumberInputExercise } from '@/components/math-skills/number-input-exercise/number-input-exercise'
 import { NumberLineExercise } from '@/components/math-skills/number-line-exercise/number-line-exercise'
-import { FrontendClientBase } from '@/components/frontend-client-base'
-import { HeadTags } from '@/components/head-tags'
 
 const ContentPage: NextPage = () => {
   const router = useRouter()
@@ -19,11 +19,19 @@ const ContentPage: NextPage = () => {
     >
       <HeadTags
         data={{
-          title: `Mathe-Skills für die ${String(router.query.grade)}. Klasse`,
+          title: `Mathe-Skills für die ${String(router.query.grade).replace(
+            'klasse',
+            ''
+          )}. Klasse`,
           metaDescription: 'Zeige deine mathematischen Skills',
         }}
       />
       <Content />
+      <style jsx global>{`
+        html {
+          background-color: white !important;
+        }
+      `}</style>
     </FrontendClientBase>
   )
 }

@@ -1,10 +1,10 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
-import { MathSkillsHeader } from '@/components/math-skills/math-skills-header'
 import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
+import { MathSkillsHeader } from '@/components/math-skills/math-skills-header'
 
 const ContentPage: NextPage = () => {
   const router = useRouter()
@@ -18,20 +18,28 @@ const ContentPage: NextPage = () => {
     >
       <HeadTags
         data={{
-          title: `Mathe-Skills für die ${String(router.query.grade)}. Klasse`,
+          title: `Mathe-Skills für die ${String(router.query.grade).replace(
+            'klasse',
+            ''
+          )}. Klasse`,
           metaDescription: 'Zeige deine mathematischen Skills',
         }}
       />
       <Content />
+      <style jsx global>{`
+        html {
+          background-color: white !important;
+        }
+      `}</style>
     </FrontendClientBase>
   )
 }
 
 function Content() {
   const router = useRouter()
-  const grade = Number(router.query.grade)
+  const grade = router.query.grade
 
-  if (isNaN(grade) || grade !== 5) return null
+  if (grade !== 'klasse5') return null
 
   return (
     <>
@@ -42,7 +50,7 @@ function Content() {
             <p className="text-2xl">5. Klasse</p>
           </div>
         </div>
-        <h2 className="mb-8 mt-5 text-2xl font-bold">Themenübersicht</h2>
+        <h2 className="mb-8 mt-5 text-2xl font-bold">Themenauswahl</h2>
       </div>
       <div className="flex justify-center py-10">
         <div className="w-72 rounded-lg bg-brand-100 p-5">
@@ -50,7 +58,7 @@ function Content() {
           <ul className="mt-1 text-lg">
             <li>
               <Link
-                href="/meine-mathe-skills/5/zahlen-finden"
+                href="/meine-mathe-skills/klasse5/zahlen-finden"
                 className="serlo-link"
               >
                 Zahlenstrahl – Level 1
@@ -58,7 +66,7 @@ function Content() {
             </li>
             <li>
               <Link
-                href="/meine-mathe-skills/5/potenzieren"
+                href="/meine-mathe-skills/klasse5/potenzieren"
                 className="serlo-link"
               >
                 Potenzieren
