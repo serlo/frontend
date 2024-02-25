@@ -1,4 +1,3 @@
-import * as confetti from 'canvas-confetti' // why is this throwing warnings? sigh ..
 import { useEffect, useState } from 'react'
 
 import { ActualRangeInput } from './actual-range-input'
@@ -42,15 +41,14 @@ export function NumberLineExercise() {
   const onCheck = () => {
     if (isChecked || selectedValue === 0) return
 
-    if (isCorrect) {
-      void confetti.default()
-    } else {
-      const element = document.getElementById('number-line')?.parentElement
-      element?.classList.add('animate-shake')
-      setTimeout(() => {
-        element?.classList.remove('animate-shake')
-      }, 1000)
-    }
+    const animationClass = isCorrect
+      ? 'motion-safe:animate-jump'
+      : 'motion-safe:animate-shake'
+    const element = document.getElementById('number-line')?.parentElement
+
+    element?.classList.add(animationClass)
+    setTimeout(() => element?.classList.remove(animationClass), 1000)
+
     setIsChecked(true)
   }
 

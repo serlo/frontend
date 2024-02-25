@@ -24,12 +24,12 @@ export function NumberInputExercise() {
   function onCheck() {
     if (!inputValue) return
 
-    const animationClass = isCorrect ? 'animate-nod' : 'animate-shake'
+    const animationClass = isCorrect
+      ? 'motion-safe:animate-jump'
+      : 'motion-safe:animate-shake'
     const element = document.getElementById('number-input')
     element?.classList.add(animationClass)
-    setTimeout(() => {
-      element?.classList.remove(animationClass)
-    }, 1000)
+    setTimeout(() => element?.classList.remove(animationClass), 1000)
 
     setIsChecked(true)
   }

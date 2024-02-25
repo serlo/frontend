@@ -82,7 +82,7 @@ export default {
         'spin-fast': 'spin 400ms linear infinite',
         'spin-slow': 'spin 2s linear infinite',
         shake: 'shakeNo 1s ease-in-out',
-        nod: 'nodYes 0.5s ease-in-out',
+        jump: 'jump 0.5s ease-out',
       },
       keyframes: {
         shakeNo: {
@@ -93,11 +93,12 @@ export default {
           '43.5%': { transform: 'translateX(-2px) rotateY(-3deg)' },
           '50%': { transform: 'translateX(0)' },
         },
-        nodYes: {
+        jump: {
           '0%': { transform: 'translateY(0)' },
-          '12%': { transform: 'translateY(-2px)' },
-          '30%': { transform: 'translateY(10px) rotateX(1deg)' },
-          '50%': { transform: 'translateY(12px)' },
+          '25%': { transform: 'translateY(-13px)' },
+          '50%': { transform: 'translateY(0)' },
+          '75%': { transform: 'translateY(-10px)' },
+          '100%': { transform: 'translateY(0)' },
         },
       },
       borderRadius: {
