@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 
-import { Link } from '../link'
+import { Link } from '../content/link'
 import { cn } from '@/helper/cn'
 
 export function MathSkillsHeader() {

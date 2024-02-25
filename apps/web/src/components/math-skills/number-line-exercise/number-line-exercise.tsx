@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 
-import { ActualRangeInput } from './actual-range-input'
-import { ArrowButtonNavigation } from './arrow-button-navigation'
-import { NewExerciseButton } from './new-exercise-button'
-import { NumberLabels } from './number-labels'
-import { RangeInputOverlay } from './range-input-overlay'
+import { ActualRangeInput } from './actual-range-input.jsx'
+import { ArrowButtonNavigation } from './arrow-button-navigation.jsx'
+import { NewExerciseButton } from './new-exercise-button.jsx'
+import { NumberLabels } from './number-labels.jsx'
+import { RangeInputOverlay } from './range-input-overlay.jsx'
 import { getIntRange } from '@/helper/get-int-range'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 

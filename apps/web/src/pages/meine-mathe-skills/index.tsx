@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-before-interactive-script-outside-document */
 import { NextPage } from 'next'
 
-import { MathSkillsHeader } from '@/components/content/exercises/math-skills-header'
+import { MathSkillsHeader } from '@/components/math-skills/math-skills-header'
 import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'

@@ -1,4 +1,4 @@
-import { OverlayMarker } from './overlay-marker'
+import { OverlayMarker } from './overlay-marker.jsx'
 import { cn } from '@/helper/cn'
 
 interface RangeInputOverlayProps {
