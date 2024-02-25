@@ -13,6 +13,8 @@ function generator() {
   return { base, power }
 }
 
+// input supports ~ up to 7 digits without clipping
+
 export function NumberInputExercise() {
   const [inputValue, setInputValue] = useState('')
   const [isChecked, setIsChecked] = useState(false)
@@ -64,9 +66,12 @@ export function NumberInputExercise() {
           value={inputValue}
           disabled={isChecked}
           onChange={({ currentTarget }) => setInputValue(currentTarget.value)}
-          type="number"
+          type="text"
+          pattern="\d+"
+          inputMode="decimal"
+          autoComplete="off"
           className={cn(
-            'ml-0.5 w-32 rounded-lg bg-[#d8f5ef] p-2 text-2xl ',
+            'ml-0.5 w-[7.8rem] rounded-lg bg-[#d8f5ef] p-2 text-2xl ',
             'outline-dotted outline-2 outline-transparent focus-visible:outline-newgreen',
             isChecked && isCorrect && 'bg-newgreen-600',
             isChecked && !isCorrect && 'bg-red-100'
