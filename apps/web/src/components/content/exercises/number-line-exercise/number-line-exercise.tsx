@@ -6,7 +6,8 @@ import { ArrowButtonNavigation } from './arrow-button-navigation'
 import { NewExerciseButton } from './new-exercise-button'
 import { NumberLabels } from './number-labels'
 import { RangeInputOverlay } from './range-input-overlay'
-import { shuffleArray } from '@/helper/shuffle-array'
+import { getIntRange } from '@/helper/get-int-range'
+import { randomItemFromArray } from '@/helper/random-item-from-array'
 
 // layout support up to 6 digits
 
@@ -25,10 +26,6 @@ const exampleValues = [
   [2000, 0.25, 8000],
   [6000, 0.75, 8000],
 ]
-
-function helperChooseRandomly<T>(arr: T[]) {
-  return shuffleArray(arr)[0]
-}
 
 export function NumberLineExercise() {
   const [selectedValue, setSelectedValue] = useState(-1) // move outside for actual exercise
@@ -58,22 +55,18 @@ export function NumberLineExercise() {
   }
 
   function makeNewExercise() {
-    const kind = helperChooseRandomly([0, 1, 2, 3])
+    const kind = randomItemFromArray([0, 1, 2, 3])
     if (kind === 0 || kind === 1) {
       // basic, maxVal fixed to 40 or 400, exact choice
       const step = kind === 1 ? 10 : 1
       const maxVal = step * 40
-      const searchValues = []
-      for (let i = 10; i < 40; i++) {
-        if (i !== 20) {
-          searchValues.push(i)
-        }
-      }
-      const searchedVal = helperChooseRandomly(searchValues) * step
-      const labeledPos = helperChooseRandomly([0.25, 0.5, 0.75, 1])
+
+      const searchValues = getIntRange(10, 39, [20])
+      const searchedVal = randomItemFromArray(searchValues) * step
+      const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
       setValues([searchedVal, labeledPos, maxVal])
     } else {
-      setValues(helperChooseRandomly(exampleValues) as [number, number, number])
+      setValues(randomItemFromArray(exampleValues) as [number, number, number])
     }
     setSelectedValue(0)
     setIsChecked(false)
