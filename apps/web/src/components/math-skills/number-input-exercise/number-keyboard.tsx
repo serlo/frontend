@@ -29,6 +29,7 @@ export function NumberKeyboard({
   function renderButton(label: string, onClick?: () => void) {
     return (
       <button
+        key={label}
         onClick={onClick ? onClick : () => addCharacter(label)}
         className="serlo-button-light me-2 h-10 w-10"
       >
