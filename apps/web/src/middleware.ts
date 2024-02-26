@@ -17,7 +17,7 @@ export function middleware(request: NextRequest) {
     : undefined
 
   return NextResponse.redirect(
-    new URL('/pruefungen/' + regionName ?? 'bayern', request.url)
+    new URL('/pruefungen/' + (regionName ?? 'bayern'), request.url)
   )
 }
 
