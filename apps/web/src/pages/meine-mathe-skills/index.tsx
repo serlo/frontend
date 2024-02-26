@@ -86,7 +86,7 @@ function Content() {
                   <br />
                   schön, dass du hier bist!
                   {sharedWelcome}
-                  Jetzt bist du dran:
+                  <b>Jetzt bist du dran:</b>
                   <br />
                   Zeige, welche Mathe-Skills du drauf hast.
                   {/* Du hast schon … */}
