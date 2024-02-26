@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 
+import { useMathSkillsStorage } from './utils/math-skills-data-context'
 import { Link } from '../content/link'
 import { cn } from '@/helper/cn'
 
@@ -7,7 +8,7 @@ export function MathSkillsHeader() {
   const router = useRouter()
   const isExercise = !!router.query.exercise
   const grade = String(router.query.grade)
-
+  const { data } = useMathSkillsStorage()
   const isGradePage = !!router.query.grade
 
   return (
@@ -15,11 +16,11 @@ export function MathSkillsHeader() {
       <Link
         href="/meine-mathe-skills"
         className={cn(
-          'block cursor-pointer text-2xl text-almost-black',
+          'block cursor-pointer text-xl text-almost-black',
           isExercise || isGradePage ? '' : 'w-full text-center'
         )}
       >
-        Meine Mathe-Skills
+        {data?.name ? addGermanGenetiveS(data.name) : 'Meine'} Mathe-Skills
       </Link>
       {isExercise ? (
         <Link
@@ -39,4 +40,9 @@ export function MathSkillsHeader() {
       ) : null}
     </div>
   )
+}
+
+function addGermanGenetiveS(name: string) {
+  const isException = !!name.match(/(s|ß|z|x|(ce))$/)
+  return `${name}${isException ? '’' : 's'}`
 }
