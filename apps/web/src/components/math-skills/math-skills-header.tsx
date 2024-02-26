@@ -43,6 +43,6 @@ export function MathSkillsHeader() {
 }
 
 function addGermanGenetiveS(name: string) {
-  const isException = !!name.match(/[s|ß|z|x|ce]$/)
+  const isException = !!name.match(/(s|ß|z|x|(ce))$/)
   return `${name}${isException ? '’' : 's'}`
 }
