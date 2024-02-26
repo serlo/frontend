@@ -120,10 +120,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
                       Matheautor*in!
                     </p>
                   </div>
-                  <a
-                    href="mailto:tina@serlo.org"
-                    className="my-2 inline-flex items-center rounded-lg bg-brand px-3 py-2 text-center text-base font-bold text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 sm:text-base"
-                  >
+                  <button className="my-2 inline-flex items-center rounded-lg bg-brand px-3 py-2 text-center text-base font-bold text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 sm:text-base">
                     <svg
                       width="20"
                       height="20"
@@ -137,7 +134,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
                       />
                     </svg>
                     &nbsp; Melde dich bei tina@serlo.org!
-                  </a>
+                  </button>
                 </div>
               </div>
             </a>
@@ -241,7 +238,13 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       return
     }
 
-    if (!asPath.startsWith('/mathe/')) {
+    const isMath =
+      asPath.startsWith('/mathe/') ||
+      (page.breadcrumbsData &&
+        page.breadcrumbsData.some((val) => val.label.includes('Mathematik')))
+
+    console.log(isMath, page.breadcrumbsData)
+    if (!isMath) {
       return
     }
 
