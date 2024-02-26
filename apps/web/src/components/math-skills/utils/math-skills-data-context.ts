@@ -2,7 +2,17 @@ import { createContext, useContext } from 'react'
 
 export interface MathSkillsStorageData {
   name: string
+  animal: (typeof animals)[number]
 }
+
+export const animals = [
+  'lion',
+  'crocodile',
+  'leopard',
+  'monkey',
+  'penguin',
+  'zebra',
+] as const
 
 const storageKey = 'math-skills-data'
 

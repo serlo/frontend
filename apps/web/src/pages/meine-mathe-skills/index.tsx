@@ -3,6 +3,7 @@ import { NextPage } from 'next'
 
 import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import { LandingAnimal } from '@/components/math-skills/landing-animal'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
 import { NameInput } from '@/components/math-skills/name-input'
 import { useMathSkillsStorage } from '@/components/math-skills/utils/math-skills-data-context'
@@ -40,11 +41,7 @@ function Content() {
   return (
     <div>
       <div className="mx-4 justify-center sm:mt-10 sm:flex sm:flex-row-reverse sm:items-center">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/_assets/img/meine-mathe-skills/educated-lion.svg"
-          className="mx-auto mt-5 w-52 self-start p-4 sm:mx-0 sm:-mt-1"
-        />
+        <LandingAnimal />
         <div className="mx-auto mb-6 mt-4 max-w-md text-lg sm:mx-0 sm:leading-relaxed">
           {data?.name ? (
             <>
