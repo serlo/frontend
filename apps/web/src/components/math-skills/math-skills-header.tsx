@@ -10,6 +10,10 @@ export function MathSkillsHeader() {
   const grade = String(router.query.grade)
   const { data } = useMathSkillsStorage()
   const isGradePage = !!router.query.grade
+  const isLanding = !isGradePage && !isExercise
+
+  const genitiveName = addGermanGenetiveS(data?.name)
+  const titlePrefix = genitiveName && !isLanding ? genitiveName : 'Meine'
 
   return (
     <div className="flex h-14 items-center justify-between bg-yellow-100 px-4 text-center">
@@ -20,7 +24,7 @@ export function MathSkillsHeader() {
           isExercise || isGradePage ? '' : 'w-full text-center'
         )}
       >
-        {data?.name ? addGermanGenetiveS(data.name) : 'Meine'} Mathe-Skills
+        {titlePrefix} Mathe-Skills
       </Link>
       {isExercise ? (
         <Link
@@ -42,7 +46,8 @@ export function MathSkillsHeader() {
   )
 }
 
-function addGermanGenetiveS(name: string) {
+function addGermanGenetiveS(name?: string) {
+  if (!name) return undefined
   const isException = !!name.match(/(s|ß|z|x|(ce))$/)
   return `${name}${isException ? '’' : 's'}`
 }
