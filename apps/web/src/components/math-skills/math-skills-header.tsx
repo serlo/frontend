@@ -26,14 +26,15 @@ export function MathSkillsHeader() {
           href={`/meine-mathe-skills/${String(router.query.grade)}`}
           className="my-3 block rounded bg-brand-200 px-2 py-1 text-lg !no-underline hover:bg-brand-300"
         >
-          zur {grade.replace('klasse', '')}. Klasse
+          <span className="hidden sm:inline">zur </span>
+          {grade.replace('klasse', '')}. Klasse
         </Link>
       ) : isGradePage ? (
         <Link
           href="/meine-mathe-skills"
           className="my-3 block rounded bg-brand-200 px-2 py-1 text-lg !no-underline hover:bg-brand-300"
         >
-          zur Startseite
+          <span className="hidden sm:inline">zur </span>Startseite
         </Link>
       ) : null}
     </div>
