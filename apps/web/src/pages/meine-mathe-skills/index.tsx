@@ -80,7 +80,7 @@ function Content() {
                   Immer Schritt für Schritt!
                   <br />
                   <br />
-                  Jetzt bist du an der Reihe:
+                  Jetzt bist du dran:
                   <br />
                   Zeige, welche Mathe-Skills du drauf hast.
                   {/* Du hast schon … */}
