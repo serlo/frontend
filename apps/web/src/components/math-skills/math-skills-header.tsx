@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 
 import { Link } from '../content/link'
 import { cn } from '@/helper/cn'
+import { ThreeStars } from './three-stars'
 
 export function MathSkillsHeader() {
   const router = useRouter()
@@ -13,7 +14,6 @@ export function MathSkillsHeader() {
 
   return (
     <>
-      {/* {isNotLanding ? <CheckName /> : null} */}
       <div className="flex h-14 items-center justify-between bg-yellow-100 px-4 text-center">
         <Link
           href="/meine-mathe-skills"
@@ -24,6 +24,7 @@ export function MathSkillsHeader() {
         >
           Meine Mathe-Skills
         </Link>
+        {isExercise ? <ThreeStars /> : null}
         {isExercise ? (
           <Link
             href={`/meine-mathe-skills/${String(router.query.grade)}`}
