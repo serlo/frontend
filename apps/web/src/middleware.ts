@@ -8,7 +8,7 @@ const regionMapping = {
 } as const
 
 export function middleware(request: NextRequest) {
-  const region = request.geo?.region ?? 'NI'
+  const region = request.geo?.region ?? 'BY'
 
   const regionSlug = regionMapping[
     region as keyof typeof regionMapping
