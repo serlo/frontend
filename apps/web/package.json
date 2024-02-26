@@ -46,7 +46,6 @@
     "@serlo/authorization": "^0.59.1",
     "@serlo/editor": "workspace:*",
     "@tippyjs/react": "^4.2.6",
-    "@vercel/edge": "^1.1.1",
     "array-move": "^4.0.0",
     "autoprefixer": "^10.4.16",
     "canvas-confetti": "^1.9.2",
