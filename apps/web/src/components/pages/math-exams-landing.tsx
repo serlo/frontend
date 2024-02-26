@@ -29,7 +29,7 @@ export function MathExamsLanding({ region: initRegion }: RegionData) {
     <>
       <HeadTags
         data={{
-          title: `Mathe Abschlussprüfungen – lernen mit serlo!`,
+          title: `Mathe Abschlussprüfungen ${regions[region].title} – lernen mit serlo!`,
           metaImage: `https://de.${serloDomain}/_assets/img/meta/mathe.png`,
         }}
       />

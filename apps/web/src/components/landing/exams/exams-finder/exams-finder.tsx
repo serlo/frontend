@@ -194,22 +194,65 @@ export const schoolTypesWithExamsByRegion: Record<
   //@ts-expect-error not sure how to fix the type here,
   niedersachsen: {
     mittelschule: {
-      title: 'Mittelschule',
+      title: 'Gesamtschule',
       exams: [
         {
-          title: 'Quali',
-          url: '/mathe/75678/quali-abschlusspr%C3%BCfungen-mit-l%C3%B6sung',
-          years: [],
+          title: 'ISG G',
+          url: '/mathe/300763/igs-g',
+          years: [
+            { title: '2023', url: '/mathe/300785/2023' },
+            { title: '2022', url: '/mathe/300786/2022' },
+            { title: '2021', url: '/mathe/300787/2021' },
+          ],
         },
         {
-          title: 'Mittlerer Schulabschluss',
-          url: '/mathe/247427/mittlerer-schulabschluss-an-der-mittelschule',
-          years: [],
+          title: 'ISG E',
+          url: '/mathe/300762/igs-e',
+          years: [
+            { title: '2023', url: '/mathe/300764/2023' },
+            { title: '2022', url: '/mathe/300765/2022' },
+            { title: '2021', url: '/mathe/300766/2021' },
+          ],
         },
       ],
     },
-    // realschule: { title: 'Realschule', exams: [] },
-    // gymnasium: { title: 'Gymnasium', exams: [] },
+    realschule: {
+      title: 'Realschule',
+      exams: [
+        {
+          title: 'Abschlussarbeit Realschule',
+          url: '/mathe/297604/abschlussprüfungen-mit-lösungen',
+          years: [
+            { title: '2023', url: '/mathe/300698/2023' },
+            { title: '2022', url: '/mathe/300714/2022' },
+            { title: '2021', url: '/mathe/300718/2021' },
+          ],
+        },
+      ],
+    },
+    gymnasium: {
+      title: 'Gymnasium',
+      exams: [
+        {
+          title: 'Abitur (gA)',
+          url: '/mathe/300778/abiturprüfungen-ga-mit-lösungen',
+          years: [
+            { title: '2023', url: '/mathe/300804/2023' },
+            { title: '2022', url: '/mathe/300805/2022' },
+            { title: '2021', url: '/mathe/300806/2021' },
+          ],
+        },
+        {
+          title: 'Abitur (eA)',
+          url: '/mathe/297606/abiturprüfungen-ea-mit-lösungen',
+          years: [
+            { title: '2023', url: '/mathe/300750/2023' },
+            { title: '2022', url: '/mathe/300754/2022' },
+            { title: '2021', url: '/mathe/300755/2021' },
+          ],
+        },
+      ],
+    },
   },
 } as const
 

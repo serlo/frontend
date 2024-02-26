@@ -32,16 +32,19 @@ export function ExamsCompleteList({ region }: { region: SupportedRegion }) {
                       <Link href={exam.url}>{exam.title}</Link>
                     </b>
                     <br />
-                    {exam.years.slice(0, 3).map((year) => {
+                    {exam.years.slice(0, 3).map((year, index) => {
                       return (
                         <Fragment key={year.url}>
                           <Link href={year.url}>{year.title}</Link>
-                          {', '}
+                          {index !== 2 ? ', ' : ''}
                         </Fragment>
                       )
                     })}
                     {exam.years.length > 3 ? (
-                      <Link href={exam.url}>weitere ...</Link>
+                      <>
+                        {', '}
+                        <Link href={exam.url}>weitere ...</Link>
+                      </>
                     ) : null}
                   </p>
                 )
