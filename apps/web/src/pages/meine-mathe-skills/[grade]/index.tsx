@@ -1,21 +1,11 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
 
 import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { HeadTags } from '@/components/head-tags'
-import { MathSkillsHeader } from '@/components/math-skills/math-skills-header'
-import {
-  MathSkillsProvider,
-  MathSkillsStorageData,
-  getStored,
-  updateStored,
-} from '@/components/math-skills/utils/math-skills-data-context'
+import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
 
 const ContentPage: NextPage = () => {
-  const router = useRouter()
-
   return (
     <FrontendClientBase
       noHeaderFooter
@@ -23,21 +13,9 @@ const ContentPage: NextPage = () => {
       showNav={false}
       authorization={{}}
     >
-      <HeadTags
-        data={{
-          title: `Mathe-Skills für die ${String(router.query.grade).replace(
-            'klasse',
-            ''
-          )}. Klasse`,
-          metaDescription: 'Zeige deine mathematischen Skills',
-        }}
-      />
-      <Content />
-      <style jsx global>{`
-        html {
-          background-color: white !important;
-        }
-      `}</style>
+      <MathSkillsWrapper>
+        <Content />
+      </MathSkillsWrapper>
     </FrontendClientBase>
   )
 }
@@ -46,18 +24,10 @@ function Content() {
   const router = useRouter()
   const grade = router.query.grade
 
-  const [data, setData] = useState<MathSkillsStorageData | undefined>(undefined)
-  useEffect(() => setData(getStored()), [])
-
-  function updateData(updates: Partial<MathSkillsStorageData>) {
-    setData(updateStored(updates))
-  }
-
   if (grade !== 'klasse5') return null
 
   return (
-    <MathSkillsProvider value={{ data, updateData }}>
-      <MathSkillsHeader />
+    <div className="min-h-[80vh]">
       <div className="text-center">
         <div className="mt-16 flex justify-center text-2xl font-bold">
           <div className="flex h-36 w-36 items-center justify-center rounded-full bg-brand-600 text-white">
@@ -94,8 +64,7 @@ function Content() {
           </ul>
         </div>
       </div>
-      <div className="h-72"></div>
-    </MathSkillsProvider>
+    </div>
   )
 }
 

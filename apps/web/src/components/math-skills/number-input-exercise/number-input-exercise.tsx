@@ -50,7 +50,7 @@ export function NumberInputExercise() {
   }, [isChecked, inputValue])
 
   return (
-    <div className="relative mx-4 my-16 max-w-lg bg-white">
+    <>
       <h2 className="pb-6 text-left text-2xl font-bold">
         Berechne den Potenzwert:
       </h2>
@@ -116,6 +116,6 @@ export function NumberInputExercise() {
         removeCharacter={() => setInputValue(inputValue.slice(0, -1))}
         isDisabled={isChecked}
       />
-    </div>
+    </>
   )
 }

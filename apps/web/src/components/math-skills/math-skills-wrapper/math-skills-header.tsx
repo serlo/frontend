@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 
-import { useMathSkillsStorage } from './utils/math-skills-data-context'
-import { Link } from '../content/link'
+import { Link } from '../../content/link'
+import { useMathSkillsStorage } from '../utils/math-skills-data-context'
 import { cn } from '@/helper/cn'
 
 export function MathSkillsHeader() {
@@ -16,7 +16,7 @@ export function MathSkillsHeader() {
   const titlePrefix = genitiveName && !isLanding ? genitiveName : 'Meine'
 
   return (
-    <div className="flex h-14 items-center justify-between bg-yellow-100 px-4 text-center">
+    <div className="flex h-14 items-center justify-between bg-yellow-100 px-4 py-2 text-center">
       <Link
         href="/meine-mathe-skills"
         className={cn(
