@@ -112,9 +112,9 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
               rel="noreferrer"
             >
               <div>
-                <div className="brand brand ml-2 mt-2 mobileExt:mt-6 sm:mt-10">
+                <div className="brand brand my-6 ml-4 mobileExt:mt-6 sm:mt-10">
                   <div className="mt-3 flex justify-between">
-                    <p className="text-2xl sm:max-w-[400px]">
+                    <p className="mr-14 text-lg sm:mr-0 sm:max-w-[400px] sm:text-2xl">
                       Bekämpfe die <strong>Ungerechtigkeit</strong> bei der
                       <strong> Prüfungsvorbereitung</strong> als ehrenamtliche*r
                       Matheautor*in!
@@ -122,7 +122,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
                   </div>
                   <a
                     href="mailto:tina@serlo.org"
-                    className="text-m mt-4 inline-flex items-center rounded-lg bg-brand px-3 py-2 text-center font-bold text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
+                    className="my-2 inline-flex items-center rounded-lg bg-brand px-3 py-2 text-center text-base font-bold text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 sm:text-base"
                   >
                     <svg
                       width="20"
@@ -142,8 +142,9 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
               </div>
             </a>
 
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              className="h-20 mobileExt:h-28 sm:mb-10 sm:ml-4 sm:mt-6 sm:h-48"
+              className="my-8 mr-8 hidden h-20 mobileExt:h-40 sm:mb-10 sm:ml-4 sm:mt-6 sm:block sm:h-48"
               src="https://denkspace.de/images/tina.png"
               alt="Tina"
             />
@@ -212,13 +213,13 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
     )
   }
 
-  function renderUnicorn() {
+  /*function renderUnicorn() {
     return (
       <>
-        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages }
         <a href="">
           <div>
-            {/* eslint-disable-next-line @next/next/no-img-element*/}
+            {/* eslint-disable-next-line @next/next/no-img-element}
             <img
               src="https://denkspace.de/images/tina.png"
               alt="Einhorn der Mathematik"
@@ -228,7 +229,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
         </a>
       </>
     )
-  }
+  }*/
 
   function triggerPopup() {
     // pop-up already visible
@@ -244,17 +245,13 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       return
     }
 
-    if (asPath.includes('einhorn-der-mathematik')) {
-      return
-    }
-
     // pop-up already shown
-    if (Cookies.get('serlo-international-day-of-mathematics-banner')) {
+    if (Cookies.get('serlo-call-for-authors')) {
       return
     }
 
     const startDate = new Date('2024-02-22T00:00:00+02:00')
-    const endDate = new Date('2024-03-15T00:00:00+02:00')
+    const endDate = new Date('2024-03-03T00:00:00+02:00')
 
     // pop-up will vanish after survey run
     if (Date.now() > endDate.getTime()) {
@@ -266,8 +263,8 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       return
     }
 
-    Cookies.set('serlo-international-day-of-mathematics-banner', '1', {
-      expires: 2,
+    Cookies.set('serlo-call-for-authors', '1', {
+      expires: 7,
       sameSite: 'Lax',
     })
 
