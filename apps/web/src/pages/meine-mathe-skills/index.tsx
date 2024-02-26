@@ -74,7 +74,15 @@ function Content() {
                   schön, dass du hier bist!
                   <br />
                   <br />
-                  Bist du bereit für ein neues Lernabenteuer?
+                  Hier geht es darum Dinge zu können und das auch zu zeigen. Das
+                  dürfen auch kleine Sachen sein.
+                  <br />
+                  Immer Schritt für Schritt!
+                  <br />
+                  <br />
+                  Jetzt bist du an der Reihe:
+                  <br />
+                  Zeige, welche Mathe-Skills du drauf hast.
                   {/* Du hast schon … */}
                 </>
               ) : (
