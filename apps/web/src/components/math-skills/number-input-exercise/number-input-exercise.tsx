@@ -18,7 +18,7 @@ function generator() {
 export function NumberInputExercise() {
   const [inputValue, setInputValue] = useState('')
   const [isChecked, setIsChecked] = useState(false)
-  const [{ base, power }, setExponent] = useState({ base: 0, power: 1 })
+  const [{ base, power }, setExponent] = useState({ base: 5, power: 2 })
 
   const correctValue = Math.pow(base, power)
 
