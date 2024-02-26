@@ -55,6 +55,19 @@ function Content() {
     setData(updateStored(updates))
   }
 
+  const sharedWelcome = (
+    <>
+      <br />
+      <br />
+      Hier geht es darum Dinge zu können und das auch zu zeigen. Das dürfen auch
+      kleine Sachen sein.
+      <br />
+      Immer Schritt für Schritt!
+      <br />
+      <br />
+    </>
+  )
+
   return (
     <MathSkillsProvider value={{ data, updateData }}>
       <div className="flex h-full flex-col justify-between">
@@ -72,14 +85,7 @@ function Content() {
                   Willkommen <b>{name}</b>,
                   <br />
                   schön, dass du hier bist!
-                  <br />
-                  <br />
-                  Hier geht es darum Dinge zu können und das auch zu zeigen. Das
-                  dürfen auch kleine Sachen sein.
-                  <br />
-                  Immer Schritt für Schritt!
-                  <br />
-                  <br />
+                  {sharedWelcome}
                   Jetzt bist du dran:
                   <br />
                   Zeige, welche Mathe-Skills du drauf hast.
@@ -88,14 +94,7 @@ function Content() {
               ) : (
                 <>
                   <b>Willkommen!</b>
-                  <br />
-                  <br />
-                  Hier geht es darum Dinge zu können und das auch zu zeigen. Das
-                  dürfen auch kleine Sachen sein.
-                  <br />
-                  Immer Schritt für Schritt!
-                  <br />
-                  <br />
+                  {sharedWelcome}
                   <b>Wie heißt du denn?</b>
                   <NameInput />
                 </>
