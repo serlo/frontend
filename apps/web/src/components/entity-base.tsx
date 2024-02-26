@@ -94,7 +94,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
   return (
     <ABProvider value={abValue}>
       {survey && (
-        <div className="fixed bottom-0 left-0 right-0 z-[200] border-t-2 border-gray-300 bg-brand-50">
+        <div className="fixed bottom-0 left-0 right-0 z-[200] border-t-2 border-gray-300 bg-yellow-100">
           <button
             className="serlo-button-blue absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full"
             onClick={() => {
@@ -106,37 +106,45 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
           <div className="flex flex-row justify-center">
             {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a
-              href="https://einhorn.arrrg.de/"
+              href="mailto:tina@serlo.org"
               target="_blank"
               className="group"
               rel="noreferrer"
             >
               <div>
-                <div className="ml-2 mt-2 mobileExt:mt-6 sm:mt-10">
-                  <p>
-                    <button className="mr-12 text-left text-3xl sm:mr-0">
-                      Internationaler Tag der Mathematik
-                    </button>
-                  </p>
-
+                <div className="brand brand my-6 ml-4 mobileExt:mt-6 sm:mt-10">
                   <div className="mt-3 flex justify-between">
-                    <p className="text-lg sm:max-w-[400px]">
-                      Feiere zusammen mit uns diesen Tag und erlebe die
-                      Mathematik von ihrer spielerischen Seite.
+                    <p className="mr-14 text-lg sm:mr-0 sm:max-w-[400px] sm:text-2xl">
+                      Bekämpfe die <strong>Ungerechtigkeit</strong> bei der
+                      <strong> Prüfungsvorbereitung</strong> als ehrenamtliche*r
+                      Matheautor*in!
                     </p>
-                    <div className="mr-4 mt-4 min-w-fit sm:hidden">
-                      {renderUnicorn()}
-                    </div>
                   </div>
-                  <p className="mb-4 mt-4">
-                    <button className="rounded-full bg-pink-600 px-4 py-2 font-bold text-white transition-colors group-hover:bg-pink-500">
-                      Zum Einhorn der Mathematik
-                    </button>
-                  </p>
+                  <button className="my-2 inline-flex items-center rounded-lg bg-brand px-3 py-2 text-center text-base font-bold text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 sm:text-base">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 256 256"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M32 56C27.6 56 24 59.6 24 64V75.05L110.25 145.85C120.6 154.35 135.45 154.35 145.8 145.85L232 75.05V64C232 59.6 228.4 56 224 56H32ZM24 106.1V192C24 196.4 27.6 200 32 200H224C228.4 200 232 196.4 232 192V106.1L161 164.4C141.8 180.15 114.15 180.15 95 164.4L24 106.1ZM0 64C0 46.35 14.35 32 32 32H224C241.65 32 256 46.35 256 64V192C256 209.65 241.65 224 224 224H32C14.35 224 0 209.65 0 192V64Z"
+                        fill="white"
+                      />
+                    </svg>
+                    &nbsp; Melde dich bei tina@serlo.org!
+                  </button>
                 </div>
               </div>
             </a>
-            <div className="hidden sm:block">{renderUnicorn()}</div>
+
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className="my-8 mr-8 hidden h-20 mobileExt:h-40 sm:mb-10 sm:ml-4 sm:mt-6 sm:block sm:h-48"
+              src="https://denkspace.de/images/tina.png"
+              alt="Tina"
+            />
           </div>
         </div>
       )}
@@ -202,23 +210,23 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
     )
   }
 
-  function renderUnicorn() {
+  /*function renderUnicorn() {
     return (
       <>
-        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-        <a href="/mathe/298181/einhorn-der-mathematik-%C3%BCbersicht-aller-episoden">
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages }
+        <a href="">
           <div>
-            {/* eslint-disable-next-line @next/next/no-img-element*/}
+            {/* eslint-disable-next-line @next/next/no-img-element}
             <img
-              src="https://assets.serlo.org/e16a66c0-c26b-11ee-b6d8-a1dea02dc7c7/einhorndermathematikC3BCbersichtallerepisoden.png"
+              src="https://denkspace.de/images/tina.png"
               alt="Einhorn der Mathematik"
-              className="h-20 mobileExt:h-28 sm:mb-10 sm:ml-8 sm:mt-14 sm:h-36"
+              className="h-40 mobileExt:h-28 sm:mb-10 sm:ml-8 sm:mt-14 sm:h-36"
             />
           </div>
         </a>
       </>
     )
-  }
+  }*/
 
   function triggerPopup() {
     // pop-up already visible
@@ -230,21 +238,23 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       return
     }
 
-    if (!asPath.startsWith('/mathe/')) {
-      return
-    }
+    const isMath =
+      asPath.startsWith('/mathe/') ||
+      (page.breadcrumbsData &&
+        page.breadcrumbsData.some((val) => val.label.includes('Mathematik')))
 
-    if (asPath.includes('einhorn-der-mathematik')) {
+    console.log(isMath, page.breadcrumbsData)
+    if (!isMath) {
       return
     }
 
     // pop-up already shown
-    if (Cookies.get('serlo-international-day-of-mathematics-banner')) {
+    if (Cookies.get('serlo-call-for-authors')) {
       return
     }
 
-    const startDate = new Date('2024-03-14T00:00:00+02:00')
-    const endDate = new Date('2024-03-15T00:00:00+02:00')
+    const startDate = new Date('2024-02-22T00:00:00+02:00')
+    const endDate = new Date('2024-03-03T00:00:00+02:00')
 
     // pop-up will vanish after survey run
     if (Date.now() > endDate.getTime()) {
@@ -256,8 +266,8 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       return
     }
 
-    Cookies.set('serlo-international-day-of-mathematics-banner', '1', {
-      expires: 2,
+    Cookies.set('serlo-call-for-authors', '1', {
+      expires: 7,
       sameSite: 'Lax',
     })
 
