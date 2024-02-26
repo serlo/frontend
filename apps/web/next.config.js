@@ -101,6 +101,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'de.serlo.org',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   modularizeImports: {

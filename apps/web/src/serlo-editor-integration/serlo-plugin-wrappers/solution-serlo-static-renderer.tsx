@@ -49,7 +49,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
       exerciseSubmission(
         {
           path: asPath,
-          entityId: context?.exerciseId,
+          entityId: context?.exerciseId ?? exerciseUuid,
           type: 'text',
           result: 'open',
         },

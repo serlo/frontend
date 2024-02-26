@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
 import { TextExerciseGroupTypeRenderer } from './renderer'
+import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
   import(
@@ -31,8 +32,13 @@ export function TextExerciseGroupTypeStaticRenderer(
   if (content.plugin === EditorPluginType.ExerciseGroup) {
     return (
       <div className="relative">
-        {loaded && auth && context?.uuid ? (
-          <div className="absolute -right-8">
+        <div className="absolute -right-8">
+          {context?.licenseId ? (
+            <div className="ml-1">
+              <ExerciseLicenseNotice exerciseLicenseId={context?.licenseId} />
+            </div>
+          ) : null}
+          {loaded && auth && context?.uuid ? (
             <AuthorToolsExercises
               data={{
                 type: ExerciseInlineType.ExerciseGroup,
@@ -41,8 +47,8 @@ export function TextExerciseGroupTypeStaticRenderer(
                 unrevisedRevisions: context?.unrevisedRevisions,
               }}
             />
-          </div>
-        ) : null}
+          ) : null}
+        </div>
         <StaticRenderer document={content} />
       </div>
     )
@@ -62,8 +68,13 @@ export function TextExerciseGroupTypeStaticRenderer(
 
   return (
     <div className="relative">
-      {loaded && auth && context?.uuid ? (
-        <div className="absolute -right-8">
+      <div className="absolute -right-8">
+        {context?.licenseId ? (
+          <div className="ml-1">
+            <ExerciseLicenseNotice exerciseLicenseId={context?.licenseId} />
+          </div>
+        ) : null}
+        {loaded && auth && context?.uuid ? (
           <AuthorToolsExercises
             data={{
               type: ExerciseInlineType.ExerciseGroup,
@@ -72,8 +83,8 @@ export function TextExerciseGroupTypeStaticRenderer(
               unrevisedRevisions: context?.unrevisedRevisions,
             }}
           />
-        </div>
-      ) : null}
+        ) : null}
+      </div>
       <TextExerciseGroupTypeRenderer
         content={<StaticRenderer document={content} />}
         exercises={rendered}

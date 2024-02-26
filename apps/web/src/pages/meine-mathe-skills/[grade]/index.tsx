@@ -66,7 +66,7 @@ function Content() {
         </div>
         <h2 className="mb-8 mt-5 text-2xl font-bold">Themenauswahl</h2>
       </div>
-      <div className="flex justify-center py-10">
+      <div className="flex flex-wrap justify-center py-10 mobileExt:flex-nowrap">
         <div className="w-72 rounded-lg bg-brand-100 p-5">
           <h3 className="pb-2 text-xl font-bold">Natürliche Zahlen</h3>
           <ul className="mt-1 text-lg">
@@ -80,7 +80,7 @@ function Content() {
             </li>
           </ul>
         </div>
-        <div className="ml-4 w-72 rounded-lg bg-brand-100 p-5">
+        <div className="mt-4 w-72 rounded-lg bg-brand-100 p-5 mobileExt:ml-4 mobileExt:mt-0">
           <h3 className="pb-2 text-xl font-bold">Rechnen in ℕ</h3>
           <ul className="mt-1 text-lg">
             <li>
