@@ -1,3 +1,4 @@
+import { Draft, produce } from 'immer'
 import { useRouter } from 'next/router'
 import { ReactNode, useEffect, useState } from 'react'
 
@@ -6,6 +7,7 @@ import {
   MathSkillsProvider,
   MathSkillsStorageData,
   deleteStored,
+  getEmptyData,
   getStored,
   updateStored,
 } from '../utils/math-skills-data-context'
@@ -19,12 +21,18 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
   const grade = router?.query?.grade
     ? String(router.query.grade).replace('klasse', '')
     : '_'
-  const [data, setData] = useState<MathSkillsStorageData | undefined>(undefined)
+  const [data, setData] = useState<MathSkillsStorageData>(getEmptyData())
 
   useEffect(() => setData(getStored()), [])
 
-  function updateData(updates: Partial<MathSkillsStorageData>) {
-    setData(updateStored(updates))
+  useEffect(() => {}, [data])
+
+  function updateData(fn: (arg: Draft<MathSkillsStorageData>) => void) {
+    setData((data) => {
+      const newVal = produce(fn)(data)
+      updateStored(newVal)
+      return newVal
+    })
   }
 
   return (
@@ -48,7 +56,7 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
             <button
               onClick={() => {
                 deleteStored()
-                setData(undefined)
+                setData(getEmptyData())
               }}
             >
               (daten löschen)

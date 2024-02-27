@@ -22,7 +22,10 @@ export function NameInput() {
           'outline-dotted outline-2 outline-transparent focus-visible:outline-newgreen'
         )}
         onKeyDown={({ key }) => {
-          if (key === 'Enter') updateData({ name: trimmedName })
+          if (key === 'Enter')
+            updateData((data) => {
+              data.name = trimmedName
+            })
         }}
       />
       <button
@@ -32,7 +35,11 @@ export function NameInput() {
             ? 'focus:bg-brand'
             : 'cursor-default bg-brand-200 hover:bg-brand-200'
         )}
-        onClick={() => updateData({ name: trimmedName })}
+        onClick={() =>
+          updateData((data) => {
+            data.name = trimmedName
+          })
+        }
         disabled={!hasName}
       >
         Los gehts!
