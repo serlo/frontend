@@ -9,9 +9,9 @@ export function revisionResponseToResponse(
 
   if (!Object.hasOwn(uuid, 'repository')) return null
 
-  const { license, trashed, instance, id, alias } = uuid.repository
+  const { licenseId, trashed, instance, id, alias } = uuid.repository
   const repositoryFields = {
-    license,
+    licenseId,
     trashed,
     id,
     instance,

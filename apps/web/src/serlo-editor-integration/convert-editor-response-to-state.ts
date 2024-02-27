@@ -45,7 +45,9 @@ export function convertEditorResponseToState(
     TaxonomyTerm: { convert: convertTaxonomy },
   }
 
-  const licenseId = Object.hasOwn(uuid, 'license') ? uuid.license.id : undefined
+  const licenseId = Object.hasOwn(uuid, 'licenseId')
+    ? uuid.licenseId
+    : undefined
 
   const { id } = uuid
 

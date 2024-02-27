@@ -2,6 +2,7 @@ import {
   insertPluginChildAfter,
   removePluginChild,
   selectChildTreeOfParent,
+  selectParentPluginType,
   selectStaticDocumentWithoutIds,
   store,
   useAppDispatch,
@@ -10,7 +11,7 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faClone, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { UuidsContext } from '@serlo/frontend/src/contexts/uuids-context'
-import { useCallback, useContext } from 'react'
+import { useCallback, useContext, useMemo } from 'react'
 
 import { AnchorLinkCopyTool } from './anchor-link-copy-tool'
 import { DropdownButton } from './dropdown-button'
@@ -27,6 +28,13 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
 
   // using useContext directly so result can also be null for edusharing
   const serloEntityId = useContext(UuidsContext)?.entityId
+
+  const hasRowsParent = useMemo(
+    () =>
+      selectParentPluginType(store.getState(), pluginId) ===
+      EditorPluginType.Rows,
+    [pluginId]
+  )
 
   const handleDuplicatePlugin = useCallback(() => {
     const parent = selectChildTreeOfParent(store.getState(), pluginId)
@@ -71,21 +79,31 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
 
   return (
     <>
-      <DropdownButton
-        onClick={handleDuplicatePlugin}
-        label={pluginStrings.rows.duplicate}
-        icon={faClone}
-        dataQa="duplicate-plugin-button"
-      />
-      <DropdownButton
-        onClick={handleRemovePlugin}
-        label={pluginStrings.rows.remove}
-        icon={faTrashAlt}
-        dataQa="remove-plugin-button"
-      />
-      <PluginCopyTool pluginId={pluginId} />
-      {serloEntityId ? (
-        <AnchorLinkCopyTool serloEntityId={serloEntityId} pluginId={pluginId} />
+      {hasRowsParent ? (
+        <>
+          <DropdownButton
+            onClick={handleDuplicatePlugin}
+            label={pluginStrings.rows.duplicate}
+            icon={faClone}
+            dataQa="duplicate-plugin-button"
+          />
+          <DropdownButton
+            onClick={handleRemovePlugin}
+            label={pluginStrings.rows.remove}
+            icon={faTrashAlt}
+            dataQa="remove-plugin-button"
+          />
+        </>
+      ) : null}
+
+      <PluginCopyTool pluginId={pluginId} noSeparator={!hasRowsParent} />
+      {serloEntityId && hasRowsParent ? (
+        <>
+          <AnchorLinkCopyTool
+            serloEntityId={serloEntityId}
+            pluginId={pluginId}
+          />
+        </>
       ) : null}
     </>
   )

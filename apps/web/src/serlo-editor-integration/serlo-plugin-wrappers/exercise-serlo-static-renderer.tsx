@@ -33,6 +33,14 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
   const solutionLicenseId = (props.state.solution as EditorSolutionDocument)
     ?.state.licenseId
 
+  // when we moved the groupedExercises into the exercises state we used the old entity uuid as editor id
+  // e.g. `3743-exercise-child`. This way we can use the entity ids in injections and for exercise analytics
+  const oldEntityId = context?.uuid ?? Number(props.id?.split('-')[0])
+  const entityId = isNaN(oldEntityId)
+    ? // construct fake but persisting entityId just for evaluation
+      Number(props.id?.replace(/[^0-9]/g, '').substring(0, 8))
+    : oldEntityId
+
   return (
     <div className="relative">
       <div className="absolute -right-8 -mt-1">
@@ -57,9 +65,7 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
         ) : null}
       </div>
       {/* Provide uuids for interactive exercises */}
-      <UuidsProvider
-        value={{ entityId: context?.uuid, revisionId: context?.revisionId }}
-      >
+      <UuidsProvider value={{ entityId, revisionId: context?.revisionId }}>
         <div className="-mt-block">
           <ExerciseStaticRenderer {...props} />
         </div>

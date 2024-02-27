@@ -32,33 +32,30 @@ export const InjectionToolbar = ({
           >
             {injectionStrings.serloId} <FaIcon icon={faPencilAlt} />
           </button>
-          {/* In the future we want a popovers per setting, but this is faster for now */}
-          {showSettingsModal ? (
-            <ModalWithCloseButton
-              isOpen={showSettingsModal}
-              onCloseClick={() => setShowSettingsModal(false)}
-              className="top-8 max-w-xl translate-y-0 sm:top-1/3"
-            >
-              <h3 className="serlo-h3 mt-4">{injectionStrings.title}</h3>
+          <ModalWithCloseButton
+            isOpen={showSettingsModal}
+            onCloseClick={() => setShowSettingsModal(false)}
+            className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+          >
+            <h3 className="serlo-h3 mt-4">{injectionStrings.title}</h3>
 
-              <div className="mx-side mb-3">
-                <EditorInput
-                  autoFocus
-                  label={`${injectionStrings.serloId}: `}
-                  placeholder={injectionStrings.placeholder}
-                  inputMode="numeric"
-                  pattern="\d+"
-                  value={state.value}
-                  onChange={(e) =>
-                    state.set(e.target.value.replace(/[^0-9]/g, ''))
-                  }
-                  width="100%"
-                  inputWidth="100%"
-                  className="block"
-                />
-              </div>
-            </ModalWithCloseButton>
-          ) : null}
+            <div className="mx-side mb-3">
+              <EditorInput
+                autoFocus
+                label={`${injectionStrings.serloId}: `}
+                placeholder={injectionStrings.placeholder}
+                value={state.value}
+                onChange={(e) =>
+                  // TODO: make pasting a serlo url a working method
+                  // TODO: enforce form starting with `/`
+                  state.set(e.target.value)
+                }
+                width="100%"
+                inputWidth="100%"
+                className="block"
+              />
+            </div>
+          </ModalWithCloseButton>
         </>
       }
       pluginControls={<PluginDefaultTools pluginId={id} />}

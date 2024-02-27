@@ -271,7 +271,7 @@ export async function requestPage(
     }
   }
 
-  const licenseId = uuid.license.id
+  const { licenseId } = uuid
 
   if (uuid.__typename === UuidType.Article) {
     return {

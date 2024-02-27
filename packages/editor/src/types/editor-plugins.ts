@@ -232,7 +232,7 @@ export interface EditorTemplateExerciseGroupDocument {
     uuid?: number
     trashed?: boolean
     unrevisedRevisions?: number
-    licenseId?: number
+    licenseId: number
   }
 }
 export interface EditorTemplateGenericContentDocument {

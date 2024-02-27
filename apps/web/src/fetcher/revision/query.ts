@@ -2,7 +2,6 @@ import { gql } from 'graphql-request'
 
 import {
   sharedExerciseFragments,
-  sharedLicenseFragments,
   sharedRevisionFragments,
   sharedTaxonomyParents,
 } from '../query-fragments'
@@ -31,7 +30,7 @@ export const revisionQuery = gql`
         changes
         repository {
           ...taxonomyTermsV2
-          ...license
+          licenseId
           trashed
           instance
           id
@@ -53,7 +52,7 @@ export const revisionQuery = gql`
       ... on PageRevision {
         ...pageRevision
         repository {
-          ...license
+          licenseId
           trashed
           instance
           id
@@ -75,7 +74,7 @@ export const revisionQuery = gql`
         changes
         repository {
           ...taxonomyTermsV2
-          ...license
+          licenseId
           trashed
           instance
           id
@@ -99,7 +98,7 @@ export const revisionQuery = gql`
         changes
         repository {
           ...taxonomyTermsV2
-          ...license
+          licenseId
           trashed
           instance
           id
@@ -129,7 +128,7 @@ export const revisionQuery = gql`
         ...coursePageRevision
         changes
         repository {
-          ...license
+          licenseId
           trashed
           instance
           id
@@ -170,7 +169,7 @@ export const revisionQuery = gql`
         ...eventRevision
         changes
         repository {
-          ...license
+          licenseId
           ...taxonomyTermsV2
           trashed
           instance
@@ -193,7 +192,7 @@ export const revisionQuery = gql`
         changes
         repository {
           ...taxonomyTermsV2
-          ...license
+          licenseId
           trashed
           instance
           id
@@ -203,7 +202,7 @@ export const revisionQuery = gql`
             content
             date
           }
-          ...license
+          licenseId
           revisions(unrevised: false) {
             totalCount
             nodes {
@@ -218,7 +217,7 @@ export const revisionQuery = gql`
         changes
         cohesive
         repository {
-          ...license
+          licenseId
           ...taxonomyTermsV2
           trashed
           instance
@@ -248,7 +247,7 @@ export const revisionQuery = gql`
         changes
         repository {
           ...taxonomyTermsV2
-          ...license
+          licenseId
           trashed
           instance
           id
@@ -286,7 +285,6 @@ export const revisionQuery = gql`
   }
 
   ${sharedTaxonomyParents}
-  ${sharedLicenseFragments}
   ${sharedExerciseFragments}
   ${sharedRevisionFragments}
 `

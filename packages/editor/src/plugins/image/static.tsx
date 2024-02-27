@@ -37,20 +37,19 @@ export function ImageStaticRenderer({
   )
 
   function getSemanticSource() {
-    if (!src.startsWith('https://assets.serlo.org/')) return src
-
-    const semanticName = (alt && alt.length > 3 ? alt : pathNameBase)?.replace(
-      /[^\w+]/g,
-      ''
-    )
     if (
-      !semanticName ||
-      semanticName.length < 4 ||
-      semanticName.match(/^[0-9]+$/)
+      !src.startsWith('https://assets.serlo.org/') ||
+      !src.includes('/image.')
     )
       return src
 
+    const semanticBase = alt && alt.length > 3 ? alt : pathNameBase
+    const semanticName = semanticBase?.replace(/[^\w+]/g, '') ?? ''
+
+    if (semanticName?.length < 4 && semanticName.match(/^[0-9]+$/)) return src
+
     const dot = src.lastIndexOf('.')
+
     return `${src.substring(0, dot)}/${semanticName}${src.substring(
       dot
     )}`.replace('/image', '')

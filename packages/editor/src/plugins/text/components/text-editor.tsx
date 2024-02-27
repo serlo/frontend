@@ -2,22 +2,15 @@ import { useFormattingOptions } from '@editor/editor-ui/plugin-toolbar/text-cont
 import { SlateOverlay } from '@editor/editor-ui/slate-overlay'
 import type { EditorPluginProps } from '@editor/plugin'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import React, { useMemo, useEffect, useCallback } from 'react'
-import {
-  createEditor,
-  Node,
-  Transforms,
-  Range,
-  Editor,
-  NodeEntry,
-  Element,
-} from 'slate'
+import React, { useMemo, useEffect } from 'react'
+import { createEditor, Node, Transforms } from 'slate'
 import { Editable, Slate, withReact } from 'slate-react'
 import { v4 } from 'uuid'
 
 import { LinkControls } from './link/link-controls'
 import { Suggestions } from './suggestions'
 import { TextToolbar } from './text-toolbar'
+import { useDynamicPlacehoder } from '../hooks/use-dynamic-placeholder'
 import { useEditableKeydownHandler } from '../hooks/use-editable-key-down-handler'
 import { useEditablePasteHandler } from '../hooks/use-editable-paste-handler'
 import { useEditorChange } from '../hooks/use-editor-change'
@@ -58,21 +51,19 @@ export function TextEditor(props: TextEditorProps) {
       editorKey: v4(),
     }
   }, [createTextEditor])
-  const suggestions = useSuggestions({
+  const { showSuggestions, suggestionsProps } = useSuggestions({
     editor,
     id,
     focused,
     isInlineChildEditor: config.isInlineChildEditor,
   })
-  const { showSuggestions, suggestionsProps } = suggestions
-
   const { handleRenderElement, handleRenderLeaf } = useSlateRenderHandlers({
     editor,
     focused,
     placeholder: config.placeholder,
     id,
   })
-  const { handleEditorChange } = useEditorChange({
+  const handleEditorChange = useEditorChange({
     editor,
     state,
     id,
@@ -88,6 +79,14 @@ export function TextEditor(props: TextEditorProps) {
   const handleEditablePaste = useEditablePasteHandler({
     editor,
     id,
+  })
+  const dynamicPlaceholder = useDynamicPlacehoder({
+    id,
+    editor,
+    focused,
+    containerRef,
+    staticPlaceholder: config.placeholder,
+    noLinebreaks: config.noLinebreaks,
   })
 
   // Workaround for setting selection when adding a new editor:
@@ -123,60 +122,6 @@ export function TextEditor(props: TextEditorProps) {
     }
   }, [editor, focused, id])
 
-  // Workaround for removing double empty lines on editor blur.
-  // Normalization is forced on blur and handled in
-  // `withEmptyLinesRestriction` plugin.
-  // `useEffect` and event delegation are used because `<Editable`
-  // `onBlur` doesn't work when custom-empty-line-placeholder is
-  // shown before bluring the editor. More info on event delegation:
-  // https://www.quirksmode.org/blog/archives/2008/04/delegating_the.html
-  useEffect(() => {
-    const handleBlur = () => {
-      // @ts-expect-error custom operation to do special normalization only on blur.
-      editor.normalize({ force: true, operation: { type: 'blur_container' } })
-    }
-    const container = containerRef?.current
-    container?.addEventListener('blur', handleBlur, true)
-    return () => {
-      container?.removeEventListener('blur', handleBlur, true)
-    }
-  }, [containerRef, editor, id])
-
-  // Show a placeholder on empty lines.
-  // https://jkrsp.com/slate-js-placeholder-per-line/
-  const decorateEmptyLinesWithPlaceholder = useCallback(
-    ([node, path]: NodeEntry) => {
-      const { selection } = editor
-
-      const isEmptyElement =
-        Element.isElement(node) && Editor.isEmpty(editor, node)
-
-      const isFirstLine = path[0] === 0
-      if (
-        (!focused && !isFirstLine) ||
-        selection === null ||
-        Editor.isEditor(node) ||
-        !Range.includes(selection, path) ||
-        !Range.isCollapsed(selection) ||
-        Editor.string(editor, [path[0]]) !== '' ||
-        !isEmptyElement
-      ) {
-        return []
-      }
-      return [{ ...selection, showPlaceholder: true }]
-    },
-    [editor, focused]
-  )
-
-  // fallback to static placeholder when:
-  // - for inline text plugins
-  // - we define a custom placeholder text
-  // - when the editor was newly created and never had a selection
-  //   (e.g.on a new box plugin) to make sure the text plugin never just an empty line
-  //   decorator unfortunately does not work when there is no selection.
-  const shouldShowStaticPlaceholder =
-    config.noLinebreaks || config.placeholder || !editor.selection
-
   return (
     <Slate
       editor={editor}
@@ -200,18 +145,18 @@ export function TextEditor(props: TextEditorProps) {
         renderElement={handleRenderElement}
         renderLeaf={handleRenderLeaf}
         decorate={
-          shouldShowStaticPlaceholder
-            ? undefined
-            : decorateEmptyLinesWithPlaceholder
+          dynamicPlaceholder.shouldShow
+            ? dynamicPlaceholder.decorateEmptyLines
+            : undefined
         }
         placeholder={
-          shouldShowStaticPlaceholder
-            ? config.placeholder ?? textStrings.placeholder
-            : undefined
+          dynamicPlaceholder.shouldShow
+            ? undefined
+            : config.placeholder ?? textStrings.placeholder
         }
         // `[&>[data-slate-node]]:mx-side` fixes placeholder position in safari
         // `outline-none` removes the ugly outline present in Slate v0.94.1
-        className="outline-none [&>[data-slate-node]]:mx-side"
+        className="outline-none focus:outline-none [&>[data-slate-node]]:mx-side"
         data-qa="plugin-text-editor"
       />
 

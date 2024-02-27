@@ -10,11 +10,7 @@ export const articleUuidMock = {
   alias:
     '/mathe/zahlen-groessen/bruchrechnen-dezimalzahlen/dezimalbrueche/addition-subtraktion-dezimalbruechen',
   instance: 'de',
-  license: {
-    id: 1,
-    url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-    title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
-  },
+  licenseId: 1,
   taxonomyTerms: {
     nodes: [
       {
@@ -1213,11 +1209,7 @@ export const appletUuidMock = {
   alias:
     '/mathe/zahlen-größen/bruchrechnen-dezimalzahlen/rechnen-brüchen/brüche-multiplizieren-138114',
   instance: 'de',
-  license: {
-    id: 1,
-    url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-    title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
-  },
+  licenseId: 1,
   taxonomyTerms: {
     nodes: [
       {
@@ -1266,11 +1258,7 @@ export const videoUuidMock = {
   alias:
     '/mathe/geometrie/konstruktion-geometrischen-objekten/winkel-konstruieren',
   instance: 'de',
-  license: {
-    id: 1,
-    url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-    title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
-  },
+  licenseId: 1,
   taxonomyTerms: {
     nodes: [
       {
@@ -1313,11 +1301,7 @@ export const coursePageUuidMock = {
   alias:
     '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht',
   instance: 'de',
-  license: {
-    id: 1,
-    url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-    title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
-  },
+  licenseId: 1,
   currentRevision: {
     content:
       '{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Ziel dieses Kurses ist es, einen Überblick zur möglichen Vorgehensweise beim Finden von Nullstellen von Polynomfunktionen zu geben."}]},{"type":"p","children":[{"text":" "}]},{"type":"p","children":[{"text":"Inhalte"}]},{"type":"unordered-list","children":[{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Erarbeitung der Linearfaktordarstellung"}]}]}]},{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Methoden der Nullstellenberechnung"}]},{"type":"unordered-list","children":[{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Termumformungen"}]}]}]},{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Ausklammern von Faktoren"}]}]}]},{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Lösen mithilfe der Polynomdivision"}]}]}]},{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Lösen durch Substitution"}]}]}]}]}]}]}]},{"type":"p","children":[{"text":"Vorwissen"}]},{"type":"unordered-list","children":[{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Funktionsbegriff"}]}]}]},{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Polynomfunktion"}]}]}]},{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Definition einer Nullstelle"}]}]}]},{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Berechnung von Nullstellen bei linearen und quadratischen Funktionen"}]}]}]}]}]}]}',
@@ -1617,11 +1601,7 @@ export const pageUuidMock = {
   id: 18922,
   alias: '/serlo',
   instance: 'de',
-  license: {
-    id: 1,
-    url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-    title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
-  },
+  licenseId: 1,
   currentRevision: {
     id: 169463,
     title: 'Über Serlo',
@@ -1646,11 +1626,7 @@ export const exerciseUuidMock = {
   alias:
     '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen/54210',
   instance: 'de',
-  license: {
-    id: 1,
-    url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-    title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
-  },
+  licenseId: 1,
   taxonomyTerms: {
     nodes: [
       {
@@ -1769,11 +1745,7 @@ export const exerciseGroupUuidMock = {
   alias:
     '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen/53205',
   instance: 'de',
-  license: {
-    id: 1,
-    url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-    title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
-  },
+  licenseId: 1,
   taxonomyTerms: {
     nodes: [
       {
@@ -1894,11 +1866,7 @@ export const exerciseGroupUuidMock = {
         content:
           '{"plugin":"exercise","state":{"content":{"plugin":"rows","state":[{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e021a8c95ce_de1b6de2a64aebbb6030e31fff0f5e353b784a48.png","alt":"Graph1","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}}]},"solution":{"plugin":"solution","state":{"prerequisite":{"id":"1450","title":"Sinus- und Kosinusfunktion"},"strategy":{"plugin":"text","state":[{"type":"p","children":[{}]}]},"steps":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Die "},{"type":"a","href":"/1569","children":[{"text":"Ruhelage"}]},{"text":" der Funktion liegt auf der "},{"type":"math","src":"x","inline":true,"children":[{"text":"x"}]},{"text":"-Achse."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e134ad11931_7a29c372db1fb46847913c95ea3e63c78d107366.png","alt":"Lösungsteil1","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Der Graph schneidet das Koordinatensystem im Nullpunkt, also handelt es sich um eine Sinusfunktion (beziehungsweise einen verschobenen Kosinus)."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e1347fd9dc1_338b31d48a89340e131d3dd1edbdddafce1725fb.png","alt":"Lösungsteil2","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Da es leichter ist, verwendest du in den weiteren Schritten die Sinusfunktion."}]},{"type":"p","children":[{"text":"Im nächsten Schritt suchst du nach der "},{"type":"a","href":"/1569","children":[{"text":"Amplitude"}]},{"text":" der Funktion."}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Die Amplitude der Funktion ist "},{"type":"math","src":"3","inline":true,"children":[{"text":"3"}]},{"text":". Das heißt, dass die Funktion vorerst von der Form "},{"type":"math","src":"f(x)=3\\\\cdot\\\\sin(x)","inline":true,"children":[{"text":"f(x)=3\\\\cdot\\\\sin(x)"}]},{"text":" ist."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e1346338a3e_542af962ee94cb2e532d473c629508001b2d6790.png","alt":"Lösungsteil3","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Jetzt fehlt dir nur noch die "},{"type":"a","href":"/2113","children":[{"text":"Periode"}]},{"text":" der Funktion. Am Graphen kannst du ablesen, dass diese "},{"type":"math","src":"2\\\\pi","inline":true,"children":[{"text":"2\\\\pi"}]},{"text":" beträgt. Das ist die normale Periode von der Sinusfunktion."}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Da die Periode der Sinusfunktion nicht verändert wurde, lautet die Funktion:"}]},{"type":"p","children":[{"type":"math","src":"f(x)=3\\\\cdot\\\\sin(x).","inline":false,"children":[{"text":"f(x)=3\\\\cdot\\\\sin(x)."}]}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e1345199b59_b5c08794fb0621d80c980488ebfc535883be0f8c.png","alt":"Lösungsteil4","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}}]}}}}}',
       },
-      license: {
-        id: 1,
-        url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-        title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
-      },
+      licenseId: 1,
     },
     {
       id: 53216,
@@ -1906,11 +1874,7 @@ export const exerciseGroupUuidMock = {
         content:
           '{"plugin":"exercise","state":{"content":{"plugin":"rows","state":[{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e6df0bc7338_33ac3a380268df5758d8eb63f9aa78e63eee4b9e.png","alt":"Graph2","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}}]},"solution":{"plugin":"solution","state":{"prerequisite":{"id":"1450","title":"Sinus- und Kosinusfunktion"},"strategy":{"plugin":"text","state":[{"type":"p","children":[{}]}]},"steps":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Bestimme zunächst die Ruhelage der Funktion."}]}]},{"plugin":"text","state":[{"type":"h","level":3,"children":[{"text":"Ruhelage bestimmen"}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Die "},{"type":"a","href":"/1569","children":[{"text":"Ruhelage"}]},{"text":" der Funktion liegt "},{"type":"math","src":"3","inline":true,"children":[{"text":"3"}]},{"text":" Einheiten über der "},{"type":"math","src":"x","inline":true,"children":[{"text":"x"}]},{"text":"-Achse."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e13afaf39f9_7a29c372db1fb46847913c95ea3e63c78d107366.png","alt":"Lösungsteil1","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Der Graph hat ein "},{"type":"a","href":"/1579","children":[{"text":"Extremum"}]},{"text":" (E) auf der "},{"type":"math","src":"y","inline":true,"children":[{"text":"y"}]},{"text":"-Achse. Das heißt, es handelt sich um eine Kosinusfunktion (beziehungsweise eine verschobene Sinusfunktion). "}]},{"type":"p","children":[{"text":"Da es leichter ist, beschränken wir uns hier auf die Kosinusfunktion."}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Aufgrund der bisherigen Erkenntnisse gehen wir zunächst von folgender Form aus:"}]},{"type":"math","src":"g(x)=\\\\cos(x)+3","inline":false,"children":[{"text":"g(x)=\\\\cos(x)+3"}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e13b0f00356_338b31d48a89340e131d3dd1edbdddafce1725fb.png","alt":"Lösungsteil2","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}},{"plugin":"text","state":[{"type":"h","level":3,"children":[{"text":"Amplitude ermitteln"}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Als nächsten Schritt betrachten wir die "},{"type":"a","href":"/1569","children":[{"text":"Amplitude"}]},{"text":" der gegeben Kosinusfunktion. Dazu müssen wir den Abstand eines Extremums zu der Ruhelage herausfinden."}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Die Amplitude der Funktion hat den Wert "},{"type":"math","src":"2","inline":true,"children":[{"text":"2"}]},{"text":". Das heißt, sie ist doppelt so groß wie bei der normalen Sinusfunktion. Daraus ergibt sich die vorläufige Form der Funktion:"}]},{"type":"math","src":"g(x)=2\\\\cdot\\\\cos(x)+3","inline":false,"children":[{"text":"g(x)=2\\\\cdot\\\\cos(x)+3"}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e13d0b3f8e3_542af962ee94cb2e532d473c629508001b2d6790.png","alt":"Lösungsteil3","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}},{"plugin":"text","state":[{"type":"h","level":3,"children":[{"text":"Untersuchung der Periode"}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Als nächstes untersuchst du die "},{"type":"a","href":"/2113","children":[{"text":"Periode"}]},{"text":" der Funktion. Dazu untersuchst du, wie viele Perioden der gegebenen Funktion in dem "},{"type":"a","href":"/1947","children":[{"text":"Intervall"}]},{"text":" "},{"type":"math","src":"[0,2\\\\pi]","inline":true,"children":[{"text":"[0,2\\\\pi]"}]},{"text":" liegen. Bei der normalen Kosinusfunktion liegt in diesem Intervall genau eine Periode. Hier sind es genau zwei Perioden, da im halben Intervall "},{"type":"math","src":"[0,\\\\pi]","inline":true,"children":[{"text":"[0,\\\\pi]"}]},{"text":" eine Periode liegt. Also ist die Funktion um den Faktor "},{"type":"math","src":"2","inline":true,"children":[{"text":"2"}]},{"text":" gestaucht."}]}]},{"plugin":"text","state":[{"type":"h","level":3,"children":[{"text":"Ergebnis"}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Da die Funktion um den "},{"type":"a","href":"/1639","children":[{"text":"Faktor"}]},{"text":" "},{"type":"math","src":"2","inline":true,"children":[{"text":"2"}]},{"text":" gestaucht ist, lautet die Funktion:"}]},{"type":"math","src":"g(x)=2\\\\cdot\\\\cos(2x)+3","inline":false,"children":[{"text":"g(x)=2\\\\cdot\\\\cos(2x)+3"}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e13b3362350_b5c08794fb0621d80c980488ebfc535883be0f8c.png","alt":"Lösungsteil4","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}}]}}}}}',
       },
-      license: {
-        id: 1,
-        url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-        title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
-      },
+      licenseId: 1,
     },
     {
       id: 53221,
@@ -1918,11 +1882,7 @@ export const exerciseGroupUuidMock = {
         content:
           '{"plugin":"exercise","state":{"content":{"plugin":"rows","state":[{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e022719985b_75abdcf67bb65527808fcc0afa8d5285ed02ca68.png","alt":"Graph3","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}}]},"solution":{"plugin":"solution","state":{"prerequisite":{"id":"1450","title":"Sinus- und Kosinusfunktion"},"strategy":{"plugin":"text","state":[{"type":"p","children":[{}]}]},"steps":{"plugin":"rows","state":[{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Die "},{"type":"a","href":"/1569","children":[{"text":"Ruhelage"}]},{"text":" der Funktion liegt bei "},{"type":"math","src":"y=2","inline":true,"children":[{"text":"y=2"}]},{"text":"."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e28fc697b40_7a29c372db1fb46847913c95ea3e63c78d107366.png","alt":"Lösungsteil1","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Als nächstes findest du die Art der Funktion heraus. Handelt es sich bei der Funktion um einen Kosinus oder um einen Sinus?"}]},{"type":"p","children":[{"text":"Da die Funktion die "},{"type":"math","src":"y","inline":true,"children":[{"text":"y"}]},{"text":"-Achse im selben Punkt schneidet wie die Ruhelage, also in "},{"type":"math","src":"S(0\\\\mid 2),","inline":true,"children":[{"text":"S(0\\\\mid 2),"}]},{"text":" handelt es sich um eine Sinusfunktion (beziehungsweise um eine verschobene Kosinusfunktion). Da es die folgenden Schritte erleichtert nehmen wir an, dass es sich um eine Sinusfunktion handelt."}]}]}]},{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Die Funktion ist fürs Erste von der Form:"}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e28fd6293cd_338b31d48a89340e131d3dd1edbdddafce1725fb.png","alt":"Lösungsteil2","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Der nächste Schritt, den du machst, ist die Bestimmung der "},{"type":"a","href":"/1569","children":[{"text":"Amplitude"}]},{"text":"."}]},{"type":"p","children":[{"text":"Da die "},{"type":"a","href":"/1579","children":[{"text":"Extrema"}]},{"text":" jeweils eine Einheit in "},{"type":"math","src":"y","inline":true,"children":[{"text":"y"}]},{"text":"-Richtung von der Ruhelage entfernt sind, handelt es sich um die Standard-Sinus-Amplitude."}]}]}]},{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Da die Amplitude der normalen Amplitude der Sinusfunktion entspricht, bleibt es zunächst bei der Form der Funktion:"}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e28f7de1bd2_542af962ee94cb2e532d473c629508001b2d6790.png","alt":"Lösungsteil3","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Jetzt fehlt dir nur noch die Periode der Funktion."}]},{"type":"p","children":[{"text":"Betrachte dazu zum Beispiel den "},{"type":"math","src":"x","inline":true,"children":[{"text":"x"}]},{"text":"-Achsenabschnitt von "},{"type":"math","src":"0","inline":true,"children":[{"text":"0"}]},{"text":" bis "},{"type":"math","src":"\\\\pi","inline":true,"children":[{"text":"\\\\pi"}]},{"text":". In diesem Abschnitt befinden sich "},{"type":"math","src":"2,5","inline":true,"children":[{"text":"2,5"}]},{"text":" Perioden der Funktion. Da eine Periode der Standard-Sinus-Funktion von "},{"type":"math","src":"0","inline":true,"children":[{"text":"0"}]},{"text":" bis "},{"type":"math","src":"2\\\\pi","inline":true,"children":[{"text":"2\\\\pi"}]},{"text":" geht, multiplizieren wir den Wert "},{"type":"math","src":"2,5","inline":true,"children":[{"text":"2,5"}]},{"text":" mit "},{"type":"math","src":"2","inline":true,"children":[{"text":"2"}]},{"text":". Damit kommen wir auf den Stauchungsfaktor "},{"type":"math","src":"5","inline":true,"children":[{"text":"5"}]},{"text":"."}]}]}]},{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Da die Funktion um den Faktor "},{"type":"math","src":"5","inline":true,"children":[{"text":"5"}]},{"text":" gestaucht ist, lautet die passende Funktion zu dem Bild:"}]},{"type":"p","children":[{"type":"math","src":"h(x)=\\\\sin(5x)+2.","inline":false,"children":[{"text":"h(x)=\\\\sin(5x)+2."}]}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e28f94bba72_b5c08794fb0621d80c980488ebfc535883be0f8c.png","alt":"Lösungsteil4","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}}]}]}}}}}',
       },
-      license: {
-        id: 1,
-        url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-        title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
-      },
+      licenseId: 1,
     },
     {
       id: 53224,
@@ -1930,11 +1890,7 @@ export const exerciseGroupUuidMock = {
         content:
           '{"plugin":"exercise","state":{"content":{"plugin":"rows","state":[{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e022ab6fcf2_e8d856c4f94af067b2dcbfd4545e68149d1e6a4c.png","alt":"Graph4","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}}]},"solution":{"plugin":"solution","state":{"prerequisite":{"id":"1450","title":"Sinus- und Kosinusfunktion"},"strategy":{"plugin":"text","state":[{"type":"p","children":[{}]}]},"steps":{"plugin":"rows","state":[{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Die "},{"type":"a","href":"/1569","children":[{"text":"Ruhelage"}]},{"text":" der Funktion entspricht der "},{"type":"math","src":"x","inline":true,"children":[{"text":"x"}]},{"text":"-Achse."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/6198dae2d124a_5d80f35a0f3044aaf05cf1ce11f72b47e0be0fea.svg","alt":"Lösungsteil1","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Als erstes findest du heraus, ob es sich um eine Sinusfunktion oder eine Kosinusfunktion handelt. "}]},{"type":"p","children":[{"text":"Die Funktion schneidet die "},{"type":"math","src":"y","inline":true,"children":[{"text":"y"}]},{"text":"-Achse weder in einem "},{"type":"a","href":"/1579","children":[{"text":"Extrempunkt"}]},{"text":", noch im Nullpunkt. Betrachtest du aber die "},{"type":"a","href":"/27781","children":[{"text":"Parallele"}]},{"text":" zur "},{"type":"math","src":"y","inline":true,"children":[{"text":"y"}]},{"text":"-Achse durch die Stelle "},{"type":"math","src":"-1","inline":true,"children":[{"text":"-1"}]},{"text":" auf der "},{"type":"math","src":"x","inline":true,"children":[{"text":"x"}]},{"text":"-Achse. Die Funktion schneidet in einem Maximum diese Parallele. Deshalb nehmen wir an, dass es sich um eine verschobene Kosinusfunktion handelt."}]}]}]},{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Da die Kosinusfunktion um eine Einheit nach links verschoben ist, lautet die vorläufige Funktion:"}]},{"type":"p","children":[{"type":"math","src":"i(x)=\\\\cos(x+1).","inline":false,"children":[{"text":"i(x)=\\\\cos(x+1)."}]}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e29907303e2_338b31d48a89340e131d3dd1edbdddafce1725fb.png","alt":"Lösungsteil2","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Jetzt ermittelst du die "},{"type":"a","href":"/1569","children":[{"text":"Amplitude"}]},{"text":" der Funktion."}]},{"type":"p","children":[{"text":"Der Abstand der Extrema zu der Ruhelage hat den Wert "},{"type":"math","src":"1","inline":true,"children":[{"text":"1"}]},{"text":", also wird an der Amplitude der Funktion nichts geändert."}]}]}]},{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Die Amplitude ist bei der Funktion nicht manipuliert."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e299192a532_542af962ee94cb2e532d473c629508001b2d6790.png","alt":"Lösungsteil3","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Als letztes fehlt dir nur noch die Periode der Funktion."}]},{"type":"p","children":[{"text":"Dazu betrachten wir ein "},{"type":"a","href":"/1947","children":[{"text":"Intervall"}]},{"text":" der Länge "},{"type":"math","src":"\\\\pi","inline":true,"children":[{"text":"\\\\pi"}]},{"text":" das von "},{"type":"math","src":"-1","inline":true,"children":[{"text":"-1"}]},{"text":" nach rechts verläuft. In diesem Intervall befinden sich "},{"type":"math","src":"1,5","inline":true,"children":[{"text":"1,5"}]},{"text":" Perioden der Funktion, also "},{"type":"math","src":"3","inline":true,"children":[{"text":"3"}]},{"text":" in einem Intervall von "},{"type":"math","src":"2\\\\pi","inline":true,"children":[{"text":"2\\\\pi"}]},{"text":". Da "},{"type":"math","src":"2\\\\pi","inline":true,"children":[{"text":"2\\\\pi"}]},{"text":" die Periode der Standard-Kosinus-Funktion ist, ist die Funktion um den Faktor "},{"type":"math","src":"3","inline":true,"children":[{"text":"3"}]},{"text":" gestaucht."}]}]}]},{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Da die Funktion um den Faktor "},{"type":"math","src":"3","inline":true,"children":[{"text":"3"}]},{"text":" gestaucht ist, lautet sie: "}]},{"type":"math","src":"i\\\\left(x\\\\right)=\\\\cos\\\\left(3\\\\left(x+1\\\\right)\\\\right)","inline":false,"children":[{"text":""}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e29930b1d78_b5c08794fb0621d80c980488ebfc535883be0f8c.png","alt":"Lösungsteil4","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}}]}]}}}}}',
       },
-      license: {
-        id: 1,
-        url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-        title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
-      },
+      licenseId: 1,
     },
   ],
 }
@@ -1945,11 +1901,7 @@ export const courseUuidMock_id = {
   alias:
     '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen',
   instance: 'de',
-  license: {
-    id: 1,
-    url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-    title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
-  },
+  licenseId: 1,
   taxonomyTerms: {
     nodes: [
       {
@@ -2159,11 +2111,7 @@ export const courseUuidMock_alias = {
   alias:
     '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht',
   instance: 'de',
-  license: {
-    id: 1,
-    url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-    title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
-  },
+  licenseId: 1,
   currentRevision: {
     content:
       '{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Ziel dieses Kurses ist es, einen Überblick zur möglichen Vorgehensweise beim Finden von Nullstellen von Polynomfunktionen zu geben."}]},{"type":"p","children":[{"text":" "}]},{"type":"p","children":[{"text":"Inhalte"}]},{"type":"unordered-list","children":[{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Erarbeitung der Linearfaktordarstellung"}]}]}]},{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Methoden der Nullstellenberechnung"}]},{"type":"unordered-list","children":[{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Termumformungen"}]}]}]},{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Ausklammern von Faktoren"}]}]}]},{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Lösen mithilfe der Polynomdivision"}]}]}]},{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Lösen durch Substitution"}]}]}]}]}]}]}]},{"type":"p","children":[{"text":"Vorwissen"}]},{"type":"unordered-list","children":[{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Funktionsbegriff"}]}]}]},{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Polynomfunktion"}]}]}]},{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Definition einer Nullstelle"}]}]}]},{"type":"list-item","children":[{"type":"list-item-child","children":[{"type":"p","children":[{"text":"Berechnung von Nullstellen bei linearen und quadratischen Funktionen"}]}]}]}]}]}]}',
@@ -2463,11 +2411,7 @@ export const eventUuidMock = {
   id: 145590,
   alias: '/community/veranstaltungen/digital-learning-summer-academy-2020',
   instance: 'de',
-  license: {
-    id: 1,
-    url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-    title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
-  },
+  licenseId: 1,
   taxonomyTerms: {
     nodes: [
       {

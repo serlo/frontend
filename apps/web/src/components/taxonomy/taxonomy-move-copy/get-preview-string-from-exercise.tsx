@@ -5,7 +5,10 @@ import {
   EditorRowsDocument,
   EditorTemplateExerciseGroupDocument,
 } from '@editor/types/editor-plugins'
-import { isRowsDocument } from '@editor/types/plugin-type-guards'
+import {
+  isMultimediaDocument,
+  isRowsDocument,
+} from '@editor/types/plugin-type-guards'
 
 import { InstanceData } from '@/data-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
@@ -20,11 +23,32 @@ export function getPreviewStringFromExercise(
     ? (document.state.content as EditorRowsDocument)
     : undefined
 
-  const titleString = rows?.state.map(extractStringFromTextDocument).join(' ')
+  const titleString = extractStringFromRowsTextAndMultimedia(rows)
 
   if (!titleString || titleString.trim().length < 3) return typeString
 
   return `${typeString}: "${
     titleString.length < 60 ? titleString : titleString.substring(0, 50) + '…'
   }"`
+}
+
+function extractStringFromRowsTextAndMultimedia(
+  document?: AnyEditorDocument
+): string {
+  if (document) {
+    if (isRowsDocument(document)) {
+      return document.state
+        .map(extractStringFromRowsTextAndMultimedia)
+        .join(' ')
+        .trim()
+    }
+
+    if (isMultimediaDocument(document)) {
+      return extractStringFromRowsTextAndMultimedia(document.state.explanation)
+    }
+
+    return extractStringFromTextDocument(document)
+  }
+
+  return ''
 }

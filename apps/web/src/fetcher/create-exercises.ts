@@ -27,7 +27,7 @@ export function createExercise(
       trashed: uuid.trashed,
       grouped: false,
       unrevisedRevisions: uuid.revisions?.totalCount,
-      licenseId: uuid.license.id,
+      licenseId: uuid.licenseId,
     },
   }
 
@@ -52,7 +52,7 @@ export function createExerciseGroup(
       uuid: uuid.id,
       trashed: uuid.trashed,
       unrevisedRevisions: uuid.revisions.totalCount,
-      licenseId: uuid.license.id,
+      licenseId: uuid.licenseId,
     },
   }
 }

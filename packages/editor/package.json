@@ -1,6 +1,6 @@
 {
   "name": "@serlo/editor",
-  "version": "0.6.0-beta.7",
+  "version": "0.6.0-beta.11",
   "homepage": "https://de.serlo.org/editor",
   "bugs": {
     "url": "https://github.com/serlo/frontend/issues"
@@ -84,6 +84,7 @@
     "@types/ramda": "^0.29.6",
     "@types/react": "^18.0.25",
     "@types/react-beautiful-dnd": "^13.1.5",
+    "@types/react-dnd-multi-backend": "^6.0.6",
     "@types/react-dom": "^18.0.8",
     "@types/react-lazyload": "^3.2.1",
     "@types/react-modal": "^3.16.1",
@@ -139,9 +140,12 @@
     "prop-types": "^15.8.1",
     "qrcode.react": "^3.1.0",
     "ramda": "^0.29.1",
+    "rdndmb-html5-to-touch": "^8.0.3",
     "react-diff-viewer": "^3.1.1",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
+    "react-dnd-multi-backend": "^8.0.3",
+    "react-dnd-touch-backend": "^16.0.1",
     "react-hotkeys-hook": "^4.4.1",
     "react-is": "^18.2.0",
     "react-lazyload": "^3.2.0",

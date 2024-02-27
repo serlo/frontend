@@ -140,4 +140,4 @@ You can find more detailed explanations in our wiki. Currently, we have these pa
 - [VS Code Setup](https://github.com/serlo/frontend/wiki/VS-Code)
 - [Unsorted old stuff](https://github.com/serlo/frontend/wiki/Archive)
 - [Forked packages](https://github.com/serlo/frontend/wiki/Forked-packages)
-- [Export Editor package (experimental)](https://github.com/serlo/frontend/issues/3213)
+- [Editor package](https://github.com/serlo/frontend/wiki/Editor-npm-package)

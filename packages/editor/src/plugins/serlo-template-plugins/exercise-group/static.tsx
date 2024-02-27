@@ -1,5 +1,5 @@
-import { EditorPluginType } from '@editor/package'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { EditorTemplateExerciseGroupDocument } from '@editor/types/editor-plugins'
 import { useAuthentication } from '@serlo/frontend/src/auth/use-authentication'
 import type { MoreAuthorToolsProps } from '@serlo/frontend/src/components/user-tools/foldout-author-menus/more-author-tools'
@@ -9,7 +9,6 @@ import { useContext, useEffect, useState } from 'react'
 
 import { TextExerciseGroupTypeRenderer } from './renderer'
 import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
-import { RevisionViewContext } from '@/contexts/revision-view-context'
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
   import(
@@ -32,13 +31,13 @@ export function TextExerciseGroupTypeStaticRenderer(
   if (content.plugin === EditorPluginType.ExerciseGroup) {
     return (
       <div className="relative">
-        <div className="absolute -right-8 z-20 flex">
+        <div className="absolute -right-8">
           {context?.licenseId ? (
             <div className="ml-1">
               <ExerciseLicenseNotice exerciseLicenseId={context?.licenseId} />
             </div>
           ) : null}
-          {loaded && auth && context?.uuid && !isRevisionView ? (
+          {loaded && auth && context?.uuid ? (
             <AuthorToolsExercises
               data={{
                 type: ExerciseInlineType.ExerciseGroup,
@@ -68,8 +67,13 @@ export function TextExerciseGroupTypeStaticRenderer(
 
   return (
     <div className="relative">
-      {loaded && auth && context?.uuid ? (
-        <div className="absolute -right-8">
+      <div className="absolute -right-8">
+        {context?.licenseId ? (
+          <div className="ml-1">
+            <ExerciseLicenseNotice exerciseLicenseId={context?.licenseId} />
+          </div>
+        ) : null}
+        {loaded && auth && context?.uuid ? (
           <AuthorToolsExercises
             data={{
               type: ExerciseInlineType.ExerciseGroup,
@@ -78,8 +82,8 @@ export function TextExerciseGroupTypeStaticRenderer(
               unrevisedRevisions: context?.unrevisedRevisions,
             }}
           />
-        </div>
-      ) : null}
+        ) : null}
+      </div>
       <TextExerciseGroupTypeRenderer
         content={<StaticRenderer document={content} />}
         exercises={rendered}

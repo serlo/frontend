@@ -255,15 +255,7 @@ export const sharedExerciseFragments = gql`
       content
       date
     }
-    ...license
-  }
-`
-
-export const sharedLicenseFragments = gql`
-  fragment license on AbstractRepository {
-    license {
-      id
-    }
+    licenseId
   }
 `
 

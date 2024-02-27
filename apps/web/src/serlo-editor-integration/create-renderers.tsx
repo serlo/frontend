@@ -62,11 +62,11 @@ const InputSerloStaticRenderer = dynamic<EditorInputExerciseDocument>(() =>
     '@/serlo-editor-integration/serlo-plugin-wrappers/input-serlo-static-renderer'
   ).then((mod) => mod.InputSerloStaticRenderer)
 )
-const FillInTheBlanksStaticRenderer =
+const FillInTheBlanksSerloStaticRenderer =
   dynamic<EditorFillInTheBlanksExerciseDocument>(() =>
-    import('@editor/plugins/fill-in-the-blanks-exercise/static').then(
-      (mod) => mod.FillInTheBlanksStaticRenderer
-    )
+    import(
+      '@/serlo-editor-integration/serlo-plugin-wrappers/fill-in-the-blanks-serlo-static-renderer'
+    ).then((mod) => mod.FillInTheBlanksSerloStaticRenderer)
   )
 const InjectionStaticRenderer = dynamic<EditorInjectionDocument>(() =>
   import('@editor/plugins/injection/static').then(
@@ -227,7 +227,7 @@ export function createRenderers(): InitRenderersArgs {
       },
       {
         type: EditorPluginType.FillInTheBlanksExercise,
-        renderer: FillInTheBlanksStaticRenderer,
+        renderer: FillInTheBlanksSerloStaticRenderer,
       },
       {
         type: EditorPluginType.Solution,

@@ -7,12 +7,14 @@ import { isMac } from '@/helper/client-detection'
 import { cn } from '@/helper/cn'
 import { quickbarStatsSubmission } from '@/helper/quickbar-stats-submission'
 
+export const quickbarUrl = 'https://de.serlo.org/api/stats/quickbar.json'
+
 export interface QuickbarDataEntry {
   title: string
   id: string
   path: string[]
   isTax: boolean
-  count: number
+  count: number // ~ visits in last 3 weeks
   pathLower: string[]
   titleLower: string
   root: string
@@ -24,10 +26,16 @@ interface QuickbarProps {
   subject?: string
   placeholder?: string
   className?: string
+  customData?: QuickbarData
 }
 
-export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
-  const [data, setData] = useState<QuickbarData | null>(null)
+export function Quickbar({
+  subject,
+  className,
+  placeholder,
+  customData,
+}: QuickbarProps) {
+  const [data, setData] = useState<QuickbarData | undefined>(customData)
   const [query, setQuery] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -50,9 +58,9 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
   }, [query, data, subject])
 
   useEffect(() => {
-    //reset data when subject changes
-    setData(null)
-  }, [subject])
+    //reset data when subject or customData changes
+    setData(customData)
+  }, [subject, customData])
 
   useEffect(() => {
     setSelection(0)
@@ -261,7 +269,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
 }
 
 export async function fetchQuickbarData(subject?: string) {
-  const req = await fetch('https://de.serlo.org/api/stats/quickbar.json')
+  const req = await fetch(quickbarUrl)
   const data = (await req.json()) as QuickbarData
 
   data.forEach((entry) => {

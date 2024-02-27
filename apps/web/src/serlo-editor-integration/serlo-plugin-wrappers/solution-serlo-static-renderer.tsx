@@ -18,7 +18,7 @@ const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
   )
 )
 
-// Special version for serlo.org with author tools, comments and license
+// Special version for serlo.org with author tools and comments
 export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const { asPath } = useRouter()
   const ab = useAB()
@@ -49,7 +49,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
       exerciseSubmission(
         {
           path: asPath,
-          entityId: context?.exerciseId,
+          entityId: context?.exerciseId ?? exerciseUuid,
           type: 'text',
           result: 'open',
         },

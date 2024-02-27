@@ -2,7 +2,6 @@ import { gql } from 'graphql-request'
 
 import {
   sharedExerciseFragments,
-  sharedLicenseFragments,
   sharedRevisionFragments,
   sharedTaxonomyParents,
 } from './query-fragments'
@@ -18,7 +17,7 @@ export const dataQuery = gql`
 
       ... on AbstractRepository {
         instance
-        ...license
+        licenseId
       }
 
       ... on AbstractTaxonomyTermChild {
@@ -201,7 +200,7 @@ export const dataQuery = gql`
               revisions(unrevised: true) {
                 totalCount
               }
-              ...license
+              licenseId
             }
             ... on TaxonomyTerm {
               type
@@ -313,7 +312,6 @@ export const dataQuery = gql`
   }
 
   ${sharedTaxonomyParents}
-  ${sharedLicenseFragments}
   ${sharedExerciseFragments}
   ${sharedRevisionFragments}
 `

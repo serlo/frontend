@@ -76,7 +76,7 @@ export function SubjectLandingContent({
 
           <Quickbar
             subject={data.title}
-            className="max-w-sm sm:-ml-1 sm:px-0 md:max-w-2xl md:pr-4"
+            className="mx-auto max-w-sm sm:-ml-1 sm:px-0 md:max-w-2xl md:pr-4"
           />
         </section>
 
@@ -132,7 +132,7 @@ export function SubjectLandingContent({
   function renderIcon() {
     return (
       <>
-        <div className="landing-subjects group mx-auto -mt-3">
+        <div className="landing-subjects group mx-auto mt-2 sm:-mt-3">
           <SubjectIcon subject={subject} />
         </div>
         <style jsx global>{`

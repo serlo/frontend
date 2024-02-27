@@ -153,8 +153,8 @@ export const instanceData = {
         yourAnswer: "Tu respuesta...",
         chooseOption: "Elige una de las opciones.",
         printModeChooseOption: "Elige una de las opciones.",
-        strategy: 'Strategy',
-        solution: 'Proposed Solution'
+        strategy: "Estrategia",
+        solution: "Solución propuesta"
       },
       boxTypes: {
         blank: "Blanco",
@@ -285,7 +285,7 @@ export const instanceData = {
     },
     print: {
       preparingNotice: "¡Preparando impresión!",
-      warning: "IMPORTANTE: Para asegurarse de que todas las imágenes y fórmulas se puedan imprimir, por favor desplácese hasta el final de la página ANTES de abrir este diálogo. ¡Gracias!"
+      warning: "IMPORTANTE: Para asegurarte de que todas las imágenes y fórmulas se impriman, por favor desplázate hacia abajo hasta el final de la página una vez ANTES de abrir este diálogo. ¡Gracias!"
     },
     profiles: {
       aboutMe: "Sobre mi",
@@ -301,7 +301,7 @@ export const instanceData = {
       directMessage: "Mensaje directo",
       goToChat: "Ir al chat",
       registerChat: "Registrate para el chat",
-      inviteToChat: "Invita al chat",
+      inviteToChat: "Invitar a Chat",
       inviteModal: {
         part1: "%username%  aún no está activo/a en nuestra comunidad del chat en %chatLink%.",
         part2: "Puedes invitar a %username% al chat para enviarle mensajes directos.",
@@ -325,12 +325,12 @@ export const instanceData = {
     notices: {
       welcome: "¡Bienvenida/o  %username%!",
       bye: "👋 ¡Nos vemos pronto!",
-      alreadyLoggedIn: "👋 Bienvenido de nuevo",
+      alreadyLoggedIn: "👋 Bienvenido/a de nuevo",
       warningLoggedOut: "⚠️ Has cerrado la sesión. Por favor, inicia sesión de nuevo y luego usa \"Cargar ediciones almacenadas\" para restaurar tus cambios actuales.",
       revisionSaved: "La revisión se ha guardado y se revisará pronto 👍",
-      revisionAccepted: "Revisión aceptada con éxito ✅",
-      revisionRejected: "Revisión rechazada con éxito ❎",
-      revisionSavedAccepted: "Revisión guardada y aceptada con éxito ✅"
+      revisionAccepted: "Revisión aceptada exitosamente ✅",
+      revisionRejected: "La revisión fue rechazada exitosamente ❎",
+      revisionSavedAccepted: "Revisión guardada y aceptada exitosamente ✅"
     },
     loading: {
       oneMomentPlease: "Un momento, por favor...",
@@ -366,7 +366,7 @@ export const instanceData = {
         registerNewAccount: "Registrar una nueva cuenta",
         forgotPassword: "¿Has %forgotLinkText%?",
         forgotLinkText: "Contraseña olvidada",
-        validSessionDetected: "Oye, ya has iniciado sesión en otra pestaña. ¡Recarga la página para verlo!"
+        validSessionDetected: "Oye, ya has iniciado sesión en otra pestaña. ¡Recarga la página para verla!"
       },
       fields: {
         identifier: "Nombre de usuario o dirección de correo electrónico",
@@ -443,7 +443,7 @@ export const instanceData = {
       createEntity: "%actor% creó %object%.",
       setLicense: "%actor% cambió la licencia de %repository%.",
       createEntityLink: "%actor% vinculó %child% con %parent%.",
-      removeEntityLink: "%actor% disoció %child% de %parent%.",
+      removeEntityLink: "%actor% desvinculo %child% de %parent%.",
       createEntityRevision: "%actor% creó %revision% de %entity%.",
       checkoutRevision: "%actor% ha verificado %revision% en %repository%",
       rejectRevision: "%actor% no aceptó %revision% en %repository%.",
@@ -464,7 +464,7 @@ export const instanceData = {
     },
     bin: {
       title: "Título",
-      trashed: "Destruido..."
+      trashed: "Eliminado..."
     }
   }
 };
@@ -512,7 +512,7 @@ export const loggedInData = {
       title: "Suscripciones"
     }, {
       url: '/auth/settings',
-      title: "Actualizar contraseña"
+      title: "Cambiar contraseña"
     }, {
       url: '/user/settings',
       title: "Configuración"
@@ -761,7 +761,7 @@ export const loggedInData = {
           headings: "Encabezados",
           link: "Vínculo (%ctrlOrCmd% + K)",
           noElementPasteInLists: "Lo sentimos, no está permitido pegar elementos dentro de listas.",
-          pastingPluginNotAllowedHere: 'Sorry, pasting this plugin here is not allowed.',
+          pastingPluginNotAllowedHere: "Lo siento, pegar este plugin aquí no está permitido.",
           linkOverlay: {
             placeholder: "https://… o /1234",
             inputLabel: "Pegar o escribir un enlace",
@@ -777,8 +777,8 @@ export const loggedInData = {
           mathFormula: "Fórmula matemática (%ctrlOrCmd% + M)",
           code: "Código (%ctrlOrCmd% + + + `)",
           blank: "Blanco",
-          createBlank: 'Create Blank',
-          removeBlank: 'Remove Blank',
+          createBlank: "Crear espacio en blanco",
+          removeBlank: "Eliminar espacio en blanc",
           bold: "Negrilla (%ctrlOrCmd% + B)",
           italic: "Itálica (%ctrlOrCmd% + I)",
           noItemsFound: "Elementos no encontrados",
@@ -837,24 +837,24 @@ export const loggedInData = {
           description: "Opción única o múltiple"
         },
         blanksExercise: {
-          title: 'Fill In The Blanks',
+          title: "Completa los espacios en blanco",
           description: "Textos con blancos",
           placeholder: "Escribe un texto y añade espacios en blanco",
           chooseType: "Elige el tipo de ejercicio",
           modes: {
-            typing: 'Typing',
-            'drag-and-drop': 'Drag & Drop'
+            typing: "Tecleando/escribir",
+            'drag-and-drop': "Arrastrar y colocar"
           },
           previewMode: "Vista Previa",
-          previewIsActiveHint: 'Edit the exercise again',
-          previewIsDeactiveHint: 'Preview the exercise',
-          dummyAnswers: 'Extra incorrect answers',
-          addDummyAnswer: 'Add an incorrect answer',
-          removeDummyAnswer: 'Remove extra answer',
-          addAlternativeAnswer: 'Add an alternative answer',
-          removeAlternativeAnswer: 'Remove alternative answer',
-          alternativeAnswers: 'Alternative answers',
-          acceptMathEquivalents: 'Accept all equivalent mathematical values'
+          previewIsActiveHint: "Vuelve a editar el ejercicio",
+          previewIsDeactiveHint: "Vista preliminar del ejercicio",
+          dummyAnswers: "Respuestas incorrectas adicionales",
+          addDummyAnswer: "Añadir una respuesta incorrecta",
+          removeDummyAnswer: "Eliminar la respuesta adicional",
+          addAlternativeAnswer: "Añade una respuesta alternativa",
+          removeAlternativeAnswer: "Eliminar respuesta alternativa",
+          alternativeAnswers: "Respuestas alternativas",
+          acceptMathEquivalents: "Acepta todos los valores matemáticos equivalentes"
         }
       },
       templatePlugins: {
@@ -960,7 +960,7 @@ export const loggedInData = {
           showSolution: "Mostrar la solución",
           hideSolution: "Ocultar la solución",
           changeLicense: "Cambiar licencia",
-          addPrerequisite: 'Add link'
+          addPrerequisite: "Añadir enlace"
         },
         textExerciseGroup: {
           removeExercise: "Eliminar ejercicio",
@@ -1006,8 +1006,8 @@ export const loggedInData = {
         createdAt: "¿Cuándo?",
         ready: "¿Listo para guardar?",
         anchorLinkWarning: "Este enlace sólo funcionará en el frontend y para contenidos que tengan una revisión algo nueva.",
-        pluginCopyInfo: 'You can now paste this plugin into text plugins',
-        pluginCopyButtonLabel: 'Copy plugin to clipboard'
+        pluginCopyInfo: "Ahora puedes pegar este plugin en plugins de texto",
+        pluginCopyButtonLabel: "Copiar plugin al portapapeles"
       },
       taxonomy: {
         title: "Título"
