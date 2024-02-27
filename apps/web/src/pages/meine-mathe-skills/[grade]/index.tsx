@@ -42,10 +42,26 @@ function Content() {
           <ul className="mt-1 text-lg">
             <li>
               <Link
-                href="/meine-mathe-skills/klasse5/zahlen-finden"
+                href="/meine-mathe-skills/klasse5/zahlen-anordnen-1"
                 className="serlo-link"
               >
-                Zahlenstrahl – Level 1
+                Zahlen anordnen – Level 1
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/meine-mathe-skills/klasse5/zahlen-anordnen-2"
+                className="serlo-link"
+              >
+                Zahlen anordnen – Level 2
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/meine-mathe-skills/klasse5/zahlen-anordnen-profi"
+                className="serlo-link"
+              >
+                Zahlen anordnen – für Profis
               </Link>
             </li>
           </ul>

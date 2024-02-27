@@ -6,12 +6,14 @@ import { NewExerciseButton } from './new-exercise-button'
 import { NumberLabels } from './number-labels'
 import { RangeInputOverlay } from './range-input-overlay'
 import { feedbackAnimation } from '../utils/feedback-animation'
-import { getIntRange } from '@/helper/get-int-range'
-import { randomItemFromArray } from '@/helper/random-item-from-array'
 
 // layout support up to 6 digits
 
-export function NumberLineExercise() {
+interface NumberLineExerciseProps {
+  generator: () => [number, number, number]
+}
+
+export function NumberLineExercise({ generator }: NumberLineExerciseProps) {
   const [selectedValue, setSelectedValue] = useState(-1) // move outside for actual exercise
 
   const [[searchedValue, labeledPosition, maxValue], setValues] = useState([
@@ -30,26 +32,7 @@ export function NumberLineExercise() {
   }
 
   function makeNewExercise() {
-    const kind = randomItemFromArray([0, 1])
-    if (kind === 0) {
-      const maxVal = 40
-
-      const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
-      const searchValues = getIntRange(10, 39, [labeledPos * 40])
-      const searchedVal = randomItemFromArray(searchValues)
-      setValues([searchedVal, labeledPos, maxVal])
-    } else {
-      const maxVal = randomItemFromArray([8000, 12000, 16000, 20000])
-      const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
-      const possibleSearchValues = [
-        maxVal / 4,
-        maxVal / 2,
-        (maxVal / 4) * 3,
-        maxVal,
-      ].filter((val) => val !== maxVal * labeledPos)
-      const searchedVal = randomItemFromArray(possibleSearchValues)
-      setValues([searchedVal, labeledPos, maxVal])
-    }
+    setValues(generator())
     setSelectedValue(0)
     setIsChecked(false)
   }
