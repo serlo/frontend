@@ -9,12 +9,13 @@ import { SkipMenu } from './skip-menu'
 import { FaIcon } from '@/components/fa-icon'
 import { Quickbar } from '@/components/navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { cn } from '@/helper/cn'
 import { submitEvent } from '@/helper/submit-event'
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const { strings } = useInstanceData()
+  const { strings, lang } = useInstanceData()
   const router = useRouter()
 
   const isLanding = router.route === '/'
@@ -74,7 +75,7 @@ export function Header() {
   )
 
   function renderQuickbar() {
-    if (isLanding) return renderSpecialDonationButton()
+    if (isLanding && lang === Instance.De) return renderSpecialDonationButton()
     if (hideQuickbar) return null
     return (
       <Quickbar
