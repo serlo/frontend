@@ -29,7 +29,7 @@ function Content() {
     <>
       <br />
       <br />
-      Hier geht es darum Dinge zu können und das auch zu zeigen. Das dürfen auch
+      Hier geht es darum, Mathematik können und das zu zeigen. Das dürfen auch
       kleine Sachen sein.
       <br />
       Immer Schritt für Schritt!
@@ -42,13 +42,14 @@ function Content() {
     <div>
       <div className="mx-4 justify-center sm:mt-10 sm:flex sm:flex-row-reverse sm:items-center">
         <LandingAnimal />
-        <div className="mx-auto mb-6 mt-4 min-h-[22rem] max-w-[26rem] text-lg sm:mx-0 sm:leading-relaxed">
+        <div className="mx-auto mb-6 mt-4 min-h-[22rem] max-w-[26rem] text-lg sm:mx-0 sm:w-[26rem] sm:leading-relaxed">
           {data?.name ? (
             <>
-              Willkommen <b>{data.name}</b>,
+              Hallo <b>{data.name}</b>,
               <br />
               schön, dass du hier bist!
-              {sharedWelcome}
+              <br />
+              <br />
               <b>Jetzt bist du dran:</b>
               <br />
               Zeige, welche Mathe-Skills du drauf hast.
