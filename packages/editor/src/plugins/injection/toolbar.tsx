@@ -5,10 +5,12 @@ import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, type ClipboardEvent } from 'react'
 
 import type { InjectionProps } from '.'
 import { EditorInput } from '../../editor-ui'
+import { getCleanUrl } from '../text/utils/link'
+import { showToastNotice } from '@/helper/show-toast-notice'
 
 export const InjectionToolbar = ({
   id,
@@ -20,6 +22,24 @@ export const InjectionToolbar = ({
   setShowSettingsModal: Dispatch<SetStateAction<boolean>>
 }) => {
   const injectionStrings = useEditorStrings().plugins.injection
+
+  function validateBeforeClose() {
+    const [id, hash] = state.value.split('#')
+    const isValidId = /^\/[1-9]?[0-9]+$/.test(id)
+    const isValidHash = hash === undefined || /[a-z0-9-]+/.test(hash)
+
+    if (isValidId && isValidHash) setShowSettingsModal(false)
+    else showToastNotice(injectionStrings.invalidStateWarning, 'warning')
+  }
+
+  function onPaste(e: ClipboardEvent<HTMLInputElement>) {
+    // cleanup pasted links
+    setTimeout(() => {
+      const inputUrl = (e.target as HTMLInputElement).value
+      const cleanUrl = getCleanUrl(inputUrl)
+      if (cleanUrl !== inputUrl) state.set(cleanUrl)
+    })
+  }
 
   return (
     <PluginToolbar
@@ -34,7 +54,7 @@ export const InjectionToolbar = ({
           </button>
           <ModalWithCloseButton
             isOpen={showSettingsModal}
-            onCloseClick={() => setShowSettingsModal(false)}
+            onCloseClick={validateBeforeClose}
             className="top-8 max-w-xl translate-y-0 sm:top-1/3"
           >
             <h3 className="serlo-h3 mt-4">{injectionStrings.title}</h3>
@@ -45,11 +65,13 @@ export const InjectionToolbar = ({
                 label={`${injectionStrings.serloId}: `}
                 placeholder={injectionStrings.placeholder}
                 value={state.value}
-                onChange={(e) =>
-                  // TODO: make pasting a serlo url a working method
-                  // TODO: enforce form starting with `/`
-                  state.set(e.target.value)
-                }
+                onPaste={onPaste}
+                onChange={(e) => {
+                  const { value } = e.target
+                  const prepended =
+                    value.length > 0 && value[0] !== '/' ? `/${value}` : value
+                  state.set(prepended)
+                }}
                 width="100%"
                 inputWidth="100%"
                 className="block"
