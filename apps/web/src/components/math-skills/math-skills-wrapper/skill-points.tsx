@@ -14,7 +14,7 @@ export function SkillPoints() {
   const animal = data?.animal ?? 'lion'
 
   return (
-    <div className="relative z-30 mx-auto -mt-[3.55rem] flex w-full max-w-lg">
+    <div className="mx-auto mt-3 flex sm:relative sm:-mt-[3.55rem] sm:w-full sm:max-w-lg sm:justify-center">
       {renderPoint(100)}
       {renderPoint(10)}
       {renderPoint(0)}
