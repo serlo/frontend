@@ -5,7 +5,7 @@ import { useAuthentication } from '@serlo/frontend/src/auth/use-authentication'
 import type { MoreAuthorToolsProps } from '@serlo/frontend/src/components/user-tools/foldout-author-menus/more-author-tools'
 import { ExerciseInlineType } from '@serlo/frontend/src/data-types'
 import dynamic from 'next/dynamic'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { TextExerciseGroupTypeRenderer } from './renderer'
 import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
@@ -25,7 +25,6 @@ export function TextExerciseGroupTypeStaticRenderer(
   useEffect(() => setLoaded(true), [])
 
   const { content, exercises } = state
-  const isRevisionView = useContext(RevisionViewContext)
 
   // new renderer
   if (content.plugin === EditorPluginType.ExerciseGroup) {
