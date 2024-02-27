@@ -65,6 +65,30 @@ function Content() {
                 Zahlen anordnen – für Profis
               </Link>
             </li>
+            <li>
+              <Link
+                href="/meine-mathe-skills/klasse5/zahlen-ablesen-1"
+                className="serlo-link"
+              >
+                Zahlen ablesen – Level 1
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/meine-mathe-skills/klasse5/zahlen-ablesen-2"
+                className="serlo-link"
+              >
+                Zahlen ablesen – Level 2
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/meine-mathe-skills/klasse5/zahlen-ablesen-profi"
+                className="serlo-link"
+              >
+                Zahlen ablesen – für Profis
+              </Link>
+            </li>
           </ul>
         </div>
         <div className="mt-4 w-72 rounded-lg bg-brand-100 p-5 mobileExt:ml-4 mobileExt:mt-0">

@@ -5,6 +5,7 @@ import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
 import { NumberInputExercise } from '@/components/math-skills/number-input-exercise/number-input-exercise'
+import { NumberLineInputExercise } from '@/components/math-skills/number-input-exercise/number-line-input-exercise'
 import { NumberLineExercise } from '@/components/math-skills/number-line-exercise/number-line-exercise'
 import { getIntRange } from '@/helper/get-int-range'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -44,71 +45,77 @@ function Content() {
   return (
     <div className="relative mx-4 mt-20 max-w-lg bg-white sm:mx-auto sm:w-full">
       {exercise === 'zahlen-anordnen-1' ? (
-        <NumberLineExercise
-          generator={() => {
-            const kind = randomItemFromArray([0, 1])
-            if (kind === 0) {
-              const maxVal = 40
-
-              const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
-              const searchValues = getIntRange(10, 39, [labeledPos * 40])
-              const searchedVal = randomItemFromArray(searchValues)
-              return [searchedVal, labeledPos, maxVal]
-            } else {
-              const maxVal = randomItemFromArray([8000, 12000, 16000, 20000])
-              const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
-              const possibleSearchValues = [
-                maxVal / 4,
-                maxVal / 2,
-                (maxVal / 4) * 3,
-                maxVal,
-              ].filter((val) => val !== maxVal * labeledPos)
-              const searchedVal = randomItemFromArray(possibleSearchValues)
-              return [searchedVal, labeledPos, maxVal]
-            }
-          }}
-        />
+        <NumberLineExercise generator={numberLineGeneratorLevel1} />
       ) : null}
       {exercise === 'zahlen-anordnen-2' ? (
-        <NumberLineExercise
-          generator={() => {
-            const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
-            const searchValues = getIntRange(10, 39, [labeledPos * 40])
-            const searchedVal = randomItemFromArray(searchValues)
-            return [searchedVal * 10, labeledPos, 400]
-          }}
-        />
+        <NumberLineExercise generator={numberLineGeneratorLevel2} />
       ) : null}
       {exercise === 'zahlen-anordnen-profi' ? (
-        <NumberLineExercise
-          generator={() => {
-            const kind = randomItemFromArray([0, 1])
-            if (kind === 0) {
-              const step = randomItemFromArray([10, 20])
-              const maxVal = 40 * step
-
-              const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
-              const searchValues = getIntRange(10, 39, [labeledPos * 40])
-              const searchedVal = randomItemFromArray(searchValues)
-              return [searchedVal * step, labeledPos, maxVal]
-            } else {
-              const maxVal = randomItemFromArray([8000, 12000, 16000, 20000])
-              const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
-              const possibleSearchValues = [
-                maxVal / 4,
-                maxVal / 2,
-                (maxVal / 4) * 3,
-                maxVal,
-              ].filter((val) => val !== maxVal * labeledPos)
-              const searchedVal = randomItemFromArray(possibleSearchValues)
-              return [searchedVal, labeledPos, maxVal]
-            }
-          }}
-        />
+        <NumberLineExercise generator={numberLineGeneratorLevel3} />
       ) : null}
       {exercise === 'potenzwert-berechnen' ? <NumberInputExercise /> : null}
+      {exercise === 'zahlen-ablesen-1' ? (
+        <NumberLineInputExercise generator={numberLineGeneratorLevel1} />
+      ) : null}
+      {exercise === 'zahlen-ablesen-2' ? (
+        <NumberLineInputExercise generator={numberLineGeneratorLevel2} />
+      ) : null}
+      {exercise === 'zahlen-ablesen-profi' ? (
+        <NumberLineInputExercise generator={numberLineGeneratorLevel3} />
+      ) : null}
     </div>
   )
+}
+
+function numberLineGeneratorLevel1(): [number, number, number] {
+  const kind = randomItemFromArray([0, 1])
+  if (kind === 0) {
+    const maxVal = 40
+
+    const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
+    const searchValues = getIntRange(10, 39, [labeledPos * 40])
+    const searchedVal = randomItemFromArray(searchValues)
+    return [searchedVal, labeledPos, maxVal]
+  } else {
+    const maxVal = randomItemFromArray([8000, 12000, 16000, 20000])
+    const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
+    const possibleSearchValues = [
+      maxVal / 4,
+      maxVal / 2,
+      (maxVal / 4) * 3,
+      maxVal,
+    ].filter((val) => val !== maxVal * labeledPos)
+    const searchedVal = randomItemFromArray(possibleSearchValues)
+    return [searchedVal, labeledPos, maxVal]
+  }
+}
+
+function numberLineGeneratorLevel2(): [number, number, number] {
+  const step = randomItemFromArray([10, 20])
+  const maxVal = 40 * step
+
+  const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
+  const searchValues = getIntRange(10, 39, [labeledPos * 40])
+  const searchedVal = randomItemFromArray(searchValues)
+  return [searchedVal * step, labeledPos, maxVal]
+}
+
+function numberLineGeneratorLevel3(): [number, number, number] {
+  const kind = randomItemFromArray([0, 1])
+  if (kind === 0) {
+    return numberLineGeneratorLevel2()
+  } else {
+    const maxVal = randomItemFromArray([8000, 12000, 16000, 20000])
+    const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
+    const possibleSearchValues = [
+      maxVal / 4,
+      maxVal / 2,
+      (maxVal / 4) * 3,
+      maxVal,
+    ].filter((val) => val !== maxVal * labeledPos)
+    const searchedVal = randomItemFromArray(possibleSearchValues)
+    return [searchedVal, labeledPos, maxVal]
+  }
 }
 
 export default ContentPage
