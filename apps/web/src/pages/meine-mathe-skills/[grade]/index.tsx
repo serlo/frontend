@@ -73,7 +73,7 @@ function Content() {
           <ul className="mt-1">
             <li>
               <Link
-                href="/meine-mathe-skills/klasse5/potenzieren"
+                href="/meine-mathe-skills/klasse5/potenzwert-berechnen"
                 className="serlo-link"
               >
                 Potenzwert berechnen

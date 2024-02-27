@@ -106,7 +106,7 @@ function Content() {
           }}
         />
       ) : null}
-      {exercise === 'potenzieren' ? <NumberInputExercise /> : null}
+      {exercise === 'potenzwert-berechnen' ? <NumberInputExercise /> : null}
     </div>
   )
 }
