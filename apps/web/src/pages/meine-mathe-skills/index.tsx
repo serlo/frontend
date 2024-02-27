@@ -45,6 +45,8 @@ function Content() {
         <div className="mx-auto mb-6 mt-4 min-h-[22rem] max-w-[26rem] text-lg sm:mx-0 sm:w-[26rem] sm:leading-relaxed">
           {data?.name ? (
             <>
+              <br />
+              <br />
               Hallo <b>{data.name}</b>,
               <br />
               schön, dass du hier bist!
