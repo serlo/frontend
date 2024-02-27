@@ -66,8 +66,8 @@ export const deSubjectLandingData = {
 export interface FeaturedContentData {
   title: string
   type: UuidType | TaxonomyTermType
-  url: `/${string}`
-  img: `https://${string}.serlo.org/${string}`
+  url: string
+  img?: string
 }
 
 // Will probably be fetched dynamically in the future:
