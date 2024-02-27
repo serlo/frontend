@@ -42,7 +42,7 @@ function Content() {
     <div>
       <div className="mx-4 justify-center sm:mt-10 sm:flex sm:flex-row-reverse sm:items-center">
         <LandingAnimal />
-        <div className="mx-auto mb-6 mt-4 max-w-md text-lg sm:mx-0 sm:leading-relaxed">
+        <div className="mx-auto mb-6 mt-4 min-h-[22rem] max-w-[26rem] text-lg sm:mx-0 sm:leading-relaxed">
           {data?.name ? (
             <>
               Willkommen <b>{data.name}</b>,
@@ -52,7 +52,6 @@ function Content() {
               <b>Jetzt bist du dran:</b>
               <br />
               Zeige, welche Mathe-Skills du drauf hast.
-              {/* Du hast schon … */}
             </>
           ) : (
             <>
@@ -64,7 +63,7 @@ function Content() {
           )}
         </div>
       </div>
-      <div className="mx-4 mt-10 text-2xl font-bold mobile:flex mobile:justify-center">
+      <div className="mx-4 mt-2 text-2xl font-bold mobile:flex mobile:justify-center">
         <h2>Wähle eine Klassenstufe</h2>
       </div>
       <div className="mb-8 mt-6 flex justify-center text-2xl font-bold sm:mt-8">

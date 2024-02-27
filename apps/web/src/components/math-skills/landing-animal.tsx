@@ -14,12 +14,12 @@ export function LandingAnimal() {
   }
 
   return (
-    <figure className="relative">
+    <figure className="relative mx-auto mt-4 self-start sm:mx-0 sm:-mt-1">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         alt="Tiermaskottchen"
         src={`/_assets/img/math-skills/${animal}.svg`}
-        className="mx-auto mt-5 w-52 self-start p-4 sm:mx-0 sm:-mt-1"
+        className="w-52 p-4"
       />
       <button
         className="serlo-button-light absolute bottom-7 right-7 h-8 w-8 bg-brand-200 !p-1.5"
