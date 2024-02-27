@@ -49,18 +49,18 @@ function Content() {
               <br />
               Hallo <b>{data.name}</b>,
               <br />
-              schön, dass du hier bist!
+              schön, dass du hier bist.
               <br />
               <br />
               <b>Jetzt bist du dran:</b>
               <br />
-              Zeige, welche Mathe-Skills du drauf hast.
+              Zeige, welche Mathe-Skills du drauf hast!
             </>
           ) : (
             <>
               <b>Willkommen!</b>
               {sharedWelcome}
-              <b>Wie heißt du denn?</b>
+              <b>Wie heißt du?</b>
               <NameInput />
             </>
           )}

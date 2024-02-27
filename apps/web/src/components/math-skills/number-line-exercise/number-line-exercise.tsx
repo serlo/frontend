@@ -37,6 +37,7 @@ export function NumberLineExercise({ generator }: NumberLineExerciseProps) {
     setIsChecked(false)
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(makeNewExercise, [])
 
   useEffect(() => {
