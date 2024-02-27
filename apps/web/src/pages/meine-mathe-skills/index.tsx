@@ -29,8 +29,8 @@ function Content() {
     <>
       <br />
       <br />
-      Hier geht es darum, Mathematik können und das zu zeigen. Das dürfen auch
-      kleine Sachen sein.
+      Hier geht es darum, Mathematik zu können und das zu zeigen. Das dürfen
+      auch kleine Sachen sein.
       <br />
       Immer Schritt für Schritt!
       <br />
