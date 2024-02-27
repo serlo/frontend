@@ -72,7 +72,6 @@ function Content() {
       {exercise === 'zahlen-anordnen-2' ? (
         <NumberLineExercise
           generator={() => {
-            // TODO: Adapt this generator to higher level
             const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
             const searchValues = getIntRange(10, 39, [labeledPos * 40])
             const searchedVal = randomItemFromArray(searchValues)

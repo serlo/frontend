@@ -39,7 +39,8 @@ function Content() {
       <div className="flex flex-wrap justify-center py-10 mobileExt:flex-nowrap">
         <div className="w-72 rounded-lg bg-brand-100 p-5">
           <h3 className="pb-2 text-xl font-bold">Natürliche Zahlen</h3>
-          <ul className="mt-1 text-lg">
+          <h4 className="text-lg">Zahlenstrahl</h4>
+          <ul className="mt-1">
             <li>
               <Link
                 href="/meine-mathe-skills/klasse5/zahlen-anordnen-1"
@@ -68,13 +69,14 @@ function Content() {
         </div>
         <div className="mt-4 w-72 rounded-lg bg-brand-100 p-5 mobileExt:ml-4 mobileExt:mt-0">
           <h3 className="pb-2 text-xl font-bold">Rechnen in ℕ</h3>
-          <ul className="mt-1 text-lg">
+          <h4 className="text-lg">Potenzieren</h4>
+          <ul className="mt-1">
             <li>
               <Link
                 href="/meine-mathe-skills/klasse5/potenzieren"
                 className="serlo-link"
               >
-                Potenzieren
+                Potenzwert berechnen
               </Link>
             </li>
           </ul>
