@@ -687,8 +687,8 @@ export const loggedInData = {
           illegalInjectionFound: "Ungültige Injection gefunden",
           serloEntitySrc: "Serlo Inhalt {{src}}",
           serloId: 'Serlo ID',
-          placeholder: 'Serlo ID (e.g. /1565)',
-          invalidStateWarning: "Please use a valid Serlo ID (just numbers). E.g. '/1555'"
+          placeholder: "Serlo ID (z.B. 1565)",
+          invalidStateWarning: "Bitte verwende eine gültige Serlo ID (nur Zahlen) – z.B. '/1555'"
         },
         multimedia: {
           title: "Erklärung mit Multimedia-Inhalt",
