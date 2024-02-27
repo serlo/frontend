@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 
-import { Coins } from './coins'
+import { SkillPoints } from './skill-points'
 import { Link } from '../../content/link'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
 import { cn } from '@/helper/cn'
@@ -30,7 +30,7 @@ export function MathSkillsHeader() {
         </Link>
         {renderBackLink()}
       </header>
-      {isExercise ? <Coins /> : null}
+      {isExercise ? <SkillPoints /> : null}
     </>
   )
 

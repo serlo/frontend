@@ -9,23 +9,23 @@ const animalColors = {
   zebra: '#7CAFEC',
 } as const
 
-export function Coins() {
+export function SkillPoints() {
   const { data } = useMathSkillsStorage()
   const animal = data?.animal ?? 'lion'
 
   return (
     <div className="relative z-30 mx-auto -mt-[3.55rem] flex w-full max-w-lg">
-      {renderFullCoin()}
-      {renderProgress(10)}
-      {renderProgress(0)}
+      {renderPoint(100)}
+      {renderPoint(10)}
+      {renderPoint(0)}
     </div>
   )
 
-  function renderProgress(percent: number) {
+  function renderPoint(percent: number) {
     const radius = 40
     const circumference = radius * 2 * Math.PI
     if (percent === 0) return null
-    if (percent === 100) return renderFullCoin()
+    if (percent === 100) return renderFullPoint()
     return (
       <div
         className="relative ml-0.5 mr-1.5 mt-2.5 h-[43px] w-[43px] -rotate-90"
@@ -58,14 +58,14 @@ export function Coins() {
     )
   }
 
-  function renderFullCoin() {
+  function renderFullPoint() {
     return (
       <div className="group -ml-0.5 mr-1">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          alt="Tiermünze"
+          alt="Skill-Punkt mit Tier"
           src={`/_assets/img/math-skills/${animal}.svg`}
-          className="w-12 origin-center transition-transform [transition-duration:0.35s] group-hover:[transform:rotateY(160deg)]"
+          className="w-12 origin-center transition-transform [transition-duration:0.35s] group-hover:[transform:rotateY(180deg)]"
         />
       </div>
     )
