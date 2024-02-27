@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 
+import { Coins } from './coins'
 import { Link } from '../../content/link'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
 import { cn } from '@/helper/cn'
@@ -16,18 +17,21 @@ export function MathSkillsHeader() {
   const titlePrefix = genitiveName && !isLanding ? genitiveName : 'Meine'
 
   return (
-    <div className="flex h-14 items-center justify-between bg-yellow-100 px-4 py-2 text-center">
-      <Link
-        href="/meine-mathe-skills"
-        className={cn(
-          'block cursor-pointer text-xl text-almost-black',
-          isExercise || isGradePage ? '' : 'w-full text-center'
-        )}
-      >
-        {titlePrefix} Mathe-Skills
-      </Link>
-      {renderBackLink()}
-    </div>
+    <>
+      <header className="flex h-14 items-center justify-between bg-yellow-100 px-4 py-2 text-center">
+        <Link
+          href="/meine-mathe-skills"
+          className={cn(
+            'block cursor-pointer text-xl text-almost-black',
+            isExercise || isGradePage ? '' : 'w-full text-center'
+          )}
+        >
+          {titlePrefix} Mathe-Skills
+        </Link>
+        {renderBackLink()}
+      </header>
+      {isExercise ? <Coins /> : null}
+    </>
   )
 
   function renderBackLink() {
