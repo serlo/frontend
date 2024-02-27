@@ -64,12 +64,14 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
             >
               Datenschutz
             </a>
-            <span className="ml-4 opacity-50 hover:underline">
-              <a href="https://www.freepik.com/free-vector/collection-cute-animals-wearing-graduation-cap-cartoon-style-vector_3780561.htm#query=animal%20illustration&position=1&from_view=keyword&track=ais&uuid=7991b85d-fd28-4da4-8e08-29af073982df">
-                Bild von rawpixel.com
-              </a>{' '}
-              (Freepik){' '}
-            </span>
+            {isLanding && (
+              <span className="ml-4 opacity-50 hover:underline">
+                <a href="https://www.freepik.com/free-vector/collection-cute-animals-wearing-graduation-cap-cartoon-style-vector_3780561.htm#query=animal%20illustration&position=1&from_view=keyword&track=ais&uuid=7991b85d-fd28-4da4-8e08-29af073982df">
+                  Bild von rawpixel.com
+                </a>{' '}
+                (Freepik){' '}
+              </span>
+            )}
           </div>
         </footer>
       </MathSkillsProvider>
