@@ -25,8 +25,8 @@ export function ActualRangeInput({
   return (
     <input
       className={cn(
-        `z-20 h-[120px] w-full cursor-ew-resize appearance-none rounded-md
-        p-4 outline-dotted outline-2 outline-transparent focus-visible:outline-brand-400
+        `z-20 h-[120px] w-full cursor-ew-resize appearance-none rounded-md p-4
+        outline-dotted outline-2 outline-transparent focus-visible:outline-brand-400 disabled:cursor-default
         [&::-moz-range-thumb]:opacity-0 [&::-webkit-slider-thumb]:opacity-0`
       )}
       id="number-line-input"
