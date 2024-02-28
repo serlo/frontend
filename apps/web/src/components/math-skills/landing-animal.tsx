@@ -9,7 +9,8 @@ export function LandingAnimal() {
 
   function changeAnimal() {
     const index = animals.indexOf(animal)
-    const newAnimal = index <= animals.length ? animals[index + 1] : animals[0]
+    const newAnimal =
+      index + 1 < animals.length ? animals[index + 1] : animals[0]
     updateData((data) => {
       data.animal = newAnimal
     })

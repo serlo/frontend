@@ -49,7 +49,7 @@ function Content() {
 
   return (
     <div className="relative mx-4 mt-20 max-w-lg bg-white sm:mx-auto sm:w-full">
-      <h2 className="text-xl">{data.title}</h2>
+      <h2 className="mb-4 text-xl">{data.title}</h2>
       {data.component}
     </div>
   )
