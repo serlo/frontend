@@ -196,6 +196,11 @@ const exerciseData: {
   },
   'stellenwerte-aendern-1': dataForPlaceValueChange(false),
   'stellenwerte-aendern-profi': dataForPlaceValueChange(true),
+  'zahlen-vergroeßern-verkleinern-1': dataForIncrDescNumberExercise('Level 1'),
+  'zahlen-vergroeßern-verkleinern-2': dataForIncrDescNumberExercise('Level 2'),
+  'zahlen-vergroeßern-verkleinern-3': dataForIncrDescNumberExercise('Level 3'),
+  'zahlen-vergroeßern-verkleinern-profi':
+    dataForIncrDescNumberExercise('Profi'),
 }
 
 function dataForPlaceValueChange(expert: boolean) {
@@ -253,6 +258,58 @@ function dataForPlaceValueChange(expert: boolean) {
               </p>
               <div className="ml-0.5 mt-4 text-2xl font-bold" id="number-input">
                 <span className="mr-3">Die neue Zahl lautet:</span>
+                {input}
+              </div>
+            </>
+          )
+        }}
+      />
+    ),
+  }
+}
+
+function dataForIncrDescNumberExercise(
+  level: 'Level 1' | 'Level 2' | 'Level 3' | 'Profi'
+) {
+  return {
+    title: 'Zahlen vergrößern & verkleinern',
+    level,
+    component: (
+      <NumberInputExercise
+        centAmount={level === 'Level 1' || level === 'Level 2' ? 28 : 35}
+        longerInput
+        generator={() => {
+          const diff = randomItemFromArray([10, 100, 1000])
+          const isIncr = randomItemFromArray([true, false])
+          const number =
+            level === 'Profi'
+              ? randomIntBetween(isIncr ? 0 : 1, 18) * 1000000 +
+                randomIntBetween(1, 1000)
+              : randomIntBetween(
+                  isIncr ? 11 : 2000,
+                  level === 'Level 1'
+                    ? 18000
+                    : level === 'Level 2'
+                      ? 18000
+                      : 180000
+                )
+          return { diff, isIncr, number }
+        }}
+        getCorrectValue={({ diff, number, isIncr }) => {
+          return number + diff * (isIncr ? 1 : -1)
+        }}
+        render={(input, { diff, number, isIncr }) => {
+          return (
+            <>
+              <h2 className="mt-8 pb-6 text-left text-2xl font-bold">
+                Welche Zahl ist ...
+              </h2>
+              <div className="ml-0.5 text-2xl font-bold" id="number-input">
+                <span className="text-newgreen">
+                  um {diff} {isIncr ? 'größer' : 'kleiner'} als {number}?
+                </span>
+                <br />
+                <br />
                 {input}
               </div>
             </>
@@ -383,57 +440,3 @@ function numberLineGeneratorLevel3(): [number, number, number] {
 }
 
 export default ContentPage
-
-/*
-
- {exercise === 'zahlen-anordnen-1' ? (
-        <NumberLineExercise generator={numberLineGeneratorLevel1} />
-      ) : null}
-      {exercise === 'zahlen-anordnen-2' ? (
-        <NumberLineExercise generator={numberLineGeneratorLevel2} />
-      ) : null}
-      {exercise === 'zahlen-anordnen-profi' ? (
-        <NumberLineExercise generator={numberLineGeneratorLevel3} />
-      ) : null}
-      {exercise === 'potenzwert-berechnen' ? (
-        <NumberInputExercise
-          generator={() => {
-            const base = randomIntBetween(0, 12)
-            const powerLimit = Math.floor(
-              base === 10 ? 6 : base > 4 ? 2 : 8 - base * 1.2
-            )
-            const power = randomIntBetween(1, powerLimit)
-            return { base, power }
-          }}
-          getCorrectValue={({ base, power }) => {
-            return Math.pow(base, power)
-          }}
-          render={(input, { base, power }) => {
-            return (
-              <>
-                <h2 className="pb-6 text-left text-2xl font-bold">
-                  Berechne den Potenzwert:
-                </h2>
-                <div className="ml-0.5 text-2xl font-bold" id="number-input">
-                  <span className="text-newgreen">
-                    {base}
-                    <sup className="ml-0.5">{power}</sup>
-                  </span>
-                  {' = '}
-                  {input}
-                </div>
-              </>
-            )
-          }}
-        />
-      ) : null}
-      {exercise === 'zahlen-ablesen-1' ? (
-        <NumberLineInputExercise generator={numberLineGeneratorLevel1} />
-      ) : null}
-      {exercise === 'zahlen-ablesen-2' ? (
-        <NumberLineInputExercise generator={numberLineGeneratorLevel2} />
-      ) : null}
-      {exercise === 'zahlen-ablesen-profi' ? (
-        <NumberLineInputExercise generator={numberLineGeneratorLevel3} />
-      ) : null}
-      */

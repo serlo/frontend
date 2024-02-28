@@ -53,28 +53,36 @@ function Content() {
             {renderItem('zahlen-anordnen-2', 'Level 2')}
             {renderItem('zahlen-anordnen-profi', 'für Profis')}
           </ul>
-          <h4 className="mt-3 text-lg">Zahlenstrahl: Ablesen</h4>
+          <h4 className="mt-1 text-lg">Zahlenstrahl: Ablesen</h4>
           <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
             {renderItem('zahlen-ablesen-1', 'Level 1')}
             {renderItem('zahlen-ablesen-2', 'Level 2')}
             {renderItem('zahlen-ablesen-profi', 'für Profis')}
           </ul>
-          <h4 className="mt-3 text-lg">Stellenwert-Tabelle</h4>
+          <h4 className="mt-1 text-lg">Stellenwert-Tabelle</h4>
           <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
             {renderItem('stellenwert-tabelle-ablesen', 'ablesen')}
             {/*renderItem('zahlen-ablesen-1', 'Stelle erkennen')*/}
             <span></span>
           </ul>
-          <h4 className="mt-3 text-lg">Stellenwerte ändern</h4>
+          <h4 className="mt-1 text-lg">Stellenwerte ändern</h4>
           <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
             {renderItem('stellenwerte-aendern-1', 'Level 1')}
             {renderItem('stellenwerte-aendern-profi', 'für Profis')}
             <span></span>
           </ul>
-          <h4 className="mt-3 text-lg">Text in Zahl umwandeln</h4>
+          <h4 className="mt-1 text-lg">Text in Zahl umwandeln</h4>
           <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
             {renderItem('text-in-zahl-1', 'Level 1')}
             {renderItem('text-in-zahl-profi', 'für Profis')}
+            <span></span>
+          </ul>
+          <h4 className="mt-1 text-lg">Zahlen vergrößern und verkleinern</h4>
+          <ul className="-ml-0.25 mr-2 mt-1 flex flex-wrap justify-between">
+            {renderItem('zahlen-vergroeßern-verkleinern-1', 'Level 1')}
+            {renderItem('zahlen-vergroeßern-verkleinern-2', 'Level 2')}
+            {renderItem('zahlen-vergroeßern-verkleinern-3', 'Level 3')}
+            {renderItem('zahlen-vergroeßern-verkleinern-profi', 'für Profis')}
             <span></span>
           </ul>
         </div>
@@ -100,7 +108,7 @@ function Content() {
       <li>
         <Link
           href={`/meine-mathe-skills/${slug}`}
-          className="block rounded-md bg-brand-50 px-2 py-1.5 !no-underline transition-colors hover:bg-brand-200"
+          className="mb-2 block rounded-md bg-brand-50 px-2 py-1.5 !no-underline transition-colors hover:bg-brand-200"
         >
           {text} <br />
           {data?.animal
