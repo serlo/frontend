@@ -59,6 +59,22 @@ function Content() {
             {renderItem('zahlen-ablesen-2', 'Level 2')}
             {renderItem('zahlen-ablesen-profi', 'für Profis')}
           </ul>
+          {/*<h4 className="mt-3 text-lg">Stellenwerte erkennen</h4>
+          <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
+            {renderItem('zahlen-ablesen-1', 'Level 1')}
+          </ul>
+          <h4 className="mt-3 text-lg">Stellenwerte ändern</h4>
+          <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
+            {renderItem('zahlen-ablesen-1', 'Level 1')}
+            {renderItem('zahlen-ablesen-2', 'Level 2')}
+            {renderItem('zahlen-ablesen-profi', 'für Profis')}
+  </ul>*/}
+          <h4 className="mt-3 text-lg">Text in Zahl umwandeln</h4>
+          <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
+            {renderItem('text-in-zahl-1', 'Level 1')}
+            {renderItem('text-in-zahl-profi', 'für Profis')}
+            <span></span>
+          </ul>
         </div>
         <div className="mt-4 w-72 rounded-lg border border-brand-200 p-5 shadow-menu mobileExt:ml-4 mobileExt:mt-0">
           <h3 className="pb-2 text-xl font-bold">Rechnen in ℕ</h3>
@@ -68,6 +84,7 @@ function Content() {
           </ul>
         </div>
       </div>
+      <div className="h-72"></div>
     </div>
   )
 

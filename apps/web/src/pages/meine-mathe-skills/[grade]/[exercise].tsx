@@ -149,6 +149,75 @@ const exerciseData: {
       />
     ),
   },
+  'text-in-zahl-1': dataForTextToNumberExercise(false),
+  'text-in-zahl-profi': dataForTextToNumberExercise(true),
+}
+
+function dataForTextToNumberExercise(expert: boolean) {
+  return {
+    title: 'Text in Zahl umwandeln - ' + (expert ? 'Profi' : 'Level 1'),
+    component: (
+      <NumberInputExercise
+        centAmount={35}
+        longerInput
+        generator={() => {
+          return generateTextToNumberExercise(expert)
+        }}
+        getCorrectValue={({ value }) => {
+          return value
+        }}
+        render={(input, { text }) => {
+          return (
+            <>
+              <h2 className="mt-8 pb-6 text-left text-2xl font-bold">
+                Schreibe als Zahl:
+              </h2>
+              <div className="ml-0.5 text-2xl font-bold" id="number-input">
+                <span className="text-newgreen">{text}</span>
+                <br />
+                <br />
+                {input}
+              </div>
+            </>
+          )
+        }}
+      />
+    ),
+  }
+}
+
+function generateTextToNumberExercise(expert: boolean) {
+  const mode = randomItemFromArray([
+    'MTE',
+    'ME',
+    'MT',
+    ...(expert
+      ? ['AMT', 'ATE', 'AME', 'AM', 'AT', 'AE']
+      : ['TE', 'TE', 'ME', 'MT', 'M', 'T']),
+  ])
+  let text = ''
+  let value = 0
+  if (mode.includes('A')) {
+    const val = randomIntBetween(2, 29)
+    value += val * 1000000000
+    text += `${val} Milliarden `
+  }
+  if (mode.includes('M')) {
+    const val = randomIntBetween(2, expert ? 999 : 29)
+    value += val * 1000000
+    text += `${val} Millionen `
+  }
+  if (mode.includes('T')) {
+    const val = randomIntBetween(2, 999)
+    value += val * 1000
+    text += `${val} Tausend `
+  }
+  if (mode.includes('E')) {
+    const val = randomIntBetween(2, 999)
+    value += val
+    text += `${val} `
+  }
+  return { text, value }
 }
 
 function numberLineGeneratorLevel1(): [number, number, number] {

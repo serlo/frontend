@@ -11,6 +11,7 @@ interface NumberInputExerciseProps<DATA> {
   getCorrectValue: (input: DATA) => number
   render: (input: JSX.Element, data: DATA) => JSX.Element
   centAmount?: number
+  longerInput?: boolean
 }
 
 // input supports ~ up to 7 digits without clipping
@@ -20,6 +21,7 @@ export function NumberInputExercise<T>({
   getCorrectValue,
   render,
   centAmount,
+  longerInput,
 }: NumberInputExerciseProps<T>) {
   const [inputValue, setInputValue] = useState('')
   const [isChecked, setIsChecked] = useState(false)
@@ -71,10 +73,11 @@ export function NumberInputExercise<T>({
           inputMode="decimal"
           autoComplete="off"
           className={cn(
-            'ml-0.5 w-[7.8rem] rounded-lg bg-[#d8f5ef] p-2 text-2xl ',
+            'ml-0.5 rounded-lg bg-[#d8f5ef] p-2 text-2xl ',
             'outline-dotted outline-2 outline-transparent focus-visible:outline-newgreen',
             isChecked && isCorrect && 'bg-newgreen-600',
-            isChecked && !isCorrect && 'bg-red-100'
+            isChecked && !isCorrect && 'bg-red-100',
+            longerInput ? 'w-56' : 'w-[7.8rem]'
           )}
         />,
         data
