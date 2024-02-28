@@ -4,6 +4,10 @@ import { useRouter } from 'next/router'
 import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
+import {
+  useExerciseData,
+  useMathSkillsStorage,
+} from '@/components/math-skills/utils/math-skills-data-context'
 
 const ContentPage: NextPage = () => {
   return (
@@ -20,7 +24,18 @@ const ContentPage: NextPage = () => {
   )
 }
 
+const animalEmoji = {
+  lion: '🦁',
+  crocodile: '🐊',
+  leopard: '🐆',
+  monkey: '🐵',
+  penguin: '🐧',
+  zebra: '🦓',
+} as const
+
 function Content() {
+  const { getExerciseData } = useExerciseData()
+  const { data } = useMathSkillsStorage()
   const router = useRouter()
   const grade = router.query.grade
 
@@ -41,73 +56,46 @@ function Content() {
           <h3 className="pb-2 text-xl font-bold">Natürliche Zahlen</h3>
           <h4 className="text-lg">Zahlenstrahl</h4>
           <ul className="mt-1">
-            <li>
-              <Link
-                href="/meine-mathe-skills/klasse5/zahlen-anordnen-1"
-                className="serlo-link"
-              >
-                Zahlen anordnen – Level 1
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/meine-mathe-skills/klasse5/zahlen-anordnen-2"
-                className="serlo-link"
-              >
-                Zahlen anordnen – Level 2
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/meine-mathe-skills/klasse5/zahlen-anordnen-profi"
-                className="serlo-link"
-              >
-                Zahlen anordnen – für Profis
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/meine-mathe-skills/klasse5/zahlen-ablesen-1"
-                className="serlo-link"
-              >
-                Zahlen ablesen – Level 1
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/meine-mathe-skills/klasse5/zahlen-ablesen-2"
-                className="serlo-link"
-              >
-                Zahlen ablesen – Level 2
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/meine-mathe-skills/klasse5/zahlen-ablesen-profi"
-                className="serlo-link"
-              >
-                Zahlen ablesen – für Profis
-              </Link>
-            </li>
+            {renderItem('zahlen-anordnen-1', 'Zahlen anordnen – Level 1')}
+            {renderItem('zahlen-anordnen-2', 'Zahlen anordnen – Level 2')}
+            {renderItem(
+              'zahlen-anordnen-profi',
+              'Zahlen anordnen – für Profis'
+            )}
+            {renderItem('zahlen-ablesen-1', 'Zahlen ablesen – Level 1')}
+            {renderItem('zahlen-ablesen-2', 'Zahlen ablesen – Level 2')}
+            {renderItem('zahlen-ablesen-profi', 'Zahlen ablesen – für Profis')}
           </ul>
         </div>
         <div className="mt-4 w-72 rounded-lg bg-brand-100 p-5 mobileExt:ml-4 mobileExt:mt-0">
           <h3 className="pb-2 text-xl font-bold">Rechnen in ℕ</h3>
           <h4 className="text-lg">Potenzieren</h4>
           <ul className="mt-1">
-            <li>
-              <Link
-                href="/meine-mathe-skills/klasse5/potenzwert-berechnen"
-                className="serlo-link"
-              >
-                Potenzwert berechnen
-              </Link>
-            </li>
+            {renderItem('potenzwert-berechnen', 'Potenzwert berechnen')}
           </ul>
         </div>
       </div>
     </div>
   )
+
+  function renderItem(exerciseId: string, text: string) {
+    if (!grade) return null
+    const slug = `${String(grade)}/${exerciseId}`
+    const { skillLevel } = getExerciseData(slug)
+    const points = Array.from({ length: Math.trunc(skillLevel + 0.001) })
+
+    return (
+      <li>
+        <Link
+          href={`/meine-mathe-skills/${slug}`}
+          className="serlo-link whitespace-nowrap"
+        >
+          {text}{' '}
+          {data?.animal ? points.map(() => animalEmoji[data?.animal]) : null}
+        </Link>
+      </li>
+    )
+  }
 }
 
 export default ContentPage

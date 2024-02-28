@@ -98,9 +98,9 @@ export function useExerciseData() {
     })
   }
 
-  function getExerciseData() {
+  function getExerciseData(overwriteKey?: string) {
     return (
-      data?.exercises.get(exerciseKey) ?? {
+      data?.exercises.get(overwriteKey ?? exerciseKey) ?? {
         correct: 0,
         incorrect: 0,
         skillLevel: 0,
