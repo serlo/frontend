@@ -73,7 +73,7 @@ export function useExerciseData() {
       const exercise = exercises.get(exerciseKey)
       if (exercise) {
         // eslint-disable-next-line no-console
-        console.log(exercise.skillCent)
+        //console.log(exercise.skillCent)
         if (isCorrect) {
           const pointAmount = getPointsAmount(exercise.skillCent)
 
@@ -110,7 +110,17 @@ export function useExerciseData() {
     )
   }
 
-  return { getExerciseData, setExerciseData }
+  function deductPoints(centAmount: number) {
+    updateData(({ exercises }) => {
+      const exercise = exercises.get(exerciseKey)
+      if (exercise) {
+        const floor = Math.floor(exercise.skillCent / 100) * 100 + 1
+        exercise.skillCent = Math.max(floor, exercise.skillCent - centAmount)
+      }
+    })
+  }
+
+  return { getExerciseData, setExerciseData, deductPoints }
 }
 
 // needed to make map work with JSON.stringify and .parse

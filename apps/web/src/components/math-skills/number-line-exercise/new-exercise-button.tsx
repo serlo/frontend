@@ -1,6 +1,7 @@
 import { FaIcon } from '@editor/package'
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
 
+import { useExerciseData } from '../utils/math-skills-data-context'
 import { cn } from '@/helper/cn'
 
 export function NewExerciseButton({
@@ -8,10 +9,14 @@ export function NewExerciseButton({
 }: {
   makeNewExercise: () => void
 }) {
+  const { deductPoints } = useExerciseData()
   return (
     <button
       className="group serlo-button-light absolute right-0 top-0 z-50 flex h-9 items-center"
-      onClick={makeNewExercise}
+      onClick={() => {
+        deductPoints(3)
+        makeNewExercise()
+      }}
     >
       <span
         className={cn(
