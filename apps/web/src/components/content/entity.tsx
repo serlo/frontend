@@ -1,6 +1,6 @@
 // Temporary file while working on unified renderer
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { isEmptyArticle } from '@editor/plugins/rows/utils/static-is-empty'
+import { isEmptyArticle } from '@editor/plugins/article/utils/static-is-empty'
 import { CourseNavigation } from '@editor/plugins/serlo-template-plugins/course/course-navigation'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { isArticleDocument } from '@editor/types/plugin-type-guards'
