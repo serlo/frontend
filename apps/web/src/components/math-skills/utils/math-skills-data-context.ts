@@ -3,11 +3,12 @@ import { type Draft } from 'immer'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect } from 'react'
 
+import { Animal } from './animal-data'
 import { getPointsAmount } from './get-points-amount'
 
 export interface MathSkillsStorageData {
   name: string
-  animal: (typeof animals)[number]
+  animal: Animal
   exercises: Map<
     string,
     {
@@ -22,15 +23,6 @@ export interface MathSkillsStorageData {
 export function getEmptyData(): MathSkillsStorageData {
   return { name: '', animal: 'lion', exercises: new Map([]) }
 }
-
-export const animals = [
-  'lion',
-  'crocodile',
-  'leopard',
-  'monkey',
-  'penguin',
-  'zebra',
-] as const
 
 const storageKey = 'math-skills-data'
 

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
+import { animalsData } from '@/components/math-skills/utils/animal-data'
 import { getPointsAmount } from '@/components/math-skills/utils/get-points-amount'
 import {
   useExerciseData,
@@ -24,15 +25,6 @@ const ContentPage: NextPage = () => {
     </FrontendClientBase>
   )
 }
-
-const animalEmoji = {
-  lion: '🦁',
-  crocodile: '🐊',
-  leopard: '🐆',
-  monkey: '🐵',
-  penguin: '🐧',
-  zebra: '🦓',
-} as const
 
 function Content() {
   const { getExerciseData } = useExerciseData()
@@ -92,7 +84,9 @@ function Content() {
           className="block rounded-md bg-brand-50 px-2 py-1.5 !no-underline transition-colors hover:bg-brand-200"
         >
           {text} <br />
-          {data?.animal ? points.map(() => animalEmoji[data?.animal]) : null}
+          {data?.animal
+            ? points.map(() => animalsData[data.animal].emoji)
+            : null}
         </Link>
       </li>
     )

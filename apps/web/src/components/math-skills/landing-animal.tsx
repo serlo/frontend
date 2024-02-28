@@ -1,6 +1,7 @@
 import { faRepeat } from '@fortawesome/free-solid-svg-icons'
 
-import { animals, useMathSkillsStorage } from './utils/math-skills-data-context'
+import { animals } from './utils/animal-data'
+import { useMathSkillsStorage } from './utils/math-skills-data-context'
 import { FaIcon } from '../fa-icon'
 
 export function LandingAnimal() {

@@ -1,16 +1,8 @@
+import { animalsData } from '../utils/animal-data'
 import {
   useExerciseData,
   useMathSkillsStorage,
 } from '../utils/math-skills-data-context'
-
-const animalColors = {
-  lion: '#7A95F6',
-  crocodile: '#7FC1F0',
-  leopard: '#9983F0',
-  monkey: '#9ED67C',
-  penguin: '#91DCF3',
-  zebra: '#7CAFEC',
-} as const
 
 export function SkillPoints() {
   const { data } = useMathSkillsStorage()
@@ -35,7 +27,7 @@ export function SkillPoints() {
     return (
       <div
         className="relative ml-0.5 mr-1.5 mt-2.5 h-[43px] w-[43px] -rotate-90"
-        style={{ color: animalColors[animal] }}
+        style={{ color: animalsData[animal].color }}
       >
         <svg className="h-full w-full" viewBox="0 0 100 100">
           <circle
