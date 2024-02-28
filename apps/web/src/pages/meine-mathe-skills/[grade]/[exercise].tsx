@@ -3,11 +3,12 @@ import { useRouter } from 'next/router'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
+import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
 import { NumberInputExercise } from '@/components/math-skills/number-input-exercise/number-input-exercise'
-import { NumberLineInputExercise } from '@/components/math-skills/number-input-exercise/number-line-input-exercise'
 import { NumberLineExercise } from '@/components/math-skills/number-line-exercise/number-line-exercise'
 import { getIntRange } from '@/helper/get-int-range'
+import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
 const ContentPage: NextPage = () => {
@@ -53,7 +54,38 @@ function Content() {
       {exercise === 'zahlen-anordnen-profi' ? (
         <NumberLineExercise generator={numberLineGeneratorLevel3} />
       ) : null}
-      {exercise === 'potenzwert-berechnen' ? <NumberInputExercise /> : null}
+      {exercise === 'potenzwert-berechnen' ? (
+        <NumberInputExercise
+          generator={() => {
+            const base = randomIntBetween(0, 12)
+            const powerLimit = Math.floor(
+              base === 10 ? 6 : base > 4 ? 2 : 8 - base * 1.2
+            )
+            const power = randomIntBetween(1, powerLimit)
+            return { base, power }
+          }}
+          getCorrectValue={({ base, power }) => {
+            return Math.pow(base, power)
+          }}
+          render={(input, { base, power }) => {
+            return (
+              <>
+                <h2 className="pb-6 text-left text-2xl font-bold">
+                  Berechne den Potenzwert:
+                </h2>
+                <div className="ml-0.5 text-2xl font-bold" id="number-input">
+                  <span className="text-newgreen">
+                    {base}
+                    <sup className="ml-0.5">{power}</sup>
+                  </span>
+                  {' = '}
+                  {input}
+                </div>
+              </>
+            )
+          }}
+        />
+      ) : null}
       {exercise === 'zahlen-ablesen-1' ? (
         <NumberLineInputExercise generator={numberLineGeneratorLevel1} />
       ) : null}

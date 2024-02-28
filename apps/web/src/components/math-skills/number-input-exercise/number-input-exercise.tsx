@@ -5,24 +5,26 @@ import { NewExerciseButton } from '../number-line-exercise/new-exercise-button'
 import { feedbackAnimation } from '../utils/feedback-animation'
 import { useExerciseData } from '../utils/math-skills-data-context'
 import { cn } from '@/helper/cn'
-import { randomIntBetween } from '@/helper/random-int-between'
 
-function generator() {
-  const base = randomIntBetween(0, 12)
-  const powerLimit = Math.floor(base === 10 ? 6 : base > 4 ? 2 : 8 - base * 1.2)
-  const power = randomIntBetween(1, powerLimit)
-  return { base, power }
+interface NumberInputExerciseProps<DATA> {
+  generator: () => DATA
+  getCorrectValue: (input: DATA) => number
+  render: (input: JSX.Element, data: DATA) => JSX.Element
 }
 
 // input supports ~ up to 7 digits without clipping
 
-export function NumberInputExercise() {
+export function NumberInputExercise<T>({
+  generator,
+  getCorrectValue,
+  render,
+}: NumberInputExerciseProps<T>) {
   const [inputValue, setInputValue] = useState('')
   const [isChecked, setIsChecked] = useState(false)
-  const [{ base, power }, setExponent] = useState({ base: 5, power: 2 })
+  const [data, setData] = useState(generator())
   const { setExerciseData } = useExerciseData()
 
-  const correctValue = Math.pow(base, power)
+  const correctValue = getCorrectValue(data)
 
   const isCorrect = correctValue === parseInt(inputValue)
 
@@ -34,7 +36,7 @@ export function NumberInputExercise() {
   }
 
   function makeNewExercise() {
-    setExponent(generator())
+    setData(generator())
     setInputValue('')
     setIsChecked(false)
     setTimeout(() => {
@@ -54,16 +56,9 @@ export function NumberInputExercise() {
 
   return (
     <>
-      <h2 className="pb-6 text-left text-2xl font-bold">
-        Berechne den Potenzwert:
-      </h2>
       <NewExerciseButton makeNewExercise={makeNewExercise} />
-      <div className="ml-0.5 text-2xl font-bold" id="number-input">
-        <span className="text-newgreen">
-          {base}
-          <sup className="ml-0.5">{power}</sup>
-        </span>
-        {' = '}
+
+      {render(
         <input
           autoFocus
           value={inputValue}
@@ -79,8 +74,9 @@ export function NumberInputExercise() {
             isChecked && isCorrect && 'bg-newgreen-600',
             isChecked && !isCorrect && 'bg-red-100'
           )}
-        />
-      </div>
+        />,
+        data
+      )}
 
       <div className="mt-5 min-h-[120px] sm:flex sm:min-h-[80px] sm:items-center sm:justify-between">
         <div className="text-almost-black">
