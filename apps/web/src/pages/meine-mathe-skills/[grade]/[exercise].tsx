@@ -292,7 +292,7 @@ function dataForIncrDescNumberExercise(
     level,
     component: (
       <NumberInputExercise
-        centAmount={level === 'Level 1' || level === 'Level 2' ? 28 : 35}
+        centAmount={35}
         longerInput
         generator={() => {
           const diff = randomItemFromArray([10, 100, 1000])

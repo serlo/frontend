@@ -61,8 +61,8 @@ function Content() {
           </ul>
           <h4 className="mt-1 text-lg">Stellenwert-Tabelle</h4>
           <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
+            {renderItem('stellenwert-finden', 'Stelle finden')}
             {renderItem('stellenwert-tabelle-ablesen', 'ablesen')}
-            {/*renderItem('zahlen-ablesen-1', 'Stelle erkennen')*/}
             <span></span>
           </ul>
           <h4 className="mt-1 text-lg">Stellenwerte ändern</h4>
@@ -85,9 +85,12 @@ function Content() {
             {renderItem('zahlen-vergroeßern-verkleinern-profi', 'für Profis')}
             <span></span>
           </ul>
-          <h4 className="mt-3 text-lg">Stellenwerte finden</h4>
-          <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
-            {renderItem('stellenwerte-finden', 'Level 1')}
+          <h4 className="mt-1 text-lg">Zahlenabstände erkennen</h4>
+          <ul className="-ml-0.25 mr-2 mt-1 flex flex-wrap justify-between">
+            {renderItem('zahlenabstaende-erkennen-1', 'Level 1')}
+            {renderItem('zahlenabstaende-erkennen-2', 'Level 2')}
+            {renderItem('zahlenabstaende-erkennen-profi', 'Profi')}
+            {renderItem('zahlenabstaende-erkennen-topprofi', 'TopProfi')}
             <span></span>
           </ul>
         </div>
