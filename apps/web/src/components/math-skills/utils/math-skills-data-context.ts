@@ -78,7 +78,13 @@ export function useExerciseData() {
           const pointAmount = getPointsAmount(exercise.skillCent)
 
           // 0 Points: 100% | 1 Point: 75% | 2 Points: 50% || (all rounded)
-          const centChange = Math.round(centAmount * ((4 - pointAmount) / 4))
+          const factor =
+            exercise.skillCent >= 200
+              ? 0.3
+              : exercise.skillCent >= 100
+                ? 0.5
+                : 1
+          const centChange = Math.round(centAmount * factor)
 
           exercise.correct += 1
           exercise.skillCent += centChange

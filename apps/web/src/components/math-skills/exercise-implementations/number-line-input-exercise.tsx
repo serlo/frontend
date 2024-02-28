@@ -5,15 +5,18 @@ import { RangeInputOverlay } from '../number-line-exercise/range-input-overlay'
 
 interface NumberLineInputExerciseProps {
   generator: () => [number, number, number]
+  centAmount?: number
 }
 
 // input supports ~ up to 7 digits without clipping
 
 export function NumberLineInputExercise({
   generator,
+  centAmount,
 }: NumberLineInputExerciseProps) {
   return (
     <NumberInputExercise
+      centAmount={centAmount}
       generator={generator}
       getCorrectValue={(data) => data[0]}
       render={(input, data) => (

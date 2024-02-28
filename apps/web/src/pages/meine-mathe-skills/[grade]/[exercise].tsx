@@ -63,22 +63,33 @@ const exerciseData: {
     component: (
       <NumberLineExercise
         generator={numberLineGeneratorLevel1}
-        centAmount={15}
+        centAmount={35}
       />
     ),
   },
   'zahlen-anordnen-2': {
     title: 'Zahlenstrahl anordnen – Level 2',
-    component: <NumberLineExercise generator={numberLineGeneratorLevel2} />,
+    component: (
+      <NumberLineExercise
+        generator={numberLineGeneratorLevel2}
+        centAmount={35}
+      />
+    ),
   },
   'zahlen-anordnen-profi': {
     title: 'Zahlenstrahl anordnen – Profi',
-    component: <NumberLineExercise generator={numberLineGeneratorLevel3} />,
+    component: (
+      <NumberLineExercise
+        generator={numberLineGeneratorLevel3}
+        centAmount={35}
+      />
+    ),
   },
   'potenzwert-berechnen': {
     title: 'Potenzwert berechnen',
     component: (
       <NumberInputExercise
+        centAmount={35}
         generator={() => {
           const base = randomIntBetween(0, 12)
           const powerLimit = Math.floor(
@@ -94,7 +105,7 @@ const exerciseData: {
         render={(input, { base, power }) => {
           return (
             <>
-              <h2 className="pb-6 text-left text-2xl font-bold">
+              <h2 className="mt-8 pb-6 text-left text-2xl font-bold">
                 Berechne den Potenzwert:
               </h2>
               <div className="ml-0.5 text-2xl font-bold" id="number-input">
@@ -114,19 +125,28 @@ const exerciseData: {
   'zahlen-ablesen-1': {
     title: 'Zahlenstrahl ablesen - Level 1',
     component: (
-      <NumberLineInputExercise generator={numberLineGeneratorLevel1} />
+      <NumberLineInputExercise
+        generator={numberLineGeneratorLevel1}
+        centAmount={35}
+      />
     ),
   },
   'zahlen-ablesen-2': {
     title: 'Zahlenstrahl ablesen - Level 2',
     component: (
-      <NumberLineInputExercise generator={numberLineGeneratorLevel2} />
+      <NumberLineInputExercise
+        generator={numberLineGeneratorLevel2}
+        centAmount={35}
+      />
     ),
   },
   'zahlen-ablesen-profi': {
     title: 'Zahlenstrahl ablesen - Profi',
     component: (
-      <NumberLineInputExercise generator={numberLineGeneratorLevel3} />
+      <NumberLineInputExercise
+        generator={numberLineGeneratorLevel3}
+        centAmount={35}
+      />
     ),
   },
 }
