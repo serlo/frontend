@@ -55,6 +55,14 @@ export function NumberLineExercise({
       }
     }
 
+    window.addEventListener('touchmove', function (event) {
+      const target = event.target as HTMLElement
+      if (target?.id.startsWith('number-line')) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+    })
+
     document.addEventListener('keydown', keyEventHandler)
     return () => document.removeEventListener('keydown', keyEventHandler)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,7 +77,7 @@ export function NumberLineExercise({
       <NewExerciseButton makeNewExercise={makeNewExercise} />
 
       <div
-        className="relative -left-4 -mr-4 mb-6 ml-4 mt-12 touch-pinch-zoom"
+        className="relative -left-4 -mr-4 mb-6 ml-4 mt-12"
         id="number-line-wrapper"
       >
         <ActualRangeInput
