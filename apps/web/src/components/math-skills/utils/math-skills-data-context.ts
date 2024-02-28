@@ -114,7 +114,7 @@ export function useExerciseData() {
     updateData(({ exercises }) => {
       const exercise = exercises.get(exerciseKey)
       if (exercise) {
-        const floor = Math.floor(exercise.skillCent / 100) * 100 + 1
+        const floor = getPointsAmount(exercise.skillCent) * 100 + 1
         exercise.skillCent = Math.max(floor, exercise.skillCent - centAmount)
       }
     })

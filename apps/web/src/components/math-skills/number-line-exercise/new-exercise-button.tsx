@@ -12,7 +12,7 @@ export function NewExerciseButton({
   const { deductPoints } = useExerciseData()
   return (
     <button
-      className="group serlo-button-light absolute right-0 top-0 z-50 flex h-9 items-center"
+      className="group serlo-button-light absolute -top-1 right-0 z-50 flex h-9 items-center"
       onClick={() => {
         deductPoints(3)
         makeNewExercise()

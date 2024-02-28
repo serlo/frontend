@@ -9,63 +9,33 @@ interface PlaceValueChartProps {
 
 export function PlaceValueChart({ T, H, Z, E }: PlaceValueChartProps) {
   return (
-    <table className="border-collapse border border-gray-400">
-      <thead className="text-xl">
-        <tr>
-          <th className="w-24 border border-gray-400 p-2">T</th>
-          <th className="w-24 border border-gray-400 p-2">H</th>
-          <th className="w-24 border border-gray-400 p-2">Z</th>
-          <th className="w-24 border border-gray-400 p-2">E</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td className="h-[57px] border border-gray-400 p-1 py-3 align-top">
-            <div className="flex flex-wrap justify-start">
-              {' '}
-              {arrayOfLength(T).map((_, i) => (
-                <div
-                  key={i}
-                  className="m-0.5 h-3 w-3 rounded-full bg-blue-500"
-                ></div>
-              ))}
-            </div>
-          </td>
-          <td className="border border-gray-400 p-1 py-3 text-center align-top">
-            <div className="flex flex-wrap justify-start">
-              {' '}
-              {arrayOfLength(H).map((_, i) => (
-                <div
-                  key={i}
-                  className="m-0.5 h-3 w-3 rounded-full bg-green-500"
-                ></div>
-              ))}
-            </div>
-          </td>
-          <td className="border border-gray-400 p-1 py-3 text-center align-top">
-            <div className="flex flex-wrap justify-start">
-              {' '}
-              {arrayOfLength(Z).map((_, i) => (
-                <div
-                  key={i}
-                  className="m-0.5 h-3 w-3 rounded-full bg-yellow-500"
-                ></div>
-              ))}
-            </div>
-          </td>
-          <td className="border border-gray-400 p-1 py-3 text-center align-top">
-            <div className="flex flex-wrap justify-start">
-              {' '}
-              {arrayOfLength(E).map((_, i) => (
-                <div
-                  key={i}
-                  className="m-0.5 h-3 w-3 rounded-full bg-red-500"
-                ></div>
-              ))}
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div className="-ml-2 pb-3">
+      <table className="w-[26rem] table-fixed text-left">
+        <thead>
+          <tr className="divide-x-2 divide-gray-200 text-xl">
+            <th className="w-24 pl-2.5 pt-3">T</th>
+            <th className="w-24 pl-2.5 pt-3">H</th>
+            <th className="w-24 pl-2.5 pt-3">Z</th>
+            <th className="w-24 pl-2.5 pt-3">E</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="divide-x-2 divide-gray-200 break-all text-sm">
+            <td className="h-[65px] px-2 pb-3 align-top text-brand-500">
+              {arrayOfLength(T).map((_) => '⬤')}
+            </td>
+            <td className="px-2 pb-3 align-top text-newgreen">
+              {arrayOfLength(H).map((_) => '⬤')}
+            </td>
+            <td className="px-2 pb-3 align-top text-orange-300">
+              {arrayOfLength(Z).map((_) => '⬤')}
+            </td>
+            <td className="px-2 pb-3 align-top text-red-400">
+              {arrayOfLength(E).map((_) => '⬤')}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   )
 }

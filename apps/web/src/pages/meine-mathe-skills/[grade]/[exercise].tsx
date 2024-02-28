@@ -50,17 +50,20 @@ function Content() {
 
   return (
     <div className="relative mx-4 mt-20 max-w-lg bg-white sm:mx-auto sm:w-full">
-      <h2 className="mb-4 text-xl">{data.title}</h2>
+      <h2 className="text-md mb-9 font-bold text-gray-400">
+        {data.title}: <span className="text-brand-500">{data.level}</span>
+      </h2>
       {data.component}
     </div>
   )
 }
 
 const exerciseData: {
-  [key: string]: { title: string; component: JSX.Element }
+  [key: string]: { title: string; level: string; component: JSX.Element }
 } = {
   'zahlen-anordnen-1': {
-    title: 'Zahlenstrahl anordnen – Level 1',
+    title: 'Zahlenstrahl anordnen',
+    level: 'Level 1',
     component: (
       <NumberLineExercise
         generator={numberLineGeneratorLevel1}
@@ -69,7 +72,8 @@ const exerciseData: {
     ),
   },
   'zahlen-anordnen-2': {
-    title: 'Zahlenstrahl anordnen – Level 2',
+    title: 'Zahlenstrahl anordnen',
+    level: 'Level 2',
     component: (
       <NumberLineExercise
         generator={numberLineGeneratorLevel2}
@@ -78,7 +82,8 @@ const exerciseData: {
     ),
   },
   'zahlen-anordnen-profi': {
-    title: 'Zahlenstrahl anordnen – Profi',
+    title: 'Zahlenstrahl anordnen',
+    level: 'Profi',
     component: (
       <NumberLineExercise
         generator={numberLineGeneratorLevel3}
@@ -88,6 +93,7 @@ const exerciseData: {
   },
   'potenzwert-berechnen': {
     title: 'Potenzwert berechnen',
+    level: '',
     component: (
       <NumberInputExercise
         centAmount={35}
@@ -124,7 +130,8 @@ const exerciseData: {
     ),
   },
   'zahlen-ablesen-1': {
-    title: 'Zahlenstrahl ablesen - Level 1',
+    title: 'Zahlenstrahl ablesen',
+    level: 'Level 1',
     component: (
       <NumberLineInputExercise
         generator={numberLineGeneratorLevel1}
@@ -133,7 +140,8 @@ const exerciseData: {
     ),
   },
   'zahlen-ablesen-2': {
-    title: 'Zahlenstrahl ablesen - Level 2',
+    title: 'Zahlenstrahl ablesen',
+    level: 'Level 2',
     component: (
       <NumberLineInputExercise
         generator={numberLineGeneratorLevel2}
@@ -142,7 +150,8 @@ const exerciseData: {
     ),
   },
   'zahlen-ablesen-profi': {
-    title: 'Zahlenstrahl ablesen - Profi',
+    title: 'Zahlenstrahl ablesen',
+    level: 'Profi',
     component: (
       <NumberLineInputExercise
         generator={numberLineGeneratorLevel3}
@@ -153,7 +162,8 @@ const exerciseData: {
   'text-in-zahl-1': dataForTextToNumberExercise(false),
   'text-in-zahl-profi': dataForTextToNumberExercise(true),
   'stellenwert-tabelle-ablesen': {
-    title: 'Stellenwerte ändern - Level 1',
+    title: 'Stellenwerte ändern',
+    level: 'Level 1',
     component: (
       <NumberInputExercise
         centAmount={35}
@@ -170,10 +180,10 @@ const exerciseData: {
         render={(input, { T, H, Z, E }) => {
           return (
             <>
-              <h2 className="mt-8 pb-6 text-left text-2xl font-bold">
+              <PlaceValueChart T={T} H={H} Z={Z} E={E} />
+              <h2 className="mt-4 text-xl">
                 Welche Zahl ist in der Stellenwert-Tafel dargestellt?
               </h2>
-              <PlaceValueChart T={T} H={H} Z={Z} E={E} />
               <div className="ml-0.5 mt-8 text-2xl font-bold" id="number-input">
                 <span className="mr-3">Die Zahl lautet:</span>
                 {input}
@@ -190,7 +200,8 @@ const exerciseData: {
 
 function dataForPlaceValueChange(expert: boolean) {
   return {
-    title: 'Stellenwerte ändern - ' + (expert ? 'Profi' : 'Level 1'),
+    title: 'Stellenwerte ändern',
+    level: expert ? 'Profi' : 'Level 1',
     component: (
       <NumberInputExercise
         centAmount={52}
@@ -236,8 +247,9 @@ function dataForPlaceValueChange(expert: boolean) {
             <>
               <PlaceValueChart T={T} H={H} Z={Z} E={E} />
               <p className="mt-4 text-xl">
-                Ein Plättchen wird von {from} nach {to} geschoben. Welche Zahl
-                entsteht?
+                Ein Plättchen wird von <b>{from}</b> nach <b>{to}</b> geschoben.
+                <br />
+                Welche Zahl entsteht?
               </p>
               <div className="ml-0.5 mt-4 text-2xl font-bold" id="number-input">
                 <span className="mr-3">Die neue Zahl lautet:</span>
@@ -253,7 +265,8 @@ function dataForPlaceValueChange(expert: boolean) {
 
 function dataForTextToNumberExercise(expert: boolean) {
   return {
-    title: 'Text in Zahl umwandeln - ' + (expert ? 'Profi' : 'Level 1'),
+    title: 'Text in Zahl umwandeln',
+    level: expert ? 'Profi' : 'Level 1',
     component: (
       <NumberInputExercise
         centAmount={35}
