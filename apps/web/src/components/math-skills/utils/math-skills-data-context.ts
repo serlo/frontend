@@ -25,6 +25,7 @@ export function getEmptyData(): MathSkillsStorageData {
 }
 
 const storageKey = 'math-skills-data'
+const useLocalKey = 'math-skills-use-local'
 
 export const MathSkillsContext = createContext<{
   data: MathSkillsStorageData
@@ -37,19 +38,46 @@ const errorMessage = 'attempted to use uuid data outside of provider!'
 
 export function getStored() {
   if (typeof window === 'undefined') return getEmptyData()
-  const data = sessionStorage.getItem(storageKey)
+  const data = getStorage().getItem(storageKey)
   return data
     ? (JSON.parse(data, mapReviverJson) as MathSkillsStorageData)
     : getEmptyData()
 }
 
 export function updateStored(newData: MathSkillsStorageData) {
-  sessionStorage.setItem(storageKey, JSON.stringify(newData, mapReplacerJson))
+  getStorage().setItem(storageKey, JSON.stringify(newData, mapReplacerJson))
   return newData
+}
+
+export function isUsingLocal() {
+  if (typeof window === 'undefined') return false
+  return !!localStorage.getItem(useLocalKey)
+}
+
+function getStorage() {
+  return isUsingLocal() ? localStorage : sessionStorage
+}
+
+export function activateLocalStorage() {
+  localStorage.setItem(useLocalKey, '1')
+  const sessionString = sessionStorage.getItem(storageKey)
+  if (!sessionString) return
+  localStorage.setItem(storageKey, sessionString)
+  sessionStorage.removeItem(storageKey)
+}
+
+export function deactivateLocalStorage() {
+  localStorage.removeItem(useLocalKey)
+  const localString = localStorage.getItem(storageKey)
+  if (!localString) return
+  sessionStorage.setItem(storageKey, localString)
+  localStorage.removeItem(storageKey)
 }
 
 export function deleteStored() {
   sessionStorage.removeItem(storageKey)
+  localStorage.removeItem(storageKey)
+  localStorage.removeItem(useLocalKey)
 }
 
 export function useMathSkillsStorage() {

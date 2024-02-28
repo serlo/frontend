@@ -71,7 +71,7 @@ export function PlaceValueChooser({
           const digitIndex = digitAmount - i
           const isTicked = digitIndex === selectedDigit
           return (
-            <label key={char + i}>
+            <label key={char + i} className="cursor-pointer">
               <input
                 id="place-value-chooser-input"
                 className="appearance-none opacity-0"

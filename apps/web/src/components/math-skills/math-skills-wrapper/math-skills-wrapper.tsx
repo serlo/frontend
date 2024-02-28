@@ -6,9 +6,12 @@ import { MathSkillsHeader } from './math-skills-header'
 import {
   MathSkillsProvider,
   MathSkillsStorageData,
+  activateLocalStorage,
+  deactivateLocalStorage,
   deleteStored,
   getEmptyData,
   getStored,
+  isUsingLocal,
   updateStored,
 } from '../utils/math-skills-data-context'
 import { HeadTags } from '@/components/head-tags'
@@ -58,14 +61,26 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
         </div>
         <footer className="mb-3 ml-3 mt-auto flex justify-between px-3 text-gray-700">
           {isProduction ? null : (
-            <button
-              onClick={() => {
-                deleteStored()
-                setData(getEmptyData())
-              }}
-            >
-              (daten löschen)
-            </button>
+            <span>
+              <button
+                onClick={() => {
+                  deleteStored()
+                  setData(getEmptyData())
+                }}
+              >
+                (daten löschen)
+              </button>
+              <button
+                className="ml-2"
+                onClick={
+                  isUsingLocal() ? deactivateLocalStorage : activateLocalStorage
+                }
+              >
+                {isUsingLocal()
+                  ? 'Punkte nicht auf dem Gerät speichern'
+                  : 'Punkte auf dem Gerät speichern'}
+              </button>
+            </span>
           )}
           <div>
             <a className="hover:underline" href="https://de.serlo.org/legal">
