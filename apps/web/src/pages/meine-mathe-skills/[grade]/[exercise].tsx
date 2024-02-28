@@ -59,15 +59,15 @@ const exerciseData: {
   [key: string]: { title: string; component: JSX.Element }
 } = {
   'zahlen-anordnen-1': {
-    title: 'Zahlenstrahl: Anordnen - Level 1',
+    title: 'Zahlenstrahl anordnen - Level 1',
     component: <NumberLineExercise generator={numberLineGeneratorLevel1} />,
   },
   'zahlen-anordnen-2': {
-    title: 'Zahlenstrahl: Anordnen - Level 2',
+    title: 'Zahlenstrahl anordnen - Level 2',
     component: <NumberLineExercise generator={numberLineGeneratorLevel2} />,
   },
   'zahlen-anordnen-profi': {
-    title: 'Zahlenstrahl: Anordnen - Profi',
+    title: 'Zahlenstrahl anordnen - Profi',
     component: <NumberLineExercise generator={numberLineGeneratorLevel3} />,
   },
   'potenzwert-berechnen': {
@@ -106,19 +106,19 @@ const exerciseData: {
     ),
   },
   'zahlen-ablesen-1': {
-    title: 'Zahlenstrahl: Ablesen - Level 1',
+    title: 'Zahlenstrahl ablesen - Level 1',
     component: (
       <NumberLineInputExercise generator={numberLineGeneratorLevel1} />
     ),
   },
   'zahlen-ablesen-2': {
-    title: 'Zahlenstrahl: Ablesen - Level 2',
+    title: 'Zahlenstrahl ablesen - Level 2',
     component: (
       <NumberLineInputExercise generator={numberLineGeneratorLevel2} />
     ),
   },
   'zahlen-ablesen-profi': {
-    title: 'Zahlenstrahl: Ablesen - Profi',
+    title: 'Zahlenstrahl ablesen - Profi',
     component: (
       <NumberLineInputExercise generator={numberLineGeneratorLevel3} />
     ),

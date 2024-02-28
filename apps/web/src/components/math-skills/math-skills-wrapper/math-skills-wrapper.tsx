@@ -51,8 +51,11 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
         }}
       />
       <MathSkillsProvider value={{ data, updateData }}>
-        <MathSkillsHeader />
-        {children}
+        {/* This div here is for the outer flexbox */}
+        <div>
+          <MathSkillsHeader />
+          {children}
+        </div>
         <footer className="mb-3 ml-3 mt-auto flex justify-between px-3 text-gray-700">
           {isProduction ? null : (
             <button
@@ -92,12 +95,13 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
         body,
         html,
         #__next {
-          height: 100%;
+          min-height: 100%;
         }
         #__next {
           min-height: 100vh;
           display: flex;
           flex-direction: column;
+          justify-content: space-between;
         }
       `}</style>
     </>
