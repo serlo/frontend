@@ -27,7 +27,7 @@ export function getEmptyData(): MathSkillsStorageData {
 const storageKey = 'math-skills-data'
 
 export const MathSkillsContext = createContext<{
-  data?: MathSkillsStorageData
+  data: MathSkillsStorageData
   updateData: (fn: (arg: Draft<MathSkillsStorageData>) => void) => void
 } | null>(null)
 
@@ -95,7 +95,7 @@ export function useExerciseData() {
 
   function getExerciseData(overwriteKey?: string) {
     return (
-      data?.exercises.get(overwriteKey ?? exerciseKey) ?? {
+      data.exercises.get(overwriteKey ?? exerciseKey) ?? {
         correct: 0,
         incorrect: 0,
         skillCent: 0,

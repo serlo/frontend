@@ -6,7 +6,7 @@ import { FaIcon } from '../fa-icon'
 
 export function LandingAnimal() {
   const { data, updateData } = useMathSkillsStorage()
-  const animal = data?.animal ?? 'lion'
+  const { animal } = data
 
   function changeAnimal() {
     const index = animals.indexOf(animal)

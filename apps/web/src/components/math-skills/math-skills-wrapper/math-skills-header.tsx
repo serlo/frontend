@@ -13,7 +13,7 @@ export function MathSkillsHeader() {
   const isGradePage = !isExercise && !!router.query.grade
   const isLanding = !isGradePage && !isExercise
 
-  const genitiveName = addGermanGenetiveS(data?.name)
+  const genitiveName = addGermanGenetiveS(data.name)
   const titlePrefix = genitiveName && !isLanding ? genitiveName : 'Meine'
 
   return (
@@ -57,8 +57,8 @@ export function MathSkillsHeader() {
   }
 }
 
-function addGermanGenetiveS(name?: string) {
-  if (!name) return undefined
+function addGermanGenetiveS(name: string) {
+  if (!name.length) return undefined
   const isException = !!name.match(/(s|ß|z|x|(ce))$/)
   return `${name}${isException ? '’' : 's'}`
 }

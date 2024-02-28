@@ -9,7 +9,7 @@ export function SkillPoints() {
   const { getExerciseData } = useExerciseData()
 
   const { skillCent } = getExerciseData()
-  const animal = data?.animal ?? 'lion'
+  const { animal } = data
 
   return (
     <div className="mx-auto mt-3 flex min-h-[53px] sm:relative sm:-mt-[3.55rem] sm:w-full sm:max-w-lg sm:justify-center">
