@@ -61,8 +61,8 @@ function Content() {
           </ul>
           <h4 className="mt-1 text-lg">Stellenwert-Tabelle</h4>
           <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
-            {renderItem('stellenwert-finden', 'Stelle finden')}
-            {renderItem('stellenwert-tabelle-ablesen', 'ablesen')}
+            {renderItem('stellenwerte-finden', 'Stelle finden')}
+            {renderItem('stellenwert-tabelle-ablesen', 'Zahl ablesen')}
             <span></span>
           </ul>
           <h4 className="mt-1 text-lg">Stellenwerte ändern</h4>

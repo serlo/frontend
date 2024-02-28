@@ -52,7 +52,12 @@ function Content() {
   return (
     <div className="relative mx-4 mt-20 max-w-lg bg-white sm:mx-auto sm:w-full">
       <h2 className="text-md mb-9 font-bold text-gray-400">
-        {data.title}: <span className="text-brand-500">{data.level}</span>
+        {data.title}
+        {data.level ? (
+          <>
+            : <span className="text-brand-500">{data.level}</span>
+          </>
+        ) : null}
       </h2>
       {data.component}
     </div>
@@ -204,7 +209,7 @@ const exerciseData: {
     dataForIncrDescNumberExercise('Profi'),
   'stellenwerte-finden': {
     title: 'Stellenwerte finden',
-    level: 'Level 1',
+    level: '',
     component: (
       <PlaceValueChooser
         centAmount={35}

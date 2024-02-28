@@ -22,16 +22,16 @@ export function PlaceValueChart({ T, H, Z, E }: PlaceValueChartProps) {
         <tbody>
           <tr className="divide-x-2 divide-gray-200 break-all text-sm">
             <td className="h-[65px] px-2 pb-3 align-top text-brand-500">
-              {arrayOfLength(T).map((_) => '⬤')}
+              {arrayOfLength(T).map((_) => '⬤ ')}
             </td>
             <td className="px-2 pb-3 align-top text-newgreen">
-              {arrayOfLength(H).map((_) => '⬤')}
+              {arrayOfLength(H).map((_) => '⬤ ')}
             </td>
             <td className="px-2 pb-3 align-top text-orange-300">
-              {arrayOfLength(Z).map((_) => '⬤')}
+              {arrayOfLength(Z).map((_) => '⬤ ')}
             </td>
             <td className="px-2 pb-3 align-top text-red-400">
-              {arrayOfLength(E).map((_) => '⬤')}
+              {arrayOfLength(E).map((_) => '⬤ ')}
             </td>
           </tr>
         </tbody>
