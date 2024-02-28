@@ -171,7 +171,9 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     // then remove the leftover empty line.
     setTimeout(() => {
       insertPlugin({ pluginType, editor, id, dispatch })
-      editor.deleteBackward('block')
+      if (selection && editor.children[selection.anchor.path[0]]) {
+        editor.deleteBackward('block')
+      }
     })
   }
 
