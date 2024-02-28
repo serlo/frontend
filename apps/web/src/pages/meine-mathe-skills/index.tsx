@@ -66,17 +66,21 @@ function Content() {
           )}
         </div>
       </div>
-      <div className="mx-4 mt-2 text-2xl font-bold mobile:flex mobile:justify-center">
-        <h2>Wähle eine Klassenstufe</h2>
-      </div>
-      <div className="mb-8 mt-6 flex justify-center text-2xl font-bold sm:mt-8">
-        <Link
-          href="/meine-mathe-skills/klasse5"
-          className="flex h-36 w-36 items-center justify-center rounded-full bg-brand-600 text-center  text-white !no-underline transition-colors hover:bg-brand-500"
-        >
-          <p className="text-2xl">5. Klasse</p>
-        </Link>
-      </div>
+      {data?.name && (
+        <>
+          <div className="mx-4 mt-2 text-2xl font-bold mobile:flex mobile:justify-center">
+            <h2>Wähle eine Klassenstufe</h2>
+          </div>
+          <div className="mb-8 mt-6 flex justify-center text-2xl font-bold sm:mt-8">
+            <Link
+              href="/meine-mathe-skills/klasse5"
+              className="flex h-36 w-36 items-center justify-center rounded-full bg-brand-600 text-center  text-white !no-underline transition-colors hover:bg-brand-500"
+            >
+              <p className="text-2xl">5. Klasse</p>
+            </Link>
+          </div>
+        </>
+      )}
     </div>
   )
 }
