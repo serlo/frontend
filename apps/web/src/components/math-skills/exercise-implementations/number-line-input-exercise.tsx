@@ -19,7 +19,7 @@ export function NumberLineInputExercise({
       render={(input, data) => (
         <>
           <div
-            className="relative -left-2 -mr-2 mb-6 ml-2 mt-12 [overscroll-behaviour-x:none]"
+            className="relative -left-4 -mr-4 mb-6 ml-4 mt-12 touch-pinch-zoom"
             id="number-line-wrapper"
           >
             <ActualRangeInput
