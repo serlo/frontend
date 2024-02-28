@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { NumberKeyboard } from './number-keyboard'
 import { NewExerciseButton } from '../number-line-exercise/new-exercise-button'
 import { feedbackAnimation } from '../utils/feedback-animation'
+import { useExerciseData } from '../utils/math-skills-data-context'
 import { cn } from '@/helper/cn'
 import { randomIntBetween } from '@/helper/random-int-between'
 
@@ -19,6 +20,7 @@ export function NumberInputExercise() {
   const [inputValue, setInputValue] = useState('')
   const [isChecked, setIsChecked] = useState(false)
   const [{ base, power }, setExponent] = useState({ base: 5, power: 2 })
+  const { setExerciseData } = useExerciseData()
 
   const correctValue = Math.pow(base, power)
 
@@ -28,6 +30,7 @@ export function NumberInputExercise() {
     if (!inputValue) return
     feedbackAnimation(isCorrect, document.getElementById('number-input'))
     setIsChecked(true)
+    setExerciseData(isCorrect)
   }
 
   function makeNewExercise() {

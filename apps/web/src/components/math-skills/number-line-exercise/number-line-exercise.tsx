@@ -6,6 +6,7 @@ import { NewExerciseButton } from './new-exercise-button'
 import { NumberLabels } from './number-labels'
 import { RangeInputOverlay } from './range-input-overlay'
 import { feedbackAnimation } from '../utils/feedback-animation'
+import { useExerciseData } from '../utils/math-skills-data-context'
 
 // layout support up to 6 digits
 
@@ -22,6 +23,7 @@ export function NumberLineExercise({ generator }: NumberLineExerciseProps) {
   const labeledValue = labeledPosition * maxValue
 
   const [isChecked, setIsChecked] = useState(false)
+  const { setExerciseData } = useExerciseData()
 
   const isCorrect = selectedValue === searchedValue
 
@@ -29,6 +31,7 @@ export function NumberLineExercise({ generator }: NumberLineExerciseProps) {
     if (isChecked || selectedValue === 0) return
     feedbackAnimation(isCorrect, document.getElementById('number-line-wrapper'))
     setIsChecked(true)
+    setExerciseData(isCorrect)
   }
 
   function makeNewExercise() {

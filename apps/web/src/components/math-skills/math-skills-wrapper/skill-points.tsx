@@ -1,4 +1,7 @@
-import { useMathSkillsStorage } from '../utils/math-skills-data-context'
+import {
+  useExerciseData,
+  useMathSkillsStorage,
+} from '../utils/math-skills-data-context'
 
 const animalColors = {
   lion: '#7A95F6',
@@ -11,21 +14,25 @@ const animalColors = {
 
 export function SkillPoints() {
   const { data } = useMathSkillsStorage()
+  const { getExerciseData } = useExerciseData()
+
+  const { skillLevel } = getExerciseData()
   const animal = data?.animal ?? 'lion'
 
   return (
     <div className="mx-auto mt-3 flex sm:relative sm:-mt-[3.55rem] sm:w-full sm:max-w-lg sm:justify-center">
-      {renderPoint(100)}
-      {renderPoint(10)}
-      {renderPoint(0)}
+      {renderPoint(Math.min(skillLevel, 1))}
+      {renderPoint(Math.min(skillLevel - 1, 1))}
+      {renderPoint(Math.min(skillLevel - 2, 1))}
     </div>
   )
 
-  function renderPoint(percent: number) {
+  function renderPoint(fraction: number) {
+    if (fraction <= 0) return null
+    if (fraction >= 0.99) return renderFullPoint()
+    const percent = Math.round(fraction * 100)
     const radius = 40
     const circumference = radius * 2 * Math.PI
-    if (percent === 0) return null
-    if (percent === 100) return renderFullPoint()
     return (
       <div
         className="relative ml-0.5 mr-1.5 mt-2.5 h-[43px] w-[43px] -rotate-90"

@@ -6,6 +6,7 @@ import { NewExerciseButton } from '../number-line-exercise/new-exercise-button'
 import { NumberLabels } from '../number-line-exercise/number-labels'
 import { RangeInputOverlay } from '../number-line-exercise/range-input-overlay'
 import { feedbackAnimation } from '../utils/feedback-animation'
+import { useExerciseData } from '../utils/math-skills-data-context'
 import { cn } from '@/helper/cn'
 
 interface NumberLineInputExerciseProps {
@@ -22,7 +23,7 @@ export function NumberLineInputExercise({
   ])
   const [inputValue, setInputValue] = useState('')
   const [isChecked, setIsChecked] = useState(false)
-
+  const { setExerciseData } = useExerciseData()
   const correctValue = searchedValue
 
   const isCorrect = correctValue === parseInt(inputValue)
@@ -31,6 +32,7 @@ export function NumberLineInputExercise({
     if (!inputValue) return
     feedbackAnimation(isCorrect, document.getElementById('number-input'))
     setIsChecked(true)
+    setExerciseData(isCorrect)
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -38,6 +38,7 @@ export function RangeInputOverlay({
               isChecked={isChecked}
               isCorrect={isCorrect}
               isSearched={isSearched}
+              index={i}
               key={i}
             />
           )
