@@ -59,15 +59,15 @@ const exerciseData: {
   [key: string]: { title: string; component: JSX.Element }
 } = {
   'zahlen-anordnen-1': {
-    title: 'Zahlenstrahl anordnen - Level 1',
+    title: 'Zahlenstrahl anordnen – Level 1',
     component: <NumberLineExercise generator={numberLineGeneratorLevel1} />,
   },
   'zahlen-anordnen-2': {
-    title: 'Zahlenstrahl anordnen - Level 2',
+    title: 'Zahlenstrahl anordnen – Level 2',
     component: <NumberLineExercise generator={numberLineGeneratorLevel2} />,
   },
   'zahlen-anordnen-profi': {
-    title: 'Zahlenstrahl anordnen - Profi',
+    title: 'Zahlenstrahl anordnen – Profi',
     component: <NumberLineExercise generator={numberLineGeneratorLevel3} />,
   },
   'potenzwert-berechnen': {

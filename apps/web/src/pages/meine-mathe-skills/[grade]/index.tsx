@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
+import { getPointsAmount } from '@/components/math-skills/utils/get-points-amount'
 import {
   useExerciseData,
   useMathSkillsStorage,
@@ -81,8 +82,8 @@ function Content() {
   function renderItem(exerciseId: string, text: string) {
     if (!grade) return null
     const slug = `${String(grade)}/${exerciseId}`
-    const { skillLevel } = getExerciseData(slug)
-    const points = Array.from({ length: Math.trunc(skillLevel + 0.001) })
+    const { skillCent } = getExerciseData(slug)
+    const points = Array.from({ length: getPointsAmount(skillCent) })
 
     return (
       <li>

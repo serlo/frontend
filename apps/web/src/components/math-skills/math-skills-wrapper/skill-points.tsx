@@ -16,21 +16,20 @@ export function SkillPoints() {
   const { data } = useMathSkillsStorage()
   const { getExerciseData } = useExerciseData()
 
-  const { skillLevel } = getExerciseData()
+  const { skillCent } = getExerciseData()
   const animal = data?.animal ?? 'lion'
 
   return (
-    <div className="mx-auto mt-3 flex sm:relative sm:-mt-[3.55rem] sm:w-full sm:max-w-lg sm:justify-center">
-      {renderPoint(Math.min(skillLevel, 1))}
-      {renderPoint(Math.min(skillLevel - 1, 1))}
-      {renderPoint(Math.min(skillLevel - 2, 1))}
+    <div className="mx-auto mt-3 flex min-h-[53px] sm:relative sm:-mt-[3.55rem] sm:w-full sm:max-w-lg sm:justify-center">
+      {renderPoint(skillCent)}
+      {renderPoint(skillCent - 100)}
+      {renderPoint(skillCent - 200)}
     </div>
   )
 
-  function renderPoint(fraction: number) {
-    if (fraction <= 0) return null
-    if (fraction >= 0.99) return renderFullPoint()
-    const percent = Math.round(fraction * 100)
+  function renderPoint(percent: number) {
+    if (percent <= 0) return null
+    if (percent >= 100) return renderFullPoint()
     const radius = 40
     const circumference = radius * 2 * Math.PI
     return (

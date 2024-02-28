@@ -3,12 +3,19 @@ import { type Draft } from 'immer'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect } from 'react'
 
+import { getPointsAmount } from './get-points-amount'
+
 export interface MathSkillsStorageData {
   name: string
   animal: (typeof animals)[number]
   exercises: Map<
     string,
-    { correct: number; incorrect: number; skillLevel: number /* 0-3 */ }
+    {
+      correct: number
+      incorrect: number
+      // 0-300; 100, 200, 300 give you a skill point
+      skillCent: number
+    }
   >
 }
 
@@ -73,26 +80,22 @@ export function useExerciseData() {
     updateData(({ exercises }) => {
       const exercise = exercises.get(exerciseKey)
       if (exercise) {
-        const oldLevel = exercise.skillLevel
+        const oldCent = exercise.skillCent
 
         exercise.correct += isCorrect ? 1 : 0
         exercise.incorrect += isCorrect ? 0 : 1
-        exercise.skillLevel += isCorrect ? 0.1 : 0
+        exercise.skillCent += isCorrect ? 10 : 0
 
         const isNewPoint =
-          isCorrect && Math.trunc(oldLevel) < Math.trunc(oldLevel + 0.101)
+          isCorrect && getPointsAmount(oldCent) < getPointsAmount(oldCent + 10)
         if (isNewPoint) {
-          try {
-            void confetti.default()
-          } catch (e) {
-            /*🤷*/
-          }
+          setTimeout(confetti.default, 150)
         }
       } else {
         exercises.set(exerciseKey, {
           correct: isCorrect ? 1 : 0,
           incorrect: isCorrect ? 0 : 1,
-          skillLevel: isCorrect ? 0.1 : 0,
+          skillCent: isCorrect ? 10 : 0,
         })
       }
     })
@@ -103,7 +106,7 @@ export function useExerciseData() {
       data?.exercises.get(overwriteKey ?? exerciseKey) ?? {
         correct: 0,
         incorrect: 0,
-        skillLevel: 0,
+        skillCent: 0,
       }
     )
   }
