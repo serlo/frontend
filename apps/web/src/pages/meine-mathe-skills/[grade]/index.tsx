@@ -45,7 +45,7 @@ function Content() {
         <h2 className="mb-8 mt-5 text-2xl font-bold">Themenauswahl</h2>
       </div>
       <div className="flex flex-wrap justify-center py-10 mobileExt:flex-nowrap">
-        <div className="w-72 rounded-lg border border-brand-200 p-5 shadow-menu">
+        <div className="h-fit w-72 rounded-lg border border-brand-200 p-5 shadow-menu">
           <h3 className="pb-2 text-xl font-bold">Natürliche Zahlen</h3>
           <h4 className="text-lg">Zahlenstrahl: Anordnen</h4>
           <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
@@ -94,7 +94,7 @@ function Content() {
             <span></span>
           </ul>
         </div>
-        <div className="mt-4 w-72 rounded-lg border border-brand-200 p-5 shadow-menu mobileExt:ml-4 mobileExt:mt-0">
+        <div className="mt-4 h-fit w-72 rounded-lg border border-brand-200 p-5 shadow-menu mobileExt:ml-4 mobileExt:mt-0">
           <h3 className="pb-2 text-xl font-bold">Rechnen in ℕ</h3>
           <h4 className="text-lg">Potenzieren</h4>
           <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
