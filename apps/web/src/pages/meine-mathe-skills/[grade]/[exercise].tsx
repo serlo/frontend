@@ -60,7 +60,12 @@ const exerciseData: {
 } = {
   'zahlen-anordnen-1': {
     title: 'Zahlenstrahl anordnen – Level 1',
-    component: <NumberLineExercise generator={numberLineGeneratorLevel1} />,
+    component: (
+      <NumberLineExercise
+        generator={numberLineGeneratorLevel1}
+        centAmount={15}
+      />
+    ),
   },
   'zahlen-anordnen-2': {
     title: 'Zahlenstrahl anordnen – Level 2',

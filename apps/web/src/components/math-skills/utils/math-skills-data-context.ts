@@ -68,26 +68,33 @@ export function useExerciseData() {
 
   const exerciseKey = String(query.grade) + '/' + String(query.exercise)
 
-  function setExerciseData(isCorrect: boolean) {
+  function setExerciseData(isCorrect: boolean, centAmount = 10) {
     updateData(({ exercises }) => {
       const exercise = exercises.get(exerciseKey)
       if (exercise) {
-        const oldCent = exercise.skillCent
+        // eslint-disable-next-line no-console
+        console.log(exercise.skillCent)
+        if (isCorrect) {
+          const pointAmount = getPointsAmount(exercise.skillCent)
 
-        exercise.correct += isCorrect ? 1 : 0
-        exercise.incorrect += isCorrect ? 0 : 1
-        exercise.skillCent += isCorrect ? 10 : 0
+          // 0 Points: 100% | 1 Point: 75% | 2 Points: 50% || (all rounded)
+          const centChange = Math.round(centAmount * ((4 - pointAmount) / 4))
 
-        const isNewPoint =
-          isCorrect && getPointsAmount(oldCent) < getPointsAmount(oldCent + 10)
-        if (isNewPoint) {
-          setTimeout(confetti.default, 150)
+          exercise.correct += 1
+          exercise.skillCent += centChange
+
+          const newPointAmount = getPointsAmount(exercise.skillCent)
+          const celebrateNewPoint = isCorrect && pointAmount < newPointAmount
+          if (celebrateNewPoint) setTimeout(confetti.default, 150)
+        } else {
+          // maybe add removing points
+          exercise.incorrect += isCorrect ? 0 : 1
         }
       } else {
         exercises.set(exerciseKey, {
           correct: isCorrect ? 1 : 0,
           incorrect: isCorrect ? 0 : 1,
-          skillCent: isCorrect ? 10 : 0,
+          skillCent: isCorrect ? centAmount : 0,
         })
       }
     })

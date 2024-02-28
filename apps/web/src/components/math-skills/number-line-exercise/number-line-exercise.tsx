@@ -12,9 +12,13 @@ import { useExerciseData } from '../utils/math-skills-data-context'
 
 interface NumberLineExerciseProps {
   generator: () => [number, number, number]
+  centAmount?: number
 }
 
-export function NumberLineExercise({ generator }: NumberLineExerciseProps) {
+export function NumberLineExercise({
+  generator,
+  centAmount,
+}: NumberLineExerciseProps) {
   const [selectedValue, setSelectedValue] = useState(-1) // move outside for actual exercise
 
   const [[searchedValue, labeledPosition, maxValue], setValues] = useState([
@@ -31,7 +35,7 @@ export function NumberLineExercise({ generator }: NumberLineExerciseProps) {
     if (isChecked || selectedValue === 0) return
     feedbackAnimation(isCorrect, document.getElementById('number-line-wrapper'))
     setIsChecked(true)
-    setExerciseData(isCorrect)
+    setExerciseData(isCorrect, centAmount)
   }
 
   function makeNewExercise() {
