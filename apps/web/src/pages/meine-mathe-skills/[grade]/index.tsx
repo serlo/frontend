@@ -52,25 +52,25 @@ function Content() {
         <h2 className="mb-8 mt-5 text-2xl font-bold">Themenauswahl</h2>
       </div>
       <div className="flex flex-wrap justify-center py-10 mobileExt:flex-nowrap">
-        <div className="w-72 rounded-lg bg-brand-100 p-5">
+        <div className="w-72 rounded-lg border border-brand-200 p-5 shadow-menu">
           <h3 className="pb-2 text-xl font-bold">Natürliche Zahlen</h3>
-          <h4 className="text-lg">Zahlenstrahl</h4>
-          <ul className="mt-1">
-            {renderItem('zahlen-anordnen-1', 'Zahlen anordnen – Level 1')}
-            {renderItem('zahlen-anordnen-2', 'Zahlen anordnen – Level 2')}
-            {renderItem(
-              'zahlen-anordnen-profi',
-              'Zahlen anordnen – für Profis'
-            )}
-            {renderItem('zahlen-ablesen-1', 'Zahlen ablesen – Level 1')}
-            {renderItem('zahlen-ablesen-2', 'Zahlen ablesen – Level 2')}
-            {renderItem('zahlen-ablesen-profi', 'Zahlen ablesen – für Profis')}
+          <h4 className="text-lg">Zahlenstrahl: Anordnen</h4>
+          <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
+            {renderItem('zahlen-anordnen-1', 'Level 1')}
+            {renderItem('zahlen-anordnen-2', 'Level 2')}
+            {renderItem('zahlen-anordnen-profi', 'für Profis')}
+          </ul>
+          <h4 className="mt-3 text-lg">Zahlenstrahl: Ablesen</h4>
+          <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
+            {renderItem('zahlen-ablesen-1', 'Level 1')}
+            {renderItem('zahlen-ablesen-2', 'Level 2')}
+            {renderItem('zahlen-ablesen-profi', 'für Profis')}
           </ul>
         </div>
-        <div className="mt-4 w-72 rounded-lg bg-brand-100 p-5 mobileExt:ml-4 mobileExt:mt-0">
+        <div className="mt-4 w-72 rounded-lg border border-brand-200 p-5 shadow-menu mobileExt:ml-4 mobileExt:mt-0">
           <h3 className="pb-2 text-xl font-bold">Rechnen in ℕ</h3>
           <h4 className="text-lg">Potenzieren</h4>
-          <ul className="mt-1">
+          <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
             {renderItem('potenzwert-berechnen', 'Potenzwert berechnen')}
           </ul>
         </div>
@@ -88,9 +88,9 @@ function Content() {
       <li>
         <Link
           href={`/meine-mathe-skills/${slug}`}
-          className="serlo-link whitespace-nowrap"
+          className="block rounded-md bg-brand-50 px-2 py-1.5 !no-underline transition-colors hover:bg-brand-200"
         >
-          {text}{' '}
+          {text} <br />
           {data?.animal ? points.map(() => animalEmoji[data?.animal]) : null}
         </Link>
       </li>
