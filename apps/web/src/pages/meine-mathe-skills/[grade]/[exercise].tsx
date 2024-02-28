@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
 import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
+import { PlaceValueChart } from '@/components/math-skills/exercise-implementations/place-value-chart'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
 import { NumberInputExercise } from '@/components/math-skills/number-input-exercise/number-input-exercise'
 import { NumberLineExercise } from '@/components/math-skills/number-line-exercise/number-line-exercise'
@@ -151,6 +152,103 @@ const exerciseData: {
   },
   'text-in-zahl-1': dataForTextToNumberExercise(false),
   'text-in-zahl-profi': dataForTextToNumberExercise(true),
+  'stellenwert-tabelle-ablesen': {
+    title: 'Stellenwerte ändern - Level 1',
+    component: (
+      <NumberInputExercise
+        centAmount={35}
+        generator={() => {
+          const T = randomIntBetween(1, 9)
+          const H = randomIntBetween(0, 9)
+          const Z = randomIntBetween(0, 9)
+          const E = randomIntBetween(0, 9)
+          return { value: T * 1000 + H * 100 + Z * 10 + E, T, H, Z, E }
+        }}
+        getCorrectValue={({ value }) => {
+          return value
+        }}
+        render={(input, { T, H, Z, E }) => {
+          return (
+            <>
+              <h2 className="mt-8 pb-6 text-left text-2xl font-bold">
+                Welche Zahl ist in der Stellenwert-Tafel dargestellt?
+              </h2>
+              <PlaceValueChart T={T} H={H} Z={Z} E={E} />
+              <div className="ml-0.5 mt-8 text-2xl font-bold" id="number-input">
+                <span className="mr-3">Die Zahl lautet:</span>
+                {input}
+              </div>
+            </>
+          )
+        }}
+      />
+    ),
+  },
+  'stellenwerte-aendern-1': dataForPlaceValueChange(false),
+  'stellenwerte-aendern-profi': dataForPlaceValueChange(true),
+}
+
+function dataForPlaceValueChange(expert: boolean) {
+  return {
+    title: 'Stellenwerte ändern - ' + (expert ? 'Profi' : 'Level 1'),
+    component: (
+      <NumberInputExercise
+        centAmount={52}
+        generator={() => {
+          const lower = expert ? 8 : 4
+          const upper = expert ? 9 : 8
+          const T = randomIntBetween(lower, upper)
+          const H = randomIntBetween(lower, upper)
+          const Z = randomIntBetween(lower, upper)
+          const E = randomIntBetween(lower, upper)
+          const from = randomItemFromArray(['T', 'H', 'Z', 'E'])
+          const to = randomItemFromArray(
+            ['T', 'H', 'Z', 'E'].filter((x) => x !== from)
+          )
+          const placeValues: { [key: string]: number } = {
+            T: 1000,
+            H: 100,
+            Z: 10,
+            E: 1,
+          }
+
+          return {
+            value:
+              T * 1000 +
+              H * 100 +
+              Z * 10 +
+              E -
+              placeValues[from] +
+              placeValues[to],
+            T,
+            H,
+            Z,
+            E,
+            from,
+            to,
+          }
+        }}
+        getCorrectValue={({ value }) => {
+          return value
+        }}
+        render={(input, { T, H, Z, E, from, to }) => {
+          return (
+            <>
+              <PlaceValueChart T={T} H={H} Z={Z} E={E} />
+              <p className="mt-4 text-xl">
+                Ein Plättchen wird von {from} nach {to} geschoben. Welche Zahl
+                entsteht?
+              </p>
+              <div className="ml-0.5 mt-4 text-2xl font-bold" id="number-input">
+                <span className="mr-3">Die neue Zahl lautet:</span>
+                {input}
+              </div>
+            </>
+          )
+        }}
+      />
+    ),
+  }
 }
 
 function dataForTextToNumberExercise(expert: boolean) {
