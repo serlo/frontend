@@ -32,7 +32,9 @@ function Content() {
       Hier geht es darum, Mathematik zu können und das zu zeigen. Das dürfen
       auch kleine Sachen sein.
       <br />
-      Immer Schritt für Schritt!
+      Jeder Skill gibt Vertrauen, weiterzulernen.
+      <br />
+      Schritt für Schritt.
       <br />
       <br />
     </>
