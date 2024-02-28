@@ -79,7 +79,8 @@ const exerciseData: {
           const powerLimit = Math.floor(
             base === 10 ? 6 : base > 4 ? 2 : 8 - base * 1.2
           )
-          const power = randomIntBetween(1, powerLimit)
+          const mode = randomItemFromArray(['trivial', 'normal', 'normal'])
+          const power = mode === 'trivial' ? 1 : randomIntBetween(2, powerLimit)
           return { base, power }
         }}
         getCorrectValue={({ base, power }) => {
