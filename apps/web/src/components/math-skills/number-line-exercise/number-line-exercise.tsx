@@ -68,7 +68,10 @@ export function NumberLineExercise({
 
       <NewExerciseButton makeNewExercise={makeNewExercise} />
 
-      <div className="relative" id="number-line-wrapper">
+      <div
+        className="relative -left-2 -mr-2 mb-6 ml-2 mt-12 [overscroll-behaviour-x:none]"
+        id="number-line-wrapper"
+      >
         <ActualRangeInput
           selectedValue={selectedValue}
           setSelectedValue={setSelectedValue}
