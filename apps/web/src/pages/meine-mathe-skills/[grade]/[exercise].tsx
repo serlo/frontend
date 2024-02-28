@@ -43,60 +43,86 @@ function Content() {
 
   if (!exercise) return null
 
+  const data = exerciseData[exercise]
+
+  if (!data) return null
+
   return (
     <div className="relative mx-4 mt-20 max-w-lg bg-white sm:mx-auto sm:w-full">
-      {exercise === 'zahlen-anordnen-1' ? (
-        <NumberLineExercise generator={numberLineGeneratorLevel1} />
-      ) : null}
-      {exercise === 'zahlen-anordnen-2' ? (
-        <NumberLineExercise generator={numberLineGeneratorLevel2} />
-      ) : null}
-      {exercise === 'zahlen-anordnen-profi' ? (
-        <NumberLineExercise generator={numberLineGeneratorLevel3} />
-      ) : null}
-      {exercise === 'potenzwert-berechnen' ? (
-        <NumberInputExercise
-          generator={() => {
-            const base = randomIntBetween(0, 12)
-            const powerLimit = Math.floor(
-              base === 10 ? 6 : base > 4 ? 2 : 8 - base * 1.2
-            )
-            const power = randomIntBetween(1, powerLimit)
-            return { base, power }
-          }}
-          getCorrectValue={({ base, power }) => {
-            return Math.pow(base, power)
-          }}
-          render={(input, { base, power }) => {
-            return (
-              <>
-                <h2 className="pb-6 text-left text-2xl font-bold">
-                  Berechne den Potenzwert:
-                </h2>
-                <div className="ml-0.5 text-2xl font-bold" id="number-input">
-                  <span className="text-newgreen">
-                    {base}
-                    <sup className="ml-0.5">{power}</sup>
-                  </span>
-                  {' = '}
-                  {input}
-                </div>
-              </>
-            )
-          }}
-        />
-      ) : null}
-      {exercise === 'zahlen-ablesen-1' ? (
-        <NumberLineInputExercise generator={numberLineGeneratorLevel1} />
-      ) : null}
-      {exercise === 'zahlen-ablesen-2' ? (
-        <NumberLineInputExercise generator={numberLineGeneratorLevel2} />
-      ) : null}
-      {exercise === 'zahlen-ablesen-profi' ? (
-        <NumberLineInputExercise generator={numberLineGeneratorLevel3} />
-      ) : null}
+      <h2 className="text-xl">{data.title}</h2>
+      {data.component}
     </div>
   )
+}
+
+const exerciseData: {
+  [key: string]: { title: string; component: JSX.Element }
+} = {
+  'zahlen-anordnen-1': {
+    title: 'Zahlenstrahl: Anordnen - Level 1',
+    component: <NumberLineExercise generator={numberLineGeneratorLevel1} />,
+  },
+  'zahlen-anordnen-2': {
+    title: 'Zahlenstrahl: Anordnen - Level 2',
+    component: <NumberLineExercise generator={numberLineGeneratorLevel2} />,
+  },
+  'zahlen-anordnen-profi': {
+    title: 'Zahlenstrahl: Anordnen - Profi',
+    component: <NumberLineExercise generator={numberLineGeneratorLevel3} />,
+  },
+  'potenzwert-berechnen': {
+    title: 'Potenzwert berechnen',
+    component: (
+      <NumberInputExercise
+        generator={() => {
+          const base = randomIntBetween(0, 12)
+          const powerLimit = Math.floor(
+            base === 10 ? 6 : base > 4 ? 2 : 8 - base * 1.2
+          )
+          const power = randomIntBetween(1, powerLimit)
+          return { base, power }
+        }}
+        getCorrectValue={({ base, power }) => {
+          return Math.pow(base, power)
+        }}
+        render={(input, { base, power }) => {
+          return (
+            <>
+              <h2 className="pb-6 text-left text-2xl font-bold">
+                Berechne den Potenzwert:
+              </h2>
+              <div className="ml-0.5 text-2xl font-bold" id="number-input">
+                <span className="text-newgreen">
+                  {base}
+                  <sup className="ml-0.5">{power}</sup>
+                </span>
+                {' = '}
+                {input}
+              </div>
+            </>
+          )
+        }}
+      />
+    ),
+  },
+  'zahlen-ablesen-1': {
+    title: 'Zahlenstrahl: Ablesen - Level 1',
+    component: (
+      <NumberLineInputExercise generator={numberLineGeneratorLevel1} />
+    ),
+  },
+  'zahlen-ablesen-2': {
+    title: 'Zahlenstrahl: Ablesen - Level 2',
+    component: (
+      <NumberLineInputExercise generator={numberLineGeneratorLevel2} />
+    ),
+  },
+  'zahlen-ablesen-profi': {
+    title: 'Zahlenstrahl: Ablesen - Profi',
+    component: (
+      <NumberLineInputExercise generator={numberLineGeneratorLevel3} />
+    ),
+  },
 }
 
 function numberLineGeneratorLevel1(): [number, number, number] {
@@ -151,3 +177,57 @@ function numberLineGeneratorLevel3(): [number, number, number] {
 }
 
 export default ContentPage
+
+/*
+
+ {exercise === 'zahlen-anordnen-1' ? (
+        <NumberLineExercise generator={numberLineGeneratorLevel1} />
+      ) : null}
+      {exercise === 'zahlen-anordnen-2' ? (
+        <NumberLineExercise generator={numberLineGeneratorLevel2} />
+      ) : null}
+      {exercise === 'zahlen-anordnen-profi' ? (
+        <NumberLineExercise generator={numberLineGeneratorLevel3} />
+      ) : null}
+      {exercise === 'potenzwert-berechnen' ? (
+        <NumberInputExercise
+          generator={() => {
+            const base = randomIntBetween(0, 12)
+            const powerLimit = Math.floor(
+              base === 10 ? 6 : base > 4 ? 2 : 8 - base * 1.2
+            )
+            const power = randomIntBetween(1, powerLimit)
+            return { base, power }
+          }}
+          getCorrectValue={({ base, power }) => {
+            return Math.pow(base, power)
+          }}
+          render={(input, { base, power }) => {
+            return (
+              <>
+                <h2 className="pb-6 text-left text-2xl font-bold">
+                  Berechne den Potenzwert:
+                </h2>
+                <div className="ml-0.5 text-2xl font-bold" id="number-input">
+                  <span className="text-newgreen">
+                    {base}
+                    <sup className="ml-0.5">{power}</sup>
+                  </span>
+                  {' = '}
+                  {input}
+                </div>
+              </>
+            )
+          }}
+        />
+      ) : null}
+      {exercise === 'zahlen-ablesen-1' ? (
+        <NumberLineInputExercise generator={numberLineGeneratorLevel1} />
+      ) : null}
+      {exercise === 'zahlen-ablesen-2' ? (
+        <NumberLineInputExercise generator={numberLineGeneratorLevel2} />
+      ) : null}
+      {exercise === 'zahlen-ablesen-profi' ? (
+        <NumberLineInputExercise generator={numberLineGeneratorLevel3} />
+      ) : null}
+      */
