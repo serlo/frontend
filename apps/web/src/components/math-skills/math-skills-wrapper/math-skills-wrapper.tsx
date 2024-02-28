@@ -1,4 +1,4 @@
-import { Draft, produce } from 'immer'
+import { Draft, produce, enableMapSet } from 'immer'
 import { useRouter } from 'next/router'
 import { ReactNode, useEffect, useState } from 'react'
 
@@ -13,6 +13,8 @@ import {
 } from '../utils/math-skills-data-context'
 import { HeadTags } from '@/components/head-tags'
 import { isProduction } from '@/helper/is-production'
+
+enableMapSet()
 
 export function MathSkillsWrapper({ children }: { children: ReactNode }) {
   const router = useRouter()
