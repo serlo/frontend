@@ -18,7 +18,10 @@ export function NumberLineInputExercise({
       getCorrectValue={(data) => data[0]}
       render={(input, data) => (
         <>
-          <div className="relative mb-6 mt-12" id="number-line-wrapper">
+          <div
+            className="relative mb-6 mt-12 [overscroll-behaviour-x:none]"
+            id="number-line-wrapper"
+          >
             <ActualRangeInput
               selectedValue={data[0]}
               setSelectedValue={() => {}}
