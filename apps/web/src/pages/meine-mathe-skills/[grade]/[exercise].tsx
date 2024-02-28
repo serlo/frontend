@@ -5,6 +5,7 @@ import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
 import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
 import { PlaceValueChart } from '@/components/math-skills/exercise-implementations/place-value-chart'
+import { PlaceValueChooser } from '@/components/math-skills/exercise-implementations/place-value-chooser'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
 import { NumberInputExercise } from '@/components/math-skills/number-input-exercise/number-input-exercise'
 import { NumberLineExercise } from '@/components/math-skills/number-line-exercise/number-line-exercise'
@@ -201,6 +202,21 @@ const exerciseData: {
   'zahlen-vergroeßern-verkleinern-3': dataForIncrDescNumberExercise('Level 3'),
   'zahlen-vergroeßern-verkleinern-profi':
     dataForIncrDescNumberExercise('Profi'),
+  'stellenwerte-finden': {
+    title: 'Stellenwerte finden',
+    level: 'Level 1',
+    component: (
+      <PlaceValueChooser
+        centAmount={35}
+        generator={() => {
+          const figure = randomIntBetween(1000, 99999)
+          // digit pos starting with 1 => Einser
+          const searchedDigit = randomIntBetween(1, figure.toString().length)
+          return { figure, searchedDigit }
+        }}
+      />
+    ),
+  },
 }
 
 function dataForPlaceValueChange(expert: boolean) {

@@ -85,6 +85,11 @@ function Content() {
             {renderItem('zahlen-vergroeßern-verkleinern-profi', 'für Profis')}
             <span></span>
           </ul>
+          <h4 className="mt-3 text-lg">Stellenwerte finden</h4>
+          <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
+            {renderItem('stellenwerte-finden', 'Level 1')}
+            <span></span>
+          </ul>
         </div>
         <div className="mt-4 w-72 rounded-lg border border-brand-200 p-5 shadow-menu mobileExt:ml-4 mobileExt:mt-0">
           <h3 className="pb-2 text-xl font-bold">Rechnen in ℕ</h3>
