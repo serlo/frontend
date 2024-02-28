@@ -12,14 +12,14 @@ interface OverlayMarkerProps {
   isChecked?: boolean
   isCorrect?: boolean
   isSearched?: boolean
-  key: number
+  index: number
 }
 
 export function OverlayMarker({
   isChecked,
   isCorrect,
   isSearched,
-  key,
+  index,
 }: OverlayMarkerProps) {
   const icon = isChecked
     ? isCorrect
@@ -31,7 +31,7 @@ export function OverlayMarker({
 
   return (
     <div
-      key={key}
+      key={index}
       className="relative -mb-8 h-16 w-[3px] bg-newgreen shadow-menu"
     >
       <div
