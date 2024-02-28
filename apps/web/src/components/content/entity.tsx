@@ -1,6 +1,6 @@
 // Temporary file while working on unified renderer
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { isEmptyRowsDocument } from '@editor/plugins/rows/utils/static-is-empty'
+import { isEmptyArticle } from '@editor/plugins/rows/utils/static-is-empty'
 import { CourseNavigation } from '@editor/plugins/serlo-template-plugins/course/course-navigation'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { isArticleDocument } from '@editor/types/plugin-type-guards'
@@ -211,7 +211,7 @@ export function Entity({ data }: EntityProps) {
     // this check could be more exact, but I guess empty articles are the most important case
     const hasContent = data.content
       ? !Array.isArray(data.content) && isArticleDocument(data.content)
-        ? !isEmptyRowsDocument(data.content.state.content)
+        ? !isEmptyArticle(data.content)
         : true
       : !!data.title
 
