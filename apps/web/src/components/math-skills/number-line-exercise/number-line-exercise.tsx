@@ -25,6 +25,7 @@ export function NumberLineExercise({
     0, 0.0, 0,
   ])
   const labeledValue = labeledPosition * maxValue
+  const startValue = Math.round(maxValue / 8)
 
   const [isChecked, setIsChecked] = useState(false)
   const { setExerciseData } = useExerciseData()
@@ -39,8 +40,10 @@ export function NumberLineExercise({
   }
 
   function makeNewExercise() {
-    setValues(generator())
-    setSelectedValue(0)
+    const newData = generator()
+    const newMaxValue = newData[2]
+    setValues(newData)
+    setSelectedValue(Math.round(newMaxValue / 8))
     setIsChecked(false)
   }
 
@@ -68,7 +71,7 @@ export function NumberLineExercise({
 
       <NewExerciseButton makeNewExercise={makeNewExercise} />
 
-      <div className="relative" id="number-line-wrapper">
+      <div className="relative touch-pinch-zoom" id="number-line-wrapper">
         <ActualRangeInput
           selectedValue={selectedValue}
           setSelectedValue={setSelectedValue}
@@ -113,7 +116,7 @@ export function NumberLineExercise({
           />
         )}
         <div className="mt-6 text-center text-gray-500 sm:mt-0 sm:text-right">
-          {selectedValue === 0 ? (
+          {selectedValue === startValue ? (
             <>
               Klicke auf den Zeitstrahl
               <br /> oder benutze die Pfeilbuttons

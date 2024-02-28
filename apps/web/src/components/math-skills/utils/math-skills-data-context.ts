@@ -77,13 +77,7 @@ export function useExerciseData() {
         if (isCorrect) {
           const pointAmount = getPointsAmount(exercise.skillCent)
 
-          // 0 Points: 100% | 1 Point: 75% | 2 Points: 50% || (all rounded)
-          const factor =
-            exercise.skillCent >= 200
-              ? 0.3
-              : exercise.skillCent >= 100
-                ? 0.5
-                : 1
+          const factor = pointAmount > 2 ? 0.3 : pointAmount > 1 ? 0.5 : 1
           const centChange = Math.round(centAmount * factor)
 
           exercise.correct += 1
@@ -120,7 +114,7 @@ export function useExerciseData() {
 }
 
 // needed to make map work with JSON.stringify and .parse
-function mapReviverJson(key: string, value: { dataType?: 'Map'; value: any }) {
+function mapReviverJson(_: string, value: { dataType?: 'Map'; value: any }) {
   if (typeof value === 'object' && value !== null && value.dataType === 'Map') {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return new Map(value.value)
@@ -128,7 +122,7 @@ function mapReviverJson(key: string, value: { dataType?: 'Map'; value: any }) {
   return value
 }
 
-function mapReplacerJson(key: string, value: any) {
+function mapReplacerJson(_: string, value: any) {
   if (value instanceof Map) return { dataType: 'Map', value: [...value] }
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return value
