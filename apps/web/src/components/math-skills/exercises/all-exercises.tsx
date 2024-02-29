@@ -1,12 +1,20 @@
+import { createExponentiateExercise } from './create/create-exponentiate-exercise'
+import { createIncrDescNumberExercise } from './create/create-incr-desc-number-exercise'
+import { createNumberDistancesExercise } from './create/create-number-distance-exercise'
+import { createPlaceValueChangeExercise } from './create/create-place-value-change-exercise'
+import { createTextToNumberExercise } from './create/create-text-to-number-exercise'
+import {
+  numberLineGeneratorLevel1,
+  numberLineGeneratorLevel2,
+  numberLineGeneratorLevel3,
+} from './generators/number-line-generator'
 import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
 import { OrderValues } from '@/components/math-skills/exercise-implementations/order-values'
 import { PlaceValueChart } from '@/components/math-skills/exercise-implementations/place-value-chart'
 import { PlaceValueChooser } from '@/components/math-skills/exercise-implementations/place-value-chooser'
 import { NumberInputExercise } from '@/components/math-skills/number-input-exercise/number-input-exercise'
 import { NumberLineExercise } from '@/components/math-skills/number-line-exercise/number-line-exercise'
-import { getIntRange } from '@/helper/get-int-range'
 import { randomIntBetween } from '@/helper/random-int-between'
-import { randomItemFromArray } from '@/helper/random-item-from-array'
 import { shuffleArray } from '@/helper/shuffle-array'
 
 export const allExercises = {
@@ -38,7 +46,6 @@ export const allExercises = {
         eigenen Abstand festlegen.
       </>
     ),
-
     component: (
       <NumberLineExercise
         generator={numberLineGeneratorLevel2}
@@ -120,10 +127,12 @@ export const allExercises = {
     title: 'Stellenwerte finden',
     smallprint: (
       <>
-        Um die Schreibarbeit zu vereinfachen, werden in Zukunft die Stellenwerte
-        mit Buchstaben abgekürzt, die jeweils den Anfangsbuchstaben der Namen
-        entsprechen. E = Einer, Z = Zehner, H = Hunderter, T = Tausender, ZT =
-        Zehntausender, HT = Hunderttausender, M = Million.
+        Um die Schreibarbeit zu vereinfachen, werden in den anderen <br />
+        Aufgaben die Stellenwerte auf die Anfangsbuchstaben abgekürzt:
+        <br />
+        E = Einer, Z = Zehner, H = Hunderter, T = Tausender,
+        <br />
+        ZT = Zehntausender, HT = Hunderttausender, M = Million.
       </>
     ),
     component: (
@@ -161,9 +170,7 @@ export const allExercises = {
           const E = randomIntBetween(0, 9)
           return { value: T * 1000 + H * 100 + Z * 10 + E, T, H, Z, E }
         }}
-        getCorrectValue={({ value }) => {
-          return value
-        }}
+        getCorrectValue={({ value }) => value}
         render={(input, { T, H, Z, E }) => {
           return (
             <>
@@ -181,7 +188,7 @@ export const allExercises = {
     ),
   },
   'stellenwerte-aendern-1': {
-    ...dataForPlaceValueChange(false),
+    ...createPlaceValueChangeExercise(false),
     smallprint: (
       <>
         Mathematisch bedeutet das Entfernen eines Plättchens eine Subtraktion,
@@ -190,7 +197,7 @@ export const allExercises = {
     ),
   },
   'stellenwerte-aendern-profi': {
-    ...dataForPlaceValueChange(true),
+    ...createPlaceValueChangeExercise(true),
     smallprint: (
       <>
         Wenn du 10 Plättchen in einer Spalte hast, müssen diese zu einem
@@ -202,7 +209,7 @@ export const allExercises = {
     ),
   },
   'text-in-zahl-1': {
-    ...dataForTextToNumberExercise(false),
+    ...createTextToNumberExercise(false),
     smallprint: (
       <>
         Die Zahl Million besteht aus dem lateinischen Wort mille (= Tausend) und
@@ -214,7 +221,7 @@ export const allExercises = {
     ),
   },
   'text-in-zahl-profi': {
-    ...dataForTextToNumberExercise(true),
+    ...createTextToNumberExercise(true),
     smallprint: (
       <>
         Im Englischen wird für eine Milliarde das Wort <em>billion</em>{' '}
@@ -223,11 +230,10 @@ export const allExercises = {
       </>
     ),
   },
-  'zahlen-vergroeßern-verkleinern-1': dataForIncrDescNumberExercise('Level 1'),
-  'zahlen-vergroeßern-verkleinern-2': dataForIncrDescNumberExercise('Level 2'),
-  'zahlen-vergroeßern-verkleinern-3': dataForIncrDescNumberExercise('Level 3'),
-  'zahlen-vergroeßern-verkleinern-profi':
-    dataForIncrDescNumberExercise('Profi'),
+  'zahlen-vergroeßern-verkleinern-1': createIncrDescNumberExercise('Level 1'),
+  'zahlen-vergroeßern-verkleinern-2': createIncrDescNumberExercise('Level 2'),
+  'zahlen-vergroeßern-verkleinern-3': createIncrDescNumberExercise('Level 3'),
+  'zahlen-vergroeßern-verkleinern-profi': createIncrDescNumberExercise('Profi'),
   'zahlen-sortieren-wip': {
     title: 'Zahlen Sortieren',
     level: 'WIP',
@@ -245,347 +251,12 @@ export const allExercises = {
       />
     ),
   },
-  'zahlenabstaende-erkennen-1': dataForNumberDistances('Level 1'),
-  'zahlenabstaende-erkennen-2': dataForNumberDistances('Level 2'),
-  'zahlenabstaende-erkennen-profi': dataForNumberDistances('Profi'),
-  'zahlenabstaende-erkennen-topprofi': dataForNumberDistances('TopProfi'),
-  'potenzwert-berechnen': {
-    title: 'Potenzwert berechnen',
-    component: (
-      <NumberInputExercise
-        centAmount={35}
-        generator={() => {
-          const base = randomIntBetween(0, 12)
-          const powerLimit = Math.floor(
-            base === 10 ? 6 : base > 4 ? 2 : 8 - base * 1.2
-          )
-          const mode = randomItemFromArray(['trivial', 'normal', 'normal'])
-          const power = mode === 'trivial' ? 1 : randomIntBetween(2, powerLimit)
-          return { base, power }
-        }}
-        getCorrectValue={({ base, power }) => {
-          return Math.pow(base, power)
-        }}
-        render={(input, { base, power }) => {
-          return (
-            <>
-              <h2 className="mt-8 pb-4 text-left text-2xl">
-                Berechne den Potenzwert
-              </h2>
-              <div className="ml-0.5 text-2xl font-bold" id="number-input">
-                <span className="text-newgreen">
-                  {base}
-                  <sup className="ml-0.5">{power}</sup>
-                </span>
-                {' = '}
-                {input}
-              </div>
-            </>
-          )
-        }}
-      />
-    ),
-  },
+  'zahlenabstaende-erkennen-1': createNumberDistancesExercise('Level 1'),
+  'zahlenabstaende-erkennen-2': createNumberDistancesExercise('Level 2'),
+  'zahlenabstaende-erkennen-profi': createNumberDistancesExercise('Profi'),
+  'zahlenabstaende-erkennen-topprofi':
+    createNumberDistancesExercise('TopProfi'),
+  'potenzwert-berechnen': createExponentiateExercise(),
 } as const
 
 export type SupportedExercisesId = keyof typeof allExercises
-
-function dataForNumberDistances(
-  level: 'Level 1' | 'Level 2' | 'Profi' | 'TopProfi'
-) {
-  return {
-    title: 'Zahlenabstände erkennen',
-    level,
-    component: (
-      <NumberInputExercise
-        centAmount={35}
-        generator={() => {
-          const baseNumber = randomIntBetween(3, 15)
-          const factor = randomItemFromArray([10, 100, 1000])
-          const overlay =
-            randomIntBetween(3, 15) *
-            randomItemFromArray([10000, 100000, 1000000, 10000000])
-          const output = {
-            a: baseNumber * factor + overlay,
-            b: baseNumber * factor * 2 + overlay,
-            c: baseNumber * factor * 3 + overlay,
-            result: -1,
-          }
-          const toFill = randomItemFromArray(
-            level === 'Level 1'
-              ? ['c']
-              : level === 'Level 2'
-                ? ['a']
-                : level === 'Profi'
-                  ? ['a', 'c']
-                  : ['a', 'b', 'c']
-          ) as 'a' | 'b' | 'c'
-          output.result = output[toFill]
-          output[toFill] = 0
-          return output
-        }}
-        getCorrectValue={({ result }) => result}
-        render={(input, { a, c, b }) => {
-          return (
-            <>
-              <div className="my-5 flex items-baseline text-2xl">
-                <span className="inline-block w-24">1. Zahl</span>
-                <div className="w-32 text-left font-mono font-bold">
-                  {a ? <span className="ml-2">{a}</span> : input}
-                </div>
-              </div>
-              <div className="my-5 flex items-baseline text-2xl">
-                <span className="inline-block w-24">2. Zahl</span>
-                <div className="w-32 text-left font-mono font-bold">
-                  {b ? <span className="ml-2">{b}</span> : input}
-                </div>
-              </div>
-              <div className="my-5 flex items-baseline text-2xl">
-                <span className="inline-block w-24">3. Zahl</span>
-                <div className="w-32 text-left font-mono font-bold">
-                  {c ? <span className="ml-2">{c}</span> : input}
-                </div>
-              </div>
-            </>
-          )
-        }}
-        widthForDigits={9}
-      />
-    ),
-  }
-}
-
-function dataForPlaceValueChange(expert: boolean) {
-  return {
-    title: 'Stellenwerte ändern',
-    level: expert ? 'Profi' : 'Level 1',
-    component: (
-      <NumberInputExercise
-        centAmount={52}
-        generator={() => {
-          const lower = expert ? 8 : 4
-          const upper = expert ? 9 : 8
-          const T = randomIntBetween(lower, upper)
-          const H = randomIntBetween(lower, upper)
-          const Z = randomIntBetween(lower, upper)
-          const E = randomIntBetween(lower, upper)
-          const from = randomItemFromArray(['T', 'H', 'Z', 'E'])
-          const to = randomItemFromArray(
-            ['T', 'H', 'Z', 'E'].filter((x) => x !== from)
-          )
-          const placeValues: { [key: string]: number } = {
-            T: 1000,
-            H: 100,
-            Z: 10,
-            E: 1,
-          }
-
-          return {
-            value:
-              T * 1000 +
-              H * 100 +
-              Z * 10 +
-              E -
-              placeValues[from] +
-              placeValues[to],
-            T,
-            H,
-            Z,
-            E,
-            from,
-            to,
-          }
-        }}
-        getCorrectValue={({ value }) => {
-          return value
-        }}
-        render={(input, { T, H, Z, E, from, to }) => {
-          return (
-            <>
-              <PlaceValueChart T={T} H={H} Z={Z} E={E} />
-              <p className="mt-4 text-xl">
-                Ein Plättchen wird von <b>{from}</b> nach <b>{to}</b> geschoben.
-                <br />
-                Welche Zahl entsteht?
-              </p>
-              <div className="ml-0.5 mt-4 text-2xl font-bold" id="number-input">
-                <span className="mr-3">Die neue Zahl lautet:</span>
-                {input}
-              </div>
-            </>
-          )
-        }}
-      />
-    ),
-  }
-}
-
-function dataForIncrDescNumberExercise(
-  level: 'Level 1' | 'Level 2' | 'Level 3' | 'Profi'
-) {
-  return {
-    title: 'Zahlen vergrößern & verkleinern',
-    level,
-    component: (
-      <NumberInputExercise
-        centAmount={35}
-        widthForDigits={15}
-        generator={() => {
-          const diff = randomItemFromArray([10, 100, 1000])
-          const isIncr = randomItemFromArray([true, false])
-          const number =
-            level === 'Profi'
-              ? randomIntBetween(isIncr ? 0 : 1, 18) * 1000000 +
-                randomIntBetween(1, 1000)
-              : randomIntBetween(
-                  isIncr ? 11 : 2000,
-                  level === 'Level 1'
-                    ? 18000
-                    : level === 'Level 2'
-                      ? 18000
-                      : 180000
-                )
-          return { diff, isIncr, number }
-        }}
-        getCorrectValue={({ diff, number, isIncr }) => {
-          return number + diff * (isIncr ? 1 : -1)
-        }}
-        render={(input, { diff, number, isIncr }) => {
-          return (
-            <>
-              <h2 className="mt-8 pb-4 text-left text-2xl">
-                Welche Zahl ist <wbr />
-                <span className="whitespace-nowrap font-bold text-newgreen">
-                  um {diff} {isIncr ? 'größer' : 'kleiner'} als {number}
-                </span>
-                &thinsp;?
-              </h2>
-              <div className="ml-0.5 text-2xl font-bold" id="number-input">
-                {input}
-              </div>
-            </>
-          )
-        }}
-      />
-    ),
-  }
-}
-
-function dataForTextToNumberExercise(expert: boolean) {
-  return {
-    title: 'Text in Zahl umwandeln',
-    level: expert ? 'Profi' : 'Level 1',
-    component: (
-      <NumberInputExercise
-        centAmount={35}
-        widthForDigits={15}
-        generator={() => {
-          return generateTextToNumberExercise(expert)
-        }}
-        getCorrectValue={({ value }) => {
-          return value
-        }}
-        render={(input, { text }) => {
-          return (
-            <>
-              <h2 className="mt-8 pb-4 text-left text-2xl text-almost-black">
-                Schreibe als Zahl:
-                <br />
-                {/* Text is sometimes to long and will break here anyways. This prevents some jumping arounds.*/}
-                <span className="inline-block font-bold text-newgreen">
-                  {text}
-                </span>
-              </h2>
-              <div id="number-input">{input}</div>
-            </>
-          )
-        }}
-      />
-    ),
-  }
-}
-
-function generateTextToNumberExercise(expert: boolean) {
-  const mode = randomItemFromArray([
-    'MTE',
-    'ME',
-    'MT',
-    ...(expert
-      ? ['AMT', 'ATE', 'AME', 'AM', 'AT', 'AE']
-      : ['TE', 'TE', 'ME', 'MT', 'M', 'T']),
-  ])
-  let text = ''
-  let value = 0
-  if (mode.includes('A')) {
-    const val = randomIntBetween(2, 29)
-    value += val * 1000000000
-    text += `${val} Milliarden `
-  }
-  if (mode.includes('M')) {
-    const val = randomIntBetween(2, expert ? 999 : 29)
-    value += val * 1000000
-    text += `${val} Millionen `
-  }
-  if (mode.includes('T')) {
-    const val = randomIntBetween(2, 999)
-    value += val * 1000
-    text += `${val} Tausend `
-  }
-  if (mode.includes('E')) {
-    const val = randomIntBetween(2, 999)
-    value += val
-    text += `${val} `
-  }
-  return { text, value }
-}
-
-function numberLineGeneratorLevel1(): [number, number, number] {
-  const kind = randomItemFromArray([0, 1])
-  if (kind === 0) {
-    const maxVal = 40
-
-    const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
-    const searchValues = getIntRange(10, 39, [labeledPos * 40])
-    const searchedVal = randomItemFromArray(searchValues)
-    return [searchedVal, labeledPos, maxVal]
-  } else {
-    const maxVal = randomItemFromArray([8000, 12000, 16000, 20000])
-    const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
-    const possibleSearchValues = [
-      maxVal / 4,
-      maxVal / 2,
-      (maxVal / 4) * 3,
-      maxVal,
-    ].filter((val) => val !== maxVal * labeledPos)
-    const searchedVal = randomItemFromArray(possibleSearchValues)
-    return [searchedVal, labeledPos, maxVal]
-  }
-}
-
-function numberLineGeneratorLevel2(): [number, number, number] {
-  const step = randomItemFromArray([10, 20])
-  const maxVal = 40 * step
-
-  const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
-  const searchValues = getIntRange(10, 39, [labeledPos * 40])
-  const searchedVal = randomItemFromArray(searchValues)
-  return [searchedVal * step, labeledPos, maxVal]
-}
-
-function numberLineGeneratorLevel3(): [number, number, number] {
-  const kind = randomItemFromArray([0, 1])
-  if (kind === 0) {
-    return numberLineGeneratorLevel2()
-  } else {
-    const maxVal = randomItemFromArray([8000, 12000, 16000, 20000])
-    const labeledPos = randomItemFromArray([0.25, 0.5, 0.75, 1])
-    const possibleSearchValues = [
-      maxVal / 4,
-      maxVal / 2,
-      (maxVal / 4) * 3,
-      maxVal,
-    ].filter((val) => val !== maxVal * labeledPos)
-    const searchedVal = randomItemFromArray(possibleSearchValues)
-    return [searchedVal, labeledPos, maxVal]
-  }
-}
