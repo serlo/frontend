@@ -156,11 +156,11 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
                       )}
                       style={{ ...provided.draggableProps.style }}
                     >
+                      {value}{' '}
                       <FaIcon
                         icon={faGripVertical}
                         className="mb-0.25 text-base text-newgreen opacity-70"
-                      />{' '}
-                      {value}
+                      />
                     </div>
                   )}
                 </Draggable>
