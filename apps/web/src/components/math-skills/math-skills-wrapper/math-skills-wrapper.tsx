@@ -26,11 +26,18 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
   const grade = router?.query?.grade
     ? String(router.query.grade).replace('klasse', '')
     : '_'
+
+  const isExercise = !!router?.query?.exercise
+
   const [data, setData] = useState<MathSkillsStorageData>(getEmptyData())
 
   useEffect(() => setData(getStored()), [])
 
-  useEffect(() => {}, [data])
+  const [, setRenderCounter] = useState(1)
+
+  function rerender() {
+    setRenderCounter((x) => x + 1)
+  }
 
   function updateData(fn: (arg: Draft<MathSkillsStorageData>) => void) {
     setData((data) => {
@@ -59,8 +66,10 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
           <MathSkillsHeader />
           {children}
         </div>
-        <footer className="mb-3 ml-3 mt-auto flex justify-between px-3 text-gray-700">
-          {isProduction ? null : (
+        <footer className="mb-3 ml-3 mt-auto flex flex-col justify-between px-3 text-gray-700 sm:flex-row">
+          {isProduction || isExercise ? (
+            <div></div>
+          ) : (
             <span>
               <button
                 onClick={() => {
@@ -70,16 +79,22 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
               >
                 (daten löschen)
               </button>
-              <button
-                className="ml-2"
-                onClick={
-                  isUsingLocal() ? deactivateLocalStorage : activateLocalStorage
-                }
-              >
-                {isUsingLocal()
-                  ? 'Punkte nicht auf dem Gerät speichern'
-                  : 'Punkte auf dem Gerät speichern'}
-              </button>
+              <label className="ml-2">
+                <input
+                  type="checkbox"
+                  className="mr-2"
+                  checked={isUsingLocal()}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      activateLocalStorage()
+                    } else {
+                      deactivateLocalStorage()
+                    }
+                    rerender()
+                  }}
+                />
+                Fortschritt auf diesem Gerät speichern
+              </label>
             </span>
           )}
           <div>
