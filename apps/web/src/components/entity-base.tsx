@@ -142,7 +142,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="my-8 mr-8 hidden h-20 mobileExt:h-40 sm:mb-10 sm:ml-4 sm:mt-6 sm:block sm:h-48"
-              src="https://denkspace.de/images/tina.png"
+              src="https://assets.serlo.org/f08cdf70-d553-11ee-830e-c731413216ff/image.png"
               alt="Tina"
             />
           </div>
@@ -243,7 +243,6 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       (page.breadcrumbsData &&
         page.breadcrumbsData.some((val) => val.label.includes('Mathematik')))
 
-    console.log(isMath, page.breadcrumbsData)
     if (!isMath) {
       return
     }

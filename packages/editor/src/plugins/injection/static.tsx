@@ -102,10 +102,14 @@ export function InjectionStaticRenderer({
   >('loading')
   const { strings } = useInstanceData()
   const [base, hash] = href.split('#')
-  const cleanedHref = base
-    ? base.startsWith('/')
-      ? base
-      : `/${base}`
+
+  // TODO: Temporary until migration is done
+  const baseReplacedWithHash = hash && /^[0-9]+$/.test(hash) ? hash : base
+
+  const cleanedHref = baseReplacedWithHash
+    ? baseReplacedWithHash.startsWith('/')
+      ? baseReplacedWithHash
+      : `/${baseReplacedWithHash}`
     : undefined
 
   useEffect(() => {
