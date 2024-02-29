@@ -85,14 +85,14 @@ function Content() {
             {renderItem('zahlen-vergroeßern-verkleinern-profi', 'für Profis')}
             <span></span>
           </ul>
-          {/*<h4 className="mt-1 text-lg">Zahlenabstände erkennen</h4>
+          <h4 className="mt-1 text-lg">Zahlenabstände erkennen</h4>
           <ul className="-ml-0.25 mr-2 mt-1 flex flex-wrap justify-between">
             {renderItem('zahlenabstaende-erkennen-1', 'Level 1')}
             {renderItem('zahlenabstaende-erkennen-2', 'Level 2')}
             {renderItem('zahlenabstaende-erkennen-profi', 'Profi')}
             {renderItem('zahlenabstaende-erkennen-topprofi', 'TopProfi')}
             <span></span>
-          </ul>*/}
+          </ul>
         </div>
         <div className="mt-4 h-fit w-72 rounded-lg border border-brand-200 p-5 shadow-menu mobileExt:ml-4 mobileExt:mt-0">
           <h3 className="pb-2 text-xl font-bold">Rechnen in ℕ</h3>

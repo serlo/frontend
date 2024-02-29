@@ -298,6 +298,76 @@ const exerciseData: {
       />
     ),
   },
+  'zahlenabstaende-erkennen-1': dataForNumberDistances('Level 1'),
+  'zahlenabstaende-erkennen-2': dataForNumberDistances('Level 2'),
+  'zahlenabstaende-erkennen-profi': dataForNumberDistances('Profi'),
+  'zahlenabstaende-erkennen-topprofi': dataForNumberDistances('TopProfi'),
+}
+
+function dataForNumberDistances(
+  level: 'Level 1' | 'Level 2' | 'Profi' | 'TopProfi'
+) {
+  return {
+    title: 'Zahlenabstände erkennen',
+    level,
+    component: (
+      <NumberInputExercise
+        centAmount={35}
+        generator={() => {
+          const baseNumber = randomIntBetween(3, 15)
+          const factor = randomItemFromArray([10, 100, 1000])
+          const overlay =
+            randomIntBetween(3, 15) *
+            randomItemFromArray([10000, 100000, 1000000, 10000000])
+          const output = {
+            a: baseNumber * factor + overlay,
+            b: baseNumber * factor * 2 + overlay,
+            c: baseNumber * factor * 3 + overlay,
+            result: -1,
+          }
+          const toFill = randomItemFromArray(
+            level === 'Level 1'
+              ? ['c']
+              : level === 'Level 2'
+                ? ['a']
+                : level === 'Profi'
+                  ? ['a', 'c']
+                  : ['a', 'b', 'c']
+          ) as 'a' | 'b' | 'c'
+          output.result = output[toFill]
+          output[toFill] = 0
+          return output
+        }}
+        getCorrectValue={({ result }) => {
+          return result
+        }}
+        render={(input, { a, c, b }) => {
+          return (
+            <>
+              <div className="my-5 flex items-baseline text-2xl">
+                <span className="inline-block w-24">1. Zahl</span>
+                <div className="w-32 text-right font-bold">
+                  {a ? <span className="ml-2">{a}</span> : input}
+                </div>
+              </div>
+              <div className="my-5 flex items-baseline text-2xl">
+                <span className="inline-block w-24">2. Zahl</span>
+                <div className="w-32 text-right font-bold">
+                  {b ? <span className="ml-2">{b}</span> : input}
+                </div>
+              </div>
+              <div className="my-5 flex items-baseline text-2xl">
+                <span className="inline-block w-24">3. Zahl</span>
+                <div className="w-32 text-right font-bold">
+                  {c ? <span className="ml-2">{c}</span> : input}
+                </div>
+              </div>
+            </>
+          )
+        }}
+      />
+    ),
+  }
 }
 
 function dataForPlaceValueChange(expert: boolean) {
