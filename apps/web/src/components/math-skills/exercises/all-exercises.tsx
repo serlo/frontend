@@ -435,8 +435,10 @@ function dataForTextToNumberExercise(expert: boolean) {
           return (
             <>
               <h2 className="mt-8 pb-4 text-left text-2xl text-almost-black">
-                Schreibe als Zahl: <wbr />
-                <span className="font-bold text-newgreen">{text}</span>
+                Schreibe als Zahl:{' '}
+                <span className="inline-block font-bold text-newgreen">
+                  {text}
+                </span>
               </h2>
               <div id="number-input">{input}</div>
             </>
