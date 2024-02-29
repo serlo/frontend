@@ -1,4 +1,4 @@
-import type { BlankInterface as Blank } from '@editor/plugins/fill-in-the-blanks-exercise/types'
+import type { BlankInterface as Blank } from '@editor/plugins/blanks-exercise/types'
 import { ListsEditor } from '@prezly/slate-lists'
 import type { BaseEditor } from 'slate'
 import { ReactEditor } from 'slate-react'

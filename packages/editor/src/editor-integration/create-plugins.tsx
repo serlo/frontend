@@ -6,7 +6,7 @@ import type { PluginsWithData } from '@editor/plugin/helpers/editor-plugins'
 import { anchorPlugin } from '@editor/plugins/anchor'
 import { articlePlugin } from '@editor/plugins/article'
 import { audioPlugin } from '@editor/plugins/audio'
-import { fillInTheBlanksExercise } from '@editor/plugins/fill-in-the-blanks-exercise'
+import { blanksExercise } from '@editor/plugins/blanks-exercise'
 import { H5pPlugin } from '@editor/plugins/h5p'
 import { imagePlugin } from '@editor/plugins/image/image-with-serlo-config'
 import { injectionPlugin } from '@editor/plugins/injection'
@@ -112,8 +112,8 @@ export function createPlugins({
       ? []
       : [
           {
-            type: EditorPluginType.FillInTheBlanksExercise,
-            plugin: fillInTheBlanksExercise,
+            type: EditorPluginType.BlanksExercise,
+            plugin: blanksExercise,
           },
         ]),
 

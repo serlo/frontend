@@ -5,7 +5,7 @@ Feature('Serlo Editor - Blank exercise')
 
 Before(popupWarningFix)
 
-const FillInTheBlanksExerciseButton = '$add-exercise-blanksExercise'
+const BlanksExerciseButton = '$add-exercise-blanksExercise'
 
 const initialTextPluginCount = 1
 
@@ -13,7 +13,7 @@ Scenario('Create and remove fill in the gap exercise', async ({ I }) => {
   I.amOnPage('/entity/create/Exercise/23869')
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
-  I.click(FillInTheBlanksExerciseButton)
+  I.click(BlanksExerciseButton)
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.click(locate('$plugin-text-editor').last())
@@ -32,7 +32,7 @@ Scenario(
     I.amOnPage('/entity/create/Exercise/23869')
 
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
-    I.click(FillInTheBlanksExerciseButton)
+    I.click(BlanksExerciseButton)
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
     I.pressKey(['CommandOrControl', 'Z'])
@@ -45,7 +45,7 @@ Scenario('Create and remove gaps through toolbar', async ({ I }) => {
   I.amOnPage('/entity/create/Exercise/23869')
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
-  I.click(FillInTheBlanksExerciseButton)
+  I.click(BlanksExerciseButton)
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.click(locate('$plugin-text-editor').last())
@@ -70,7 +70,7 @@ Scenario('Create a blank gap and type in it', async ({ I }) => {
   I.amOnPage('/entity/create/Exercise/23869')
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
-  I.click(FillInTheBlanksExerciseButton)
+  I.click(BlanksExerciseButton)
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.click(locate('$plugin-text-editor').last())
@@ -88,7 +88,7 @@ Scenario('Create and delete gaps with backspace/del', async ({ I }) => {
   I.amOnPage('/entity/create/Exercise/23869')
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
-  I.click(FillInTheBlanksExerciseButton)
+  I.click(BlanksExerciseButton)
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.click(locate('$plugin-text-editor').last())
@@ -113,7 +113,7 @@ Scenario.todo(
     I.amOnPage('/entity/create/Exercise/23869')
 
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
-    I.click(FillInTheBlanksExerciseButton)
+    I.click(BlanksExerciseButton)
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
     I.click(locate('$plugin-text-editor').last())
@@ -139,7 +139,7 @@ Scenario(
     I.amOnPage('/entity/create/Exercise/23869')
 
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
-    I.click(FillInTheBlanksExerciseButton)
+    I.click(BlanksExerciseButton)
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
     I.click(locate('$plugin-text-editor').last())

@@ -7,16 +7,16 @@ import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { Dispatch, SetStateAction } from 'react'
 
-import { type FillInTheBlanksExerciseProps } from '.'
+import { type BlanksExerciseProps } from '.'
 import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
 
-export const FillInTheBlanksToolbar = ({
+export const BlanksExerciseToolbar = ({
   id,
   state,
   previewActive,
   setPreviewActive,
   childPluginType,
-}: FillInTheBlanksExerciseProps & {
+}: BlanksExerciseProps & {
   previewActive: boolean
   setPreviewActive: Dispatch<SetStateAction<boolean>>
   childPluginType: EditorPluginType
@@ -26,7 +26,7 @@ export const FillInTheBlanksToolbar = ({
 
   return (
     <PluginToolbar
-      pluginType={EditorPluginType.FillInTheBlanksExercise}
+      pluginType={EditorPluginType.BlanksExercise}
       className="top-[-33px]"
       pluginSettings={
         <>

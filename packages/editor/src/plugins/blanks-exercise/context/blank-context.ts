@@ -1,9 +1,9 @@
 import { createContext } from 'react'
 
-import type { BlankId, DraggableId, FillInTheBlanksMode } from '..'
+import type { BlankId, DraggableId, BlanksExerciseMode } from '..'
 
-export interface FillInTheBlanksContextType {
-  mode: FillInTheBlanksMode
+export interface BlanksContextType {
+  mode: BlanksExerciseMode
   feedbackForBlanks: {
     value: Map<BlankId, { isCorrect?: boolean }>
     set: React.Dispatch<
@@ -29,7 +29,6 @@ export interface FillInTheBlanksContextType {
   }
 }
 
-// Used to pass state to BlankRenderer from FillInTheBlanksRenderer
+// Used to pass state to BlankRenderer from BlanksExerciseRenderer
 // BlankRenderer will use this state alongside the state stored in the slate custom element 'textBlank' to render.
-export const FillInTheBlanksContext =
-  createContext<FillInTheBlanksContextType | null>(null)
+export const BlanksContext = createContext<BlanksContextType | null>(null)
