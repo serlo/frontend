@@ -15,9 +15,10 @@ export const allExercises = {
     level: 'Level 1',
     smallprint: (
       <>
-        Der Zahlenstrahl ist flexibel. Pro Zahlenstrahl sind die Abstände
-        zwischen den Strichen immer gleich, aber jeder Zahlenstrahl kann einen
-        eigenen Abstand festlegen.
+        Fange damit an, die fehlenden Markierungen der langen Striche
+        herauszufinden. Die Mitte lässt sich gut bestimmen, auch eine
+        Verdopplung der Länge. Wenn du die Werte der langen Striche weißt, dann
+        hast du bereits einen guten Überblick.
       </>
     ),
     component: (
@@ -32,12 +33,12 @@ export const allExercises = {
     level: 'Level 2',
     smallprint: (
       <>
-        Im Jahr 1685 wurde von John Wallis das erste Mal der Zahlenstrahl
-        verwendet, um Zahlen darzustellen und zu zeigen, wie man mit ihnen
-        rechnet. Man stelle sich dabei vor, wie eine Person auf dem Strahl nach
-        links und rechts läuft.
+        Der Zahlenstrahl ist flexibel. Pro Zahlenstrahl sind die Abstände
+        zwischen den Strichen immer gleich, aber jeder Zahlenstrahl kann einen
+        eigenen Abstand festlegen.
       </>
     ),
+
     component: (
       <NumberLineExercise
         generator={numberLineGeneratorLevel2}
@@ -54,42 +55,13 @@ export const allExercises = {
         centAmount={35}
       />
     ),
-  },
-  'potenzwert-berechnen': {
-    title: 'Potenzwert berechnen',
-    component: (
-      <NumberInputExercise
-        centAmount={35}
-        generator={() => {
-          const base = randomIntBetween(0, 12)
-          const powerLimit = Math.floor(
-            base === 10 ? 6 : base > 4 ? 2 : 8 - base * 1.2
-          )
-          const mode = randomItemFromArray(['trivial', 'normal', 'normal'])
-          const power = mode === 'trivial' ? 1 : randomIntBetween(2, powerLimit)
-          return { base, power }
-        }}
-        getCorrectValue={({ base, power }) => {
-          return Math.pow(base, power)
-        }}
-        render={(input, { base, power }) => {
-          return (
-            <>
-              <h2 className="mt-8 pb-4 text-left text-2xl">
-                Berechne den Potenzwert
-              </h2>
-              <div className="ml-0.5 text-2xl font-bold" id="number-input">
-                <span className="text-newgreen">
-                  {base}
-                  <sup className="ml-0.5">{power}</sup>
-                </span>
-                {' = '}
-                {input}
-              </div>
-            </>
-          )
-        }}
-      />
+    smallprint: (
+      <>
+        Im Jahr 1685 wurde von John Wallis das erste Mal der Zahlenstrahl
+        verwendet, um Zahlen darzustellen. Mit dem Zahlenstrahl erklärte er, wie
+        man Zahlen addiert und subtrahiert. Er nutzte die Vorstellung von einem
+        Menschen, der auf dem Strahl nach rechts oder nach links läuft.
+      </>
     ),
   },
   'zahlen-ablesen-1': {
@@ -97,10 +69,9 @@ export const allExercises = {
     level: 'Level 1',
     smallprint: (
       <>
-        Manchmal fällt die gesuchte Zahl auf einen langen Strich. In dem Fall
-        reicht es, wenn du dir die Abstände zwischen den langen, grünen Strichen
-        anschaust. Die Zahlen sind alle so gewählt, dass du sie gut im Kopf
-        rechnen kannst.
+        Wie beim Anordnen ist ein guter Anfang, die Werte der langen Striche zu
+        bestimmen. Überlege dir dann, wie groß der Abstand zwischen zwei kleinen
+        Strichen ist (falls nötig).
       </>
     ),
     component: (
@@ -131,6 +102,13 @@ export const allExercises = {
   'zahlen-ablesen-profi': {
     title: 'Zahlenstrahl ablesen',
     level: 'Profi',
+    smallprint: (
+      <>
+        Der Zahlenstrahl beginnt bei 0 und verläuft unendlich nach rechts.
+        Später wirst du sehen, dass man den Zahlenstrahl auch nach links
+        erweitern kann. Daraus entsteht dann die Zahlengerade.
+      </>
+    ),
     component: (
       <NumberLineInputExercise
         generator={numberLineGeneratorLevel3}
@@ -138,8 +116,28 @@ export const allExercises = {
       />
     ),
   },
-  'text-in-zahl-1': dataForTextToNumberExercise(false),
-  'text-in-zahl-profi': dataForTextToNumberExercise(true),
+  'stellenwerte-finden': {
+    title: 'Stellenwerte finden',
+    smallprint: (
+      <>
+        Um die Schreibarbeit zu vereinfachen, werden in Zukunft die Stellenwerte
+        mit Buchstaben abgekürzt, die jeweils den Anfangsbuchstaben der Namen
+        entsprechen. E = Einer, Z = Zehner, H = Hunderter, T = Tausender, ZT =
+        Zehntausender, HT = Hunderttausender, M = Million.
+      </>
+    ),
+    component: (
+      <PlaceValueChooser
+        centAmount={35}
+        generator={() => {
+          const figure = randomIntBetween(1000, 99999)
+          // digit pos starting with 1 => Einser
+          const searchedDigit = randomIntBetween(1, figure.toString().length)
+          return { figure, searchedDigit }
+        }}
+      />
+    ),
+  },
   'stellenwert-tabelle-ablesen': {
     title: 'Stellenwerte ablesen',
     level: 'Level 1',
@@ -182,13 +180,46 @@ export const allExercises = {
       />
     ),
   },
-  'stellenwerte-aendern-1': dataForPlaceValueChange(false),
+  'stellenwerte-aendern-1': {
+    ...dataForPlaceValueChange(false),
+    smallprint: (
+      <>
+        Mathematisch bedeutet das Entfernen eines Plättchens eine Subtraktion,
+        das Hinzufügen entspricht einer Addition.
+      </>
+    ),
+  },
   'stellenwerte-aendern-profi': {
     ...dataForPlaceValueChange(true),
     smallprint: (
       <>
-        In Babylon gab es bereits ein Stellenwertsystem. Allerdings wurde nicht
-        bei der 10 gebündelt, sondern erst bei der 60!
+        Wenn du 10 Plättchen in einer Spalte hast, müssen diese zu einem
+        Plättchen gebündelt und in die nächste Spalte links eingetragen werden.
+        Unser Dezimalsystem bündelt bei der Zahl 10. Im alten Babylon gab es ein
+        Zahlensystem, das erst bei der 60 bündelt! Die Tabelle dort sah deutlich
+        voller aus.
+      </>
+    ),
+  },
+  'text-in-zahl-1': {
+    ...dataForTextToNumberExercise(false),
+    smallprint: (
+      <>
+        Die Zahl Million besteht aus dem lateinischen Wort mille (= Tausend) und
+        der Vergrößerungs-Silbe &quot;-ion&quot;, wörtlich also
+        &quot;großtausend&quot;. Eine Million hat 6 Nullen, ein Tausend hat 3
+        Nullen. Für große Zahlen sind die Zahlwörter immer in diesem 3er-Abstand
+        zu finden.
+      </>
+    ),
+  },
+  'text-in-zahl-profi': {
+    ...dataForTextToNumberExercise(true),
+    smallprint: (
+      <>
+        Im Englischen wird für eine Milliarde das Wort <em>billion</em>{' '}
+        verwendet - nicht zu verwechseln mit der deutschen Billion. Hier liegt
+        wahrlich ein großes Potenzial für Missverständnisse.
       </>
     ),
   },
@@ -197,20 +228,6 @@ export const allExercises = {
   'zahlen-vergroeßern-verkleinern-3': dataForIncrDescNumberExercise('Level 3'),
   'zahlen-vergroeßern-verkleinern-profi':
     dataForIncrDescNumberExercise('Profi'),
-  'stellenwerte-finden': {
-    title: 'Stellenwerte finden',
-    component: (
-      <PlaceValueChooser
-        centAmount={35}
-        generator={() => {
-          const figure = randomIntBetween(1000, 99999)
-          // digit pos starting with 1 => Einser
-          const searchedDigit = randomIntBetween(1, figure.toString().length)
-          return { figure, searchedDigit }
-        }}
-      />
-    ),
-  },
   'zahlen-sortieren-wip': {
     title: 'Zahlen Sortieren',
     level: 'WIP',
@@ -232,6 +249,43 @@ export const allExercises = {
   'zahlenabstaende-erkennen-2': dataForNumberDistances('Level 2'),
   'zahlenabstaende-erkennen-profi': dataForNumberDistances('Profi'),
   'zahlenabstaende-erkennen-topprofi': dataForNumberDistances('TopProfi'),
+  'potenzwert-berechnen': {
+    title: 'Potenzwert berechnen',
+    component: (
+      <NumberInputExercise
+        centAmount={35}
+        generator={() => {
+          const base = randomIntBetween(0, 12)
+          const powerLimit = Math.floor(
+            base === 10 ? 6 : base > 4 ? 2 : 8 - base * 1.2
+          )
+          const mode = randomItemFromArray(['trivial', 'normal', 'normal'])
+          const power = mode === 'trivial' ? 1 : randomIntBetween(2, powerLimit)
+          return { base, power }
+        }}
+        getCorrectValue={({ base, power }) => {
+          return Math.pow(base, power)
+        }}
+        render={(input, { base, power }) => {
+          return (
+            <>
+              <h2 className="mt-8 pb-4 text-left text-2xl">
+                Berechne den Potenzwert
+              </h2>
+              <div className="ml-0.5 text-2xl font-bold" id="number-input">
+                <span className="text-newgreen">
+                  {base}
+                  <sup className="ml-0.5">{power}</sup>
+                </span>
+                {' = '}
+                {input}
+              </div>
+            </>
+          )
+        }}
+      />
+    ),
+  },
 } as const
 
 export type SupportedExercisesId = keyof typeof allExercises
@@ -435,7 +489,9 @@ function dataForTextToNumberExercise(expert: boolean) {
           return (
             <>
               <h2 className="mt-8 pb-4 text-left text-2xl text-almost-black">
-                Schreibe als Zahl:{' '}
+                Schreibe als Zahl:
+                <br />
+                {/* Text is sometimes to long and will break here anyways. This prevents some jumping arounds.*/}
                 <span className="inline-block font-bold text-newgreen">
                   {text}
                 </span>

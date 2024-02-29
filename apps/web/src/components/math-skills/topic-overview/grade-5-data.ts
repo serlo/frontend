@@ -78,7 +78,6 @@ export const grade5Data: GradeTopicData[] = [
           { id: 'zahlenabstaende-erkennen-1', text: 'Level 1' },
           { id: 'zahlenabstaende-erkennen-2', text: 'Level 2' },
           { id: 'zahlenabstaende-erkennen-profi', text: 'Profi' },
-          { id: 'zahlenabstaende-erkennen-profi', text: 'Profi' },
           { id: 'zahlenabstaende-erkennen-topprofi', text: 'Profi+' },
         ],
       },
