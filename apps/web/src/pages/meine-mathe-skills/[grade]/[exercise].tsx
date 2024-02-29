@@ -3,7 +3,10 @@ import { useRouter } from 'next/router'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
-import { allExercises } from '@/components/math-skills/exercises/all-exercises'
+import {
+  SupportedExercisesId,
+  allExercises,
+} from '@/components/math-skills/exercises/all-exercises'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
 
 const ContentPage: NextPage = () => {
@@ -37,8 +40,14 @@ function Content() {
   const exercise = String(router.query.exercise)
 
   if (!exercise) return null
+  if (!Object.hasOwn(allExercises, exercise)) return null
 
-  const data = allExercises[exercise]
+  const data = allExercises[exercise as SupportedExercisesId] as {
+    title: string
+    level?: string
+    component: JSX.Element
+    smallprint?: JSX.Element
+  }
 
   if (!data) return null
 

@@ -9,13 +9,6 @@ import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 import { shuffleArray } from '@/helper/shuffle-array'
 
-export interface MathSkillExercise {
-  title: string
-  level?: string
-  component: JSX.Element
-  smallprint?: JSX.Element
-}
-
 export const allExercises = {
   'zahlen-anordnen-1': {
     title: 'Zahlenstrahl anordnen',
