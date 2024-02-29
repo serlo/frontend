@@ -10,6 +10,7 @@ import { NewFolderPrototypeProps } from './new-folder-prototype'
 import { SubTopic } from './sub-topic'
 import { TopicCategories } from './topic-categories'
 import { ExerciseNumbering } from '../content/exercises/exercise-numbering'
+import { ExamsInfoBox } from '../exams-info-box'
 import { FaIcon } from '../fa-icon'
 import { InfoPanel } from '../info-panel'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
@@ -112,6 +113,7 @@ export function Topic({ data }: TopicProps) {
     return (
       <h1 className="serlo-h1 mb-10 mt-8" itemProp="name">
         {data.title}
+        <ExamsInfoBox id={data.id} />
         {isExerciseFolder && (
           <span title={strings.entities.exerciseFolder}>
             {' '}
