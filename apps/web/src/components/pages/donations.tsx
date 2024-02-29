@@ -121,14 +121,14 @@ export function Donations() {
                   height={160}
                   className="mx-auto -ml-1.5 mb-7 mt-3 rounded-full object-cover"
                   src="/_assets/img/donations-contact.jpg"
-                  alt="Ansprechpartner Wolfgang Schmid"
+                  alt="Ansprechpartnerin Lena Eßer"
                 />
               </p>
               <div className="text-left mobile:ml-5 mobile:mt-5 md:ml-0 md:mt-0">
                 <p>
-                  <b>Wolfgang Schmid</b>
+                  <b>Lena Eßer</b>
                   <br />
-                  <i>(Vorstand & Mitgründer)</i>
+                  <i>(Partnerships & Fundraising)</i>
                 </p>
 
                 <p className="mt-3">
