@@ -69,8 +69,9 @@ export function NumberLineExercise({
 
   return (
     <>
-      <h2 className="pb-5 text-left text-2xl font-bold text-almost-black">
-        Wo ist die <span className="text-newgreen">{searchedValue}</span>?
+      <h2 className="pb-5 text-left text-2xl text-almost-black">
+        Wo ist die{' '}
+        <span className="font-bold text-newgreen">{searchedValue}</span>?
       </h2>
       <NewExerciseButton makeNewExercise={makeNewExercise} />
       <div className="relative touch-pinch-zoom" id="number-line-wrapper">

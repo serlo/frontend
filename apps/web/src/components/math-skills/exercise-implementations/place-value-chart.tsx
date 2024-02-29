@@ -10,7 +10,7 @@ interface PlaceValueChartProps {
 export function PlaceValueChart({ T, H, Z, E }: PlaceValueChartProps) {
   return (
     <div className="-ml-2 pb-3">
-      <table className="w-[22.5rem] table-fixed text-left">
+      <table className="w-[30rem] table-fixed text-left">
         <thead>
           <tr className="divide-x-2 divide-gray-200 text-xl">
             <th className="pl-2.5 pt-3">T</th>

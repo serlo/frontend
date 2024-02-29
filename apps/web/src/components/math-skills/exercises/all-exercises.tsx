@@ -75,8 +75,8 @@ export const allExercises = {
         render={(input, { base, power }) => {
           return (
             <>
-              <h2 className="mt-8 pb-6 text-left text-2xl font-bold">
-                Berechne den Potenzwert:
+              <h2 className="mt-8 pb-4 text-left text-2xl">
+                Berechne den Potenzwert
               </h2>
               <div className="ml-0.5 text-2xl font-bold" id="number-input">
                 <span className="text-newgreen">
@@ -170,11 +170,10 @@ export const allExercises = {
           return (
             <>
               <PlaceValueChart T={T} H={H} Z={Z} E={E} />
-              <h2 className="mt-4 text-xl">
-                Welche Zahl ist in der Stellenwert-Tafel dargestellt?
+              <h2 className="my-4 text-2xl">
+                Welche Zahl stellt die Stellenwert-Tafel dar?
               </h2>
-              <div className="ml-0.5 mt-8 text-2xl font-bold" id="number-input">
-                <span className="mr-3">Die Zahl lautet:</span>
+              <div className="ml-0.5 mt-2" id="number-input">
                 {input}
               </div>
             </>
@@ -400,16 +399,14 @@ function dataForIncrDescNumberExercise(
         render={(input, { diff, number, isIncr }) => {
           return (
             <>
-              <h2 className="mt-8 pb-1 text-left text-2xl font-bold">
-                Welche Zahl ist ...
-              </h2>
-              <div className="ml-0.5 text-2xl font-bold" id="number-input">
-                <span className="text-newgreen">
+              <h2 className="mt-8 pb-4 text-left text-2xl">
+                Welche Zahl ist <wbr />
+                <span className="whitespace-nowrap font-bold text-newgreen">
                   um {diff} {isIncr ? 'größer' : 'kleiner'} als {number}
                 </span>
                 &thinsp;?
-                <br />
-                <br />
+              </h2>
+              <div className="ml-0.5 text-2xl font-bold" id="number-input">
                 {input}
               </div>
             </>
@@ -437,9 +434,9 @@ function dataForTextToNumberExercise(expert: boolean) {
         render={(input, { text }) => {
           return (
             <>
-              <h2 className="mt-8 pb-7 text-left text-2xl font-bold text-almost-black">
-                Schreibe als Zahl: <br />
-                <span className="text-newgreen">{text}</span>
+              <h2 className="mt-8 pb-4 text-left text-2xl text-almost-black">
+                Schreibe als Zahl: <wbr />
+                <span className="font-bold text-newgreen">{text}</span>
               </h2>
               <div id="number-input">{input}</div>
             </>
