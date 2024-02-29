@@ -93,16 +93,16 @@ function Content() {
             {renderItem('zahlenabstaende-erkennen-topprofi', 'TopProfi')}
             <span></span>
           </ul>
+          <h4 className="text-lg">Zahlenordnung</h4>
+          <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
+            {renderItem('zahlen-sortieren-wip', 'Zahlen ordnen (WIP)')}
+          </ul>
         </div>
         <div className="mt-4 h-fit w-72 rounded-lg border border-brand-200 p-5 shadow-menu mobileExt:ml-4 mobileExt:mt-0">
           <h3 className="pb-2 text-xl font-bold">Rechnen in ℕ</h3>
           <h4 className="text-lg">Potenzieren</h4>
           <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
             {renderItem('potenzwert-berechnen', 'Potenzwert berechnen')}
-          </ul>
-          <h4 className="text-lg">WIP</h4>
-          <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
-            {renderItem('zahlen-sortieren-wip', 'Zahlen sortieren')}
           </ul>
         </div>
       </div>
