@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
 import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
+import { OrderValues } from '@/components/math-skills/exercise-implementations/order-values'
 import { PlaceValueChart } from '@/components/math-skills/exercise-implementations/place-value-chart'
 import { PlaceValueChooser } from '@/components/math-skills/exercise-implementations/place-value-chooser'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
@@ -12,6 +13,7 @@ import { NumberLineExercise } from '@/components/math-skills/number-line-exercis
 import { getIntRange } from '@/helper/get-int-range'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
+import { shuffleArray } from '@/helper/shuffle-array'
 
 const ContentPage: NextPage = () => {
   const router = useRouter()
@@ -218,6 +220,23 @@ const exerciseData: {
           // digit pos starting with 1 => Einser
           const searchedDigit = randomIntBetween(1, figure.toString().length)
           return { figure, searchedDigit }
+        }}
+      />
+    ),
+  },
+  'zahlen-sortieren-wip': {
+    title: 'Zahlen Sortieren',
+    level: 'WIP',
+    component: (
+      <OrderValues
+        centAmount={35}
+        generator={() => {
+          const v1 = randomIntBetween(1000, 99999)
+          const v2 = v1 - randomIntBetween(1, 10)
+          const v3 = v2 - randomIntBetween(1, 10)
+          const v4 = v3 - randomIntBetween(1, 10)
+          const v5 = v4 - randomIntBetween(1, 10)
+          return { values: shuffleArray([v1, v2, v3, v4, v5]) }
         }}
       />
     ),

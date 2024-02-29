@@ -100,6 +100,10 @@ function Content() {
           <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
             {renderItem('potenzwert-berechnen', 'Potenzwert berechnen')}
           </ul>
+          <h4 className="text-lg">WIP</h4>
+          <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
+            {renderItem('zahlen-sortieren-wip', 'Zahlen sortieren')}
+          </ul>
         </div>
       </div>
       <div className="h-72"></div>
