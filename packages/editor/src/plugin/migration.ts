@@ -6,10 +6,8 @@ import {
 
 // this file is currently unused
 
-/**
- * @param type - The initial {@link @edtr-io/internal__plugin-state#StateType | state type} to start the migration from
- */
 export function migratable<S, T, R>(
+  // Initial state type to start migration from
   type: StateType<S, T, R>
 ): MigratableStateType<S, S, S, T, R> {
   return migrate<S, never, S, S, T, R>(
