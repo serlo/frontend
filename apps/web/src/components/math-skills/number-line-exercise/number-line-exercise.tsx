@@ -95,7 +95,7 @@ export function NumberLineExercise({
         </div>
       </div>
 
-      <div className="h-3 justify-between text-center sm:flex sm:text-left">
+      <div className="justify-between text-center sm:flex sm:text-left">
         {isChecked ? (
           <p>
             {isCorrect ? (

@@ -62,16 +62,33 @@ function Content() {
         ) : null}
       </h2>
       {data.component}
+      {data.smallprint ? (
+        <div className="mb-12 mt-14 hyphens-auto leading-snug">
+          {data.smallprint}
+        </div>
+      ) : null}
     </div>
   )
 }
 
 const exerciseData: {
-  [key: string]: { title: string; level: string; component: JSX.Element }
+  [key: string]: {
+    title: string
+    level?: string
+    component: JSX.Element
+    smallprint?: JSX.Element
+  }
 } = {
   'zahlen-anordnen-1': {
     title: 'Zahlenstrahl anordnen',
     level: 'Level 1',
+    smallprint: (
+      <>
+        Der Zahlenstrahl ist flexibel. Pro Zahlenstrahl sind die Abstände
+        zwischen den Strichen immer gleich, aber jeder Zahlenstrahl kann einen
+        eigenen Abstand festlegen.
+      </>
+    ),
     component: (
       <NumberLineExercise
         generator={numberLineGeneratorLevel1}
@@ -82,6 +99,14 @@ const exerciseData: {
   'zahlen-anordnen-2': {
     title: 'Zahlenstrahl anordnen',
     level: 'Level 2',
+    smallprint: (
+      <>
+        Im Jahr 1685 wurde von John Wallis das erste Mal der Zahlenstrahl
+        verwendet, um Zahlen darzustellen und zu zeigen, wie man mit ihnen
+        rechnet. Man stelle sich dabei vor, wie eine Person auf dem Strahl nach
+        links und rechts läuft.
+      </>
+    ),
     component: (
       <NumberLineExercise
         generator={numberLineGeneratorLevel2}
@@ -101,7 +126,6 @@ const exerciseData: {
   },
   'potenzwert-berechnen': {
     title: 'Potenzwert berechnen',
-    level: '',
     component: (
       <NumberInputExercise
         centAmount={35}
@@ -140,6 +164,14 @@ const exerciseData: {
   'zahlen-ablesen-1': {
     title: 'Zahlenstrahl ablesen',
     level: 'Level 1',
+    smallprint: (
+      <>
+        Wenn die Markierung auf einem langen, grünen Strich zeigt, dann reicht
+        es dir aus, die Schrittlänge zwischen zwei langen Strichen
+        herauszufinden. Die Zahlen sind alle so gewählt, dass du sie gut im Kopf
+        rechnen kannst.
+      </>
+    ),
     component: (
       <NumberLineInputExercise
         generator={numberLineGeneratorLevel1}
@@ -150,6 +182,14 @@ const exerciseData: {
   'zahlen-ablesen-2': {
     title: 'Zahlenstrahl ablesen',
     level: 'Level 2',
+    smallprint: (
+      <>
+        Wer genau hinschaut erkennt, dass es nur zwei verschiedene Einteilungen
+        gibt! Einmal mit 400 als Maximalwert, und einmal mit 800. Der Abstand
+        der kleinen Striche ist bei dem einen 10, bei dem anderen 20. Achte auf
+        diesen Unterschied.
+      </>
+    ),
     component: (
       <NumberLineInputExercise
         generator={numberLineGeneratorLevel2}
@@ -170,8 +210,18 @@ const exerciseData: {
   'text-in-zahl-1': dataForTextToNumberExercise(false),
   'text-in-zahl-profi': dataForTextToNumberExercise(true),
   'stellenwert-tabelle-ablesen': {
-    title: 'Stellenwerte ändern',
+    title: 'Stellenwerte ablesen',
     level: 'Level 1',
+    smallprint: (
+      <>
+        Lange Zeit gab es keine Ziffer Null. Wenn eine Stelle in der
+        Stellenwert-Tafel leer war, musste man sich anders behelfen, z.B. mit
+        einem größeren Abstand zwischen zwei Ziffern oder einen anderen
+        Platzhalter. So kann es sehr schwer sein, zwischen 42001 und 420001 zu
+        unterscheiden. Erst mit der Erfindung der Null wurde unser Dezimalsystem
+        so leistungsfähig, wie wir es heute kennen.
+      </>
+    ),
     component: (
       <NumberInputExercise
         centAmount={35}
@@ -203,7 +253,15 @@ const exerciseData: {
     ),
   },
   'stellenwerte-aendern-1': dataForPlaceValueChange(false),
-  'stellenwerte-aendern-profi': dataForPlaceValueChange(true),
+  'stellenwerte-aendern-profi': {
+    ...dataForPlaceValueChange(true),
+    smallprint: (
+      <>
+        In Babylon gab es bereits ein Stellenwertsystem. Allerdings wurde nicht
+        bei der 10 gebündelt, sondern erst bei der 60!
+      </>
+    ),
+  },
   'zahlen-vergroeßern-verkleinern-1': dataForIncrDescNumberExercise('Level 1'),
   'zahlen-vergroeßern-verkleinern-2': dataForIncrDescNumberExercise('Level 2'),
   'zahlen-vergroeßern-verkleinern-3': dataForIncrDescNumberExercise('Level 3'),
@@ -211,7 +269,6 @@ const exerciseData: {
     dataForIncrDescNumberExercise('Profi'),
   'stellenwerte-finden': {
     title: 'Stellenwerte finden',
-    level: '',
     component: (
       <PlaceValueChooser
         centAmount={35}
