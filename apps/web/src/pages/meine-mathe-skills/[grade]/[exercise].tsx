@@ -166,9 +166,9 @@ const exerciseData: {
     level: 'Level 1',
     smallprint: (
       <>
-        Wenn die Markierung auf einen langen, grünen Strich zeigt, dann reicht
-        es dir aus, die Schrittlänge zwischen zwei langen Strichen
-        herauszufinden. Die Zahlen sind alle so gewählt, dass du sie gut im Kopf
+        Manchmal fällt die gesuchte Zahl auf einen langen Strich. In dem Fall
+        reicht es, wenn du dir die Abstände zwischen den langen, grünen Strichen
+        anschaust. Die Zahlen sind alle so gewählt, dass du sie gut im Kopf
         rechnen kannst.
       </>
     ),

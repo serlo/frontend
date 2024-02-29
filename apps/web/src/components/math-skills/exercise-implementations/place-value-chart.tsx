@@ -10,13 +10,13 @@ interface PlaceValueChartProps {
 export function PlaceValueChart({ T, H, Z, E }: PlaceValueChartProps) {
   return (
     <div className="-ml-2 pb-3">
-      <table className="w-[26rem] table-fixed text-left">
+      <table className="w-[22.5rem] table-fixed text-left">
         <thead>
           <tr className="divide-x-2 divide-gray-200 text-xl">
-            <th className="w-24 pl-2.5 pt-3">T</th>
-            <th className="w-24 pl-2.5 pt-3">H</th>
-            <th className="w-24 pl-2.5 pt-3">Z</th>
-            <th className="w-24 pl-2.5 pt-3">E</th>
+            <th className="pl-2.5 pt-3">T</th>
+            <th className="pl-2.5 pt-3">H</th>
+            <th className="pl-2.5 pt-3">Z</th>
+            <th className="pl-2.5 pt-3">E</th>
           </tr>
         </thead>
         <tbody>
