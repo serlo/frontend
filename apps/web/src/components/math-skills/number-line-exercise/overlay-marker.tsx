@@ -9,6 +9,7 @@ import { FaIcon } from '@/components/fa-icon'
 import { cn } from '@/helper/cn'
 
 interface OverlayMarkerProps {
+  isActive: boolean
   isChecked?: boolean
   isCorrect?: boolean
   isSearched?: boolean
@@ -16,6 +17,7 @@ interface OverlayMarkerProps {
 }
 
 export function OverlayMarker({
+  isActive,
   isChecked,
   isCorrect,
   isSearched,
@@ -33,6 +35,7 @@ export function OverlayMarker({
     <div
       key={index}
       className="relative -mb-8 h-16 w-[3px] bg-newgreen shadow-menu"
+      id={isActive ? 'range-input-user-maker' : undefined}
     >
       <div
         className={cn(

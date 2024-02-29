@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
+import { ExerciseFeedback } from '../feedback/execise-feedback'
 import { NewExerciseButton } from '../number-line-exercise/new-exercise-button'
-import { feedbackAnimation } from '../utils/feedback-animation'
-import { useExerciseData } from '../utils/math-skills-data-context'
 import { cn } from '@/helper/cn'
 
 interface PlaceValueChooserProps {
@@ -16,7 +15,6 @@ export function PlaceValueChooser({
 }: PlaceValueChooserProps) {
   const [data, setData] = useState(generator())
   const [isChecked, setIsChecked] = useState(false)
-  const { setExerciseData } = useExerciseData()
   const { figure, searchedDigit } = data
   const figureString = String(figure)
   const digitAmount = figureString.length
@@ -33,26 +31,6 @@ export function PlaceValueChooser({
       document.getElementById('place-value-chooser-input')?.focus()
     })
   }
-
-  function onCheck() {
-    if (selectedDigit === undefined) return
-    feedbackAnimation(
-      isCorrect,
-      document.getElementById('place-value-chooser-wrapper')
-    )
-    setIsChecked(true)
-    setExerciseData(isCorrect, centAmount)
-  }
-
-  useEffect(() => {
-    const keyEventHandler = (e: KeyboardEvent) => {
-      if (e.key === 'Enter') isChecked ? makeNewExercise() : onCheck()
-    }
-
-    document.addEventListener('keydown', keyEventHandler)
-    return () => document.removeEventListener('keydown', keyEventHandler)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isChecked, figure, selectedDigit])
 
   return (
     <>
@@ -112,27 +90,16 @@ export function PlaceValueChooser({
         })}
       </div>
 
-      <div className="mt-5 min-h-[120px] sm:flex sm:min-h-[80px] sm:items-center sm:justify-between">
-        <div className="text-almost-black">
-          {isChecked ? (
-            <p>
-              {isCorrect ? 'Sehr gut gemacht 👌' : <>Leider nicht richtig.</>}
-            </p>
-          ) : null}
-        </div>
-        <div className="pt-5 sm:flex sm:justify-between sm:pt-0">
-          {selectedDigit === undefined ? (
-            <>Wähle eine Stelle aus</>
-          ) : (
-            <button
-              className="serlo-button-blue -mt-1 h-8 focus:bg-brand"
-              onClick={isChecked ? makeNewExercise : onCheck}
-            >
-              {isChecked ? 'Nächste Aufgabe' : 'Überprüfen'}
-            </button>
-          )}
-        </div>
-      </div>
+      <ExerciseFeedback
+        noUserInput={selectedDigit === undefined}
+        noUserInputText={<>Wähle eine Stelle aus</>}
+        isChecked={isChecked}
+        setIsChecked={setIsChecked}
+        isCorrect={isCorrect}
+        shakeElementId="place-value-chooser-wrapper"
+        makeNewExercise={makeNewExercise}
+        centAmount={centAmount}
+      />
     </>
   )
 

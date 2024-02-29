@@ -7,9 +7,8 @@ import {
 } from '@hello-pangea/dnd'
 import { useEffect, useState } from 'react'
 
+import { ExerciseFeedback } from '../feedback/execise-feedback'
 import { NewExerciseButton } from '../number-line-exercise/new-exercise-button'
-import { feedbackAnimation } from '../utils/feedback-animation'
-import { useExerciseData } from '../utils/math-skills-data-context'
 import { FaIcon } from '@/components/fa-icon'
 import { cn } from '@/helper/cn'
 
@@ -28,7 +27,6 @@ interface OrderValuesProps {
 export function OrderValues({ generator, centAmount }: OrderValuesProps) {
   const [data, setData] = useState(generator())
   const [isChecked, setIsChecked] = useState(false)
-  const { setExerciseData } = useExerciseData()
   const { values } = data
   const correctOrder = Array.from(values).sort((a, b) => b - a)
   const isCorrect = values.every((value, i) => value === correctOrder[i])
@@ -41,18 +39,8 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
     })
   }
 
-  function onCheck() {
-    feedbackAnimation(
-      isCorrect,
-      document.getElementById('order-values-wrapper')
-    )
-    setIsChecked(true)
-    setExerciseData(isCorrect, centAmount)
-  }
-
   useEffect(() => {
     const keyEventHandler = (e: KeyboardEvent) => {
-      if (e.key === 'Enter') isChecked ? makeNewExercise() : onCheck()
       const isDown = e.key === 'ArrowDown'
       if (isDown || e.key === 'ArrowUp') {
         if (!document.activeElement) return true
@@ -78,7 +66,10 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
         <h2 className="pb-8 text-left text-2xl font-bold text-almost-black">
           Sortiere:
         </h2>
-        <div className="ml-8 text-right font-mono text-xl">
+        <div
+          className="ml-8 text-right font-mono text-xl"
+          id="order-values-draggables"
+        >
           {renderDragAndDropList()}
         </div>
         <div className="ml-2 flex flex-col justify-between py-2 text-lg text-gray-400">
@@ -91,23 +82,15 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
         </div>
       </div>
 
-      <div className="mt-5 min-h-[120px] sm:flex sm:min-h-[80px] sm:items-center sm:justify-between">
-        <div className="text-almost-black">
-          {isChecked ? (
-            <p>
-              {isCorrect ? 'Sehr gut gemacht 👌' : <>Leider nicht richtig.</>}
-            </p>
-          ) : null}
-        </div>
-        <div className="pt-5 sm:flex sm:justify-between sm:pt-0">
-          <button
-            className="serlo-button-blue -mt-1 h-8 focus:bg-brand"
-            onClick={isChecked ? makeNewExercise : onCheck}
-          >
-            {isChecked ? 'Nächste Aufgabe' : 'Überprüfen'}
-          </button>
-        </div>
-      </div>
+      <ExerciseFeedback
+        noUserInput={false}
+        isChecked={isChecked}
+        setIsChecked={setIsChecked}
+        isCorrect={isCorrect}
+        shakeElementId="order-values-draggables"
+        makeNewExercise={makeNewExercise}
+        centAmount={centAmount}
+      />
     </>
   )
 

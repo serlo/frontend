@@ -25,8 +25,8 @@ export function RangeInputOverlay({
 
   return (
     <div className="relative flex items-center justify-between">
-      <div className="absolute -left-4 -right-7 top-[17px] h-[3px] bg-newgreen-600 sm:-right-10"></div>
-      <div className="absolute -right-8 h-0 w-0 border-y-8 border-l-[16px] border-y-transparent border-l-newgreen-600 sm:-right-12"></div>
+      <div className="bg-newgreen-600 absolute -left-4 -right-7 top-[17px] h-[3px] sm:-right-10"></div>
+      <div className="border-l-newgreen-600 absolute -right-8 h-0 w-0 border-y-8 border-l-[16px] border-y-transparent sm:-right-12"></div>
 
       {Array.from({ length: stepAmount + 1 }).map((_, i) => {
         const isActive = selectedStep === i
@@ -35,6 +35,7 @@ export function RangeInputOverlay({
         if (isActive || (isChecked && !isCorrect && isSearched)) {
           return (
             <OverlayMarker
+              isActive={isActive}
               isChecked={isChecked}
               isCorrect={isCorrect}
               isSearched={isSearched}

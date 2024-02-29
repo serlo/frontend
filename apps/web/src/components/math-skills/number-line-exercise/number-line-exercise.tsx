@@ -5,8 +5,7 @@ import { ArrowButtonNavigation } from './arrow-button-navigation'
 import { NewExerciseButton } from './new-exercise-button'
 import { NumberLabels } from './number-labels'
 import { RangeInputOverlay } from './range-input-overlay'
-import { feedbackAnimation } from '../utils/feedback-animation'
-import { useExerciseData } from '../utils/math-skills-data-context'
+import { ExerciseFeedback } from '../feedback/execise-feedback'
 
 // layout support up to 6 digits
 
@@ -28,16 +27,8 @@ export function NumberLineExercise({
   const startValue = Math.round(maxValue / 8)
 
   const [isChecked, setIsChecked] = useState(false)
-  const { setExerciseData } = useExerciseData()
 
   const isCorrect = selectedValue === searchedValue
-
-  const onCheck = () => {
-    if (isChecked || selectedValue === 0) return
-    feedbackAnimation(isCorrect, document.getElementById('number-line-wrapper'))
-    setIsChecked(true)
-    setExerciseData(isCorrect, centAmount)
-  }
 
   function makeNewExercise() {
     const newData = generator()
@@ -52,7 +43,6 @@ export function NumberLineExercise({
 
   useEffect(() => {
     const keyEventHandler = (e: KeyboardEvent) => {
-      if (e.key === 'Enter') isChecked ? makeNewExercise() : onCheck()
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
         document.getElementById('number-line-input')?.focus()
       }
@@ -63,14 +53,26 @@ export function NumberLineExercise({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedValue, searchedValue, isChecked])
 
+  const noInputText = (
+    <>
+      Klicke auf den Zeitstrahl
+      <br /> oder benutze die Pfeilbuttons
+    </>
+  )
+  const isIncorrectText = (
+    <>
+      Leider nicht richtig.
+      <br />
+      Du hast die Zahl <b>{selectedValue}</b> ausgewählt.
+    </>
+  )
+
   return (
     <>
-      <h2 className="pb-8 text-left text-2xl font-bold text-almost-black">
+      <h2 className="pb-5 text-left text-2xl font-bold text-almost-black">
         Wo ist die <span className="text-newgreen">{searchedValue}</span>?
       </h2>
-
       <NewExerciseButton makeNewExercise={makeNewExercise} />
-
       <div className="relative touch-pinch-zoom" id="number-line-wrapper">
         <ActualRangeInput
           selectedValue={selectedValue}
@@ -95,42 +97,25 @@ export function NumberLineExercise({
         </div>
       </div>
 
-      <div className="justify-between text-center sm:flex sm:text-left">
-        {isChecked ? (
-          <p>
-            {isCorrect ? (
-              'Sehr gut gemacht 👌'
-            ) : (
-              <>
-                Leider nicht richtig.
-                <br />
-                Du hast die Zahl <b>{selectedValue}</b> ausgewählt.
-              </>
-            )}
-          </p>
-        ) : (
-          <ArrowButtonNavigation
-            selectedValue={selectedValue}
-            setSelectedValue={setSelectedValue}
-            maxValue={maxValue}
-          />
-        )}
-        <div className="mt-6 text-center text-gray-500 sm:mt-0 sm:text-right">
-          {selectedValue === startValue ? (
-            <>
-              Klicke auf den Zeitstrahl
-              <br /> oder benutze die Pfeilbuttons
-            </>
-          ) : (
-            <button
-              className="serlo-button-blue mt-2 h-8"
-              onClick={isChecked ? makeNewExercise : onCheck}
-            >
-              {isChecked ? 'Nächste Aufgabe' : 'Überprüfen'}
-            </button>
-          )}
-        </div>
+      <div className="-mt-8 mb-4">
+        <ExerciseFeedback
+          noUserInput={selectedValue === startValue}
+          noUserInputText={noInputText}
+          isChecked={isChecked}
+          setIsChecked={setIsChecked}
+          isIncorrectText={isIncorrectText}
+          isCorrect={isCorrect}
+          shakeElementId="range-input-user-maker"
+          makeNewExercise={makeNewExercise}
+          centAmount={centAmount}
+        />
       </div>
+
+      <ArrowButtonNavigation
+        selectedValue={selectedValue}
+        setSelectedValue={setSelectedValue}
+        maxValue={maxValue}
+      />
     </>
   )
 }
