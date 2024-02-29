@@ -30,21 +30,6 @@ function Content() {
     return (all += getPointsAmount(current.skillCent))
   }, 0)
 
-  const sharedWelcome = (
-    <>
-      <br />
-      <br />
-      Hier geht es darum, Mathematik zu können und das zu zeigen. Das dürfen
-      auch kleine Sachen sein.
-      <br />
-      Jeder Skill gibt Vertrauen, weiterzulernen.
-      <br />
-      Schritt für Schritt.
-      <br />
-      <br />
-    </>
-  )
-
   return (
     <div>
       <div className="mx-4 justify-center sm:mt-10 sm:flex sm:flex-row-reverse sm:items-center">
@@ -73,7 +58,16 @@ function Content() {
           ) : (
             <>
               <b>Willkommen!</b>
-              {sharedWelcome}
+              <br />
+              <br />
+              Hier geht es darum, Mathematik zu können und das zu zeigen. Das
+              dürfen auch kleine Sachen sein.
+              <br />
+              Jeder Skill gibt Vertrauen, weiterzulernen.
+              <br />
+              Schritt für Schritt.
+              <br />
+              <br />
               <b>Wie heißt du?</b>
               <NameInput />
             </>

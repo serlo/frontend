@@ -16,7 +16,7 @@ export interface MathSkillExercise {
   smallprint?: JSX.Element
 }
 
-export const allExercises: Record<string, MathSkillExercise> = {
+export const allExercises = {
   'zahlen-anordnen-1': {
     title: 'Zahlenstrahl anordnen',
     level: 'Level 1',
@@ -240,7 +240,9 @@ export const allExercises: Record<string, MathSkillExercise> = {
   'zahlenabstaende-erkennen-2': dataForNumberDistances('Level 2'),
   'zahlenabstaende-erkennen-profi': dataForNumberDistances('Profi'),
   'zahlenabstaende-erkennen-topprofi': dataForNumberDistances('TopProfi'),
-}
+} as const
+
+export type SupportedExercisesId = keyof typeof allExercises
 
 function dataForNumberDistances(
   level: 'Level 1' | 'Level 2' | 'Profi' | 'TopProfi'
