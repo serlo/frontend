@@ -45,7 +45,7 @@ export function ExamsInfoBox({ id }: { id: number }) {
             {renderIcon()}
             <div>
               <p className="serlo-p mb-2 font-normal  leading-normal">
-                Du bist grade im Prüfungsbereich für{' '}
+                Du bist gerade im Prüfungsbereich für{' '}
                 <b>{isInBYTax ? 'Bayern' : 'Niedersachsen'}</b>.
                 <br />
                 Die anderen Bundesländer, noch mehr Prüfungsaufgaben <br /> und
