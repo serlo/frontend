@@ -9,8 +9,6 @@ import { MathExamsLanding } from '@/components/pages/math-exams-landing'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-// TODO: rename to `mathe-pruefungen` again before going live
-
 export const supportedRegions = Object.keys(regions)
 export interface RegionData {
   region: SupportedRegion
