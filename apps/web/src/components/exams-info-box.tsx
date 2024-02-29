@@ -1,9 +1,10 @@
 import { BoxRenderer } from '@editor/plugins/box/renderer'
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
+import dynamic from 'next/dynamic'
 
 import { Link } from './content/link'
 import { FaIcon } from './fa-icon'
-import { SubjectIcon } from './landing/rework/subject-icon'
+import { type SubjectIconProps } from './landing/rework/subject-icon'
 
 // manually for now,
 // we need to figure out an elegant way to get all taxonomy ids that contain
@@ -23,6 +24,12 @@ const examsTaxIdsNI = [
   300698, 300714, 300718, 300778, 300804, 300805, 300806, 297606, 300750,
   300754, 300755, 297605,
 ]
+
+const SubjectIcon = dynamic<SubjectIconProps>(() =>
+  import('@/components/landing/rework/subject-icon').then(
+    (mod) => mod.SubjectIcon
+  )
+)
 
 export function ExamsInfoBox({ id }: { id: number }) {
   const isInBYTax = examsTaxIdsBY.includes(id)
