@@ -18,7 +18,7 @@ import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { cn } from '@/helper/cn'
 import { serloDomain } from '@/helper/urls/serlo-domain'
-import type { RegionData } from '@/pages/pruefungen/[region]'
+import type { RegionData } from '@/pages/mathe-pruefungen/[region]'
 
 export function MathExamsLanding({ region: initRegion }: RegionData) {
   const [region, setRegion] = useState<SupportedRegion>(initRegion ?? 'bayern')

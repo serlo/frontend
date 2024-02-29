@@ -1,11 +1,14 @@
+import { FaIcon } from '@editor/package'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { isImageDocument } from '@editor/types/plugin-type-guards'
+import { faListUl } from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
 
 import { MaxWidthDiv } from '../../navigation/max-width-div'
 import { SubTopic } from '../../taxonomy/sub-topic'
+import { Link } from '@/components/content/link'
 import type { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import type { TaxonomySubTerm } from '@/data-types'
@@ -31,9 +34,10 @@ export function SubjectLandingTopicOverview({
   const { extraTerms, allTopicsTaxonomyId } = deSubjectLandingData[subject]
 
   const allTopicsEntry = {
-    title: '↪ Alle Themen',
+    title: 'Alle Themen ⬈',
     description: undefined,
     href: `/${allTopicsTaxonomyId}`,
+    icon: faListUl,
   }
 
   function onMenuClick(index: number) {
@@ -96,39 +100,57 @@ export function SubjectLandingTopicOverview({
 
           const isExtraTerm = Object.hasOwn(term, 'href')
 
+          const buttonClass = cn(
+            `
+              m-2 flex min-h-[4rem] w-auto
+              items-center rounded-xl p-2 text-left text-left font-bold
+              text-brand shadow-menu transition-colors hover:bg-brand/5
+            `,
+            isActive ? 'bg-brand/10 text-black hover:bg-brand/10' : ''
+          )
+
+          if (isExtraTerm) {
+            return (
+              <Link
+                href={term.href}
+                key={term.title}
+                className={cn(buttonClass, '!no-underline')}
+              >
+                {term.icon ? (
+                  <FaIcon
+                    icon={term.icon}
+                    className="mr-2 h-10 w-10 rounded-lg bg-white bg-opacity-70 px-1.5 text-brand-500"
+                  />
+                ) : null}
+                {term.title}
+              </Link>
+            )
+          }
           return (
             <button
               key={term.title}
-              className={cn(
-                `
-                  m-2 flex min-h-[4rem]
-                  w-auto rounded-xl p-2 text-left text-left font-bold
-                  text-brand shadow-menu transition-colors hover:bg-brand/5
-                `,
-                isActive ? 'bg-brand/10 text-black hover:bg-brand/10' : '',
-                src ? '' : 'pl-16'
-              )}
+              className={buttonClass}
               onClick={() =>
                 isExtraTerm ? router.push(term.href) : onMenuClick(index)
               }
             >
-              {src ? (
-                <div className="relative h-12 w-12">
-                  {src.startsWith('https://assets.serlo.org') ? (
+              <div className="relative mr-2 h-10 w-10 rounded-lg bg-white bg-opacity-70 px-1.5">
+                {src ? (
+                  src.startsWith('https://assets.serlo.org') ? (
                     <Image
                       src={src}
                       fill
-                      sizes="3rem"
-                      className="object-cover pr-2"
+                      sizes="6rem"
+                      className="object-cover"
                       aria-hidden
                       alt={`Illustration: ${term.title}`}
                     />
                   ) : (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={src} className="h-12 w-12 object-cover pr-2" />
-                  )}
-                </div>
-              ) : null}
+                    <img src={src} className="h-12 w-12 object-cover" />
+                  )
+                ) : null}
+              </div>
               {term.title.replace(' und ', ' & ')}
             </button>
           )
