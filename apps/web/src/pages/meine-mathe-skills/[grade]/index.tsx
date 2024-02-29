@@ -77,6 +77,16 @@ function Content() {
             {renderItem('text-in-zahl-profi', 'für Profis')}
             <span></span>
           </ul>
+          <h4 className="text-lg">Zahlen ordnen</h4>
+          <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
+            {renderItem('zahlen-sortieren-wip', 'Level 1 (WIP)')}
+          </ul>
+          <h4 className="text-lg">Vorgänger und Nachfolger</h4>
+          <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
+            {renderItem('zahlen-sortieren-wip', 'Level 1 (TODO)')}
+            {renderItem('zahlen-sortieren-wip', 'Level 2 (TODO)')}
+            <span></span>
+          </ul>
           <h4 className="mt-1 text-lg">Zahlen vergrößern und verkleinern</h4>
           <ul className="-ml-0.25 mr-2 mt-1 flex flex-wrap justify-between">
             {renderItem('zahlen-vergroeßern-verkleinern-1', 'Level 1')}
@@ -92,10 +102,6 @@ function Content() {
             {renderItem('zahlenabstaende-erkennen-profi', 'Profi')}
             {renderItem('zahlenabstaende-erkennen-topprofi', 'TopProfi')}
             <span></span>
-          </ul>
-          <h4 className="text-lg">Zahlenordnung</h4>
-          <ul className="-ml-0.25 mr-2 mt-1 flex justify-between">
-            {renderItem('zahlen-sortieren-wip', 'Zahlen ordnen (WIP)')}
           </ul>
         </div>
         <div className="mt-4 h-fit w-72 rounded-lg border border-brand-200 p-5 shadow-menu mobileExt:ml-4 mobileExt:mt-0">
