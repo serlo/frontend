@@ -30,24 +30,33 @@ export function ExamsInfoBox({ id }: { id: number }) {
   if (!isInBYTax && !isInNITax) return null
 
   return (
-    <div className="-ml-side mt-8 max-w-[34rem]">
-      <BoxRenderer boxType="blank" anchorId="exams-info-box">
-        <div className="py-4">
-          <p className="serlo-p mb-2 font-normal  leading-normal">
-            Du bist grade im Prüfungsbereich für{' '}
-            <b>{isInBYTax ? 'Bayern' : 'Niedersachsen'}</b>.
-            <br />
-            Die anderen Bundesländer, noch mehr Prüfungsaufgaben <br /> und
-            unseren Discord-Server findest du hier:
-          </p>
-          <Link
-            href="/mathe-pruefungen"
-            className="serlo-button-blue mx-side !px-3 !py-2"
-          >
-            <FaIcon icon={faGraduationCap} /> Mathe-Prüfungen Startseite
-          </Link>
-        </div>
-      </BoxRenderer>
-    </div>
+    <>
+      <div className="-ml-side mt-8">
+        <BoxRenderer boxType="blank" anchorId="exams-info-box">
+          <div className="py-4">
+            <p className="serlo-p mb-2 font-normal  leading-normal">
+              Du bist grade im Prüfungsbereich für{' '}
+              <b>{isInBYTax ? 'Bayern' : 'Niedersachsen'}</b>.
+              <br />
+              Die anderen Bundesländer, noch mehr Prüfungsaufgaben <br /> und
+              unseren Discord-Server findest du hier:
+            </p>
+            <Link
+              href="/mathe-pruefungen"
+              className="serlo-button-blue mx-side !px-3 !py-2"
+            >
+              <FaIcon icon={faGraduationCap} /> Mathe-Prüfungen Startseite
+            </Link>
+          </div>
+        </BoxRenderer>
+        <style jsx global>
+          {`
+            #secondary-menu {
+              display: none !important;
+            }
+          `}
+        </style>
+      </div>
+    </>
   )
 }
