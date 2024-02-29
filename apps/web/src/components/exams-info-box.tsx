@@ -3,6 +3,7 @@ import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 
 import { Link } from './content/link'
 import { FaIcon } from './fa-icon'
+import { SubjectIcon } from './landing/rework/subject-icon'
 
 // manually for now,
 // we need to figure out an elegant way to get all taxonomy ids that contain
@@ -33,20 +34,23 @@ export function ExamsInfoBox({ id }: { id: number }) {
     <>
       <div className="-ml-side mt-8">
         <BoxRenderer boxType="blank" anchorId="exams-info-box">
-          <div className="py-4">
-            <p className="serlo-p mb-2 font-normal  leading-normal">
-              Du bist grade im Prüfungsbereich für{' '}
-              <b>{isInBYTax ? 'Bayern' : 'Niedersachsen'}</b>.
-              <br />
-              Die anderen Bundesländer, noch mehr Prüfungsaufgaben <br /> und
-              unseren Discord-Server findest du hier:
-            </p>
-            <Link
-              href="/mathe-pruefungen"
-              className="serlo-button-blue mx-side !px-3 !py-2"
-            >
-              <FaIcon icon={faGraduationCap} /> Mathe-Prüfungen Startseite
-            </Link>
+          <div className="flex py-4">
+            {renderIcon()}
+            <div>
+              <p className="serlo-p mb-2 font-normal  leading-normal">
+                Du bist grade im Prüfungsbereich für{' '}
+                <b>{isInBYTax ? 'Bayern' : 'Niedersachsen'}</b>.
+                <br />
+                Die anderen Bundesländer, noch mehr Prüfungsaufgaben <br /> und
+                unseren Discord-Server findest du hier:
+              </p>
+              <Link
+                href="/mathe-pruefungen"
+                className="serlo-button-blue mx-side !px-3 !py-2"
+              >
+                <FaIcon icon={faGraduationCap} /> Mathe-Prüfungen Startseite
+              </Link>
+            </div>
           </div>
         </BoxRenderer>
         <style jsx global>
@@ -59,4 +63,22 @@ export function ExamsInfoBox({ id }: { id: number }) {
       </div>
     </>
   )
+
+  function renderIcon() {
+    return (
+      <>
+        <div className="landing-subjects group hidden sm:mt-1 sm:block">
+          <SubjectIcon subject="mathe" />
+        </div>
+        <style jsx global>{`
+          .landing-subjects svg.serlo-subject-icon {
+            display: block;
+            margin: 0 auto;
+            width: 8rem;
+            height: 8rem;
+          }
+        `}</style>
+      </>
+    )
+  }
 }
