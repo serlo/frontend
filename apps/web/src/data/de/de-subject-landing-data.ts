@@ -1,3 +1,5 @@
+import { faGraduationCap, faSitemap } from '@fortawesome/free-solid-svg-icons'
+
 import { UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
@@ -18,14 +20,16 @@ export const deSubjectLandingData = {
     contributeLink: '/community',
     extraTerms: [
       {
-        title: '↪ Themen nach Lehrplan',
+        title: 'Themen nach Lehrplan ⬈',
         description: undefined,
         href: '/mathe/16030/deutschland',
+        icon: faSitemap,
       },
       {
-        title: '↪ Prüfungsbereich',
+        title: 'Abschlussprüfungen & Lösungen ⬈',
         description: undefined,
-        href: 'https://de.serlo.org/83249/mathematik-pr%C3%BCfungen',
+        href: '/mathe-pruefungen',
+        icon: faGraduationCap,
       },
     ],
   },
