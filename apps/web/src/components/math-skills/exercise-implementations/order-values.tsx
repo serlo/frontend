@@ -75,7 +75,9 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
       <NewExerciseButton makeNewExercise={makeNewExercise} />
 
       <div id="order-values-wrapper" className="flex">
-        <h2 className="pb-8 text-left text-2xl font-bold">Sortiere:</h2>
+        <h2 className="pb-8 text-left text-2xl font-bold text-almost-black">
+          Sortiere:
+        </h2>
         <div className="ml-8 text-right font-mono text-xl">
           {renderDragAndDropList()}
         </div>
@@ -145,7 +147,7 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       className={cn(
-                        'mb-1 rounded-md border border-brand-100 p-2',
+                        'mb-1 rounded-md border border-brand-100 p-2 font-bold text-almost-black',
                         'select-none bg-newgreen bg-opacity-0 hover:bg-opacity-5',
                         isDragging && ' bg-opacity-10',
                         isChecked && 'bg-opacity-10',

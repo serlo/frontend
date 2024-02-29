@@ -10,8 +10,9 @@ interface NumberInputExerciseProps<DATA> {
   generator: () => DATA
   getCorrectValue: (input: DATA) => number
   render: (input: JSX.Element, data: DATA) => JSX.Element
+  widthForDigits?: number
   centAmount?: number
-  longerInput?: boolean
+  className?: string
 }
 
 // input supports ~ up to 7 digits without clipping
@@ -20,8 +21,9 @@ export function NumberInputExercise<T>({
   generator,
   getCorrectValue,
   render,
+  widthForDigits = 7,
   centAmount,
-  longerInput,
+  className,
 }: NumberInputExerciseProps<T>) {
   const [inputValue, setInputValue] = useState('')
   const [isChecked, setIsChecked] = useState(false)
@@ -67,7 +69,9 @@ export function NumberInputExercise<T>({
           autoFocus
           value={inputValue}
           disabled={isChecked}
-          onChange={({ currentTarget }) => setInputValue(currentTarget.value)}
+          onChange={({ currentTarget }) => {
+            setInputValue(currentTarget.value)
+          }}
           type="text"
           pattern="\d+"
           inputMode="decimal"
@@ -77,8 +81,9 @@ export function NumberInputExercise<T>({
             'outline-dotted outline-2 outline-transparent focus-visible:outline-newgreen',
             isChecked && isCorrect && 'bg-newgreen-600',
             isChecked && !isCorrect && 'bg-red-100',
-            longerInput ? 'w-56' : 'w-[7.8rem]'
+            className
           )}
+          style={{ width: `${widthForDigits * 0.7}em` }}
         />,
         data
       )}

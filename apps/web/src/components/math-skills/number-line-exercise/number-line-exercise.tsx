@@ -65,7 +65,7 @@ export function NumberLineExercise({
 
   return (
     <>
-      <h2 className="pb-8 text-left text-2xl font-bold">
+      <h2 className="pb-8 text-left text-2xl font-bold text-almost-black">
         Wo ist die <span className="text-newgreen">{searchedValue}</span>?
       </h2>
 

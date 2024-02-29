@@ -271,33 +271,32 @@ function dataForNumberDistances(
           output[toFill] = 0
           return output
         }}
-        getCorrectValue={({ result }) => {
-          return result
-        }}
+        getCorrectValue={({ result }) => result}
         render={(input, { a, c, b }) => {
           return (
             <>
               <div className="my-5 flex items-baseline text-2xl">
                 <span className="inline-block w-24">1. Zahl</span>
-                <div className="w-32 text-right font-bold">
+                <div className="w-32 text-left font-mono font-bold">
                   {a ? <span className="ml-2">{a}</span> : input}
                 </div>
               </div>
               <div className="my-5 flex items-baseline text-2xl">
                 <span className="inline-block w-24">2. Zahl</span>
-                <div className="w-32 text-right font-bold">
+                <div className="w-32 text-left font-mono font-bold">
                   {b ? <span className="ml-2">{b}</span> : input}
                 </div>
               </div>
               <div className="my-5 flex items-baseline text-2xl">
                 <span className="inline-block w-24">3. Zahl</span>
-                <div className="w-32 text-right font-bold">
+                <div className="w-32 text-left font-mono font-bold">
                   {c ? <span className="ml-2">{c}</span> : input}
                 </div>
               </div>
             </>
           )
         }}
+        widthForDigits={9}
       />
     ),
   }
@@ -377,7 +376,7 @@ function dataForIncrDescNumberExercise(
     component: (
       <NumberInputExercise
         centAmount={35}
-        longerInput
+        widthForDigits={15}
         generator={() => {
           const diff = randomItemFromArray([10, 100, 1000])
           const isIncr = randomItemFromArray([true, false])
@@ -401,13 +400,14 @@ function dataForIncrDescNumberExercise(
         render={(input, { diff, number, isIncr }) => {
           return (
             <>
-              <h2 className="mt-8 pb-6 text-left text-2xl font-bold">
+              <h2 className="mt-8 pb-1 text-left text-2xl font-bold">
                 Welche Zahl ist ...
               </h2>
               <div className="ml-0.5 text-2xl font-bold" id="number-input">
                 <span className="text-newgreen">
-                  um {diff} {isIncr ? 'größer' : 'kleiner'} als {number}?
+                  um {diff} {isIncr ? 'größer' : 'kleiner'} als {number}
                 </span>
+                &thinsp;?
                 <br />
                 <br />
                 {input}
@@ -427,7 +427,7 @@ function dataForTextToNumberExercise(expert: boolean) {
     component: (
       <NumberInputExercise
         centAmount={35}
-        longerInput
+        widthForDigits={15}
         generator={() => {
           return generateTextToNumberExercise(expert)
         }}
@@ -437,15 +437,11 @@ function dataForTextToNumberExercise(expert: boolean) {
         render={(input, { text }) => {
           return (
             <>
-              <h2 className="mt-8 pb-6 text-left text-2xl font-bold">
-                Schreibe als Zahl:
-              </h2>
-              <div className="ml-0.5 text-2xl font-bold" id="number-input">
+              <h2 className="mt-8 pb-7 text-left text-2xl font-bold text-almost-black">
+                Schreibe als Zahl: <br />
                 <span className="text-newgreen">{text}</span>
-                <br />
-                <br />
-                {input}
-              </div>
+              </h2>
+              <div id="number-input">{input}</div>
             </>
           )
         }}

@@ -56,7 +56,7 @@ export function PlaceValueChooser({
 
   return (
     <>
-      <h2 className="pb-8 text-left text-2xl font-bold">
+      <h2 className="pb-8 text-left text-2xl font-bold text-almost-black">
         Markiere den Stellenwert:{' '}
         <span className="text-newgreen">{getDigitString()?.long}</span>
       </h2>
