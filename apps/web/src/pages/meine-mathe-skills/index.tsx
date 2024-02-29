@@ -6,6 +6,7 @@ import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LandingAnimal } from '@/components/math-skills/landing-animal'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
 import { NameInput } from '@/components/math-skills/name-input'
+import { getPointsAmount } from '@/components/math-skills/utils/get-points-amount'
 import { useMathSkillsStorage } from '@/components/math-skills/utils/math-skills-data-context'
 
 const ContentPage: NextPage = () => {
@@ -25,6 +26,10 @@ const ContentPage: NextPage = () => {
 
 function Content() {
   const { data } = useMathSkillsStorage()
+  const allPoints = [...data.exercises.values()].reduce((all, current) => {
+    return (all += getPointsAmount(current.skillCent))
+  }, 0)
+
   const sharedWelcome = (
     <>
       <br />
@@ -52,9 +57,16 @@ function Content() {
               Hallo <b>{data.name}</b>,
               <br />
               schön, dass du hier bist.
+              {allPoints ? (
+                <>
+                  <br />
+                  <br />
+                  Du hast schon <b>{allPoints}</b> Skill-Punkte gesammelt 🎉
+                </>
+              ) : null}
               <br />
               <br />
-              <b>Jetzt bist du dran:</b>
+              <b>{allPoints ? "Jetzt geht's weiter" : 'Jetzt bist du dran'}:</b>
               <br />
               Zeige, welche Mathe-Skills du drauf hast!
             </>

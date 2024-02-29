@@ -42,7 +42,7 @@ function Content() {
             <p className="text-2xl">5. Klasse</p>
           </div>
         </div>
-        <h2 className="mb-8 mt-5 text-2xl font-bold">Themenauswahl</h2>
+        <h2 className="mb-8 mt-5 text-2xl font-bold">Aufgabenauswahl</h2>
       </div>
       <div className="flex flex-wrap justify-center py-10 mobileExt:flex-nowrap">
         <div className="h-fit w-72 rounded-lg border border-brand-200 p-5 shadow-menu">

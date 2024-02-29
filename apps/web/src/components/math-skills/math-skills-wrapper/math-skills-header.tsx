@@ -46,7 +46,7 @@ export function MathSkillsHeader() {
         className={className}
       >
         <span className="hidden sm:inline">zur </span>
-        {grade.replace('klasse', '')}. Klasse
+        Auswahl ({grade.replace('klasse', '')}.)
       </Link>
     ) : (
       <Link href="/meine-mathe-skills" className={className}>

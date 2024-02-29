@@ -6,18 +6,17 @@ import { createContext, useContext, useEffect } from 'react'
 import { Animal } from './animal-data'
 import { getPointsAmount } from './get-points-amount'
 
+export interface ExerciseData {
+  correct: number
+  incorrect: number
+  // 0-300; 100, 200, 300 give you a skill point
+  skillCent: number
+}
+
 export interface MathSkillsStorageData {
   name: string
   animal: Animal
-  exercises: Map<
-    string,
-    {
-      correct: number
-      incorrect: number
-      // 0-300; 100, 200, 300 give you a skill point
-      skillCent: number
-    }
-  >
+  exercises: Map<string, ExerciseData>
 }
 
 export function getEmptyData(): MathSkillsStorageData {
