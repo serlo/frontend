@@ -17,21 +17,20 @@ export function MathSkillsHeader() {
   const titlePrefix = genitiveName && !isLanding ? genitiveName : 'Meine'
 
   return (
-    <>
-      <header className="flex h-14 items-center justify-between bg-yellow-100 px-4 py-2 text-center">
-        <Link
-          href="/meine-mathe-skills"
-          className={cn(
-            'block cursor-pointer text-xl text-almost-black',
-            isExercise || isGradePage ? '' : 'w-full text-center'
-          )}
-        >
-          {titlePrefix} Mathe-Skills
-        </Link>
-        {renderBackLink()}
-      </header>
+    <header className="flex h-[4.5rem] items-center justify-between bg-yellow-100 px-4 py-2 text-center">
+      <Link
+        href="/meine-mathe-skills"
+        className={cn(
+          'block cursor-pointer text-xl text-almost-black',
+          isExercise || isGradePage ? '' : 'w-full text-center',
+          isExercise && '!hidden sm:!block'
+        )}
+      >
+        {titlePrefix} Mathe-Skills
+      </Link>
       {isExercise ? <SkillPoints /> : null}
-    </>
+      {renderBackLink()}
+    </header>
   )
 
   function renderBackLink() {

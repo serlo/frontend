@@ -3,6 +3,7 @@ import {
   useExerciseData,
   useMathSkillsStorage,
 } from '../utils/math-skills-data-context'
+import { cn } from '@/helper/cn'
 
 export function SkillPoints() {
   const { data } = useMathSkillsStorage()
@@ -12,7 +13,7 @@ export function SkillPoints() {
   const { animal } = data
 
   return (
-    <div className="mx-auto mt-3 flex min-h-[53px] w-fit sm:relative sm:-mt-[3.55rem] sm:w-full sm:max-w-lg sm:justify-center">
+    <div className="-ml-1 mt-1 flex w-fit items-center sm:mx-auto sm:mt-2 sm:justify-center">
       {renderPoint(skillCent)}
       {renderPoint(skillCent - 100)}
       {renderPoint(skillCent - 200)}
@@ -20,13 +21,16 @@ export function SkillPoints() {
   )
 
   function renderPoint(percent: number) {
-    if (percent <= 0) return null
     if (percent >= 100) return renderFullPoint()
+    const cleanPercent = Math.max(percent, 0)
     const radius = 40
     const circumference = radius * 2 * Math.PI
     return (
       <div
-        className="relative ml-0.5 mr-1.5 mt-2.5 h-[43px] w-[43px] -rotate-90"
+        className={cn(
+          'relative mr-2 h-[43px] w-[43px] -rotate-90',
+          percent <= 0 && 'opacity-60'
+        )}
         style={{ color: animalsData[animal].color }}
       >
         <svg className="h-full w-full" viewBox="0 0 100 100">
@@ -49,7 +53,9 @@ export function SkillPoints() {
             r={radius}
             fill="transparent"
             strokeDasharray={circumference}
-            strokeDashoffset={circumference - (percent / 100) * circumference}
+            strokeDashoffset={
+              circumference - (cleanPercent / 100) * circumference
+            }
           ></circle>
         </svg>
       </div>
@@ -58,7 +64,7 @@ export function SkillPoints() {
 
   function renderFullPoint() {
     return (
-      <div className="group -ml-0.5 mr-1">
+      <div className="group -ml-0.5 -mt-2.5 mr-1">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt="Skill-Punkt mit Tier"
