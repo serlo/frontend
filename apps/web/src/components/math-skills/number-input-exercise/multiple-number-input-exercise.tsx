@@ -37,7 +37,9 @@ export function MultipleNumberInputExercise<T>({
   const correctValues = getCorrectValues(data)
 
   const isCorrect = correctValues.every(
-    (val, i) => val === parseInt(inputValues[i])
+    (val, i) =>
+      val === parseInt(inputValues[i]) &&
+      parseInt(inputValues[i]).toString() === inputValues[i]
   )
 
   function makeNewExercise() {
