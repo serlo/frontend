@@ -13,6 +13,7 @@ interface ExerciseFeedbackProps {
   makeNewExercise: () => void
   shakeElementId?: string
   centAmount?: number
+  forceCheck?: boolean
 }
 export function ExerciseFeedback({
   noUserInput,
@@ -24,6 +25,7 @@ export function ExerciseFeedback({
   makeNewExercise,
   shakeElementId,
   centAmount,
+  forceCheck,
 }: ExerciseFeedbackProps) {
   const { setExerciseData } = useExerciseData()
 
@@ -36,6 +38,11 @@ export function ExerciseFeedback({
     setIsChecked(true)
     setExerciseData(isCorrect, centAmount)
   }
+
+  useEffect(() => {
+    if (forceCheck) onCheck()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [forceCheck])
 
   useEffect(() => {
     const keyEventHandler = (e: KeyboardEvent) => {

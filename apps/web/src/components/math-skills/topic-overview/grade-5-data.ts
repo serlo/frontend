@@ -81,6 +81,13 @@ export const grade5Data: GradeTopicData[] = [
           { id: 'zahlenabstaende-erkennen-topprofi', text: 'Profi+' },
         ],
       },
+      {
+        title: 'Baustellen',
+        children: [
+          { id: 'memory-small-wip', text: 'Memory Klein' },
+          { id: 'memory-big-wip', text: 'Memory Groß' },
+        ],
+      },
     ],
   },
   {

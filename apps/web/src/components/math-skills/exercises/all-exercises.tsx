@@ -8,7 +8,9 @@ import {
   numberLineGeneratorLevel2,
   numberLineGeneratorLevel3,
 } from './generators/number-line-generator'
+import { MemoryGame } from '../exercise-implementations/memory/memory-game'
 import { MultipleNumberInputExercise } from '../number-input-exercise/multiple-number-input-exercise'
+import { toRoman } from '../utils/roman-numerals'
 import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
 import { OrderValues } from '@/components/math-skills/exercise-implementations/order-values'
 import { PlaceValueChart } from '@/components/math-skills/exercise-implementations/place-value-chart'
@@ -298,6 +300,48 @@ export const allExercises = {
   'zahlenabstaende-erkennen-topprofi':
     createNumberDistancesExercise('TopProfi'),
   'potenzwert-berechnen': createExponentiateExercise(),
+  'memory-small-wip': {
+    title: 'Memory',
+    level: 'WIP',
+    component: (
+      <MemoryGame
+        centAmount={35}
+        checkPair={(v0: number | string, v1: number | string) => {
+          return (
+            (Number.isInteger(v0) ? toRoman(v0 as number) : v0) ===
+            (Number.isInteger(v1) ? toRoman(v1 as number) : v1)
+          )
+        }}
+        generator={() => {
+          const arabic = [2, 3, 4]
+          const roman = arabic.map(toRoman)
+          const values = shuffleArray([...arabic, ...roman])
+          return { values }
+        }}
+      />
+    ),
+  },
+  'memory-big-wip': {
+    title: 'Memory',
+    level: 'WIP',
+    component: (
+      <MemoryGame
+        centAmount={35}
+        checkPair={(v0: number | string, v1: number | string) => {
+          return (
+            (Number.isInteger(v0) ? toRoman(v0 as number) : v0) ===
+            (Number.isInteger(v1) ? toRoman(v1 as number) : v1)
+          )
+        }}
+        generator={() => {
+          const arabic = [2, 3, 4, 5, 6, 7, 8, 9]
+          const roman = arabic.map(toRoman)
+          const values = shuffleArray([...arabic, ...roman])
+          return { values }
+        }}
+      />
+    ),
+  },
 } as const
 
 export type SupportedExercisesId = keyof typeof allExercises
