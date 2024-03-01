@@ -1,4 +1,5 @@
 import { arrayOfLength } from '@/helper/array-of-length'
+import { cn } from '@/helper/cn'
 
 interface PlaceValueChartProps {
   T: number
@@ -6,36 +7,40 @@ interface PlaceValueChartProps {
   Z: number
   E: number
 }
-
 export function PlaceValueChart({ T, H, Z, E }: PlaceValueChartProps) {
   return (
-    <div className="-ml-2 pb-3">
-      <table className="w-[30rem] table-fixed text-left">
-        <thead>
-          <tr className="divide-x-2 divide-gray-200 text-xl">
-            <th className="pl-2.5 pt-3">T</th>
-            <th className="pl-2.5 pt-3">H</th>
-            <th className="pl-2.5 pt-3">Z</th>
-            <th className="pl-2.5 pt-3">E</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="divide-x-2 divide-gray-200 break-all text-sm">
-            <td className="h-[65px] px-2 pb-3 align-top text-brand-500">
-              {arrayOfLength(T).map((_) => '⬤ ')}
-            </td>
-            <td className="px-2 pb-3 align-top text-newgreen">
-              {arrayOfLength(H).map((_) => '⬤ ')}
-            </td>
-            <td className="px-2 pb-3 align-top text-orange-300">
-              {arrayOfLength(Z).map((_) => '⬤ ')}
-            </td>
-            <td className="px-2 pb-3 align-top text-red-400">
-              {arrayOfLength(E).map((_) => '⬤ ')}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div className="-ml-2 flex gap-x-3 divide-x-2 divide-gray-200 pb-3 text-xl">
+      {renderBlock('T', T, 'text-brand-500')}
+      {renderBlock('H', H, 'text-newgreen')}
+      {renderBlock('Z', Z, 'text-orange-300')}
+      {renderBlock('E', E, 'text-red-400')}
     </div>
   )
+
+  function renderBlock(title: string, amount: number, colorClass: string) {
+    return (
+      <div
+        className={cn(
+          'min-h-[90px] basis-[50px] py-2.5 pl-3 mobile:basis-[130px]',
+          colorClass
+        )}
+      >
+        <span className="font-bold text-almost-black">{title}</span>
+        <div className="mt-1 flex gap-1 mobile:flex-col sm:gap-1.5">
+          <div className="flex flex-col gap-1 mobile:flex-row sm:gap-1.5">
+            {arrayOfLength(Math.min(amount, 5)).map(renderCircle)}
+          </div>
+          <div className="flex flex-col gap-1 mobile:flex-row sm:gap-1.5">
+            {arrayOfLength(Math.max(amount - 5, 0)).map(renderCircle)}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  function renderCircle(_: unknown, i: number) {
+    return (
+      <div key={i} className="inline-block h-4 w-4 rounded-full bg-current" />
+    )
+  }
 }
