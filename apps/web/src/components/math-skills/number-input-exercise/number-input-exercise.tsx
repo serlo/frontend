@@ -30,7 +30,9 @@ export function NumberInputExercise<T>({
 
   const correctValue = getCorrectValue(data)
 
-  const isCorrect = correctValue === parseInt(inputValue)
+  const isCorrect =
+    correctValue === parseInt(inputValue) &&
+    parseInt(inputValue).toString() === inputValue
 
   function makeNewExercise() {
     setData(generator())
