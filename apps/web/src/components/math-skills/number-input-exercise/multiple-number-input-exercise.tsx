@@ -35,12 +35,14 @@ export function MultipleNumberInputExercise<T>({
   const [selected, setSelected] = useState(0)
 
   const correctValues = getCorrectValues(data)
-
-  const isCorrect = correctValues.every(
-    (val, i) =>
-      val === parseInt(inputValues[i]) &&
+  const isCorrectArray = correctValues.map(
+    (value, i) =>
+      value === parseInt(inputValues[i]) &&
       parseInt(inputValues[i]).toString() === inputValues[i]
   )
+  const isCorrect = isCorrectArray.every(Boolean)
+  const isPartlyCorrect =
+    isCorrectArray.some(Boolean) && isCorrectArray.some((value) => !value)
 
   function makeNewExercise() {
     setData(generator())
@@ -78,8 +80,8 @@ export function MultipleNumberInputExercise<T>({
             className={cn(
               'ml-0.5 rounded-lg bg-[#d8f5ef] p-2 text-2xl ',
               'outline-dotted outline-2 outline-transparent focus-visible:outline-newgreen',
-              isChecked && isCorrect && 'bg-newgreen-600',
-              isChecked && !isCorrect && 'bg-red-100',
+              isChecked && isCorrectArray[i] && 'bg-newgreen-600',
+              isChecked && !isCorrectArray[i] && 'bg-red-100',
               className
             )}
             style={{ width: `${widthForDigits * 0.7}em` }}
@@ -93,7 +95,13 @@ export function MultipleNumberInputExercise<T>({
         noUserInputText={<>Gib eine Zahl ein</>}
         isChecked={isChecked}
         setIsChecked={setIsChecked}
-        isIncorrectText={<>Leider nicht richtig.</>}
+        isIncorrectText={
+          isPartlyCorrect ? (
+            <>Stimmt leider nicht ganz.</>
+          ) : (
+            <>Leider nicht richtig.</>
+          )
+        }
         isCorrect={isCorrect}
         shakeElementId="number-input"
         makeNewExercise={makeNewExercise}
