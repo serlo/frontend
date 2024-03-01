@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 
 import { ActualRangeInput } from './actual-range-input'
 import { ArrowButtonNavigation } from './arrow-button-navigation'
-import { NewExerciseButton } from './new-exercise-button'
 import { NumberLabels } from './number-labels'
 import { RangeInputOverlay } from './range-input-overlay'
-import { ExerciseFeedback } from '../feedback/execise-feedback'
+import { ExerciseFeedback } from '../exercises/components/feedback/execise-feedback'
+import { NewExerciseButton } from '../exercises/components/new-exercise-button'
 
 // layout support up to 6 digits
 
@@ -106,7 +106,7 @@ export function NumberLineExercise({
           setIsChecked={setIsChecked}
           isIncorrectText={isIncorrectText}
           isCorrect={isCorrect}
-          shakeElementId="range-input-user-maker"
+          elementToShakeQuery="#range-input-user-maker"
           makeNewExercise={makeNewExercise}
           centAmount={centAmount}
         />

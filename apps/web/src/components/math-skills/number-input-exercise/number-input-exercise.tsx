@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
 import { NumberKeyboard } from './number-keyboard'
-import { ExerciseFeedback } from '../feedback/execise-feedback'
-import { NewExerciseButton } from '../number-line-exercise/new-exercise-button'
+import { ExerciseFeedback } from '../exercises/components/feedback/execise-feedback'
+import { NewExerciseButton } from '../exercises/components/new-exercise-button'
 import { cn } from '@/helper/cn'
 
 interface NumberInputExerciseProps<DATA> {
@@ -82,7 +82,7 @@ export function NumberInputExercise<T>({
           </>
         }
         isCorrect={isCorrect}
-        shakeElementId="number-input"
+        elementToShakeQuery="#number-input"
         makeNewExercise={makeNewExercise}
         centAmount={centAmount}
       />

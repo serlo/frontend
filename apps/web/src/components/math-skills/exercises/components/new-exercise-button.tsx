@@ -1,7 +1,7 @@
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
 
-import { FaIcon } from '../../fa-icon'
-import { useExerciseData } from '../utils/math-skills-data-context'
+import { FaIcon } from '../../../fa-icon'
+import { useExerciseData } from '../../utils/math-skills-data-context'
 import { cn } from '@/helper/cn'
 
 export function NewExerciseButton({

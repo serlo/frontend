@@ -7,8 +7,8 @@ import {
 } from '@hello-pangea/dnd'
 import { useEffect, useState } from 'react'
 
-import { ExerciseFeedback } from '../feedback/execise-feedback'
-import { NewExerciseButton } from '../number-line-exercise/new-exercise-button'
+import { ExerciseFeedback } from '../exercises/components/feedback/execise-feedback'
+import { NewExerciseButton } from '../exercises/components/new-exercise-button'
 import { FaIcon } from '@/components/fa-icon'
 import { cn } from '@/helper/cn'
 
@@ -87,7 +87,7 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
         isChecked={isChecked}
         setIsChecked={setIsChecked}
         isCorrect={isCorrect}
-        shakeElementId="order-values-draggables"
+        elementToShakeQuery="#order-values-draggables"
         makeNewExercise={makeNewExercise}
         centAmount={centAmount}
       />

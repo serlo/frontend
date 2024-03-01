@@ -1,7 +1,4 @@
-import { useState } from 'react'
-
-import { ExerciseFeedback } from '../feedback/execise-feedback'
-import { NewExerciseButton } from '../number-line-exercise/new-exercise-button'
+import { ExerciseWrapper } from '../exercises/components/exercise-wrapper'
 import { cn } from '@/helper/cn'
 
 interface PlaceValueChooserProps {
@@ -13,100 +10,96 @@ export function PlaceValueChooser({
   generator,
   centAmount,
 }: PlaceValueChooserProps) {
-  const [data, setData] = useState(generator())
-  const [isChecked, setIsChecked] = useState(false)
-  const { figure, searchedDigit } = data
-  const figureString = String(figure)
-  const digitAmount = figureString.length
-  const [selectedDigit, setSelectedDigit] = useState<number | undefined>(
-    undefined
-  )
-  const isCorrect = selectedDigit === searchedDigit
-
-  function makeNewExercise() {
-    setData(generator())
-    setSelectedDigit(undefined)
-    setIsChecked(false)
-    setTimeout(() => {
-      document.getElementById('place-value-chooser-input')?.focus()
-    })
-  }
-
   return (
-    <>
-      <h2 className="pb-8 text-left text-2xl font-bold text-almost-black">
-        Markiere den Stellenwert:{' '}
-        <span className="text-newgreen">{getDigitString()?.long}</span>
-      </h2>
+    <ExerciseWrapper
+      generator={generator}
+      centAmount={centAmount}
+      getCorrect={({ searchedDigit }) => searchedDigit}
+      check={(digitIndex, { searchedDigit }) => digitIndex === searchedDigit}
+      noUserInputText={<>Wähle eine Stelle aus</>}
+      elementToShakeQuery="#place-value-chooser-wrapper"
+      renderTaskAndInputs={({
+        data,
+        interactionState: selectedDigit,
+        setInteractionState: setSelectedDigit,
+        isChecked,
+        isCorrect,
+      }) => {
+        const { figure, searchedDigit } = data
+        const figureString = String(figure)
+        const digitAmount = figureString.length
 
-      <NewExerciseButton makeNewExercise={makeNewExercise} />
-
-      <div
-        id="place-value-chooser-wrapper"
-        className="flex justify-center text-2xl font-bold"
-      >
-        {[...figureString].map((char, i) => {
-          const digitIndex = digitAmount - i
-          const isTicked = digitIndex === selectedDigit
-          return (
-            <label key={char + i} className="cursor-pointer">
-              <input
-                id="place-value-chooser-input"
-                className="appearance-none opacity-0"
-                type="radio"
-                disabled={isChecked}
-                name={figureString}
-                value={char}
-                checked={isTicked}
-                onChange={() => setSelectedDigit(digitIndex)}
-              />
-              <span
-                className={cn(
-                  'mx-0.25 inline-block min-w-[30px] rounded-md border-2 p-1.5 text-center',
-                  // default selection
-                  isTicked &&
-                    !isChecked &&
-                    'border-newgreen-600 bg-newgreen bg-opacity-10',
-                  // feedback
-                  isChecked &&
-                    isTicked &&
-                    isCorrect &&
-                    'border-newgreen-600 bg-newgreen bg-opacity-50',
-                  isChecked &&
-                    isTicked &&
-                    !isCorrect &&
-                    'border-red-300 bg-red-100',
-                  // feedback: actually correct:
-                  isChecked &&
-                    !isCorrect &&
-                    searchedDigit === digitIndex &&
-                    'border-newgreen-600 bg-newgreen bg-opacity-20'
-                )}
-              >
-                {char}
+        return (
+          <>
+            <h2 className="pb-8 text-left text-2xl font-bold text-almost-black">
+              Markiere den Stellenwert:{' '}
+              <span className="text-newgreen">
+                {getDigitString(searchedDigit)?.long}
               </span>
-            </label>
+            </h2>
+            <div
+              id="place-value-chooser-wrapper"
+              className="flex justify-center text-2xl font-bold"
+            >
+              {[...figureString].map((char, i) => {
+                const digitIndex = digitAmount - i
+                const isTicked = digitIndex === selectedDigit
+                return (
+                  <label key={char + i} className="cursor-pointer">
+                    <input
+                      id="place-value-chooser-input"
+                      className="appearance-none opacity-0"
+                      type="radio"
+                      disabled={isChecked}
+                      name={figureString}
+                      value={char}
+                      checked={isTicked}
+                      onChange={() => setSelectedDigit(digitIndex)}
+                    />
+                    <span className={getSpanClasses({ isTicked, digitIndex })}>
+                      {char}
+                    </span>
+                  </label>
+                )
+              })}
+            </div>
+          </>
+        )
+
+        function getSpanClasses({
+          isTicked,
+          digitIndex,
+        }: {
+          isTicked: boolean
+          digitIndex: number
+        }) {
+          return cn(
+            'mx-0.25 inline-block min-w-[30px] rounded-md border-2 p-1.5 text-center',
+            // default selection
+            isTicked &&
+              !isChecked &&
+              'border-newgreen-600 bg-newgreen bg-opacity-10',
+            // feedback
+            isChecked &&
+              isTicked &&
+              isCorrect &&
+              'border-newgreen-600 bg-newgreen bg-opacity-50',
+            isChecked && isTicked && !isCorrect && 'border-red-300 bg-red-100',
+            // feedback: actually correct:
+            isChecked &&
+              !isCorrect &&
+              searchedDigit === digitIndex &&
+              'border-newgreen-600 bg-newgreen bg-opacity-20'
           )
-        })}
-      </div>
-
-      <ExerciseFeedback
-        noUserInput={selectedDigit === undefined}
-        noUserInputText={<>Wähle eine Stelle aus</>}
-        isChecked={isChecked}
-        setIsChecked={setIsChecked}
-        isCorrect={isCorrect}
-        shakeElementId="place-value-chooser-wrapper"
-        makeNewExercise={makeNewExercise}
-        centAmount={centAmount}
-      />
-    </>
+        }
+      }}
+    />
   )
+}
 
-  function getDigitString() {
-    if (searchedDigit < 1 || searchedDigit > 7) return undefined
-    return digitStrings[searchedDigit as keyof typeof digitStrings]
-  }
+function getDigitString(searchedDigit: number) {
+  if (searchedDigit < 1 || searchedDigit > 7) return undefined
+  return digitStrings[searchedDigit as keyof typeof digitStrings]
 }
 
 const digitStrings = {

@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect } from 'react'
 
-import { feedbackAnimation } from '../utils/feedback-animation'
-import { useExerciseData } from '../utils/math-skills-data-context'
+import { feedbackAnimation } from '../../../utils/feedback-animation'
+import { useExerciseData } from '../../../utils/math-skills-data-context'
 
 interface ExerciseFeedbackProps {
   noUserInput: boolean
@@ -11,7 +11,7 @@ interface ExerciseFeedbackProps {
   isIncorrectText?: JSX.Element
   isCorrect: boolean
   makeNewExercise: () => void
-  shakeElementId?: string
+  elementToShakeQuery?: string
   centAmount?: number
 }
 export function ExerciseFeedback({
@@ -22,7 +22,7 @@ export function ExerciseFeedback({
   isIncorrectText,
   isCorrect,
   makeNewExercise,
-  shakeElementId,
+  elementToShakeQuery,
   centAmount,
 }: ExerciseFeedbackProps) {
   const { setExerciseData } = useExerciseData()
@@ -31,7 +31,9 @@ export function ExerciseFeedback({
     if (noUserInput) return
     feedbackAnimation(
       isCorrect,
-      shakeElementId ? document.getElementById(shakeElementId) : null
+      elementToShakeQuery
+        ? document.querySelector<HTMLElement>(elementToShakeQuery)
+        : null
     )
     setIsChecked(true)
     setExerciseData(isCorrect, centAmount)
