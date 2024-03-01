@@ -246,23 +246,24 @@ export const allExercises = {
         render={(inputs, data) => {
           return (
             <>
-              <div>Ergänze die fehlenden Zahlen!</div>
-              <div className="flex">
-                <div className="border p-2">
-                  Vorgänger
-                  <br />
+              <h2 className="pb-5 text-2xl text-almost-black">
+                Ergänze die fehlenden Zahlen:
+              </h2>
+              <div className="flex flex-col gap-3 text-sm font-bold text-almost-black mobile:flex-row">
+                <label>
                   {inputs[0]}
-                </div>
-                <div className="border p-2">
-                  Zahl
-                  <br />
-                  {data}
-                </div>
-                <div className="border p-2">
-                  Nachfolger
-                  <br />
+                  <p className="ml-2.5 mt-0.5 font-normal">Vorgänger</p>
+                </label>
+                <label>
+                  <p className="w-[120px] rounded-lg bg-gray-100 p-2 text-2xl">
+                    {data}
+                  </p>
+                  <p className="ml-2.5 mt-0.5 font-normal">Zahl</p>
+                </label>
+                <label>
                   {inputs[1]}
-                </div>
+                  <p className="ml-2.5 mt-0.5 font-normal">Nachfolger</p>
+                </label>
               </div>
             </>
           )
