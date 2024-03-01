@@ -59,7 +59,7 @@ export const grade5Data: GradeTopicData[] = [
       {
         title: 'Vorgänger und Nachfolger',
         children: [
-          { id: 'zahlen-sortieren-wip', text: 'Level 1 (TODO)' },
+          { id: 'vorgaenger-nachfolger-1', text: 'Level 1 (WIP)' },
           { id: 'zahlen-sortieren-wip', text: 'Level 2 (TODO)' },
         ],
       },

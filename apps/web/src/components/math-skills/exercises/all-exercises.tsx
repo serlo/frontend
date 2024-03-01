@@ -8,6 +8,7 @@ import {
   numberLineGeneratorLevel2,
   numberLineGeneratorLevel3,
 } from './generators/number-line-generator'
+import { MultipleNumberInputExercise } from '../number-input-exercise/multiple-number-input-exercise'
 import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
 import { OrderValues } from '@/components/math-skills/exercise-implementations/order-values'
 import { PlaceValueChart } from '@/components/math-skills/exercise-implementations/place-value-chart'
@@ -228,6 +229,45 @@ export const allExercises = {
         verwendet - nicht zu verwechseln mit der deutschen Billion. Hier liegt
         wahrlich ein großes Potenzial für Missverständnisse.
       </>
+    ),
+  },
+  'vorgaenger-nachfolger-1': {
+    title: 'Vorgänger und Nachfolger',
+    level: 'Level 1',
+    component: (
+      <MultipleNumberInputExercise
+        numberOfInputs={2}
+        generator={() => {
+          return randomIntBetween(10, 30) * 100 // finish generator code
+        }}
+        getCorrectValues={(val) => {
+          return [val - 1, val + 1]
+        }}
+        render={(inputs, data) => {
+          return (
+            <>
+              <div>Ergänze die fehlenden Zahlen!</div>
+              <div className="flex">
+                <div className="border p-2">
+                  Vorgänger
+                  <br />
+                  {inputs[0]}
+                </div>
+                <div className="border p-2">
+                  Zahl
+                  <br />
+                  {data}
+                </div>
+                <div className="border p-2">
+                  Nachfolger
+                  <br />
+                  {inputs[1]}
+                </div>
+              </div>
+            </>
+          )
+        }}
+      />
     ),
   },
   'zahlen-vergroeßern-verkleinern-1': createIncrDescNumberExercise('Level 1'),
