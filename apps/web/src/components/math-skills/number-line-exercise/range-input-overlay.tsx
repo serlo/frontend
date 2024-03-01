@@ -7,6 +7,7 @@ interface RangeInputOverlayProps {
   searchedValue: number
   isChecked?: boolean
   isCorrect?: boolean
+  useQuestionIcon?: boolean
 }
 
 const stepAmount = 40
@@ -17,6 +18,7 @@ export function RangeInputOverlay({
   searchedValue,
   isChecked,
   isCorrect,
+  useQuestionIcon,
 }: RangeInputOverlayProps) {
   const step = maxValue / 40
 
@@ -39,6 +41,7 @@ export function RangeInputOverlay({
               isChecked={isChecked}
               isCorrect={isCorrect}
               isSearched={isSearched}
+              useQuestionIcon={useQuestionIcon}
               index={i}
               key={i}
             />

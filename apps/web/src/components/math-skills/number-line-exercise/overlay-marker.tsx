@@ -2,6 +2,7 @@ import {
   faCheck,
   faCircleDot,
   faLeftRight,
+  faQuestion,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons'
 
@@ -9,27 +10,31 @@ import { FaIcon } from '@/components/fa-icon'
 import { cn } from '@/helper/cn'
 
 interface OverlayMarkerProps {
+  index: number
   isActive: boolean
   isChecked?: boolean
   isCorrect?: boolean
   isSearched?: boolean
-  index: number
+  useQuestionIcon?: boolean
 }
 
 export function OverlayMarker({
+  index,
   isActive,
   isChecked,
   isCorrect,
   isSearched,
-  index,
+  useQuestionIcon,
 }: OverlayMarkerProps) {
-  const icon = isChecked
-    ? isCorrect
-      ? faCheck
-      : isSearched
-        ? faCircleDot
-        : faXmark
-    : faLeftRight
+  const icon = useQuestionIcon
+    ? faQuestion
+    : isChecked
+      ? isCorrect
+        ? faCheck
+        : isSearched
+          ? faCircleDot
+          : faXmark
+      : faLeftRight
 
   return (
     <div

@@ -42,13 +42,14 @@ export function NumberLineInputExercise({
                 maxValue={data[2]}
                 selectedValue={data[0]}
                 searchedValue={data[0]}
-                isChecked
+                isChecked //deactivates user input
                 isCorrect={false}
+                useQuestionIcon
               />
             </div>
           </div>
-          <div className="ml-0.5 text-xl font-bold" id="number-input">
-            <span className="mr-3">Die gesuchte Zahl lautet: {input}</span>
+          <div className="text-xl" id="number-input">
+            Die gesuchte Zahl lautet:&nbsp; <b>{input}</b>
           </div>
         </>
       )}
