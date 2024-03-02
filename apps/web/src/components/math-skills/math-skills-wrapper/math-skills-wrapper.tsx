@@ -71,15 +71,7 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
             <div></div>
           ) : (
             <span>
-              <button
-                onClick={() => {
-                  deleteStored()
-                  setData(getEmptyData())
-                }}
-              >
-                (daten löschen)
-              </button>
-              <label className="ml-2">
+              <label className="mr-2">
                 <input
                   type="checkbox"
                   className="mr-2"
@@ -95,9 +87,26 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
                 />
                 Fortschritt auf diesem Gerät speichern
               </label>
+              <button
+                onClick={() => {
+                  deleteStored()
+                  setData(getEmptyData())
+                }}
+                className="text-gray-400"
+              >
+                (daten löschen)
+              </button>
             </span>
           )}
           <div>
+            <span className="group relative mr-4 text-gray-400 hover:underline">
+              <a href="https://www.freepik.com/free-vector/collection-cute-animals-wearing-graduation-cap-cartoon-style-vector_3780561.htm#query=animal%20illustration&position=1&from_view=keyword&track=ais&uuid=7991b85d-fd28-4da4-8e08-29af073982df">
+                Bildquelle
+              </a>
+              <span className="pointer-events-none absolute -right-1.5 -top-10 hidden w-max rounded-md bg-gray-200 px-2 py-1 text-almost-black group-focus-within:block group-hover:block">
+                Tierbilder von rawpixel.com (Freepik)
+              </span>
+            </span>
             <a className="hover:underline" href="https://de.serlo.org/legal">
               Impressum
             </a>
@@ -107,14 +116,6 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
             >
               Datenschutz
             </a>
-            {isLanding && (
-              <span className="ml-4 opacity-50 hover:underline">
-                <a href="https://www.freepik.com/free-vector/collection-cute-animals-wearing-graduation-cap-cartoon-style-vector_3780561.htm#query=animal%20illustration&position=1&from_view=keyword&track=ais&uuid=7991b85d-fd28-4da4-8e08-29af073982df">
-                  Bild von rawpixel.com
-                </a>{' '}
-                (Freepik){' '}
-              </span>
-            )}
           </div>
         </footer>
       </MathSkillsProvider>
