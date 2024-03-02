@@ -1,10 +1,10 @@
-import { FaIcon } from '@editor/package'
 import { faListDots } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/router'
 
 import { SkillPoints } from './skill-points'
 import { Link } from '../../content/link'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
+import { FaIcon } from '@/components/fa-icon'
 import { cn } from '@/helper/cn'
 
 export function MathSkillsHeader() {
