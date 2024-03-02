@@ -248,7 +248,7 @@ export const allExercises = {
         render={(inputs, data) => {
           return (
             <>
-              <h2 className="pb-5 text-2xl text-almost-black">
+              <h2 className="mr-12 pb-5 text-2xl text-almost-black">
                 Ergänze die fehlenden Zahlen:
               </h2>
               <div className="flex flex-col gap-3 text-sm font-bold text-almost-black mobile:flex-row">

@@ -62,11 +62,11 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
       />
       <MathSkillsProvider value={{ data, updateData }}>
         {/* This div here is for the outer flexbox */}
-        <div>
+        <div className="min-h-[calc(100vh-8.5rem)] text-almost-black">
           <MathSkillsHeader />
           {children}
         </div>
-        <footer className="mb-3 ml-3 mt-auto flex flex-col justify-between px-3 text-gray-700 sm:flex-row">
+        <footer className="mb-3 ml-3 mt-24 flex flex-col justify-between px-3 text-gray-700 sm:h-7 sm:flex-row">
           {isProduction || isExercise ? (
             <div></div>
           ) : (
@@ -121,17 +121,6 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
       <style jsx global>{`
         html {
           background-color: white !important;
-        }
-        body,
-        html,
-        #__next {
-          min-height: 100%;
-        }
-        #__next {
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
         }
       `}</style>
     </>

@@ -55,7 +55,7 @@ export function ExerciseFeedback({
   }, [isChecked, isCorrect, noUserInput])
 
   return (
-    <div className="mt-5 min-h-[120px] sm:flex sm:min-h-[80px] sm:items-center sm:justify-between">
+    <div className="mt-5 flex min-h-[120px] flex-col items-center sm:min-h-[80px] sm:flex-row sm:justify-between">
       <div className="text-almost-black">
         {isChecked ? (
           <p>

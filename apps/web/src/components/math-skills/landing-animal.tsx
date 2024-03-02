@@ -18,7 +18,7 @@ export function LandingAnimal() {
   }
 
   return (
-    <figure className="relative mx-auto mt-4 w-fit self-start sm:mx-0 sm:-mt-1">
+    <figure className="relative mx-auto mt-1 w-fit self-start sm:mx-0 sm:-mt-6">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         alt="Tiermaskottchen"

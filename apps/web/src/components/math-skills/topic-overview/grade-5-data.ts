@@ -1,6 +1,6 @@
 import { SupportedExercisesId } from '../exercises/all-exercises'
 
-interface GradeTopicData {
+export interface GradeTopicData {
   title: string
   children: {
     title: string
