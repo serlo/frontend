@@ -8,7 +8,7 @@ export function NameInput() {
   const [nameValue, setNameValue] = useState('')
 
   const trimmedName = nameValue.trim()
-  const hasName = trimmedName.length > 2
+  const hasName = trimmedName.length >= 2
 
   return (
     <>

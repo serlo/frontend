@@ -52,8 +52,10 @@ function Content() {
   if (!data) return null
 
   return (
-    <div className="relative mx-4 mt-20 max-w-lg bg-white sm:mx-auto sm:w-full">
-      <h2 className="text-md mb-9 font-bold text-gray-400">
+    <div className="relative mx-4 mt-10 max-w-lg bg-white mobileExt:mx-auto sm:w-full">
+      {data.component}
+
+      <h2 className="text-md mb-5 mt-9 font-bold">
         {data.title}
         {data.level ? (
           <>
@@ -61,11 +63,8 @@ function Content() {
           </>
         ) : null}
       </h2>
-      {data.component}
       {data.smallprint ? (
-        <div className="mb-12 mt-14 hyphens-auto leading-snug">
-          {data.smallprint}
-        </div>
+        <div className="mb-12 hyphens-auto leading-snug">{data.smallprint}</div>
       ) : null}
     </div>
   )

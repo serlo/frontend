@@ -119,7 +119,7 @@ export function MemoryGame({
         </h2>
         <nav
           className={cn(
-            'grid max-w-[350px] grid-cols-4 gap-2 text-center text-3xl font-bold',
+            'grid max-w-[350px] gap-2 text-center text-3xl font-bold',
             useSmallField ? 'grid-cols-3' : 'grid-cols-4'
           )}
           id="memory-game-cards"

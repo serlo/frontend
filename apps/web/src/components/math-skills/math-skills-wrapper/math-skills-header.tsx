@@ -1,14 +1,15 @@
+import { faListDots } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/router'
 
 import { SkillPoints } from './skill-points'
 import { Link } from '../../content/link'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
+import { FaIcon } from '@/components/fa-icon'
 import { cn } from '@/helper/cn'
 
 export function MathSkillsHeader() {
   const router = useRouter()
   const isExercise = !!router.query.exercise
-  const grade = String(router.query.grade)
   const { data } = useMathSkillsStorage()
   const isGradePage = !isExercise && !!router.query.grade
   const isLanding = !isGradePage && !isExercise
@@ -44,8 +45,7 @@ export function MathSkillsHeader() {
         href={`/meine-mathe-skills/${String(router.query.grade)}`}
         className={className}
       >
-        <span className="hidden sm:inline">zur </span>
-        Auswahl ({grade.replace('klasse', '')}.)
+        <FaIcon icon={faListDots} /> Aufgaben
       </Link>
     ) : (
       <Link href="/meine-mathe-skills" className={className}>

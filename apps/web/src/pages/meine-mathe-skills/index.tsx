@@ -1,13 +1,11 @@
-/* eslint-disable @next/next/no-before-interactive-script-outside-document */
 import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 
-import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { LandingAnimal } from '@/components/math-skills/landing-animal'
+import { WelcomeSection } from '@/components/math-skills/landing/welcome-section'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
-import { NameInput } from '@/components/math-skills/name-input'
-import { getPointsAmount } from '@/components/math-skills/utils/get-points-amount'
 import { useMathSkillsStorage } from '@/components/math-skills/utils/math-skills-data-context'
+import { cn } from '@/helper/cn'
 
 const ContentPage: NextPage = () => {
   return (
@@ -25,70 +23,37 @@ const ContentPage: NextPage = () => {
 }
 
 function Content() {
+  const router = useRouter()
   const { data } = useMathSkillsStorage()
-  const allPoints = [...data.exercises.values()].reduce((all, current) => {
-    return (all += getPointsAmount(current.skillCent))
-  }, 0)
 
   return (
-    <div>
-      <div className="mx-4 justify-center sm:mt-10 sm:flex sm:flex-row-reverse sm:items-center">
-        <LandingAnimal />
-        <div className="mx-auto mb-6 mt-4 min-h-[22rem] max-w-[26rem] text-lg sm:mx-0 sm:w-[26rem] sm:leading-relaxed">
-          {data?.name ? (
-            <>
-              <br />
-              <br />
-              Hallo <b>{data.name}</b>,
-              <br />
-              schön, dass du hier bist.
-              {allPoints ? (
-                <>
-                  <br />
-                  <br />
-                  Du hast schon <b>{allPoints}</b> Skill-Punkte gesammelt 🎉
-                </>
-              ) : null}
-              <br />
-              <br />
-              <b>{allPoints ? "Jetzt geht's weiter" : 'Jetzt bist du dran'}:</b>
-              <br />
-              Zeige, welche Mathe-Skills du drauf hast!
-            </>
-          ) : (
-            <>
-              <b>Willkommen!</b>
-              <br />
-              <br />
-              Hier geht es darum, Mathematik zu können und das zu zeigen. Das
-              dürfen auch kleine Sachen sein.
-              <br />
-              Jeder Skill gibt Vertrauen, weiterzulernen.
-              <br />
-              Schritt für Schritt.
-              <br />
-              <br />
-              <b>Wie heißt du?</b>
-              <NameInput />
-            </>
-          )}
-        </div>
+    <div className="mx-4 max-w-md mobile:mx-auto sm:mt-10 lg:max-w-xl">
+      <div className="sm:flex sm:flex-row-reverse sm:items-center sm:justify-center">
+        <WelcomeSection />
       </div>
-      {data?.name && (
+      {data?.name ? (
         <>
-          <div className="mx-4 mt-2 text-2xl font-bold mobile:flex mobile:justify-center">
-            <h2>Wähle eine Klassenstufe</h2>
-          </div>
-          <div className="mb-8 mt-6 flex justify-center text-2xl font-bold sm:mt-8">
-            <Link
+          <h2 className="mt-10 text-lg font-bold">Wähle eine Klassenstufe:</h2>
+          <div className="mb-8 mt-4 flex pr-4 text-lg font-bold">
+            <a
               href="/meine-mathe-skills/klasse5"
-              className="flex h-36 w-36 items-center justify-center rounded-full bg-brand-600 text-center  text-white !no-underline transition-colors hover:bg-brand-500"
+              onClick={(e) => {
+                e.preventDefault()
+                void router.push('/meine-mathe-skills/klasse5', undefined, {
+                  shallow: true,
+                  scroll: false,
+                })
+              }}
+              className={cn(`
+                flex h-24 w-24 items-center justify-center rounded-full bg-newgreen bg-opacity-30
+              text-almost-black !no-underline transition-colors hover:bg-opacity-70 md:h-28 md:w-28
+              `)}
             >
-              <p className="text-2xl">5. Klasse</p>
-            </Link>
+              <p>5. Klasse</p>
+            </a>
           </div>
         </>
-      )}
+      ) : null}
     </div>
   )
 }
