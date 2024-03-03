@@ -11,46 +11,27 @@ export function createPlaceValueChangeExercise(expert: boolean) {
       <NumberInputExercise
         centAmount={52}
         generator={() => {
-          const lower = expert ? 8 : 4
-          const upper = expert ? 9 : 8
-          const T = randomIntBetween(lower, upper)
-          const H = randomIntBetween(lower, upper)
-          const Z = randomIntBetween(lower, upper)
-          const E = randomIntBetween(lower, upper)
-          const from = randomItemFromArray(['T', 'H', 'Z', 'E'])
-          const to = randomItemFromArray(
-            ['T', 'H', 'Z', 'E'].filter((x) => x !== from)
-          )
-          const placeValues: { [key: string]: number } = {
+          const placeValues: Record<string, number> = {
             T: 1000,
             H: 100,
             Z: 10,
             E: 1,
           }
+          const titles = Object.keys(placeValues)
+          const startValue = expert
+            ? randomIntBetween(8888, 9999)
+            : randomIntBetween(4444, 8888)
+          const from = randomItemFromArray(titles)
+          const to = randomItemFromArray(titles.filter((x) => x !== from))
 
-          return {
-            value:
-              T * 1000 +
-              H * 100 +
-              Z * 10 +
-              E -
-              placeValues[from] +
-              placeValues[to],
-            T,
-            H,
-            Z,
-            E,
-            from,
-            to,
-          }
+          const value = startValue - placeValues[from] + placeValues[to]
+          return { value, from, to }
         }}
-        getCorrectValue={({ value }) => {
-          return value
-        }}
-        render={(input, { T, H, Z, E, from, to }) => {
+        getCorrectValue={({ value }) => value}
+        render={(input, { value, from, to }) => {
           return (
             <>
-              <PlaceValueChart T={T} H={H} Z={Z} E={E} />
+              <PlaceValueChart value={value} />
               <p className="mt-4 text-xl">
                 Ein Plättchen wird von <b>{from}</b> nach <b>{to}</b> geschoben.
                 <br />
