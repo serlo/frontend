@@ -8,7 +8,6 @@ import {
 import { useEffect, useState } from 'react'
 
 import { ExerciseFeedback } from '../feedback/execise-feedback'
-import { NewExerciseButton } from '../number-line-exercise/new-exercise-button'
 import { FaIcon } from '@/components/fa-icon'
 import { cn } from '@/helper/cn'
 
@@ -60,8 +59,6 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
 
   return (
     <>
-      <NewExerciseButton makeNewExercise={makeNewExercise} />
-
       <div id="order-values-wrapper" className="flex">
         <h2 className="pb-8 text-left text-2xl font-bold text-almost-black">
           Sortiere:

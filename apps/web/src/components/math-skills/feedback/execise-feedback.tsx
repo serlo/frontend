@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useEffect } from 'react'
 
+import { SkipExerciseButton } from './skip-exercise-button'
 import { feedbackAnimation } from '../utils/feedback-animation'
 import { useExerciseData } from '../utils/math-skills-data-context'
 
@@ -55,28 +56,33 @@ export function ExerciseFeedback({
   }, [isChecked, isCorrect, noUserInput])
 
   return (
-    <div className="mt-5 flex min-h-[120px] flex-col items-center sm:min-h-[80px] sm:flex-row sm:justify-between">
-      <div className="text-almost-black">
-        {isChecked ? (
-          <p>
-            {isCorrect
-              ? 'Sehr gut gemacht 👌'
-              : isIncorrectText ?? <>Leider nicht richtig.</>}
-          </p>
-        ) : null}
+    <>
+      <div className="mt-5 flex min-h-[120px] flex-col items-center sm:min-h-[80px] sm:flex-row sm:justify-between">
+        <div className="text-almost-black">
+          {isChecked ? (
+            <p>
+              {isCorrect
+                ? 'Sehr gut gemacht 👌'
+                : isIncorrectText ?? <>Leider nicht richtig.</>}
+            </p>
+          ) : null}
+        </div>
+        <div className="pt-5 sm:flex sm:justify-between sm:pt-0">
+          {noUserInput ? (
+            noUserInputText ?? ''
+          ) : (
+            <button
+              className="serlo-button-blue -mt-1 h-8 focus:bg-brand"
+              onClick={isChecked ? makeNewExercise : onCheck}
+            >
+              {isChecked ? 'Nächste Aufgabe' : 'Überprüfen'}
+            </button>
+          )}
+        </div>
       </div>
-      <div className="pt-5 sm:flex sm:justify-between sm:pt-0">
-        {noUserInput ? (
-          noUserInputText ?? ''
-        ) : (
-          <button
-            className="serlo-button-blue -mt-1 h-8 focus:bg-brand"
-            onClick={isChecked ? makeNewExercise : onCheck}
-          >
-            {isChecked ? 'Nächste Aufgabe' : 'Überprüfen'}
-          </button>
-        )}
+      <div className="text-right">
+        <SkipExerciseButton makeNewExercise={makeNewExercise} />
       </div>
-    </div>
+    </>
   )
 }

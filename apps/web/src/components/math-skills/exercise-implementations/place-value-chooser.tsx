@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import { ExerciseFeedback } from '../feedback/execise-feedback'
-import { NewExerciseButton } from '../number-line-exercise/new-exercise-button'
 import { cn } from '@/helper/cn'
 
 interface PlaceValueChooserProps {
@@ -38,9 +37,6 @@ export function PlaceValueChooser({
         Markiere den Stellenwert:{' '}
         <span className="text-newgreen">{getDigitString()?.long}</span>
       </h2>
-
-      <NewExerciseButton makeNewExercise={makeNewExercise} />
-
       <div
         id="place-value-chooser-wrapper"
         className="flex justify-center text-2xl font-bold"

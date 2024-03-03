@@ -2,7 +2,6 @@ import { useState } from 'react'
 
 import { NumberKeyboard } from './number-keyboard'
 import { ExerciseFeedback } from '../feedback/execise-feedback'
-import { NewExerciseButton } from '../number-line-exercise/new-exercise-button'
 import { arrayOfLength } from '@/helper/array-of-length'
 import { cn } from '@/helper/cn'
 
@@ -55,8 +54,6 @@ export function MultipleNumberInputExercise<T>({
 
   return (
     <>
-      <NewExerciseButton makeNewExercise={makeNewExercise} />
-
       {render(
         inputValues.map((_, i) => (
           <input

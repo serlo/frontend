@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 
 import { MemoryCard } from './memory-card'
 import { ExerciseFeedback } from '../../feedback/execise-feedback'
-import { NewExerciseButton } from '../../number-line-exercise/new-exercise-button'
 import { cn } from '@/helper/cn'
 
 interface MemoryGameProps {
@@ -111,8 +110,6 @@ export function MemoryGame({
 
   return (
     <>
-      <NewExerciseButton makeNewExercise={makeNewExercise} />
-
       <div id="memory-game-wrapper" className="">
         <h2 className="pb-8 text-left text-2xl font-bold text-almost-black">
           Finde die gleichen Werte:

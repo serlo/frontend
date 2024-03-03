@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 
 import { ActualRangeInput } from './actual-range-input'
 import { ArrowButtonNavigation } from './arrow-button-navigation'
-import { NewExerciseButton } from './new-exercise-button'
 import { NumberLabels } from './number-labels'
 import { RangeInputOverlay } from './range-input-overlay'
 import { ExerciseFeedback } from '../feedback/execise-feedback'
@@ -73,7 +72,6 @@ export function NumberLineExercise({
         Wo ist die{' '}
         <span className="font-bold text-newgreen">{searchedValue}</span>?
       </h2>
-      <NewExerciseButton makeNewExercise={makeNewExercise} />
       <div className="relative touch-pinch-zoom" id="number-line-wrapper">
         <ActualRangeInput
           selectedValue={selectedValue}
