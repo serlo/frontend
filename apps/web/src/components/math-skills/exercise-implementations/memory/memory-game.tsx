@@ -27,14 +27,6 @@ export function MemoryGame({
 
   const bothCardsOpen = card0 !== null && card1 !== null
 
-  function makeNewExercise() {
-    setData(generator())
-    setIsChecked(false)
-    setOpenCards([null, null])
-    setTruesAmount(0)
-    setMatchedCards([])
-  }
-
   useEffect(() => {
     const keyEventHandler = (e: KeyboardEvent) => {
       const down = e.key === 'ArrowDown'
@@ -140,7 +132,12 @@ export function MemoryGame({
         isChecked={isChecked}
         setIsChecked={setIsChecked}
         isCorrect
-        makeNewExercise={makeNewExercise}
+        onNewExecise={() => {
+          setData(generator())
+          setOpenCards([null, null])
+          setTruesAmount(0)
+          setMatchedCards([])
+        }}
         centAmount={centAmount}
         forceCheck={isChecked}
       />

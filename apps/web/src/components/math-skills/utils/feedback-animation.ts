@@ -1,10 +1,16 @@
 export function feedbackAnimation(
   isCorrect: boolean,
-  element?: HTMLElement | null
+  shakeElementQuery?: string
 ) {
   const animationClass = isCorrect
     ? 'motion-safe:animate-jump'
     : 'motion-safe:animate-shake'
-  element?.classList.add(animationClass)
-  setTimeout(() => element?.classList.remove(animationClass), 1000)
+
+  const target = shakeElementQuery
+    ? document.querySelector(shakeElementQuery)
+    : null
+  if (!target) return
+
+  target.classList.add(animationClass)
+  setTimeout(() => target.classList.remove(animationClass), 1000)
 }

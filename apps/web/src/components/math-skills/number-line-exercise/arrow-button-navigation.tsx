@@ -6,10 +6,12 @@ export function ArrowButtonNavigation({
   maxValue,
   selectedValue,
   setSelectedValue,
+  active,
 }: {
   maxValue: number
   selectedValue: number
   setSelectedValue: Dispatch<SetStateAction<number>>
+  active: boolean
 }) {
   return (
     <nav className="text-center sm:min-w-180">
@@ -46,13 +48,14 @@ export function ArrowButtonNavigation({
     onClick: () => void,
     isDisabled: boolean
   ) {
+    const disabled = isDisabled || !active
     return (
       <button
-        disabled={isDisabled}
+        disabled={disabled}
         onClick={onClick}
         className={cn(
-          'serlo-button-light me-2 h-10 w-10',
-          isDisabled && 'cursor-not-allowed opacity-50'
+          'serlo-button-light me-2 h-10 w-10 bg-orange-100 text-gray-500 opacity-80 hover:bg-orange-200 hover:text-black',
+          disabled && 'cursor-default !bg-gray-100 !text-gray-500 opacity-50'
         )}
       >
         {label}

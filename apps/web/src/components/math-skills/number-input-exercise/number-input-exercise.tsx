@@ -33,15 +33,6 @@ export function NumberInputExercise<T>({
     correctValue === parseInt(inputValue) &&
     parseInt(inputValue).toString() === inputValue
 
-  function makeNewExercise() {
-    setData(generator())
-    setInputValue('')
-    setIsChecked(false)
-    setTimeout(() => {
-      document.querySelector<HTMLInputElement>('#number-input input')?.focus()
-    })
-  }
-
   return (
     <>
       {render(
@@ -81,8 +72,12 @@ export function NumberInputExercise<T>({
           </>
         }
         isCorrect={isCorrect}
-        shakeElementId="number-input"
-        makeNewExercise={makeNewExercise}
+        shakeElementQuery="#number-input"
+        focusElementQuery="#number-input input"
+        onNewExecise={() => {
+          setData(generator())
+          setInputValue('')
+        }}
         centAmount={centAmount}
       />
 

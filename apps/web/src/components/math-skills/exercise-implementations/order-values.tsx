@@ -30,14 +30,6 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
   const correctOrder = Array.from(values).sort((a, b) => b - a)
   const isCorrect = values.every((value, i) => value === correctOrder[i])
 
-  function makeNewExercise() {
-    setData(generator())
-    setIsChecked(false)
-    setTimeout(() => {
-      document.getElementById('place-value-chooser-input')?.focus()
-    })
-  }
-
   useEffect(() => {
     const keyEventHandler = (e: KeyboardEvent) => {
       const isDown = e.key === 'ArrowDown'
@@ -84,8 +76,9 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
         isChecked={isChecked}
         setIsChecked={setIsChecked}
         isCorrect={isCorrect}
-        shakeElementId="order-values-draggables"
-        makeNewExercise={makeNewExercise}
+        shakeElementQuery="#order-values-draggables"
+        focusElementQuery="#place-value-chooser-input"
+        onNewExecise={() => setData(generator())}
         centAmount={centAmount}
       />
     </>

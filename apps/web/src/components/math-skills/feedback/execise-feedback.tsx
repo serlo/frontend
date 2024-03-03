@@ -11,8 +11,9 @@ interface ExerciseFeedbackProps {
   setIsChecked: Dispatch<SetStateAction<boolean>>
   isIncorrectText?: JSX.Element
   isCorrect: boolean
-  makeNewExercise: () => void
-  shakeElementId?: string
+  onNewExecise: () => void
+  shakeElementQuery?: string // nod or shake for feedback
+  focusElementQuery?: string // focus on new exercise
   centAmount?: number
   forceCheck?: boolean
 }
@@ -23,19 +24,29 @@ export function ExerciseFeedback({
   setIsChecked,
   isIncorrectText,
   isCorrect,
-  makeNewExercise,
-  shakeElementId,
+  onNewExecise,
+  shakeElementQuery,
+  focusElementQuery,
   centAmount,
   forceCheck,
 }: ExerciseFeedbackProps) {
   const { setExerciseData } = useExerciseData()
 
+  function makeNewExercise() {
+    setIsChecked(false)
+    onNewExecise()
+
+    if (focusElementQuery) {
+      setTimeout(() => {
+        const target = document.querySelector(focusElementQuery)
+        ;(target as HTMLInputElement)?.focus()
+      })
+    }
+  }
+
   function onCheck() {
     if (noUserInput) return
-    feedbackAnimation(
-      isCorrect,
-      shakeElementId ? document.getElementById(shakeElementId) : null
-    )
+    feedbackAnimation(isCorrect, shakeElementQuery)
     setIsChecked(true)
     setExerciseData(isCorrect, centAmount)
   }
@@ -75,13 +86,16 @@ export function ExerciseFeedback({
               className="serlo-button-blue -mt-1 h-8 focus:bg-brand"
               onClick={isChecked ? makeNewExercise : onCheck}
             >
-              {isChecked ? 'Nächste Aufgabe' : 'Überprüfen'}
+              {isChecked ? 'Nächste Aufgabe 👉' : "Stimmt's?"}
             </button>
           )}
         </div>
       </div>
       <div className="text-right">
-        <SkipExerciseButton makeNewExercise={makeNewExercise} />
+        <SkipExerciseButton
+          makeNewExercise={makeNewExercise}
+          hidden={isChecked}
+        />
       </div>
     </>
   )

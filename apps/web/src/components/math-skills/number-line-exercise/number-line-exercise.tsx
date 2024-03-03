@@ -29,7 +29,7 @@ export function NumberLineExercise({
 
   const isCorrect = selectedValue === searchedValue
 
-  function makeNewExercise() {
+  function onNewExercise() {
     const newData = generator()
     const newMaxValue = newData[2]
     setValues(newData)
@@ -38,7 +38,7 @@ export function NumberLineExercise({
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(makeNewExercise, [])
+  useEffect(onNewExercise, [])
 
   useEffect(() => {
     const keyEventHandler = (e: KeyboardEvent) => {
@@ -53,10 +53,10 @@ export function NumberLineExercise({
   }, [selectedValue, searchedValue, isChecked])
 
   const noInputText = (
-    <>
+    <span className="text-right">
       Klicke auf den Zeitstrahl
-      <br /> oder benutze die Pfeilbuttons
-    </>
+      <br /> oder benutze die orangenen Pfeile links.
+    </span>
   )
   const isIncorrectText = (
     <>
@@ -96,7 +96,7 @@ export function NumberLineExercise({
         </div>
       </div>
 
-      <div className="-mt-8 mb-4">
+      <div className="relative -mt-8 mb-4">
         <ExerciseFeedback
           noUserInput={selectedValue === startValue}
           noUserInputText={noInputText}
@@ -104,17 +104,19 @@ export function NumberLineExercise({
           setIsChecked={setIsChecked}
           isIncorrectText={isIncorrectText}
           isCorrect={isCorrect}
-          shakeElementId="range-input-user-maker"
-          makeNewExercise={makeNewExercise}
+          shakeElementQuery="#range-input-user-maker"
+          onNewExecise={onNewExercise}
           centAmount={centAmount}
         />
+        <div className="absolute left-0 top-[7.4rem] sm:top-[4.7rem]">
+          <ArrowButtonNavigation
+            selectedValue={selectedValue}
+            setSelectedValue={setSelectedValue}
+            maxValue={maxValue}
+            active={!isChecked}
+          />
+        </div>
       </div>
-
-      <ArrowButtonNavigation
-        selectedValue={selectedValue}
-        setSelectedValue={setSelectedValue}
-        maxValue={maxValue}
-      />
     </>
   )
 }

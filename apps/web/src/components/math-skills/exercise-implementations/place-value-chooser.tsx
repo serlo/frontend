@@ -22,15 +22,6 @@ export function PlaceValueChooser({
   )
   const isCorrect = selectedDigit === searchedDigit
 
-  function makeNewExercise() {
-    setData(generator())
-    setSelectedDigit(undefined)
-    setIsChecked(false)
-    setTimeout(() => {
-      document.getElementById('place-value-chooser-input')?.focus()
-    })
-  }
-
   return (
     <>
       <h2 className="pb-8 text-left text-2xl font-bold text-almost-black">
@@ -92,8 +83,12 @@ export function PlaceValueChooser({
         isChecked={isChecked}
         setIsChecked={setIsChecked}
         isCorrect={isCorrect}
-        shakeElementId="place-value-chooser-wrapper"
-        makeNewExercise={makeNewExercise}
+        shakeElementQuery="#place-value-chooser-wrapper"
+        focusElementQuery="#place-value-chooser-input"
+        onNewExecise={() => {
+          setData(generator())
+          setSelectedDigit(undefined)
+        }}
         centAmount={centAmount}
       />
     </>

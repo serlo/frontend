@@ -43,15 +43,6 @@ export function MultipleNumberInputExercise<T>({
   const isPartlyCorrect =
     isCorrectArray.some(Boolean) && isCorrectArray.some((value) => !value)
 
-  function makeNewExercise() {
-    setData(generator())
-    setInputValues(inputValues.map(() => ''))
-    setIsChecked(false)
-    setTimeout(() => {
-      document.querySelector<HTMLInputElement>('#number-input input')?.focus()
-    })
-  }
-
   return (
     <>
       {render(
@@ -100,8 +91,12 @@ export function MultipleNumberInputExercise<T>({
           )
         }
         isCorrect={isCorrect}
-        shakeElementId="number-input"
-        makeNewExercise={makeNewExercise}
+        shakeElementQuery="#number-input"
+        focusElementQuery="#number-input input"
+        onNewExecise={() => {
+          setData(generator())
+          setInputValues(inputValues.map(() => ''))
+        }}
         centAmount={centAmount}
       />
 

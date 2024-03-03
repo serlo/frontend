@@ -6,13 +6,20 @@ import { cn } from '@/helper/cn'
 
 export function SkipExerciseButton({
   makeNewExercise,
+  hidden,
 }: {
   makeNewExercise: () => void
+  hidden?: boolean
 }) {
   const { deductPoints } = useExerciseData()
   return (
     <button
-      className="group serlo-button-light ml-auto flex h-9 items-center hover:bg-brand-100 hover:text-brand"
+      className={cn(
+        'group serlo-button-light !z-50 ml-auto flex h-9 items-center hover:bg-brand-100 hover:text-brand',
+        'relative z-10',
+        hidden && 'opacity-0'
+      )}
+      disabled={hidden}
       onClick={() => {
         deductPoints(3)
         makeNewExercise()
