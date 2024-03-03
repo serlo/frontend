@@ -25,12 +25,11 @@ export function BarGraph({ generator, centAmount }: BarGraphProps) {
   }
 
   useEffect(() => {
-    const keyEventHandler = (e: KeyboardEvent) => {
-      // TODO?
-    }
-
-    document.addEventListener('keydown', keyEventHandler)
-    return () => document.removeEventListener('keydown', keyEventHandler)
+    // const keyEventHandler = (e: KeyboardEvent) => {
+    //   // TODO?
+    // }
+    // document.addEventListener('keydown', keyEventHandler)
+    // return () => document.removeEventListener('keydown', keyEventHandler)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isChecked, data])
 
