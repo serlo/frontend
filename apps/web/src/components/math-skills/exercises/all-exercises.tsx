@@ -8,6 +8,7 @@ import {
   numberLineGeneratorLevel2,
   numberLineGeneratorLevel3,
 } from './generators/number-line-generator'
+import { BarGraph } from '../exercise-implementations/graph/bar-graph'
 import { MemoryGame } from '../exercise-implementations/memory/memory-game'
 import { MultipleNumberInputExercise } from '../number-input-exercise/multiple-number-input-exercise'
 import { toRoman } from '../utils/roman-numerals'
@@ -338,6 +339,18 @@ export const allExercises = {
           const roman = arabic.map(toRoman)
           const values = shuffleArray([...arabic, ...roman])
           return { values }
+        }}
+      />
+    ),
+  },
+  'diagramm-wip': {
+    title: 'Diagram',
+    level: 'WIP',
+    component: (
+      <BarGraph
+        centAmount={35}
+        generator={() => {
+          return 1
         }}
       />
     ),

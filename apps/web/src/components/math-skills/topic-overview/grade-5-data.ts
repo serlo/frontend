@@ -86,6 +86,7 @@ export const grade5Data: GradeTopicData[] = [
         children: [
           { id: 'memory-small-wip', text: 'Memory Klein' },
           { id: 'memory-big-wip', text: 'Memory Groß' },
+          { id: 'diagramm-wip', text: 'Balkendiagramm' },
         ],
       },
     ],
