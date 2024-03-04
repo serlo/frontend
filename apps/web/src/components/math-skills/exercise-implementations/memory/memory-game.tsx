@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { MemoryCard } from './memory-card'
-import { ExerciseFeedback } from '../../feedback/execise-feedback'
+import { ExStatus, ExerciseFeedback } from '../../feedback/execise-feedback'
 import { cn } from '@/helper/cn'
 
 interface MemoryGameProps {
@@ -17,7 +17,7 @@ export function MemoryGame({
   centAmount,
 }: MemoryGameProps) {
   const [data, setData] = useState(generator())
-  const [isChecked, setIsChecked] = useState(false)
+  const [exStatus, setExStatus] = useState<ExStatus>('fresh')
   const { values } = data
   const [triesAmount, setTruesAmount] = useState<number>(0)
   const [matchedCards, setMatchedCards] = useState<number[]>([])
@@ -65,7 +65,7 @@ export function MemoryGame({
     document.addEventListener('keydown', keyEventHandler)
     return () => document.removeEventListener('keydown', keyEventHandler)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isChecked, values])
+  }, [exStatus, values])
 
   function onCardSelect(index: number) {
     if (bothCardsOpen) return
@@ -87,7 +87,7 @@ export function MemoryGame({
         setTruesAmount(triesAmount + 1)
 
         if (values.length === matchedCards.length + 2) {
-          setIsChecked(true)
+          setExStatus('correct')
         }
       }, 400)
     } else {
@@ -127,10 +127,10 @@ export function MemoryGame({
       </div>
 
       <ExerciseFeedback
-        noUserInput={!isChecked}
+        noUserInput={exStatus !== 'correct'}
         noUserInputText={triesAmount ? <>{triesAmount} Züge</> : undefined}
-        isChecked={isChecked}
-        setIsChecked={setIsChecked}
+        exStatus={exStatus}
+        setExStatus={setExStatus}
         isCorrect
         onNewExecise={() => {
           setData(generator())
@@ -139,7 +139,7 @@ export function MemoryGame({
           setMatchedCards([])
         }}
         centAmount={centAmount}
-        forceCheck={isChecked}
+        forceCheck={exStatus === 'correct'}
       />
     </>
   )

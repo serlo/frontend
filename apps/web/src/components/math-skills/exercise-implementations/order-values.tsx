@@ -7,7 +7,7 @@ import {
 } from '@hello-pangea/dnd'
 import { useEffect, useState } from 'react'
 
-import { ExerciseFeedback } from '../feedback/execise-feedback'
+import { ExStatus, ExerciseFeedback } from '../feedback/execise-feedback'
 import { FaIcon } from '@/components/fa-icon'
 import { cn } from '@/helper/cn'
 
@@ -25,10 +25,12 @@ interface OrderValuesProps {
 
 export function OrderValues({ generator, centAmount }: OrderValuesProps) {
   const [data, setData] = useState(generator())
-  const [isChecked, setIsChecked] = useState(false)
+  const [exStatus, setExStatus] = useState<ExStatus>('fresh')
   const { values } = data
   const correctOrder = Array.from(values).sort((a, b) => b - a)
   const isCorrect = values.every((value, i) => value === correctOrder[i])
+
+  const isDisabled = exStatus === 'correct' || exStatus === 'revealed'
 
   useEffect(() => {
     const keyEventHandler = (e: KeyboardEvent) => {
@@ -47,7 +49,7 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
     document.addEventListener('keydown', keyEventHandler)
     return () => document.removeEventListener('keydown', keyEventHandler)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isChecked, values])
+  }, [exStatus, values])
 
   return (
     <>
@@ -73,8 +75,8 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
 
       <ExerciseFeedback
         noUserInput={false}
-        isChecked={isChecked}
-        setIsChecked={setIsChecked}
+        exStatus={exStatus}
+        setExStatus={setExStatus}
         isCorrect={isCorrect}
         shakeElementQuery="#order-values-draggables"
         focusElementQuery="#place-value-chooser-input"
@@ -99,7 +101,12 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
 
   function renderDragAndDropList() {
     return (
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext
+        onDragEnd={onDragEnd}
+        onDragStart={() => {
+          if (exStatus === 'incorrect') setExStatus('fresh')
+        }}
+      >
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
             <div
@@ -112,7 +119,7 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
                   key={value}
                   draggableId={value.toString()}
                   index={index}
-                  isDragDisabled={isChecked}
+                  isDragDisabled={isDisabled}
                 >
                   {(provided, { isDragging }) => (
                     <div
@@ -123,9 +130,8 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
                         'mb-1 rounded-md border border-brand-100 p-2 font-bold text-almost-black',
                         'select-none bg-newgreen bg-opacity-0 hover:bg-opacity-5',
                         isDragging && ' bg-opacity-10',
-                        isChecked && 'bg-opacity-10',
-                        isChecked &&
-                          !isCorrect &&
+                        isDisabled && 'bg-opacity-10',
+                        exStatus === 'incorrect' &&
                           value !== correctOrder[index] &&
                           'bg-red-400'
                       )}
