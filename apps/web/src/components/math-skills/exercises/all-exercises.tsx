@@ -1,7 +1,11 @@
+import { createDecimalToRomanExercise } from './create/create-decimal-to-roman-exercise'
 import { createExponentiateExercise } from './create/create-exponentiate-exercise'
 import { createIncrDescNumberExercise } from './create/create-incr-desc-number-exercise'
 import { createNumberDistancesExercise } from './create/create-number-distance-exercise'
+import { createOrderRomanExercise } from './create/create-order-roman-exercises'
 import { createPlaceValueChangeExercise } from './create/create-place-value-change-exercise'
+import { createRomanMemoryExercise } from './create/create-roman-memory-exercise'
+import { createRomanToDecimalExercise } from './create/create-roman-to-decimal-exercise'
 import { createTextToNumberExercise } from './create/create-text-to-number-exercise'
 import {
   numberLineGeneratorLevel1,
@@ -20,9 +24,6 @@ import { NumberLineExercise } from '@/components/math-skills/number-line-exercis
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 import { shuffleArray } from '@/helper/shuffle-array'
-import { createRomanToDecimalExercise } from './create/create-roman-to-decimal-exercise'
-import { createDecimalToRomanExercise } from './create/create-decimal-to-roman-exercise'
-import { createRomanMemoryExercise } from './create/create-roman-memory-exercise'
 
 export const allExercises = {
   'zahlen-anordnen-1': {
@@ -381,7 +382,9 @@ export const allExercises = {
           const v3 = v2 - randomIntBetween(1, 10)
           const v4 = v3 - randomIntBetween(1, 10)
           const v5 = v4 - randomIntBetween(1, 10)
-          return { values: shuffleArray([v1, v2, v3, v4, v5]) }
+          return {
+            values: shuffleArray([v1, v2, v3, v4, v5]),
+          }
         }}
       />
     ),
@@ -418,6 +421,22 @@ export const allExercises = {
     40,
     1500,
     3
+  ),
+  'roemische-zahlen-ordnen-1': createOrderRomanExercise(
+    'Level 1',
+    'small-number'
+  ),
+  'roemische-zahlen-ordnen-2': createOrderRomanExercise(
+    'Level 2',
+    'consecutive',
+    30,
+    70
+  ),
+  'roemische-zahlen-ordnen-profi': createOrderRomanExercise(
+    'Profi',
+    'consecutive',
+    50,
+    130
   ),
   'potenzwert-berechnen': createExponentiateExercise(),
   'memory-small-wip': {

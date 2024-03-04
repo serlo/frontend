@@ -21,9 +21,14 @@ const reorder = (list: number[], startIndex: number, endIndex: number) => {
 interface OrderValuesProps {
   generator: () => { values: number[] }
   centAmount?: number
+  display?: (n: number) => string
 }
 
-export function OrderValues({ generator, centAmount }: OrderValuesProps) {
+export function OrderValues({
+  generator,
+  centAmount,
+  display,
+}: OrderValuesProps) {
   const [data, setData] = useState(generator())
   const [exStatus, setExStatus] = useState<ExStatus>('fresh')
   const { values } = data
@@ -137,7 +142,7 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
                       )}
                       style={{ ...provided.draggableProps.style }}
                     >
-                      {value}{' '}
+                      {display ? display(value) : value}{' '}
                       <FaIcon
                         icon={faGripVertical}
                         className="mb-0.25 text-base text-newgreen opacity-70"
