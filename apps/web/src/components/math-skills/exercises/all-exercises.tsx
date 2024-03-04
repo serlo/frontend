@@ -22,6 +22,7 @@ import { randomItemFromArray } from '@/helper/random-item-from-array'
 import { shuffleArray } from '@/helper/shuffle-array'
 import { createRomanToDecimalExercise } from './create/create-roman-to-decimal-exercise'
 import { createDecimalToRomanExercise } from './create/create-decimal-to-roman-exercise'
+import { createRomanMemoryExercise } from './create/create-roman-memory-exercise'
 
 export const allExercises = {
   'zahlen-anordnen-1': {
@@ -397,6 +398,27 @@ export const allExercises = {
   'dezimal-nach-roemisch-1': createDecimalToRomanExercise('Level 1', 1, 105),
   'dezimal-nach-roemisch-2': createDecimalToRomanExercise('Level 2', 1, 305),
   'dezimal-nach-roemisch-profi': createDecimalToRomanExercise('Profi', 1, 2100),
+  'roemische-zahlen-memory-1': createRomanMemoryExercise('1 bis 10', 1, 10),
+  'roemische-zahlen-memory-2': createRomanMemoryExercise('11 bis 60', 11, 60),
+  'roemische-zahlen-memory-3': createRomanMemoryExercise('4 bis 50', 4, 50),
+  'roemische-zahlen-memory-4': createRomanMemoryExercise(
+    '40 bis 500',
+    40,
+    500,
+    2
+  ),
+  'roemische-zahlen-memory-profi': createRomanMemoryExercise(
+    'Profi',
+    400,
+    1500,
+    2
+  ),
+  'roemische-zahlen-memory-profi-plus': createRomanMemoryExercise(
+    'Profi+',
+    40,
+    1500,
+    3
+  ),
   'potenzwert-berechnen': createExponentiateExercise(),
   'memory-small-wip': {
     title: 'Memory',

@@ -106,7 +106,7 @@ export const grade5Data: GradeTopicData[] = [
           { id: 'roemische-zahlen-memory-3', text: '4 bis 50' },
           { id: 'roemische-zahlen-memory-4', text: '40 bis 500' },
           { id: 'roemische-zahlen-memory-profi', text: 'Profi' },
-          { id: 'roemische-zahlen-memory-topprofi', text: 'Profi+' },
+          { id: 'roemische-zahlen-memory-profi-plus', text: 'Profi+' },
         ],
       },
       {
