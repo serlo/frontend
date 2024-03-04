@@ -5,8 +5,11 @@ export interface GradeTopicData {
   children: {
     title: string
     children: {
-      id: SupportedExercisesId
-      text: string
+      title: string
+      children: {
+        id: SupportedExercisesId
+        text: string
+      }[]
     }[]
   }[]
 }
@@ -16,77 +19,88 @@ export const grade5Data: GradeTopicData[] = [
     title: 'Natürliche Zahlen',
     children: [
       {
-        title: 'Zahlenstrahl: Anordnen',
+        title: 'Zahlenstrahl',
         children: [
-          { id: 'zahlen-anordnen-1', text: 'Level 1' },
-          { id: 'zahlen-anordnen-2', text: 'Level 2' },
-          { id: 'zahlen-anordnen-profi', text: 'Profi' },
+          {
+            title: 'Zahlenstrahl: Anordnen',
+            children: [
+              { id: 'zahlen-anordnen-1', text: 'Level 1' },
+              { id: 'zahlen-anordnen-2', text: 'Level 2' },
+              { id: 'zahlen-anordnen-profi', text: 'Profi' },
+            ],
+          },
+          {
+            title: 'Zahlenstrahl: Ablesen',
+            children: [
+              { id: 'zahlen-ablesen-1', text: 'Level 1' },
+              { id: 'zahlen-ablesen-2', text: 'Level 2' },
+              { id: 'zahlen-ablesen-profi', text: 'Profi' },
+            ],
+          },
         ],
       },
       {
-        title: 'Zahlenstrahl: Ablesen',
+        title: 'Große Zahlen',
         children: [
-          { id: 'zahlen-ablesen-1', text: 'Level 1' },
-          { id: 'zahlen-ablesen-2', text: 'Level 2' },
-          { id: 'zahlen-ablesen-profi', text: 'Profi' },
+          {
+            title: 'Stellenwert-Tabelle',
+            children: [
+              { id: 'stellenwerte-finden', text: 'Stelle finden' },
+              { id: 'stellenwert-tabelle-ablesen', text: 'Zahl ablesen' },
+            ],
+          },
+          {
+            title: 'Stellenwerte ändern',
+            children: [
+              { id: 'stellenwerte-aendern-1', text: 'Level 1' },
+              { id: 'stellenwerte-aendern-profi', text: 'Profi' },
+            ],
+          },
+          {
+            title: 'Text in Zahl umwandeln',
+            children: [
+              { id: 'text-in-zahl-1', text: 'Level 1' },
+              { id: 'text-in-zahl-profi', text: 'Profi' },
+            ],
+          },
+          {
+            title: 'Zahlen ordnen',
+            children: [{ id: 'zahlen-ordnen', text: 'Level 1' }],
+          },
+          {
+            title: 'Vorgänger und Nachfolger',
+            children: [
+              { id: 'vorgaenger-nachfolger-1', text: 'Tabelle' },
+              { id: 'vorgaenger-nachfolger-2', text: 'Text' },
+            ],
+          },
+          {
+            title: 'Zahlen vergrößern & verkleinern',
+            children: [
+              { id: 'zahlen-vergroeßern-verkleinern-1', text: 'Level 1' },
+              { id: 'zahlen-vergroeßern-verkleinern-2', text: 'Level 2' },
+              { id: 'zahlen-vergroeßern-verkleinern-3', text: 'Level 3' },
+              { id: 'zahlen-vergroeßern-verkleinern-profi', text: 'Profi' },
+            ],
+          },
+          {
+            title: 'Zahlenabstände erkennen',
+            children: [
+              { id: 'zahlenabstaende-erkennen-1', text: 'Level 1' },
+              { id: 'zahlenabstaende-erkennen-2', text: 'Level 2' },
+              { id: 'zahlenabstaende-erkennen-profi', text: 'Profi' },
+              { id: 'zahlenabstaende-erkennen-topprofi', text: 'Profi+' },
+            ],
+          },
         ],
       },
       {
-        title: 'Stellenwert-Tabelle',
-        children: [
-          { id: 'stellenwerte-finden', text: 'Stelle finden' },
-          { id: 'stellenwert-tabelle-ablesen', text: 'Zahl ablesen' },
-        ],
+        title: 'Römische Zahlen',
+        children: [],
       },
       {
-        title: 'Stellenwerte ändern',
-        children: [
-          { id: 'stellenwerte-aendern-1', text: 'Level 1' },
-          { id: 'stellenwerte-aendern-profi', text: 'Profi' },
-        ],
-      },
-      {
-        title: 'Text in Zahl umwandeln',
-        children: [
-          { id: 'text-in-zahl-1', text: 'Level 1' },
-          { id: 'text-in-zahl-profi', text: 'Profi' },
-        ],
-      },
-      {
-        title: 'Zahlen ordnen',
-        children: [{ id: 'zahlen-ordnen', text: 'Level 1' }],
-      },
-      {
-        title: 'Vorgänger und Nachfolger',
-        children: [
-          { id: 'vorgaenger-nachfolger-1', text: 'Tabelle' },
-          { id: 'vorgaenger-nachfolger-2', text: 'Text' },
-        ],
-      },
-      {
-        title: 'Zahlen vergrößern & verkleinern',
-        children: [
-          { id: 'zahlen-vergroeßern-verkleinern-1', text: 'Level 1' },
-          { id: 'zahlen-vergroeßern-verkleinern-2', text: 'Level 2' },
-          { id: 'zahlen-vergroeßern-verkleinern-3', text: 'Level 3' },
-          { id: 'zahlen-vergroeßern-verkleinern-profi', text: 'Profi' },
-        ],
-      },
-      {
-        title: 'Zahlenabstände erkennen',
-        children: [
-          { id: 'zahlenabstaende-erkennen-1', text: 'Level 1' },
-          { id: 'zahlenabstaende-erkennen-2', text: 'Level 2' },
-          { id: 'zahlenabstaende-erkennen-profi', text: 'Profi' },
-          { id: 'zahlenabstaende-erkennen-topprofi', text: 'Profi+' },
-        ],
-      },
-      {
-        title: 'Baustellen',
-        children: [
-          { id: 'memory-small-wip', text: 'Memory Klein' },
-          { id: 'memory-big-wip', text: 'Memory Groß' },
-        ],
+        title: 'Dualzahlen',
+        children: [],
       },
     ],
   },
@@ -96,7 +110,12 @@ export const grade5Data: GradeTopicData[] = [
       {
         title: 'Potenzieren',
         children: [
-          { id: 'potenzwert-berechnen', text: 'Potenzwert berechnen' },
+          {
+            title: 'Erste Übung',
+            children: [
+              { id: 'potenzwert-berechnen', text: 'Potenzwert berechnen' },
+            ],
+          },
         ],
       },
     ],
