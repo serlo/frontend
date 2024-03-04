@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { ExerciseFeedback } from '../feedback/execise-feedback'
+import { ExStatus, ExerciseFeedback } from '../feedback/execise-feedback'
 import { arrayOfLength } from '@/helper/array-of-length'
 import { cn } from '@/helper/cn'
 
@@ -15,7 +15,6 @@ interface MultipleNumberInputExerciseProps<DATA> {
 }
 
 // input supports ~ up to 7 digits without clipping
-
 export function MultipleNumberInputExercise<T>({
   generator,
   getCorrectValues,
@@ -28,7 +27,7 @@ export function MultipleNumberInputExercise<T>({
   const [inputValues, setInputValues] = useState(
     arrayOfLength(numberOfInputs).map(() => '')
   )
-  const [isChecked, setIsChecked] = useState(false)
+  const [exStatus, setExStatus] = useState<ExStatus>('fresh')
   const [data, setData] = useState(generator())
 
   const correctValues = getCorrectValues(data)
@@ -38,8 +37,9 @@ export function MultipleNumberInputExercise<T>({
       parseInt(inputValues[i]).toString() === inputValues[i]
   )
   const isCorrect = isCorrectArray.every(Boolean)
-  const isPartlyCorrect =
-    isCorrectArray.some(Boolean) && isCorrectArray.some((value) => !value)
+  const incorrectAmount =
+    !isCorrect && isCorrectArray.filter((value) => !value).length
+  const isDisabled = exStatus === 'correct' || exStatus === 'revealed'
 
   return (
     <>
@@ -47,13 +47,15 @@ export function MultipleNumberInputExercise<T>({
         inputValues.map((_, i) => (
           <input
             key={i}
+            id={`number-input-${i}`}
             autoFocus={i === 0}
             value={inputValues[i]}
-            disabled={isChecked}
+            disabled={isDisabled}
             onChange={({ currentTarget }) => {
               const newValues = [...inputValues]
               newValues[i] = currentTarget.value
               setInputValues(newValues)
+              setExStatus('fresh')
             }}
             type="text"
             pattern="\d+"
@@ -62,8 +64,10 @@ export function MultipleNumberInputExercise<T>({
             className={cn(
               'ml-0.5 rounded-lg bg-[#d8f5ef] p-2 text-2xl ',
               'outline-dotted outline-2 outline-transparent focus-visible:outline-newgreen',
-              isChecked && isCorrectArray[i] && 'bg-newgreen-600',
-              isChecked && !isCorrectArray[i] && 'bg-red-100',
+              exStatus === 'correct' && isCorrectArray[i] && 'bg-newgreen-600',
+              (exStatus === 'revealed' || exStatus === 'incorrect') &&
+                !isCorrectArray[i] &&
+                'bg-red-100',
               className
             )}
             style={{ width: `${widthForDigits * 0.7}em` }}
@@ -75,18 +79,37 @@ export function MultipleNumberInputExercise<T>({
       <ExerciseFeedback
         noUserInput={inputValues.every((x) => x.trim() === '')}
         noUserInputText={<>Gib eine Zahl ein</>}
-        isChecked={isChecked}
-        setIsChecked={setIsChecked}
-        isIncorrectText={
-          isPartlyCorrect ? (
-            <>Stimmt leider nicht ganz.</>
-          ) : (
-            <>Leider nicht richtig.</>
-          )
-        }
+        exStatus={exStatus}
+        setExStatus={setExStatus}
+        feedbacks={{
+          incorrect: (
+            <>
+              {incorrectAmount === 1
+                ? 'Ein Feld stimmt'
+                : 'Mehrere Felder stimmen'}{' '}
+              noch nicht.
+              <br />
+              <b>Versuch den Fehler zu finden</b>
+              <br />
+              oder zeig&apos; dir die Lösung an.
+            </>
+          ),
+          revealed: (
+            <>
+              Die richtigen Zahlen währen gewesen: <br />
+              {correctValues.slice(0, -1).map((value, i) => (
+                <>
+                  <b>{value}</b>
+                  {i === correctValues.length - 2 ? '' : ','}{' '}
+                </>
+              ))}{' '}
+              und <b>{correctValues.at(-1)}</b>.
+            </>
+          ),
+        }}
         isCorrect={isCorrect}
         shakeElementQuery="#number-input"
-        focusElementQuery="#number-input input"
+        focusElementQuery="#number-input-0"
         onNewExecise={() => {
           setData(generator())
           setInputValues(inputValues.map(() => ''))

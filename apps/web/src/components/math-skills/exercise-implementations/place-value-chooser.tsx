@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { ExerciseFeedback } from '../feedback/execise-feedback'
+import { ExStatus, ExerciseFeedback } from '../feedback/execise-feedback'
 import { cn } from '@/helper/cn'
 
 interface PlaceValueChooserProps {
@@ -13,7 +13,7 @@ export function PlaceValueChooser({
   centAmount,
 }: PlaceValueChooserProps) {
   const [data, setData] = useState(generator())
-  const [isChecked, setIsChecked] = useState(false)
+  const [exStatus, setExStatus] = useState<ExStatus>('fresh')
   const { figure, searchedDigit } = data
   const figureString = String(figure)
   const digitAmount = figureString.length
@@ -41,33 +41,19 @@ export function PlaceValueChooser({
                 id="place-value-chooser-input"
                 className="appearance-none opacity-0"
                 type="radio"
-                disabled={isChecked}
+                disabled={exStatus === 'correct' || exStatus === 'revealed'}
                 name={figureString}
                 value={char}
                 checked={isTicked}
-                onChange={() => setSelectedDigit(digitIndex)}
+                onChange={() => {
+                  setSelectedDigit(digitIndex)
+                  if (exStatus === 'incorrect') setExStatus('fresh')
+                }}
               />
               <span
                 className={cn(
                   'mx-0.25 inline-block min-w-[30px] rounded-md border-2 p-1.5 text-center',
-                  // default selection
-                  isTicked &&
-                    !isChecked &&
-                    'border-newgreen-600 bg-newgreen bg-opacity-10',
-                  // feedback
-                  isChecked &&
-                    isTicked &&
-                    isCorrect &&
-                    'border-newgreen-600 bg-newgreen bg-opacity-50',
-                  isChecked &&
-                    isTicked &&
-                    !isCorrect &&
-                    'border-red-300 bg-red-100',
-                  // feedback: actually correct:
-                  isChecked &&
-                    !isCorrect &&
-                    searchedDigit === digitIndex &&
-                    'border-newgreen-600 bg-newgreen bg-opacity-20'
+                  getColorClasses(i, isTicked)
                 )}
               >
                 {char}
@@ -80,8 +66,8 @@ export function PlaceValueChooser({
       <ExerciseFeedback
         noUserInput={selectedDigit === undefined}
         noUserInputText={<>Wähle eine Stelle aus</>}
-        isChecked={isChecked}
-        setIsChecked={setIsChecked}
+        exStatus={exStatus}
+        setExStatus={setExStatus}
         isCorrect={isCorrect}
         shakeElementQuery="#place-value-chooser-wrapper"
         focusElementQuery="#place-value-chooser-input"
@@ -97,6 +83,22 @@ export function PlaceValueChooser({
   function getDigitString() {
     if (searchedDigit < 1 || searchedDigit > 7) return undefined
     return digitStrings[searchedDigit as keyof typeof digitStrings]
+  }
+
+  function getColorClasses(index: number, isTicked: boolean) {
+    // revealed: actually correct:
+    if (exStatus === 'revealed' && searchedDigit === index) {
+      return cn('border-newgreen-600 bg-newgreen bg-opacity-20')
+    }
+
+    if (!isTicked) return
+    return cn(
+      // default selection
+      exStatus === 'fresh' && 'border-newgreen-600 bg-newgreen bg-opacity-10',
+      exStatus === 'correct' && 'border-newgreen-600 bg-newgreen bg-opacity-50',
+      (exStatus === 'incorrect' || exStatus === 'revealed') &&
+        'border-red-300 bg-red-100'
+    )
   }
 }
 
