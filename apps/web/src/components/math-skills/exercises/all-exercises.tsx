@@ -19,6 +19,7 @@ import { NumberInputExercise } from '@/components/math-skills/number-input-exerc
 import { NumberLineExercise } from '@/components/math-skills/number-line-exercise/number-line-exercise'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { shuffleArray } from '@/helper/shuffle-array'
+import { randomItemFromArray } from '@/helper/random-item-from-array'
 
 export const allExercises = {
   'zahlen-anordnen-1': {
@@ -235,17 +236,50 @@ export const allExercises = {
   },
   'vorgaenger-nachfolger-1': {
     title: 'Vorgänger und Nachfolger',
-    level: 'Level 1',
+    level: 'Tabelle',
     component: (
       <MultipleNumberInputExercise
         numberOfInputs={2}
+        centAmount={35}
         generator={() => {
-          return randomIntBetween(10, 30) * 100 // finish generator code
+          const modus = randomItemFromArray(['simple', 'composite'])
+          const showIndex = randomItemFromArray([0, 1, 2])
+          if (modus === 'simple') {
+            return { midValue: randomIntBetween(2, 30) * 100, showIndex }
+          }
+          return {
+            midValue:
+              1000 * randomIntBetween(2, 50) + 10 * randomIntBetween(0, 10),
+            showIndex,
+          }
         }}
-        getCorrectValues={(val) => {
-          return [val - 1, val + 1]
+        getCorrectValues={({ midValue, showIndex }) => {
+          const output = [midValue - 1, midValue, midValue + 1]
+          output.splice(showIndex, 1)
+          return output
         }}
         render={(inputs, data) => {
+          const numbers = [data.midValue - 1, data.midValue, data.midValue + 1]
+          const vals = [
+            inputs[0],
+            <p
+              className="w-[120px] rounded-lg bg-gray-100 p-2 text-2xl"
+              key={data.showIndex}
+            >
+              {numbers[data.showIndex]}
+            </p>,
+            inputs[1],
+          ]
+          if (data.showIndex === 0) {
+            const t = vals[1]
+            vals[1] = vals[0]
+            vals[0] = t
+          }
+          if (data.showIndex === 2) {
+            const t = vals[2]
+            vals[2] = vals[1]
+            vals[1] = t
+          }
           return (
             <>
               <h2 className="mr-12 pb-5 text-2xl text-almost-black">
@@ -253,19 +287,77 @@ export const allExercises = {
               </h2>
               <div className="flex flex-col gap-3 text-sm font-bold text-almost-black mobile:flex-row">
                 <label>
-                  {inputs[0]}
+                  {vals[0]}
                   <p className="ml-2.5 mt-0.5 font-normal">Vorgänger</p>
                 </label>
                 <label>
-                  <p className="w-[120px] rounded-lg bg-gray-100 p-2 text-2xl">
-                    {data}
-                  </p>
+                  {vals[1]}
                   <p className="ml-2.5 mt-0.5 font-normal">Zahl</p>
                 </label>
                 <label>
-                  {inputs[1]}
+                  {vals[2]}
                   <p className="ml-2.5 mt-0.5 font-normal">Nachfolger</p>
                 </label>
+              </div>
+            </>
+          )
+        }}
+      />
+    ),
+  },
+  'vorgaenger-nachfolger-2': {
+    title: 'Vorgänger und Nachfolger',
+    level: 'Text',
+    component: (
+      <NumberInputExercise
+        centAmount={35}
+        generator={() => {
+          let midValue = -1
+          const direction = randomItemFromArray(['up', 'down'])
+          const rel = randomItemFromArray([
+            'lower',
+            'upper',
+            'doublelower',
+            'doubleupper',
+          ])
+          const modus = randomItemFromArray(['simple', 'composite'])
+          if (modus === 'simple') {
+            midValue = randomIntBetween(2, 30) * 100
+          } else {
+            midValue =
+              1000 * randomIntBetween(2, 50) + 10 * randomIntBetween(0, 10)
+          }
+          let showValue = midValue
+          if (rel === 'lower' && direction === 'up') {
+            showValue--
+          }
+          if (rel === 'upper' && direction === 'down') {
+            showValue++
+          }
+          if (rel === 'doublelower' && direction === 'up') {
+            showValue -= 2
+          }
+          if (rel === 'doubleupper' && direction === 'down') {
+            showValue += 2
+          }
+          const resultValue = direction === 'up' ? showValue + 1 : showValue - 1
+          return { showValue, resultValue, direction }
+        }}
+        getCorrectValue={({ resultValue }) => {
+          return resultValue
+        }}
+        render={(input, { showValue, direction }) => {
+          return (
+            <>
+              <h2 className="mr-12 pb-5 text-2xl text-almost-black">
+                Gegeben ist die Zahl: {showValue}
+              </h2>
+              <p className="mb-2 text-2xl">
+                Wie lautet der {direction === 'up' ? 'Nachfolger' : 'Vorgänger'}{' '}
+                der Zahl?
+              </p>
+              <div className="ml-0.5 mt-2" id="number-input">
+                {input}
               </div>
             </>
           )
@@ -277,9 +369,9 @@ export const allExercises = {
   'zahlen-vergroeßern-verkleinern-2': createIncrDescNumberExercise('Level 2'),
   'zahlen-vergroeßern-verkleinern-3': createIncrDescNumberExercise('Level 3'),
   'zahlen-vergroeßern-verkleinern-profi': createIncrDescNumberExercise('Profi'),
-  'zahlen-sortieren-wip': {
-    title: 'Zahlen Sortieren',
-    level: 'WIP',
+  'zahlen-ordnen': {
+    title: 'Zahlen ordnen',
+    level: 'Level 1',
     component: (
       <OrderValues
         centAmount={35}
