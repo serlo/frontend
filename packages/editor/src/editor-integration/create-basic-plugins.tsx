@@ -6,10 +6,10 @@ import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedi
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
+import { blanksExercise } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
-import { fillInTheBlanksExercise } from '@editor/plugins/fill-in-the-blanks-exercise'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
@@ -130,8 +130,8 @@ export function createBasicPlugins({
       plugin: createScMcExercisePlugin(),
     },
     {
-      type: EditorPluginType.FillInTheBlanksExercise,
-      plugin: fillInTheBlanksExercise,
+      type: EditorPluginType.BlanksExercise,
+      plugin: blanksExercise,
     },
 
     // Special plugins, never visible in suggestions

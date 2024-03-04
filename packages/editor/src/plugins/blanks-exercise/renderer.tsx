@@ -9,11 +9,11 @@ import {
 } from 'react'
 import { v4 as uuid_v4 } from 'uuid'
 
-import type { BlankId, DraggableId, FillInTheBlanksMode } from '.'
+import type { BlankId, DraggableId, BlanksExerciseMode } from '.'
 import { BlankCheckButton } from './components/blank-check-button'
 import { BlankDraggableAnswer } from './components/blank-draggable-answer'
 import { BlankDraggableArea } from './components/blank-draggable-area'
-import { FillInTheBlanksContext } from './context/blank-context'
+import { BlanksContext } from './context/blank-context'
 import { Blank, type BlankType } from './types'
 
 const DndWrapper = lazy(() =>
@@ -24,21 +24,21 @@ const DndWrapper = lazy(() =>
 
 type MathjsImport = typeof import('mathjs')
 
-export interface FillInTheBlanksRendererProps {
+export interface BlanksExerciseRendererProps {
   childPlugin: ReactNode
   childPluginState: {
     plugin: string
     state?: unknown
     id?: string | undefined
   }
-  mode: FillInTheBlanksMode
+  mode: BlanksExerciseMode
   initialTextInBlank: 'empty' | 'correct-answer'
   extraDraggableAnswers?: Array<{ answer: string }>
   isEditing?: boolean
   onEvaluate?: (correct: boolean) => void
 }
 
-export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
+export function BlanksExerciseRenderer(props: BlanksExerciseRendererProps) {
   const {
     childPlugin,
     childPluginState,
@@ -156,7 +156,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
     <Suspense fallback={<div>Loading...</div>}>
       <DndWrapper>
         <div className="mx-side mb-block leading-[30px] [&>p]:leading-[30px]">
-          <FillInTheBlanksContext.Provider
+          <BlanksContext.Provider
             value={{
               mode,
               feedbackForBlanks: {
@@ -180,7 +180,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
             }}
           >
             {childPlugin}
-          </FillInTheBlanksContext.Provider>
+          </BlanksContext.Provider>
 
           {mode === 'drag-and-drop' ? (
             <BlankDraggableArea onDrop={handleDraggableAreaDrop}>

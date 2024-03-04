@@ -1,4 +1,4 @@
-import { BlankInterface as Blank } from '@editor/plugins/fill-in-the-blanks-exercise/types'
+import { BlankInterface as Blank } from '@editor/plugins/blanks-exercise/types'
 import {
   Editor as SlateEditor,
   Element,
