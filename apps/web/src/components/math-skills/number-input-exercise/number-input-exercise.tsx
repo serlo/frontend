@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-import { NumberKeyboard } from './number-keyboard'
 import { ExerciseFeedback } from '../feedback/execise-feedback'
 import { cn } from '@/helper/cn'
 
