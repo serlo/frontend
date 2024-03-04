@@ -1,12 +1,12 @@
 import { OverlayMarker } from './overlay-marker'
+import { ExStatus } from '../feedback/execise-feedback'
 import { cn } from '@/helper/cn'
 
 interface RangeInputOverlayProps {
   maxValue: number // highest value of number line
   selectedValue: number
   searchedValue: number
-  isChecked?: boolean
-  isCorrect?: boolean
+  exStatus: ExStatus
   useQuestionIcon?: boolean
 }
 
@@ -16,8 +16,7 @@ export function RangeInputOverlay({
   maxValue,
   selectedValue,
   searchedValue,
-  isChecked,
-  isCorrect,
+  exStatus,
   useQuestionIcon,
 }: RangeInputOverlayProps) {
   const step = maxValue / 40
@@ -34,12 +33,11 @@ export function RangeInputOverlay({
         const isActive = selectedStep === i
         const isSearched = searchedStep === i
 
-        if (isActive || (isChecked && !isCorrect && isSearched)) {
+        if (isActive || (exStatus === 'revealed' && isSearched)) {
           return (
             <OverlayMarker
               isActive={isActive}
-              isChecked={isChecked}
-              isCorrect={isCorrect}
+              exStatus={exStatus}
               isSearched={isSearched}
               useQuestionIcon={useQuestionIcon}
               index={i}

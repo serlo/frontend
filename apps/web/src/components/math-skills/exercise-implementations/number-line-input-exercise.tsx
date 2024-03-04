@@ -42,8 +42,7 @@ export function NumberLineInputExercise({
                 maxValue={data[2]}
                 selectedValue={data[0]}
                 searchedValue={data[0]}
-                isChecked //deactivates user input
-                isCorrect={false}
+                exStatus="fresh" //deactivates user input
                 useQuestionIcon
               />
             </div>

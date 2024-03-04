@@ -62,11 +62,7 @@ export function NumberLineExercise({
 
   const isIncorrectText = (
     <>
-      Stimmt so leider noch nicht.
-      <br />
-      Du hast die Zahl <b>{selectedValue}</b> ausgewählt.
-      <br />
-      Probier es einfach noch mal.
+      Das stimmt noch nicht, Du hast die Zahl <b>{selectedValue}</b> ausgewählt.
     </>
   )
 
@@ -94,13 +90,12 @@ export function NumberLineExercise({
             maxValue={maxValue}
             selectedValue={selectedValue}
             searchedValue={searchedValue}
-            isChecked={exStatus !== 'fresh'}
-            isCorrect={isCorrect}
+            exStatus={exStatus}
           />
         </div>
       </div>
 
-      <div className="relative -mt-8 mb-4">
+      <div className="-mt-4 mb-4">
         <ExerciseFeedback
           noUserInput={selectedValue === startValue}
           noUserInputText={noInputText}
@@ -112,7 +107,7 @@ export function NumberLineExercise({
           onNewExecise={onNewExercise}
           centAmount={centAmount}
         />
-        <div className="absolute left-0 top-[7.4rem] sm:top-[4.7rem]">
+        <div className="">
           <ArrowButtonNavigation
             selectedValue={selectedValue}
             setSelectedValue={setSelectedValue}

@@ -35,6 +35,7 @@ export function PlaceValueChooser({
         {[...figureString].map((char, i) => {
           const digitIndex = digitAmount - i
           const isTicked = digitIndex === selectedDigit
+          const isCorrect = digitIndex === searchedDigit
           return (
             <label key={char + i} className="cursor-pointer">
               <input
@@ -52,8 +53,9 @@ export function PlaceValueChooser({
               />
               <span
                 className={cn(
-                  'mx-0.25 inline-block min-w-[30px] rounded-md border-2 p-1.5 text-center',
-                  getColorClasses(i, isTicked)
+                  'mx-0.25 inline-block min-w-[30px] rounded-md border-2 p-1.5 text-center transition-all',
+                  getColorClasses(isCorrect, isTicked),
+                  exStatus === 'revealed' && !isCorrect && 'opacity-60'
                 )}
               >
                 {char}
@@ -85,9 +87,9 @@ export function PlaceValueChooser({
     return digitStrings[searchedDigit as keyof typeof digitStrings]
   }
 
-  function getColorClasses(index: number, isTicked: boolean) {
+  function getColorClasses(isCorrect: boolean, isTicked: boolean) {
     // revealed: actually correct:
-    if (exStatus === 'revealed' && searchedDigit === index) {
+    if (exStatus === 'revealed' && isCorrect) {
       return cn('border-newgreen-600 bg-newgreen bg-opacity-20')
     }
 

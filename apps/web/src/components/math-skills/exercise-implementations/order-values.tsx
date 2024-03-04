@@ -77,6 +77,14 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
         noUserInput={false}
         exStatus={exStatus}
         setExStatus={setExStatus}
+        feedbacks={{
+          revealed: (
+            <>
+              Die richtige Reihenfolge ist: <br />
+              <b>{correctOrder.join(', ')}</b>
+            </>
+          ),
+        }}
         isCorrect={isCorrect}
         shakeElementQuery="#order-values-draggables"
         focusElementQuery="#place-value-chooser-input"
@@ -131,7 +139,7 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
                         'select-none bg-newgreen bg-opacity-0 hover:bg-opacity-5',
                         isDragging && ' bg-opacity-10',
                         isDisabled && 'bg-opacity-10',
-                        exStatus === 'incorrect' &&
+                        exStatus === 'revealed' &&
                           value !== correctOrder[index] &&
                           'bg-red-400'
                       )}

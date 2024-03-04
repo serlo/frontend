@@ -71,7 +71,8 @@ export function NumberInputExercise<T>({
         feedbacks={{
           revealed: (
             <>
-              Die richtige Antwort wäre <b>{correctValue}</b> gewesen.
+              Die richtige Antwort wäre{' '}
+              <b className="text-newgreen">{correctValue}</b> gewesen.
             </>
           ),
         }}

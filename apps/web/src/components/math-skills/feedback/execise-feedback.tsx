@@ -3,7 +3,6 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { SkipExerciseButton } from './skip-exercise-button'
 import { feedbackAnimation } from '../utils/feedback-animation'
 import { useExerciseData } from '../utils/math-skills-data-context'
-import { cn } from '@/helper/cn'
 
 export type ExStatus = 'fresh' | 'correct' | 'incorrect' | 'revealed'
 
@@ -68,7 +67,7 @@ export function ExerciseFeedback({
   }
 
   const onButtonClick = isRevealButton
-    ? revealEx
+    ? undefined
     : isNextButton
       ? newEx
       : checkEx
@@ -80,7 +79,7 @@ export function ExerciseFeedback({
 
   useEffect(() => {
     const keyEventHandler = (e: KeyboardEvent) => {
-      if (e.key === 'Enter') onButtonClick()
+      if (e.key === 'Enter') onButtonClick?.()
     }
 
     document.addEventListener('keydown', keyEventHandler)
@@ -96,15 +95,15 @@ export function ExerciseFeedback({
             {exStatus === 'correct' ? 'Sehr gut gemacht 👌' : null}
             {exStatus === 'incorrect' ? (
               <>
-                {feedbacks?.incorrect ?? (
-                  <>
-                    Das stimmt so noch nicht.
-                    <br />
-                    <b>Probier&apos;s einfach noch mal,</b>
-                    <br />
-                    oder zeig&apos; dir die Lösung an.
-                  </>
-                )}
+                {feedbacks?.incorrect ?? 'Das stimmt so noch nicht.'}
+                <br />
+                <b>Probier&apos;s einfach noch mal,</b>
+                <br />
+                oder{' '}
+                <a className="serlo-link cursor-pointer" onClick={revealEx}>
+                  zeig&apos; dir die Lösung an
+                </a>
+                .
               </>
             ) : null}
             {exStatus === 'revealed' ? <>{feedbacks?.revealed ?? ''}</> : null}
@@ -115,24 +114,15 @@ export function ExerciseFeedback({
         </div>
       </div>
       <div className="text-right">
-        <SkipExerciseButton
-          makeNewExercise={newEx}
-          hidden={exStatus === 'incorrect' || isNextButton}
-        />
+        <SkipExerciseButton makeNewExercise={newEx} hidden={isNextButton} />
       </div>
     </>
   )
 
   function renderMainButton() {
+    if (isRevealButton) return null
     return (
-      <button
-        className={cn(
-          '-mt-1 h-8',
-          isRevealButton ? 'serlo-button-light' : 'serlo-button-blue'
-        )}
-        onClick={onButtonClick}
-      >
-        {isRevealButton && 'Auflösen'}
+      <button className="serlo-button-blue -mt-1 h-8" onClick={onButtonClick}>
         {isNextButton && 'Nächste Aufgabe 👉'}
         {exStatus === 'fresh' && "Stimmt's?"}
       </button>

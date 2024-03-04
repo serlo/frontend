@@ -88,10 +88,6 @@ export function MultipleNumberInputExercise<T>({
                 ? 'Ein Feld stimmt'
                 : 'Mehrere Felder stimmen'}{' '}
               noch nicht.
-              <br />
-              <b>Versuch den Fehler zu finden</b>
-              <br />
-              oder zeig&apos; dir die Lösung an.
             </>
           ),
           revealed: (
@@ -99,11 +95,11 @@ export function MultipleNumberInputExercise<T>({
               Die richtigen Zahlen währen gewesen: <br />
               {correctValues.slice(0, -1).map((value, i) => (
                 <>
-                  <b>{value}</b>
+                  <b className="text-newgreen">{value}</b>
                   {i === correctValues.length - 2 ? '' : ','}{' '}
                 </>
               ))}{' '}
-              und <b>{correctValues.at(-1)}</b>.
+              und <b className="text-newgreen">{correctValues.at(-1)}</b>.
             </>
           ),
         }}

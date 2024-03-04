@@ -347,12 +347,12 @@ export const allExercises = {
           return (
             <>
               <h2 className="mr-12 pb-5 text-2xl text-almost-black">
-                Gegeben ist die Zahl: {showValue}
+                Wie lautet der{' '}
+                <b className="text-newgreen">
+                  {direction === 'up' ? 'Nachfolger' : 'Vorgänger'}
+                </b>{' '}
+                der Zahl <b className="text-newgreen">{showValue}</b>?
               </h2>
-              <p className="mb-2 text-2xl">
-                Wie lautet der {direction === 'up' ? 'Nachfolger' : 'Vorgänger'}{' '}
-                der Zahl?
-              </p>
               <div className="ml-0.5 mt-2" id="number-input">
                 {input}
               </div>
