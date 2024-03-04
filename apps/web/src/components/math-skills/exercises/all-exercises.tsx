@@ -1,4 +1,5 @@
 import { createDecimalToRomanExercise } from './create/create-decimal-to-roman-exercise'
+import { createBinaryToDecimalExercise } from './create/create-dual-to-decimal-exercise'
 import { createExponentiateExercise } from './create/create-exponentiate-exercise'
 import { createIncrDescNumberExercise } from './create/create-incr-desc-number-exercise'
 import { createNumberDistancesExercise } from './create/create-number-distance-exercise'
@@ -12,9 +13,7 @@ import {
   numberLineGeneratorLevel2,
   numberLineGeneratorLevel3,
 } from './generators/number-line-generator'
-import { MemoryGame } from '../exercise-implementations/memory/memory-game'
 import { MultipleNumberInputExercise } from '../number-input-exercise/multiple-number-input-exercise'
-import { toRoman } from '../utils/roman-numerals'
 import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
 import { OrderValues } from '@/components/math-skills/exercise-implementations/order-values'
 import { PlaceValueChart } from '@/components/math-skills/exercise-implementations/place-value-chart'
@@ -460,15 +459,30 @@ export const allExercises = {
     level: 'Level 1',
     component: (
       <NumberInputExercise
+        centAmount={35}
         generator={() => randomIntBetween(2, 31)}
         getCorrectValue={(val) => val}
-        render={(input) => {
+        render={(input, data) => {
+          const digits = data.toString(2).split('')
+          while (digits.length < 5) {
+            digits.unshift(' ')
+          }
           return (
             <>
               <p>
                 Gib die Dualzahl aus der Stellenwerttafel als Dezimalzahl an.
               </p>
-              <div>TODO, Tabelle</div>
+              <div className="my-8 flex">
+                {digits.map((el, i) => {
+                  return (
+                    <div key={i} className="border-r-4 px-2">
+                      {Math.pow(2, 4 - i)}er
+                      <br />
+                      {el}
+                    </div>
+                  )
+                })}
+              </div>
               {input}
             </>
           )
@@ -481,15 +495,30 @@ export const allExercises = {
     level: 'Level 2',
     component: (
       <NumberInputExercise
-        generator={() => randomIntBetween(2, 31)}
+        centAmount={35}
+        generator={() => randomIntBetween(4, 127)}
         getCorrectValue={(val) => val}
-        render={(input) => {
+        render={(input, data) => {
+          const digits = data.toString(2).split('')
+          while (digits.length < 7) {
+            digits.unshift(' ')
+          }
           return (
             <>
               <p>
                 Gib die Dualzahl aus der Stellenwerttafel als Dezimalzahl an.
               </p>
-              <div>TODO, Tabelle</div>
+              <div className="my-8 flex border-l-4">
+                {digits.map((el, i) => {
+                  return (
+                    <div key={i} className="border-r-4 px-2">
+                      {Math.pow(2, 6 - i)}er
+                      <br />
+                      {el}
+                    </div>
+                  )
+                })}
+              </div>
               {input}
             </>
           )
@@ -497,49 +526,16 @@ export const allExercises = {
       />
     ),
   },
+  'dual-nach-dezimal-umrechnen-1': createBinaryToDecimalExercise('Level 1', 15),
+  'dual-nach-dezimal-umrechnen-profi': createBinaryToDecimalExercise(
+    'Profi',
+    45
+  ),
+  'dual-nach-dezimal-umrechnen-profi-plus': createBinaryToDecimalExercise(
+    'Profi+',
+    127
+  ),
   'potenzwert-berechnen': createExponentiateExercise(),
-  'memory-small-wip': {
-    title: 'Memory',
-    level: 'WIP',
-    component: (
-      <MemoryGame
-        centAmount={35}
-        checkPair={(v0: number | string, v1: number | string) => {
-          return (
-            (Number.isInteger(v0) ? toRoman(v0 as number) : v0) ===
-            (Number.isInteger(v1) ? toRoman(v1 as number) : v1)
-          )
-        }}
-        generator={() => {
-          const arabic = [2, 3, 4]
-          const roman = arabic.map(toRoman)
-          const values = shuffleArray([...arabic, ...roman])
-          return { values }
-        }}
-      />
-    ),
-  },
-  'memory-big-wip': {
-    title: 'Memory',
-    level: 'WIP',
-    component: (
-      <MemoryGame
-        centAmount={35}
-        checkPair={(v0: number | string, v1: number | string) => {
-          return (
-            (Number.isInteger(v0) ? toRoman(v0 as number) : v0) ===
-            (Number.isInteger(v1) ? toRoman(v1 as number) : v1)
-          )
-        }}
-        generator={() => {
-          const arabic = [2, 3, 4, 5, 6, 7, 8, 9]
-          const roman = arabic.map(toRoman)
-          const values = shuffleArray([...arabic, ...roman])
-          return { values }
-        }}
-      />
-    ),
-  },
 } as const
 
 export type SupportedExercisesId = keyof typeof allExercises

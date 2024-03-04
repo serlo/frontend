@@ -131,19 +131,29 @@ export const grade5Data: GradeTopicData[] = [
         children: [
           {
             id: 'dual-nach-dezimal-stellenwerttafel-1',
-            text: 'Level 1 (WIP)',
+            text: 'Level 1',
           },
           {
             id: 'dual-nach-dezimal-stellenwerttafel-2',
-            text: 'Level 2 (WIP)',
+            text: 'Level 2',
           },
         ],
       },
       {
-        title: 'Baustellen',
+        title: 'Dual nach Dezimal umrechnen',
         children: [
-          { id: 'memory-small-wip', text: 'Memory Klein' },
-          { id: 'memory-big-wip', text: 'Memory Groß' },
+          {
+            id: 'dual-nach-dezimal-umrechnen-1',
+            text: 'Level 1',
+          },
+          {
+            id: 'dual-nach-dezimal-umrechnen-profi',
+            text: 'Profi',
+          },
+          {
+            id: 'dual-nach-dezimal-umrechnen-profi-plus',
+            text: 'Profi+',
+          },
         ],
       },
     ],
