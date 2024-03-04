@@ -54,13 +54,13 @@ export const grade5Data: GradeTopicData[] = [
       },
       {
         title: 'Zahlen ordnen',
-        children: [{ id: 'zahlen-sortieren-wip', text: 'Level 1 (WIP)' }],
+        children: [{ id: 'zahlen-ordnen', text: 'Level 1' }],
       },
       {
         title: 'Vorgänger und Nachfolger',
         children: [
-          { id: 'vorgaenger-nachfolger-1', text: 'Level 1 (WIP)' },
-          { id: 'zahlen-sortieren-wip', text: 'Level 2 (TODO)' },
+          { id: 'vorgaenger-nachfolger-1', text: 'Tabelle' },
+          { id: 'vorgaenger-nachfolger-2', text: 'Text' },
         ],
       },
       {
