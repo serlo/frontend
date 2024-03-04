@@ -20,6 +20,7 @@ import { NumberLineExercise } from '@/components/math-skills/number-line-exercis
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 import { shuffleArray } from '@/helper/shuffle-array'
+import { createRomanToDecimalExercise } from './create/create-roman-to-decimal-exercise'
 
 export const allExercises = {
   'zahlen-anordnen-1': {
@@ -388,6 +389,10 @@ export const allExercises = {
   'zahlenabstaende-erkennen-profi': createNumberDistancesExercise('Profi'),
   'zahlenabstaende-erkennen-topprofi':
     createNumberDistancesExercise('TopProfi'),
+  'roemisch-nach-dezimal-1': createRomanToDecimalExercise('Level 1', 1, 54),
+  'roemisch-nach-dezimal-2': createRomanToDecimalExercise('Level 2', 10, 100),
+  'roemisch-nach-dezimal-3': createRomanToDecimalExercise('Level 3', 10, 350),
+  'roemisch-nach-dezimal-profi': createRomanToDecimalExercise('Profi', 1, 2100),
   'potenzwert-berechnen': createExponentiateExercise(),
   'memory-small-wip': {
     title: 'Memory',
