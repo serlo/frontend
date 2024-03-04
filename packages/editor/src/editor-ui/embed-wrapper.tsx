@@ -1,4 +1,3 @@
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
@@ -26,20 +25,20 @@ export function EmbedWrapper({
   type,
   embedUrl,
 }: EmbedWrapperProps) {
-  const [showIframe, setShowIframe] = useState(false)
+  const [showContent, setShowContent] = useState(false)
 
   useEffect(() => {
-    setShowIframe(false)
+    setShowContent(false)
   }, [embedUrl])
 
   const { strings } = useInstanceData()
 
   const confirmLoad = () => {
-    if (!showIframe) setShowIframe(true)
+    if (!showContent) setShowContent(true)
   }
 
   function onKeyDown(e: KeyboardEvent<HTMLButtonElement>) {
-    if (!showIframe && (e.key === 'Enter' || e.key === ' ')) {
+    if (!showContent && (e.key === 'Enter' || e.key === ' ')) {
       e.preventDefault()
       confirmLoad()
     }
@@ -55,8 +54,7 @@ export function EmbedWrapper({
         className
       )}
     >
-      {renderPlaceholder()}
-      {showIframe && children}
+      {showContent ? children : renderPlaceholder()}
     </div>
   )
 
@@ -66,10 +64,10 @@ export function EmbedWrapper({
     )}`
 
     return (
-      <div className="text-center">
-        <div className="relative bg-editor-primary-100 pb-[56.2%]">
+      <div className="w-full">
+        <div className="relative flex aspect-[16/9] w-full justify-center rounded-xl bg-editor-primary-100">
           <img
-            className="absolute left-0 h-full w-full object-cover opacity-50"
+            className="w-full object-contain opacity-50"
             src={previewImageUrl}
             alt={`${strings.content.previewImage}`}
           />
@@ -82,10 +80,7 @@ export function EmbedWrapper({
             className="serlo-button-editor-primary group-hover:bg-editor-primary"
             onKeyDown={onKeyDown}
           >
-            <FaIcon
-              className={cn('py-0.5', showIframe && 'animate-spin-slow')}
-              icon={showIframe ? faSpinner : entityIconMapping[type]}
-            />{' '}
+            <FaIcon className="py-0.5" icon={entityIconMapping[type]} />{' '}
             {strings.embed.general}
           </button>
         </div>

@@ -4,7 +4,7 @@ import { isRowsDocument } from '@editor/types/plugin-type-guards'
 
 import { isEmptyTextDocument } from '../../text/utils/static-is-empty'
 
-export function isEmptyRowsDocument(rows: AnyEditorDocument) {
+export function isEmptyRowsDocument(rows: AnyEditorDocument): boolean {
   if (!isRowsDocument(rows)) return false
 
   // only checks for initial empty state,

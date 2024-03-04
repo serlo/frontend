@@ -30,7 +30,7 @@ export function VideoRenderer({ src, type }: VideoRendererProps) {
   }
 
   return (
-    <div className="mx-side my-0  p-0">
+    <div className="my-0 aspect-[16/9] w-full p-0">
       {type === VideoType.WikimediaCommons ? (
         <video controls src={src} className={videoClassName} />
       ) : (
@@ -46,9 +46,7 @@ export function VideoRenderer({ src, type }: VideoRendererProps) {
   )
 }
 
-const videoClassName = cn(
-  `absolute left-0 top-0 z-20 h-full w-full border-none bg-black/30`
-)
+const videoClassName = cn(`h-full w-full border-none bg-black/30`)
 
 export function parseVideoUrl(
   inputSrc: string,

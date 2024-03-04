@@ -15,7 +15,7 @@ const allInteractiveExerciseTypes = [
   EditorPluginType.InputExercise,
   EditorPluginType.H5p,
   EditorPluginType.TextAreaExercise,
-  EditorPluginType.FillInTheBlanksExercise,
+  EditorPluginType.BlanksExercise,
 ] as const
 
 export type InteractiveExerciseType =

@@ -15,6 +15,8 @@ import { triggerSentry } from '@serlo/frontend/src/helper/trigger-sentry'
 import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
 
+import { isProduction } from '@/helper/is-production'
+
 // TODO: move query into frontend
 export interface InjectionOnlyContentQuery {
   __typename?: 'Query'
@@ -102,10 +104,15 @@ export function InjectionStaticRenderer({
   >('loading')
   const { strings } = useInstanceData()
   const [base, hash] = href.split('#')
-  const cleanedHref = base
-    ? base.startsWith('/')
-      ? base
-      : `/${base}`
+
+  // TODO: Temporary until migration is done
+  const baseReplacedWithHash =
+    isProduction && hash && /^[0-9]+$/.test(hash) ? hash : base
+
+  const cleanedHref = baseReplacedWithHash
+    ? baseReplacedWithHash.startsWith('/')
+      ? baseReplacedWithHash
+      : `/${baseReplacedWithHash}`
     : undefined
 
   useEffect(() => {

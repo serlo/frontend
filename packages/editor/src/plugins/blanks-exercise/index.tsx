@@ -10,25 +10,24 @@ import {
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { FillInTheBlanksExerciseEditor } from './editor'
+import { BlanksExerciseEditor } from './editor'
 
-export type FillInTheBlanksMode = 'typing' | 'drag-and-drop'
+export type BlanksExerciseMode = 'typing' | 'drag-and-drop'
 
 export type BlankId = string
 
 export type DraggableId = string
 
-export const fillInTheBlanksExercise: EditorPlugin<FillInTheBlanksExerciseState> =
-  {
-    Component: FillInTheBlanksExerciseEditor,
-    config: {},
-    state: createState(),
-  }
+export const blanksExercise: EditorPlugin<BlanksExerciseState> = {
+  Component: BlanksExerciseEditor,
+  config: {},
+  state: createState(),
+}
 
-export type FillInTheBlanksExerciseState = ReturnType<typeof createState>
+export type BlanksExerciseState = ReturnType<typeof createState>
 
 function createState() {
-  const defaultMode: FillInTheBlanksMode = 'typing'
+  const defaultMode: BlanksExerciseMode = 'typing'
 
   return object({
     // text can also be a table plugin
@@ -52,5 +51,4 @@ function createState() {
   })
 }
 
-export type FillInTheBlanksExerciseProps =
-  EditorPluginProps<FillInTheBlanksExerciseState>
+export type BlanksExerciseProps = EditorPluginProps<BlanksExerciseState>
