@@ -43,7 +43,7 @@ export function MemoryCard({
       </div>
       <div
         className={cn(`
-          absolute top-0 flex h-full w-full items-center
+          absolute top-0 flex h-full w-full rotate-0 items-center
           justify-center rounded-md bg-brand-50 [backface-visibility:hidden]
          `)}
       >
