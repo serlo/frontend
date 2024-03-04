@@ -5,7 +5,9 @@ import { Link } from '@/components/content/link'
 
 export function TodaysExercise() {
   const { data } = useMathSkillsStorage()
-  const selection = grade5Data[0].children
+  const selection = grade5Data[0].children.flatMap(
+    (section) => section.children
+  )
   const index = Math.max(
     Math.floor((new Date().getDate() * selection.length) / 31),
     selection.length
