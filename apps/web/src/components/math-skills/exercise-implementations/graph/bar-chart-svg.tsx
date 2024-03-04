@@ -532,7 +532,7 @@ export function BarGraphSVG({
   )
 
   function renderBar(index: number, xPos: number, color: string) {
-    const yPos = 224 - heights[index]
+    const yPos = 224.5 - heights[index]
     return (
       <>
         <rect
