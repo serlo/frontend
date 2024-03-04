@@ -43,9 +43,7 @@ export function MathExamsLanding({ region: initRegion }: RegionData) {
           <div>
             <h1
               className={cn(`
-                mb-10 mt-3 text-4xl
-                font-extrabold
-                tracking-tight sm:text-6xl
+                mb-10 mt-3 text-5xl font-extrabold tracking-tight
               `)}
             >
               <span className="inline-block w-min max-w-[27rem] !whitespace-normal pb-3">
@@ -56,8 +54,12 @@ export function MathExamsLanding({ region: initRegion }: RegionData) {
               </span>
             </h1>
             <p className="text-2xl leading-cozy text-almost-black">
-              Hier findest du <b>Übungsaufgaben</b>, <b>Lösungen</b> und{' '}
-              <b>Erklärungen</b> für Deine Prüfungen.
+              Hier findest du Deine <b>originalen Prüfungsaufgaben</b> mit{' '}
+              <b>Lösungen</b>
+              <wbr />{' '}
+              <span className="whitespace-nowrap">
+                und <b>Erklärungen</b>.
+              </span>
               <br />
               <br />
               Du packst das! 🙌
