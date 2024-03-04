@@ -6,11 +6,13 @@ import { cn } from '@/helper/cn'
 interface PlaceValueChooserProps {
   generator: () => { figure: number; searchedDigit: number }
   centAmount?: number
+  digitString?: (searchedDigits: number) => string
 }
 
 export function PlaceValueChooser({
   generator,
   centAmount,
+  digitString,
 }: PlaceValueChooserProps) {
   const [data, setData] = useState(generator())
   const [exStatus, setExStatus] = useState<ExStatus>('fresh')
@@ -26,7 +28,9 @@ export function PlaceValueChooser({
     <>
       <h2 className="pb-8 text-left text-2xl font-bold text-almost-black">
         Markiere den Stellenwert:{' '}
-        <span className="text-newgreen">{getDigitString()?.long}</span>
+        <span className="text-newgreen">
+          {digitString ? digitString(searchedDigit) : getDigitString()?.long}
+        </span>
       </h2>
       <div
         id="place-value-chooser-wrapper"

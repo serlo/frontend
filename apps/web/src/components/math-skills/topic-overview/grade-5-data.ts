@@ -118,6 +118,15 @@ export const grade5Data: GradeTopicData[] = [
         ],
       },
       {
+        title: 'Dualzahlen: Einführung',
+        children: [
+          {
+            id: 'dualzahlen-stellenwerte-erkennen',
+            text: 'Stellenwerte erkennen',
+          },
+        ],
+      },
+      {
         title: 'Baustellen',
         children: [
           { id: 'memory-small-wip', text: 'Memory Klein' },

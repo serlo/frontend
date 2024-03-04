@@ -438,6 +438,23 @@ export const allExercises = {
     50,
     130
   ),
+  'dualzahlen-stellenwerte-erkennen': {
+    title: 'Stellenwerte von Dualzahlen erkennen',
+    component: (
+      <PlaceValueChooser
+        centAmount={35}
+        digitString={(searchedDigit) => {
+          return `${Math.pow(2, searchedDigit - 1)}er`
+        }}
+        generator={() => {
+          const figure = parseInt(randomIntBetween(32, 511).toString(2))
+          // digit pos starting with 1 => Einser
+          const searchedDigit = randomIntBetween(3, figure.toString().length)
+          return { figure, searchedDigit }
+        }}
+      />
+    ),
+  },
   'potenzwert-berechnen': createExponentiateExercise(),
   'memory-small-wip': {
     title: 'Memory',
