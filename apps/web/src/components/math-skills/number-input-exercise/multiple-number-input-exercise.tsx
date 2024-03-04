@@ -99,20 +99,6 @@ export function MultipleNumberInputExercise<T>({
         }}
         centAmount={centAmount}
       />
-
-      <NumberKeyboard
-        addCharacter={(char: string) => {
-          const newValues = [...inputValues]
-          newValues[selected] = newValues[selected] + char
-          setInputValues(newValues)
-        }}
-        removeCharacter={() => {
-          const newValues = [...inputValues]
-          newValues[selected] = newValues[selected].slice(0, -1)
-          setInputValues(newValues)
-        }}
-        isDisabled={isChecked}
-      />
     </>
   )
 }

@@ -80,14 +80,6 @@ export function NumberInputExercise<T>({
         }}
         centAmount={centAmount}
       />
-
-      <NumberKeyboard
-        addCharacter={(char: string) => {
-          setInputValue(inputValue + char)
-        }}
-        removeCharacter={() => setInputValue(inputValue.slice(0, -1))}
-        isDisabled={isChecked}
-      />
     </>
   )
 }

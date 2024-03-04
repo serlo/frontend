@@ -168,17 +168,14 @@ export const allExercises = {
       <NumberInputExercise
         centAmount={35}
         generator={() => {
-          const T = randomIntBetween(1, 9)
-          const H = randomIntBetween(0, 9)
-          const Z = randomIntBetween(0, 9)
-          const E = randomIntBetween(0, 9)
-          return { value: T * 1000 + H * 100 + Z * 10 + E, T, H, Z, E }
+          const value = randomIntBetween(1000, 9999)
+          return { value }
         }}
         getCorrectValue={({ value }) => value}
-        render={(input, { T, H, Z, E }) => {
+        render={(input, { value }) => {
           return (
             <>
-              <PlaceValueChart T={T} H={H} Z={Z} E={E} />
+              <PlaceValueChart value={value} />
               <h2 className="my-4 text-2xl">
                 Welche Zahl stellt die Stellenwert-Tafel dar?
               </h2>

@@ -2,18 +2,18 @@ import { arrayOfLength } from '@/helper/array-of-length'
 import { cn } from '@/helper/cn'
 
 interface PlaceValueChartProps {
-  T: number
-  H: number
-  Z: number
-  E: number
+  value: number
 }
-export function PlaceValueChart({ T, H, Z, E }: PlaceValueChartProps) {
+
+export function PlaceValueChart({ value = 0 }: PlaceValueChartProps) {
+  const blocks = [...value.toString()].map((val) => parseInt(val))
+
   return (
     <div className="-ml-2 flex gap-x-3 divide-x-2 divide-gray-200 pb-3 text-xl">
-      {renderBlock('T', T, 'text-brand-500')}
-      {renderBlock('H', H, 'text-newgreen')}
-      {renderBlock('Z', Z, 'text-orange-300')}
-      {renderBlock('E', E, 'text-red-400')}
+      {renderBlock('T', blocks[0], 'text-brand-500')}
+      {renderBlock('H', blocks[1], 'text-newgreen')}
+      {renderBlock('Z', blocks[2], 'text-orange-300')}
+      {renderBlock('E', blocks[3], 'text-red-400')}
     </div>
   )
 
