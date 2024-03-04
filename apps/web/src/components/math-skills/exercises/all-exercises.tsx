@@ -455,6 +455,48 @@ export const allExercises = {
       />
     ),
   },
+  'dual-nach-dezimal-stellenwerttafel-1': {
+    title: 'Dualzahl in Dezimalzahl umrechnen',
+    level: 'Level 1',
+    component: (
+      <NumberInputExercise
+        generator={() => randomIntBetween(2, 31)}
+        getCorrectValue={(val) => val}
+        render={(input) => {
+          return (
+            <>
+              <p>
+                Gib die Dualzahl aus der Stellenwerttafel als Dezimalzahl an.
+              </p>
+              <div>TODO, Tabelle</div>
+              {input}
+            </>
+          )
+        }}
+      />
+    ),
+  },
+  'dual-nach-dezimal-stellenwerttafel-2': {
+    title: 'Dualzahl in Dezimalzahl umrechnen',
+    level: 'Level 2',
+    component: (
+      <NumberInputExercise
+        generator={() => randomIntBetween(2, 31)}
+        getCorrectValue={(val) => val}
+        render={(input) => {
+          return (
+            <>
+              <p>
+                Gib die Dualzahl aus der Stellenwerttafel als Dezimalzahl an.
+              </p>
+              <div>TODO, Tabelle</div>
+              {input}
+            </>
+          )
+        }}
+      />
+    ),
+  },
   'potenzwert-berechnen': createExponentiateExercise(),
   'memory-small-wip': {
     title: 'Memory',

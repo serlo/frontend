@@ -127,6 +127,19 @@ export const grade5Data: GradeTopicData[] = [
         ],
       },
       {
+        title: 'Dual nach Dezimal mit Stellenwerttafel',
+        children: [
+          {
+            id: 'dual-nach-dezimal-stellenwerttafel-1',
+            text: 'Level 1 (WIP)',
+          },
+          {
+            id: 'dual-nach-dezimal-stellenwerttafel-2',
+            text: 'Level 2 (WIP)',
+          },
+        ],
+      },
+      {
         title: 'Baustellen',
         children: [
           { id: 'memory-small-wip', text: 'Memory Klein' },
