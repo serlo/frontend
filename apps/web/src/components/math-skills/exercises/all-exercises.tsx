@@ -18,8 +18,8 @@ import { PlaceValueChooser } from '@/components/math-skills/exercise-implementat
 import { NumberInputExercise } from '@/components/math-skills/number-input-exercise/number-input-exercise'
 import { NumberLineExercise } from '@/components/math-skills/number-line-exercise/number-line-exercise'
 import { randomIntBetween } from '@/helper/random-int-between'
-import { shuffleArray } from '@/helper/shuffle-array'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
+import { shuffleArray } from '@/helper/shuffle-array'
 
 export const allExercises = {
   'zahlen-anordnen-1': {
