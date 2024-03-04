@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-import { NumberKeyboard } from './number-keyboard'
 import { ExerciseFeedback } from '../feedback/execise-feedback'
 import { arrayOfLength } from '@/helper/array-of-length'
 import { cn } from '@/helper/cn'
@@ -31,7 +30,6 @@ export function MultipleNumberInputExercise<T>({
   )
   const [isChecked, setIsChecked] = useState(false)
   const [data, setData] = useState(generator())
-  const [selected, setSelected] = useState(0)
 
   const correctValues = getCorrectValues(data)
   const isCorrectArray = correctValues.map(
@@ -56,10 +54,6 @@ export function MultipleNumberInputExercise<T>({
               const newValues = [...inputValues]
               newValues[i] = currentTarget.value
               setInputValues(newValues)
-              setSelected(i)
-            }}
-            onFocus={() => {
-              setSelected(i)
             }}
             type="text"
             pattern="\d+"
