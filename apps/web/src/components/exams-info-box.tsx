@@ -1,10 +1,9 @@
 import { BoxRenderer } from '@editor/plugins/box/renderer'
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
-import dynamic from 'next/dynamic'
 
 import { Link } from './content/link'
 import { FaIcon } from './fa-icon'
-import { type SubjectIconProps } from './landing/rework/subject-icon'
+import { cn } from '@/helper/cn'
 
 // manually for now,
 // we need to figure out an elegant way to get all taxonomy ids that contain
@@ -25,12 +24,6 @@ const examsTaxIdsNI = [
   300754, 300755, 297605,
 ]
 
-const SubjectIcon = dynamic<SubjectIconProps>(() =>
-  import('@/components/landing/rework/subject-icon').then(
-    (mod) => mod.SubjectIcon
-  )
-)
-
 export function ExamsInfoBox({ id }: { id: number }) {
   const isInBYTax = examsTaxIdsBY.includes(id)
   const isInNITax = examsTaxIdsNI.includes(id)
@@ -39,25 +32,45 @@ export function ExamsInfoBox({ id }: { id: number }) {
 
   return (
     <>
-      <div className="-ml-side mt-8">
+      <div
+        className={cn(
+          '-ml-side mt-8',
+          'md:absolute md:left-side md:z-10 md:mt-10 md:w-[200px]',
+          'lg:w-[220px]',
+          'xl:left-side xl:w-[245px]'
+        )}
+      >
         <BoxRenderer boxType="blank" anchorId="exams-info-box">
-          <div className="flex py-4">
-            {renderIcon()}
-            <div>
-              <p className="serlo-p mb-2 font-normal  leading-normal">
-                Du bist gerade im Prüfungsbereich für{' '}
-                <b>{isInBYTax ? 'Bayern' : 'Niedersachsen'}</b>.
-                <br />
-                Die anderen Bundesländer, noch mehr Prüfungsaufgaben <br /> und
-                unseren Discord-Server findest du hier:
-              </p>
+          <div className="pb-2 sm:flex md:block">
+            <p className="serlo-p mb-2 max-w-lg font-normal leading-normal">
+              Willkommen im Prüfungsbereich für{' '}
+              <b className="inline-block">
+                {isInBYTax ? 'Bayern' : 'Niedersachsen'}
+              </b>
+              .
+              <br />
+              Die anderen Bundesländer, noch mehr Aufgaben und unseren
+              Discord-Server findest du hier:
+            </p>
+            <p>
               <Link
                 href="/mathe-pruefungen"
-                className="serlo-button-blue mx-side !px-3 !py-2"
+                className={cn(
+                  'serlo-button-light mx-side mt-2 !px-3 !py-2',
+                  'sm:mr-7 sm:flex sm:w-min sm:justify-around sm:rounded-lg sm:!px-4 sm:!py-2.5'
+                )}
               >
-                <FaIcon icon={faGraduationCap} /> Mathe-Prüfungen Startseite
+                <FaIcon
+                  icon={faGraduationCap}
+                  className={cn(
+                    'mr-1 text-brand-400',
+                    'sm:mr-2 sm:mt-3 sm:text-3xl',
+                    'md:hidden xl:block'
+                  )}
+                />
+                <span>Mathe- Prüfungen Startseite</span>
               </Link>
-            </div>
+            </p>
           </div>
         </BoxRenderer>
         <style jsx global>
@@ -70,22 +83,4 @@ export function ExamsInfoBox({ id }: { id: number }) {
       </div>
     </>
   )
-
-  function renderIcon() {
-    return (
-      <>
-        <div className="landing-subjects group hidden sm:mt-1 sm:block">
-          <SubjectIcon subject="mathe" />
-        </div>
-        <style jsx global>{`
-          .landing-subjects svg.serlo-subject-icon {
-            display: block;
-            margin: 0 auto;
-            width: 8rem;
-            height: 8rem;
-          }
-        `}</style>
-      </>
-    )
-  }
 }
