@@ -536,12 +536,16 @@ export const allExercises = {
     'Profi+',
     127
   ),
-  'dezimal-nach-dual-stellenwerttafel-1':
-    createDecimalToDualWithChartExercise('Level 1'),
-  'dezimal-nach-dual-stellenwerttafel-2':
-    createDecimalToDualWithChartExercise('Level 2'),
+  'dezimal-nach-dual-stellenwerttafel-1': createDecimalToDualWithChartExercise(
+    'Level 1',
+    5
+  ),
+  'dezimal-nach-dual-stellenwerttafel-2': createDecimalToDualWithChartExercise(
+    'Level 2',
+    7
+  ),
   'dezimal-nach-dual-stellenwerttafel-profi':
-    createDecimalToDualWithChartExercise('Profi'),
+    createDecimalToDualWithChartExercise('Profi', 8),
   'potenzwert-berechnen': createExponentiateExercise(),
 } as const
 

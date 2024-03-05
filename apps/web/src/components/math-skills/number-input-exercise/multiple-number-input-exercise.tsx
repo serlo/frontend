@@ -31,10 +31,12 @@ export function MultipleNumberInputExercise<T>({
   const [data, setData] = useState(generator())
 
   const correctValues = getCorrectValues(data)
+  console.log(correctValues)
   const isCorrectArray = correctValues.map(
     (value, i) =>
-      value === parseInt(inputValues[i]) &&
-      parseInt(inputValues[i]).toString() === inputValues[i]
+      (isNaN(value) && !inputValues[i]) ||
+      (value === parseInt(inputValues[i]) &&
+        parseInt(inputValues[i]).toString() === inputValues[i])
   )
   const isCorrect = isCorrectArray.every(Boolean)
   const incorrectAmount =
