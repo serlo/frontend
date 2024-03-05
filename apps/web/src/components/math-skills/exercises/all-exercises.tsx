@@ -1,3 +1,4 @@
+import { createDecimalToDualWithChartExercise } from './create/create-decimal-to-dual-with-chart-exercise'
 import { createDecimalToRomanExercise } from './create/create-decimal-to-roman-exercise'
 import { createBinaryToDecimalExercise } from './create/create-dual-to-decimal-exercise'
 import { createExponentiateExercise } from './create/create-exponentiate-exercise'
@@ -535,6 +536,12 @@ export const allExercises = {
     'Profi+',
     127
   ),
+  'dezimal-nach-dual-stellenwerttafel-1':
+    createDecimalToDualWithChartExercise('Level 1'),
+  'dezimal-nach-dual-stellenwerttafel-2':
+    createDecimalToDualWithChartExercise('Level 2'),
+  'dezimal-nach-dual-stellenwerttafel-profi':
+    createDecimalToDualWithChartExercise('Profi'),
   'potenzwert-berechnen': createExponentiateExercise(),
 } as const
 

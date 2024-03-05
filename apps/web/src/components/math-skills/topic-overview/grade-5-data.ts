@@ -122,7 +122,7 @@ export const grade5Data: GradeTopicData[] = [
         children: [
           {
             id: 'dualzahlen-stellenwerte-erkennen',
-            text: 'Stellenwerte erkennen',
+            text: 'Stelle finden',
           },
         ],
       },
@@ -153,6 +153,23 @@ export const grade5Data: GradeTopicData[] = [
           {
             id: 'dual-nach-dezimal-umrechnen-profi-plus',
             text: 'Profi+',
+          },
+        ],
+      },
+      {
+        title: 'Dezimal nach Dual mit Stellenwerttafel',
+        children: [
+          {
+            id: 'dezimal-nach-dual-stellenwerttafel-1',
+            text: 'Level 1 (WIP)',
+          },
+          {
+            id: 'dezimal-nach-dual-stellenwerttafel-2',
+            text: 'Level 2 (WIP)',
+          },
+          {
+            id: 'dezimal-nach-dual-stellenwerttafel-profi',
+            text: 'Profi (WIP)',
           },
         ],
       },
