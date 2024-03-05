@@ -182,15 +182,70 @@ export const grade5Data: GradeTopicData[] = [
             children: [
               {
                 id: 'dezimal-nach-dual-stellenwerttafel-1',
-                text: 'Level 1 (WIP)',
+                text: 'Level 1',
               },
               {
                 id: 'dezimal-nach-dual-stellenwerttafel-2',
-                text: 'Level 2 (WIP)',
+                text: 'Level 2',
               },
               {
                 id: 'dezimal-nach-dual-stellenwerttafel-profi',
-                text: 'Profi (WIP)',
+                text: 'Profi',
+              },
+            ],
+          },
+          {
+            title: 'Dezimal nach Dual umrechnen',
+            children: [
+              {
+                id: 'dezimal-nach-dual-umrechnen-1',
+                text: 'Level 1',
+              },
+              {
+                id: 'dezimal-nach-dual-umrechnen-profi',
+                text: 'Profi',
+              },
+              {
+                id: 'dezimal-nach-dual-umrechnen-profi-plus',
+                text: 'Profi+',
+              },
+            ],
+          },
+          {
+            title: 'Dualzahlen Memory',
+            children: [
+              {
+                id: 'dualzahlen-memory-1',
+                text: 'Level 1',
+              },
+              {
+                id: 'dualzahlen-memory-2',
+                text: 'Level 2',
+              },
+              {
+                id: 'dualzahlen-memory-profi',
+                text: 'Profi',
+              },
+            ],
+          },
+          {
+            title: 'Dualzahlen ordnen',
+            children: [
+              {
+                id: 'dualzahlen-nachfolger',
+                text: 'Nachfolger',
+              },
+              {
+                id: 'dualzahlen-vorgaenger',
+                text: 'Vorgänger',
+              },
+              {
+                id: 'dualzahlen-vorgaenger-nachfolger-kombi',
+                text: 'Kombi',
+              },
+              {
+                id: 'dualzahlen-vorgaenger-nachfolger-profi',
+                text: 'Profi',
               },
             ],
           },
