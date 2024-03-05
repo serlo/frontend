@@ -93,7 +93,8 @@ export function MultipleNumberInputExercise<T>({
           ),
           revealed: (
             <>
-              Die richtigen Zahlen währen gewesen: <br />
+              Die richtigen Zahlen lauten:
+              <br />
               {correctValues.slice(0, -1).map((value, i) => (
                 <>
                   <b className="text-newgreen">{value}</b>

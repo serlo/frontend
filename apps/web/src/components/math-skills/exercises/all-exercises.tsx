@@ -572,6 +572,72 @@ export const allExercises = {
   'dualzahlen-vorgaenger': createBinaryIncrDescExercise('Vorgänger'),
   'dualzahlen-vorgaenger-nachfolger-kombi':
     createBinaryIncrDescExercise('Kombi'),
+  'dualzahlen-vorgaenger-nachfolger-profi': {
+    title: 'Vorgänger und Nachfolger einer Dualzahl',
+    component: (
+      <MultipleNumberInputExercise
+        numberOfInputs={2}
+        centAmount={35}
+        generator={() => {
+          const showIndex = randomItemFromArray([0, 1, 2])
+          return { midValue: randomIntBetween(2, 30), showIndex }
+        }}
+        getCorrectValues={({ midValue, showIndex }) => {
+          const output = [midValue - 1, midValue, midValue + 1]
+          output.splice(showIndex, 1)
+          return output.map((x) => parseInt(x.toString(2)))
+        }}
+        render={(inputs, data) => {
+          const numbers = [data.midValue - 1, data.midValue, data.midValue + 1]
+          const vals = [
+            <span className="font-mono" key={0}>
+              {inputs[0]}
+            </span>,
+            <p
+              className="w-[120px] rounded-lg bg-gray-100 p-2 font-mono text-2xl"
+              key={data.showIndex}
+            >
+              {numbers[data.showIndex].toString(2)}
+            </p>,
+            <span className="font-mono" key={1}>
+              {inputs[1]}
+            </span>,
+          ]
+          if (data.showIndex === 0) {
+            const t = vals[1]
+            vals[1] = vals[0]
+            vals[0] = t
+          }
+          if (data.showIndex === 2) {
+            const t = vals[2]
+            vals[2] = vals[1]
+            vals[1] = t
+          }
+          return (
+            <>
+              <h2 className="mr-12 pb-5 text-2xl text-almost-black">
+                Ergänze die fehlenden Zahlen:
+              </h2>
+              <div className="flex flex-col gap-3 text-sm font-bold text-almost-black mobile:flex-row">
+                <label>
+                  {vals[0]}
+                  <p className="ml-2.5 mt-0.5 font-normal">Vorgänger</p>
+                </label>
+                <label>
+                  {vals[1]}
+                  <p className="ml-2.5 mt-0.5 font-normal">Zahl</p>
+                </label>
+                <label>
+                  {vals[2]}
+                  <p className="ml-2.5 mt-0.5 font-normal">Nachfolger</p>
+                </label>
+              </div>
+            </>
+          )
+        }}
+      />
+    ),
+  },
   'potenzwert-berechnen': createExponentiateExercise(),
   'multiple-choice-sample': {
     title: 'Multiple Choice Sample',
