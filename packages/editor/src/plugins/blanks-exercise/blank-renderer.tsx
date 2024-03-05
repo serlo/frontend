@@ -67,7 +67,7 @@ export function BlankRenderer(props: BlankRendererProps) {
 
   // remove empty blanks when plugin looses focus
   useEffect(() => {
-    if (!focused && !correctAnswers[0].answer.trim().length) {
+    if (!focused && !correctAnswers[0]?.answer.trim().length) {
       removeBlanks(editor)
     }
   }, [focused, editor, correctAnswers])
@@ -143,7 +143,7 @@ export function BlankRenderer(props: BlankRendererProps) {
 
   function handleBlur() {
     // Trim the text inside of the blank input
-    handleCorrectAnswerChange(0, correctAnswers[0].answer.trim())
+    handleCorrectAnswerChange(0, correctAnswers[0]?.answer.trim())
     setCorrectAnswers(
       correctAnswers
         // Trim the text inside of alternative answers inputs

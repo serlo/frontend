@@ -62,7 +62,7 @@ export function BlankControls(props: BlankControlsProps) {
   }, [selection, editor, blankId])
 
   const isBlankAnswerAlphabetical = useMemo(() => {
-    if (correctAnswers[0].length === 0) return true
+    if (correctAnswers[0]?.length === 0) return true
     return /^[a-zA-Z]+$/.test(correctAnswers[0])
   }, [correctAnswers])
 

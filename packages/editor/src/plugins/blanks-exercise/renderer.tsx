@@ -89,7 +89,7 @@ export function BlanksExerciseRenderer(props: BlanksExerciseRendererProps) {
   const draggables = useMemo(() => {
     const sorted = blanks.map(({ blankId, correctAnswers }) => ({
       draggableId: `solution-${blankId}`,
-      text: correctAnswers[0].answer,
+      text: correctAnswers[0]?.answer,
     }))
     if (isEditing) return sorted
 
