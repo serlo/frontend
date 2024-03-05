@@ -86,6 +86,39 @@ Scenario('focus plugins with tab key', async ({ I }) => {
   I.see('Erklärung mit Multimedia-Inhalt', '$plugin-multimedia-parent-button')
 })
 
-Scenario.todo('focus plugins with arrow keys', ({ I }) => {})
+Scenario('focus plugins with arrow keys', ({ I }) => {
+  I.amOnPage('/entity/create/Article/1377')
+
+  I.say('add first text plugin, type in it, check that it has focus')
+  I.click('Füge ein Element hinzu')
+  I.pressKey('Backspace')
+  I.type('First text plugin')
+  I.see('First text plugin', 'div[data-slate-editor="true"]:focus')
+
+  I.say('add second text plugin, type in it, check that it has focus')
+  I.click('Füge ein Element hinzu')
+  I.pressKey('Backspace')
+  I.type('Second text plugin')
+  I.see('First text plugin', 'div[data-slate-editor="true"]')
+  I.dontSee('First text plugin', 'div[data-slate-editor="true"]:focus')
+  I.see('Second text plugin', 'div[data-slate-editor="true"]:focus')
+
+  I.say('move back to first text plugin using arrow up')
+  // first arrow up to move cursor to start, second to focus first text plugin
+  I.pressKey('ArrowUp')
+  I.pressKey('ArrowUp')
+  // cursor will be at the beginning of first text plugin (okay for now)
+  I.see('Second text plugin', 'div[data-slate-editor="true"]')
+  I.dontSee('Second text plugin', 'div[data-slate-editor="true"]:focus')
+  I.see('First text plugin', 'div[data-slate-editor="true"]:focus')
+
+  I.say('move down to second text plugin using arrow down')
+  // first arrow down to move cursor to end, second to focus second text plugin
+  I.pressKey('ArrowDown')
+  I.pressKey('ArrowDown')
+  I.see('First text plugin', 'div[data-slate-editor="true"]')
+  I.dontSee('First text plugin', 'div[data-slate-editor="true"]:focus')
+  I.see('Second text plugin', 'div[data-slate-editor="true"]:focus')
+})
 
 Scenario.todo('restores cursor positions')
