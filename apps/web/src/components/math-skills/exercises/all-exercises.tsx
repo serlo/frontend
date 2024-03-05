@@ -24,6 +24,7 @@ import { NumberLineExercise } from '@/components/math-skills/number-line-exercis
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 import { shuffleArray } from '@/helper/shuffle-array'
+import { createDecimalToDualExercise } from './create/create-decimal-to-dual-exercise'
 
 export const allExercises = {
   'zahlen-anordnen-1': {
@@ -546,6 +547,21 @@ export const allExercises = {
   ),
   'dezimal-nach-dual-stellenwerttafel-profi':
     createDecimalToDualWithChartExercise('Profi', 8),
+  'dezimal-nach-dual-umrechnen-1': createDecimalToDualExercise(
+    'Level 1',
+    2,
+    17
+  ),
+  'dezimal-nach-dual-umrechnen-profi': createDecimalToDualExercise(
+    'Profi',
+    2,
+    40
+  ),
+  'dezimal-nach-dual-umrechnen-profi-plus': createDecimalToDualExercise(
+    'Profi+',
+    24,
+    74
+  ),
   'potenzwert-berechnen': createExponentiateExercise(),
 } as const
 

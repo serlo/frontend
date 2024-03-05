@@ -31,7 +31,6 @@ export function MultipleNumberInputExercise<T>({
   const [data, setData] = useState(generator())
 
   const correctValues = getCorrectValues(data)
-  console.log(correctValues)
   const isCorrectArray = correctValues.map(
     (value, i) =>
       (isNaN(value) && !inputValues[i]) ||
