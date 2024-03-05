@@ -15,6 +15,7 @@ import { BlankDraggableAnswer } from './components/blank-draggable-answer'
 import { BlankDraggableArea } from './components/blank-draggable-area'
 import { BlanksContext } from './context/blank-context'
 import { Blank, type BlankType } from './types'
+import { cn } from '@/helper/cn'
 
 const DndWrapper = lazy(() =>
   import('@editor/core/components/dnd-wrapper').then((module) => ({
@@ -155,7 +156,15 @@ export function BlanksExerciseRenderer(props: BlanksExerciseRendererProps) {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <DndWrapper>
-        <div className="mx-side mb-block leading-[30px] [&>p]:leading-[30px]">
+        <div
+          className={cn(
+            'mx-side mb-block',
+            // Increase Slate line height in the editor
+            '[&>div>div>div[data-slate-node="element"]]:leading-[30px]',
+            // Increase Slate line height in the renderer
+            '[&>p]:leading-[30px]'
+          )}
+        >
           <BlanksContext.Provider
             value={{
               mode,
