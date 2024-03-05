@@ -8,6 +8,7 @@ interface MemoryGameProps {
   generator: () => { values: (number | string)[] }
   checkPair: (v0: number | string, v1: number | string) => boolean
   centAmount?: number
+  render?: (title: string | number) => JSX.Element
 }
 
 /* supports from 4 to 16 cards for now and only strings or numbers on the cards */
@@ -15,6 +16,7 @@ export function MemoryGame({
   generator,
   checkPair,
   centAmount,
+  render,
 }: MemoryGameProps) {
   const [data, setData] = useState(generator())
   const [exStatus, setExStatus] = useState<ExStatus>('fresh')
@@ -121,6 +123,7 @@ export function MemoryGame({
               index={index}
               isMatched={matchedCards.includes(index)}
               onCardSelect={onCardSelect}
+              render={render}
             />
           ))}
         </nav>

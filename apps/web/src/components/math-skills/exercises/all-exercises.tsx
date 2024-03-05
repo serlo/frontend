@@ -1,3 +1,5 @@
+import { createBinaryMemoryExercise } from './create/create-binary-memory-exercise'
+import { createDecimalToDualExercise } from './create/create-decimal-to-dual-exercise'
 import { createDecimalToDualWithChartExercise } from './create/create-decimal-to-dual-with-chart-exercise'
 import { createDecimalToRomanExercise } from './create/create-decimal-to-roman-exercise'
 import { createBinaryToDecimalExercise } from './create/create-dual-to-decimal-exercise'
@@ -25,7 +27,6 @@ import { NumberLineExercise } from '@/components/math-skills/number-line-exercis
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 import { shuffleArray } from '@/helper/shuffle-array'
-import { createDecimalToDualExercise } from './create/create-decimal-to-dual-exercise'
 
 export const allExercises = {
   'zahlen-anordnen-1': {
@@ -563,6 +564,9 @@ export const allExercises = {
     24,
     74
   ),
+  'dualzahlen-memory-1': createBinaryMemoryExercise('Level 1', 2, 9),
+  'dualzahlen-memory-2': createBinaryMemoryExercise('Level 2', 8, 15),
+  'dualzahlen-memory-profi': createBinaryMemoryExercise('Profi', 5, 12),
   'potenzwert-berechnen': createExponentiateExercise(),
   'multiple-choice-sample': {
     title: 'Multiple Choice Sample',
