@@ -5,7 +5,8 @@ import { cn } from '@/helper/cn'
 
 interface NumberInputExerciseProps<DATA> {
   generator: () => DATA
-  getCorrectValue: (input: DATA) => number
+  getCorrectValue?: (input: DATA) => number
+  getCorrectStringValue?: (input: DATA) => string
   render: (input: JSX.Element, data: DATA) => JSX.Element
   widthForDigits?: number
   centAmount?: number
@@ -17,6 +18,7 @@ interface NumberInputExerciseProps<DATA> {
 export function NumberInputExercise<T>({
   generator,
   getCorrectValue,
+  getCorrectStringValue,
   render,
   widthForDigits = 7,
   centAmount,
@@ -26,7 +28,17 @@ export function NumberInputExercise<T>({
   const [exStatus, setExStatus] = useState<ExStatus>('fresh')
   const [data, setData] = useState(generator())
 
-  const correctValue = getCorrectValue(data)
+  const correctValue = getCorrectValue
+    ? getCorrectValue(data)
+    : getCorrectStringValue
+      ? getCorrectStringValue(data)
+      : '?'
+
+  const isCorrect = getCorrectValue
+    ? correctValue === parseInt(inputValue) &&
+      parseInt(inputValue).toString() === inputValue
+    : correctValue.toString().toLowerCase().replace(/\s/g, '') ===
+      correctValue.toString().toLowerCase()
 
   return (
     <>
@@ -48,7 +60,7 @@ export function NumberInputExercise<T>({
           }}
           type="text"
           pattern="\d+"
-          inputMode="decimal"
+          inputMode={getCorrectValue ? 'decimal' : 'text'}
           autoComplete="off"
           className={cn(
             `ml-0.5 rounded-lg bg-[#d8f5ef] p-2 text-2xl font-bold
@@ -76,10 +88,7 @@ export function NumberInputExercise<T>({
             </>
           ),
         }}
-        isCorrect={
-          correctValue === parseInt(inputValue) &&
-          parseInt(inputValue).toString() === inputValue
-        }
+        isCorrect={isCorrect}
         shakeElementQuery="#number-input"
         focusElementQuery="#number-input input"
         onNewExecise={() => {

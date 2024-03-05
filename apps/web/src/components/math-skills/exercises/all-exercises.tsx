@@ -1,16 +1,20 @@
+import { createDecimalToDualWithChartExercise } from './create/create-decimal-to-dual-with-chart-exercise'
+import { createDecimalToRomanExercise } from './create/create-decimal-to-roman-exercise'
+import { createBinaryToDecimalExercise } from './create/create-dual-to-decimal-exercise'
 import { createExponentiateExercise } from './create/create-exponentiate-exercise'
 import { createIncrDescNumberExercise } from './create/create-incr-desc-number-exercise'
 import { createNumberDistancesExercise } from './create/create-number-distance-exercise'
+import { createOrderRomanExercise } from './create/create-order-roman-exercises'
 import { createPlaceValueChangeExercise } from './create/create-place-value-change-exercise'
+import { createRomanMemoryExercise } from './create/create-roman-memory-exercise'
+import { createRomanToDecimalExercise } from './create/create-roman-to-decimal-exercise'
 import { createTextToNumberExercise } from './create/create-text-to-number-exercise'
 import {
   numberLineGeneratorLevel1,
   numberLineGeneratorLevel2,
   numberLineGeneratorLevel3,
 } from './generators/number-line-generator'
-import { MemoryGame } from '../exercise-implementations/memory/memory-game'
 import { MultipleNumberInputExercise } from '../number-input-exercise/multiple-number-input-exercise'
-import { toRoman } from '../utils/roman-numerals'
 import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
 import { OrderValues } from '@/components/math-skills/exercise-implementations/order-values'
 import { PlaceValueChart } from '@/components/math-skills/exercise-implementations/place-value-chart'
@@ -378,7 +382,9 @@ export const allExercises = {
           const v3 = v2 - randomIntBetween(1, 10)
           const v4 = v3 - randomIntBetween(1, 10)
           const v5 = v4 - randomIntBetween(1, 10)
-          return { values: shuffleArray([v1, v2, v3, v4, v5]) }
+          return {
+            values: shuffleArray([v1, v2, v3, v4, v5]),
+          }
         }}
       />
     ),
@@ -388,49 +394,155 @@ export const allExercises = {
   'zahlenabstaende-erkennen-profi': createNumberDistancesExercise('Profi'),
   'zahlenabstaende-erkennen-topprofi':
     createNumberDistancesExercise('TopProfi'),
+  'roemisch-nach-dezimal-1': createRomanToDecimalExercise('Level 1', 1, 54),
+  'roemisch-nach-dezimal-2': createRomanToDecimalExercise('Level 2', 10, 100),
+  'roemisch-nach-dezimal-3': createRomanToDecimalExercise('Level 3', 10, 350),
+  'roemisch-nach-dezimal-profi': createRomanToDecimalExercise('Profi', 1, 2100),
+  'dezimal-nach-roemisch-1': createDecimalToRomanExercise('Level 1', 1, 105),
+  'dezimal-nach-roemisch-2': createDecimalToRomanExercise('Level 2', 1, 305),
+  'dezimal-nach-roemisch-profi': createDecimalToRomanExercise('Profi', 1, 2100),
+  'roemische-zahlen-memory-1': createRomanMemoryExercise('1 bis 10', 1, 10),
+  'roemische-zahlen-memory-2': createRomanMemoryExercise('11 bis 60', 11, 60),
+  'roemische-zahlen-memory-3': createRomanMemoryExercise('4 bis 50', 4, 50),
+  'roemische-zahlen-memory-4': createRomanMemoryExercise(
+    '40 bis 500',
+    40,
+    500,
+    2
+  ),
+  'roemische-zahlen-memory-profi': createRomanMemoryExercise(
+    'Profi',
+    400,
+    1500,
+    2
+  ),
+  'roemische-zahlen-memory-profi-plus': createRomanMemoryExercise(
+    'Profi+',
+    40,
+    1500,
+    3
+  ),
+  'roemische-zahlen-ordnen-1': createOrderRomanExercise(
+    'Level 1',
+    'small-number'
+  ),
+  'roemische-zahlen-ordnen-2': createOrderRomanExercise(
+    'Level 2',
+    'consecutive',
+    30,
+    70
+  ),
+  'roemische-zahlen-ordnen-profi': createOrderRomanExercise(
+    'Profi',
+    'consecutive',
+    50,
+    130
+  ),
+  'dualzahlen-stellenwerte-erkennen': {
+    title: 'Stellenwerte von Dualzahlen erkennen',
+    component: (
+      <PlaceValueChooser
+        centAmount={35}
+        digitString={(searchedDigit) => {
+          return `${Math.pow(2, searchedDigit - 1)}er`
+        }}
+        generator={() => {
+          const figure = parseInt(randomIntBetween(32, 511).toString(2))
+          // digit pos starting with 1 => Einser
+          const searchedDigit = randomIntBetween(3, figure.toString().length)
+          return { figure, searchedDigit }
+        }}
+      />
+    ),
+  },
+  'dual-nach-dezimal-stellenwerttafel-1': {
+    title: 'Dualzahl in Dezimalzahl umrechnen',
+    level: 'Level 1',
+    component: (
+      <NumberInputExercise
+        centAmount={35}
+        generator={() => randomIntBetween(2, 31)}
+        getCorrectValue={(val) => val}
+        render={(input, data) => {
+          const digits = data.toString(2).split('')
+          while (digits.length < 5) {
+            digits.unshift(' ')
+          }
+          return (
+            <>
+              <p>
+                Gib die Dualzahl aus der Stellenwerttafel als Dezimalzahl an.
+              </p>
+              <div className="my-8 flex">
+                {digits.map((el, i) => {
+                  return (
+                    <div key={i} className="border-r-4 px-2">
+                      {Math.pow(2, 4 - i)}er
+                      <br />
+                      {el}
+                    </div>
+                  )
+                })}
+              </div>
+              {input}
+            </>
+          )
+        }}
+      />
+    ),
+  },
+  'dual-nach-dezimal-stellenwerttafel-2': {
+    title: 'Dualzahl in Dezimalzahl umrechnen',
+    level: 'Level 2',
+    component: (
+      <NumberInputExercise
+        centAmount={35}
+        generator={() => randomIntBetween(4, 127)}
+        getCorrectValue={(val) => val}
+        render={(input, data) => {
+          const digits = data.toString(2).split('')
+          while (digits.length < 7) {
+            digits.unshift(' ')
+          }
+          return (
+            <>
+              <p>
+                Gib die Dualzahl aus der Stellenwerttafel als Dezimalzahl an.
+              </p>
+              <div className="my-8 flex border-l-4">
+                {digits.map((el, i) => {
+                  return (
+                    <div key={i} className="border-r-4 px-2">
+                      {Math.pow(2, 6 - i)}er
+                      <br />
+                      {el}
+                    </div>
+                  )
+                })}
+              </div>
+              {input}
+            </>
+          )
+        }}
+      />
+    ),
+  },
+  'dual-nach-dezimal-umrechnen-1': createBinaryToDecimalExercise('Level 1', 15),
+  'dual-nach-dezimal-umrechnen-profi': createBinaryToDecimalExercise(
+    'Profi',
+    45
+  ),
+  'dual-nach-dezimal-umrechnen-profi-plus': createBinaryToDecimalExercise(
+    'Profi+',
+    127
+  ),
+  'dezimal-nach-dual-stellenwerttafel-1':
+    createDecimalToDualWithChartExercise('Level 1'),
+  'dezimal-nach-dual-stellenwerttafel-2':
+    createDecimalToDualWithChartExercise('Level 2'),
+  'dezimal-nach-dual-stellenwerttafel-profi':
+    createDecimalToDualWithChartExercise('Profi'),
   'potenzwert-berechnen': createExponentiateExercise(),
-  'memory-small-wip': {
-    title: 'Memory',
-    level: 'WIP',
-    component: (
-      <MemoryGame
-        centAmount={35}
-        checkPair={(v0: number | string, v1: number | string) => {
-          return (
-            (Number.isInteger(v0) ? toRoman(v0 as number) : v0) ===
-            (Number.isInteger(v1) ? toRoman(v1 as number) : v1)
-          )
-        }}
-        generator={() => {
-          const arabic = [2, 3, 4]
-          const roman = arabic.map(toRoman)
-          const values = shuffleArray([...arabic, ...roman])
-          return { values }
-        }}
-      />
-    ),
-  },
-  'memory-big-wip': {
-    title: 'Memory',
-    level: 'WIP',
-    component: (
-      <MemoryGame
-        centAmount={35}
-        checkPair={(v0: number | string, v1: number | string) => {
-          return (
-            (Number.isInteger(v0) ? toRoman(v0 as number) : v0) ===
-            (Number.isInteger(v1) ? toRoman(v1 as number) : v1)
-          )
-        }}
-        generator={() => {
-          const arabic = [2, 3, 4, 5, 6, 7, 8, 9]
-          const roman = arabic.map(toRoman)
-          const values = shuffleArray([...arabic, ...roman])
-          return { values }
-        }}
-      />
-    ),
-  },
 } as const
 
 export type SupportedExercisesId = keyof typeof allExercises

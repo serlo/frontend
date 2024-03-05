@@ -96,11 +96,105 @@ export const grade5Data: GradeTopicData[] = [
       },
       {
         title: 'Römische Zahlen',
-        children: [],
+        children: [
+          {
+            title: 'Römische Zahlen: Römisch nach Dezimal',
+            children: [
+              { id: 'roemisch-nach-dezimal-1', text: 'Level 1' },
+              { id: 'roemisch-nach-dezimal-2', text: 'Level 2' },
+              { id: 'roemisch-nach-dezimal-3', text: 'Level 3' },
+              { id: 'roemisch-nach-dezimal-profi', text: 'Profi' },
+            ],
+          },
+          {
+            title: 'Römische Zahlen: Dezimal nach Römisch',
+            children: [
+              { id: 'dezimal-nach-roemisch-1', text: 'Level 1' },
+              { id: 'dezimal-nach-roemisch-2', text: 'Level 2' },
+              { id: 'dezimal-nach-roemisch-profi', text: 'Profi' },
+            ],
+          },
+          {
+            title: 'Römische Zahlen: Memory',
+            children: [
+              { id: 'roemische-zahlen-memory-1', text: '1 bis 10' },
+              { id: 'roemische-zahlen-memory-2', text: '11 bis 60' },
+              { id: 'roemische-zahlen-memory-3', text: '4 bis 50' },
+              { id: 'roemische-zahlen-memory-4', text: '40 bis 500' },
+              { id: 'roemische-zahlen-memory-profi', text: 'Profi' },
+              { id: 'roemische-zahlen-memory-profi-plus', text: 'Profi+' },
+            ],
+          },
+          {
+            title: 'Römische Zahlen ordnen',
+            children: [
+              { id: 'roemische-zahlen-ordnen-1', text: 'Level 1' },
+              { id: 'roemische-zahlen-ordnen-2', text: 'Level 2' },
+              { id: 'roemische-zahlen-ordnen-profi', text: 'Profi' },
+            ],
+          },
+        ],
       },
       {
         title: 'Dualzahlen',
-        children: [],
+        children: [
+          {
+            title: 'Dualzahlen: Einführung',
+            children: [
+              {
+                id: 'dualzahlen-stellenwerte-erkennen',
+                text: 'Stelle finden',
+              },
+            ],
+          },
+          {
+            title: 'Dual nach Dezimal mit Stellenwerttafel',
+            children: [
+              {
+                id: 'dual-nach-dezimal-stellenwerttafel-1',
+                text: 'Level 1',
+              },
+              {
+                id: 'dual-nach-dezimal-stellenwerttafel-2',
+                text: 'Level 2',
+              },
+            ],
+          },
+          {
+            title: 'Dual nach Dezimal umrechnen',
+            children: [
+              {
+                id: 'dual-nach-dezimal-umrechnen-1',
+                text: 'Level 1',
+              },
+              {
+                id: 'dual-nach-dezimal-umrechnen-profi',
+                text: 'Profi',
+              },
+              {
+                id: 'dual-nach-dezimal-umrechnen-profi-plus',
+                text: 'Profi+',
+              },
+            ],
+          },
+          {
+            title: 'Dezimal nach Dual mit Stellenwerttafel',
+            children: [
+              {
+                id: 'dezimal-nach-dual-stellenwerttafel-1',
+                text: 'Level 1 (WIP)',
+              },
+              {
+                id: 'dezimal-nach-dual-stellenwerttafel-2',
+                text: 'Level 2 (WIP)',
+              },
+              {
+                id: 'dezimal-nach-dual-stellenwerttafel-profi',
+                text: 'Profi (WIP)',
+              },
+            ],
+          },
+        ],
       },
     ],
   },
