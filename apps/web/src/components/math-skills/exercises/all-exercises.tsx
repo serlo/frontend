@@ -1,3 +1,4 @@
+import { createBinaryIncrDescExercise } from './create/create-binary-incr-decr-exercise'
 import { createBinaryMemoryExercise } from './create/create-binary-memory-exercise'
 import { createDecimalToDualExercise } from './create/create-decimal-to-dual-exercise'
 import { createDecimalToDualWithChartExercise } from './create/create-decimal-to-dual-with-chart-exercise'
@@ -567,6 +568,10 @@ export const allExercises = {
   'dualzahlen-memory-1': createBinaryMemoryExercise('Level 1', 2, 9),
   'dualzahlen-memory-2': createBinaryMemoryExercise('Level 2', 8, 15),
   'dualzahlen-memory-profi': createBinaryMemoryExercise('Profi', 5, 12),
+  'dualzahlen-nachfolger': createBinaryIncrDescExercise('Nachfolger'),
+  'dualzahlen-vorgaenger': createBinaryIncrDescExercise('Vorgänger'),
+  'dualzahlen-vorgaenger-nachfolger-kombi':
+    createBinaryIncrDescExercise('Kombi'),
   'potenzwert-berechnen': createExponentiateExercise(),
   'multiple-choice-sample': {
     title: 'Multiple Choice Sample',

@@ -229,7 +229,7 @@ export const grade5Data: GradeTopicData[] = [
             ],
           },
           {
-            title: 'Dualzahlen ordnen',
+            title: 'Dualzahlen Ordnung',
             children: [
               {
                 id: 'dualzahlen-nachfolger',
