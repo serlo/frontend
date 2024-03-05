@@ -166,9 +166,9 @@ export function BlankControls(props: BlankControlsProps) {
               })}
               <button
                 onClick={handleAlternativeAnswerAdd}
-                className="serlo-button-editor-primary h-5 w-5 px-1 py-0 text-xs"
+                className="serlo-button-editor-primary h-5 w-5 p-0 text-xs"
               >
-                <FaIcon icon={faPlus} />
+                <FaIcon icon={faPlus} className="h-5 w-3" />
               </button>
             </div>
           </div>
