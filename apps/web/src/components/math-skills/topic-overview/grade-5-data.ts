@@ -216,6 +216,10 @@ export const grade5Data: GradeTopicData[] = [
               { id: 'multiple-choice-sample', text: 'Multiple Choice Test' },
             ],
           },
+          {
+            title: 'JSXGraph',
+            children: [{ id: 'jsxgraph-example', text: 'Example' }],
+          },
         ],
       },
     ],

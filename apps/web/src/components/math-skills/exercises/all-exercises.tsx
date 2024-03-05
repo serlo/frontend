@@ -14,6 +14,7 @@ import {
   numberLineGeneratorLevel2,
   numberLineGeneratorLevel3,
 } from './generators/number-line-generator'
+import { JSXGraphExample } from '../exercise-implementations/jsxgraph-example'
 import { MultipleChoiceExercise } from '../exercise-implementations/multiple-choice-exercise'
 import { MultipleNumberInputExercise } from '../number-input-exercise/multiple-number-input-exercise'
 import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
@@ -561,6 +562,10 @@ export const allExercises = {
         }}
       />
     ),
+  },
+  'jsxgraph-example': {
+    title: 'Jsxgraph Example',
+    component: <JSXGraphExample />,
   },
 } as const
 
