@@ -98,7 +98,7 @@ export const grade5Data: GradeTopicData[] = [
         title: 'Römische Zahlen',
         children: [
           {
-            title: 'Römische Zahlen: Römisch nach Dezimal',
+            title: 'Römisch nach Dezimal umrechnen',
             children: [
               { id: 'roemisch-nach-dezimal-1', text: 'Level 1' },
               { id: 'roemisch-nach-dezimal-2', text: 'Level 2' },
@@ -107,7 +107,7 @@ export const grade5Data: GradeTopicData[] = [
             ],
           },
           {
-            title: 'Römische Zahlen: Dezimal nach Römisch',
+            title: 'Dezimal nach Römisch umrechnen',
             children: [
               { id: 'dezimal-nach-roemisch-1', text: 'Level 1' },
               { id: 'dezimal-nach-roemisch-2', text: 'Level 2' },
@@ -115,7 +115,7 @@ export const grade5Data: GradeTopicData[] = [
             ],
           },
           {
-            title: 'Römische Zahlen: Memory',
+            title: 'Römische Zahlen Memory',
             children: [
               { id: 'roemische-zahlen-memory-1', text: '1 bis 10' },
               { id: 'roemische-zahlen-memory-2', text: '11 bis 60' },
@@ -139,7 +139,7 @@ export const grade5Data: GradeTopicData[] = [
         title: 'Dualzahlen',
         children: [
           {
-            title: 'Dualzahlen: Einführung',
+            title: 'Einführung',
             children: [
               {
                 id: 'dualzahlen-stellenwerte-erkennen',
