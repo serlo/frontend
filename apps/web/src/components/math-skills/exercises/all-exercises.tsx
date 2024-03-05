@@ -17,7 +17,6 @@ import {
   numberLineGeneratorLevel2,
   numberLineGeneratorLevel3,
 } from './generators/number-line-generator'
-import { MultipleChoiceExercise } from '../exercise-implementations/multiple-choice-exercise'
 import { MultipleNumberInputExercise } from '../number-input-exercise/multiple-number-input-exercise'
 import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
 import { OrderValues } from '@/components/math-skills/exercise-implementations/order-values'
@@ -639,24 +638,6 @@ export const allExercises = {
     ),
   },
   'potenzwert-berechnen': createExponentiateExercise(),
-  'multiple-choice-sample': {
-    title: 'Multiple Choice Sample',
-    smallprint: <>1, 2 oder 3, oder alle drei?</>,
-    component: (
-      <MultipleChoiceExercise
-        centAmount={35}
-        generator={() => {
-          // digit pos starting with 1 => Einser
-          const options = [
-            { title: 'correct', isCorrect: true },
-            { title: 'incorrect', isCorrect: false },
-            { title: 'also incorrect', isCorrect: false },
-          ]
-          return { options }
-        }}
-      />
-    ),
-  },
 } as const
 
 export type SupportedExercisesId = keyof typeof allExercises
