@@ -49,7 +49,6 @@ export function MultipleNumberInputExercise<T>({
           <input
             key={i}
             id={`number-input-${i}`}
-            autoFocus={i === 0}
             value={inputValues[i]}
             disabled={isDisabled}
             onChange={({ currentTarget }) => {

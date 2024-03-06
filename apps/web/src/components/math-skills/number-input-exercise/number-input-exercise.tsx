@@ -38,13 +38,12 @@ export function NumberInputExercise<T>({
     ? correctValue === parseInt(inputValue) &&
       parseInt(inputValue).toString() === inputValue
     : correctValue.toString().toLowerCase().replace(/\s/g, '') ===
-      correctValue.toString().toLowerCase()
+      inputValue.toString().toLowerCase()
 
   return (
     <>
       {render(
         <input
-          autoFocus
           value={inputValue}
           disabled={exStatus === 'correct' || exStatus === 'revealed'}
           onChange={({ currentTarget }) => {

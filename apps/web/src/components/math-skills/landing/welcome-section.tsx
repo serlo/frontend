@@ -22,7 +22,17 @@ export function WelcomeSection() {
               <>
                 <br />
                 <br />
-                Du hast schon <b>{allPoints}</b> Skill-Punkte gesammelt 🎉
+                Du hast schon{' '}
+                {allPoints === 1 ? (
+                  <>
+                    <b>einen Skill-Punkt</b>
+                  </>
+                ) : (
+                  <>
+                    <b>{allPoints}</b> Skill-Punkte
+                  </>
+                )}{' '}
+                gesammelt 🎉
               </>
             ) : null}
             <br />
