@@ -657,6 +657,192 @@ export const allExercises = {
       />
     ),
   },
+  'euro-zerlegen': {
+    title: 'Vorgänger und Nachfolger einer Dualzahl',
+    component: (
+      <MultipleNumberInputExercise
+        numberOfInputs={2}
+        centAmount={35}
+        generator={() => {
+          const euro = randomIntBetween(0, 35)
+          const cent = randomIntBetween(0, 99)
+          return { euro, cent }
+        }}
+        getCorrectValues={({ euro, cent }) => [euro, cent]}
+        render={(inputs, { euro, cent }) => {
+          return (
+            <>
+              <h2 className="mr-12 pb-5 text-2xl text-almost-black">
+                Zerlege{' '}
+                <b className="text-newgreen">
+                  {euro},{String(cent).padStart(2, '0')} €
+                </b>{' '}
+                in € und Cent
+              </h2>
+              <div className="flex flex-col gap-3 text-2xl font-bold text-almost-black mobile:flex-row">
+                <label>{inputs[0]} €</label>
+                <label>{inputs[1]} Cent</label>
+              </div>
+            </>
+          )
+        }}
+      />
+    ),
+  },
+  'euro-kommaschreibweise': {
+    title: 'Euro in Kommaschreibweise',
+    level: 'Level 1',
+    component: (
+      <NumberInputExercise
+        centAmount={35}
+        generator={() => {
+          const euro = randomIntBetween(0, 35)
+          const cent = randomIntBetween(0, 99)
+          return { euro, cent }
+        }}
+        getCorrectStringValue={({ euro, cent }) =>
+          `${euro},${String(cent).padStart(2, '0')}`
+        }
+        render={(input, { euro, cent }) => {
+          return (
+            <>
+              <h2 className="mr-12 pb-5 text-2xl text-almost-black">
+                Was ist{' '}
+                <b className="text-newgreen">
+                  {euro} € und {cent} Cent
+                </b>
+                <br />
+                in Kommaschreibweise?
+              </h2>
+              <div
+                className="flex flex-col gap-3 text-2xl font-bold text-almost-black mobile:flex-row"
+                id="number-input"
+              >
+                <label>{input} €</label>
+              </div>
+            </>
+          )
+        }}
+      />
+    ),
+  },
+  'euro-in-cent': {
+    title: 'Euro in Cent',
+    component: (
+      <NumberInputExercise
+        centAmount={35}
+        generator={() => {
+          const euro = randomIntBetween(0, 35)
+          const cent = randomIntBetween(0, 99)
+          return { euro, cent }
+        }}
+        getCorrectValue={({ euro, cent }) => euro * 100 + cent}
+        render={(input, { euro, cent }) => {
+          return (
+            <>
+              <h2 className="mr-12 pb-5 text-2xl text-almost-black">
+                Schreibe als Cent-Betrag:
+                <br />
+                <b className="text-newgreen">
+                  {euro} € und {cent} Cent
+                </b>
+              </h2>
+              <div
+                className="text-2xl font-bold text-almost-black"
+                id="number-input"
+              >
+                <label>{input} Cent</label>
+              </div>
+            </>
+          )
+        }}
+      />
+    ),
+  },
+  'euro-muenzen-mindestens': {
+    title: 'Wie viele Münzen mindestens?',
+    component: (
+      <NumberInputExercise
+        centAmount={35}
+        generator={() => {
+          const cent = randomIntBetween(11, 99)
+          return { cent }
+        }}
+        getCorrectValue={({ cent }) => {
+          const coins = [200, 100, 50, 20, 10, 5, 2, 1]
+          let remainingCents = cent
+          let coinAmount = 0
+          while (remainingCents !== 0) {
+            const biggestCoin = coins.find(
+              (coinCents) => remainingCents >= coinCents
+            )!
+            coinAmount += 1
+            remainingCents -= biggestCoin
+          }
+          return coinAmount
+        }}
+        render={(input, { cent }) => {
+          return (
+            <>
+              <h2 className="mr-12 pb-5 text-2xl text-almost-black">
+                Du willst <b className="text-newgreen">{cent} Cent</b> bezahlen.
+                <br />
+                Wie viele Münzen brauchst du mindestens?
+              </h2>
+              <div
+                className="text-2xl font-bold text-almost-black"
+                id="number-input"
+              >
+                <label>{input} Münzen</label>
+              </div>
+            </>
+          )
+        }}
+      />
+    ),
+  },
+  'euro-scheine-mindestens': {
+    title: 'Wie viele Scheine mindestens?',
+    component: (
+      <NumberInputExercise
+        centAmount={35}
+        generator={() => {
+          const euro = Math.round(randomIntBetween(100, 1000) / 5) * 5
+          return { euro }
+        }}
+        getCorrectValue={({ euro }) => {
+          const bills = [500, 200, 100, 50, 20, 10, 5]
+          let remainingEuros = euro
+          let billAmount = 0
+          while (remainingEuros !== 0) {
+            const biggestBill = bills.find(
+              (billEuros) => remainingEuros >= billEuros
+            )!
+            billAmount += 1
+            remainingEuros -= biggestBill
+          }
+          return billAmount
+        }}
+        render={(input, { euro }) => {
+          return (
+            <>
+              <h2 className="mr-12 pb-5 text-2xl text-almost-black">
+                Du willst <b className="text-newgreen">{euro} €</b> bezahlen.
+                <br />
+                Wie viele Scheine brauchst du mindestens?
+              </h2>
+              <div
+                className="text-2xl font-bold text-almost-black"
+                id="number-input"
+              >
+                <label>{input} Scheine</label>
+              </div>
+            </>
+          )
+        }}
+      />
+    ),
+  },
 } as const
 
 export type SupportedExercisesId = keyof typeof allExercises

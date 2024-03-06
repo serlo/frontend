@@ -275,4 +275,24 @@ export const grade5Data: GradeTopicData[] = [
       },
     ],
   },
+  {
+    title: 'Rechnen mit Größen',
+    children: [
+      {
+        title: 'Geld',
+        children: [
+          {
+            title: 'Geldbeträge darstellen',
+            // padded zeroes in answer are evaluated as incorrect I think we should have a feedback for that
+            children: [
+              { id: 'euro-zerlegen', text: 'Euro zerlegen' },
+              { id: 'euro-kommaschreibweise', text: 'Kommaschreibweise' },
+              { id: 'euro-muenzen-mindestens', text: 'Wie viele Münzen?' },
+              { id: 'euro-scheine-mindestens', text: 'Wie viele Scheine?' },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 ]
