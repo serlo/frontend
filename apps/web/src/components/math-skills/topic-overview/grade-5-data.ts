@@ -285,12 +285,6 @@ export const grade5Data: GradeTopicData[] = [
               { id: 'potenzwert-berechnen', text: 'Potenzwert berechnen' },
             ],
           },
-          {
-            title: 'Multiple Choice Test',
-            children: [
-              { id: 'multiple-choice-sample', text: 'Multiple Choice Test' },
-            ],
-          },
         ],
       },
     ],
