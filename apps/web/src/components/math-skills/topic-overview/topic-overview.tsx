@@ -1,10 +1,21 @@
+import { useEffect } from 'react'
+
 import { GradeTopicData, grade5Data } from './grade-5-data'
 import { TodaysExercise } from './todays-exercise'
 import { TopicItem } from './topic-item'
+import { scrollIfNeeded } from '@/helper/scroll'
 
 export function TopicOverview() {
+  useEffect(() => {
+    const target = document.querySelector(window.location.hash)
+    target?.setAttribute('open', '')
+  })
+
   return (
-    <div className="flex flex-col gap-4 pb-10 pt-3 sm:flex-row sm:flex-wrap">
+    <div
+      className="flex flex-col gap-4 pb-10 pt-3 sm:flex-row sm:flex-wrap"
+      id="topic-overview-wrapper"
+    >
       {renderCard(grade5Data[0])}
       {renderCard(grade5Data[1])}
       <TodaysExercise />
@@ -21,7 +32,23 @@ export function TopicOverview() {
         <h3 className="inline-block pb-2 text-xl font-bold"> {area.title}</h3>
         {area.children.map((subsection) => {
           return (
-            <details key={subsection.title}>
+            <details
+              id={subsection.hash}
+              key={subsection.title}
+              onToggle={(e) => {
+                if ((e.nativeEvent as ToggleEvent).newState === 'open') {
+                  window.location.hash = subsection.hash
+                  document
+                    .querySelectorAll('#topic-overview-wrapper details')
+                    .forEach((details) => {
+                      if (details !== e.target) details.removeAttribute('open')
+                      const handle = (e.target as HTMLElement)
+                        ?.firstElementChild as HTMLElement
+                      if (handle) scrollIfNeeded(handle)
+                    })
+                }
+              }}
+            >
               <summary className="cursor-pointer">
                 <h4 className="mt-2 inline-block text-base text-xl">
                   {subsection.title}

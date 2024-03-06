@@ -4,6 +4,7 @@ export interface GradeTopicData {
   title: string
   children: {
     title: string
+    hash: string
     children: {
       title: string
       children: {
@@ -20,9 +21,10 @@ export const grade5Data: GradeTopicData[] = [
     children: [
       {
         title: 'Zahlenstrahl',
+        hash: 'zahlenstrahl',
         children: [
           {
-            title: 'Zahlenstrahl: Anordnen',
+            title: 'Anordnen',
             children: [
               { id: 'zahlen-anordnen-1', text: 'Level 1' },
               { id: 'zahlen-anordnen-2', text: 'Level 2' },
@@ -30,7 +32,7 @@ export const grade5Data: GradeTopicData[] = [
             ],
           },
           {
-            title: 'Zahlenstrahl: Ablesen',
+            title: 'Ablesen',
             children: [
               { id: 'zahlen-ablesen-1', text: 'Level 1' },
               { id: 'zahlen-ablesen-2', text: 'Level 2' },
@@ -41,6 +43,7 @@ export const grade5Data: GradeTopicData[] = [
       },
       {
         title: 'Große Zahlen',
+        hash: 'große-zahlen',
         children: [
           {
             title: 'Stellenwert-Tabelle',
@@ -96,6 +99,7 @@ export const grade5Data: GradeTopicData[] = [
       },
       {
         title: 'Römische Zahlen',
+        hash: 'roemische-zahlen',
         children: [
           {
             title: 'Römisch nach Dezimal umrechnen',
@@ -137,6 +141,7 @@ export const grade5Data: GradeTopicData[] = [
       },
       {
         title: 'Dualzahlen',
+        hash: 'dualzahlen',
         children: [
           {
             title: 'Einführung',
@@ -253,6 +258,7 @@ export const grade5Data: GradeTopicData[] = [
       },
       {
         title: 'Runden',
+        hash: 'runden',
         children: [
           {
             title: 'Zahlen runden',
@@ -278,6 +284,7 @@ export const grade5Data: GradeTopicData[] = [
     children: [
       {
         title: 'Potenzieren',
+        hash: 'potenzieren',
         children: [
           {
             title: 'Erste Übung',
@@ -294,6 +301,7 @@ export const grade5Data: GradeTopicData[] = [
     children: [
       {
         title: 'Geld',
+        hash: 'geld',
         children: [
           {
             title: 'Geldbeträge darstellen',
