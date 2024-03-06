@@ -701,7 +701,7 @@ export const allExercises = {
           return { euro, cent }
         }}
         getCorrectStringValue={({ euro, cent }) =>
-          `${euro},${String(cent).padStart(2, '0')}`
+          centToEuroCommaString(euro * 100 + cent)
         }
         render={(input, { euro, cent }) => {
           return (
@@ -843,6 +843,56 @@ export const allExercises = {
       />
     ),
   },
+  'plusminus-vergleichen-1': {
+    title: 'Sammelergebnis vergleichen',
+    component: (
+      <NumberInputExercise
+        centAmount={35}
+        generator={() => {
+          const centAmount = randomIntBetween(1000, 2000)
+          const centDifference = randomIntBetween(-700, 700)
+          return { centAmount, centDifference }
+        }}
+        getCorrectStringValue={({ centAmount, centDifference }) => {
+          const answerAmount = centAmount - centDifference
+          return centToEuroCommaString(answerAmount)
+        }}
+        render={(input, { centAmount, centDifference }) => {
+          const amount = centToEuroCommaString(centAmount)
+          const difference = centToEuroCommaString(Math.abs(centDifference))
+          const direction = centDifference < 0 ? 'mehr' : 'weniger'
+
+          return (
+            <>
+              <h2 className="mr-12 pb-5 text-xl text-almost-black">
+                Elif und Selina sammeln Spenden für Fridays for Future. Elif hat
+                schon <b>{amount} €</b>.
+                <br />
+                Selina hat{' '}
+                <b>
+                  {difference} € {direction}
+                </b>
+                .<br />
+                Wie viel hat Selina? (in Kommaschreibweise)
+              </h2>
+              <div
+                className="text-2xl font-bold text-almost-black"
+                id="number-input"
+              >
+                <label>{input} €</label>
+              </div>
+            </>
+          )
+        }}
+      />
+    ),
+  },
+  // TODO: plusminus-vergleichen-2
 } as const
 
 export type SupportedExercisesId = keyof typeof allExercises
+
+function centToEuroCommaString(inCent: number) {
+  const [euro, cent] = String(inCent / 100).split('.')
+  return `${euro},${String(cent).padEnd(2, '0')}`
+}

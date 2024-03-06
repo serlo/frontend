@@ -291,6 +291,15 @@ export const grade5Data: GradeTopicData[] = [
               { id: 'euro-scheine-mindestens', text: 'Wie viele Scheine?' },
             ],
           },
+          {
+            title: 'Addieren & Subtrahieren',
+            children: [
+              {
+                id: 'plusminus-vergleichen-1',
+                text: 'Spendenergebnis vergleichen',
+              },
+            ],
+          },
         ],
       },
     ],
