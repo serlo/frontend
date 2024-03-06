@@ -823,7 +823,8 @@ export const loggedInData = {
         },
         exercise: {
           title: "Aufgabe",
-          description: "Interaktive- oder Textaufgaben"
+          description: "Interaktive- oder Textaufgaben",
+          placeholder: 'Type the assignment here (Optional)'
         },
         inputExercise: {
           title: "Eingabefeld",
