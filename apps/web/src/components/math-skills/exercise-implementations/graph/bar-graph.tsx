@@ -8,7 +8,7 @@ interface BarGraphProps {
   centAmount?: number
 }
 
-export function BarGraph({ generator, centAmount }: BarGraphProps) {
+export function BarGraph({ centAmount }: BarGraphProps) {
   // const [data, setData] = useState(generator())
   const [exStatus, setExStatus] = useState<ExStatus>('fresh')
   // const { values } = data
