@@ -97,7 +97,7 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
       {previewActive ? (
         <BlanksExerciseStaticRenderer {...staticDocument} />
       ) : (
-        <div className="relative z-auto mt-12">
+        <div className="relative mt-12">
           <BlanksExerciseRenderer
             isEditing
             childPlugin={
