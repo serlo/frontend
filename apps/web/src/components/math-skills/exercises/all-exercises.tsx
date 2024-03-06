@@ -5,6 +5,7 @@ import { createDecimalToDualWithChartExercise } from './create/create-decimal-to
 import { createDecimalToRomanExercise } from './create/create-decimal-to-roman-exercise'
 import { createBinaryToDecimalExercise } from './create/create-dual-to-decimal-exercise'
 import { createExponentiateExercise } from './create/create-exponentiate-exercise'
+import { createFindCorrectlyRoundedExercise } from './create/create-find-correctly-rounded-exercise'
 import { createIncrDescNumberExercise } from './create/create-incr-desc-number-exercise'
 import { createNumberDistancesExercise } from './create/create-number-distance-exercise'
 import { createOrderRomanExercise } from './create/create-order-roman-exercises'
@@ -17,7 +18,6 @@ import {
   numberLineGeneratorLevel2,
   numberLineGeneratorLevel3,
 } from './generators/number-line-generator'
-import { MultipleChoiceExercise } from '../exercise-implementations/multiple-choice-exercise'
 import { MultipleNumberInputExercise } from '../number-input-exercise/multiple-number-input-exercise'
 import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
 import { OrderValues } from '@/components/math-skills/exercise-implementations/order-values'
@@ -638,25 +638,99 @@ export const allExercises = {
       />
     ),
   },
-  'potenzwert-berechnen': createExponentiateExercise(),
-  'multiple-choice-sample': {
-    title: 'Multiple Choice Sample',
-    smallprint: <>1, 2 oder 3, oder alle drei?</>,
+  'zahlen-runden-1': {
+    title: 'Zahlen runden',
+    level: 'Level 1',
     component: (
-      <MultipleChoiceExercise
-        centAmount={35}
+      <NumberInputExercise
         generator={() => {
-          // digit pos starting with 1 => Einser
-          const options = [
-            { title: 'correct', isCorrect: true },
-            { title: 'incorrect', isCorrect: false },
-            { title: 'also incorrect', isCorrect: false },
-          ]
-          return { options }
+          const number = randomIntBetween(10000, 50000)
+          const [target, factor] = randomItemFromArray([
+            ['Zehner', 10],
+            ['Hunderter', 100],
+            ['Tausender', 1000],
+            ['Zehntausender', 10000],
+          ])
+          return {
+            number,
+            target,
+            result: Math.round(number / factor) * factor,
+          }
+        }}
+        centAmount={35}
+        getCorrectValue={({ result }) => {
+          return result
+        }}
+        render={(input, { number, target }) => {
+          return (
+            <>
+              <div className="text-2xl">
+                Runde <span className="font-bold text-newgreen">{number}</span>{' '}
+                auf <span className="font-bold text-newgreen">{target}</span>.
+                <br />
+                <br />
+                {input}
+              </div>
+            </>
+          )
         }}
       />
     ),
   },
+  'zahlen-runden-profi': {
+    title: 'Zahlen runden',
+    level: 'Profi',
+    component: (
+      <NumberInputExercise
+        generator={() => {
+          const [target, factor] = randomItemFromArray([
+            ['Zehner', 10],
+            ['Hunderter', 100],
+            ['Tausender', 1000],
+            ['Zehntausender', 10000],
+          ])
+          const number = randomIntBetween(10000, 50000)
+          const rounded = Math.round(number / factor) * factor
+          const dir = randomItemFromArray(['lower', 'upper'])
+          return {
+            rounded,
+            dir,
+            target,
+            result:
+              dir === 'lower' ? rounded - factor / 2 : rounded + factor / 2 - 1,
+          }
+        }}
+        centAmount={35}
+        getCorrectValue={({ result }) => {
+          return result
+        }}
+        render={(input, { dir, rounded, target }) => {
+          return (
+            <>
+              <div className="text-2xl">
+                Wie lautet die{' '}
+                <span className="font-bold text-newgreen">
+                  {dir === 'upper' ? 'größtmögliche' : 'kleinstmögliche'}
+                </span>{' '}
+                Zahl, die auf{' '}
+                <span className="font-bold text-newgreen">{target}</span>{' '}
+                gerundet{' '}
+                <span className="font-bold text-newgreen">{rounded}</span>{' '}
+                ergibt?
+                <br />
+                <br />
+                {input}
+              </div>
+            </>
+          )
+        }}
+      />
+    ),
+  },
+  'zahlen-richtig-gerundet-1': createFindCorrectlyRoundedExercise(1),
+  'zahlen-richtig-gerundet-2': createFindCorrectlyRoundedExercise(2),
+  'zahlen-richtig-gerundet-3': createFindCorrectlyRoundedExercise(3),
+  'potenzwert-berechnen': createExponentiateExercise(),
   'euro-zerlegen': {
     title: 'Vorgänger und Nachfolger einer Dualzahl',
     component: (

@@ -251,6 +251,26 @@ export const grade5Data: GradeTopicData[] = [
           },
         ],
       },
+      {
+        title: 'Runden',
+        children: [
+          {
+            title: 'Zahlen runden',
+            children: [
+              { id: 'zahlen-runden-1', text: 'Level 1' },
+              { id: 'zahlen-runden-profi', text: 'Profi' },
+            ],
+          },
+          {
+            title: 'Wurde richtig gerundet?',
+            children: [
+              { id: 'zahlen-richtig-gerundet-1', text: 'Level 1' },
+              { id: 'zahlen-richtig-gerundet-2', text: 'Level 2' },
+              { id: 'zahlen-richtig-gerundet-3', text: 'Level 3' },
+            ],
+          },
+        ],
+      },
     ],
   },
   {
