@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { BarGraphSVG } from './bar-chart-svg'
-import { ExerciseFeedback } from '../../feedback/execise-feedback'
-import { NewExerciseButton } from '../../number-line-exercise/new-exercise-button'
+import { ExStatus, ExerciseFeedback } from '../../feedback/execise-feedback'
 
 interface BarGraphProps {
   generator: () => number
@@ -10,33 +9,13 @@ interface BarGraphProps {
 }
 
 export function BarGraph({ generator, centAmount }: BarGraphProps) {
-  const [data, setData] = useState(generator())
-  const [isChecked, setIsChecked] = useState(false)
+  // const [data, setData] = useState(generator())
+  const [exStatus, setExStatus] = useState<ExStatus>('fresh')
   // const { values } = data
   const isCorrect = false // TODO
 
-  function makeNewExercise() {
-    setData(generator())
-    setIsChecked(false)
-    setTimeout(() => {
-      // TODO
-      document.getElementById('place-value-chooser-input')?.focus()
-    })
-  }
-
-  useEffect(() => {
-    // const keyEventHandler = (e: KeyboardEvent) => {
-    //   // TODO?
-    // }
-    // document.addEventListener('keydown', keyEventHandler)
-    // return () => document.removeEventListener('keydown', keyEventHandler)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isChecked, data])
-
   return (
     <>
-      <NewExerciseButton makeNewExercise={makeNewExercise} />
-
       <div id="order-values-wrapper" className="sm:flex">
         <div>
           <BarGraphSVG maxValue={400} allowBarResize values={[200, 400, 100]} />
@@ -48,12 +27,14 @@ export function BarGraph({ generator, centAmount }: BarGraphProps) {
       </div>
       <ExerciseFeedback
         noUserInput={false}
-        isChecked={isChecked}
-        setIsChecked={setIsChecked}
+        exStatus={exStatus}
+        setExStatus={setExStatus}
         isCorrect={isCorrect}
-        shakeElementId="order-values-draggables" // TODO
-        makeNewExercise={makeNewExercise}
+        shakeElementQuery="#order-values-draggables" // TODO
         centAmount={centAmount}
+        onNewExecise={() => {
+          console.log('TODO: reset states')
+        }}
       />
     </>
   )
