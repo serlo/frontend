@@ -287,6 +287,7 @@ export const grade5Data: GradeTopicData[] = [
             children: [
               { id: 'euro-zerlegen', text: 'Euro zerlegen' },
               { id: 'euro-kommaschreibweise', text: 'Kommaschreibweise' },
+              { id: 'euro-in-cent', text: 'Euro in Cent' },
               { id: 'euro-muenzen-mindestens', text: 'Wie viele Münzen?' },
               { id: 'euro-scheine-mindestens', text: 'Wie viele Scheine?' },
             ],
@@ -295,7 +296,7 @@ export const grade5Data: GradeTopicData[] = [
             title: 'Addieren & Subtrahieren',
             children: [
               {
-                id: 'plusminus-vergleichen-1',
+                id: 'euro-vergleichen-1',
                 text: 'Spendenergebnis vergleichen',
               },
             ],

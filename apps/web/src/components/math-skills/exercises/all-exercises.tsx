@@ -843,13 +843,13 @@ export const allExercises = {
       />
     ),
   },
-  'plusminus-vergleichen-1': {
+  'euro-vergleichen-1': {
     title: 'Sammelergebnis vergleichen',
     component: (
       <NumberInputExercise
         centAmount={35}
         generator={() => {
-          const centAmount = randomIntBetween(1000, 2000)
+          const centAmount = Math.round(randomIntBetween(1000, 2000) / 5) * 5
           const centDifference = randomIntBetween(-700, 700)
           return { centAmount, centDifference }
         }}
@@ -887,7 +887,7 @@ export const allExercises = {
       />
     ),
   },
-  // TODO: plusminus-vergleichen-2
+  // TODO: euro-vergleichen-2
 } as const
 
 export type SupportedExercisesId = keyof typeof allExercises
