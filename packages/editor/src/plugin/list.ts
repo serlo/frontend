@@ -11,13 +11,9 @@ import {
   ToStoreHelpers,
 } from './internal-plugin-state'
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/**
- * @param type - The {@link @edtr-io/internal__plugin-state#StateType | state type} of the list items
- * @param initialCount - The initial number of list items
- */
 export function list<D extends StateType>(
   type: D,
+  // Initial number of list items
   initialCount = 0
 ): ListStateType<D> {
   type S = StateTypeStaticType<D>

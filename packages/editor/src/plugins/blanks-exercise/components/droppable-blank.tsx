@@ -3,7 +3,7 @@ import { useDrop } from 'react-dnd'
 
 import { blankDraggableAnswerDragType } from './blank-draggable-answer'
 import type { BlankId, DraggableId } from '..'
-import { FillInTheBlanksContext } from '../context/blank-context'
+import { BlanksContext } from '../context/blank-context'
 import { cn } from '@/helper/cn'
 
 interface DroppableBlankProps {
@@ -14,7 +14,7 @@ interface DroppableBlankProps {
 export function DroppableBlank(props: DroppableBlankProps) {
   const { blankId, children } = props
 
-  const context = useContext(FillInTheBlanksContext)
+  const context = useContext(BlanksContext)
 
   const [{ isOver }, dropRef] = useDrop({
     accept: blankDraggableAnswerDragType,

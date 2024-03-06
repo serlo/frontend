@@ -1,8 +1,6 @@
 import { useState } from 'react'
 
-import { NumberKeyboard } from './number-keyboard'
-import { ExerciseFeedback } from '../feedback/execise-feedback'
-import { NewExerciseButton } from '../number-line-exercise/new-exercise-button'
+import { ExStatus, ExerciseFeedback } from '../feedback/execise-feedback'
 import { arrayOfLength } from '@/helper/array-of-length'
 import { cn } from '@/helper/cn'
 
@@ -17,7 +15,6 @@ interface MultipleNumberInputExerciseProps<DATA> {
 }
 
 // input supports ~ up to 7 digits without clipping
-
 export function MultipleNumberInputExercise<T>({
   generator,
   getCorrectValues,
@@ -30,48 +27,35 @@ export function MultipleNumberInputExercise<T>({
   const [inputValues, setInputValues] = useState(
     arrayOfLength(numberOfInputs).map(() => '')
   )
-  const [isChecked, setIsChecked] = useState(false)
+  const [exStatus, setExStatus] = useState<ExStatus>('fresh')
   const [data, setData] = useState(generator())
-  const [selected, setSelected] = useState(0)
 
   const correctValues = getCorrectValues(data)
   const isCorrectArray = correctValues.map(
     (value, i) =>
-      value === parseInt(inputValues[i]) &&
-      parseInt(inputValues[i]).toString() === inputValues[i]
+      (isNaN(value) && !inputValues[i]) ||
+      (value === parseInt(inputValues[i]) &&
+        parseInt(inputValues[i]).toString() === inputValues[i])
   )
   const isCorrect = isCorrectArray.every(Boolean)
-  const isPartlyCorrect =
-    isCorrectArray.some(Boolean) && isCorrectArray.some((value) => !value)
-
-  function makeNewExercise() {
-    setData(generator())
-    setInputValues(inputValues.map(() => ''))
-    setIsChecked(false)
-    setTimeout(() => {
-      document.querySelector<HTMLInputElement>('#number-input input')?.focus()
-    })
-  }
+  const incorrectAmount =
+    !isCorrect && isCorrectArray.filter((value) => !value).length
+  const isDisabled = exStatus === 'correct' || exStatus === 'revealed'
 
   return (
     <>
-      <NewExerciseButton makeNewExercise={makeNewExercise} />
-
       {render(
         inputValues.map((_, i) => (
           <input
             key={i}
-            autoFocus={i === 0}
+            id={`number-input-${i}`}
             value={inputValues[i]}
-            disabled={isChecked}
+            disabled={isDisabled}
             onChange={({ currentTarget }) => {
               const newValues = [...inputValues]
               newValues[i] = currentTarget.value
               setInputValues(newValues)
-              setSelected(i)
-            }}
-            onFocus={() => {
-              setSelected(i)
+              setExStatus('fresh')
             }}
             type="text"
             pattern="\d+"
@@ -80,8 +64,10 @@ export function MultipleNumberInputExercise<T>({
             className={cn(
               'ml-0.5 rounded-lg bg-[#d8f5ef] p-2 text-2xl ',
               'outline-dotted outline-2 outline-transparent focus-visible:outline-newgreen',
-              isChecked && isCorrectArray[i] && 'bg-newgreen-600',
-              isChecked && !isCorrectArray[i] && 'bg-red-100',
+              exStatus === 'correct' && isCorrectArray[i] && 'bg-newgreen-600',
+              (exStatus === 'revealed' || exStatus === 'incorrect') &&
+                !isCorrectArray[i] &&
+                'bg-red-100',
               className
             )}
             style={{ width: `${widthForDigits * 0.7}em` }}
@@ -93,33 +79,39 @@ export function MultipleNumberInputExercise<T>({
       <ExerciseFeedback
         noUserInput={inputValues.every((x) => x.trim() === '')}
         noUserInputText={<>Gib eine Zahl ein</>}
-        isChecked={isChecked}
-        setIsChecked={setIsChecked}
-        isIncorrectText={
-          isPartlyCorrect ? (
-            <>Stimmt leider nicht ganz.</>
-          ) : (
-            <>Leider nicht richtig.</>
-          )
-        }
+        exStatus={exStatus}
+        setExStatus={setExStatus}
+        feedbacks={{
+          incorrect: (
+            <>
+              {incorrectAmount === 1
+                ? 'Ein Feld stimmt'
+                : 'Mehrere Felder stimmen'}{' '}
+              noch nicht.
+            </>
+          ),
+          revealed: (
+            <>
+              Die richtigen Zahlen lauten:
+              <br />
+              {correctValues.slice(0, -1).map((value, i) => (
+                <>
+                  <b className="text-newgreen">{value}</b>
+                  {i === correctValues.length - 2 ? '' : ','}{' '}
+                </>
+              ))}{' '}
+              und <b className="text-newgreen">{correctValues.at(-1)}</b>.
+            </>
+          ),
+        }}
         isCorrect={isCorrect}
-        shakeElementId="number-input"
-        makeNewExercise={makeNewExercise}
+        shakeElementQuery="#number-input"
+        focusElementQuery="#number-input-0"
+        onNewExecise={() => {
+          setData(generator())
+          setInputValues(inputValues.map(() => ''))
+        }}
         centAmount={centAmount}
-      />
-
-      <NumberKeyboard
-        addCharacter={(char: string) => {
-          const newValues = [...inputValues]
-          newValues[selected] = newValues[selected] + char
-          setInputValues(newValues)
-        }}
-        removeCharacter={() => {
-          const newValues = [...inputValues]
-          newValues[selected] = newValues[selected].slice(0, -1)
-          setInputValues(newValues)
-        }}
-        isDisabled={isChecked}
       />
     </>
   )

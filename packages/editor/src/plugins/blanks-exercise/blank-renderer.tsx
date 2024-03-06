@@ -12,7 +12,7 @@ import { ReactEditor, useSelected, useSlate, useFocused } from 'slate-react'
 
 import { BlankControls } from './components/blank-controls'
 import { BlankRendererInput } from './components/blank-renderer-input'
-import { FillInTheBlanksContext } from './context/blank-context'
+import { BlanksContext } from './context/blank-context'
 import type { BlankInterface } from './types'
 
 interface BlankRendererProps {
@@ -72,7 +72,7 @@ export function BlankRenderer(props: BlankRendererProps) {
     }
   }, [focused, editor, correctAnswers])
 
-  const context = useContext(FillInTheBlanksContext)
+  const context = useContext(BlanksContext)
   if (context === null) return null
 
   return (

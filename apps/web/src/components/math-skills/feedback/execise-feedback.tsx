@@ -1,82 +1,131 @@
-import { Dispatch, SetStateAction, useEffect } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
+import { SkipExerciseButton } from './skip-exercise-button'
 import { feedbackAnimation } from '../utils/feedback-animation'
 import { useExerciseData } from '../utils/math-skills-data-context'
+
+export type ExStatus = 'fresh' | 'correct' | 'incorrect' | 'revealed'
 
 interface ExerciseFeedbackProps {
   noUserInput: boolean
   noUserInputText?: JSX.Element
-  isChecked: boolean
-  setIsChecked: Dispatch<SetStateAction<boolean>>
-  isIncorrectText?: JSX.Element
+  exStatus: ExStatus
+  setExStatus: Dispatch<SetStateAction<ExStatus>>
   isCorrect: boolean
-  makeNewExercise: () => void
-  shakeElementId?: string
+  feedbacks?: {
+    correct?: JSX.Element | Text
+    incorrect?: JSX.Element | Text
+    revealed?: JSX.Element | Text
+  }
+  onNewExecise: () => void
+  shakeElementQuery?: string // nod or shake for feedback
+  focusElementQuery?: string // focus on new exercise
   centAmount?: number
   forceCheck?: boolean
 }
 export function ExerciseFeedback({
   noUserInput,
   noUserInputText,
-  isChecked,
-  setIsChecked,
-  isIncorrectText,
+  setExStatus,
+  feedbacks,
+  exStatus,
   isCorrect,
-  makeNewExercise,
-  shakeElementId,
+  onNewExecise,
+  shakeElementQuery,
+  focusElementQuery,
   centAmount,
   forceCheck,
 }: ExerciseFeedbackProps) {
   const { setExerciseData } = useExerciseData()
+  const [attempts, setAttempts] = useState(0)
 
-  function onCheck() {
+  const isRevealButton = exStatus === 'incorrect'
+  const isNextButton = exStatus === 'correct' || exStatus === 'revealed'
+
+  function newEx() {
+    setExStatus('fresh')
+    onNewExecise()
+
+    if (focusElementQuery) {
+      setTimeout(() => {
+        const target = document.querySelector(focusElementQuery)
+        ;(target as HTMLInputElement)?.focus()
+      })
+    }
+  }
+
+  function checkEx() {
     if (noUserInput) return
-    feedbackAnimation(
-      isCorrect,
-      shakeElementId ? document.getElementById(shakeElementId) : null
-    )
-    setIsChecked(true)
+    feedbackAnimation(isCorrect, shakeElementQuery)
+    setExStatus(isCorrect ? 'correct' : 'incorrect')
+    setAttempts(attempts + 1)
     setExerciseData(isCorrect, centAmount)
   }
 
+  function revealEx() {
+    setExStatus('revealed')
+  }
+
+  const onButtonClick = isRevealButton
+    ? undefined
+    : isNextButton
+      ? newEx
+      : checkEx
+
   useEffect(() => {
-    if (forceCheck) onCheck()
+    if (forceCheck) checkEx()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [forceCheck])
 
   useEffect(() => {
     const keyEventHandler = (e: KeyboardEvent) => {
-      if (e.key === 'Enter') isChecked ? makeNewExercise() : onCheck()
+      if (e.key === 'Enter') onButtonClick?.()
     }
 
     document.addEventListener('keydown', keyEventHandler)
     return () => document.removeEventListener('keydown', keyEventHandler)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isChecked, isCorrect, noUserInput])
+  }, [onButtonClick])
 
   return (
-    <div className="mt-5 flex min-h-[120px] flex-col items-center sm:min-h-[80px] sm:flex-row sm:justify-between">
-      <div className="text-almost-black">
-        {isChecked ? (
+    <>
+      <div className="mt-5 flex min-h-[120px] flex-col items-center sm:min-h-[80px] sm:flex-row sm:justify-between">
+        <div className="text-almost-black">
           <p>
-            {isCorrect
-              ? 'Sehr gut gemacht 👌'
-              : isIncorrectText ?? <>Leider nicht richtig.</>}
+            {exStatus === 'correct' ? 'Sehr gut gemacht 👌' : null}
+            {exStatus === 'incorrect' ? (
+              <>
+                {feedbacks?.incorrect ?? 'Das stimmt so noch nicht.'}
+                <br />
+                <b>Probier&apos;s einfach noch mal,</b>
+                <br />
+                oder{' '}
+                <a className="serlo-link cursor-pointer" onClick={revealEx}>
+                  zeig&apos; dir die Lösung an
+                </a>
+                .
+              </>
+            ) : null}
+            {exStatus === 'revealed' ? <>{feedbacks?.revealed ?? ''}</> : null}
           </p>
-        ) : null}
+        </div>
+        <div className="pt-5 sm:flex sm:justify-between sm:pt-0">
+          {noUserInput ? noUserInputText ?? '' : renderMainButton()}
+        </div>
       </div>
-      <div className="pt-5 sm:flex sm:justify-between sm:pt-0">
-        {noUserInput ? (
-          noUserInputText ?? ''
-        ) : (
-          <button
-            className="serlo-button-blue -mt-1 h-8 focus:bg-brand"
-            onClick={isChecked ? makeNewExercise : onCheck}
-          >
-            {isChecked ? 'Nächste Aufgabe' : 'Überprüfen'}
-          </button>
-        )}
+      <div className="text-right">
+        <SkipExerciseButton makeNewExercise={newEx} hidden={isNextButton} />
       </div>
-    </div>
+    </>
   )
+
+  function renderMainButton() {
+    if (isRevealButton) return null
+    return (
+      <button className="serlo-button-blue -mt-1 h-8" onClick={onButtonClick}>
+        {isNextButton && 'Nächste Aufgabe 👉'}
+        {exStatus === 'fresh' && "Stimmt's?"}
+      </button>
+    )
+  }
 }

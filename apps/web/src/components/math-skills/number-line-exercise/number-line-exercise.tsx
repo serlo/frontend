@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react'
 
 import { ActualRangeInput } from './actual-range-input'
 import { ArrowButtonNavigation } from './arrow-button-navigation'
-import { NewExerciseButton } from './new-exercise-button'
 import { NumberLabels } from './number-labels'
 import { RangeInputOverlay } from './range-input-overlay'
-import { ExerciseFeedback } from '../feedback/execise-feedback'
+import { ExStatus, ExerciseFeedback } from '../feedback/execise-feedback'
 
 // layout support up to 6 digits
 
@@ -26,20 +25,26 @@ export function NumberLineExercise({
   const labeledValue = labeledPosition * maxValue
   const startValue = Math.round(maxValue / 8)
 
-  const [isChecked, setIsChecked] = useState(false)
+  const [exStatus, setExStatus] = useState<ExStatus>('fresh')
 
   const isCorrect = selectedValue === searchedValue
+  const isDisabled = exStatus === 'correct' || exStatus === 'revealed'
 
-  function makeNewExercise() {
+  function onNewExercise() {
     const newData = generator()
     const newMaxValue = newData[2]
     setValues(newData)
     setSelectedValue(Math.round(newMaxValue / 8))
-    setIsChecked(false)
+    setExStatus('fresh')
   }
 
+  useEffect(() => {
+    if (exStatus === 'incorrect') setExStatus('fresh')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedValue])
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(makeNewExercise, [])
+  useEffect(onNewExercise, [])
 
   useEffect(() => {
     const keyEventHandler = (e: KeyboardEvent) => {
@@ -51,19 +56,13 @@ export function NumberLineExercise({
     document.addEventListener('keydown', keyEventHandler)
     return () => document.removeEventListener('keydown', keyEventHandler)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedValue, searchedValue, isChecked])
+  }, [selectedValue, searchedValue, exStatus])
 
-  const noInputText = (
-    <>
-      Klicke auf den Zeitstrahl
-      <br /> oder benutze die Pfeilbuttons
-    </>
-  )
+  const noInputText = <>Bewege den Marker auf dem Zeitstrahl</>
+
   const isIncorrectText = (
     <>
-      Leider nicht richtig.
-      <br />
-      Du hast die Zahl <b>{selectedValue}</b> ausgewählt.
+      Das stimmt noch nicht, Du hast die Zahl <b>{selectedValue}</b> ausgewählt.
     </>
   )
 
@@ -73,50 +72,50 @@ export function NumberLineExercise({
         Wo ist die{' '}
         <span className="font-bold text-newgreen">{searchedValue}</span>?
       </h2>
-      <NewExerciseButton makeNewExercise={makeNewExercise} />
       <div className="relative touch-pinch-zoom" id="number-line-wrapper">
         <ActualRangeInput
           selectedValue={selectedValue}
           setSelectedValue={setSelectedValue}
           maxValue={maxValue}
           searchedValue={searchedValue}
-          disabled={isChecked}
+          disabled={isDisabled}
         />
         <NumberLabels
           maxValue={maxValue}
           labeledValue={labeledValue}
-          isChecked={isChecked}
+          isChecked={exStatus === 'revealed'}
         />
         <div className="pointer-events-none absolute top-6 w-full px-4">
           <RangeInputOverlay
             maxValue={maxValue}
             selectedValue={selectedValue}
             searchedValue={searchedValue}
-            isChecked={isChecked}
-            isCorrect={isCorrect}
+            exStatus={exStatus}
           />
         </div>
       </div>
 
-      <div className="-mt-8 mb-4">
+      <div className="-mt-4 mb-4">
         <ExerciseFeedback
           noUserInput={selectedValue === startValue}
           noUserInputText={noInputText}
-          isChecked={isChecked}
-          setIsChecked={setIsChecked}
-          isIncorrectText={isIncorrectText}
+          exStatus={exStatus}
+          setExStatus={setExStatus}
+          feedbacks={{ incorrect: isIncorrectText }}
           isCorrect={isCorrect}
-          shakeElementId="range-input-user-maker"
-          makeNewExercise={makeNewExercise}
+          shakeElementQuery="#range-input-user-maker"
+          onNewExecise={onNewExercise}
           centAmount={centAmount}
         />
+        <div className="">
+          <ArrowButtonNavigation
+            selectedValue={selectedValue}
+            setSelectedValue={setSelectedValue}
+            maxValue={maxValue}
+            active={!isDisabled}
+          />
+        </div>
       </div>
-
-      <ArrowButtonNavigation
-        selectedValue={selectedValue}
-        setSelectedValue={setSelectedValue}
-        maxValue={maxValue}
-      />
     </>
   )
 }

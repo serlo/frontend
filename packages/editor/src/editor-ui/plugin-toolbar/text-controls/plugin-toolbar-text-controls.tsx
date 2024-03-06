@@ -36,8 +36,8 @@ export function PluginToolbarTextControls({
     control.name === TextEditorFormattingOption.textBlank
 
   const mathActive = controls.find(isMath)?.isActive(editor)
-  const hasFillInTheBlanks = controls.find(isBlank)
-  const blankActive = hasFillInTheBlanks?.isActive(editor)
+  const hasBlanks = controls.find(isBlank)
+  const blankActive = hasBlanks?.isActive(editor)
   const isSpecialMode = mathActive || blankActive
 
   if (typeof subMenu !== 'number') {

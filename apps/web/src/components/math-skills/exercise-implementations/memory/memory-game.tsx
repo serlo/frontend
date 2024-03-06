@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 
 import { MemoryCard } from './memory-card'
-import { ExerciseFeedback } from '../../feedback/execise-feedback'
-import { NewExerciseButton } from '../../number-line-exercise/new-exercise-button'
+import { ExStatus, ExerciseFeedback } from '../../feedback/execise-feedback'
 import { cn } from '@/helper/cn'
 
 interface MemoryGameProps {
   generator: () => { values: (number | string)[] }
   checkPair: (v0: number | string, v1: number | string) => boolean
   centAmount?: number
+  render?: (title: string | number) => JSX.Element
 }
 
 /* supports from 4 to 16 cards for now and only strings or numbers on the cards */
@@ -16,9 +16,10 @@ export function MemoryGame({
   generator,
   checkPair,
   centAmount,
+  render,
 }: MemoryGameProps) {
   const [data, setData] = useState(generator())
-  const [isChecked, setIsChecked] = useState(false)
+  const [exStatus, setExStatus] = useState<ExStatus>('fresh')
   const { values } = data
   const [triesAmount, setTruesAmount] = useState<number>(0)
   const [matchedCards, setMatchedCards] = useState<number[]>([])
@@ -27,14 +28,6 @@ export function MemoryGame({
   >([null, null])
 
   const bothCardsOpen = card0 !== null && card1 !== null
-
-  function makeNewExercise() {
-    setData(generator())
-    setIsChecked(false)
-    setOpenCards([null, null])
-    setTruesAmount(0)
-    setMatchedCards([])
-  }
 
   useEffect(() => {
     const keyEventHandler = (e: KeyboardEvent) => {
@@ -74,7 +67,7 @@ export function MemoryGame({
     document.addEventListener('keydown', keyEventHandler)
     return () => document.removeEventListener('keydown', keyEventHandler)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isChecked, values])
+  }, [exStatus, values])
 
   function onCardSelect(index: number) {
     if (bothCardsOpen) return
@@ -96,7 +89,7 @@ export function MemoryGame({
         setTruesAmount(triesAmount + 1)
 
         if (values.length === matchedCards.length + 2) {
-          setIsChecked(true)
+          setExStatus('correct')
         }
       }, 400)
     } else {
@@ -111,8 +104,6 @@ export function MemoryGame({
 
   return (
     <>
-      <NewExerciseButton makeNewExercise={makeNewExercise} />
-
       <div id="memory-game-wrapper" className="">
         <h2 className="pb-8 text-left text-2xl font-bold text-almost-black">
           Finde die gleichen Werte:
@@ -132,20 +123,26 @@ export function MemoryGame({
               index={index}
               isMatched={matchedCards.includes(index)}
               onCardSelect={onCardSelect}
+              render={render}
             />
           ))}
         </nav>
       </div>
 
       <ExerciseFeedback
-        noUserInput={!isChecked}
+        noUserInput={exStatus !== 'correct'}
         noUserInputText={triesAmount ? <>{triesAmount} Züge</> : undefined}
-        isChecked={isChecked}
-        setIsChecked={setIsChecked}
+        exStatus={exStatus}
+        setExStatus={setExStatus}
         isCorrect
-        makeNewExercise={makeNewExercise}
+        onNewExecise={() => {
+          setData(generator())
+          setOpenCards([null, null])
+          setTruesAmount(0)
+          setMatchedCards([])
+        }}
         centAmount={centAmount}
-        forceCheck={isChecked}
+        forceCheck={exStatus === 'correct'}
       />
     </>
   )

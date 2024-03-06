@@ -7,8 +7,7 @@ import {
 } from '@hello-pangea/dnd'
 import { useEffect, useState } from 'react'
 
-import { ExerciseFeedback } from '../feedback/execise-feedback'
-import { NewExerciseButton } from '../number-line-exercise/new-exercise-button'
+import { ExStatus, ExerciseFeedback } from '../feedback/execise-feedback'
 import { FaIcon } from '@/components/fa-icon'
 import { cn } from '@/helper/cn'
 
@@ -22,22 +21,21 @@ const reorder = (list: number[], startIndex: number, endIndex: number) => {
 interface OrderValuesProps {
   generator: () => { values: number[] }
   centAmount?: number
+  display?: (n: number) => string
 }
 
-export function OrderValues({ generator, centAmount }: OrderValuesProps) {
+export function OrderValues({
+  generator,
+  centAmount,
+  display,
+}: OrderValuesProps) {
   const [data, setData] = useState(generator())
-  const [isChecked, setIsChecked] = useState(false)
+  const [exStatus, setExStatus] = useState<ExStatus>('fresh')
   const { values } = data
   const correctOrder = Array.from(values).sort((a, b) => b - a)
   const isCorrect = values.every((value, i) => value === correctOrder[i])
 
-  function makeNewExercise() {
-    setData(generator())
-    setIsChecked(false)
-    setTimeout(() => {
-      document.getElementById('place-value-chooser-input')?.focus()
-    })
-  }
+  const isDisabled = exStatus === 'correct' || exStatus === 'revealed'
 
   useEffect(() => {
     const keyEventHandler = (e: KeyboardEvent) => {
@@ -56,12 +54,10 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
     document.addEventListener('keydown', keyEventHandler)
     return () => document.removeEventListener('keydown', keyEventHandler)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isChecked, values])
+  }, [exStatus, values])
 
   return (
     <>
-      <NewExerciseButton makeNewExercise={makeNewExercise} />
-
       <div id="order-values-wrapper" className="flex">
         <h2 className="pb-8 text-left text-2xl font-bold text-almost-black">
           Sortiere:
@@ -84,11 +80,20 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
 
       <ExerciseFeedback
         noUserInput={false}
-        isChecked={isChecked}
-        setIsChecked={setIsChecked}
+        exStatus={exStatus}
+        setExStatus={setExStatus}
+        feedbacks={{
+          revealed: (
+            <>
+              Die richtige Reihenfolge ist: <br />
+              <b>{correctOrder.join(', ')}</b>
+            </>
+          ),
+        }}
         isCorrect={isCorrect}
-        shakeElementId="order-values-draggables"
-        makeNewExercise={makeNewExercise}
+        shakeElementQuery="#order-values-draggables"
+        focusElementQuery="#place-value-chooser-input"
+        onNewExecise={() => setData(generator())}
         centAmount={centAmount}
       />
     </>
@@ -109,7 +114,12 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
 
   function renderDragAndDropList() {
     return (
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext
+        onDragEnd={onDragEnd}
+        onDragStart={() => {
+          if (exStatus === 'incorrect') setExStatus('fresh')
+        }}
+      >
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
             <div
@@ -122,7 +132,7 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
                   key={value}
                   draggableId={value.toString()}
                   index={index}
-                  isDragDisabled={isChecked}
+                  isDragDisabled={isDisabled}
                 >
                   {(provided, { isDragging }) => (
                     <div
@@ -133,15 +143,14 @@ export function OrderValues({ generator, centAmount }: OrderValuesProps) {
                         'mb-1 rounded-md border border-brand-100 p-2 font-bold text-almost-black',
                         'select-none bg-newgreen bg-opacity-0 hover:bg-opacity-5',
                         isDragging && ' bg-opacity-10',
-                        isChecked && 'bg-opacity-10',
-                        isChecked &&
-                          !isCorrect &&
+                        isDisabled && 'bg-opacity-10',
+                        exStatus === 'revealed' &&
                           value !== correctOrder[index] &&
                           'bg-red-400'
                       )}
                       style={{ ...provided.draggableProps.style }}
                     >
-                      {value}{' '}
+                      {display ? display(value) : value}{' '}
                       <FaIcon
                         icon={faGripVertical}
                         className="mb-0.25 text-base text-newgreen opacity-70"
