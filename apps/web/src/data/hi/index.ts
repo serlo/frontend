@@ -823,7 +823,8 @@ export const loggedInData = {
         },
         exercise: {
           title: "अभ्यास",
-          description: 'Interactive or text based exercise'
+          description: 'Interactive or text based exercise',
+          placeholder: 'Type the assignment here (Optional)'
         },
         inputExercise: {
           title: 'Input Exercise',
