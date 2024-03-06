@@ -11,10 +11,6 @@ import {
   StateExecutor,
 } from './internal-plugin-state'
 
-/**
- * @param types - The {@link @edtr-io/internal__plugin-state#StateType | state types} of the properties of the object
- * @param getFocusableChildren - Allows to override the default order of focusable children
- */
 export function object<Ds extends Record<string, StateType>>(
   types: Ds
 ): ObjectStateType<Ds> {
@@ -101,6 +97,7 @@ export function object<Ds extends Record<string, StateType>>(
         return type.toStaticState(storeState[key], helpers)
       }, types) as S
     },
+    // Allows to override the default order of focusable children
     getFocusableChildren(state) {
       const children = R.mapObjIndexed((type, key) => {
         return type.getFocusableChildren(state[key])

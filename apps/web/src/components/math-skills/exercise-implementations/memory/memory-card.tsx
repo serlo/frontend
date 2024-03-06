@@ -7,12 +7,14 @@ export function MemoryCard({
   flipped,
   onCardSelect,
   isMatched,
+  render,
 }: {
   title: string | number
   index: number
   flipped: boolean
   onCardSelect: (index: number) => void
   isMatched: boolean
+  render?: (title: string | number) => JSX.Element
 }) {
   const { data } = useMathSkillsStorage()
   const isFlipped = flipped || isMatched
@@ -39,7 +41,9 @@ export function MemoryCard({
             'animate-jump !bg-newgreen !bg-opacity-20 text-newgreen opacity-60'
         )}
       >
-        <span className="[transform:rotateY(180deg)]">{title}</span>
+        <span className="[transform:rotateY(180deg)]">
+          {render ? render(title) : title}
+        </span>
       </div>
       <div
         className={cn(`

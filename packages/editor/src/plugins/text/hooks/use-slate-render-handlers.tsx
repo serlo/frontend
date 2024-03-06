@@ -3,7 +3,7 @@ import { createElement, useCallback, useMemo } from 'react'
 import { Editor as SlateEditor } from 'slate'
 import { ReactEditor, RenderElementProps, RenderLeafProps } from 'slate-react'
 
-import { BlankRenderer } from '../../fill-in-the-blanks-exercise/blank-renderer'
+import { BlankRenderer } from '../../blanks-exercise/blank-renderer'
 import { MathElement } from '../components/math-element'
 import { TextLeafWithPlaceholder } from '../components/text-leaf-with-placeholder'
 import { ListElementType } from '../types/text-editor'

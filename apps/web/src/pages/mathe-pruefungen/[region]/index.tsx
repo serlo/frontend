@@ -6,10 +6,7 @@ import {
   regions,
 } from '@/components/landing/exams/exams-finder/exams-finder'
 import { MathExamsLanding } from '@/components/pages/math-exams-landing'
-import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
-
-// TODO: rename to `mathe-pruefungen` again before going live
 
 export const supportedRegions = Object.keys(regions)
 export interface RegionData {
@@ -26,7 +23,6 @@ export default renderedPageNoHooks<RegionData>(({ region }) => {
 
 export const getStaticProps: GetStaticProps<RegionData> = async (context) => {
   if (context.locale !== 'de') return { notFound: true }
-  if (isProduction) return { notFound: true }
 
   const region = context.params?.region as SupportedRegion
   if (!supportedRegions.includes(region)) return { notFound: true }

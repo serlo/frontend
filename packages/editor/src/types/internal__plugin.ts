@@ -107,7 +107,7 @@ export interface EditorPluginProps<
   config: Config
 
   /**
-   * Current state of the document, see {@link @edtr-io/internal__plugin-state#StateTypeReturnType}
+   * Current state of the document
    */
   state: StateTypeReturnType<S>
 

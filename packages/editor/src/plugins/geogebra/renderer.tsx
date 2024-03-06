@@ -1,7 +1,8 @@
-import { cn } from '@serlo/frontend/src/helper/cn'
 import Script from 'next/script'
 import { useState } from 'react'
 import { v4 as uuid_v4 } from 'uuid'
+
+import { cn } from '@/helper/cn'
 
 export interface GeogebraRendererProps {
   geogebraId: string
@@ -50,12 +51,21 @@ export function GeogebraRenderer({ geogebraId, url }: GeogebraRendererProps) {
           }
         }}
       />
-      <div
-        className={cn(
-          `${containerId} absolute top-0 flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-brand-50 p-0`
-        )}
-      >
-        {url ? <div id={`${elementId}`} className="mx-auto"></div> : null}
+      <div className="aspect-[16/9] w-full overflow-hidden rounded-xl bg-brand-50 p-1">
+        <div
+          className={cn(
+            containerId,
+            'flex h-full w-full flex-col justify-center'
+          )}
+        >
+          {url ? (
+            <div
+              id={elementId}
+              data-ggb-id={geogebraId}
+              className="mx-auto"
+            ></div>
+          ) : null}
+        </div>
       </div>
     </>
   )

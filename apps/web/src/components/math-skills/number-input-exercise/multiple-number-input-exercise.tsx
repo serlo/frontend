@@ -33,8 +33,9 @@ export function MultipleNumberInputExercise<T>({
   const correctValues = getCorrectValues(data)
   const isCorrectArray = correctValues.map(
     (value, i) =>
-      value === parseInt(inputValues[i]) &&
-      parseInt(inputValues[i]).toString() === inputValues[i]
+      (isNaN(value) && !inputValues[i]) ||
+      (value === parseInt(inputValues[i]) &&
+        parseInt(inputValues[i]).toString() === inputValues[i])
   )
   const isCorrect = isCorrectArray.every(Boolean)
   const incorrectAmount =
@@ -48,7 +49,6 @@ export function MultipleNumberInputExercise<T>({
           <input
             key={i}
             id={`number-input-${i}`}
-            autoFocus={i === 0}
             value={inputValues[i]}
             disabled={isDisabled}
             onChange={({ currentTarget }) => {
@@ -92,7 +92,8 @@ export function MultipleNumberInputExercise<T>({
           ),
           revealed: (
             <>
-              Die richtigen Zahlen währen gewesen: <br />
+              Die richtigen Zahlen lauten:
+              <br />
               {correctValues.slice(0, -1).map((value, i) => (
                 <>
                   <b className="text-newgreen">{value}</b>

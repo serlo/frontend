@@ -10,18 +10,27 @@ interface MultipleChoiceOption {
   isCorrect: boolean
 }
 
-interface MultipleChoiceExerciseProps {
-  generator: () => { options: MultipleChoiceOption[] }
+interface MultipleChoiceExerciseProps<DATA> {
+  generator: () => DATA
+  getOptions: (d: DATA) => MultipleChoiceOption[]
   centAmount?: number
+  render: (choices: JSX.Element, data: DATA) => JSX.Element
 }
 
-export function MultipleChoiceExercise({
+export function MultipleChoiceExercise<T>({
   generator,
+  getOptions,
   centAmount,
-}: MultipleChoiceExerciseProps) {
-  const [data, setData] = useState(generator())
+  render,
+}: MultipleChoiceExerciseProps<T>) {
+  function createData() {
+    const data = generator()
+    const options = getOptions(data)
+    return { data, options }
+  }
+  const [{ data, options }, setData] = useState(createData())
   const [exStatus, setExStatus] = useState<ExStatus>('fresh')
-  const { options } = data
+
   const [selection, setSelection] = useState<boolean[]>(
     options.map(() => false)
   )
@@ -33,53 +42,51 @@ export function MultipleChoiceExercise({
 
   return (
     <>
-      <h2 className="pb-8 text-left text-2xl font-bold text-almost-black">
-        Welche Antworten stimmen?{' '}
-        {/* TODO: Task. <span className="text-newgreen">
-          {data.options.map(({ title }) => (
-            <>{title}, </>
-          ))}
-        </span> */}
-      </h2>
-      <div id="multiple-choice-wrapper" className="text-2xl font-bold">
-        {options.map(({ title }, i) => {
-          const isTicked = selection[i]
-          const isCorrect = isTicked === options[i].isCorrect
+      {render(
+        <div id="multiple-choice-wrapper" className="text-2xl font-bold">
+          {options.map(({ title }, i) => {
+            const isTicked = selection[i]
+            const isCorrect = isTicked === options[i].isCorrect
 
-          return (
-            <label key={title + i} className="group mb-2 block cursor-pointer">
-              <input
-                className="appearance-none opacity-0"
-                type="checkbox"
-                disabled={exStatus === 'correct' || exStatus === 'revealed'}
-                name="mcExercise"
-                value={title}
-                checked={isTicked}
-                onChange={() => {
-                  const newSelection = [...selection]
-                  newSelection[i] = !newSelection[i]
-                  setSelection(newSelection)
-                  if (exStatus === 'incorrect') setExStatus('fresh')
-                }}
-              />
-              <span
-                className={cn(
-                  'mx-0.25 inline-block min-w-[30px] rounded-md border-2 p-1.5 transition-all',
-                  'border-opacity-10 group-focus-within:!border-opacity-100',
-                  getColorClasses(isCorrect, isTicked),
-                  exStatus === 'revealed' && !isCorrect && 'opacity-60'
-                )}
+            return (
+              <label
+                key={title + i}
+                className="group mb-2 block cursor-pointer"
               >
-                <FaIcon
-                  icon={isTicked ? faCheckSquare : faSquare}
-                  className="text-newgreen opacity-60"
-                />{' '}
-                {title}
-              </span>
-            </label>
-          )
-        })}
-      </div>
+                <input
+                  className="appearance-none opacity-0"
+                  type="checkbox"
+                  disabled={exStatus === 'correct' || exStatus === 'revealed'}
+                  name="mcExercise"
+                  value={title}
+                  checked={isTicked}
+                  onChange={() => {
+                    const newSelection = [...selection]
+                    newSelection[i] = !newSelection[i]
+                    setSelection(newSelection)
+                    if (exStatus === 'incorrect') setExStatus('fresh')
+                  }}
+                />
+                <span
+                  className={cn(
+                    'mx-0.25 inline-block min-w-[30px] rounded-md border-2 p-1.5 transition-all',
+                    'border-opacity-10 group-focus-within:!border-opacity-100',
+                    getColorClasses(isCorrect, isTicked),
+                    exStatus === 'revealed' && !isCorrect && 'opacity-60'
+                  )}
+                >
+                  <FaIcon
+                    icon={isTicked ? faCheckSquare : faSquare}
+                    className="text-newgreen opacity-60"
+                  />{' '}
+                  {title}
+                </span>
+              </label>
+            )
+          })}
+        </div>,
+        data
+      )}
 
       <ExerciseFeedback
         noUserInput={noUserInput}
@@ -90,7 +97,7 @@ export function MultipleChoiceExercise({
         shakeElementQuery="#multiple-choice-wrapper"
         focusElementQuery="#multiple-choice-wrapper input"
         onNewExecise={() => {
-          setData(generator())
+          setData(createData())
           setSelection(selection.map(() => false))
         }}
         centAmount={centAmount}

@@ -22,7 +22,7 @@ export function createOrderRomanExercise(
             for (let i = 5; i <= 30; i++) {
               candidates.push(i)
             }
-            return { values: shuffleArray(candidates).slice() }
+            return { values: shuffleArray(candidates).slice(0, 5) }
           } else {
             const v1 = randomIntBetween(from ?? 5, to ?? 30)
             const v2 = v1 - randomIntBetween(1, 10)

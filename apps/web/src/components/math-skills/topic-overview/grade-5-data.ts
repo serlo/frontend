@@ -182,16 +182,91 @@ export const grade5Data: GradeTopicData[] = [
             children: [
               {
                 id: 'dezimal-nach-dual-stellenwerttafel-1',
-                text: 'Level 1 (WIP)',
+                text: 'Level 1',
               },
               {
                 id: 'dezimal-nach-dual-stellenwerttafel-2',
-                text: 'Level 2 (WIP)',
+                text: 'Level 2',
               },
               {
                 id: 'dezimal-nach-dual-stellenwerttafel-profi',
-                text: 'Profi (WIP)',
+                text: 'Profi',
               },
+            ],
+          },
+          {
+            title: 'Dezimal nach Dual umrechnen',
+            children: [
+              {
+                id: 'dezimal-nach-dual-umrechnen-1',
+                text: 'Level 1',
+              },
+              {
+                id: 'dezimal-nach-dual-umrechnen-profi',
+                text: 'Profi',
+              },
+              {
+                id: 'dezimal-nach-dual-umrechnen-profi-plus',
+                text: 'Profi+',
+              },
+            ],
+          },
+          {
+            title: 'Dualzahlen Memory',
+            children: [
+              {
+                id: 'dualzahlen-memory-1',
+                text: 'Level 1',
+              },
+              {
+                id: 'dualzahlen-memory-2',
+                text: 'Level 2',
+              },
+              {
+                id: 'dualzahlen-memory-profi',
+                text: 'Profi',
+              },
+            ],
+          },
+          {
+            title: 'Dualzahlen Ordnung',
+            children: [
+              {
+                id: 'dualzahlen-nachfolger',
+                text: 'Nachfolger',
+              },
+              {
+                id: 'dualzahlen-vorgaenger',
+                text: 'Vorgänger',
+              },
+              {
+                id: 'dualzahlen-vorgaenger-nachfolger-kombi',
+                text: 'Kombi',
+              },
+              {
+                id: 'dualzahlen-vorgaenger-nachfolger-profi',
+                text: 'Profi',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Runden',
+        children: [
+          {
+            title: 'Zahlen runden',
+            children: [
+              { id: 'zahlen-runden-1', text: 'Level 1' },
+              { id: 'zahlen-runden-profi', text: 'Profi' },
+            ],
+          },
+          {
+            title: 'Wurde richtig gerundet?',
+            children: [
+              { id: 'zahlen-richtig-gerundet-1', text: 'Level 1' },
+              { id: 'zahlen-richtig-gerundet-2', text: 'Level 2' },
+              { id: 'zahlen-richtig-gerundet-3', text: 'Level 3' },
             ],
           },
         ],
@@ -210,10 +285,34 @@ export const grade5Data: GradeTopicData[] = [
               { id: 'potenzwert-berechnen', text: 'Potenzwert berechnen' },
             ],
           },
+        ],
+      },
+    ],
+  },
+  {
+    title: 'Rechnen mit Größen',
+    children: [
+      {
+        title: 'Geld',
+        children: [
           {
-            title: 'Multiple Choice Test',
+            title: 'Geldbeträge darstellen',
+            // padded zeroes in answer are evaluated as incorrect I think we should have a feedback for that
             children: [
-              { id: 'multiple-choice-sample', text: 'Multiple Choice Test' },
+              { id: 'euro-zerlegen', text: 'Euro zerlegen' },
+              { id: 'euro-kommaschreibweise', text: 'Kommaschreibweise' },
+              { id: 'euro-in-cent', text: 'Euro in Cent' },
+              { id: 'euro-muenzen-mindestens', text: 'Wie viele Münzen?' },
+              { id: 'euro-scheine-mindestens', text: 'Wie viele Scheine?' },
+            ],
+          },
+          {
+            title: 'Addieren & Subtrahieren',
+            children: [
+              {
+                id: 'euro-vergleichen-1',
+                text: 'Spendenergebnis vergleichen',
+              },
             ],
           },
           {
