@@ -216,7 +216,11 @@ export function EditorRowRenderer({
         <div
           className={collectedDragProps.isDragging ? 'opacity-30' : undefined}
         >
-          {row.render()}
+          {row.render({
+            config: {
+              placeholder: config.textPluginPlaceholder,
+            },
+          })}
         </div>
       </div>
       {!draggingAbove ? dropPreview : null}
