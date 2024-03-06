@@ -824,7 +824,7 @@ export const loggedInData = {
         exercise: {
           title: "Aufgabe",
           description: "Interaktive- oder Textaufgaben",
-          placeholder: 'Type the assignment here (Optional)'
+          placeholder: "Füge hier den Arbeitsauftrag ein (Optional)"
         },
         inputExercise: {
           title: "Eingabefeld",
