@@ -6,10 +6,10 @@ import { FaIcon } from '../fa-icon'
 import { HeadTags } from '../head-tags'
 import { ExamsCompleteList } from '../landing/exams/exams-finder/exams-complete-list'
 import {
-  ExamsFinder,
   SupportedRegion,
   regions,
-} from '../landing/exams/exams-finder/exams-finder'
+} from '../landing/exams/exams-finder/exams-data'
+import { ExamsFinder } from '../landing/exams/exams-finder/exams-finder'
 import { FooterNew } from '../landing/rework/footer-new'
 import { SubjectIcon } from '../landing/rework/subject-icon'
 import { Header } from '../navigation/header/header'
@@ -46,8 +46,9 @@ export function MathExamsLanding({ region: initRegion }: RegionData) {
                 mb-10 mt-3 text-5xl font-extrabold tracking-tight
               `)}
             >
-              <span className="inline-block w-min max-w-[27rem] !whitespace-normal pb-3">
-                Mathe Prüfungen{' '}
+              <span className="inline-block max-w-[27rem] !whitespace-normal pb-3">
+                Mathe Prüfungen
+                <br />
                 <span className="serlo-underlined">
                   {regions[region].title}
                 </span>
@@ -68,11 +69,8 @@ export function MathExamsLanding({ region: initRegion }: RegionData) {
           {renderIcon()}
         </section>
 
-        <section className="themen relative -left-side min-h-[28rem] w-[calc(100%+32px)] px-side text-center">
-          <div className="mx-auto mb-12 max-w-3xl text-left">
-            <h2 className={cn(`pb-6 text-lg font-extrabold tracking-tight`)}>
-              Finde deine Prüfung 🔎
-            </h2>
+        <section className="themen relative -left-side !mt-12 min-h-[24rem] w-[calc(100%+32px)] px-side text-center">
+          <div className="sm:-mt-6">
             <ExamsFinder region={region} setRegion={setRegion} />
           </div>
         </section>
