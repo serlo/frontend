@@ -6,14 +6,14 @@ import {
   useAppSelector,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import type { EditorFillInTheBlanksExerciseDocument } from '@editor/types/editor-plugins'
+import type { EditorBlanksExerciseDocument } from '@editor/types/editor-plugins'
 import { useMemo, useState } from 'react'
 
-import type { FillInTheBlanksExerciseProps, FillInTheBlanksMode } from '.'
+import type { BlanksExerciseProps, BlanksExerciseMode } from '.'
 import { ExtraIncorrectAnswers } from './components/extra-incorrect-answers'
-import { FillInTheBlanksRenderer } from './renderer'
-import { FillInTheBlanksStaticRenderer } from './static'
-import { FillInTheBlanksToolbar } from './toolbar'
+import { BlanksExerciseRenderer } from './renderer'
+import { BlanksExerciseStaticRenderer } from './static'
+import { BlanksExerciseToolbar } from './toolbar'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 
@@ -35,9 +35,7 @@ const cellTextFormattingOptions = [
   TextEditorFormattingOption.textBlank,
 ]
 
-export function FillInTheBlanksExerciseEditor(
-  props: FillInTheBlanksExerciseProps
-) {
+export function BlanksExerciseEditor(props: BlanksExerciseProps) {
   const { focused, id, state } = props
   const { text: childPlugin, mode, extraDraggableAnswers } = state
   const [previewActive, setPreviewActive] = useState(false)
@@ -55,10 +53,7 @@ export function FillInTheBlanksExerciseEditor(
 
   const staticDocument = useAppSelector(
     (storeState) =>
-      selectStaticDocument(
-        storeState,
-        id
-      ) as EditorFillInTheBlanksExerciseDocument
+      selectStaticDocument(storeState, id) as EditorBlanksExerciseDocument
   )
 
   const childPluginConfig = useMemo(() => {
@@ -77,10 +72,10 @@ export function FillInTheBlanksExerciseEditor(
         'rounded-b-xl border-3 border-transparent focus-within:rounded-tl-xl focus-within:border-gray-100',
         focused && '!border-gray-100'
       )}
-      data-qa="plugin-fill-in-the-blanks-exercise"
+      data-qa="plugin-blanks-exercise"
     >
       {focused ? (
-        <FillInTheBlanksToolbar
+        <BlanksExerciseToolbar
           {...props}
           previewActive={previewActive}
           setPreviewActive={setPreviewActive}
@@ -100,10 +95,10 @@ export function FillInTheBlanksExerciseEditor(
       )}
 
       {previewActive ? (
-        <FillInTheBlanksStaticRenderer {...staticDocument} />
+        <BlanksExerciseStaticRenderer {...staticDocument} />
       ) : (
-        <div className="relative z-0 mt-12">
-          <FillInTheBlanksRenderer
+        <div className="relative mt-12">
+          <BlanksExerciseRenderer
             isEditing
             childPlugin={
               <>
@@ -119,7 +114,7 @@ export function FillInTheBlanksExerciseEditor(
             }
             childPluginState={childPluginState}
             extraDraggableAnswers={staticDocument.state.extraDraggableAnswers}
-            mode={mode.value as FillInTheBlanksMode}
+            mode={mode.value as BlanksExerciseMode}
             initialTextInBlank="correct-answer"
           />
 

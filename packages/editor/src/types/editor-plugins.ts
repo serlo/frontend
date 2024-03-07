@@ -2,11 +2,11 @@ import type { PrettyStaticState } from '@editor/plugin'
 import type { AnchorPluginState } from '@editor/plugins/anchor'
 import type { ArticlePluginState } from '@editor/plugins/article'
 import { AudioPluginState } from '@editor/plugins/audio'
+import { BlanksExerciseState } from '@editor/plugins/blanks-exercise'
 import { BoxPluginState } from '@editor/plugins/box'
 import { EquationsPluginState } from '@editor/plugins/equations'
 import type { ExercisePluginState } from '@editor/plugins/exercise'
 import { ExerciseGroupPluginState } from '@editor/plugins/exercise-group'
-import { FillInTheBlanksExerciseState } from '@editor/plugins/fill-in-the-blanks-exercise'
 import type { GeogebraPluginState } from '@editor/plugins/geogebra'
 import { H5pPluginState } from '@editor/plugins/h5p'
 import type { HighlightPluginState } from '@editor/plugins/highlight'
@@ -131,9 +131,9 @@ export interface EditorScMcExerciseDocument {
   state: PrettyStaticState<ScMcExercisePluginState>
   id?: string
 }
-export interface EditorFillInTheBlanksExerciseDocument {
-  plugin: EditorPluginType.FillInTheBlanksExercise
-  state: PrettyStaticState<FillInTheBlanksExerciseState>
+export interface EditorBlanksExerciseDocument {
+  plugin: EditorPluginType.BlanksExercise
+  state: PrettyStaticState<BlanksExerciseState>
   id?: string
 }
 export interface EditorSpoilerDocument {

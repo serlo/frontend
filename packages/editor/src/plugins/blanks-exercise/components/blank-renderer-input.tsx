@@ -2,12 +2,12 @@ import { AutogrowInput } from '@editor/editor-ui/autogrow-input'
 import { type ComponentProps, forwardRef } from 'react'
 
 import { BlankId } from '..'
-import { FillInTheBlanksContextType } from '../context/blank-context'
+import { BlanksContextType } from '../context/blank-context'
 import { cn } from '@/helper/cn'
 
 interface BlankRendererInputProps {
   blankId: string
-  context: FillInTheBlanksContextType
+  context: BlanksContextType
   isAnswerCorrect?: boolean
 }
 

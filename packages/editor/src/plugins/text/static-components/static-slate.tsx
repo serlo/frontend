@@ -1,5 +1,5 @@
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { BlankRendererStatic } from '@editor/plugins/fill-in-the-blanks-exercise/blank-renderer-static'
+import { BlankRendererStatic } from '@editor/plugins/blanks-exercise/blank-renderer-static'
 import { createElement } from 'react'
 import { Descendant, Element } from 'slate'
 

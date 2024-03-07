@@ -23,7 +23,7 @@ yarn
 yarn dev
 ```
 
-The developement server is now live on [localhost:3000](http://localhost:3000). Use same username/password as on staging.
+The development server is now live on [localhost:3000](http://localhost:3000). Use same username/password as on staging.
 
 Choose language using `http://localhost:3000/{es|de|hi|ta|en|fr}/`
 
@@ -53,21 +53,25 @@ Add the environment variable `DATABASE_URL` to `apps/web/.env.local` (next.js). 
 
 ## Repository Overview
 
-Here are some useful places:
+This is a monorepo that contains the editor and the frontend platform. Here are some useful directories:
 
-- `/src/pages`: File-system routing root directory. Add new routes by creating files in this folder.
+- `/apps/web`: Serlo.org platform.
 
-- `/src/components`: Collection of react components for the frontend.
+- `/apps/web/src/pages`: File-system routing root directory. Add new routes by creating files in this folder.
 
-- `/src/fetcher`: Requesting data from the GraphQL backend and process it.
+- `/apps/web/src/components`: Collection of react components for the frontend.
 
-- `/src/schema`: Definition of the frontend content format, with renderer, and converter for edtr-io and legacy.
+- `/apps/web/src/fetcher`: Requesting data from the GraphQL backend and process it.
 
-- `/src/data`: Translations, entries for navigation
+- `/apps/web/src/data`: Translations, entries for navigation
 
-- `/public/_`: A place for public assets, served as static files under the path `/_assets/`. Don't use `import` from here, but use the path as `src` instead.
+- `/apps/web/public/_`: A place for public assets, served as static files under the path `/_assets/`. Don't use `import` from here, but use the path as `src` instead.
 
-- `/external`: Third-party code that is not maintained by the frontend.
+- `/apps/web/external`: Third-party code that is not maintained by the frontend.
+
+- `/packages/editor`: Serlo Editor. See [here](https://www.serlo.org/editor) for more information.
+
+- `/e2e-tests`: End to end tests in BDD style with CodeceptJS and playwright. More info on testing below and in the [readme](https://github.com/serlo/frontend/tree/staging/) of the directory.
 
 Some useful commands:
 

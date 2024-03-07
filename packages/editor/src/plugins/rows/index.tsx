@@ -52,6 +52,7 @@ export type RowsPluginState = ReturnType<typeof createRowsState>
 export interface RowsPluginConfig {
   allowedPlugins?: (EditorPluginType | string)[]
   parentType: string
+  textPluginPlaceholder?: string
 }
 
 export type RowsProps = EditorPluginProps<RowsPluginState, RowsConfig>
