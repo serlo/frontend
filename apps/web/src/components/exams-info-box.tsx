@@ -58,9 +58,7 @@ export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
             {!isInBYTax ? ( // only for niedersachsen
               <div className="serlo-p mb-0 mt-2 border-t pt-2 text-sm font-normal">
                 Wichtig: Für die Aufgaben hier gelten{' '}
-                <Link href="/license/detail/26">
-                  andere Nutzungbedingungen
-                </Link>
+                <Link href="/license/detail/26">andere Nutzungbedingungen</Link>
                 .
               </div>
             ) : null}
