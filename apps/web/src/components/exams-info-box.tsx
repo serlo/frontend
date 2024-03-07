@@ -3,15 +3,11 @@ import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 
 import { Link } from './content/link'
 import { FaIcon } from './fa-icon'
-import { mathExamDetails } from '@/data/de/math-exams-taxonomies'
+import { mathExamTaxBY } from '@/data/de/math-exams-taxonomies'
 import { cn } from '@/helper/cn'
 
 export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
-  const isInBYTax =
-    Object.hasOwn(mathExamDetails, examsFolderId) &&
-    mathExamDetails[examsFolderId as keyof typeof mathExamDetails].region ===
-      'bayern'
-
+  const isInBYTax = mathExamTaxBY.includes(examsFolderId)
   return (
     <>
       <div
