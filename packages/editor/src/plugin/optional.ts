@@ -7,12 +7,10 @@ import {
   StateUpdater,
 } from './internal-plugin-state'
 
-/**
- * @param type - The {@link @edtr-io/internal__plugin-state#StateType | state type} for defined values
- * @param initiallyDefined - Whether the value should be defined initially
- */
 export function optional<D extends StateType>(
+  // State Type for defined values
   type: D,
+  // Whether the value should be defined initially
   initiallyDefined = false
 ): OptionalStateType<D> {
   type T = StateTypeValueType<D>

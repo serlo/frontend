@@ -4,11 +4,11 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useRef } from 'react'
 
-import type { FillInTheBlanksExerciseProps } from '..'
+import type { BlanksExerciseProps } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface ExtraIncorrectAnswersProps {
-  extraDraggableAnswers: FillInTheBlanksExerciseProps['state']['extraDraggableAnswers']
+  extraDraggableAnswers: BlanksExerciseProps['state']['extraDraggableAnswers']
 }
 
 export function ExtraIncorrectAnswers(props: ExtraIncorrectAnswersProps) {

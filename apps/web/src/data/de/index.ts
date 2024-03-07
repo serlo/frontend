@@ -687,7 +687,8 @@ export const loggedInData = {
           illegalInjectionFound: "Ungültige Injection gefunden",
           serloEntitySrc: "Serlo Inhalt {{src}}",
           serloId: 'Serlo ID',
-          placeholder: "Serlo ID (z.B. 1565)"
+          placeholder: "Serlo ID (z.B. 1565)",
+          invalidStateWarning: "Bitte verwende eine gültige Serlo ID (nur Zahlen) – z.B. '/1555'"
         },
         multimedia: {
           title: "Erklärung mit Multimedia-Inhalt",
@@ -822,7 +823,8 @@ export const loggedInData = {
         },
         exercise: {
           title: "Aufgabe",
-          description: "Interaktive- oder Textaufgaben"
+          description: "Interaktive- oder Textaufgaben",
+          placeholder: "Füge hier den Arbeitsauftrag ein (Optional)"
         },
         inputExercise: {
           title: "Eingabefeld",

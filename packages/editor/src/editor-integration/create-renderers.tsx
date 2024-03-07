@@ -4,10 +4,10 @@ import {
 } from '@editor/plugin/helpers/editor-renderer'
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
+import { BlanksExerciseStaticRenderer } from '@editor/plugins/blanks-exercise/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
 import { EquationsStaticRenderer } from '@editor/plugins/equations/static'
 import { ExerciseStaticRenderer } from '@editor/plugins/exercise/static'
-import { FillInTheBlanksStaticRenderer } from '@editor/plugins/fill-in-the-blanks-exercise/static'
 import { GeogebraStaticRenderer } from '@editor/plugins/geogebra/static'
 import { H5pStaticRenderer } from '@editor/plugins/h5p/static'
 import { HighlightStaticRenderer } from '@editor/plugins/highlight/static'
@@ -87,8 +87,8 @@ export function createRenderers(): InitRenderersArgs {
         renderer: ScMcExerciseStaticRenderer,
       },
       {
-        type: EditorPluginType.FillInTheBlanksExercise,
-        renderer: FillInTheBlanksStaticRenderer,
+        type: EditorPluginType.BlanksExercise,
+        renderer: BlanksExerciseStaticRenderer,
       },
       {
         type: EditorPluginType.TextAreaExercise,

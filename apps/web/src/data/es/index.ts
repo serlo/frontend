@@ -687,7 +687,8 @@ export const loggedInData = {
           illegalInjectionFound: "Entrada ilegal encontrada",
           serloEntitySrc: "entidad de Serlo {{src}}",
           serloId: 'Serlo ID',
-          placeholder: "Serlo ID (p.ej. 1565)"
+          placeholder: 'Serlo ID (e.g. /1565)',
+          invalidStateWarning: "Please use a valid Serlo ID (just numbers). E.g. '/1555'"
         },
         multimedia: {
           title: "Contenido multimedia asociado con el texto",
@@ -822,7 +823,8 @@ export const loggedInData = {
         },
         exercise: {
           title: "Ejercicio",
-          description: "Ejercicio interactivo o basado en texto"
+          description: "Ejercicio interactivo o basado en texto",
+          placeholder: 'Type the assignment here (Optional)'
         },
         inputExercise: {
           title: "Ejercicio de respuesta escrita",
