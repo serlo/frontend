@@ -474,16 +474,18 @@ export const allExercises = {
           }
           return (
             <>
-              <p>
+              <p className="text-2xl">
                 Gib die Dualzahl aus der Stellenwerttafel als Dezimalzahl an.
               </p>
-              <div className="my-8 flex">
+              <div className="my-8 flex text-xl">
                 {digits.map((el, i) => {
                   return (
                     <div key={i} className="border-r-4 px-2">
                       {Math.pow(2, 4 - i)}er
                       <br />
-                      {el}
+                      <span className="font-mono font-bold text-newgreen">
+                        {el}
+                      </span>
                     </div>
                   )
                 })}
@@ -510,16 +512,18 @@ export const allExercises = {
           }
           return (
             <>
-              <p>
+              <p className="text-2xl">
                 Gib die Dualzahl aus der Stellenwerttafel als Dezimalzahl an.
               </p>
-              <div className="my-8 flex border-l-4">
+              <div className="my-8 flex border-l-4 text-xl">
                 {digits.map((el, i) => {
                   return (
                     <div key={i} className="border-r-4 px-2">
                       {Math.pow(2, 6 - i)}er
                       <br />
-                      {el}
+                      <span className="font-mono font-bold text-newgreen">
+                        {el}
+                      </span>
                     </div>
                   )
                 })}
