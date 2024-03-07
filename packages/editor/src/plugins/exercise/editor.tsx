@@ -15,7 +15,7 @@ const allInteractiveExerciseTypes = [
   EditorPluginType.InputExercise,
   EditorPluginType.H5p,
   EditorPluginType.TextAreaExercise,
-  EditorPluginType.FillInTheBlanksExercise,
+  EditorPluginType.BlanksExercise,
 ] as const
 
 export type InteractiveExerciseType =
@@ -58,7 +58,11 @@ export function ExerciseEditor(props: ExerciseProps) {
         </button>
       )}
       <div className="h-10"></div>
-      {content.render()}
+      {content.render({
+        config: {
+          textPluginPlaceholder: exPluginStrings.placeholder,
+        },
+      })}
       <div className="mx-side">
         {interactive.defined ? (
           interactive.render()

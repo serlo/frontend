@@ -197,7 +197,7 @@ export const schoolTypesWithExamsByRegion: Record<
       title: 'Gesamtschule',
       exams: [
         {
-          title: 'ISG G',
+          title: 'IGS G',
           url: '/mathe/300763/igs-g',
           years: [
             { title: '2023', url: '/mathe/300785/2023' },
@@ -206,7 +206,7 @@ export const schoolTypesWithExamsByRegion: Record<
           ],
         },
         {
-          title: 'ISG E',
+          title: 'IGS E',
           url: '/mathe/300762/igs-e',
           years: [
             { title: '2023', url: '/mathe/300764/2023' },

@@ -12,7 +12,7 @@ import { ReactEditor, useSelected, useSlate, useFocused } from 'slate-react'
 
 import { BlankControls } from './components/blank-controls'
 import { BlankRendererInput } from './components/blank-renderer-input'
-import { FillInTheBlanksContext } from './context/blank-context'
+import { BlanksContext } from './context/blank-context'
 import type { BlankInterface } from './types'
 
 interface BlankRendererProps {
@@ -67,12 +67,12 @@ export function BlankRenderer(props: BlankRendererProps) {
 
   // remove empty blanks when plugin looses focus
   useEffect(() => {
-    if (!focused && !correctAnswers[0].answer.trim().length) {
+    if (!focused && !correctAnswers[0]?.answer.trim().length) {
       removeBlanks(editor)
     }
   }, [focused, editor, correctAnswers])
 
-  const context = useContext(FillInTheBlanksContext)
+  const context = useContext(BlanksContext)
   if (context === null) return null
 
   return (
@@ -93,7 +93,6 @@ export function BlankRenderer(props: BlankRendererProps) {
           onAlternativeAnswerAdd={handleAlternativeAnswerAdd}
           onAlternativeAnswerChange={handleCorrectAnswerChange}
           onAlternativeAnswerRemove={handleAlternativeAnswerRemove}
-          onAlternativeAnswerBlur={handleAlternativeAnswerBlur}
           onAcceptMathEquivalentsChange={handleAcceptMathEquivalentsChange}
         />
       ) : null}
@@ -143,7 +142,15 @@ export function BlankRenderer(props: BlankRendererProps) {
   }
 
   function handleBlur() {
-    handleCorrectAnswerChange(0, correctAnswers[0].answer.trim())
+    // Trim the text inside of the blank input
+    handleCorrectAnswerChange(0, correctAnswers[0]?.answer.trim())
+    setCorrectAnswers(
+      correctAnswers
+        // Trim the text inside of alternative answers inputs
+        .map(({ answer }) => ({ answer: answer.trim() }))
+        // Filter out the empty alternative answers
+        .filter(({ answer }) => answer.length > 0)
+    )
   }
 
   function handleAlternativeAnswerAdd() {
@@ -160,14 +167,6 @@ export function BlankRenderer(props: BlankRendererProps) {
 
   function handleAlternativeAnswerRemove(targetIndex: number) {
     setCorrectAnswers(correctAnswers.filter((_, i) => i !== targetIndex))
-  }
-
-  function handleAlternativeAnswerBlur() {
-    setCorrectAnswers(
-      correctAnswers
-        .map(({ answer }) => ({ answer: answer.trim() }))
-        .filter(({ answer }) => answer.length > 0)
-    )
   }
 
   function setCorrectAnswers(correctAnswers: Array<{ answer: string }>) {

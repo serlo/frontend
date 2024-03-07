@@ -24,7 +24,6 @@ interface BlankControlsProps {
   onAlternativeAnswerAdd: () => void
   onAlternativeAnswerChange: (targetIndex: number, newValue: string) => void
   onAlternativeAnswerRemove: (targetIndex: number) => void
-  onAlternativeAnswerBlur: () => void
   onAcceptMathEquivalentsChange: () => void
 }
 
@@ -36,7 +35,6 @@ export function BlankControls(props: BlankControlsProps) {
     onAlternativeAnswerAdd,
     onAlternativeAnswerChange,
     onAlternativeAnswerRemove,
-    onAlternativeAnswerBlur,
     onAcceptMathEquivalentsChange,
   } = props
   const [selectedElement, setSelectedElement] = useState<Blank | null>(null)
@@ -64,7 +62,7 @@ export function BlankControls(props: BlankControlsProps) {
   }, [selection, editor, blankId])
 
   const isBlankAnswerAlphabetical = useMemo(() => {
-    if (correctAnswers[0].length === 0) return true
+    if (correctAnswers[0]?.length === 0) return true
     return /^[a-zA-Z]+$/.test(correctAnswers[0])
   }, [correctAnswers])
 
@@ -159,16 +157,15 @@ export function BlankControls(props: BlankControlsProps) {
                           handleAlternativeAnswerRemove(index)
                         }
                       }}
-                      onBlur={onAlternativeAnswerBlur}
                     />
                   </RemovableInputWrapper>
                 )
               })}
               <button
                 onClick={handleAlternativeAnswerAdd}
-                className="serlo-button-editor-primary h-5 w-5 px-1 py-0 text-xs"
+                className="serlo-button-editor-primary h-5 w-5 p-0 text-xs"
               >
-                <FaIcon icon={faPlus} />
+                <FaIcon icon={faPlus} className="h-5 w-3" />
               </button>
             </div>
           </div>

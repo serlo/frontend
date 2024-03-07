@@ -32,6 +32,7 @@ export const cfWorkerLinks = [
   '/neuerechtsform',
   '/beitreten',
   '/global',
+  '/mathe-pruefungen', // make sure we use redirect from cf-worker here
 ]
 
 // warning: forwarding ref is crucial for dropdowns to work

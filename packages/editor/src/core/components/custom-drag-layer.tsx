@@ -2,7 +2,7 @@ import {
   BlankAnswerDragItem,
   blankDraggableAnswerDragType,
   dragAnswerStyle,
-} from '@editor/plugins/fill-in-the-blanks-exercise/components/blank-draggable-answer'
+} from '@editor/plugins/blanks-exercise/components/blank-draggable-answer'
 import { useDragLayer } from 'react-dnd'
 
 import { cn } from '@/helper/cn'

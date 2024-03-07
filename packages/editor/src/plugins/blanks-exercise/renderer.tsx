@@ -9,12 +9,13 @@ import {
 } from 'react'
 import { v4 as uuid_v4 } from 'uuid'
 
-import type { BlankId, DraggableId, FillInTheBlanksMode } from '.'
+import type { BlankId, DraggableId, BlanksExerciseMode } from '.'
 import { BlankCheckButton } from './components/blank-check-button'
 import { BlankDraggableAnswer } from './components/blank-draggable-answer'
 import { BlankDraggableArea } from './components/blank-draggable-area'
-import { FillInTheBlanksContext } from './context/blank-context'
+import { BlanksContext } from './context/blank-context'
 import { Blank, type BlankType } from './types'
+import { cn } from '@/helper/cn'
 
 const DndWrapper = lazy(() =>
   import('@editor/core/components/dnd-wrapper').then((module) => ({
@@ -24,21 +25,21 @@ const DndWrapper = lazy(() =>
 
 type MathjsImport = typeof import('mathjs')
 
-export interface FillInTheBlanksRendererProps {
+export interface BlanksExerciseRendererProps {
   childPlugin: ReactNode
   childPluginState: {
     plugin: string
     state?: unknown
     id?: string | undefined
   }
-  mode: FillInTheBlanksMode
+  mode: BlanksExerciseMode
   initialTextInBlank: 'empty' | 'correct-answer'
   extraDraggableAnswers?: Array<{ answer: string }>
   isEditing?: boolean
   onEvaluate?: (correct: boolean) => void
 }
 
-export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
+export function BlanksExerciseRenderer(props: BlanksExerciseRendererProps) {
   const {
     childPlugin,
     childPluginState,
@@ -88,7 +89,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
   const draggables = useMemo(() => {
     const sorted = blanks.map(({ blankId, correctAnswers }) => ({
       draggableId: `solution-${blankId}`,
-      text: correctAnswers[0].answer,
+      text: correctAnswers[0]?.answer,
     }))
     if (isEditing) return sorted
 
@@ -155,8 +156,16 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <DndWrapper>
-        <div className="mx-side mb-block leading-[30px] [&>p]:leading-[30px]">
-          <FillInTheBlanksContext.Provider
+        <div
+          className={cn(
+            'mx-side mb-block',
+            // Increase Slate line height in the editor
+            '[&>div>div>div[data-slate-node="element"]]:leading-[30px]',
+            // Increase Slate line height in the renderer
+            '[&>p]:leading-[30px]'
+          )}
+        >
+          <BlanksContext.Provider
             value={{
               mode,
               feedbackForBlanks: {
@@ -180,7 +189,7 @@ export function FillInTheBlanksRenderer(props: FillInTheBlanksRendererProps) {
             }}
           >
             {childPlugin}
-          </FillInTheBlanksContext.Provider>
+          </BlanksContext.Provider>
 
           {mode === 'drag-and-drop' ? (
             <BlankDraggableArea onDrop={handleDraggableAreaDrop}>

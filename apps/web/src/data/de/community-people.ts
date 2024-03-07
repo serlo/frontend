@@ -77,13 +77,6 @@ export const communityWallPersons = [
     ],
   },
   {
-    name: 'wolfgang',
-    role: 'Team',
-    imgSrc:
-      'https://assets.serlo.org/5fc60fd578266_ef388187d8288b790cf5378e160278301df24c16.jpg',
-    subjects: ['landing', 'biologie', 'chemie', 'lerntipps', 'nachhaltigkeit'],
-  },
-  {
     name: 'johanna_b',
     role: 'Autorin',
     imgSrc:

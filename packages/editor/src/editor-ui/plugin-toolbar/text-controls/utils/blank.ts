@@ -1,4 +1,5 @@
-import { BlankInterface as Blank } from '@editor/plugins/fill-in-the-blanks-exercise/types'
+import { BlankInterface as Blank } from '@editor/plugins/blanks-exercise/types'
+import { isSelectionAtEnd } from '@editor/plugins/text/utils/selection'
 import {
   Editor as SlateEditor,
   Element,
@@ -79,5 +80,13 @@ function addBlank(editor: SlateEditor) {
     children: [{ text: '' }],
   }
 
-  Transforms.insertNodes(editor, newBlankNode)
+  // If selection is at the end of the Slate editor, insert the blank,
+  // and a space after it, so that clicking outside of the blank would
+  // blur it. Otherwise, just insert the blank.
+  if (isSelectionAtEnd(editor, selection)) {
+    Transforms.insertNodes(editor, [newBlankNode, { text: ' ' }])
+    return
+  } else {
+    Transforms.insertNodes(editor, newBlankNode)
+  }
 }

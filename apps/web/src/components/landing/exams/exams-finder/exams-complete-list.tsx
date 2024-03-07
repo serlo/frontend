@@ -13,16 +13,16 @@ export function ExamsCompleteList({ region }: { region: SupportedRegion }) {
   )
 
   return (
-    <>
-      <h2 className="mb-6 text-2xl font-extrabold">
+    <div className="px-side">
+      <h2 className="mb-6 text-left text-2xl font-extrabold sm:text-center">
         Alle Mathe-Abschlussprüfungen für {regions[region].title}
       </h2>
-      <div className="mx-auto max-w-6xl justify-around text-left sm:flex sm:flex-wrap">
+      <div className="max-w-6xl text-left sm:mx-auto sm:flex sm:flex-wrap">
         {schoolTypesWithData.map(([schoolTypeKey, { title, exams }]) => {
           return (
             <div
               key={schoolTypeKey}
-              className="mx-4 mt-6 min-w-[10rem] text-lg sm:min-w-[17rem] md:min-w-[14rem]"
+              className="mt-6 min-w-[10rem] text-lg sm:mx-4 sm:min-w-[14rem] md:min-w-[14rem]"
             >
               <h2 className="mb-2 font-bold">{title}</h2>
               {exams.map((exam) => {
@@ -69,6 +69,6 @@ export function ExamsCompleteList({ region }: { region: SupportedRegion }) {
           </a>
         )}
       </h2>
-    </>
+    </div>
   )
 }
