@@ -8,6 +8,7 @@ interface NumberInputExerciseProps<DATA> {
   getCorrectValue?: (input: DATA) => number
   getCorrectStringValue?: (input: DATA) => string
   render: (input: JSX.Element, data: DATA) => JSX.Element
+  renderFeedback?: (data: DATA) => JSX.Element
   widthForDigits?: number
   centAmount?: number
   className?: string
@@ -20,6 +21,7 @@ export function NumberInputExercise<T>({
   getCorrectValue,
   getCorrectStringValue,
   render,
+  renderFeedback,
   widthForDigits = 7,
   centAmount,
   className,
@@ -83,7 +85,10 @@ export function NumberInputExercise<T>({
           revealed: (
             <>
               Die richtige Antwort wäre{' '}
-              <b className="text-newgreen">{correctValue}</b> gewesen.
+              <b className="text-newgreen">
+                {renderFeedback ? renderFeedback(data) : correctValue}
+              </b>{' '}
+              gewesen.
             </>
           ),
         }}

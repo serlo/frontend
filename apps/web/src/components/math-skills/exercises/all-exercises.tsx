@@ -475,16 +475,18 @@ export const allExercises = {
           }
           return (
             <>
-              <p>
+              <p className="text-2xl">
                 Gib die Dualzahl aus der Stellenwerttafel als Dezimalzahl an.
               </p>
-              <div className="my-8 flex">
+              <div className="my-8 flex text-xl">
                 {digits.map((el, i) => {
                   return (
                     <div key={i} className="border-r-4 px-2">
                       {Math.pow(2, 4 - i)}er
                       <br />
-                      {el}
+                      <span className="font-mono font-bold text-newgreen">
+                        {el}
+                      </span>
                     </div>
                   )
                 })}
@@ -511,16 +513,18 @@ export const allExercises = {
           }
           return (
             <>
-              <p>
+              <p className="text-2xl">
                 Gib die Dualzahl aus der Stellenwerttafel als Dezimalzahl an.
               </p>
-              <div className="my-8 flex border-l-4">
+              <div className="my-8 flex border-l-4 text-xl">
                 {digits.map((el, i) => {
                   return (
                     <div key={i} className="border-r-4 px-2">
                       {Math.pow(2, 6 - i)}er
                       <br />
-                      {el}
+                      <span className="font-mono font-bold text-newgreen">
+                        {el}
+                      </span>
                     </div>
                   )
                 })}
@@ -840,22 +844,51 @@ export const allExercises = {
       <NumberInputExercise
         centAmount={35}
         generator={() => {
-          const cent = randomIntBetween(11, 99)
-          return { cent }
-        }}
-        getCorrectValue={({ cent }) => {
-          const coins = [200, 100, 50, 20, 10, 5, 2, 1]
+          const precalc = {
+            1: [20, 50],
+            2: [11, 12, 15, 21, 22, 25, 30, 40, 51, 52, 55, 60, 70],
+            3: [
+              13, 14, 16, 17, 23, 24, 26, 27, 31, 32, 35, 41, 42, 45, 53, 54,
+              56, 57, 61, 62, 65, 71, 72, 75, 80, 90,
+            ],
+            4: [
+              18, 19, 28, 29, 33, 34, 36, 37, 43, 44, 46, 47, 58, 59, 63, 64,
+              66, 67, 73, 74, 76, 77, 81, 82, 85, 91, 92, 95,
+            ],
+            5: [38, 39, 48, 49, 68, 69, 78, 79, 83, 84, 86, 87, 93, 94, 96, 97],
+            6: [88, 89, 98, 99],
+          } as { [key: number]: number[] }
+          const n = randomIntBetween(1, 6)
+          const cent = randomItemFromArray(precalc[n])
+
+          const coins = []
+
+          const coinsAvailable = [200, 100, 50, 20, 10, 5, 2, 1]
           let remainingCents = cent
-          let coinAmount = 0
           while (remainingCents !== 0) {
-            const biggestCoin = coins.find(
+            const biggestCoin = coinsAvailable.find(
               (coinCents) => remainingCents >= coinCents
             )!
-            coinAmount += 1
+            coins.push(biggestCoin)
             remainingCents -= biggestCoin
           }
-          return coinAmount
+
+          return { cent, n, coins }
         }}
+        getCorrectValue={({ n }) => {
+          return n
+        }}
+        renderFeedback={({ n, coins }) => (
+          <>
+            <br />
+            {n}
+            <br />
+            mit den Münzen
+            <br />
+            {coins.map((x) => `${x}ct`).join(', ')}
+            <br />
+          </>
+        )}
         render={(input, { cent }) => {
           return (
             <>
@@ -882,22 +915,53 @@ export const allExercises = {
       <NumberInputExercise
         centAmount={35}
         generator={() => {
-          const euro = Math.round(randomIntBetween(100, 1000) / 5) * 5
-          return { euro }
-        }}
-        getCorrectValue={({ euro }) => {
-          const bills = [500, 200, 100, 50, 20, 10, 5]
-          let remainingEuros = euro
-          let billAmount = 0
-          while (remainingEuros !== 0) {
-            const biggestBill = bills.find(
-              (billEuros) => remainingEuros >= billEuros
+          const precalc = {
+            1: [100, 200],
+            2: [105, 110, 120, 150, 205, 210, 220, 250, 300, 400],
+            3: [
+              115, 125, 130, 140, 155, 160, 170, 215, 225, 230, 240, 255, 260,
+              270, 305, 310, 320, 350, 405, 410, 420, 450,
+            ],
+            4: [
+              135, 145, 165, 175, 180, 190, 235, 245, 265, 275, 280, 290, 315,
+              325, 330, 340, 355, 360, 370, 415, 425, 430, 440, 455, 460, 470,
+            ],
+            5: [
+              185, 195, 285, 295, 335, 345, 365, 375, 380, 390, 435, 445, 465,
+              475, 480, 490,
+            ],
+            6: [385, 395, 485, 495],
+          } as { [key: number]: number[] }
+          const n = randomIntBetween(1, 6)
+          const euro = randomItemFromArray(precalc[n])
+
+          const bills = []
+
+          const billsAvailable = [200, 100, 50, 20, 10, 5]
+          let remaining = euro
+          while (remaining !== 0) {
+            const biggestBill = billsAvailable.find(
+              (coinCents) => remaining >= coinCents
             )!
-            billAmount += 1
-            remainingEuros -= biggestBill
+            bills.push(biggestBill)
+            remaining -= biggestBill
           }
-          return billAmount
+          return { euro, n, bills }
         }}
+        getCorrectValue={({ n }) => {
+          return n
+        }}
+        renderFeedback={({ n, bills }) => (
+          <>
+            <br />
+            {n}
+            <br />
+            mit den Scheinen
+            <br />
+            {bills.map((x) => `${x}€`).join(', ')}
+            <br />
+          </>
+        )}
         render={(input, { euro }) => {
           return (
             <>

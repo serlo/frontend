@@ -24,14 +24,14 @@ export function createPlaceValueChangeExercise(expert: boolean) {
           const from = randomItemFromArray(titles)
           const to = randomItemFromArray(titles.filter((x) => x !== from))
 
-          const value = startValue - placeValues[from] + placeValues[to]
-          return { value, from, to }
+          const result = startValue - placeValues[from] + placeValues[to]
+          return { startValue, result, from, to }
         }}
-        getCorrectValue={({ value }) => value}
-        render={(input, { value, from, to }) => {
+        getCorrectValue={({ result }) => result}
+        render={(input, { startValue, from, to }) => {
           return (
             <>
-              <PlaceValueChart value={value} />
+              <PlaceValueChart value={startValue} />
               <p className="mt-4 text-xl">
                 Ein Plättchen wird von <b>{from}</b> nach <b>{to}</b> geschoben.
                 <br />
