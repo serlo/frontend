@@ -7,8 +7,10 @@ import { scrollIfNeeded } from '@/helper/scroll'
 
 export function TopicOverview() {
   useEffect(() => {
-    const target = document.querySelector(window.location.hash)
-    target?.setAttribute('open', '')
+    if (window.location.hash) {
+      const target = document.querySelector(window.location.hash)
+      target?.setAttribute('open', '')
+    }
   })
 
   return (
