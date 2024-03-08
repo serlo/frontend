@@ -1,11 +1,11 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
+import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { WelcomeSection } from '@/components/math-skills/landing/welcome-section'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
 import { TopicOverview } from '@/components/math-skills/topic-overview/topic-overview'
-import { Link } from '@/components/content/link'
 
 const ContentPage: NextPage = () => {
   return (
@@ -42,7 +42,7 @@ function Content() {
             :
             <p className="my-6">
               <Link href="/meine-mathe-skills/grundwissen-realschule-bayern/logarithmus-1">
-                Logarithmus zusammenfassen
+                Logarithmus zusammenfassen (mit 3. binomischer Formel)
               </Link>
             </p>
             <div className="h-24"></div>
