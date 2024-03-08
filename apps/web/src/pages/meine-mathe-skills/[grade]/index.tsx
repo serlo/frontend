@@ -52,6 +52,19 @@ function Content() {
                 <p>
                   <b>Logarithmus zusammenfassen</b>
                   <br />
+                  <span className="text-base">(Terme)</span>
+                </p>
+              </Link>
+              <Link
+                href="/meine-mathe-skills/grundwissen-realschule-bayern/logarithmus-2"
+                className={cn(
+                  'flex aspect-square w-48 items-center justify-center rounded-2xl bg-newgreen bg-opacity-10 p-4 text-almost-black !no-underline',
+                  'transition-colors hover:bg-opacity-20 hover:shadow-menu active:bg-opacity-20'
+                )}
+              >
+                <p>
+                  <b>Logarithmus zusammenfassen</b>
+                  <br />
                   <span className="text-base">(mit 3. binomischer Formel)</span>
                 </p>
               </Link>
