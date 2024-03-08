@@ -18,6 +18,7 @@ import {
   numberLineGeneratorLevel2,
   numberLineGeneratorLevel3,
 } from './generators/number-line-generator'
+import { SelfEvaluationExercise } from '../exercise-implementations/self-evaluation-exercise'
 import { MultipleNumberInputExercise } from '../number-input-exercise/multiple-number-input-exercise'
 import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
 import { OrderValues } from '@/components/math-skills/exercise-implementations/order-values'
@@ -1026,6 +1027,56 @@ export const allExercises = {
     ),
   },
   // TODO: euro-vergleichen-2
+  'logarithmus-1': {
+    // title: 'Logarithmus zusammenfassen 1',
+    component: (
+      <SelfEvaluationExercise
+        generator={() => {
+          return { formula: <>log&#8202;₂(x²-9) - log&#8202;₂(x+3)</> }
+        }}
+        renderTask={({ formula }) => {
+          return (
+            <>
+              <h2 className="text-2xl">
+                Fasse zu einem Logarithmus zusammen
+                <br />
+                (oder vereinfache)
+              </h2>
+              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+                {formula}
+              </span>
+              <p className="mt-5">
+                Rechne am Besten mit Stift und Papier. <br />
+                <br />
+              </p>
+            </>
+          )
+        }}
+        renderSolution={({ formula }) => {
+          return (
+            <>
+              Aufgabenstellung: <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                {formula}
+              </span>
+              <br />
+              <br />
+              Die Teile erweitern: <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                log&#8202;₂((x+3)(x-3) / (x+3))
+              </span>
+              <br />
+              <br />
+              Ergebnis: <br />
+              <span className="mt-5 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+                log&#8202;₂(x-3)
+              </span>
+            </>
+          )
+        }}
+      />
+    ),
+  },
 } as const
 
 export type SupportedExercisesId = keyof typeof allExercises
