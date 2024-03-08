@@ -1,7 +1,8 @@
 import { SpoilerRenderer } from '@editor/plugins/spoiler/renderer'
 import { useState } from 'react'
 
-import { ExStatus, ExerciseFeedback } from '../feedback/execise-feedback'
+import { ExStatus } from '../feedback/execise-feedback'
+import { ExerciseSelfFeedback } from '../feedback/execise-self-feedback'
 
 interface SelfEvaluationExerciseProps<DATA> {
   generator: () => DATA
@@ -23,6 +24,7 @@ export function SelfEvaluationExercise<T>({
   return (
     <>
       {renderTask(data)}
+      <div className="h-24"></div>
       Und wenn du fertig bist:
       <div className="-ml-side mt-2">
         <SpoilerRenderer
@@ -32,40 +34,19 @@ export function SelfEvaluationExercise<T>({
           content={
             <div className="mt-2 p-side">
               {renderSolution(data)}
-              <div className="mt-4 border-t border-t-gray-200 py-5">
-                <b className="text-lg">Und wie lief&apos;s?</b>
-                <div className="mt-2 flex justify-between">
-                  <button
-                    className="serlo-button-blue text-lg"
-                    onClick={() => setExStatus('revealed')}
-                  >
-                    Nicht (ganz) richtig gelöst
-                  </button>
-                  <button
-                    className="serlo-button-green text-lg"
-                    onClick={() => setExStatus('correct')}
-                  >
-                    Erfolgreich gelöst!
-                  </button>
-                </div>
-              </div>
+              <ExerciseSelfFeedback
+                exStatus={exStatus}
+                setExStatus={setExStatus}
+                onNewExecise={() => {
+                  setData(generator())
+                  setShowSolution(false)
+                }}
+                centAmount={centAmount}
+              />
             </div>
           }
         />
       </div>
-      <ExerciseFeedback
-        noUserInput={exStatus !== 'correct'}
-        noUserInputText={undefined}
-        exStatus={exStatus}
-        setExStatus={setExStatus}
-        isCorrect={exStatus === 'correct'}
-        onNewExecise={() => {
-          setData(generator())
-          setShowSolution(false)
-        }}
-        centAmount={centAmount}
-        forceCheck={exStatus === 'revealed'}
-      />
     </>
   )
 }

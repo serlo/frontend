@@ -1026,7 +1026,6 @@ export const allExercises = {
       />
     ),
   },
-  // TODO: euro-vergleichen-2
   'logarithmus-1': {
     // title: 'Logarithmus zusammenfassen 1',
     component: (
@@ -1045,10 +1044,9 @@ export const allExercises = {
               <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
                 {formula}
               </span>
-              <p className="mt-5">
-                Rechne am Besten mit Stift und Papier. <br />
-                <br />
-              </p>
+              <br />
+              <br />
+              <i>Rechne am Besten mit Stift und Papier.</i>
             </>
           )
         }}
@@ -1074,6 +1072,7 @@ export const allExercises = {
             </>
           )
         }}
+        centAmount={35}
       />
     ),
   },
