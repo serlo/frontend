@@ -6,6 +6,7 @@ import { FrontendClientBase } from '@/components/frontend-client-base'
 import { WelcomeSection } from '@/components/math-skills/landing/welcome-section'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
 import { TopicOverview } from '@/components/math-skills/topic-overview/topic-overview'
+import { cn } from '@/helper/cn'
 
 const ContentPage: NextPage = () => {
   return (
@@ -40,11 +41,36 @@ function Content() {
               Grundwissen Mittlere Reife Bayern (Realschule)
             </b>
             :
-            <p className="my-6">
-              <Link href="/meine-mathe-skills/grundwissen-realschule-bayern/logarithmus-1">
-                Logarithmus zusammenfassen (mit 3. binomischer Formel)
+            <div className="my-6 flex gap-3">
+              <Link
+                href="/meine-mathe-skills/grundwissen-realschule-bayern/logarithmus-1"
+                className={cn(
+                  'flex aspect-square w-48 items-center justify-center rounded-2xl bg-newgreen bg-opacity-10 p-4 text-almost-black !no-underline',
+                  'transition-colors hover:bg-opacity-20 hover:shadow-menu active:bg-opacity-20'
+                )}
+              >
+                <p>
+                  <b>Logarithmus zusammenfassen</b>
+                  <br />
+                  <span className="text-base">(mit 3. binomischer Formel)</span>
+                </p>
               </Link>
-            </p>
+              <Link
+                href="/meine-mathe-skills/grundwissen-realschule-bayern/triogonometrie-1"
+                className={cn(
+                  'flex aspect-square w-48 items-center justify-center rounded-2xl bg-newgreen bg-opacity-10 p-4 text-almost-black !no-underline',
+                  'transition-colors hover:bg-opacity-20 hover:shadow-menu active:bg-opacity-20'
+                )}
+              >
+                <p>
+                  <b>Trigonometrie</b>
+                  <br />
+                  <span className="text-base">
+                    (parallele Geraden und Dreiecke)
+                  </span>
+                </p>
+              </Link>
+            </div>
             <div className="h-24"></div>
           </h2>
         </div>
