@@ -1031,18 +1031,22 @@ export const allExercises = {
     component: (
       <SelfEvaluationExercise
         generator={() => {
-          return { formula: <>log&#8202;₂(x²-9) - log&#8202;₂(x+3)</> }
+          ;<></>
+          return {
+            num: randomIntBetween(1, 9),
+            isPlus: randomItemFromArray([true, false]),
+            varName: randomItemFromArray(['a', 'b', 'c', 'x', 'y', 'z']),
+            logBase: randomIntBetween(2, 15),
+          }
         }}
-        renderTask={({ formula }) => {
+        renderTask={({ num, isPlus, varName, logBase }) => {
           return (
             <>
-              <h2 className="text-2xl">
-                Fasse zu einem Logarithmus zusammen
-                <br />
-                (oder vereinfache)
-              </h2>
+              <h2 className="text-2xl">Fasse zu einem Logarithmus zusammen:</h2>
               <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-                {formula}
+                log&#8202;<sub>{logBase}</sub>({varName}² - {num * num}) -
+                log&#8202;
+                <sub>{logBase}</sub>({varName} {isPlus ? '+' : '-'} {num})
               </span>
               <br />
               <br />
@@ -1050,24 +1054,56 @@ export const allExercises = {
             </>
           )
         }}
-        renderSolution={({ formula }) => {
+        renderSolution={({ num, isPlus, varName, logBase }) => {
           return (
             <>
               Aufgabenstellung: <br />
               <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                {formula}
+                log&#8202;<sub>{logBase}</sub>({varName}² - {num * num}) -
+                log&#8202;
+                <sub>{logBase}</sub>({varName} {isPlus ? '+' : '-'} {num})
               </span>
               <br />
               <br />
-              Die Teile erweitern: <br />
+              Forme um mit Logarithmusgesetz:
+              <br />
               <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                log&#8202;₂((x+3)(x-3) / (x+3))
+                log&#8202;<sub>{logBase}</sub>
+                <span className="inline-block scale-y-[2.5]">(</span>
+                {buildFrac(
+                  <>
+                    {varName}² - {num * num}
+                  </>,
+                  <>
+                    {varName} {isPlus ? '+' : '-'} {num}
+                  </>
+                )}
+                <span className="inline-block scale-y-[2.5]">)</span>
               </span>
               <br />
               <br />
+              Wende 3. binomische Formel im Zähler an:
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                log&#8202;<sub>{logBase}</sub>
+                <span className="inline-block scale-y-[2.5]">(</span>
+                {buildFrac(
+                  <>
+                    ({varName} + {num})({varName} - {num})
+                  </>,
+                  <>
+                    {varName} {isPlus ? '+' : '-'} {num}
+                  </>
+                )}
+                <span className="inline-block scale-y-[2.5]">)</span>
+              </span>
+              <br />
+              <br />
+              Kürze mit {varName} {isPlus ? '+' : '-'} {num} und erhalte das
               Ergebnis: <br />
               <span className="mt-5 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-                log&#8202;₂(x-3)
+                log&#8202;<sub>{logBase}</sub>({varName} {isPlus ? '-' : '+'}{' '}
+                {num})
               </span>
             </>
           )
@@ -1083,4 +1119,13 @@ export type SupportedExercisesId = keyof typeof allExercises
 function centToEuroCommaString(inCent: number) {
   const [euro, cent] = String(inCent / 100).split('.')
   return `${euro},${String(cent).padEnd(2, '0')}`
+}
+
+function buildFrac(x: JSX.Element, y: JSX.Element) {
+  return (
+    <div className="relative mx-0.5 inline-block text-center align-middle">
+      <span className="block p-0.5">{x}</span>
+      <span className="block border-t border-black p-0.5">{y}</span>
+    </div>
+  )
 }

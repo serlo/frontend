@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 import { ExStatus } from '../feedback/execise-feedback'
 import { ExerciseSelfFeedback } from '../feedback/execise-self-feedback'
+import { SkipExerciseButton } from '../feedback/skip-exercise-button'
 
 interface SelfEvaluationExerciseProps<DATA> {
   generator: () => DATA
@@ -24,7 +25,14 @@ export function SelfEvaluationExercise<T>({
   return (
     <>
       {renderTask(data)}
-      <div className="h-24"></div>
+      <div className="h-12"></div>
+      <SkipExerciseButton
+        makeNewExercise={() => {
+          setData(generator())
+          setShowSolution(false)
+        }}
+      />
+      <div className="h-4"></div>
       Und wenn du fertig bist:
       <div className="-ml-side mt-2">
         <SpoilerRenderer
