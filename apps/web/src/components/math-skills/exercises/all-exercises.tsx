@@ -19,6 +19,7 @@ import {
   numberLineGeneratorLevel3,
 } from './generators/number-line-generator'
 import { SelfEvaluationExercise } from '../exercise-implementations/self-evaluation-exercise'
+import { Trigonometry } from '../exercise-implementations/trigonometry'
 import { MultipleNumberInputExercise } from '../number-input-exercise/multiple-number-input-exercise'
 import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
 import { OrderValues } from '@/components/math-skills/exercise-implementations/order-values'
@@ -1111,6 +1112,10 @@ export const allExercises = {
         centAmount={35}
       />
     ),
+  },
+  'triogonometrie-1': {
+    // title: 'Logarithmus zusammenfassen 1',
+    component: <Trigonometry />,
   },
 } as const
 
