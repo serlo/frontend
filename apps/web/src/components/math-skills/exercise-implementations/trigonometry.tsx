@@ -3,9 +3,9 @@ import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
+import { buildFrac } from '../utils/math-bulder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
-import { buildFrac } from '../utils/math-bulder'
 
 // JXG.Options.label.autoPosition = true
 
