@@ -5,12 +5,14 @@ export interface SpoilerRendererProps {
   title: JSX.Element
   content: JSX.Element
   openOverwrite?: boolean
+  setOpenOverwrite?: (open: boolean) => void
 }
 
 export function SpoilerRenderer({
   title,
   content,
   openOverwrite,
+  setOpenOverwrite,
 }: SpoilerRendererProps) {
   const [open, setOpen] = useState(false)
   const isOpen = openOverwrite === undefined ? open : openOverwrite
@@ -24,7 +26,9 @@ export function SpoilerRenderer({
       )}
     >
       <button
-        onClick={() => setOpen(!open)}
+        onClick={() =>
+          setOpenOverwrite ? setOpenOverwrite(!isOpen) : setOpen(!open)
+        }
         className={cn(
           `
             serlo-input-font-reset z-10 m-0 border-none px-side py-2.5

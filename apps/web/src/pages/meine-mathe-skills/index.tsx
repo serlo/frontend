@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
@@ -50,6 +51,32 @@ function Content() {
               `)}
             >
               <p>5. Klasse</p>
+            </a>
+            <a
+              href="/meine-mathe-skills/grundwissen-realschule-bayern"
+              onClick={(e) => {
+                e.preventDefault()
+                void router.push(
+                  '/meine-mathe-skills/grundwissen-realschule-bayern',
+                  undefined,
+                  {
+                    shallow: true,
+                    scroll: false,
+                  }
+                )
+              }}
+              className={cn(`
+               ml-8 flex h-24 w-24 items-center justify-center rounded-full bg-newgreen bg-opacity-30 text-center
+              text-base text-almost-black !no-underline transition-colors hover:bg-opacity-70 md:h-28 md:w-28
+              `)}
+            >
+              <p>
+                Grundwissen
+                <br />
+                Mittlere Reife
+                <br />
+                Bayern (RS)
+              </p>
             </a>
           </div>
         </>
