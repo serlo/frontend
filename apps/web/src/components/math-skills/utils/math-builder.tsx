@@ -1,4 +1,3 @@
-
 export function buildFrac(x: JSX.Element, y: JSX.Element) {
   return (
     <div className="relative mx-0.5 inline-block text-center align-middle">

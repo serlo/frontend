@@ -21,7 +21,7 @@ import {
 import { SelfEvaluationExercise } from '../exercise-implementations/self-evaluation-exercise'
 import { Trigonometry } from '../exercise-implementations/trigonometry'
 import { MultipleNumberInputExercise } from '../number-input-exercise/multiple-number-input-exercise'
-import { buildFrac } from '../utils/math-bulder'
+import { buildFrac } from '../utils/math-builder'
 import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
 import { OrderValues } from '@/components/math-skills/exercise-implementations/order-values'
 import { PlaceValueChart } from '@/components/math-skills/exercise-implementations/place-value-chart'
@@ -1146,7 +1146,7 @@ export const allExercises = {
               </span>
               <br />
               <br />
-              {summands.some((s) => s.isOutside) && (
+              {summands.some((s) => s.isOutside && s.exponent !== 1) && (
                 <>
                   Ziehe Vorfaktoren in den Logarithmus:
                   <br />

@@ -3,7 +3,7 @@ import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { buildFrac } from '../utils/math-bulder'
+import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -19,8 +19,6 @@ interface Trig1Data {
 }
 
 export function Trigonometry() {
-  const [data, setData] = useState<null | Trig1Data>(null)
-
   return (
     <SelfEvaluationExercise
       generator={() => {
