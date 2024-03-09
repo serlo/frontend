@@ -78,9 +78,7 @@ function Content() {
                 <p>
                   <b>Trigonometrie</b>
                   <br />
-                  <span className="text-base">
-                    (parallele Geraden und Dreiecke)
-                  </span>
+                  <span className="text-base">(Strahlensatz, Kosinussatz)</span>
                 </p>
               </Link>
             </div>
