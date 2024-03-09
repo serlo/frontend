@@ -21,6 +21,7 @@ import {
 import { SelfEvaluationExercise } from '../exercise-implementations/self-evaluation-exercise'
 import { Trigonometry } from '../exercise-implementations/trigonometry'
 import { MultipleNumberInputExercise } from '../number-input-exercise/multiple-number-input-exercise'
+import { buildFrac } from '../utils/math-bulder'
 import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
 import { OrderValues } from '@/components/math-skills/exercise-implementations/order-values'
 import { PlaceValueChart } from '@/components/math-skills/exercise-implementations/place-value-chart'
@@ -1124,13 +1125,4 @@ export type SupportedExercisesId = keyof typeof allExercises
 function centToEuroCommaString(inCent: number) {
   const [euro, cent] = String(inCent / 100).split('.')
   return `${euro},${String(cent).padEnd(2, '0')}`
-}
-
-function buildFrac(x: JSX.Element, y: JSX.Element) {
-  return (
-    <div className="relative mx-0.5 inline-block text-center align-middle">
-      <span className="block p-0.5">{x}</span>
-      <span className="block border-t border-black p-0.5">{y}</span>
-    </div>
-  )
 }
