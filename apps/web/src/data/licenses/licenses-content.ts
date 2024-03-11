@@ -1,4 +1,5 @@
 export const licensesContent = [
+  // instance: DE
   {
     id: 1,
     content:
@@ -54,6 +55,7 @@ export const licensesContent = [
     content:
       '{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Das Urheberrecht für diese Aufgabenstellungen liegt beim Ministerium für Schule und Bildung des Landes Nordrhein-Westfalen. Sie unterliegt nicht den Standard-Nutzungsbedingungen für Inhalte auf serlo.org."}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"Wichtig:","strong":true},{"text":" Bei den "},{"text":"Lösungsvorschlägen","strong":true},{"text":" zu dieser Aufgabenstellung handelt es sich nicht um Lösungsvorgaben des Landes NRW. Diese sind von Autor*innen auf serlo.org erstellt oder kommen aus anderen Quellen."}]}],"id":"afc5e2bf-0199-40a3-86d6-7b28d5dc3fe3"}]}',
   },
+  // other instances
   {
     id: 9,
     content:
