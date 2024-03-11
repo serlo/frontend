@@ -71,7 +71,7 @@ function Content() {
               `)}
             >
               <p>
-                Grundwissen
+                Training
                 <br />
                 Mittlere Reife
                 <br />
