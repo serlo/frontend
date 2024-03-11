@@ -24,7 +24,7 @@ export const licenses: LicenseData[] = [
     title:
       'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0 mit Namensnennung von Herrn Franz Strobl.',
     shortTitle: 'strobl-f.de',
-    url: 'http://www.strobl-f.de/',
+    url: 'http://www.strobl-f.de',
 
     agreement:
       'Mit dem Speichern dieser Seite versicherst du, dass du die Veränderung des Beitrags von Herrn Franz Strobl selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/21654">Nutzungsbedingungen</a> festlegen darf. Der Beitrag von Herrn Franz Strobl muss unter den <a href="/21654">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, notwendigen Lizenzanforderungen zu folgen.\r\n',
@@ -34,7 +34,7 @@ export const licenses: LicenseData[] = [
     title:
       'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0 mit Namensnennung von Herrn Günther Rasch',
     shortTitle: 'raschweb.de',
-    url: 'http://www.raschweb.de/',
+    url: 'http://www.raschweb.de',
 
     agreement:
       'Mit dem Speichern dieser Seite versicherst du, dass du die Veränderung des Beitrags von Herrn Günther Rasch selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/21654">Nutzungsbedingungen</a> festlegen darf. Der Beitrag von Herrn Günther Rasch muss unter den <a href="/21654">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, den notwendigen Lizenzanforderungen zu folgen.',
@@ -51,7 +51,7 @@ export const licenses: LicenseData[] = [
     id: 16,
     title: 'Dieses Werk steht unter der Lizenz CC BY-ND 4.0',
     shortTitle: 'CC BY-ND 4.0',
-    url: 'https://creativecommons.org/licenses/by-nd/4.0/',
+    url: 'https://creativecommons.org/licenses/by-nd/4.0',
 
     agreement:
       'Mit dem Speichern dieser Seite versicherst du, dass du deinen Beitrag (damit sind auch Änderungen gemeint) selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/21654">Nutzungsbedingungen</a> festlegen darf. Falls du den Beitrag nicht selbst verfasst hast, muss er unter den <a href="/21654">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, notwendigen Lizenzanforderungen zu folgen.\r\n\r\nDas Video steht unter der Lizenz CC BY-ND, d.h. es dürfen keine Änderungen vorgenommen werden.\r\n',
@@ -61,7 +61,7 @@ export const licenses: LicenseData[] = [
     title:
       'Dieses Werk steht unter der freien Lizenz CC BY 4.0 mit Namensnennung Landesbildungsserver Baden-Württemberg',
     shortTitle: 'schule-bw.de',
-    url: 'https://www.schule-bw.de/',
+    url: 'https://www.schule-bw.de',
 
     agreement: '',
   },
@@ -80,7 +80,7 @@ export const licenses: LicenseData[] = [
     title:
       'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0 mit Namensnennung vom Chancenwerk',
     shortTitle: 'Chancenwerk',
-    url: 'https://chancenwerk.de/',
+    url: 'https://chancenwerk.de',
 
     agreement: `Mit dem Speichern dieser Seite versichere ich, dass ich die Veränderung des Inhalts selbst verfasst habe bzw. dass meine Änderungen keine fremden Rechte verletzen. Ich willige ein, meinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/terms">Nutzungsbedingungen</a> festlegen darf. Let's go 🤘`,
   },
@@ -91,5 +91,14 @@ export const licenses: LicenseData[] = [
     shortTitle: 'Niedersächsisches Kultusministerium',
     url: 'https://aba-aufgaben.nibis.de',
     agreement: `Mit dem Speichern dieser Seite versicherst du, dass du in deinem Beitrag (damit sind auch Änderungen gemeint) die Aufgabenstellung vom Land Niedersachsen nicht inhaltlich verändert hast, keine Rechte Dritter verletzt und dich an die <a href="https://aba-aufgaben.nibis.de/">Nutzungsbedingungen</a> gehalten hast.`,
+  },
+  {
+    id: 27,
+    title:
+      'Das Urheberrecht an dieser Aufgabenstellung liegt beim Ministerium für Schule und Bildung des Landes Nordrhein-Westfalen.',
+    shortTitle:
+      'Ministerium für Schule und Bildung des Landes Nordrhein-Westfalen',
+    url: 'https://www.schulministerium.nrw',
+    agreement: `Mit dem Speichern dieser Seite versicherst du, dass du in deinem Beitrag (damit sind auch Änderungen gemeint) die Aufgabenstellung vom Land NRW nicht inhaltlich verändert hast, keine Rechte Dritter verletzt und dich an die <a href="/terms">Nutzungsbedingungen</a> gehalten hast.`,
   },
 ]
