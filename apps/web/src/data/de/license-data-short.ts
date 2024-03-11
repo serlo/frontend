@@ -98,7 +98,7 @@ export const licenses: LicenseData[] = [
       'Das Urheberrecht an dieser Aufgabenstellung liegt beim Ministerium für Schule und Bildung des Landes Nordrhein-Westfalen.',
     shortTitle:
       'Ministerium für Schule und Bildung des Landes Nordrhein-Westfalen',
-    url: 'https://www.schulministerium.nrw',
+    url: '/license/detail/27',
     agreement: `Mit dem Speichern dieser Seite versicherst du, dass du in deinem Beitrag (damit sind auch Änderungen gemeint) die Aufgabenstellung vom Land NRW nicht inhaltlich verändert hast, keine Rechte Dritter verletzt und dich an die <a href="/terms">Nutzungsbedingungen</a> gehalten hast.`,
   },
 ]
