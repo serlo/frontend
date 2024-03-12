@@ -35,10 +35,10 @@ export function LicenseIcons({ title, isDefault }: LicenseIconsProps) {
 
   return (
     <span className="relative inline-block h-8 w-10">
-      {renderIcon({ icon: faCreativeCommons, className: 'absolute' })}
+      {renderIcon({ icon: faCreativeCommons, className: 'absolute left-0' })}
       {renderIcon({
         icon: faSlash,
-        className: '-scale-x-[0.6] absolute left-4 scale-y-[0.6]',
+        className: '-scale-x-[0.6] absolute scale-y-[0.6] -left-1',
       })}
     </span>
   )
