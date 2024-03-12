@@ -4,7 +4,7 @@ import { FrontendClientBase } from '@/components/frontend-client-base'
 import {
   SupportedRegion,
   regions,
-} from '@/components/landing/exams/exams-finder/exams-finder'
+} from '@/components/landing/exams/exams-finder/exams-data'
 import { MathExamsLanding } from '@/components/pages/math-exams-landing'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
