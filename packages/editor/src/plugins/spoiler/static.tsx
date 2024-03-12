@@ -3,7 +3,8 @@ import { EditorSpoilerDocument } from '@editor/types/editor-plugins'
 import { useState } from 'react'
 
 import { SpoilerRenderer } from './renderer'
-import { spoilerOpened } from '@/helper/tracking/spoiler-opened'
+import { abSubmission } from '@/helper/ab-submission'
+import { useAB } from '@/contexts/ab'
 
 export function SpoilerStaticRenderer({
   state,
@@ -12,11 +13,18 @@ export function SpoilerStaticRenderer({
   const { title, content } = state
   const [hasSentSpoilerTrackingEvent, setHasSentSpoilerTrackingEvent] = useState(false)
 
+  const ab = useAB()
+
   const trackSpoilerOpened = () => {
-    if(hasSentSpoilerTrackingEvent) return
+    if(!ab || hasSentSpoilerTrackingEvent) return
     // send tracking event
-    spoilerOpened({
-      entityId: content.id,
+    abSubmission({
+      entityId: -1, // should this be a real id?
+      experiment: ab.experiment,
+      group: ab.group,
+      result: "open",
+      topicId: ab.topicId,
+      type: 'spoiler',
     })
     setHasSentSpoilerTrackingEvent(true)
   }
