@@ -6,8 +6,6 @@ import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import type { InstanceData, LoggedInData } from '@/data-types'
 
-import '@/assets-webkit/styles/serlo-tailwind.css'
-
 export interface SerloEditorProps {
   instanceData: InstanceData
   loggedInData: LoggedInData
