@@ -1146,7 +1146,9 @@ export const allExercises = {
               </span>
               <br />
               <br />
-              {summands.some((s) => s.isOutside && s.exponent !== 1) && (
+              {summands.some(
+                (s) => s.isOutside && Math.abs(s.exponent) !== 1
+              ) && (
                 <>
                   Ziehe Vorfaktoren in den Logarithmus:
                   <br />
