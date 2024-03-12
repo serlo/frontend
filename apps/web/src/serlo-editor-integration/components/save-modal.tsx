@@ -2,10 +2,13 @@ import type { StateTypeReturnType } from '@editor/plugin'
 import { entity } from '@editor/plugins/serlo-template-plugins/common/common'
 import { useHandleSave } from '@editor/plugins/serlo-template-plugins/helpers/use-handle-save'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import { Entity } from '@serlo/authorization'
 import { useContext, useEffect, useState } from 'react'
 
+import { LicenseChooser } from './license-chooser'
 import { LocalStorageButton } from './local-storage-button'
 import { SaveContext } from '../context/save-context'
+import { useCanDo } from '@/auth/use-can-do'
 import { InfoPanel } from '@/components/info-panel'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -42,6 +45,7 @@ export function SaveModal({
   const [fireSave, setFireSave] = useState(false)
   const [highlightMissingFields, setHighlightMissingFields] = useState(false)
   const { licenses } = useInstanceData()
+  const canDo = useCanDo()
 
   const licenseAccepted = !licenseId || hasAgreedLicense
   const changesFilled = !changes || changesText
@@ -87,7 +91,10 @@ export function SaveModal({
     >
       <div className="mx-side">
         {renderChanges()}
-        {renderLicense()}
+        {canDo(Entity.updateLicense) ? (
+          <LicenseChooser licenseId={licenseId} />
+        ) : null}
+        {renderLicenseAgreement()}
         {renderSubscription()}
         {renderCheckout()}
         {isOnlyText ? editorStrings.ready : null}
@@ -201,12 +208,17 @@ export function SaveModal({
     )
   }
 
-  function renderLicense() {
+  function renderLicenseAgreement() {
     if (licenseId === undefined) return null
-    const licenseAgreement = getLicense(
+    const licenseData = getLicense(
       licenses,
       licenseId?.defined ? licenseId.value : undefined
-    ).agreement.replace(/<a href/g, '<a target="_blank" href')
+    )
+
+    const licenseAgreement = licenseData.agreement.replace(
+      /<a href/g,
+      '<a target="_blank" href'
+    )
 
     if (!licenseAgreement) return null
 
