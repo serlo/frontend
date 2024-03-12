@@ -89,9 +89,9 @@ function Content() {
                 )}
               >
                 <p>
-                  <b>Felix Testaufgabe</b>
+                  <b>Normalform einer Parabel</b>
                   <br />
-                  <span className="text-base">(Terme)</span>
+                  <span className="text-base">(Quadratische Funktionen)</span>
                 </p>
               </Link>
             </div>

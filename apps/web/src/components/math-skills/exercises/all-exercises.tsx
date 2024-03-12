@@ -1323,46 +1323,44 @@ export const allExercises = {
     component: <Trigonometry />,
   },
   'felix-test': {
-    // title: 'Logarithmus zusammenfassen 1',
+    // title: 'Normalform bestimmen',
     component: (
-      <SelfEvaluationExercise
-        generator={() => {
-          return 0
-        }}
-        renderTask={() => {
-          return (
-            <>
-              <h2 className="text-2xl">Fasse zu einem Logarithmus zusammen:</h2>
-              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-                test
-              </span>
-              <br />
-              <br />
-              <i>Rechne am Besten mit Stift und Papier.</i>
-            </>
-          )
-        }}
-        renderSolution={() => {
-          return (
-            <>
-              Aufgabenstellung: <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                test
-              </span>
-              <br />
-              <br />
-            </>
-          )
-        }}
+      <NumberInputExercise
         centAmount={35}
+        generator={() => {
+          const x_s = randomIntBetween(1, 9)
+          const y_s = randomIntBetween(1, 9)
+          const y_sol = x_s * x_s + y_s
+          return { x_s, y_s, y_sol }
+        }}
+        getCorrectValue={({ x_s, y_s }) => {
+          return 2 * x_s
+        }}
+        render={(input, { x_s, y_s, y_sol }) => {
+          return (
+            <>
+              <h2 className="mt-8 pb-4 text-left text-2xl">
+                Vervollständige die Normalform der Funktion
+              </h2>
+              <div className="ml-0.5 text-2xl font-bold" id="number-input">
+                <span className="text-almostblack">
+                  y=(x-{x_s})<sup className="ml-0.5">2</sup>+{y_s}
+                </span>
+                <br />
+                <br />
+                {' y= '}
+                <span className="text-almostblack">
+                  x<sup className="ml-0.5">2</sup>+
+                </span>
+                {input}
+                <span className="text-almostblack">x</span>+{y_sol}
+              </div>
+            </>
+          )
+        }}
       />
     ),
   },
 } as const
 
 export type SupportedExercisesId = keyof typeof allExercises
-
-function centToEuroCommaString(inCent: number) {
-  const [euro, cent] = String(inCent / 100).split('.')
-  return `${euro},${String(cent).padEnd(2, '0')}`
-}
