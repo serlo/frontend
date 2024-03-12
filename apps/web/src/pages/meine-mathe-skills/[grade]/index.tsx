@@ -94,6 +94,19 @@ function Content() {
                   <span className="text-base">(Quadratische Funktionen)</span>
                 </p>
               </Link>
+              <Link
+                href="/meine-mathe-skills/grundwissen-realschule-bayern/volumenpyramide-1"
+                className={cn(
+                  'flex aspect-square w-48 items-center justify-center rounded-2xl bg-newgreen bg-opacity-10 p-4 text-almost-black !no-underline',
+                  'transition-colors hover:bg-opacity-20 hover:shadow-menu active:bg-opacity-20'
+                )}
+              >
+                <p>
+                  <b>Volumen einer Pyramide</b>
+                  <br />
+                  <span className="text-base">(vierseitig)</span>
+                </p>
+              </Link>
             </div>
             <div className="h-24"></div>
           </h2>

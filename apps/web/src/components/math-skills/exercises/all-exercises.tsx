@@ -19,7 +19,9 @@ import {
   numberLineGeneratorLevel3,
 } from './generators/number-line-generator'
 import { SelfEvaluationExercise } from '../exercise-implementations/self-evaluation-exercise'
+import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
 import { Trigonometry } from '../exercise-implementations/trigonometry'
+// import { VolumePyramide } from '../exercise-implementations/volume-pyramide'
 import { MultipleNumberInputExercise } from '../number-input-exercise/multiple-number-input-exercise'
 import { buildFrac } from '../utils/math-builder'
 import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
@@ -1318,6 +1320,16 @@ export const allExercises = {
       />
     ),
   },
+  'volumenpyramide-1': {
+    // title: Volumenberechnung Pyramide
+
+    component: <SurfacePyramide />,
+  },
+  // 'oberflaechepyramide-1': {
+  //title: Volumenberechnung Pyramide
+
+  // component: <SurfacePyramide />,
+  // },
   'triogonometrie-1': {
     // title: 'Logarithmus zusammenfassen 1',
     component: <Trigonometry />,
@@ -1333,7 +1345,7 @@ export const allExercises = {
           const y_sol = x_s * x_s + y_s
           return { x_s, y_s, y_sol }
         }}
-        getCorrectValue={({ x_s, y_s }) => {
+        getCorrectValue={({ x_s }) => {
           return 2 * x_s
         }}
         render={(input, { x_s, y_s, y_sol }) => {
@@ -1364,3 +1376,8 @@ export const allExercises = {
 } as const
 
 export type SupportedExercisesId = keyof typeof allExercises
+
+function centToEuroCommaString(inCent: number) {
+  const [euro, cent] = String(inCent / 100).split('.')
+  return `${euro},${String(cent).padEnd(2, '0')}`
+}
