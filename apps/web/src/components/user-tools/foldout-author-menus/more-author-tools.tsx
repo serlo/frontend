@@ -87,8 +87,8 @@ export function MoreAuthorTools({
           Tool.Curriculum,
           Tool.Log,
           Tool.AnalyticsLink,
-          Tool.Trash,
           Tool.ChangeLicense,
+          Tool.Trash,
         ]
       case UuidType.Event:
         return [Tool.Abo, Tool.History, Tool.Curriculum, Tool.Log, Tool.Trash]

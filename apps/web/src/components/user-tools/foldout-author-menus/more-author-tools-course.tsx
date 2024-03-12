@@ -75,6 +75,7 @@ export function MoreAuthorToolsCourse({
           Tool.SortCoursePages,
           Tool.Curriculum,
           Tool.Log,
+          Tool.ChangeLicense,
           Tool.Trash,
         ]
       : [
@@ -84,7 +85,6 @@ export function MoreAuthorToolsCourse({
           Tool.Log,
           Tool.AnalyticsLink,
           Tool.Trash,
-          Tool.ChangeLicense,
         ]
   }
 }
