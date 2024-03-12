@@ -189,20 +189,20 @@ export const schoolTypesWithExamsByRegion: Record<
       exams: [
         {
           title: 'IGS G',
-          url: '/mathe/300763/igs-g',
+          url: '/mathe/302433/igs-prüfungen-g-kurs-mit-lösungen',
           years: [
-            { title: '2023', url: '/mathe/300785/2023' },
-            { title: '2022', url: '/mathe/300786/2022' },
-            { title: '2021', url: '/mathe/300787/2021' },
+            { title: '2023', url: '/mathe/302453/2023' },
+            { title: '2022', url: '/mathe/302454/2022' },
+            { title: '2021', url: '/mathe/302455/2021' },
           ],
         },
         {
           title: 'IGS E',
-          url: '/mathe/300762/igs-e',
+          url: '/mathe/302434/igs-prüfungen-e-kurs-mit-lösungen',
           years: [
-            { title: '2023', url: '/mathe/300764/2023' },
-            { title: '2022', url: '/mathe/300765/2022' },
-            { title: '2021', url: '/mathe/300766/2021' },
+            { title: '2023', url: '/mathe/302435/2023' },
+            { title: '2022', url: '/mathe/302436/2022' },
+            { title: '2021', url: '/mathe/302437/2021' },
           ],
         },
       ],
@@ -301,11 +301,11 @@ export const examsByRegionAndType: Record<
   niedersachsen: {
     igsG: {
       title: 'IGS G',
-      url: '/mathe/300763/igs-g',
+      url: '/mathe/302433/igs-prüfungen-g-kurs-mit-lösungen',
     },
     igsE: {
       title: 'IGS E',
-      url: '/mathe/300762/igs-e',
+      url: '/mathe/302434/igs-prüfungen-e-kurs-mit-lösungen',
     },
     realschule: {
       title: 'Realschulabschluss',
