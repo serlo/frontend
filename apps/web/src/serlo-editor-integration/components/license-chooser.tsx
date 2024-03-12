@@ -44,7 +44,7 @@ export function LicenseChooser({ licenseId }: LicenseChooserProps) {
         key={license.id}
         value={license.id}
       >
-        {license.id} {license.title}
+        {license.id} {license.shortTitle}
       </option>
     )
   }
