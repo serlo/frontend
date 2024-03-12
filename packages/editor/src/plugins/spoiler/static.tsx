@@ -13,7 +13,8 @@ export function SpoilerStaticRenderer({
   openOverwrite,
 }: EditorSpoilerDocument & { openOverwrite?: boolean }) {
   const { title, content } = state
-  const [hasSentSpoilerTrackingEvent, setHasSentSpoilerTrackingEvent] = useState(false)
+  const [hasSentSpoilerTrackingEvent, setHasSentSpoilerTrackingEvent] =
+    useState(false)
 
   const ab = useAB()
   const entityId = useEntityId()
@@ -21,7 +22,7 @@ export function SpoilerStaticRenderer({
   const { asPath } = useRouter()
 
   const trackSpoilerOpened = () => {
-    if(!ab || hasSentSpoilerTrackingEvent) return
+    if (!ab || hasSentSpoilerTrackingEvent) return
     // send tracking event
     exerciseSubmission(
       {

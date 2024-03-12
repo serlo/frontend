@@ -4,7 +4,7 @@ import { useState } from 'react'
 export interface SpoilerRendererProps {
   title: JSX.Element
   content: JSX.Element
-  openOverwrite?: boolean,
+  openOverwrite?: boolean
   onOpen?: () => void
 }
 
@@ -12,7 +12,7 @@ export function SpoilerRenderer({
   title,
   content,
   openOverwrite,
-  onOpen
+  onOpen,
 }: SpoilerRendererProps) {
   const [open, setOpen] = useState(false)
   const isOpen = openOverwrite === undefined ? open : openOverwrite
