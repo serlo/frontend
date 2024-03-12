@@ -1,4 +1,4 @@
-import { editorPlugins } from '@editor/package'
+import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 

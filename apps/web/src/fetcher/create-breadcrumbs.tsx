@@ -1,5 +1,9 @@
 import { Instance } from './graphql-types/operations'
 import { MainUuidType } from './query-types'
+import {
+  mathExamsTaxonomies,
+  schoolTaxonomies,
+} from '@/data/de/math-exams-taxonomies'
 import { BreadcrumbsData, UuidType } from '@/data-types'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 
@@ -138,13 +142,28 @@ export function createBreadcrumbs(uuid: MainUuidType, instance: Instance) {
   }
 
   function compat(breadcrumbs: BreadcrumbsData | undefined) {
-    if (!breadcrumbs) return breadcrumbs
+    if (!breadcrumbs) return undefined
 
+    // identify final exam taxonomies or their children
+    const isOrInExamsFolder = !!breadcrumbs.find(
+      ({ id }) => id && mathExamsTaxonomies.includes(id)
+    )
+
+    // compat: remove last entry because it is the entry itself
     if (uuid.__typename === UuidType.TaxonomyTerm && breadcrumbs.length > 1) {
-      breadcrumbs = breadcrumbs.slice(0, -1) // compat: remove last entry because it is the entry itself
+      breadcrumbs = breadcrumbs.slice(0, -1)
     }
 
-    breadcrumbs = breadcrumbs.filter((entry) => entry.url && entry.label) // compat: remove empty entries
+    // compat: remove empty entries
+    breadcrumbs = breadcrumbs.filter(({ url, label }) => url && label)
+
+    // compat: exam breadcrumbs remove "Deutschland" Taxonomie and maybe school type
+    if (isOrInExamsFolder) {
+      const exclude =
+        breadcrumbs.length > 4 ? [...schoolTaxonomies, 16030] : [16030]
+      return breadcrumbs.filter(({ id }) => id && !exclude.includes(id))
+    }
+
     const shortened: BreadcrumbsData = []
     breadcrumbs.map((entry, i, arr) => {
       const maxItems = 4

@@ -1,25 +1,14 @@
-import { GetStaticProps } from 'next'
+// just for localhost and feature branches where the cloudflare worker does not redirect
 
-import { Link } from '@/components/content/link'
-import { FrontendClientBase } from '@/components/frontend-client-base'
-import { isProduction } from '@/helper/is-production'
-import { renderedPageNoHooks } from '@/helper/rendered-page'
+export default function Page() {
+  return <>nothing to see here</>
+}
 
-export default renderedPageNoHooks(() => {
-  return (
-    <FrontendClientBase noContainers noHeaderFooter>
-      <>
-        Outside of the dev environment you would be redirected in the cloudflare
-        worker to{' '}
-        <Link href="/mathe-pruefungen/bayern">
-          Math Exams Landing Page for Bayern
-        </Link>{' '}
-        for example.
-      </>
-    </FrontendClientBase>
-  )
-})
-
-export const getStaticProps: GetStaticProps<object> = async () => {
-  return isProduction ? { notFound: true } : { props: {} }
+export async function getServerSideProps() {
+  return {
+    redirect: {
+      destination: '/mathe-pruefungen/niedersachsen',
+      permanent: false,
+    },
+  }
 }
