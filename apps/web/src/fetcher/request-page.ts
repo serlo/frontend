@@ -435,7 +435,7 @@ export async function requestPage(
         typename: UuidType.CoursePage,
         title: uuid.currentRevision?.title ?? '',
         content,
-        licenseId,
+        licenseId: uuid.course.licenseId,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
           useArticleTag: true,

@@ -75,6 +75,7 @@ export function MoreAuthorToolsCourse({
           Tool.SortCoursePages,
           Tool.Curriculum,
           Tool.Log,
+          Tool.ChangeLicense,
           Tool.Trash,
         ]
       : [
