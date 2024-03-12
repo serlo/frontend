@@ -1,10 +1,12 @@
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorSpoilerDocument } from '@editor/types/editor-plugins'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 
 import { SpoilerRenderer } from './renderer'
-import { abSubmission } from '@/helper/ab-submission'
 import { useAB } from '@/contexts/ab'
+import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
+import { exerciseSubmission } from '@/helper/exercise-submission'
 
 export function SpoilerStaticRenderer({
   state,
@@ -14,18 +16,23 @@ export function SpoilerStaticRenderer({
   const [hasSentSpoilerTrackingEvent, setHasSentSpoilerTrackingEvent] = useState(false)
 
   const ab = useAB()
+  const entityId = useEntityId()
+  const revisionId = useRevisionId()
+  const { asPath } = useRouter()
 
   const trackSpoilerOpened = () => {
     if(!ab || hasSentSpoilerTrackingEvent) return
     // send tracking event
-    abSubmission({
-      entityId: -1, // should this be a real id?
-      experiment: ab.experiment,
-      group: ab.group,
-      result: "open",
-      topicId: ab.topicId,
-      type: 'spoiler',
-    })
+    exerciseSubmission(
+      {
+        path: asPath,
+        entityId,
+        revisionId,
+        result: 'open',
+        type: 'spoiler',
+      },
+      ab
+    )
     setHasSentSpoilerTrackingEvent(true)
   }
 
