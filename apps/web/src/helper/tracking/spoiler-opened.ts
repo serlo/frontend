@@ -13,8 +13,6 @@ export function spoilerOpened(data: SpoilerEventData) {
   }
   const sessionId = sessionStorage.getItem(sesionStorageKey)
 
-  // console.log(data)
-
   void (async () => {
     await fetch('/api/frontend/spoiler-opened-tracking', {
       method: 'POST',

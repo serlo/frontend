@@ -1,5 +1,5 @@
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 export interface SpoilerRendererProps {
   title: JSX.Element

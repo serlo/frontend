@@ -1,8 +1,8 @@
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorSpoilerDocument } from '@editor/types/editor-plugins'
+import { useState } from 'react'
 
 import { SpoilerRenderer } from './renderer'
-import { useState } from 'react'
 import { spoilerOpened } from '@/helper/tracking/spoiler-opened'
 
 export function SpoilerStaticRenderer({
