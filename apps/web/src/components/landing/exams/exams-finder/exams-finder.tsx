@@ -87,7 +87,7 @@ export function ExamsFinder({
 
   function renderSchoolTypeButtons() {
     return (
-      <p className="mt-6 text-2xl leading-cozy text-almost-black">
+      <div className="mt-6 text-2xl leading-cozy text-almost-black">
         Für welche Prüfung lernst du?
         <br />
         <div className="flex flex-wrap justify-center pt-4">
@@ -95,7 +95,7 @@ export function ExamsFinder({
             ([_schoolTypeKey, boxData]) => renderFeaturedBox(boxData)
           )}
         </div>
-      </p>
+      </div>
     )
   }
 
@@ -164,10 +164,10 @@ export function ExamsFinder({
       >
         <h4 className="relative mx-auto mb-1 mt-1 hyphens-auto break-normal text-center text-xl font-bold">
           {options ? (
-            <div
+            <span
               className={cn(
                 'absolute z-10 h-full w-full flex-col content-stretch justify-stretch gap-2',
-                'hidden group-hover:flex group-focus:flex'
+                'hidden group-focus-within:flex group-hover:flex'
               )}
             >
               {options.map((option) => {
@@ -181,12 +181,12 @@ export function ExamsFinder({
                   </Link>
                 )
               })}
-            </div>
+            </span>
           ) : null}
 
           <div
             className={cn(
-              options && 'group-hover:opacity-0 group-focus:opacity-0'
+              options && 'group-focus-within:opacity-0 group-hover:opacity-0'
             )}
           >
             <FaIcon
