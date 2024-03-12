@@ -124,19 +124,21 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
 
   function renderHeader() {
     return (
-      <h1 className="serlo-h1 mb-10 mt-8" itemProp="name">
-        {data.title}
+      <>
+        <h1 className="serlo-h1 mb-10 mt-8" itemProp="name">
+          {data.title}
+          {isExerciseFolder && (
+            <span title={strings.entities.exerciseFolder}>
+              {' '}
+              <FaIcon
+                icon={faFile}
+                className="align-baseline text-[1.43rem] text-brand-400"
+              />{' '}
+            </span>
+          )}
+        </h1>
         {examsFolderId ? <ExamsInfoBox examsFolderId={examsFolderId} /> : null}
-        {isExerciseFolder && (
-          <span title={strings.entities.exerciseFolder}>
-            {' '}
-            <FaIcon
-              icon={faFile}
-              className="align-baseline text-[1.43rem] text-brand-400"
-            />{' '}
-          </span>
-        )}
-      </h1>
+      </>
     )
   }
 

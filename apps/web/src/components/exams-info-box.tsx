@@ -1,4 +1,5 @@
 import { BoxRenderer } from '@editor/plugins/box/renderer'
+import { faDiscord } from '@fortawesome/free-brands-svg-icons'
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 
 import { Link } from './content/link'
@@ -12,7 +13,7 @@ export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
     <>
       <div
         className={cn(
-          '-ml-side mt-8',
+          'mt-8 sm:-ml-side',
           'md:absolute md:left-side md:top-9 md:z-10 md:w-[200px]',
           'lg:w-[220px]',
           'xl:left-side xl:w-[245px]'
@@ -20,36 +21,66 @@ export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
       >
         <BoxRenderer boxType="blank" anchorId="exams-info-box">
           <>
-            <div className="pb-2 sm:flex md:block">
-              <p className="serlo-p mb-2 max-w-lg font-normal leading-normal">
-                Willkommen im Prüfungsbereich für{' '}
+            <div className="">
+              <p className="serlo-p mb-0 max-w-lg font-normal leading-normal">
+                🎓 Prüfungsbereich für{' '}
                 <b className="inline-block">
                   {isInBYTax ? 'Bayern' : 'Niedersachsen'}
-                </b>
-                .
+                </b>{' '}
                 <br />
-                Die anderen Bundesländer, noch mehr Aufgaben und unseren
-                Discord-Server findest du hier:
+                <br />
               </p>
-              <p>
-                <Link
-                  href="/mathe-pruefungen"
-                  className={cn(
-                    'serlo-button-light mx-side mt-2 !px-3 !py-2',
-                    'sm:mr-7 sm:flex sm:w-min sm:justify-around sm:rounded-lg sm:!px-4 sm:!py-2.5'
-                  )}
-                >
-                  <FaIcon
-                    icon={faGraduationCap}
+              <div className="sm:flex md:block">
+                <p className="serlo-p !text-sm">
+                  <b>
+                    Weitere Bundesländer{' '}
+                    <span className="inline-block">& Aufgaben</span>:
+                  </b>
+                  <br />
+                  <Link
+                    href="/mathe-pruefungen"
                     className={cn(
-                      'mr-1 text-brand-400',
-                      'sm:mr-2 sm:mt-3 sm:text-3xl',
-                      'md:hidden xl:block'
+                      'serlo-button-light -ml-1 mt-1 !px-3 !py-2',
+                      'md:rounded-lg md:!px-4 md:!py-2.5 xl:flex xl:justify-around'
                     )}
-                  />
-                  <span>Mathe- Prüfungen Startseite</span>
-                </Link>
-              </p>
+                  >
+                    <FaIcon
+                      icon={faGraduationCap}
+                      className={cn(
+                        'mr-1 text-brand-400',
+                        'xl:mr-2 xl:mt-3 xl:text-3xl',
+                        'md:hidden xl:block'
+                      )}
+                    />
+                    <span>
+                      Mathe- <span className="inline-block">Prüfungen</span>{' '}
+                      Startseite
+                    </span>
+                  </Link>
+                </p>
+                <p className="serlo-p mb-3">
+                  <b className="text-sm">Austausch & Hilfe:</b>
+                  <br />
+                  <Link
+                    href="https://discord.com/invite/HyPx9jVq5G"
+                    className={cn(
+                      'serlo-button-light -ml-1 mt-1 !px-3 !py-2',
+                      'md:rounded-lg md:!px-4 md:!py-2.5 xl:flex xl:justify-around'
+                    )}
+                    noExternalIcon
+                  >
+                    <FaIcon
+                      icon={faDiscord}
+                      className={cn(
+                        'mr-1 text-brand-400',
+                        'xl:mr-2 xl:mt-1 xl:text-3xl',
+                        'md:hidden xl:block'
+                      )}
+                    />
+                    <span>Discord-Server</span>
+                  </Link>
+                </p>
+              </div>
             </div>
             {!isInBYTax ? ( // only for niedersachsen
               <div className="serlo-p mb-0 mt-2 border-t pt-2 text-sm font-normal">
