@@ -10,11 +10,11 @@ import SustainabilitySVG from '@/assets-webkit/img/landing/subjects-sustainabili
 import type { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import type { LandingSubjectIcon } from '@/data-types'
 
-export function SubjectIcon({
-  subject,
-}: {
+export interface SubjectIconProps {
   subject?: LandingSubjectIcon | deSubjectLandingSubjects | string
-}) {
+}
+
+export function SubjectIcon({ subject }: SubjectIconProps) {
   return <div className="serlo-subject-icon-wrapper">{renderIcon(subject)}</div>
 
   function renderIcon(

@@ -29,7 +29,10 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
     pageData.kind === 'single-entity' ? (
       <Entity data={pageData.entityData} />
     ) : (
-      <Topic data={pageData.taxonomyData} />
+      <Topic
+        data={pageData.taxonomyData}
+        breadcrumbs={pageData.breadcrumbsData}
+      />
     )
   const entityId =
     pageData.kind === 'single-entity'
