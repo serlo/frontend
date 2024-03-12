@@ -84,6 +84,7 @@ export function MoreAuthorToolsCourse({
           Tool.Log,
           Tool.AnalyticsLink,
           Tool.Trash,
+          Tool.ChangeLicense,
         ]
   }
 }
