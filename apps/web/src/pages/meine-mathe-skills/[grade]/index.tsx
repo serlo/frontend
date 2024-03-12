@@ -38,10 +38,10 @@ function Content() {
             {/* should be select when there are more grades to select */}
             Übersicht{' '}
             <b className="text-newgreen">
-              Grundwissen Mittlere Reife Bayern (Realschule)
+              Training Mittlere Reife Bayern (Realschule)
             </b>
             :
-            <div className="my-6 flex gap-3">
+            <div className="my-6 flex flex-wrap gap-3">
               <Link
                 href="/meine-mathe-skills/grundwissen-realschule-bayern/logarithmus-1"
                 className={cn(
@@ -79,6 +79,19 @@ function Content() {
                   <b>Trigonometrie</b>
                   <br />
                   <span className="text-base">(Strahlensatz, Kosinussatz)</span>
+                </p>
+              </Link>
+              <Link
+                href="/meine-mathe-skills/grundwissen-realschule-bayern/felix-test"
+                className={cn(
+                  'flex aspect-square w-48 items-center justify-center rounded-2xl bg-newgreen bg-opacity-10 p-4 text-almost-black !no-underline',
+                  'transition-colors hover:bg-opacity-20 hover:shadow-menu active:bg-opacity-20'
+                )}
+              >
+                <p>
+                  <b>Felix Testaufgabe</b>
+                  <br />
+                  <span className="text-base">(Terme)</span>
                 </p>
               </Link>
             </div>

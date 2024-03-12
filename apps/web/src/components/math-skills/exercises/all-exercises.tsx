@@ -1322,6 +1322,42 @@ export const allExercises = {
     // title: 'Logarithmus zusammenfassen 1',
     component: <Trigonometry />,
   },
+  'felix-test': {
+    // title: 'Logarithmus zusammenfassen 1',
+    component: (
+      <SelfEvaluationExercise
+        generator={() => {
+          return 0
+        }}
+        renderTask={() => {
+          return (
+            <>
+              <h2 className="text-2xl">Fasse zu einem Logarithmus zusammen:</h2>
+              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+                test
+              </span>
+              <br />
+              <br />
+              <i>Rechne am Besten mit Stift und Papier.</i>
+            </>
+          )
+        }}
+        renderSolution={() => {
+          return (
+            <>
+              Aufgabenstellung: <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                test
+              </span>
+              <br />
+              <br />
+            </>
+          )
+        }}
+        centAmount={35}
+      />
+    ),
+  },
 } as const
 
 export type SupportedExercisesId = keyof typeof allExercises
