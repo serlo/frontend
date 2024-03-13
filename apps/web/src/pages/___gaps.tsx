@@ -1,3 +1,4 @@
+import { Feedback } from '@editor/plugins/sc-mc-exercise/renderer/feedback'
 import clsx from 'clsx'
 import React, {
   createContext,
@@ -11,7 +12,6 @@ import React, {
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { shuffleArray } from '@/helper/shuffle-array'
-import { Feedback } from '@/serlo-editor/plugins/sc-mc-exercise/renderer/feedback'
 
 export default renderedPageNoHooks(() => (
   <FrontendClientBase>
