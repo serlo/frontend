@@ -3,9 +3,16 @@ import { useRouter } from 'next/router'
 
 import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import { middleSchoolFinalExam } from '@/components/math-skills/exercises/middle-school-final-exam'
 import { WelcomeSection } from '@/components/math-skills/landing/welcome-section'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
 import { TopicOverview } from '@/components/math-skills/topic-overview/topic-overview'
+import { animalsData } from '@/components/math-skills/utils/animal-data'
+import { getPointsAmount } from '@/components/math-skills/utils/get-points-amount'
+import {
+  useExerciseData,
+  useMathSkillsStorage,
+} from '@/components/math-skills/utils/math-skills-data-context'
 import { cn } from '@/helper/cn'
 
 const ContentPage: NextPage = () => {
@@ -27,7 +34,14 @@ function Content() {
   const router = useRouter()
   const grade = router.query.grade
 
+  const { getExerciseData } = useExerciseData()
+  const { data } = useMathSkillsStorage()
+
   function renderCard(id: string, title: string, subtitle: string) {
+    const slug = `${String(grade)}/${id}`
+    const { skillCent } = getExerciseData(slug)
+    const points = Array.from({ length: getPointsAmount(skillCent) })
+
     return (
       <Link
         href={`/meine-mathe-skills/training-realschule-bayern/${id}`}
@@ -40,6 +54,11 @@ function Content() {
           <b>{title}</b>
         </p>
         <p className="text-base">({subtitle})</p>
+        <p className="mt-2 text-base">
+          {data?.animal
+            ? points.map(() => animalsData[data.animal].emoji)
+            : null}
+        </p>
       </Link>
     )
   }
@@ -58,40 +77,8 @@ function Content() {
             </b>
             :
             <div className="my-6 flex flex-wrap gap-3">
-              {renderCard(
-                'logarithmus-1',
-                'Logarithmus zusammenfassen',
-                'Terme, ohne TR'
-              )}
-              {renderCard(
-                'logarithmus-2',
-                'Logarithmus zusammenfassen',
-                'mit 3. binomischer Formel'
-              )}
-              {renderCard(
-                'trigonometrie-1',
-                'Trigonometrie',
-                'Strahlensatz, Kosinussatz, ohne TR'
-              )}
-              {renderCard(
-                'Normalform-1',
-                'Normalform einer Parabel',
-                'Quadratische Funktionen'
-              )}
-              {renderCard(
-                'Scheitelform-1',
-                'Scheitelform einer Parabel',
-                'Quadratische Funktionen'
-              )}
-              {renderCard(
-                'volumenpyramide-1',
-                'Volumen einer Pyramide',
-                'vierseitig'
-              )}
-              {renderCard(
-                'surfacepyramide-1',
-                'Oberfläche einer Pyramide',
-                'vierseitig'
+              {Object.entries(middleSchoolFinalExam).map(([id, obj]) =>
+                renderCard(id, obj.title, obj.subtitle)
               )}
             </div>
             <div className="h-24"></div>
