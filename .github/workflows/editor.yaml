@@ -1,0 +1,38 @@
+name: Editor
+
+on:
+  push:
+    branches:
+      - staging
+      - editor-package-vite
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+      - run: yarn
+      - run: yarn build:prisma
+
+      - name: Build editor package
+        run: yarn editor:build
+
+      - name: Check if current version is already published
+        id: check_published
+        run: |
+          CURRENT_VERSION=$(node -p "require('./packages/editor/package.json').version")
+          if npm view @serlo/editor@$CURRENT_VERSION > /dev/null 2>&1; then
+            echo "::set-output name=already_published::true"
+          else
+            echo "::set-output name=already_published::false"
+          fi
+
+      - name: Publish to npm
+        if: steps.check_published.outputs.already_published == 'false'
+        run: yarn editor:publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

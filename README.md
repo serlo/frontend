@@ -1,8 +1,9 @@
-<img src="https://raw.githubusercontent.com/serlo/frontend/staging/public/_assets/img/serlo-logo-gh.svg" alt="Serlo Logo" title="Serlo" align="right" height="75"/>
+<img src="https://raw.githubusercontent.com/serlo/frontend/staging/apps/web/public/_assets/img/serlo-logo-gh.svg" alt="Serlo Logo" title="Serlo" align="right" height="75"/>
 
 # serlo.org – Frontend
 
 Next.js app that serves [serlo.org](https://serlo.org).
+You can find it in `apps/web`.
 
 ## Overview
 
@@ -22,7 +23,7 @@ yarn
 yarn dev
 ```
 
-The developement server is now live on [localhost:3000](http://localhost:3000). Use same username/password as on staging.
+The development server is now live on [localhost:3000](http://localhost:3000). Use same username/password as on staging.
 
 Choose language using `http://localhost:3000/{es|de|hi|ta|en|fr}/`
 
@@ -48,25 +49,29 @@ Some of the features we use:
 
 We are trying out a [serverless sql database](https://app.planetscale.com/serlo/serlo_planetscale) and use it to build prototypes. Don't use for production features yet!
 
-Add the environment variable `DATABASE_URL` to `.env.local` (next.js) and `prisma/.env` (prisma cli). You can generate the database url from planetscale or ping one of us to generat one for you. (sorry for the inconvienience here). Run `yarn prisma generate` to update the prisma client and test the database connection.
+Add the environment variable `DATABASE_URL` to `apps/web/.env.local` (next.js). You can generate the database url from planetscale or ping one of us to generat one for you. (sorry for the inconvienience here). Run `yarn prisma:build` to update the prisma client and test the database connection. Run `yarn prisma:studio` for Prisma Studio, run `yarn prisma:db-pull` to download db schema.
 
 ## Repository Overview
 
-Here are some useful places:
+This is a monorepo that contains the editor and the frontend platform. Here are some useful directories:
 
-- `/src/pages`: File-system routing root directory. Add new routes by creating files in this folder.
+- `/apps/web`: Serlo.org platform.
 
-- `/src/components`: Collection of react components for the frontend.
+- `/apps/web/src/pages`: File-system routing root directory. Add new routes by creating files in this folder.
 
-- `/src/fetcher`: Requesting data from the GraphQL backend and process it.
+- `/apps/web/src/components`: Collection of react components for the frontend.
 
-- `/src/schema`: Definition of the frontend content format, with renderer, and converter for edtr-io and legacy.
+- `/apps/web/src/fetcher`: Requesting data from the GraphQL backend and process it.
 
-- `/src/data`: Translations, entries for navigation
+- `/apps/web/src/data`: Translations, entries for navigation
 
-- `/public/_`: A place for public assets, served as static files under the path `/_assets/`. Don't use `import` from here, but use the path as `src` instead.
+- `/apps/web/public/_`: A place for public assets, served as static files under the path `/_assets/`. Don't use `import` from here, but use the path as `src` instead.
 
-- `/external`: Third-party code that is not maintained by the frontend.
+- `/apps/web/external`: Third-party code that is not maintained by the frontend.
+
+- `/packages/editor`: Serlo Editor. See [here](https://www.serlo.org/editor) for more information.
+
+- `/e2e-tests`: End to end tests in BDD style with CodeceptJS and playwright. More info on testing below and in the [readme](https://github.com/serlo/frontend/tree/staging/) of the directory.
 
 Some useful commands:
 
@@ -114,6 +119,21 @@ Technical issues are opened for bugs and feature that we decided to work on. For
 
 This method should avoid stale issues and make it possible to keep an "zero inbox".
 
+## e2e testing
+
+This repo includes e2e test with codeceptjs.
+To run them for the first time:
+
+```sh
+cd e2e-tests
+yarn
+yarn playwright install
+cd ..
+yarn e2e
+```
+
+You can find the [full readme here](https://github.com/serlo/frontend/tree/staging/e2e-tests#readme).
+
 ## More information
 
 You can find more detailed explanations in our wiki. Currently, we have these pages available:
@@ -123,3 +143,5 @@ You can find more detailed explanations in our wiki. Currently, we have these pa
 - [Tailwind Getting Started Guide](https://github.com/serlo/frontend/wiki/Tailwind-Getting-Started-Guide)
 - [VS Code Setup](https://github.com/serlo/frontend/wiki/VS-Code)
 - [Unsorted old stuff](https://github.com/serlo/frontend/wiki/Archive)
+- [Forked packages](https://github.com/serlo/frontend/wiki/Forked-packages)
+- [Editor package](https://github.com/serlo/frontend/wiki/Editor-npm-package)

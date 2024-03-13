@@ -1,0 +1,28 @@
+{
+  "extends": "@serlo/typescript-config/base.json",
+  "compilerOptions": {
+    "rootDir": "../..",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@editor/*": ["../../packages/editor/src/*"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "module": "esnext",
+    "moduleResolution": "bundler"
+  },
+  "include": [
+    "custom.d.ts",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "shared/tailwind-base.js",
+    "../../packages/editor/src/**/*.ts",
+    "../../packages/editor/src/**/*.tsx"
+  ],
+  "exclude": ["node_modules"]
+}
