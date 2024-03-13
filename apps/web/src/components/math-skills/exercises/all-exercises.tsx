@@ -451,8 +451,8 @@ export const allExercises = {
               <br />
               <br />
               <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                y = <span className="inline-block scale-y-[2.5]">(</span>x -{' '}
-                {buildFrac(<>{b}</>, <>2</>)}{' '}
+                y = <span className="inline-block scale-y-[2.5]">(</span>x{' '}
+                {isPlus ? '+' : '-'} {buildFrac(<>{b}</>, <>2</>)}{' '}
                 <span className="inline-block scale-y-[2.5]">)</span>
                 <sup>2</sup> {isPlus_2 ? '+' : '-'} {c} -{' '}
                 <span className="inline-block scale-y-[2.5] ">(</span>
