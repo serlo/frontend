@@ -1340,8 +1340,8 @@ export const allExercises = {
       <NumberInputExercise
         centAmount={35}
         generator={() => {
-          const x_s = randomIntBetween(1, 10s)
-          const y_s = randomIntBetween(1, 9)
+          const x_s = randomIntBetween(1, 10)
+          const y_s = randomIntBetween(1, 10)
           const y_sol = x_s * x_s + y_s
           return { x_s, y_s, y_sol }
         }}
