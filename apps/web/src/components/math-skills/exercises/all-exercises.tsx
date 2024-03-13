@@ -1334,7 +1334,7 @@ export const allExercises = {
     // title: 'Logarithmus zusammenfassen 1',
     component: <Trigonometry />,
   },
-  'felix-test': {
+  'Normalform-1': {
     // title: 'Normalform bestimmen',
     component: (
       <SelfEvaluationExercise
