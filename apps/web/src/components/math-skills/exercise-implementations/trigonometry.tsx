@@ -175,18 +175,18 @@ function SubComponent({ data }: { data: Trig1Data }) {
     )
 
     const lineAB = b.create('line', [pointA, pointB])
-    const lineCD = b.create('parallel', [lineAB, pointD])
+    b.create('parallel', [lineAB, pointD])
 
-    const lineSC = b.create('line', [pointS, pointC], {
+    b.create('line', [pointS, pointC], {
       straightFirst: false,
       straightLast: true,
     })
-    const lineSD = b.create('line', [pointS, pointD], {
+    b.create('line', [pointS, pointD], {
       straightFirst: false,
       straightLast: true,
     })
 
-    const angle = b.create('angle', [pointB, pointA, pointS], {
+    b.create('angle', [pointB, pointA, pointS], {
       radius: 1,
       name: function () {
         return `${data.angle}°`
