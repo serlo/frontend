@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { buildFrac } from '../utils/math-builder'
+import { buildFrac, buildSqrt } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -60,8 +59,8 @@ export function Trigonometry() {
               <li className="mt-12 text-2xl">
                 2. Begründe warum gilt:{' '}
                 <b className="rounded-md bg-newgreen bg-opacity-20 p-1">
-                  |<span className="overline">SB</span>| = √
-                  <span className="pl-1 overline">{data.sb_sq}</span> cm
+                  |<span className="overline">SB</span>| ={' '}
+                  {buildSqrt(<>{data.sb_sq}</>)} cm
                 </b>
                 .
               </li>
@@ -130,15 +129,15 @@ export function Trigonometry() {
             Ziehe die Wurzel. Das Ergebnis ist bestätigt.
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              |<span className="overline">SB</span>| = √
-              <span className="pl-1 overline">{data.sb_sq}</span> cm
+              |<span className="overline">SB</span>| ={' '}
+              {buildSqrt(<>{data.sb_sq}</>)} cm
             </span>
             <br />
             <br />
           </>
         )
       }}
-      centAmount={35}
+      centAmount={52}
     />
   )
 }
@@ -176,18 +175,18 @@ function SubComponent({ data }: { data: Trig1Data }) {
     )
 
     const lineAB = b.create('line', [pointA, pointB])
-    const lineCD = b.create('parallel', [lineAB, pointD])
+    b.create('parallel', [lineAB, pointD])
 
-    const lineSC = b.create('line', [pointS, pointC], {
+    b.create('line', [pointS, pointC], {
       straightFirst: false,
       straightLast: true,
     })
-    const lineSD = b.create('line', [pointS, pointD], {
+    b.create('line', [pointS, pointD], {
       straightFirst: false,
       straightLast: true,
     })
 
-    const angle = b.create('angle', [pointB, pointA, pointS], {
+    b.create('angle', [pointB, pointA, pointS], {
       radius: 1,
       name: function () {
         return `${data.angle}°`

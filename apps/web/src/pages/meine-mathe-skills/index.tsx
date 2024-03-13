@@ -53,11 +53,11 @@ function Content() {
               <p>5. Klasse</p>
             </a>
             <a
-              href="/meine-mathe-skills/grundwissen-realschule-bayern"
+              href="/meine-mathe-skills/training-realschule-bayern"
               onClick={(e) => {
                 e.preventDefault()
                 void router.push(
-                  '/meine-mathe-skills/grundwissen-realschule-bayern',
+                  '/meine-mathe-skills/training-realschule-bayern',
                   undefined,
                   {
                     shallow: true,
@@ -71,11 +71,13 @@ function Content() {
               `)}
             >
               <p>
-                Grundwissen
+                Training
                 <br />
-                Mittlere Reife
+                Realschule
                 <br />
-                Bayern (RS)
+                Bayern
+                <br />
+                (Abschlussprüfung)
               </p>
             </a>
           </div>
