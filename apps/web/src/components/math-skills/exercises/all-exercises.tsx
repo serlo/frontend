@@ -22,6 +22,7 @@ import { SelfEvaluationExercise } from '../exercise-implementations/self-evaluat
 import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
 import { Trigonometry } from '../exercise-implementations/trigonometry'
 // import { VolumePyramide } from '../exercise-implementations/volume-pyramide'
+import { VolumePyramide } from '../exercise-implementations/volume-pyramide'
 import { MultipleNumberInputExercise } from '../number-input-exercise/multiple-number-input-exercise'
 import { buildFrac } from '../utils/math-builder'
 import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
@@ -1322,14 +1323,13 @@ export const allExercises = {
   },
   'volumenpyramide-1': {
     // title: Volumenberechnung Pyramide
-
+    component: <VolumePyramide />,
+  },
+  'surfacepyramide-1': {
+    // title: Volumenberechnung Pyramide
     component: <SurfacePyramide />,
   },
-  // 'oberflaechepyramide-1': {
-  //title: Volumenberechnung Pyramide
 
-  // component: <SurfacePyramide />,
-  // },
   'triogonometrie-1': {
     // title: 'Logarithmus zusammenfassen 1',
     component: <Trigonometry />,
