@@ -27,112 +27,72 @@ function Content() {
   const router = useRouter()
   const grade = router.query.grade
 
-  if (grade === 'grundwissen-realschule-bayern')
+  function renderCard(id: string, title: string, subtitle: string) {
+    return (
+      <Link
+        href={`/meine-mathe-skills/training-realschule-bayern/${id}`}
+        className={cn(
+          'flex aspect-square w-48 flex-col items-start justify-center rounded-2xl bg-newgreen bg-opacity-10 p-4 text-almost-black !no-underline',
+          'transition-colors hover:bg-opacity-20 hover:shadow-menu active:bg-opacity-20'
+        )}
+      >
+        <p className="mb-2">
+          <b>{title}</b>
+        </p>
+        <p className="text-base">({subtitle})</p>
+      </Link>
+    )
+  }
+
+  if (grade === 'training-realschule-bayern')
     return (
       <>
-        <div className="mx-4 max-w-md mobile:mx-auto sm:mt-10 lg:max-w-xl">
-          <div className="sm:flex sm:flex-row-reverse sm:items-center">
+        <div className="mx-4 max-w-md mobile:mx-auto sm:mt-10 lg:max-w-4xl">
+          <div className="sm:flex sm:flex-row-reverse sm:items-center sm:justify-center">
             <WelcomeSection />
           </div>
           <h2 className="mt-10 text-xl">
-            {/* should be select when there are more grades to select */}
             Übersicht{' '}
             <b className="text-newgreen">
-              Training Mittlere Reife Bayern (Realschule)
+              Training Realschule Bayern (Abschlussprüfung)
             </b>
             :
             <div className="my-6 flex flex-wrap gap-3">
-              <Link
-                href="/meine-mathe-skills/grundwissen-realschule-bayern/logarithmus-1"
-                className={cn(
-                  'flex aspect-square w-48 items-center justify-center rounded-2xl bg-newgreen bg-opacity-10 p-4 text-almost-black !no-underline',
-                  'transition-colors hover:bg-opacity-20 hover:shadow-menu active:bg-opacity-20'
-                )}
-              >
-                <p>
-                  <b>Logarithmus zusammenfassen</b>
-                  <br />
-                  <span className="text-base">(Terme)</span>
-                </p>
-              </Link>
-              <Link
-                href="/meine-mathe-skills/grundwissen-realschule-bayern/logarithmus-2"
-                className={cn(
-                  'flex aspect-square w-48 items-center justify-center rounded-2xl bg-newgreen bg-opacity-10 p-4 text-almost-black !no-underline',
-                  'transition-colors hover:bg-opacity-20 hover:shadow-menu active:bg-opacity-20'
-                )}
-              >
-                <p>
-                  <b>Logarithmus zusammenfassen</b>
-                  <br />
-                  <span className="text-base">(mit 3. binomischer Formel)</span>
-                </p>
-              </Link>
-              <Link
-                href="/meine-mathe-skills/grundwissen-realschule-bayern/triogonometrie-1"
-                className={cn(
-                  'flex aspect-square w-48 items-center justify-center rounded-2xl bg-newgreen bg-opacity-10 p-4 text-almost-black !no-underline',
-                  'transition-colors hover:bg-opacity-20 hover:shadow-menu active:bg-opacity-20'
-                )}
-              >
-                <p>
-                  <b>Trigonometrie</b>
-                  <br />
-                  <span className="text-base">(Strahlensatz, Kosinussatz)</span>
-                </p>
-              </Link>
-              <Link
-                href="/meine-mathe-skills/grundwissen-realschule-bayern/Normalform-1"
-                className={cn(
-                  'flex aspect-square w-48 items-center justify-center rounded-2xl bg-newgreen bg-opacity-10 p-4 text-almost-black !no-underline',
-                  'transition-colors hover:bg-opacity-20 hover:shadow-menu active:bg-opacity-20'
-                )}
-              >
-                <p>
-                  <b>Normalform einer Parabel</b>
-                  <br />
-                  <span className="text-base">(Quadratische Funktionen)</span>
-                </p>
-              </Link>
-              <Link
-                href="/meine-mathe-skills/grundwissen-realschule-bayern/Scheitelform-1"
-                className={cn(
-                  'flex aspect-square w-48 items-center justify-center rounded-2xl bg-newgreen bg-opacity-10 p-4 text-almost-black !no-underline',
-                  'transition-colors hover:bg-opacity-20 hover:shadow-menu active:bg-opacity-20'
-                )}
-              >
-                <p>
-                  <b>Scheitelform einer Parabel</b>
-                  <br />
-                  <span className="text-base">(Quadratische Funktionen)</span>
-                </p>
-              </Link>
-              <Link
-                href="/meine-mathe-skills/grundwissen-realschule-bayern/volumenpyramide-1"
-                className={cn(
-                  'flex aspect-square w-48 items-center justify-center rounded-2xl bg-newgreen bg-opacity-10 p-4 text-almost-black !no-underline',
-                  'transition-colors hover:bg-opacity-20 hover:shadow-menu active:bg-opacity-20'
-                )}
-              >
-                <p>
-                  <b>Volumen einer Pyramide</b>
-                  <br />
-                  <span className="text-base">(vierseitig)</span>
-                </p>
-              </Link>
-              <Link
-                href="/meine-mathe-skills/grundwissen-realschule-bayern/surfacepyramide-1"
-                className={cn(
-                  'flex aspect-square w-48 items-center justify-center rounded-2xl bg-newgreen bg-opacity-10 p-4 text-almost-black !no-underline',
-                  'transition-colors hover:bg-opacity-20 hover:shadow-menu active:bg-opacity-20'
-                )}
-              >
-                <p>
-                  <b>Oberfläche einer Pyramide</b>
-                  <br />
-                  <span className="text-base">(vierseitig)</span>
-                </p>
-              </Link>
+              {renderCard(
+                'logarithmus-1',
+                'Logarithmus zusammenfassen',
+                'Terme, ohne TR'
+              )}
+              {renderCard(
+                'logarithmus-2',
+                'Logarithmus zusammenfassen',
+                'mit 3. binomischer Formel'
+              )}
+              {renderCard(
+                'trigonometrie-1',
+                'Trigonometrie',
+                'Strahlensatz, Kosinussatz, ohne TR'
+              )}
+              {renderCard(
+                'Normalform-1',
+                'Normalform einer Parabel',
+                'Quadratische Funktionen'
+              )}
+              {renderCard(
+                'Scheitelform-1',
+                'Scheitelform einer Parabel',
+                'Quadratische Funktionen'
+              )}
+              {renderCard(
+                'volumenpyramide-1',
+                'Volumen einer Pyramide',
+                'vierseitig'
+              )}
+              {renderCard(
+                'surfacepyramide-1',
+                'Oberfläche einer Pyramide',
+                'vierseitig'
+              )}
             </div>
             <div className="h-24"></div>
           </h2>

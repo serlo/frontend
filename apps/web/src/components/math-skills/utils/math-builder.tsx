@@ -6,3 +6,16 @@ export function buildFrac(x: JSX.Element, y: JSX.Element) {
     </div>
   )
 }
+
+export function buildOverline(x: JSX.Element) {
+  return <span className="overline">{x}</span>
+}
+
+export function buildSqrt(x: JSX.Element) {
+  return (
+    <>
+      <span className="text-2xl">&#8730;</span>
+      {buildOverline(x)}
+    </>
+  )
+}
