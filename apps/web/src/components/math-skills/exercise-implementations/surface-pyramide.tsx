@@ -150,7 +150,7 @@ export function SurfacePyramide() {
           </>
         )
       }}
-      centAmount={35}
+      centAmount={52}
     />
   )
 }

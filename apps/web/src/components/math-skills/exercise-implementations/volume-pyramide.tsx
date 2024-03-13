@@ -96,7 +96,7 @@ export function VolumePyramide() {
           </>
         )
       }}
-      centAmount={35}
+      centAmount={52}
     />
   )
 }

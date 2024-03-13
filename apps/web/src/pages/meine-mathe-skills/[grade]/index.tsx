@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 
 import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import { middleSchoolFinalExam } from '@/components/math-skills/exercises/middle-school-final-exam'
 import { WelcomeSection } from '@/components/math-skills/landing/welcome-section'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
 import { TopicOverview } from '@/components/math-skills/topic-overview/topic-overview'
@@ -76,40 +77,8 @@ function Content() {
             </b>
             :
             <div className="my-6 flex flex-wrap gap-3">
-              {renderCard(
-                'logarithmus-1',
-                'Logarithmus zusammenfassen',
-                'Terme, ohne TR'
-              )}
-              {renderCard(
-                'logarithmus-2',
-                'Logarithmus zusammenfassen',
-                'mit 3. binomischer Formel'
-              )}
-              {renderCard(
-                'trigonometrie-1',
-                'Trigonometrie',
-                'Strahlensatz, Kosinussatz, ohne TR, TODO: Aufspalten in 2 Aufgaben'
-              )}
-              {renderCard(
-                'Normalform-1',
-                'Normalform einer Parabel',
-                'Quadratische Funktionen'
-              )}
-              {renderCard(
-                'Scheitelform-1',
-                'Scheitelform einer Parabel',
-                'Quadratische Funktionen'
-              )}
-              {renderCard(
-                'volumenpyramide-1',
-                'Volumen einer Pyramide',
-                'vierseitig'
-              )}
-              {renderCard(
-                'surfacepyramide-1',
-                'Oberfläche einer Pyramide',
-                'vierseitig'
+              {Object.entries(middleSchoolFinalExam).map(([id, obj]) =>
+                renderCard(id, obj.title, obj.subtitle)
               )}
             </div>
             <div className="h-24"></div>
