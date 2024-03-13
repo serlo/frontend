@@ -8,6 +8,7 @@ import {
   allExercises,
 } from '@/components/math-skills/exercises/all-exercises'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
+import { cn } from '@/helper/cn'
 
 const ContentPage: NextPage = () => {
   const router = useRouter()
@@ -45,6 +46,7 @@ function Content() {
   const data = allExercises[exercise as SupportedExercisesId] as {
     title: string
     level?: string
+    track?: number
     component: JSX.Element
     smallprint?: JSX.Element
   }
@@ -52,7 +54,12 @@ function Content() {
   if (!data) return null
 
   return (
-    <div className="relative mx-4 mt-10 max-w-lg bg-white mobileExt:mx-auto sm:w-full">
+    <div
+      className={cn(
+        'relative mx-4 mt-10 bg-white mobileExt:mx-auto sm:w-full',
+        data.track ? 'max-w-2xl' : 'max-w-lg '
+      )}
+    >
       {data.component}
 
       <h2 className="text-md mb-5 mt-9 font-bold">

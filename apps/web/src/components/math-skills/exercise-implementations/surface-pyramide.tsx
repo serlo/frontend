@@ -30,6 +30,14 @@ export function SurfacePyramide() {
         }
         return { data }
       }}
+      renderHint={() => {
+        return (
+          <>
+            Die Pyramide-Oberfläche besteht aus 4 Dreiecken und der Grundfläche.
+            Berechne diese Flächen zuerst separat.
+          </>
+        )
+      }}
       renderTask={({ data }) => {
         return (
           <>

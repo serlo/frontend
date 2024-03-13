@@ -9,6 +9,7 @@ interface SelfEvaluationExerciseProps<DATA> {
   generator: () => DATA
   renderTask: (data: DATA) => JSX.Element
   renderSolution: (data: DATA) => JSX.Element // maybe turn into array of steps
+  renderHint?: () => JSX.Element // maybe turn into array of steps
   centAmount?: number
 }
 
@@ -17,10 +18,12 @@ export function SelfEvaluationExercise<T>({
   renderTask,
   renderSolution,
   centAmount,
+  renderHint,
 }: SelfEvaluationExerciseProps<T>) {
   const [data, setData] = useState(generator())
   const [exStatus, setExStatus] = useState<ExStatus>('fresh')
   const [showSolution, setShowSolution] = useState(false)
+  const [showStrategy, setShowStrategy] = useState(false)
 
   return (
     <>
@@ -55,6 +58,16 @@ export function SelfEvaluationExercise<T>({
           }
         />
       </div>
+      {renderHint && (
+        <div className="-ml-side mt-2">
+          <SpoilerRenderer
+            openOverwrite={showStrategy}
+            setOpenOverwrite={setShowStrategy}
+            title={<>Tipps</>}
+            content={<div className="mt-2 p-side">{renderHint()}</div>}
+          />
+        </div>
+      )}
     </>
   )
 }
