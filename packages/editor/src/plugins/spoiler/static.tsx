@@ -6,8 +6,8 @@ import { SpoilerRenderer } from './renderer'
 export function SpoilerStaticRenderer({
   state,
   openOverwrite,
-  onOpen
-}: EditorSpoilerDocument & { openOverwrite?: boolean, onOpen?: () => void }) {
+  onOpen,
+}: EditorSpoilerDocument & { openOverwrite?: boolean; onOpen?: () => void }) {
   const { title, content } = state
 
   return (

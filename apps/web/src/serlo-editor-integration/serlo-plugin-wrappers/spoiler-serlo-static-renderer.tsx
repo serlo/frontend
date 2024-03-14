@@ -9,7 +9,7 @@ import { exerciseSubmission } from '@/helper/exercise-submission'
 
 export function SpoilerSerloStaticRenderer({
   ...props
-}: EditorSpoilerDocument & { openOverwrite?: boolean, onOpen?: () => void }) {
+}: EditorSpoilerDocument & { openOverwrite?: boolean; onOpen?: () => void }) {
   const [hasSentSpoilerTrackingEvent, setHasSentSpoilerTrackingEvent] =
     useState(false)
 
@@ -38,9 +38,6 @@ export function SpoilerSerloStaticRenderer({
   }
 
   return (
-    <SpoilerStaticRenderer
-      onOpen={() => trackSpoilerOpened()}
-      {...props}
-    />
+    <SpoilerStaticRenderer onOpen={() => trackSpoilerOpened()} {...props} />
   )
 }
