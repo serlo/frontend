@@ -47,7 +47,7 @@ function Content() {
         href={`/meine-mathe-skills/training-realschule-bayern/${id}`}
         className={cn(
           'flex aspect-square w-48 flex-col items-start justify-center rounded-2xl bg-newgreen bg-opacity-10 p-4 text-almost-black !no-underline',
-          'transition-colors hover:bg-opacity-20 hover:shadow-menu active:bg-opacity-20'
+          'text-xl transition-colors hover:bg-opacity-20 hover:shadow-menu active:bg-opacity-20'
         )}
       >
         <p className="mb-2">
@@ -63,7 +63,8 @@ function Content() {
     )
   }
 
-  if (grade === 'training-realschule-bayern')
+  if (grade === 'training-realschule-bayern') {
+    const examTasks = Object.entries(middleSchoolFinalExam)
     return (
       <>
         <div className="mx-4 max-w-md mobile:mx-auto sm:mt-10 lg:max-w-4xl">
@@ -76,16 +77,47 @@ function Content() {
               Training Realschule Bayern (Abschlussprüfung)
             </b>
             :
-            <div className="my-6 flex flex-wrap gap-3">
-              {Object.entries(middleSchoolFinalExam).map(([id, obj]) =>
-                renderCard(id, obj.title, obj.subtitle)
-              )}
-            </div>
-            <div className="h-24"></div>
           </h2>
+          <h3 className="my-5 text-2xl">Zweig I</h3>
+          <h4 className="text-lg font-bold">Teil A (ohne Hilfsmittel)</h4>
+          <div className="my-6 flex flex-wrap gap-3">
+            {examTasks
+              .filter(
+                ([, obj]) => obj.useCalculator === false && obj.track === 1
+              )
+              .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
+          </div>
+          <h4 className="text-lg font-bold">Teil B (mit Hilfsmittel)</h4>
+          <div className="my-6 flex flex-wrap gap-3">
+            {examTasks
+              .filter(
+                ([, obj]) =>
+                  obj.useCalculator === true && (obj.track as number) === 1
+              )
+              .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
+          </div>
+          <h3 className="my-5 text-2xl">Zweig II / III</h3>
+          <h4 className="text-lg font-bold">Teil A (ohne Hilfsmittel)</h4>
+          <div className="my-6 flex flex-wrap gap-3">
+            {examTasks
+              .filter(
+                ([, obj]) => obj.useCalculator === false && obj.track === 2
+              )
+              .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
+          </div>
+          <h4 className="text-lg font-bold">Teil B (mit Hilfsmittel)</h4>
+          <div className="my-6 flex flex-wrap gap-3">
+            {examTasks
+              .filter(
+                ([, obj]) => obj.useCalculator === true && obj.track === 2
+              )
+              .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
+          </div>
+          <div className="h-24"></div>
         </div>
       </>
     )
+  }
 
   if (grade !== 'klasse5') return null
 
