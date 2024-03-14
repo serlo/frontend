@@ -1,5 +1,3 @@
-import { sqrt } from 'mathjs'
-
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { buildFrac } from '../utils/math-builder'
@@ -14,15 +12,15 @@ export function ABCFormular() {
     <SelfEvaluationExercise
       generator={() => {
         return {
-          a: randomIntBetween(1, 1),
-          n_1: randomIntBetween(6, 9),
-          n_2: randomIntBetween(2, 5),
+          a: randomIntBetween(1, 2),
+          n_1: randomIntBetween(5, 8),
+          n_2: randomIntBetween(1, 4),
         }
       }}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       renderTask={({ a, n_1, n_2 }) => {
-        const b = -1 * n_1 - n_2
-        const c = n_1 * n_2
+        const b = (-1 * n_1 - n_2) * a
+        const c = n_1 * n_2 * a
 
         return (
           <>
@@ -30,7 +28,8 @@ export function ABCFormular() {
               Bestimme die Lösungsmenge der Gleichung:
             </h2>
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-              0 = x<sup>2</sup> {b > 0 ? '+' : ''} {b}x {c > 0 ? '+' : ''} {c}
+              0 = {a > 1 ? a : ''}x<sup>2</sup> {b > 0 ? '+' : ''} {b}x{' '}
+              {c > 0 ? '+' : ''} {c}
             </span>
 
             <br />
@@ -40,14 +39,15 @@ export function ABCFormular() {
         )
       }}
       renderSolution={({ a, n_1, n_2 }) => {
-        const b = -1 * n_1 - n_2
-        const c = n_1 * n_2
+        const b = (-1 * n_1 - n_2) * a
+        const c = n_1 * n_2 * a
         return (
           <>
             Löse die Gleichung:
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              0 = x<sup>2</sup> {b > 0 ? '+' : ''} {b}x {c > 0 ? '+' : ''} {c}
+              0 = {a > 1 ? a : ''}x<sup>2</sup> {b > 0 ? '+' : ''} {b}x{' '}
+              {c > 0 ? '+' : ''} {c}
             </span>
             <br />
             Wir verwenden die abc-Formel um die Gleichung zu lösen:
@@ -64,15 +64,15 @@ export function ABCFormular() {
             <br />
             Wir setzen{' '}
             <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
-              a={a}
+              a = {a}
             </span>
             ,{' '}
             <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
-              b={b}
+              b = {b}
             </span>{' '}
             und{' '}
             <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
-              c={c}
+              c = {c}
             </span>{' '}
             ein:
             <br />
@@ -83,14 +83,29 @@ export function ABCFormular() {
                 <>
                   -({b}) &#177; √
                   <span className="pl-1 overline">
-                    ({b})² -4 · {a} · ({b}){' '}
+                    ({b})² - 4 · {a} · {c}{' '}
                   </span>
                 </>,
                 <>2 · {a}</>
               )}
             </span>
-            Wir fassen den Term zusammen:
             <br />
+            <br />
+            Berechne die Potenz und das Produkt unter der Wurzel:
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              x<sub>1,2</sub> ={' '}
+              {buildFrac(
+                <>
+                  -({b}) &#177; √
+                  <span className="pl-1 overline">
+                    {b * b} - {4 * a * c}{' '}
+                  </span>
+                </>,
+                <>2 · {a}</>
+              )}
+            </span>
+            <br />
+            Fasse unter der Wurzel zusammen:
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               x<sub>1,2</sub> ={' '}
@@ -109,7 +124,7 @@ export function ABCFormular() {
               x<sub>1,2</sub> ={' '}
               {buildFrac(
                 <>
-                  {-b} &#177; {sqrt(b * b - 4 * a * c)}
+                  {-b} &#177; {Math.sqrt(b * b - 4 * a * c)}
                 </>,
                 <>{2 * a}</>
               )}
@@ -118,15 +133,35 @@ export function ABCFormular() {
             Daraus ergeben sich die beiden Lösungen:
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              x<sub>1</sub>=
-              {buildFrac(<>{-b + sqrt(b * b - 4 * a * c)}</>, <>{2 * a}</>)}=
-              {((-b + sqrt(b * b - 4 * a * c)) / 2) * a}
+              x<sub>1</sub> ={' '}
+              {buildFrac(
+                <>
+                  {-b} + {Math.sqrt(b * b - 4 * a * c)}
+                </>,
+                <>{2 * a}</>
+              )}{' '}
+              ={' '}
+              {buildFrac(
+                <>{-b + Math.sqrt(b * b - 4 * a * c)}</>,
+                <>{2 * a}</>
+              )}{' '}
+              = {((-b + Math.sqrt(b * b - 4 * a * c)) / 2) * a}
             </span>
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              x<sub>2</sub>=
-              {buildFrac(<>{-b - sqrt(b * b - 4 * a * c)}</>, <>{2 * a}</>)}=
-              {((-b - sqrt(b * b - 4 * a * c)) / 2) * a}
+              x<sub>2</sub> ={' '}
+              {buildFrac(
+                <>
+                  {-b} - {Math.sqrt(b * b - 4 * a * c)}
+                </>,
+                <>{2 * a}</>
+              )}{' '}
+              ={' '}
+              {buildFrac(
+                <>{-b - Math.sqrt(b * b - 4 * a * c)}</>,
+                <>{2 * a}</>
+              )}{' '}
+              = {((-b - Math.sqrt(b * b - 4 * a * c)) / 2) * a}
             </span>
           </>
         )
