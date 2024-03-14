@@ -89,14 +89,3 @@ model EquationsAppStats {
 
   @@index([timestamp])
 }
-
-model SpoilerOpenedTrackingData {
-  id           Int      @id @default(autoincrement())
-  entityId     String
-  sessionId    String   @db.VarChar(64)
-  isProduction Boolean
-  timestamp    DateTime @default(now())
-
-  @@index([entityId])
-  @@index([timestamp])
-}
