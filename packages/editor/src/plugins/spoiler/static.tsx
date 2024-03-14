@@ -22,7 +22,10 @@ export function SpoilerStaticRenderer({
   const { asPath } = useRouter()
 
   const trackSpoilerOpened = () => {
-    if (!ab || hasSentSpoilerTrackingEvent) return
+    const experimentIds = [30680, 23869, 66809]
+    const shouldTrackSpoilerOpen = entityId && experimentIds.includes(entityId)
+
+    if (!shouldTrackSpoilerOpen || !ab || hasSentSpoilerTrackingEvent) return
     // send tracking event
     exerciseSubmission(
       {
