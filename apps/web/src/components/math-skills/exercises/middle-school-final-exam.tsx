@@ -1,3 +1,4 @@
+import { ABCFormular } from '../exercise-implementations/abc-formular'
 import { LogarithmExercise1 } from '../exercise-implementations/logarithm-exercise-1'
 import { LogarithmExercise2 } from '../exercise-implementations/logarithm-exericse-2'
 import { NormalformParabola } from '../exercise-implementations/normalform-parabola'
@@ -51,6 +52,13 @@ export const middleSchoolFinalExam = {
     useCalculator: false,
     track: 2,
     component: <VertexParabola />,
+  },
+  'abcformel-1': {
+    title: 'ABC-Formel',
+    subtitle: 'Quadratische Gleichungen',
+    useCalculator: false,
+    track: 2,
+    component: <ABCFormular />,
   },
   'volumen-pyramide-1': {
     title: 'Volumen einer Pyramiden',
