@@ -1,4 +1,3 @@
-import { FaIcon } from '@editor/package'
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/router'
 import { Dispatch, SetStateAction, useState } from 'react'
@@ -12,6 +11,7 @@ import {
   examsByRegionAndType,
 } from './exams-data'
 import { Link } from '@/components/content/link'
+import { FaIcon } from '@/components/fa-icon'
 import { cn } from '@/helper/cn'
 
 interface ExamsFinderProps {

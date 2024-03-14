@@ -77,7 +77,7 @@ export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
                         'md:hidden xl:block'
                       )}
                     />
-                    <span>Discord-Server</span>
+                    <span>Prüfungen-Discord</span>
                   </Link>
                 </p>
               </div>
