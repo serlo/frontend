@@ -2,7 +2,7 @@ import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { buildSqrt } from '../utils/math-builder'
+import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -17,7 +17,7 @@ interface Trig1Data {
   sb_sq: number
 }
 
-export function Trigonometry() {
+export function Trigonometry1() {
   return (
     <SelfEvaluationExercise
       generator={() => {
@@ -48,11 +48,10 @@ export function Trigonometry() {
             <small className="mb-6 block">
               Skizze ist nicht maßstabsgetreu
             </small>
-            <p className="mt-12 text-2xl">
-              Begründe warum gilt:{' '}
-              <b className="rounded-md bg-newgreen bg-opacity-20 p-1">
-                |<span className="overline">SB</span>| ={' '}
-                {buildSqrt(<>{data.sb_sq}</>)} cm
+            <p className="text-2xl">
+              Berechne die Länge der Strecke{' '}
+              <b className="rounded-md bg-newgreen bg-opacity-20 p-1 overline">
+                CD
               </b>
               .
             </p>
@@ -64,31 +63,34 @@ export function Trigonometry() {
       renderSolution={({ data }) => {
         return (
           <>
-            Wende den Kosinussatz an:
-            <br />
+            Stelle eine Gleichung mit dem Strahlensatz auf:
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              |<span className="overline">SB</span>|² = ({data.as} cm)² + (
-              {data.ab} cm)²
-              <br />
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-
-              2 · {data.as} cm · {data.ab} cm · cos 60°
+              {buildFrac(
+                <>
+                  |<span className="overline">CD</span>|
+                </>,
+                <>{data.ab} cm</>
+              )}{' '}
+              = {buildFrac(<>{data.as + data.ac} cm</>, <>{data.as} cm</>)}
             </span>
             <br />
             <br />
-            Nutze cos 60° = 0,5 und berechne:
+            Forme die Gleichung nach |<span className="overline">CD</span>| um:{' '}
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              |<span className="overline">SB</span>|² ={' '}
-              {data.as * data.as + data.ab * data.ab} cm² -{' '}
-              {2 * data.as * data.ab} cm²
+              ⇔ |<span className="overline">CD</span>| ={' '}
+              {buildFrac(<>{data.as + data.ac} cm</>, <>{data.as} cm</>)} ·{' '}
+              {data.ab} cm
             </span>
             <br />
             <br />
-            Ziehe die Wurzel. Das Ergebnis ist bestätigt.
-            <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              |<span className="overline">SB</span>| ={' '}
-              {buildSqrt(<>{data.sb_sq}</>)} cm
+            Ergebnis: <br />
+            <span className="mt-5 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              |<span className="overline">CD</span>| ={' '}
+              {(((data.as + data.ac) / data.as) * data.ab)
+                .toString()
+                .replace('.', ',')}{' '}
+              cm
             </span>
             <br />
             <br />
@@ -144,13 +146,11 @@ function SubComponent({ data }: { data: Trig1Data }) {
       straightLast: true,
     })
 
-    b.create('angle', [pointB, pointA, pointS], {
-      name: function () {
-        return `${data.angle}°`
-      },
-    })
-
     b.create('text', [2, 0, `${data.as} cm`], {
+      anchorX: 'middle',
+      anchorY: 'top',
+    })
+    b.create('text', [5.3, 0, `${data.ac} cm`], {
       anchorX: 'middle',
       anchorY: 'top',
     })

@@ -3,6 +3,7 @@ import { LogarithmExercise2 } from '../exercise-implementations/logarithm-exeric
 import { NormalformParabola } from '../exercise-implementations/normalform-parabola'
 import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
 import { Trigonometry } from '../exercise-implementations/trigonometry'
+import { Trigonometry1 } from '../exercise-implementations/trigonometry-1'
 import { VertexParabola } from '../exercise-implementations/vertex-parabola'
 import { VolumePyramide } from '../exercise-implementations/volume-pyramide'
 
@@ -23,23 +24,16 @@ export const middleSchoolFinalExam = {
     track: 1,
     component: <LogarithmExercise2 />,
   },
-  'volumen-pyramide-1': {
-    title: 'Volumen einer Pyramiden',
-    subtitle: 'vierseitig',
-    useCalculator: true,
-    track: 2,
-    component: <VolumePyramide />,
-  },
-  'oberflaeche-pyramide-1': {
-    title: 'Oberfläche einer Pyramide',
-    subtitle: 'vierseitig',
-    useCalculator: true,
-    track: 2,
-    component: <SurfacePyramide />,
-  },
   'trigonometrie-1': {
-    title: 'Trigonometrie',
-    subtitle: 'Strahlensatz, Kosinussatz',
+    title: 'Strahlensatz',
+    subtitle: 'Trigonometrie',
+    useCalculator: false,
+    track: 1,
+    component: <Trigonometry1 />,
+  },
+  'trigonometrie-2': {
+    title: 'Kosinussatz',
+    subtitle: 'Trigonometrie',
     useCalculator: false,
     track: 1,
     component: <Trigonometry />,
@@ -57,5 +51,19 @@ export const middleSchoolFinalExam = {
     useCalculator: false,
     track: 2,
     component: <VertexParabola />,
+  },
+  'volumen-pyramide-1': {
+    title: 'Volumen einer Pyramiden',
+    subtitle: 'vierseitig',
+    useCalculator: true,
+    track: 2,
+    component: <VolumePyramide />,
+  },
+  'oberflaeche-pyramide-1': {
+    title: 'Oberfläche einer Pyramide',
+    subtitle: 'vierseitig',
+    useCalculator: true,
+    track: 2,
+    component: <SurfacePyramide />,
   },
 } as const
