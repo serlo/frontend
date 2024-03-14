@@ -74,8 +74,8 @@ export function VertexParabola() {
             <br />
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              y = <span className="inline-block scale-y-[2.5]">(</span>x -{' '}
-              {buildFrac(<>{b}</>, <>2</>)}{' '}
+              y = <span className="inline-block scale-y-[2.5]">(</span>x{' '}
+              {isPlus ? '+' : '-'} {buildFrac(<>{b}</>, <>2</>)}{' '}
               <span className="inline-block scale-y-[2.5]">)</span>
               <sup>2</sup> {isPlus_2 ? '+' : '-'} {c} -{' '}
               <span className="inline-block scale-y-[2.5] ">(</span>
@@ -86,17 +86,21 @@ export function VertexParabola() {
             <br />
             <br />
             Die Zahlen hinter der Klammer werden auch zusammengefasst:
+            <br />
+            <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              y = <span className="inline-block scale-y-[2.5]">(</span>x -{' '}
-              {b / 2}
+              y = <span className="inline-block scale-y-[2.5]">(</span>x{' '}
+              {isPlus ? '+' : '-'} {(b / 2).toString().replace('.', ',')}
               <span className="inline-block scale-y-[2.5]">)</span>
               <sup>2</sup>{' '}
               {c - (b / 2) * (b / 2) === 0 ? (
                 <></>
               ) : (
                 <>
-                  {c - (b / 2) * (b / 2) > 0 ? '+' : ''}{' '}
-                  {isPlus_2 ? c - (b / 2) * (b / 2) : -c - (b / 2) * (b / 2)}
+                  {isPlus_2 && c - (b / 2) * (b / 2) > 0 ? '+' : ''}{' '}
+                  {isPlus_2
+                    ? (c - (b / 2) * (b / 2)).toString().replace('.', ',')
+                    : (-c - (b / 2) * (b / 2)).toString().replace('.', ',')}
                 </>
               )}
             </span>
