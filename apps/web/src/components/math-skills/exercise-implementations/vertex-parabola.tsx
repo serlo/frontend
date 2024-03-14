@@ -48,9 +48,9 @@ export function VertexParabola() {
             Wir führen eine quadratische Ergänzung durch. <br />
             Dazu addieren wir den Term{' '}
             <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-1">
-              <span className="inline-block scale-y-[2.5]">(</span>
+              <span className="inline-block scale-y-[3]">(</span>
               {buildFrac(<>{b}</>, <>2</>)}
-              <span className="inline-block scale-y-[2.5]">)</span>
+              <span className="inline-block scale-y-[3]">)</span>
               <sup>2</sup>
             </span>{' '}
             und subtrahieren ihn zum Schluss wieder:
@@ -59,13 +59,13 @@ export function VertexParabola() {
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               y = x<sup>2</sup>
               {isPlus ? '+' : '-'} {b}x +{' '}
-              <span className="inline-block scale-y-[2.5]">(</span>
+              <span className="inline-block scale-y-[3]">(</span>
               {buildFrac(<>{b}</>, <>2</>)}
-              <span className="inline-block scale-y-[2.5]">)</span>
+              <span className="inline-block scale-y-[3]">)</span>
               <sup>2</sup> {isPlus_2 ? '+' : '-'} {c} -{' '}
-              <span className="inline-block scale-y-[2.5] ">(</span>
+              <span className="inline-block scale-y-[3] ">(</span>
               {buildFrac(<>{b}</>, <>2</>)}
-              <span className="inline-block scale-y-[2.5]">)</span>
+              <span className="inline-block scale-y-[3]">)</span>
               <sup>2</sup>
             </span>
             <br />
@@ -74,13 +74,13 @@ export function VertexParabola() {
             <br />
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              y = <span className="inline-block scale-y-[2.5]">(</span>x{' '}
+              y = <span className="inline-block scale-y-[3]">(</span>x{' '}
               {isPlus ? '+' : '-'} {buildFrac(<>{b}</>, <>2</>)}{' '}
-              <span className="inline-block scale-y-[2.5]">)</span>
+              <span className="inline-block scale-y-[3]">)</span>
               <sup>2</sup> {isPlus_2 ? '+' : '-'} {c} -{' '}
-              <span className="inline-block scale-y-[2.5] ">(</span>
+              <span className="inline-block scale-y-[3] ">(</span>
               {buildFrac(<>{b}</>, <>2</>)}
-              <span className="inline-block scale-y-[2.5]">)</span>
+              <span className="inline-block scale-y-[3]">)</span>
               <sup>2</sup>
             </span>
             <br />
@@ -89,9 +89,9 @@ export function VertexParabola() {
             <br />
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              y = <span className="inline-block scale-y-[2.5]">(</span>x{' '}
+              y = <span className="inline-block scale-y-[1.5]">(</span>x{' '}
               {isPlus ? '+' : '-'} {(b / 2).toString().replace('.', ',')}
-              <span className="inline-block scale-y-[2.5]">)</span>
+              <span className="inline-block scale-y-[1.5]">)</span>
               <sup>2</sup>{' '}
               {c - (b / 2) * (b / 2) === 0 ? (
                 <></>
