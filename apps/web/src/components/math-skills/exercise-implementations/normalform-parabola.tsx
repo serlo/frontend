@@ -23,7 +23,7 @@ export function NormalformParabola() {
       renderTask={({ x_s, isPlus, isPlus_2, y_s }) => {
         return (
           <>
-            <h2 className="text-2xl">Bestimme die Normalenform der Parabel:</h2>
+            <h2 className="text-2xl">Bestimme die Normalform der Parabel:</h2>
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               y = (x {isPlus ? '+' : '-'} {x_s})<sup>2</sup>{' '}
               {isPlus_2 ? '+' : '-'} {y_s}
@@ -63,9 +63,21 @@ export function NormalformParabola() {
             Fasse den Term zusammen:
             <br />
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-              y = x<sup>2</sup>
-              {isPlus ? '+' : '-'} {2 * x_s}x{isPlus_2 ? '+' : '-'}{' '}
-              {isPlus_2 ? x_s * x_s + y_s : x_s * x_s - y_s}
+              {x_s * x_s - y_s === 0 && !isPlus_2 ? (
+                <>
+                  y = x<sup>2</sup> {isPlus ? '+' : '-'} {2 * x_s} x
+                </>
+              ) : (
+                <>
+                  y = x<sup>2</sup> {isPlus ? '+' : '-'} {2 * x_s} x{' '}
+                  {(isPlus && isPlus_2) ||
+                  x_s * x_s - y_s > 0 ||
+                  (!isPlus && isPlus_2)
+                    ? '+'
+                    : ''}{' '}
+                  {isPlus_2 ? x_s * x_s + y_s : x_s * x_s - y_s}
+                </>
+              )}
             </span>
           </>
         )
