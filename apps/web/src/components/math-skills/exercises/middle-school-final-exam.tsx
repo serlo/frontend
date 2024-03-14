@@ -12,7 +12,7 @@ export const middleSchoolFinalExam = {
     title: 'Logarithmus zusammenfassen',
     subtitle: 'Terme',
     useCalculator: false,
-    track: 3, // 1 = beide Zweige, 2 = nur nicht-Mathezweig, 3 = nur Mathe-Zweig
+    track: 3, // 1 = beide Zweige, 2 = nur nicht-Mathezweig, 3 = nur Mathe-Zweig TODO
     component: (
       <SelfEvaluationExercise
         generator={() => {
