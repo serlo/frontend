@@ -74,7 +74,7 @@ function Content() {
           <h2 className="mt-10 text-xl">
             Übersicht{' '}
             <b className="text-newgreen">
-              Training Realschule Bayern (Abschlussprüfung)
+              Training Realschule Bayern (Abschlussprüfung) LALAL
             </b>
             :
           </h2>
