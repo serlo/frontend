@@ -6,7 +6,6 @@ import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
-import { SpoilerStaticRenderer } from '@editor/plugins/spoiler/static'
 import type { MathElement } from '@editor/plugins/text'
 import { TextStaticRenderer } from '@editor/plugins/text/static'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
@@ -36,6 +35,7 @@ import { ComponentProps } from 'react'
 import { ExtraInfoIfRevisionView } from './extra-info-if-revision-view'
 import { GeogebraSerloStaticRenderer } from './serlo-plugin-wrappers/geogebra-serlo-static-renderer'
 import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-static-renderer'
+import { SpoilerSerloStaticRenderer } from './serlo-plugin-wrappers/spoiler-serlo-static-renderer'
 import { VideoSerloStaticRenderer } from './serlo-plugin-wrappers/video-serlo-static-renderer'
 import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
@@ -144,7 +144,7 @@ export function createRenderers(): InitRenderersArgs {
         type: EditorPluginType.Spoiler,
         renderer: (state: EditorSpoilerDocument) => {
           return (
-            <SpoilerStaticRenderer
+            <SpoilerSerloStaticRenderer
               {...state}
               openOverwrite={isPrintMode ? true : undefined}
             />
