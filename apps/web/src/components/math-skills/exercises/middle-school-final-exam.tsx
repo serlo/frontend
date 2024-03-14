@@ -1,6 +1,8 @@
+import { NormalformParabola } from '../exercise-implementations/normalform-parabola'
 import { SelfEvaluationExercise } from '../exercise-implementations/self-evaluation-exercise'
 import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
 import { Trigonometry } from '../exercise-implementations/trigonometry'
+import { VertexParabola } from '../exercise-implementations/vertex-parabola'
 import { VolumePyramide } from '../exercise-implementations/volume-pyramide'
 import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
@@ -330,175 +332,13 @@ export const middleSchoolFinalExam = {
     subtitle: 'Quadratische Funktionen',
     useCalculator: false,
     track: 3, // 1 = beide Zweige, 2 = nur nicht-Mathezweig, 3 = nur Mathe-Zweig
-    component: (
-      <SelfEvaluationExercise
-        generator={() => {
-          return {
-            x_s: randomIntBetween(1, 9),
-            y_s: randomIntBetween(1, 9),
-            isPlus: randomItemFromArray([true, false]),
-            isPlus_2: randomItemFromArray([true, false]),
-          }
-        }}
-        renderTask={({ x_s, isPlus, isPlus_2, y_s }) => {
-          return (
-            <>
-              <h2 className="text-2xl">
-                Bestimme die Normalenform der Parabel:
-              </h2>
-              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-                y = (x {isPlus ? '+' : '-'} {x_s})<sup>2</sup>{' '}
-                {isPlus_2 ? '+' : '-'} {y_s}
-              </span>
-              <br />
-              <br />
-              <i>Rechne am Besten mit Stift und Papier.</i>
-            </>
-          )
-        }}
-        renderSolution={({ x_s, isPlus, isPlus_2, y_s }) => {
-          return (
-            <>
-              Aufgabenstellung: <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                y = (x {isPlus ? '+' : '-'} {x_s})<sup>2</sup>{' '}
-                {isPlus_2 ? '+' : '-'} {y_s}
-              </span>
-              <br />
-              <br />
-              Wende die die binomischen Formeln an:
-              <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                y = [ x<sup>2</sup> {isPlus ? '+' : '-'} 2 · {x_s} · x + {x_s}
-                <sup>2</sup> ] {isPlus_2 ? '+' : '-'} {y_s}
-              </span>
-              <br />
-              <br />
-              Berechne den Mischterm und die Potenz:
-              <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                y = [ x<sup>2</sup> {isPlus ? '+' : '-'} {2 * x_s}x +{' '}
-                {x_s * x_s} ] {isPlus_2 ? '+' : '-'} {y_s}
-              </span>
-              <br />
-              <br />
-              Fasse den Term zusammen:
-              <br />
-              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-                y = x<sup>2</sup>
-                {isPlus ? '+' : '-'} {2 * x_s}x{isPlus_2 ? '+' : '-'}{' '}
-                {isPlus_2 ? x_s * x_s + y_s : x_s * x_s - y_s}
-              </span>
-            </>
-          )
-        }}
-        centAmount={52}
-      />
-    ),
+    component: <NormalformParabola />,
   },
   'scheitelform-1': {
     title: 'Scheitelform einer Parabel',
     subtitle: 'Quadratische Funktionen',
     useCalculator: false,
     track: 3, // 1 = beide Zweige, 2 = nur nicht-Mathezweig, 3 = nur Mathe-Zweig
-    component: (
-      <SelfEvaluationExercise
-        generator={() => {
-          return {
-            b: randomIntBetween(2, 9),
-            c: randomIntBetween(2, 9),
-            isPlus: randomItemFromArray([true, false]),
-            isPlus_2: randomItemFromArray([true, false]),
-          }
-        }}
-        renderTask={({ b, isPlus, isPlus_2, c }) => {
-          return (
-            <>
-              <h2 className="text-2xl">
-                Bestimme die Scheitelform der Parabel:
-              </h2>
-              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-                y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x{' '}
-                {isPlus_2 ? '+' : '-'} {c}
-              </span>
-
-              <br />
-              <br />
-              <i>Rechne am Besten mit Stift und Papier.</i>
-            </>
-          )
-        }}
-        renderSolution={({ b, isPlus, isPlus_2, c }) => {
-          return (
-            <>
-              Aufgabenstellung: <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x{' '}
-                {isPlus_2 ? '+' : '-'}
-                {c}
-              </span>
-              <br />
-              <br />
-              Wir führen eine quadratische Ergänzung durch. <br />
-              Dazu addieren wir den Term{' '}
-              <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-1">
-                <span className="inline-block scale-y-[2.5]">(</span>
-                {buildFrac(<>{b}</>, <>2</>)}
-                <span className="inline-block scale-y-[2.5]">)</span>
-                <sup>2</sup>
-              </span>{' '}
-              und subtrahieren ihn zum Schluss wieder:
-              <br />
-              <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                y = x<sup>2</sup>
-                {isPlus ? '+' : '-'} {b}x +{' '}
-                <span className="inline-block scale-y-[2.5]">(</span>
-                {buildFrac(<>{b}</>, <>2</>)}
-                <span className="inline-block scale-y-[2.5]">)</span>
-                <sup>2</sup> {isPlus_2 ? '+' : '-'} {c} -{' '}
-                <span className="inline-block scale-y-[2.5] ">(</span>
-                {buildFrac(<>{b}</>, <>2</>)}
-                <span className="inline-block scale-y-[2.5]">)</span>
-                <sup>2</sup>
-              </span>
-              <br />
-              <br />
-              Den vorderen Teil fassen wir zu einem Binom Zusammen:
-              <br />
-              <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                y = <span className="inline-block scale-y-[2.5]">(</span>x -{' '}
-                {buildFrac(<>{b}</>, <>2</>)}{' '}
-                <span className="inline-block scale-y-[2.5]">)</span>
-                <sup>2</sup> {isPlus_2 ? '+' : '-'} {c} -{' '}
-                <span className="inline-block scale-y-[2.5] ">(</span>
-                {buildFrac(<>{b}</>, <>2</>)}
-                <span className="inline-block scale-y-[2.5]">)</span>
-                <sup>2</sup>
-              </span>
-              <br />
-              <br />
-              Die Zahlen hinter der Klammer werden auch zusammengefasst:
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                y = <span className="inline-block scale-y-[2.5]">(</span>x -{' '}
-                {b / 2}
-                <span className="inline-block scale-y-[2.5]">)</span>
-                <sup>2</sup>{' '}
-                {c - (b / 2) * (b / 2) === 0 ? (
-                  <></>
-                ) : (
-                  <>
-                    {c - (b / 2) * (b / 2) > 0 ? '+' : ''}{' '}
-                    {isPlus_2 ? c - (b / 2) * (b / 2) : -c - (b / 2) * (b / 2)}
-                  </>
-                )}
-              </span>
-            </>
-          )
-        }}
-        centAmount={35}
-      />
-    ),
+    component: <VertexParabola />,
   },
 } as const
