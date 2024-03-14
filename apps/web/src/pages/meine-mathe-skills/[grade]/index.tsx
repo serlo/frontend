@@ -83,7 +83,9 @@ function Content() {
           <div className="my-6 flex flex-wrap gap-3">
             {examTasks
               .filter(
-                ([, obj]) => obj.useCalculator === false && obj.track === 1
+                ([, obj]) =>
+                  obj.useCalculator === false &&
+                  (obj.track === 1 || (obj.track as number) === 3)
               )
               .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
           </div>
@@ -92,7 +94,8 @@ function Content() {
             {examTasks
               .filter(
                 ([, obj]) =>
-                  obj.useCalculator === true && (obj.track as number) === 1
+                  obj.useCalculator === true &&
+                  ((obj.track as number) === 1 || (obj.track as number) === 3)
               )
               .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
           </div>
@@ -101,7 +104,9 @@ function Content() {
           <div className="my-6 flex flex-wrap gap-3">
             {examTasks
               .filter(
-                ([, obj]) => obj.useCalculator === false && obj.track === 2
+                ([, obj]) =>
+                  obj.useCalculator === false &&
+                  (obj.track === 2 || (obj.track as number) === 3)
               )
               .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
           </div>
@@ -109,7 +114,9 @@ function Content() {
           <div className="my-6 flex flex-wrap gap-3">
             {examTasks
               .filter(
-                ([, obj]) => obj.useCalculator === true && obj.track === 2
+                ([, obj]) =>
+                  obj.useCalculator === true &&
+                  ((obj.track as number) === 2 || (obj.track as number) === 3)
               )
               .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
           </div>
