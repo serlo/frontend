@@ -46,7 +46,7 @@ function Content() {
                 })
               }}
               className={cn(`
-                flex h-24 w-24 items-center justify-center rounded-full bg-newgreen bg-opacity-30
+                flex hidden h-24 w-24 items-center justify-center rounded-full bg-newgreen bg-opacity-30
               text-almost-black !no-underline transition-colors hover:bg-opacity-70 md:h-28 md:w-28
               `)}
             >

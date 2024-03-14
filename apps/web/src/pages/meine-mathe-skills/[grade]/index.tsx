@@ -126,7 +126,7 @@ function Content() {
     )
   }
 
-  if (grade !== 'klasse5') return null
+  if (grade !== 'k5') return null
 
   return (
     <>

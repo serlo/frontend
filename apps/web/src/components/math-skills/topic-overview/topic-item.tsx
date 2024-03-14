@@ -18,7 +18,7 @@ export function TopicItem({
   const grade = useRouter().query.grade
   const { getExerciseData } = useExerciseData()
   const { data } = useMathSkillsStorage()
-  if (grade !== 'klasse5') return null
+  if (grade !== 'k5') return null
   const slug = `${String(grade)}/${exerciseId}`
   const { skillCent } = getExerciseData(slug)
   const points = Array.from({ length: getPointsAmount(skillCent) })
