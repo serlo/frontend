@@ -1029,5 +1029,5 @@ export const exercisesGrade5 = {
 
 function centToEuroCommaString(inCent: number) {
   const [euro, cent] = String(inCent / 100).split('.')
-  return `${euro},${String(cent).padEnd(2, '0')}`
+  return `${euro},${String(cent ?? 0).padEnd(2, '0')}`
 }
