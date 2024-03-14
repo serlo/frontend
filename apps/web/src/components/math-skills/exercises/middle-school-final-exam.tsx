@@ -12,7 +12,7 @@ export const middleSchoolFinalExam = {
     title: 'Logarithmus zusammenfassen',
     subtitle: 'Terme',
     useCalculator: false,
-    track: 3, // 1 = beide Zweige, 2 = nur nicht-Mathezweig, 3 = nur Mathe-Zweig TODO
+    track: 3, // 1 = beide Zweige, 2 = nur nicht-Mathezweig, 3 = nur Mathe-Zweig
     component: (
       <SelfEvaluationExercise
         generator={() => {
@@ -375,6 +375,7 @@ export const middleSchoolFinalExam = {
               <br />
               <br />
               Berechne den Mischterm und die Potenz:
+              <br />
               <span className="bg-grey-300 mt-3 inline-block rounded-md bg-opacity-20 p-1 px-3 text-2xl">
                 y = [ x<sup>2</sup> {isPlus ? '+' : '-'} {2 * x_s}x +{' '}
                 {x_s * x_s} ] {isPlus_2 ? '+' : '-'} {y_s}
@@ -396,7 +397,7 @@ export const middleSchoolFinalExam = {
     ),
   },
   'scheitelform-1': {
-    title: 'Normalform einer Parabel',
+    title: 'Scheitelform einer Parabel',
     subtitle: 'Quadratische Funktionen',
     useCalculator: false,
     track: 3, // 1 = beide Zweige, 2 = nur nicht-Mathezweig, 3 = nur Mathe-Zweig
@@ -404,7 +405,7 @@ export const middleSchoolFinalExam = {
       <SelfEvaluationExercise
         generator={() => {
           return {
-            b: randomIntBetween(2, 6),
+            b: randomIntBetween(2, 9),
             c: randomIntBetween(2, 9),
             isPlus: randomItemFromArray([true, false]),
             isPlus_2: randomItemFromArray([true, false]),
