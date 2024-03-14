@@ -1,4 +1,5 @@
 import { ABCFormular } from '../exercise-implementations/abc-formular'
+import { ExponentialFunction } from '../exercise-implementations/exponential-function-1'
 import { LogarithmExercise1 } from '../exercise-implementations/logarithm-exercise-1'
 import { LogarithmExercise2 } from '../exercise-implementations/logarithm-exericse-2'
 import { NormalformParabola } from '../exercise-implementations/normalform-parabola'
@@ -73,5 +74,12 @@ export const middleSchoolFinalExam = {
     useCalculator: true,
     track: 2,
     component: <SurfacePyramide />,
+  },
+  'exponential-function-1': {
+    title: 'Zinseszins',
+    subtitle: 'Exponentialfunktion',
+    useCalculator: true,
+    track: 1,
+    component: <ExponentialFunction />,
   },
 } as const

@@ -9,7 +9,7 @@ interface SelfEvaluationExerciseProps<DATA> {
   generator: () => DATA
   renderTask: (data: DATA) => JSX.Element
   renderSolution: (data: DATA) => JSX.Element // maybe turn into array of steps
-  renderHint?: () => JSX.Element // maybe turn into array of steps
+  renderHint?: (data: DATA) => JSX.Element // maybe turn into array of steps
   centAmount?: number
 }
 
