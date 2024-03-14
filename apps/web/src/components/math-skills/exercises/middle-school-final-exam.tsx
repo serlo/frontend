@@ -360,7 +360,7 @@ export const middleSchoolFinalExam = {
           return (
             <>
               Aufgabenstellung: <br />
-              <span className="bg-grey-300 mt-3 inline-block rounded-md bg-opacity-20 p-1 px-3 text-2xl">
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
                 y = (x {isPlus ? '+' : '-'} {x_s})<sup>2</sup>{' '}
                 {isPlus_2 ? '+' : '-'} {y_s}
               </span>
@@ -368,7 +368,7 @@ export const middleSchoolFinalExam = {
               <br />
               Wende die die binomischen Formeln an:
               <br />
-              <span className="bg-grey-300 mt-3 inline-block rounded-md bg-opacity-20 p-1 px-3 text-2xl">
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
                 y = [ x<sup>2</sup> {isPlus ? '+' : '-'} 2 · {x_s} · x + {x_s}
                 <sup>2</sup> ] {isPlus_2 ? '+' : '-'} {y_s}
               </span>
@@ -376,7 +376,7 @@ export const middleSchoolFinalExam = {
               <br />
               Berechne den Mischterm und die Potenz:
               <br />
-              <span className="bg-grey-300 mt-3 inline-block rounded-md bg-opacity-20 p-1 px-3 text-2xl">
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
                 y = [ x<sup>2</sup> {isPlus ? '+' : '-'} {2 * x_s}x +{' '}
                 {x_s * x_s} ] {isPlus_2 ? '+' : '-'} {y_s}
               </span>
