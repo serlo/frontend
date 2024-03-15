@@ -97,6 +97,21 @@ export function VolumePyramide() {
           </>
         )
       }}
+      // eslint-disable-next-line no-empty-pattern
+      renderHint={({}) => {
+        return (
+          <>
+            Verwende die Formel für das Volumen einer Pyramide:
+            <br />
+            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              V = {buildFrac(<>1</>, <>3</>)} · G · h
+            </span>
+            <br />
+            Bestimme dazu den Inhalt der rechteckigen Grundfläche{' '}
+            <strong>G</strong>.
+          </>
+        )
+      }}
       centAmount={52}
     />
   )
