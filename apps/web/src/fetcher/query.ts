@@ -85,6 +85,7 @@ export const dataQuery = gql`
         }
         course {
           id
+          licenseId
           currentRevision {
             title
           }
