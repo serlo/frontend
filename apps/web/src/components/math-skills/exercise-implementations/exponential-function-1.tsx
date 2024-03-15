@@ -25,20 +25,21 @@ export function ExponentialFunction() {
       }}
       renderTask={({ Jahr_Anlage, Money_Start, Ende_Anlage, Zins }) => {
         return (
-          <>
+          <div className="text-lg">
             <h2 className="text-2xl">Rechnen mit der Exponentialfunktion</h2>
             <br />
             <br />
-            {data.name} hat {Money_Start} € im Jahr {Jahr_Anlage} angelegt.
-            Jedes Jahr wird das Kapital mit {Zins} % verzinst. Berechne, welchen
-            Betrag {data.name} {Ende_Anlage === 0 ? 'heute' : null}
+            {data.name ? `${data.name} hat` : 'Du hast'} {Money_Start} € im Jahr{' '}
+            {Jahr_Anlage} angelegt. Jedes Jahr wird das Kapital mit {Zins} %
+            verzinst. Berechne, welchen Betrag {data.name || 'Du'}{' '}
+            {Ende_Anlage === 0 ? 'heute' : null}
             {Ende_Anlage === 1 ? 'nächstes Jahr' : null}
             {Ende_Anlage === 2 ? 'übernächstes Jahr' : null}
             {Ende_Anlage === 3 ? 'in 5 Jahren' : null} besitzt.
             <br />
             <br />
             <i>Rechne am Besten mit Stift und Papier.</i>
-          </>
+          </div>
         )
       }}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -55,11 +56,10 @@ export function ExponentialFunction() {
             <br />
             Damit wird das Kapital durch die Exponentialfunktion
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               y = {Money_Start} · {Faktor.toString().replace('.', ',')}
               <sup>x</sup>
             </span>
-            <br />
             <br />
             beschrieben. x steht dabei für die Anzahl der Jahre ab {Jahr_Anlage}
             .

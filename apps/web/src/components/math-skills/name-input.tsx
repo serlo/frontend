@@ -14,7 +14,6 @@ export function NameInput() {
     <>
       <input
         type="text"
-        autoFocus
         value={nameValue}
         onChange={({ currentTarget }) => setNameValue(currentTarget.value)}
         className={cn(

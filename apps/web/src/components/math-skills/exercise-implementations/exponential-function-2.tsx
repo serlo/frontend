@@ -28,18 +28,22 @@ export function ExponentialFunctionTime() {
       renderTask={({ Jahr_Anlage, Money_Start, Zins, Geld_Ende }) => {
         return (
           <>
-            <h2 className="text-2xl">Rechnen mit der Exponentialfunktion</h2>
-            <br />
-            <br />
-            {data.name} hat {Money_Start} € im Jahr {Jahr_Anlage} angelegt.
-            Jedes Jahr wurde das Kapital mit {Zins} % verzinst, sodass das
-            Kapital am Ende {Geld_Ende} € betragen hat.
-            <br />
-            <br />
-            Berechne, wie viele Jahre das Geld angelegt wurde.
-            <br />
-            <br />
-            <i>Rechne am Besten mit Stift und Papier.</i>
+            <p className="mb-8 text-2xl">
+              Im Jahr {Jahr_Anlage} {data.name ? `hat ${data.name}` : 'hast Du'}{' '}
+              {Money_Start} € angelegt.
+              <br />
+              Jedes Jahr wurde das Kapital mit {Zins} % verzinst, sodass das
+              Kapital am Ende {Geld_Ende} € betragen hat.
+              <br />
+              <br />
+              Wie viele Jahre war das Geld angelegt?
+            </p>
+            <p>
+              <i>
+                Rechne mit der Exponentialfunktion und am besten mit Stift und
+                Papier.
+              </i>
+            </p>
           </>
         )
       }}

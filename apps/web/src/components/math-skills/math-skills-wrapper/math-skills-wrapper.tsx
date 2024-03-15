@@ -53,11 +53,11 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
         data={{
           title:
             !isLanding && grade
-              ? `Mathe-Skills für die ${grade}. Klasse`
+              ? 'Mathe Skills: Realschule Prüfungsvorbereitung' //`Mathe-Skills für die ${grade}. Klasse`
               : 'Meine Mathe-Skills',
           metaDescription: isLanding
-            ? 'Zeige deine mathematischen Skills. Interaktive Aufgaben ab der 5. Klasse.'
-            : 'Zeige deine mathematischen Skills',
+            ? 'Mathe-Prüfungsvorbereitung Realschule Bayern' //'Zeige deine mathematischen Skills. Interaktive Aufgaben ab der 5. Klasse.'
+            : '', //'Zeige deine mathematischen Skills',
         }}
       />
       <MathSkillsProvider value={{ data, updateData }}>
@@ -100,7 +100,11 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
           )}
           <div>
             <span className="group relative mr-4 text-gray-400 hover:underline">
-              <a href="https://www.freepik.com/free-vector/collection-cute-animals-wearing-graduation-cap-cartoon-style-vector_3780561.htm#query=animal%20illustration&position=1&from_view=keyword&track=ais&uuid=7991b85d-fd28-4da4-8e08-29af073982df">
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href="https://www.freepik.com/free-vector/collection-cute-animals-wearing-graduation-cap-cartoon-style-vector_3780561.htm#query=animal%20illustration&position=1&from_view=keyword&track=ais&uuid=7991b85d-fd28-4da4-8e08-29af073982df"
+              >
                 Bildquelle
               </a>
               <span className="pointer-events-none absolute -right-1.5 -top-10 hidden w-max rounded-md bg-gray-200 px-2 py-1 text-almost-black group-focus-within:block group-hover:block">

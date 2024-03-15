@@ -44,7 +44,7 @@ function Content() {
         <div className="sm:flex sm:flex-row-reverse sm:justify-end">
           <WelcomeSection />
         </div>
-        <h2 className="mt-10 text-2xl font-bold">
+        <h2 className="mt-10 text-2xl font-bold" id="aufgaben">
           Training Realschule Bayern (Abschlussprüfung):
         </h2>
         <h3 className="my-5 text-2xl">Zweig I</h3>

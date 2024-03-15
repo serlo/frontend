@@ -55,7 +55,6 @@ export function VertexParabola() {
             </span>{' '}
             und subtrahieren ihn zum Schluss wieder:
             <br />
-            <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               y = x<sup>2</sup>
               {isPlus ? '+' : '-'} {b}x +{' '}
@@ -72,7 +71,6 @@ export function VertexParabola() {
             <br />
             Den vorderen Teil fassen wir zu einem Binom Zusammen:
             <br />
-            <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               y = <span className="inline-block scale-y-[3]">(</span>x{' '}
               {isPlus ? '+' : '-'} {buildFrac(<>{b}</>, <>2</>)}{' '}
@@ -86,7 +84,6 @@ export function VertexParabola() {
             <br />
             <br />
             Die Zahlen hinter der Klammer werden auch zusammengefasst:
-            <br />
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               y = <span className="inline-block scale-y-[1.5]">(</span>x{' '}
