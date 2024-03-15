@@ -99,6 +99,21 @@ export function Trigonometry() {
           </>
         )
       }}
+      renderHint={({ data }) => {
+        return (
+          <>
+            Verwende den Kosinussatz:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              |<span className="overline">SB</span>|² = |
+              <span className="overline">AS</span>|² + |
+              <span className="overline">AB</span>|² - 2 · |
+              <span className="overline">AS</span>| · |
+              <span className="overline">AB</span>| · cos(&#945;)
+            </span>
+          </>
+        )
+      }}
       centAmount={52}
     />
   )
