@@ -99,7 +99,8 @@ export function Trigonometry() {
           </>
         )
       }}
-      renderHint={({ data }) => {
+      // eslint-disable-next-line no-empty-pattern
+      renderHint={({}) => {
         return (
           <>
             Verwende den Kosinussatz:
