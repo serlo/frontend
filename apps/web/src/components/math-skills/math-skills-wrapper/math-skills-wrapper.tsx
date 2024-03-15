@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { ReactNode, useEffect, useState } from 'react'
 
 import { MathSkillsHeader } from './math-skills-header'
+import { animalsData } from '../utils/animal-data'
 import {
   MathSkillsProvider,
   MathSkillsStorageData,
@@ -126,6 +127,9 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
       <style jsx global>{`
         html {
           background-color: white !important;
+        }
+        :root {
+          --color-animal: ${animalsData[data.animal].color};
         }
       `}</style>
     </>

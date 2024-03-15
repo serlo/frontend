@@ -69,6 +69,7 @@ export default {
           DEFAULT: colors.red[900],
           100: colors.red[100],
         },
+        animal: 'rgb(var(--color-animal) / <alpha-value>)',
       },
       borderWidth: {
         3: '3px',

@@ -31,7 +31,7 @@ export function SkillPoints() {
           'relative mr-2 h-[43px] w-[43px] -rotate-90',
           percent <= 0 && 'opacity-60'
         )}
-        style={{ color: animalsData[animal].color }}
+        style={{ color: `rgb(${animalsData[animal].color})` }}
       >
         <svg className="h-full w-full" viewBox="0 0 100 100">
           <circle

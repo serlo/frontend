@@ -59,7 +59,7 @@ function Content() {
             <div>
               <a
                 className={cn(
-                  track === 1 && 'bg-newgreen bg-opacity-10',
+                  track === 1 && 'bg-animal bg-opacity-50',
                   'my-5 inline-block rounded-lg px-2 py-1 text-2xl hover:shadow-menu'
                 )}
                 href="/meine-mathe-skills?zweig=1"
@@ -77,7 +77,7 @@ function Content() {
               </a>
               <a
                 className={cn(
-                  track === 2 && 'bg-newgreen bg-opacity-10',
+                  track === 2 && 'bg-animal bg-opacity-50',
                   'my-5 ml-3 inline-block rounded-lg px-2 py-1 text-2xl hover:shadow-menu'
                 )}
                 href="/meine-mathe-skills?zweig=2"
@@ -169,8 +169,8 @@ function Content() {
         key={id}
         href={`/meine-mathe-skills/training-realschule-bayern/${id}`}
         className={cn(
-          'flex aspect-square w-48 flex-col items-start justify-center rounded-2xl bg-newgreen bg-opacity-10 p-4 text-almost-black !no-underline',
-          'text-xl transition-colors hover:bg-opacity-20 hover:shadow-menu active:bg-opacity-20'
+          'bg-animal flex aspect-square w-48 flex-col items-start justify-center rounded-2xl bg-opacity-10 p-4 text-almost-black !no-underline',
+          'text-xl transition-colors hover:bg-opacity-25 hover:shadow-menu active:bg-opacity-25'
         )}
       >
         <p className="mb-2">
