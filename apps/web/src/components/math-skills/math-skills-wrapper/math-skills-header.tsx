@@ -41,10 +41,7 @@ export function MathSkillsHeader() {
       'my-3 block rounded bg-brand-200 px-2 py-1 text-lg !no-underline hover:bg-brand-300'
     )
     return isExercise ? (
-      <Link
-        href={`/meine-mathe-skills/${String(router.query.grade)}`}
-        className={className}
-      >
+      <Link href="/meine-mathe-skills#aufgaben" className={className}>
         <FaIcon icon={faListDots} /> Aufgaben
       </Link>
     ) : (
