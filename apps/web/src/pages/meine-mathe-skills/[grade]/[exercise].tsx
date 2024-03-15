@@ -62,16 +62,22 @@ function Content() {
     >
       {data.component}
 
-      <h2 className="text-md mb-5 mt-9 font-bold">
-        {data.title}
-        {data.level ? (
-          <>
-            : <span className="text-brand-500">{data.level}</span>
-          </>
-        ) : null}
-      </h2>
       {data.smallprint ? (
-        <div className="mb-12 hyphens-auto leading-snug">{data.smallprint}</div>
+        <>
+          <h2 className="text-md mb-5 mt-9 font-bold">
+            {data.title}
+            {data.level ? (
+              <>
+                : <span className="text-brand-500">{data.level}</span>
+              </>
+            ) : null}
+          </h2>
+          {data.smallprint ? (
+            <div className="mb-12 hyphens-auto leading-snug">
+              {data.smallprint}
+            </div>
+          ) : null}
+        </>
       ) : null}
     </div>
   )
