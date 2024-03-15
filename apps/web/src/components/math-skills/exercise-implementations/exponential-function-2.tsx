@@ -110,7 +110,7 @@ export function ExponentialFunctionTime() {
             <br />
             Mit dem Taschenrechner ergibt sich:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               x = {Zeit.toString().replace('.', ',')}
             </span>
             <br />
