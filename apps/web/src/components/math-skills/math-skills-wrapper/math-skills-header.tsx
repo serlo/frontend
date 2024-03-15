@@ -18,12 +18,7 @@ export function MathSkillsHeader() {
   const titlePrefix = genitiveName && !isLanding ? genitiveName : 'Meine'
 
   return (
-    <header
-      className={cn(
-        'flex h-[4.5rem] items-center justify-between bg-yellow-100 px-4 py-2 text-center',
-        isExercise ? 'sticky top-0 z-50' : ''
-      )}
-    >
+    <header className="flex h-[4.5rem] items-center justify-between bg-yellow-100 px-4 py-2 text-center">
       <Link
         href="/meine-mathe-skills"
         className={cn(
