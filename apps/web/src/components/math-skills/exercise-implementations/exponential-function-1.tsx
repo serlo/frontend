@@ -83,11 +83,28 @@ export function ExponentialFunction() {
         )
       }}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      renderHint={() => {
+      renderHint={({ Money_Start, Zins }) => {
+        const Faktor = 1 + Zins / 100
         return (
           <>
             Das angelegte Geld kann mit einer Exponentialfunktion beschrieben
             werden.
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              y = a · b <sup>x</sup>
+            </span>
+            <br />
+            Dabei steht a für den Anfangswert{' '}
+            <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
+              {Money_Start}
+            </span>{' '}
+            und b für die Wachstumsrate{' '}
+            <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
+              {Faktor.toString().replace('.', ',')}.
+            </span>
+            <br />
+            <br />
+            Um das Kapital zu berechnen muss die richtige Anzahl der Jahre für x
+            eingesetzt werden.
           </>
         )
       }}
