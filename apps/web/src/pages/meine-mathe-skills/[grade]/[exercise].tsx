@@ -56,7 +56,7 @@ function Content() {
   return (
     <div
       className={cn(
-        'relative mx-4 mt-10 bg-white mobileExt:mx-auto sm:w-full',
+        'mx-4 mt-10 bg-white mobileExt:mx-auto sm:w-full',
         data.track ? 'max-w-2xl' : 'max-w-lg '
       )}
     >

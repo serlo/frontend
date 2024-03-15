@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 import { ExStatus } from '../feedback/execise-feedback'
 import { ExerciseSelfFeedback } from '../feedback/execise-self-feedback'
+import { ExerciseHint } from '../feedback/exercise-hint'
 import { SkipExerciseButton } from '../feedback/skip-exercise-button'
 
 interface SelfEvaluationExerciseProps<DATA> {
@@ -23,7 +24,6 @@ export function SelfEvaluationExercise<T>({
   const [data, setData] = useState(generator())
   const [exStatus, setExStatus] = useState<ExStatus>('fresh')
   const [showSolution, setShowSolution] = useState(false)
-  const [showStrategy, setShowStrategy] = useState(false)
 
   return (
     <>
@@ -33,10 +33,10 @@ export function SelfEvaluationExercise<T>({
         makeNewExercise={() => {
           setData(generator())
           setShowSolution(false)
-          setShowStrategy(false)
         }}
       />
       <div className="h-4"></div>
+      {renderHint ? <ExerciseHint data={data} renderHint={renderHint} /> : null}
       Und wenn du fertig bist:
       <div className="-ml-side mt-2">
         <SpoilerRenderer
@@ -59,16 +59,6 @@ export function SelfEvaluationExercise<T>({
           }
         />
       </div>
-      {renderHint && (
-        <div className="-ml-side mt-2">
-          <SpoilerRenderer
-            openOverwrite={showStrategy}
-            setOpenOverwrite={setShowStrategy}
-            title={<>Tipps</>}
-            content={<div className="mt-2 p-side">{renderHint(data)}</div>}
-          />
-        </div>
-      )}
     </>
   )
 }
