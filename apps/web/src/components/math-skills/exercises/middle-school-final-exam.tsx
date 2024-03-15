@@ -1,5 +1,6 @@
 import { ABCFormular } from '../exercise-implementations/abc-formular'
 import { ExponentialFunction } from '../exercise-implementations/exponential-function-1'
+import { ExponentialFunctionTime } from '../exercise-implementations/exponential-function-2'
 import { LogarithmExercise1 } from '../exercise-implementations/logarithm-exercise-1'
 import { LogarithmExercise2 } from '../exercise-implementations/logarithm-exericse-2'
 import { NormalformParabola } from '../exercise-implementations/normalform-parabola'
@@ -76,10 +77,17 @@ export const middleSchoolFinalExam = {
     component: <SurfacePyramide />,
   },
   'exponential-function-1': {
-    title: 'Zinseszins',
+    title: 'Kapital berechnen',
     subtitle: 'Exponentialfunktion',
     useCalculator: true,
     track: 1,
     component: <ExponentialFunction />,
+  },
+  'exponential-function-2': {
+    title: 'Anlagezeit berechnen',
+    subtitle: 'Exponentialfunktion',
+    useCalculator: true,
+    track: 1,
+    component: <ExponentialFunctionTime />,
   },
 } as const
