@@ -15,7 +15,7 @@ export function ExerciseHint<T>({ data, renderHint }: ExerciseHintProps<T>) {
   return (
     <>
       <a
-        className="group fixed right-0 z-50 block cursor-pointer outline-none"
+        className="group fixed bottom-28 right-0 z-50 block cursor-pointer outline-none"
         tabIndex={0}
         onClick={() => setShowHint(!showHint)}
       >
@@ -31,10 +31,10 @@ export function ExerciseHint<T>({ data, renderHint }: ExerciseHintProps<T>) {
             showHint && '-right-48 -rotate-[45deg] opacity-100'
           )}
         >
-          <p className="absolute -mr-4 -mt-10 text-center font-handwritten text-xl">
+          <p className="absolute z-[51] -mr-4 -mt-10 text-center font-handwritten text-xl">
             Einfach einmal Klicken <br /> für einen Tipp :)
           </p>
-          <LandingAnimal />
+          <LandingAnimal noChangeButton />
         </div>
       </a>
       <ModalWithCloseButton
