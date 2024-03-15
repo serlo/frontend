@@ -98,7 +98,8 @@ export function Trigonometry1() {
           </>
         )
       }}
-      renderHint={({ data }) => {
+      // eslint-disable-next-line no-empty-pattern
+      renderHint={({}) => {
         return (
           <>
             Verwende den Strahlensatz, um eine Gleichung aufzustellen:

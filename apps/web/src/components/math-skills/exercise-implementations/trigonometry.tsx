@@ -75,18 +75,22 @@ export function Trigonometry() {
             </span>
             <br />
             <br />
-            Nutze cos 60° = 0,5 und berechne:
+            Nutze{' '}
+            <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
+              cos 60° = 0,5
+            </span>{' '}
+            und berechne:
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               |<span className="overline">SB</span>|² ={' '}
               {data.as * data.as + data.ab * data.ab} cm² -{' '}
-              {2 * data.as * data.ab} cm²
+              {2 * data.as * data.ab * 0.5} cm²
             </span>
             <br />
             <br />
             Ziehe die Wurzel. Das Ergebnis ist bestätigt.
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               |<span className="overline">SB</span>| ={' '}
               {buildSqrt(<>{data.sb_sq}</>)} cm
             </span>
