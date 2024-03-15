@@ -44,8 +44,77 @@ export function ExponentialFunctionTime() {
         )
       }}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      renderSolution={({ Jahr_Anlage }) => {
-        return <></>
+      renderSolution={({ Money_Start, Jahr_Anlage, Zins, Geld_Ende }) => {
+        const Faktor = Zins / 100 + 1
+        const Zeit =
+          Math.round(
+            (Math.log2(Geld_Ende / Money_Start) / Math.log2(Faktor)) * 100
+          ) / 100
+        const Zeit_Jahre = Math.ceil(
+          Math.round(
+            (Math.log2(Geld_Ende / Money_Start) / Math.log2(Faktor)) * 100
+          ) / 100
+        )
+        return (
+          <>
+            Bei {Zins} % Zinsen wächst das Kapital jährlich mit dem Faktor{' '}
+            {Faktor.toString().replace('.', ',')}.
+            <br />
+            <br />
+            Damit wird das Kapital durch die Exponentialfunktion
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              y = {Money_Start} · {Faktor.toString().replace('.', ',')}
+              <sup>x</sup>
+            </span>
+            <br />
+            <br />
+            beschrieben. x steht dabei für die gesuchte Anzahl der Jahre ab{' '}
+            {Jahr_Anlage}.
+            <br />
+            <br />
+            Wir setzen für y den Endbetrag {Geld_Ende} € ein, weil wir
+            untersuchen, wann das Kapital diesen Wert erreicht hat.
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              {Geld_Ende} = {Money_Start} ·{' '}
+              {Faktor.toString().replace('.', ',')}
+              <sup>x</sup>
+            </span>
+            <br />
+            Wir lösen die Gleichung, indem wir zuerst beide Seiten durch{' '}
+            <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
+              {Money_Start}{' '}
+            </span>{' '}
+            teilen.
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              {buildFrac(<>{Geld_Ende}</>, <>{Money_Start}</>)} ={' '}
+              {Faktor.toString().replace('.', ',')}
+              <sup>x</sup>
+            </span>
+            <br />
+            <br /> Um x zu bestimmen, muss der Logarithmus zur Basis{' '}
+            {Faktor.toString().replace('.', ',')} angewendet werden:
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              log <sub>{Faktor.toString().replace('.', ',')}</sub>
+              <span className="inline-block scale-y-[3] ">(</span>
+              {buildFrac(<>{Geld_Ende}</>, <>{Money_Start}</>)}
+              <span className="inline-block scale-y-[3] ">)</span> = x
+            </span>
+            <br />
+            <br />
+            Mit dem Taschenrechner ergibt sich:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              x = {Zeit.toString().replace('.', ',')}
+            </span>
+            <br />
+            <br />
+            Das Geld wurde also {Zeit.toString().replace('.', ',')} Jahre bzw.{' '}
+            {Zeit_Jahre.toString().replace('.', ',')} ganze Jahre angelegt.
+          </>
+        )
       }}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       renderHint={() => {
