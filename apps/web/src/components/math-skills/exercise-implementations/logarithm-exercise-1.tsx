@@ -134,7 +134,7 @@ export function LogarithmExercise1() {
                 <br />
               </>
             )}
-            Fasse zusammen:
+            Fasse zusammen mithilfe der Logarithmusregeln:
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               {summands.some((s) => s.exponent < 0) ? (
@@ -200,6 +200,28 @@ export function LogarithmExercise1() {
                   {resultExp !== 1 ? <sup>{resultExp}</sup> : null}
                 </>
               )}
+            </span>
+          </>
+        )
+      }}
+      // eslint-disable-next-line no-empty-pattern
+      renderHint={({}) => {
+        return (
+          <>
+            Verwende die Logarithmusregeln
+            <br />
+            <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              log(u) + log(v) = log(u · v)
+            </span>
+            <br />
+            <br />
+            und
+            <br />
+            <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              log(u) - log(v) = log
+              <span className="inline-block scale-y-[2.5] ">(</span>
+              {buildFrac(<>u</>, <>v</>)}
+              <span className="inline-block scale-y-[2.5] ">)</span>.
             </span>
           </>
         )
