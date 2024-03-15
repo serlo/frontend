@@ -104,6 +104,24 @@ export function VertexParabola() {
           </>
         )
       }}
+      // eslint-disable-next-line no-empty-pattern
+      renderHint={({ b }) => {
+        return (
+          <>
+            Führe eine quadratische Ergänzung durch mit dem Term:
+            <br />
+            <span className="text-1xl mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-1">
+              <span className="inline-block scale-y-[3]">(</span>
+              {buildFrac(<>{b}</>, <>2</>)}
+              <span className="inline-block scale-y-[3]">)</span>
+              <sup>2</sup>
+            </span>
+            <br />
+            <br />
+            Fasse den vorderen Teil des Terms zu einem Binom zusammen.
+          </>
+        )
+      }}
       centAmount={35}
     />
   )
