@@ -211,6 +211,10 @@ export function LogarithmExercise1() {
             Verwende die Logarithmusregeln
             <br />
             <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              a · log(u) = log(u<sup>a</sup>),
+            </span>
+            <br />
+            <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               log(u) + log(v) = log(u · v)
             </span>
             <br />
