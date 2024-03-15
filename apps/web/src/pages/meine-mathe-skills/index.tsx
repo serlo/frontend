@@ -44,52 +44,57 @@ function Content() {
         <div className="sm:flex sm:flex-row-reverse sm:justify-end">
           <WelcomeSection />
         </div>
-        <h2 className="mt-10 text-2xl font-bold" id="aufgaben">
-          Training Realschule Bayern (Abschlussprüfung):
-        </h2>
-        <h3 className="my-5 text-2xl">Zweig I</h3>
-        <h4 className="text-lg font-bold">Teil A (ohne Hilfsmittel)</h4>
-        <div className="my-6 flex flex-wrap gap-3">
-          {examTasks
-            .filter(
-              ([, obj]) =>
-                obj.useCalculator === false &&
-                (obj.track === 1 || (obj.track as number) === 3)
-            )
-            .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
-        </div>
-        <h4 className="text-lg font-bold">Teil B (mit Hilfsmittel)</h4>
-        <div className="my-6 flex flex-wrap gap-3">
-          {examTasks
-            .filter(
-              ([, obj]) =>
-                obj.useCalculator === true &&
-                ((obj.track as number) === 1 || (obj.track as number) === 3)
-            )
-            .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
-        </div>
-        <h3 className="my-5 text-2xl">Zweig II / III</h3>
-        <h4 className="text-lg font-bold">Teil A (ohne Hilfsmittel)</h4>
-        <div className="my-6 flex flex-wrap gap-3">
-          {examTasks
-            .filter(
-              ([, obj]) =>
-                obj.useCalculator === false &&
-                (obj.track === 2 || (obj.track as number) === 3)
-            )
-            .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
-        </div>
-        <h4 className="text-lg font-bold">Teil B (mit Hilfsmittel)</h4>
-        <div className="my-6 flex flex-wrap gap-3">
-          {examTasks
-            .filter(
-              ([, obj]) =>
-                obj.useCalculator === true &&
-                ((obj.track as number) === 2 || (obj.track as number) === 3)
-            )
-            .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
-        </div>
-        <div className="h-24"></div>
+        {data.name ? (
+          <>
+            {' '}
+            <h2 className="mt-10 text-2xl font-bold" id="aufgaben">
+              Training Realschule Bayern (Abschlussprüfung):
+            </h2>
+            <h3 className="my-5 text-2xl">Zweig I</h3>
+            <h4 className="text-lg font-bold">Teil A (ohne Hilfsmittel)</h4>
+            <div className="my-6 flex flex-wrap gap-3">
+              {examTasks
+                .filter(
+                  ([, obj]) =>
+                    obj.useCalculator === false &&
+                    (obj.track === 1 || (obj.track as number) === 3)
+                )
+                .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
+            </div>
+            <h4 className="text-lg font-bold">Teil B (mit Hilfsmittel)</h4>
+            <div className="my-6 flex flex-wrap gap-3">
+              {examTasks
+                .filter(
+                  ([, obj]) =>
+                    obj.useCalculator === true &&
+                    ((obj.track as number) === 1 || (obj.track as number) === 3)
+                )
+                .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
+            </div>
+            <h3 className="my-5 text-2xl">Zweig II / III</h3>
+            <h4 className="text-lg font-bold">Teil A (ohne Hilfsmittel)</h4>
+            <div className="my-6 flex flex-wrap gap-3">
+              {examTasks
+                .filter(
+                  ([, obj]) =>
+                    obj.useCalculator === false &&
+                    (obj.track === 2 || (obj.track as number) === 3)
+                )
+                .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
+            </div>
+            <h4 className="text-lg font-bold">Teil B (mit Hilfsmittel)</h4>
+            <div className="my-6 flex flex-wrap gap-3">
+              {examTasks
+                .filter(
+                  ([, obj]) =>
+                    obj.useCalculator === true &&
+                    ((obj.track as number) === 2 || (obj.track as number) === 3)
+                )
+                .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
+            </div>
+            <div className="h-24"></div>
+          </>
+        ) : null}
       </div>
     </>
   )

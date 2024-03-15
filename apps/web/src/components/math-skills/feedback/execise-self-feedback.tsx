@@ -2,6 +2,7 @@ import { faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import { Dispatch, SetStateAction, useEffect } from 'react'
 
 import { ExStatus } from './execise-feedback'
+import { SkillPoints } from '../math-skills-wrapper/skill-points'
 import { useExerciseData } from '../utils/math-skills-data-context'
 import { FaIcon } from '@/components/fa-icon'
 
@@ -49,7 +50,12 @@ export function ExerciseSelfFeedback({
 
   return (
     <div className="mt-10 border-t border-t-gray-200 py-7">
-      <b className="text-lg">Und wie lief&apos;s?</b>
+      <div className="flex justify-between">
+        <b className="text-lg">Und wie lief&apos;s?</b>
+        <div className="-mt-4">
+          <SkillPoints />
+        </div>
+      </div>
 
       {isNextButton ? (
         <div className="-mt-2 flex min-h-[120px] flex-col items-center sm:min-h-[80px] sm:flex-row sm:justify-between">

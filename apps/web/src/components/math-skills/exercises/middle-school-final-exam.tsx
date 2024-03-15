@@ -63,7 +63,7 @@ export const middleSchoolFinalExam = {
     component: <ABCFormular />,
   },
   'volumen-pyramide-1': {
-    title: 'Volumen einer Pyramiden',
+    title: 'Volumen einer Pyramide',
     subtitle: 'vierseitig',
     useCalculator: true,
     track: 2,
