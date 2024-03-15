@@ -125,7 +125,7 @@ export function LogarithmExercise1() {
               (s) => s.isOutside && Math.abs(s.exponent) !== 1
             ) && (
               <>
-                Ziehe Vorfaktoren in den Logarithmus:
+                Ziehe die Vorfaktoren in den Logarithmus:
                 <br />
                 <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
                   {summands.map((el, i) => renderSummandAllInside(el, i))}
