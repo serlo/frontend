@@ -44,7 +44,7 @@ export function NormalformParabola() {
             </span>
             <br />
             <br />
-            Wende die die binomischen Formeln an:
+            Wende die binomischen Formeln an:
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               y = [ x<sup>2</sup> {isPlus ? '+' : '-'} 2 · {x_s} · x + {x_s}

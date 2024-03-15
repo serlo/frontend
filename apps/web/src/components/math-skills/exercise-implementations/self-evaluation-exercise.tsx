@@ -33,6 +33,7 @@ export function SelfEvaluationExercise<T>({
         makeNewExercise={() => {
           setData(generator())
           setShowSolution(false)
+          setShowStrategy(false)
         }}
       />
       <div className="h-4"></div>
@@ -64,9 +65,7 @@ export function SelfEvaluationExercise<T>({
             openOverwrite={showStrategy}
             setOpenOverwrite={setShowStrategy}
             title={<>Tipps</>}
-            content={
-              <div className="mt-2 p-side text-lg">{renderHint(data)}</div>
-            }
+            content={<div className="mt-2 p-side">{renderHint(data)}</div>}
           />
         </div>
       )}

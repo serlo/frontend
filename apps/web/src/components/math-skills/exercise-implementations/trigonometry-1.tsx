@@ -64,6 +64,7 @@ export function Trigonometry1() {
         return (
           <>
             Stelle eine Gleichung mit dem Strahlensatz auf:
+            <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               {buildFrac(
                 <>
@@ -94,6 +95,37 @@ export function Trigonometry1() {
             </span>
             <br />
             <br />
+          </>
+        )
+      }}
+      // eslint-disable-next-line no-empty-pattern
+      renderHint={({}) => {
+        return (
+          <>
+            Verwende den Strahlensatz, um eine Gleichung aufzustellen:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              {buildFrac(
+                <>
+                  |<span className="overline">CD</span>|
+                </>,
+                <>
+                  |<span className="overline">AB</span>|
+                </>
+              )}{' '}
+              ={' '}
+              {buildFrac(
+                <>
+                  |<span className="overline">CS</span>|{' '}
+                </>,
+                <>
+                  |<span className="overline">AS</span>|
+                </>
+              )}
+            </span>
+            <br />
+            <br />
+            Setze die Werte der Längen ein und löse die Gleichung.
           </>
         )
       }}
