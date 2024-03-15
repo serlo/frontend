@@ -71,7 +71,7 @@ export function ExponentialFunction() {
             {Ende_Anlage === 3 ? 'in 5 Jahren' : null} sind es insgesamt {Jahre}{' '}
             Jahre, womit wir {Jahre} für x in die Funktion einsetzen:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               y = {Money_Start} · {Faktor.toString().replace('.', ',')}
               <sup>{Jahre}</sup> = {Geld.toString().replace('.', ',')}
             </span>
