@@ -85,7 +85,7 @@ export function VertexParabola() {
             <br />
             Die Zahlen hinter der Klammer werden auch zusammengefasst:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               y = <span className="inline-block scale-y-[1.5]">(</span>x{' '}
               {isPlus ? '+' : '-'} {(b / 2).toString().replace('.', ',')}
               <span className="inline-block scale-y-[1.5]">)</span>
