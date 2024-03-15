@@ -12,7 +12,7 @@ export function WelcomeSection() {
   return (
     <>
       <LandingAnimal />
-      <div className="mx-auto mb-6 mt-2 text-lg sm:mx-0 sm:w-[26rem] sm:leading-relaxed">
+      <div className="mb-6 mt-2 max-w-[26rem] text-lg sm:leading-relaxed">
         {data?.name ? (
           <>
             Hallo <b>{data.name}</b>,
