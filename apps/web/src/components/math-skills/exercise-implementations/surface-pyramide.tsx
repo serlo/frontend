@@ -33,8 +33,8 @@ export function SurfacePyramide() {
       renderHint={() => {
         return (
           <>
-            Die Pyramide-Oberfläche besteht aus 4 Dreiecken und der Grundfläche.
-            Berechne diese Flächen zuerst separat.
+            Die Pyramide-Oberfläche besteht aus <b>4 Dreiecken</b> und der{' '}
+            <b>Grundfläche</b>. Berechne diese Flächen zuerst separat.
           </>
         )
       }}
@@ -51,11 +51,12 @@ export function SurfacePyramide() {
             </small>
             <ol>
               <li className="mt-12 text-2xl">
-                Berechne den Oberflächeninhalt der <br /> Pyramide{' '}
-                <b className="rounded-md bg-newgreen bg-opacity-20 p-1">
+                Berechne den Oberflächeninhalt der Pyramide{' '}
+                <b className="inline-block rounded-md bg-newgreen bg-opacity-20 p-1">
                   ABCDE
-                </b>
-                und runde auf 2 Stellen nach dem Komma.
+                </b>{' '}
+                und runde auf <span className="inline-block">2 Stellen</span>{' '}
+                nach dem Komma.
               </li>
             </ol>
           </>
@@ -80,21 +81,21 @@ export function SurfacePyramide() {
         return (
           <>
             Allgemeine Gleichung für den Flächeninhalt von Pyramiden: <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               A = G + M
             </span>{' '}
             <br />
             Dabei ist <strong>G</strong> die Grundfläche der Pyramide, die wir
             schon in Teilaufgabe 1 bestimmt haben und <strong>M</strong> der
             Flächeninhalt aller Mantelflächen (Dreiecksflächen). <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               G = {data.ab * data.bd} cm² <br />
             </span>{' '}
             <br />
             Die Mantelfläche der Pyramide besteht aus vier Dreiecken. Dabei sind
             die gegenüberliegenden Dreieicke gleich groß.
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               M = 2 · M<sub>a</sub> + 2 · M<sub>b</sub> <br />M<sub>a</sub> ={' '}
               {buildFrac(<>1</>, <>2</>)} · a · h<sub>a</sub> <br />M
               <sub>b</sub> = {buildFrac(<>1</>, <>2</>)} · b · h<sub>b</sub>{' '}
@@ -103,41 +104,41 @@ export function SurfacePyramide() {
             <br />
             Du hast h<sub>a</sub> und h<sub>b</sub> nicht gegeben. Deshalb musst
             du als nächstes Die Dreieckshöhen berechnen: <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               h<sub>a</sub> = √
               <span className="pl-1 overline">(a/2)² + h² </span>
             </span>{' '}
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               h<sub>a</sub> = √
               <span className="pl-1 overline">
                 ({data.ab} cm/2)² + {data.me} cm²{' '}
               </span>
             </span>{' '}
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               h<sub>a</sub> = {ha.toLocaleString('de-DE')} cm
             </span>{' '}
             <br /> <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               h<sub>b</sub> = √
               <span className="pl-1 overline">(b/2)² + h² </span>
             </span>{' '}
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               h<sub>b</sub> = √
               <span className="pl-1 overline">
                 ({data.bd} cm/2)² + {data.me} cm²{' '}
               </span>
             </span>{' '}
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               h<sub>b</sub> = {hb.toLocaleString('de-DE')} cm
             </span>{' '}
             <br /> <br />
             Nun kannst du h<sub>a</sub> und h<sub>b</sub> in die
             Mantelflächenformel einsetzen: <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               M<sub>a</sub> = {buildFrac(<>1</>, <>2</>)} · {data.ab} cm ·{' '}
               {ha.toLocaleString('de-DE')} cm <br />M<sub>a</sub> ={' '}
               {Ma.toLocaleString('de-DE')} cm²

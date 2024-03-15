@@ -46,8 +46,9 @@ export function VolumePyramide() {
                 Berechne das Volumen der Pyramide{' '}
                 <b className="rounded-md bg-newgreen bg-opacity-20 p-1">
                   ABCDE
-                </b>
-                und runde auf 2 Stellen nach dem Komma.
+                </b>{' '}
+                und runde auf <span className="inline-block">2 Stellen</span>{' '}
+                nach dem Komma.
               </li>
             </ol>
           </>
@@ -72,19 +73,19 @@ export function VolumePyramide() {
         return (
           <>
             Allgemeine Gleichung für das Volumen von Pyramiden: <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               V = {buildFrac(<>1</>, <>3</>)} · G · h
             </span>
             <br /> Dabei ist <strong>G</strong> die Grundfläche und{' '}
             <strong>h</strong> die Höhe der Pyramide. Die Grundfläche besteht
             bei unserer Pyramide aus einem Rechteck: <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               G = {data.ab} cm · {data.bd} cm <br />G = {G} cm²
             </span>
             <br />
             Nun können wir alle Werte in die allgemeine Gleichung einsetzen:{' '}
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               V = {buildFrac(<>1</>, <>3</>)} · {data.ab * data.bd} cm² ·{' '}
               {data.me} cm
             </span>

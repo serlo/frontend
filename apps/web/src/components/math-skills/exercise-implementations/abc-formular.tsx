@@ -50,6 +50,7 @@ export function ABCFormular() {
               {c > 0 ? '+' : ''} {c}
             </span>
             <br />
+            <br />
             Wir verwenden die abc-Formel um die Gleichung zu lösen:
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               x<sub>1,2</sub> ={' '}
@@ -75,7 +76,6 @@ export function ABCFormular() {
               c = {c}
             </span>{' '}
             ein:
-            <br />
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               x<sub>1,2</sub> ={' '}
@@ -105,6 +105,7 @@ export function ABCFormular() {
               )}
             </span>
             <br />
+            <br />
             Fasse unter der Wurzel zusammen:
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
@@ -118,6 +119,7 @@ export function ABCFormular() {
               )}
             </span>
             <br />
+            <br />
             Ziehe die Wurzel und fasse weiter zusammen:
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
@@ -129,6 +131,7 @@ export function ABCFormular() {
                 <>{2 * a}</>
               )}
             </span>
+            <br />
             <br />
             Daraus ergeben sich die beiden Lösungen:
             <br />

@@ -53,11 +53,11 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
         data={{
           title:
             !isLanding && grade
-              ? `Mathe-Skills für die ${grade}. Klasse`
+              ? 'Mathe Skills: Realschule Prüfungsvorbereitung' //`Mathe-Skills für die ${grade}. Klasse`
               : 'Meine Mathe-Skills',
           metaDescription: isLanding
-            ? 'Zeige deine mathematischen Skills. Interaktive Aufgaben ab der 5. Klasse.'
-            : 'Zeige deine mathematischen Skills',
+            ? 'Mathe-Prüfungsvorbereitung Realschule Bayern' //'Zeige deine mathematischen Skills. Interaktive Aufgaben ab der 5. Klasse.'
+            : '', //'Zeige deine mathematischen Skills',
         }}
       />
       <MathSkillsProvider value={{ data, updateData }}>
