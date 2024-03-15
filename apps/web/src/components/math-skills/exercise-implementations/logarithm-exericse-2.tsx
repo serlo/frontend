@@ -40,7 +40,7 @@ export function LogarithmExercise2() {
             </span>
             <br />
             <br />
-            Forme um mit Logarithmusgesetz:
+            Forme um mit den Logarithmusgesetzen:
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               log&#8202;<sub>{logBase}</sub>
@@ -57,7 +57,7 @@ export function LogarithmExercise2() {
             </span>
             <br />
             <br />
-            Wende 3. binomische Formel im Zähler an:
+            Wende die 3. binomische Formel im Zähler an:
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               log&#8202;<sub>{logBase}</sub>
@@ -80,6 +80,26 @@ export function LogarithmExercise2() {
               log&#8202;<sub>{logBase}</sub>({varName} {isPlus ? '-' : '+'}{' '}
               {num})
             </span>
+          </>
+        )
+      }}
+      // eslint-disable-next-line no-empty-pattern
+      renderHint={({}) => {
+        return (
+          <>
+            Verwende die Logarithmusregel
+            <br />
+            <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              log(u) - log(v) = log
+              <span className="inline-block scale-y-[2.5] ">(</span>
+              {buildFrac(<>u</>, <>v</>)}
+              <span className="inline-block scale-y-[2.5] ">)</span>.
+            </span>
+            <br />
+            <br />
+            Verwende die 3. binomische Formel, um den Term im Logarithmus weiter
+            zu vereinfachen.
+            <br />
           </>
         )
       }}
