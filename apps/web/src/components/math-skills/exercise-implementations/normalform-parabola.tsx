@@ -82,6 +82,22 @@ export function NormalformParabola() {
           </>
         )
       }}
+      // eslint-disable-next-line no-empty-pattern
+      renderHint={({ isPlus }) => {
+        return (
+          <>
+            Verwende die binomische Formel:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              (a {isPlus ? '+' : '-'} b) = a² {isPlus ? '+' : '-'} 2 · a · b +
+              b²
+            </span>
+            <br />
+            <br />
+            Fasse den Term am Ende zusammen.
+          </>
+        )
+      }}
       centAmount={52}
     />
   )

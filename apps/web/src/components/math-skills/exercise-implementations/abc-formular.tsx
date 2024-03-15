@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-pattern */
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { buildFrac } from '../utils/math-builder'
@@ -176,6 +177,26 @@ export function ABCFormular() {
               {((-b + Math.sqrt(b * b - 4 * a * c)) / 2) * a}
               {'}'}
             </span>
+          </>
+        )
+      }}
+      renderHint={({}) => {
+        return (
+          <>
+            Löse die Gleichung mit der abc-Formel:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              x<sub>1,2</sub> ={' '}
+              {buildFrac(
+                <>
+                  -b &#177; √<span className="pl-1 overline">b² -4ac </span>
+                </>,
+                <>2a</>
+              )}
+            </span>
+            <br />
+            Bestimme dazu <strong>a</strong>,<strong>b</strong> und{' '}
+            <strong>c</strong> aus der Gleichung und setze ein.
           </>
         )
       }}
