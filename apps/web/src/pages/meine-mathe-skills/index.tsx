@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
@@ -34,6 +35,11 @@ function Content() {
   const router = useRouter()
   const grade = router.query.grade
 
+  const [track, setTrack] = useState<1 | 2>(() => {
+    if (router.asPath.endsWith('zweig=1')) return 1
+    if (router.asPath.endsWith('zweig=2')) return 2
+    return 1
+  })
   const { getExerciseData } = useExerciseData()
   const { data } = useMathSkillsStorage()
 
@@ -50,48 +56,102 @@ function Content() {
             <h2 className="mt-10 text-2xl font-bold" id="aufgaben">
               Training Realschule Bayern (Abschlussprüfung):
             </h2>
-            <h3 className="my-5 text-2xl">Zweig I</h3>
-            <h4 className="text-lg font-bold">Teil A (ohne Hilfsmittel)</h4>
-            <div className="my-6 flex flex-wrap gap-3">
-              {examTasks
-                .filter(
-                  ([, obj]) =>
-                    obj.useCalculator === false &&
-                    (obj.track === 1 || (obj.track as number) === 3)
-                )
-                .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
+            <div>
+              <a
+                className={cn(
+                  track === 1 && 'bg-newgreen bg-opacity-10',
+                  'my-5 inline-block rounded-lg px-2 py-1 text-2xl hover:shadow-menu'
+                )}
+                href="/meine-mathe-skills?zweig=1"
+                onClick={(e) => {
+                  e.preventDefault()
+                  void router.replace(
+                    '/meine-mathe-skills?zweig=1',
+                    undefined,
+                    { shallow: true }
+                  )
+                  setTrack(1)
+                }}
+              >
+                Zweig I
+              </a>
+              <a
+                className={cn(
+                  track === 2 && 'bg-newgreen bg-opacity-10',
+                  'my-5 ml-3 inline-block rounded-lg px-2 py-1 text-2xl hover:shadow-menu'
+                )}
+                href="/meine-mathe-skills?zweig=2"
+                onClick={(e) => {
+                  e.preventDefault()
+                  void router.replace(
+                    '/meine-mathe-skills?zweig=2',
+                    undefined,
+                    { shallow: true }
+                  )
+                  setTrack(2)
+                }}
+              >
+                Zweig II/III
+              </a>
             </div>
-            <h4 className="text-lg font-bold">Teil B (mit Hilfsmittel)</h4>
-            <div className="my-6 flex flex-wrap gap-3">
-              {examTasks
-                .filter(
-                  ([, obj]) =>
-                    obj.useCalculator === true &&
-                    ((obj.track as number) === 1 || (obj.track as number) === 3)
-                )
-                .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
-            </div>
-            <h3 className="my-5 text-2xl">Zweig II / III</h3>
-            <h4 className="text-lg font-bold">Teil A (ohne Hilfsmittel)</h4>
-            <div className="my-6 flex flex-wrap gap-3">
-              {examTasks
-                .filter(
-                  ([, obj]) =>
-                    obj.useCalculator === false &&
-                    (obj.track === 2 || (obj.track as number) === 3)
-                )
-                .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
-            </div>
-            <h4 className="text-lg font-bold">Teil B (mit Hilfsmittel)</h4>
-            <div className="my-6 flex flex-wrap gap-3">
-              {examTasks
-                .filter(
-                  ([, obj]) =>
-                    obj.useCalculator === true &&
-                    ((obj.track as number) === 2 || (obj.track as number) === 3)
-                )
-                .map(([id, obj]) => renderCard(id, obj.title, obj.subtitle))}
-            </div>
+            {track === 1 ? (
+              <div>
+                <h4 className="text-lg font-bold">Teil A (ohne Hilfsmittel)</h4>
+                <div className="my-6 flex flex-wrap gap-3">
+                  {examTasks
+                    .filter(
+                      ([, obj]) =>
+                        obj.useCalculator === false &&
+                        (obj.track === 1 || (obj.track as number) === 3)
+                    )
+                    .map(([id, obj]) =>
+                      renderCard(id, obj.title, obj.subtitle)
+                    )}
+                </div>
+                <h4 className="text-lg font-bold">Teil B (mit Hilfsmittel)</h4>
+                <div className="my-6 flex flex-wrap gap-3">
+                  {examTasks
+                    .filter(
+                      ([, obj]) =>
+                        obj.useCalculator === true &&
+                        ((obj.track as number) === 1 ||
+                          (obj.track as number) === 3)
+                    )
+                    .map(([id, obj]) =>
+                      renderCard(id, obj.title, obj.subtitle)
+                    )}
+                </div>
+              </div>
+            ) : null}
+            {track === 2 ? (
+              <div>
+                <h4 className="text-lg font-bold">Teil A (ohne Hilfsmittel)</h4>
+                <div className="my-6 flex flex-wrap gap-3">
+                  {examTasks
+                    .filter(
+                      ([, obj]) =>
+                        obj.useCalculator === false &&
+                        (obj.track === 2 || (obj.track as number) === 3)
+                    )
+                    .map(([id, obj]) =>
+                      renderCard(id, obj.title, obj.subtitle)
+                    )}
+                </div>
+                <h4 className="text-lg font-bold">Teil B (mit Hilfsmittel)</h4>
+                <div className="my-6 flex flex-wrap gap-3">
+                  {examTasks
+                    .filter(
+                      ([, obj]) =>
+                        obj.useCalculator === true &&
+                        ((obj.track as number) === 2 ||
+                          (obj.track as number) === 3)
+                    )
+                    .map(([id, obj]) =>
+                      renderCard(id, obj.title, obj.subtitle)
+                    )}
+                </div>
+              </div>
+            ) : null}
             <div className="h-24"></div>
           </>
         ) : null}
@@ -106,6 +166,7 @@ function Content() {
 
     return (
       <Link
+        key={id}
         href={`/meine-mathe-skills/training-realschule-bayern/${id}`}
         className={cn(
           'flex aspect-square w-48 flex-col items-start justify-center rounded-2xl bg-newgreen bg-opacity-10 p-4 text-almost-black !no-underline',
