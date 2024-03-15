@@ -73,8 +73,12 @@ export function ExponentialFunction() {
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               y = {Money_Start} · {Faktor.toString().replace('.', ',')}
-              <sup>{Jahre}</sup> = {Geld.toString().replace('.', ',')} €
+              <sup>{Jahre}</sup> = {Geld.toString().replace('.', ',')}
             </span>
+            <br />
+            <br />
+            Das Kapital beträgt nach {Jahre} Jahren{' '}
+            {Geld.toString().replace('.', ',')} €.
           </>
         )
       }}
