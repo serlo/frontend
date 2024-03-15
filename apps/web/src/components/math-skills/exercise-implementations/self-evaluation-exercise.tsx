@@ -64,7 +64,7 @@ export function SelfEvaluationExercise<T>({
             openOverwrite={showStrategy}
             setOpenOverwrite={setShowStrategy}
             title={<>Tipps</>}
-            content={<div className="mt-2 p-side">{renderHint()}</div>}
+            content={<div className="mt-2 p-side">{renderHint(data)}</div>}
           />
         </div>
       )}
