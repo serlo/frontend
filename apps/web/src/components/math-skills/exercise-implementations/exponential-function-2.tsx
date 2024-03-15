@@ -36,7 +36,7 @@ export function ExponentialFunctionTime() {
               Kapital am Ende {Geld_Ende} € betragen hat.
               <br />
               <br />
-              Wie viele Jahre war das Geld angelegt?
+              Berechne, wie viele Jahre das Geld angelegt wurde.
             </p>
             <p>
               <i>
