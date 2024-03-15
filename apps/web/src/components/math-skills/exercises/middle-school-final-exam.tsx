@@ -4,6 +4,7 @@ import { ExponentialFunctionTime } from '../exercise-implementations/exponential
 import { LogarithmExercise1 } from '../exercise-implementations/logarithm-exercise-1'
 import { LogarithmExercise2 } from '../exercise-implementations/logarithm-exericse-2'
 import { NormalformParabola } from '../exercise-implementations/normalform-parabola'
+import { RootEquations } from '../exercise-implementations/root-equations'
 import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
 import { Trigonometry } from '../exercise-implementations/trigonometry'
 import { Trigonometry1 } from '../exercise-implementations/trigonometry-1'
@@ -89,5 +90,12 @@ export const middleSchoolFinalExam = {
     useCalculator: true,
     track: 1,
     component: <ExponentialFunctionTime />,
+  },
+  'root-equations-1': {
+    title: 'Zinssatz berechnen',
+    subtitle: 'Wurzeln',
+    useCalculator: true,
+    track: 1,
+    component: <RootEquations />,
   },
 } as const
