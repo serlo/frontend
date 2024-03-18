@@ -930,7 +930,7 @@ export const loggedInData = {
           title: "Titel"
         },
         inputExercise: {
-          chooseType: "Wähle den Antworttyp",
+          chooseType: "Wähle den Aufgabentyp",
           unit: "Einheit (optional)",
           addAnswer: "Antwort hinzufügen",
           enterTheValue: "Gib hier die Antwort ein",
