@@ -1,21 +1,22 @@
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import type { AnyEditorDocument } from '@editor/types/editor-plugins'
+import type { SupportedLanguage } from '@editor/types/language-data'
 
+import { editorData } from './editor-data'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
-import type { InstanceData, LoggedInData } from '@/data-types'
 
 export interface SerloRendererProps {
-  instanceData: InstanceData
-  loggedInData: LoggedInData
+  language?: SupportedLanguage
   document?: AnyEditorDocument | AnyEditorDocument[]
 }
 
 export function SerloRenderer({
-  instanceData,
-  loggedInData,
+  language = 'de',
   ...props
 }: SerloRendererProps) {
+  const { instanceData, loggedInData } = editorData[language]
+
   return (
     <InstanceDataProvider value={instanceData}>
       <LoggedInDataProvider value={loggedInData}>
