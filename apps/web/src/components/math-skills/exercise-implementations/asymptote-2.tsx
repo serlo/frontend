@@ -99,7 +99,28 @@ export function Asymptote2() {
       }}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       renderHint={({ data }) => {
-        return <></>
+        return (
+          <>
+            Der <strong>Definitionsbereich</strong> einer Exponentialfunktion
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              y = a · b<sup>x</sup> + c
+            </span>
+            <br />
+            <br />
+            ist immer die Menge der reellen Zahlen.
+            <br />
+            Die <strong>Asyptote</strong> hat immer die Gleichung:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              y = c
+            </span>
+            <br />
+            <br />
+            Die Asymptote bildet die Grenze zum <strong>Wertebereich</strong>.
+            Abhängig davon, ob a positiv oder negativ ist, sind alle Werte
+            darüber oder darunter der Wertebereich.
+          </>
+        )
       }}
       centAmount={35}
     />

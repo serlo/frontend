@@ -127,8 +127,7 @@ export function Asymptote1() {
       renderHint={({ data }) => {
         return (
           <>
-            Eine ganzrationale Funktion hat immer die Form:
-            <br />
+            Der <strong>Definitionsbereich</strong> einer Exponentialfunktion
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               y ={' '}
               {buildFrac(
@@ -141,6 +140,17 @@ export function Asymptote1() {
             </span>
             <br />
             <br />
+            ist immer die Menge aller reellen Zahlen außer der Stelle b.
+            <br />
+            Die <strong>Asyptoten</strong> haben immer die Gleichungen:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              y = d, x = b
+            </span>
+            <br />
+            <br />
+            Der <strong>Wertebereich</strong> ist abhängig vom Grad und der
+            Verschiebung in y-Richtung.
           </>
         )
       }}
