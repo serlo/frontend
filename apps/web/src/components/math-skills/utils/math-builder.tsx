@@ -20,6 +20,20 @@ export function buildSqrt(x: JSX.Element) {
   )
 }
 
+export function buildBigSqrt(x: JSX.Element) {
+  return (
+    <>
+      <span
+        className="inline-block scale-y-[2] text-2xl"
+        style={{ verticalAlign: '-3px' }}
+      >
+        &#8730;
+      </span>
+      <span className="inline-block border-t border-black px-1">{x}</span>
+    </>
+  )
+}
+
 export function buildVec2(x: JSX.Element, y: JSX.Element) {
   return (
     <>

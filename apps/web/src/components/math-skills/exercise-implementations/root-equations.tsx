@@ -95,7 +95,7 @@ export function RootEquations() {
             <br />
             <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               <sup>{Aktuelles_Jahr - Start_Jahr}</sup>
-              {buildSqrt(preresult.toString().replace('.', ','))}= x
+              {buildSqrt(<>{preresult.toString().replace('.', ',')}</>)}= x
             </span>
             <br />
             Mit dem Taschenrechner berechnet sich das Ergebnis zu:
