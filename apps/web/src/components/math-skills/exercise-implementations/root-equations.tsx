@@ -94,8 +94,8 @@ export function RootEquations() {
             auf beiden Seiten:
             <br />
             <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              <sup>{2024 - Start_Jahr}</sup>
-              {buildSqrt(LeftSide)}= x
+              <sup>{2024 - Start_Jahr}</sup>√
+              <span className="pl-1 overline">{LeftSide} </span> = x
             </span>
             <br />
             Mit dem Taschenrechner berechnet sich das Ergebnis zu:
