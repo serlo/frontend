@@ -169,7 +169,7 @@ function Content() {
         key={id}
         href={`/meine-mathe-skills/training-realschule-bayern/${id}`}
         className={cn(
-          'bg-animal flex aspect-square w-48 flex-col items-start justify-center rounded-2xl bg-opacity-10 p-4 text-almost-black !no-underline',
+          'flex aspect-square w-48 flex-col items-start justify-center rounded-2xl bg-animal bg-opacity-10 p-4 text-almost-black !no-underline',
           'text-xl transition-colors hover:bg-opacity-25 hover:shadow-menu active:bg-opacity-25'
         )}
       >
