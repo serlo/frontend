@@ -17,10 +17,11 @@ export function ExponentialFunction() {
     <SelfEvaluationExercise
       generator={() => {
         return {
-          Jahr_Anlage: randomIntBetween(2010, 2024),
           Zins: randomIntBetween(1, 5),
           Money_Start: randomIntBetween(20, 60) * 100,
           Ende_Anlage: randomIntBetween(0, 3),
+          Aktuelles_Jahr: new Date().getFullYear(),
+          Jahr_Anlage: randomIntBetween(2010, 2024),
         }
       }}
       renderTask={({ Jahr_Anlage, Money_Start, Ende_Anlage, Zins }) => {
@@ -43,8 +44,14 @@ export function ExponentialFunction() {
         )
       }}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      renderSolution={({ Jahr_Anlage, Money_Start, Ende_Anlage, Zins }) => {
-        const Jahre = 2024 - Jahr_Anlage + Ende_Anlage
+      renderSolution={({
+        Jahr_Anlage,
+        Money_Start,
+        Ende_Anlage,
+        Zins,
+        Aktuelles_Jahr,
+      }) => {
+        const Jahre = Aktuelles_Jahr - Jahr_Anlage + Ende_Anlage
         const Faktor = 1 + Zins / 100
         const Geld =
           Math.round(Money_Start * Math.pow(Faktor, Jahre) * 100) / 100
