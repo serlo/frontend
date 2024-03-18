@@ -842,8 +842,8 @@ export const loggedInData = {
           title: "Lückentext",
           description: "Ein Text mit Lücken zum Ausfüllen",
           placeholder: "Schreibe einen Text und füge Lücken ein",
-          chooseType: "Wähle den Antworttyp",
-          chooseChildPluginType: 'Choose the answer type',
+          chooseType: "Wähle den Aufgabentyp",
+          chooseChildPluginType: "Wähle den Antworttyp",
           modes: {
             typing: "Tippen",
             'drag-and-drop': 'Drag & Drop'
