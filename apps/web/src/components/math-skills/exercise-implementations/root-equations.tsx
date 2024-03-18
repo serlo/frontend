@@ -1,4 +1,6 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { buildFrac, buildSqrt } from '../utils/math-builder'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
 import { randomIntBetween } from '@/helper/random-int-between'
 
@@ -40,12 +42,11 @@ export function RootEquations() {
       }}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty-pattern
       renderSolution={({ Money_Start, Start_Jahr, Money_Ende }) => {
-        const LeftSide = (Math.round((Money_Ende / Money_Start) * 100) / 100)
-          .toString()
-          .replace('.', ',')
-
+        const preresult = Math.round((Money_Ende / Money_Start) * 1000) / 1000
         const result =
-          Math.round(Math.pow(Money_Ende / Money_Start, 1 / 11) * 1000) / 1000
+          Math.round(
+            Math.pow(Money_Ende / Money_Start, 1 / (2024 - Start_Jahr)) * 1000
+          ) / 1000
         const zinssatz = Math.round((result * 100 - 100) * 1000) / 1000
 
         return (
@@ -75,15 +76,16 @@ export function RootEquations() {
             Anfangswert teilen:
             <br />
             <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              {LeftSide} = x <sup>{2024 - Start_Jahr}</sup>
+              {buildFrac(<>{Money_Ende}</>, <>{Money_Start}</>)} = x{' '}
+              <sup>{2024 - Start_Jahr}</sup>
             </span>
             <br />
             Um x zu bestimmen, verwenden wir die {2024 - Start_Jahr}-te Wurzel
             auf beiden Seiten:
             <br />
             <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              <sup>{2024 - Start_Jahr}</sup>√
-              <span className="pl-1 overline">{LeftSide} </span> = x
+              <sup>{2024 - Start_Jahr}</sup>
+              {buildSqrt(preresult.toString().replace('.', ','))}= x
             </span>
             <br />
             Mit dem Taschenrechner berechnet sich das Ergebnis zu:
