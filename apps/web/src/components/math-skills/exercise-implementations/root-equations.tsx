@@ -4,7 +4,7 @@ import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { NameInput } from '../name-input'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { buildFrac } from '../utils/math-builder'
-// eslint-disable-next-line no-duplicate-imports
+// eslint-disable-next-line no-duplicate-imports, @typescript-eslint/no-unused-vars
 import { buildSqrt } from '../utils/math-builder'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
