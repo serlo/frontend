@@ -20,7 +20,7 @@ interface PlotData {
   d: number
 }
 
-export function PlotFunction() {
+export function Asymptote1() {
   return (
     <SelfEvaluationExercise
       generator={() => {
@@ -40,7 +40,9 @@ export function PlotFunction() {
       renderTask={({ data }) => {
         return (
           <>
-            <h2 className="text-2xl">Skizziere den Graphen der Funktion:</h2>
+            <h2 className="text-2xl">
+              Bestimme die Definitions-, Wertemenge und Asymptote der Funktion:
+            </h2>
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               y = {data.a === -1 ? '-' : null}{' '}
               {buildFrac(
@@ -57,10 +59,7 @@ export function PlotFunction() {
             </span>
             <br />
             <br />
-            <i>
-              Lege dafür ein Koordinatensystem mit -6 &#8804; x &#8804; 6 und -6
-              &#8804; y &#8804; 6 an.
-            </i>
+            <i>Rechne am Besten mit Stift und Papier.</i>
           </>
         )
       }}
@@ -68,7 +67,8 @@ export function PlotFunction() {
       renderSolution={({ data }) => {
         return (
           <>
-            Skizziere den Graphen der Funktion:
+            Bestimme Definitions- und Wertebereich, sowie Asymptoten der
+            Funktion:
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               y = {data.a === -1 ? '-' : null}{' '}
@@ -86,7 +86,38 @@ export function PlotFunction() {
             </span>
             <br />
             <br />
-            Graph für -6 &#8804; x &#8804; 6 und -6 &#8804; y &#8804; 6:
+            Die Definitionsmenge die Menge aller reellen Zahlen, sodass der
+            Nenner nicht 0 ist:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              D = R \ {'{'}
+              {-data.b}
+              {'}'}
+            </span>
+            <br />
+            <br />
+            Der Wertebereich setzt sich aus allen reellen Funktionswerten
+            zusammen:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              W = {'{'} y |
+              {data.a > 0 && data.c % 2 === 0 ? ' y > ' + data.d : null}
+              {data.a < 0 && data.c % 2 === 0 ? ' y < ' + data.d : null}
+              {data.c % 2 !== 0 ? ' y ≠ ' : null}
+              {data.c % 2 !== 0 ? data.d : null}
+              {' }'}
+            </span>
+            <br />
+            <br />
+            Der Graph hat zwei Asymptoten mit den Gleichungen:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              y = {data.d} und x = {-data.b}
+            </span>
+            <br />
+            <br />
+            Graph für -6 &#8804; x &#8804; 6 und -6 &#8804; y &#8804; 6 als
+            Hilfe:
             <br />
             <SubComponent data={data} />
           </>
@@ -110,22 +141,6 @@ export function PlotFunction() {
             </span>
             <br />
             <br />
-            Dabei sind:
-            <ol>
-              <li>· a die Streckung in y-Richtung,</li>
-              <li>· b die Verschiebung in x-Richtung,</li>
-              <li>· c der Grad der Funktion und</li>
-              <li>· d die Verschiebung in y-Richtung.</li>
-            </ol>
-            Wenn a negativ ist, ist der Graph in y-Richtung gespiegelt.
-            <br />
-            <br />
-            Beim Skizzieren hilft es, erst den Graphen von{' '}
-            <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
-              x<sup>{data.c}</sup>
-            </span>{' '}
-            zu zeichnen und anschließend die Verschiebungen und Streckungen
-            auszuführen.
           </>
         )
       }}
