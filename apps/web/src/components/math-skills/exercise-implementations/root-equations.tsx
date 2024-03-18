@@ -15,6 +15,7 @@ export function RootEquations() {
           Money_Start: randomIntBetween(200, 400) * 10,
           Start_Jahr: randomIntBetween(2010, 2020),
           Money_Ende: randomIntBetween(500, 650) * 10,
+          Aktuelles_Jahr: new Date().getFullYear(),
         }
       }}
       renderTask={({ Money_Start, Start_Jahr, Money_Ende }) => {
@@ -41,11 +42,19 @@ export function RootEquations() {
         )
       }}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty-pattern
-      renderSolution={({ Money_Start, Start_Jahr, Money_Ende }) => {
+      renderSolution={({
+        Money_Start,
+        Start_Jahr,
+        Money_Ende,
+        Aktuelles_Jahr,
+      }) => {
         const preresult = Math.round((Money_Ende / Money_Start) * 1000) / 1000
         const result =
           Math.round(
-            Math.pow(Money_Ende / Money_Start, 1 / (2024 - Start_Jahr)) * 1000
+            Math.pow(
+              Money_Ende / Money_Start,
+              1 / (Aktuelles_Jahr - Start_Jahr)
+            ) * 1000
           ) / 1000
         const zinssatz = Math.round((result * 100 - 100) * 1000) / 1000
 
@@ -64,11 +73,12 @@ export function RootEquations() {
             </ol>
             <br />
             <br />
-            Nach {2024 - Start_Jahr} Jahren soll das Kapital {Money_Ende} €{' '}
-            betragen. Setze ein:
+            Nach {Aktuelles_Jahr - Start_Jahr} Jahren soll das Kapital{' '}
+            {Money_Ende} € betragen. Setze ein:
             <br />
             <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              {Money_Ende} = {Money_Start} · x <sup>{2024 - Start_Jahr}</sup>
+              {Money_Ende} = {Money_Start} · x{' '}
+              <sup>{Aktuelles_Jahr - Start_Jahr}</sup>
             </span>
             <br />
             <br />
@@ -77,14 +87,14 @@ export function RootEquations() {
             <br />
             <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               {buildFrac(<>{Money_Ende}</>, <>{Money_Start}</>)} = x{' '}
-              <sup>{2024 - Start_Jahr}</sup>
+              <sup>{Aktuelles_Jahr - Start_Jahr}</sup>
             </span>
             <br />
-            Um x zu bestimmen, verwenden wir die {2024 - Start_Jahr}-te Wurzel
-            auf beiden Seiten:
+            Um x zu bestimmen, verwenden wir die {Aktuelles_Jahr - Start_Jahr}
+            -te Wurzel auf beiden Seiten:
             <br />
             <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              <sup>{2024 - Start_Jahr}</sup>
+              <sup>{Aktuelles_Jahr - Start_Jahr}</sup>
               {buildSqrt(preresult.toString().replace('.', ','))}= x
             </span>
             <br />
