@@ -3,8 +3,9 @@ import { type Draft } from 'immer'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect } from 'react'
 
-import { Animal } from './animal-data'
+import { Animal, animalsData } from './animal-data'
 import { getPointsAmount } from './get-points-amount'
+import { randomItemFromArray } from '@/helper/random-item-from-array'
 
 export interface ExerciseData {
   correct: number
@@ -20,7 +21,11 @@ export interface MathSkillsStorageData {
 }
 
 export function getEmptyData(): MathSkillsStorageData {
-  return { name: '', animal: 'lion', exercises: new Map([]) }
+  return {
+    name: '',
+    animal: randomItemFromArray(Object.keys(animalsData) as Animal[]),
+    exercises: new Map([]),
+  }
 }
 
 const storageKey = 'math-skills-data'
