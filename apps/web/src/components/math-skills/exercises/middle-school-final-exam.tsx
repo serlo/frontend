@@ -4,6 +4,7 @@ import { ExponentialFunctionTime } from '../exercise-implementations/exponential
 import { LogarithmExercise1 } from '../exercise-implementations/logarithm-exercise-1'
 import { LogarithmExercise2 } from '../exercise-implementations/logarithm-exericse-2'
 import { NormalformParabola } from '../exercise-implementations/normalform-parabola'
+import { PlotFunction } from '../exercise-implementations/plot-function-1'
 import { RootEquations } from '../exercise-implementations/root-equations'
 import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
 import { Trigonometry } from '../exercise-implementations/trigonometry'
@@ -97,5 +98,12 @@ export const middleSchoolFinalExam = {
     useCalculator: true,
     track: 1,
     component: <RootEquations />,
+  },
+  'plot-function-1': {
+    title: 'Graphen skizzieren',
+    subtitle: 'Ganzrationale Funktionen',
+    useCalculator: false,
+    track: 1,
+    component: <PlotFunction />,
   },
 } as const
