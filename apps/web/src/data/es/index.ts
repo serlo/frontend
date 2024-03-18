@@ -843,6 +843,7 @@ export const loggedInData = {
           description: "Textos con blancos",
           placeholder: "Escribe un texto y añade espacios en blanco",
           chooseType: "Elige el tipo de ejercicio",
+          chooseChildPluginType: 'Choose the answer type',
           modes: {
             typing: "Tecleando/escribir",
             'drag-and-drop': "Arrastrar y colocar"
