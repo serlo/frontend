@@ -1,5 +1,6 @@
 import { ABCFormular } from '../exercise-implementations/abc-formular'
 import { Asymptote1 } from '../exercise-implementations/asymptote-1'
+import { Asymptote2 } from '../exercise-implementations/asymptote-2'
 import { ExponentialFunction } from '../exercise-implementations/exponential-function-1'
 import { ExponentialFunctionTime } from '../exercise-implementations/exponential-function-2'
 import { LogarithmExercise1 } from '../exercise-implementations/logarithm-exercise-1'
@@ -115,11 +116,18 @@ export const middleSchoolFinalExam = {
     track: 1,
     component: <PlotFunction2 />,
   },
-  'asymptote-2': {
+  'asymptote-1': {
     title: 'Definitions-, Wertebereich und Asymptote',
     subtitle: 'Ganzrationale Funktionen',
     useCalculator: false,
     track: 1,
     component: <Asymptote1 />,
+  },
+  'asymptote-2': {
+    title: 'Definitions-, Wertebereich und Asymptote',
+    subtitle: 'Exponentialfunktionen',
+    useCalculator: false,
+    track: 1,
+    component: <Asymptote2 />,
   },
 } as const
