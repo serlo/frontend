@@ -921,6 +921,7 @@ export const loggedInData = {
           description: 'Text with blanks',
           placeholder: 'Write a text and add blanks',
           chooseType: 'Choose the exercise type',
+          chooseChildPluginType: 'Choose the answer type',
           modes: {
             typing: 'Typing',
             'drag-and-drop': 'Drag & Drop',
