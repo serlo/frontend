@@ -5,6 +5,7 @@ import { LogarithmExercise1 } from '../exercise-implementations/logarithm-exerci
 import { LogarithmExercise2 } from '../exercise-implementations/logarithm-exericse-2'
 import { NormalformParabola } from '../exercise-implementations/normalform-parabola'
 import { PlotFunction } from '../exercise-implementations/plot-function-1'
+import { PlotFunction2 } from '../exercise-implementations/plot-function-2'
 import { RootEquations } from '../exercise-implementations/root-equations'
 import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
 import { Trigonometry } from '../exercise-implementations/trigonometry'
@@ -105,5 +106,12 @@ export const middleSchoolFinalExam = {
     useCalculator: false,
     track: 1,
     component: <PlotFunction />,
+  },
+  'plot-function-2': {
+    title: 'Graphen skizzieren',
+    subtitle: 'Exponentialfunktionen',
+    useCalculator: false,
+    track: 1,
+    component: <PlotFunction2 />,
   },
 } as const
