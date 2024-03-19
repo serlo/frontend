@@ -15,7 +15,7 @@ export function ExerciseHint<T>({ data, renderHint }: ExerciseHintProps<T>) {
   return (
     <>
       <a
-        className="group fixed bottom-28 right-0 z-50 block cursor-pointer outline-none"
+        className="group fixed bottom-28 right-0 z-50 hidden cursor-pointer outline-none sm:block"
         tabIndex={0}
         onClick={() => setShowHint(!showHint)}
       >
@@ -37,6 +37,12 @@ export function ExerciseHint<T>({ data, renderHint }: ExerciseHintProps<T>) {
           <LandingAnimal noChangeButton />
         </div>
       </a>
+      <button
+        className="serlo-button-light mb-6 block sm:hidden"
+        onClick={() => setShowHint(!showHint)}
+      >
+        Tipps
+      </button>
       <ModalWithCloseButton
         isOpen={showHint}
         onCloseClick={() => setShowHint(false)}
