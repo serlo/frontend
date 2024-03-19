@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Link } from '../content/link'
 import { PageTitle } from '../content/page-title'
 import { useInstanceData } from '@/contexts/instance-context'
+import { isProduction } from '@/helper/is-production'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
@@ -39,31 +40,35 @@ export function ConsentPage() {
   )
 
   function renderTable() {
-    return consentedProviders.map((provider) => {
-      return (
-        <tr key={provider}>
-          <td className="serlo-td text-lg">
-            <b>{provider}</b>
-          </td>
-          <td className="serlo-td text-lg">
-            {checkConsent(provider) ? (
-              <button
-                className="serlo-button-light"
-                onClick={() => {
-                  revokeConsent(provider)
-                  updateState({})
-                }}
-              >
-                {strings.consent.revokeConsent}
-              </button>
-            ) : (
-              <span className="ml-1 text-gray-600">
-                ({strings.consent.noConsent})
-              </span>
-            )}
-          </td>
-        </tr>
+    return consentedProviders
+      .filter((provider) =>
+        isProduction ? provider !== ExternalProvider.Vocaroo : true
       )
-    })
+      .map((provider) => {
+        return (
+          <tr key={provider}>
+            <td className="serlo-td text-lg">
+              <b>{provider}</b>
+            </td>
+            <td className="serlo-td text-lg">
+              {checkConsent(provider) ? (
+                <button
+                  className="serlo-button-light"
+                  onClick={() => {
+                    revokeConsent(provider)
+                    updateState({})
+                  }}
+                >
+                  {strings.consent.revokeConsent}
+                </button>
+              ) : (
+                <span className="ml-1 text-gray-600">
+                  ({strings.consent.noConsent})
+                </span>
+              )}
+            </td>
+          </tr>
+        )
+      })
   }
 }
