@@ -206,7 +206,7 @@ function RealmathInjection({
   }, [])
   return (
     <>
-      <div className="mb-4 mt-12 w-full bg-gray-100 p-3">
+      <div className="mb-4 mt-12 w-full rounded bg-gray-100 p-3">
         {score < target ? (
           <>
             Erreiche {target} Punkte. Aktueller Stand:{' '}
@@ -352,7 +352,7 @@ const levels: {
   4: {
     title: 'KoSi',
     x: 45,
-    y: 230,
+    y: 250,
     deps: [1],
     component: (c, onClose) => {
       return (
@@ -401,18 +401,21 @@ const levels: {
     },
   },
   6: {
-    title: 'TODO',
-    x: 160,
-    y: 400,
-    deps: [42],
+    title: 'Einzeichnen',
+    x: 70,
+    y: 370,
+    deps: [4],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            Jetzt kommt die umgekehrte Aufgabe. Schiebe die Punkte an die
+            richtige Stelle.
+          </p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
+            url="/Neues/Klasse5/geometrie/gittternetzzeichnen.php"
             height={500}
-            target={50}
+            target={45}
             onClose={onClose}
             key={c}
           />
@@ -421,18 +424,21 @@ const levels: {
     },
   },
   7: {
-    title: 'TODO',
+    title: 'Fläche',
     x: 160,
-    y: 400,
-    deps: [42],
+    y: 420,
+    deps: [4, 5],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            Der Flächeninhalt des Rechtsecks hängt sehr eng mit der
+            Multiplikation zusammen - auch sehr anschaulich.
+          </p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
+            url="/Neues/Klasse5/umfang/rechtecksflaeche.php"
             height={500}
-            target={50}
+            target={75}
             onClose={onClose}
             key={c}
           />
@@ -441,9 +447,152 @@ const levels: {
     },
   },
   8: {
+    title: 'Winkelnamen',
+    x: 230,
+    y: 340,
+    deps: [5],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>
+            Jedem Winkel kann mit drei Punkten ein Name gegeben werden. Starte
+            mit dem ersten Schenkel, mache dann mit dem Scheitel weiter und
+            schließe ab mit dem zweiten Schenkel gegen dem Uhrzeigersinn.
+          </p>
+          <RealmathInjection
+            url="/Neues/Klasse6/winkel/winkelaufg1b.php"
+            height={500}
+            target={60}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  9: {
+    title: 'Verschiebung',
+    x: 65,
+    y: 635,
+    deps: [6],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>
+            Zeichne wieder Punkte ein. Orientiere dich diesmal an einen anderen
+            Punkt.
+          </p>
+          <RealmathInjection
+            url="/Neues/Klasse5/geometrie/gittternetzvar.php"
+            height={470}
+            target={60}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  10: {
+    title: 'Quadrate zeichnen',
+    x: 130,
+    y: 550,
+    deps: [6],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>
+            Quadrate haben einen engen Zusammenhang mit Quadratzahlen! Die
+            Brücke ist der Flächeninhalt.
+          </p>
+          <p>
+            Mache dich mit diesem Zusammenhang vertraut und zeichne passende
+            Quadrate. Ein bisschen Um-die-Ecke-Denken ist gefragt!
+          </p>
+          <RealmathInjection
+            url="/Neues/Klasse5/umfang/quadratflaeche2.php"
+            height={500}
+            target={45}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  11: {
+    title: 'Rechteck-Profi',
+    x: 210,
+    y: 620,
+    deps: [7],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>
+            Du kannst Fläche und Umfang berechnen und kannst auch nicht mit den
+            Begriffen durcheinander!
+          </p>
+          <RealmathInjection
+            url="/Neues/Klasse5/rechteck/rechteckuebung.php"
+            height={500}
+            target={70}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  12: {
+    title: 'Kreuzung',
+    x: 220,
+    y: 490,
+    deps: [7, 8],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>
+            Wenn sich zwei Geraden kreuzen, entstehen vier Winkel. Wenn du einen
+            der Winkel kennst, kannst du alle anderen drei bereits ausrechnen.
+          </p>
+          <RealmathInjection
+            url="/Neues/Klasse6/nebenwinkel/nebenwink00.php"
+            height={500}
+            target={60}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  13: {
+    title: 'Sektoren',
+    x: 330,
+    y: 580,
+    deps: [8],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>
+            Ein Kreis hat immer 360°. In je mehr Sektoren man den Kreis teilt,
+            umso kleiner werden die Winkel.
+          </p>
+          <RealmathInjection
+            url="/Neues/Klasse5/winkel/winkelkreis.php"
+            height={500}
+            target={60}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  14: {
     title: 'TODO',
-    x: 160,
-    y: 400,
+    x: 560,
+    y: 600,
     deps: [42],
     component: (c, onClose) => {
       return (
@@ -460,10 +609,170 @@ const levels: {
       )
     },
   },
-  9: {
+  15: {
     title: 'TODO',
-    x: 160,
-    y: 400,
+    x: 560,
+    y: 600,
+    deps: [42],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>TODO</p>
+          <RealmathInjection
+            url="/Neues/Klasse5/geld/euro.php"
+            height={500}
+            target={50}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  16: {
+    title: 'TODO',
+    x: 560,
+    y: 600,
+    deps: [42],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>TODO</p>
+          <RealmathInjection
+            url="/Neues/Klasse5/geld/euro.php"
+            height={500}
+            target={50}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  17: {
+    title: 'TODO',
+    x: 560,
+    y: 600,
+    deps: [42],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>TODO</p>
+          <RealmathInjection
+            url="/Neues/Klasse5/geld/euro.php"
+            height={500}
+            target={50}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  18: {
+    title: 'TODO',
+    x: 560,
+    y: 600,
+    deps: [42],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>TODO</p>
+          <RealmathInjection
+            url="/Neues/Klasse5/geld/euro.php"
+            height={500}
+            target={50}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  19: {
+    title: 'TODO',
+    x: 560,
+    y: 600,
+    deps: [42],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>TODO</p>
+          <RealmathInjection
+            url="/Neues/Klasse5/geld/euro.php"
+            height={500}
+            target={50}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  20: {
+    title: 'TODO',
+    x: 560,
+    y: 600,
+    deps: [42],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>TODO</p>
+          <RealmathInjection
+            url="/Neues/Klasse5/geld/euro.php"
+            height={500}
+            target={50}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  21: {
+    title: 'TODO',
+    x: 560,
+    y: 600,
+    deps: [42],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>TODO</p>
+          <RealmathInjection
+            url="/Neues/Klasse5/geld/euro.php"
+            height={500}
+            target={50}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  22: {
+    title: 'TODO',
+    x: 560,
+    y: 600,
+    deps: [42],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>TODO</p>
+          <RealmathInjection
+            url="/Neues/Klasse5/geld/euro.php"
+            height={500}
+            target={50}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  23: {
+    title: 'TODO',
+    x: 560,
+    y: 600,
     deps: [42],
     component: (c, onClose) => {
       return (
@@ -482,8 +791,8 @@ const levels: {
   },
   42: {
     title: 'TODO',
-    x: 160,
-    y: 400,
+    x: 560,
+    y: 600,
     deps: [42],
     component: (c, onClose) => {
       return (

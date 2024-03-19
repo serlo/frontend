@@ -93,7 +93,6 @@ export default async function handler(
 
           try {
             document.querySelector('input[name="Auswahl007"]').click()
-
           } catch (e) {}
         </script>
       </html>
