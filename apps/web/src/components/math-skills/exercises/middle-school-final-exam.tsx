@@ -6,6 +6,7 @@ import { ExponentialFunctionTime } from '../exercise-implementations/exponential
 import { LogarithmExercise1 } from '../exercise-implementations/logarithm-exercise-1'
 import { LogarithmExercise2 } from '../exercise-implementations/logarithm-exericse-2'
 import { NormalformParabola } from '../exercise-implementations/normalform-parabola'
+import { ObliqueImagePyramide } from '../exercise-implementations/oblique-image'
 import { PlotFunction } from '../exercise-implementations/plot-function-1'
 import { PlotFunction2 } from '../exercise-implementations/plot-function-2'
 import { RootEquations } from '../exercise-implementations/root-equations'
@@ -129,5 +130,12 @@ export const middleSchoolFinalExam = {
     useCalculator: false,
     track: 1,
     component: <Asymptote2 />,
+  },
+  'oblique-image-1': {
+    title: 'Schrägbilder zeichnen',
+    subtitle: 'Geometrie',
+    useCalculator: false,
+    track: 1,
+    component: <ObliqueImagePyramide />,
   },
 } as const
