@@ -187,8 +187,15 @@ function RealmathInjection({
   const [score, setScore] = useState(-1)
 
   function handler(e: MessageEvent) {
-    const s = parseInt(e.data as string)
-    setScore(isNaN(s) ? -1 : s)
+    if (typeof e.data === 'string') {
+      const str = e.data
+      if (str.startsWith('score')) {
+        const score = parseInt(str.slice(5))
+        if (!isNaN(score) && score > 0) {
+          setScore(score)
+        }
+      }
+    }
   }
 
   useEffect(() => {

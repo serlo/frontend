@@ -83,7 +83,8 @@ export default async function handler(
               }
             }
             if (score > 0) {
-              window.top.postMessage(score, '*')
+              console.log('sending score', score)
+              window.top.postMessage('score' + score.toString(), '*')
             }
             setTimeout(handler, 1000)
           }
