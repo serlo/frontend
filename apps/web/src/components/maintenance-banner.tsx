@@ -1,14 +1,21 @@
 export function MaintenanceBanner() {
   return (
-    <div className="block rounded-lg bg-orange-300 p-3">
-      <p className="">
-        <span className="font-bold">Vorsicht!</span> Heute und Morgen wird an
-        den Aufgabengruppen in der Datenbank gearbeitet.
+    <div className="mb-12 block rounded-lg bg-orange-300 p-3">
+      <p>
+        <b>🧑‍🔧 Vorsicht!</b>
+        <br /> Am Mittwoch (20.3.) wird zwischen 17 und 22 Uhr an der Datenbank
+        gearbeitet.
         <br />
-        Es wird zeitweise zu Problemen beim Speichern kommen.
+        Vor allem Aufgabengruppen sind betroffen.
         <br />
-        Sagt uns auf Slack / im Community-Chat Bescheid, wenn euch etwas
-        auffällt. 🧑‍🔧
+        <br />
+        <b>Es wird zeitweise nicht möglich sein zu speichern.</b>
+        <br />
+        <br />
+        <small>
+          Sagt uns auf Slack / im Community-Chat Bescheid, wenn euch (ab
+          Donnerstag) Probleme über den Weg laufen.
+        </small>
       </p>
     </div>
   )

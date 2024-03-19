@@ -73,9 +73,7 @@ export function SerloEditor({
       <SaveContext.Provider
         value={{ onSave, userCanSkipReview, entityNeedsReview }}
       >
-        {type === 'GroupedExercise' || type === 'ExerciseGroup' ? (
-          <MaintenanceBanner />
-        ) : null}
+        <MaintenanceBanner />
         <LocalStorageNotice useStored={useStored} setUseStored={setUseStored} />
         <Editor
           initialState={useStored ? getStateFromLocalStorage()! : initialState}
