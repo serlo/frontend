@@ -843,6 +843,7 @@ export const loggedInData = {
           description: 'Text with blanks',
           placeholder: 'Write a text and add blanks',
           chooseType: "Choisissez le type d'exercice",
+          chooseChildPluginType: 'Choose the answer type',
           modes: {
             typing: 'Typing',
             'drag-and-drop': 'Drag & Drop'

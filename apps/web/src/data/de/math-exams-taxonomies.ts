@@ -1,4 +1,4 @@
-export const mathExamTaxNI = [297604, 297605, 302433, 302434, 300778]
+export const mathExamTaxNI = [297604, 297605, 302433, 302434, 300778, 297606]
 export const mathExamTaxBY = [
   75678, 247427, 75049, 76750, 20852, 91272, 91252, 91253,
 ]

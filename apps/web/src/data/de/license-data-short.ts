@@ -4,7 +4,7 @@ export const licenses: LicenseData[] = [
   {
     id: 1,
     isDefault: true,
-    title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0.',
+    title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
     shortTitle: 'CC BY-SA 4.0',
     url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
     agreement:
@@ -22,7 +22,7 @@ export const licenses: LicenseData[] = [
   {
     id: 6,
     title:
-      'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0 mit Namensnennung von Herrn Franz Strobl.',
+      'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0 mit Namensnennung von Herrn Franz Strobl',
     shortTitle: 'strobl-f.de',
     url: 'http://www.strobl-f.de',
 
@@ -87,7 +87,7 @@ export const licenses: LicenseData[] = [
   {
     id: 26,
     title:
-      'Dieses Werk wurde vom Kultusministerium Niedersachsen zur Verfügung gestellt --- Die Lösungsvorschläge dagegen sind NICHT vom Land Niedersachsen.',
+      'Dieses Werk wurde vom Kultusministerium Niedersachsen zur Verfügung gestellt --- Die Lösungsvorschläge dagegen sind NICHT vom Land Niedersachsen',
     shortTitle: 'Niedersächsisches Kultusministerium',
     url: 'https://aba-aufgaben.nibis.de',
     agreement: `Mit dem Speichern dieser Seite versicherst du, dass du in deinem Beitrag (damit sind auch Änderungen gemeint) die Aufgabenstellung vom Land Niedersachsen nicht inhaltlich verändert hast, keine Rechte Dritter verletzt und dich an die <a href="https://aba-aufgaben.nibis.de/">Nutzungsbedingungen</a> gehalten hast.`,
@@ -95,7 +95,7 @@ export const licenses: LicenseData[] = [
   {
     id: 27,
     title:
-      'Das Urheberrecht an dieser Aufgabenstellung liegt beim Ministerium für Schule und Bildung des Landes Nordrhein-Westfalen.',
+      'Diese Aufgabe stammt vom Ministerium für Schule und Bildung des Landes Nordrhein-Westfalen',
     shortTitle:
       'Ministerium für Schule und Bildung des Landes Nordrhein-Westfalen',
     url: '/license/detail/27',
