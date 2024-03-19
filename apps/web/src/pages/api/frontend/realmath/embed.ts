@@ -54,7 +54,7 @@ export default async function handler(
       )
       .replace('geogebraweb"', 'geogebraweb" id="ggbApplet"')
       .replace(
-        '</html>',
+        '</body>',
         `
       
         <style>
@@ -95,7 +95,7 @@ export default async function handler(
             document.querySelector('input[name="Auswahl007"]').click()
           } catch (e) {}
         </script>
-      </html>
+      </body>
       `
       )
   )

@@ -303,8 +303,8 @@ const levels: {
     },
   },
   2: {
-    title: 'Hoch 2',
-    x: 160,
+    title: 'Quadratzahlen',
+    x: 190,
     y: 35,
     deps: [0],
     component: (c, onClose) => {
@@ -835,18 +835,22 @@ const levels: {
     },
   },
   24: {
-    title: 'TODO',
-    x: 750,
-    y: 0,
-    deps: [42],
+    title: 'Potenzen',
+    x: 310,
+    y: 140,
+    deps: [2],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            Potenz ist das lateinische Wort für Macht. Und wahrlich mächtig,
+            wenn man eine Zahl wiederholt mit sich selbst multipliziert. Dabei
+            entstehen schnell große Zahlen.
+          </p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
+            url="/Neues/Klasse5/basis/begriff.php"
             height={500}
-            target={-1}
+            target={60}
             onClose={onClose}
             key={c}
           />
@@ -855,18 +859,22 @@ const levels: {
     },
   },
   25: {
-    title: 'TODO',
-    x: 750,
-    y: 0,
-    deps: [42],
+    title: 'Kopfrechnen',
+    x: 340,
+    y: 45,
+    deps: [2],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            Hier sind ein paar Aufgaben um deine grauen Zellen in Schwung zu
+            bringen.
+          </p>
+          <p>Ein Schritt nach unten in der Tabelle erhöht die Zahl um 10.</p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
+            url="/Neues/Klasse5/addieren/addimkopf.php"
             height={500}
-            target={-1}
+            target={80}
             onClose={onClose}
             key={c}
           />
@@ -875,18 +883,21 @@ const levels: {
     },
   },
   26: {
-    title: 'TODO',
-    x: 750,
-    y: 0,
-    deps: [42],
+    title: 'Einmaleins',
+    x: 520,
+    y: 260,
+    deps: [24],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            Sobald du das kleine Einmaleins sicher beherrscht, kannst du mit der
+            schriftlichen Rechnung mit beliebig großen Zahlen umgehen.{' '}
+          </p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
+            url="/Neues/Klasse5/multiplizieren/memory1x1-a.php"
             height={500}
-            target={-1}
+            target={100}
             onClose={onClose}
             key={c}
           />
@@ -895,18 +906,21 @@ const levels: {
     },
   },
   27: {
-    title: 'TODO',
-    x: 750,
-    y: 0,
-    deps: [42],
+    title: 'Zahlenstern',
+    x: 510,
+    y: 160,
+    deps: [24, 25],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            Es gibt verschiedene Möglichkeiten, vier Zahlen zu multiplizieren.
+            Einige davon sind elegant und sparen dir Arbeit.
+          </p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
+            url="/Neues/Klasse5/addieren/sternaddnat.php"
             height={500}
-            target={-1}
+            target={75}
             onClose={onClose}
             key={c}
           />
@@ -915,18 +929,21 @@ const levels: {
     },
   },
   28: {
-    title: 'TODO',
-    x: 750,
-    y: 0,
-    deps: [42],
+    title: 'Rechenbaum',
+    x: 550,
+    y: 35,
+    deps: [25],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            In diesem Rechenbaum sind die Blätter die Zahlen und diese laufen
+            zum Stamm zusammen.
+          </p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
+            url="/Neues/Klasse5/subtrahieren/rechenbaummult05.php"
             height={500}
-            target={-1}
+            target={50}
             onClose={onClose}
             key={c}
           />
@@ -935,18 +952,21 @@ const levels: {
     },
   },
   29: {
-    title: 'TODO',
-    x: 750,
-    y: 0,
-    deps: [42],
+    title: 'Termometer',
+    x: 720,
+    y: 320,
+    deps: [26],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            Negative Zahlen begegnen dir schon früh bei Temperatur-Angaben.
+            Nutze dieses intuitive Wissen, um das Thermometer abzulesen.
+          </p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
+            url="/Neues/Klasse6/gegenzahl/negativeinf3.php"
             height={500}
-            target={-1}
+            target={75}
             onClose={onClose}
             key={c}
           />
@@ -955,18 +975,21 @@ const levels: {
     },
   },
   30: {
-    title: 'TODO',
-    x: 750,
-    y: 0,
-    deps: [42],
+    title: 'Pfeile',
+    x: 660,
+    y: 240,
+    deps: [26, 27],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            Zahlen und Rechenoperationen lassen sich mit Pfeilen darstellen.
+            Hier kannst du das ausprobieren.
+          </p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
+            url="/Neues/Klasse5/addieren/additionspfeile00.php"
             height={500}
-            target={-1}
+            target={90}
             onClose={onClose}
             key={c}
           />
@@ -975,18 +998,20 @@ const levels: {
     },
   },
   31: {
-    title: 'TODO',
-    x: 750,
-    y: 0,
-    deps: [42],
+    title: 'Zahlenpyramide',
+    x: 710,
+    y: 180,
+    deps: [27],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            Ein bisschen Geduld ist gefragt! Fülle alle Felder der Pyramide aus.
+          </p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
+            url="/Neues/Klasse5/addieren/pyramide.php"
             height={500}
-            target={-1}
+            target={105}
             onClose={onClose}
             key={c}
           />
@@ -995,18 +1020,22 @@ const levels: {
     },
   },
   32: {
-    title: 'TODO',
-    x: 750,
-    y: 0,
-    deps: [42],
+    title: 'Division',
+    x: 660,
+    y: 110,
+    deps: [28],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            In der 5. Klasse ist die Division stark eingegrenzt: Es kommen nur
+            Rechnungen vor, die aufgehen. Wie auch bei diesen
+            Kopfrechenaufgaben.
+          </p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
+            url="/Neues/Klasse5/multiplizieren/divimkopf.php"
             height={500}
-            target={-1}
+            target={50}
             onClose={onClose}
             key={c}
           />
@@ -1015,38 +1044,18 @@ const levels: {
     },
   },
   33: {
-    title: 'TODO',
-    x: 750,
-    y: 0,
-    deps: [42],
+    title: 'Profi-Baum',
+    x: 730,
+    y: 50,
+    deps: [28],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>Und zeige jetzt, dass du auch rückwärts denken kannst.</p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
+            url="/Neues/Klasse5/subtrahieren/rechenbaummult5.php"
             height={500}
-            target={-1}
-            onClose={onClose}
-            key={c}
-          />
-        </>
-      )
-    },
-  },
-  42: {
-    title: 'TODO',
-    x: 750,
-    y: 0,
-    deps: [42],
-    component: (c, onClose) => {
-      return (
-        <>
-          <p>TODO</p>
-          <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
-            height={500}
-            target={50}
+            target={75}
             onClose={onClose}
             key={c}
           />
