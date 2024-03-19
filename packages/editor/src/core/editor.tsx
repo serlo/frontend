@@ -1,3 +1,4 @@
+import { LanguageData } from '@editor/types/language-data'
 import { useEffect, ReactNode, useRef, useState } from 'react'
 import { HotkeysProvider, useHotkeys } from 'react-hotkeys-hook'
 import { Provider } from 'react-redux'
@@ -18,6 +19,8 @@ import {
   selectStaticDocument,
 } from '../store'
 import { ROOT } from '../store/root/constants'
+import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 /**
  * Renders a single editor for an Serlo Editor document
@@ -39,6 +42,8 @@ export function Editor(props: EditorProps) {
 function InnerDocument({ children, onChange, ...props }: EditorProps) {
   const [isInitialized, setIsInitialized] = useState(false)
   const dispatch = useAppDispatch()
+  const instanceData = useInstanceData()
+  const loggedInData = useLoggedInData()
 
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   useBlurOnOutsideClick(wrapperRef)
@@ -135,8 +140,8 @@ function InnerDocument({ children, onChange, ...props }: EditorProps) {
   function renderChildren(id: string) {
     const document = <SubDocument id={id} />
 
-    if (typeof children === 'function') {
-      return children(document)
+    if (typeof children === 'function' && loggedInData) {
+      return children(document, { instanceData, loggedInData })
     }
 
     return (
@@ -149,7 +154,9 @@ function InnerDocument({ children, onChange, ...props }: EditorProps) {
 }
 
 export interface EditorProps {
-  children?: ReactNode | ((document: ReactNode) => ReactNode)
+  children?:
+    | ReactNode
+    | ((document: ReactNode, languageData: LanguageData) => ReactNode)
   initialState: {
     plugin: string
     state?: unknown

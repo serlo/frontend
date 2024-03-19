@@ -213,36 +213,6 @@ export const revisionQuery = gql`
           }
         }
       }
-      ... on GroupedExerciseRevision {
-        content
-        changes
-        repository {
-          licenseId
-          trashed
-          instance
-          id
-          alias
-          exerciseGroup {
-            id
-            alias
-            exercises {
-              id
-            }
-          }
-          currentRevision {
-            id
-            content
-            date
-          }
-          revisions(unrevised: false) {
-            totalCount
-            nodes {
-              id
-              trashed
-            }
-          }
-        }
-      }
       ... on ExerciseGroupRevision {
         ...exerciseGroupRevision
         changes

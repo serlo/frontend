@@ -18,19 +18,19 @@ Scenario(
 
     I.say('Toggle bold on')
     I.pressKey(['CommandOrControl', 'B'])
-    I.seeElement({ css: 'b' })
+    I.see('Some text', 'b[data-slate-leaf="true"]')
 
     I.say('Toggle bold off')
     I.pressKey(['CommandOrControl', 'B'])
-    I.dontSeeElement({ css: 'b' })
+    I.dontSeeElement('b[data-slate-leaf="true"]')
 
     I.say('Toggle italic on')
     I.pressKey(['CommandOrControl', 'I'])
-    I.seeElement({ css: 'i' })
+    I.see('Some text', 'i[data-slate-leaf="true"]')
 
     I.say('Toggle italic off')
     I.pressKey(['CommandOrControl', 'I'])
-    I.dontSeeElement({ css: 'i' })
+    I.dontSeeElement('i[data-slate-leaf="true"]')
 
     I.say('Toggle link on')
     I.pressKey(['CommandOrControl', 'K'])
@@ -126,19 +126,19 @@ Scenario(
     I.say('Toggle bold on')
     I.pressKey(['CommandOrControl', 'A'])
     I.click('$plugin-toolbar-button-fett')
-    I.seeElement({ css: 'b' })
+    I.see('Some text', 'b[data-slate-leaf="true"]')
 
     I.say('Toggle bold off')
     I.click('$plugin-toolbar-button-fett')
-    I.dontSeeElement({ css: 'b' })
+    I.dontSeeElement('b[data-slate-leaf="true"]')
 
     I.say('Toggle italic on')
     I.click('$plugin-toolbar-button-kursiv')
-    I.seeElement({ css: 'i' })
+    I.see('Some text', 'i[data-slate-leaf="true"]')
 
     I.say('Toggle italic off')
     I.click('$plugin-toolbar-button-kursiv')
-    I.dontSeeElement({ css: 'i' })
+    I.dontSeeElement('i[data-slate-leaf="true"]')
 
     I.say('Toggle code on')
     I.click('$plugin-toolbar-button-code')

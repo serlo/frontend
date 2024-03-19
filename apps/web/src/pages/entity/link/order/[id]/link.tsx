@@ -1,4 +1,3 @@
-import { isTemplateExerciseGroupDocument } from '@editor/types/plugin-type-guards'
 import { faGripLines, faTools } from '@fortawesome/free-solid-svg-icons'
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
 import { arrayMoveImmutable } from 'array-move'
@@ -11,7 +10,6 @@ import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
-import { getPreviewStringFromExercise } from '@/components/taxonomy/taxonomy-move-copy/get-preview-string-from-exercise'
 import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -43,38 +41,23 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
   const sort = useEntitySortMutation()
   const router = useRouter()
   const { entityData } = pageData
-  const { typename, courseData, content } = entityData
-  const isCourse =
-    typename === UuidType.Course || typename === UuidType.CoursePage
-  const entityId = courseData?.id ?? entityData.id
+  const { typename, courseData } = entityData
 
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
+
+  const isCourse =
+    typename === UuidType.Course || typename === UuidType.CoursePage
+  const entityId = courseData?.id ?? entityData.id
 
   const courseLinks =
     courseData?.pages.map(({ url, title, id }) => {
       return { url, title, id }
     }) ?? []
 
-  const exercises =
-    content &&
-    !Array.isArray(content) &&
-    isTemplateExerciseGroupDocument(content)
-      ? content.state.exercises
-      : []
+  const [children, setChildren] = useState<TaxonomyLink[]>(courseLinks)
 
-  const exerciseLinks = exercises.map((exercise, index) => {
-    return {
-      url: `/${exercise.serloContext?.uuid}`,
-      title:
-        `(${index + 1}) ` + getPreviewStringFromExercise(exercise, strings),
-      id: exercise.serloContext?.uuid ?? 0,
-    }
-  })
-
-  const [children, setChildren] = useState<TaxonomyLink[]>(
-    isCourse ? courseLinks : exerciseLinks
-  )
+  if (!isCourse) return <>not supported</>
 
   if (!loggedInData) return <PleaseLogIn />
   const loggedInStrings = loggedInData.strings.taxonomyTermTools.sort

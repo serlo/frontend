@@ -141,22 +141,6 @@ export function revisionResponseToResponse(
     }
   }
 
-  if (uuid.__typename === UuidRevType.GroupedExercise) {
-    uuid.__typename
-    return {
-      __typename: UuidType.GroupedExercise,
-      currentRevision: {
-        content,
-        date,
-        id: -1,
-      },
-      exerciseGroup: uuid.repository.exerciseGroup,
-      ...repositoryFields,
-      revisions: uuid.repository.revisions,
-      date,
-    }
-  }
-
   // probably not needed
   if (uuid.__typename === UuidRevType.Page) {
     uuid.__typename

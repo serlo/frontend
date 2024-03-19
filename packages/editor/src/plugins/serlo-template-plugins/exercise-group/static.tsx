@@ -22,9 +22,7 @@ export function TextExerciseGroupTypeStaticRenderer(
   const { state, serloContext: context } = props
   const [loaded, setLoaded] = useState(false)
   const auth = useAuthentication()
-  useEffect(() => {
-    setLoaded(true)
-  }, [])
+  useEffect(() => setLoaded(true), [])
 
   const { content, exercises } = state
 

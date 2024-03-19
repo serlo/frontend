@@ -29,6 +29,7 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
 
   const context = props.serloContext
 
+  const exerciseLicenseId = context?.licenseId ?? props.state.licenseId
   const solutionLicenseId = (props.state.solution as EditorSolutionDocument)
     ?.state.licenseId
 
@@ -43,10 +44,10 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
   return (
     <div className="relative">
       <div className="absolute -right-8 -mt-1">
-        {context?.licenseId || solutionLicenseId ? (
+        {exerciseLicenseId || solutionLicenseId ? (
           <div className="ml-1">
             <ExerciseLicenseNotice
-              exerciseLicenseId={context?.licenseId}
+              exerciseLicenseId={exerciseLicenseId}
               solutionLicenseId={solutionLicenseId}
             />
           </div>

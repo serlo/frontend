@@ -128,9 +128,7 @@ export function RevisionPreviewBoxes({
         </p>
         <div
           className={cn(
-            (data.typename === UuidRevType.Exercise ||
-              data.typename === UuidRevType.GroupedExercise) &&
-              '!py-2',
+            data.typename === UuidRevType.Exercise && '!py-2',
             withPadding && 'p-side',
             'fixH1 rounded-2xl border border-brand-400 py-7 text-lg'
           )}

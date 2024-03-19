@@ -31,7 +31,6 @@ export function ArticleRelatedMagicInput({
         UuidType.Video,
         UuidType.Exercise,
         UuidType.ExerciseGroup,
-        UuidType.GroupedExercise,
         UuidType.TaxonomyTerm,
       ]}
       supportedTaxonomyTypes={[TaxonomyTermType.ExerciseFolder]}

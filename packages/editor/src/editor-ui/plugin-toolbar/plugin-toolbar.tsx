@@ -49,7 +49,7 @@ export function PluginToolbar({
 
       <div className="flex flex-grow items-center justify-end">
         {/* Plugin type indicator */}
-        <div className="mx-4 text-sm font-bold">
+        <div className="mx-4 text-sm font-bold" data-qa="plugin-type-indicator">
           {getPluginTitle(pluginStrings, pluginType)}
         </div>
 

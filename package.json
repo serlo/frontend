@@ -31,6 +31,7 @@
     "e2e-workers": "cd e2e-tests && yarn e2e-workers",
     "editor:build": "yarn workspace @serlo/editor build",
     "editor:publish": "yarn workspace @serlo/editor run npm publish",
+    "editor:publish-local": "yarn workspace @serlo/editor yalc:publish",
     "format": "yarn workspace @serlo/frontend format",
     "format:eslint": "yarn workspace @serlo/frontend format:eslint",
     "format:prettier": "yarn workspaces foreach -Ap run format:prettier",
