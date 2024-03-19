@@ -67,12 +67,12 @@ Scenario('Edit existing link', async ({ I }) => {
   I.type('Some text')
   I.pressKey(['CommandOrControl', 'A'])
   I.click('$plugin-toolbar-button-link')
-  I.type('Math')
+  I.type('Mathematik Start')
   I.seeElement('$link-suggestion-1')
   I.pressKey('ArrowDown')
   I.pressKey('Enter')
   I.seeElement(
-    locate({ css: '.serlo-editor-hacks a' }).withAttr({ href: '/83249' })
+    locate({ css: '.serlo-editor-hacks a' }).withAttr({ href: '/19767' })
   )
 
   I.say('Click edit button')
@@ -81,12 +81,12 @@ Scenario('Edit existing link', async ({ I }) => {
 
   I.say('Change the link href value')
   I.pressKey(['CommandOrControl', 'A'])
-  I.type('Geo')
+  I.type('geometrie')
   I.seeElement('$link-suggestion-1')
   I.pressKey('ArrowDown')
   I.pressKey('Enter')
   I.seeElement(
-    locate({ css: '.serlo-editor-hacks a' }).withAttr({ href: '/274643' })
+    locate({ css: '.serlo-editor-hacks a' }).withAttr({ href: '/1288' })
   )
 })
 
