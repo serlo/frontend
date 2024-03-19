@@ -146,6 +146,7 @@ export const revisionQuery = gql`
             }
           }
           course {
+            licenseId
             ...taxonomyTermsV2
             revisions(unrevised: true) {
               totalCount

@@ -1,4 +1,5 @@
 export const licensesContent = [
+  // instance: DE
   {
     id: 1,
     content:
@@ -49,6 +50,12 @@ export const licensesContent = [
     content:
       '{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Für diese "},{"text":"Aufgabenstellungen","strong":true},{"text":" der Abschlussarbeiten gelten die "},{"type":"a","href":"https://aba-aufgaben.nibis.de/","children":[{"text":"Nutzungsbedingungen des Niedersächsischen Kultusministeriums"}]},{"text":" (siehe auch unten)."}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"Wichtig:","strong":true},{"text":" Bei den "},{"text":"Lösungsvorschlägen","strong":true},{"text":" dazu handelt es sich "},{"text":"explizit nicht","strong":true},{"text":" um Lösungsvorgaben des Landes Niedersachsens. Diese sind von Autor*innen auf serlo.org erstellt oder kommen aus anderen Quellen."}]},{"type":"h","children":[{"text":""}],"level":3}],"id":"1d0f5fb6-7d86-4847-9829-7c389fd86bb0"},{"plugin":"box","state":{"type":"quote","title":{"plugin":"text","state":[{"type":"p","children":[{"text":"Nutzungsbedingungen vom Niedersächsischen Kultusministerium"}]}],"id":"3ab2c124-20a9-4ca5-afe6-9cbe7d01f7cc"},"anchorId":"","content":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Es wird darauf hingewiesen, dass die hier bereitgestellten Werke des Niedersächsischen Kultusministeriums zur freien Verwendung unentgeltlich zur Verfügung gestellt werden. Aufgabenstellungen und Lösungsvorgaben dürfen nur veröffentlicht werden, wenn die zur Verfügung gestellten Fassungen inhaltlich nicht verändert werden und bei der Veröffentlichung eine Quellenangabe erfolgt. Selbst erstellte Lösungen sind mit dem Hinweis zu versehen, dass es sich dabei nicht um Lösungsvorgaben des Landes Niedersachsen handelt. Die zur Verfügung gestellten Unterlagen enthalten aus urheberrechtlichen Gründen keinerlei Texte, Abbildungen oder andere Werke anderer Urheber*innen, sondern verweisen lediglich auf diese. Nutzer*innen verpflichten sich, hinsichtlich solcher Werke die geltenden urheberrechtlichen Bestimmungen zu beachten und vor einer Verwendung dieser Quellen von den jeweiligen Urheber*innen die erforderlichen Nutzungs- und Verwertungsrechte einzuholen."}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"Stand: 15.02.2024 ("},{"type":"a","href":"https://aba-aufgaben.nibis.de/","children":[{"text":"Quelle"}]},{"text":")"}]}],"id":"0c0ab6e8-9b97-45ec-9db4-60fd7cb24046"}],"id":"051eaece-d731-4022-8eae-13269beb9a56"}},"id":"7e25bb34-e257-4bca-b03b-ccb77d7890c7"}]}',
   },
+  {
+    id: 27,
+    content:
+      '{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Diese Aufgabe stammt vom Ministerium für Schule und Bildung des Landes Nordrhein-Westfalen. Sie unterliegt nicht den Standard-Nutzungsbedingungen für Inhalte auf serlo.org."}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"Wichtig:","strong":true},{"text":" Bei den "},{"text":"Lösungsvorschlägen","strong":true},{"text":" zu dieser Aufgabenstellung handelt es sich nicht um Lösungsvorgaben des Landes NRW. Diese sind von Autor*innen auf serlo.org erstellt oder kommen aus anderen Quellen."}]}],"id":"afc5e2bf-0199-40a3-86d6-7b28d5dc3fe3"}]}',
+  },
+  // other instances
   {
     id: 9,
     content:

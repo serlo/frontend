@@ -48,6 +48,7 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
         </ul>
       </nav>
       <nav
+        id="secondary-menu"
         className={cn(`
           absolute left-side z-10 mt-8
           hidden w-[170px] md:block xl:left-0 xl:ml-side-lg xl:w-[200px]

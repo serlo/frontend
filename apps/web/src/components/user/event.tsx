@@ -255,6 +255,12 @@ export function Event({
     ) {
       return <div className="text-gray-500">{event.reason}</div>
     }
+    if (event.__typename === 'CreateEntityRevisionNotificationEvent') {
+      if (Object.hasOwn(event.entityRevision, 'changes'))
+        return (
+          <div className="text-gray-500">{event.entityRevision.changes}</div>
+        )
+    }
     if (event.__typename === 'CreateThreadNotificationEvent') {
       return renderCommentContent(event.thread.thread.nodes[0].content)
     }

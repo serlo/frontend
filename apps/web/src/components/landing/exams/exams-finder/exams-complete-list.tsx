@@ -4,7 +4,7 @@ import {
   SupportedRegion,
   regions,
   schoolTypesWithExamsByRegion,
-} from './exams-finder'
+} from './exams-data'
 import { Link } from '@/components/content/link'
 
 export function ExamsCompleteList({ region }: { region: SupportedRegion }) {

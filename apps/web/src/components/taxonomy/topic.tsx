@@ -10,6 +10,7 @@ import { NewFolderPrototypeProps } from './new-folder-prototype'
 import { SubTopic } from './sub-topic'
 import { TopicCategories } from './topic-categories'
 import { ExerciseNumbering } from '../content/exercises/exercise-numbering'
+import { ExamsInfoBox } from '../exams-info-box'
 import { FaIcon } from '../fa-icon'
 import { InfoPanel } from '../info-panel'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
@@ -17,7 +18,13 @@ import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useAB } from '@/contexts/ab'
 import { useInstanceData } from '@/contexts/instance-context'
-import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
+import { mathExamsTaxonomies } from '@/data/de/math-exams-taxonomies'
+import {
+  BreadcrumbsData,
+  TaxonomyData,
+  TopicCategoryType,
+  UuidType,
+} from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { abSubmission } from '@/helper/ab-submission'
 import { cn } from '@/helper/cn'
@@ -25,6 +32,7 @@ import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 export interface TopicProps {
   data: TaxonomyData
+  breadcrumbs?: BreadcrumbsData
 }
 
 const DonationsBanner = dynamic<DonationsBannerProps>(() =>
@@ -41,15 +49,21 @@ const NewFolderPrototype = dynamic<NewFolderPrototypeProps>(() =>
   import('./new-folder-prototype').then((mod) => mod.NewFolderPrototype)
 )
 
-export function Topic({ data }: TopicProps) {
+export function Topic({ data, breadcrumbs }: TopicProps) {
   const { strings } = useInstanceData()
-
   const ab = useAB()
 
   const [hasFeedback, setHasFeedback] = useState(false)
 
   const isExerciseFolder = data.taxonomyType === TaxonomyTermType.ExerciseFolder
   const isTopic = data.taxonomyType === TaxonomyTermType.Topic
+
+  // identify final exam taxonomies or their children
+  const examsFolderId = breadcrumbs
+    ? [...breadcrumbs, data]?.find(
+        ({ id }) => id && mathExamsTaxonomies.includes(id)
+      )?.id
+    : undefined
 
   const hasExercises = data.exercisesContent.length > 0
 
@@ -110,18 +124,21 @@ export function Topic({ data }: TopicProps) {
 
   function renderHeader() {
     return (
-      <h1 className="serlo-h1 mb-10 mt-8" itemProp="name">
-        {data.title}
-        {isExerciseFolder && (
-          <span title={strings.entities.exerciseFolder}>
-            {' '}
-            <FaIcon
-              icon={faFile}
-              className="align-baseline text-[1.43rem] text-brand-400"
-            />{' '}
-          </span>
-        )}
-      </h1>
+      <>
+        <h1 className="serlo-h1 mb-10 mt-8" itemProp="name">
+          {data.title}
+          {isExerciseFolder && (
+            <span title={strings.entities.exerciseFolder}>
+              {' '}
+              <FaIcon
+                icon={faFile}
+                className="align-baseline text-[1.43rem] text-brand-400"
+              />{' '}
+            </span>
+          )}
+        </h1>
+        {examsFolderId ? <ExamsInfoBox examsFolderId={examsFolderId} /> : null}
+      </>
     )
   }
 

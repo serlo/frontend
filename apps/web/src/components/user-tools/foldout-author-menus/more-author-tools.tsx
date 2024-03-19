@@ -81,15 +81,17 @@ export function MoreAuthorTools({
       case UuidType.Article:
       case UuidType.Video:
       case UuidType.Applet:
-      case UuidType.Event:
         return [
           Tool.Abo,
           Tool.History,
           Tool.Curriculum,
           Tool.Log,
           Tool.AnalyticsLink,
+          Tool.ChangeLicense,
           Tool.Trash,
         ]
+      case UuidType.Event:
+        return [Tool.Abo, Tool.History, Tool.Curriculum, Tool.Log, Tool.Trash]
       case UuidType.TaxonomyTerm:
         return taxNewItems
           ? [Tool.NewEntitySubmenu]
