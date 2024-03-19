@@ -3,7 +3,7 @@ import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { buildFrac } from '../utils/math-builder'
+import { buildBigSqrt, buildFrac, buildSqrt } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -105,15 +105,26 @@ export function SurfacePyramide() {
             Du hast h<sub>a</sub> und h<sub>b</sub> nicht gegeben. Deshalb musst
             du als nächstes Die Dreieckshöhen berechnen: <br />
             <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              h<sub>a</sub> = √
-              <span className="pl-1 overline">(a/2)² + h² </span>
+              h<sub>a</sub> ={' '}
+              {buildBigSqrt(
+                <>
+                  <span className="inline-block scale-y-[3]">(</span>{' '}
+                  {buildFrac(<>a</>, <>2</>)}{' '}
+                  <span className="inline-block scale-y-[3]">)</span>² + h²
+                </>
+              )}{' '}
             </span>{' '}
             <br />
             <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              h<sub>a</sub> = √
-              <span className="pl-1 overline">
-                ({data.ab} cm/2)² + {data.me} cm²{' '}
-              </span>
+              h<sub>a</sub> ={' '}
+              {buildBigSqrt(
+                <>
+                  <span className="inline-block scale-y-[3]">(</span>{' '}
+                  {buildFrac(<>{data.ab} cm</>, <>2</>)}{' '}
+                  <span className="inline-block scale-y-[3]">)</span>² + (
+                  {data.me} cm)²
+                </>
+              )}{' '}
             </span>{' '}
             <br />
             <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
@@ -121,15 +132,26 @@ export function SurfacePyramide() {
             </span>{' '}
             <br /> <br />
             <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              h<sub>b</sub> = √
-              <span className="pl-1 overline">(b/2)² + h² </span>
+              h<sub>b</sub> ={' '}
+              {buildBigSqrt(
+                <>
+                  <span className="inline-block scale-y-[3]">(</span>{' '}
+                  {buildFrac(<>b</>, <>2</>)}{' '}
+                  <span className="inline-block scale-y-[3]">)</span>² + h²
+                </>
+              )}{' '}
             </span>{' '}
             <br />
             <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              h<sub>b</sub> = √
-              <span className="pl-1 overline">
-                ({data.bd} cm/2)² + {data.me} cm²{' '}
-              </span>
+              h<sub>b</sub> ={' '}
+              {buildBigSqrt(
+                <>
+                  <span className="inline-block scale-y-[3]">(</span>{' '}
+                  {buildFrac(<>{data.bd} cm</>, <>2</>)}{' '}
+                  <span className="inline-block scale-y-[3]">)</span>² + (
+                  {data.me} cm)²
+                </>
+              )}{' '}
             </span>{' '}
             <br />
             <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">

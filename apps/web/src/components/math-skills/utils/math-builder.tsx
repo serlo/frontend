@@ -24,7 +24,7 @@ export function buildBigSqrt(x: JSX.Element) {
   return (
     <>
       <span
-        className="inline-block scale-y-[2] text-2xl"
+        className="inline-block scale-y-[2.67] text-2xl"
         style={{ verticalAlign: '-3px' }}
       >
         &#8730;
