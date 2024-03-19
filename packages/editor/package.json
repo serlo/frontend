@@ -40,7 +40,8 @@
     "lint": "npm-run-all lint:tsc lint:eslint lint:prettier",
     "lint:eslint": "yarn _eslint",
     "lint:prettier": "yarn _prettier --check",
-    "lint:tsc": "tsc --noEmit"
+    "lint:tsc": "tsc --noEmit",
+    "yalc:publish": "yarn build && yalc publish --push --sig"
   },
   "dependencies": {
     "react": "^18.2.0",
