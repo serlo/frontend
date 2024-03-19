@@ -1,6 +1,6 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { buildFrac, buildSqrt } from '../utils/math-builder'
+import { buildBigSqrt, buildFrac, buildSqrt } from '../utils/math-builder'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
 import { randomIntBetween } from '@/helper/random-int-between'
 
@@ -48,7 +48,6 @@ export function RootEquations() {
         Money_Ende,
         Aktuelles_Jahr,
       }) => {
-        const preresult = Math.round((Money_Ende / Money_Start) * 1000) / 1000
         const result =
           Math.round(
             Math.pow(
@@ -95,7 +94,10 @@ export function RootEquations() {
             <br />
             <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               <sup>{Aktuelles_Jahr - Start_Jahr}</sup>
-              {buildSqrt(<>{preresult.toString().replace('.', ',')}</>)}= x
+              {buildBigSqrt(
+                <>{buildFrac(<>{Money_Ende}</>, <>{Money_Start}</>)}</>
+              )}
+              = x
             </span>
             <br />
             Mit dem Taschenrechner berechnet sich das Ergebnis zu:
