@@ -8,8 +8,8 @@ import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { MainUuidType } from './query-types'
 
 type BareExercise = Omit<
-  Extract<MainUuidType, { __typename: 'Exercise' | 'GroupedExercise' }>,
-  'exerciseGroup' | '__typename' | 'instance'
+  Extract<MainUuidType, { __typename: 'Exercise' }>,
+  '__typename' | 'instance' | 'taxonomyTerms'
 >
 
 export function createExercise(
@@ -42,18 +42,11 @@ export function createExerciseGroup(
 ): EditorTemplateExerciseGroupDocument | undefined {
   if (!uuid.currentRevision?.content) return undefined
 
-  const exercises = uuid.exercises
-    .map(createExercise)
-    .filter(
-      (exercise) => exercise && !exercise.serloContext?.trashed
-    ) as EditorExerciseDocument[]
-
   return {
     plugin: TemplatePluginType.TextExerciseGroup,
     state: {
       // @ts-expect-error not sure why string is expected here
       content: parseDocumentString(uuid.currentRevision.content),
-      exercises,
     },
     serloContext: {
       uuid: uuid.id,

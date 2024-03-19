@@ -44,7 +44,6 @@ export enum Tool {
   NewEntitySubmenu = 'newEntitySubmenu',
   Separator = 'separator',
   SortCoursePages = 'sortCoursePages',
-  SortGroupedExercises = 'sortGroupedExercises',
   SortEntities = 'sortEntities',
   Trash = 'trash',
   DirectLink = 'directLink',
@@ -117,10 +116,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       canDo: true,
     },
     sortCoursePages: {
-      url: `/entity/link/order/${entityId}/link`,
-      canDo: canDo(Entity.orderChildren),
-    },
-    sortGroupedExercises: {
       url: `/entity/link/order/${entityId}/link`,
       canDo: canDo(Entity.orderChildren),
     },

@@ -59,27 +59,10 @@ export interface InjectionOnlyContentQuery {
           __typename?: 'ExerciseGroupRevision'
           content: string
         } | null
-        exercises: Array<{
-          __typename?: 'GroupedExercise'
-          currentRevision?: {
-            __typename?: 'GroupedExerciseRevision'
-            content: string
-          } | null
-          licenseId: number
-        }>
         licenseId: number
       }
     | { __typename: 'ExerciseGroupRevision' }
     | { __typename: 'ExerciseRevision' }
-    | {
-        __typename: 'GroupedExercise'
-        currentRevision?: {
-          __typename?: 'GroupedExerciseRevision'
-          content: string
-        } | null
-        licenseId: number
-      }
-    | { __typename: 'GroupedExerciseRevision' }
     | { __typename: 'Page' }
     | { __typename: 'PageRevision' }
     | { __typename: 'TaxonomyTerm'; alias: string; title: string }
@@ -135,7 +118,6 @@ export function InjectionStaticRenderer({
         .then((data: { data: InjectionOnlyContentQuery }) => {
           if (!data.data?.uuid) throw new Error('not found')
           const uuid = data.data.uuid
-
           if (
             uuid.__typename === 'Article' ||
             uuid.__typename === 'TaxonomyTerm' ||
@@ -153,16 +135,12 @@ export function InjectionStaticRenderer({
             throw new Error('no accepted revision')
           }
 
-          if (
-            uuid.__typename === 'GroupedExercise' ||
-            uuid.__typename === 'Exercise'
-          ) {
+          if (uuid.__typename === 'Exercise') {
             const exerciseContext = {
               serloContext: {
                 licenseId: uuid.licenseId,
               },
             }
-
             setContent([
               { ...JSON.parse(uuid.currentRevision.content), exerciseContext },
             ])
@@ -187,7 +165,10 @@ export function InjectionStaticRenderer({
             setContent([
               {
                 plugin: TemplatePluginType.TextExerciseGroup,
-                state: { content },
+                state: {
+                  content,
+                  serloContext: { licenseId: uuid.licenseId },
+                },
               },
             ])
             return
@@ -264,9 +245,6 @@ const query = gql`
     uuid(alias: { path: $path, instance: de }) {
       __typename
       ... on Exercise {
-        ...injectionExercise
-      }
-      ... on GroupedExercise {
         ...injectionExercise
       }
       ... on ExerciseGroup {

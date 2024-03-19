@@ -124,21 +124,6 @@ export const unrevisedEntitiesFragment = gql`
           }
         }
       }
-      ... on GroupedExercise {
-        currentRevision {
-          id
-        }
-        revisions(unrevised: true) {
-          nodes {
-            id
-            author {
-              ...basicUserData
-            }
-            changes
-            date
-          }
-        }
-      }
       ... on Video {
         currentRevision {
           title

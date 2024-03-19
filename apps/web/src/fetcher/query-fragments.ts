@@ -267,15 +267,6 @@ export const sharedEventFragments = gql`
         }
       }
     }
-    ... on GroupedExercise {
-      exerciseGroup {
-        taxonomyTerms {
-          nodes {
-            type
-          }
-        }
-      }
-    }
   }
 `
 

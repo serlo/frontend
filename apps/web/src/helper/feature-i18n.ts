@@ -164,7 +164,6 @@ export function getEntityStringByTypename(
     Applet: strings.entities.applet,
     CoursePage: strings.entities.coursePage,
     Exercise: strings.entities.exercise,
-    GroupedExercise: strings.entities.groupedExercise,
     ExerciseGroup: strings.entities.exerciseGroup,
     Event: strings.entities.event,
     Course: strings.entities.course,
