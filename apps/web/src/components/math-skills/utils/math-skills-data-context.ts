@@ -18,6 +18,7 @@ export interface MathSkillsStorageData {
   name: string
   animal: Animal
   exercises: Map<string, ExerciseData>
+  highFiveSolved: number[]
 }
 
 export function getEmptyData(): MathSkillsStorageData {
@@ -25,6 +26,7 @@ export function getEmptyData(): MathSkillsStorageData {
     name: '',
     animal: randomItemFromArray(Object.keys(animalsData) as Animal[]),
     exercises: new Map([]),
+    highFiveSolved: [],
   }
 }
 
