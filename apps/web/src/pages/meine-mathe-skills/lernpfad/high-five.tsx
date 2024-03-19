@@ -447,7 +447,7 @@ const levels: {
     },
   },
   8: {
-    title: 'Winkelnamen',
+    title: 'Sektoren',
     x: 230,
     y: 340,
     deps: [5],
@@ -455,12 +455,11 @@ const levels: {
       return (
         <>
           <p>
-            Jedem Winkel kann mit drei Punkten ein Name gegeben werden. Starte
-            mit dem ersten Schenkel, mache dann mit dem Scheitel weiter und
-            schließe ab mit dem zweiten Schenkel gegen dem Uhrzeigersinn.
+            Ein Kreis hat immer 360°. In je mehr Sektoren man den Kreis teilt,
+            umso kleiner werden die Winkel.
           </p>
           <RealmathInjection
-            url="/Neues/Klasse6/winkel/winkelaufg1b.php"
+            url="/Neues/Klasse5/winkel/winkelkreis.php"
             height={500}
             target={60}
             onClose={onClose}
@@ -545,7 +544,7 @@ const levels: {
   },
   12: {
     title: 'Kreuzung',
-    x: 220,
+    x: 240,
     y: 490,
     deps: [7, 8],
     component: (c, onClose) => {
@@ -567,19 +566,20 @@ const levels: {
     },
   },
   13: {
-    title: 'Sektoren',
+    title: 'Winkelnamen',
     x: 330,
-    y: 580,
+    y: 560,
     deps: [8],
     component: (c, onClose) => {
       return (
         <>
           <p>
-            Ein Kreis hat immer 360°. In je mehr Sektoren man den Kreis teilt,
-            umso kleiner werden die Winkel.
+            Jedem Winkel kann mit drei Punkten ein Name gegeben werden. Starte
+            mit dem ersten Schenkel, mache dann mit dem Scheitel weiter und
+            schließe ab mit dem zweiten Schenkel gegen dem Uhrzeigersinn.
           </p>
           <RealmathInjection
-            url="/Neues/Klasse5/winkel/winkelkreis.php"
+            url="/Neues/Klasse6/winkel/winkelaufg1b.php"
             height={500}
             target={60}
             onClose={onClose}
@@ -590,18 +590,21 @@ const levels: {
     },
   },
   14: {
-    title: 'TODO',
-    x: 560,
-    y: 600,
-    deps: [42],
+    title: 'Ordnung',
+    x: 250,
+    y: 270,
+    deps: [3],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            Wenn man viele Zahlen hat, kann eine Ordnung Wunder wirken um
+            Übersicht reinzubringen.
+          </p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
+            url="/Neues/Klasse5/zahlenausn/zahlenordnen.php"
             height={500}
-            target={50}
+            target={240}
             onClose={onClose}
             key={c}
           />
@@ -610,18 +613,30 @@ const levels: {
     },
   },
   15: {
-    title: 'TODO',
-    x: 560,
-    y: 600,
-    deps: [42],
+    title: 'Römer',
+    x: 340,
+    y: 220,
+    deps: [3],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            Die römischen Zahlen nutzen ein ganz anderes System als unser
+            Zahlensystem und zeigt, welche Vielfalt in der Mathematik möglich
+            ist
+          </p>
+          <p>
+            Aber es zeigt auch, dass sich die besten Systeme durchsetzen und
+            weniger optimale Systeme aus dem Alltag verdrängt werden.
+          </p>
+          <p>
+            Aber was die römischen Zahlen immer haben werden: ihren ganz
+            besonderen Stil.
+          </p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
+            url="/Neues/Klasse5/dual/roemischmemory1.php"
             height={500}
-            target={50}
+            target={100}
             onClose={onClose}
             key={c}
           />
@@ -630,18 +645,22 @@ const levels: {
     },
   },
   16: {
-    title: 'TODO',
-    x: 560,
-    y: 600,
-    deps: [42],
+    title: 'Diagramm',
+    x: 340,
+    y: 420,
+    deps: [14],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            Mit einem guten Diagramm kannst du schnell wichtige Informationen
+            darstellen - wie zum Beispiel das Ergebnis der Umfrage zum
+            Wandertag.
+          </p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
-            height={500}
-            target={50}
+            url="/Neues/Klasse5/diagramm/balkendiagramm.php"
+            height={470}
+            target={80}
             onClose={onClose}
             key={c}
           />
@@ -650,16 +669,19 @@ const levels: {
     },
   },
   17: {
-    title: 'TODO',
-    x: 560,
-    y: 600,
-    deps: [42],
+    title: 'Runden',
+    x: 480,
+    y: 400,
+    deps: [14, 15],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            Manchmal sind zu viele Details auch nicht gut. Das Runden hilft,
+            unsere Aufmerksamkeit auf die wesentlichen Dinge zu lenken.
+          </p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
+            url="/Neues/Klasse5/zahlenausn/zahlenrunden.php"
             height={500}
             target={50}
             onClose={onClose}
@@ -670,18 +692,22 @@ const levels: {
     },
   },
   18: {
-    title: 'TODO',
-    x: 560,
-    y: 600,
-    deps: [42],
+    title: 'Große Zahlen',
+    x: 520,
+    y: 340,
+    deps: [15],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            Es wird immer Berührpunkte zwischen Mathematik und Sprache geben.
+            Zahlen wollen in Worte geschrieben werden - und Worte wieder in
+            Zahlen.
+          </p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
-            height={500}
-            target={50}
+            url="/Neues/Klasse5/zahlenausn/textinzahl01.php"
+            height={440}
+            target={60}
             onClose={onClose}
             key={c}
           />
@@ -690,18 +716,21 @@ const levels: {
     },
   },
   19: {
-    title: 'TODO',
-    x: 560,
-    y: 600,
-    deps: [42],
+    title: 'Längenmaße',
+    x: 460,
+    y: 620,
+    deps: [16],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            Dank des metrischen Systems muss man beim Umrechnen von
+            Längeneinheiten nur das Komma an die richtige Stelle verschieben.
+          </p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
+            url="/Neues/Klasse5/laengen/laengen00.php"
             height={500}
-            target={50}
+            target={45}
             onClose={onClose}
             key={c}
           />
@@ -710,18 +739,22 @@ const levels: {
     },
   },
   20: {
-    title: 'TODO',
-    x: 560,
+    title: 'Entfernungen',
+    x: 620,
     y: 600,
-    deps: [42],
+    deps: [16],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            In der Tabelle siehst du alle Entfernungen zwischen den vier
+            Städten. Zeige, dass du den richtigen Blick hast und die Tabelle
+            auslesen kannst.
+          </p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
+            url="/Neues/Klasse5/laengen/entfernungen01.php"
             height={500}
-            target={50}
+            target={40}
             onClose={onClose}
             key={c}
           />
@@ -730,18 +763,22 @@ const levels: {
     },
   },
   21: {
-    title: 'TODO',
-    x: 560,
-    y: 600,
-    deps: [42],
+    title: 'Quersumme',
+    x: 580,
+    y: 500,
+    deps: [17],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            Die Ziffern einer Zahl du addieren, fühlt sich im ersten Moment
+            etwas schräg an. Doch man kann daraus etwas ganz nützliches machen.
+          </p>
+          <p>Die Mathematik bietet manchmal kleine Überraschungen.</p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
+            url="/Neues/Klasse5/teiler/teildurch3.php"
             height={500}
-            target={50}
+            target={80}
             onClose={onClose}
             key={c}
           />
@@ -750,18 +787,21 @@ const levels: {
     },
   },
   22: {
-    title: 'TODO',
-    x: 560,
-    y: 600,
-    deps: [42],
+    title: 'Zahlenstrahl',
+    x: 730,
+    y: 540,
+    deps: [17, 18],
     component: (c, onClose) => {
       return (
         <>
-          <p>TODO</p>
+          <p>
+            Das erste Mal wurde vor etwa 400 Jahren der Zahlenstrahl verwendet,
+            um Zahlen darzustellen und mit ihnen zu rechnen.
+          </p>
           <RealmathInjection
-            url="/Neues/Klasse5/geld/euro.php"
+            url="/Neues/Klasse5/zahlenausn/zahlenanordnen.php"
             height={500}
-            target={50}
+            target={60}
             onClose={onClose}
             key={c}
           />
@@ -770,9 +810,34 @@ const levels: {
     },
   },
   23: {
+    title: 'Münzen',
+    x: 730,
+    y: 420,
+    deps: [18],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>
+            Unsere Münzen sind so gewählt, dass man viele Beträge mit wenigen
+            Münzen darstellen kann. Trotzdem gibt es beträgt, die man mit
+            wenigen Münzen darstellen kann, und andere Beträge, die mehr Münzen
+            brauchen.
+          </p>
+          <RealmathInjection
+            url="/Neues/Klasse5/geld/eurobetrag.php"
+            height={500}
+            target={80}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  24: {
     title: 'TODO',
-    x: 560,
-    y: 600,
+    x: 750,
+    y: 0,
     deps: [42],
     component: (c, onClose) => {
       return (
@@ -781,7 +846,187 @@ const levels: {
           <RealmathInjection
             url="/Neues/Klasse5/geld/euro.php"
             height={500}
-            target={50}
+            target={-1}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  25: {
+    title: 'TODO',
+    x: 750,
+    y: 0,
+    deps: [42],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>TODO</p>
+          <RealmathInjection
+            url="/Neues/Klasse5/geld/euro.php"
+            height={500}
+            target={-1}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  26: {
+    title: 'TODO',
+    x: 750,
+    y: 0,
+    deps: [42],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>TODO</p>
+          <RealmathInjection
+            url="/Neues/Klasse5/geld/euro.php"
+            height={500}
+            target={-1}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  27: {
+    title: 'TODO',
+    x: 750,
+    y: 0,
+    deps: [42],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>TODO</p>
+          <RealmathInjection
+            url="/Neues/Klasse5/geld/euro.php"
+            height={500}
+            target={-1}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  28: {
+    title: 'TODO',
+    x: 750,
+    y: 0,
+    deps: [42],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>TODO</p>
+          <RealmathInjection
+            url="/Neues/Klasse5/geld/euro.php"
+            height={500}
+            target={-1}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  29: {
+    title: 'TODO',
+    x: 750,
+    y: 0,
+    deps: [42],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>TODO</p>
+          <RealmathInjection
+            url="/Neues/Klasse5/geld/euro.php"
+            height={500}
+            target={-1}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  30: {
+    title: 'TODO',
+    x: 750,
+    y: 0,
+    deps: [42],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>TODO</p>
+          <RealmathInjection
+            url="/Neues/Klasse5/geld/euro.php"
+            height={500}
+            target={-1}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  31: {
+    title: 'TODO',
+    x: 750,
+    y: 0,
+    deps: [42],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>TODO</p>
+          <RealmathInjection
+            url="/Neues/Klasse5/geld/euro.php"
+            height={500}
+            target={-1}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  32: {
+    title: 'TODO',
+    x: 750,
+    y: 0,
+    deps: [42],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>TODO</p>
+          <RealmathInjection
+            url="/Neues/Klasse5/geld/euro.php"
+            height={500}
+            target={-1}
+            onClose={onClose}
+            key={c}
+          />
+        </>
+      )
+    },
+  },
+  33: {
+    title: 'TODO',
+    x: 750,
+    y: 0,
+    deps: [42],
+    component: (c, onClose) => {
+      return (
+        <>
+          <p>TODO</p>
+          <RealmathInjection
+            url="/Neues/Klasse5/geld/euro.php"
+            height={500}
+            target={-1}
             onClose={onClose}
             key={c}
           />
@@ -791,8 +1036,8 @@ const levels: {
   },
   42: {
     title: 'TODO',
-    x: 560,
-    y: 600,
+    x: 750,
+    y: 0,
     deps: [42],
     component: (c, onClose) => {
       return (
