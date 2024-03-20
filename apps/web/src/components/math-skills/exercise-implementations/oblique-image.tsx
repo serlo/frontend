@@ -78,7 +78,7 @@ export function ObliqueImage() {
             <ol>
               <li className="text-2xl">
                 Die Strecke <span className="overline">AB</span> soll auf der
-                Schrägbildachse liegen und der Punkt A soll links von C liegen.
+                Schrägbildachse liegen und der Punkt A soll links von B liegen.
               </li>
             </ol>
           </>
