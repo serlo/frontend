@@ -432,7 +432,7 @@ const levels: {
       return (
         <>
           <p>
-            Der Flächeninhalt des Rechtsecks hängt sehr eng mit der
+            Der Flächeninhalt des Rechtecks hängt sehr eng mit der
             Multiplikation zusammen - auch sehr anschaulich.
           </p>
           <RealmathInjection
@@ -914,8 +914,8 @@ const levels: {
       return (
         <>
           <p>
-            Es gibt verschiedene Möglichkeiten, vier Zahlen zu multiplizieren.
-            Einige davon sind elegant und sparen dir Arbeit.
+            Es gibt verschiedene Möglichkeiten, vier Zahlen zu addieren. Einige
+            davon sind elegant und sparen dir Arbeit.
           </p>
           <RealmathInjection
             url="/Neues/Klasse5/addieren/sternaddnat.php"
@@ -961,7 +961,7 @@ const levels: {
         <>
           <p>
             Negative Zahlen begegnen dir schon früh bei Temperatur-Angaben.
-            Nutze dieses intuitive Wissen, um das Thermometer abzulesen.
+            Nutze dieses intuitive Wissen, um das Termometer abzulesen.
           </p>
           <RealmathInjection
             url="/Neues/Klasse6/gegenzahl/negativeinf3.php"
