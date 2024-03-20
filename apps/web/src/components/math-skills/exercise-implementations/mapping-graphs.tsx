@@ -41,10 +41,10 @@ export function AbbildungGraphen() {
         const d = randomIntBetween(-4, 4)
         const x_reflect = randomItemFromArray([true, false, false])
         const y_reflect = randomItemFromArray([true, false, false])
-        const x_offset = randomIntBetween(0, 4)
+        const x_offset = randomIntBetween(1, 7)
         const x_dir = randomItemFromArray(['links', 'rechts'])
         const y_dir = randomItemFromArray(['oben', 'unten'])
-        const y_offset = randomIntBetween(0, 4)
+        const y_offset = randomIntBetween(1, 7)
         const function_type = randomIntBetween(1, 3)
         const isPlus = randomItemFromArray([true, false])
         const isPlus2 = randomItemFromArray([true, false])
@@ -106,33 +106,12 @@ export function AbbildungGraphen() {
               <br />
               <ol>
                 <li>
-                  {data.x_reflect === true
-                    ? '· Der Graph von f wird an der y-Achse gespiegelt.'
-                    : null}{' '}
+                  · Der Graph von f wird um {data.x_offset} Einheiten nach{' '}
+                  {data.x_dir} verschoben.
                 </li>
                 <li>
-                  {data.y_reflect === true
-                    ? '· Der Graph von f wird an der x-Achse gespiegelt.'
-                    : null}{' '}
-                </li>
-
-                <li>
-                  {data.x_offset !== 0
-                    ? '· Der Graph von f wird um ' +
-                      data.x_offset +
-                      ' nach ' +
-                      data.x_dir +
-                      ' verschoben.'
-                    : null}{' '}
-                </li>
-                <li>
-                  {data.y_offset !== 0
-                    ? '· Der Graph von f wird um ' +
-                      data.y_offset +
-                      ' nach ' +
-                      data.y_dir +
-                      ' verschoben.'
-                    : null}{' '}
+                  · Der Graph von f wird um {data.y_offset} Einheiten nach{' '}
+                  {data.y_dir} verschoben.
                 </li>
               </ol>
               <br />
@@ -147,45 +126,26 @@ export function AbbildungGraphen() {
               Der Graph der Funktion <i>f</i>
               <br />
               <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-                y = {data.isPlus === true ? '+' : '-'} (x{' '}
+                y = {data.isPlus === true ? null : '-'} (x{' '}
                 {data.isPlus ? '+' : '-'} {data.x_s})<sup>2</sup>{' '}
                 {data.isPlus2 ? '+' : '-'} {data.y_s}
               </span>
               <br />
               <br />
-              wird durch folgende Abbildungen auf den Graphen von <i>g</i>{' '}
+              wird durch folgende Verschiebungen auf den Graphen von <i>
+                g
+              </i>{' '}
               abgebildet:
               <br />
               <br />
               <ol>
                 <li>
-                  {data.x_reflect === true
-                    ? '· Der Graph von f wird an der y-Achse gespiegelt.'
-                    : null}{' '}
+                  · Der Graph von f wird um {data.x_offset} Einheiten nach{' '}
+                  {data.x_dir} verschoben.
                 </li>
                 <li>
-                  {data.y_reflect === true
-                    ? '· Der Graph von f wird an der x-Achse gespiegelt.'
-                    : null}{' '}
-                </li>
-
-                <li>
-                  {data.x_offset !== 0
-                    ? '· Der Graph von f wird um ' +
-                      data.x_offset +
-                      ' nach ' +
-                      data.x_dir +
-                      ' verschoben.'
-                    : null}{' '}
-                </li>
-                <li>
-                  {data.y_offset !== 0
-                    ? '· Der Graph von f wird um ' +
-                      data.y_offset +
-                      ' nach ' +
-                      data.y_dir +
-                      ' verschoben.'
-                    : null}{' '}
+                  · Der Graph von f wird um {data.y_offset} Einheiten nach{' '}
+                  {data.y_dir} verschoben.
                 </li>
               </ol>
               <br />
@@ -213,33 +173,12 @@ export function AbbildungGraphen() {
               <br />
               <ol>
                 <li>
-                  {data.x_reflect === true
-                    ? '· Der Graph von f wird an der y-Achse gespiegelt.'
-                    : null}{' '}
+                  · Der Graph von f wird um {data.x_offset} Einheiten nach{' '}
+                  {data.x_dir} verschoben.
                 </li>
                 <li>
-                  {data.y_reflect === true
-                    ? '· Der Graph von f wird an der x-Achse gespiegelt.'
-                    : null}{' '}
-                </li>
-
-                <li>
-                  {data.x_offset !== 0
-                    ? '· Der Graph von f wird um ' +
-                      data.x_offset +
-                      ' nach ' +
-                      data.x_dir +
-                      ' verschoben.'
-                    : null}{' '}
-                </li>
-                <li>
-                  {data.y_offset !== 0
-                    ? '· Der Graph von f wird um ' +
-                      data.y_offset +
-                      ' nach ' +
-                      data.y_dir +
-                      ' verschoben.'
-                    : null}{' '}
+                  · Der Graph von f wird um {data.y_offset} Einheiten nach{' '}
+                  {data.y_dir} verschoben.
                 </li>
               </ol>
               <br />
@@ -250,12 +189,10 @@ export function AbbildungGraphen() {
       }}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       renderSolution={({ data }) => {
-        const Nenner_Faktor = Math.pow(-1, data.c)
-        if (data.function_type === 1 && data.x_reflect === true)
+        if (data.function_type === 1)
           return (
             <>
-              Der Graph von <i>f</i> wird an der y-Achse gespielt. Wir ersetzen
-              &quot;x&quot; durch &quot;-x&quot;:
+              Der Funktionsterm von <i>g</i> lautet:
               <br />
               <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
                 y = {data.a === -1 ? '-' : null}{' '}
@@ -271,60 +208,9 @@ export function AbbildungGraphen() {
                 {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
                 {data.d !== 0 ? data.d : null}
               </span>
-              <br />
-              <br />
-              Zieht man das Minus aus dem Nenner ergibt sich der Term:
-              <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                y = {data.a === -1 ? '-' : null}{' '}
-                {buildFrac(
-                  <>{data.a !== -1 ? data.a : -data.a}</>,
-                  <>
-                    (-1)<sup>{data.c !== -1 ? -data.c : null}</sup> ·{' '}
-                    {data.b === 0 || data.c === -1 ? null : '('}x{' '}
-                    {data.b < 0 ? '+' : null} {data.b !== 0 ? -data.b : null}
-                    {data.b === 0 || data.c === -1 ? null : ')'}
-                    <sup>{data.c !== -1 ? -data.c : null}</sup>
-                  </>
-                )}{' '}
-                {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
-                {data.d !== 0 ? data.d : null}
-              </span>
-              <br />
-              <br />
-              Vereinfacht:
-              <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                y ={' '}
-                {data.a === -1 || (data.a === 1 && Nenner_Faktor === -1)
-                  ? '-'
-                  : null}{' '}
-                {buildFrac(
-                  <>{data.a !== -1 ? data.a : -data.a}</>,
-                  <>
-                    {' '}
-                    {data.b === 0 || data.c === -1 ? null : '('}x{' '}
-                    {data.b < 0 ? '+' : null} {data.b !== 0 ? -data.b : null}
-                    {data.b === 0 || data.c === -1 ? null : ')'}
-                    <sup>{data.c !== -1 ? -data.c : null}</sup>
-                  </>
-                )}{' '}
-                {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
-                {data.d !== 0 ? data.d : null}
-              </span>
             </>
           )
-        if (
-          data.function_type === 1 &&
-          data.y_reflect === true &&
-          data.x_reflect === false
-        )
-          return (
-            <>
-              Der Graph von <i>f</i> wird an der x-Achse gespielt. Wir
-              multiplizieren den ganzen Funktionsterm mit (-1):
-            </>
-          )
+
         return <></>
       }}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
