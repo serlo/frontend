@@ -1,5 +1,4 @@
-import { LanguageData } from '@editor/types/language-data'
-import { useEffect, ReactNode, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { HotkeysProvider, useHotkeys } from 'react-hotkeys-hook'
 import { Provider } from 'react-redux'
 
@@ -7,15 +6,20 @@ import { DndWrapper } from './components/dnd-wrapper'
 import { PreferenceContextProvider } from './contexts'
 import { useBlurOnOutsideClick } from './hooks/use-blur-on-outside-click'
 import { SubDocument } from './sub-document'
+import type { EditorProps } from './types'
 import {
+  store,
+  useAppDispatch,
+  useAppSelector,
   runInitRootSaga,
+  persistHistory,
   undo,
   redo,
   selectPendingChanges,
   selectHasPendingChanges,
-  store,
-  useAppDispatch,
-  DocumentState,
+  selectHasUndoActions,
+  selectHasRedoActions,
+  selectDocuments,
   selectStaticDocument,
 } from '../store'
 import { ROOT } from '../store/root/constants'
@@ -138,33 +142,38 @@ function InnerDocument({ children, onChange, ...props }: EditorProps) {
   )
 
   function renderChildren(id: string) {
-    const document = <SubDocument id={id} />
+    const editor = <SubDocument id={id} />
 
     if (typeof children === 'function' && loggedInData) {
-      return children(document, { instanceData, loggedInData })
+      return children({
+        element: editor,
+        languageData: {
+          instanceData,
+          loggedInData,
+        },
+        storeData: {
+          ROOT,
+          store,
+          useAppDispatch,
+          useAppSelector,
+          persistHistory,
+          redo,
+          undo,
+          selectHasPendingChanges,
+          selectPendingChanges,
+          selectHasUndoActions,
+          selectHasRedoActions,
+          selectDocuments,
+          selectStaticDocument,
+        },
+      })
     }
 
     return (
       <>
-        {document}
+        {editor}
         {children}
       </>
     )
   }
 }
-
-export interface EditorProps {
-  children?:
-    | ReactNode
-    | ((document: ReactNode, languageData: LanguageData) => ReactNode)
-  initialState: {
-    plugin: string
-    state?: unknown
-  }
-  onChange?: OnEditorChange
-}
-
-export type OnEditorChange = (payload: {
-  changed: boolean
-  getDocument: () => DocumentState | null
-}) => void
