@@ -252,9 +252,6 @@ const query = gql`
         currentRevision {
           content
         }
-        exercises {
-          ...injectionExercise
-        }
       }
       ... on Video {
         currentRevision {
