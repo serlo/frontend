@@ -36,7 +36,7 @@ export function ObliqueImage() {
           'prisma3',
           'pyra3',
         ])
-        const w = randomItemFromArray([30, 45, 60])
+        const w = randomItemFromArray([45])
         const data: BodyData = {
           ab,
           me,
@@ -201,6 +201,7 @@ export function ObliqueImage() {
               Verbinde die Punkte zu einem Prisma.
             </>
           )
+        return <></>
       }}
       centAmount={52}
     />
