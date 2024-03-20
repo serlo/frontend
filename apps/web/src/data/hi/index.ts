@@ -50,7 +50,6 @@ export const instanceData = {
       exercise: "अभ्यास",
       exerciseGroup: "व्यायाम समूह",
       topic: 'Folder',
-      groupedExercise: "समूह व्यायाम",
       page: "पृष्ठ",
       solution: "हल",
       taxonomyTerm: "टैक्सोनोमी शब्द",
@@ -544,7 +543,6 @@ export const loggedInData = {
       confirmTrash: 'Are you sure you want to delete this content?',
       restoreContent: "कचरे से पुनर्स्थापित करें",
       sortCoursePages: 'Sort course pages',
-      sortGroupedExercises: 'Sort grouped Exercises',
       edit: "संपादित",
       editTax: 'Edit Title & Text',
       unrevisedEdit: 'Show unrevised revisions',
@@ -843,6 +841,7 @@ export const loggedInData = {
           description: 'Text with blanks',
           placeholder: 'Write a text and add blanks',
           chooseType: 'Choose the exercise type',
+          chooseChildPluginType: 'Choose the answer type',
           modes: {
             typing: 'Typing',
             'drag-and-drop': 'Drag & Drop'

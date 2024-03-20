@@ -60,9 +60,9 @@ export const BlanksExerciseToolbar = ({
             ]}
           />
           <ToolbarSelect
-            tooltipText={blanksExerciseStrings.chooseType}
+            tooltipText={blanksExerciseStrings.chooseChildPluginType}
             value={childPluginType}
-            dataQa="plugin-blanks-mode-switch"
+            dataQa="plugin-blanks-child-plugin-switch"
             changeValue={(value) => state.text.replace(value)}
             options={[
               {

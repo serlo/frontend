@@ -63,6 +63,7 @@ export function SerloEditor({
       parentType: type,
     })
   )
+
   // some plugins rely on static renderes
   editorRenderers.init(createRenderers())
 

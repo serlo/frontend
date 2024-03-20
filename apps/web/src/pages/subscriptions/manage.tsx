@@ -31,7 +31,6 @@ const filters = [
   UuidType.Applet,
   UuidType.CoursePage,
   UuidType.Exercise,
-  UuidType.GroupedExercise,
   UuidType.ExerciseGroup,
   UuidType.User,
   UuidType.Course,

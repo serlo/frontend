@@ -46,14 +46,11 @@ export async function requestRevision(
     uuid.__typename === UuidRevType.Video ||
     uuid.__typename === UuidRevType.Event ||
     uuid.__typename === UuidRevType.Applet ||
-    uuid.__typename === UuidRevType.GroupedExercise ||
     uuid.__typename === UuidRevType.Exercise ||
     uuid.__typename === UuidRevType.ExerciseGroup ||
     uuid.__typename === UuidRevType.Course
   ) {
-    const isExercise =
-      uuid.__typename === UuidRevType.Exercise ||
-      uuid.__typename === UuidRevType.GroupedExercise
+    const isExercise = uuid.__typename === UuidRevType.Exercise
 
     const title = createTitle(uuid, instance)
 
@@ -84,22 +81,6 @@ export async function requestRevision(
           ]
         : null
 
-    const getParentId = () => {
-      return uuid.__typename === UuidRevType.GroupedExercise
-        ? uuid.repository.exerciseGroup.id
-        : uuid.repository.id
-    }
-
-    const getPositionInGroup = () => {
-      if (uuid.__typename === UuidRevType.GroupedExercise) {
-        const pos = uuid.repository.exerciseGroup.exercises.findIndex(
-          (ex) => ex.id === uuid.repository.id
-        )
-        return pos > -1 ? pos : undefined
-      }
-      return undefined
-    }
-
     // likely the previously accepted revision
     const getPreviousRevisionId = () => {
       const revNodes = uuid.repository.revisions?.nodes
@@ -128,9 +109,8 @@ export async function requestRevision(
         repository: {
           id: uuid.repository.id,
           alias: uuid.repository.alias,
-          parentId: getParentId(),
+          parentId: uuid.repository.id,
           previousRevisionId: getPreviousRevisionId(),
-          positionInGroup: getPositionInGroup(),
         },
         typename: uuid.__typename as UuidRevType,
         thisRevision: {

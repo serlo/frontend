@@ -7,12 +7,17 @@ import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-co
 import { useState } from 'react'
 
 import type { SolutionProps } from '.'
+import { cn } from '@/helper/cn'
 
 interface SerloLicenseChooserProps {
   licenseId: SolutionProps['state']['licenseId']
+  className?: string
 }
 
-export function SerloLicenseChooser({ licenseId }: SerloLicenseChooserProps) {
+export function SerloLicenseChooser({
+  licenseId,
+  className,
+}: SerloLicenseChooserProps) {
   const solutionStrings = useEditorStrings().templatePlugins.solution
   const [showLicenseModal, setShowLicenseModal] = useState(false)
 
@@ -20,15 +25,22 @@ export function SerloLicenseChooser({ licenseId }: SerloLicenseChooserProps) {
 
   return (
     <>
-      <div className="absolute right-12 top-0 z-20">
-        <button
-          className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
-          onClick={() => setShowLicenseModal(true)}
-        >
-          <EditorTooltip text={solutionStrings.changeLicense} />
-          <FaIcon icon={faCreativeCommons} />
-        </button>
-      </div>
+      <button
+        className={cn(
+          'absolute -top-0.5 right-12 z-20',
+          'serlo-button-editor-secondary serlo-tooltip-trigger mr-2',
+          className
+        )}
+        onMouseDown={(e) => {
+          // prevents plugin from stealing focus
+          e.preventDefault()
+          e.stopPropagation()
+        }}
+        onClick={() => setShowLicenseModal(true)}
+      >
+        <EditorTooltip text={solutionStrings.changeLicense} />
+        <FaIcon icon={faCreativeCommons} />
+      </button>
       <ModalWithCloseButton
         isOpen={showLicenseModal}
         onCloseClick={() => setShowLicenseModal(false)}
