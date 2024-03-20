@@ -26,6 +26,9 @@ interface PlotData {
   isPlus2: boolean
   x_s: number
   y_s: number
+  Anfangswert: number
+  exp_offset: number
+  Faktor: number
 }
 
 export function AbbildungGraphen() {
@@ -47,6 +50,9 @@ export function AbbildungGraphen() {
         const isPlus2 = randomItemFromArray([true, false])
         const x_s = randomIntBetween(1, 9)
         const y_s = randomIntBetween(1, 9)
+        const Anfangswert = randomIntBetween(10, 90) * 10
+        const exp_offset = randomIntBetween(1, 6)
+        const Faktor = randomIntBetween(1, 8) / 100 + 1
         const data: PlotData = {
           a,
           b,
@@ -63,6 +69,9 @@ export function AbbildungGraphen() {
           isPlus2,
           x_s,
           y_s,
+          Anfangswert,
+          exp_offset,
+          Faktor,
         }
         return { data }
       }}
@@ -137,8 +146,9 @@ export function AbbildungGraphen() {
               <br />
               Der Graph der Funktion <i>f</i>
               <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                y = (x {data.isPlus ? '+' : '-'} {data.x_s})<sup>2</sup>{' '}
+              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+                y = {data.isPlus === true ? '+' : '-'} (x{' '}
+                {data.isPlus ? '+' : '-'} {data.x_s})<sup>2</sup>{' '}
                 {data.isPlus2 ? '+' : '-'} {data.y_s}
               </span>
               <br />
@@ -189,19 +199,11 @@ export function AbbildungGraphen() {
               <br />
               Der Graph der Funktion <i>f</i>
               <br />
-              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-                y = {data.a === -1 ? '-' : null}{' '}
-                {buildFrac(
-                  <>{data.a !== -1 ? data.a : -data.a}</>,
-                  <>
-                    {data.b === 0 || data.c === -1 ? null : '('}x{' '}
-                    {data.b > 0 ? '+' : null} {data.b !== 0 ? data.b : null}
-                    {data.b === 0 || data.c === -1 ? null : ')'}
-                    <sup>{data.c !== -1 ? -data.c : null}</sup>
-                  </>
-                )}{' '}
-                {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
-                {data.d !== 0 ? data.d : null}
+              <span className="my-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+                y = {data.Anfangswert} ·{' '}
+                {data.Faktor.toString().replace('.', ',')}
+                <sup>x</sup> {data.isPlus === true ? '+' : '-'}{' '}
+                {data.exp_offset}
               </span>
               <br />
               <br />
