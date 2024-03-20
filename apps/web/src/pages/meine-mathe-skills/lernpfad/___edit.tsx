@@ -110,6 +110,9 @@ function Content() {
                   )}
                 >
                   {levelData.title}
+                  <span className="absolute -right-4 -top-4 block aspect-square h-7 rounded-full bg-orange-500 bg-opacity-30 p-0.5">
+                    {index}
+                  </span>
                 </button>
               </div>
             )
