@@ -184,6 +184,7 @@ export async function requestPage(
       entityData: {
         id: uuid.id,
         alias: uuid.alias,
+        trashed: uuid.trashed,
         typename: UuidType.ExerciseGroup,
         content: exerciseGroup,
         unrevisedRevisions: uuid.revisions?.totalCount,
