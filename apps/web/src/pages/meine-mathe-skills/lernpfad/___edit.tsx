@@ -34,12 +34,13 @@ const ContentPage: NextPage = () => {
 function Content() {
   const [positions, setPositions] = useState(inputPositions)
   const [, setRenderCounter] = useState<number>(0)
+  const [movingIndex, setMovingIndex] = useState<number | undefined>(undefined)
 
   return (
     <div className="mx-auto w-fit px-4">
       <p className="mb-7 mt-4">
         <button
-          className="serlo-link"
+          className="serlo-button-light"
           onClick={() => {
             console.log(JSON.stringify(positions))
           }}
@@ -54,6 +55,27 @@ function Content() {
           id="tree-wrapper"
           style={{
             backgroundImage: "url('/_assets/mathe-skills/high-five.jpg')",
+          }}
+          onMouseDown={(e) => {
+            const div = e.target as HTMLButtonElement
+            if (div.tagName.toLocaleLowerCase() !== 'button') return
+            const index = parseInt(div.id)
+            setMovingIndex(index)
+          }}
+          onMouseUp={() => {
+            setMovingIndex(undefined)
+          }}
+          onMouseMove={(e) => {
+            if (movingIndex === undefined) return
+            const wrapper = e.currentTarget
+
+            const newPositions = positions
+            newPositions[movingIndex] = {
+              x: e.pageX - wrapper.offsetLeft,
+              y: e.pageY - wrapper.offsetTop,
+            }
+            setPositions(newPositions)
+            setRenderCounter((counter) => counter + 1)
           }}
         >
           <svg
@@ -90,20 +112,9 @@ function Content() {
                   top: `${positions[index].y}px`,
                 }}
                 key={id}
-                onMouseMove={(e) => {
-                  if (e.buttons !== 1) return
-                  const wrapper = document.getElementById('tree-wrapper')!
-
-                  const newPositions = positions
-                  newPositions[index] = {
-                    x: e.pageX - wrapper.offsetLeft,
-                    y: e.pageY - wrapper.offsetTop,
-                  }
-                  setPositions(newPositions)
-                  setRenderCounter((counter) => counter + 1)
-                }}
               >
                 <button
+                  id={String(index)}
                   className={cn(
                     'absolute whitespace-nowrap  rounded px-2 py-0.5 font-bold',
                     'bg-gray-200 hover:bg-gray-300'
