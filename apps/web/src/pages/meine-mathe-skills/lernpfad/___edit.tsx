@@ -204,8 +204,10 @@ function Content() {
               <button
                 id={id}
                 className={cn(
-                  'absolute whitespace-nowrap  rounded px-2 py-0.5 font-bold',
-                  'cursor-move bg-gray-200 hover:bg-gray-300'
+                  'absolute cursor-move  whitespace-nowrap rounded px-2 py-0.5 font-bold',
+                  active === parseInt(id)
+                    ? 'bg-orange-200 hover:bg-orange-300'
+                    : 'bg-gray-200 hover:bg-gray-300'
                 )}
                 onClick={(e) => {
                   if (e.metaKey && active) {
