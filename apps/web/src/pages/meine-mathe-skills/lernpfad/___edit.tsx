@@ -167,6 +167,7 @@ function Content() {
                 {node.deps.map((dep) => {
                   return (
                     <line
+                      className="cursor-cell"
                       key={`connect-${id}-${dep}`}
                       x1={node.x}
                       y1={node.y}
