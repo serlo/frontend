@@ -1,5 +1,5 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { buildBigSqrt, buildFrac } from '../utils/math-builder'
+import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 import { shuffleArray } from '@/helper/shuffle-array'
@@ -67,22 +67,6 @@ export function LogarithmExercise1() {
             <br />
             <br />
             <i>Rechne am Besten mit Stift und Papier.</i>
-            <p>
-              Test:{' '}
-              {buildBigSqrt(
-                <>
-                  {buildFrac(
-                    <>
-                      {189098}
-                      <sup>3</sup>
-                    </>,
-                    <>
-                      4 €lj <sub>2</sub>
-                    </>
-                  )}
-                </>
-              )}
-            </p>
           </>
         )
       }}
