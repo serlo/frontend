@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-empty-pattern */
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -189,7 +190,58 @@ export function AbbildungGraphen() {
       }}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       renderSolution={({ data }) => {
+        const x_Ende_1 = data.b + data.x_offset
+        const x_Ende_2 = data.b - data.x_offset
+        const y_Ende_1 = data.d + data.y_offset
+        const y_Ende_2 = data.d - data.y_offset
+
         if (data.function_type === 1)
+          return (
+            <>
+              Der Funktionsterm von <i>g</i> lautet:
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = {data.a === -1 ? '-' : null}{' '}
+                {buildFrac(
+                  <>{data.a !== -1 ? data.a : -data.a}</>,
+                  <>
+                    {data.b === 0 || data.c === -1 ? null : '('}x{' '}
+                    {data.b > 0 ? '+' : null} {data.b !== 0 ? data.b : null}{' '}
+                    {data.x_dir === 'links'
+                      ? '+ ' + data.x_offset
+                      : '- ' + data.x_offset}
+                    {data.b === 0 || data.c === -1 ? null : ')'}
+                    <sup>{data.c !== -1 ? -data.c : null}</sup>
+                  </>
+                )}{' '}
+                {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
+                {data.d !== 0 ? data.d : null}{' '}
+                {data.y_dir === 'oben'
+                  ? '+ ' + data.y_offset
+                  : '- ' + data.y_offset}
+              </span>
+              <br />
+              <br />
+              Zusammengefasst:
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = {data.a === -1 ? '-' : null}{' '}
+                {buildFrac(
+                  <>{data.a !== -1 ? data.a : -data.a}</>,
+                  <>
+                    {data.b === 0 || data.c === -1 ? null : '('}x{' '}
+                    {data.b > 0 ? '+' : null} {data.b !== 0 ? data.b : null}{' '}
+                    {data.b === 0 || data.c === -1 ? null : ')'}
+                    <sup>{data.c !== -1 ? -data.c : null}</sup>
+                  </>
+                )}{' '}
+                {data.y_dir === 'oben' && y_Ende_1 > 0 ? '+ ' + y_Ende_1 : null}
+                {data.y_dir === 'oben' && y_Ende_1 === 0 ? null : null}
+                {data.y_dir === 'oben' && y_Ende_1 < 0 ? '- ' : null}
+              </span>
+            </>
+          )
+        if (data.function_type === 2)
           return (
             <>
               Der Funktionsterm von <i>g</i> lautet:
@@ -210,7 +262,27 @@ export function AbbildungGraphen() {
               </span>
             </>
           )
-
+        if (data.function_type === 3)
+          return (
+            <>
+              Der Funktionsterm von <i>g</i> lautet:
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = {data.a === -1 ? '-' : null}{' '}
+                {buildFrac(
+                  <>{data.a !== -1 ? data.a : -data.a}</>,
+                  <>
+                    {data.b === 0 || data.c === -1 ? null : '('}-x{' '}
+                    {data.b > 0 ? '+' : null} {data.b !== 0 ? data.b : null}
+                    {data.b === 0 || data.c === -1 ? null : ')'}
+                    <sup>{data.c !== -1 ? -data.c : null}</sup>
+                  </>
+                )}{' '}
+                {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
+                {data.d !== 0 ? data.d : null}
+              </span>
+            </>
+          )
         return <></>
       }}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
