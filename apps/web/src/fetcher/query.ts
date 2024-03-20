@@ -129,12 +129,6 @@ export const dataQuery = gql`
         revisions(unrevised: true) {
           totalCount
         }
-        exercises {
-          ...exercise
-          revisions(unrevised: true) {
-            totalCount
-          }
-        }
       }
 
       ... on Event {
@@ -191,12 +185,6 @@ export const dataQuery = gql`
                 id
                 date
                 cohesive
-              }
-              exercises {
-                ...exercise
-                revisions(unrevised: true) {
-                  totalCount
-                }
               }
               revisions(unrevised: true) {
                 totalCount
