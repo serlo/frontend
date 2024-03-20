@@ -50,7 +50,6 @@ export const instanceData = {
       exercise: "Ejercicio",
       exerciseGroup: "Grupo de ejercicios",
       topic: "Carpeta",
-      groupedExercise: "Ejercicio agrupado",
       page: "Página",
       solution: "Solución",
       taxonomyTerm: "Término de taxonomía",
@@ -544,7 +543,6 @@ export const loggedInData = {
       confirmTrash: "¿Estás seguro de que quieres eliminar este contenido?",
       restoreContent: "Restaurar de la papelera",
       sortCoursePages: "Ordenar páginas del curso",
-      sortGroupedExercises: "Ordenar ejercicios agrupados",
       edit: "Editar",
       editTax: "Editar título y texto",
       unrevisedEdit: "Mostrar revisiones sin revisar",
@@ -843,6 +841,7 @@ export const loggedInData = {
           description: "Textos con blancos",
           placeholder: "Escribe un texto y añade espacios en blanco",
           chooseType: "Elige el tipo de ejercicio",
+          chooseChildPluginType: 'Choose the answer type',
           modes: {
             typing: "Tecleando/escribir",
             'drag-and-drop': "Arrastrar y colocar"

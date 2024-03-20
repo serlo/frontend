@@ -1,7 +1,6 @@
 import { gql } from 'graphql-request'
 
 import {
-  sharedExerciseFragments,
   sharedRevisionFragments,
   sharedTaxonomyParents,
 } from '../query-fragments'
@@ -213,36 +212,6 @@ export const revisionQuery = gql`
           }
         }
       }
-      ... on GroupedExerciseRevision {
-        content
-        changes
-        repository {
-          licenseId
-          trashed
-          instance
-          id
-          alias
-          exerciseGroup {
-            id
-            alias
-            exercises {
-              id
-            }
-          }
-          currentRevision {
-            id
-            content
-            date
-          }
-          revisions(unrevised: false) {
-            totalCount
-            nodes {
-              id
-              trashed
-            }
-          }
-        }
-      }
       ... on ExerciseGroupRevision {
         ...exerciseGroupRevision
         changes
@@ -263,12 +232,6 @@ export const revisionQuery = gql`
             nodes {
               id
               trashed
-            }
-          }
-          exercises {
-            ...exercise
-            revisions(unrevised: true) {
-              totalCount
             }
           }
         }
@@ -316,6 +279,5 @@ export const revisionQuery = gql`
   }
 
   ${sharedTaxonomyParents}
-  ${sharedExerciseFragments}
   ${sharedRevisionFragments}
 `

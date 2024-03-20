@@ -50,7 +50,6 @@ export const instanceData = {
       exercise: "Exercice",
       exerciseGroup: "Groupe d'exercices",
       topic: "Dossier",
-      groupedExercise: "Exercice groupé",
       page: "page",
       solution: "solution",
       taxonomyTerm: "Terme de taxonomie",
@@ -544,7 +543,6 @@ export const loggedInData = {
       confirmTrash: 'Are you sure you want to delete this content?',
       restoreContent: "Restaurer à partir de la corbeille",
       sortCoursePages: "Trier les pages du cours",
-      sortGroupedExercises: "Trier les exercices groupés",
       edit: "Modifier",
       editTax: 'Edit Title & Text',
       unrevisedEdit: "Afficher les révisions non révisées",
@@ -843,6 +841,7 @@ export const loggedInData = {
           description: 'Text with blanks',
           placeholder: 'Write a text and add blanks',
           chooseType: "Choisissez le type d'exercice",
+          chooseChildPluginType: 'Choose the answer type',
           modes: {
             typing: 'Typing',
             'drag-and-drop': 'Drag & Drop'

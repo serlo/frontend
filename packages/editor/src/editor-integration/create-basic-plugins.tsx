@@ -6,6 +6,7 @@ import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedi
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
+import { editorData } from '@editor/package/editor-data'
 import { blanksExercise } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
 import { equationsPlugin } from '@editor/plugins/equations'
@@ -27,25 +28,26 @@ import { createTextPlugin } from '@editor/plugins/text'
 import { textAreaExercisePlugin } from '@editor/plugins/text-area-exercise'
 import { unsupportedPlugin } from '@editor/plugins/unsupported'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { SupportedLanguage } from '@editor/types/language-data'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
-import { type LoggedInData } from '@/data-types'
-
 export function createBasicPlugins({
-  editorStrings,
+  language = 'de',
   enableTextAreaExercise = false,
   exerciseVisibleInSuggestion,
   allowedChildPlugins,
   allowImageInTableCells,
   multimediaConfig,
 }: {
+  language?: SupportedLanguage
   allowedChildPlugins?: string[]
   exerciseVisibleInSuggestion: boolean
   enableTextAreaExercise?: boolean
   allowImageInTableCells: boolean
-  editorStrings: LoggedInData['strings']['editor']
   multimediaConfig?: MultimediaConfig
 }) {
+  const editorStrings = editorData[language].loggedInData.strings.editor
+
   return [
     {
       type: EditorPluginType.Text,

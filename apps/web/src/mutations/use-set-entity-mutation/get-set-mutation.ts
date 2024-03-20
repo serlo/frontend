@@ -93,19 +93,6 @@ const setExerciseGroupMutation = gql`
     }
   }
 `
-const setGroupedExerciseMutation = gql`
-  mutation setGroupedExercise($input: SetGenericEntityInput!) {
-    entity {
-      setGroupedExercise(input: $input) {
-        __typename
-        success
-        record {
-          id
-        }
-      }
-    }
-  }
-`
 const setVideoMutation = gql`
   mutation setVideo($input: SetVideoInput!) {
     entity {
@@ -131,7 +118,6 @@ export function getSetMutation(
     Event: setEventMutation,
     Exercise: setExerciseMutation,
     ExerciseGroup: setExerciseGroupMutation,
-    GroupedExercise: setGroupedExerciseMutation,
     Video: setVideoMutation,
   }[type]
 }
