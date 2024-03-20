@@ -75,7 +75,6 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
     return [
       Tool.Abo,
       ...(hasUnrevised ? [Tool.UnrevisedEdit] : [Tool.Edit, Tool.History]),
-      Tool.SortGroupedExercises,
       Tool.Curriculum,
       Tool.ChangeLicense,
       Tool.Log,
