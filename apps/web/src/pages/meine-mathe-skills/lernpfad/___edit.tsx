@@ -37,6 +37,10 @@ function Content() {
   const [movingIndex, setMovingIndex] = useState<number | undefined>(undefined)
   const [active, setActive] = useState<number | undefined>(undefined)
 
+  function forceRender() {
+    setRenderCounter((counter) => counter + 1)
+  }
+
   return (
     <div className="mx-auto w-fit px-4">
       <p className="mb-7 mt-4">
@@ -52,6 +56,13 @@ function Content() {
         >
           copy json to clipboard
         </button>
+        <ul>
+          <li>
+            Create connection: Click on a node (child) and CTRL/CMD-Click on
+            another node (parent)
+          </li>
+          <li>Remove connection: CTRL/CMD-Click on a connections</li>
+        </ul>
       </p>
       <>
         <h2 className="mb-3 mt-8 text-2xl font-bold">Edit Tree</h2>
@@ -64,8 +75,8 @@ function Content() {
           onMouseDown={(e) => {
             const div = e.target as HTMLButtonElement
             if (div.tagName.toLocaleLowerCase() !== 'button') return
-            const index = parseInt(div.id)
-            setMovingIndex(index)
+            const numId = parseInt(div.id)
+            setMovingIndex(numId)
           }}
           onMouseUp={() => {
             setMovingIndex(undefined)
@@ -79,8 +90,7 @@ function Content() {
               oldNodes[movingIndex].y = e.pageY - wrapper.offsetTop
               return oldNodes
             })
-
-            setRenderCounter((counter) => counter + 1)
+            forceRender()
           }}
         >
           <svg
@@ -101,6 +111,17 @@ function Content() {
                         y2={nodes[dep].y}
                         strokeWidth="10"
                         stroke="rgba(148, 163, 184, 0.8)"
+                        onClick={(e) => {
+                          if (!e.metaKey) return
+                          setNodes((currentNodes) => {
+                            const node = currentNodes[parseInt(id)]
+                            node.deps = node.deps.filter(
+                              (depId) => depId !== dep
+                            )
+                            return currentNodes
+                          })
+                          forceRender()
+                        }}
                       />
                     )
                   })}
@@ -108,7 +129,7 @@ function Content() {
               )
             })}
           </svg>
-          {Object.entries(nodes).map(([id, node], index) => {
+          {Object.entries(nodes).map(([id, node]) => {
             return (
               <div
                 className="group absolute flex w-0 items-center justify-center"
@@ -119,12 +140,26 @@ function Content() {
                 key={id}
               >
                 <button
-                  id={String(index)}
+                  id={id}
                   className={cn(
                     'absolute whitespace-nowrap  rounded px-2 py-0.5 font-bold',
                     'cursor-move bg-gray-200 hover:bg-gray-300'
                   )}
-                  onClick={() => setActive(index)}
+                  onClick={(e) => {
+                    if (e.metaKey && active) {
+                      //new connection from currently active element
+                      setNodes((currentNodes) => {
+                        const numId = parseInt(id)
+                        if (!currentNodes[active].deps.includes(numId)) {
+                          currentNodes[active].deps.push(numId)
+                        }
+                        return currentNodes
+                      })
+                      forceRender()
+                    } else {
+                      setActive(parseInt(id))
+                    }
+                  }}
                 >
                   {node.title}
                 </button>
@@ -147,7 +182,7 @@ function Content() {
                       oldNodes[active].title = value
                       return oldNodes
                     })
-                    setRenderCounter((counter) => counter + 1)
+                    forceRender()
                   }}
                 />
               </label>
@@ -162,7 +197,7 @@ function Content() {
                     return currentNodes
                   })
                   setActive(undefined)
-                  setRenderCounter((counter) => counter + 1)
+                  forceRender()
                 }}
               >
                 <FaIcon icon={faTrash} /> Remove Node
