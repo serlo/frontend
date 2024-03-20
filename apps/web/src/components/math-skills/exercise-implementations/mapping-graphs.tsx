@@ -31,8 +31,8 @@ export function AbbildungGraphen() {
         const b = randomIntBetween(-3, 3)
         const c = randomIntBetween(-4, -1)
         const d = randomIntBetween(-4, 4)
-        const x_reflect = randomItemFromArray([true, true, false])
-        const y_reflect = randomItemFromArray([true, true, true, false])
+        const x_reflect = randomItemFromArray([true, false, false])
+        const y_reflect = randomItemFromArray([true, false, false])
         const x_offset = randomIntBetween(0, 4)
         const x_dir = randomItemFromArray(['links', 'rechts'])
         const y_dir = randomItemFromArray(['oben', 'unten'])
@@ -81,15 +81,16 @@ export function AbbildungGraphen() {
             <br />
             <ol>
               <li>
-                {data.y_reflect === true
-                  ? '· Der Graph von f wird an der x-Achse gespiegelt.'
-                  : null}{' '}
-              </li>
-              <li>
                 {data.x_reflect === true
                   ? '· Der Graph von f wird an der y-Achse gespiegelt.'
                   : null}{' '}
               </li>
+              <li>
+                {data.y_reflect === true
+                  ? '· Der Graph von f wird an der x-Achse gespiegelt.'
+                  : null}{' '}
+              </li>
+
               <li>
                 {data.x_offset !== 0
                   ? '· Der Graph von f wird um ' +
@@ -178,6 +179,13 @@ export function AbbildungGraphen() {
                 {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
                 {data.d !== 0 ? data.d : null}
               </span>
+            </>
+          )
+        if (data.y_reflect === true && data.x_reflect === false)
+          return (
+            <>
+              Der Graph von <i>f</i> wird an der x-Achse gespielt. Wir
+              multiplizieren den ganzen Funktionsterm mit (-1):
             </>
           )
         return <></>
