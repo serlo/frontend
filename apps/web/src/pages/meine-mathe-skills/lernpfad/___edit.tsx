@@ -1,10 +1,7 @@
 import { NextPage } from 'next'
 import { Fragment, useState } from 'react'
 
-import {
-  levels,
-  positions as inputPositions,
-} from '../../../components/math-skills/high-five/high-five-levels'
+import { nodes as inputNodes } from '../../../components/math-skills/high-five/high-five-levels'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
@@ -33,7 +30,7 @@ const ContentPage: NextPage = () => {
 }
 
 function Content() {
-  const [positions, setPositions] = useState(inputPositions)
+  const [nodes, setNodes] = useState(inputNodes)
   const [, setRenderCounter] = useState<number>(0)
   const [movingIndex, setMovingIndex] = useState<number | undefined>(undefined)
 
@@ -43,14 +40,14 @@ function Content() {
         <button
           className="serlo-button-light"
           onClick={() => {
-            const output = JSON.stringify(positions)
+            const output = JSON.stringify(nodes)
             // eslint-disable-next-line no-console
             console.log(output)
             void navigator.clipboard.writeText(output)
             showToastNotice('👌', 'success')
           }}
         >
-          export json to console
+          copy json to clipboard
         </button>
       </p>
       <>
@@ -74,12 +71,12 @@ function Content() {
             if (movingIndex === undefined) return
             const wrapper = e.currentTarget
 
-            const newPositions = positions
-            newPositions[movingIndex] = {
-              x: e.pageX - wrapper.offsetLeft,
-              y: e.pageY - wrapper.offsetTop,
-            }
-            setPositions(newPositions)
+            setNodes((oldNodes) => {
+              oldNodes[movingIndex].x = e.pageX - wrapper.offsetLeft
+              oldNodes[movingIndex].y = e.pageY - wrapper.offsetTop
+              return oldNodes
+            })
+
             setRenderCounter((counter) => counter + 1)
           }}
         >
@@ -88,17 +85,17 @@ function Content() {
             viewBox="0 0 800 668"
             className="relative"
           >
-            {Object.entries(levels).map(([id, levelData], index) => {
+            {Object.entries(nodes).map(([id, node]) => {
               return (
                 <Fragment key={id}>
-                  {levelData.deps.map((dep) => {
+                  {node.deps.map((dep) => {
                     return (
                       <line
                         key={`connect-${id}-${dep}`}
-                        x1={positions[index].x}
-                        y1={positions[index].y}
-                        x2={positions[dep].x}
-                        y2={positions[dep].y}
+                        x1={node.x}
+                        y1={node.y}
+                        x2={nodes[dep].x}
+                        y2={nodes[dep].y}
                         strokeWidth="10"
                         stroke="rgba(148, 163, 184, 0.8)"
                       />
@@ -108,13 +105,13 @@ function Content() {
               )
             })}
           </svg>
-          {Object.entries(levels).map(([id, levelData], index) => {
+          {Object.entries(nodes).map(([id, node], index) => {
             return (
               <div
                 className="absolute flex w-0 items-center justify-center"
                 style={{
-                  left: `${positions[index].x}px`,
-                  top: `${positions[index].y}px`,
+                  left: `${node.x}px`,
+                  top: `${node.y}px`,
                 }}
                 key={id}
               >
@@ -125,7 +122,7 @@ function Content() {
                     'bg-gray-200 hover:bg-gray-300'
                   )}
                 >
-                  {levelData.title}
+                  {node.title}
                   <span className="absolute -right-4 -top-4 block aspect-square h-7 rounded-full bg-orange-500 bg-opacity-30 p-0.5">
                     {index}
                   </span>

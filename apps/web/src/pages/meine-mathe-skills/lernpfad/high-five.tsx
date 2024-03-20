@@ -2,8 +2,8 @@ import { NextPage } from 'next'
 import { Fragment, useState } from 'react'
 
 import {
-  levels,
-  positions,
+  nodes,
+  levelComponents,
 } from '../../../components/math-skills/high-five/high-five-levels'
 import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
@@ -60,27 +60,27 @@ function Content() {
               viewBox="0 0 800 668"
               className="relative"
             >
-              {Object.entries(levels).map(([id, levelData]) => {
+              {Object.entries(nodes).map(([id, levelData]) => {
                 const lid = parseInt(id)
                 if (
                   data.highFiveSolved.includes(lid) ||
-                  levels[lid].deps.length === 0 ||
-                  levels[lid].deps.some((dep) =>
+                  nodes[lid].deps.length === 0 ||
+                  nodes[lid].deps.some((dep) =>
                     data.highFiveSolved.includes(dep)
                   ) ||
                   showAll
                 )
                   return (
                     <Fragment key={id}>
-                      {levelData.deps.map((dep, index) => {
+                      {levelData.deps.map((dep) => {
                         if (data.highFiveSolved.includes(dep) || showAll) {
                           return (
                             <line
                               key={`connect-${id}-${dep}`}
-                              x1={positions[index].x}
-                              y1={positions[index].y}
-                              x2={positions[dep].x}
-                              y2={positions[dep].y}
+                              x1={levelData.x}
+                              y1={levelData.y}
+                              x2={nodes[dep].x}
+                              y2={nodes[dep].y}
                               strokeWidth="10"
                               stroke="rgba(148, 163, 184, 0.8)"
                             />
@@ -95,12 +95,12 @@ function Content() {
                 return null
               })}
             </svg>
-            {Object.entries(levels).map(([id, levelData], index) => {
+            {Object.entries(nodes).map(([id, levelData]) => {
               const lid = parseInt(id)
               if (
                 data.highFiveSolved.includes(lid) ||
-                levels[lid].deps.length === 0 ||
-                levels[lid].deps.some((dep) =>
+                nodes[lid].deps.length === 0 ||
+                nodes[lid].deps.some((dep) =>
                   data.highFiveSolved.includes(dep)
                 ) ||
                 showAll
@@ -109,8 +109,8 @@ function Content() {
                   <div
                     className="absolute flex w-0 items-center justify-center"
                     style={{
-                      left: `${positions[index].x}px`,
-                      top: `${positions[index].y}px`,
+                      left: `${levelData.x}px`,
+                      top: `${levelData.y}px`,
                     }}
                     key={id}
                   >
@@ -146,7 +146,7 @@ function Content() {
       ) : (
         <div className="w-[800px]">
           <h2 className="mb-3 mt-8 text-2xl font-bold">
-            High Five - {levels[selected].title}
+            High Five - {nodes[selected].title}
           </h2>
           <p>
             <button
@@ -160,7 +160,7 @@ function Content() {
             </button>
           </p>
           <main className="mt-8 text-base [&>p]:my-4 [&>p]:text-lg">
-            {levels[selected].component(renderCounter, () => {
+            {levelComponents[selected](renderCounter, () => {
               updateData((data) => {
                 if (!data.highFiveSolved.includes(selected)) {
                   data.highFiveSolved.push(selected)
