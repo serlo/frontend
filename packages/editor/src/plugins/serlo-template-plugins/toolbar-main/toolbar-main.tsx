@@ -91,6 +91,12 @@ export function ToolbarMain({
       <button
         className="serlo-button-green pointer-events-auto ml-2 md:mr-[-11.5vw] lg:-mr-52 xl:-mr-64"
         onClick={() => {
+          // TODO: deactivated saving while migrating
+          showToastNotice(
+            "⚠️ Speichern grade nicht möglich! Probier's bitte in 1-2h noch mal.",
+            'warning'
+          )
+          return
           if (
             isChanged ||
             changes?.value.startsWith('[KI generiert]:') ||
