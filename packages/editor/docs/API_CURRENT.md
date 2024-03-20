@@ -52,6 +52,11 @@
 - **Why Exported/How Used**: These are utilized for initializing and configuring the editor with custom plugins and renderers. `editorPlugins.init` and `editorRenderers.init` are called to set up the editor's functionality with plugins and renderers defined elsewhere in your application (`createPlugins`, `createRenderers`).
 - **Long-Term Support**: Ugly, should be removed as far as possible
 - **Needs Change?**: Yes, perhaps one config object passed to the component
+- **Details**:
+  - Used in `src/frontend/serlo-editor.tsx:38`
+    - `editorPlugins.init(createPlugins({ ltik }))`
+    - `editorRenderers.init(createRenderers())`
+  - Used in `src/frontend/plugins/create-plugins.tsx`
 
 #### 9. - **`SerloRenderer`, `SerloRendererProps`**
 
