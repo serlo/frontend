@@ -7,6 +7,7 @@ import { FaIcon } from '@/components/fa-icon'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
+import { isMac } from '@/helper/client-detection'
 import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
@@ -39,6 +40,10 @@ function Content() {
 
   function forceRender() {
     setRenderCounter((counter) => counter + 1)
+  }
+
+  function ctrlOrMeta(e: React.MouseEvent<Element, MouseEvent>) {
+    return (isMac && e.metaKey) || (!isMac && e.ctrlKey)
   }
 
   return (
@@ -134,7 +139,7 @@ function Content() {
           forceRender()
         }}
         onClick={(e) => {
-          if (!e.metaKey) return
+          if (!ctrlOrMeta(e)) return
           const target = e.target as HTMLElement
           if (target.tagName.toLowerCase() !== 'svg') return
 
@@ -176,7 +181,7 @@ function Content() {
                       strokeWidth="10"
                       stroke="rgba(148, 163, 184, 0.8)"
                       onClick={(e) => {
-                        if (!e.metaKey) return
+                        if (!ctrlOrMeta(e)) return
                         setNodes((currentNodes) => {
                           const node = currentNodes[parseInt(id)]
                           node.deps = node.deps.filter((depId) => depId !== dep)
@@ -210,7 +215,7 @@ function Content() {
                     : 'bg-gray-200 hover:bg-gray-300'
                 )}
                 onClick={(e) => {
-                  if (e.metaKey && active) {
+                  if (ctrlOrMeta(e) && active) {
                     //new connection from currently active element
                     setNodes((currentNodes) => {
                       const numId = parseInt(id)
