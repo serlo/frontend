@@ -1,6 +1,7 @@
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import dts from 'vite-plugin-dts'
 import svgr from 'vite-plugin-svgr'
 
@@ -33,5 +34,10 @@ export default defineConfig({
       '@': resolve(__dirname, '../../apps/web/src'),
     },
   },
-  plugins: [react(), dts(), svgr({ include: '**/*.svg' })],
+  plugins: [
+    react(),
+    dts(),
+    svgr({ include: '**/*.svg' }),
+    cssInjectedByJsPlugin(),
+  ],
 })

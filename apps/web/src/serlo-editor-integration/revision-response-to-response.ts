@@ -133,24 +133,7 @@ export function revisionResponseToResponse(
         cohesive: uuid.cohesive,
         date,
       },
-      exercises: uuid.repository.exercises,
       taxonomyTerms: uuid.repository.taxonomyTerms,
-      ...repositoryFields,
-      revisions: uuid.repository.revisions,
-      date,
-    }
-  }
-
-  if (uuid.__typename === UuidRevType.GroupedExercise) {
-    uuid.__typename
-    return {
-      __typename: UuidType.GroupedExercise,
-      currentRevision: {
-        content,
-        date,
-        id: -1,
-      },
-      exerciseGroup: uuid.repository.exerciseGroup,
       ...repositoryFields,
       revisions: uuid.repository.revisions,
       date,

@@ -8,7 +8,6 @@ import {
   eventUuidMock,
   courseUuidMock_alias,
   courseUuidMock_id,
-  groupedExerciseUuidMock,
   exerciseGroupUuidMock,
   videoUuidMock,
   pageUuidMock,
@@ -350,24 +349,6 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.newsletterPopup).toBe(false)
     expect(pageData.kind).toBe('single-entity')
     expect(pageData.entityData.id).toBe(53205)
-  })
-
-  test('typename: GroupedExercise', async () => {
-    givenApiReturnsUuid(groupedExerciseUuidMock)
-
-    const pageData = (await fetchPageData('/de/53209')) as SingleEntityPage
-
-    expect(pageData.metaData?.title).toBe('Teilaufgabe - lernen mit Serlo!')
-    expect(pageData.metaData?.contentType).toBe('groupedexercise')
-    expect(pageData.metaData?.metaDescription).toBe(undefined)
-    assertCorrectMetaImageLink(pageData)
-    assertCorrectHorizonDataFormat(pageData)
-
-    expect(pageData.cacheKey).toBe('/de/53209')
-    expect(pageData.newsletterPopup).toBe(false)
-    expect(pageData.kind).toBe('single-entity')
-    expect(pageData.entityData.id).toBe(53209)
-    expect(pageData.breadcrumbsData?.length === 1)
   })
 
   test('typename: Course', async () => {

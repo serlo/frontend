@@ -6,12 +6,6 @@ export { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 
 export { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-// default strings
-export {
-  instanceData as instanceDataDe,
-  loggedInData as loggedInDataDe,
-} from '@/data/de'
-
 export { ROOT } from '@editor/store/root/constants'
 export {
   redo,

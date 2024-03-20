@@ -218,22 +218,6 @@ export const revisionHistoryQuery = gql`
           }
         }
       }
-      ... on GroupedExercise {
-        currentRevision {
-          id
-        }
-        revisions {
-          nodes {
-            id
-            trashed
-            author {
-              ...basicUserData
-            }
-            changes
-            date
-          }
-        }
-      }
       ... on Page {
         currentRevision {
           id

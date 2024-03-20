@@ -15,10 +15,7 @@ import { LoggedInData, UuidType } from '@/data-types'
 import { SetGenericEntityInput } from '@/fetcher/graphql-types/operations'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { successHash } from '@/helper/use-leave-confirm'
-import type {
-  CourseSerializedState,
-  TextExerciseGroupSerializedState,
-} from '@/serlo-editor-integration/convert-editor-response-to-state'
+import type { CourseSerializedState } from '@/serlo-editor-integration/convert-editor-response-to-state'
 
 const equalsWithEmptyStringIsNull = eqBy(
   mapObjIndexed((v) => (v === '' || v === undefined ? null : v))
@@ -157,20 +154,6 @@ export function useSetEntityMutation() {
             data['course-page'],
             UuidType.CoursePage,
             (initialStateState as CourseSerializedState)?.['course-page']
-          ))
-      }
-      if (
-        data.__typename === UuidType.ExerciseGroup &&
-        data['grouped-text-exercise']
-      ) {
-        success =
-          success &&
-          (await mapField(
-            data['grouped-text-exercise'],
-            UuidType.GroupedExercise,
-            (initialStateState as TextExerciseGroupSerializedState)?.[
-              'grouped-text-exercise'
-            ]
           ))
       }
 

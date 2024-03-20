@@ -56,10 +56,6 @@ export function getRawTitle(
     return subject + ' ' + typenameString
   }
 
-  if (uuid.__typename === UuidType.GroupedExercise) {
-    //good enough for now
-    return getTranslatedType(strings, uuid.__typename)
-  }
   if (uuid.__typename === UuidType.User) {
     return uuid.username
   }

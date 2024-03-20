@@ -50,7 +50,6 @@ export const instanceData = {
       exercise: "Aufgabe",
       exerciseGroup: "Aufgabe mit Teilaufgaben",
       topic: "Themenbereich",
-      groupedExercise: "Teilaufgabe",
       page: "Seite",
       solution: "Lösung",
       taxonomyTerm: "Taxonomie-Begriff",
@@ -544,7 +543,6 @@ export const loggedInData = {
       confirmTrash: "Bist du sicher, dass du diesen Inhalt löschen willst?",
       restoreContent: "Aus dem Papierkorb wiederherstellen",
       sortCoursePages: "Kursseiten sortieren",
-      sortGroupedExercises: "Teilaufgaben sortieren",
       edit: "Überarbeiten",
       editTax: "Titel & Beschreibung bearbeiten",
       unrevisedEdit: "Zeige neue Bearbeitungen",
@@ -842,7 +840,8 @@ export const loggedInData = {
           title: "Lückentext",
           description: "Ein Text mit Lücken zum Ausfüllen",
           placeholder: "Schreibe einen Text und füge Lücken ein",
-          chooseType: "Wähle den Antworttyp",
+          chooseType: "Wähle den Aufgabentyp",
+          chooseChildPluginType: "Wähle den Eingabetyp",
           modes: {
             typing: "Tippen",
             'drag-and-drop': 'Drag & Drop'
