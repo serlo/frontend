@@ -37,7 +37,7 @@ export const nodes: Record<number, TreeNode> = {
   26: { title: 'Einmaleins', deps: [24], x: 520, y: 260 },
   27: { title: 'Zahlenstern', deps: [24, 25], x: 510, y: 160 },
   28: { title: 'Rechenbaum', deps: [25], x: 558, y: 45 },
-  29: { title: 'Termometer', deps: [26], x: 720, y: 320 },
+  29: { title: 'Thermometer', deps: [26], x: 720, y: 320 },
   30: { title: 'Pfeile', deps: [26, 27], x: 660, y: 240 },
   31: { title: 'Zahlenpyramide', deps: [27], x: 710, y: 180 },
   32: { title: 'Division', deps: [28], x: 660, y: 110 },
@@ -171,7 +171,7 @@ export const levelComponents: Record<
   7: (c, onClose) => (
     <>
       <p>
-        Der Flächeninhalt des Rechtsecks hängt sehr eng mit der Multiplikation
+        Der Flächeninhalt des Rechtecks hängt sehr eng mit der Multiplikation
         zusammen - auch sehr anschaulich.
       </p>
       <RealmathInjection
@@ -488,8 +488,8 @@ export const levelComponents: Record<
   27: (c, onClose) => (
     <>
       <p>
-        Es gibt verschiedene Möglichkeiten, vier Zahlen zu multiplizieren.
-        Einige davon sind elegant und sparen dir Arbeit.
+        Es gibt verschiedene Möglichkeiten, vier Zahlen zu addieren. Einige
+        davon sind elegant und sparen dir Arbeit.
       </p>
       <RealmathInjection
         url="/Neues/Klasse5/addieren/sternaddnat.php"
