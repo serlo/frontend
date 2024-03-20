@@ -1,7 +1,9 @@
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { NextPage } from 'next'
 import { Fragment, useState } from 'react'
 
 import { nodes as inputNodes } from '../../../components/math-skills/high-five/high-five-levels'
+import { FaIcon } from '@/components/fa-icon'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
@@ -33,6 +35,7 @@ function Content() {
   const [nodes, setNodes] = useState(inputNodes)
   const [, setRenderCounter] = useState<number>(0)
   const [movingIndex, setMovingIndex] = useState<number | undefined>(undefined)
+  const [active, setActive] = useState<number | undefined>(undefined)
 
   return (
     <div className="mx-auto w-fit px-4">
@@ -108,7 +111,7 @@ function Content() {
           {Object.entries(nodes).map(([id, node], index) => {
             return (
               <div
-                className="absolute flex w-0 items-center justify-center"
+                className="group absolute flex w-0 items-center justify-center"
                 style={{
                   left: `${node.x}px`,
                   top: `${node.y}px`,
@@ -119,17 +122,55 @@ function Content() {
                   id={String(index)}
                   className={cn(
                     'absolute whitespace-nowrap  rounded px-2 py-0.5 font-bold',
-                    'bg-gray-200 hover:bg-gray-300'
+                    'cursor-move bg-gray-200 hover:bg-gray-300'
                   )}
+                  onClick={() => setActive(index)}
                 >
                   {node.title}
-                  <span className="absolute -right-4 -top-4 block aspect-square h-7 rounded-full bg-orange-500 bg-opacity-30 p-0.5">
-                    {index}
-                  </span>
                 </button>
               </div>
             )
           })}
+        </div>
+        <div className="w-full bg-gray-100 p-2">
+          {active !== undefined ? (
+            <div className="flex items-center justify-between">
+              <label className="mr-6">
+                Titel:{' '}
+                <input
+                  className="mx-1 rounded-sm p-1"
+                  type="text"
+                  value={nodes[active].title}
+                  onChange={(e) => {
+                    const value = e.currentTarget.value
+                    setNodes((oldNodes) => {
+                      oldNodes[active].title = value
+                      return oldNodes
+                    })
+                    setRenderCounter((counter) => counter + 1)
+                  }}
+                />
+              </label>
+              Node-ID: {active}
+              <button
+                onClick={() => {
+                  setNodes((currentNodes) => {
+                    Object.values(currentNodes).forEach((node) => {
+                      node.deps = node.deps.filter((depId) => depId !== active)
+                    })
+                    delete nodes[active]
+                    return currentNodes
+                  })
+                  setActive(undefined)
+                  setRenderCounter((counter) => counter + 1)
+                }}
+              >
+                <FaIcon icon={faTrash} /> Remove Node
+              </button>
+            </div>
+          ) : (
+            <>&nbsp;</>
+          )}
         </div>
       </>
     </div>
