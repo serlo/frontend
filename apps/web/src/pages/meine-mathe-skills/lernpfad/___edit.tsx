@@ -9,6 +9,7 @@ import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
 import { cn } from '@/helper/cn'
+import { showToastNotice } from '@/helper/show-toast-notice'
 
 const ContentPage: NextPage = () => {
   return (
@@ -42,7 +43,11 @@ function Content() {
         <button
           className="serlo-button-light"
           onClick={() => {
-            console.log(JSON.stringify(positions))
+            const output = JSON.stringify(positions)
+            // eslint-disable-next-line no-console
+            console.log(output)
+            void navigator.clipboard.writeText(output)
+            showToastNotice('👌', 'success')
           }}
         >
           export json to console
