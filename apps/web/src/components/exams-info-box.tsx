@@ -14,9 +14,9 @@ export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
       <div
         className={cn(
           'mt-8 sm:-ml-side',
-          'md:absolute md:left-side md:top-9 md:z-10 md:w-[200px]',
+          'md:absolute md:left-side md:top-9 md:z-10 md:w-[180px]',
           'lg:w-[220px]',
-          'xl:left-side xl:w-[245px]'
+          'bg-white xl:left-side xl:w-[245px]'
         )}
       >
         <BoxRenderer boxType="blank" anchorId="exams-info-box">
