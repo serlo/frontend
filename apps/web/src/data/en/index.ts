@@ -901,6 +901,9 @@ export const loggedInData = {
           title: 'Exercise',
           description: 'Interactive or text based exercise',
           placeholder: 'Type the assignment here (Optional)',
+          hideInteractiveActivated: 'interactive element collapsed on load',
+          deactivateHideInteractive: 'Load Interactive Element visible',
+          activateHideInteractive: 'Load Interactive Element collapsed',
         },
         inputExercise: {
           title: 'Input Exercise',
