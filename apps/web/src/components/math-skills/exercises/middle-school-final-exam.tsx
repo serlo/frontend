@@ -15,6 +15,7 @@ import { RootEquations } from '../exercise-implementations/root-equations'
 import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
 import { Trigonometry } from '../exercise-implementations/trigonometry'
 import { Trigonometry1 } from '../exercise-implementations/trigonometry-1'
+import { ValueSetParabola } from '../exercise-implementations/value-set-parabola'
 import { VertexParabola } from '../exercise-implementations/vertex-parabola'
 import { VolumePyramide } from '../exercise-implementations/volume-pyramide'
 
@@ -63,12 +64,20 @@ export const middleSchoolFinalExam = {
     track: 2,
     component: <VertexParabola />,
   },
+
   'abcformel-1': {
     title: 'ABC-Formel',
     subtitle: 'Quadratische Gleichungen',
     useCalculator: false,
     track: 2,
     component: <ABCFormular />,
+  },
+  'value-set-parabolas': {
+    title: 'Wertemenge von Parabeln',
+    subtitle: 'Quadratische Funktionen',
+    useCalculator: false,
+    track: 2,
+    component: <ValueSetParabola />,
   },
   'volumen-pyramide-1': {
     title: 'Volumen einer Pyramide',
