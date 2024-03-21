@@ -26,7 +26,7 @@ export type InteractiveExerciseType =
 
 export function ExerciseEditor(props: ExerciseProps) {
   const { state, focused } = props
-  const { content, interactive, solution, licenseId } = state
+  const { content, interactive, solution, licenseId, hideInteractive } = state
   const isSerlo = useContext(IsSerloContext) // only on serlo
 
   const interactiveExerciseTypes = allInteractiveExerciseTypes.filter((type) =>
@@ -76,7 +76,14 @@ export function ExerciseEditor(props: ExerciseProps) {
       })}
       <div className="mx-side">
         {interactive.defined ? (
-          interactive.render()
+          <>
+            {interactive.render()}
+            {hideInteractive.defined ? (
+              <small className="bg-editor-primary-200 p-1">
+                [{exPluginStrings.hideInteractiveActivated}]
+              </small>
+            ) : null}
+          </>
         ) : (
           <>
             <p className="mb-2 text-gray-400">
