@@ -44,12 +44,12 @@ export function AbbildungGraphen2() {
         const x_dir = randomItemFromArray(['links', 'rechts'])
         const y_dir = randomItemFromArray(['oben', 'unten'])
         const y_offset = randomIntBetween(1, 7)
-        const function_type = randomIntBetween(2, 2)
+        const function_type = randomIntBetween(3, 3)
         const x_s = randomIntBetween(-9, 9)
         const y_s = randomIntBetween(-9, 9)
         const Anfangswert = randomIntBetween(10, 90) * 10
         const exp_offset = randomIntBetween(-6, 6)
-        const Faktor = randomIntBetween(1, 8) / 100 + 1
+        const Faktor = randomIntBetween(1, 80) / 100 + 1
         const data: PlotData = {
           a,
           b,
@@ -201,6 +201,7 @@ export function AbbildungGraphen2() {
         const y_Ende_1 = data.d + data.y_offset
         const y_Ende_2 = data.d - data.y_offset
         const Nenner = Math.pow(-1, data.c)
+        const Basis = Math.round((1 / data.Faktor) * 100) / 100
 
         if (data.function_type === 1 && data.y_reflect === false)
           return (
@@ -419,7 +420,83 @@ export function AbbildungGraphen2() {
               </span>
             </>
           )
-        if (data.function_type === 3) return <></>
+        if (data.function_type === 3 && data.y_reflect === false)
+          return (
+            <>
+              Der Graph von <i>g</i> ist gegeben durch:
+              <br />
+              <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = (-1) · ({data.Anfangswert} ·{' '}
+                {data.Faktor.toString().replace('.', ',')}
+                <sup>x</sup>{' '}
+                {data.exp_offset > 0 ? '+ ' + data.exp_offset : null}
+                {data.exp_offset === 0 ? null : null}{' '}
+                {data.exp_offset < 0 ? data.exp_offset : null})
+              </span>
+              <br />
+              <br />
+              Klammer aufgelöst:
+              <br />
+              <span className="my-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+                y = - {data.Anfangswert} ·{' '}
+                {data.Faktor.toString().replace('.', ',')}
+                <sup>x</sup> {data.exp_offset > 0 ? -data.exp_offset : null}
+                {data.exp_offset === 0 ? null : null}{' '}
+                {data.exp_offset < 0 ? '+ ' + -data.exp_offset : null}
+              </span>
+            </>
+          )
+        if (data.function_type === 3 && data.y_reflect === true)
+          return (
+            <>
+              Der Graph von <i>g</i> ist gegeben durch:
+              <br />
+              <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = (-1) · ({data.Anfangswert} ·{' '}
+                {data.Faktor.toString().replace('.', ',')} <sup>-x</sup>{' '}
+                {data.exp_offset > 0 ? '+ ' + data.exp_offset : null}
+                {data.exp_offset === 0 ? null : null}{' '}
+                {data.exp_offset < 0 ? data.exp_offset : null})
+              </span>
+              <br />
+              <br />
+              Klammer aufgelöst:
+              <br />
+              <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = - {data.Anfangswert} ·{' '}
+                {data.Faktor.toString().replace('.', ',')} <sup>-x</sup>{' '}
+                {data.exp_offset > 0 ? -data.exp_offset : null}
+                {data.exp_offset === 0 ? null : null}{' '}
+                {data.exp_offset < 0 ? '+ ' + -data.exp_offset : null}
+              </span>
+              <br />
+              <br />
+              Der negative Exponent kann noch umgewandelt werden:
+              <br />
+              <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = - {data.Anfangswert} ·{' '}
+                <span className="inline-block scale-y-[2.5]">(</span>
+                {buildFrac(
+                  <>1</>,
+                  <>{data.Faktor.toString().replace('.', ',')}</>
+                )}
+                <span className="inline-block scale-y-[2.5]">)</span>
+                <sup>x</sup> {data.exp_offset > 0 ? -data.exp_offset : null}
+                {data.exp_offset === 0 ? null : null}{' '}
+                {data.exp_offset < 0 ? '+ ' + -data.exp_offset : null}
+              </span>
+              <br />
+              <br />
+              Mit dem Taschenrechner lässt sich die Basis neu berechnen:
+              <br />
+              <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = - {data.Anfangswert} · {Basis.toString().replace('.', ',')}
+                <sup>x</sup> {data.exp_offset > 0 ? -data.exp_offset : null}
+                {data.exp_offset === 0 ? null : null}{' '}
+                {data.exp_offset < 0 ? '+ ' + -data.exp_offset : null}
+              </span>
+            </>
+          )
         return <></>
       }}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
