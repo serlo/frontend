@@ -44,7 +44,7 @@ export function AbbildungGraphen2() {
         const x_dir = randomItemFromArray(['links', 'rechts'])
         const y_dir = randomItemFromArray(['oben', 'unten'])
         const y_offset = randomIntBetween(1, 7)
-        const function_type = randomIntBetween(1, 3)
+        const function_type = randomIntBetween(1, 1)
         const x_s = randomIntBetween(-9, 9)
         const y_s = randomIntBetween(-9, 9)
         const Anfangswert = randomIntBetween(10, 90) * 10
@@ -122,7 +122,7 @@ export function AbbildungGraphen2() {
               Der Graph der Funktion <i>f</i>
               <br />
               <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-                y = {data.x_s !== 0 ? '(' : null}x{data.x_s > 0 ? '+ ' : null}
+                y = {data.x_s !== 0 ? '(' : null}x {data.x_s > 0 ? '+ ' : null}
                 {data.x_s === 0 ? null : null}
                 {data.x_s !== 0 ? data.x_s : null}
                 {data.x_s !== 0 ? ')' : null}
@@ -140,12 +140,14 @@ export function AbbildungGraphen2() {
               <br />
               <ol>
                 <li>
-                  · Der Graph von f wird um {data.x_offset} Einheiten nach{' '}
-                  {data.x_dir} verschoben.
+                  {data.x_reflect === true
+                    ? '· Der Graph von f wird an der x-Achse gespiegelt.'
+                    : null}
                 </li>
                 <li>
-                  · Der Graph von f wird um {data.y_offset} Einheiten nach{' '}
-                  {data.y_dir} verschoben.
+                  {data.y_reflect === true
+                    ? '· Der Graph von f wird zusätzlich an der y-Achse gespiegelt.'
+                    : null}
                 </li>
               </ol>
               <br />
@@ -175,12 +177,14 @@ export function AbbildungGraphen2() {
               <br />
               <ol>
                 <li>
-                  · Der Graph von f wird um {data.x_offset} Einheiten nach{' '}
-                  {data.x_dir} verschoben.
+                  {data.x_reflect === true
+                    ? '· Der Graph von f wird an der x-Achse gespiegelt.'
+                    : null}
                 </li>
                 <li>
-                  · Der Graph von f wird um {data.y_offset} Einheiten nach{' '}
-                  {data.y_dir} verschoben.
+                  {data.y_reflect === true
+                    ? '· Der Graph von f wird zusätzlich an der y-Achse gespiegelt.'
+                    : null}
                 </li>
               </ol>
               <br />
@@ -195,8 +199,132 @@ export function AbbildungGraphen2() {
         const x_Ende_2 = data.b - data.x_offset
         const y_Ende_1 = data.d + data.y_offset
         const y_Ende_2 = data.d - data.y_offset
+        const Nenner = Math.pow(-1, data.c)
 
-        if (data.function_type === 1) return <></>
+        if (data.function_type === 1 && data.y_reflect === false)
+          return (
+            <>
+              Der Graph von <i>g</i> ist gegeben durch:
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = (-1) · <span className="inline-block scale-y-[3]">(</span>
+                {data.a === -1 ? '-' : null}{' '}
+                {buildFrac(
+                  <>{data.a !== -1 ? data.a : -data.a}</>,
+                  <>
+                    {data.b === 0 || data.c === -1 ? null : '('}x{' '}
+                    {data.b > 0 ? '+' : null} {data.b !== 0 ? data.b : null}
+                    {data.b === 0 || data.c === -1 ? null : ')'}
+                    <sup>{data.c !== -1 ? -data.c : null}</sup>
+                  </>
+                )}{' '}
+                {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
+                {data.d !== 0 ? data.d : null}
+                <span className="inline-block scale-y-[3]">)</span>
+              </span>
+              <br />
+              <br />
+              Vereinfacht:
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+                y = {data.a === -1 ? null : '-'}{' '}
+                {buildFrac(
+                  <>{data.a !== -1 ? data.a : -data.a}</>,
+                  <>
+                    {data.b === 0 || data.c === -1 ? null : '('}x{' '}
+                    {data.b > 0 ? '+' : null} {data.b !== 0 ? data.b : null}
+                    {data.b === 0 || data.c === -1 ? null : ')'}
+                    <sup>{data.c !== -1 ? -data.c : null}</sup>
+                  </>
+                )}{' '}
+                {data.d > 0 && data.d !== 0 ? '-' : null}{' '}
+                {-data.d > 0 ? '+ ' + -data.d : null}
+                {-data.d < 0 ? data.d : null}
+              </span>
+            </>
+          )
+        if (data.function_type === 1 && data.y_reflect === true)
+          return (
+            <>
+              Der Graph von <i>g</i> ist gegeben durch:
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = (-1) · <span className="inline-block scale-y-[3]">(</span>
+                {data.a === -1 ? '-' : null}{' '}
+                {buildFrac(
+                  <>{data.a !== -1 ? data.a : -data.a}</>,
+                  <>
+                    (- x{data.b > 0 ? '+' : null} {data.b !== 0 ? data.b : null}
+                    )<sup>{data.c !== -1 ? -data.c : null}</sup>
+                  </>
+                )}{' '}
+                {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
+                {data.d !== 0 ? data.d : null}
+                <span className="inline-block scale-y-[3]">)</span>
+              </span>
+              <br />
+              <br />
+              Klammer auflösen:
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = {data.a === -1 ? null : '-'}{' '}
+                {buildFrac(
+                  <>{data.a !== -1 ? data.a : -data.a}</>,
+                  <>
+                    (- x {data.b > 0 ? '+' : null}{' '}
+                    {data.b !== 0 ? data.b : null})
+                    <sup>{data.c !== -1 ? -data.c : null}</sup>
+                  </>
+                )}{' '}
+                {data.d > 0 && data.d !== 0 ? '-' : null}{' '}
+                {-data.d > 0 ? '+ ' + -data.d : null}
+                {-data.d < 0 ? data.d : null}
+              </span>
+              <br />
+              <br />
+              (-1) im Nenner ausgeklammert:
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = {data.a === -1 ? null : '-'}{' '}
+                {buildFrac(
+                  <>{data.a !== -1 ? data.a : -data.a}</>,
+                  <>
+                    (-1)<sup>{data.c !== -1 ? -data.c : null}</sup> ·{' '}
+                    {data.b === 0 ? null : '('}x {data.b < 0 ? '+' : null}{' '}
+                    {data.b !== 0 ? -data.b : null}
+                    {data.b === 0 ? null : ')'}
+                    <sup>{data.c !== -1 ? -data.c : null}</sup>
+                  </>
+                )}{' '}
+                {data.d > 0 && data.d !== 0 ? '-' : null}{' '}
+                {-data.d > 0 ? '+ ' + -data.d : null}
+                {-data.d < 0 ? data.d : null}
+              </span>
+              <br />
+              <br />
+              Vereinfacht:
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+                y = {data.a === -1 && data.c % 2 === 0 ? '' : null}{' '}
+                {data.a === -1 && data.c % 2 === -1 ? '-' : null}{' '}
+                {data.a === 1 && data.c % 2 === -1 ? '' : null}{' '}
+                {data.a === 1 && data.c % 2 === 0 ? '-' : null}{' '}
+                {buildFrac(
+                  <>{data.a !== -1 ? data.a : -data.a}</>,
+                  <>
+                    {' '}
+                    {data.b === 0 || data.c === -1 ? null : '('}x{' '}
+                    {data.b < 0 ? '+' : null} {data.b !== 0 ? -data.b : null}
+                    {data.b === 0 || data.c === -1 ? null : ')'}
+                    <sup>{data.c !== -1 ? -data.c : null}</sup>
+                  </>
+                )}{' '}
+                {data.d > 0 && data.d !== 0 ? '-' : null}{' '}
+                {-data.d > 0 ? '+ ' + -data.d : null}
+                {-data.d < 0 ? data.d : null}
+              </span>
+            </>
+          )
         if (data.function_type === 2) return <></>
         if (data.function_type === 3) return <></>
         return <></>
