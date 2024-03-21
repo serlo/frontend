@@ -44,7 +44,7 @@ export function AbbildungGraphen2() {
         const x_dir = randomItemFromArray(['links', 'rechts'])
         const y_dir = randomItemFromArray(['oben', 'unten'])
         const y_offset = randomIntBetween(1, 7)
-        const function_type = randomIntBetween(1, 1)
+        const function_type = randomIntBetween(2, 2)
         const x_s = randomIntBetween(-9, 9)
         const y_s = randomIntBetween(-9, 9)
         const Anfangswert = randomIntBetween(10, 90) * 10
@@ -122,7 +122,8 @@ export function AbbildungGraphen2() {
               Der Graph der Funktion <i>f</i>
               <br />
               <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-                y = {data.x_s !== 0 ? '(' : null}x {data.x_s > 0 ? '+ ' : null}
+                y = {data.a > 0 ? null : '- '}
+                {data.x_s !== 0 ? '(' : null}x {data.x_s > 0 ? '+ ' : null}
                 {data.x_s === 0 ? null : null}
                 {data.x_s !== 0 ? data.x_s : null}
                 {data.x_s !== 0 ? ')' : null}
@@ -325,7 +326,99 @@ export function AbbildungGraphen2() {
               </span>
             </>
           )
-        if (data.function_type === 2) return <></>
+        if (data.function_type === 2 && data.y_reflect === false)
+          return (
+            <>
+              Der Graph von <i>g</i> ist gegeben durch:
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = (-1) · <span className="inline-block scale-y-[1.8]">(</span>{' '}
+                {data.a > 0 ? null : '- '}
+                {data.x_s !== 0 ? '(' : null}x {data.x_s > 0 ? '+ ' : null}
+                {data.x_s === 0 ? null : null}
+                {data.x_s !== 0 ? data.x_s : null}
+                {data.x_s !== 0 ? ')' : null}
+                <sup>2</sup> {data.y_s > 0 ? '+ ' + data.y_s : null}
+                {data.y_s === 0 ? null : null}
+                {data.y_s < 0 ? data.y_s : null}
+                <span className="inline-block scale-y-[1.8]">)</span>
+              </span>
+              <br />
+              <br />
+              Vereinfacht
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+                y = {data.a < 0 ? null : '- '}
+                {data.x_s !== 0 ? '(' : null}x {data.x_s > 0 ? '+ ' : null}
+                {data.x_s === 0 ? null : null}
+                {data.x_s !== 0 ? data.x_s : null}
+                {data.x_s !== 0 ? ')' : null}
+                <sup>2</sup> {data.y_s > 0 ? -data.y_s : null}{' '}
+                {data.y_s === 0 ? null : null}{' '}
+                {data.y_s < 0 ? '+ ' + -data.y_s : null}
+              </span>
+            </>
+          )
+        if (data.function_type === 2 && data.y_reflect === true)
+          return (
+            <>
+              Der Graph von <i>g</i> ist gegeben durch:
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = (-1) · <span className="inline-block scale-y-[1.8]">(</span>{' '}
+                {data.a > 0 ? null : '- '}
+                {data.x_s !== 0 ? '(' : null}- x {data.x_s > 0 ? '+ ' : null}
+                {data.x_s === 0 ? null : null}
+                {data.x_s !== 0 ? data.x_s : null}
+                {data.x_s !== 0 ? ')' : null}
+                <sup>2</sup> {data.y_s > 0 ? '+ ' + data.y_s : null}
+                {data.y_s === 0 ? null : null}
+                {data.y_s < 0 ? data.y_s : null}
+                <span className="inline-block scale-y-[1.8]">)</span>
+              </span>
+              <br />
+              <br />
+              Klammer aufgelöst:
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = {data.a < 0 ? null : '- '}
+                {data.x_s !== 0 ? '(' : null}- x {data.x_s > 0 ? '+ ' : null}
+                {data.x_s === 0 ? null : null}
+                {data.x_s !== 0 ? data.x_s : null}
+                {data.x_s !== 0 ? ')' : null}
+                <sup>2</sup> {data.y_s > 0 ? -data.y_s : null}{' '}
+                {data.y_s === 0 ? null : null}{' '}
+                {data.y_s < 0 ? '+ ' + -data.y_s : null}
+              </span>
+              <br />
+              <br />
+              (-1) aus der Klammer ziehen:
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = {data.a < 0 ? null : '- '} (-1)<sup>2</sup> ·{' '}
+                {data.x_s !== 0 ? '(' : null}x {data.x_s < 0 ? '+ ' : null}
+                {data.x_s === 0 ? null : null}
+                {data.x_s !== 0 ? -data.x_s : null}
+                {data.x_s !== 0 ? ')' : null}
+                <sup>2</sup> {data.y_s > 0 ? -data.y_s : null}{' '}
+                {data.y_s === 0 ? null : null}{' '}
+                {data.y_s < 0 ? '+ ' + -data.y_s : null}
+              </span>
+              <br />
+              <br />
+              Vereinfacht <br />
+              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+                y = {data.a < 0 ? null : '- '} {data.x_s !== 0 ? '(' : null}x{' '}
+                {data.x_s < 0 ? '+ ' : null}
+                {data.x_s === 0 ? null : null}
+                {data.x_s !== 0 ? -data.x_s : null}
+                {data.x_s !== 0 ? ')' : null}
+                <sup>2</sup> {data.y_s > 0 ? -data.y_s : null}{' '}
+                {data.y_s === 0 ? null : null}{' '}
+                {data.y_s < 0 ? '+ ' + -data.y_s : null}
+              </span>
+            </>
+          )
         if (data.function_type === 3) return <></>
         return <></>
       }}
