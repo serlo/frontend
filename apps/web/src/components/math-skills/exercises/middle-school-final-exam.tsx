@@ -5,7 +5,8 @@ import { ExponentialFunction } from '../exercise-implementations/exponential-fun
 import { ExponentialFunctionTime } from '../exercise-implementations/exponential-function-2'
 import { LogarithmExercise1 } from '../exercise-implementations/logarithm-exercise-1'
 import { LogarithmExercise2 } from '../exercise-implementations/logarithm-exericse-2'
-import { AbbildungGraphen } from '../exercise-implementations/mapping-graphs'
+import { AbbildungGraphen } from '../exercise-implementations/mapping-graphs-1'
+import { AbbildungGraphen2 } from '../exercise-implementations/mapping-graphs-2'
 import { NormalformParabola } from '../exercise-implementations/normalform-parabola'
 import { ObliqueImage } from '../exercise-implementations/oblique-image'
 import { PlotFunction } from '../exercise-implementations/plot-function-1'
@@ -145,5 +146,12 @@ export const middleSchoolFinalExam = {
     useCalculator: false,
     track: 1,
     component: <AbbildungGraphen />,
+  },
+  'mapping-graphs-2': {
+    title: 'Graphen spiegeln',
+    subtitle: 'Funktionen',
+    useCalculator: false,
+    track: 1,
+    component: <AbbildungGraphen2 />,
   },
 } as const
