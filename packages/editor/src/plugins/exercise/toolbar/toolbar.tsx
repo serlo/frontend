@@ -1,10 +1,8 @@
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar/components/toolbar-select'
-import { DropdownButton } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/dropdown-button'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { selectDocument, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 import type { ExerciseProps } from '..'
@@ -19,7 +17,6 @@ export const ExerciseToolbar = ({
 }) => {
   const { interactive } = state
   const exTemplateStrings = useEditorStrings().templatePlugins.exercise
-  const exPluginStrings = useEditorStrings().plugins.exercise
 
   const currentlySelected = interactive.defined
     ? selectDocument(store.getState(), interactive.id)?.plugin
@@ -43,30 +40,7 @@ export const ExerciseToolbar = ({
   return (
     <PluginToolbar
       pluginType={EditorPluginType.Exercise}
-      pluginControls={
-        <>
-          <PluginDefaultTools pluginId={id} />
-          {state.interactive.defined ? (
-            <>
-              <div className="m-2 h-0.25 bg-gray-500"></div>
-              <DropdownButton
-                onClick={() => {
-                  if (state.hideInteractive.defined) {
-                    state.hideInteractive.remove()
-                  } else state.hideInteractive.create(true)
-                }}
-                label={
-                  state.hideInteractive.defined
-                    ? exPluginStrings.deactivateHideInteractive
-                    : exPluginStrings.activateHideInteractive
-                }
-                icon={state.hideInteractive.defined ? faEye : faEyeSlash}
-                dataQa="toggle-interactive-default-visibility"
-              />
-            </>
-          ) : null}
-        </>
-      }
+      pluginControls={<PluginDefaultTools pluginId={id} />}
       pluginSettings={pluginSettings}
       className="mt-2.5"
     />
