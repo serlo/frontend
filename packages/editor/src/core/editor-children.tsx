@@ -54,15 +54,15 @@ export function EditorChildren({ children }: { children: EditorChildren }) {
         instanceData,
         loggedInData,
       },
-      storeData: {
+      historyData: {
         hasUndoActions,
         hasRedoActions,
+        pendingChanges,
         dispatchUndo,
         dispatchRedo,
-        pendingChanges,
         dispatchPersistHistory,
-        selectRootDocument,
       },
+      selectRootDocument,
     })
   }
 
