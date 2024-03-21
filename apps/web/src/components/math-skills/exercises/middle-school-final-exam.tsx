@@ -7,6 +7,7 @@ import { LogarithmExercise1 } from '../exercise-implementations/logarithm-exerci
 import { LogarithmExercise2 } from '../exercise-implementations/logarithm-exericse-2'
 import { AbbildungGraphen } from '../exercise-implementations/mapping-graphs-1'
 import { AbbildungGraphen2 } from '../exercise-implementations/mapping-graphs-2'
+import { ModellingParabola } from '../exercise-implementations/modelling-parabolax'
 import { NormalformParabola } from '../exercise-implementations/normalform-parabola'
 import { ObliqueImage } from '../exercise-implementations/oblique-image'
 import { PlotFunction } from '../exercise-implementations/plot-function-1'
@@ -78,6 +79,13 @@ export const middleSchoolFinalExam = {
     useCalculator: false,
     track: 2,
     component: <ValueSetParabola />,
+  },
+  'modelling-parabolas': {
+    title: 'Modellieren mit Parabeln',
+    subtitle: 'Quadratische Funktionen',
+    useCalculator: false,
+    track: 2,
+    component: <ModellingParabola />,
   },
   'volumen-pyramide-1': {
     title: 'Volumen einer Pyramide',

@@ -52,16 +52,16 @@ export function ValueSetParabola() {
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               y = {a ? null : '-'} (x - {b < 0 ? '(' : null}
               {b}
-              {b < 0 ? ')' : null})<sup>2</sup> + {c < 0 ? '(' : null}
-              {c}
+              {b < 0 ? ')' : null})<sup>2</sup> +{c < 0 ? '(' : null} {a}
               {c < 0 ? ')' : null}
             </span>
             <br />
             <br />
             Zusammengefasst: <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              y = {a ? null : '-'} (x {b > 0 && b !== 0 ? '- ' + b : '+ ' + -b})
-              <sup>2</sup> {c > 0 && c !== 0 ? '+ ' + c : '- ' + -c}
+              y = {a ? null : '-'} (x {b > 0 ? '- ' + b : '+ ' + -b})
+              <sup>2</sup> {c > 0 ? '+ ' + c : null}
+              {c < 0 ? '- ' + -c : null}
             </span>
             <br />
             <br />
