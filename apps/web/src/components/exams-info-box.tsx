@@ -14,12 +14,15 @@ export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
       <div
         className={cn(
           'mt-8 sm:-ml-side',
-          'md:absolute md:left-side md:top-9 md:z-10 md:w-[180px]',
-          'lg:w-[220px]',
-          'bg-white xl:left-side xl:w-[245px]'
+          'lg:absolute lg:left-side lg:top-9 lg:z-10 lg:w-[225px]',
+          'xl:left-side xl:w-[270px]'
         )}
       >
-        <BoxRenderer boxType="blank" anchorId="exams-info-box">
+        <BoxRenderer
+          boxType="blank"
+          anchorId="exams-info-box"
+          className="bg-white"
+        >
           <>
             <div className="">
               <p className="serlo-p mb-0 max-w-lg font-normal leading-normal">
