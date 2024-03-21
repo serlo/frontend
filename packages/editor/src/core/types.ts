@@ -1,11 +1,20 @@
 import type { DocumentState } from '@editor/store'
+import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 import type { LanguageData } from '@editor/types/language-data'
 import type { ReactNode } from 'react'
 
-type StoreType = { ROOT: string } & Partial<typeof import('@editor/store')>
+interface StoreData {
+  hasUndoActions: boolean
+  hasRedoActions: boolean
+  dispatchUndo: () => void
+  dispatchRedo: () => void
+  pendingChanges: number
+  dispatchPersistHistory: () => void
+  selectRootDocument: () => AnyEditorDocument
+}
 
 export interface EditorProps {
-  children?: ReactNode | ((editor: EditorData) => ReactNode)
+  children?: EditorChildren
   initialState: {
     plugin: string
     state?: unknown
@@ -13,10 +22,12 @@ export interface EditorProps {
   onChange?: OnEditorChange
 }
 
+export type EditorChildren = ReactNode | ((editor: EditorData) => ReactNode)
+
 export interface EditorData {
   element: ReactNode
   languageData: LanguageData
-  storeData: StoreType
+  storeData: StoreData
 }
 
 export type OnEditorChange = (payload: {
