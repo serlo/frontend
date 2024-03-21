@@ -6,12 +6,14 @@ import { useState } from 'react'
 
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 import { FaIcon } from '@/components/fa-icon'
+import { useInstanceData } from '@/contexts/instance-context'
 
 export function ExerciseStaticRenderer({ state }: EditorExerciseDocument) {
   const { content, interactive, solution, hideInteractive } = state
   const [revealInteractive, setRevealInteractive] = useState(
     hideInteractive ? false : true
   )
+  const { strings } = useInstanceData()
   if (!content) return null
 
   const isEmptyContent =
@@ -36,7 +38,8 @@ export function ExerciseStaticRenderer({ state }: EditorExerciseDocument) {
             setRevealInteractive(true)
           }}
         >
-          <FaIcon icon={faCircleCheck} /> Deine Lösung überprüfen
+          <FaIcon icon={faCircleCheck} />{' '}
+          {strings.content.exercises.showHiddenInteractive}
         </button>
       ) : null}
 

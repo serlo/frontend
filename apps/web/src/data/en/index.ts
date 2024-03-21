@@ -164,6 +164,7 @@ export const instanceData = {
         printModeChooseOption: 'Check one of the options.',
         strategy: 'Strategy',
         solution: 'Proposed Solution',
+        showHiddenInteractive: 'Check your solution here',
       },
       boxTypes: {
         blank: 'Blank',
