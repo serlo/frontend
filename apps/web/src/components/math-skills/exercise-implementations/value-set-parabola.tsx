@@ -70,15 +70,40 @@ export function ValueSetParabola() {
             {a === true ? 'oberhalb' : 'unterhalb'} des Scheitels:
             <br />
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-              W = {'{'} y | y {a === true ? '>' : '<'}{' '}
+              W = {'{'} y | y {a === true ? '≥' : '≤'}{' '}
               {c > 0 && c !== 0 ? c : '- ' + -c} {'}'}
             </span>
           </>
         )
       }}
       // eslint-disable-next-line no-empty-pattern
-      renderHint={({ b }) => {
-        return <></>
+      renderHint={({ a, c, b }) => {
+        return (
+          <>
+            Für den Wertebereich untersuchen wir den Öffnungsfaktor und den
+            y-Wert des Scheitel der Parabel:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              y =
+            </span>
+            <span className="mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3 text-2xl">
+              {a ? '1 · ' : '(-1) · '}{' '}
+            </span>
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              (x {b > 0 && b !== 0 ? '- ' + b : '+ ' + -b})<sup>2</sup>{' '}
+            </span>
+            <span className="mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3 text-2xl">
+              {c > 0 && c !== 0 ? '+ ' + c : '- ' + -c}
+            </span>
+            <br />
+            <br />
+            Der Öffnungsfaktor entscheidet darüber, ob alle Werte oberhalb oder
+            unterhalb des Scheitels von der Funktion angenommen werden.
+            <br />
+            <br />
+            Die y-Koordinate des Scheitels gibt die Grenze zum Wertebereich vor.
+          </>
+        )
       }}
       centAmount={35}
     />
