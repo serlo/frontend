@@ -133,9 +133,6 @@ export const sharedEventFragments = gql`
         ... on ExerciseGroupRevision {
           changes
         }
-        ... on GroupedExerciseRevision {
-          changes
-        }
         ... on VideoRevision {
           changes
         }
