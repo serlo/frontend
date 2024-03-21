@@ -140,7 +140,7 @@ export const middleSchoolFinalExam = {
     component: <ObliqueImage />,
   },
   'mapping-graphs-1': {
-    title: 'Graphen verschieben/strecken/spiegeln',
+    title: 'Graphen verschieben',
     subtitle: 'Funktionen',
     useCalculator: false,
     track: 1,

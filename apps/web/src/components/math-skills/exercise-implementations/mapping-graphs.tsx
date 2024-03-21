@@ -23,8 +23,6 @@ interface PlotData {
   x_dir: string
   y_dir: string
   function_type: number
-  isPlus: boolean
-  isPlus2: boolean
   x_s: number
   y_s: number
   Anfangswert: number
@@ -46,13 +44,11 @@ export function AbbildungGraphen() {
         const x_dir = randomItemFromArray(['links', 'rechts'])
         const y_dir = randomItemFromArray(['oben', 'unten'])
         const y_offset = randomIntBetween(1, 7)
-        const function_type = randomIntBetween(1, 3)
-        const isPlus = randomItemFromArray([true, false])
-        const isPlus2 = randomItemFromArray([true, false])
-        const x_s = randomIntBetween(1, 9)
-        const y_s = randomIntBetween(1, 9)
+        const function_type = randomIntBetween(3, 3)
+        const x_s = randomIntBetween(-9, 9)
+        const y_s = randomIntBetween(-9, 9)
         const Anfangswert = randomIntBetween(10, 90) * 10
-        const exp_offset = randomIntBetween(1, 6)
+        const exp_offset = randomIntBetween(-6, 6)
         const Faktor = randomIntBetween(1, 8) / 100 + 1
         const data: PlotData = {
           a,
@@ -66,8 +62,6 @@ export function AbbildungGraphen() {
           x_dir,
           y_dir,
           function_type,
-          isPlus,
-          isPlus2,
           x_s,
           y_s,
           Anfangswert,
@@ -127,9 +121,13 @@ export function AbbildungGraphen() {
               Der Graph der Funktion <i>f</i>
               <br />
               <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-                y = {data.isPlus === true ? null : '-'} (x{' '}
-                {data.isPlus ? '+' : '-'} {data.x_s})<sup>2</sup>{' '}
-                {data.isPlus2 ? '+' : '-'} {data.y_s}
+                y = {data.x_s !== 0 ? '(' : null}x{data.x_s > 0 ? '+ ' : null}
+                {data.x_s === 0 ? null : null}
+                {data.x_s !== 0 ? data.x_s : null}
+                {data.x_s !== 0 ? ')' : null}
+                <sup>2</sup> {data.y_s > 0 ? '+ ' + data.y_s : null}
+                {data.y_s === 0 ? null : null}
+                {data.y_s < 0 ? data.y_s : null}
               </span>
               <br />
               <br />
@@ -163,8 +161,10 @@ export function AbbildungGraphen() {
               <span className="my-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
                 y = {data.Anfangswert} ·{' '}
                 {data.Faktor.toString().replace('.', ',')}
-                <sup>x</sup> {data.isPlus === true ? '+' : '-'}{' '}
-                {data.exp_offset}
+                <sup>x</sup>
+                {data.exp_offset > 0 ? '+ ' + data.exp_offset : null}
+                {data.exp_offset === 0 ? null : null}{' '}
+                {data.exp_offset < 0 ? data.exp_offset : null}
               </span>
               <br />
               <br />
@@ -230,14 +230,32 @@ export function AbbildungGraphen() {
                   <>{data.a !== -1 ? data.a : -data.a}</>,
                   <>
                     {data.b === 0 || data.c === -1 ? null : '('}x{' '}
-                    {data.b > 0 ? '+' : null} {data.b !== 0 ? data.b : null}{' '}
+                    {data.x_dir === 'links' && x_Ende_1 > 0
+                      ? '+ ' + x_Ende_1
+                      : null}
+                    {data.x_dir === 'links' && x_Ende_1 === 0 ? null : null}
+                    {data.x_dir === 'links' && x_Ende_1 < 0
+                      ? '- ' + x_Ende_1
+                      : null}
+                    {data.x_dir === 'rechts' && x_Ende_2 > 0
+                      ? '+ ' + x_Ende_2
+                      : null}
+                    {data.x_dir === 'rechts' && x_Ende_2 === 0 ? null : null}
+                    {data.x_dir === 'rechts' && x_Ende_2 < 0
+                      ? ' ' + x_Ende_2
+                      : null}
                     {data.b === 0 || data.c === -1 ? null : ')'}
                     <sup>{data.c !== -1 ? -data.c : null}</sup>
                   </>
                 )}{' '}
                 {data.y_dir === 'oben' && y_Ende_1 > 0 ? '+ ' + y_Ende_1 : null}
                 {data.y_dir === 'oben' && y_Ende_1 === 0 ? null : null}
-                {data.y_dir === 'oben' && y_Ende_1 < 0 ? '- ' : null}
+                {data.y_dir === 'oben' && y_Ende_1 < 0 ? '- ' + y_Ende_1 : null}
+                {data.y_dir === 'unten' && y_Ende_2 > 0
+                  ? '+ ' + y_Ende_2
+                  : null}
+                {data.y_dir === 'unten' && y_Ende_2 === 0 ? null : null}
+                {data.y_dir === 'unten' && y_Ende_2 < 0 ? ' ' + y_Ende_2 : null}
               </span>
             </>
           )
@@ -246,41 +264,135 @@ export function AbbildungGraphen() {
             <>
               Der Funktionsterm von <i>g</i> lautet:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                y = {data.a === -1 ? '-' : null}{' '}
-                {buildFrac(
-                  <>{data.a !== -1 ? data.a : -data.a}</>,
-                  <>
-                    {data.b === 0 || data.c === -1 ? null : '('}-x{' '}
-                    {data.b > 0 ? '+' : null} {data.b !== 0 ? data.b : null}
-                    {data.b === 0 || data.c === -1 ? null : ')'}
-                    <sup>{data.c !== -1 ? -data.c : null}</sup>
-                  </>
-                )}{' '}
-                {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
-                {data.d !== 0 ? data.d : null}
+              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+                y = (x {data.x_s > 0 ? '+ ' : null}
+                {data.x_s === 0 ? null : null}
+                {data.x_s !== 0 ? data.x_s : null}
+                {data.x_dir === 'links' ? ' + ' + data.x_offset : null}
+                {data.x_dir === 'rechts' ? ' - ' + data.x_offset : null})
+                <sup>2</sup> {data.y_s > 0 ? '+ ' + data.y_s : null}
+                {data.y_s === 0 ? null : null}
+                {data.y_s < 0 ? data.y_s : null}
+                {data.y_dir === 'oben' ? ' + ' + data.y_offset : null}
+                {data.y_dir === 'unten' ? ' - ' + data.y_offset : null}
+              </span>
+              <br />
+              <br />
+              Zusammengefasst:
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+                y ={' '}
+                {data.x_dir === 'links' && data.x_s + data.x_offset !== 0
+                  ? '('
+                  : null}
+                {data.x_dir === 'rechts' && data.x_s - data.x_offset !== 0
+                  ? '('
+                  : null}
+                x{' '}
+                {data.x_dir === 'links' && data.x_s + data.x_offset > 0
+                  ? '+ '
+                  : null}
+                {data.x_dir === 'rechts' && data.x_s - data.x_offset > 0
+                  ? '+ '
+                  : null}
+                {data.x_dir === 'links' && data.x_s + data.x_offset !== 0
+                  ? data.x_s + data.x_offset
+                  : null}
+                {data.x_dir === 'rechts' && data.x_s - data.x_offset !== 0
+                  ? data.x_s - data.x_offset
+                  : null}
+                {data.x_dir === 'links' && data.x_s + data.x_offset !== 0
+                  ? ')'
+                  : null}
+                {data.x_dir === 'rechts' && data.x_s - data.x_offset !== 0
+                  ? ')'
+                  : null}
+                <sup>2</sup>{' '}
+                {data.y_dir === 'oben' && data.y_s + data.y_offset > 0
+                  ? '+ '
+                  : null}
+                {data.y_dir === 'unten' && data.y_s - data.y_offset > 0
+                  ? '+ '
+                  : null}
+                {data.y_dir === 'oben' && data.y_s + data.y_offset !== 0
+                  ? data.y_s + data.y_offset
+                  : null}
+                {data.y_dir === 'unten' && data.y_s - data.y_offset !== 0
+                  ? data.y_s - data.y_offset
+                  : null}
               </span>
             </>
           )
         if (data.function_type === 3)
+          if (data.exp_offset !== 0)
+            return (
+              <>
+                Der Funktionsterm von <i>g</i> lautet:
+                <br />
+                <span className="my-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+                  y = {data.Anfangswert} ·{' '}
+                  {data.Faktor.toString().replace('.', ',')}
+                  <sup>
+                    x {data.x_dir === 'links' ? ' + ' + data.x_offset : null}
+                    {data.x_dir === 'rechts' ? ' - ' + data.x_offset : null}
+                  </sup>
+                  {data.exp_offset > 0 ? '+ ' + data.exp_offset : null}
+                  {data.exp_offset === 0 ? null : null}{' '}
+                  {data.exp_offset < 0 ? data.exp_offset : null}
+                  {data.y_dir === 'oben' ? ' + ' + data.y_offset : null}
+                  {data.y_dir === 'unten' ? ' - ' + data.y_offset : null}
+                </span>
+                <br />
+                <br />
+                Zusammengefasst:
+                <br />
+                <span className="my-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+                  y = {data.Anfangswert} ·{' '}
+                  {data.Faktor.toString().replace('.', ',')}
+                  <sup>
+                    x {data.x_dir === 'links' ? ' + ' + data.x_offset : null}
+                    {data.x_dir === 'rechts' ? ' - ' + data.x_offset : null}
+                  </sup>{' '}
+                  {data.y_dir === 'oben' && data.exp_offset + data.y_offset > 0
+                    ? '+ '
+                    : null}
+                  {data.y_dir === 'unten' && data.exp_offset - data.y_offset > 0
+                    ? '+ '
+                    : null}
+                  {data.y_dir === 'oben' &&
+                  data.exp_offset + data.y_offset !== 0
+                    ? data.exp_offset + data.y_offset
+                    : null}
+                  {data.y_dir === 'unten' &&
+                  data.exp_offset - data.y_offset !== 0
+                    ? data.exp_offset - data.y_offset
+                    : null}
+                </span>
+              </>
+            )
+        if (data.exp_offset === 0)
           return (
             <>
               Der Funktionsterm von <i>g</i> lautet:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                y = {data.a === -1 ? '-' : null}{' '}
-                {buildFrac(
-                  <>{data.a !== -1 ? data.a : -data.a}</>,
-                  <>
-                    {data.b === 0 || data.c === -1 ? null : '('}-x{' '}
-                    {data.b > 0 ? '+' : null} {data.b !== 0 ? data.b : null}
-                    {data.b === 0 || data.c === -1 ? null : ')'}
-                    <sup>{data.c !== -1 ? -data.c : null}</sup>
-                  </>
-                )}{' '}
-                {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
-                {data.d !== 0 ? data.d : null}
-              </span>
+              <span className="my-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+                y = {data.Anfangswert} ·{' '}
+                {data.Faktor.toString().replace('.', ',')}
+                <sup>
+                  x {data.x_dir === 'links' ? ' + ' + data.x_offset : null}
+                  {data.x_dir === 'rechts' ? ' - ' + data.x_offset : null}
+                </sup>{' '}
+                {data.y_dir === 'oben' && data.exp_offset + data.y_offset > 0
+                  ? '+ '
+                  : null}
+                {data.y_dir === 'unten' && data.exp_offset - data.y_offset > 0
+                  ? '+ '
+                  : null}
+                {data.y_dir === 'oben' ? data.exp_offset + data.y_offset : null}
+                {data.y_dir === 'unten'
+                  ? data.exp_offset - data.y_offset
+                  : null}
+              </span>{' '}
             </>
           )
         return <></>
