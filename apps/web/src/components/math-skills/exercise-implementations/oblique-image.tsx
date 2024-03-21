@@ -4,7 +4,7 @@ import { pi } from 'mathjs'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { buildFrac } from '../utils/math-builder'
+import { buildFrac, buildOverline } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -33,8 +33,8 @@ export function ObliqueImage() {
         const koerper = randomItemFromArray([
           'pyra',
           'quader',
-          'prisma3',
-          'pyra3',
+          //'prisma3',
+          //'pyra3',
         ])
         const w = randomItemFromArray([45])
         const data: BodyData = {
@@ -51,23 +51,56 @@ export function ObliqueImage() {
       renderTask={({ data }) => {
         return (
           <>
-            <h2 className="text-2xl">
-              Das ist {data.koerper === 'pyra' ? 'die Pyramide ABCDE.' : null}
-              {data.koerper === 'quader' ? 'der Quader ABCDEFGH.' : null}
-              {data.koerper === 'prisma3' ? 'der Prisma ABCDEF.' : null}
-              {data.koerper === 'pyra3' ? 'die Dreieckspyramide ABCD.' : null}
-            </h2>
-            {data.koerper === 'pyra' ? <ComponentPyra data={data} /> : null}
-            {data.koerper === 'quader' ? <ComponentQuader data={data} /> : null}
-            {data.koerper === 'prisma3' ? (
-              <ComponentPrisma data={data} />
-            ) : null}
-            {data.koerper === 'pyra3' ? (
-              <ComponentPyraDrei data={data} />
-            ) : null}
-            <small className="mb-6 block">
-              Skizze ist nicht maßstabsgetreu
-            </small>
+            {data.koerper === 'quader' ? (
+              <>
+                <p className="text-2xl">
+                  Das Rechteck ABCD ist die Grundfläche des Quaders ABCDEFGH.
+                  <br />
+                  <br />
+                  Es gilt: |{buildOverline(<>AB</>)}| = {data.ab} cm, |
+                  {buildOverline(<>BC</>)}| = {data.bd} cm und |
+                  {buildOverline(<>BF</>)}| = {data.me} cm.
+                </p>
+              </>
+            ) : data.koerper === 'pyra' ? (
+              <p className="text-2xl">
+                Das Rechteck ABCD ist die Grundfläche der Pyramide ABCDE.
+                <br />
+                <br />
+                Es gilt: |{buildOverline(<>AB</>)}| = {data.ab} cm, |
+                {buildOverline(<>BC</>)}| = {data.bd} cm und die Höhe beträgt{' '}
+                {data.me} cm.
+              </p>
+            ) : data.koerper === 'pyra3' ? (
+              <p className="text-2xl">
+                Das Dreieck ABC ist die Grundfläche der Pyramide ABCD.
+                <br />
+                <br />
+                Es gilt: |{buildOverline(<>AB</>)}| = {data.ab} cm, |
+                {buildOverline(<>BC</>)}| = {data.bd} cm und die Höhe beträgt{' '}
+                {data.me} cm.
+                <ComponentPyraDrei data={data} />
+              </p>
+            ) : (
+              <>
+                <h2 className="text-2xl">
+                  Das ist{' '}
+                  {data.koerper === 'pyra' ? 'die Pyramide ABCDE.' : null}
+                  {data.koerper === 'quader' ? 'der Quader ABCDEFGH.' : null}
+                  {data.koerper === 'prisma3' ? 'der Prisma ABCDEF.' : null}
+                  {data.koerper === 'pyra3'
+                    ? 'die Dreieckspyramide ABCD.'
+                    : null}
+                </h2>
+                {data.koerper === 'prisma3' ? (
+                  <ComponentPrisma data={data} />
+                ) : null}
+                <small className="mb-6 block">
+                  Skizze ist nicht maßstabsgetreu
+                </small>
+              </>
+            )}
+
             <ol>
               <li className="text-2xl">
                 Zeiche das Schrägbild des Körpers mit dem Maßstab q ={' '}
