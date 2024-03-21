@@ -44,7 +44,7 @@ export function AbbildungGraphen() {
         const x_dir = randomItemFromArray(['links', 'rechts'])
         const y_dir = randomItemFromArray(['oben', 'unten'])
         const y_offset = randomIntBetween(1, 7)
-        const function_type = randomIntBetween(3, 3)
+        const function_type = randomIntBetween(1, 3)
         const x_s = randomIntBetween(-9, 9)
         const y_s = randomIntBetween(-9, 9)
         const Anfangswert = randomIntBetween(10, 90) * 10
@@ -224,7 +224,7 @@ export function AbbildungGraphen() {
               <br />
               Zusammengefasst:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
                 y = {data.a === -1 ? '-' : null}{' '}
                 {buildFrac(
                   <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -264,7 +264,7 @@ export function AbbildungGraphen() {
             <>
               Der Funktionsterm von <i>g</i> lautet:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              <span className="bg-bg-gray-300 mt-3 inline-block rounded-md bg-opacity-20 p-1 px-3 text-2xl">
                 y = (x {data.x_s > 0 ? '+ ' : null}
                 {data.x_s === 0 ? null : null}
                 {data.x_s !== 0 ? data.x_s : null}
@@ -329,7 +329,7 @@ export function AbbildungGraphen() {
               <>
                 Der Funktionsterm von <i>g</i> lautet:
                 <br />
-                <span className="my-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+                <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
                   y = {data.Anfangswert} ·{' '}
                   {data.Faktor.toString().replace('.', ',')}
                   <sup>
@@ -399,7 +399,32 @@ export function AbbildungGraphen() {
       }}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       renderHint={({ data }) => {
-        return <></>
+        return (
+          <>
+            Eine Verschiebung in x-Richtung wird durch Addieren/Subtrahieren des
+            Wertes von x ausgeführt.
+            <br />
+            <br />
+            Beispiel für eine Verschiebung um 1 nach rechts:
+            <br />
+            <br />
+            <span className="my-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              y = (x - 2)<sup>2</sup> + 1 ↦ y = (x - 1 - 2)<sup>2</sup> + 1
+            </span>
+            <br />
+            <br />
+            Eine Verschiebung in y-Richtung wird durch Addieren/Subtrahieren des
+            Wertes vom Funktionsterm ausgeführt.
+            <br />
+            <br />
+            Beispiel für eine Verschiebung um 2 nach unten:
+            <br />
+            <br />
+            <span className="my-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              y = 20 · 2<sup>x</sup> + 5 ↦ y = 20 · 2<sup>x</sup> + 5 - 2
+            </span>
+          </>
+        )
       }}
       centAmount={35}
     />
