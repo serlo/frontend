@@ -57,10 +57,12 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
   const courseStrings = editorStrings.templatePlugins.course
   const [courseNavOpen, setCourseNavOpen] = useState(true)
   const [showSettingsModal, setShowSettingsModal] = useState(false)
+  const [activePageIndex, setActivePageIndex] = useState(0)
+
+  // const templateStrings = useEditorStrings().templatePlugins
 
   const staticState = selectStaticDocument(store.getState(), props.id)
     ?.state as PrettyStaticState<CourseTypePluginState>
-
   if (!staticState) return null
   const staticPages = staticState[
     'course-page'
@@ -83,40 +85,17 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
       </div>
       <article className="mt-20">
         {renderCourseNavigation()}
-        {children.map((child, index) => {
-          const uniqueId = `page-${staticPages[index].id}`
-          return (
-            <div
-              key={uniqueId}
-              id={uniqueId}
-              className="mt-16 border-t-2 border-editor-primary-200 pt-2"
-            >
-              <nav className="flex justify-end">
-                <button
-                  className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
-                  onClick={() => children.remove(index)}
-                >
-                  <EditorTooltip text={courseStrings.removeCoursePage} />
-                  <FaIcon icon={faTrashAlt} />
-                </button>
-                <ContentLoaders
-                  id={staticPages[index].id}
-                  currentRevision={staticPages[index].revision}
-                  onSwitchRevision={(data) =>
-                    child.replace(TemplatePluginType.CoursePage, data)
-                  }
-                  entityType={UuidType.CoursePage}
-                />
-              </nav>
-              {child.render()}
-            </div>
-          )
-        })}
-        <div className="mt-24 border-t-2 border-editor-primary-200 pt-12">
-          <AddButton onClick={() => children.insert()}>
+        <div className="ml-side mt-4">
+          <AddButton
+            onClick={() => {
+              children.insert()
+              setActivePageIndex(staticPages.length)
+            }}
+          >
             {courseStrings.addCoursePage}
           </AddButton>
         </div>
+        {renderCoursePage()}
         <ToolbarMain showSubscriptionOptions {...props.state} />
       </article>
       <ModalWithCloseButton
@@ -152,14 +131,74 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
             onChange={(e) => title.set(e.target.value)}
           />
         }
-        pages={staticPages.map((coursePage) => {
+        pages={staticPages.map(({ title, id }, index) => {
           return {
-            title: coursePage.title,
-            url: `#page-${coursePage.id}`,
-            id: coursePage.id,
+            key: title + id + index,
+            element: (
+              <div className="group">
+                <button
+                  onClick={() => {
+                    if (index === activePageIndex) return
+                    setActivePageIndex(index)
+                  }}
+                  className={cn(
+                    'serlo-link text-lg leading-browser',
+                    index === activePageIndex &&
+                      'font-semibold text-almost-black hover:no-underline'
+                  )}
+                >
+                  {title.trim().length ? title : '___'}
+                </button>{' '}
+                {/* {index > 0 ? (
+                  <button
+                    className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100"
+                    onClick={() => {
+                      const newIndex = index - 1
+                      children.move(index, newIndex)
+                      setActivePageIndex(() => newIndex)
+                    }}
+                  >
+                    <EditorTooltip text={templateStrings.article.moveUpLabel} />
+                    <FaIcon icon={faArrowCircleUp} />
+                  </button>
+                ) : null} */}
+              </div>
+            ),
           }
         })}
       />
+    )
+  }
+
+  function renderCoursePage() {
+    const activePage = children.at(activePageIndex)
+    if (!activePage) return
+    const staticPage = staticPages[activePageIndex]
+
+    return (
+      <div
+        key={activePage.id}
+        className="mt-16 border-t-2 border-editor-primary-200 pt-2"
+      >
+        <nav className="flex justify-end">
+          <button
+            className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
+            onClick={() => children.remove(activePageIndex)}
+          >
+            <EditorTooltip text={courseStrings.removeCoursePage} />
+            <FaIcon icon={faTrashAlt} />
+          </button>
+          <ContentLoaders
+            id={staticPage.id}
+            currentRevision={staticPage.revision}
+            onSwitchRevision={(data) =>
+              activePage.replace(TemplatePluginType.CoursePage, data)
+            }
+            entityType={UuidType.CoursePage}
+          />
+        </nav>
+        {children[activePageIndex]?.render()}
+      </div>
     )
   }
 }
