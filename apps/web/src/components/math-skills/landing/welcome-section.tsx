@@ -57,15 +57,11 @@ export function WelcomeSection() {
             <b>Willkommen!</b>
             <br />
             <br />
-            Hier kannst Du dich in Ruhe auf deine Mathe-Abschlussprüfung
-            vorbereiten.
+            Entdecke unterschiedliche Lernpfade und starte deine Reise durch
+            diverse Bereiche der Mathematik.
             <br />
             <br />
-            Zu allen Aufgaben gibt es Musterlösungen
-            <br />
-            und Du kannst jede Challenge so lange üben,
-            <br />
-            bis du dich sicher fühlst.
+            Baue dabei deine Mathe-Skills auf gewinne Sicherheit.
             <br />
             {/* <b>Willkommen!</b>
             <br />
