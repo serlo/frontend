@@ -489,7 +489,7 @@ export function AbbildungGraphen2() {
               <br />
               Mit dem Taschenrechner lässt sich die Basis neu berechnen:
               <br />
-              <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <span className="my-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
                 y = - {data.Anfangswert} · {Basis.toString().replace('.', ',')}
                 <sup>x</sup> {data.exp_offset > 0 ? -data.exp_offset : null}
                 {data.exp_offset === 0 ? null : null}{' '}
