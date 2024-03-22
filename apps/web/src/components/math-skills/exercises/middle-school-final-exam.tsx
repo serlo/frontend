@@ -11,6 +11,7 @@ import { AbbildungGraphen2 } from '../exercise-implementations/mapping-graphs-2'
 import { ModellingParabola } from '../exercise-implementations/modelling-parabolax'
 import { NormalformParabola } from '../exercise-implementations/normalform-parabola'
 import { ObliqueImage } from '../exercise-implementations/oblique-image'
+import { ParabolaCharacteristics } from '../exercise-implementations/parabola-by-characteristics'
 import { PlotFunction } from '../exercise-implementations/plot-function-1'
 import { PlotFunction2 } from '../exercise-implementations/plot-function-2'
 import { RootEquations } from '../exercise-implementations/root-equations'
@@ -87,6 +88,13 @@ export const middleSchoolFinalExam = {
     useCalculator: false,
     track: 2,
     component: <ModellingParabola />,
+  },
+  'parabolas-by-characteristics': {
+    title: 'Steckbriefaufgabe Parabeln',
+    subtitle: 'Quadratische Funktionen',
+    useCalculator: true,
+    track: 2,
+    component: <ParabolaCharacteristics />,
   },
   'volumen-pyramide-1': {
     title: 'Volumen einer Pyramide',
