@@ -250,7 +250,7 @@ export function AbbildungGraphen() {
                 )}{' '}
                 {data.y_dir === 'oben' && y_Ende_1 > 0 ? '+ ' + y_Ende_1 : null}
                 {data.y_dir === 'oben' && y_Ende_1 === 0 ? null : null}
-                {data.y_dir === 'oben' && y_Ende_1 < 0 ? '- ' + y_Ende_1 : null}
+                {data.y_dir === 'oben' && y_Ende_1 < 0 ? ' ' + y_Ende_1 : null}
                 {data.y_dir === 'unten' && y_Ende_2 > 0
                   ? '+ ' + y_Ende_2
                   : null}
