@@ -3,6 +3,7 @@ import { Asymptote1 } from '../exercise-implementations/asymptote-1'
 import { Asymptote2 } from '../exercise-implementations/asymptote-2'
 import { ExponentialFunction } from '../exercise-implementations/exponential-function-1'
 import { ExponentialFunctionTime } from '../exercise-implementations/exponential-function-2'
+import { ExponentialEquation } from '../exercise-implementations/exponential-function-3'
 import { LogarithmExercise1 } from '../exercise-implementations/logarithm-exercise-1'
 import { LogarithmExercise2 } from '../exercise-implementations/logarithm-exericse-2'
 import { AbbildungGraphen } from '../exercise-implementations/mapping-graphs-1'
@@ -114,6 +115,13 @@ export const middleSchoolFinalExam = {
     useCalculator: true,
     track: 1,
     component: <ExponentialFunctionTime />,
+  },
+  'exponential-function-3': {
+    title: 'Gleichungen lösen',
+    subtitle: 'Exponentialfunktion',
+    useCalculator: false,
+    track: 1,
+    component: <ExponentialEquation />,
   },
   'root-equations-1': {
     title: 'Zinssatz berechnen',
