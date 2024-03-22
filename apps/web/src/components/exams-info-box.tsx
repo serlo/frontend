@@ -14,12 +14,15 @@ export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
       <div
         className={cn(
           'mt-8 sm:-ml-side',
-          'md:absolute md:left-side md:top-9 md:z-10 md:w-[200px]',
-          'lg:w-[220px]',
-          'xl:left-side xl:w-[245px]'
+          'xl:absolute xl:left-side xl:top-9 xl:z-10 xl:w-[200px]',
+          '2xl:w-[270px]'
         )}
       >
-        <BoxRenderer boxType="blank" anchorId="exams-info-box">
+        <BoxRenderer
+          boxType="blank"
+          anchorId="exams-info-box"
+          className="bg-white"
+        >
           <>
             <div className="">
               <p className="serlo-p mb-0 max-w-lg font-normal leading-normal">
@@ -30,7 +33,7 @@ export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
                 <br />
                 <br />
               </p>
-              <div className="sm:flex md:block">
+              <div className="sm:flex xl:block">
                 <p className="serlo-p !text-sm">
                   <b>
                     Weitere Bundesländer{' '}
@@ -49,7 +52,7 @@ export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
                       className={cn(
                         'mr-1 text-brand-400',
                         'xl:mr-2 xl:mt-3 xl:text-3xl',
-                        'md:hidden xl:block'
+                        'xl:hidden'
                       )}
                     />
                     <span>
@@ -74,7 +77,7 @@ export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
                       className={cn(
                         'mr-1 text-brand-400',
                         'xl:mr-2 xl:mt-1 xl:text-3xl',
-                        'md:hidden xl:block'
+                        'xl:block xl:hidden'
                       )}
                     />
                     <span>Prüfungen-Discord</span>
@@ -83,7 +86,7 @@ export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
               </div>
             </div>
             {!isInBYTax ? ( // only for niedersachsen
-              <div className="serlo-p mb-1 mt-10 border-t pt-2 text-sm font-normal">
+              <div className="serlo-p mb-1 border-t pt-2 text-sm font-normal xl:mt-10">
                 Wichtig: Für die Aufgaben hier gelten{' '}
                 <Link href="/license/detail/26">andere Nutzungbedingungen</Link>
                 .
