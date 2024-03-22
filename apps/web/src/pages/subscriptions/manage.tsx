@@ -149,60 +149,17 @@ export const subscriptionsQuery = gql`
             __typename
             id
             alias
-            ... on User {
-              username
-            }
+            title
+
             ... on TaxonomyTerm {
               type
-              name
             }
-            ... on Exercise {
+
+            ... on AbstractEntity {
               subject {
                 taxonomyTerm {
                   name
                 }
-              }
-            }
-            ... on ExerciseGroup {
-              subject {
-                taxonomyTerm {
-                  name
-                }
-              }
-            }
-            ... on Page {
-              currentRevision {
-                title
-              }
-            }
-            ... on Article {
-              currentRevision {
-                title
-              }
-            }
-            ... on Video {
-              currentRevision {
-                title
-              }
-            }
-            ... on Applet {
-              currentRevision {
-                title
-              }
-            }
-            ... on CoursePage {
-              currentRevision {
-                title
-              }
-            }
-            ... on Course {
-              currentRevision {
-                title
-              }
-            }
-            ... on Event {
-              currentRevision {
-                title
               }
             }
           }
