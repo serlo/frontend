@@ -13,19 +13,19 @@ import svgr from 'vite-plugin-svgr'
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/package/index.ts'),
+      entry: resolve(__dirname, 'src/package/simple-web-component.ts'),
       name: 'editor',
       fileName: 'editor',
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
-      output: {
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-        },
-      },
+      // external: ['react', 'react-dom'],
+      // output: {
+      //   globals: {
+      //     react: 'React',
+      //     'react-dom': 'ReactDOM',
+      //   },
+      // },
     },
   },
   resolve: {

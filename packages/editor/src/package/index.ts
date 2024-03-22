@@ -38,3 +38,5 @@ export { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 export { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 export { createRenderers } from '@editor/editor-integration/create-renderers'
 export { createBasicPlugins } from '@editor/editor-integration/create-basic-plugins'
+
+export { ReactWrapper } from './simple-web-component'
