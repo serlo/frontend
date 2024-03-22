@@ -173,8 +173,8 @@ export function ABCFormular() {
             <br />
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               L = {'{'}
-              {((-b - Math.sqrt(b * b - 4 * a * c)) / 2) * a};
-              {((-b + Math.sqrt(b * b - 4 * a * c)) / 2) * a}
+              {(-b - Math.sqrt(b * b - 4 * a * c)) / 2 / a};
+              {(-b + Math.sqrt(b * b - 4 * a * c)) / 2 / a}
               {'}'}
             </span>
           </>
