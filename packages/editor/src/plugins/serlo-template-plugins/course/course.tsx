@@ -15,7 +15,7 @@ import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { UuidType } from '@serlo/frontend/src/data-types'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { CourseNavigation } from './course-navigation'
 import type { CoursePageTypePluginState } from './course-page'
@@ -60,13 +60,18 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
   const [activePageIndex, setActivePageIndex] = useState(0)
 
   // const templateStrings = useEditorStrings().templatePlugins
-
   const staticState = selectStaticDocument(store.getState(), props.id)
     ?.state as PrettyStaticState<CourseTypePluginState>
-  if (!staticState) return null
   const staticPages = staticState[
     'course-page'
   ] as PrettyStaticState<CoursePageTypePluginState>[]
+
+  useEffect(() => {
+    const hashId = parseInt(window.location.hash.substring(1))
+    setActivePageIndex(staticPages.findIndex(({ id }) => id === hashId))
+  }, [staticPages])
+
+  if (!staticState) return null
 
   return (
     <>
@@ -140,6 +145,7 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
                   onClick={() => {
                     if (index === activePageIndex) return
                     setActivePageIndex(index)
+                    window.location.hash = `#${staticPages[activePageIndex].id}`
                   }}
                   className={cn(
                     'serlo-link text-lg leading-browser',
