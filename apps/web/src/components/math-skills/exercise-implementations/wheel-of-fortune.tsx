@@ -27,7 +27,7 @@ export function WheelOfFortune() {
     <SelfEvaluationExercise
       generator={() => {
         const sections = randomIntBetween(3, 8)
-        const event = randomIntBetween(1, 3)
+        const event = randomIntBetween(1, 1)
         const number_1 = randomIntBetween(1, 5)
         const number_2 = randomIntBetween(1, 5)
         const number_3 = randomIntBetween(1, 5)
@@ -36,6 +36,7 @@ export function WheelOfFortune() {
         const number_6 = randomIntBetween(1, 5)
         const number_7 = randomIntBetween(1, 5)
         const number_8 = randomIntBetween(1, 5)
+
         const data: WofData = {
           sections,
           event,
@@ -76,14 +77,129 @@ export function WheelOfFortune() {
                   '.'
                 : null}
               {data.event === 3
-                ? 'Es erscheint mindestens eine ' + data.number_1 + '.'
+                ? 'Beim zweimaligen Drehen erscheint mindestens eine ' +
+                  data.number_1 +
+                  '.'
+                : null}
+              {data.event === 4
+                ? 'Beim zweimaligen Drehen erscheint genau eine ' +
+                  data.number_1 +
+                  '.'
                 : null}
             </h2>
           </>
         )
       }}
       renderSolution={({ data }) => {
-        return <></>
+        const array = [
+          data.number_1,
+          data.number_2,
+          data.number_3,
+          data.number_4,
+          data.number_5,
+          data.number_6,
+          data.number_7,
+          data.number_8,
+        ]
+        array.splice(data.sections)
+
+        const counter_Number_1 = array.filter((x) => x === data.number_1).length
+        const counter_Number_2 = array.filter((x) => x === data.number_2).length
+        const counter_Number_3 = array.filter((x) => x === data.number_3).length
+        return (
+          <>
+            Die Ergebnisemenge beim einmaligen Drehen des Glücksrads lautet:
+            <br />{' '}
+            <span className="mt-5 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              Ω = {'{'} {array.includes(1) ? '1' : null}
+              {array.includes(1) && array.includes(2) ? ', 2' : null}
+              {!array.includes(1) && array.includes(2) ? '2' : null}
+              {(array.includes(1) || array.includes(2)) && array.includes(3)
+                ? ', 3'
+                : null}
+              {!array.includes(1) && !array.includes(2) && array.includes(3)
+                ? '3'
+                : null}
+              {(array.includes(1) || array.includes(2) || array.includes(3)) &&
+              array.includes(4)
+                ? ', 4'
+                : null}
+              {!array.includes(1) &&
+              !array.includes(2) &&
+              !array.includes(3) &&
+              array.includes(4)
+                ? '4'
+                : null}
+              {(array.includes(1) ||
+                array.includes(2) ||
+                array.includes(3) ||
+                array.includes(4)) &&
+              array.includes(5)
+                ? ', 5'
+                : null}
+              {!array.includes(1) &&
+              !array.includes(2) &&
+              !array.includes(3) &&
+              !array.includes(4) &&
+              array.includes(5)
+                ? '5'
+                : null}{' '}
+              {'}'}
+            </span>
+            <br />
+            <br />
+            Wir betrachten das Ereignis: &quot;
+            {data.event === 1
+              ? 'Beim zweimaligen Drehen erscheint keine ' + data.number_2 + '.'
+              : null}
+            {data.event === 2
+              ? 'Es erscheint zwei mal hintereinander eine ' +
+                data.number_3 +
+                '.'
+              : null}
+            {data.event === 3
+              ? 'Beim zweimaligen Drehen erscheint mindestens eine ' +
+                data.number_1 +
+                '.'
+              : null}
+            {data.event === 4
+              ? 'Beim zweimaligen Drehen erscheint genau eine ' +
+                data.number_1 +
+                '.'
+              : null}
+            &quot;
+            <br />
+            <br />
+            Wir berechnen die Wahrscheinlichkeit für einen Dreh mit der Formel
+            für das Laplace-Experiment:
+            <br />
+            <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              P({data.event === 1 ? 'keine ' + data.number_2 : null}
+              {data.event === 2 ? 'eine ' + data.number_3 : null}
+              {data.event === 3 ? 'eine ' + data.number_1 : null}
+              {data.event === 4 ? 'eine ' + data.number_2 : null}) ={' '}
+              {buildFrac(
+                <>Anzahl der Ereignisse &quot;keine {data.number_2}&quot;</>,
+                <>Anzahl aller Ereignisse</>
+              )}
+            </span>
+            <br />
+            <br />
+            Wir zählen nach und setzen ein:
+            <br />
+            <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              P({data.event === 1 ? 'keine ' + data.number_2 : null}
+              {data.event === 2 ? 'eine ' + data.number_3 : null}
+              {data.event === 3 ? 'eine ' + data.number_1 : null}
+              {data.event === 4 ? 'eine ' + data.number_2 : null}) ={' '}
+              {buildFrac(
+                <>{data.sections - counter_Number_2}</>,
+                <>{data.sections}</>
+              )}
+            </span>
+            <br />
+          </>
+        )
       }}
       // eslint-disable-next-line no-empty-pattern
       renderHint={({}) => {
