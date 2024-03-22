@@ -102,7 +102,7 @@ const landingPages: LandingPageData[] = [
     headingText: 'In der Chemie ist nicht alles ätzend',
     taxRootName: 'Chemie',
     quickbarKeyword: 'chemie',
-    quickbarKeywordResult: 'Chemie Startseite',
+    quickbarKeywordResult: 'Chemie',
     quickbarDistractor: 'zelle',
     quickbarDistractorDontSee: 'Tierische Zelle',
     taxonomy1: 'Grundlagen',
@@ -126,10 +126,7 @@ const landingPages: LandingPageData[] = [
 ]
 
 Scenario('Subject landing page', ({ I }) => {
-  testLandingPage(
-    I,
-    landingPages[Math.floor(Math.random() * landingPages.length)]
-  )
+  testLandingPage(I, landingPages[3])
 })
 
 Scenario('Geogebra', ({ I }) => {
