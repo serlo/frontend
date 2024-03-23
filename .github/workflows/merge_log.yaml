@@ -10,9 +10,9 @@ jobs:
   if_merged:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    env:
+      PR_NUMBER: ${{ github.event.number }}
     steps:
-      - env:
-        PR_NUMBER: ${{ github.event.number }}
       - uses: bcgov-nr/action-pr-description-add@main
         with:
           add_markdown: |
