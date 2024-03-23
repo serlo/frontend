@@ -276,7 +276,7 @@ const query = gql`
     }
   }
 
-  fragment injectionExercise on AbstractExercise {
+  fragment injectionExercise on Exercise {
     licenseId
     currentRevision {
       content
