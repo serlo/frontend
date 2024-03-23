@@ -3,5 +3,3 @@
 # serlo.org – Frontend
 
 This is part of a monorepo. You can find [the main README here](https://github.com/serlo/frontend).
-
-test
