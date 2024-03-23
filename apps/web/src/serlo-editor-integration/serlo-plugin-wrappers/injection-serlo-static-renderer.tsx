@@ -111,7 +111,7 @@ export function InjectionSerloStaticRenderer({
               plugin: EditorPluginType.Video,
               state: {
                 src: uuid.currentRevision.url,
-                alt: uuid.currentRevision.title ?? 'video',
+                alt: uuid.title ?? 'video',
               },
             }
             setContent([state])
@@ -180,52 +180,26 @@ const query = gql`
   query injectionOnlyContent($path: String!) {
     uuid(alias: { path: $path, instance: de }) {
       __typename
-      ... on Exercise {
-        ...injectionExercise
-      }
-      ... on ExerciseGroup {
-        licenseId
+      alias
+      title
+
+      ... on AbstractEntity {
         currentRevision {
           content
         }
+        licenseId
       }
+
       ... on Video {
         currentRevision {
           url
-          title
         }
       }
       ... on Applet {
         currentRevision {
           url
-          content
         }
       }
-      ... on Event {
-        currentRevision {
-          content
-        }
-      }
-      ### fallbacks
-      ... on Article {
-        alias
-        title
-      }
-      ... on TaxonomyTerm {
-        alias
-        title
-      }
-      ... on CoursePage {
-        alias
-        title
-      }
-    }
-  }
-
-  fragment injectionExercise on Exercise {
-    licenseId
-    currentRevision {
-      content
     }
   }
 `
