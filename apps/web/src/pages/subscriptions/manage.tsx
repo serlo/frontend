@@ -154,14 +154,6 @@ export const subscriptionsQuery = gql`
             ... on TaxonomyTerm {
               type
             }
-
-            ... on AbstractEntity {
-              subject {
-                taxonomyTerm {
-                  name
-                }
-              }
-            }
           }
         }
       }
