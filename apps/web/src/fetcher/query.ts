@@ -95,20 +95,10 @@ export const dataQuery = gql`
       }
 
       ... on Exercise {
-        subject {
-          taxonomyTerm {
-            name
-          }
-        }
         ...exercise
       }
 
       ... on ExerciseGroup {
-        subject {
-          taxonomyTerm {
-            name
-          }
-        }
         currentRevision {
           ...exerciseGroupRevision
         }
