@@ -68,10 +68,10 @@ const BlanksExerciseSerloStaticRenderer = dynamic<EditorBlanksExerciseDocument>(
       '@/serlo-editor-integration/serlo-plugin-wrappers/blanks-exercise-static-renderer'
     ).then((mod) => mod.BlanksExerciseSerloStaticRenderer)
 )
-const InjectionStaticRenderer = dynamic<EditorInjectionDocument>(() =>
-  import('@editor/plugins/injection/static').then(
-    (mod) => mod.InjectionStaticRenderer
-  )
+const InjectionSerloStaticRenderer = dynamic<EditorInjectionDocument>(() =>
+  import(
+    '@/serlo-editor-integration/serlo-plugin-wrappers/injection-serlo-static-renderer'
+  ).then((mod) => mod.InjectionSerloStaticRenderer)
 )
 
 const PageLayoutStaticRenderer = dynamic<EditorPageLayoutDocument>(() =>
@@ -155,15 +155,7 @@ export function createRenderers(): InitRenderersArgs {
       { type: EditorPluginType.SerloTable, renderer: SerloTableStaticRenderer },
       {
         type: EditorPluginType.Injection,
-        renderer: (props: EditorInjectionDocument) => {
-          if (!props.state) return null
-          return (
-            <Lazy>
-              <InjectionStaticRenderer {...props} />
-              <ExtraInfoIfRevisionView>{props.state}</ExtraInfoIfRevisionView>
-            </Lazy>
-          )
-        },
+        renderer: InjectionSerloStaticRenderer,
       },
       { type: EditorPluginType.Equations, renderer: EquationsStaticRenderer },
       {

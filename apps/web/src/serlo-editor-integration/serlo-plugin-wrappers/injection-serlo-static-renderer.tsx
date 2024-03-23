@@ -15,69 +15,11 @@ import { triggerSentry } from '@serlo/frontend/src/helper/trigger-sentry'
 import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
 
-// TODO: move query into frontend
-export interface InjectionOnlyContentQuery {
-  __typename?: 'Query'
-  uuid?:
-    | {
-        __typename: 'Applet'
-        currentRevision?: {
-          __typename?: 'AppletRevision'
-          url: string
-          content: string
-        } | null
-      }
-    | { __typename: 'AppletRevision' }
-    | { __typename: 'Article'; alias: string; title: string }
-    | { __typename: 'ArticleRevision' }
-    | { __typename: 'Comment' }
-    | { __typename: 'Course' }
-    | { __typename: 'CoursePage'; alias: string; title: string }
-    | { __typename: 'CoursePageRevision' }
-    | { __typename: 'CourseRevision' }
-    | {
-        __typename: 'Event'
-        currentRevision?: {
-          __typename?: 'EventRevision'
-          content: string
-        } | null
-      }
-    | { __typename: 'EventRevision' }
-    | {
-        __typename: 'Exercise'
-        currentRevision?: {
-          __typename?: 'ExerciseRevision'
-          content: string
-        } | null
-        licenseId: number
-      }
-    | {
-        __typename: 'ExerciseGroup'
-        currentRevision?: {
-          __typename?: 'ExerciseGroupRevision'
-          content: string
-        } | null
-        licenseId: number
-      }
-    | { __typename: 'ExerciseGroupRevision' }
-    | { __typename: 'ExerciseRevision' }
-    | { __typename: 'Page' }
-    | { __typename: 'PageRevision' }
-    | { __typename: 'TaxonomyTerm'; alias: string; title: string }
-    | { __typename: 'User' }
-    | {
-        __typename: 'Video'
-        currentRevision?: {
-          __typename?: 'VideoRevision'
-          url: string
-          title: string
-        } | null
-      }
-    | { __typename: 'VideoRevision' }
-    | null
-}
+import { ExtraInfoIfRevisionView } from '../extra-info-if-revision-view'
+import { Lazy } from '@/components/content/lazy'
+import { type InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
 
-export function InjectionStaticRenderer({
+export function InjectionSerloStaticRenderer({
   state: href,
 }: EditorInjectionDocument) {
   const [content, setContent] = useState<
@@ -204,6 +146,7 @@ export function InjectionStaticRenderer({
     }
   }, [cleanedHref, hash])
 
+  if (!href) return null
   if (!cleanedHref) return null
 
   if (content === 'loading') return <LoadingSpinner />
@@ -224,9 +167,12 @@ export function InjectionStaticRenderer({
   }
 
   return (
-    <div className="border-b-3 border-brand-200 pb-4 text-gray-900">
-      <StaticRenderer document={content} />
-    </div>
+    <Lazy>
+      <div className="border-b-3 border-brand-200 pb-4 text-gray-900">
+        <StaticRenderer document={content} />
+      </div>
+      <ExtraInfoIfRevisionView>{href}</ExtraInfoIfRevisionView>
+    </Lazy>
   )
 }
 
