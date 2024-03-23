@@ -24,6 +24,17 @@ export const dataQuery = gql`
         ...taxonomyTermsV2
       }
 
+      ... on AbstractEntity {
+        revisions(unrevised: false) {
+          totalCount
+          nodes {
+            id
+            title
+            trashed
+          }
+        }
+      }
+
       ... on Page {
         currentRevision {
           ...pageRevision
@@ -35,12 +46,6 @@ export const dataQuery = gql`
         currentRevision {
           ...articleRevision
         }
-        revisions(unrevised: true) {
-          totalCount
-          nodes {
-            title
-          }
-        }
       }
 
       ... on User {
@@ -51,24 +56,12 @@ export const dataQuery = gql`
         currentRevision {
           ...videoRevision
         }
-        revisions(unrevised: true) {
-          totalCount
-          nodes {
-            title
-          }
-        }
       }
 
       ... on Applet {
         date
         currentRevision {
           ...appletRevision
-        }
-        revisions(unrevised: true) {
-          totalCount
-          nodes {
-            title
-          }
         }
       }
 
@@ -77,17 +70,19 @@ export const dataQuery = gql`
         currentRevision {
           ...coursePageRevision
         }
-        revisions(unrevised: true) {
-          totalCount
-          nodes {
-            title
-          }
-        }
         course {
           id
           licenseId
           currentRevision {
             title
+          }
+          revisions(unrevised: true) {
+            totalCount
+            nodes {
+              id
+              trashed
+              title
+            }
           }
           pages(trashed: false, hasCurrentRevision: true) {
             alias
@@ -98,9 +93,6 @@ export const dataQuery = gql`
             }
           }
           ...taxonomyTermsV2
-          revisions(unrevised: true) {
-            totalCount
-          }
         }
       }
 
@@ -111,9 +103,6 @@ export const dataQuery = gql`
           }
         }
         ...exercise
-        revisions(unrevised: true) {
-          totalCount
-        }
       }
 
       ... on ExerciseGroup {
@@ -125,9 +114,6 @@ export const dataQuery = gql`
         date
         currentRevision {
           ...exerciseGroupRevision
-        }
-        revisions(unrevised: true) {
-          totalCount
         }
       }
 

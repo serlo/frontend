@@ -37,8 +37,9 @@ export function createExercise(
 export function createExerciseGroup(
   uuid: Omit<
     Extract<MainUuidType, { __typename: 'ExerciseGroup' }>,
-    'date' | 'taxonomyTerms'
-  >
+    'date' | 'taxonomyTerms' | 'repositories' | 'revisions'
+  >,
+  unrevisedRevisions: number
 ): EditorTemplateExerciseGroupDocument | undefined {
   if (!uuid.currentRevision?.content) return undefined
 
@@ -51,7 +52,7 @@ export function createExerciseGroup(
     serloContext: {
       uuid: uuid.id,
       trashed: uuid.trashed,
-      unrevisedRevisions: uuid.revisions.totalCount,
+      unrevisedRevisions,
       licenseId: uuid.licenseId,
     },
   }

@@ -72,6 +72,7 @@ export function revisionResponseToResponse(
       ...repositoryFields,
       pages: uuid.repository.pages,
       taxonomyTerms: uuid.repository.taxonomyTerms,
+      revisions: uuid.repository.revisions,
     }
   }
 
@@ -104,6 +105,7 @@ export function revisionResponseToResponse(
       },
       ...repositoryFields,
       taxonomyTerms: uuid.repository.taxonomyTerms,
+      revisions: uuid.repository.revisions,
     }
   }
 

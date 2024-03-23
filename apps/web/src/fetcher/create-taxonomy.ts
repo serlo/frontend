@@ -60,12 +60,12 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
     if (child.__typename === UuidType.Exercise && child.currentRevision) {
       const exercise = createExercise({
         ...child,
-        revisions: { totalCount: 0 },
+        revisions: { totalCount: 0, nodes: [] },
       })
       if (exercise) result.push(exercise)
     }
     if (child.__typename === UuidType.ExerciseGroup && child.currentRevision) {
-      const group = createExerciseGroup(child)
+      const group = createExerciseGroup(child, child.revisions.totalCount)
       if (group) result.push(group)
     }
   })
