@@ -1,0 +1,19 @@
+# Update merged PRs in Deployment PR Description
+name: Update merged PRs list
+on:
+  pull_request:
+    branches:
+      - staging
+    types:
+      - closed
+jobs:
+  if_merged:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+        PR_NUMBER: ${{ github.event.number }}
+      - uses: bcgov-nr/action-pr-description-add@main
+        with:
+          add_markdown: |
+            - #$PR_NUMBER
