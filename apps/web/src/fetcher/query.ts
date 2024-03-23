@@ -25,6 +25,7 @@ export const dataQuery = gql`
       }
 
       ... on AbstractEntity {
+        date
         revisions(unrevised: false) {
           totalCount
           nodes {
@@ -42,7 +43,6 @@ export const dataQuery = gql`
       }
 
       ... on Article {
-        date
         currentRevision {
           ...articleRevision
         }
@@ -59,14 +59,12 @@ export const dataQuery = gql`
       }
 
       ... on Applet {
-        date
         currentRevision {
           ...appletRevision
         }
       }
 
       ... on CoursePage {
-        date
         currentRevision {
           ...coursePageRevision
         }
@@ -111,7 +109,6 @@ export const dataQuery = gql`
             name
           }
         }
-        date
         currentRevision {
           ...exerciseGroupRevision
         }
@@ -172,9 +169,6 @@ export const dataQuery = gql`
                 date
                 cohesive
               }
-              revisions(unrevised: true) {
-                totalCount
-              }
               licenseId
             }
             ... on TaxonomyTerm {
@@ -211,76 +205,25 @@ export const dataQuery = gql`
     }
   }
 
-  fragment taxonomyTermChild on AbstractRepository {
-    ... on Article {
-      alias
-      id
-      currentRevision {
-        title
-      }
-      revisions(first: 1, unrevised: true) {
-        nodes {
-          title
-        }
-      }
+  fragment taxonomyTermChild on AbstractEntity {
+    alias
+    id
+    date
+    currentRevision {
+      title
     }
-
-    ... on Video {
-      alias
-      id
-      date
-      currentRevision {
+    revisions(first: 1, unrevised: true) {
+      totalCount
+      nodes {
         title
-        date
-      }
-      revisions(first: 1, unrevised: true) {
-        nodes {
-          title
-        }
-      }
-    }
-
-    ... on Applet {
-      alias
-      id
-      currentRevision {
-        title
-      }
-      revisions(first: 1, unrevised: true) {
-        nodes {
-          title
-        }
       }
     }
 
     ... on Course {
-      alias
-      id
-      currentRevision {
-        title
-      }
-      revisions(first: 1, unrevised: true) {
-        nodes {
-          title
-        }
-      }
       pages {
         id
         currentRevision {
           id
-        }
-      }
-    }
-
-    ... on Event {
-      alias
-      id
-      currentRevision {
-        title
-      }
-      revisions(first: 1, unrevised: true) {
-        nodes {
-          title
         }
       }
     }
