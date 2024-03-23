@@ -45,9 +45,6 @@ function getTitle(entity: UnrevisedRevisionEntity) {
 export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
   const { strings } = useInstanceData()
 
-  // TODO: remove after migration, api changes and codegen
-  if (entity.__typename === 'GroupedExercise') return null
-
   const nodes = getNodes(entity)
   const title = getTitle(entity)
   const isProbablyNew = entity.currentRevision === null
