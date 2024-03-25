@@ -164,6 +164,7 @@ export const instanceData = {
         printModeChooseOption: 'Check one of the options.',
         strategy: 'Strategy',
         solution: 'Proposed Solution',
+        showHiddenInteractive: 'Check your solution here',
       },
       boxTypes: {
         blank: 'Blank',
@@ -901,6 +902,11 @@ export const loggedInData = {
           title: 'Exercise',
           description: 'Interactive or text based exercise',
           placeholder: 'Type the assignment here (Optional)',
+          hideInteractiveInitially: {
+            info: 'Interactive element collapsed on load',
+            deactivate: 'Load Interactive Element visible',
+            activate: 'Load Interactive Element collapsed',
+          },
         },
         inputExercise: {
           title: 'Input Exercise',

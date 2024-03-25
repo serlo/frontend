@@ -119,6 +119,7 @@ export function convertAiGeneratedScExerciseToEditorDocument(
           ],
         },
         interactive,
+        hideInteractiveInitially: undefined,
         solution,
         licenseId: undefined,
       },
