@@ -1,17 +1,22 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faArrowCircleUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
-import type { ExerciseGroupProps } from '.'
-import { ExerciseGroupRenderer } from './renderer'
+import { IntermediateTask } from './intermediate-task'
+import { type ExerciseGroupProps } from '..'
+import { ExerciseGroupRenderer } from '../renderer'
 import { FaIcon } from '@/components/fa-icon'
+import { shouldUseFeature } from '@/components/user/profile-experimental'
 
 export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
-  const { content, exercises } = state
+  const { content, exercises, intermediateTasks } = state
 
   const templateStrings = useEditorStrings().templatePlugins
   const exGroupStrings = templateStrings.textExerciseGroup
+
+  const lastExerciseIndex = exercises.length - 1
 
   return (
     <>
@@ -45,23 +50,55 @@ export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
                   </button>
                 </nav>
                 {exercise.render()}
+                <IntermediateTask
+                  intermediateTasks={intermediateTasks}
+                  exerciseIndex={index}
+                  lastExerciseIndex={lastExerciseIndex}
+                />
               </>
             ),
           }
         })}
       />
-      {renderButton(exGroupStrings.addExercise)}
+      {renderButtons()}
     </>
   )
 
-  function renderButton(text: string, noIcon?: boolean) {
+  function renderButtons() {
+    const showIntermediateTaskButton =
+      shouldUseFeature('editorIntermediateTasks') &&
+      lastExerciseIndex >= 0 &&
+      (intermediateTasks.defined
+        ? !intermediateTasks.find(
+            (task) => task.afterIndex.value === lastExerciseIndex
+          )
+        : true)
+
     return (
-      <SerloAddButton
-        text={text}
-        noIcon={noIcon}
-        onClick={() => exercises.insert()}
-        className="mb-8 mt-4"
-      />
+      <>
+        <SerloAddButton
+          text={exGroupStrings.addExercise}
+          onClick={() => exercises.insert()}
+          className="mb-8 mt-4"
+        />
+        {showIntermediateTaskButton ? (
+          <SerloAddButton
+            text={exGroupStrings.addIntermediateTask}
+            onClick={() => {
+              const newTask = {
+                afterIndex: lastExerciseIndex,
+                content: { plugin: EditorPluginType.Rows },
+              }
+              if (intermediateTasks.defined) {
+                intermediateTasks.insert(undefined, newTask)
+              } else {
+                intermediateTasks.create([newTask])
+              }
+            }}
+            className="mb-8 mt-4"
+          />
+        ) : null}
+      </>
     )
   }
 }
