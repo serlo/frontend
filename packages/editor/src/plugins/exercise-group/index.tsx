@@ -10,7 +10,7 @@ import {
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { ExeriseGroupEditor } from './editor'
+import { ExeriseGroupEditor } from './editor/editor'
 
 const allowedPluginsIntermediateTasks = [
   EditorPluginType.Text,
