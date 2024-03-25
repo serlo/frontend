@@ -41,7 +41,7 @@ Scenario('Interact with single choice', ({ I }) => {
   I.see('Super!')
 
   // Fallback feedback
-  I.amOnPage('/145139')
+  I.amOnPage('/mathe/145136/145136#145139')
   I.click('mit dem Graphen')
   I.click("Stimmt's?")
   I.see('Leider nicht richtig')

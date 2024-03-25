@@ -34,9 +34,16 @@ interface BoxProps {
   anchorId: string
   children: JSX.Element
   title?: JSX.Element | string
+  className?: string
 }
 
-export function BoxRenderer({ boxType, title, anchorId, children }: BoxProps) {
+export function BoxRenderer({
+  boxType,
+  title,
+  anchorId,
+  children,
+  className,
+}: BoxProps) {
   const { strings } = useInstanceData()
   if (!children || !boxType) return null
 
@@ -57,7 +64,8 @@ export function BoxRenderer({ boxType, title, anchorId, children }: BoxProps) {
           [&>div.my-block]:first:mt-3.5
           [&>div.my-block]:last:mb-3.5
         `,
-        isAttention ? 'border-red-100' : 'border-brand-200'
+        isAttention ? 'border-red-100' : 'border-brand-200',
+        className
       )}
     >
       <figcaption className="px-side pt-2.5 text-lg">
