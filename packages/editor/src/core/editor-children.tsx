@@ -47,29 +47,29 @@ export function EditorChildren({ children }: { children: EditorRenderProps }) {
 
   const editor = <SubDocument id={ROOT} />
 
-  if (typeof children === 'function' && loggedInData) {
-    return children({
-      element: editor,
-      i18n: {
-        instanceData,
-        loggedInData,
-      },
-      history: {
-        hasUndoActions,
-        hasRedoActions,
-        pendingChanges,
-        dispatchUndo,
-        dispatchRedo,
-        dispatchPersistHistory,
-      },
-      selectRootDocument,
-    })
+  if (typeof children !== 'function' || !loggedInData) {
+    return (
+      <>
+        {editor}
+        {children}
+      </>
+    )
   }
 
-  return (
-    <>
-      {editor}
-      {children}
-    </>
-  )
+  return children({
+    element: editor,
+    i18n: {
+      instanceData,
+      loggedInData,
+    },
+    history: {
+      hasUndoActions,
+      hasRedoActions,
+      pendingChanges,
+      dispatchUndo,
+      dispatchRedo,
+      dispatchPersistHistory,
+    },
+    selectRootDocument,
+  })
 }
