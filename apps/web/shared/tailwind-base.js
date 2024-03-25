@@ -163,6 +163,7 @@ export default {
       md: '1024px',
       lg: '1216px',
       xl: '1300px',
+      '2xl': '1436px',
       print: { raw: 'print' },
     },
   },
