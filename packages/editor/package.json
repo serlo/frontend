@@ -15,14 +15,6 @@
   "exports": {
     ".": {
       "import": "./dist/editor.js"
-    },
-    "./dist/editor-tailwind.css": {
-      "import": "./dist/editor-tailwind.css",
-      "require": "./dist/editor-tailwind.css"
-    },
-    "./dist/style.css": {
-      "import": "./dist/style.css",
-      "require": "./dist/style.css"
     }
   },
   "module": "./dist/editor.js",

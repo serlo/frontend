@@ -133,7 +133,6 @@ export function revisionResponseToResponse(
         cohesive: uuid.cohesive,
         date,
       },
-      exercises: uuid.repository.exercises,
       taxonomyTerms: uuid.repository.taxonomyTerms,
       ...repositoryFields,
       revisions: uuid.repository.revisions,
