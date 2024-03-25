@@ -92,7 +92,7 @@ export const middleSchoolFinalExam = {
     component: <ModellingParabola />,
   },
   'parabolas-by-characteristics': {
-    title: 'Steckbriefaufgabe Parabeln',
+    title: 'Parabel aus Punkten bestimmen',
     subtitle: 'Quadratische Funktionen',
     useCalculator: true,
     track: 2,
