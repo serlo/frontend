@@ -133,9 +133,6 @@ export const sharedEventFragments = gql`
         ... on ExerciseGroupRevision {
           changes
         }
-        ... on GroupedExerciseRevision {
-          changes
-        }
         ... on VideoRevision {
           changes
         }
@@ -271,7 +268,7 @@ export const sharedEventFragments = gql`
 `
 
 export const sharedExerciseFragments = gql`
-  fragment exercise on AbstractExercise {
+  fragment exercise on Exercise {
     id
     alias
     instance

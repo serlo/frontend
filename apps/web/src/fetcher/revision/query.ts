@@ -1,7 +1,6 @@
 import { gql } from 'graphql-request'
 
 import {
-  sharedExerciseFragments,
   sharedRevisionFragments,
   sharedTaxonomyParents,
 } from '../query-fragments'
@@ -235,12 +234,6 @@ export const revisionQuery = gql`
               trashed
             }
           }
-          exercises {
-            ...exercise
-            revisions(unrevised: true) {
-              totalCount
-            }
-          }
         }
       }
       ... on VideoRevision {
@@ -286,6 +279,5 @@ export const revisionQuery = gql`
   }
 
   ${sharedTaxonomyParents}
-  ${sharedExerciseFragments}
   ${sharedRevisionFragments}
 `

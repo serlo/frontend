@@ -184,6 +184,7 @@ export async function requestPage(
       entityData: {
         id: uuid.id,
         alias: uuid.alias,
+        trashed: uuid.trashed,
         typename: UuidType.ExerciseGroup,
         content: exerciseGroup,
         unrevisedRevisions: uuid.revisions?.totalCount,
@@ -203,14 +204,6 @@ export async function requestPage(
       cacheKey,
       authorization,
     }
-  }
-
-  // TODO: remove after migration, api changes and codegen
-  if (
-    uuid.__typename === 'GroupedExerciseRevision' ||
-    uuid.__typename === 'GroupedExercise'
-  ) {
-    return { kind: 'not-found' }
   }
 
   const content = (await prettifyLinksInState(

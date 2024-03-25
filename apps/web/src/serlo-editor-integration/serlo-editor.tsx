@@ -15,7 +15,6 @@ import { createPlugins } from './create-plugins'
 import { createRenderers } from './create-renderers'
 import { useCanDo } from '@/auth/use-can-do'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { MaintenanceBanner } from '@/components/maintenance-banner'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidWithRevType } from '@/data-types'
 import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
@@ -73,7 +72,6 @@ export function SerloEditor({
       <SaveContext.Provider
         value={{ onSave, userCanSkipReview, entityNeedsReview }}
       >
-        <MaintenanceBanner />
         <LocalStorageNotice useStored={useStored} setUseStored={setUseStored} />
         <Editor
           initialState={useStored ? getStateFromLocalStorage()! : initialState}
