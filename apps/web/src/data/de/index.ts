@@ -154,7 +154,7 @@ export const instanceData = {
         printModeChooseOption: "Kreuze eine der Optionen an.",
         strategy: "Strategie",
         solution: "Lösungsvorschlag",
-        showHiddenInteractive: 'Check your solution here'
+        showHiddenInteractive: "Hier deine Lösung prüfen"
       },
       boxTypes: {
         blank: "Blanko",
@@ -825,9 +825,9 @@ export const loggedInData = {
           description: "Interaktive- oder Textaufgaben",
           placeholder: "Füge hier den Arbeitsauftrag ein (Optional)",
           hideInteractiveInitially: {
-            info: 'Interactive element collapsed on load',
-            deactivate: 'Load Interactive Element visible',
-            activate: 'Load Interactive Element collapsed'
+            info: "Interaktives Element ist versteckt beim laden",
+            deactivate: "Interaktives Element sichtbar laden",
+            activate: "Interaktives Element versteckt laden"
           }
         },
         inputExercise: {
@@ -975,9 +975,9 @@ export const loggedInData = {
           kindOfExerciseGroup: "Art der Aufgabengruppe",
           notCohesive: "nicht zusammenhängend",
           cohesive: "zusammenhängend",
-          addIntermediateTask: 'Add Intermediate Task',
-          removeIntermediateTask: 'Remove intermediate Task',
-          intermediateTask: 'Intermediate Task'
+          addIntermediateTask: "Zwischentext hinzufügen",
+          removeIntermediateTask: "Zwischentext entfernen",
+          intermediateTask: "Zwischentext"
         }
       },
       edtrIo: {
