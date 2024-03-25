@@ -39,10 +39,8 @@ export function Trigonometry() {
         return (
           <>
             <h2 className="text-2xl">
-              Die beiden Geraden{' '}
-              <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">AB</b> und{' '}
-              <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">CD</b>{' '}
-              sind zueinander parallel.
+              Hier ist das Dreieck{' '}
+              <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">ABS</b>
             </h2>
             <SubComponent data={data} />
             <small className="mb-6 block">
@@ -127,41 +125,34 @@ function SubComponent({ data }: { data: Trig1Data }) {
 
   useEffect(() => {
     const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox: [-1, 6, 7, -2],
+      boundingbox: [-2, 6, 7, -2],
       showNavigation: false,
       showCopyright: false,
     })
 
-    const pointS = b.create('point', [0, 0], {
+    const pointS = b.create('point', [-0.5, 0], {
       name: 'S',
       fixed: true,
       label: { autoPosition: true },
     })
-    const pointA = b.create('point', [4, 0], { name: 'A', fixed: true })
-    const pointC = b.create('point', [6, 0], { name: 'C', fixed: true })
-    const pointB = b.create('point', [2.1, 2.7], {
+    const pointA = b.create('point', [5.5, 0], { name: 'A', fixed: true })
+    const pointB = b.create('point', [2.1, 4.2], {
       name: 'B',
       fixed: true,
     })
-    const pointD = b.create(
-      'point',
-      [() => pointB.X() * 1.5, () => pointB.Y() * 1.5],
-      {
-        name: 'D',
-        fixed: true,
-      }
-    )
 
-    const lineAB = b.create('line', [pointA, pointB])
-    b.create('parallel', [lineAB, pointD])
-
-    b.create('line', [pointS, pointC], {
+    b.create('line', [pointA, pointB], {
       straightFirst: false,
-      straightLast: true,
+      straightLast: false,
     })
-    b.create('line', [pointS, pointD], {
+
+    b.create('line', [pointS, pointB], {
       straightFirst: false,
-      straightLast: true,
+      straightLast: false,
+    })
+    b.create('line', [pointS, pointA], {
+      straightFirst: false,
+      straightLast: false,
     })
 
     b.create('angle', [pointB, pointA, pointS], {
@@ -170,12 +161,12 @@ function SubComponent({ data }: { data: Trig1Data }) {
       },
     })
 
-    b.create('text', [2, 0, `${data.as} cm`], {
+    b.create('text', [2.5, 0, `${data.as} cm`], {
       anchorX: 'middle',
       anchorY: 'top',
     })
 
-    b.create('text', [2.8, 2, `${data.ab} cm`], {})
+    b.create('text', [4.2, 2.5, `${data.ab} cm`], {})
     setBoard(b)
 
     return () => {
