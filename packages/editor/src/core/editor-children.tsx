@@ -47,7 +47,13 @@ export function EditorChildren({ children }: { children: EditorRenderProps }) {
 
   const editor = <SubDocument id={ROOT} />
 
-  if (typeof children !== 'function' || !loggedInData) {
+  if (!loggedInData) {
+    // eslint-disable-next-line no-console
+    console.error('Logged in data not provided. This should not have happened.')
+    return null
+  }
+
+  if (typeof children !== 'function') {
     return (
       <>
         {editor}
