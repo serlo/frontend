@@ -9,9 +9,9 @@ import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export function ExerciseStaticRenderer({ state }: EditorExerciseDocument) {
-  const { content, interactive, solution, hideInteractive } = state
-  const [revealInteractive, setRevealInteractive] = useState(
-    hideInteractive ? false : true
+  const { content, interactive, solution, hideInteractiveInitially } = state
+  const [interactiveHidden, setInteractiveHidden] = useState(
+    hideInteractiveInitially
   )
   const { strings } = useInstanceData()
   if (!content) return null
@@ -21,8 +21,6 @@ export function ExerciseStaticRenderer({ state }: EditorExerciseDocument) {
     content.state.length === 1 &&
     isEmptyTextDocument(content.state[0])
 
-  const showInteractive = hideInteractive ? revealInteractive : true
-
   return (
     <>
       {isEmptyContent ? (
@@ -31,19 +29,17 @@ export function ExerciseStaticRenderer({ state }: EditorExerciseDocument) {
         <StaticRenderer document={content} />
       )}
 
-      {hideInteractive && !revealInteractive ? (
+      {interactiveHidden ? (
         <button
           className="serlo-button-blue-transparent ml-side text-base hover:bg-brand-100 hover:text-brand-700"
-          onClick={() => {
-            setRevealInteractive(true)
-          }}
+          onClick={() => setInteractiveHidden(false)}
         >
           <FaIcon icon={faCircleCheck} />{' '}
           {strings.content.exercises.showHiddenInteractive}
         </button>
-      ) : null}
-
-      {showInteractive ? <StaticRenderer document={interactive} /> : null}
+      ) : (
+        <StaticRenderer document={interactive} />
+      )}
 
       <StaticRenderer document={solution} />
     </>

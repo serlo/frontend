@@ -26,7 +26,7 @@ const exerciseState = object({
   ),
   solution: optional(child({ plugin: EditorPluginType.Solution })),
   licenseId: optional(number()),
-  hideInteractive: optional(boolean()), // if true interactive element starts hidden but can be shown
+  hideInteractiveInitially: optional(boolean()),
 })
 
 export type ExercisePluginState = typeof exerciseState

@@ -51,16 +51,20 @@ export const ExerciseToolbar = ({
               <div className="m-2 h-0.25 bg-gray-500"></div>
               <DropdownButton
                 onClick={() => {
-                  if (state.hideInteractive.defined) {
-                    state.hideInteractive.remove()
-                  } else state.hideInteractive.create(true)
+                  if (state.hideInteractiveInitially.defined) {
+                    state.hideInteractiveInitially.remove()
+                  } else state.hideInteractiveInitially.create(true)
                 }}
                 label={
-                  state.hideInteractive.defined
-                    ? exPluginStrings.deactivateHideInteractive
-                    : exPluginStrings.activateHideInteractive
+                  exPluginStrings.hideInteractiveInitially[
+                    state.hideInteractiveInitially.defined
+                      ? 'deactivate'
+                      : 'activate'
+                  ]
                 }
-                icon={state.hideInteractive.defined ? faEye : faEyeSlash}
+                icon={
+                  state.hideInteractiveInitially.defined ? faEye : faEyeSlash
+                }
                 dataQa="toggle-interactive-default-visibility"
               />
             </>
