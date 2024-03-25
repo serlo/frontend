@@ -226,8 +226,8 @@ function SubComponent({ data }: { data: WofData }) {
       [4, 0],
     ])
 
-    let texts: any[] = []
-    let lines: any[] = []
+    const texts: JXG.Text[] = []
+    const lines: JXG.Line[] = []
     for (let i = 0; i < data.sections; i++) {
       const angle = ((2 * Math.PI) / data.sections) * i
       const x_Text = 2.5 * Math.cos(angle)
@@ -260,7 +260,7 @@ function SubComponent({ data }: { data: WofData }) {
     // Animationszeit und Schritte definieren
     const duration = 2000 // Gesamtdauer der Animation in ms
     const steps = 100 // Anzahl der Schritte in der Animation
-    let stepDuration = duration / steps
+    const stepDuration = duration / steps
     let currentStep = 0
 
     const rotationInterval = setInterval(() => {
