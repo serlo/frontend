@@ -10,43 +10,50 @@ import { randomItemFromArray } from '@/helper/random-item-from-array'
 
 // JXG.Options.label.autoPosition = true
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+interface PlotData {
+  b: number
+
+  context: number
+}
+
 export function ModellingParabola() {
   const { data } = useMathSkillsStorage()
 
   return (
     <SelfEvaluationExercise
       generator={() => {
-        return {
-          b: randomIntBetween(7, 15),
-          c: randomIntBetween(2, 9),
-          isPlus: randomItemFromArray([true, false]),
-          isPlus_2: randomItemFromArray([true, false]),
-          context: randomIntBetween(1, 4),
+        const b = randomIntBetween(7, 12)
+
+        const context = randomIntBetween(1, 4)
+        const data: PlotData = {
+          context,
+          b,
         }
+        return { data }
       }}
-      renderTask={({ context, b, isPlus, isPlus_2, c }) => {
+      renderTask={({ data }) => {
         return (
           <>
             <h2 className="text-2xl">
-              {data.name ? `${data.name} ` : 'Sophie '}
-              {context === 1
-                ? 'macht einen Weitsprung. Der Sprung kann mit dem Graphen der Funktion '
+              {data.context === 1
+                ? 'Sophie macht einen Weitsprung. Der Sprung kann mit dem Graphen der Funktion '
                 : null}
-              {context === 2
-                ? 'sieht beim Autofahren den Eingang eines Tunnels. Der Eingang kann mit dem Graphen der Funktion '
+              {data.context === 2
+                ? 'Sophie sieht beim Autofahren den Eingang eines Tunnels. Der Eingang kann mit dem Graphen der Funktion '
                 : null}
-              {context === 3
-                ? 'wirft einen Stein in einen See. Der Wurf kann mit dem Graphen der Funktion '
+              {data.context === 3
+                ? 'Sophie wirft einen Stein in einen See. Der Wurf kann mit dem Graphen der Funktion '
                 : null}
-              {context === 4
-                ? 'beobachtet einen Einsatz der Feuerwehr. Der Wasserstrahl, der ein brennendes Auto löscht kann mit dem Graphen der Funktion '
+              {data.context === 4
+                ? 'Sophie beobachtet einen Einsatz der Feuerwehr. Der Wasserstrahl, der ein brennendes Auto löscht kann mit dem Graphen der Funktion '
                 : null}
             </h2>
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               y = - x<sup>2</sup> +{' '}
-              {context === 1
-                ? (b / 2).toString().replace('.', ',')
-                : b.toString().replace('.', ',')}
+              {data.context === 1
+                ? (data.b / 2).toString().replace('.', ',')
+                : data.b.toString().replace('.', ',')}
               x
             </span>
             <br />
@@ -55,17 +62,17 @@ export function ModellingParabola() {
             <br />
             <br />
             <h2 className="text-2xl">
-              {context === 1 ? 'Berechne die Sprungweite und wo ' : null}
-              {data.name && context === 1 ? `${data.name} ` : null}
-              {data.name === '' ? `Sophie` : null}
-              {context === 1 ? 'am höchsten in der Luft war.' : null}
-              {context === 2
+              {data.context === 1
+                ? 'Berechne die Sprungweite und wo Sophie am höchsten in der Luft war.'
+                : null}
+
+              {data.context === 2
                 ? 'Berechne die maximale Breite und Höhe des Eingangs.'
                 : null}
-              {context === 3
+              {data.context === 3
                 ? 'Berechne die maximale Weite des Wurfs und wie hoch der Stein am höchsten Punkt war.'
                 : null}
-              {context === 4
+              {data.context === 4
                 ? 'Berechne wie weit der Strahl maximal kommt und wie hoch er am höchsten Punkt war.'
                 : null}
             </h2>
@@ -75,17 +82,17 @@ export function ModellingParabola() {
           </>
         )
       }}
-      renderSolution={({ context, b, isPlus, isPlus_2, c }) => {
+      renderSolution={({ data }) => {
         return (
           <>
-            Für die {context === 2 ? 'maximale Breite' : 'maximale Weite'}{' '}
+            Für die {data.context === 2 ? 'maximale Breite' : 'maximale Weite'}{' '}
             müssen die Nullstellen der Parabel berechnet werden:
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               0 = - x<sup>2</sup> +{' '}
-              {context === 1
-                ? (b / 2).toString().replace('.', ',')
-                : b.toString().replace('.', ',')}
+              {data.context === 1
+                ? (data.b / 2).toString().replace('.', ',')
+                : data.b.toString().replace('.', ',')}
               x
             </span>
             <br />
@@ -95,9 +102,9 @@ export function ModellingParabola() {
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               0 = - x · (x -{' '}
-              {context === 1
-                ? (b / 2).toString().replace('.', ',')
-                : b.toString().replace('.', ',')}
+              {data.context === 1
+                ? (data.b / 2).toString().replace('.', ',')
+                : data.b.toString().replace('.', ',')}
               )
             </span>
             <br />
@@ -109,21 +116,19 @@ export function ModellingParabola() {
             Der zweite Faktor - die Klammer - ist dann 0, wenn:{' '}
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               x<sub>2</sub> ={' '}
-              {context === 1
-                ? (b / 2).toString().replace('.', ',')
-                : b.toString().replace('.', ',')}
+              {data.context === 1
+                ? (data.b / 2).toString().replace('.', ',')
+                : data.b.toString().replace('.', ',')}
             </span>
             <br />
             <br />
-            Die maximale {context === 2
-              ? 'maximale Breite'
-              : 'maximale Weite'}{' '}
-            ist damit: <br />
+            Die {data.context === 2 ? 'maximale Breite' : 'maximale Weite'} ist
+            damit: <br />
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               x<sub>2</sub> - x<sub>1</sub> ={' '}
-              {context === 1
-                ? (b / 2).toString().replace('.', ',')
-                : b.toString().replace('.', ',')}
+              {data.context === 1
+                ? (data.b / 2).toString().replace('.', ',')
+                : data.b.toString().replace('.', ',')}
             </span>
             <br />
             <br />
@@ -140,9 +145,9 @@ export function ModellingParabola() {
                 <>2</>
               )}{' '}
               ={' '}
-              {context === 1
-                ? (b / 4).toString().replace('.', ',')
-                : (b / 2).toString().replace('.', ',')}
+              {data.context === 1
+                ? (data.b / 4).toString().replace('.', ',')
+                : (data.b / 2).toString().replace('.', ',')}
             </span>
             <br />
             <br />
@@ -150,41 +155,46 @@ export function ModellingParabola() {
             <br />
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               y<sub>s</sub> = -{' '}
-              {context === 1
-                ? (b / 4).toString().replace('.', ',')
-                : (b / 2).toString().replace('.', ',')}
+              {data.context === 1
+                ? (data.b / 4).toString().replace('.', ',')
+                : (data.b / 2).toString().replace('.', ',')}
               <sup>2</sup> +{' '}
-              {context === 1
-                ? (b / 2).toString().replace('.', ',')
-                : b.toString().replace('.', ',')}{' '}
+              {data.context === 1
+                ? (data.b / 2).toString().replace('.', ',')
+                : data.b.toString().replace('.', ',')}{' '}
               ·{' '}
-              {context === 1
-                ? (b / 4).toString().replace('.', ',')
-                : (b / 2).toString().replace('.', ',')}{' '}
+              {data.context === 1
+                ? (data.b / 4).toString().replace('.', ',')
+                : (data.b / 2).toString().replace('.', ',')}{' '}
               ={' '}
-              {context === 1
-                ? (-(b / 4) * (b / 4) + (b / 2) * (b / 4))
+              {data.context === 1
+                ? (-(data.b / 4) * (data.b / 4) + (data.b / 2) * (data.b / 4))
                     .toString()
                     .replace('.', ',')
-                : (-(b / 2) * (b / 2) + (b / 2) * b)
+                : (-(data.b / 2) * (data.b / 2) + (data.b / 2) * data.b)
                     .toString()
                     .replace('.', ',')}
             </span>
+            <br />
+            <br />
+            Graph als Hilfe:
+            <br />
+            <SubComponent data={data} />
           </>
         )
       }}
       // eslint-disable-next-line no-empty-pattern
-      renderHint={({ context, b }) => {
+      renderHint={({ data }) => {
         return (
           <>
-            Für die {context === 2 ? 'maximale Breite' : 'maximale Weite'}{' '}
+            Für die {data.context === 2 ? 'maximale Breite' : 'maximale Weite'}{' '}
             müssen die Nullstellen der Parabel berechnet werden:
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               0 = - x<sup>2</sup> +{' '}
-              {context === 1
-                ? (b / 2).toString().replace('.', ',')
-                : b.toString().replace('.', ',')}
+              {data.context === 1
+                ? (data.b / 2).toString().replace('.', ',')
+                : data.b.toString().replace('.', ',')}
               x
             </span>
             <br />
@@ -201,5 +211,97 @@ export function ModellingParabola() {
       }}
       centAmount={35}
     />
+  )
+}
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function SubComponent({ data }: { data: PlotData }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [board, setBoard] = useState<ReturnType<
+    typeof JXG.JSXGraph.initBoard
+  > | null>(null)
+  useEffect(() => {
+    const x = JXG.JSXGraph.initBoard('jxgbox', {
+      boundingbox: [-1, 35, 13, -3],
+      showNavigation: false,
+      showCopyright: false,
+    })
+
+    x.create('axis', [
+      [0.0, 0.0],
+      [0.0, 1.0],
+    ])
+    x.create('axis', [
+      [0.0, 0.0],
+      [1.0, 0.0],
+    ])
+
+    x.create(
+      'arrow',
+      [
+        [0, 0],
+        [data.b, 0],
+      ],
+      {}
+    )
+    x.create(
+      'arrow',
+      [
+        [data.b, 0],
+        [0, 0],
+      ],
+      {}
+    )
+    x.create(
+      'arrow',
+      [
+        [data.b / 2, 0],
+        [data.b / 2, (data.b / 2) * (data.b / 2)],
+      ],
+      {}
+    )
+    x.create('text', [12, 1.5, `x`], {})
+    x.create('text', [0.5, 33.5, `y`], {})
+    x.create('text', [data.b / 4 - 0.8, 1.5, `maximale Breite`], {})
+    x.create(
+      'text',
+      [data.b / 2 + 0.3, ((data.b / 2) * (data.b / 2)) / 2, `maximale Höhe`],
+      {}
+    )
+    x.create('functiongraph', [
+      function (x: number) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        return -x * x + data.b * x
+      },
+      -3,
+      15,
+    ])
+    setBoard(x)
+
+    return () => {
+      if (board) JXG.JSXGraph.freeBoard(board)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
+
+  return (
+    <div
+      onClick={(e) => {
+        e.preventDefault()
+      }}
+    >
+      <div
+        id="jxgbox"
+        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
+      ></div>
+      <style jsx global>
+        {`
+          .JXGtext {
+            font-family: Karla, sans-serif !important;
+            font-weight: bold !important;
+            font-size: 18px !important;
+          }
+        `}
+      </style>
+    </div>
   )
 }
