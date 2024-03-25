@@ -13,7 +13,7 @@ interface HistoryData {
 }
 
 export interface EditorProps {
-  children?: EditorChildren
+  children?: EditorRenderProps
   initialState: {
     plugin: string
     state?: unknown
@@ -21,12 +21,12 @@ export interface EditorProps {
   onChange?: OnEditorChange
 }
 
-export type EditorChildren = ReactNode | ((editor: EditorData) => ReactNode)
+export type EditorRenderProps = ReactNode | ((editor: BaseEditor) => ReactNode)
 
-export interface EditorData {
+export interface BaseEditor {
   element: ReactNode
-  languageData: LanguageData
-  historyData: HistoryData
+  i18n: LanguageData
+  history: HistoryData
   selectRootDocument: () => AnyEditorDocument
 }
 

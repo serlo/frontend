@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
 import { SubDocument } from './sub-document'
-import type { EditorChildren } from './types'
+import type { EditorRenderProps } from './types'
 import {
   store,
   useAppDispatch,
@@ -19,7 +19,7 @@ import { ROOT } from '../store/root/constants'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
-export function EditorChildren({ children }: { children: EditorChildren }) {
+export function EditorChildren({ children }: { children: EditorRenderProps }) {
   const instanceData = useInstanceData()
   const loggedInData = useLoggedInData()
 
@@ -50,11 +50,11 @@ export function EditorChildren({ children }: { children: EditorChildren }) {
   if (typeof children === 'function' && loggedInData) {
     return children({
       element: editor,
-      languageData: {
+      i18n: {
         instanceData,
         loggedInData,
       },
-      historyData: {
+      history: {
         hasUndoActions,
         hasRedoActions,
         pendingChanges,
