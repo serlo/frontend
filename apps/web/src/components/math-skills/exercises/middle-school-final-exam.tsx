@@ -16,6 +16,7 @@ import { PlotFunction } from '../exercise-implementations/plot-function-1'
 import { PlotFunction2 } from '../exercise-implementations/plot-function-2'
 import { RootEquations } from '../exercise-implementations/root-equations'
 import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
+import { SurfaceThreePyramide } from '../exercise-implementations/surface-pyramide-2'
 import { Trigonometry } from '../exercise-implementations/trigonometry'
 import { Trigonometry1 } from '../exercise-implementations/trigonometry-1'
 import { ValueSetParabola } from '../exercise-implementations/value-set-parabola'
@@ -110,6 +111,13 @@ export const middleSchoolFinalExam = {
     useCalculator: true,
     track: 2,
     component: <SurfacePyramide />,
+  },
+  'oberflaeche-pyramide-2': {
+    title: 'Oberfläche einer Pyramide',
+    subtitle: 'dreiseitig',
+    useCalculator: true,
+    track: 2,
+    component: <SurfaceThreePyramide />,
   },
   'exponential-function-1': {
     title: 'Kapital berechnen',
