@@ -206,14 +206,6 @@ export async function requestPage(
     }
   }
 
-  // TODO: remove after migration, api changes and codegen
-  if (
-    uuid.__typename === 'GroupedExerciseRevision' ||
-    uuid.__typename === 'GroupedExercise'
-  ) {
-    return { kind: 'not-found' }
-  }
-
   const content = (await prettifyLinksInState(
     uuid.currentRevision?.content
       ? parseDocumentString(uuid.currentRevision?.content)
