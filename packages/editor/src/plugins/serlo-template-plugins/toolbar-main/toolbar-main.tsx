@@ -18,13 +18,17 @@ import { SaveModal } from '@serlo/frontend/src/serlo-editor-integration/componen
 import { useState } from 'react'
 
 import { ClientOnlyPortal } from './client-only-portal'
+import { LeaveConfirmationRenderNull } from './leave-confirmation-render-null'
 import { entity } from '../common/common'
-import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 
 interface ToolbarMainProps {
   changes?: StateTypeReturnType<(typeof entity)['changes']>
   licenseId?: StateTypeReturnType<(typeof entity)['licenseId']>
   showSubscriptionOptions?: boolean
+}
+
+const isNextApp = () => {
+  return Boolean(document.getElementById('__next'))
 }
 
 export function ToolbarMain({
@@ -38,12 +42,12 @@ export function ToolbarMain({
   const isChanged = useAppSelector(selectHasPendingChanges)
   const [saveModalOpen, setSaveModalOpen] = useState(false)
 
-  useLeaveConfirm(isChanged)
-
   const editorStrings = useEditorStrings()
 
   return (
     <>
+      {/* For the web component export, we don't want to call the useLeaveConfirm hook as the next router won't be available */}
+      {isNextApp() && <LeaveConfirmationRenderNull isChanged={isChanged} />}
       <ClientOnlyPortal selector=".controls-portal">
         <nav className="flex h-14 w-full justify-between pl-5 pr-3 pt-6">
           <div className="pointer-events-auto md:-ml-28 lg:-ml-52">

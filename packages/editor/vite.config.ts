@@ -13,7 +13,7 @@ import svgr from 'vite-plugin-svgr'
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/package/simple-web-component.ts'),
+      entry: resolve(__dirname, 'src/package/index.ts'),
       name: 'editor',
       fileName: 'editor',
       formats: ['es'],

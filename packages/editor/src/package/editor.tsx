@@ -24,7 +24,8 @@ const emptyState = {
   ],
 }
 
-/** For exporting the editor */
+/** For exporting the editor. Note that this component is not used by the Serlo
+ * frontend. */
 export function SerloEditor({
   language = 'de',
   initialState,
@@ -35,7 +36,7 @@ export function SerloEditor({
   return (
     <InstanceDataProvider value={instanceData}>
       <LoggedInDataProvider value={loggedInData}>
-        <div className="serlo-editor-hacks">
+        <div className="serlo-editor-hacks" id="serlo-root">
           <Editor initialState={initialState ?? emptyState} {...props} />
         </div>
       </LoggedInDataProvider>
