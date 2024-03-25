@@ -30,6 +30,14 @@ export function IntermediateTask({
   const task = intermediateTasks[taskIndex]
   if (!task) return null
 
+  function canMoveTask(newIndex: number) {
+    if (!intermediateTasks.defined) return false
+    const indexOccupied = !!intermediateTasks.find(
+      ({ afterIndex }) => afterIndex.value === newIndex
+    )
+    return newIndex >= 0 && newIndex < lastExerciseIndex && !indexOccupied
+  }
+
   return (
     <>
       <nav className="flex justify-end">
@@ -37,7 +45,7 @@ export function IntermediateTask({
           {exGroupStrings.intermediateTask}
         </small>
         <div>
-          {exerciseIndex > 0 ? (
+          {canMoveTask(exerciseIndex - 1) ? (
             <button
               className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
               onClick={() => {
@@ -48,7 +56,7 @@ export function IntermediateTask({
               <FaIcon icon={faArrowCircleUp} />
             </button>
           ) : null}
-          {exerciseIndex < lastExerciseIndex ? (
+          {canMoveTask(exerciseIndex + 1) ? (
             <button
               className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
               onClick={() => {
@@ -60,7 +68,11 @@ export function IntermediateTask({
           ) : null}
           <button
             className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
-            onClick={() => intermediateTasks.remove(taskIndex)}
+            onClick={() => {
+              intermediateTasks.set((currentTasks) => {
+                return currentTasks.filter((_, index) => index !== taskIndex)
+              })
+            }}
           >
             <EditorTooltip text={exGroupStrings.removeIntermediateTask} />
             <FaIcon icon={faTrashAlt} />
