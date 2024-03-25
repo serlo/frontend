@@ -134,7 +134,7 @@ export const middleSchoolFinalExam = {
     component: <ExponentialFunctionTime />,
   },
   'exponential-function-3': {
-    title: 'Gleichungen lösen',
+    title: 'Nullstelle berechnen',
     subtitle: 'Exponentialfunktion',
     useCalculator: false,
     track: 1,
