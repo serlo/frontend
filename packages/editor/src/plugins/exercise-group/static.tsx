@@ -3,7 +3,7 @@ import {
   EditorExerciseGroupDocument,
   EditorRowsDocument,
 } from '@editor/types/editor-plugins'
-import { useAuthentication } from '@serlo/frontend/src/auth/use-authentication'
+// import { useAuthentication } from '@serlo/frontend/src/auth/use-authentication'
 import type { MoreAuthorToolsProps } from '@serlo/frontend/src/components/user-tools/foldout-author-menus/more-author-tools'
 import { ExerciseInlineType } from '@serlo/frontend/src/data-types'
 import dynamic from 'next/dynamic'
@@ -24,7 +24,7 @@ export function ExerciseGroupStaticRenderer(
   const { state, serloContext: context } = props
   const [loaded, setLoaded] = useState(false)
   useEffect(() => setLoaded(true), [])
-  const auth = useAuthentication()
+  // const auth = useAuthentication()
 
   const { content, exercises } = state
   if (!exercises) return null
@@ -45,7 +45,7 @@ export function ExerciseGroupStaticRenderer(
             <ExerciseLicenseNotice exerciseLicenseId={context?.licenseId} />
           </div>
         ) : null}
-        {loaded && auth && context?.uuid ? (
+        {loaded && context?.uuid ? (
           <AuthorToolsExercises
             data={{
               type: ExerciseInlineType.ExerciseGroup,
