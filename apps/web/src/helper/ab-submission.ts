@@ -17,6 +17,7 @@ export interface ABSubmissionData {
     | 'rating'
     | 'visit'
     | 'blanks'
+    | 'spoiler'
   result: 'correct' | 'wrong' | 'open' | string
 }
 

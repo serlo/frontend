@@ -1895,22 +1895,6 @@ export const exerciseGroupUuidMock = {
   ],
 }
 
-export const groupedExerciseUuidMock = {
-  __typename: UuidType.GroupedExercise,
-  id: 53209,
-  alias:
-    '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen/53205/53209',
-  instance: 'de',
-  licenseId: 1,
-  currentRevision: {
-    content:
-      '{"plugin":"exercise","state":{"content":{"plugin":"rows","state":[{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e021a8c95ce_de1b6de2a64aebbb6030e31fff0f5e353b784a48.png","alt":"Graph1","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}}]},"solution":{"plugin":"solution","state":{"prerequisite":{"id":"1450","title":"Sinus- und Kosinusfunktion"},"strategy":{"plugin":"text","state":[{"type":"p","children":[{}]}]},"steps":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Die "},{"type":"a","href":"/1569","children":[{"text":"Ruhelage"}]},{"text":" der Funktion liegt auf der "},{"type":"math","src":"x","inline":true,"children":[{"text":"x"}]},{"text":"-Achse."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e134ad11931_7a29c372db1fb46847913c95ea3e63c78d107366.png","alt":"Lösungsteil1","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Der Graph schneidet das Koordinatensystem im Nullpunkt, also handelt es sich um eine Sinusfunktion (beziehungsweise einen verschobenen Kosinus)."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e1347fd9dc1_338b31d48a89340e131d3dd1edbdddafce1725fb.png","alt":"Lösungsteil2","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Da es leichter ist, verwendest du in den weiteren Schritten die Sinusfunktion."}]},{"type":"p","children":[{"text":"Im nächsten Schritt suchst du nach der "},{"type":"a","href":"/1569","children":[{"text":"Amplitude"}]},{"text":" der Funktion."}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Die Amplitude der Funktion ist "},{"type":"math","src":"3","inline":true,"children":[{"text":"3"}]},{"text":". Das heißt, dass die Funktion vorerst von der Form "},{"type":"math","src":"f(x)=3\\\\cdot\\\\sin(x)","inline":true,"children":[{"text":"f(x)=3\\\\cdot\\\\sin(x)"}]},{"text":" ist."}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e1346338a3e_542af962ee94cb2e532d473c629508001b2d6790.png","alt":"Lösungsteil3","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Jetzt fehlt dir nur noch die "},{"type":"a","href":"/2113","children":[{"text":"Periode"}]},{"text":" der Funktion. Am Graphen kannst du ablesen, dass diese "},{"type":"math","src":"2\\\\pi","inline":true,"children":[{"text":"2\\\\pi"}]},{"text":" beträgt. Das ist die normale Periode von der Sinusfunktion."}]}]},{"plugin":"text","state":[{"type":"p","children":[{"text":"Da die Periode der Sinusfunktion nicht verändert wurde, lautet die Funktion:"}]},{"type":"p","children":[{"type":"math","src":"f(x)=3\\\\cdot\\\\sin(x).","inline":false,"children":[{"text":"f(x)=3\\\\cdot\\\\sin(x)."}]}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/legacy/56e1345199b59_b5c08794fb0621d80c980488ebfc535883be0f8c.png","alt":"Lösungsteil4","caption":{"plugin":"text","state":[{"type":"p","children":[{}]}]}}}]}}}}}',
-  },
-  exerciseGroup: {
-    alias: '/mathe/12345/12345',
-  },
-}
-
 export const courseUuidMock_id = {
   __typename: UuidType.Course,
   id: 51979,

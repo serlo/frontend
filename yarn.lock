@@ -4851,6 +4851,7 @@ __metadata:
     use-query-params: ^2.2.1
     uuid: ^9.0.1
     vite: ^5.0.12
+    vite-plugin-css-injected-by-js: ^3.4.0
     vite-plugin-dts: ^3.6.3
     vite-plugin-svgr: ^4.2.0
   languageName: unknown
@@ -9397,12 +9398,12 @@ __metadata:
   linkType: hard
 
 "follow-redirects@npm:^1.14.9":
-  version: 1.15.4
-  resolution: "follow-redirects@npm:1.15.4"
+  version: 1.15.6
+  resolution: "follow-redirects@npm:1.15.6"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: e178d1deff8b23d5d24ec3f7a94cde6e47d74d0dc649c35fc9857041267c12ec5d44650a0c5597ef83056ada9ea6ca0c30e7c4f97dbf07d035086be9e6a5b7b6
+  checksum: a62c378dfc8c00f60b9c80cab158ba54e99ba0239a5dd7c81245e5a5b39d10f0c35e249c3379eae719ff0285fff88c365dd446fab19dee771f1d76252df1bbf5
   languageName: node
   linkType: hard
 
@@ -17495,6 +17496,15 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
     core-util-is: 1.0.2
     extsprintf: ^1.2.0
   checksum: c431df0bedf2088b227a4e051e0ff4ca54df2c114096b0c01e1cbaadb021c30a04d7dd5b41ab277bcd51246ca135bf931d4c4c796ecae7a4fef6d744ecef36ea
+  languageName: node
+  linkType: hard
+
+"vite-plugin-css-injected-by-js@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "vite-plugin-css-injected-by-js@npm:3.4.0"
+  peerDependencies:
+    vite: ">2.0.0-0"
+  checksum: 4b70fe566b6899a1a01c8b9a545e91281cbf71e9756920659f50d2459e7885825a8491e4218824cb16c10db20ff0505d2ae4ad3c1e2f6eb293a9e27332f7e83e
   languageName: node
   linkType: hard
 

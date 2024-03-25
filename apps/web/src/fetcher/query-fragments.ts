@@ -112,6 +112,30 @@ export const sharedEventFragments = gql`
     ... on CreateEntityRevisionNotificationEvent {
       entityRevision {
         id
+        ... on AppletRevision {
+          changes
+        }
+        ... on ArticleRevision {
+          changes
+        }
+        ... on CourseRevision {
+          changes
+        }
+        ... on CoursePageRevision {
+          changes
+        }
+        ... on EventRevision {
+          changes
+        }
+        ... on ExerciseRevision {
+          changes
+        }
+        ... on ExerciseGroupRevision {
+          changes
+        }
+        ... on VideoRevision {
+          changes
+        }
       }
       entity {
         ...withTaxonomyTerms
@@ -240,20 +264,11 @@ export const sharedEventFragments = gql`
         }
       }
     }
-    ... on GroupedExercise {
-      exerciseGroup {
-        taxonomyTerms {
-          nodes {
-            type
-          }
-        }
-      }
-    }
   }
 `
 
 export const sharedExerciseFragments = gql`
-  fragment exercise on AbstractExercise {
+  fragment exercise on Exercise {
     id
     alias
     instance

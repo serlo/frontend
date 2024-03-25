@@ -18,7 +18,7 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
-import { UuidType, UuidRevType } from '@/data-types'
+import { UuidType } from '@/data-types'
 import type { User, MainUuidType } from '@/fetcher/query-types'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
@@ -38,7 +38,6 @@ export function convertEditorResponseToState(
     CoursePage: { convert: convertCoursePage },
     Event: { convert: convertEvent },
     Page: { convert: convertPage },
-    GroupedExercise: { convert: convertTextExercise },
     Exercise: { convert: convertTextExercise },
     ExerciseGroup: { convert: convertTextExerciseGroup },
     User: { convert: convertUser },
@@ -287,27 +286,6 @@ export function convertEditorResponseToState(
   ): StaticDocument<TextExerciseGroupTypePluginState> {
     stack.push({ id: uuid.id, type: 'text-exercise-group' })
 
-    const exercises = uuid.exercises
-      .filter((exercise) => exercise.trashed === false)
-      .map((exercise) => {
-        return convertTextExercise({
-          ...exercise,
-          __typename: UuidType.Exercise,
-          taxonomyTerms: { nodes: [] },
-          revisions: {
-            __typename: 'ExerciseRevisionConnection',
-            totalCount: -1,
-          },
-          currentRevision: {
-            ...exercise.currentRevision,
-            __typename: UuidRevType.Exercise,
-            content: exercise.currentRevision?.content ?? '',
-            date: '',
-            id: -1,
-          },
-        }).state
-      })
-
     return {
       plugin: TemplatePluginType.TextExerciseGroup,
       state: {
@@ -316,7 +294,6 @@ export function convertEditorResponseToState(
         revision,
         content: serializeStaticDocument(parseStaticString(content)),
         cohesive: uuid.currentRevision?.cohesive ?? false,
-        'grouped-text-exercise': exercises,
       },
     }
   }
@@ -450,7 +427,6 @@ export interface TextExerciseGroupSerializedState extends Entity {
   __typename?: UuidType.ExerciseGroup
   cohesive?: string
   content: SerializedStaticState
-  'grouped-text-exercise'?: TextExerciseSerializedState[]
 }
 
 export interface UserSerializedState extends Uuid {

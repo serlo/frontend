@@ -10,12 +10,13 @@ import {
   number,
   object,
 } from '../../plugin'
+import { isProduction } from '@/helper/is-production'
 
 const defaultConfig: MultimediaConfig = {
   allowedPlugins: [
     EditorPluginType.Image,
     EditorPluginType.Video,
-    EditorPluginType.Audio,
+    ...(isProduction ? [] : [EditorPluginType.Audio]),
     EditorPluginType.Geogebra,
   ],
   explanation: {
@@ -25,7 +26,7 @@ const defaultConfig: MultimediaConfig = {
         EditorPluginType.Text,
         EditorPluginType.Highlight,
         EditorPluginType.Anchor,
-        EditorPluginType.Audio,
+        ...(isProduction ? [] : [EditorPluginType.Audio]),
         EditorPluginType.Equations,
         EditorPluginType.Image,
         EditorPluginType.SerloTable,

@@ -38,8 +38,6 @@ export interface FetchExerciseFolderQuery {
     | { __typename?: 'ExerciseGroup' }
     | { __typename?: 'ExerciseGroupRevision' }
     | { __typename?: 'ExerciseRevision' }
-    | { __typename?: 'GroupedExercise' }
-    | { __typename?: 'GroupedExerciseRevision' }
     | { __typename?: 'Page' }
     | { __typename?: 'PageRevision' }
     | {
@@ -79,8 +77,6 @@ export interface FetchExerciseFolderQuery {
               }
             | { __typename?: 'ExerciseGroupRevision' }
             | { __typename?: 'ExerciseRevision' }
-            | { __typename?: 'GroupedExercise' }
-            | { __typename?: 'GroupedExerciseRevision' }
             | { __typename?: 'Page' }
             | { __typename?: 'PageRevision' }
             | { __typename?: 'TaxonomyTerm' }
