@@ -1272,6 +1272,25 @@ export interface ExerciseRevisionCursor {
   node: ExerciseRevision;
 }
 
+export interface ExerciseSubmissionInput {
+  entityId: Scalars['Int']['input'];
+  path: Scalars['String']['input'];
+  result: Scalars['String']['input'];
+  revisionId: Scalars['Int']['input'];
+  sessionId: Scalars['String']['input'];
+  type: Scalars['String']['input'];
+}
+
+export interface ExperimentMutation {
+  __typename?: 'ExperimentMutation';
+  createExerciseSubmission: DefaultResponse;
+}
+
+
+export interface ExperimentMutationCreateExerciseSubmissionArgs {
+  input: ExerciseSubmissionInput;
+}
+
 export interface HasNextPageInfo {
   __typename?: 'HasNextPageInfo';
   endCursor?: Maybe<Scalars['String']['output']>;
@@ -1344,6 +1363,7 @@ export interface Mutation {
   __typename?: 'Mutation';
   _cache: _CacheMutation;
   entity: EntityMutation;
+  experiment: ExperimentMutation;
   notification: NotificationMutation;
   oauth: OauthMutation;
   page: PageMutation;
@@ -3072,6 +3092,13 @@ export type UpdateLicenseMutationVariables = Exact<{
 
 
 export type UpdateLicenseMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', updateLicense: { __typename?: 'EntityUpdateLicenseResponse', success: boolean } } };
+
+export type CreateExerciseSubmissionMutationVariables = Exact<{
+  input: ExerciseSubmissionInput;
+}>;
+
+
+export type CreateExerciseSubmissionMutation = { __typename?: 'Mutation', experiment: { __typename?: 'ExperimentMutation', createExerciseSubmission: { __typename?: 'DefaultResponse', success: boolean } } };
 
 export type RejectRevisionMutationVariables = Exact<{
   input: RejectRevisionInput;
