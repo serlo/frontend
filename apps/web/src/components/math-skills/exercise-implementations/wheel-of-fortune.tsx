@@ -209,7 +209,6 @@ export function WheelOfFortune() {
     />
   )
 }
-
 function SubComponent({ data }: { data: WofData }) {
   const [board, setBoard] = useState<ReturnType<
     typeof JXG.JSXGraph.initBoard
@@ -221,17 +220,20 @@ function SubComponent({ data }: { data: WofData }) {
       showNavigation: false,
       showCopyright: false,
     })
+
     b.create('circle', [
       [0, 0],
       [4, 0],
     ])
-    let i = 0
 
-    while (i !== data.sections) {
-      const x_Text = 2.5 * Math.cos(((2 * Math.PI) / data.sections) * (i + 0.5))
-      const y_Text = 2.5 * Math.sin(((2 * Math.PI) / data.sections) * (i + 0.5))
-      const x = 4 * Math.cos(((2 * Math.PI) / data.sections) * i)
-      const y = 4 * Math.sin(((2 * Math.PI) / data.sections) * i)
+    let texts: any[] = []
+    let lines: any[] = []
+    for (let i = 0; i < data.sections; i++) {
+      const angle = ((2 * Math.PI) / data.sections) * i
+      const x_Text = 2.5 * Math.cos(angle)
+      const y_Text = 2.5 * Math.sin(angle)
+      const x = 4 * Math.cos(angle)
+      const y = 4 * Math.sin(angle)
       const array = [
         data.number_1,
         data.number_2,
@@ -242,25 +244,56 @@ function SubComponent({ data }: { data: WofData }) {
         data.number_7,
         data.number_8,
       ]
-      b.create(
-        'line',
-        [
-          [0, 0],
-          [x, y],
-        ],
-        { straightFirst: false, straightLast: false }
+      lines.push(
+        b.create(
+          'line',
+          [
+            [0, 0],
+            [x, y],
+          ],
+          { straightFirst: false, straightLast: false }
+        )
       )
-      b.create(
-        'text',
-        [x_Text, y_Text, array[i].toString().replace('.', ',')],
-        {}
-      )
-      i++
+      texts.push(b.create('text', [x_Text, y_Text, array[i].toString()], {}))
     }
+
+    // Animationszeit und Schritte definieren
+    const duration = 2000 // Gesamtdauer der Animation in ms
+    const steps = 100 // Anzahl der Schritte in der Animation
+    let stepDuration = duration / steps
+    let currentStep = 0
+
+    const rotationInterval = setInterval(() => {
+      currentStep++
+      const angle = (currentStep / steps) * 2 * Math.PI
+      for (let i = 0; i < data.sections; i++) {
+        const line = lines[i]
+        const text = texts[i]
+        const rotationPoint = JXG.COORDS_BY_USER
+        line.point2.setPosition(rotationPoint, [
+          4 * Math.cos(angle + (i * 2 * Math.PI) / data.sections),
+          4 * Math.sin(angle + (i * 2 * Math.PI) / data.sections),
+        ])
+        text.setPosition(rotationPoint, [
+          2.5 * Math.cos(angle + (i * 2 * Math.PI + 3) / data.sections),
+          2.5 * Math.sin(angle + (i * 2 * Math.PI + 3) / data.sections),
+        ])
+      }
+      b.update()
+
+      // Stoppe die Animation nach der letzten Drehung
+      if (currentStep >= steps) {
+        clearInterval(rotationInterval)
+      }
+    }, stepDuration)
+
     setBoard(b)
 
     return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
+      if (board) {
+        clearInterval(rotationInterval) // Stelle sicher, dass die Animation angehalten wird
+        JXG.JSXGraph.freeBoard(board)
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
