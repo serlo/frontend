@@ -153,6 +153,7 @@ function createExerciseGroupDocument(
       },
       exercises,
       cohesive: false,
+      intermediateTasks: undefined,
     },
   }
 }

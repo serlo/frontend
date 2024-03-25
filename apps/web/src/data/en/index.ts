@@ -1057,6 +1057,9 @@ export const loggedInData = {
           kindOfExerciseGroup: 'Kind of exercise group',
           notCohesive: 'not cohesive',
           cohesive: 'cohesive',
+          addIntermediateTask: 'Add Intermediate Task',
+          removeIntermediateTask: 'Remove intermediate Task',
+          intermediateTask: 'Intermediate Task',
         },
       },
       edtrIo: {
