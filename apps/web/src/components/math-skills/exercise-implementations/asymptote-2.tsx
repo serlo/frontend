@@ -62,7 +62,7 @@ export function Asymptote2() {
             Bestimme Definitions- und Wertebereich, sowie Asymptoten der
             Funktion:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
               {data.a === -1 ? null : '·'}{' '}
               {data.b === 123 ? 'e' : data.b.toString().replace('.', ',')}
@@ -74,12 +74,8 @@ export function Asymptote2() {
             Die Definitionsmenge ist bei allen Exponentialfunktionen die Menge
             der reellen Zahlen.
             <br />
-            Der Wertebereich setzt sich aus allen reellen Funktionswerten
-            zusammen:
-            <br />
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-              W = {'{'} y |{data.a > 0 ? ' y > ' + data.c : ' y < ' + data.c}
-              {'}'}
+              D = R
             </span>
             <br />
             <br />
@@ -87,6 +83,16 @@ export function Asymptote2() {
             <br />
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               y = {data.c}
+            </span>
+            <br />
+            <br />
+            Der Wertebereich setzt sich aus allen Werten{' '}
+            {data.a > 0 ? 'oberhalb' : 'unterhalb'} der Asymptote zusammen (der
+            Faktor der Funktion ist {data.a > 0 ? 'positiv' : 'negativ'}):
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              W = {'{'} y |{data.a > 0 ? ' y > ' + data.c : ' y < ' + data.c}
+              {'}'}
             </span>
             <br />
             <br />

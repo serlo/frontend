@@ -58,34 +58,28 @@ export function WheelOfFortune() {
               Die Abbildung zeigt ein Glücksrad mit gleichgroßen Feldern{' '}
             </h2>
             <SubComponent data={data} />
-
-            <h2 className="text-2xl">
-              Bestimme die Wahrscheinlichkeit für das Ereignis:
-            </h2>
-
             <br />
-            <h2 className="text-2xl">
-              {data.event === 1
-                ? 'Beim zweimaligen Drehen erscheint keine ' +
-                  data.number_2 +
-                  '.'
-                : null}
-              {data.event === 2
-                ? 'Es erscheint zwei mal hintereinander eine ' +
-                  data.number_3 +
-                  '.'
-                : null}
-              {data.event === 3
-                ? 'Beim zweimaligen Drehen erscheint mindestens eine ' +
-                  data.number_1 +
-                  '.'
-                : null}
-              {data.event === 4
-                ? 'Beim zweimaligen Drehen erscheint genau eine ' +
-                  data.number_2 +
-                  '.'
-                : null}
-            </h2>
+            Bestimme die Wahrscheinlichkeit für das Ereignis:
+            <br />
+            <br />
+            {data.event === 1
+              ? 'Beim zweimaligen Drehen erscheint keine ' + data.number_2 + '.'
+              : null}
+            {data.event === 2
+              ? 'Es erscheint zwei mal hintereinander eine ' +
+                data.number_3 +
+                '.'
+              : null}
+            {data.event === 3
+              ? 'Beim zweimaligen Drehen erscheint mindestens eine ' +
+                data.number_1 +
+                '.'
+              : null}
+            {data.event === 4
+              ? 'Beim zweimaligen Drehen erscheint genau eine ' +
+                data.number_2 +
+                '.'
+              : null}
           </>
         )
       }}
