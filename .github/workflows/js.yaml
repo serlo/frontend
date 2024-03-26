@@ -22,6 +22,7 @@ jobs:
         with:
           node-version: 20
       - run: yarn
+      - run: yarn build:prisma
       - run: yarn lint:eslint
   prettier:
     runs-on: ubuntu-latest
