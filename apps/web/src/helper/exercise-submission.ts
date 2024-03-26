@@ -78,13 +78,24 @@ export function exerciseSubmission(
 
   const sessionId = sessionStorage.getItem(sesionStorageKey)
 
+  const { revisionId, path } = data
+
+  const isValid =
+    data.path.length < 1024 &&
+    Math.floor(entityId) === entityId &&
+    revisionId &&
+    Math.floor(revisionId) === revisionId &&
+    entityId > 0
+
+  if (!isValid) return
+
   void (async () => {
     await submitFn({
-      path: data.path,
+      path: path,
       entityId: data.entityId || -1,
       type: data.type,
       result: data.result,
-      revisionId: data.revisionId || -1,
+      revisionId: revisionId || -1,
       sessionId,
     })
   })()
