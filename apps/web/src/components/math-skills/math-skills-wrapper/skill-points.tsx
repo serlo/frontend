@@ -13,7 +13,7 @@ export function SkillPoints() {
   const { animal } = data
 
   return (
-    <div className="-ml-1 mt-1 flex w-fit items-center sm:mx-auto sm:mt-2 sm:justify-center">
+    <div className="skill-points -ml-1 mt-1 flex w-fit items-center sm:mx-auto sm:mt-2 sm:justify-center">
       {renderPoint(skillCent)}
       {renderPoint(skillCent - 100)}
       {renderPoint(skillCent - 200)}

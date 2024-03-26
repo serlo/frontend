@@ -20,6 +20,13 @@ export function LevelSkillHeader({ onClose }: { onClose: () => void }) {
       <div className="ml-auto">
         <SkillPoints />
       </div>
+      <style jsx global>
+        {`
+          header .skill-points {
+            display: none;
+          }
+        `}
+      </style>
     </div>
   )
 }
