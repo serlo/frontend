@@ -45,11 +45,27 @@ export function VertexParabola() {
             </span>
             <br />
             <br />
-            Wir führen eine quadratische Ergänzung durch. Wir möchten den
-            Funktionsterm als Binom schreiben, weshalb wir ihn noch etwas
-            umformen müssen. <br />
-            Dazu addieren wir den Term{' '}
+            Wir führen eine quadratische Ergänzung durch. Lies dazu den
+            Parameter b im Funktionsterm aus: <br />
+            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              y = x<sup>2</sup>{' '}
+              <strong>
+                {isPlus ? '+' : '-'} {b}
+              </strong>
+              x {isPlus_2 ? '+' : '-'} {c}
+            </span>
+            <br />
+            <br />
+            Wir addieren den Term{' '}
             <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-1">
+              <span className="inline-block scale-y-[3]">(</span>
+              {buildFrac(
+                <>
+                  <strong>b</strong>
+                </>,
+                <>2</>
+              )}
+              <span className="inline-block scale-y-[3]">)</span> ={' '}
               <span className="inline-block scale-y-[3]">(</span>
               {buildFrac(
                 <>
@@ -143,20 +159,45 @@ export function VertexParabola() {
         )
       }}
       // eslint-disable-next-line no-empty-pattern
-      renderHint={({ b }) => {
+      renderHint={({ b, isPlus, isPlus_2, c }) => {
         return (
           <>
+            Lies den Parameter <strong>b</strong> aus dem Funktionsterm ab:
+            <br />
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              y = x<sup>2</sup>{' '}
+              <strong>
+                {isPlus ? '+' : '-'} {b}
+              </strong>
+              x {isPlus_2 ? '+' : '-'} {c}
+            </span>
+            <br />
+            <br />
             Führe eine quadratische Ergänzung durch mit dem Term:
             <br />
             <span className="text-1xl mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-1">
               <span className="inline-block scale-y-[3]">(</span>
-              {buildFrac(<>{b}</>, <>2</>)}
+              {buildFrac(
+                <>
+                  <strong>b</strong>
+                </>,
+                <>2</>
+              )}
+              <span className="inline-block scale-y-[3]">)</span>
+              <sup>2</sup> = <span className="inline-block scale-y-[3]">(</span>
+              {buildFrac(
+                <>
+                  <strong>{b}</strong>
+                </>,
+                <>2</>
+              )}
               <span className="inline-block scale-y-[3]">)</span>
               <sup>2</sup>
             </span>
             <br />
             <br />
-            Fasse den vorderen Teil des Terms zu einem Binom zusammen.
+            Schreibe den Funktionsterm als Binom.{' '}
           </>
         )
       }}
