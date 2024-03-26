@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 
-import { useMutationFetch } from '../helper/use-mutation-fetch.js'
+import { useMutationFetch } from '../helper/use-mutation-fetch'
 import { ExerciseSubmissionInput } from '@/fetcher/graphql-types/operations'
 
 const mutation = gql`
