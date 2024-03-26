@@ -125,18 +125,14 @@ function Content() {
                         isSolved ? 'opacity-100' : 'opacity-80'
                       )}
                       onClick={() => {
-                        void router.push(
-                          {
-                            ...router,
-                            query: {
-                              ...router.query,
-                              grade: 'high-five',
-                              exercise: levelData.title.toLowerCase(),
-                            },
+                        void router.replace({
+                          ...router,
+                          query: {
+                            ...router.query,
+                            grade: 'high-five',
+                            exercise: levelData.title.toLowerCase(),
                           },
-                          undefined,
-                          { shallow: true }
-                        )
+                        })
                         setSelected(lid)
                       }}
                     >
@@ -172,9 +168,7 @@ function Content() {
             <button
               onClick={() => {
                 setSelected(-1)
-                void router.push(router.basePath, undefined, {
-                  shallow: true,
-                })
+                void router.replace(router.basePath)
                 setRenderCounter((counter) => counter + 1)
               }}
               className="serlo-link"
@@ -189,7 +183,7 @@ function Content() {
                   data.highFiveSolved.push(selected)
                 }
                 setSelected(-1)
-                void router.push(router.basePath, undefined, { shallow: true })
+                void router.replace(router.basePath)
               })
             })}
           </main>
