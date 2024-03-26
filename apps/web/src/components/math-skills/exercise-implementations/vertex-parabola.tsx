@@ -45,11 +45,18 @@ export function VertexParabola() {
             </span>
             <br />
             <br />
-            Wir führen eine quadratische Ergänzung durch. <br />
+            Wir führen eine quadratische Ergänzung durch. Wir möchten den
+            Funktionsterm als Binom schreiben, weshalb wir ihn noch etwas
+            umformen müssen. <br />
             Dazu addieren wir den Term{' '}
             <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-1">
               <span className="inline-block scale-y-[3]">(</span>
-              {buildFrac(<>{b}</>, <>2</>)}
+              {buildFrac(
+                <>
+                  <strong>{b}</strong>
+                </>,
+                <>2</>
+              )}
               <span className="inline-block scale-y-[3]">)</span>
               <sup>2</sup>
             </span>{' '}
@@ -57,7 +64,33 @@ export function VertexParabola() {
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               y = x<sup>2</sup>
-              {isPlus ? '+' : '-'} {b}x +{' '}
+              {isPlus ? '+' : '-'} <strong>{b}</strong>x +{' '}
+              <span className="inline-block scale-y-[3]">(</span>
+              {buildFrac(
+                <>
+                  <strong>{b}</strong>
+                </>,
+                <>2</>
+              )}
+              <span className="inline-block scale-y-[3]">)</span>
+              <sup>2</sup> {isPlus_2 ? '+' : '-'} {c} -{' '}
+              <span className="inline-block scale-y-[3] ">(</span>
+              {buildFrac(
+                <>
+                  <strong>{b}</strong>
+                </>,
+                <>2</>
+              )}
+              <span className="inline-block scale-y-[3]">)</span>
+              <sup>2</sup>
+            </span>
+            <br />
+            Wenn man den Mischterm etwas umformt, sieht der Term noch mehr wie
+            das Ergebnis einer binomischen Formel aus:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              y = x<sup>2</sup>
+              {isPlus ? '+' : '-'} 2 · x · {buildFrac(<>{b}</>, <>2</>)} +{' '}
               <span className="inline-block scale-y-[3]">(</span>
               {buildFrac(<>{b}</>, <>2</>)}
               <span className="inline-block scale-y-[3]">)</span>
@@ -69,7 +102,7 @@ export function VertexParabola() {
             </span>
             <br />
             <br />
-            Den vorderen Teil fassen wir zu einem Binom Zusammen:
+            Den vorderen Teil fassen wir zu diesem Binom zusammen:
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               y = <span className="inline-block scale-y-[3]">(</span>x{' '}
@@ -77,7 +110,12 @@ export function VertexParabola() {
               <span className="inline-block scale-y-[3]">)</span>
               <sup>2</sup> {isPlus_2 ? '+' : '-'} {c} -{' '}
               <span className="inline-block scale-y-[3] ">(</span>
-              {buildFrac(<>{b}</>, <>2</>)}
+              {buildFrac(
+                <>
+                  <strong>{b}</strong>
+                </>,
+                <>2</>
+              )}
               <span className="inline-block scale-y-[3]">)</span>
               <sup>2</sup>
             </span>
