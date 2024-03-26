@@ -45,12 +45,6 @@ Some of the features we use:
 - [Incremental Static Regeneration](https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration)
 - …
 
-### Optional: Prisma + Planetscale (experimental)
-
-We are trying out a [serverless sql database](https://app.planetscale.com/serlo/serlo_planetscale) and use it to build prototypes. Don't use for production features yet!
-
-Add the environment variable `DATABASE_URL` to `apps/web/.env.local` (next.js). You can generate the database url from planetscale or ping one of us to generat one for you. (sorry for the inconvienience here). Run `yarn prisma:build` to update the prisma client and test the database connection. Run `yarn prisma:studio` for Prisma Studio, run `yarn prisma:db-pull` to download db schema.
-
 ## Repository Overview
 
 This is a monorepo that contains the editor and the frontend platform. Here are some useful directories:
