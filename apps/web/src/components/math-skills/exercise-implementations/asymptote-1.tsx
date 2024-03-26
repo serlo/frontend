@@ -86,7 +86,7 @@ export function Asymptote1() {
             </span>
             <br />
             <br />
-            Die Definitionsmenge die Menge aller reellen Zahlen, sodass der
+            Die Definitionsmenge ist die Menge aller reellen Zahlen, sodass der
             Nenner nicht 0 ist:
             <br />
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
@@ -96,8 +96,20 @@ export function Asymptote1() {
             </span>
             <br />
             <br />
-            Der Wertebereich setzt sich aus allen reellen Funktionswerten
-            zusammen:
+            Der Wertebereich setzt sich aus allen reellen Zahlen zusammen, die
+            von der Funktion angenommen werden. Dabei ist der Grad der Funktion
+            und der Vorfaktor entscheidend.
+            <br />
+            <br />
+            {data.c % 2 === 0 && data.a > 0
+              ? 'Diese Funktion hat einen geraden Grad und ist nicht gespiegelt. Sie kommt von oben und geht nach oben. Dabei bleibt sie immer oberhalb der Asymptote:'
+              : null}
+            {data.c % 2 === 0 && data.a < 0
+              ? 'Diese Funktion hat einen geraden Grad und ist gespiegelt. Sie kommt von unten und geht nach unten. Dabei bleibt sie immer unterhalb der Asymptote:'
+              : null}
+            {data.c % 2 === -1
+              ? 'Diese Funktion hat einen ungeraden Grad. Sie nimmt alle Werte an, bis auf den der Asymptote:'
+              : null}
             <br />
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               W = {'{'} y |
