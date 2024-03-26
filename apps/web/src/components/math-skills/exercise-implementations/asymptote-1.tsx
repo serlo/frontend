@@ -154,7 +154,7 @@ export function Asymptote1() {
             <br />
             ist immer die Menge aller reellen Zahlen außer der Stelle b.
             <br />
-            Die <strong>Asyptoten</strong> haben immer die Gleichungen:
+            Die <strong>Asymptoten</strong> haben immer die Gleichungen:
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               y = d, x = b
