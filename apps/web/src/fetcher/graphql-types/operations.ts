@@ -19,11 +19,27 @@ export interface Scalars {
   JSONObject: { input: any; output: any; }
 }
 
+export interface AbSubmission {
+  __typename?: 'AbSubmission';
+  entityId: Scalars['Int']['output'];
+  experiment: Scalars['String']['output'];
+  group: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  isProduction: Scalars['Boolean']['output'];
+  result: Scalars['String']['output'];
+  sessionId: Scalars['Int']['output'];
+  timestamp: Scalars['DateTime']['output'];
+  topicId: Scalars['Int']['output'];
+  type: Scalars['String']['output'];
+}
+
 export interface AbSubmissionInput {
   entityId: Scalars['Int']['input'];
   experiment: Scalars['String']['input'];
   group: Scalars['String']['input'];
+  isProduction: Scalars['Boolean']['input'];
   result: Scalars['String']['input'];
+  sessionId: Scalars['Int']['input'];
   topicId: Scalars['Int']['input'];
   type: Scalars['String']['input'];
 }
@@ -1324,6 +1340,16 @@ export interface ExperimentMutationCreateQuickbarStatsArgs {
   input: QuickbarStatsInput;
 }
 
+export interface ExperimentQuery {
+  __typename?: 'ExperimentQuery';
+  abSubmissions: Array<AbSubmission>;
+}
+
+
+export interface ExperimentQueryAbSubmissionsArgs {
+  experiment: Scalars['String']['input'];
+}
+
 export interface HasNextPageInfo {
   __typename?: 'HasNextPageInfo';
   endCursor?: Maybe<Scalars['String']['output']>;
@@ -1641,6 +1667,7 @@ export interface Query {
   authorization: Scalars['JSON']['output'];
   entity?: Maybe<EntityQuery>;
   events: AbstractNotificationEventConnection;
+  experiment: ExperimentQuery;
   media: MediaQuery;
   metadata: MetadataQuery;
   notificationEvent?: Maybe<AbstractNotificationEvent>;
@@ -3034,6 +3061,13 @@ export type IsSubscribedQueryVariables = Exact<{
 
 
 export type IsSubscribedQuery = { __typename?: 'Query', subscription: { __typename?: 'SubscriptionQuery', currentUserHasSubscribed: boolean } };
+
+export type CreateAbSubmissionMutationVariables = Exact<{
+  input: AbSubmissionInput;
+}>;
+
+
+export type CreateAbSubmissionMutation = { __typename?: 'Mutation', experiment: { __typename?: 'ExperimentMutation', createAbSubmission: { __typename?: 'DefaultResponse', success: boolean } } };
 
 export type CreateEquationsAppStatsMutationVariables = Exact<{
   input: EquationsAppStatsInput;
