@@ -954,6 +954,12 @@ export interface EntityUpdateLicenseResponse {
   success: Scalars['Boolean']['output'];
 }
 
+export interface EquationsAppStatsInput {
+  event: Scalars['String']['input'];
+  latex: Scalars['String']['input'];
+  sessionId: Scalars['String']['input'];
+}
+
 export interface Event extends AbstractEntity, AbstractRepository, AbstractTaxonomyTermChild, AbstractUuid, InstanceAware, ThreadAware {
   __typename?: 'Event';
   alias: Scalars['String']['output'];
@@ -1283,8 +1289,14 @@ export interface ExerciseSubmissionInput {
 
 export interface ExperimentMutation {
   __typename?: 'ExperimentMutation';
+  createEquationsAppStats: DefaultResponse;
   createExerciseSubmission: DefaultResponse;
   createQuickbarStats: DefaultResponse;
+}
+
+
+export interface ExperimentMutationCreateEquationsAppStatsArgs {
+  input: EquationsAppStatsInput;
 }
 
 
@@ -3007,6 +3019,13 @@ export type IsSubscribedQueryVariables = Exact<{
 
 
 export type IsSubscribedQuery = { __typename?: 'Query', subscription: { __typename?: 'SubscriptionQuery', currentUserHasSubscribed: boolean } };
+
+export type CreateEquationsAppStatsMutationVariables = Exact<{
+  input: EquationsAppStatsInput;
+}>;
+
+
+export type CreateEquationsAppStatsMutation = { __typename?: 'Mutation', experiment: { __typename?: 'ExperimentMutation', createEquationsAppStats: { __typename?: 'DefaultResponse', success: boolean } } };
 
 export type CreateExerciseSubmissionMutationVariables = Exact<{
   input: ExerciseSubmissionInput;

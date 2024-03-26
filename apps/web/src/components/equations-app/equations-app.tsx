@@ -10,6 +10,7 @@ import { v4 } from 'uuid'
 import { MathField2 } from './math-field-2'
 import { ReadonlyMathField } from './readonly-math-field'
 import { FaIcon } from '../fa-icon'
+import { useCreateEquationsAppStatsMutation } from '@/mutations/planetscale/use-experiment-create-equations-app-stats-mutation'
 
 type Mode = 'done' | 'input' | 'choose'
 type InputState =
@@ -24,6 +25,8 @@ export function EquationsApp() {
   const ce = new ComputeEngine()
 
   const [sessionId] = useState(v4())
+
+  const trackEquationsAppStats = useCreateEquationsAppStatsMutation()
 
   function safeParse(latex: string) {
     return ce.parse(latex.replaceAll('{,}', '.'))
@@ -89,7 +92,7 @@ export function EquationsApp() {
   }, [showOverview])
 
   useEffect(() => {
-    submit({ event: 'visit', latex: '', sessionId })
+    submit({ event: 'visit', latex: '', sessionId }, trackEquationsAppStats)
     const handlePopstate = () => {
       setShowOverview(true)
     }
@@ -517,11 +520,14 @@ export function EquationsApp() {
                                   // don't care
                                 }
 
-                                submit({
-                                  event: 'done',
-                                  latex: list[0],
-                                  sessionId,
-                                })
+                                submit(
+                                  {
+                                    event: 'done',
+                                    latex: list[0],
+                                    sessionId,
+                                  },
+                                  trackEquationsAppStats
+                                )
                                 setMode('done')
                                 setSolution(op.displayLatex!)
                                 solved.current.add(list[0])
@@ -1045,14 +1051,18 @@ interface EquationsAppstatsData {
   sessionId: string
 }
 
-function submit(data: EquationsAppstatsData) {
+function submit(
+  data: EquationsAppstatsData,
+  submitFn: (data: any) => Promise<any>
+) {
+  const isValid =
+    data.event.length < 255 &&
+    data.latex.length < 255 &&
+    data.sessionId.length < 64
+
+  if (!isValid) return
+
   void (async () => {
-    await fetch('/api/frontend/equations-app-stats', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...data }),
-    })
+    await submitFn(data)
   })()
 }
