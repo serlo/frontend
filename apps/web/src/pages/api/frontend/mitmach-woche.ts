@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { prisma } from '@/helper/prisma'
 
-// TODO: Remove, not used
+// TODO: Remove this file, it is not used anymore
 
 export default async function handler(
   req: NextApiRequest,

@@ -19,6 +19,15 @@ export interface Scalars {
   JSONObject: { input: any; output: any; }
 }
 
+export interface AbSubmissionInput {
+  entityId: Scalars['Int']['input'];
+  experiment: Scalars['String']['input'];
+  group: Scalars['String']['input'];
+  result: Scalars['String']['input'];
+  topicId: Scalars['Int']['input'];
+  type: Scalars['String']['input'];
+}
+
 export interface AbstractEntity {
   alias: Scalars['String']['output'];
   currentRevision?: Maybe<AbstractEntityRevision>;
@@ -1289,9 +1298,15 @@ export interface ExerciseSubmissionInput {
 
 export interface ExperimentMutation {
   __typename?: 'ExperimentMutation';
+  createAbSubmission: DefaultResponse;
   createEquationsAppStats: DefaultResponse;
   createExerciseSubmission: DefaultResponse;
   createQuickbarStats: DefaultResponse;
+}
+
+
+export interface ExperimentMutationCreateAbSubmissionArgs {
+  input: AbSubmissionInput;
 }
 
 

@@ -33,6 +33,15 @@ export function abSubmission(
   }
   const sessionId = sessionStorage.getItem(sesionStorageKey)
 
+  const { group, experiment, entityId } = data
+
+  const isValid =
+    group.length < 8 &&
+    experiment.length < 64 &&
+    Math.floor(entityId) === entityId &&
+    (entityId > 0 || entityId === -1)
+
+  if (!isValid) return
   // console.log(data)
   void (async () => {
     await submitFn({ ...data, sessionId, isProduction })
