@@ -23,7 +23,10 @@ export interface ABSubmissionData {
 
 const sesionStorageKey = '___serlo_ab_session___'
 
-export function abSubmission(data: ABSubmissionData) {
+export function abSubmission(
+  data: ABSubmissionData,
+  submitFn: (data: any) => Promise<any>
+) {
   if (!sessionStorage.getItem(sesionStorageKey)) {
     // set new session id
     sessionStorage.setItem(sesionStorageKey, uuidv4())
@@ -31,14 +34,7 @@ export function abSubmission(data: ABSubmissionData) {
   const sessionId = sessionStorage.getItem(sesionStorageKey)
 
   // console.log(data)
-
   void (async () => {
-    await fetch('/api/frontend/ab-submission', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...data, sessionId, isProduction }),
-    })
+    await submitFn({ ...data, sessionId, isProduction })
   })()
 }

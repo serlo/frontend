@@ -2,6 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { prisma } from '@/helper/prisma'
 
+// TODO: Remove, not used
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

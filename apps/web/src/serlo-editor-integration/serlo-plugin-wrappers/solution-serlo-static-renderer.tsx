@@ -11,6 +11,7 @@ import { useAB } from '@/contexts/ab'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { useEntityId } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
+import { useCreateExerciseSubmissionMutation } from '@/mutations/planetscale/use-experiment-create-exercise-submission-mutation'
 
 const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
   import('@/components/comments/comment-area-entity').then(
@@ -26,6 +27,8 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const context = props.serloContext
 
   const exerciseUuid = useEntityId()
+
+  const trackExperiment = useCreateExerciseSubmissionMutation()
 
   if (isPrintMode && !printModeSolutionVisible) return null
 
@@ -53,7 +56,8 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
           type: 'text',
           result: 'open',
         },
-        ab
+        ab,
+        trackExperiment
       )
     }
   }

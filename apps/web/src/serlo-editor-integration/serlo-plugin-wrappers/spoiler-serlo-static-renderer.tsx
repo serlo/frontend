@@ -5,6 +5,7 @@ import { useState } from 'react'
 
 import { useAB } from '@/contexts/ab'
 import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
+import { exerciseSubmission } from '@/helper/exercise-submission'
 import { useCreateExerciseSubmissionMutation } from '@/mutations/planetscale/use-experiment-create-exercise-submission-mutation'
 
 export function SpoilerSerloStaticRenderer({
@@ -18,32 +19,28 @@ export function SpoilerSerloStaticRenderer({
   const revisionId = useRevisionId()
   const { asPath } = useRouter()
 
-  // TODO: is this allowed to be here?
-  const sessionStorageKey = '___serlo_ab_session___'
-  const sessionId = sessionStorage.getItem(sessionStorageKey)
-
   const trackExperiment = useCreateExerciseSubmissionMutation()
-  const trackSpoilerOpened = async () => {
+  const trackSpoilerOpened = () => {
     const experimentIds = [30680, 23869, 66809]
     const shouldTrackSpoilerOpen = entityId && experimentIds.includes(entityId)
 
-    if (!shouldTrackSpoilerOpen || !ab || hasSentSpoilerTrackingEvent) return
+    // if (!shouldTrackSpoilerOpen || !ab || hasSentSpoilerTrackingEvent) return
     // send tracking event
-    await trackExperiment({
-      path: asPath,
-      entityId: entityId || -1,
-      sessionId: sessionId || '',
-      revisionId: revisionId || -1,
-      result: 'open',
-      type: 'spoiler',
-    })
+    exerciseSubmission(
+      {
+        path: asPath,
+        entityId,
+        revisionId,
+        result: 'open',
+        type: 'spoiler',
+      },
+      ab,
+      trackExperiment
+    )
     setHasSentSpoilerTrackingEvent(true)
   }
 
   return (
-    <SpoilerStaticRenderer
-      onOpen={async () => await trackSpoilerOpened()}
-      {...props}
-    />
+    <SpoilerStaticRenderer onOpen={() => trackSpoilerOpened()} {...props} />
   )
 }
