@@ -5,6 +5,7 @@ export interface SpoilerRendererProps {
   title: JSX.Element
   content: JSX.Element
   openOverwrite?: boolean
+  setOpenOverwrite?: (open: boolean) => void
   onOpen?: () => void
 }
 
@@ -12,13 +13,14 @@ export function SpoilerRenderer({
   title,
   content,
   openOverwrite,
+  setOpenOverwrite,
   onOpen,
 }: SpoilerRendererProps) {
   const [open, setOpen] = useState(false)
   const isOpen = openOverwrite === undefined ? open : openOverwrite
 
   const handleSpoilerClick = () => {
-    setOpen(!open)
+    setOpenOverwrite ? setOpenOverwrite(!isOpen) : setOpen(!open)
     onOpen && onOpen()
   }
 
