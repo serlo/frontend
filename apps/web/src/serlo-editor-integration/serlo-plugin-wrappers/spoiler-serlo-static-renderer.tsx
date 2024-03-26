@@ -24,7 +24,7 @@ export function SpoilerSerloStaticRenderer({
     const experimentIds = [30680, 23869, 66809]
     const shouldTrackSpoilerOpen = entityId && experimentIds.includes(entityId)
 
-    // if (!shouldTrackSpoilerOpen || !ab || hasSentSpoilerTrackingEvent) return
+    if (!shouldTrackSpoilerOpen || !ab || hasSentSpoilerTrackingEvent) return
     // send tracking event
     exerciseSubmission(
       {
