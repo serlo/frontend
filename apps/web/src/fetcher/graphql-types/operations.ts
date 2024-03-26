@@ -1284,11 +1284,17 @@ export interface ExerciseSubmissionInput {
 export interface ExperimentMutation {
   __typename?: 'ExperimentMutation';
   createExerciseSubmission: DefaultResponse;
+  createQuickbarStats: DefaultResponse;
 }
 
 
 export interface ExperimentMutationCreateExerciseSubmissionArgs {
   input: ExerciseSubmissionInput;
+}
+
+
+export interface ExperimentMutationCreateQuickbarStatsArgs {
+  input: QuickbarStatsInput;
 }
 
 export interface HasNextPageInfo {
@@ -1653,6 +1659,13 @@ export interface QueryNotificationsArgs {
 export interface QueryUuidArgs {
   alias?: InputMaybe<AliasInput>;
   id?: InputMaybe<Scalars['Int']['input']>;
+}
+
+export interface QuickbarStatsInput {
+  isSubject: Scalars['Boolean']['input'];
+  path: Scalars['String']['input'];
+  query: Scalars['String']['input'];
+  target: Scalars['String']['input'];
 }
 
 export interface RejectRevisionInput {
@@ -2995,6 +3008,20 @@ export type IsSubscribedQueryVariables = Exact<{
 
 export type IsSubscribedQuery = { __typename?: 'Query', subscription: { __typename?: 'SubscriptionQuery', currentUserHasSubscribed: boolean } };
 
+export type CreateExerciseSubmissionMutationVariables = Exact<{
+  input: ExerciseSubmissionInput;
+}>;
+
+
+export type CreateExerciseSubmissionMutation = { __typename?: 'Mutation', experiment: { __typename?: 'ExperimentMutation', createExerciseSubmission: { __typename?: 'DefaultResponse', success: boolean } } };
+
+export type CreateQuickbarStatsMutationVariables = Exact<{
+  input: QuickbarStatsInput;
+}>;
+
+
+export type CreateQuickbarStatsMutation = { __typename?: 'Mutation', experiment: { __typename?: 'ExperimentMutation', createQuickbarStats: { __typename?: 'DefaultResponse', success: boolean } } };
+
 export type TaxonomyTermCreateEntityLinkMutationVariables = Exact<{
   input: TaxonomyEntityLinksInput;
 }>;
@@ -3092,13 +3119,6 @@ export type UpdateLicenseMutationVariables = Exact<{
 
 
 export type UpdateLicenseMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', updateLicense: { __typename?: 'EntityUpdateLicenseResponse', success: boolean } } };
-
-export type CreateExerciseSubmissionMutationVariables = Exact<{
-  input: ExerciseSubmissionInput;
-}>;
-
-
-export type CreateExerciseSubmissionMutation = { __typename?: 'Mutation', experiment: { __typename?: 'ExperimentMutation', createExerciseSubmission: { __typename?: 'DefaultResponse', success: boolean } } };
 
 export type RejectRevisionMutationVariables = Exact<{
   input: RejectRevisionInput;

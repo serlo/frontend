@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 import { useAB } from '@/contexts/ab'
 import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
-import { useExperimentCreateMutation } from '@/mutations/use-experiment-create-mutation'
+import { useCreateExerciseSubmissionMutation } from '@/mutations/planetscale/use-experiment-create-exercise-submission-mutation'
 
 export function SpoilerSerloStaticRenderer({
   ...props
@@ -22,7 +22,7 @@ export function SpoilerSerloStaticRenderer({
   const sessionStorageKey = '___serlo_ab_session___'
   const sessionId = sessionStorage.getItem(sessionStorageKey)
 
-  const trackExperiment = useExperimentCreateMutation()
+  const trackExperiment = useCreateExerciseSubmissionMutation()
   const trackSpoilerOpened = async () => {
     const experimentIds = [30680, 23869, 66809]
     const shouldTrackSpoilerOpen = entityId && experimentIds.includes(entityId)

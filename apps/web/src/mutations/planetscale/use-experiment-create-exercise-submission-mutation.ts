@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 
-import { useMutationFetch } from './helper/use-mutation-fetch'
+import { useMutationFetch } from '../helper/use-mutation-fetch.js'
 import { ExerciseSubmissionInput } from '@/fetcher/graphql-types/operations'
 
 const mutation = gql`
@@ -13,7 +13,7 @@ const mutation = gql`
   }
 `
 
-export function useExperimentCreateMutation() {
+export function useCreateExerciseSubmissionMutation() {
   const mutationFetch = useMutationFetch()
 
   return async function (input: ExerciseSubmissionInput) {

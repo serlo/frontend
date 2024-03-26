@@ -6,6 +6,7 @@ import { FaIcon } from '../fa-icon'
 import { isMac } from '@/helper/client-detection'
 import { cn } from '@/helper/cn'
 import { quickbarStatsSubmission } from '@/helper/quickbar-stats-submission'
+import { useCreateQuickbarStatsMutation } from '@/mutations/planetscale/use-experiment-create-quickbar-stats-mutation'
 
 export const quickbarUrl = 'https://de.serlo.org/api/stats/quickbar.json'
 
@@ -44,6 +45,8 @@ export function Quickbar({
 
   const wrapper = useRef<HTMLDivElement>(null)
   const overlayWrapper = useRef<HTMLDivElement>(null)
+
+  const trackQuickbarStats = useCreateQuickbarStatsMutation()
 
   const isSubject = !!subject
 
@@ -85,19 +88,14 @@ export function Quickbar({
       setIsOpen(false)
     }, 200)
 
-  const goToSearch = () => {
-    quickbarStatsSubmission(
-      {
-        path: router.asPath,
-        query,
-        target: '/search',
-        isSubject,
-      },
-      () => {
-        // not using router since the hacky search component does not refresh easily
-        window.location.href = `/search?q=${encodeURIComponent(query)}`
-      }
-    )
+  const goToSearch = async () => {
+    await trackQuickbarStats({
+      path: router.asPath,
+      query,
+      target: '/search',
+      isSubject,
+    })
+    window.location.href = `/search?q=${encodeURIComponent(query)}`
   }
 
   const goToResult = (
@@ -121,7 +119,7 @@ export function Quickbar({
     close()
   }
 
-  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDown = async (e: KeyboardEvent<HTMLInputElement>) => {
     {
       if (e.key === 'Escape') {
         setQuery('')
@@ -134,7 +132,7 @@ export function Quickbar({
           setSelection(selection - 1)
         }
         if (e.key === 'Enter') {
-          if (selection === results.length) goToSearch()
+          if (selection === results.length) await goToSearch()
           if (selection >= 0 && selection < results.length) {
             goToResult(results[selection].entry.id, e)
           }
@@ -179,7 +177,7 @@ export function Quickbar({
         onFocus={() => {
           if (query && data) setIsOpen(true)
         }}
-        onKeyDown={onKeyDown}
+        onKeyDown={async (e) => await onKeyDown(e)}
         data-qa="quickbar-input"
       />
     )
@@ -256,7 +254,7 @@ export function Quickbar({
             >
               <a
                 className="cursor-pointer hover:text-black"
-                onClick={goToSearch}
+                onClick={async () => await goToSearch()}
               >
                 Auf Serlo nach <i className="font-bold">{query}</i> suchen ...
               </a>
