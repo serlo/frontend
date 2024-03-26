@@ -71,6 +71,32 @@ export function PlotFunction2() {
             </span>
             <br />
             <br />
+            Zeichne dazu zuerst die Asymptote mit der Gleichung:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              y = {data.c}
+            </span>
+            <br />
+            <br />
+            Bestimme die Stelle, durch die der Graph an der y-Achse verläuft:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
+              {data.a === -1 ? null : '·'}{' '}
+              {data.b === 123 ? 'e' : data.b.toString().replace('.', ',')}
+              <sup>0</sup> {data.c > 0 ? '+' : null}{' '}
+              {data.c !== 0 ? data.c : null} ={' '}
+              {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
+              {data.a === -1 ? null : '·'} 1 {data.c > 0 ? '+' : null}{' '}
+              {data.c !== 0 ? data.c : null} ={' '}
+              {(data.a + data.c).toString().replace('.', ',')}
+            </span>
+            <br />
+            <br />
+            Skizziere den Graphen mithilfe der Asymptote und dem Durchgang durch
+            die y-Achse.
+            <br />
+            <br />
             Graph für -6 &#8804; x &#8804; 6 und -6 &#8804; y &#8804; 6:
             <br />
             <SubComponent data={data} />

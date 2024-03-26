@@ -86,6 +86,25 @@ export function PlotFunction() {
             </span>
             <br />
             <br />
+            Zeichne dazu zuerst die waagerechte Asymptote mit der Gleichung:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              y = {data.d}
+            </span>
+            <br />
+            <br />
+            Zeichne als Nächstes die senkrechte Asymptote mit der Gleichung:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              y = {-data.b}
+            </span>
+            <br />
+            <br />
+            Berücksichtige den Grad der Funktion und ob der Graph durch ein
+            negatives Vorzeichen gespiegelt ist. Zeichne den Graphen mithilfe
+            der Asymptoten.
+            <br />
+            <br />
             Graph für -6 &#8804; x &#8804; 6 und -6 &#8804; y &#8804; 6:
             <br />
             <SubComponent data={data} />
@@ -124,8 +143,7 @@ export function PlotFunction() {
             <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
               x<sup>{data.c}</sup>
             </span>{' '}
-            zu zeichnen und anschließend die Verschiebungen und Streckungen
-            auszuführen.
+            zu zeichnen und anschließend die Verschiebungen etc. auszuführen.
           </>
         )
       }}
