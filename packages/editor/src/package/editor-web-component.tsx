@@ -15,7 +15,7 @@ import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 // import cssUrl from '@/assets-webkit/styles/serlo-tailwind.css?url'
 // import cssUrl from '../../../../apps/web/src/assets-webkit/styles/serlo-tailwind.css'
 
-// const exampleInitialState: SerloEditorProps['initialState'] = {
+// TODO: Delete this file
 const exampleInitialState: SerloEditorProps['initialState'] = {
   plugin: 'type-article',
   state: {
