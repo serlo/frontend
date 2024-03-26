@@ -1,10 +1,11 @@
 import { sanitizeLatex } from '@editor/plugins/text/utils/sanitize-latex'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import KaTeX from 'katex'
-/* eslint-disable import/no-unassigned-import */
+// eslint-disable-next-line import/no-unassigned-import
 import 'katex/contrib/mhchem'
 
-import { useLazyLoadKaTeXStyles } from './use-lazy-load-katex-styles'
+// eslint-disable-next-line import/no-unassigned-import
+import 'serlo-katex-styles/styles.css'
 import type { MathElement } from '../types/text-editor'
 
 export type StaticMathProps = Omit<MathElement, 'children'>
@@ -12,7 +13,6 @@ export type StaticMathProps = Omit<MathElement, 'children'>
 /** 🐘 This component is quite big. 🐘
  *  Load it dynamically if you can. */
 export function StaticMath({ src, inline }: StaticMathProps) {
-  useLazyLoadKaTeXStyles()
   if (!src) return null
 
   const cleanedSrc = sanitizeLatex(src)

@@ -1,8 +1,6 @@
 import { PreferenceContext } from '@editor/core'
 import { isElementWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { MathEditor } from '@editor/math'
-// eslint-disable-next-line import/no-unassigned-import
-// import '@serlo/frontend/src/../external/katexstyles.css'
 import React, { useContext, useMemo } from 'react'
 import { Editor, Node, Path, Range, Transforms } from 'slate'
 import {
@@ -13,7 +11,8 @@ import {
 } from 'slate-react'
 
 import { StaticMath } from '../static-components/static-math'
-import { useLazyLoadKaTeXStyles } from '../static-components/use-lazy-load-katex-styles'
+// eslint-disable-next-line import/no-unassigned-import
+import 'serlo-katex-styles/styles.css'
 import type {
   MathElement as MathElementType,
   Paragraph,
@@ -34,7 +33,6 @@ export function MathElement({
   focused,
   children,
 }: MathElementProps) {
-  useLazyLoadKaTeXStyles()
   const editor = useSlate()
   const selected = useSelected()
   const preferences = useContext(PreferenceContext)
