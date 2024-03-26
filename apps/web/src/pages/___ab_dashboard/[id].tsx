@@ -3,7 +3,7 @@ import Head from 'next/head'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { experiments } from '@/contexts/ab'
-import { prisma } from '@/helper/prisma'
+import { requestAbTestingData } from '@/fetcher/planetscale/request'
 
 interface ABResultsProps {
   experiment: string
@@ -254,10 +254,7 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
     b: { ratings: [] },
   }
 
-  const data = await prisma.aBTestingData.findMany({
-    where: { experiment, isProduction: true },
-    orderBy: { timestamp: 'asc' },
-  })
+  const data = await requestAbTestingData(experiment)
 
   const bySession: {
     [key: string]: {
@@ -271,6 +268,7 @@ export const getStaticProps: GetStaticProps<ABResultsProps> = async (
   } = {}
 
   for (const entry of data) {
+    if (!entry) break
     const group = entry.group as 'a' | 'b'
     if (entry.type === 'rating') {
       intermediate[group].ratings.push(parseInt(entry.result))
