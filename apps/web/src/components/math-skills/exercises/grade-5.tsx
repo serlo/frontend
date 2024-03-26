@@ -5,6 +5,7 @@ import { createDecimalToDualWithChartExercise } from './create/create-decimal-to
 import { createDecimalToRomanExercise } from './create/create-decimal-to-roman-exercise'
 import { createBinaryToDecimalExercise } from './create/create-dual-to-decimal-exercise'
 import { createExponentiateExercise } from './create/create-exponentiate-exercise'
+import { createSquareNumberExercise } from './create/create-exponentiate-exercise-with-options'
 import { createFindCorrectlyRoundedExercise } from './create/create-find-correctly-rounded-exercise'
 import { createIncrDescNumberExercise } from './create/create-incr-desc-number-exercise'
 import { createNumberDistancesExercise } from './create/create-number-distance-exercise'
@@ -734,13 +735,14 @@ export const exercisesGrade5 = {
   'zahlen-richtig-gerundet-1': createFindCorrectlyRoundedExercise(1),
   'zahlen-richtig-gerundet-2': createFindCorrectlyRoundedExercise(2),
   'zahlen-richtig-gerundet-3': createFindCorrectlyRoundedExercise(3),
+  'quadratzahlen-berechnen': createSquareNumberExercise(),
   'potenzwert-berechnen': createExponentiateExercise(),
   'euro-zerlegen': {
     title: 'Vorgänger und Nachfolger einer Dualzahl',
     component: (
       <MultipleNumberInputExercise
         numberOfInputs={2}
-        centAmount={35}
+        centAmount={70}
         generator={() => {
           const euro = randomIntBetween(0, 35)
           const cent = randomIntBetween(0, 99)

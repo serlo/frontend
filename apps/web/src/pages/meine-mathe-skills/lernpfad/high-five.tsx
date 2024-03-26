@@ -1,4 +1,6 @@
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import { Fragment, useState } from 'react'
 
 import {
@@ -6,6 +8,7 @@ import {
   levelComponents,
 } from '../../../components/math-skills/high-five/high-five-levels'
 import { Link } from '@/components/content/link'
+import { FaIcon } from '@/components/fa-icon'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
@@ -38,6 +41,7 @@ function Content() {
   const [renderCounter, setRenderCounter] = useState(1)
   const [showAll, setShowAll] = useState(false)
 
+  const router = useRouter()
   const { updateData, data } = useMathSkillsStorage()
 
   return (
@@ -81,8 +85,8 @@ function Content() {
                               y1={levelData.y}
                               x2={nodes[dep].x}
                               y2={nodes[dep].y}
-                              strokeWidth="10"
-                              stroke="rgba(148, 163, 184, 0.8)"
+                              strokeWidth="6"
+                              stroke="rgba(178, 193, 204, 0.6)"
                             />
                           )
                         } else {
@@ -97,8 +101,9 @@ function Content() {
             </svg>
             {Object.entries(nodes).map(([id, levelData]) => {
               const lid = parseInt(id)
+              const isSolved = data.highFiveSolved.includes(lid)
               if (
-                data.highFiveSolved.includes(lid) ||
+                isSolved ||
                 nodes[lid].deps.length === 0 ||
                 nodes[lid].deps.some((dep) =>
                   data.highFiveSolved.includes(dep)
@@ -116,16 +121,31 @@ function Content() {
                   >
                     <button
                       className={cn(
-                        'absolute whitespace-nowrap  rounded px-2 py-0.5 font-bold',
-                        data.highFiveSolved.includes(parseInt(id))
-                          ? 'bg-gray-200 hover:bg-gray-300'
-                          : 'bg-newgreen hover:bg-newgreen-600'
+                        'absolute whitespace-nowrap rounded bg-gray-50 px-2 py-0.5 font-bold hover:opacity-100',
+                        isSolved ? 'opacity-100' : 'opacity-80'
                       )}
                       onClick={() => {
-                        setSelected(parseInt(id))
+                        void router.push(
+                          {
+                            ...router,
+                            query: {
+                              ...router.query,
+                              grade: 'high-five',
+                              exercise: levelData.title.toLowerCase(),
+                            },
+                          },
+                          undefined,
+                          { shallow: true }
+                        )
+                        setSelected(lid)
                       }}
                     >
                       {levelData.title}
+                      {isSolved ? (
+                        <span className="absolute -bottom-2.5 -right-2.5 block aspect-square h-5 w-5 rounded-full bg-newgreen align-middle leading-[1.36rem] text-white">
+                          <FaIcon icon={faCheckCircle} />
+                        </span>
+                      ) : null}
                     </button>
                   </div>
                 )
@@ -152,6 +172,9 @@ function Content() {
             <button
               onClick={() => {
                 setSelected(-1)
+                void router.push(router.basePath, undefined, {
+                  shallow: true,
+                })
                 setRenderCounter((counter) => counter + 1)
               }}
               className="serlo-link"
@@ -166,6 +189,7 @@ function Content() {
                   data.highFiveSolved.push(selected)
                 }
                 setSelected(-1)
+                void router.push(router.basePath, undefined, { shallow: true })
               })
             })}
           </main>

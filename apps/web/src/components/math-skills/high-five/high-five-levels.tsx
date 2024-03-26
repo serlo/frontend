@@ -1,4 +1,6 @@
+import { LevelSkillHeader } from './level-skill-header'
 import { RealmathInjection } from './realmath-injection'
+import { exercisesGrade5 } from '../exercises/grade-5'
 
 interface TreeNode {
   title: string
@@ -59,16 +61,13 @@ export const levelComponents: Record<
         das eine gute Gelegenheit, deine Mathe-Skills etwas aufzufrischen.
       </p>
       <p>
-        Die erste Aufgabe ist unten eingeblendet. Erreiche 40 Punkte, um die
-        Aufgabe abzuschließen.
+        Die erste Aufgabe ist unten eingeblendet. Die Aufgabe ist abgeschlossen
+        wenn du drei Skill-Punkte erreicht hast.
       </p>
-      <RealmathInjection
-        url="/Neues/Klasse5/geld/euro.php"
-        height={420}
-        target={40}
-        onClose={onClose}
-        key={c}
-      />
+      <LevelSkillHeader onClose={onClose} />
+      <div className="rounded-lg border-2 border-gray-100 p-4 pt-7">
+        {exercisesGrade5['euro-zerlegen'].component}
+      </div>
     </>
   ),
   1: (c, onClose) => (
@@ -94,13 +93,10 @@ export const levelComponents: Record<
         Hier findest du einen sanften Einstieg ins Kopfrechnen. Berechne die
         Quadratzahlen.
       </p>
-      <RealmathInjection
-        url="/Neues/Klasse5/basis/quadrat10a.php"
-        height={500}
-        target={30}
-        onClose={onClose}
-        key={c}
-      />
+      <LevelSkillHeader onClose={onClose} />
+      <div className="rounded-lg border-2 border-gray-100 p-4 pt-7">
+        {exercisesGrade5['quadratzahlen-berechnen'].component}
+      </div>
     </>
   ),
   3: (c, onClose) => (
