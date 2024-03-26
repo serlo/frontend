@@ -88,6 +88,8 @@ const exampleInitialState: SerloEditorProps['initialState'] = {
 //     }
 //   | undefined
 
+// Could probably remove the export entirely, as the customElement is registered
+// below.
 export class EditorWebComponent extends HTMLElement {
   private reactRoot: ReactDOM.Root | null = null
   private container: HTMLDivElement

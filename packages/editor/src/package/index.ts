@@ -40,4 +40,4 @@ export { createRenderers } from '@editor/editor-integration/create-renderers'
 export { createBasicPlugins } from '@editor/editor-integration/create-basic-plugins'
 
 export { ReactWrapper } from './simple-web-component'
-export { EditorWebComponent } from './editor-web-component'
+// export { EditorWebComponent } from './editor-web-component'
