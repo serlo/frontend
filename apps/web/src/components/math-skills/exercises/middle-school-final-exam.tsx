@@ -22,6 +22,7 @@ import { Trigonometry1 } from '../exercise-implementations/trigonometry-1'
 import { ValueSetParabola } from '../exercise-implementations/value-set-parabola'
 import { VertexParabola } from '../exercise-implementations/vertex-parabola'
 import { VolumePyramide } from '../exercise-implementations/volume-pyramide'
+import { VolumeThreePyramide } from '../exercise-implementations/volume-pyramide-2'
 import { WheelOfFortune } from '../exercise-implementations/wheel-of-fortune'
 
 //track:  1 = Mathe-Zweig 1, 2 = Mathe-Zweig 2 & 3, 3 = beide Zweige
@@ -104,6 +105,13 @@ export const middleSchoolFinalExam = {
     useCalculator: true,
     track: 2,
     component: <VolumePyramide />,
+  },
+  'volumen-pyramide-2': {
+    title: 'Volumen einer Pyramide',
+    subtitle: 'dreiseitig',
+    useCalculator: true,
+    track: 2,
+    component: <VolumeThreePyramide />,
   },
   'oberflaeche-pyramide-1': {
     title: 'Oberfläche einer Pyramide',

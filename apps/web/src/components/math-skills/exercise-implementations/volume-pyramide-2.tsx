@@ -16,7 +16,7 @@ interface PyraData {
   ac: number
 }
 
-export function SurfaceThreePyramide() {
+export function VolumeThreePyramide() {
   return (
     <SelfEvaluationExercise
       generator={() => {
@@ -32,15 +32,6 @@ export function SurfaceThreePyramide() {
         }
         return { data }
       }}
-      renderHint={() => {
-        return (
-          <>
-            Die Pyramide-Oberfläche besteht aus <b>3 Dreiecken</b> und der{' '}
-            <b>dreieckigen Grundfläche</b>. Berechne diese Flächen zuerst
-            separat.
-          </>
-        )
-      }}
       renderTask={({ data }) => {
         return (
           <>
@@ -54,8 +45,8 @@ export function SurfaceThreePyramide() {
               Skizze ist nicht maßstabsgetreu
             </small>
             <ol>
-              <li className="mt-12 text-2xl">
-                Berechne den Oberflächeninhalt der Pyramide und runde auf{' '}
+              <li className="text-2xl">
+                Berechne das Volumen der Pyramide und runde auf{' '}
                 <span className="inline-block">2 Stellen</span> nach dem Komma.
               </li>
             </ol>
@@ -72,93 +63,55 @@ export function SurfaceThreePyramide() {
             Math.sqrt(Math.pow(data.bd / 2, 2) + Math.pow(data.me, 2)) * 100
           ) / 100
 
-        const hc =
-          Math.round(
-            Math.sqrt(Math.pow(data.ac / 2, 2) + Math.pow(data.me, 2)) * 100
-          ) / 100
-
         const Ma = Math.round(0.5 * data.ab * ha * 100) / 100
         const Mb = Math.round(0.5 * data.bd * hb * 100) / 100
-        const Mc = Math.round(0.5 * data.ac * hc * 100) / 100
-        const s = Math.round(0.5 * (data.bd + data.ac + data.ab) * 100) / 100
-        const M = Math.round((Ma + Mb + Mc) * 100) / 100
-        const G =
-          Math.round(0.25 * Math.pow(data.bd, 2) * Math.sqrt(3) * 100) / 100
-        // Math.round(
-        // Math.sqrt(s * (s - data.bd) * (s - data.ac) * (s - data.ab)) * 100
-        //  ) / 100
-
+        const M = Math.round((2 * Ma + 2 * Mb) * 100) / 100
+        const G = Math.round(data.ab * data.bd * 100) / 100
         const V = Math.round((1 / 3) * G * data.me * 100) / 100
 
         return (
           <>
-            Allgemeine Gleichung für den Flächeninhalt von Pyramiden: <br />
+            Allgemeine Gleichung für das Volumen von Pyramiden: <br />
             <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              A = G + M
-            </span>{' '}
-            <br />
-            Dabei ist <strong>G</strong> die Grundfläche der Pyramide und{' '}
-            <strong>M</strong> der Flächeninhalt aller Mantelflächen
-            (Dreiecksflächen).
-            <br />
+              V = {buildFrac(<>1</>, <>3</>)} · G · h
+            </span>
+            <br /> Dabei ist <strong>G</strong> die Grundfläche und{' '}
+            <strong>h</strong> die Höhe der Pyramide. Die Grundfläche besteht
+            bei unserer Pyramide aus einem Dreieck: <br />
             <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               G = {buildFrac(<>1</>, <>4</>)} * a² * {buildSqrt(<>3</>)} <br />G
               = {buildFrac(<>1</>, <>4</>)} * ({data.bd} cm)² *{' '}
-              {buildSqrt(<>3</>)} <br />G = {G} cm²
-            </span>{' '}
+              {buildSqrt(<>3</>)} <br />G = {G} cm² <br />
+            </span>
             <br />
-            Die Mantelfläche der Pyramide besteht aus drei gleichen Dreiecken.
-            <br />
-            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              M = 3* M<sub>a</sub> <br />M<sub>a</sub> ={' '}
-              {buildFrac(<>1</>, <>2</>)} · a · h<sub>a</sub>{' '}
-            </span>{' '}
-            <br />
-            Du hast h<sub>a</sub> nicht gegeben. Deshalb musst du als nächstes
-            die Dreieckshöhen berechnen: <br />
-            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              h<sub>a</sub> ={' '}
-              {buildBigSqrt(
-                <>
-                  <span className="inline-block scale-y-[3]">(</span>{' '}
-                  {buildFrac(<>a</>, <>2</>)}{' '}
-                  <span className="inline-block scale-y-[3]">)</span>² + h²
-                </>
-              )}{' '}
-            </span>{' '}
+            Nun können wir alle Werte in die allgemeine Gleichung einsetzen:{' '}
             <br />
             <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              h<sub>a</sub> ={' '}
-              {buildBigSqrt(
-                <>
-                  <span className="inline-block scale-y-[3]">(</span>{' '}
-                  {buildFrac(<>{data.ab} cm</>, <>2</>)}{' '}
-                  <span className="inline-block scale-y-[3]">)</span>² + (
-                  {data.me} cm)²
-                </>
-              )}{' '}
-            </span>{' '}
+              V = {buildFrac(<>1</>, <>3</>)} · {data.ab * data.bd} cm² ·{' '}
+              {data.me} cm
+            </span>
             <br />
-            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              h<sub>a</sub> = {ha.toLocaleString('de-DE')} cm
-            </span>{' '}
-            <br /> <br />
-            Nun kannst du h<sub>a</sub> in die Mantelflächenformel einsetzen:{' '}
-            <br />
-            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              M<sub>a</sub> = {buildFrac(<>1</>, <>2</>)} · {data.ab} cm ·{' '}
-              {ha.toLocaleString('de-DE')} cm <br />M<sub>a</sub> ={' '}
-              {Ma.toLocaleString('de-DE')} cm²
-              <br />M =3 * {Ma.toLocaleString('de-DE')} cm² <br />M ={' '}
-              {M.toLocaleString('de-DE')} cm² <br /> <br />
-              A = G + M <br />A = {G.toLocaleString('de-DE')} cm² +{' '}
-              {M.toLocaleString('de-DE')} cm²
-            </span>{' '}
-            <br /> <br />
-            <strong>Ergebnis:</strong>
-            <br />
+            Ergebnis: <br />
             <span className="mt-5 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-              A = {(G + M).toLocaleString('de-DE')} cm²
+              V = {V.toLocaleString('de-DE')} cm³
+            </span>
+          </>
+        )
+      }}
+      // eslint-disable-next-line no-empty-pattern
+      renderHint={({}) => {
+        return (
+          <>
+            Verwende die Formel für das Volumen einer Pyramide:
+            <br />
+            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              V = {buildFrac(<>1</>, <>3</>)} · G · h
+            </span>
+            <br />
+            Bestimme dazu den Inhalt der dreieckigen Grundfläche{' '}
+            <strong>G</strong>: <br />
+            <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              G = {buildFrac(<>1</>, <>4</>)} * a² * {buildSqrt(<>3</>)}
             </span>
           </>
         )
