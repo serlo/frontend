@@ -54,7 +54,7 @@ export function EquationsRenderer({
             'text-left'
           )}
           {renderTD(
-            step.transform ? (
+            transformationTarget !== 'term' && step.transform ? (
               <span className="border-l border-black pl-1">
                 {renderStepFormula('transform')}
               </span>
