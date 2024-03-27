@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 
 import { useAuthentication } from '@/auth/use-authentication'
 import { abSubmission } from '@/helper/ab-submission'
+import { useCreateAbSubmissionMutation } from '@/mutations/planetscale/use-experiment-create-ab-submission'
 
 export const experiments: {
   experiment: string
@@ -62,6 +63,7 @@ export type ABValue = null | {
 
 export function useABValue(entityId: number) {
   const [value, setValue] = useState<ABValue>(null)
+  const trackAbSubmission = useCreateAbSubmissionMutation()
 
   useEffect(() => {
     // check which experiment is currently active
@@ -82,20 +84,23 @@ export function useABValue(entityId: number) {
       group = Math.random() < 0.5 ? 'a' : 'b'
       sessionStorage.setItem('___serlo_ab_group___', group)
     }
-    abSubmission({
-      entityId: -1,
-      experiment,
-      group,
-      result: '',
-      topicId: entityId,
-      type: 'visit',
-    })
+    abSubmission(
+      {
+        entityId: -1,
+        experiment,
+        group,
+        result: '',
+        topicId: entityId,
+        type: 'visit',
+      },
+      trackAbSubmission
+    )
     setValue({
       group,
       topicId: entityId,
       experiment,
     })
-  }, [entityId])
+  }, [entityId, trackAbSubmission])
 
   return value
 }

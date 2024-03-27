@@ -28,6 +28,7 @@ import {
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { abSubmission } from '@/helper/ab-submission'
 import { cn } from '@/helper/cn'
+import { useCreateAbSubmissionMutation } from '@/mutations/planetscale/use-experiment-create-ab-submission'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 export interface TopicProps {
@@ -55,6 +56,7 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
 
   const [hasFeedback, setHasFeedback] = useState(false)
 
+  const trackAbSubmission = useCreateAbSubmissionMutation()
   const isExerciseFolder = data.taxonomyType === TaxonomyTermType.ExerciseFolder
   const isTopic = data.taxonomyType === TaxonomyTermType.Topic
 
@@ -193,14 +195,17 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
           readonly={hasFeedback}
           onClick={(rate) => {
             //submit_event(`rate_quest_${core.ws.quest.id}_${rate}`, core)
-            abSubmission({
-              entityId: -1,
-              experiment: ab.experiment,
-              group: ab.group,
-              result: rate.toString(),
-              topicId: ab.topicId,
-              type: 'rating',
-            })
+            abSubmission(
+              {
+                entityId: -1,
+                experiment: ab.experiment,
+                group: ab.group,
+                result: rate.toString(),
+                topicId: ab.topicId,
+                type: 'rating',
+              },
+              trackAbSubmission
+            )
             setHasFeedback(true)
           }}
         />

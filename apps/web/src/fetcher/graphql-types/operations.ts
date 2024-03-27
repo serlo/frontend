@@ -19,6 +19,31 @@ export interface Scalars {
   JSONObject: { input: any; output: any; }
 }
 
+export interface AbSubmission {
+  __typename?: 'AbSubmission';
+  entityId: Scalars['Int']['output'];
+  experiment: Scalars['String']['output'];
+  group: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  isProduction: Scalars['Boolean']['output'];
+  result: Scalars['String']['output'];
+  sessionId: Scalars['Int']['output'];
+  timestamp: Scalars['DateTime']['output'];
+  topicId: Scalars['Int']['output'];
+  type: Scalars['String']['output'];
+}
+
+export interface AbSubmissionInput {
+  entityId: Scalars['Int']['input'];
+  experiment: Scalars['String']['input'];
+  group: Scalars['String']['input'];
+  isProduction: Scalars['Boolean']['input'];
+  result: Scalars['String']['input'];
+  sessionId: Scalars['Int']['input'];
+  topicId: Scalars['Int']['input'];
+  type: Scalars['String']['input'];
+}
+
 export interface AbstractEntity {
   alias: Scalars['String']['output'];
   currentRevision?: Maybe<AbstractEntityRevision>;
@@ -954,6 +979,12 @@ export interface EntityUpdateLicenseResponse {
   success: Scalars['Boolean']['output'];
 }
 
+export interface EquationsAppStatsInput {
+  event: Scalars['String']['input'];
+  latex: Scalars['String']['input'];
+  sessionId: Scalars['String']['input'];
+}
+
 export interface Event extends AbstractEntity, AbstractRepository, AbstractTaxonomyTermChild, AbstractUuid, InstanceAware, ThreadAware {
   __typename?: 'Event';
   alias: Scalars['String']['output'];
@@ -1272,6 +1303,55 @@ export interface ExerciseRevisionCursor {
   node: ExerciseRevision;
 }
 
+export interface ExerciseSubmissionInput {
+  entityId: Scalars['Int']['input'];
+  path: Scalars['String']['input'];
+  result: Scalars['String']['input'];
+  revisionId: Scalars['Int']['input'];
+  sessionId: Scalars['String']['input'];
+  type: Scalars['String']['input'];
+}
+
+export interface ExperimentMutation {
+  __typename?: 'ExperimentMutation';
+  createAbSubmission: DefaultResponse;
+  createEquationsAppStats: DefaultResponse;
+  createExerciseSubmission: DefaultResponse;
+  createQuickbarStats: DefaultResponse;
+}
+
+
+export interface ExperimentMutationCreateAbSubmissionArgs {
+  input: AbSubmissionInput;
+}
+
+
+export interface ExperimentMutationCreateEquationsAppStatsArgs {
+  input: EquationsAppStatsInput;
+}
+
+
+export interface ExperimentMutationCreateExerciseSubmissionArgs {
+  input: ExerciseSubmissionInput;
+}
+
+
+export interface ExperimentMutationCreateQuickbarStatsArgs {
+  input: QuickbarStatsInput;
+}
+
+export interface ExperimentQuery {
+  __typename?: 'ExperimentQuery';
+  abSubmissions: Array<AbSubmission>;
+}
+
+
+export interface ExperimentQueryAbSubmissionsArgs {
+  cursor: Scalars['String']['input'];
+  experiment: Scalars['String']['input'];
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}
+
 export interface HasNextPageInfo {
   __typename?: 'HasNextPageInfo';
   endCursor?: Maybe<Scalars['String']['output']>;
@@ -1344,6 +1424,7 @@ export interface Mutation {
   __typename?: 'Mutation';
   _cache: _CacheMutation;
   entity: EntityMutation;
+  experiment: ExperimentMutation;
   notification: NotificationMutation;
   oauth: OauthMutation;
   page: PageMutation;
@@ -1588,6 +1669,7 @@ export interface Query {
   authorization: Scalars['JSON']['output'];
   entity?: Maybe<EntityQuery>;
   events: AbstractNotificationEventConnection;
+  experiment: ExperimentQuery;
   media: MediaQuery;
   metadata: MetadataQuery;
   notificationEvent?: Maybe<AbstractNotificationEvent>;
@@ -1633,6 +1715,13 @@ export interface QueryNotificationsArgs {
 export interface QueryUuidArgs {
   alias?: InputMaybe<AliasInput>;
   id?: InputMaybe<Scalars['Int']['input']>;
+}
+
+export interface QuickbarStatsInput {
+  isSubject: Scalars['Boolean']['input'];
+  path: Scalars['String']['input'];
+  query: Scalars['String']['input'];
+  target: Scalars['String']['input'];
 }
 
 export interface RejectRevisionInput {
@@ -2974,6 +3063,34 @@ export type IsSubscribedQueryVariables = Exact<{
 
 
 export type IsSubscribedQuery = { __typename?: 'Query', subscription: { __typename?: 'SubscriptionQuery', currentUserHasSubscribed: boolean } };
+
+export type CreateAbSubmissionMutationVariables = Exact<{
+  input: AbSubmissionInput;
+}>;
+
+
+export type CreateAbSubmissionMutation = { __typename?: 'Mutation', experiment: { __typename?: 'ExperimentMutation', createAbSubmission: { __typename?: 'DefaultResponse', success: boolean } } };
+
+export type CreateEquationsAppStatsMutationVariables = Exact<{
+  input: EquationsAppStatsInput;
+}>;
+
+
+export type CreateEquationsAppStatsMutation = { __typename?: 'Mutation', experiment: { __typename?: 'ExperimentMutation', createEquationsAppStats: { __typename?: 'DefaultResponse', success: boolean } } };
+
+export type CreateExerciseSubmissionMutationVariables = Exact<{
+  input: ExerciseSubmissionInput;
+}>;
+
+
+export type CreateExerciseSubmissionMutation = { __typename?: 'Mutation', experiment: { __typename?: 'ExperimentMutation', createExerciseSubmission: { __typename?: 'DefaultResponse', success: boolean } } };
+
+export type CreateQuickbarStatsMutationVariables = Exact<{
+  input: QuickbarStatsInput;
+}>;
+
+
+export type CreateQuickbarStatsMutation = { __typename?: 'Mutation', experiment: { __typename?: 'ExperimentMutation', createQuickbarStats: { __typename?: 'DefaultResponse', success: boolean } } };
 
 export type TaxonomyTermCreateEntityLinkMutationVariables = Exact<{
   input: TaxonomyEntityLinksInput;
