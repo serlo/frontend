@@ -3,15 +3,20 @@ import {
   type CreateBasicPluginsConfig,
   createBasicPlugins,
 } from '@editor/editor-integration/create-basic-plugins'
+import { createRenderers } from '@editor/editor-integration/create-renderers'
 import {
   type PluginsWithData,
   editorPlugins,
 } from '@editor/plugin/helpers/editor-plugins'
+import {
+  type InitRenderersArgs,
+  editorRenderers,
+} from '@editor/plugin/helpers/editor-renderer'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { SupportedLanguage } from '@editor/types/language-data'
 import React from 'react'
 
 import { editorData } from './editor-data'
-import { EditorPluginType } from '../types/editor-plugin-type'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 
@@ -21,7 +26,14 @@ export interface SerloEditorProps {
   children: EditorProps['children']
   initialState?: EditorProps['initialState']
   basicPluginsConfig: CreateBasicPluginsConfig
+  // Custom plugins are an Edusharing specific feature, and will not be supported in the future
   customPlugins: PluginsWithData
+  // Custom renderers are an Edusharing specific feature, and will not be supported in the future
+  customRenderers: Partial<
+    Pick<InitRenderersArgs, 'mathRenderer' | 'linkRenderer'>
+  >
+  // Custom plugins renderers are an Edusharing specific feature, and will not be supported in the future
+  customPluginsRenderers: InitRenderersArgs['pluginRenderers']
   language?: SupportedLanguage
 }
 
@@ -41,12 +53,17 @@ export function SerloEditor({
   initialState,
   basicPluginsConfig,
   customPlugins,
+  customRenderers,
+  customPluginsRenderers,
   language = 'de',
 }: SerloEditorProps) {
   const { instanceData, loggedInData } = editorData[language]
 
   const basicPlugins = createBasicPlugins(basicPluginsConfig)
   editorPlugins.init([...basicPlugins, ...customPlugins])
+
+  const basicRenderers = createRenderers(customPluginsRenderers)
+  editorRenderers.init({ ...basicRenderers, ...customRenderers })
 
   return (
     <InstanceDataProvider value={instanceData}>

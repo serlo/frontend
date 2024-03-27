@@ -1,6 +1,7 @@
-import {
+import type {
   InitRenderersArgs,
   LinkRenderer,
+  PluginStaticRenderer,
 } from '@editor/plugin/helpers/editor-renderer'
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
@@ -32,7 +33,9 @@ import { ComponentProps } from 'react'
 import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
 
-export function createRenderers(): InitRenderersArgs {
+export function createRenderers(
+  customPluginRenderers: PluginStaticRenderer[]
+): InitRenderersArgs {
   return {
     pluginRenderers: [
       // plugins
@@ -106,6 +109,7 @@ export function createRenderers(): InitRenderersArgs {
         type: TemplatePluginType.GenericContent,
         renderer: GenericContentTypeStaticRenderer,
       },
+      ...customPluginRenderers,
     ],
     mathRenderer: (element: MathElement) =>
       element.inline ? (
