@@ -14,6 +14,8 @@ export async function requestAbTestingData(
 ): Promise<AbSubmissionData[]> {
   const variables = {
     experiment,
+    limit: 100,
+    cursor: '0',
   }
 
   const response = await request<ExperimentQuery>(
