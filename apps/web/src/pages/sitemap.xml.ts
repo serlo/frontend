@@ -40,7 +40,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   //   const sitemapData = (await request.json()) as SitemapEntry[]
 
   // generate sitemap
-  const sitemap = generateSiteMap([...nextStaticPages,...sitemapData])
+  const sitemap = generateSiteMap([...nextStaticPages, ...sitemapData])
 
   res.setHeader('Content-Type', 'text/xml')
   res.setHeader('Cache-Control', 's-maxage=86400') // one day
@@ -56,7 +56,6 @@ export default Sitemap
 const nextStaticPages: SitemapEntry[] = [
   { url: '/' },
   { url: '/biologie' },
-  { url: '/chemie' },
   { url: '/chemie' },
   { url: '/editor' },
   { url: '/informatik' },
