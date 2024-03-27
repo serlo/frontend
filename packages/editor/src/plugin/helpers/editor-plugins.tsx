@@ -1,5 +1,3 @@
-import type { CreateBasicPluginsConfig } from '@editor/editor-integration/create-basic-plugins'
-
 import { EditorPlugin } from '../internal-plugin'
 
 export interface PluginWithData {
@@ -10,11 +8,6 @@ export interface PluginWithData {
 }
 
 export type PluginsWithData = PluginWithData[]
-
-export interface CreatePluginsConfig {
-  basicPlugins: CreateBasicPluginsConfig
-  customPlugins: PluginsWithData
-}
 
 export const editorPlugins = (function () {
   let allPlugins: PluginsWithData | null = null

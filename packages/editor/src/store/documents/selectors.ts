@@ -30,15 +30,6 @@ export const selectDocument = createSelector(
   }
 )
 
-export const selectDocumentWithPlugin = createSelector(
-  [selectSelf, (_state, id: string | null) => id],
-  (documents, id) => {
-    const document = id ? documents[id] : null
-    const plugin = editorPlugins.getByType(document?.plugin || '')
-    return { document, plugin }
-  }
-)
-
 export const selectDocumentPluginType = createSelector(
   [selectSelf, (_state, id: string) => id],
   (documents, id) => documents[id].plugin as EditorPluginType
