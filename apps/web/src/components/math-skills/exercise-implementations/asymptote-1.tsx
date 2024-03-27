@@ -96,9 +96,15 @@ export function Asymptote1() {
             </span>
             <br />
             <br />
+            Der Graph hat zwei Asymptoten mit den Gleichungen:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              y = {data.d} und x = {-data.b}
+            </span>
+            <br />
+            <br />
             Der Wertebereich setzt sich aus allen reellen Zahlen zusammen, die
-            von der Funktion angenommen werden. Dabei ist der Grad der Funktion
-            und der Vorfaktor entscheidend.
+            von der Funktion angenommen werden.
             <br />
             <br />
             {data.c % 2 === 0 && data.a > 0
@@ -118,13 +124,6 @@ export function Asymptote1() {
               {data.c % 2 !== 0 ? ' y ≠ ' : null}
               {data.c % 2 !== 0 ? data.d : null}
               {' }'}
-            </span>
-            <br />
-            <br />
-            Der Graph hat zwei Asymptoten mit den Gleichungen:
-            <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-              y = {data.d} und x = {-data.b}
             </span>
             <br />
             <br />
