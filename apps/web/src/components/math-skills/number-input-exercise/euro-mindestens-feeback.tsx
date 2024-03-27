@@ -186,7 +186,7 @@ export function EuroMindestensFeedback() {
               </ul>
               <p className="mt-3">
                 <button
-                  className="bg-animal serlo-button-light bg-opacity-30 px-2.5 py-1.5 text-almost-black hover:bg-opacity-35 hover:text-black"
+                  className="hover:bg-opacity-35 serlo-button-light bg-animal bg-opacity-30 px-2.5 py-1.5 text-almost-black hover:text-black"
                   onClick={() => setExStatus('revealed')}
                 >
                   Schritt für Schritt rechnen

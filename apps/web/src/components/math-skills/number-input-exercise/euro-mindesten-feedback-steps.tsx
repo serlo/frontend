@@ -199,7 +199,7 @@ export function EuroMindestensFeedbackSteps({
       <button
         className={cn(
           'mr-3 inline-flex aspect-square items-center justify-around rounded-lg text-center font-bold',
-          'outline-animal w-12 bg-gray-200 outline outline-[3px] hover:opacity-80'
+          'w-12 bg-gray-200 outline outline-[3px] outline-animal hover:opacity-80'
         )}
         onClick={() => {
           setFeedback({ element: null })

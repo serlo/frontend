@@ -65,10 +65,6 @@ export function ExerciseFeedback({
     setExerciseData(isCorrect, centAmount)
   }
 
-  function revealEx() {
-    setExStatus('revealed')
-  }
-
   const onButtonClick = isRevealButton
     ? undefined
     : isNextButton

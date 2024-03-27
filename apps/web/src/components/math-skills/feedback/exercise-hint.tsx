@@ -19,7 +19,7 @@ export function ExerciseHint<T>({ data, renderHint }: ExerciseHintProps<T>) {
         tabIndex={0}
         onClick={() => setShowHint(!showHint)}
       >
-        <span className="-mr-12 block aspect-square w-24 rounded-full bg-animal bg-opacity-15 text-right text-lg group-focus-visible:outline group-focus-visible:outline-2 group-focus-visible:outline-brand">
+        <span className="bg-opacity-15 -mr-12 block aspect-square w-24 rounded-full bg-animal text-right text-lg group-focus-visible:outline group-focus-visible:outline-2 group-focus-visible:outline-brand">
           <span className="-ml-8 block rotate-90 pr-1.5">Tipps</span>
         </span>
         <div
