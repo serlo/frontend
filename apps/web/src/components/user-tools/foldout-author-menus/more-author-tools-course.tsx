@@ -23,11 +23,6 @@ export function MoreAuthorToolsCourse({
 
   const isEmptyCourse = data.type === UuidType.Course
 
-  const hasCourseRevisions =
-    data.unrevisedCourseRevisions && data.unrevisedCourseRevisions > 0
-  const hasUnrevised =
-    data.unrevisedRevisions !== undefined && data.unrevisedRevisions > 0
-
   return (
     <>
       {renderSettingsItem(true)}
@@ -70,7 +65,6 @@ export function MoreAuthorToolsCourse({
     return wholeCourse
       ? [
           Tool.Abo,
-          hasCourseRevisions ? Tool.UnrevisedEdit : Tool.Edit,
           Tool.History,
           Tool.SortCoursePages,
           Tool.Curriculum,
@@ -78,13 +72,6 @@ export function MoreAuthorToolsCourse({
           Tool.ChangeLicense,
           Tool.Trash,
         ]
-      : [
-          Tool.Abo,
-          hasUnrevised ? Tool.UnrevisedEdit : Tool.Edit,
-          Tool.History,
-          Tool.Log,
-          Tool.AnalyticsLink,
-          Tool.Trash,
-        ]
+      : [Tool.Abo, Tool.History, Tool.Log]
   }
 }

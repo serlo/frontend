@@ -1,18 +1,16 @@
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
-import { Link } from '@serlo/frontend/src/components/content/link'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { CoursePagesData } from '@serlo/frontend/src/data-types'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import type { MouseEvent } from 'react'
+import { type MouseEvent } from 'react'
 
 export interface CourseNavigationProps {
   title: string | JSX.Element
-  pages: CoursePagesData
+  pages: { key: string; element: JSX.Element }[]
   open: boolean
   onOverviewButtonClick: (e?: MouseEvent<HTMLButtonElement>) => void
 }
-
+// this is a renderer
 export function CourseNavigation({
   title,
   pages,
@@ -45,25 +43,9 @@ export function CourseNavigation({
       ) : null}
       {open ? (
         <ol className="serlo-ol mb-0 mt-7">
-          {pages.map(({ url, active, title, noCurrentRevision }) => (
-            <li key={url}>
-              <Link
-                className={cn(
-                  'text-lg leading-browser',
-                  {
-                    'font-semibold text-almost-black hover:no-underline':
-                      active,
-                  },
-                  { 'text-brand-300': noCurrentRevision }
-                )}
-                href={active ? undefined : url}
-              >
-                {noCurrentRevision
-                  ? '(' + strings.course.noRevisionForPage + ')'
-                  : title}
-              </Link>
-            </li>
-          ))}
+          {pages.map(({ key, element }) => {
+            return <li key={key}>{element}</li>
+          })}
         </ol>
       ) : null}
     </nav>
