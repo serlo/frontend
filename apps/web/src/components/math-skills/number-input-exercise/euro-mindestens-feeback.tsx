@@ -64,13 +64,13 @@ export function EuroMindestensFeedback() {
       <ExerciseFeedback
         noUserInput={inputValue.trim() === ''}
         noUserInputText={<>Gib eine Zahl ein</>}
-        exStatus={exStatus}
+        exStatus={exStatus === 'revealed' ? 'fresh' : exStatus}
         setExStatus={setExStatus}
         feedbacks={{
           revealed: <></>,
           incorrect: (
             <>
-              Das stimmt so noch nicht.
+              {getFeedbackString()}
               <br />
               <b>Probier&apos;s einfach noch mal,</b>
               <br />
@@ -78,11 +78,11 @@ export function EuroMindestensFeedback() {
               <a
                 className="serlo-link cursor-pointer"
                 onClick={() => {
-                  ;(
-                    document.getElementById(
-                      'hint-details'
-                    ) as HTMLDetailsElement
-                  ).open = true
+                  const details = document.getElementById(
+                    'hint-details'
+                  ) as HTMLDetailsElement
+                  details.open = true
+                  details.scrollIntoView({ behavior: 'smooth' })
                 }}
               >
                 schau&apos; dir die Tipps an
@@ -92,6 +92,9 @@ export function EuroMindestensFeedback() {
                 className="serlo-link cursor-pointer"
                 onClick={() => {
                   setExStatus('revealed')
+                  document
+                    .getElementById('hint-details')
+                    ?.scrollIntoView({ behavior: 'smooth' })
                 }}
               >
                 mach die Aufgabe Schritt für Schritt.
@@ -178,7 +181,10 @@ export function EuroMindestensFeedback() {
           ) : (
             <div>
               <ul className="serlo-ul">
-                <li>Du kannst alle Münzen auch mehrmals verwenden.</li>
+                <li>
+                  Du kannst alle Münzwerte auch mehrmals verwenden (also z.B.
+                  zwei 20 Cent Münzen).
+                </li>
                 <li>
                   Euro-Münzen brauchst du nicht, weil der Betrag kleiner als 100
                   Cent ist.
@@ -199,19 +205,27 @@ export function EuroMindestensFeedback() {
     )
   }
 
+  function getFeedbackString() {
+    if (isNaN(parseInt(inputValue))) return 'Gib eine ganze Zahl ein'
+    if (parseInt(inputValue) > correctValue)
+      return 'Du kannst noch weniger Münzen benutzen.'
+    if (parseInt(inputValue) < correctValue)
+      return 'Um auf genau den Betrag zu kommen braucht du mehr Münzen.'
+  }
+
   function renderInput() {
     return (
       <input
         value={inputValue}
-        disabled={exStatus === 'correct' || exStatus === 'revealed'}
+        disabled={exStatus === 'correct'}
         onChange={({ currentTarget }) => {
           setInputValue(currentTarget.value)
-          if (exStatus === 'incorrect') {
+          if (exStatus === 'incorrect' || exStatus === 'revealed') {
             setExStatus('fresh')
           }
         }}
         onFocus={() => {
-          if (exStatus === 'incorrect') {
+          if (exStatus === 'incorrect' || exStatus === 'revealed') {
             setExStatus('fresh')
           }
         }}

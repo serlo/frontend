@@ -20,7 +20,6 @@ const correctStrings = [
 
 export function EuroMindestensFeedbackSteps({
   data,
-  setExStatus,
 }: {
   data: {
     cent: number
@@ -218,7 +217,6 @@ export function EuroMindestensFeedbackSteps({
                 ),
                 isCorrect: true,
               })
-              setExStatus('fresh')
               void confetti.default()
             }
             if (amount < correctValue) {
