@@ -1,7 +1,4 @@
-import {
-  createBasicPlugins,
-  type CreateBasicPluginsConfig,
-} from '@editor/editor-integration/create-basic-plugins'
+import type { CreateBasicPluginsConfig } from '@editor/editor-integration/create-basic-plugins'
 
 import { EditorPlugin } from '../internal-plugin'
 
@@ -26,18 +23,6 @@ export const editorPlugins = (function () {
     if (allPlugins) return // only initialize once
 
     allPlugins = plugins
-
-    // Ensure the highest integrity level that JS provides
-    Object.freeze(allPlugins)
-  }
-
-  function initTemp(config: CreatePluginsConfig) {
-    if (allPlugins) return // only initialize once
-
-    allPlugins = [
-      ...createBasicPlugins(config.basicPlugins),
-      ...config.customPlugins,
-    ]
 
     // Ensure the highest integrity level that JS provides
     Object.freeze(allPlugins)

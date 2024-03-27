@@ -1,4 +1,12 @@
 import { Editor, type EditorProps } from '@editor/core'
+import {
+  type CreateBasicPluginsConfig,
+  createBasicPlugins,
+} from '@editor/editor-integration/create-basic-plugins'
+import {
+  type PluginsWithData,
+  editorPlugins,
+} from '@editor/plugin/helpers/editor-plugins'
 import { SupportedLanguage } from '@editor/types/language-data'
 import React from 'react'
 
@@ -10,10 +18,13 @@ import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import '@/assets-webkit/styles/serlo-tailwind.css'
 
 export interface SerloEditorProps {
-  language?: SupportedLanguage
-  initialState?: EditorProps['initialState']
   children: EditorProps['children']
+  initialState?: EditorProps['initialState']
+  basicPluginsConfig: CreateBasicPluginsConfig
+  customPlugins: PluginsWithData
+  language?: SupportedLanguage
 }
+
 const emptyState = {
   plugin: EditorPluginType.Rows,
   state: [
@@ -26,17 +37,22 @@ const emptyState = {
 
 /** For exporting the editor */
 export function SerloEditor({
-  language = 'de',
+  children,
   initialState,
-  ...props
+  basicPluginsConfig,
+  customPlugins,
+  language = 'de',
 }: SerloEditorProps) {
   const { instanceData, loggedInData } = editorData[language]
+
+  const basicPlugins = createBasicPlugins(basicPluginsConfig)
+  editorPlugins.init([...basicPlugins, ...customPlugins])
 
   return (
     <InstanceDataProvider value={instanceData}>
       <LoggedInDataProvider value={loggedInData}>
         <div className="serlo-editor-hacks">
-          <Editor initialState={initialState ?? emptyState} {...props} />
+          <Editor initialState={initialState ?? emptyState}>{children}</Editor>
         </div>
       </LoggedInDataProvider>
     </InstanceDataProvider>
