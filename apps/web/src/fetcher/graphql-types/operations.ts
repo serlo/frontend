@@ -1347,7 +1347,7 @@ export interface ExperimentQuery {
 
 
 export interface ExperimentQueryAbSubmissionsArgs {
-  cursor?: InputMaybe<Scalars['Int']['input']>;
+  cursor: Scalars['String']['input'];
   experiment: Scalars['String']['input'];
   limit?: InputMaybe<Scalars['Int']['input']>;
 }
