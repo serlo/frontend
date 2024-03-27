@@ -5,6 +5,12 @@ import { cn } from '@/helper/cn'
 import { isProduction } from '@/helper/is-production'
 
 export const features = {
+  editorIntermediateTasks: {
+    cookieName: 'useEditorIntermediateTasks',
+    isActive: false,
+    activeInDev: true,
+    hideInProduction: false,
+  },
   edtrPasteHack: {
     cookieName: 'useEdtrPasteHack',
     isActive: false,
@@ -88,6 +94,17 @@ export function ProfileExperimental() {
       <h2 className="serlo-h2" id="experiments">
         🧪 Experimente
       </h2>
+      {shouldBeVisible('editorIntermediateTasks') ? (
+        <div>
+          <h3 className="serlo-h3 mb-3">
+            {renderFeatureButton('editorIntermediateTasks')} Zwischentexte für
+            Aufgaben mit Teilaufgaben 🛠
+          </h3>
+          <p className="serlo-p">
+            Experimentelles Feature: nur für Teammitglieder im Prüfungsbereich.
+          </p>
+        </div>
+      ) : null}
       {shouldBeVisible('edtrPasteHack') ? (
         <div>
           <h3 className="serlo-h3 mb-3">

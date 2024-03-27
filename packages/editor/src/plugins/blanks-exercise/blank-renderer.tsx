@@ -154,6 +154,7 @@ export function BlankRenderer(props: BlankRendererProps) {
   }
 
   function handleAlternativeAnswerAdd() {
+    ReactEditor.blur(editor)
     setCorrectAnswers([...correctAnswers, { answer: '' }])
   }
 

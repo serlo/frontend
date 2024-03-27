@@ -24,9 +24,9 @@ export const focusSlice = createSlice({
     },
     focusPrevious(state, action: PayloadAction<ChildTreeNode | null>) {
       if (!state || !action.payload) return state
-      const next = findPreviousChildTreeNode(action.payload, state)
-      if (!next) return state
-      return next
+      const previous = findPreviousChildTreeNode(action.payload, state)
+      if (!previous) return state
+      return previous
     },
   },
   extraReducers: (builder) => {
