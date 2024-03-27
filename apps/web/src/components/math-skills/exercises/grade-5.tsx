@@ -18,6 +18,7 @@ import {
   numberLineGeneratorLevel2,
   numberLineGeneratorLevel3,
 } from './generators/number-line-generator'
+import { EuroMindestensFeedback } from '../number-input-exercise/euro-mindestens-feeback'
 import { MultipleNumberInputExercise } from '../number-input-exercise/multiple-number-input-exercise'
 import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
 import { OrderValues } from '@/components/math-skills/exercise-implementations/order-values'
@@ -28,7 +29,6 @@ import { NumberLineExercise } from '@/components/math-skills/number-line-exercis
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 import { shuffleArray } from '@/helper/shuffle-array'
-import { EuroMindestensFeedback } from '../number-input-exercise/euro-mindestens-feeback'
 
 export const exercisesGrade5 = {
   'zahlen-anordnen-1': {
