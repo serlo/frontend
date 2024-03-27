@@ -25,7 +25,7 @@ export function PlotFunction2() {
       generator={() => {
         const a = randomItemFromArray([-2, -1, 2, 0.5])
 
-        const b = randomItemFromArray([2, 3, 0.5, 0.25, 123])
+        const b = randomItemFromArray([2, 3, 0.5, 0.25, 2.718])
 
         const c = randomIntBetween(-2, 2)
         const data: PlotData = {
@@ -43,7 +43,7 @@ export function PlotFunction2() {
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
               {data.a === -1 ? null : '·'}{' '}
-              {data.b === 123 ? 'e' : data.b.toString().replace('.', ',')}
+              {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
               <sup>x</sup> {data.c > 0 ? '+' : null}{' '}
               {data.c !== 0 ? data.c : null}
             </span>
@@ -65,7 +65,7 @@ export function PlotFunction2() {
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
               {data.a === -1 ? null : '·'}{' '}
-              {data.b === 123 ? 'e' : data.b.toString().replace('.', ',')}
+              {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
               <sup>x</sup> {data.c > 0 ? '+' : null}{' '}
               {data.c !== 0 ? data.c : null}
             </span>
@@ -83,7 +83,7 @@ export function PlotFunction2() {
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
               {data.a === -1 ? null : '·'}{' '}
-              {data.b === 123 ? 'e' : data.b.toString().replace('.', ',')}
+              {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
               <sup>0</sup> {data.c > 0 ? '+' : null}{' '}
               {data.c !== 0 ? data.c : null} ={' '}
               {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
