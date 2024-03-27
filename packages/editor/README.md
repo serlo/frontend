@@ -24,18 +24,7 @@ This is an early beta version of the [Serlo Editor](https://de.serlo.org/editor)
 - **Long-Term Support**: Unclear
 - **Needs Change?**: Unclear
 
-#### 4. - **`editorPlugins`, `editorRenderers`**
-
-- **Why Exported/How Used**: These are utilized for initializing and configuring the editor with custom plugins and renderers. `editorPlugins.init` and `editorRenderers.init` are called to set up the editor's functionality with plugins and renderers defined elsewhere in your application (`createPlugins`, `createRenderers`).
-- **Long-Term Support**: Ugly, should be removed as far as possible
-- **Needs Change?**: Yes, perhaps one config object passed to the component
-- **Details**:
-  - Used in `src/frontend/serlo-editor.tsx:38`
-    - `editorPlugins.init(createPlugins({ ltik }))`
-    - `editorRenderers.init(createRenderers())`
-  - Used in `src/frontend/plugins/create-plugins.tsx`
-
-#### 5. - **`SerloRenderer`, `SerloRendererProps`**
+#### 4. - **`SerloRenderer`, `SerloRendererProps`**
 
 - **Why Exported/How Used**: `SerloRenderer` is a component provided by the `@serlo/editor` for rendering content in a non-editable format. This is particularly useful for displaying the content to users who are not currently editing or are not allowed to edit. The `SerloRendererProps` are used for type safety, ensuring the correct data shape is passed to the renderer.
 - **Long-Term Support**: Unclear
@@ -54,7 +43,12 @@ This is an early beta version of the [Serlo Editor](https://de.serlo.org/editor)
 
 - The `LtikContext.Provider` is used to provide the `ltik` token to any components that need it, encapsulating the editor or renderer within this context to ensure they have access to authentication tokens if required.
 
-- Initialization of `editorPlugins` and `editorRenderers` with custom plugins and renderers illustrates an advanced use case of the `@serlo/editor`, enabling the application to extend or customize the editor's functionality beyond the default behavior. (?)
+- Serlo Editor plugins can be configured to an extent, this configuration is currently done via the `basicPluginsConfig` prop of the `SerloEditor` component.
+
+- Custom plugins are currently supported for the Edusharing integration, but will not be supported in the future. The following `SerloEditor` props will be deprecated:
+  - `customPlugins`
+  - `customRenderers`
+  - `customPluginsRenderers`
 
 ## Releasing a new version to npm
 
