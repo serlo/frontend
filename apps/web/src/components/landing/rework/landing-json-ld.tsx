@@ -12,15 +12,19 @@ export function LandingJsonLd() {
 
   function getData() {
     return {
-      '@context': [
-        'https://w3id.org/kim/lrmi-profile/draft/context.jsonld',
-        {
-          '@language': 'de',
-          '@vocab': 'http://schema.org/',
-          type: '@type',
-          id: '@id',
+      '@context': {
+        id: '@id',
+        type: '@type',
+        '@language': 'de',
+        '@vocab': 'http://schema.org/',
+        skos: 'http://www.w3.org/2004/02/skos/core#',
+        prefLabel: {
+          '@id': 'skos:prefLabel',
+          '@container': '@language',
         },
-      ],
+        inScheme: 'skos:inScheme',
+        Concept: 'skos:Concept',
+      },
       id: 'https://serlo.org/',
       type: ['EducationalOrganization', 'NGO'],
       name: 'Serlo Education e.V.',
