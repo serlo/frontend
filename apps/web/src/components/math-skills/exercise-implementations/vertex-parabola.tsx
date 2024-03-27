@@ -36,168 +36,201 @@ export function VertexParabola() {
         )
       }}
       renderSolution={({ b, isPlus, isPlus_2, c }) => {
+        if (isPlus_2 && c === (b / 2) * (b / 2))
+          return (
+            <>
+              Wir formen den Funktionsterm in die Scheitelform um: <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x{' '}
+                {isPlus_2 ? '+' : '-'}
+                {c}
+              </span>
+              <br />
+              <br />
+              Die Scheitelform der Funktion hat die Form
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = (x - ☐)<sup>2</sup> + ☐
+              </span>
+              <br />
+              <br />
+              wobei in den Kästchen die passenden Werte stehen müssen.
+              <br />
+              <br />
+              <h2 className="text-2xl">Wert im ersten Kästchen</h2>
+              <br />
+              Damit aus dem Binom der richtige Mischterm entsteht, muss aus dem
+              Funktionsterm
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = x<sup>2</sup> {isPlus ? '+' : '-'} 2 · x ·{' '}
+                <strong>{b / 2}</strong> {isPlus_2 ? '+' : '-'}
+                {c}
+              </span>
+              <br />
+              <br />
+              in das Binom eingesetzt werden:
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = (x - <strong>{b / 2}</strong>)<sup>2</sup> + ☐
+              </span>
+              <br />
+              <br />
+              <h2 className="text-2xl">Wert im zweiten Kästchen</h2>
+              <br />
+              Würden wir das Binom wieder ausschreiben, erhalten wir bereits den
+              richtigen Funktionsterm wieder:
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x{' '}
+                {isPlus_2 ? '+' : '-'}
+                {c}
+              </span>
+              <br />
+              <br />
+              Der Wert im zweiten Kästchen ist damit <strong>0</strong>. Das ist
+              ein Spezialfall!
+            </>
+          )
         return (
           <>
-            Aufgabenstellung: <br />
+            Wir formen den Funktionsterm in die Scheitelform um: <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x {isPlus_2 ? '+' : '-'}
               {c}
             </span>
             <br />
             <br />
-            Wir führen eine quadratische Ergänzung durch. Lies dazu den
-            Parameter b im Funktionsterm aus: <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-              y = x<sup>2</sup>{' '}
-              <strong>
-                {isPlus ? '+' : '-'} {b}
-              </strong>
-              x {isPlus_2 ? '+' : '-'} {c}
+            Die Scheitelform der Funktion hat die Form
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              y = (x - ☐)<sup>2</sup> + ☐
             </span>
             <br />
             <br />
-            Wir addieren den Term{' '}
-            <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-1">
-              <span className="inline-block scale-y-[3]">(</span>
-              {buildFrac(
-                <>
-                  <strong>b</strong>
-                </>,
-                <>2</>
-              )}
-              <span className="inline-block scale-y-[3]">)</span> ={' '}
-              <span className="inline-block scale-y-[3]">(</span>
-              {buildFrac(
-                <>
-                  <strong>{b}</strong>
-                </>,
-                <>2</>
-              )}
-              <span className="inline-block scale-y-[3]">)</span>
-              <sup>2</sup>
+            wobei in den Kästchen die passenden Werte stehen müssen.
+            <br />
+            <br />
+            <h2 className="text-2xl">Wert im ersten Kästchen</h2>
+            <br />
+            Damit aus dem Binom der richtige Mischterm entsteht, muss aus dem
+            Funktionsterm
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              y = x<sup>2</sup> {isPlus ? '+' : '-'} 2 · x ·{' '}
+              <strong>{b / 2}</strong> {isPlus_2 ? '+' : '-'}
+              {c}
+            </span>
+            <br />
+            <br />
+            in das Binom eingesetzt werden:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              y = (x - <strong>{b / 2}</strong>)<sup>2</sup> + ☐
+            </span>
+            <br />
+            <br />
+            <h2 className="text-2xl">Wert im zweiten Kästchen</h2>
+            <br />
+            Würden wir das Binom so stehen lassen, wäre der Term am Ende nicht
+            immer der gleiche wie im ursprünglichen Funktionsterm:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x + {(b / 2) * (b / 2)}{' '}
+              + ☐
+            </span>
+            <br />
+            <br />
+            Damit am Ende{' '}
+            <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
+              {isPlus_2 ? '+' : '-'}
+              {c}
             </span>{' '}
-            und subtrahieren ihn zum Schluss wieder:
+            steht, müssen wir mit dem richtigen Wert korrigieren:
             <br />
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              y = x<sup>2</sup>
-              {isPlus ? '+' : '-'} <strong>{b}</strong>x +{' '}
-              <span className="inline-block scale-y-[3]">(</span>
-              {buildFrac(
-                <>
-                  <strong>{b}</strong>
-                </>,
-                <>2</>
-              )}
-              <span className="inline-block scale-y-[3]">)</span>
-              <sup>2</sup> {isPlus_2 ? '+' : '-'} {c} -{' '}
-              <span className="inline-block scale-y-[3] ">(</span>
-              {buildFrac(
-                <>
-                  <strong>{b}</strong>
-                </>,
-                <>2</>
-              )}
-              <span className="inline-block scale-y-[3]">)</span>
-              <sup>2</sup>
-            </span>
-            <br />
-            Wenn man den Mischterm etwas umformt, sieht der Term noch mehr wie
-            das Ergebnis einer binomischen Formel aus:
-            <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              y = x<sup>2</sup>
-              {isPlus ? '+' : '-'} 2 · x · {buildFrac(<>{b}</>, <>2</>)} +{' '}
-              <span className="inline-block scale-y-[3]">(</span>
-              {buildFrac(<>{b}</>, <>2</>)}
-              <span className="inline-block scale-y-[3]">)</span>
-              <sup>2</sup> {isPlus_2 ? '+' : '-'} {c} -{' '}
-              <span className="inline-block scale-y-[3] ">(</span>
-              {buildFrac(<>{b}</>, <>2</>)}
-              <span className="inline-block scale-y-[3]">)</span>
-              <sup>2</sup>
+              y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x + {(b / 2) * (b / 2)}{' '}
+              <strong>
+                {c - (b / 2) * (b / 2) === 0 ? (
+                  <></>
+                ) : (
+                  <>
+                    {isPlus_2 && c - (b / 2) * (b / 2) > 0 ? '+' : ''}{' '}
+                    {isPlus_2
+                      ? (c - (b / 2) * (b / 2)).toString().replace('.', ',')
+                      : (-c - (b / 2) * (b / 2)).toString().replace('.', ',')}
+                  </>
+                )}
+              </strong>{' '}
             </span>
             <br />
             <br />
-            Den vorderen Teil fassen wir zu diesem Binom zusammen:
-            <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              y = <span className="inline-block scale-y-[3]">(</span>x{' '}
-              {isPlus ? '+' : '-'} {buildFrac(<>{b}</>, <>2</>)}{' '}
-              <span className="inline-block scale-y-[3]">)</span>
-              <sup>2</sup> {isPlus_2 ? '+' : '-'} {c} -{' '}
-              <span className="inline-block scale-y-[3] ">(</span>
-              {buildFrac(
-                <>
-                  <strong>{b}</strong>
-                </>,
-                <>2</>
-              )}
-              <span className="inline-block scale-y-[3]">)</span>
-              <sup>2</sup>
-            </span>
-            <br />
-            <br />
-            Die Zahlen hinter der Klammer werden auch zusammengefasst:
-            <br />
+            Damit ist die richtige Scheitelform: <br />
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               y = <span className="inline-block scale-y-[1.5]">(</span>x{' '}
               {isPlus ? '+' : '-'} {(b / 2).toString().replace('.', ',')}
               <span className="inline-block scale-y-[1.5]">)</span>
               <sup>2</sup>{' '}
-              {c - (b / 2) * (b / 2) === 0 ? (
-                <></>
-              ) : (
-                <>
-                  {isPlus_2 && c - (b / 2) * (b / 2) > 0 ? '+' : ''}{' '}
-                  {isPlus_2
-                    ? (c - (b / 2) * (b / 2)).toString().replace('.', ',')
-                    : (-c - (b / 2) * (b / 2)).toString().replace('.', ',')}
-                </>
-              )}
+              <strong>
+                {c - (b / 2) * (b / 2) === 0 ? (
+                  <></>
+                ) : (
+                  <>
+                    {isPlus_2 && c - (b / 2) * (b / 2) > 0 ? '+' : ''}{' '}
+                    {isPlus_2
+                      ? (c - (b / 2) * (b / 2)).toString().replace('.', ',')
+                      : (-c - (b / 2) * (b / 2)).toString().replace('.', ',')}
+                  </>
+                )}
+              </strong>
             </span>
           </>
         )
       }}
       // eslint-disable-next-line no-empty-pattern
       renderHint={({ b, isPlus, isPlus_2, c }) => {
+        if (isPlus_2 && c === (b / 2) * (b / 2))
+          return (
+            <>
+              Schreibe den Funktionsterm in die Scheitelform:
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = (x - ☐)<sup>2</sup> + ☐
+              </span>
+              <br />
+              <br />
+              Bestimme dazu zuerst, welcher Wert im Binom stehen muss, um den
+              richtigen Mischterm zu ergeben:
+              <br />
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                y = x<sup>2</sup> {isPlus ? '+' : '-'} <strong>{b}</strong>x{' '}
+                {isPlus_2 ? '+' : '-'}
+                {c}
+              </span>
+              <br />
+              <br />
+              Begründe, warum im zweiten Kästchen eine 0 stehen muss.
+            </>
+          )
         return (
           <>
-            Lies den Parameter <strong>b</strong> aus dem Funktionsterm ab:
-            <br />
-            <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-              y = x<sup>2</sup>{' '}
-              <strong>
-                {isPlus ? '+' : '-'} {b}
-              </strong>
-              x {isPlus_2 ? '+' : '-'} {c}
+            Schreibe den Funktionsterm in die Scheitelform:
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              y = (x - ☐)<sup>2</sup> + ☐
             </span>
             <br />
             <br />
-            Führe eine quadratische Ergänzung durch mit dem Term:
+            Bestimme dazu zuerst, welcher Wert im Binom stehen muss, um den
+            richtigen Mischterm zu ergeben:
             <br />
-            <span className="text-1xl mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-1">
-              <span className="inline-block scale-y-[3]">(</span>
-              {buildFrac(
-                <>
-                  <strong>b</strong>
-                </>,
-                <>2</>
-              )}
-              <span className="inline-block scale-y-[3]">)</span>
-              <sup>2</sup> = <span className="inline-block scale-y-[3]">(</span>
-              {buildFrac(
-                <>
-                  <strong>{b}</strong>
-                </>,
-                <>2</>
-              )}
-              <span className="inline-block scale-y-[3]">)</span>
-              <sup>2</sup>
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              y = x<sup>2</sup> {isPlus ? '+' : '-'} <strong>{b}</strong>x{' '}
+              {isPlus_2 ? '+' : '-'}
+              {c}
             </span>
             <br />
             <br />
-            Schreibe den Funktionsterm als Binom.{' '}
+            Mache eine Probe und rechne das Binom aus, um zu bestimmen, was der
+            Wert des zweiten Kästchens sein muss.
           </>
         )
       }}
