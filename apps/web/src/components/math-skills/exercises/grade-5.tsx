@@ -28,6 +28,7 @@ import { NumberLineExercise } from '@/components/math-skills/number-line-exercis
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 import { shuffleArray } from '@/helper/shuffle-array'
+import { EuroMindestensFeedback } from '../number-input-exercise/euro-mindestens-feeback'
 
 export const exercisesGrade5 = {
   'zahlen-anordnen-1': {
@@ -907,6 +908,10 @@ export const exercisesGrade5 = {
         }}
       />
     ),
+  },
+  'euro-muenzen-feedback-test': {
+    title: 'Wie viele Münzen mindesten',
+    component: <EuroMindestensFeedback />,
   },
   'euro-scheine-mindestens': {
     title: 'Wie viele Scheine mindestens?',

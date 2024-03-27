@@ -2,7 +2,10 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 import { SkipExerciseButton } from './skip-exercise-button'
 import { feedbackAnimation } from '../utils/feedback-animation'
-import { useExerciseData } from '../utils/math-skills-data-context'
+import {
+  useExerciseData,
+  useMathSkillsStorage,
+} from '../utils/math-skills-data-context'
 
 export type ExStatus = 'fresh' | 'correct' | 'incorrect' | 'revealed'
 
@@ -38,7 +41,7 @@ export function ExerciseFeedback({
 }: ExerciseFeedbackProps) {
   const { setExerciseData } = useExerciseData()
   const [attempts, setAttempts] = useState(0)
-
+  const data = useMathSkillsStorage().data
   const isRevealButton = exStatus === 'incorrect'
   const isNextButton = exStatus === 'correct' || exStatus === 'revealed'
 
@@ -92,19 +95,11 @@ export function ExerciseFeedback({
       <div className="mt-5 flex min-h-[120px] flex-col items-center sm:min-h-[80px] sm:flex-row sm:justify-between">
         <div className="text-almost-black">
           <p>
-            {exStatus === 'correct' ? 'Sehr gut gemacht 👌' : null}
+            {exStatus === 'correct'
+              ? `Sehr gut gemacht ${data.name ?? ''} 👍`
+              : null}
             {exStatus === 'incorrect' ? (
-              <>
-                {feedbacks?.incorrect ?? 'Das stimmt so noch nicht.'}
-                <br />
-                <b>Probier&apos;s einfach noch mal,</b>
-                <br />
-                oder{' '}
-                <a className="serlo-link cursor-pointer" onClick={revealEx}>
-                  zeig&apos; dir die Lösung an
-                </a>
-                .
-              </>
+              <>{feedbacks?.incorrect ?? 'Das stimmt so noch nicht.'}</>
             ) : null}
             {exStatus === 'revealed' ? <>{feedbacks?.revealed ?? ''}</> : null}
           </p>
@@ -113,7 +108,7 @@ export function ExerciseFeedback({
           {noUserInput ? noUserInputText ?? '' : renderMainButton()}
         </div>
       </div>
-      <div className="text-right">
+      <div className="flex justify-between">
         <SkipExerciseButton makeNewExercise={newEx} hidden={isNextButton} />
       </div>
     </>
