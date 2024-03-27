@@ -64,7 +64,7 @@ export async function requestRevision(
               id: uuid.id,
               date: uuid.date,
             },
-            revisions: { totalCount: 0 },
+            revisions: { totalCount: 0, nodes: [] },
           }),
         ]
       : undefined
@@ -76,7 +76,7 @@ export async function requestRevision(
               ...uuid,
               licenseId: uuid.repository.licenseId,
               currentRevision: uuid.repository.currentRevision,
-              revisions: { totalCount: 0 },
+              revisions: { totalCount: 0, nodes: [] },
             }),
           ]
         : null

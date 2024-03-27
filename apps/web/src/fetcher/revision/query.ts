@@ -23,10 +23,11 @@ export const revisionQuery = gql`
           isActiveReviewer
         }
       }
-
+      ... on AbstractEntityRevision {
+        changes
+      }
       ... on ArticleRevision {
         ...articleRevision
-        changes
         repository {
           ...taxonomyTermsV2
           licenseId
@@ -61,8 +62,10 @@ export const revisionQuery = gql`
             ...pageRevision
           }
           revisions(unrevised: false) {
+            totalCount
             nodes {
               id
+              title
               trashed
             }
           }
@@ -70,7 +73,6 @@ export const revisionQuery = gql`
       }
       ... on AppletRevision {
         ...appletRevision
-        changes
         repository {
           ...taxonomyTermsV2
           licenseId
@@ -94,7 +96,6 @@ export const revisionQuery = gql`
       }
       ... on CourseRevision {
         ...courseRevision
-        changes
         repository {
           ...taxonomyTermsV2
           licenseId
@@ -107,8 +108,10 @@ export const revisionQuery = gql`
             ...courseRevision
           }
           revisions(unrevised: false) {
+            totalCount
             nodes {
               id
+              title
               trashed
             }
           }
@@ -125,7 +128,6 @@ export const revisionQuery = gql`
       }
       ... on CoursePageRevision {
         ...coursePageRevision
-        changes
         repository {
           licenseId
           trashed
@@ -149,6 +151,11 @@ export const revisionQuery = gql`
             ...taxonomyTermsV2
             revisions(unrevised: true) {
               totalCount
+              nodes {
+                id
+                title
+                trashed
+              }
             }
             id
             currentRevision {
@@ -167,7 +174,6 @@ export const revisionQuery = gql`
       }
       ... on EventRevision {
         ...eventRevision
-        changes
         repository {
           licenseId
           ...taxonomyTermsV2
@@ -180,8 +186,10 @@ export const revisionQuery = gql`
             ...eventRevision
           }
           revisions(unrevised: false) {
+            totalCount
             nodes {
               id
+              title
               trashed
             }
           }
@@ -189,7 +197,6 @@ export const revisionQuery = gql`
       }
       ... on ExerciseRevision {
         content
-        changes
         repository {
           ...taxonomyTermsV2
           licenseId
@@ -207,6 +214,7 @@ export const revisionQuery = gql`
             totalCount
             nodes {
               id
+              title
               trashed
             }
           }
@@ -214,7 +222,6 @@ export const revisionQuery = gql`
       }
       ... on ExerciseGroupRevision {
         ...exerciseGroupRevision
-        changes
         cohesive
         repository {
           licenseId
@@ -231,6 +238,7 @@ export const revisionQuery = gql`
             totalCount
             nodes {
               id
+              title
               trashed
             }
           }
@@ -238,7 +246,6 @@ export const revisionQuery = gql`
       }
       ... on VideoRevision {
         ...videoRevision
-        changes
         repository {
           ...taxonomyTermsV2
           licenseId

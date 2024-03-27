@@ -106,7 +106,8 @@ export const revisionHistoryQuery = gql`
       alias
       __typename
       title
-      ... on Applet {
+
+      ... on AbstractEntity {
         currentRevision {
           id
         }
@@ -122,102 +123,7 @@ export const revisionHistoryQuery = gql`
           }
         }
       }
-      ... on Article {
-        currentRevision {
-          id
-        }
-        revisions {
-          nodes {
-            id
-            trashed
-            author {
-              ...basicUserData
-            }
-            changes
-            date
-          }
-        }
-      }
-      ... on Course {
-        currentRevision {
-          id
-        }
-        revisions {
-          nodes {
-            id
-            trashed
-            author {
-              ...basicUserData
-            }
-            changes
-            date
-          }
-        }
-      }
-      ... on CoursePage {
-        currentRevision {
-          id
-        }
-        revisions {
-          nodes {
-            id
-            trashed
-            author {
-              ...basicUserData
-            }
-            changes
-            date
-          }
-        }
-      }
-      ... on Event {
-        currentRevision {
-          id
-        }
-        revisions {
-          nodes {
-            id
-            trashed
-            author {
-              ...basicUserData
-            }
-            changes
-            date
-          }
-        }
-      }
-      ... on Exercise {
-        currentRevision {
-          id
-        }
-        revisions {
-          nodes {
-            id
-            trashed
-            author {
-              ...basicUserData
-            }
-            changes
-            date
-          }
-        }
-      }
-      ... on ExerciseGroup {
-        currentRevision {
-          id
-        }
-        revisions {
-          nodes {
-            id
-            trashed
-            author {
-              ...basicUserData
-            }
-            changes
-            date
-          }
-        }
-      }
+
       ... on Page {
         currentRevision {
           id
@@ -229,22 +135,6 @@ export const revisionHistoryQuery = gql`
             author {
               ...basicUserData
             }
-            date
-          }
-        }
-      }
-      ... on Video {
-        currentRevision {
-          id
-        }
-        revisions {
-          nodes {
-            id
-            trashed
-            author {
-              ...basicUserData
-            }
-            changes
             date
           }
         }

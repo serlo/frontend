@@ -10,7 +10,7 @@ import { getIconByTypename } from '@serlo/frontend/src/helper/icon-by-entity-typ
 import { gql } from 'graphql-request'
 
 import { SerloAddButton } from '../../../plugin/helpers/serlo-editor-button'
-import { InjectionStaticRenderer } from '../../injection/static'
+import { InjectionSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/injection-serlo-static-renderer'
 
 interface ArticleRelatedExercisesProps {
   exerciseFolderId: number
@@ -150,7 +150,7 @@ export function ArticleRelatedExercises({
 
     return (
       <div key={id} className="my-5 border-t-2 border-black py-5">
-        <InjectionStaticRenderer
+        <InjectionSerloStaticRenderer
           plugin={EditorPluginType.Injection}
           state={`/${id}`}
         />

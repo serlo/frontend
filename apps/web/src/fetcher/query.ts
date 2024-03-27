@@ -24,6 +24,18 @@ export const dataQuery = gql`
         ...taxonomyTermsV2
       }
 
+      ... on AbstractEntity {
+        date
+        revisions(unrevised: true) {
+          totalCount
+          nodes {
+            id
+            title
+            trashed
+          }
+        }
+      }
+
       ... on Page {
         currentRevision {
           ...pageRevision
@@ -31,15 +43,8 @@ export const dataQuery = gql`
       }
 
       ... on Article {
-        date
         currentRevision {
           ...articleRevision
-        }
-        revisions(unrevised: true) {
-          totalCount
-          nodes {
-            title
-          }
         }
       }
 
@@ -51,43 +56,31 @@ export const dataQuery = gql`
         currentRevision {
           ...videoRevision
         }
-        revisions(unrevised: true) {
-          totalCount
-          nodes {
-            title
-          }
-        }
       }
 
       ... on Applet {
-        date
         currentRevision {
           ...appletRevision
-        }
-        revisions(unrevised: true) {
-          totalCount
-          nodes {
-            title
-          }
         }
       }
 
       ... on CoursePage {
-        date
         currentRevision {
           ...coursePageRevision
-        }
-        revisions(unrevised: true) {
-          totalCount
-          nodes {
-            title
-          }
         }
         course {
           id
           licenseId
           currentRevision {
             title
+          }
+          revisions(unrevised: true) {
+            totalCount
+            nodes {
+              id
+              trashed
+              title
+            }
           }
           pages(trashed: false, hasCurrentRevision: true) {
             alias
@@ -98,36 +91,16 @@ export const dataQuery = gql`
             }
           }
           ...taxonomyTermsV2
-          revisions(unrevised: true) {
-            totalCount
-          }
         }
       }
 
       ... on Exercise {
-        subject {
-          taxonomyTerm {
-            name
-          }
-        }
         ...exercise
-        revisions(unrevised: true) {
-          totalCount
-        }
       }
 
       ... on ExerciseGroup {
-        subject {
-          taxonomyTerm {
-            name
-          }
-        }
-        date
         currentRevision {
           ...exerciseGroupRevision
-        }
-        revisions(unrevised: true) {
-          totalCount
         }
       }
 
@@ -186,9 +159,6 @@ export const dataQuery = gql`
                 date
                 cohesive
               }
-              revisions(unrevised: true) {
-                totalCount
-              }
               licenseId
             }
             ... on TaxonomyTerm {
@@ -225,76 +195,25 @@ export const dataQuery = gql`
     }
   }
 
-  fragment taxonomyTermChild on AbstractRepository {
-    ... on Article {
-      alias
-      id
-      currentRevision {
-        title
-      }
-      revisions(first: 1, unrevised: true) {
-        nodes {
-          title
-        }
-      }
+  fragment taxonomyTermChild on AbstractEntity {
+    alias
+    id
+    date
+    currentRevision {
+      title
     }
-
-    ... on Video {
-      alias
-      id
-      date
-      currentRevision {
+    revisions(first: 1, unrevised: true) {
+      totalCount
+      nodes {
         title
-        date
-      }
-      revisions(first: 1, unrevised: true) {
-        nodes {
-          title
-        }
-      }
-    }
-
-    ... on Applet {
-      alias
-      id
-      currentRevision {
-        title
-      }
-      revisions(first: 1, unrevised: true) {
-        nodes {
-          title
-        }
       }
     }
 
     ... on Course {
-      alias
-      id
-      currentRevision {
-        title
-      }
-      revisions(first: 1, unrevised: true) {
-        nodes {
-          title
-        }
-      }
       pages {
         id
         currentRevision {
           id
-        }
-      }
-    }
-
-    ... on Event {
-      alias
-      id
-      currentRevision {
-        title
-      }
-      revisions(first: 1, unrevised: true) {
-        nodes {
-          title
         }
       }
     }

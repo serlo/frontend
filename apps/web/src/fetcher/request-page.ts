@@ -178,7 +178,7 @@ export async function requestPage(
   }
 
   if (uuid.__typename === UuidType.ExerciseGroup) {
-    const exerciseGroup = createExerciseGroup(uuid)
+    const exerciseGroup = createExerciseGroup(uuid, uuid.revisions.totalCount)
     return {
       kind: 'single-entity',
       entityData: {
