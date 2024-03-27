@@ -26,7 +26,7 @@ export const dataQuery = gql`
 
       ... on AbstractEntity {
         date
-        revisions(unrevised: false) {
+        revisions(unrevised: true) {
           totalCount
           nodes {
             id
