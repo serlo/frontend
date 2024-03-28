@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
-import { SkipExerciseButton } from './skip-exercise-button'
 import { feedbackAnimation } from '../utils/feedback-animation'
 import {
   useExerciseData,
@@ -103,9 +102,6 @@ export function ExerciseFeedback({
         <div className="pt-5 sm:flex sm:justify-between sm:pt-0">
           {noUserInput ? noUserInputText ?? '' : renderMainButton()}
         </div>
-      </div>
-      <div className="flex justify-between">
-        <SkipExerciseButton makeNewExercise={newEx} hidden={isNextButton} />
       </div>
     </>
   )
