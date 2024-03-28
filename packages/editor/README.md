@@ -43,12 +43,9 @@ This is an early beta version of the [Serlo Editor](https://de.serlo.org/editor)
 
 - The `LtikContext.Provider` is used to provide the `ltik` token to any components that need it, encapsulating the editor or renderer within this context to ensure they have access to authentication tokens if required.
 
-- Serlo Editor plugins can be configured to an extent, this configuration is currently done via the `basicPluginsConfig` prop of the `SerloEditor` component.
+- Serlo Editor plugins can be configured to an extent, this configuration is currently done via the `pluginsConfig` prop of the `SerloEditor` component.
 
-- Custom plugins are currently supported for the Edusharing integration, but will not be supported in the future. The following `SerloEditor` props will be deprecated:
-  - `customPlugins`
-  - `customRenderers`
-  - `customPluginsRenderers`
+- Custom plugins are currently supported for the Edusharing integration, but will not be supported in the future.
 
 ## Releasing a new version to npm
 
