@@ -21,8 +21,9 @@ export const getStaticProps: GetStaticProps<LicenseDetailProps> = async (
 
   if (isNaN(id)) return { notFound: true }
 
-  const licenseContent = licensesContent.find((license) => id === license.id)
-    ?.content
+  const licenseContent = licensesContent.find(
+    (license) => id === license.id
+  )?.content
 
   if (!licenseContent) return { notFound: true }
 

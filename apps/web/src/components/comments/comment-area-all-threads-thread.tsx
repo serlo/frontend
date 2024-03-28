@@ -1,4 +1,4 @@
-import { Entity, Thread } from '@serlo/authorization'
+import { Thread } from '@serlo/authorization'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -43,7 +43,6 @@ export function CommentAreaAllThreadsThread({
   const canSetStatus =
     auth &&
     (canDo(Thread.setThreadState) ||
-      canDo(Entity.checkoutRevision) ||
       thread.comments.nodes.some((obj) => obj.author.id === auth.id))
 
   return (
@@ -64,12 +63,13 @@ export function CommentAreaAllThreadsThread({
           <div>
             <select
               className={cn(
-                'mb-1 rounded py-2 pl-4 pr-6 disabled:appearance-none disabled:py-1 disabled:text-center',
+                'mb-1 rounded bg-opacity-40 py-2 pl-4 pr-6 opacity-100',
+                'disabled:cursor-not-allowed disabled:appearance-none disabled:px-4 disabled:py-1 disabled:text-center',
                 status === 'open'
                   ? 'bg-yellow'
                   : status === CommentStatus.Done
                     ? 'bg-brandgreen-500'
-                    : 'bg-gray-200'
+                    : 'bg-gray-300'
               )}
               disabled={!canSetStatus}
               value={status}

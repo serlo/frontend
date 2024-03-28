@@ -153,7 +153,8 @@ export const instanceData = {
         chooseOption: 'Click on one of the options.',
         printModeChooseOption: 'Check one of the options.',
         strategy: 'Strategy',
-        solution: 'Proposed Solution'
+        solution: 'Proposed Solution',
+        showHiddenInteractive: 'Check your solution here'
       },
       boxTypes: {
         blank: 'Blank',
@@ -822,7 +823,12 @@ export const loggedInData = {
         exercise: {
           title: "பயிற்சிகள்",
           description: 'Interactive or text based exercise',
-          placeholder: 'Type the assignment here (Optional)'
+          placeholder: 'Type the assignment here (Optional)',
+          hideInteractiveInitially: {
+            info: 'Interactive element collapsed on load',
+            deactivate: 'Load Interactive Element visible',
+            activate: 'Load Interactive Element collapsed'
+          }
         },
         inputExercise: {
           title: 'Input Exercise',
@@ -968,7 +974,10 @@ export const loggedInData = {
           addExercise: 'Add exercise',
           kindOfExerciseGroup: 'Kind of exercise group',
           notCohesive: 'not cohesive',
-          cohesive: 'cohesive'
+          cohesive: 'cohesive',
+          addIntermediateTask: 'Add Intermediate Task',
+          removeIntermediateTask: 'Remove intermediate Task',
+          intermediateTask: 'Intermediate Task'
         }
       },
       edtrIo: {

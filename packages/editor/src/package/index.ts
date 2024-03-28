@@ -1,26 +1,12 @@
 export { SerloEditor, type SerloEditorProps } from './editor'
 export { SerloRenderer, type SerloRendererProps } from './serlo-renderer'
 
+export { type BaseEditor } from '@editor/core'
+
 export { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 export { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 
 export { EditorPluginType } from '@editor/types/editor-plugin-type'
-
-export { ROOT } from '@editor/store/root/constants'
-export {
-  redo,
-  undo,
-  selectHasPendingChanges,
-  useAppDispatch,
-  useAppSelector,
-  store,
-  selectPendingChanges,
-  selectHasUndoActions,
-  selectHasRedoActions,
-  persistHistory,
-  selectDocuments,
-  selectStaticDocument,
-} from '@editor/store'
 
 export { StaticRenderer } from '@editor/static-renderer/static-renderer'
 

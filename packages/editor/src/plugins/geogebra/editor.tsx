@@ -30,7 +30,7 @@ export function GeogebraEditor(props: GeogebraProps) {
           embedUrl={url}
           className={!focused ? 'pointer-events-none' : ''}
         >
-          <GeogebraRenderer url={url} geogebraId={cleanId} />
+          <GeogebraRenderer geogebraId={cleanId} />
         </EmbedWrapper>
       ) : (
         <div

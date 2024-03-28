@@ -119,6 +119,7 @@ export function convertAiGeneratedScExerciseToEditorDocument(
           ],
         },
         interactive,
+        hideInteractiveInitially: undefined,
         solution,
         licenseId: undefined,
       },
@@ -152,6 +153,7 @@ function createExerciseGroupDocument(
       },
       exercises,
       cohesive: false,
+      intermediateTasks: undefined,
     },
   }
 }

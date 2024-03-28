@@ -13,7 +13,7 @@ export function RowsStaticRenderer({ state }: EditorRowsDocument) {
         const key = row.id ?? `${row.plugin}${index}`
 
         if (row.plugin === EditorPluginType.Anchor)
-          return <StaticRenderer document={row} />
+          return <StaticRenderer document={row} key={key} />
 
         return (
           <div key={key} id={row.id?.split('-')[0]} className="my-block">

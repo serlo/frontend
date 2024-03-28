@@ -13,8 +13,10 @@ export const UnsupportedEditor: React.FunctionComponent<
 > = (props) => {
   const unsupportedStrings = useEditorStrings().plugins.unsupported
 
-  const unsupportedType = selectStaticDocument(store.getState(), props.id)
-    ?.plugin
+  const unsupportedType = selectStaticDocument(
+    store.getState(),
+    props.id
+  )?.plugin
   const { focused, id } = props
 
   return (

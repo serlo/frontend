@@ -268,7 +268,7 @@ export const sharedEventFragments = gql`
 `
 
 export const sharedExerciseFragments = gql`
-  fragment exercise on AbstractExercise {
+  fragment exercise on Exercise {
     id
     alias
     instance
