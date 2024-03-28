@@ -25,7 +25,7 @@ import '@/assets-webkit/styles/serlo-tailwind.css'
 
 // Custom plugins and renderers are an Edusharing specific feature,
 // and will not be supported in the future
-interface PluginsConfig {
+export interface PluginsConfig {
   basicPluginsConfig: CreateBasicPluginsConfig
   customPlugins?: Array<PluginWithData & PluginStaticRenderer>
   customRenderers?: Partial<InitRenderersArgs>
