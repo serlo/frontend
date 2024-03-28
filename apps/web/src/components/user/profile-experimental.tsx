@@ -153,7 +153,7 @@ export function ProfileExperimental() {
   function renderFeatureButton(feature: FeatureKey, href?: string) {
     if (!features[feature]) return null
 
-    const isActive = features[feature]!.isActive
+    const isActive = features[feature].isActive
     return (
       <button
         className="inline-block cursor-pointer align-bottom"
