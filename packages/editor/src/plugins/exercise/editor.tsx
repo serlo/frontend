@@ -125,12 +125,7 @@ export function ExerciseEditor(props: ExerciseProps) {
             {solution.render()}
           </div>
         ) : (
-          <div
-            className={cn(
-              'mt-20 hidden max-w-[50%] group-focus-within/exercise:block',
-              focused && '!block'
-            )}
-          >
+          <div className={cn('mt-12 max-w-[50%]', focused && '!block')}>
             <AddButton onClick={() => solution.create()}>
               {exTemplateStrings.createSolution}
             </AddButton>
