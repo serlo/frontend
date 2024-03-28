@@ -18,6 +18,7 @@ import {
   numberLineGeneratorLevel2,
   numberLineGeneratorLevel3,
 } from './generators/number-line-generator'
+import { EuroMindestensFeedback } from '../number-input-exercise/euro-mindestens-feeback'
 import { MultipleNumberInputExercise } from '../number-input-exercise/multiple-number-input-exercise'
 import { NumberLineInputExercise } from '@/components/math-skills/exercise-implementations/number-line-input-exercise'
 import { OrderValues } from '@/components/math-skills/exercise-implementations/order-values'
@@ -907,6 +908,10 @@ export const exercisesGrade5 = {
         }}
       />
     ),
+  },
+  'euro-muenzen-feedback-test': {
+    title: 'Wie viele Münzen mindesten',
+    component: <EuroMindestensFeedback />,
   },
   'euro-scheine-mindestens': {
     title: 'Wie viele Scheine mindestens?',
