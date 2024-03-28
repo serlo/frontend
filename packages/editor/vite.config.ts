@@ -6,7 +6,6 @@ import dts from 'vite-plugin-dts'
 import svgr from 'vite-plugin-svgr'
 
 // https://vitejs.dev/guide/build.html#library-mode
-
 /* we use vite only for building the serlo editor package */
 
 // eslint-disable-next-line import/no-default-export

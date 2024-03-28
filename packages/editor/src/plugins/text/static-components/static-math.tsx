@@ -1,10 +1,11 @@
 import { sanitizeLatex } from '@editor/plugins/text/utils/sanitize-latex'
-import { KaTeXStyles } from '@serlo/frontend/src/../external/katexstyles'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import KaTeX from 'katex'
-
-/* eslint-disable import/no-unassigned-import */
+// eslint-disable-next-line import/no-unassigned-import
 import 'katex/contrib/mhchem'
+
+// eslint-disable-next-line import/no-unassigned-import
+import 'serlo-katex-styles/styles.css'
 import type { MathElement } from '../types/text-editor'
 
 export type StaticMathProps = Omit<MathElement, 'children'>
@@ -54,7 +55,6 @@ export function StaticMath({ src, inline }: StaticMathProps) {
       : ''
     return (
       <>
-        <KaTeXStyles />
         <span
           className="inline-block py-1 [page-break-inside:avoid]"
           dangerouslySetInnerHTML={{ __html: html }}

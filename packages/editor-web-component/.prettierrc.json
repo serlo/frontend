@@ -1,0 +1,7 @@
+{
+  "semi": false,
+  "singleQuote": true,
+  "tailwindFunctions": ["cn"],
+  "trailingComma": "es5",
+  "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-packagejson"]
+}

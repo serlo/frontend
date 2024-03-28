@@ -106,9 +106,9 @@ const SerloTableStaticRenderer = dynamic<EditorSerloTableDocument>(() =>
   )
 )
 const ExerciseGroupStaticRenderer = dynamic<EditorExerciseGroupDocument>(() =>
-  import('@editor/plugins/exercise-group/static').then(
-    (mod) => mod.ExerciseGroupStaticRenderer
-  )
+  import(
+    '@/serlo-editor-integration/serlo-plugin-wrappers/exercise-group-serlo-static-renderer'
+  ).then((mod) => mod.ExerciseGroupSerloStaticRenderer)
 )
 const TextExerciseGroupTypeStaticRenderer =
   dynamic<EditorTemplateExerciseGroupDocument>(() =>

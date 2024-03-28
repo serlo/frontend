@@ -1,7 +1,7 @@
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { EditorTemplateExerciseGroupDocument } from '@editor/types/editor-plugins'
-import { useAuthentication } from '@serlo/frontend/src/auth/use-authentication'
+// import { useAuthentication } from '@serlo/frontend/src/auth/use-authentication'
 import type { MoreAuthorToolsProps } from '@serlo/frontend/src/components/user-tools/foldout-author-menus/more-author-tools'
 import { ExerciseInlineType } from '@serlo/frontend/src/data-types'
 import dynamic from 'next/dynamic'
@@ -21,7 +21,7 @@ export function TextExerciseGroupTypeStaticRenderer(
 ) {
   const { state, serloContext: context } = props
   const [loaded, setLoaded] = useState(false)
-  const auth = useAuthentication()
+  // const auth = useAuthentication()
   useEffect(() => setLoaded(true), [])
 
   const { content, exercises } = state
@@ -36,7 +36,7 @@ export function TextExerciseGroupTypeStaticRenderer(
               <ExerciseLicenseNotice exerciseLicenseId={context?.licenseId} />
             </div>
           ) : null}
-          {loaded && auth && context?.uuid ? (
+          {loaded && context?.uuid ? (
             <AuthorToolsExercises
               data={{
                 type: ExerciseInlineType.ExerciseGroup,
@@ -72,7 +72,7 @@ export function TextExerciseGroupTypeStaticRenderer(
             <ExerciseLicenseNotice exerciseLicenseId={context?.licenseId} />
           </div>
         ) : null}
-        {loaded && auth && context?.uuid ? (
+        {loaded && context?.uuid ? (
           <AuthorToolsExercises
             data={{
               type: ExerciseInlineType.ExerciseGroup,

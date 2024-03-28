@@ -1,0 +1,9 @@
+{
+  "extends": "@serlo/typescript-config/editor.json",
+  "compilerOptions": {
+    "checkJs": true,
+    "outDir": "dist"
+  },
+  "include": [".", ".*.js"],
+  "exclude": ["node_modules", "dist"]
+}
