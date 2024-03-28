@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react'
 
 import { ExerciseGroupRenderer } from './renderer'
 import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
+import { ExerciseGroupProvider } from '@/contexts/exercise-group-context'
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
   import(
@@ -56,12 +57,16 @@ export function ExerciseGroupStaticRenderer(
           />
         ) : null}
       </div>
-      <ExerciseGroupRenderer
-        content={
-          <StaticRenderer document={content as unknown as EditorRowsDocument} />
-        }
-        exercises={rendered}
-      />
+      <ExerciseGroupProvider value>
+        <ExerciseGroupRenderer
+          content={
+            <StaticRenderer
+              document={content as unknown as EditorRowsDocument}
+            />
+          }
+          exercises={rendered}
+        />
+      </ExerciseGroupProvider>
     </div>
   )
 }
