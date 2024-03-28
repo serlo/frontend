@@ -34,7 +34,7 @@ import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
 
 export function createRenderers(
-  customPluginRenderers: PluginStaticRenderer[]
+  customPluginRenderers: PluginStaticRenderer[] = []
 ): InitRenderersArgs {
   return {
     pluginRenderers: [

@@ -5,12 +5,13 @@ import {
 } from '@editor/editor-integration/create-basic-plugins'
 import { createRenderers } from '@editor/editor-integration/create-renderers'
 import {
-  type PluginsWithData,
   editorPlugins,
+  type PluginWithData,
 } from '@editor/plugin/helpers/editor-plugins'
 import {
-  type InitRenderersArgs,
   editorRenderers,
+  type PluginStaticRenderer,
+  type InitRenderersArgs,
 } from '@editor/plugin/helpers/editor-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { SupportedLanguage } from '@editor/types/language-data'
@@ -22,18 +23,18 @@ import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 
 import '@/assets-webkit/styles/serlo-tailwind.css'
 
+// Custom plugins and renderers are an Edusharing specific feature,
+// and will not be supported in the future
+interface PluginsConfig {
+  basicPluginsConfig: CreateBasicPluginsConfig
+  customPlugins?: Array<PluginWithData & PluginStaticRenderer>
+  customRenderers?: Partial<InitRenderersArgs>
+}
+
 export interface SerloEditorProps {
   children: EditorProps['children']
+  pluginsConfig: PluginsConfig
   initialState?: EditorProps['initialState']
-  basicPluginsConfig: CreateBasicPluginsConfig
-  // Custom plugins are an Edusharing specific feature, and will not be supported in the future
-  customPlugins: PluginsWithData
-  // Custom renderers are an Edusharing specific feature, and will not be supported in the future
-  customRenderers: Partial<
-    Pick<InitRenderersArgs, 'mathRenderer' | 'linkRenderer'>
-  >
-  // Custom plugins renderers are an Edusharing specific feature, and will not be supported in the future
-  customPluginsRenderers: InitRenderersArgs['pluginRenderers']
   language?: SupportedLanguage
 }
 
@@ -48,21 +49,15 @@ const emptyState = {
 }
 
 /** For exporting the editor */
-export function SerloEditor({
-  children,
-  initialState,
-  basicPluginsConfig,
-  customPlugins,
-  customRenderers,
-  customPluginsRenderers,
-  language = 'de',
-}: SerloEditorProps) {
+export function SerloEditor(props: SerloEditorProps) {
+  const { children, pluginsConfig, initialState, language = 'de' } = props
+  const { basicPluginsConfig, customPlugins, customRenderers } = pluginsConfig
   const { instanceData, loggedInData } = editorData[language]
 
   const basicPlugins = createBasicPlugins(basicPluginsConfig)
-  editorPlugins.init([...basicPlugins, ...customPlugins])
+  editorPlugins.init([...basicPlugins, ...(customPlugins || [])])
 
-  const basicRenderers = createRenderers(customPluginsRenderers)
+  const basicRenderers = createRenderers(customPlugins)
   editorRenderers.init({ ...basicRenderers, ...customRenderers })
 
   return (
