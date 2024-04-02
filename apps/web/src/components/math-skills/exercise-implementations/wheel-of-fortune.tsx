@@ -198,7 +198,7 @@ export function WheelOfFortune() {
               {data.event === 1 ? 'zweimal keine ' + data.number_2 : null}
               {data.event === 2 ? 'zweimal eine ' + data.number_3 : null}
               {data.event === 3 ? 'mindestens eine ' + data.number_1 : null}
-              {data.event === 4 ? 'zweimal eine ' + data.number_2 : null}) ={' '}
+              {data.event === 4 ? 'Genau eine ' + data.number_2 : null}) ={' '}
               {data.event === 3
                 ? '1 - P(zweimal keine ' + data.number_1 + ') = 1 - '
                 : null}{' '}
