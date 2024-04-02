@@ -12,11 +12,11 @@ export function buildFrac(
   )
 }
 
-export function buildOverline(x: JSX.Element) {
+export function buildOverline(x: JSX.Element | number | string) {
   return <span className="overline">{x}</span>
 }
 
-export function buildSqrt(x: JSX.Element) {
+export function buildSqrt(x: JSX.Element | number | string) {
   return (
     <>
       <span className="text-2xl">&#8730;</span>
@@ -39,15 +39,18 @@ export function buildBigSqrt(x: JSX.Element) {
   )
 }
 
-export function buildVec2(x: JSX.Element, y: JSX.Element) {
+export function buildVec2(
+  x: JSX.Element | string | number,
+  y: JSX.Element | string | number
+) {
   return (
     <>
-      <span className="inline-block  scale-y-[2.1]">(</span>
+      <span className="inline-block  scale-y-[2.6]">(</span>
       <div className="mx-0.5 inline-block text-center align-middle">
         <div>{x}</div>
         <div>{y}</div>
       </div>
-      <span className="inline-block scale-y-[2.1]">)</span>
+      <span className="inline-block scale-y-[2.6]">)</span>
     </>
   )
 }
@@ -67,16 +70,39 @@ export function buildBlock(color: 'gray' | 'green' | 'orange', x: JSX.Element) {
   )
 }
 
-export function buildVec(x: JSX.Element) {
+export function buildVec(x: JSX.Element | string | number) {
   return (
     <span className="relative mr-0.5 inline-block">
-      <div className="absolute -top-0.5 left-0 right-0">
+      <div className="absolute -top-[0.13em] left-0 right-0">
         <div className="flex justify-end">{rightarrow}</div>
       </div>
       <div>{x}</div>
     </span>
   )
 }
+
+export function buildMat2(
+  x1: JSX.Element | string | number,
+  x2: JSX.Element | string | number,
+  y1: JSX.Element | string | number,
+  y2: JSX.Element | string | number
+) {
+  return (
+    <>
+      <span className="inline-block  scale-y-[2.6]">(</span>
+      <div className="mx-1 inline-block text-center align-middle">
+        <div>{x1}</div>
+        <div>{y1}</div>
+      </div>
+      <div className="mx-1 inline-block text-center align-middle">
+        <div>{x2}</div>
+        <div>{y2}</div>
+      </div>
+      <span className="inline-block scale-y-[2.6]">)</span>
+    </>
+  )
+}
+
 const rightarrow = (
   <svg
     height="0.522em"

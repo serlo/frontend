@@ -16,6 +16,7 @@ import { ParabolaCharacteristics } from '../exercise-implementations/parabola-by
 import { PlotFunction } from '../exercise-implementations/plot-function-1'
 import { PlotFunction2 } from '../exercise-implementations/plot-function-2'
 import { RootEquations } from '../exercise-implementations/root-equations'
+import { RotatePoint } from '../exercise-implementations/rotate-point'
 import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
 import { SurfaceThreePyramide } from '../exercise-implementations/surface-pyramide-2'
 import { Trigonometry } from '../exercise-implementations/trigonometry'
@@ -71,6 +72,13 @@ export const middleSchoolFinalExam = {
     useCalculator: false,
     track: 1,
     component: <IceCreamShop />,
+  },
+  drehung: {
+    title: 'Punkt drehen',
+    subtitle: 'Abbildungen',
+    useCalculator: false,
+    track: 1,
+    component: <RotatePoint />,
   },
   'wheel-of-fortune': {
     title: 'Glücksrad',
@@ -222,3 +230,22 @@ export const middleSchoolFinalExam = {
     component: <SurfaceThreePyramide />,
   },
 } as const
+
+/*
+
+Template for new exercise
+
+import { SelfEvaluationExercise } from './self-evaluation-exercise'
+
+export function RotatePoint() {
+  return (
+    <SelfEvaluationExercise
+      generator={() => null}
+      renderTask={() => <></>}
+      renderSolution={() => <></>}
+      centAmount={35}
+    />
+  )
+}
+
+*/
