@@ -1,4 +1,9 @@
-export function buildFrac(x: JSX.Element, y: JSX.Element) {
+import { cn } from '@/helper/cn'
+
+export function buildFrac(
+  x: JSX.Element | string | number,
+  y: JSX.Element | string | number
+) {
   return (
     <div className="relative mx-0.5 inline-block text-center align-middle">
       <span className="block p-0.5">{x}</span>
@@ -44,6 +49,21 @@ export function buildVec2(x: JSX.Element, y: JSX.Element) {
       </div>
       <span className="inline-block scale-y-[2.1]">)</span>
     </>
+  )
+}
+
+export function buildBlock(color: 'gray' | 'green' | 'orange', x: JSX.Element) {
+  return (
+    <div
+      className={cn(
+        'my-3 inline-block rounded-md bg-opacity-20 p-1 px-3 text-2xl',
+        color === 'gray' && 'bg-gray-300',
+        color === 'green' && 'bg-newgreen',
+        color === 'orange' && 'bg-yellow'
+      )}
+    >
+      {x}
+    </div>
   )
 }
 
