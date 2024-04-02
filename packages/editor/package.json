@@ -80,7 +80,7 @@
     "@types/nprogress": "^0.2.1",
     "@types/prismjs": "^1.26.1",
     "@types/qrcode.react": "^1.0.3",
-    "@types/ramda": "^0.29.6",
+    "@types/ramda": "^0.29.12",
     "@types/react": "^18.0.25",
     "@types/react-beautiful-dnd": "^13.1.5",
     "@types/react-dnd-multi-backend": "^6.0.6",
