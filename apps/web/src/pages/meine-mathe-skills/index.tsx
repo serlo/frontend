@@ -86,7 +86,7 @@ function Content() {
             </div>
             {track === 1 ? (
               <div>
-                <h4 className="text-lg font-bold">Teil A (ohne Hilfsmittel)</h4>
+                <h4 className="text-lg font-bold">Teil A (ohne Taschenrechner)</h4>
                 <div className="my-6 flex flex-wrap gap-3">
                   {examTasks
                     .filter(
@@ -98,7 +98,7 @@ function Content() {
                       renderCard(id, obj.title, obj.subtitle)
                     )}
                 </div>
-                <h4 className="text-lg font-bold">Teil B (mit Hilfsmittel)</h4>
+                <h4 className="text-lg font-bold">Teil B (mit Taschenrechner)</h4>
                 <div className="my-6 flex flex-wrap gap-3">
                   {examTasks
                     .filter(
@@ -115,7 +115,7 @@ function Content() {
             ) : null}
             {track === 2 ? (
               <div>
-                <h4 className="text-lg font-bold">Teil A (ohne Hilfsmittel)</h4>
+                <h4 className="text-lg font-bold">Teil A (ohne Taschenrechner)</h4>
                 <div className="my-6 flex flex-wrap gap-3">
                   {examTasks
                     .filter(
@@ -127,7 +127,7 @@ function Content() {
                       renderCard(id, obj.title, obj.subtitle)
                     )}
                 </div>
-                <h4 className="text-lg font-bold">Teil B (mit Hilfsmittel)</h4>
+                <h4 className="text-lg font-bold">Teil B (mit Taschenrechner)</h4>
                 <div className="my-6 flex flex-wrap gap-3">
                   {examTasks
                     .filter(
@@ -150,7 +150,7 @@ function Content() {
   )
 
   function renderCard(id: string, title: string, subtitle: string) {
-    const slug = `${String(grade)}/${id}`
+    const slug = `training-realschule-bayern/${id}`
     const { skillCent } = getExerciseData(slug)
     const points = Array.from({ length: getPointsAmount(skillCent) })
 
