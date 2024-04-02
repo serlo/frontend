@@ -23,6 +23,7 @@ export function createNumberDistancesExercise(
             c: baseNumber * factor * 3 + overlay,
             result: -1,
           }
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
           const toFill = randomItemFromArray(
             level === 'Level 1'
               ? ['c']
