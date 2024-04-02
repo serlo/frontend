@@ -65,7 +65,7 @@ function Content() {
                 href="/meine-mathe-skills?zweig=1"
                 onClick={(e) => {
                   e.preventDefault()
-                  void router.replace(
+                  void router.push(
                     '/meine-mathe-skills?zweig=1',
                     undefined,
                     { shallow: true }
@@ -83,7 +83,7 @@ function Content() {
                 href="/meine-mathe-skills?zweig=2"
                 onClick={(e) => {
                   e.preventDefault()
-                  void router.replace(
+                  void router.push(
                     '/meine-mathe-skills?zweig=2',
                     undefined,
                     { shallow: true }
