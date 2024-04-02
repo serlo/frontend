@@ -144,8 +144,8 @@ export function InjectionStaticRenderer({
 
             // use id in hash to load one exercise out of the group
             if (hash) {
-              const exercise = content.state.exercises.find(
-                (exercise) => exercise.id?.startsWith(hash)
+              const exercise = content.state.exercises.find((exercise) =>
+                exercise.id?.startsWith(hash)
               )
               if (exercise) {
                 setContent([exercise])

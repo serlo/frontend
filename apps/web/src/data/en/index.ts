@@ -201,6 +201,7 @@ export const instanceData = {
     },
     comments: {
       question: 'Do you have a question?',
+      questionLink: 'Write it below',
       commentsOne: 'Comment',
       commentsMany: 'Comments',
       submit: 'Submit',
