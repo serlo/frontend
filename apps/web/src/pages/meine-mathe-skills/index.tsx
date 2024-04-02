@@ -33,7 +33,6 @@ const ContentPage: NextPage = () => {
 }
 
 function Content() {
-
   const [track, setTrack] = useState<1 | 2>(() => {
     if (typeof sessionStorage === 'undefined') return 1
     const sessionTrack = parseInt(sessionStorage.getItem(sessionKey) ?? '1')
@@ -83,7 +82,9 @@ function Content() {
             </div>
             {track === 1 ? (
               <div>
-                <h4 className="text-lg font-bold">Teil A (ohne Taschenrechner)</h4>
+                <h4 className="text-lg font-bold">
+                  Teil A (ohne Taschenrechner)
+                </h4>
                 <div className="my-6 flex flex-wrap gap-3">
                   {examTasks
                     .filter(
@@ -95,7 +96,9 @@ function Content() {
                       renderCard(id, obj.title, obj.subtitle)
                     )}
                 </div>
-                <h4 className="text-lg font-bold">Teil B (mit Taschenrechner)</h4>
+                <h4 className="text-lg font-bold">
+                  Teil B (mit Taschenrechner)
+                </h4>
                 <div className="my-6 flex flex-wrap gap-3">
                   {examTasks
                     .filter(
@@ -112,7 +115,9 @@ function Content() {
             ) : null}
             {track === 2 ? (
               <div>
-                <h4 className="text-lg font-bold">Teil A (ohne Taschenrechner)</h4>
+                <h4 className="text-lg font-bold">
+                  Teil A (ohne Taschenrechner)
+                </h4>
                 <div className="my-6 flex flex-wrap gap-3">
                   {examTasks
                     .filter(
@@ -124,7 +129,9 @@ function Content() {
                       renderCard(id, obj.title, obj.subtitle)
                     )}
                 </div>
-                <h4 className="text-lg font-bold">Teil B (mit Taschenrechner)</h4>
+                <h4 className="text-lg font-bold">
+                  Teil B (mit Taschenrechner)
+                </h4>
                 <div className="my-6 flex flex-wrap gap-3">
                   {examTasks
                     .filter(

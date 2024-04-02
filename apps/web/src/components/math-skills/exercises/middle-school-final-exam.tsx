@@ -4,6 +4,7 @@ import { Asymptote2 } from '../exercise-implementations/asymptote-2'
 import { ExponentialFunction } from '../exercise-implementations/exponential-function-1'
 import { ExponentialFunctionTime } from '../exercise-implementations/exponential-function-2'
 import { ExponentialEquation } from '../exercise-implementations/exponential-function-3'
+import { IceCreamShop } from '../exercise-implementations/ice-cream-shop'
 import { LogarithmExercise1 } from '../exercise-implementations/logarithm-exercise-1'
 import { LogarithmExercise2 } from '../exercise-implementations/logarithm-exericse-2'
 import { AbbildungGraphen } from '../exercise-implementations/mapping-graphs-1'
@@ -28,6 +29,7 @@ import { WheelOfFortune } from '../exercise-implementations/wheel-of-fortune'
 //track:  1 = Mathe-Zweig 1, 2 = Mathe-Zweig 2 & 3, 3 = beide Zweige
 
 export const middleSchoolFinalExam = {
+  // Mathe-Zweig Teil A
   'logarithmus-1': {
     title: 'Terme zusammenfassen',
     subtitle: 'Logarithmus',
@@ -62,6 +64,91 @@ export const middleSchoolFinalExam = {
     useCalculator: false,
     track: 1,
     component: <Trigonometry />,
+  },
+  eisdiele: {
+    title: 'Eisdiele',
+    subtitle: 'Daten und Zufall',
+    useCalculator: false,
+    track: 1,
+    component: <IceCreamShop />,
+  },
+  'wheel-of-fortune': {
+    title: 'Glücksrad',
+    subtitle: 'Daten und Zufall',
+    useCalculator: false,
+    track: 1,
+    component: <WheelOfFortune />,
+  },
+  // Mathe-Zweig, Teil B
+  'exponential-function-1': {
+    title: 'Kapital berechnen',
+    subtitle: 'Exponentialfunktion',
+    useCalculator: true,
+    track: 1,
+    component: <ExponentialFunction />,
+  },
+  'exponential-function-2': {
+    title: 'Anlagezeit berechnen',
+    subtitle: 'Exponentialfunktion',
+    useCalculator: true,
+    track: 1,
+    component: <ExponentialFunctionTime />,
+  },
+  'root-equations-1': {
+    title: 'Zinssatz berechnen',
+    subtitle: 'Wurzeln',
+    useCalculator: true,
+    track: 1,
+    component: <RootEquations />,
+  },
+  'plot-function-1': {
+    title: 'Graphen skizzieren',
+    subtitle: 'Ganzrationale Funktionen',
+    useCalculator: true,
+    track: 1,
+    component: <PlotFunction />,
+  },
+  'plot-function-2': {
+    title: 'Graphen skizzieren',
+    subtitle: 'Exponentialfunktionen',
+    useCalculator: true,
+    track: 1,
+    component: <PlotFunction2 />,
+  },
+  'asymptote-1': {
+    title: 'Definitions-, Wertebereich und Asymptote',
+    subtitle: 'Ganzrationale Funktionen',
+    useCalculator: true,
+    track: 1,
+    component: <Asymptote1 />,
+  },
+  'asymptote-2': {
+    title: 'Definitions-, Wertebereich und Asymptote',
+    subtitle: 'Exponentialfunktionen',
+    useCalculator: true,
+    track: 1,
+    component: <Asymptote2 />,
+  },
+  'oblique-image-1': {
+    title: 'Schrägbilder zeichnen',
+    subtitle: 'Geometrie',
+    useCalculator: true,
+    track: 1,
+    component: <ObliqueImage />,
+  },
+  'mapping-graphs-1': {
+    title: 'Graphen verschieben',
+    subtitle: 'Funktionen',
+    useCalculator: true,
+    track: 1,
+    component: <AbbildungGraphen />,
+  },
+  'mapping-graphs-2': {
+    title: 'Graphen spiegeln',
+    subtitle: 'Funktionen',
+    useCalculator: true,
+    track: 1,
+    component: <AbbildungGraphen2 />,
   },
   'normalform-1': {
     title: 'Normalform einer Parabel',
@@ -133,82 +220,5 @@ export const middleSchoolFinalExam = {
     useCalculator: true,
     track: 2,
     component: <SurfaceThreePyramide />,
-  },
-  'exponential-function-1': {
-    title: 'Kapital berechnen',
-    subtitle: 'Exponentialfunktion',
-    useCalculator: true,
-    track: 1,
-    component: <ExponentialFunction />,
-  },
-  'exponential-function-2': {
-    title: 'Anlagezeit berechnen',
-    subtitle: 'Exponentialfunktion',
-    useCalculator: true,
-    track: 1,
-    component: <ExponentialFunctionTime />,
-  },
-  'root-equations-1': {
-    title: 'Zinssatz berechnen',
-    subtitle: 'Wurzeln',
-    useCalculator: true,
-    track: 1,
-    component: <RootEquations />,
-  },
-  'plot-function-1': {
-    title: 'Graphen skizzieren',
-    subtitle: 'Ganzrationale Funktionen',
-    useCalculator: true,
-    track: 1,
-    component: <PlotFunction />,
-  },
-  'plot-function-2': {
-    title: 'Graphen skizzieren',
-    subtitle: 'Exponentialfunktionen',
-    useCalculator: true,
-    track: 1,
-    component: <PlotFunction2 />,
-  },
-  'asymptote-1': {
-    title: 'Definitions-, Wertebereich und Asymptote',
-    subtitle: 'Ganzrationale Funktionen',
-    useCalculator: true,
-    track: 1,
-    component: <Asymptote1 />,
-  },
-  'asymptote-2': {
-    title: 'Definitions-, Wertebereich und Asymptote',
-    subtitle: 'Exponentialfunktionen',
-    useCalculator: true,
-    track: 1,
-    component: <Asymptote2 />,
-  },
-  'oblique-image-1': {
-    title: 'Schrägbilder zeichnen',
-    subtitle: 'Geometrie',
-    useCalculator: true,
-    track: 1,
-    component: <ObliqueImage />,
-  },
-  'mapping-graphs-1': {
-    title: 'Graphen verschieben',
-    subtitle: 'Funktionen',
-    useCalculator: true,
-    track: 1,
-    component: <AbbildungGraphen />,
-  },
-  'mapping-graphs-2': {
-    title: 'Graphen spiegeln',
-    subtitle: 'Funktionen',
-    useCalculator: true,
-    track: 1,
-    component: <AbbildungGraphen2 />,
-  },
-  'wheel-of-fortune': {
-    title: 'Glücksrad',
-    subtitle: 'Wahrscheinlichkeit',
-    useCalculator: false,
-    track: 1,
-    component: <WheelOfFortune />,
   },
 } as const
