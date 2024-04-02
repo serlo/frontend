@@ -16,7 +16,6 @@ import {
 } from '@/components/math-skills/utils/math-skills-data-context'
 import { cn } from '@/helper/cn'
 
-
 const sessionKey = 'math-skills-zweig'
 
 const ContentPage: NextPage = () => {
@@ -39,9 +38,9 @@ function Content() {
   const grade = router.query.grade
 
   const [track, setTrack] = useState<1 | 2>(() => {
-    if(typeof sessionStorage === 'undefined') return 1
+    if (typeof sessionStorage === 'undefined') return 1
     const sessionTrack = parseInt(sessionStorage.getItem(sessionKey) ?? '1')
-    return [1,2].includes(sessionTrack) ? sessionTrack as 1 | 2 : 1
+    return [1, 2].includes(sessionTrack) ? (sessionTrack as 1 | 2) : 1
   })
   const { getExerciseData } = useExerciseData()
   const { data } = useMathSkillsStorage()
@@ -66,7 +65,7 @@ function Content() {
                   'my-5 inline-block rounded-lg px-2 py-1 text-2xl hover:shadow-menu'
                 )}
                 onClick={() => {
-                  sessionStorage.setItem(sessionKey,'1')
+                  sessionStorage.setItem(sessionKey, '1')
                   setTrack(1)
                 }}
               >
@@ -78,7 +77,7 @@ function Content() {
                   'my-5 ml-3 inline-block rounded-lg px-2 py-1 text-2xl hover:shadow-menu'
                 )}
                 onClick={() => {
-                  sessionStorage.setItem(sessionKey,'2')
+                  sessionStorage.setItem(sessionKey, '2')
                   setTrack(2)
                 }}
               >
