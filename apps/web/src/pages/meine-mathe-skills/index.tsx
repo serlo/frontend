@@ -16,6 +16,9 @@ import {
 } from '@/components/math-skills/utils/math-skills-data-context'
 import { cn } from '@/helper/cn'
 
+
+const sessionKey = 'math-skills-zweig'
+
 const ContentPage: NextPage = () => {
   return (
     <FrontendClientBase
@@ -36,9 +39,9 @@ function Content() {
   const grade = router.query.grade
 
   const [track, setTrack] = useState<1 | 2>(() => {
-    if (router.asPath.endsWith('zweig=1')) return 1
-    if (router.asPath.endsWith('zweig=2')) return 2
-    return 1
+    if(typeof sessionStorage === 'undefined') return 1
+    const sessionTrack = parseInt(sessionStorage.getItem(sessionKey) ?? '1')
+    return [1,2].includes(sessionTrack) ? sessionTrack as 1 | 2 : 1
   })
   const { getExerciseData } = useExerciseData()
   const { data } = useMathSkillsStorage()
@@ -57,42 +60,30 @@ function Content() {
               Training Realschule Bayern (Abschlussprüfung):
             </h2>
             <div>
-              <a
+              <button
                 className={cn(
                   track === 1 && 'bg-animal bg-opacity-50',
                   'my-5 inline-block rounded-lg px-2 py-1 text-2xl hover:shadow-menu'
                 )}
-                href="/meine-mathe-skills?zweig=1"
-                onClick={(e) => {
-                  e.preventDefault()
-                  void router.push(
-                    '/meine-mathe-skills?zweig=1',
-                    undefined,
-                    { shallow: true }
-                  )
+                onClick={() => {
+                  sessionStorage.setItem(sessionKey,'1')
                   setTrack(1)
                 }}
               >
                 Zweig I
-              </a>
-              <a
+              </button>
+              <button
                 className={cn(
                   track === 2 && 'bg-animal bg-opacity-50',
                   'my-5 ml-3 inline-block rounded-lg px-2 py-1 text-2xl hover:shadow-menu'
                 )}
-                href="/meine-mathe-skills?zweig=2"
-                onClick={(e) => {
-                  e.preventDefault()
-                  void router.push(
-                    '/meine-mathe-skills?zweig=2',
-                    undefined,
-                    { shallow: true }
-                  )
+                onClick={() => {
+                  sessionStorage.setItem(sessionKey,'2')
                   setTrack(2)
                 }}
               >
                 Zweig II/III
-              </a>
+              </button>
             </div>
             {track === 1 ? (
               <div>
