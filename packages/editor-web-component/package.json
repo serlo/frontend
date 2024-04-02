@@ -30,7 +30,7 @@
     "format:eslint": "yarn _eslint --fix",
     "format:prettier": "yarn _prettier --write",
     "lint": "npm-run-all lint:eslint lint:prettier",
-    "lint:eslint": "yarn _eslint",
+    "lint:eslint": "yarn workspace @serlo/editor build && yarn _eslint",
     "lint:prettier": "yarn _prettier --check",
     "yalc:publish": "yarn build && yalc publish --push --sig"
   },
