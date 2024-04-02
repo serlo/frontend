@@ -4,11 +4,7 @@ import { animals } from './utils/animal-data'
 import { useMathSkillsStorage } from './utils/math-skills-data-context'
 import { FaIcon } from '../fa-icon'
 
-export function LandingAnimal({
-  noChangeButton,
-}: {
-  noChangeButton?: boolean
-}) {
+export function LandingAnimal() {
   const { data, updateData } = useMathSkillsStorage()
   const { animal } = data
 
@@ -29,15 +25,13 @@ export function LandingAnimal({
         src={`/_assets/img/math-skills/${animal}.svg`}
         className="w-52 p-4"
       />
-      {noChangeButton ? null : (
-        <button
-          className="serlo-button-light absolute bottom-7 right-7 h-8 w-8 bg-brand-200 !p-1.5"
-          onClick={changeAnimal}
-        >
-          <span className="sr-only">Anderes Tier auswählen</span>
-          <FaIcon icon={faRepeat} />
-        </button>
-      )}
+      <button
+        className="serlo-button-light absolute bottom-7 right-7 h-8 w-8 bg-brand-200 !p-1.5"
+        onClick={changeAnimal}
+      >
+        <span className="sr-only">Anderes Tier auswählen</span>
+        <FaIcon icon={faRepeat} />
+      </button>
     </figure>
   )
 }
