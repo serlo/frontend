@@ -49,7 +49,7 @@ export function Trigonometry1() {
               Skizze ist nicht maßstabsgetreu
             </small>
             <p className="text-2xl">
-              Berechne die Länge der Strecke{' '}
+              Berechnen Sie die Länge der Strecke{' '}
               <b className="rounded-md bg-newgreen bg-opacity-20 p-1 overline">
                 CD
               </b>

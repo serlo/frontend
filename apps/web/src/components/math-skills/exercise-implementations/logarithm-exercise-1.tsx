@@ -60,7 +60,9 @@ export function LogarithmExercise1() {
         }
         return (
           <>
-            <h2 className="text-2xl">Fasse zu einem Logarithmus zusammen.</h2>
+            <h2 className="text-2xl">
+              Fassen Sie zu einem Logarithmus zusammen:
+            </h2>
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               {summands.map((el, i) => renderSummand(el, i))}
             </span>

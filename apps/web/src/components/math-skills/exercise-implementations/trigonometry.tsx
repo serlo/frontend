@@ -39,15 +39,15 @@ export function Trigonometry() {
         return (
           <>
             <h2 className="text-2xl">
-              Hier ist das Dreieck{' '}
-              <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">ABS</b>
+              Gegeben ist das Dreieck{' '}
+              <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">ABS</b>.
             </h2>
             <SubComponent data={data} />
             <small className="mb-6 block">
               Skizze ist nicht maßstabsgetreu
             </small>
             <p className="mt-12 text-2xl">
-              Begründe warum gilt:{' '}
+              Begründen Sie, dass gilt:{' '}
               <b className="rounded-md bg-newgreen bg-opacity-20 p-1">
                 |<span className="overline">SB</span>| ={' '}
                 {buildSqrt(<>{data.sb_sq}</>)} cm
@@ -82,7 +82,7 @@ export function Trigonometry() {
             <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               |<span className="overline">SB</span>|² ={' '}
               {data.as * data.as + data.ab * data.ab} cm² -{' '}
-              {2 * data.as * data.ab * 0.5} cm²
+              {2 * data.as * data.ab * 0.5} cm² = {data.sb_sq} cm²
             </span>
             <br />
             <br />

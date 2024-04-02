@@ -41,7 +41,8 @@ export function IceCreamShop() {
             {mode === 'twoSame' && (
               <p className="mt-3 text-2xl">
                 Berechnen Sie die Wahrscheinlichkeit dafür, dass zwei Kundinnen
-                die gleiche Zusammenstellung für {kugeln} Eis wählen.
+                die gleiche {numberOfIce === 1 ? 'Auswahl' : 'Zusammenstellung'}{' '}
+                für {kugeln} Eis {numberOfIce === 1 ? 'treffen' : 'wählen'}.
               </p>
             )}
           </>

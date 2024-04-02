@@ -32,21 +32,21 @@ import { WheelOfFortune } from '../exercise-implementations/wheel-of-fortune'
 export const middleSchoolFinalExam = {
   // Mathe-Zweig Teil A
   'logarithmus-1': {
-    title: 'Terme zusammenfassen',
+    title: 'Terme zusammenfassen 1',
     subtitle: 'Logarithmus',
     useCalculator: false,
     track: 1,
     component: <LogarithmExercise1 />,
   },
   'logarithmus-2': {
-    title: 'Zusammenfassen und vereinfachen',
-    subtitle: 'Logarithmus, 3. binomische Formel',
+    title: 'Terme zusammenfassen 2',
+    subtitle: 'Logarithmus',
     useCalculator: false,
     track: 1,
     component: <LogarithmExercise2 />,
   },
   'exponential-function-3': {
-    title: 'Nullstelle berechnen',
+    title: 'Gleichung lösen',
     subtitle: 'Exponentialfunktion',
     useCalculator: false,
     track: 1,
@@ -73,19 +73,19 @@ export const middleSchoolFinalExam = {
     track: 1,
     component: <IceCreamShop />,
   },
-  drehung: {
-    title: 'Punkt drehen',
-    subtitle: 'Abbildungen',
-    useCalculator: false,
-    track: 1,
-    component: <RotatePoint />,
-  },
   'wheel-of-fortune': {
     title: 'Glücksrad',
     subtitle: 'Daten und Zufall',
     useCalculator: false,
     track: 1,
     component: <WheelOfFortune />,
+  },
+  drehung: {
+    title: 'Punkt drehen',
+    subtitle: 'Abbildungen',
+    useCalculator: false,
+    track: 1,
+    component: <RotatePoint />,
   },
   // Mathe-Zweig, Teil B
   'exponential-function-1': {
