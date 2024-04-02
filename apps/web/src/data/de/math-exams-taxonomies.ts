@@ -14,12 +14,12 @@ export const extraMetaTags = {
   297606: {
     title: 'Abiturprüfungen Mathe eA mit Lösungen',
     metaDescription:
-      'Mathe lernen fürs Abitur mit Serlo.Mathe Abi  Aufgaben erhöhtes Anforderungsnvieau mit Lösungen.Du schaffst das!',
+      'Mathe lernen fürs Abitur mit Serlo. Mathe Abi Aufgaben erhöhtes Anforderungsnvieau mit Lösungen. Du schaffst das!',
   },
   300778: {
     title: 'Abiturprüfungen Mathe gA mit Lösungen',
     metaDescription:
-      'Mathe lernen fürs Abitur mit Serlo.  Mathe Abi  Aufgaben grundlegendes Anforderungsnvieau mit Lösungen. Du schaffst das!',
+      'Mathe lernen fürs Abitur mit Serlo. Mathe Abi Aufgaben grundlegendes Anforderungsnvieau mit Lösungen. Du schaffst das!',
   },
   297604: {
     title: 'Mathe Prüfungsaufgaben mit Lösungen | Realschule',
