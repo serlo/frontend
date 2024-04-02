@@ -25,4 +25,4 @@ export { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool
 export { createRenderers } from '@editor/editor-integration/create-renderers'
 export { createBasicPlugins } from '@editor/editor-integration/create-basic-plugins'
 
-// export { EditorWebComponent } from './editor-web-component'
+export { editorData } from './editor-data'

@@ -37,8 +37,8 @@ export default defineConfig({
     react(),
     dts({
       outDir: 'dist',
-      staticImport: true,
-      insertTypesEntry: true,
+      strictOutput: true,
+      rollupTypes: true,
     }),
     svgr({ include: '**/*.svg' }),
     cssInjectedByJsPlugin(),

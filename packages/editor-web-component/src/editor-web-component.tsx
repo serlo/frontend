@@ -1,31 +1,27 @@
-// import { type PluginsWithData } from '@editor/plugin/helpers/editor-plugins'
-// import { type InitRenderersArgs } from '@editor/plugin/helpers/editor-renderer'
 import {
   SerloEditorProps,
   SerloEditor,
   editorPlugins,
   editorRenderers,
+  editorData,
 } from '@serlo/editor'
-// } from '@editor/.'
-import React from 'react'
+import React, { ReactNode } from 'react'
 import * as ReactDOM from 'react-dom/client'
 
-// import {
-//   ROOT,
-//   SerloEditorProps,
-//   SerloEditor,
-//   editorPlugins,
-//   editorRenderers,
-// } from '../../editor/src/package'
-import { editorData } from '../../editor/src/package/editor-data'
-import { type PluginsWithData } from '../../editor/src/plugin/helpers/editor-plugins'
-import { type InitRenderersArgs } from '../../editor/src/plugin/helpers/editor-renderer'
-import { LanguageData } from '../../editor/src/types/language-data'
 import '@/assets-webkit/styles/serlo-tailwind.css'
 import { createPlugins } from '@/serlo-editor-integration/create-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 type InitialState = SerloEditorProps['initialState']
+
+function isInitialState(obj: any): obj is InitialState {
+  return (
+    obj !== null &&
+    obj !== undefined &&
+    typeof obj === 'object' &&
+    'plugin' in obj
+  )
+}
 
 const exampleInitialState: InitialState = {
   plugin: 'type-article',
@@ -119,18 +115,23 @@ export class EditorWebComponent extends HTMLElement {
   mountReactComponent() {
     // Do we need to support i18n?
     const language = 'de'
-    const { loggedInData } = editorData[language] as LanguageData
+    const { loggedInData } = editorData[language]
 
     const editorStrings = loggedInData.strings.editor
 
     const initialStateAttr = this.getAttribute('initial-state')
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const initialState: InitialState = initialStateAttr
-      ? JSON.parse(initialStateAttr)
+      ? (JSON.parse(initialStateAttr) as unknown as any)
       : // TODO throw error here instead?
         exampleInitialState
 
-    const parentType = 'ROOT' as const
+    if (isInitialState(initialState)) {
+      throw new Error('Initial state is not of type InitialState')
+    }
+
+    const parentType = 'ROOT'
     // ? How can we infer the right parentType?
     // const parentType = initialState?.state
     //   ? initialState?.state?.[0].type
@@ -140,10 +141,10 @@ export class EditorWebComponent extends HTMLElement {
       createPlugins({
         editorStrings,
         parentType,
-      }) as PluginsWithData
+      })
     )
 
-    editorRenderers.init(createRenderers() as InitRenderersArgs)
+    editorRenderers.init(createRenderers())
 
     console.log('Mounting React Component', initialState)
 
@@ -157,7 +158,7 @@ export class EditorWebComponent extends HTMLElement {
             {(editor) => {
               return (
                 // <EditInner ltik={ltik} state={state} providerUrl={providerUrl}>
-                <div>{editor}</div>
+                <div>{editor as unknown as ReactNode}</div>
                 // </EditInner>
               )
             }}
