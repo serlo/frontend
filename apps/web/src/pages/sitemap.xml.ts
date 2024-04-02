@@ -1,7 +1,5 @@
 import { GetServerSideProps } from 'next'
 
-import sitemapData from '../data/sitemap.json'
-
 interface SitemapEntry {
   url: string
   lastMod?: string
@@ -33,13 +31,11 @@ function Sitemap() {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  // collect content
+  const request = await fetch(
+    'https://serlo.github.io/quickbar-updater/sitemap.json'
+  )
+  const sitemapData = (await request.json()) as SitemapEntry[]
 
-  // TODO: activate after this is deployed: https://github.com/serlo/quickbar-updater/pull/3
-  //   const request = await fetch('https://serlo.github.io/quickbar-updater/sitemap.json')
-  //   const sitemapData = (await request.json()) as SitemapEntry[]
-
-  // generate sitemap
   const sitemap = generateSiteMap([...nextStaticPages, ...sitemapData])
 
   res.setHeader('Content-Type', 'text/xml')
