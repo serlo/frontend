@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import { NextPage } from 'next'
-import { useRouter } from 'next/router'
 import { useState } from 'react'
 
 import { Link } from '@/components/content/link'
