@@ -9,11 +9,6 @@ import { editorRenderers } from '../plugin/helpers/editor-renderer'
 import '@/assets-webkit/styles/serlo-tailwind.css'
 import { createPlugins } from '@/serlo-editor-integration/create-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-// import '@/assets-webkit/styles/serlo-tailwind.css'
-// Need to import with the raw loader for the shadow DOM
-// import cssString from 'raw-loader!@/assets-webkit/styles/serlo-tailwind.css'
-// import cssUrl from '@/assets-webkit/styles/serlo-tailwind.css?url'
-// import cssUrl from '../../../../apps/web/src/assets-webkit/styles/serlo-tailwind.css'
 
 // TODO: Delete this file
 const exampleInitialState: SerloEditorProps['initialState'] = {
@@ -31,51 +26,6 @@ const exampleInitialState: SerloEditorProps['initialState'] = {
       'Der Differenzenquotient beschreibt die Steigung einer Funktion zwischen zwei Punkten.',
   },
 }
-
-// {
-//   plugin: 'text',
-//   state: [
-//     {
-//       type: 'p',
-//       children: [
-//         {
-//           text: 'Das Urnenmodell ist eine Denkhilfe ain der ',
-//         },
-//         {
-//           type: 'a',
-//           href: '/1751',
-//           children: [
-//             {
-//               text: 'Kombinatorik',
-//             },
-//           ],
-//         },
-//         {
-//           text: ', um (mehrstufige) ',
-//         },
-//         {
-//           type: 'a',
-//           href: '/1521',
-//           children: [
-//             {
-//               text: 'Zufallsexperimente',
-//             },
-//           ],
-//         },
-//         {
-//           text: ' zu modellieren. Es heißt so, weil man sich diese Experimente wie das ',
-//         },
-//         {
-//           text: 'Ziehen von Kugeln aus einer Urne',
-//           strong: true,
-//         },
-//         {
-//           text: ' vorstellt.',
-//         },
-//       ],
-//     },
-//   ],
-// } as const
 
 // Because state is of type unknown, need to redefine the type here or find a
 // way to cast it.

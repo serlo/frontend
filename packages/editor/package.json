@@ -13,10 +13,9 @@
   "author": "Serlo Education e.V.",
   "type": "module",
   "exports": {
-    ".": {
-      "import": "./dist/editor.js"
-    }
+    ".": "./dist/editor.js"
   },
+  "main": "./dist/editor.js",
   "module": "./dist/editor.js",
   "types": "./dist/packages/editor/src/package/index.d.ts",
   "files": [

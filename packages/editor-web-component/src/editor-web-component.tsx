@@ -1,15 +1,22 @@
 // import { type PluginsWithData } from '@editor/plugin/helpers/editor-plugins'
 // import { type InitRenderersArgs } from '@editor/plugin/helpers/editor-renderer'
-import React from 'react'
-import * as ReactDOM from 'react-dom/client'
-
 import {
-  ROOT,
   SerloEditorProps,
   SerloEditor,
   editorPlugins,
   editorRenderers,
-} from '../../editor/src/package'
+} from '@serlo/editor'
+// } from '@editor/.'
+import React from 'react'
+import * as ReactDOM from 'react-dom/client'
+
+// import {
+//   ROOT,
+//   SerloEditorProps,
+//   SerloEditor,
+//   editorPlugins,
+//   editorRenderers,
+// } from '../../editor/src/package'
 import { editorData } from '../../editor/src/package/editor-data'
 import { type PluginsWithData } from '../../editor/src/plugin/helpers/editor-plugins'
 import { type InitRenderersArgs } from '../../editor/src/plugin/helpers/editor-renderer'
@@ -35,51 +42,6 @@ const exampleInitialState: InitialState = {
       'Der Differenzenquotient beschreibt die Steigung einer Funktion zwischen zwei Punkten.',
   },
 }
-
-// {
-//   plugin: 'text',
-//   state: [
-//     {
-//       type: 'p',
-//       children: [
-//         {
-//           text: 'Das Urnenmodell ist eine Denkhilfe ain der ',
-//         },
-//         {
-//           type: 'a',
-//           href: '/1751',
-//           children: [
-//             {
-//               text: 'Kombinatorik',
-//             },
-//           ],
-//         },
-//         {
-//           text: ', um (mehrstufige) ',
-//         },
-//         {
-//           type: 'a',
-//           href: '/1521',
-//           children: [
-//             {
-//               text: 'Zufallsexperimente',
-//             },
-//           ],
-//         },
-//         {
-//           text: ' zu modellieren. Es heißt so, weil man sich diese Experimente wie das ',
-//         },
-//         {
-//           text: 'Ziehen von Kugeln aus einer Urne',
-//           strong: true,
-//         },
-//         {
-//           text: ' vorstellt.',
-//         },
-//       ],
-//     },
-//   ],
-// } as const
 
 // Because state is of type unknown, need to redefine the type here or find a
 // way to cast it.
@@ -156,19 +118,19 @@ export class EditorWebComponent extends HTMLElement {
 
   mountReactComponent() {
     // Do we need to support i18n?
-    const language = 'de' as const
+    const language = 'de'
     const { loggedInData } = editorData[language] as LanguageData
 
     const editorStrings = loggedInData.strings.editor
 
     const initialStateAttr = this.getAttribute('initial-state')
 
-    const initialState = initialStateAttr
-      ? (JSON.parse(initialStateAttr) as InitialState)
+    const initialState: InitialState = initialStateAttr
+      ? JSON.parse(initialStateAttr)
       : // TODO throw error here instead?
         exampleInitialState
 
-    const parentType = ROOT as string
+    const parentType = 'ROOT' as const
     // ? How can we infer the right parentType?
     // const parentType = initialState?.state
     //   ? initialState?.state?.[0].type

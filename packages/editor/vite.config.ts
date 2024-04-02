@@ -35,7 +35,11 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    dts(),
+    dts({
+      outDir: 'dist',
+      staticImport: true,
+      insertTypesEntry: true,
+    }),
     svgr({ include: '**/*.svg' }),
     cssInjectedByJsPlugin(),
   ],
