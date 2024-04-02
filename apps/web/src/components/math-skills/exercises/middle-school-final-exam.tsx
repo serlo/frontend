@@ -29,18 +29,25 @@ import { WheelOfFortune } from '../exercise-implementations/wheel-of-fortune'
 
 export const middleSchoolFinalExam = {
   'logarithmus-1': {
-    title: 'Logarithmus zusammenfassen',
-    subtitle: 'Terme',
+    title: 'Terme zusammenfassen',
+    subtitle: 'Logarithmus',
     useCalculator: false,
     track: 1,
     component: <LogarithmExercise1 />,
   },
   'logarithmus-2': {
-    title: 'Logarithmus zusammenfassen',
-    subtitle: 'mit 3. binomischer Formel',
+    title: 'Zusammenfassen und vereinfachen',
+    subtitle: 'Logarithmus, 3. binomische Formel',
     useCalculator: false,
     track: 1,
     component: <LogarithmExercise2 />,
+  },
+  'exponential-function-3': {
+    title: 'Nullstelle berechnen',
+    subtitle: 'Exponentialfunktion',
+    useCalculator: false,
+    track: 1,
+    component: <ExponentialEquation />,
   },
   'trigonometrie-1': {
     title: 'Strahlensatz',
@@ -140,13 +147,6 @@ export const middleSchoolFinalExam = {
     useCalculator: true,
     track: 1,
     component: <ExponentialFunctionTime />,
-  },
-  'exponential-function-3': {
-    title: 'Nullstelle berechnen',
-    subtitle: 'Exponentialfunktion',
-    useCalculator: false,
-    track: 1,
-    component: <ExponentialEquation />,
   },
   'root-equations-1': {
     title: 'Zinssatz berechnen',

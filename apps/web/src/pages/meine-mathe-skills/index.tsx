@@ -34,8 +34,6 @@ const ContentPage: NextPage = () => {
 }
 
 function Content() {
-  const router = useRouter()
-  const grade = router.query.grade
 
   const [track, setTrack] = useState<1 | 2>(() => {
     if (typeof sessionStorage === 'undefined') return 1
