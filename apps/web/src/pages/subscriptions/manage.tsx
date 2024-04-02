@@ -88,8 +88,8 @@ function Content() {
     return (
       <p className="serlo-p mt-8">
         {replacePlaceholders(loggedInStrings.loadedSentence, {
-          loadedCount: data?.nodes.length.toString() || '',
-          totalCount: data?.totalCount!.toString() || '',
+          loadedCount: String(data.nodes.length) || '',
+          totalCount: String(data.totalCount) || '',
         })}{' '}
         <a onClick={loadMore} className="serlo-link cursor-pointer">
           {loggedInStrings.loadMoreLink}
