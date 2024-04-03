@@ -283,7 +283,7 @@ function SubComponent({ data }: { data: DATA }) {
       if (board) JXG.JSXGraph.freeBoard(board)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [data])
 
   return <JSXGraphWrapper id="jxgbox" width={300} height={300} />
 }

@@ -39,6 +39,13 @@ export const middleSchoolFinalExam = {
     track: 1,
     component: <DescribeGraphPowerFunction />,
   },
+  'exponential-funktion-gleichung-loesen': {
+    title: 'Gleichung lösen',
+    subtitle: 'Exponentialfunktion',
+    useCalculator: false,
+    track: 1,
+    component: <ExponentialEquation />,
+  },
   'logarithmus-1': {
     title: 'Terme zusammenfassen 1',
     subtitle: 'Logarithmus',
@@ -52,13 +59,6 @@ export const middleSchoolFinalExam = {
     useCalculator: false,
     track: 1,
     component: <LogarithmExercise2 />,
-  },
-  'exponential-funktion-gleichung-loesen': {
-    title: 'Gleichung lösen',
-    subtitle: 'Exponentialfunktion',
-    useCalculator: false,
-    track: 1,
-    component: <ExponentialEquation />,
   },
   'trigonometrie-1': {
     title: 'Strahlensatz',
