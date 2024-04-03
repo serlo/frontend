@@ -2,10 +2,29 @@ import { useState, useEffect } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
-import { buildVec, buildVec2 } from '../utils/math-builder'
+import {
+  buildBlock,
+  buildFrac,
+  buildSqrt,
+  buildVec,
+  buildVec2,
+} from '../utils/math-builder'
+import { randomIntBetween } from '@/helper/random-int-between'
+import { randomItemFromArray } from '@/helper/random-item-from-array'
 
 interface DATA {
-  x: number
+  deg: number
+  tx: number
+  ty: number
+  rx_off: number
+  w: number
+  h: number
+  rx: number
+  ry: number
+  x_from: number
+  x_to: number
+  y_from: number
+  y_to: number
 }
 
 export function Parallelogram1() {
@@ -13,12 +32,44 @@ export function Parallelogram1() {
   return (
     <SelfEvaluationExercise
       generator={() => {
-        return { x: 4 }
+        const deg = randomItemFromArray([30, 60, 90])
+        const tx = randomIntBetween(-4, -1)
+        const ty = randomIntBetween(1, 5)
+        const rx_off = randomIntBetween(1, 6)
+        const w =
+          deg === 30 ? randomIntBetween(1, 3) * 2 : randomIntBetween(2, 6)
+        const h =
+          deg === 60 ? randomIntBetween(1, 3) * 2 : randomIntBetween(2, 6)
+
+        const rx =
+          rx_off +
+          (deg === 30
+            ? w * Math.pow(Math.cos((deg / 180) * Math.PI), 2)
+            : w * Math.cos((deg / 180) * Math.PI))
+        const ry =
+          deg === 60
+            ? h * Math.pow(Math.sin((deg / 180) * Math.PI), 2)
+            : h * Math.sin((deg / 180) * Math.PI)
+        return {
+          deg,
+          tx,
+          ty,
+          rx_off,
+          w,
+          h,
+          rx,
+          ry,
+          x_from: tx - 1,
+          x_to: rx_off + w + 1,
+          y_from: -1,
+          y_to: Math.max(7, h + ty + 1),
+        }
       }}
-      renderTask={() => (
+      renderTask={(data) => (
         <>
           <p className="text-2xl">
-            Seien die Pfeile {buildVec('OT')} = {buildVec2(-2, 4)} und{' '}
+            Seien die Pfeile {buildVec('OT')} = {buildVec2(data.tx, data.ty)}{' '}
+            und{' '}
             {buildVec(
               <>
                 OR<sub>n</sub>
@@ -26,9 +77,12 @@ export function Parallelogram1() {
             )}{' '}
             ={' '}
             {buildVec2(
-              <>5 + 5 · sin {phi}</>,
               <>
-                6 · cos<sup>2</sup> {phi}
+                {data.rx_off} + {data.w} · cos
+                {data.deg === 30 ? <sup>2</sup> : null} {phi}
+              </>,
+              <>
+                {data.h} · sin{data.deg === 60 ? <sup>2</sup> : null} {phi}
               </>
             )}{' '}
             gegeben.
@@ -44,15 +98,94 @@ export function Parallelogram1() {
                 OR<sub>1</sub>
               </>
             )}{' '}
-            für {phi} = 30°. Zeichnen Sie dann das Parallelogramm in ein
+            für {phi} = {data.deg}°. Zeichnen Sie das Parallelogramm in ein
             Koordinatensystem ein.
           </p>
-          <p className="mt-4 text-lg">Platzbedarf: -3 ≤ x ≤ 11; 0 ≤ y ≤ 10</p>
+          <p className="mt-4 text-lg">
+            Platzbedarf: {data.x_from} ≤ x ≤ {data.x_to}; {data.y_from} ≤ y ≤{' '}
+            {data.y_to}
+          </p>
         </>
       )}
       renderSolution={(data) => (
         <>
-          <p></p>
+          {buildBlock(
+            'green',
+            <>
+              {buildVec(
+                <>
+                  OR<sub>1</sub>
+                </>
+              )}{' '}
+              ={' '}
+              {buildVec2(
+                <>
+                  {data.rx_off} + {data.w} · cos
+                  {data.deg === 30 ? <sup>2</sup> : null} {data.deg}°
+                </>,
+                <>
+                  {data.h} · sin{data.deg === 60 ? <sup>2</sup> : null}{' '}
+                  {data.deg}°
+                </>
+              )}
+              <br />
+              <br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;={' '}
+              {data.deg === 90 ? (
+                <>
+                  {buildVec2(
+                    <>
+                      {data.rx_off} + {data.w} · 0
+                    </>,
+                    <>{data.h} · 1</>
+                  )}
+                </>
+              ) : data.deg === 60 ? (
+                <>
+                  {buildVec2(
+                    <>
+                      {data.rx_off} + {data.w} · 0,5
+                    </>,
+                    <>
+                      {data.h} · (
+                      <span className="text-lg">{buildFrac(1, 2)}</span>
+                      {buildSqrt(3)})<sup>2</sup>
+                    </>
+                  )}{' '}
+                  ={' '}
+                  {buildVec2(
+                    <>
+                      {data.rx_off} + {(data.w / 2).toLocaleString('de-De')}
+                    </>,
+                    <>{data.h} · 0,25 · 3</>
+                  )}
+                </>
+              ) : (
+                <>
+                  {buildVec2(
+                    <>
+                      {data.rx_off} + {data.w} · (
+                      <span className="text-lg">{buildFrac(1, 2)}</span>
+                      {buildSqrt(3)})<sup>2</sup>
+                    </>,
+                    <>{data.h} · 0,5</>
+                  )}{' '}
+                  ={' '}
+                  {buildVec2(
+                    <>
+                      {data.rx_off} + {data.w} · 0,25 · 3
+                    </>,
+                    <>{(data.h / 2).toLocaleString('de-De')} </>
+                  )}
+                </>
+              )}{' '}
+              ={' '}
+              {buildVec2(
+                data.rx.toLocaleString('de-De'),
+                data.ry.toLocaleString('de-De')
+              )}
+            </>
+          )}
           <SubComponent data={data} />
         </>
       )}
@@ -68,11 +201,50 @@ function SubComponent({ data }: { data: DATA }) {
 
   useEffect(() => {
     const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox: [-3, 11, 9, -1],
+      boundingbox: [data.x_from, data.y_to, data.x_to, data.y_from],
       showNavigation: false,
       showCopyright: false,
       axis: true,
+      defaultAxes: {
+        x: {
+          ticks: {
+            ticksDistance: 1,
+            insertTicks: false,
+          },
+        },
+        y: {
+          ticks: {
+            ticksDistance: 1,
+            insertTicks: false,
+          },
+        },
+      },
     })
+
+    const O = b.create('point', [0, 0], {
+      name: 'O',
+      label: { autoPosition: true },
+    })
+
+    const R = b.create('point', [data.rx, data.ry], {
+      name: 'R<sub>1</sub>',
+      label: { autoPosition: true },
+    })
+
+    const T = b.create('point', [data.tx, data.ty], {
+      name: 'T',
+      label: { autoPosition: true },
+    })
+
+    const S = b.create('point', [data.tx + data.rx, data.ty + data.ry], {
+      name: 'S<sub>1</sub>',
+      label: { autoPosition: true },
+    })
+
+    b.create('segment', [O, R])
+    b.create('segment', [R, S])
+    b.create('segment', [S, T])
+    b.create('segment', [T, O])
 
     setBoard(b)
 
@@ -82,5 +254,11 @@ function SubComponent({ data }: { data: DATA }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
 
-  return <JSXGraphWrapper id="jxgbox" width={350} height={350} />
+  return (
+    <JSXGraphWrapper
+      id="jxgbox"
+      width={(340 / (data.y_to - data.y_from)) * (data.x_to - data.x_from)}
+      height={340}
+    />
+  )
 }
