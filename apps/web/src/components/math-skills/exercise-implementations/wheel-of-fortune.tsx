@@ -1,25 +1,27 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { buildFrac } from '../utils/math-builder'
+import { buildBlock, buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
-// JXG.Options.label.autoPosition = true
-
 interface WofData {
   sections: number
-  number_1: number
-  number_2: number
-  number_3: number
-  number_4: number
-  number_5: number
-  number_6: number
-  number_7: number
-  number_8: number
+  number_1: string
+  number_2: string
+  number_3: string
+  number_4: string
+  number_5: string
+  number_6: string
+  number_7: string
+  number_8: string
   event: number
+}
+
+const gcd = function (a: number, b: number): number {
+  if (b === 0) return a
+  return gcd(b, a % b)
 }
 
 export function WheelOfFortune() {
@@ -28,14 +30,14 @@ export function WheelOfFortune() {
       generator={() => {
         const sections = randomIntBetween(3, 8)
         const event = randomIntBetween(1, 4)
-        const number_1 = randomIntBetween(1, 2)
-        const number_2 = number_1 === 1 ? 2 : 1
-        const number_3 = randomIntBetween(1, 2)
-        const number_4 = randomIntBetween(1, 2)
-        const number_5 = randomIntBetween(1, 2)
-        const number_6 = randomIntBetween(1, 2)
-        const number_7 = randomIntBetween(1, 2)
-        const number_8 = randomIntBetween(1, 2)
+        const number_1 = randomItemFromArray(['A', 'B'])
+        const number_2 = number_1 === 'A' ? 'B' : 'A'
+        const number_3 = randomItemFromArray(['A', 'B'])
+        const number_4 = randomItemFromArray(['A', 'B'])
+        const number_5 = randomItemFromArray(['A', 'B'])
+        const number_6 = randomItemFromArray(['A', 'B'])
+        const number_7 = randomItemFromArray(['A', 'B'])
+        const number_8 = randomItemFromArray(['A', 'B'])
 
         const data: WofData = {
           sections,
@@ -54,30 +56,23 @@ export function WheelOfFortune() {
       renderTask={({ data }) => {
         return (
           <>
-            <h2 className="text-2xl">
-              Die Abbildung zeigt ein Glücksrad mit gleichgroßen Feldern{' '}
-            </h2>
+            <p className="text-2xl">
+              Die Abbildung zeigt ein Glücksrad mit gleichgroßen Feldern. Es
+              gibt die Preise A und B zur Auswahl.
+            </p>
             <SubComponent data={data} />
-            <br />
-            Bestimme die Wahrscheinlichkeit für das Ereignis:
-            <br />
-            <br />
-            {data.event === 1
-              ? 'Beim zweimaligen Drehen erscheint höchstens eine ' +
-                data.number_2 +
-                '.'
-              : null}
-            {data.event === 2
-              ? 'Beim zweimaligen Drehen erscheinen zwei gleiche Zahlen.'
-              : null}
-            {data.event === 3
-              ? 'Beim zweimaligen Drehen erscheint mindestens eine ' +
-                data.number_1 +
-                '.'
-              : null}
-            {data.event === 4
-              ? 'Beim zweimaligen Drehen erscheinen unterschiedliche Zahlen.'
-              : null}
+            <p className="text-2xl">
+              Bestimmen Sie die Wahrscheinlichkeit, dass man beim zweimaligen
+              Drehen{' '}
+              {data.event === 1
+                ? 'höchstens einmal Preis ' + data.number_1 + ' erhält.'
+                : null}
+              {data.event === 2 ? ' den gleichen Preis zweimal erhält.' : null}
+              {data.event === 3
+                ? 'mindestens einmal Preis ' + data.number_1 + ' erhält.'
+                : null}
+              {data.event === 4 ? ' zwei verschiedene Preise erhält.' : null}
+            </p>
           </>
         )
       }}
@@ -94,254 +89,159 @@ export function WheelOfFortune() {
         ]
         array.splice(data.sections)
 
-        const counter_Number_1 = array.filter((x) => x === data.number_1).length
-        const counter_Number_2 = array.filter((x) => x === data.number_2).length
-        const counter_Number_3 = array.filter((x) => x === data.number_3).length
+        const counter_A = array.filter((x) => x === 'A').length
+        const counter_B = array.filter((x) => x === 'B').length
+
+        const gcdA = gcd(counter_A, data.sections)
+        const gcdB = gcd(counter_B, data.sections)
+
+        function getC(val: string) {
+          if (val === 'A') return counter_A
+          return counter_B
+        }
+
+        function buildSimplifyFrac(a: number, b: number) {
+          const d = gcd(a, b)
+          return buildFrac(a / d, b / d)
+        }
+
+        const intro = (
+          <>
+            <p>
+              Bestimme zuerst die Wahrscheinlichkeiten für die einzelnen Preise
+              beim einmaligen Drehen:
+            </p>
+            {buildBlock(
+              'gray',
+              <>
+                P(A) = {buildFrac(counter_A, data.sections)}
+                {gcdA > 1 ? (
+                  <> = {buildFrac(counter_A / gcdA, data.sections / gcdA)}</>
+                ) : null}
+              </>
+            )}
+            <p></p>
+            {buildBlock(
+              'gray',
+              <>
+                P(B) = {buildFrac(counter_B, data.sections)}
+                {gcdB > 1 ? (
+                  <> = {buildFrac(counter_B / gcdB, data.sections / gcdB)}</>
+                ) : null}
+              </>
+            )}
+          </>
+        )
         if (data.event === 1)
           return (
             <>
-              Wir betrachten das Ereignis: &quot;Beim zweimaligen Drehen
-              erscheint höchstens eine
-              {data.number_2}.&quot;
-              <br />
-              <br />
-              Wir berechnen zuerst die Wahrscheinlichkeit für einen Dreh mit der
-              Formel für das Laplace-Experiment:
-              <br />
-              <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                P({data.number_2}) ={' '}
-                {buildFrac(
-                  <>Anzahl der günstigen Ereignisse</>,
-                  <>Anzahl der möglichen Ereignisse</>
-                )}
-              </span>
-              <br />
-              <br />
-              Wir zählen nach und setzen ein:
-              <br />
-              <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                P(eine {data.number_2}) ={' '}
-                {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)}
-              </span>
-              <br />
-              <br />
-              Genauso ergibt sich:
-              <br />
-              <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                P(eine {data.number_1}) ={' '}
-                {buildFrac(<>{counter_Number_1}</>, <>{data.sections}</>)}
-              </span>
-              <br />
-              <br />
-              Beim zweimaligen Drehen wird die Wahrscheinlichkeit eines Pfades
-              durch Multiplikation berechnet. Die Wahrscheinlichkeiten
-              verschiedener Pfade werden addiert.
-              <br />
-              <span className="mt-5 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-1.5xl">
-                P(Höchstens eine {data.number_2}) = P((2; 2), (2; 1), (1; 2))
-                <br />={' '}
-                {buildFrac(
-                  <>{counter_Number_1}</>,
-                  <>{data.sections}</>
-                )} · {buildFrac(<>{counter_Number_1}</>, <>{data.sections}</>)}{' '}
-                + {buildFrac(<>{counter_Number_1}</>, <>{data.sections}</>)} ·{' '}
-                {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)} +{' '}
-                {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)} ·{' '}
-                {buildFrac(<>{counter_Number_1}</>, <>{data.sections}</>)} ={' '}
-                {buildFrac(
-                  <>
-                    {counter_Number_1 * counter_Number_1 +
-                      counter_Number_1 * counter_Number_2 * 2}
-                  </>,
-                  <>{data.sections * data.sections}</>
-                )}
-              </span>
-              <br />
-              <br /> Gegebenenfalls kann noch gekürzt werden.
+              {intro}
+              <p>
+                Um höchstens einmal den Preis {data.number_1} zu erhalten, gibt
+                es die Kombinationen{' '}
+                <span className="text-lg">
+                  (A; B), (B; A) und ({data.number_2}; {data.number_2})
+                </span>
+                . Berechne daraus die Gesamtwahrscheinlichkeit:
+              </p>
+              {buildBlock(
+                'green',
+                <>
+                  P(höchstens einmal {data.number_1}) ={' '}
+                  {buildSimplifyFrac(counter_A, data.sections)} ·{' '}
+                  {buildSimplifyFrac(counter_B, data.sections)} +{' '}
+                  {buildSimplifyFrac(counter_B, data.sections)} ·{' '}
+                  {buildSimplifyFrac(counter_A, data.sections)} +{' '}
+                  {buildSimplifyFrac(getC(data.number_2), data.sections)} ·{' '}
+                  {buildSimplifyFrac(getC(data.number_2), data.sections)} ={' '}
+                  {buildSimplifyFrac(
+                    getC(data.number_2) * getC(data.number_2) +
+                      counter_A * counter_B * 2,
+                    data.sections * data.sections
+                  )}
+                </>
+              )}
             </>
           )
         if (data.event === 2)
           return (
             <>
-              Wir betrachten das Ereignis: &quot;Beim zweimaligen Drehen
-              erscheinen zwei gleiche Zahlen.&quot;
-              <br />
-              <br />
-              Wir berechnen zuerst die Wahrscheinlichkeit für einen Dreh mit der
-              Formel für das Laplace-Experiment:
-              <br />
-              <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                P(eine {data.number_2}) ={' '}
-                {buildFrac(
-                  <>Anzahl der günstigen Ereignisse</>,
-                  <>Anzahl der möglichen Ereignisse</>
-                )}
-              </span>
-              <br />
-              <br />
-              Wir zählen nach und setzen ein:
-              <br />
-              <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                P(eine {data.number_2}) ={' '}
-                {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)}
-              </span>
-              <br />
-              <br />
-              Genauso ergibt sich:
-              <br />
-              <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                P(eine {data.number_1}) ={' '}
-                {buildFrac(<>{counter_Number_1}</>, <>{data.sections}</>)}
-              </span>
-              <br />
-              <br />
-              Beim zweimaligen Drehen wird die Wahrscheinlichkeit eines Pfades
-              durch Multiplikation berechnet. Die Wahrscheinlichkeiten
-              verschiedener Pfade werden addiert.
-              <br />
-              <span className="mt-5 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-1.5xl">
-                P(Gleiche Zahlen) = P(({data.number_2}; {data.number_2}), (
-                {data.number_1}; {data.number_1})) ={' '}
-                {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)} ·{' '}
-                {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)} +{' '}
-                {buildFrac(<>{counter_Number_1}</>, <>{data.sections}</>)} ·{' '}
-                {buildFrac(<>{counter_Number_1}</>, <>{data.sections}</>)}={' '}
-                {buildFrac(
-                  <>
-                    {data.event === 2
-                      ? counter_Number_1 * counter_Number_1 +
-                        counter_Number_2 * counter_Number_2
-                      : null}
-                  </>,
-                  <>{data.sections * data.sections}</>
-                )}
-              </span>
-              <br />
-              <br /> Gegebenenfalls kann noch gekürzt werden.
+              {intro}
+              <p>
+                Um den gleichen Preis zweimal zu erhalten, gibt es die
+                Kombinationen <span className="text-lg">(A; A) und (B; B)</span>
+                . Berechne daraus die Gesamtwahrscheinlichkeit:
+              </p>
+              {buildBlock(
+                'green',
+                <>
+                  P(gleicher Preis zweimal) ={' '}
+                  {buildSimplifyFrac(counter_A, data.sections)} ·{' '}
+                  {buildSimplifyFrac(counter_A, data.sections)} +{' '}
+                  {buildSimplifyFrac(counter_B, data.sections)} ·{' '}
+                  {buildSimplifyFrac(counter_B, data.sections)} ={' '}
+                  {buildSimplifyFrac(
+                    counter_A * counter_A + counter_B * counter_B,
+                    data.sections * data.sections
+                  )}
+                </>
+              )}
             </>
           )
         if (data.event === 3)
           return (
             <>
-              Wir betrachten das Ereignis: &quot;Beim zweimaligen Drehen
-              erscheint mindestens eine
-              {data.number_1}.&quot;
-              <br />
-              <br />
-              Wir berechnen zuerst die Wahrscheinlichkeit für einen Dreh mit der
-              Formel für das Laplace-Experiment:
-              <br />
-              <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                P(eine {data.number_1}) ={' '}
-                {buildFrac(
-                  <>Anzahl der günstigen Ereignisse</>,
-                  <>Anzahl der möglichen Ereignisse</>
-                )}
-              </span>
-              <br />
-              <br />
-              Wir zählen nach und setzen ein:
-              <br />
-              <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                P(eine {data.number_1} ) ={' '}
-                {buildFrac(<>{counter_Number_1}</>, <>{data.sections}</>)}
-              </span>
-              <br />
-              <br />
-              Genauso ergibt sich:
-              <br />
-              <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                P(eine {data.number_2}) ={' '}
-                {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)}
-              </span>
-              <br />
-              <br />
-              Beim zweimaligen Drehen wird die Wahrscheinlichkeit eines Pfades
-              durch Multiplikation berechnet. Die Wahrscheinlichkeiten
-              verschiedener Pfade werden addiert.
-              <br />
-              <span className="mt-5 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-1.5xl">
-                P(mindestens eine {data.number_1}) = P(({data.number_1};{' '}
-                {data.number_2}), ({data.number_2}; {data.number_1}), (
-                {data.number_1}; {data.number_1}))
-                <br />={' '}
-                {buildFrac(
-                  <>{counter_Number_1}</>,
-                  <>{data.sections}</>
-                )} · {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)}{' '}
-                + {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)} ·{' '}
-                {buildFrac(<>{counter_Number_1}</>, <>{data.sections}</>)} +{' '}
-                {buildFrac(<>{counter_Number_1}</>, <>{data.sections}</>)} ·{' '}
-                {buildFrac(<>{counter_Number_1}</>, <>{data.sections}</>)} ={' '}
-                {buildFrac(
-                  <>
-                    {counter_Number_1 * counter_Number_2 +
-                      counter_Number_2 * counter_Number_1 +
-                      counter_Number_1 * counter_Number_1}
-                  </>,
-                  <>{data.sections * data.sections}</>
-                )}
-              </span>
-              <br />
-              <br /> Gegebenenfalls kann noch gekürzt werden.
+              {intro}
+              <p>
+                Um mindestens einmal den Preis {data.number_1} zu erhalten, gibt
+                es die Kombinationen{' '}
+                <span className="text-lg">
+                  (A; B), (B; A) und ({data.number_1}; {data.number_1})
+                </span>
+                . Berechne daraus die Gesamtwahrscheinlichkeit:
+              </p>
+              {buildBlock(
+                'green',
+                <>
+                  P(mindestens einmal {data.number_1}) ={' '}
+                  {buildSimplifyFrac(counter_A, data.sections)} ·{' '}
+                  {buildSimplifyFrac(counter_B, data.sections)} +{' '}
+                  {buildSimplifyFrac(counter_B, data.sections)} ·{' '}
+                  {buildSimplifyFrac(counter_A, data.sections)} +{' '}
+                  {buildSimplifyFrac(getC(data.number_1), data.sections)} ·{' '}
+                  {buildSimplifyFrac(getC(data.number_1), data.sections)} ={' '}
+                  {buildSimplifyFrac(
+                    getC(data.number_1) * getC(data.number_1) +
+                      counter_A * counter_B * 2,
+                    data.sections * data.sections
+                  )}
+                </>
+              )}
             </>
           )
         if (data.event === 4)
           return (
             <>
-              Wir betrachten das Ereignis: &quot;Beim zweimaligen Drehen
-              erscheinen unterschiedliche Zahlen.&quot;
-              <br />
-              <br />
-              Wir berechnen zuerst die Wahrscheinlichkeit für einen Dreh mit der
-              Formel für das Laplace-Experiment:
-              <br />
-              <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                P(eine {data.number_2}) ={' '}
-                {buildFrac(
-                  <>Anzahl der günstigen Ereignisse</>,
-                  <>Anzahl der möglichen Ereignisse</>
-                )}
-              </span>
-              <br />
-              <br />
-              Wir zählen nach und setzen ein:
-              <br />
-              <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                P(eine {data.number_2}) ={' '}
-                {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)}
-              </span>
-              <br />
-              <br />
-              Genauso ergibt sich:
-              <br />
-              <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                P(eine {data.number_1}) ={' '}
-                {buildFrac(<>{counter_Number_1}</>, <>{data.sections}</>)}
-              </span>
-              <br />
-              <br />
-              Beim zweimaligen Drehen wird die Wahrscheinlichkeit eines Pfades
-              durch Multiplikation berechnet. Die Wahrscheinlichkeiten
-              verschiedener Pfade werden addiert.
-              <br />
-              <span className="mt-5 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-1.5xl">
-                P(Unterschiedliche Zahlen) = P(({data.number_1}; {data.number_2}
-                ), ({data.number_2}; {data.number_1}))
-                <br />={' '}
-                {buildFrac(
-                  <>{counter_Number_1}</>,
-                  <>{data.sections}</>
-                )} · {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)}{' '}
-                + {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)} ·{' '}
-                {buildFrac(<>{counter_Number_1}</>, <>{data.sections}</>)}={' '}
-                {buildFrac(
-                  <>{2 * counter_Number_2 * counter_Number_2}</>,
-                  <>{data.sections * data.sections}</>
-                )}
-              </span>
-              <br />
-              <br /> Gegebenenfalls kann noch gekürzt werden.
+              {intro}
+              <p>
+                Um zwei verschiedene Preise zu erhalten, gibt es die
+                Kombinationen <span className="text-lg">(A; B) und (B; A)</span>
+                . Berechne daraus die Gesamtwahrscheinlichkeit:
+              </p>
+              {buildBlock(
+                'green',
+                <>
+                  P(verschiedene Preise) ={' '}
+                  {buildSimplifyFrac(counter_A, data.sections)} ·{' '}
+                  {buildSimplifyFrac(counter_B, data.sections)} +{' '}
+                  {buildSimplifyFrac(counter_B, data.sections)} ·{' '}
+                  {buildSimplifyFrac(counter_A, data.sections)} ={' '}
+                  {buildSimplifyFrac(
+                    counter_A * counter_B + counter_B * counter_A,
+                    data.sections * data.sections
+                  )}
+                </>
+              )}
             </>
           )
         return <></>
@@ -364,7 +264,7 @@ export function WheelOfFortune() {
             <br />
             Untersuche, welche Kombinationen von Zahlen zum Ereignis passen und
             bestimme die Gesamtwahrscheinlichkeit mit Additions- und
-            Produktregel.
+            Multiplikationsregel.
           </>
         )
       }}
@@ -419,6 +319,8 @@ function SubComponent({ data }: { data: WofData }) {
       )
       texts.push(b.create('text', [x_Text, y_Text, array[i].toString()], {}))
     }
+
+    b.create('text', [-0.2, 4, '⧪'], {})
 
     // Animationszeit und Schritte definieren
     const duration = 2000 // Gesamtdauer der Animation in ms
