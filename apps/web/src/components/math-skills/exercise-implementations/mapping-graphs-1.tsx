@@ -108,9 +108,7 @@ export function AbbildungGraphen() {
                   · Der Graph von f wird um {data.y_offset} Einheiten nach{' '}
                   {data.y_dir} verschoben.
                 </li>
-              </ol>
-              <br />
-              <i>Rechne am Besten mit Stift und Papier.</i>
+              </ol>{' '}
             </>
           )
         if (data.function_type === 2)
@@ -147,8 +145,6 @@ export function AbbildungGraphen() {
                   {data.y_dir} verschoben.
                 </li>
               </ol>
-              <br />
-              <i>Rechne am Besten mit Stift und Papier.</i>
             </>
           )
         if (data.function_type === 3)
@@ -181,9 +177,7 @@ export function AbbildungGraphen() {
                   · Der Graph von f wird um {data.y_offset} Einheiten nach{' '}
                   {data.y_dir} verschoben.
                 </li>
-              </ol>
-              <br />
-              <i>Rechne am Besten mit Stift und Papier.</i>
+              </ol>{' '}
             </>
           )
         return <></>

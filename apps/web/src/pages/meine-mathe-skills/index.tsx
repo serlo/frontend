@@ -89,7 +89,7 @@ function Content() {
                   {examTasks
                     .filter(
                       ([, obj]) =>
-                        obj.useCalculator === false &&
+                        obj.calculatorAllowed === false &&
                         (obj.track === 1 || (obj.track as number) === 3)
                     )
                     .map(([id, obj]) =>
@@ -103,7 +103,7 @@ function Content() {
                   {examTasks
                     .filter(
                       ([, obj]) =>
-                        obj.useCalculator === true &&
+                        obj.calculatorAllowed === true &&
                         ((obj.track as number) === 1 ||
                           (obj.track as number) === 3)
                     )
@@ -122,7 +122,7 @@ function Content() {
                   {examTasks
                     .filter(
                       ([, obj]) =>
-                        obj.useCalculator === false &&
+                        obj.calculatorAllowed === false &&
                         (obj.track === 2 || (obj.track as number) === 3)
                     )
                     .map(([id, obj]) =>
@@ -136,7 +136,7 @@ function Content() {
                   {examTasks
                     .filter(
                       ([, obj]) =>
-                        obj.useCalculator === true &&
+                        obj.calculatorAllowed === true &&
                         ((obj.track as number) === 2 ||
                           (obj.track as number) === 3)
                     )

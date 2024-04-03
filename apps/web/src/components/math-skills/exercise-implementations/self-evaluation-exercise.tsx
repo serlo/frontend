@@ -1,9 +1,12 @@
 import { SpoilerRenderer } from '@editor/plugins/spoiler/renderer'
-import { useState } from 'react'
+import { faCalculator } from '@fortawesome/free-solid-svg-icons'
+import { useContext, useState } from 'react'
 
 import { ExStatus } from '../feedback/execise-feedback'
 import { ExerciseSelfFeedback } from '../feedback/execise-self-feedback'
 import { SkipExerciseButton } from '../feedback/skip-exercise-button'
+import { CalculatorAllowedContext } from '../utils/calculator-allowed-context'
+import { FaIcon } from '@/components/fa-icon'
 
 interface SelfEvaluationExerciseProps<DATA> {
   generator: () => DATA
@@ -24,11 +27,24 @@ export function SelfEvaluationExercise<T>({
   const [exStatus, setExStatus] = useState<ExStatus>('fresh')
   const [showSolution, setShowSolution] = useState(false)
   const [showStrategy, setShowStrategy] = useState(false)
+  const calculatorAllowed = useContext(CalculatorAllowedContext)
 
   return (
     <>
       {renderTask(data)}
-      <div className="h-12"></div>
+      <div className="mb-4 mt-12 border-y-2 border-stone-100 py-2 text-stone-500">
+        <i>
+          Rechne am Besten mit Stift und Papier.
+          {calculatorAllowed ? (
+            <>
+              {' '}
+              <br />
+              Taschenrechner ist erlaubt &nbsp;
+              <FaIcon icon={faCalculator} />
+            </>
+          ) : null}
+        </i>
+      </div>
       <SkipExerciseButton
         makeNewExercise={() => {
           setData(generator())

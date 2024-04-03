@@ -37,9 +37,6 @@ export function ExponentialFunction() {
             {Ende_Anlage === 1 ? 'nächstes Jahr' : null}
             {Ende_Anlage === 2 ? 'übernächstes Jahr' : null}
             {Ende_Anlage === 3 ? 'in 5 Jahren' : null} besitzt.
-            <br />
-            <br />
-            <i>Rechne am Besten mit Stift und Papier.</i>
           </div>
         )
       }}

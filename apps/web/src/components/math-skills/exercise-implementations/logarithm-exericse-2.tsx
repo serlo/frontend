@@ -25,9 +25,6 @@ export function LogarithmExercise2() {
               log&#8202;
               <sub>{logBase}</sub>({varName} {isPlus ? '+' : '-'} {num})
             </span>
-            <br />
-            <br />
-            <i>Rechne am Besten mit Stift und Papier.</i>
           </>
         )
       }}

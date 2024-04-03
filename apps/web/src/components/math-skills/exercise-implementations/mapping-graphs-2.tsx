@@ -109,9 +109,7 @@ export function AbbildungGraphen2() {
                     ? '· Der Graph von f wird zusätzlich an der y-Achse gespiegelt.'
                     : null}
                 </li>
-              </ol>
-              <br />
-              <i>Rechne am Besten mit Stift und Papier.</i>
+              </ol>{' '}
             </>
           )
         if (data.function_type === 2)
@@ -150,9 +148,7 @@ export function AbbildungGraphen2() {
                     ? '· Der Graph von f wird zusätzlich an der y-Achse gespiegelt.'
                     : null}
                 </li>
-              </ol>
-              <br />
-              <i>Rechne am Besten mit Stift und Papier.</i>
+              </ol>{' '}
             </>
           )
         if (data.function_type === 3)
@@ -187,9 +183,7 @@ export function AbbildungGraphen2() {
                     ? '· Der Graph von f wird zusätzlich an der y-Achse gespiegelt.'
                     : null}
                 </li>
-              </ol>
-              <br />
-              <i>Rechne am Besten mit Stift und Papier.</i>
+              </ol>{' '}
             </>
           )
         return <></>

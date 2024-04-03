@@ -65,10 +65,7 @@ export function LogarithmExercise1() {
             </h2>
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               {summands.map((el, i) => renderSummand(el, i))}
-            </span>
-            <br />
-            <br />
-            <i>Rechne am Besten mit Stift und Papier.</i>
+            </span>{' '}
           </>
         )
       }}

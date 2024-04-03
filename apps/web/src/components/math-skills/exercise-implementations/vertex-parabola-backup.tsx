@@ -28,10 +28,6 @@ export function VertexParabolaBackup() {
               y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x {isPlus_2 ? '+' : '-'}{' '}
               {c}
             </span>
-
-            <br />
-            <br />
-            <i>Rechne am Besten mit Stift und Papier.</i>
           </>
         )
       }}

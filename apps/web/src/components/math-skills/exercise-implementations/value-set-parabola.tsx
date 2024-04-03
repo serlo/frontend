@@ -43,9 +43,6 @@ export function ValueSetParabola() {
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               S({data.b}|{data.c})
             </span>
-            <br />
-            <br />
-            <i>Rechne am Besten mit Stift und Papier.</i>
           </>
         )
       }}

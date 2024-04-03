@@ -28,9 +28,6 @@ export function NormalformParabola() {
               y = (x {isPlus ? '+' : '-'} {x_s})<sup>2</sup>{' '}
               {isPlus_2 ? '+' : '-'} {y_s}
             </span>
-            <br />
-            <br />
-            <i>Rechne am Besten mit Stift und Papier.</i>
           </>
         )
       }}

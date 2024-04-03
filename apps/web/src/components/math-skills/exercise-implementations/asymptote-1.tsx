@@ -57,9 +57,6 @@ export function Asymptote1() {
               {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
               {data.d !== 0 ? data.d : null}
             </span>
-            <br />
-            <br />
-            <i>Rechne am Besten mit Stift und Papier.</i>
           </>
         )
       }}

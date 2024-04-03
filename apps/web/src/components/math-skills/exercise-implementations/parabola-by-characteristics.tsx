@@ -35,9 +35,7 @@ export function ParabolaCharacteristics() {
             Der Graph der Funktion verläuft durch die Punkte:{' '}
             <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               P({p_1_x}|{p_1_y}), Q({p_2_x}|{p_2_y})
-            </span>
-            <br />
-            <i>Rechne am Besten mit Stift und Papier.</i>
+            </span>{' '}
           </>
         )
       }}

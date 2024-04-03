@@ -32,10 +32,6 @@ export function ABCFormular() {
               0 = {a > 1 ? a : ''}x<sup>2</sup> {b > 0 ? '+' : ''} {b}x{' '}
               {c > 0 ? '+' : ''} {c}
             </span>
-
-            <br />
-            <br />
-            <i>Rechne am Besten mit Stift und Papier.</i>
           </>
         )
       }}

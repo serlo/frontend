@@ -75,10 +75,7 @@ export function ModellingParabola() {
               {data.context === 4
                 ? 'Berechne wie weit der Strahl maximal kommt und wie hoch er am höchsten Punkt war.'
                 : null}
-            </h2>
-            <br />
-            <br />
-            <i>Rechne am Besten mit Stift und Papier.</i>
+            </h2>{' '}
           </>
         )
       }}
