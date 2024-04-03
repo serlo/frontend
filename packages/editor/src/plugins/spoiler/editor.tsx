@@ -26,7 +26,8 @@ export function SpoilerEditor(props: SpoilerProps) {
   )
   const showToolbar = focused || isTitleFocused
 
-  // migrate old state
+  // Spoiler title used to be a string (`title`) and we now use an inline text-plugin instead (to allow math fomulas etc.)
+  // This effect migrates the old state to the new state, for entities that don't have the new state (`richText`) at load time.
   useEffect(() => {
     if (richTitle.defined) return
 
