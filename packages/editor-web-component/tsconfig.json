@@ -3,7 +3,6 @@
   "compilerOptions": {
     "rootDir": "../..",
     "paths": {
-      "@/*": ["../../apps/web/src/*"],
       "@editor/*": ["../editor/src/*"]
     },
     "outDir": "dist",
@@ -11,11 +10,6 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": false
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "../../apps/web/**/*ts",
-    "../../apps/web/**/*tsx"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules", "../../node_modules", "dist"]
 }

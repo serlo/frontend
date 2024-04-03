@@ -4752,7 +4752,6 @@ __metadata:
   dependencies:
     "@babel/core": ^7.23.0
     "@serlo/editor": "workspace:*"
-    "@serlo/frontend": "workspace:*"
     "@serlo/typescript-config": "workspace:*"
     "@types/react": ^18.0.25
     "@types/react-dom": ^18.0.8

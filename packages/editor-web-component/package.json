@@ -14,11 +14,14 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/editor-web-component.js"
+      "import": "./dist/serlo-editor-web-component.js",
+      "require": "./dist/serlo-editor-web-component.js",
+      "types": "./dist/editor-web-component.d.ts"
     }
   },
-  "module": "./dist/editor-web-component.js",
-  "types": "./dist/packages/editor-web-component/src/editor-web-component.d.ts",
+  "main": "./dist/serlo-editor-web-component.js",
+  "module": "./dist/serlo-editor-web-component.js",
+  "types": "./dist/editor-web-component.d.ts",
   "files": [
     "dist"
   ],
@@ -36,13 +39,12 @@
   },
   "dependencies": {
     "@serlo/editor": "workspace:*",
-    "@serlo/frontend": "workspace:*",
-    "@serlo/typescript-config": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.0",
+    "@serlo/typescript-config": "workspace:*",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
     "@vitejs/plugin-react": "^4.2.0",

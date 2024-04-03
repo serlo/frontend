@@ -24,12 +24,15 @@ export default defineConfig({
   resolve: {
     alias: {
       '@editor': resolve(__dirname, '../editor/src'),
-      '@': resolve(__dirname, '../../apps/web/src'),
     },
   },
   plugins: [
     react(),
-    dts(),
+    dts({
+      outDir: 'dist',
+      strictOutput: true,
+      rollupTypes: true,
+    }),
     svgr({ include: '**/*.svg' }),
     cssInjectedByJsPlugin(),
   ],
