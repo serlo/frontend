@@ -1,4 +1,3 @@
-
 import { ExternalRevisionLoader } from './external-revision-loader'
 import { RevisionHistoryLoader } from './revision-history-loader'
 import { UuidType } from '@/data-types'

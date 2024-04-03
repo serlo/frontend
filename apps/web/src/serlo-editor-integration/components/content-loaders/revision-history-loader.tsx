@@ -19,7 +19,10 @@ import { revisionQuery } from '@/fetcher/revision/query'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { revisionHistoryQuery } from '@/pages/entity/repository/history/[id]'
-import { convertEditorResponseToState, isError } from '@/serlo-editor-integration/convert-editor-response-to-state'
+import {
+  convertEditorResponseToState,
+  isError,
+} from '@/serlo-editor-integration/convert-editor-response-to-state'
 import { revisionResponseToResponse } from '@/serlo-editor-integration/revision-response-to-response'
 
 export function RevisionHistoryLoader<T>({
