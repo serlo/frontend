@@ -80,14 +80,14 @@ export const middleSchoolFinalExam = {
   },
   'parallelogramm-1': {
     title: 'Parallelogramm einzeichnen',
-    subtitle: 'Trigonometrie, WIP',
+    subtitle: 'Trigonometrie',
     calculatorAllowed: false,
     track: 1,
     component: <Parallelogram1 />,
   },
   'parallelogramm-2': {
     title: 'Winkelmaß berechnen',
-    subtitle: 'Trigonometrie, TODO',
+    subtitle: 'Trigonometrie',
     calculatorAllowed: false,
     track: 1,
     component: <Parallelogram2 />,
