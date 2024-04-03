@@ -1,7 +1,5 @@
 import { ExerciseGroupStaticRenderer } from '@editor/plugins/exercise-group/static'
-import type {
-  EditorExerciseGroupDocument,
-} from '@editor/types/editor-plugins'
+import type { EditorExerciseGroupDocument } from '@editor/types/editor-plugins'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
@@ -18,7 +16,9 @@ const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
 )
 
 // Special version for serlo.org with author tools and license
-export function ExerciseGroupSerloStaticRenderer(props: EditorExerciseGroupDocument) {
+export function ExerciseGroupSerloStaticRenderer(
+  props: EditorExerciseGroupDocument
+) {
   const auth = useAuthentication()
   const [loaded, setLoaded] = useState(false)
   useEffect(() => setLoaded(true), [])

@@ -42,7 +42,9 @@ export function createExerciseGroup(
   if (!uuid.currentRevision?.content) return undefined
 
   return {
-    ...(parseDocumentString(uuid.currentRevision.content) as EditorExerciseGroupDocument),
+    ...(parseDocumentString(
+      uuid.currentRevision.content
+    ) as EditorExerciseGroupDocument),
     serloContext: {
       uuid: uuid.id,
       trashed: uuid.trashed,

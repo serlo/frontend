@@ -61,8 +61,8 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
         </p>
       </>
     ) : (
-        <Lazy>
-          <CommentAreaEntity entityId={exerciseUuid} />
+      <Lazy>
+        <CommentAreaEntity entityId={exerciseUuid} />
       </Lazy>
     )
 

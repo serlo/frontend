@@ -495,10 +495,7 @@ export interface TaxonomyData extends TaxonomyTermBase {
   trashed: boolean
   taxonomyType: TaxonomyTermType
   subterms: TaxonomySubTerm[]
-  exercisesContent: (
-    | EditorExerciseDocument
-    | EditorExerciseGroupDocument
-  )[]
+  exercisesContent: (EditorExerciseDocument | EditorExerciseGroupDocument)[]
   licenseData?: LicenseData
 }
 
