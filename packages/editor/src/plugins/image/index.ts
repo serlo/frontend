@@ -3,7 +3,7 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 
 import { ImageEditor } from './editor'
-import type { FileError } from './image-with-serlo-config'
+import type { FileError } from '@serlo/frontend/src/serlo-editor-integration/image-with-serlo-config'
 import {
   type EditorPlugin,
   type EditorPluginProps,
