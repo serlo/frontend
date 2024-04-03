@@ -15,6 +15,9 @@ import { ModellingParabola } from '../exercise-implementations/modelling-parabol
 import { NormalformParabola } from '../exercise-implementations/normalform-parabola'
 import { ObliqueImage } from '../exercise-implementations/oblique-image'
 import { ParabolaCharacteristics } from '../exercise-implementations/parabola-by-characteristics'
+import { Parallelogram1 } from '../exercise-implementations/parallelogram-1'
+import { Parallelogram2 } from '../exercise-implementations/parallelogram-2'
+import { Parallelogram3 } from '../exercise-implementations/parallelogram-3'
 import { PlotFunction } from '../exercise-implementations/plot-function-1'
 import { PlotFunction2 } from '../exercise-implementations/plot-function-2'
 import { RootEquations } from '../exercise-implementations/root-equations'
@@ -74,6 +77,27 @@ export const middleSchoolFinalExam = {
     calculatorAllowed: false,
     track: 1,
     component: <Trigonometry />,
+  },
+  'parallelogramm-1': {
+    title: 'Parallelogramm einzeichnen',
+    subtitle: 'Trigonometrie, WIP',
+    calculatorAllowed: false,
+    track: 1,
+    component: <Parallelogram1 />,
+  },
+  'parallelogramm-2': {
+    title: 'Winkelmaß berechnen',
+    subtitle: 'Trigonometrie, TODO',
+    calculatorAllowed: false,
+    track: 1,
+    component: <Parallelogram2 />,
+  },
+  'parallelogramm-3': {
+    title: 'Punkt darstellen in Abhängigkeit',
+    subtitle: 'Trigonometrie, TODO',
+    calculatorAllowed: false,
+    track: 1,
+    component: <Parallelogram3 />,
   },
   eisdiele: {
     title: 'Eisdiele',
