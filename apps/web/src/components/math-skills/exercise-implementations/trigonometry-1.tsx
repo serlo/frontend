@@ -2,7 +2,7 @@ import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { buildFrac } from '../utils/math-builder'
+import { buildBlock, buildFrac, buildOverline } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -12,9 +12,10 @@ interface Trig1Data {
   as: number
   ac: number
   ab: number
-  angle: number
+  cd: number
+  mode: 'cd' | 'ab'
+  otherRay: boolean
   factor: number
-  sb_sq: number
 }
 
 export function Trigonometry1() {
@@ -30,8 +31,9 @@ export function Trigonometry1() {
           as,
           ac,
           ab,
-          angle: 60,
-          sb_sq: as * as + ab * ab - 2 * as * ab * 0.5,
+          cd: ((as + ac) / as) * ab,
+          mode: randomItemFromArray(['cd', 'ab']),
+          otherRay: randomItemFromArray([true, false]),
         }
         return { data }
       }}
@@ -44,6 +46,13 @@ export function Trigonometry1() {
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">CD</b>{' '}
               sind zueinander parallel.
             </h2>
+            <p className="mt-2 text-2xl">
+              Es gilt |{buildOverline(data.otherRay ? 'SB' : 'SA')}| = {data.as}{' '}
+              cm² und |{buildOverline(data.otherRay ? 'BD' : 'AB')}| = {data.ac}{' '}
+              cm² <br /> sowie |
+              {buildOverline(data.mode === 'cd' ? 'AB' : 'CD')}| ={' '}
+              {data.mode === 'cd' ? data.ab : data.cd} cm².
+            </p>
             <SubComponent data={data} />
             <small className="mb-6 block">
               Skizze ist nicht maßstabsgetreu
@@ -51,7 +60,7 @@ export function Trigonometry1() {
             <p className="text-2xl">
               Berechnen Sie die Länge der Strecke{' '}
               <b className="rounded-md bg-newgreen bg-opacity-20 p-1 overline">
-                CD
+                {data.mode.toUpperCase()}
               </b>
               .
             </p>
@@ -65,30 +74,56 @@ export function Trigonometry1() {
           <>
             Stelle eine Gleichung mit dem Strahlensatz auf:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              {buildFrac(
+            {data.mode === 'cd' ? (
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                {buildFrac(
+                  <>
+                    |<span className="overline">CD</span>|
+                  </>,
+                  <>{data.ab} cm</>
+                )}{' '}
+                = {buildFrac(<>{data.as + data.ac} cm</>, <>{data.as} cm</>)}
+              </span>
+            ) : (
+              buildBlock(
+                'gray',
                 <>
-                  |<span className="overline">CD</span>|
-                </>,
-                <>{data.ab} cm</>
-              )}{' '}
-              = {buildFrac(<>{data.as + data.ac} cm</>, <>{data.as} cm</>)}
-            </span>
+                  {buildFrac(
+                    <>
+                      |<span className="overline">AB</span>|
+                    </>,
+                    <>{data.cd} cm</>
+                  )}{' '}
+                  = {buildFrac(<>{data.as} cm</>, <>{data.as + data.ac} cm</>)}
+                </>
+              )
+            )}
             <br />
             <br />
             Forme die Gleichung nach |<span className="overline">CD</span>| um:{' '}
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              ⇔ |<span className="overline">CD</span>| ={' '}
-              {buildFrac(<>{data.as + data.ac} cm</>, <>{data.as} cm</>)} ·{' '}
-              {data.ab} cm
-            </span>
+            {data.mode === 'cd' ? (
+              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                ⇔ |<span className="overline">CD</span>| ={' '}
+                {buildFrac(<>{data.as + data.ac} cm</>, <>{data.as} cm</>)} ·{' '}
+                {data.ab} cm
+              </span>
+            ) : (
+              buildBlock(
+                'gray',
+                <>
+                  ⇔ |<span className="overline">CD</span>| ={' '}
+                  {buildFrac(<>{data.as} cm</>, <>{data.as + data.ac} cm</>)} ·{' '}
+                  {data.cd} cm
+                </>
+              )
+            )}
             <br />
             <br />
             Ergebnis: <br />
             <span className="mt-5 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
               |<span className="overline">CD</span>| ={' '}
-              {(((data.as + data.ac) / data.as) * data.ab)
+              {(data.mode === 'cd' ? data.cd : data.ab)
                 .toString()
                 .replace('.', ',')}{' '}
               cm
@@ -98,8 +133,7 @@ export function Trigonometry1() {
           </>
         )
       }}
-      // eslint-disable-next-line no-empty-pattern
-      renderHint={({}) => {
+      renderHint={({ data }) => {
         return (
           <>
             Verwende den Strahlensatz, um eine Gleichung aufzustellen:
@@ -116,10 +150,18 @@ export function Trigonometry1() {
               ={' '}
               {buildFrac(
                 <>
-                  |<span className="overline">CS</span>|{' '}
+                  |
+                  <span className="overline">
+                    {data.otherRay ? 'DS' : 'CS'}
+                  </span>
+                  |{' '}
                 </>,
                 <>
-                  |<span className="overline">AS</span>|
+                  |
+                  <span className="overline">
+                    {data.otherRay ? 'BS' : 'AS'}
+                  </span>
+                  |
                 </>
               )}
             </span>
@@ -166,8 +208,8 @@ function SubComponent({ data }: { data: Trig1Data }) {
       }
     )
 
-    const lineAB = b.create('line', [pointA, pointB])
-    b.create('parallel', [lineAB, pointD])
+    b.create('line', [pointA, pointB])
+    b.create('line', [pointC, pointD])
 
     b.create('line', [pointS, pointC], {
       straightFirst: false,
@@ -178,17 +220,30 @@ function SubComponent({ data }: { data: Trig1Data }) {
       straightLast: true,
     })
 
-    b.create('text', [2, 0, `${data.as} cm`], {
-      anchorX: 'middle',
-      anchorY: 'top',
-    })
-    b.create('text', [5.3, 0, `${data.ac} cm`], {
-      anchorX: 'middle',
-      anchorY: 'top',
-    })
+    if (data.otherRay) {
+      b.create('text', [0, 2, `${data.as} cm`], {})
+      setBoard(b)
 
-    b.create('text', [2.8, 2, `${data.ab} cm`], {})
-    setBoard(b)
+      b.create('text', [1.6, 3.8, `${data.ac} cm`], {})
+      setBoard(b)
+    } else {
+      b.create('text', [2, 0, `${data.as} cm`], {
+        anchorX: 'middle',
+        anchorY: 'top',
+      })
+      b.create('text', [5.3, 0, `${data.ac} cm`], {
+        anchorX: 'middle',
+        anchorY: 'top',
+      })
+    }
+
+    if (data.mode === 'cd') {
+      b.create('text', [2.8, 2, `${data.ab} cm`], {})
+      setBoard(b)
+    } else {
+      b.create('text', [4.6, 2.4, `${data.cd} cm`], {})
+      setBoard(b)
+    }
 
     return () => {
       if (board) JXG.JSXGraph.freeBoard(board)

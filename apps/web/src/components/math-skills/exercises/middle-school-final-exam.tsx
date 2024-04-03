@@ -45,7 +45,7 @@ export const middleSchoolFinalExam = {
     track: 1,
     component: <LogarithmExercise2 />,
   },
-  'exponential-function-3': {
+  'exponential-funktion-gleichung-loesen': {
     title: 'Gleichung lösen',
     subtitle: 'Exponentialfunktion',
     useCalculator: false,
@@ -54,7 +54,7 @@ export const middleSchoolFinalExam = {
   },
   'trigonometrie-1': {
     title: 'Strahlensatz',
-    subtitle: 'Trigonometrie',
+    subtitle: 'Geometrie',
     useCalculator: false,
     track: 1,
     component: <Trigonometry1 />,
@@ -73,7 +73,7 @@ export const middleSchoolFinalExam = {
     track: 1,
     component: <IceCreamShop />,
   },
-  'wheel-of-fortune': {
+  gluecksrad: {
     title: 'Glücksrad',
     subtitle: 'Daten und Zufall',
     useCalculator: false,
