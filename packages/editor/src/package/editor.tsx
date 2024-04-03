@@ -51,11 +51,15 @@ const emptyState = {
 /** For exporting the editor */
 export function SerloEditor(props: SerloEditorProps) {
   const { children, pluginsConfig, initialState, language = 'de' } = props
-  const { basicPluginsConfig, customPlugins, customRenderers } = pluginsConfig
+  const {
+    basicPluginsConfig,
+    customRenderers,
+    customPlugins = [],
+  } = pluginsConfig
   const { instanceData, loggedInData } = editorData[language]
 
   const basicPlugins = createBasicPlugins(basicPluginsConfig)
-  editorPlugins.init([...basicPlugins, ...(customPlugins || [])])
+  editorPlugins.init([...basicPlugins, ...customPlugins])
 
   const basicRenderers = createRenderers(customPlugins)
   editorRenderers.init({ ...basicRenderers, ...customRenderers })
