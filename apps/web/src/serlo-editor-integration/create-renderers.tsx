@@ -103,9 +103,9 @@ const SerloTableStaticRenderer = dynamic<EditorSerloTableDocument>(() =>
     (mod) => mod.SerloTableStaticRenderer
   )
 )
-const ExerciseGroupStaticRenderer = dynamic<EditorExerciseGroupDocument>(() =>
-  import('@editor/plugins/exercise-group/static').then(
-    (mod) => mod.ExerciseGroupStaticRenderer
+const ExerciseGroupSerloStaticRenderer = dynamic<EditorExerciseGroupDocument>(() =>
+  import('@/serlo-editor-integration/serlo-plugin-wrappers/exercise-group-serlo-static-renderer').then(
+    (mod) => mod.ExerciseGroupSerloStaticRenderer
   )
 )
 const HighlightStaticRenderer = dynamic<EditorHighlightDocument>(() =>
@@ -201,12 +201,12 @@ export function createRenderers(): InitRenderersArgs {
 
       // exercises
       {
-        type: EditorPluginType.ExerciseGroup,
-        renderer: ExerciseGroupStaticRenderer,
-      },
-      {
         type: EditorPluginType.Exercise,
         renderer: ExerciseSerloStaticRenderer,
+      },
+      {
+        type: EditorPluginType.ExerciseGroup,
+        renderer: ExerciseGroupSerloStaticRenderer,
       },
       { type: EditorPluginType.H5p, renderer: H5pSerloStaticRenderer },
       {
