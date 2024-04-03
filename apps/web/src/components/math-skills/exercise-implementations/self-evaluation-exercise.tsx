@@ -81,7 +81,7 @@ export function SelfEvaluationExercise<T>({
   function renderToolHints() {
     return (
       <i className="flex justify-between">
-        Rechne am Besten mit Stift und Papier.{' '}
+        Rechne am besten mit Stift und Papier.{' '}
         <>
           <span>
             {calculatorAllowed ? (
