@@ -221,9 +221,7 @@ export interface EditorExerciseGroupDocument {
 export interface EditorTemplateExerciseGroupDocument {
   plugin: TemplatePluginType.TextExerciseGroup
   state: PrettyStaticState<TextExerciseGroupTypePluginState> & {
-    content: EditorRowsDocument | EditorExerciseGroupDocument
-    // extra field that is not actually part of the state until we move solutions into exercises
-    exercises: EditorExerciseDocument[]
+    content: EditorExerciseGroupDocument
   }
   id?: string
 
