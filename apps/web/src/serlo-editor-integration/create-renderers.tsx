@@ -25,10 +25,8 @@ import type {
   EditorSerloTableDocument,
   EditorSolutionDocument,
   EditorSpoilerDocument,
-  EditorTemplateExerciseGroupDocument,
   EditorExerciseGroupDocument,
 } from '@editor/types/editor-plugins'
-import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import dynamic from 'next/dynamic'
 import { ComponentProps } from 'react'
 
@@ -110,12 +108,6 @@ const ExerciseGroupStaticRenderer = dynamic<EditorExerciseGroupDocument>(() =>
     (mod) => mod.ExerciseGroupStaticRenderer
   )
 )
-const TextExerciseGroupTypeStaticRenderer =
-  dynamic<EditorTemplateExerciseGroupDocument>(() =>
-    import('@editor/plugins/serlo-template-plugins/exercise-group/static').then(
-      (mod) => mod.TextExerciseGroupTypeStaticRenderer
-    )
-  )
 const HighlightStaticRenderer = dynamic<EditorHighlightDocument>(() =>
   import('@editor/plugins/highlight/static').then(
     (mod) => mod.HighlightStaticRenderer
@@ -233,22 +225,6 @@ export function createRenderers(): InitRenderersArgs {
         type: EditorPluginType.Solution,
         renderer: SolutionSerloStaticRenderer,
       },
-
-      // // Internal template plugins for our content types
-      // { type: TemplatePluginType.Applet, renderer: appletTypePlugin },
-      // { type: TemplatePluginType.Article, renderer: articleTypePlugin },
-      // { type: TemplatePluginType.Course, renderer: courseTypePlugin },
-      // { type: TemplatePluginType.CoursePage, renderer: coursePageTypePlugin },
-      // { type: TemplatePluginType.Event, renderer: eventTypePlugin },
-      // { type: TemplatePluginType.Page, renderer: pageTypePlugin },
-      // { type: TemplatePluginType.Taxonomy, renderer: taxonomyTypePlugin },
-      // { type: TemplatePluginType.TextExercise, renderer: textExerciseTypePlugin },
-      {
-        type: TemplatePluginType.TextExerciseGroup,
-        renderer: TextExerciseGroupTypeStaticRenderer,
-      },
-      // { type: TemplatePluginType.User, renderer: userTypePlugin },
-      // { type: TemplatePluginType.Video, renderer: videoTypePlugin },
       {
         type: EditorPluginType.Unsupported,
         renderer: (state: unknown) => {
