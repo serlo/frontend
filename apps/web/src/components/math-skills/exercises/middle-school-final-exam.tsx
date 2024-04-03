@@ -1,6 +1,7 @@
 import { ABCFormular } from '../exercise-implementations/abc-formular'
 import { Asymptote1 } from '../exercise-implementations/asymptote-1'
 import { Asymptote2 } from '../exercise-implementations/asymptote-2'
+import { DescribeGraphPowerFunction } from '../exercise-implementations/describe-graph-power-function'
 import { ExponentialFunction } from '../exercise-implementations/exponential-function-1'
 import { ExponentialFunctionTime } from '../exercise-implementations/exponential-function-2'
 import { ExponentialEquation } from '../exercise-implementations/exponential-function-3'
@@ -31,6 +32,13 @@ import { WheelOfFortune } from '../exercise-implementations/wheel-of-fortune'
 
 export const middleSchoolFinalExam = {
   // Mathe-Zweig Teil A
+  'potenzfunktionen-graphen-beschreiben': {
+    title: 'Funktionsgraph beschreiben',
+    subtitle: 'Potenzfunktionen',
+    useCalculator: false,
+    track: 1,
+    component: <DescribeGraphPowerFunction />,
+  },
   'logarithmus-1': {
     title: 'Terme zusammenfassen 1',
     subtitle: 'Logarithmus',
