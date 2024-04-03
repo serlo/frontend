@@ -12,7 +12,6 @@ import { UuidType, type UuidWithRevType } from '@/data-types'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
-
 interface ArticleAddModalProps {
   open: boolean
   data: ArticleProps['state']

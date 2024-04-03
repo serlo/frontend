@@ -22,7 +22,6 @@ import { exerciseGroupPlugin } from '@editor/plugins/exercise-group'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { H5pPlugin } from '@editor/plugins/h5p'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
-import { imagePlugin } from '@/serlo-editor-integration/image-with-serlo-config'
 import { injectionPlugin } from '@editor/plugins/injection'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
 import { createMultimediaPlugin } from '@editor/plugins/multimedia'
@@ -55,6 +54,7 @@ import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { type LoggedInData, UuidType } from '@/data-types'
 import { isProduction } from '@/helper/is-production'
+import { imagePlugin } from '@/serlo-editor-integration/image-with-serlo-config'
 
 export function createPlugins({
   editorStrings,

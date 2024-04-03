@@ -3356,3 +3356,12 @@ export type MediaUploadQueryVariables = Exact<{
 
 
 export type MediaUploadQuery = { __typename?: 'Query', media: { __typename?: 'MediaQuery', newUpload: { __typename?: 'MediaUpload', uploadUrl: string, urlAfterUpload: string } } };
+
+export type InjectionOnlyContentQueryVariables = Exact<{
+  path: Scalars['String']['input'];
+}>;
+
+
+export type InjectionOnlyContentQuery = { __typename?: 'Query', uuid?: { __typename: 'Applet', currentRevision?: { __typename?: 'AppletRevision', url: string, content: string } | null } | { __typename: 'AppletRevision' } | { __typename: 'Article', alias: string, title: string } | { __typename: 'ArticleRevision' } | { __typename: 'Comment' } | { __typename: 'Course' } | { __typename: 'CoursePage', alias: string, title: string } | { __typename: 'CoursePageRevision' } | { __typename: 'CourseRevision' } | { __typename: 'Event', currentRevision?: { __typename?: 'EventRevision', content: string } | null } | { __typename: 'EventRevision' } | { __typename: 'Exercise', licenseId: number, currentRevision?: { __typename?: 'ExerciseRevision', content: string } | null } | { __typename: 'ExerciseGroup', licenseId: number, currentRevision?: { __typename?: 'ExerciseGroupRevision', content: string } | null } | { __typename: 'ExerciseGroupRevision' } | { __typename: 'ExerciseRevision' } | { __typename: 'Page' } | { __typename: 'PageRevision' } | { __typename: 'TaxonomyTerm', alias: string, title: string } | { __typename: 'User' } | { __typename: 'Video', currentRevision?: { __typename?: 'VideoRevision', url: string, title: string } | null } | { __typename: 'VideoRevision' } | null };
+
+export type InjectionExerciseFragment = { __typename?: 'Exercise', licenseId: number, currentRevision?: { __typename?: 'ExerciseRevision', content: string } | null };

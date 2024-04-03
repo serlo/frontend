@@ -1,5 +1,4 @@
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
-import { InjectionStaticRenderer } from '@editor/plugins/injection/static'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { gql } from 'graphql-request'
 
@@ -8,15 +7,18 @@ import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType, type UuidWithRevType } from '@/data-types'
-import { FetchExerciseFolderQuery, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
+import {
+  FetchExerciseFolderQuery,
+  TaxonomyTermType,
+} from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
+import { InjectionSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/injection-serlo-static-renderer'
 
 interface ArticleRelatedExercisesProps {
   exerciseFolderId: number
   addEntry: (id: number, typename: UuidWithRevType, title?: string) => void
 }
-
 
 type ChildNodes = Extract<
   FetchExerciseFolderQuery['uuid'],
@@ -76,7 +78,7 @@ export function ArticleRelatedExercises({
 
     return (
       <div key={id} className="my-5 border-t-2 border-black py-5">
-        <InjectionStaticRenderer
+        <InjectionSerloStaticRenderer
           plugin={EditorPluginType.Injection}
           state={`/${id}`}
         />
