@@ -121,10 +121,7 @@ export function WheelOfFortune() {
               <br />
               <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
                 P(eine {data.number_2}) ={' '}
-                {buildFrac(
-                  <>{data.event === 1 ? counter_Number_2 : null}</>,
-                  <>{data.sections}</>
-                )}
+                {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)}
               </span>
               <br />
               <br />
@@ -174,7 +171,7 @@ export function WheelOfFortune() {
               Formel für das Laplace-Experiment:
               <br />
               <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                P(eine {data.number_3}) ={' '}
+                P(eine {data.number_2}) ={' '}
                 {buildFrac(
                   <>Anzahl der günstigen Ereignisse</>,
                   <>Anzahl der möglichen Ereignisse</>
@@ -185,7 +182,7 @@ export function WheelOfFortune() {
               Wir zählen nach und setzen ein:
               <br />
               <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                P(eine {data.number_3}) ={' '}
+                P(eine {data.number_2}) ={' '}
                 {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)}
               </span>
               <br />
@@ -203,7 +200,8 @@ export function WheelOfFortune() {
               verschiedener Pfade werden addiert.
               <br />
               <span className="mt-5 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-1.5xl">
-                P(Gleiche Zahlen) = P((1; 1), (2; 2)) ={' '}
+                P(Gleiche Zahlen) = P(({data.number_2}; {data.number_2}), (
+                {data.number_1}; {data.number_1})) ={' '}
                 {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)} ·{' '}
                 {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)} +{' '}
                 {buildFrac(<>{counter_Number_1}</>, <>{data.sections}</>)} ·{' '}
@@ -253,7 +251,7 @@ export function WheelOfFortune() {
               Genauso ergibt sich:
               <br />
               <span className="mt-5 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                P(eine {counter_Number_2}) ={' '}
+                P(eine {data.number_2}) ={' '}
                 {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)}
               </span>
               <br />
@@ -332,11 +330,11 @@ export function WheelOfFortune() {
                 ), ({data.number_2}; {data.number_1}))
                 <br />={' '}
                 {buildFrac(
-                  <>{counter_Number_2}</>,
+                  <>{counter_Number_1}</>,
                   <>{data.sections}</>
-                )} · {buildFrac(<>{counter_Number_1}</>, <>{data.sections}</>)}{' '}
-                + {buildFrac(<>{counter_Number_1}</>, <>{data.sections}</>)} ·{' '}
-                {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)}={' '}
+                )} · {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)}{' '}
+                + {buildFrac(<>{counter_Number_2}</>, <>{data.sections}</>)} ·{' '}
+                {buildFrac(<>{counter_Number_1}</>, <>{data.sections}</>)}={' '}
                 {buildFrac(
                   <>{2 * counter_Number_2 * counter_Number_2}</>,
                   <>{data.sections * data.sections}</>
