@@ -1,5 +1,5 @@
 import { SpoilerRenderer } from '@editor/plugins/spoiler/renderer'
-import { faCalculator } from '@fortawesome/free-solid-svg-icons'
+import { faCalculator, faSlash } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useState } from 'react'
 
 import { ExStatus } from '../feedback/execise-feedback'
@@ -33,17 +33,7 @@ export function SelfEvaluationExercise<T>({
     <>
       {renderTask(data)}
       <div className="mb-4 mt-12 border-y-2 border-stone-100 py-2 text-stone-500">
-        <i>
-          Rechne am Besten mit Stift und Papier.
-          {calculatorAllowed ? (
-            <>
-              {' '}
-              <br />
-              Taschenrechner ist erlaubt &nbsp;
-              <FaIcon icon={faCalculator} />
-            </>
-          ) : null}
-        </i>
+        {renderToolHints()}
       </div>
       <SkipExerciseButton
         makeNewExercise={() => {
@@ -87,4 +77,33 @@ export function SelfEvaluationExercise<T>({
       )}
     </>
   )
+
+  function renderToolHints(){
+    return (
+      <i className="flex justify-between">
+          Rechne am Besten mit Stift und Papier.{' '}
+          <>
+            <span>
+              {calculatorAllowed ? (
+                <>
+                  <FaIcon icon={faCalculator} />
+                  Taschenrechner ist erlaubt &nbsp;
+                </>
+              ) : (
+                <>
+                  <span className="relative inline-block w-5 -translate-y-0.25">
+                    <FaIcon
+                      icon={faCalculator}
+                      className="absolute -top-3 left-1"
+                    />
+                    <FaIcon icon={faSlash} className="absolute -top-3" />
+                  </span>
+                  Ohne Taschenrechner
+                </>
+              )}
+            </span>
+          </>
+        </i>
+    )
+  }
 }
