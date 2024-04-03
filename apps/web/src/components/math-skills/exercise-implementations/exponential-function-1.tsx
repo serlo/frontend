@@ -1,6 +1,10 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { NameInput } from '../name-input'
+import {
+  HighlightGray,
+  HighlightGreen,
+  MainTask,
+} from '../components/content-components'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { buildFrac } from '../utils/math-builder'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
@@ -27,7 +31,7 @@ export function ExponentialFunction() {
       renderTask={({ Jahr_Anlage, Money_Start, Ende_Anlage, Zins }) => {
         return (
           <div className="text-lg">
-            <h2 className="text-2xl">Rechnen mit der Exponentialfunktion</h2>
+            <MainTask>Rechnen mit der Exponentialfunktion</MainTask>
             <br />
             <br />
             {data.name ? `${data.name} hat` : 'Du hast'} {Money_Start} € im Jahr{' '}
@@ -75,10 +79,10 @@ export function ExponentialFunction() {
             {Ende_Anlage === 3 ? 'in 5 Jahren' : null} sind es insgesamt {Jahre}{' '}
             Jahre, womit wir {Jahre} für x in die Funktion einsetzen:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGreen>
               y = {Money_Start} · {Faktor.toString().replace('.', ',')}
               <sup>{Jahre}</sup> = {Geld.toString().replace('.', ',')}
-            </span>
+            </HighlightGreen>
             <br />
             <br />
             Das Kapital beträgt nach {Jahre} Jahren{' '}
@@ -93,9 +97,9 @@ export function ExponentialFunction() {
           <>
             Das angelegte Geld kann mit einer Exponentialfunktion beschrieben
             werden.
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = a · b <sup>x</sup>
-            </span>
+            </HighlightGray>
             <br />
             Dabei steht a für den Anfangswert{' '}
             <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">

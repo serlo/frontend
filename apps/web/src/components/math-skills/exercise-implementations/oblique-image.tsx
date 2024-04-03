@@ -4,6 +4,7 @@ import { pi } from 'mathjs'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
+import { MainTask } from '../components/content-components'
 import { buildFrac, buildOverline } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -83,7 +84,7 @@ export function ObliqueImage() {
               </p>
             ) : (
               <>
-                <h2 className="text-2xl">
+                <MainTask>
                   Das ist{' '}
                   {data.koerper === 'pyra' ? 'die Pyramide ABCDE.' : null}
                   {data.koerper === 'quader' ? 'der Quader ABCDEFGH.' : null}
@@ -91,7 +92,7 @@ export function ObliqueImage() {
                   {data.koerper === 'pyra3'
                     ? 'die Dreieckspyramide ABCD.'
                     : null}
-                </h2>
+                </MainTask>
                 {data.koerper === 'prisma3' ? (
                   <ComponentPrisma data={data} />
                 ) : null}

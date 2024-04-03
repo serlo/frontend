@@ -3,6 +3,11 @@ import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
+import {
+  MainTask,
+  HighlightGreen,
+  HighlightGray,
+} from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -23,11 +28,11 @@ export function VertexParabolaBackup() {
       renderTask={({ b, isPlus, isPlus_2, c }) => {
         return (
           <>
-            <h2 className="text-2xl">Bestimme die Scheitelform der Parabel:</h2>
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <MainTask>Bestimme die Scheitelform der Parabel:</MainTask>
+            <HighlightGreen>
               y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x {isPlus_2 ? '+' : '-'}{' '}
               {c}
-            </span>
+            </HighlightGreen>
           </>
         )
       }}
@@ -35,21 +40,21 @@ export function VertexParabolaBackup() {
         return (
           <>
             Wir formen den Funktionsterm in die Scheitelform um: <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x {isPlus_2 ? '+' : '-'}
               {c}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Wir führen eine quadratische Ergänzung durch. Lies dazu den
             Parameter b im Funktionsterm aus: <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGreen>
               y = x<sup>2</sup>{' '}
               <strong>
                 {isPlus ? '+' : '-'} {b}
               </strong>
               x {isPlus_2 ? '+' : '-'} {c}
-            </span>
+            </HighlightGreen>
             <br />
             <br />
             Wir addieren den Term{' '}
@@ -74,7 +79,7 @@ export function VertexParabolaBackup() {
             </span>{' '}
             und subtrahieren ihn zum Schluss wieder:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = x<sup>2</sup>
               {isPlus ? '+' : '-'} <strong>{b}</strong>x +{' '}
               <span className="inline-block scale-y-[3]">(</span>
@@ -95,12 +100,12 @@ export function VertexParabolaBackup() {
               )}
               <span className="inline-block scale-y-[3]">)</span>
               <sup>2</sup>
-            </span>
+            </HighlightGray>
             <br />
             Wenn man den Mischterm etwas umformt, sieht der Term noch mehr wie
             das Ergebnis einer binomischen Formel aus:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = x<sup>2</sup>
               {isPlus ? '+' : '-'} 2 · x · {buildFrac(<>{b}</>, <>2</>)} +{' '}
               <span className="inline-block scale-y-[3]">(</span>
@@ -111,12 +116,12 @@ export function VertexParabolaBackup() {
               {buildFrac(<>{b}</>, <>2</>)}
               <span className="inline-block scale-y-[3]">)</span>
               <sup>2</sup>
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Den vorderen Teil fassen wir zu diesem Binom zusammen:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = <span className="inline-block scale-y-[3]">(</span>x{' '}
               {isPlus ? '+' : '-'} {buildFrac(<>{b}</>, <>2</>)}{' '}
               <span className="inline-block scale-y-[3]">)</span>
@@ -130,12 +135,12 @@ export function VertexParabolaBackup() {
               )}
               <span className="inline-block scale-y-[3]">)</span>
               <sup>2</sup>
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Die Zahlen hinter der Klammer werden auch zusammengefasst:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGreen>
               y = <span className="inline-block scale-y-[1.5]">(</span>x{' '}
               {isPlus ? '+' : '-'} {(b / 2).toString().replace('.', ',')}
               <span className="inline-block scale-y-[1.5]">)</span>
@@ -150,7 +155,7 @@ export function VertexParabolaBackup() {
                     : (-c - (b / 2) * (b / 2)).toString().replace('.', ',')}
                 </>
               )}
-            </span>
+            </HighlightGreen>
           </>
         )
       }}
@@ -161,13 +166,13 @@ export function VertexParabolaBackup() {
             Lies den Parameter <strong>b</strong> aus dem Funktionsterm ab:
             <br />
             <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGreen>
               y = x<sup>2</sup>{' '}
               <strong>
                 {isPlus ? '+' : '-'} {b}
               </strong>
               x {isPlus_2 ? '+' : '-'} {c}
-            </span>
+            </HighlightGreen>
             <br />
             <br />
             Führe eine quadratische Ergänzung durch mit dem Term:

@@ -1,6 +1,6 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { NameInput } from '../name-input'
+import { HighlightGray, HighlightGreen } from '../components/content-components'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { buildFrac } from '../utils/math-builder'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
@@ -67,10 +67,10 @@ export function ExponentialFunctionTime() {
             <br />
             Damit wird das Kapital durch die Exponentialfunktion
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = {Money_Start} · {Faktor.toString().replace('.', ',')}
               <sup>x</sup>
-            </span>
+            </HighlightGray>
             <br />
             <br />
             beschrieben. x steht dabei für die gesuchte Anzahl der Jahre ab{' '}
@@ -80,39 +80,39 @@ export function ExponentialFunctionTime() {
             Wir setzen für y den Endbetrag {Geld_Ende} € ein, weil wir
             untersuchen, wann das Kapital diesen Wert erreicht hat.
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               {Geld_Ende} = {Money_Start} ·{' '}
               {Faktor.toString().replace('.', ',')}
               <sup>x</sup>
-            </span>
+            </HighlightGray>
             <br />
             Wir lösen die Gleichung, indem wir zuerst beide Seiten durch{' '}
-            <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
+            <span className="mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3 text-xl">
               {Money_Start}{' '}
             </span>{' '}
             teilen.
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               {buildFrac(<>{Geld_Ende}</>, <>{Money_Start}</>)} ={' '}
               {Faktor.toString().replace('.', ',')}
               <sup>x</sup>
-            </span>
+            </HighlightGray>
             <br />
             <br /> Um x zu bestimmen, muss der Logarithmus zur Basis{' '}
             {Faktor.toString().replace('.', ',')} angewendet werden:
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               log <sub>{Faktor.toString().replace('.', ',')}</sub>
               <span className="inline-block scale-y-[3] ">(</span>
               {buildFrac(<>{Geld_Ende}</>, <>{Money_Start}</>)}
               <span className="inline-block scale-y-[3] ">)</span> = x
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Mit dem Taschenrechner ergibt sich:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGreen>
               x = {Zeit.toString().replace('.', ',')}
-            </span>
+            </HighlightGreen>
             <br />
             <br />
             Das Geld wurde also {Zeit.toString().replace('.', ',')} Jahre bzw.{' '}
@@ -127,9 +127,9 @@ export function ExponentialFunctionTime() {
           <>
             Das angelegte Geld kann mit einer Exponentialfunktion beschrieben
             werden.
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = a · b <sup>x</sup>
-            </span>
+            </HighlightGray>
             <br />
             Dabei steht a für den Anfangswert{' '}
             <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">

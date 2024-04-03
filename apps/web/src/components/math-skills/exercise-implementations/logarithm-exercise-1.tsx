@@ -1,4 +1,9 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
+import {
+  MainTask,
+  HighlightGreen,
+  HighlightGray,
+} from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -60,12 +65,10 @@ export function LogarithmExercise1() {
         }
         return (
           <>
-            <h2 className="text-2xl">
-              Fassen Sie zu einem Logarithmus zusammen:
-            </h2>
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <MainTask>Fassen Sie zu einem Logarithmus zusammen:</MainTask>
+            <HighlightGreen>
               {summands.map((el, i) => renderSummand(el, i))}
-            </span>{' '}
+            </HighlightGreen>{' '}
           </>
         )
       }}
@@ -115,9 +118,9 @@ export function LogarithmExercise1() {
         return (
           <>
             Aufgabenstellung: <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               {summands.map((el, i) => renderSummand(el, i))}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             {summands.some(
@@ -126,16 +129,16 @@ export function LogarithmExercise1() {
               <>
                 Ziehe die Vorfaktoren in den Logarithmus:
                 <br />
-                <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+                <HighlightGray>
                   {summands.map((el, i) => renderSummandAllInside(el, i))}
-                </span>
+                </HighlightGray>
                 <br />
                 <br />
               </>
             )}
             Fasse zusammen mithilfe der Logarithmusregeln:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               {summands.some((s) => s.exponent < 0) ? (
                 <>
                   log&#8202;<sub>{logBase}</sub>
@@ -183,7 +186,7 @@ export function LogarithmExercise1() {
                   )
                 </>
               )}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Vereinfache und erhalte das Ergebnis: <br />

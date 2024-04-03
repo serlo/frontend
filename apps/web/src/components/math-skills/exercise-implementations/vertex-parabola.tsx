@@ -3,6 +3,11 @@ import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
+import {
+  MainTask,
+  HighlightGreen,
+  HighlightGray,
+} from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -23,11 +28,11 @@ export function VertexParabola() {
       renderTask={({ b, isPlus, isPlus_2, c }) => {
         return (
           <>
-            <h2 className="text-2xl">Bestimme die Scheitelform der Parabel:</h2>
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <MainTask>Bestimme die Scheitelform der Parabel:</MainTask>
+            <HighlightGreen>
               y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x {isPlus_2 ? '+' : '-'}{' '}
               {c}
-            </span>
+            </HighlightGreen>
           </>
         )
       }}
@@ -36,52 +41,52 @@ export function VertexParabola() {
           return (
             <>
               Wir formen den Funktionsterm in die Scheitelform um: <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x{' '}
                 {isPlus_2 ? '+' : '-'}
                 {c}
-              </span>
+              </HighlightGray>
               <br />
               <br />
               Die Scheitelform der Funktion hat die Form
               <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 y = (x - ☐)<sup>2</sup> + ☐
-              </span>
+              </HighlightGray>
               <br />
               <br />
               wobei in den Kästchen die passenden Werte stehen müssen.
               <br />
               <br />
-              <h2 className="text-2xl">Wert im ersten Kästchen</h2>
+              <MainTask>Wert im ersten Kästchen</MainTask>
               <br />
               Damit aus dem Binom der richtige Mischterm entsteht, muss aus dem
               Funktionsterm
               <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 y = x<sup>2</sup> {isPlus ? '+' : '-'} 2 · x ·{' '}
                 <strong>{b / 2}</strong> {isPlus_2 ? '+' : '-'}
                 {c}
-              </span>
+              </HighlightGray>
               <br />
               <br />
               in das Binom eingesetzt werden:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 y = (x - <strong>{b / 2}</strong>)<sup>2</sup> + ☐
-              </span>
+              </HighlightGray>
               <br />
               <br />
-              <h2 className="text-2xl">Wert im zweiten Kästchen</h2>
+              <MainTask>Wert im zweiten Kästchen</MainTask>
               <br />
               Würden wir das Binom wieder ausschreiben, erhalten wir bereits den
               richtigen Funktionsterm wieder:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x{' '}
                 {isPlus_2 ? '+' : '-'}
                 {c}
-              </span>
+              </HighlightGray>
               <br />
               <br />
               Der Wert im zweiten Kästchen ist damit <strong>0</strong>. Das ist
@@ -91,50 +96,50 @@ export function VertexParabola() {
         return (
           <>
             Wir formen den Funktionsterm in die Scheitelform um: <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x {isPlus_2 ? '+' : '-'}
               {c}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Die Scheitelform der Funktion hat die Form
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = (x - ☐)<sup>2</sup> + ☐
-            </span>
+            </HighlightGray>
             <br />
             <br />
             wobei in den Kästchen die passenden Werte stehen müssen.
             <br />
             <br />
-            <h2 className="text-2xl">Wert im ersten Kästchen</h2>
+            <MainTask>Wert im ersten Kästchen</MainTask>
             <br />
             Damit aus dem Binom der richtige Mischterm entsteht, muss aus dem
             Funktionsterm
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = x<sup>2</sup> {isPlus ? '+' : '-'} 2 · x ·{' '}
               <strong>{b / 2}</strong> {isPlus_2 ? '+' : '-'}
               {c}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             in das Binom eingesetzt werden:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = (x - <strong>{b / 2}</strong>)<sup>2</sup> + ☐
-            </span>
+            </HighlightGray>
             <br />
             <br />
-            <h2 className="text-2xl">Wert im zweiten Kästchen</h2>
+            <MainTask>Wert im zweiten Kästchen</MainTask>
             <br />
             Würden wir das Binom so stehen lassen, wäre der Term am Ende nicht
             immer der gleiche wie im ursprünglichen Funktionsterm:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x + {(b / 2) * (b / 2)}{' '}
               + ☐
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Damit am Ende{' '}
@@ -144,7 +149,7 @@ export function VertexParabola() {
             </span>{' '}
             steht, müssen wir mit dem richtigen Wert korrigieren:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x + {(b / 2) * (b / 2)}{' '}
               <strong>
                 {c - (b / 2) * (b / 2) === 0 ? (
@@ -158,11 +163,11 @@ export function VertexParabola() {
                   </>
                 )}
               </strong>{' '}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Damit ist die richtige Scheitelform: <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGreen>
               y = <span className="inline-block scale-y-[1.5]">(</span>x{' '}
               {isPlus ? '+' : '-'} {(b / 2).toString().replace('.', ',')}
               <span className="inline-block scale-y-[1.5]">)</span>
@@ -179,7 +184,7 @@ export function VertexParabola() {
                   </>
                 )}
               </strong>
-            </span>
+            </HighlightGreen>
           </>
         )
       }}
@@ -189,19 +194,19 @@ export function VertexParabola() {
           return (
             <>
               Schreibe den Funktionsterm in die Scheitelform:
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 y = (x - ☐)<sup>2</sup> + ☐
-              </span>
+              </HighlightGray>
               <br />
               <br />
               Bestimme dazu zuerst, welcher Wert im Binom stehen muss, um den
               richtigen Mischterm zu ergeben:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 y = x<sup>2</sup> {isPlus ? '+' : '-'} <strong>{b}</strong>x{' '}
                 {isPlus_2 ? '+' : '-'}
                 {c}
-              </span>
+              </HighlightGray>
               <br />
               <br />
               Begründe, warum im zweiten Kästchen eine 0 stehen muss.
@@ -210,19 +215,19 @@ export function VertexParabola() {
         return (
           <>
             Schreibe den Funktionsterm in die Scheitelform:
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = (x - ☐)<sup>2</sup> + ☐
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Bestimme dazu zuerst, welcher Wert im Binom stehen muss, um den
             richtigen Mischterm zu ergeben:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = x<sup>2</sup> {isPlus ? '+' : '-'} <strong>{b}</strong>x{' '}
               {isPlus_2 ? '+' : '-'}
               {c}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Mache eine Probe und rechne das Binom aus, um zu bestimmen, was der

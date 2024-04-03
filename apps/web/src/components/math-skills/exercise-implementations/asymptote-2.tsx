@@ -4,6 +4,12 @@ import { useEffect, useState } from 'react'
 /* eslint-disable no-empty-pattern */
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import {
+  HighlightGray,
+  HighlightGreen,
+  MainTask,
+} from '../components/content-components'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { buildFrac } from '../utils/math-builder'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { randomIntBetween } from '@/helper/random-int-between'
@@ -39,16 +45,16 @@ export function Asymptote2() {
       renderTask={({ data }) => {
         return (
           <>
-            <h2 className="text-2xl">
+            <MainTask>
               Bestimme die Definitions-, Wertemenge und Asymptote der Funktion:
-            </h2>
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            </MainTask>
+            <HighlightGreen>
               y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
               {data.a === -1 ? null : '·'}{' '}
               {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
               <sup>x</sup> {data.c > 0 ? '+' : null}{' '}
               {data.c !== 0 ? data.c : null}
-            </span>
+            </HighlightGreen>
           </>
         )
       }}
@@ -59,38 +65,34 @@ export function Asymptote2() {
             Bestimme Definitions- und Wertebereich, sowie Asymptoten der
             Funktion:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
               {data.a === -1 ? null : '·'}{' '}
               {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
               <sup>x</sup> {data.c > 0 ? '+' : null}{' '}
               {data.c !== 0 ? data.c : null}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Die Definitionsmenge ist bei allen Exponentialfunktionen die Menge
             der reellen Zahlen.
             <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-              D = R
-            </span>
+            <HighlightGreen>D = R</HighlightGreen>
             <br />
             <br />
             Der Graph hat eine Asymptote mit der Gleichung:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-              y = {data.c}
-            </span>
+            <HighlightGreen>y = {data.c}</HighlightGreen>
             <br />
             <br />
             Der Wertebereich setzt sich aus allen Werten{' '}
             {data.a > 0 ? 'oberhalb' : 'unterhalb'} der Asymptote zusammen (der
             Faktor der Funktion ist {data.a > 0 ? 'positiv' : 'negativ'}):
             <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGreen>
               W = {'{'} y |{data.a > 0 ? ' y > ' + data.c : ' y < ' + data.c}
               {'}'}
-            </span>
+            </HighlightGreen>
             <br />
             <br />
             Graph für -6 &#8804; x &#8804; 6 und -6 &#8804; y &#8804; 6 als
@@ -105,18 +107,16 @@ export function Asymptote2() {
         return (
           <>
             Der <strong>Definitionsbereich</strong> einer Exponentialfunktion
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = a · b<sup>x</sup> + c
-            </span>
+            </HighlightGray>
             <br />
             <br />
             ist immer die Menge der reellen Zahlen.
             <br />
             Die <strong>Asyptote</strong> hat immer die Gleichung:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              y = c
-            </span>
+            <HighlightGray>y = c</HighlightGray>
             <br />
             <br />
             Die Asymptote bildet die Grenze zum <strong>Wertebereich</strong>.

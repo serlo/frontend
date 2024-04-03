@@ -1,4 +1,5 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
+import { HighlightGray, HighlightGreen } from '../components/content-components'
 import { buildBlock } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -20,12 +21,12 @@ export function ExponentialEquation() {
             <p className="mb-8 text-2xl">
               Lösen Sie die Gleichung:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGreen>
                 0 = {sign ? '(' : null}
                 {sign ? '-' : null} {a}
                 {sign ? ')' : null} · {b}
                 <sup>x</sup> {sign ? '+' : '-'} {power * a}
-              </span>
+              </HighlightGreen>
             </p>
 
             <p>
@@ -87,10 +88,10 @@ export function ExponentialEquation() {
             Stelle diese Gleichung um, sodass auf einer Seite nur noch die
             Potenz steht.
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               {power} = {b}
               <sup>x</sup>
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Die Gleichung lässt sich als Frage umformulieren:

@@ -1,4 +1,9 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
+import {
+  HighlightGray,
+  HighlightGreen,
+  MainTask,
+} from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -17,14 +22,12 @@ export function LogarithmExercise2() {
       renderTask={({ num, isPlus, varName, logBase }) => {
         return (
           <>
-            <h2 className="text-2xl">
-              Fassen Sie zu einem Logarithmus zusammen:
-            </h2>
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <MainTask>Fassen Sie zu einem Logarithmus zusammen:</MainTask>
+            <HighlightGreen>
               log&#8202;<sub>{logBase}</sub>({varName}² - {num * num}) -
               log&#8202;
               <sub>{logBase}</sub>({varName} {isPlus ? '+' : '-'} {num})
-            </span>
+            </HighlightGreen>
           </>
         )
       }}
@@ -32,16 +35,16 @@ export function LogarithmExercise2() {
         return (
           <>
             Aufgabenstellung: <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               log&#8202;<sub>{logBase}</sub>({varName}² - {num * num}) -
               log&#8202;
               <sub>{logBase}</sub>({varName} {isPlus ? '+' : '-'} {num})
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Forme um mit den Logarithmusgesetzen:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               log&#8202;<sub>{logBase}</sub>
               <span className="inline-block scale-y-[2.5]">(</span>
               {buildFrac(
@@ -53,12 +56,12 @@ export function LogarithmExercise2() {
                 </>
               )}
               <span className="inline-block scale-y-[2.5]">)</span>
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Wende die 3. binomische Formel im Zähler an:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               log&#8202;<sub>{logBase}</sub>
               <span className="inline-block scale-y-[2.5]">(</span>
               {buildFrac(
@@ -70,7 +73,7 @@ export function LogarithmExercise2() {
                 </>
               )}
               <span className="inline-block scale-y-[2.5]">)</span>
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Kürze mit {varName} {isPlus ? '+' : '-'} {num} und erhalte das

@@ -2,6 +2,7 @@ import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
+import { MainTask, HighlightGray } from '../components/content-components'
 import { buildBlock, buildFrac, buildOverline } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -40,12 +41,12 @@ export function Trigonometry1() {
       renderTask={({ data }) => {
         return (
           <>
-            <h2 className="text-2xl">
+            <MainTask>
               Die beiden Geraden{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">AB</b> und{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">CD</b>{' '}
               sind zueinander parallel.
-            </h2>
+            </MainTask>
             <p className="mt-2 text-2xl">
               Es gilt |{buildOverline(data.otherRay ? 'SB' : 'SA')}| = {data.as}{' '}
               cm² und |{buildOverline(data.otherRay ? 'BD' : 'AB')}| = {data.ac}{' '}
@@ -75,7 +76,7 @@ export function Trigonometry1() {
             Stelle eine Gleichung mit dem Strahlensatz auf:
             <br />
             {data.mode === 'cd' ? (
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 {buildFrac(
                   <>
                     |<span className="overline">CD</span>|
@@ -83,7 +84,7 @@ export function Trigonometry1() {
                   <>{data.ab} cm</>
                 )}{' '}
                 = {buildFrac(<>{data.as + data.ac} cm</>, <>{data.as} cm</>)}
-              </span>
+              </HighlightGray>
             ) : (
               buildBlock(
                 'gray',
@@ -103,11 +104,11 @@ export function Trigonometry1() {
             Forme die Gleichung nach |<span className="overline">CD</span>| um:{' '}
             <br />
             {data.mode === 'cd' ? (
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 ⇔ |<span className="overline">CD</span>| ={' '}
                 {buildFrac(<>{data.as + data.ac} cm</>, <>{data.as} cm</>)} ·{' '}
                 {data.ab} cm
-              </span>
+              </HighlightGray>
             ) : (
               buildBlock(
                 'gray',
@@ -138,7 +139,7 @@ export function Trigonometry1() {
           <>
             Verwende den Strahlensatz, um eine Gleichung aufzustellen:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               {buildFrac(
                 <>
                   |<span className="overline">CD</span>|
@@ -164,7 +165,7 @@ export function Trigonometry1() {
                   |
                 </>
               )}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Setze die Werte der Längen ein und löse die Gleichung.

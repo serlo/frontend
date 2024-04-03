@@ -2,6 +2,11 @@
 /* eslint-disable no-empty-pattern */
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import {
+  MainTask,
+  HighlightGreen,
+  HighlightGray,
+} from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { randomIntBetween } from '@/helper/random-int-between'
@@ -75,11 +80,11 @@ export function AbbildungGraphen2() {
         if (data.function_type === 1)
           return (
             <>
-              <h2 className="text-2xl">Bestimme den Graphen der Funktion g.</h2>
+              <MainTask>Bestimme den Graphen der Funktion g.</MainTask>
               <br />
               Der Graph der Funktion <i>f</i>
               <br />
-              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGreen>
                 y = {data.a === -1 ? '-' : null}{' '}
                 {buildFrac(
                   <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -92,7 +97,7 @@ export function AbbildungGraphen2() {
                 )}{' '}
                 {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
                 {data.d !== 0 ? data.d : null}
-              </span>
+              </HighlightGreen>
               <br />
               <br />
               wird auf den Graphen von <i>g</i> abgebildet:
@@ -115,11 +120,11 @@ export function AbbildungGraphen2() {
         if (data.function_type === 2)
           return (
             <>
-              <h2 className="text-2xl">Bestimme den Graphen der Funktion g.</h2>
+              <MainTask>Bestimme den Graphen der Funktion g.</MainTask>
               <br />
               Der Graph der Funktion <i>f</i>
               <br />
-              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGreen>
                 y = {data.a > 0 ? null : '- '}
                 {data.x_s !== 0 ? '(' : null}x {data.x_s > 0 ? '+ ' : null}
                 {data.x_s === 0 ? null : null}
@@ -128,7 +133,7 @@ export function AbbildungGraphen2() {
                 <sup>2</sup> {data.y_s > 0 ? '+ ' + data.y_s : null}
                 {data.y_s === 0 ? null : null}
                 {data.y_s < 0 ? data.y_s : null}
-              </span>
+              </HighlightGreen>
               <br />
               <br />
               wird durch folgende Verschiebungen auf den Graphen von <i>
@@ -154,7 +159,7 @@ export function AbbildungGraphen2() {
         if (data.function_type === 3)
           return (
             <>
-              <h2 className="text-2xl">Bestimme den Graphen der Funktion g.</h2>
+              <MainTask>Bestimme den Graphen der Funktion g.</MainTask>
               <br />
               Der Graph der Funktion <i>f</i>
               <br />
@@ -202,7 +207,7 @@ export function AbbildungGraphen2() {
             <>
               Der Graph von <i>g</i> ist gegeben durch:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 y = (-1) · <span className="inline-block scale-y-[3]">(</span>
                 {data.a === -1 ? '-' : null}{' '}
                 {buildFrac(
@@ -217,12 +222,12 @@ export function AbbildungGraphen2() {
                 {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
                 {data.d !== 0 ? data.d : null}
                 <span className="inline-block scale-y-[3]">)</span>
-              </span>
+              </HighlightGray>
               <br />
               <br />
               Vereinfacht:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGreen>
                 y = {data.a === -1 ? null : '-'}{' '}
                 {buildFrac(
                   <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -236,7 +241,7 @@ export function AbbildungGraphen2() {
                 {data.d > 0 && data.d !== 0 ? '-' : null}{' '}
                 {-data.d > 0 ? '+ ' + -data.d : null}
                 {-data.d < 0 ? data.d : null}
-              </span>
+              </HighlightGreen>
             </>
           )
         if (data.function_type === 1 && data.y_reflect === true)
@@ -244,7 +249,7 @@ export function AbbildungGraphen2() {
             <>
               Der Graph von <i>g</i> ist gegeben durch:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 y = (-1) · <span className="inline-block scale-y-[3]">(</span>
                 {data.a === -1 ? '-' : null}{' '}
                 {buildFrac(
@@ -257,12 +262,12 @@ export function AbbildungGraphen2() {
                 {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
                 {data.d !== 0 ? data.d : null}
                 <span className="inline-block scale-y-[3]">)</span>
-              </span>
+              </HighlightGray>
               <br />
               <br />
               Klammer auflösen:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 y = {data.a === -1 ? null : '-'}{' '}
                 {buildFrac(
                   <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -275,12 +280,12 @@ export function AbbildungGraphen2() {
                 {data.d > 0 && data.d !== 0 ? '-' : null}{' '}
                 {-data.d > 0 ? '+ ' + -data.d : null}
                 {-data.d < 0 ? data.d : null}
-              </span>
+              </HighlightGray>
               <br />
               <br />
               (-1) im Nenner ausgeklammert:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 y = {data.a === -1 ? null : '-'}{' '}
                 {buildFrac(
                   <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -295,12 +300,12 @@ export function AbbildungGraphen2() {
                 {data.d > 0 && data.d !== 0 ? '-' : null}{' '}
                 {-data.d > 0 ? '+ ' + -data.d : null}
                 {-data.d < 0 ? data.d : null}
-              </span>
+              </HighlightGray>
               <br />
               <br />
               Vereinfacht:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGreen>
                 y = {data.a === -1 && data.c % 2 === 0 ? '' : null}{' '}
                 {data.a === -1 && data.c % 2 === -1 ? '-' : null}{' '}
                 {data.a === 1 && data.c % 2 === -1 ? '' : null}{' '}
@@ -318,7 +323,7 @@ export function AbbildungGraphen2() {
                 {data.d > 0 && data.d !== 0 ? '-' : null}{' '}
                 {-data.d > 0 ? '+ ' + -data.d : null}
                 {-data.d < 0 ? data.d : null}
-              </span>
+              </HighlightGreen>
             </>
           )
         if (data.function_type === 2 && data.y_reflect === false)
@@ -326,7 +331,7 @@ export function AbbildungGraphen2() {
             <>
               Der Graph von <i>g</i> ist gegeben durch:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 y = (-1) · <span className="inline-block scale-y-[1.8]">(</span>{' '}
                 {data.a > 0 ? null : '- '}
                 {data.x_s !== 0 ? '(' : null}x {data.x_s > 0 ? '+ ' : null}
@@ -337,12 +342,12 @@ export function AbbildungGraphen2() {
                 {data.y_s === 0 ? null : null}
                 {data.y_s < 0 ? data.y_s : null}
                 <span className="inline-block scale-y-[1.8]">)</span>
-              </span>
+              </HighlightGray>
               <br />
               <br />
               Vereinfacht
               <br />
-              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGreen>
                 y = {data.a < 0 ? null : '- '}
                 {data.x_s !== 0 ? '(' : null}x {data.x_s > 0 ? '+ ' : null}
                 {data.x_s === 0 ? null : null}
@@ -351,7 +356,7 @@ export function AbbildungGraphen2() {
                 <sup>2</sup> {data.y_s > 0 ? -data.y_s : null}{' '}
                 {data.y_s === 0 ? null : null}{' '}
                 {data.y_s < 0 ? '+ ' + -data.y_s : null}
-              </span>
+              </HighlightGreen>
             </>
           )
         if (data.function_type === 2 && data.y_reflect === true)
@@ -359,7 +364,7 @@ export function AbbildungGraphen2() {
             <>
               Der Graph von <i>g</i> ist gegeben durch:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 y = (-1) · <span className="inline-block scale-y-[1.8]">(</span>{' '}
                 {data.a > 0 ? null : '- '}
                 {data.x_s !== 0 ? '(' : null}- x {data.x_s > 0 ? '+ ' : null}
@@ -370,12 +375,12 @@ export function AbbildungGraphen2() {
                 {data.y_s === 0 ? null : null}
                 {data.y_s < 0 ? data.y_s : null}
                 <span className="inline-block scale-y-[1.8]">)</span>
-              </span>
+              </HighlightGray>
               <br />
               <br />
               Klammer aufgelöst:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 y = {data.a < 0 ? null : '- '}
                 {data.x_s !== 0 ? '(' : null}- x {data.x_s > 0 ? '+ ' : null}
                 {data.x_s === 0 ? null : null}
@@ -384,12 +389,12 @@ export function AbbildungGraphen2() {
                 <sup>2</sup> {data.y_s > 0 ? -data.y_s : null}{' '}
                 {data.y_s === 0 ? null : null}{' '}
                 {data.y_s < 0 ? '+ ' + -data.y_s : null}
-              </span>
+              </HighlightGray>
               <br />
               <br />
               (-1) aus der Klammer ziehen:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 y = {data.a < 0 ? null : '- '} (-1)<sup>2</sup> ·{' '}
                 {data.x_s !== 0 ? '(' : null}x {data.x_s < 0 ? '+ ' : null}
                 {data.x_s === 0 ? null : null}
@@ -398,11 +403,11 @@ export function AbbildungGraphen2() {
                 <sup>2</sup> {data.y_s > 0 ? -data.y_s : null}{' '}
                 {data.y_s === 0 ? null : null}{' '}
                 {data.y_s < 0 ? '+ ' + -data.y_s : null}
-              </span>
+              </HighlightGray>
               <br />
               <br />
               Vereinfacht <br />
-              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGreen>
                 y = {data.a < 0 ? null : '- '} {data.x_s !== 0 ? '(' : null}x{' '}
                 {data.x_s < 0 ? '+ ' : null}
                 {data.x_s === 0 ? null : null}
@@ -411,7 +416,7 @@ export function AbbildungGraphen2() {
                 <sup>2</sup> {data.y_s > 0 ? -data.y_s : null}{' '}
                 {data.y_s === 0 ? null : null}{' '}
                 {data.y_s < 0 ? '+ ' + -data.y_s : null}
-              </span>
+              </HighlightGreen>
             </>
           )
         if (data.function_type === 3 && data.y_reflect === false)

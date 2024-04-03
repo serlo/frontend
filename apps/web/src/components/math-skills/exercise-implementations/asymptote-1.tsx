@@ -4,6 +4,11 @@ import { useEffect, useState } from 'react'
 /* eslint-disable no-empty-pattern */
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import {
+  MainTask,
+  HighlightGreen,
+  HighlightGray,
+} from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { randomIntBetween } from '@/helper/random-int-between'
@@ -40,10 +45,10 @@ export function Asymptote1() {
       renderTask={({ data }) => {
         return (
           <>
-            <h2 className="text-2xl">
+            <MainTask>
               Bestimme die Definitions-, Wertemenge und Asymptote der Funktion:
-            </h2>
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            </MainTask>
+            <HighlightGreen>
               y = {data.a === -1 ? '-' : null}{' '}
               {buildFrac(
                 <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -56,7 +61,7 @@ export function Asymptote1() {
               )}{' '}
               {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
               {data.d !== 0 ? data.d : null}
-            </span>
+            </HighlightGreen>
           </>
         )
       }}
@@ -67,7 +72,7 @@ export function Asymptote1() {
             Bestimme Definitions- und Wertebereich, sowie Asymptoten der
             Funktion:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = {data.a === -1 ? '-' : null}{' '}
               {buildFrac(
                 <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -80,24 +85,24 @@ export function Asymptote1() {
               )}{' '}
               {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
               {data.d !== 0 ? data.d : null}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Die Definitionsmenge ist die Menge aller reellen Zahlen, sodass der
             Nenner nicht 0 ist:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGreen>
               D = R \ {'{'}
               {-data.b}
               {'}'}
-            </span>
+            </HighlightGreen>
             <br />
             <br />
             Der Graph hat zwei Asymptoten mit den Gleichungen:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGreen>
               y = {data.d} und x = {-data.b}
-            </span>
+            </HighlightGreen>
             <br />
             <br />
             Der Wertebereich setzt sich aus allen reellen Zahlen zusammen, die
@@ -114,14 +119,14 @@ export function Asymptote1() {
               ? 'Diese Funktion hat einen ungeraden Grad. Sie nimmt alle Werte an, bis auf den der Asymptote:'
               : null}
             <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGreen>
               W = {'{'} y |
               {data.a > 0 && data.c % 2 === 0 ? ' y > ' + data.d : null}
               {data.a < 0 && data.c % 2 === 0 ? ' y < ' + data.d : null}
               {data.c % 2 !== 0 ? ' y ≠ ' : null}
               {data.c % 2 !== 0 ? data.d : null}
               {' }'}
-            </span>
+            </HighlightGreen>
             <br />
             <br />
             Graph für -6 &#8804; x &#8804; 6 und -6 &#8804; y &#8804; 6 als
@@ -136,7 +141,7 @@ export function Asymptote1() {
         return (
           <>
             Der <strong>Definitionsbereich</strong> einer Exponentialfunktion
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y ={' '}
               {buildFrac(
                 <>a</>,
@@ -145,16 +150,14 @@ export function Asymptote1() {
                 </>
               )}{' '}
               + d
-            </span>
+            </HighlightGray>
             <br />
             <br />
             ist immer die Menge aller reellen Zahlen außer der Stelle b.
             <br />
             Die <strong>Asymptoten</strong> haben immer die Gleichungen:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              y = d, x = b
-            </span>
+            <HighlightGray>y = d, x = b</HighlightGray>
             <br />
             <br />
             Der <strong>Wertebereich</strong> ist abhängig vom Grad und der

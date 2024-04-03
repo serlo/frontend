@@ -3,6 +3,11 @@ import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
+import {
+  MainTask,
+  HighlightGreen,
+  HighlightGray,
+} from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
 import { randomIntBetween } from '@/helper/random-int-between'
@@ -35,7 +40,7 @@ export function ModellingParabola() {
       renderTask={({ data }) => {
         return (
           <>
-            <h2 className="text-2xl">
+            <MainTask>
               {data.context === 1
                 ? 'Sophie macht einen Weitsprung. Der Sprung kann mit dem Graphen der Funktion '
                 : null}
@@ -48,20 +53,20 @@ export function ModellingParabola() {
               {data.context === 4
                 ? 'Sophie beobachtet einen Einsatz der Feuerwehr. Der Wasserstrahl, der ein brennendes Auto löscht kann mit dem Graphen der Funktion '
                 : null}
-            </h2>
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            </MainTask>
+            <HighlightGreen>
               y = - x<sup>2</sup> +{' '}
               {data.context === 1
                 ? (data.b / 2).toString().replace('.', ',')
                 : data.b.toString().replace('.', ',')}
               x
-            </span>
+            </HighlightGreen>
             <br />
             <br />
-            <h2 className="text-2xl">beschrieben werden.</h2>
+            <MainTask>beschrieben werden.</MainTask>
             <br />
             <br />
-            <h2 className="text-2xl">
+            <MainTask>
               {data.context === 1
                 ? 'Berechne die Sprungweite und wo Sophie am höchsten in der Luft war.'
                 : null}
@@ -75,7 +80,7 @@ export function ModellingParabola() {
               {data.context === 4
                 ? 'Berechne wie weit der Strahl maximal kommt und wie hoch er am höchsten Punkt war.'
                 : null}
-            </h2>{' '}
+            </MainTask>{' '}
           </>
         )
       }}
@@ -85,55 +90,55 @@ export function ModellingParabola() {
             Für die {data.context === 2 ? 'maximale Breite' : 'maximale Weite'}{' '}
             müssen die Nullstellen der Parabel berechnet werden:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               0 = - x<sup>2</sup> +{' '}
               {data.context === 1
                 ? (data.b / 2).toString().replace('.', ',')
                 : data.b.toString().replace('.', ',')}
               x
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Wir lösen die Gleichung mit dem Satz des Nullprodukts. Dazu klammern
             wir - x aus:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               0 = - x · (x -{' '}
               {data.context === 1
                 ? (data.b / 2).toString().replace('.', ',')
                 : data.b.toString().replace('.', ',')}
               )
-            </span>
+            </HighlightGray>
             <br />
             Am ersten Faktor erkennen wir die erste Lösung:{' '}
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               x<sub>1</sub> = 0
-            </span>
+            </HighlightGray>
             <br />
             Der zweite Faktor - die Klammer - ist dann 0, wenn:{' '}
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               x<sub>2</sub> ={' '}
               {data.context === 1
                 ? (data.b / 2).toString().replace('.', ',')
                 : data.b.toString().replace('.', ',')}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Die {data.context === 2 ? 'maximale Breite' : 'maximale Weite'} ist
             damit: <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGreen>
               x<sub>2</sub> - x<sub>1</sub> ={' '}
               {data.context === 1
                 ? (data.b / 2).toString().replace('.', ',')
                 : data.b.toString().replace('.', ',')}
-            </span>
+            </HighlightGreen>
             <br />
             <br />
             Für die maximale Höhe muss der Scheitelpunkt der Parabel berechnet
             werden. Da die Nullstellen bekannt sind, können wir die Mitte davon
             als x-Wert des Scheitels bestimmen:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               x<sub>s</sub> ={' '}
               {buildFrac(
                 <>
@@ -145,12 +150,12 @@ export function ModellingParabola() {
               {data.context === 1
                 ? (data.b / 4).toString().replace('.', ',')
                 : (data.b / 2).toString().replace('.', ',')}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Die Höhe ist damit:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGreen>
               y<sub>s</sub> = -{' '}
               {data.context === 1
                 ? (data.b / 4).toString().replace('.', ',')
@@ -171,7 +176,7 @@ export function ModellingParabola() {
                 : (-(data.b / 2) * (data.b / 2) + (data.b / 2) * data.b)
                     .toString()
                     .replace('.', ',')}
-            </span>
+            </HighlightGreen>
             <br />
             <br />
             Graph als Hilfe:
@@ -187,13 +192,13 @@ export function ModellingParabola() {
             Für die {data.context === 2 ? 'maximale Breite' : 'maximale Weite'}{' '}
             müssen die Nullstellen der Parabel berechnet werden:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               0 = - x<sup>2</sup> +{' '}
               {data.context === 1
                 ? (data.b / 2).toString().replace('.', ',')
                 : data.b.toString().replace('.', ',')}
               x
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Verwende dazu den Satz des Nullprodukts.

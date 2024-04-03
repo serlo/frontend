@@ -1,6 +1,12 @@
 /* eslint-disable no-empty-pattern */
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import {
+  HighlightGray,
+  HighlightGreen,
+  MainTask,
+} from '../components/content-components'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -25,13 +31,11 @@ export function ABCFormular() {
 
         return (
           <>
-            <h2 className="text-2xl">
-              Bestimme die Lösungsmenge der Gleichung:
-            </h2>
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <MainTask>Bestimme die Lösungsmenge der Gleichung:</MainTask>
+            <HighlightGreen>
               0 = {a > 1 ? a : ''}x<sup>2</sup> {b > 0 ? '+' : ''} {b}x{' '}
               {c > 0 ? '+' : ''} {c}
-            </span>
+            </HighlightGreen>
           </>
         )
       }}
@@ -42,14 +46,14 @@ export function ABCFormular() {
           <>
             Löse die Gleichung:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               0 = {a > 1 ? a : ''}x<sup>2</sup> {b > 0 ? '+' : ''} {b}x{' '}
               {c > 0 ? '+' : ''} {c}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Wir verwenden die abc-Formel um die Gleichung zu lösen:
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               x<sub>1,2</sub> ={' '}
               {buildFrac(
                 <>
@@ -57,7 +61,7 @@ export function ABCFormular() {
                 </>,
                 <>2a</>
               )}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Wir setzen{' '}
@@ -74,7 +78,7 @@ export function ABCFormular() {
             </span>{' '}
             ein:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               x<sub>1,2</sub> ={' '}
               {buildFrac(
                 <>
@@ -85,11 +89,11 @@ export function ABCFormular() {
                 </>,
                 <>2 · {a}</>
               )}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Berechne die Potenz und das Produkt unter der Wurzel:
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               x<sub>1,2</sub> ={' '}
               {buildFrac(
                 <>
@@ -100,12 +104,12 @@ export function ABCFormular() {
                 </>,
                 <>2 · {a}</>
               )}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Fasse unter der Wurzel zusammen:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               x<sub>1,2</sub> ={' '}
               {buildFrac(
                 <>
@@ -114,12 +118,12 @@ export function ABCFormular() {
                 </>,
                 <>{2 * a}</>
               )}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Ziehe die Wurzel und fasse weiter zusammen:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               x<sub>1,2</sub> ={' '}
               {buildFrac(
                 <>
@@ -127,12 +131,12 @@ export function ABCFormular() {
                 </>,
                 <>{2 * a}</>
               )}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Daraus ergeben sich die beiden Lösungen:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               x<sub>1</sub> ={' '}
               {buildFrac(
                 <>
@@ -146,9 +150,9 @@ export function ABCFormular() {
                 <>{2 * a}</>
               )}{' '}
               = {(-b + Math.sqrt(b * b - 4 * a * c)) / 2 / a}
-            </span>
+            </HighlightGray>
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               x<sub>2</sub> ={' '}
               {buildFrac(
                 <>
@@ -162,17 +166,17 @@ export function ABCFormular() {
                 <>{2 * a}</>
               )}{' '}
               = {(-b - Math.sqrt(b * b - 4 * a * c)) / 2 / a}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Die Lösungsmenge ist:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGreen>
               L = {'{'}
               {(-b - Math.sqrt(b * b - 4 * a * c)) / 2 / a};
               {(-b + Math.sqrt(b * b - 4 * a * c)) / 2 / a}
               {'}'}
-            </span>
+            </HighlightGreen>
           </>
         )
       }}
@@ -181,7 +185,7 @@ export function ABCFormular() {
           <>
             Löse die Gleichung mit der abc-Formel:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               x<sub>1,2</sub> ={' '}
               {buildFrac(
                 <>
@@ -189,7 +193,7 @@ export function ABCFormular() {
                 </>,
                 <>2a</>
               )}
-            </span>
+            </HighlightGray>
             <br />
             Bestimme dazu <strong>a</strong>,<strong>b</strong> und{' '}
             <strong>c</strong> aus der Gleichung und setze ein.

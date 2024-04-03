@@ -4,6 +4,12 @@ import { useEffect, useState } from 'react'
 /* eslint-disable no-empty-pattern */
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import {
+  MainTask,
+  HighlightGreen,
+  HighlightGray,
+} from '../components/content-components'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { buildFrac } from '../utils/math-builder'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { randomIntBetween } from '@/helper/random-int-between'
@@ -39,14 +45,14 @@ export function PlotFunction2() {
       renderTask={({ data }) => {
         return (
           <>
-            <h2 className="text-2xl">Skizziere den Graphen der Funktion:</h2>
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <MainTask>Skizziere den Graphen der Funktion:</MainTask>
+            <HighlightGreen>
               y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
               {data.a === -1 ? null : '·'}{' '}
               {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
               <sup>x</sup> {data.c > 0 ? '+' : null}{' '}
               {data.c !== 0 ? data.c : null}
-            </span>
+            </HighlightGreen>
             <br />
             <br />
             <i>
@@ -62,25 +68,23 @@ export function PlotFunction2() {
           <>
             Skizziere den Graphen der Funktion:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGreen>
               y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
               {data.a === -1 ? null : '·'}{' '}
               {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
               <sup>x</sup> {data.c > 0 ? '+' : null}{' '}
               {data.c !== 0 ? data.c : null}
-            </span>
+            </HighlightGreen>
             <br />
             <br />
             Zeichne dazu zuerst die Asymptote mit der Gleichung:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              y = {data.c}
-            </span>
+            <HighlightGray>y = {data.c}</HighlightGray>
             <br />
             <br />
             Bestimme die Stelle, durch die der Graph an der y-Achse verläuft:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
               {data.a === -1 ? null : '·'}{' '}
               {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
@@ -90,7 +94,7 @@ export function PlotFunction2() {
               {data.a === -1 ? null : '·'} 1 {data.c > 0 ? '+' : null}{' '}
               {data.c !== 0 ? data.c : null} ={' '}
               {(data.a + data.c).toString().replace('.', ',')}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Skizziere den Graphen mithilfe der Asymptote und dem Durchgang durch
@@ -109,9 +113,9 @@ export function PlotFunction2() {
           <>
             Die Exponentialfunktion hat die Form:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = a · b<sup>x</sup> + c
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Skizziere am Besten zuerst die Asymptote y = c als Hilfslinie.

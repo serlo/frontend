@@ -3,6 +3,11 @@ import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
+import {
+  MainTask,
+  HighlightGreen,
+  HighlightGray,
+} from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -25,17 +30,15 @@ export function ParabolaCharacteristics() {
         const p_2_y = (p_2_x - n_1) * (p_2_x - n_2)
         return (
           <>
-            <h2 className="text-2xl">
-              Bestimme die Parameter b und c der Parabel:
-            </h2>
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <MainTask>Bestimme die Parameter b und c der Parabel:</MainTask>
+            <HighlightGreen>
               y = x<sup>2</sup> + bx + c
-            </span>
+            </HighlightGreen>
             <br />
             Der Graph der Funktion verläuft durch die Punkte:{' '}
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGreen>
               P({p_1_x}|{p_1_y}), Q({p_2_x}|{p_2_y})
-            </span>{' '}
+            </HighlightGreen>{' '}
           </>
         )
       }}
@@ -53,73 +56,73 @@ export function ParabolaCharacteristics() {
             ein:
             <br />
             Ɪ:{' '}
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               {p_1_y} = {p_1_x < 0 ? '(' + p_1_x + ')' : p_1_x}
               <sup>2</sup> {p_1_x < 0 ? p_1_x + ' · b' : null}
               {p_1_x === 0 ? ' + 0 · b' : null}
               {p_1_x > 0 ? ' + ' + p_1_x + ' · b' : null} + c
-            </span>
+            </HighlightGray>
             <br />
             ꞮꞮ:{' '}
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               {p_2_y} = {p_2_x < 0 ? '(' + p_2_x + ')' : p_2_x}
               <sup>2</sup> {p_2_x < 0 ? ' ' + p_2_x + ' · b' : null}
               {p_2_x === 0 ? ' + 0 · b' : null}
               {p_2_x > 0 ? ' + ' + p_2_x + ' · b' : null} + c
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Berechne die Potenz und fasse die rechte Seite zusammen:
             <br />
             Ɪ:{' '}
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               {p_1_y} = {p_1_x !== 0 ? p_1_x * p_1_x : null}{' '}
               {p_1_x < 0 ? p_1_x + 'b' : null}
               {p_1_x === 0 ? null : null}
               {p_1_x > 0 ? ' + ' + p_1_x + 'b' : null}{' '}
               {p_1_x === 0 ? null : '+'} c
-            </span>
+            </HighlightGray>
             <br /> ꞮꞮ:{' '}
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               {p_2_y} = {p_2_x !== 0 ? p_2_x * p_2_x : null}{' '}
               {p_2_x < 0 ? ' ' + p_2_x + 'b' : null}
               {p_2_x === 0 ? null : null}
               {p_2_x > 0 && p_2_x !== 1 ? ' + ' + p_2_x + 'b' : null}
               {p_2_x > 0 && p_2_x === 1 ? '+ b' : null}{' '}
               {p_2_x === 0 ? null : '+'} c
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Bringe die Zahlenwerte auf die linke Seite der Gleichung:
             <br />
             Ɪ:{' '}
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               {p_1_y - p_1_x * p_1_x} = {p_1_x < 0 ? p_1_x + 'b' : null}
               {p_1_x === 0 ? null : null}
               {p_1_x > 0 && p_1_x !== 1 ? ' + ' + p_1_x + 'b' : null}{' '}
               {p_1_x > 0 && p_1_x === 1 ? 'b' : null}
               {p_1_x === 0 ? null : '+'} c
-            </span>
+            </HighlightGray>
             <br />
             ꞮꞮ:{' '}
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               {p_2_y - p_2_x * p_2_x} = {p_2_x < 0 ? p_2_x + 'b' : null}
               {p_2_x === 0 ? null : null}
               {p_2_x > 0 && p_2_x !== 1 ? p_2_x + 'b' : null}
               {p_2_x > 0 && p_2_x === 1 ? 'b' : null} {p_2_x === 0 ? null : '+'}{' '}
               c
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Löse das lineare Gleichungssystem und stelle den Funktionsterm der
             Parabel auf:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGreen>
               y = x<sup>2</sup> {b !== 0 && b > 0 ? '+' : null}{' '}
               {b !== 0 && b !== 1 ? b + 'x' : null}
               {b === 1 ? 'x' : null} {c !== 0 && c > 0 ? '+' : null}
               {c !== 0 ? c : null}
-            </span>
+            </HighlightGreen>
           </>
         )
       }}
@@ -132,20 +135,20 @@ export function ParabolaCharacteristics() {
             Setze die Punkte P und Q jeweils in eine Funktionsgleichung ein:
             <br />
             Ɪ:{' '}
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               {p_1_y} = {p_1_x < 0 ? '(' + p_1_x + ')' : p_1_x}
               <sup>2</sup> {p_1_x < 0 ? p_1_x + ' · b' : null}
               {p_1_x === 0 ? ' + 0 · b' : null}
               {p_1_x > 0 ? ' + ' + p_1_x + ' · b' : null} + c
-            </span>
+            </HighlightGray>
             <br />
             ꞮꞮ:{' '}
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               {p_2_y} = {p_2_x < 0 ? '(' + p_2_x + ')' : p_2_x}
               <sup>2</sup> {p_2_x < 0 ? ' ' + p_2_x + ' · b' : null}
               {p_2_x === 0 ? ' + 0 · b' : null}
               {p_2_x > 0 ? ' + ' + p_2_x + ' · b' : null} + c
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Damit ergibt sich ein lineares Gleichungssystem mit den Lösungen b

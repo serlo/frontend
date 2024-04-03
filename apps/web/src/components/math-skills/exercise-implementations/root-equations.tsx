@@ -1,4 +1,5 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
+import { MainTask } from '../components/content-components'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { buildBigSqrt, buildFrac, buildSqrt } from '../utils/math-builder'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
@@ -22,7 +23,7 @@ export function RootEquations() {
         return (
           <>
             <div className="text-lg">
-              <h2 className="text-2xl">Rechnen mit der Exponentialfunktion</h2>
+              <MainTask>Rechnen mit der Exponentialfunktion</MainTask>
               <br />
               <br />
               {data.name ? `${data.name} hat` : 'Du hast'} {Money_Start} € im

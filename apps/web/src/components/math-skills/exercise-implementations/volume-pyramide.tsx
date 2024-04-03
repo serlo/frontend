@@ -3,6 +3,7 @@ import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
+import { MainTask } from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -33,10 +34,10 @@ export function VolumePyramide() {
       renderTask={({ data }) => {
         return (
           <>
-            <h2 className="text-2xl">
+            <MainTask>
               Das ist die vierseitige Pyramide{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">ABCDE</b>.
-            </h2>
+            </MainTask>
             <SubComponent data={data} />
             <small className="mb-6 block">
               Skizze ist nicht maßstabsgetreu

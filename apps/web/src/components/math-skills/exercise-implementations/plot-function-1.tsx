@@ -4,6 +4,11 @@ import { useEffect, useState } from 'react'
 /* eslint-disable no-empty-pattern */
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import {
+  HighlightGray,
+  HighlightGreen,
+  MainTask,
+} from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { randomIntBetween } from '@/helper/random-int-between'
@@ -40,8 +45,8 @@ export function PlotFunction() {
       renderTask={({ data }) => {
         return (
           <>
-            <h2 className="text-2xl">Skizziere den Graphen der Funktion:</h2>
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <MainTask>Skizziere den Graphen der Funktion:</MainTask>
+            <HighlightGreen>
               y = {data.a === -1 ? '-' : null}{' '}
               {buildFrac(
                 <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -54,7 +59,7 @@ export function PlotFunction() {
               )}{' '}
               {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
               {data.d !== 0 ? data.d : null}
-            </span>
+            </HighlightGreen>
             <br />
             <br />
             <i>
@@ -70,7 +75,7 @@ export function PlotFunction() {
           <>
             Skizziere den Graphen der Funktion:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y = {data.a === -1 ? '-' : null}{' '}
               {buildFrac(
                 <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -83,21 +88,17 @@ export function PlotFunction() {
               )}{' '}
               {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
               {data.d !== 0 ? data.d : null}
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Zeichne dazu zuerst die waagerechte Asymptote mit der Gleichung:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              y = {data.d}
-            </span>
+            <HighlightGray>y = {data.d}</HighlightGray>
             <br />
             <br />
             Zeichne als Nächstes die senkrechte Asymptote mit der Gleichung:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              y = {-data.b}
-            </span>
+            <HighlightGray>y = {-data.b}</HighlightGray>
             <br />
             <br />
             Berücksichtige den Grad der Funktion und ob der Graph durch ein
@@ -117,7 +118,7 @@ export function PlotFunction() {
           <>
             Eine ganzrationale Funktion hat immer die Form:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               y ={' '}
               {buildFrac(
                 <>a</>,
@@ -126,7 +127,7 @@ export function PlotFunction() {
                 </>
               )}{' '}
               + d
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Dabei sind:

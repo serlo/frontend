@@ -2,6 +2,11 @@ import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
+import {
+  MainTask,
+  HighlightGray,
+  HighlightGreen,
+} from '../components/content-components'
 import { buildSqrt } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -38,10 +43,10 @@ export function Trigonometry() {
       renderTask={({ data }) => {
         return (
           <>
-            <h2 className="text-2xl">
+            <MainTask>
               Gegeben ist das Dreieck{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">ABS</b>.
-            </h2>
+            </MainTask>
             <SubComponent data={data} />
             <small className="mb-6 block">
               Skizze ist nicht maßstabsgetreu
@@ -64,13 +69,13 @@ export function Trigonometry() {
           <>
             Wende den Kosinussatz an:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               |<span className="overline">SB</span>|² = ({data.as} cm)² + (
               {data.ab} cm)²
               <br />
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-
               2 · {data.as} cm · {data.ab} cm · cos 60°
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Nutze{' '}
@@ -79,19 +84,19 @@ export function Trigonometry() {
             </span>{' '}
             und berechne:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               |<span className="overline">SB</span>|² ={' '}
               {data.as * data.as + data.ab * data.ab} cm² -{' '}
               {2 * data.as * data.ab * 0.5} cm² = {data.sb_sq} cm²
-            </span>
+            </HighlightGray>
             <br />
             <br />
             Ziehe die Wurzel. Das Ergebnis ist bestätigt.
             <br />
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGreen>
               |<span className="overline">SB</span>| ={' '}
               {buildSqrt(<>{data.sb_sq}</>)} cm
-            </span>
+            </HighlightGreen>
             <br />
             <br />
           </>
@@ -103,13 +108,13 @@ export function Trigonometry() {
           <>
             Verwende den Kosinussatz:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               |<span className="overline">SB</span>|² = |
               <span className="overline">AS</span>|² + |
               <span className="overline">AB</span>|² - 2 · |
               <span className="overline">AS</span>| · |
               <span className="overline">AB</span>| · cos(&#945;)
-            </span>
+            </HighlightGray>
           </>
         )
       }}

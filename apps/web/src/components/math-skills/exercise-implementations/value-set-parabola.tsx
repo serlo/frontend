@@ -3,6 +3,11 @@ import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
+import {
+  MainTask,
+  HighlightGreen,
+  HighlightGray,
+} from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -33,16 +38,16 @@ export function ValueSetParabola() {
       renderTask={({ data }) => {
         return (
           <>
-            <h2 className="text-2xl">Bestimme die Wertemenge der Parabel:</h2>
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <MainTask>Bestimme die Wertemenge der Parabel:</MainTask>
+            <HighlightGreen>
               y = {data.a ? null : '-'} x<sup>2</sup> + bx + c
-            </span>
+            </HighlightGreen>
             <br />
             <br />
             Der Scheitelpunkt der Parabel ist gegeben durch:{' '}
-            <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGreen>
               S({data.b}|{data.c})
-            </span>
+            </HighlightGreen>
           </>
         )
       }}
@@ -51,9 +56,9 @@ export function ValueSetParabola() {
           return (
             <>
               Gesucht ist die Wertemenge der Parabel: <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 y = {data.a ? null : '-'} x<sup>2</sup> + bx + c
-              </span>
+              </HighlightGray>
               <br />
               <br />
               Da die Parabel nach {data.a === true ? 'oben' : 'unten'} geöfnet
@@ -61,10 +66,10 @@ export function ValueSetParabola() {
               <strong>{data.a === true ? 'oberhalb' : 'unterhalb'}</strong> des
               Scheitels:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGreen>
                 W = {'{'} y | y {data.a === true ? '≥' : '≤'}{' '}
                 {data.c > 0 && data.c !== 0 ? data.c : '- ' + -data.c} {'}'}
-              </span>
+              </HighlightGreen>
               <br />
               <br />
               Graph für -10 &#8804; x &#8804; 10 und -10 &#8804; y &#8804; 10
@@ -77,31 +82,31 @@ export function ValueSetParabola() {
           return (
             <>
               Wertemenge der Parabel: <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 y = {data.a ? null : '-'} x<sup>2</sup> + bx + c
-              </span>
+              </HighlightGray>
               <br />
               <br />
               Wir schreiben die Parabel in der Scheitelpunktform:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGray>
                 y = {data.a ? null : '-'} (x - {data.b < 0 ? '(' : null}
                 {data.b}
                 {data.b < 0 ? ')' : null})<sup>2</sup> +{' '}
                 {data.c < 0 ? '(' : null}
                 {data.c}
                 {data.c < 0 ? ')' : null}
-              </span>
+              </HighlightGray>
               <br />
               <br />
               Da die Parabel nach {data.a === true ? 'oben' : 'unten'} geöfnet
               ist, ist der Wertebereich die Menge der reellen Zahlen{' '}
               {data.a === true ? 'oberhalb' : 'unterhalb'} des Scheitels:
               <br />
-              <span className="mt-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
+              <HighlightGreen>
                 W = {'{'} y | y {data.a === true ? '≥' : '≤'}{' '}
                 {data.c > 0 && data.c !== 0 ? data.c : '- ' + -data.c} {'}'}
-              </span>
+              </HighlightGreen>
             </>
           )
         return <></>
@@ -113,16 +118,14 @@ export function ValueSetParabola() {
             Für den Wertebereich untersuchen wir den Öffnungsfaktor und den
             y-Wert des Scheitel der Parabel:
             <br />
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              y =
-            </span>
+            <HighlightGray>y =</HighlightGray>
             <span className="mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3 text-2xl">
               {data.a ? '1 · ' : '(-1) · '}{' '}
             </span>
-            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <HighlightGray>
               (x {data.b > 0 && data.b !== 0 ? '- ' + data.b : '+ ' + -data.b})
               <sup>2</sup>{' '}
-            </span>
+            </HighlightGray>
             <span className="mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3 text-2xl">
               {data.c > 0 && data.c !== 0 ? '+ ' + data.c : '- ' + -data.c}
             </span>
