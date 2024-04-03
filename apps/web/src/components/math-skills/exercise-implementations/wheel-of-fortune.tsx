@@ -344,8 +344,7 @@ export function WheelOfFortune() {
               <br /> Gegebenenfalls kann noch gekürzt werden.
             </>
           )
-        return
-        ;<></>
+        return <></>
       }}
       // eslint-disable-next-line no-empty-pattern
       renderHint={({ data }) => {
