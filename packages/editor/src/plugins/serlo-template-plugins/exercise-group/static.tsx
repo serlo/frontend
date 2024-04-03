@@ -1,16 +1,12 @@
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import {
-  EditorExerciseGroupDocument,
-  EditorTemplateExerciseGroupDocument,
-} from '@editor/types/editor-plugins'
+import { EditorTemplateExerciseGroupDocument } from '@editor/types/editor-plugins'
 
 import { triggerSentry } from '@/helper/trigger-sentry'
 
-export function TextExerciseGroupTypeStaticRenderer(
-  props: EditorTemplateExerciseGroupDocument
-) {
-  const { state, serloContext: context } = props
+export function TextExerciseGroupTypeStaticRenderer({
+  state,
+}: EditorTemplateExerciseGroupDocument) {
   const { content } = state
 
   if (content.plugin !== EditorPluginType.ExerciseGroup) {
@@ -18,14 +14,5 @@ export function TextExerciseGroupTypeStaticRenderer(
     return null
   }
 
-  return (
-    <StaticRenderer
-      document={
-        {
-          ...(content as EditorExerciseGroupDocument),
-          serloContext: context,
-        } as EditorExerciseGroupDocument
-      }
-    />
-  )
+  return <StaticRenderer document={content} />
 }

@@ -203,7 +203,9 @@ export interface EditorH5PDocument {
 
 export interface EditorExerciseGroupDocument {
   plugin: EditorPluginType.ExerciseGroup
-  state: PrettyStaticState<ExerciseGroupPluginState>
+  state: Omit<PrettyStaticState<ExerciseGroupPluginState>, 'exercises'> & {
+    exercises: EditorExerciseDocument[]
+  }
   id?: string
 
   // additional data for serlo, not part of normal state
@@ -211,7 +213,6 @@ export interface EditorExerciseGroupDocument {
     uuid?: number
     revisionId?: number
     trashed?: boolean
-    grouped?: boolean
     unrevisedRevisions?: number
     licenseId?: number
   }
@@ -224,14 +225,6 @@ export interface EditorTemplateExerciseGroupDocument {
     content: EditorExerciseGroupDocument
   }
   id?: string
-
-  // additional data for serlo, not part of normal state
-  serloContext?: {
-    uuid?: number
-    trashed?: boolean
-    unrevisedRevisions?: number
-    licenseId: number
-  }
 }
 export interface EditorTemplateGenericContentDocument {
   plugin: TemplatePluginType.GenericContent
