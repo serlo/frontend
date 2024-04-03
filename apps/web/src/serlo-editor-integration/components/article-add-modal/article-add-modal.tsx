@@ -1,16 +1,17 @@
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { UuidType, type UuidWithRevType } from '@serlo/frontend/src/data-types'
-import { getCategoryByTypename } from '@serlo/frontend/src/helper/get-category-by-typename'
-import { replacePlaceholders } from '@serlo/frontend/src/helper/replace-placeholders'
 import { useState } from 'react'
 
 import { ArticleRelatedExercises } from './article-related-exercises'
 import { ArticleRelatedMagicInput } from './article-related-magic-input'
 import { ArticleRelatedTaxonomy } from './article-related-taxonomy'
-import type { ArticleProps } from '..'
+import type { ArticleProps } from '../../../../../../packages/editor/src/plugins/article'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { useInstanceData } from '@/contexts/instance-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { UuidType, type UuidWithRevType } from '@/data-types'
+import { getCategoryByTypename } from '@/helper/get-category-by-typename'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
+
 
 interface ArticleAddModalProps {
   open: boolean

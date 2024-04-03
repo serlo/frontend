@@ -1,17 +1,17 @@
+import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import { useGraphqlSwr } from '@serlo/frontend/src/api/use-graphql-swr'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { useEntityId } from '@serlo/frontend/src/contexts/uuids-context'
-import { UuidType, type UuidWithRevType } from '@serlo/frontend/src/data-types'
-import { TaxonomyTermType } from '@serlo/frontend/src/fetcher/graphql-types/operations'
-import { getCategoryByTypename } from '@serlo/frontend/src/helper/get-category-by-typename'
-import { getTranslatedType } from '@serlo/frontend/src/helper/get-translated-type'
-import { getIconByTypename } from '@serlo/frontend/src/helper/icon-by-entity-type'
 import { gql } from 'graphql-request'
 
-import { SerloAddButton } from '../../../plugin/helpers/serlo-editor-button'
+import { useGraphqlSwr } from '@/api/use-graphql-swr'
+import { FaIcon } from '@/components/fa-icon'
+import { useInstanceData } from '@/contexts/instance-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { useEntityId } from '@/contexts/uuids-context'
+import { UuidType, type UuidWithRevType } from '@/data-types'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
+import { getCategoryByTypename } from '@/helper/get-category-by-typename'
+import { getTranslatedType } from '@/helper/get-translated-type'
+import { getIconByTypename } from '@/helper/icon-by-entity-type'
 
 interface ArticleRelatedTaxonomyProps {
   addEntry: (id: number, typename: UuidWithRevType, title?: string) => void
