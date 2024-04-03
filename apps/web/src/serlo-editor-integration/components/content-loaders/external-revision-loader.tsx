@@ -1,28 +1,29 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { faFileImport } from '@fortawesome/free-solid-svg-icons'
-import { endpoint } from '@serlo/frontend/src/api/endpoint'
-import { UuidUrlInput } from '@serlo/frontend/src/components/author/uuid-url-input'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { UuidType } from '@serlo/frontend/src/data-types'
+import request from 'graphql-request'
+import NProgress from 'nprogress'
+import { useState } from 'react'
+
+import { endpoint } from '@/api/endpoint'
+import { UuidUrlInput } from '@/components/author/uuid-url-input'
+import { FaIcon } from '@/components/fa-icon'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { useInstanceData } from '@/contexts/instance-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 import type {
   MainUuidQuery,
   MainUuidQueryVariables,
-} from '@serlo/frontend/src/fetcher/graphql-types/operations'
-import { dataQuery } from '@serlo/frontend/src/fetcher/query'
-import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
-import { triggerSentry } from '@serlo/frontend/src/helper/trigger-sentry'
+} from '@/fetcher/graphql-types/operations'
+import { dataQuery } from '@/fetcher/query'
+import { showToastNotice } from '@/helper/show-toast-notice'
+import { triggerSentry } from '@/helper/trigger-sentry'
 import {
   type ConvertResponseError,
   convertEditorResponseToState,
   isError,
-} from '@serlo/frontend/src/serlo-editor-integration/convert-editor-response-to-state'
-import request from 'graphql-request'
-import NProgress from 'nprogress'
-import { useState } from 'react'
+} from '@/serlo-editor-integration/convert-editor-response-to-state'
 
 export function ExternalRevisionLoader<T>({
   entityType,

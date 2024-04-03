@@ -1,7 +1,7 @@
-import { UuidType } from '@serlo/frontend/src/data-types'
 
 import { ExternalRevisionLoader } from './external-revision-loader'
 import { RevisionHistoryLoader } from './revision-history-loader'
+import { UuidType } from '@/data-types'
 
 interface ContentLoadersProps {
   id: number
