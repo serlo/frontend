@@ -5,7 +5,7 @@ import { selectIsFocused, useAppSelector } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import type { SpoilerProps } from '.'
 import { SpoilerRenderer } from './renderer'
@@ -21,8 +21,13 @@ export function SpoilerEditor(props: SpoilerProps) {
   const { state, id, focused } = props
   const { title, richTitle, content } = state
   const editorStrings = useEditorStrings()
+  const richTitleId = useMemo(() => {
+    return richTitle.defined ? richTitle.id : ''
+    // richTitle.id should never change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [richTitle.defined])
   const isTitleFocused = useAppSelector((state) =>
-    selectIsFocused(state, richTitle.defined ? richTitle.id : '')
+    selectIsFocused(state, richTitleId)
   )
   const showToolbar = focused || isTitleFocused
 
