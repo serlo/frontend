@@ -7,10 +7,11 @@ import { useContext } from 'react'
 
 import type { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
 import { Lazy } from '@/components/content/lazy'
+import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import { useAB } from '@/contexts/ab'
-import { ExerciseGroupContext } from '@/contexts/exercise-group-context'
+import { ExerciseGroupIdContext } from '@/contexts/exercise-group-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { useEntityId } from '@/contexts/uuids-context'
@@ -28,7 +29,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const ab = useAB()
   const commentStrings = useInstanceData().strings.comments
   const isRevisionView = useContext(RevisionViewContext)
-  const isInExerciseGroup = useContext(ExerciseGroupContext)
+  const exerciseGroupId = useContext(ExerciseGroupIdContext)
   const context = props.serloContext
 
   const exerciseUuid = useEntityId()
@@ -41,22 +42,22 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
       ? printModeSolutionVisible
       : typeof window === 'undefined'
         ? false
-        : !isInExerciseGroup && window.location.href.includes('#comment-')
+        : !exerciseGroupId && window.location.href.includes('#comment-')
 
   const afterSlot =
-    isRevisionView || !exerciseUuid ? null : isInExerciseGroup ? (
+    isRevisionView || !exerciseUuid ? null : exerciseGroupId ? (
       <>
         <h2 className="serlo-h2 mt-10 border-b-0">
           <FaIcon className="text-2xl text-brand-400" icon={faQuestionCircle} />{' '}
           {commentStrings.question}
         </h2>
         <p className="serlo-p">
-          <a
-            href="#comment-area-begin-scrollpoint"
+          <Link
+            href={`${exerciseGroupId}/#comment-area-begin-scrollpoint`}
             className="serlo-button-light"
           >
             {commentStrings.questionLink} 👇
-          </a>
+          </Link>
         </p>
       </>
     ) : (
