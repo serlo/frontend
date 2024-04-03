@@ -31,7 +31,6 @@ import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { ComponentProps } from 'react'
 
 import { Lazy } from '@/components/content/lazy'
-import { Link } from '@/components/content/link'
 
 export function createRenderers(
   customPluginRenderers: PluginStaticRenderer[]
@@ -120,7 +119,16 @@ export function createRenderers(
         </Lazy>
       ),
     linkRenderer: ({ href, children }: ComponentProps<LinkRenderer>) => {
-      return <Link href={href}>{children}</Link>
+      return (
+        <a
+          className="serlo-link cursor-pointer"
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {children}
+        </a>
+      )
     },
   }
 }

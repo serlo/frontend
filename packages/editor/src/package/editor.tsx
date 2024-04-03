@@ -11,7 +11,6 @@ import {
 import {
   editorRenderers,
   type PluginStaticRenderer,
-  type InitRenderersArgs,
 } from '@editor/plugin/helpers/editor-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { SupportedLanguage } from '@editor/types/language-data'
@@ -28,7 +27,6 @@ import '@/assets-webkit/styles/serlo-tailwind.css'
 export interface PluginsConfig {
   basicPluginsConfig: CreateBasicPluginsConfig
   customPlugins?: Array<PluginWithData & PluginStaticRenderer>
-  customRenderers?: Partial<InitRenderersArgs>
 }
 
 export interface SerloEditorProps {
@@ -51,18 +49,14 @@ const emptyState = {
 /** For exporting the editor */
 export function SerloEditor(props: SerloEditorProps) {
   const { children, pluginsConfig, initialState, language = 'de' } = props
-  const {
-    basicPluginsConfig,
-    customRenderers,
-    customPlugins = [],
-  } = pluginsConfig
+  const { basicPluginsConfig, customPlugins = [] } = pluginsConfig
   const { instanceData, loggedInData } = editorData[language]
 
   const basicPlugins = createBasicPlugins(basicPluginsConfig)
   editorPlugins.init([...basicPlugins, ...customPlugins])
 
   const basicRenderers = createRenderers(customPlugins)
-  editorRenderers.init({ ...basicRenderers, ...customRenderers })
+  editorRenderers.init(basicRenderers)
 
   return (
     <InstanceDataProvider value={instanceData}>

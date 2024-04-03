@@ -20,11 +20,11 @@ export function SerloRenderer({
   language = 'de',
   ...props
 }: SerloRendererProps) {
-  const { customRenderers, customPlugins = [] } = pluginsConfig
+  const { customPlugins = [] } = pluginsConfig
   const { instanceData, loggedInData } = editorData[language]
 
   const basicRenderers = createRenderers(customPlugins)
-  editorRenderers.init({ ...basicRenderers, ...customRenderers })
+  editorRenderers.init(basicRenderers)
 
   return (
     <InstanceDataProvider value={instanceData}>
