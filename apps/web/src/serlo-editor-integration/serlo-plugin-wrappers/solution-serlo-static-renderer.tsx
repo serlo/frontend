@@ -41,7 +41,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
       ? printModeSolutionVisible
       : typeof window === 'undefined'
         ? false
-        : window.location.href.includes('#comment-')
+        : !isInExerciseGroup && window.location.href.includes('#comment-')
 
   const afterSlot =
     isRevisionView || !exerciseUuid ? null : isInExerciseGroup ? (
@@ -60,8 +60,8 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
         </p>
       </>
     ) : (
-      <Lazy>
-        <CommentAreaEntity entityId={exerciseUuid} />
+        <Lazy>
+          <CommentAreaEntity entityId={exerciseUuid} />
       </Lazy>
     )
 
