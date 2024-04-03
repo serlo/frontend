@@ -246,8 +246,7 @@ export function WheelOfFortune() {
           )
         return <></>
       }}
-      // eslint-disable-next-line no-empty-pattern
-      renderHint={({ data }) => {
+      renderHint={() => {
         return (
           <>
             Berechne zuerst die Wahrscheinlichkeit eines Ereignisses bei einem
