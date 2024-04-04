@@ -28,10 +28,6 @@ export function ExponentialEquation() {
                 <sup>x</sup> {sign ? '+' : '-'} {power * a}
               </HighlightGreen>
             </p>
-
-            <p>
-              <i>Rechne am besten mit Stift und Papier.</i>
-            </p>
           </>
         )
       }}

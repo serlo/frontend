@@ -1,51 +1,41 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import JXG from 'jsxgraph'
-import { pi } from 'mathjs'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { MainTask } from '../components/content-components'
 import { buildFrac, buildOverline } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
-// JXG.Options.label.autoPosition = true
-
 interface BodyData {
-  ab: number
-  me: number
-  bd: number
   koerper: string
-  w: number
-  ac: number
-  cd: number
+  ab: number
+  bc: number
+  h: number
+  basePoint: string
 }
 
 export function ObliqueImage() {
   return (
     <SelfEvaluationExercise
       generator={() => {
-        const factor = randomItemFromArray([0.5, 1])
-        const me = randomIntBetween(6, 14)
-        const ab = randomIntBetween(8, 12)
-        const bd = randomIntBetween(6, 10)
-        const ac = randomIntBetween(7, 10)
-        const cd = randomIntBetween(7, 10)
-        const koerper = randomItemFromArray([
-          'pyra',
-          'quader',
-          //'prisma3',
-          //'pyra3',
-        ])
-        const w = randomItemFromArray([45])
+        const koerper = randomItemFromArray(['pyramide', 'quader'])
+        const ab = randomIntBetween(4, 10)
+        const bc = randomIntBetween(
+          6,
+          Math.max(7, Math.floor(((14 - ab) * 2) / 0.7071067))
+        )
+        const h = randomIntBetween(
+          Math.ceil(0.7071067 * bc * 0.5) + 2,
+          Math.floor(14 - 0.7071067 * bc * 0.5)
+        )
+        const basePoint = randomItemFromArray(['A', 'B', 'C', 'D'])
+
         const data: BodyData = {
-          ab,
-          me,
-          bd,
           koerper,
-          w,
-          ac,
-          cd,
+          ab,
+          bc,
+          h,
+          basePoint,
         }
         return { data }
       }}
@@ -54,79 +44,48 @@ export function ObliqueImage() {
           <>
             {data.koerper === 'quader' ? (
               <>
-                <p className="text-2xl">
+                <p className="serlo-main-task">
                   Das Rechteck ABCD ist die Grundfläche des Quaders ABCDEFGH.
-                  <br />
-                  <br />
+                </p>
+                <p className="serlo-main-task">
                   Es gilt: |{buildOverline(<>AB</>)}| = {data.ab} cm, |
-                  {buildOverline(<>BC</>)}| = {data.bd} cm und |
-                  {buildOverline(<>BF</>)}| = {data.me} cm.
+                  {buildOverline(<>BC</>)}| = {data.bc} cm und |
+                  {buildOverline(<>AE</>)}| = {data.h} cm.
                 </p>
               </>
-            ) : data.koerper === 'pyra' ? (
-              <p className="text-2xl">
-                Das Rechteck ABCD ist die Grundfläche der Pyramide ABCDE.
-                <br />
-                <br />
-                Es gilt: |{buildOverline(<>AB</>)}| = {data.ab} cm, |
-                {buildOverline(<>BC</>)}| = {data.bd} cm und die Höhe beträgt{' '}
-                {data.me} cm.
-              </p>
-            ) : data.koerper === 'pyra3' ? (
-              <p className="text-2xl">
-                Das Dreieck ABC ist die Grundfläche der Pyramide ABCD.
-                <br />
-                <br />
-                Es gilt: |{buildOverline(<>AB</>)}| = {data.ab} cm, |
-                {buildOverline(<>BC</>)}| = {data.bd} cm und die Höhe beträgt{' '}
-                {data.me} cm.
-                <ComponentPyraDrei data={data} />
-              </p>
-            ) : (
+            ) : data.koerper === 'pyramide' ? (
               <>
-                <MainTask>
-                  Das ist{' '}
-                  {data.koerper === 'pyra' ? 'die Pyramide ABCDE.' : null}
-                  {data.koerper === 'quader' ? 'der Quader ABCDEFGH.' : null}
-                  {data.koerper === 'prisma3' ? 'der Prisma ABCDEF.' : null}
-                  {data.koerper === 'pyra3'
-                    ? 'die Dreieckspyramide ABCD.'
-                    : null}
-                </MainTask>
-                {data.koerper === 'prisma3' ? (
-                  <ComponentPrisma data={data} />
-                ) : null}
-                <small className="mb-6 block">
-                  Skizze ist nicht maßstabsgetreu
-                </small>
+                <p className="serlo-main-task">
+                  Das Rechteck ABCD ist die Grundfläche der Pyramide ABCDS mit
+                  der Höhe |{buildOverline(<>{data.basePoint}S</>)}| = {data.h}{' '}
+                  cm.
+                </p>
+                <p className="serlo-main-task">
+                  Es gilt: |{buildOverline(<>AB</>)}| = {data.ab} cm und |
+                  {buildOverline(<>BC</>)}| = {data.bc} cm.
+                </p>
               </>
-            )}
+            ) : null}
 
-            <ol>
-              <li className="text-2xl">
-                Zeiche das Schrägbild des Körpers mit dem Maßstab q ={' '}
-                {buildFrac(<>1</>, <>2</>)} und dem Winkel ω = {data.w}°.{' '}
-              </li>
-            </ol>
-            <br />
-            <ol>
-              <li className="text-2xl">
-                Die Strecke <span className="overline">AB</span> soll auf der
-                Schrägbildachse liegen und der Punkt A soll links von B liegen.
-              </li>
-            </ol>
+            <p className="serlo-main-task">
+              Zeichen Sie das Schrägbild des Körpers mit dem
+              <br />
+              Maßstab q ={' '}
+              <span className="text-base">{buildFrac(<>1</>, <>2</>)}</span> und
+              dem Winkel ω = 45°. Die Strecke{' '}
+              <span className="overline">AB</span> soll auf der Schrägbildachse
+              liegen.
+            </p>
           </>
         )
       }}
       renderSolution={({ data }) => {
         return (
           <>
-            Das Schrägbild sollte so aussehen:
+            So sieht das Schrägbild aus:
             <br />
-            {data.koerper === 'pyra' ? <SolPyra data={data} /> : null}
+            {data.koerper === 'pyramide' ? <SolPyra data={data} /> : null}
             {data.koerper === 'quader' ? <SolQuader data={data} /> : null}
-            {data.koerper === 'prisma3' ? <SolPrisma data={data} /> : null}
-            {data.koerper === 'pyra3' ? <SolPyraDrei data={data} /> : null}
             <br />
             <br />
             <i>
@@ -136,7 +95,7 @@ export function ObliqueImage() {
         )
       }}
       renderHint={({ data }) => {
-        if (data.koerper === 'pyra')
+        if (data.koerper === 'pyramide')
           return (
             <>
               Beginne damit, die Strecke <span className="overline">AB</span>{' '}
@@ -144,7 +103,7 @@ export function ObliqueImage() {
               <br />
               Im Winkel{' '}
               <span className="text-12xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
-                {data.w}°
+                45°
               </span>{' '}
               und dem Maßstab{' '}
               <span className="text-12xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
@@ -161,78 +120,22 @@ export function ObliqueImage() {
               Verbinde die Punkte zu einer Pyramide.
             </>
           )
-        if (data.koerper === 'pyra3')
-          return (
-            <>
-              Beginne damit, die Strecke <span className="overline">AB</span>{' '}
-              auf die Schrägbildachse zu zeichnen.
-              <br />
-              Im Winkel{' '}
-              <span className="text-12xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
-                {data.w}°
-              </span>{' '}
-              und dem Maßstab{' '}
-              <span className="text-12xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
-                {buildFrac(<>1</>, <>2</>)}{' '}
-              </span>{' '}
-              wird die Strecke <span className="overline">AC</span> gezeichnet.
-              <br />
-              <br />
-              Zeichne den Punkt E in der richtigen Höhe über dem Mittelpunkt der
-              Grundfläche ein. Der Mittelpunkt der Grundfläche liegt auf der
-              Höhe h<sub>c</sub> und teilt diese im Verhältnis 1:2.
-              <br />
-              <br />
-              Verbinde die Punkte zu einer Dreieckspyramide.
-            </>
-          )
         if (data.koerper === 'quader')
           return (
             <>
               Beginne damit, die Strecke <span className="overline">AB</span>{' '}
               auf die Schrägbildachse zu zeichnen.
               <br />
-              Im Winkel{' '}
-              <span className="text-12xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
-                {data.w}°
-              </span>{' '}
-              und dem Maßstab{' '}
-              <span className="text-12xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
-                {buildFrac(<>1</>, <>2</>)}{' '}
-              </span>{' '}
-              werden die Strecken <span className="overline">AD</span> und{' '}
+              Im Winkel 45° und dem Maßstab {buildFrac(<>1</>, <>2</>)} werden
+              die Strecken <span className="overline">AD</span> und{' '}
               <span className="overline">BC</span> gezeichnet.
               <br />
               <br />
-              Zeichne die Punkte E,F,G und H in der richtigen Höhe über der
+              Zeichne die Punkte E, F, G und H in der richtigen Höhe über der
               Grundfläche.
               <br />
               <br />
               Verbinde die Punkte zu einem Quader.
-            </>
-          )
-        if (data.koerper === 'prisma3')
-          return (
-            <>
-              Beginne damit, die Strecke <span className="overline">AB</span>{' '}
-              auf die Schrägbildachse zu zeichnen.
-              <br />
-              Im Winkel{' '}
-              <span className="text-12xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
-                {data.w}°
-              </span>{' '}
-              und dem Maßstab{' '}
-              <span className="text-12xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
-                {buildFrac(<>1</>, <>2</>)}{' '}
-              </span>{' '}
-              wird die Strecke <span className="overline">AC</span> gezeichnet.
-              <br />
-              <br />
-              Zeichne die Punkte D,E und F in der richtigen Höhe über der
-              Grundfläche.
-              <br />
-              <br />
-              Verbinde die Punkte zu einem Prisma.
             </>
           )
         return <></>
@@ -242,420 +145,14 @@ export function ObliqueImage() {
   )
 }
 
-function ComponentPyra({ data }: { data: BodyData }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
-  useEffect(() => {
-    const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox: [-1, 6, 7, -2],
-      showNavigation: false,
-      showCopyright: false,
-    })
-
-    const pointA = b.create('point', [0, 0], {
-      name: 'A',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    const pointB = b.create('point', [5, 0], { name: 'B', fixed: true })
-    const pointC = b.create('point', [1, 0.5], { name: 'D', fixed: true })
-    const pointD = b.create('point', [6, 0.5], { name: 'C', fixed: true })
-    const pointM = b.create('point', [3, 0.25], {
-      name: '',
-      fixed: true,
-    })
-    const pointE = b.create('point', [3, 4], {
-      name: 'E',
-      fixed: true,
-    })
-
-    const poly1 = b.create('polygon', [pointA, pointB, pointE], {
-      name: 'Polygon 1',
-      withLabel: false,
-      color: 'yellow',
-    })
-
-    const poly2 = b.create('polygon', [pointA, pointB, pointD, pointC], {
-      name: 'Polygon 2',
-      withLabel: false,
-      color: 'blue',
-    })
-
-    const poly3 = b.create('polygon', [pointB, pointD, pointE], {
-      name: 'Polygon 3',
-      withLabel: false,
-    })
-
-    const poly4 = b.create('polygon', [pointA, pointC, pointE], {
-      name: 'Polygon 4',
-      withLabel: false,
-    })
-    const poly5 = b.create('polygon', [pointC, pointD, pointE], {
-      name: 'Polygon 5',
-      withLabel: false,
-    })
-
-    const poly6 = b.create('polygon', [pointM, pointE], {
-      name: 'Polygon 6',
-      withLabel: false,
-    })
-
-    b.create('text', [2, 0, `${data.ab} cm`], {
-      anchorX: 'middle',
-      anchorY: 'top',
-    })
-    b.create('text', [6.2, 0.4, `${data.bd} cm`], {
-      anchorX: 'middle',
-      anchorY: 'top',
-    })
-
-    b.create('text', [2.6, 2, `${data.me} cm`], {})
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
-  )
-}
-function ComponentQuader({ data }: { data: BodyData }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
-  useEffect(() => {
-    const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox: [-1, 6, 7, -2],
-      showNavigation: false,
-      showCopyright: false,
-    })
-
-    const pointA = b.create('point', [0, 0], {
-      name: 'A',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    const pointB = b.create('point', [5, 0], { name: 'B', fixed: true })
-    const pointD = b.create('point', [1, 0.5], { name: 'D', fixed: true })
-    const pointC = b.create('point', [6, 0.5], { name: 'C', fixed: true })
-    const pointE = b.create('point', [0, 4], { name: 'E', fixed: true })
-    const pointF = b.create('point', [5, 4], { name: 'F', fixed: true })
-    const pointG = b.create('point', [6, 4.5], { name: 'G', fixed: true })
-    const pointH = b.create('point', [1, 4.5], { name: 'H', fixed: true })
-
-    const poly1 = b.create('polygon', [pointA, pointB, pointF, pointE], {
-      name: 'Polygon 1',
-      withLabel: false,
-      color: 'yellow',
-    })
-
-    const poly2 = b.create('polygon', [pointA, pointB, pointC, pointD], {
-      name: 'Polygon 1',
-      withLabel: false,
-      color: 'blue',
-    })
-
-    const poly3 = b.create('polygon', [pointD, pointC, pointG, pointH], {
-      name: 'Polygon 1',
-      withLabel: false,
-    })
-    const poly4 = b.create('polygon', [pointA, pointD, pointH, pointE], {
-      name: 'Polygon 1',
-      withLabel: false,
-    })
-    const poly5 = b.create('polygon', [pointB, pointC, pointG, pointF], {
-      name: 'Polygon 1',
-      withLabel: false,
-    })
-    const poly6 = b.create('polygon', [pointE, pointF, pointG, pointH], {
-      name: 'Polygon 1',
-      withLabel: false,
-      color: 'blue',
-    })
-
-    b.create('text', [2, 0, `${data.ab} cm`], {
-      anchorX: 'middle',
-      anchorY: 'top',
-    })
-    b.create('text', [6.2, 0.4, `${data.bd} cm`], {
-      anchorX: 'middle',
-      anchorY: 'top',
-    })
-
-    b.create('text', [4.5, 2, `${data.me} cm`], {})
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
-  )
-}
-function ComponentPrisma({ data }: { data: BodyData }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
-  useEffect(() => {
-    const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox: [-1, 6, 7, -2],
-      showNavigation: false,
-      showCopyright: false,
-      axis: true,
-      defaultAxes: {
-        x: {
-          ticks: {
-            ticksDistance: 1,
-            insertTicks: false,
-          },
-        },
-        y: {
-          ticks: {
-            ticksDistance: 1,
-            insertTicks: false,
-          },
-        },
-      },
-    })
-
-    const pointA = b.create('point', [1, 0], {
-      name: 'A',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    const pointB = b.create('point', [5, 0], { name: 'B', fixed: true })
-    const pointC = b.create('point', [3.5, 0.5], { name: 'C', fixed: true })
-    const pointD = b.create('point', [1, 4], { name: 'D', fixed: true })
-    const pointE = b.create('point', [5, 4], { name: 'E', fixed: true })
-    const pointF = b.create('point', [3.5, 4.5], { name: 'F', fixed: true })
-
-    const poly1 = b.create('polygon', [pointA, pointC, pointF, pointD], {
-      name: 'Polygon 1',
-      withLabel: false,
-      color: 'yellow',
-    })
-    const poly2 = b.create('polygon', [pointA, pointB, pointC], {
-      name: 'Polygon 2',
-      withLabel: false,
-      color: 'blue',
-    })
-    const poly3 = b.create('polygon', [pointA, pointB, pointE, pointD], {
-      name: 'Polygon 3',
-      withLabel: false,
-      color: 'yellow',
-    })
-
-    const poly4 = b.create('polygon', [pointB, pointC, pointF, pointE], {
-      name: 'Polygon 4',
-      withLabel: false,
-    })
-    const poly5 = b.create('polygon', [pointD, pointE, pointF], {
-      name: 'Polygon 5',
-      withLabel: false,
-      color: 'blue',
-    })
-
-    b.create('text', [3.5, 0, `${data.ab} cm`], {
-      anchorX: 'middle',
-      anchorY: 'top',
-    })
-    b.create('text', [2.2, 1, `${data.ac} cm`], {
-      anchorX: 'middle',
-      anchorY: 'top',
-    })
-    b.create('text', [5.2, 1, `${data.bd} cm`], {
-      anchorX: 'middle',
-      anchorY: 'top',
-    })
-
-    b.create('text', [5.2, 3, `${data.me} cm`], {})
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
-  )
-}
-function ComponentPyraDrei({ data }: { data: BodyData }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
-  useEffect(() => {
-    const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox: [-1, 6, 7, -2],
-      showNavigation: false,
-      showCopyright: false,
-      axis: true,
-      defaultAxes: {
-        x: {
-          ticks: {
-            ticksDistance: 1,
-            insertTicks: false,
-          },
-        },
-        y: {
-          ticks: {
-            ticksDistance: 1,
-            insertTicks: false,
-          },
-        },
-      },
-    })
-
-    const pointA = b.create('point', [1, 0], {
-      name: 'A',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    const pointB = b.create('point', [5, 0], { name: 'B', fixed: true })
-    const pointC = b.create('point', [3.5, 0.5], { name: 'C', fixed: true })
-    const pointD = b.create('point', [3.2, 4], { name: 'D', fixed: true })
-    const pointM = b.create('point', [3.2, 0.2], { name: '', fixed: true })
-
-    const poly1 = b.create('polygon', [pointA, pointC, pointD], {
-      name: 'Polygon 1',
-      withLabel: false,
-      color: 'yellow',
-    })
-    const poly2 = b.create('polygon', [pointA, pointB, pointC], {
-      name: 'Polygon 2',
-      withLabel: false,
-      color: 'blue',
-    })
-    const poly3 = b.create('polygon', [pointA, pointB, pointD], {
-      name: 'Polygon 3',
-      withLabel: false,
-      color: 'yellow',
-    })
-    const line1 = b.create('line', [pointM, pointD], {
-      name: 'Hoehe',
-      withLabel: false,
-      straightFirst: false,
-      straightLast: false,
-    })
-
-    b.create('text', [3.5, 0, `${data.ab} cm`], {
-      anchorX: 'middle',
-      anchorY: 'top',
-    })
-    b.create('text', [2.2, 1, `${data.ac} cm`], {
-      anchorX: 'middle',
-      anchorY: 'top',
-    })
-    b.create('text', [5.2, 1, `${data.bd} cm`], {
-      anchorX: 'middle',
-      anchorY: 'top',
-    })
-
-    b.create('text', [3.5, 2.6, `${data.me} cm`], {})
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
-  )
-}
 function SolPyra({ data }: { data: BodyData }) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [board2, setBoard2] = useState<ReturnType<
     typeof JXG.JSXGraph.initBoard
   > | null>(null)
   useEffect(() => {
-    const x = JXG.JSXGraph.initBoard('jxgbox2', {
-      boundingbox: [-1, 18, 18, -1],
+    const g = JXG.JSXGraph.initBoard('jxgbox2', {
+      boundingbox: [1, 18, 18, 1],
       showNavigation: false,
       showCopyright: false,
       axis: true,
@@ -676,77 +173,71 @@ function SolPyra({ data }: { data: BodyData }) {
         },
       },
     })
-    const pointA = x.create('point', [0, 0], { name: 'A', fixed: true })
-    const pointB = x.create('point', [data.ab, 0], { name: 'B', fixed: true })
-    const pointC = x.create(
-      'point',
-      [
-        data.ab + Math.cos((data.w / 360) * 2 * Math.PI) * data.bd * 0.5,
-        Math.sin((data.w / 360) * 2 * Math.PI) * data.bd * 0.5,
-      ],
-      {
-        name: 'C',
-        fixed: true,
-      }
-    )
-    const pointD = x.create(
-      'point',
-      [
-        Math.cos((data.w / 360) * 2 * Math.PI) * data.bd * 0.5,
-        Math.sin((data.w / 360) * 2 * Math.PI) * data.bd * 0.5,
-      ],
-      {
-        name: 'D',
-        fixed: true,
-      }
-    )
-    const poly1 = x.create('polygon', [pointA, pointB, pointC, pointD], {
-      name: 'Polygon 1',
-      withLabel: false,
-      color: 'blue',
+
+    const A = [3, 3]
+    const B = [3 + data.ab, 3]
+    const C = [
+      3 + data.ab + 0.7071067 * data.bc * 0.5,
+      3 + 0.7071067 * data.bc * 0.5,
+    ]
+    const D = [3 + 0.7071067 * data.bc * 0.5, 3 + 0.7071067 * data.bc * 0.5]
+
+    const pointA = g.create('point', A, {
+      name: 'A',
+      fixed: true,
+      label: { autoPosition: true },
     })
-    const pointM = x.create(
-      'point',
-      [
-        data.ab * 0.5 + Math.cos((data.w / 360) * 2 * Math.PI) * data.bd * 0.25,
-        Math.sin((data.w / 360) * 2 * Math.PI) * data.bd * 0.25,
-      ],
-      { name: '', fixed: true }
-    )
-    const pointE = x.create(
-      'point',
-      [
-        data.ab * 0.5 + Math.cos((data.w / 360) * 2 * Math.PI) * data.bd * 0.25,
-        Math.sin((data.w / 360) * 2 * Math.PI) * data.bd * 0.25 + data.me,
-      ],
-      { name: 'E', fixed: true }
-    )
-    const poly2 = x.create('polygon', [pointA, pointB, pointE], {
-      name: 'Polygon 2',
-      withLabel: false,
-      color: 'yellow',
+    const pointB = g.create('point', B, {
+      name: 'B',
+      fixed: true,
+      label: { autoPosition: true },
     })
-    const poly3 = x.create('polygon', [pointB, pointC, pointE], {
-      name: 'Polygon 3',
-      withLabel: false,
-      color: 'yellow',
+    const pointC = g.create('point', C, {
+      name: 'C',
+      fixed: true,
+      label: { autoPosition: true },
     })
-    const poly4 = x.create('polygon', [pointD, pointC, pointE], {
-      name: 'Polygon 4',
-      withLabel: false,
-      color: 'yellow',
+    const pointD = g.create('point', D, {
+      name: 'D',
+      fixed: true,
+      label: { autoPosition: true },
     })
-    const poly5 = x.create('polygon', [pointA, pointD, pointE], {
-      name: 'Polygon 5',
-      withLabel: false,
-      color: 'yellow',
-    })
-    const poly6 = x.create('polygon', [pointM, pointE], {
-      name: 'Polygon 6',
-      withLabel: false,
+    g.create('segment', [pointA, pointB])
+    g.create('segment', [pointB, pointC])
+    g.create('segment', [pointC, pointD])
+    g.create('segment', [pointD, pointA])
+
+    let x = 0
+    let y = 0
+    if (data.basePoint === 'A') {
+      x = A[0]
+      y = A[1] + data.h
+    }
+    if (data.basePoint === 'B') {
+      x = B[0]
+      y = B[1] + data.h
+    }
+    if (data.basePoint === 'C') {
+      x = C[0]
+      y = C[1] + data.h
+    }
+    if (data.basePoint === 'D') {
+      x = D[0]
+      y = D[1] + data.h
+    }
+
+    const pointS = g.create('point', [x, y], {
+      name: 'S',
+      fixed: true,
+      label: { autoPosition: true },
     })
 
-    setBoard2(x)
+    g.create('segment', [pointA, pointS])
+    g.create('segment', [pointB, pointS])
+    g.create('segment', [pointC, pointS])
+    g.create('segment', [pointD, pointS])
+
+    setBoard2(g)
 
     return () => {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -781,7 +272,7 @@ function SolQuader({ data }: { data: BodyData }) {
   > | null>(null)
   useEffect(() => {
     const x = JXG.JSXGraph.initBoard('jxgbox2', {
-      boundingbox: [-1, 18, 18, -1],
+      boundingbox: [1, 18, 18, 1],
       showNavigation: false,
       showCopyright: false,
       axis: true,
@@ -802,265 +293,80 @@ function SolQuader({ data }: { data: BodyData }) {
         },
       },
     })
-    const pointA = x.create('point', [0, 0], { name: 'A', fixed: true })
-    const pointB = x.create('point', [data.ab, 0], { name: 'B', fixed: true })
+
+    const pointA = x.create('point', [3, 3], {
+      name: 'A',
+      fixed: true,
+      label: { autoPosition: true },
+    })
+    const pointB = x.create('point', [3 + data.ab, 3], {
+      name: 'B',
+      fixed: true,
+      label: { autoPosition: true },
+    })
     const pointC = x.create(
       'point',
-      [
-        data.ab + Math.cos((data.w / 360) * 2 * Math.PI) * data.bd * 0.5,
-        Math.sin((data.w / 360) * 2 * Math.PI) * data.bd * 0.5,
-      ],
+      [3 + data.ab + 0.7071067 * data.bc * 0.5, 3 + 0.7071067 * data.bc * 0.5],
       {
         name: 'C',
         fixed: true,
+        label: { autoPosition: true },
       }
     )
     const pointD = x.create(
       'point',
-      [
-        Math.cos((data.w / 360) * 2 * Math.PI) * data.bd * 0.5,
-        Math.sin((data.w / 360) * 2 * Math.PI) * data.bd * 0.5,
-      ],
+      [3 + 0.7071067 * data.bc * 0.5, 3 + 0.7071067 * data.bc * 0.5],
       {
         name: 'D',
         fixed: true,
+        label: { autoPosition: true },
       }
     )
-    const poly1 = x.create('polygon', [pointA, pointB, pointC, pointD], {
-      name: 'Polygon 1',
-      withLabel: false,
-      color: 'blue',
-    })
+    x.create('segment', [pointA, pointB])
+    x.create('segment', [pointB, pointC])
+    x.create('segment', [pointC, pointD])
+    x.create('segment', [pointD, pointA])
 
-    const pointE = x.create('point', [0, data.me], { name: 'E', fixed: true })
-    const pointF = x.create('point', [data.ab, data.me], {
+    const pointE = x.create('point', [3, 3 + data.h], {
+      name: 'E',
+      fixed: true,
+      label: { autoPosition: true },
+    })
+    const pointF = x.create('point', [3 + data.ab, 3 + data.h], {
       name: 'F',
       fixed: true,
+      label: { autoPosition: true },
     })
     const pointG = x.create(
       'point',
       [
-        data.ab + Math.cos((data.w / 360) * 2 * Math.PI) * data.bd * 0.5,
-        data.me + Math.sin((data.w / 360) * 2 * Math.PI) * data.bd * 0.5,
+        3 + data.ab + 0.7071067 * data.bc * 0.5,
+        3 + 0.7071067 * data.bc * 0.5 + data.h,
       ],
       {
         name: 'G',
         fixed: true,
+        label: { autoPosition: true },
       }
     )
     const pointH = x.create(
       'point',
-      [
-        Math.cos((data.w / 360) * 2 * Math.PI) * data.bd * 0.5,
-        Math.sin((data.w / 360) * 2 * Math.PI) * data.bd * 0.5 + data.me,
-      ],
+      [3 + 0.7071067 * data.bc * 0.5, 3 + 0.7071067 * data.bc * 0.5 + data.h],
       {
         name: 'H',
         fixed: true,
+        label: { autoPosition: true },
       }
     )
-    const poly2 = x.create('polygon', [pointA, pointB, pointF, pointE], {
-      name: 'Polygon 2',
-      withLabel: false,
-      color: 'yellow',
-    })
-    const poly3 = x.create('polygon', [pointB, pointC, pointG, pointF], {
-      name: 'Polygon 3',
-      withLabel: false,
-      color: 'yellow',
-    })
-    const poly4 = x.create('polygon', [pointE, pointF, pointG, pointH], {
-      name: 'Polygon 4',
-      withLabel: false,
-      color: 'blue',
-    })
+    x.create('segment', [pointE, pointF])
+    x.create('segment', [pointF, pointG])
+    x.create('segment', [pointG, pointH])
+    x.create('segment', [pointH, pointE])
 
-    const poly5 = x.create('polygon', [pointA, pointD, pointH, pointE], {
-      name: 'Polygon 5',
-      withLabel: false,
-      color: 'yellow',
-    })
-    const poly6 = x.create('polygon', [pointD, pointC, pointG, pointH], {
-      name: 'Polygon 6',
-      withLabel: false,
-      color: 'yellow',
-    })
-
-    setBoard2(x)
-
-    return () => {}
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox2"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
-  )
-}
-function SolPrisma({ data }: { data: BodyData }) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [board2, setBoard2] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-  useEffect(() => {
-    const x = JXG.JSXGraph.initBoard('jxgbox2', {
-      boundingbox: [-1, 18, 18, -1],
-      showNavigation: false,
-      showCopyright: false,
-    })
-    const pointA = x.create('point', [0, 0], { name: 'A', fixed: true })
-    const pointB = x.create('point', [data.ab, 0], { name: 'B', fixed: true })
-    const pointC = x.create(
-      'point',
-      [
-        Math.cos((data.w / 360) * 2 * Math.PI) * data.ac * 0.5,
-        Math.sin((data.w / 360) * 2 * Math.PI) * data.ac * 0.5,
-      ],
-      {
-        name: 'C',
-        fixed: true,
-      }
-    )
-
-    const poly1 = x.create('polygon', [pointA, pointB, pointC], {
-      name: 'Polygon 1',
-      withLabel: false,
-      color: 'blue',
-    })
-
-    const pointD = x.create('point', [0, data.me], { name: 'D', fixed: true })
-    const pointE = x.create('point', [data.ab, data.me], {
-      name: 'E',
-      fixed: true,
-    })
-    const pointF = x.create(
-      'point',
-      [
-        Math.cos((data.w / 360) * 2 * Math.PI) * data.ac * 0.5,
-        data.me + Math.sin((data.w / 360) * 2 * Math.PI) * data.bd * 0.5,
-      ],
-      {
-        name: 'F',
-        fixed: true,
-      }
-    )
-
-    const poly2 = x.create('polygon', [pointA, pointB, pointE, pointD], {
-      name: 'Polygon 2',
-      withLabel: false,
-      color: 'yellow',
-    })
-    const poly3 = x.create('polygon', [pointB, pointC, pointF, pointE], {
-      name: 'Polygon 3',
-      withLabel: false,
-      color: 'yellow',
-    })
-    const poly4 = x.create('polygon', [pointD, pointE, pointF], {
-      name: 'Polygon 4',
-      withLabel: false,
-      color: 'blue',
-    })
-
-    setBoard2(x)
-
-    return () => {}
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox2"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
-  )
-}
-function SolPyraDrei({ data }: { data: BodyData }) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [board2, setBoard2] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-  useEffect(() => {
-    const x = JXG.JSXGraph.initBoard('jxgbox2', {
-      boundingbox: [-1, 18, 18, -1],
-      showNavigation: false,
-      showCopyright: false,
-    })
-    const pointA = x.create('point', [0, 0], { name: 'A', fixed: true })
-    const pointB = x.create('point', [data.ab, 0], { name: 'B', fixed: true })
-    const pointC = x.create(
-      'point',
-      [
-        Math.cos((data.w / 360) * 2 * Math.PI) * data.ac * 0.5,
-        Math.sin((data.w / 360) * 2 * Math.PI) * data.ac * 0.5,
-      ],
-      {
-        name: 'C',
-        fixed: true,
-      }
-    )
-
-    const poly1 = x.create('polygon', [pointA, pointB, pointC], {
-      name: 'Polygon 1',
-      withLabel: false,
-      color: 'blue',
-    })
-
-    const pointD = x.create(
-      'point',
-      [
-        (data.ab + Math.cos((data.w / 360) * 2 * Math.PI) * data.ac * 0.5) / 3,
-        data.me + (Math.sin((data.w / 360) * 2 * Math.PI) * data.ac * 0.5) / 3,
-      ],
-      { name: 'D', fixed: true }
-    )
-
-    const poly2 = x.create('polygon', [pointA, pointB, pointD], {
-      name: 'Polygon 2',
-      withLabel: false,
-      color: 'yellow',
-    })
-    const poly3 = x.create('polygon', [pointA, pointC, pointD], {
-      name: 'Polygon 3',
-      withLabel: false,
-      color: 'yellow',
-    })
-    const poly4 = x.create('polygon', [pointB, pointC, pointD], {
-      name: 'Polygon 4',
-      withLabel: false,
-      color: 'yellow',
-    })
+    x.create('segment', [pointA, pointE])
+    x.create('segment', [pointB, pointF])
+    x.create('segment', [pointC, pointG])
+    x.create('segment', [pointD, pointH])
 
     setBoard2(x)
 
