@@ -1,9 +1,6 @@
 import { SerloEditorProps, SerloEditor } from '@serlo/editor'
-import React, { ReactNode } from 'react'
+import React from 'react'
 import * as ReactDOM from 'react-dom/client'
-
-// Let's import and bundle it from within the editor package!
-// import '@/assets-webkit/styles/serlo-tailwind.css'
 
 type InitialState = SerloEditorProps['initialState']
 
@@ -293,9 +290,6 @@ export class EditorWebComponent extends HTMLElement {
     }
 
     console.log('Mounting React Component', initialState)
-
-    // const instanceData = this.getAttribute('instance-data')
-    // const loggedInData = this.getAttribute('logged-in-data')
 
     if (this.reactRoot) {
       this.reactRoot.render(
