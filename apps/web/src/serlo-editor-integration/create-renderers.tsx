@@ -33,6 +33,7 @@ import { ComponentProps } from 'react'
 import { ExtraInfoIfRevisionView } from './extra-info-if-revision-view'
 import { GeogebraSerloStaticRenderer } from './serlo-plugin-wrappers/geogebra-serlo-static-renderer'
 import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-static-renderer'
+import { SpoilerSerloStaticRenderer } from './serlo-plugin-wrappers/spoiler-serlo-static-renderer'
 import { VideoSerloStaticRenderer } from './serlo-plugin-wrappers/video-serlo-static-renderer'
 import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
@@ -68,13 +69,6 @@ const BlanksExerciseSerloStaticRenderer = dynamic<EditorBlanksExerciseDocument>(
 const InjectionStaticRenderer = dynamic<EditorInjectionDocument>(() =>
   import('@editor/plugins/injection/static').then(
     (mod) => mod.InjectionStaticRenderer
-  )
-)
-const SpoilerSerloStaticRenderer = dynamic<
-  EditorSpoilerDocument & { openOverwrite?: boolean; onOpen?: () => void }
->(() =>
-  import('./serlo-plugin-wrappers/spoiler-serlo-static-renderer').then(
-    (mod) => mod.SpoilerSerloStaticRenderer
   )
 )
 

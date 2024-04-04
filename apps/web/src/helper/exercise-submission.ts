@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 
+import { abSubmission } from './ab-submission'
 import { isProduction } from './is-production'
 import { ABValue } from '@/contexts/ab'
 
@@ -13,40 +14,41 @@ export interface ExerciseSubmissionData {
 
 const sesionStorageKey = 'frontend_exercise_submission_session_id'
 
-const handleDreisatzNewDesign = (
-  data: ExerciseSubmissionData,
-  entityId: number
-) => {
-  if (data.result !== 'correct') return
-
-  const solved = JSON.parse(
-    sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
-  ) as number[]
-  if (!solved.includes(entityId)) {
-    solved.push(entityId)
-  }
-  sessionStorage.setItem(
-    '___serlo_solved_in_session___',
-    JSON.stringify(solved)
-  )
-
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-  const trigger = (window as any)?.__triggerRender
-  if (typeof trigger === 'function') {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    trigger()
-  }
-}
-
-export function exerciseSubmission(
-  data: ExerciseSubmissionData,
-  ab: ABValue,
-  submitFn: (data: any) => Promise<any>
-) {
+export function exerciseSubmission(data: ExerciseSubmissionData, ab: ABValue) {
   const entityId = data.entityId ?? -1
 
+  // check for ab testing
+  if (ab) {
+    abSubmission({
+      entityId,
+      topicId: ab.topicId,
+      experiment: ab.experiment,
+      group: ab.group,
+      type: data.type,
+      result: data.result,
+    })
+  }
+
   if (ab?.experiment === 'dreisatz_new_design') {
-    handleDreisatzNewDesign(data, entityId)
+    if (data.result === 'correct') {
+      const solved = JSON.parse(
+        sessionStorage.getItem('___serlo_solved_in_session___') ?? '[]'
+      ) as number[]
+      if (!solved.includes(entityId)) {
+        solved.push(entityId)
+      }
+      sessionStorage.setItem(
+        '___serlo_solved_in_session___',
+        JSON.stringify(solved)
+      )
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      const trigger = (window as any)?.__triggerRender
+      if (typeof trigger === 'function') {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        trigger()
+      }
+    }
   }
 
   if (!isProduction) {
@@ -59,28 +61,15 @@ export function exerciseSubmission(
     // set new session id
     sessionStorage.setItem(sesionStorageKey, uuidv4())
   }
-
   const sessionId = sessionStorage.getItem(sesionStorageKey)
 
-  const { revisionId, path } = data
-
-  const isValid =
-    data.path.length < 1024 &&
-    Math.floor(entityId) === entityId &&
-    revisionId &&
-    Math.floor(revisionId) === revisionId &&
-    entityId > 0
-
-  if (!isValid) return
-
   void (async () => {
-    await submitFn({
-      path: path,
-      entityId: data.entityId || -1,
-      type: data.type,
-      result: data.result,
-      revisionId: revisionId || -1,
-      sessionId,
+    await fetch('/api/frontend/exercise-submission', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...data, sessionId }),
     })
   })()
 }

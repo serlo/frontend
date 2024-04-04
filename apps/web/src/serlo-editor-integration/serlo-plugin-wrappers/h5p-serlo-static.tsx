@@ -7,7 +7,6 @@ import { useEffect } from 'react'
 import { useAB } from '@/contexts/ab'
 import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
-import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
 
 // Special version for serlo.org with exercise submission events
 export function H5pSerloStaticRenderer(props: EditorH5PDocument) {
@@ -15,7 +14,6 @@ export function H5pSerloStaticRenderer(props: EditorH5PDocument) {
   const ab = useAB()
   const entityId = useEntityId()
   const revisionId = useRevisionId()
-  const trackExperiment = useCreateExerciseSubmissionMutation()
 
   useEffect(() => {
     const handleSubmissionEvent = (e: Event) => {
@@ -31,8 +29,7 @@ export function H5pSerloStaticRenderer(props: EditorH5PDocument) {
             result: e.type === 'h5pExerciseCorrect' ? 'correct' : 'wrong',
             type: 'h5p',
           },
-          ab,
-          trackExperiment
+          ab
         )
       }
     }

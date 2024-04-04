@@ -5,7 +5,6 @@ import { useRouter } from 'next/router'
 import { useAB } from '@/contexts/ab'
 import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
-import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
 
 export function BlanksExerciseSerloStaticRenderer(
   props: EditorBlanksExerciseDocument
@@ -14,7 +13,6 @@ export function BlanksExerciseSerloStaticRenderer(
   const ab = useAB()
   const entityId = useEntityId()
   const revisionId = useRevisionId()
-  const trackExperiment = useCreateExerciseSubmissionMutation()
 
   return <BlanksExerciseStaticRenderer {...props} onEvaluate={onEvaluate} />
 
@@ -27,8 +25,7 @@ export function BlanksExerciseSerloStaticRenderer(
         result: correct ? 'correct' : 'wrong',
         type: 'blanks',
       },
-      ab,
-      trackExperiment
+      ab
     )
   }
 }

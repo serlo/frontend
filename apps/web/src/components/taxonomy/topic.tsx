@@ -26,6 +26,7 @@ import {
   UuidType,
 } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
+import { abSubmission } from '@/helper/ab-submission'
 import { cn } from '@/helper/cn'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
@@ -190,7 +191,16 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
         <Rating
           className="mt-4 [&_svg]:inline"
           readonly={hasFeedback}
-          onClick={() => {
+          onClick={(rate) => {
+            //submit_event(`rate_quest_${core.ws.quest.id}_${rate}`, core)
+            abSubmission({
+              entityId: -1,
+              experiment: ab.experiment,
+              group: ab.group,
+              result: rate.toString(),
+              topicId: ab.topicId,
+              type: 'rating',
+            })
             setHasFeedback(true)
           }}
         />

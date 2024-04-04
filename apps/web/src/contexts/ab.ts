@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 
 import { useAuthentication } from '@/auth/use-authentication'
+import { abSubmission } from '@/helper/ab-submission'
 
 export const experiments: {
   experiment: string
@@ -81,6 +82,14 @@ export function useABValue(entityId: number) {
       group = Math.random() < 0.5 ? 'a' : 'b'
       sessionStorage.setItem('___serlo_ab_group___', group)
     }
+    abSubmission({
+      entityId: -1,
+      experiment,
+      group,
+      result: '',
+      topicId: entityId,
+      type: 'visit',
+    })
     setValue({
       group,
       topicId: entityId,

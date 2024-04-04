@@ -5,6 +5,7 @@ import { useState, useRef, useEffect, KeyboardEvent } from 'react'
 import { FaIcon } from '../fa-icon'
 import { isMac } from '@/helper/client-detection'
 import { cn } from '@/helper/cn'
+import { quickbarStatsSubmission } from '@/helper/quickbar-stats-submission'
 
 export const quickbarUrl = 'https://de.serlo.org/api/stats/quickbar.json'
 
@@ -43,6 +44,8 @@ export function Quickbar({
 
   const wrapper = useRef<HTMLDivElement>(null)
   const overlayWrapper = useRef<HTMLDivElement>(null)
+
+  const isSubject = !!subject
 
   useEffect(() => {
     if (query && !data) {
@@ -83,7 +86,18 @@ export function Quickbar({
     }, 200)
 
   const goToSearch = () => {
-    window.location.href = `/search?q=${encodeURIComponent(query)}`
+    quickbarStatsSubmission(
+      {
+        path: router.asPath,
+        query,
+        target: '/search',
+        isSubject,
+      },
+      () => {
+        // not using router since the hacky search component does not refresh easily
+        window.location.href = `/search?q=${encodeURIComponent(query)}`
+      }
+    )
   }
 
   const goToResult = (
@@ -94,11 +108,16 @@ export function Quickbar({
   ) => {
     event.preventDefault()
     const url = `/${id}`
+    quickbarStatsSubmission({
+      path: router.asPath,
+      query,
+      target: url,
+      isSubject,
+    })
 
     if ((isMac && event.metaKey) || (!isMac && event.ctrlKey)) {
       window.open(url)
     } else void router.push(url)
-
     close()
   }
 
@@ -160,7 +179,7 @@ export function Quickbar({
         onFocus={() => {
           if (query && data) setIsOpen(true)
         }}
-        onKeyDown={(e) => onKeyDown(e)}
+        onKeyDown={onKeyDown}
         data-qa="quickbar-input"
       />
     )
@@ -237,7 +256,7 @@ export function Quickbar({
             >
               <a
                 className="cursor-pointer hover:text-black"
-                onClick={() => goToSearch()}
+                onClick={goToSearch}
               >
                 Auf Serlo nach <i className="font-bold">{query}</i> suchen ...
               </a>
