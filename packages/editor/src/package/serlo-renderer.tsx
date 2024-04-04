@@ -10,7 +10,7 @@ import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 
 export interface SerloRendererProps {
-  pluginsConfig: PluginsConfig
+  pluginsConfig?: PluginsConfig
   language?: SupportedLanguage
   document?: AnyEditorDocument | AnyEditorDocument[]
 }
@@ -20,7 +20,7 @@ export function SerloRenderer({
   language = 'de',
   ...props
 }: SerloRendererProps) {
-  const { customPlugins = [] } = pluginsConfig
+  const { customPlugins = [] } = pluginsConfig || {}
   const { instanceData, loggedInData } = editorData[language]
 
   const basicRenderers = createRenderers(customPlugins)
