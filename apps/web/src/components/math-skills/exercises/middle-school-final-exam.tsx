@@ -59,9 +59,9 @@ export const middleSchoolFinalExam = {
     track: 3,
     component: <ExponentialEquation />,
   },
-  'logarithmus-gleichung-loesen': {
-    title: 'Gleichung lösen',
-    subtitle: 'Logarithmus, TODO',
+  'logarithmus-im-kopf': {
+    title: 'Im Kopf rechnen',
+    subtitle: 'Logarithmus',
     calculatorAllowed: false,
     track: 3,
     component: <LogarithmEquation />,
