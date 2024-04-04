@@ -6,7 +6,7 @@ export function createSquareNumberExercise() {
     title: 'Quadratzahlen berechnen',
     component: (
       <NumberInputExercise
-        centAmount={35}
+        centAmount={150}
         generator={() => {
           const base = randomIntBetween(1, 10)
           const power = 2

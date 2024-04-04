@@ -742,7 +742,7 @@ export const exercisesGrade5 = {
     component: (
       <MultipleNumberInputExercise
         numberOfInputs={2}
-        centAmount={70}
+        centAmount={150}
         generator={() => {
           const euro = randomIntBetween(0, 35)
           const cent = randomIntBetween(0, 99)
