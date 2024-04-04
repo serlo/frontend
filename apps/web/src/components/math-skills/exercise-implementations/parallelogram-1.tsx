@@ -206,7 +206,7 @@ export function Parallelogram1() {
           )}
           , um zum Punkt S<sub>1</sub> zu kommen.
           <br />
-          Verbinde die Punkte zu einem Parallelogram:
+          Verbinde die Punkte zu einem Parallelogramm:
           <br />
           <SubComponent data={data} />
         </>
