@@ -47,7 +47,7 @@ export const middleSchoolFinalExam = {
   },
   'exponential-funktion-aufstellen': {
     title: 'Funktion aufstellen',
-    subtitle: 'Exponentialfunktion, TODO',
+    subtitle: 'Exponentialfunktion',
     calculatorAllowed: false,
     track: 3,
     component: <FindExponentialFunction />,
