@@ -9,7 +9,7 @@ import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { RevisionHistory } from '@/components/pages/revision-history'
 import { useInstanceData } from '@/contexts/instance-context'
 import { Revisions } from '@/fetcher/query-types'
-import { basicUserDataFragment } from '@/fetcher/user/query'
+import { basicUserDataFragment } from '@/fetcher/user/query-by-username'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export interface HistoryRevisionProps {

@@ -1,6 +1,42 @@
 import { gql } from 'graphql-request'
 
-import { sharedUserFragments } from './query'
+export const sharedUserFragments = gql`
+  fragment userData on User {
+    username
+    date
+    lastLogin
+    description
+    isActiveReviewer
+    isActiveAuthor
+    isActiveDonor
+    chatUrl
+    imageUrl
+    motivation
+    roles {
+      nodes {
+        scope
+        role
+      }
+    }
+    activityByType {
+      edits
+      comments
+      reviews
+      taxonomy
+    }
+  }
+`
+
+export const basicUserDataFragment = gql`
+  fragment basicUserData on User {
+    id
+    username
+    isActiveAuthor
+    isActiveDonor
+    isActiveReviewer
+    isNewAuthor
+  }
+`
 
 export const userByUsernameQuery = gql`
   query userByUsername($username: String!) {
