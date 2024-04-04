@@ -7,6 +7,7 @@ import { ExerciseSelfFeedback } from '../feedback/execise-self-feedback'
 import { SkipExerciseButton } from '../feedback/skip-exercise-button'
 import { CalculatorAllowedContext } from '../utils/calculator-allowed-context'
 import { FaIcon } from '@/components/fa-icon'
+import { submitEvent } from '@/helper/submit-event'
 
 interface SelfEvaluationExerciseProps<DATA> {
   generator: () => DATA
@@ -37,6 +38,7 @@ export function SelfEvaluationExercise<T>({
       </div>
       <SkipExerciseButton
         makeNewExercise={() => {
+          submitEvent('make_exercise')
           setData(generator())
           setShowSolution(false)
           setShowStrategy(false)
@@ -47,7 +49,12 @@ export function SelfEvaluationExercise<T>({
       <div className="-ml-side mt-2">
         <SpoilerRenderer
           openOverwrite={showSolution}
-          setOpenOverwrite={setShowSolution}
+          setOpenOverwrite={(val) => {
+            if (val) {
+              submitEvent('show_solution')
+            }
+            setShowSolution(val)
+          }}
           title={<>Lösung anzeigen</>}
           content={
             <div className="mt-2 p-side">
@@ -69,7 +76,12 @@ export function SelfEvaluationExercise<T>({
         <div className="-ml-side mt-2">
           <SpoilerRenderer
             openOverwrite={showStrategy}
-            setOpenOverwrite={setShowStrategy}
+            setOpenOverwrite={(val) => {
+              if (val) {
+                submitEvent('show_strategy')
+              }
+              setShowStrategy(val)
+            }}
             title={<>Tipps</>}
             content={<div className="mt-2 p-side">{renderHint(data)}</div>}
           />
