@@ -1,12 +1,12 @@
+import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import { UuidUrlInput } from '@serlo/frontend/src/components/author/uuid-url-input'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useLoggedInData } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { useEntityId } from '@serlo/frontend/src/contexts/uuids-context'
-import { UuidType, type UuidWithRevType } from '@serlo/frontend/src/data-types'
-import { TaxonomyTermType } from '@serlo/frontend/src/fetcher/graphql-types/operations'
 
-import { SerloAddButton } from '../../../plugin/helpers/serlo-editor-button'
+import { UuidUrlInput } from '@/components/author/uuid-url-input'
+import { FaIcon } from '@/components/fa-icon'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEntityId } from '@/contexts/uuids-context'
+import { UuidType, type UuidWithRevType } from '@/data-types'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
 interface ArticleRelatedMagicInputProps {
   addEntry: (id: number, typename: UuidWithRevType, title?: string) => void

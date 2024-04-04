@@ -9,10 +9,10 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { AiExerciseGenerationButton } from '@serlo/frontend/src/components/exercise-generation/ai-exercise-generation-button'
 import { useAiFeatures } from '@serlo/frontend/src/components/exercise-generation/use-ai-features'
 import { UuidType } from '@serlo/frontend/src/data-types'
+import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 import { useRouter } from 'next/router'
 
 import { editorContent, entity, entityType } from '../common/common'
-import { ContentLoaders } from '../helpers/content-loaders/content-loaders'
 import { ToolbarMain } from '../toolbar-main/toolbar-main'
 
 // text-exercises also include interactive exercises, we keep the naming to avoid db-migration

@@ -22,7 +22,6 @@ Scenario('Create box plugin and set initial type', async ({ I }) => {
   I.seeElement('$plugin-box') // Box plugin still there
   I.dontSeeElement('$plugin-box-initial-type-chooser') // Box initial type chooser gone
   I.see('Vorsicht') // Box type is Vorsicht
-  // TODO: Check if focused & toolbar visible
 })
 
 Scenario('Change box type in toolbar', async ({ I }) => {
