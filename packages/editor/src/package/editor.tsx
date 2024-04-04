@@ -31,7 +31,7 @@ export interface PluginsConfig {
 
 export interface SerloEditorProps {
   children: EditorProps['children']
-  pluginsConfig: PluginsConfig
+  pluginsConfig?: PluginsConfig
   initialState?: EditorProps['initialState']
   language?: SupportedLanguage
 }
@@ -49,7 +49,7 @@ const emptyState = {
 /** For exporting the editor */
 export function SerloEditor(props: SerloEditorProps) {
   const { children, pluginsConfig, initialState, language = 'de' } = props
-  const { basicPluginsConfig, customPlugins = [] } = pluginsConfig
+  const { basicPluginsConfig, customPlugins = [] } = pluginsConfig || {}
   const { instanceData, loggedInData } = editorData[language]
 
   const basicPlugins = createBasicPlugins(basicPluginsConfig)
