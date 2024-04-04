@@ -166,7 +166,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         <p className="serlo-p">
           <Link
             className="serlo-button-blue mt-4"
-            href={`/event/history/${id}#activities`}
+            href={`/event/history/user/profile/${username}#activities`}
           >
             {strings.profiles.showAllActivities}
           </Link>

@@ -41,7 +41,6 @@ export interface EventHistoryProps {
     id: number
     title: string
     alias: string
-    isUser: boolean
   }
 }
 
