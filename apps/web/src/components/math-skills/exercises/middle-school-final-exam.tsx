@@ -17,7 +17,7 @@ import { ObliqueImage } from '../exercise-implementations/oblique-image'
 import { ParabolaCharacteristics } from '../exercise-implementations/parabola-by-characteristics'
 import { Parallelogram1 } from '../exercise-implementations/parallelogram-1'
 import { Parallelogram2 } from '../exercise-implementations/parallelogram-2'
-// import { Parallelogram3 } from '../exercise-implementations/parallelogram-3'
+import { Parallelogram3 } from '../exercise-implementations/parallelogram-3'
 import { PlotFunction } from '../exercise-implementations/plot-function-1'
 import { PlotFunction2 } from '../exercise-implementations/plot-function-2'
 import { RootEquations } from '../exercise-implementations/root-equations'
@@ -47,7 +47,7 @@ export const middleSchoolFinalExam = {
     title: 'Gleichung lösen',
     subtitle: 'Exponentialfunktion',
     calculatorAllowed: false,
-    track: 1,
+    track: 3,
     component: <ExponentialEquation />,
   },
   'logarithmus-1': {
@@ -66,23 +66,23 @@ export const middleSchoolFinalExam = {
   },
   'schraegbild-zeichnen': {
     title: 'Schrägbild zeichnen',
-    subtitle: 'Geometrie',
+    subtitle: 'Raumgeometrie',
     calculatorAllowed: false,
-    track: 1,
+    track: 3,
     component: <ObliqueImage />,
   },
   'trigonometrie-1': {
     title: 'Strahlensatz',
     subtitle: 'Geometrie',
     calculatorAllowed: false,
-    track: 1,
+    track: 3,
     component: <Trigonometry1 />,
   },
   'trigonometrie-2': {
     title: 'Kosinussatz',
     subtitle: 'Trigonometrie',
     calculatorAllowed: false,
-    track: 1,
+    track: 3,
     component: <Trigonometry />,
   },
   'parallelogramm-1': {
@@ -99,25 +99,63 @@ export const middleSchoolFinalExam = {
     track: 1,
     component: <Parallelogram2 />,
   },
-  /*'parallelogramm-3': {
+  'parallelogramm-3': {
     title: 'Punkt darstellen in Abhängigkeit',
-    subtitle: 'Trigonometrie, TODO',
+    subtitle: 'Trigonometrie',
     calculatorAllowed: false,
     track: 1,
     component: <Parallelogram3 />,
-  },*/
+  },
+  // Einschub Zweig 2
+  'normalform-1': {
+    title: 'Normalform einer Parabel',
+    subtitle: 'Quadratische Funktionen',
+    calculatorAllowed: false,
+    track: 2,
+    component: <NormalformParabola />,
+  },
+  'scheitelform-1': {
+    title: 'Scheitelform einer Parabel',
+    subtitle: 'Quadratische Funktionen',
+    calculatorAllowed: false,
+    track: 2,
+    component: <VertexParabola />,
+  },
+
+  'abcformel-1': {
+    title: 'ABC-Formel',
+    subtitle: 'Quadratische Gleichungen',
+    calculatorAllowed: false,
+    track: 2,
+    component: <ABCFormular />,
+  },
+  'value-set-parabolas': {
+    title: 'Wertemenge von Parabeln',
+    subtitle: 'Quadratische Funktionen',
+    calculatorAllowed: false,
+    track: 2,
+    component: <ValueSetParabola />,
+  },
+  'modelling-parabolas': {
+    title: 'Modellieren mit Parabeln',
+    subtitle: 'Quadratische Funktionen',
+    calculatorAllowed: false,
+    track: 2,
+    component: <ModellingParabola />,
+  },
+  // Ende Einschub
   eisdiele: {
     title: 'Eisdiele',
     subtitle: 'Daten und Zufall',
     calculatorAllowed: false,
-    track: 1,
+    track: 3,
     component: <IceCreamShop />,
   },
   gluecksrad: {
     title: 'Glücksrad',
     subtitle: 'Daten und Zufall',
     calculatorAllowed: false,
-    track: 1,
+    track: 3,
     component: <WheelOfFortune />,
   },
   drehung: {
@@ -190,42 +228,6 @@ export const middleSchoolFinalExam = {
     calculatorAllowed: true,
     track: 1,
     component: <AbbildungGraphen2 />,
-  },
-  'normalform-1': {
-    title: 'Normalform einer Parabel',
-    subtitle: 'Quadratische Funktionen',
-    calculatorAllowed: false,
-    track: 2,
-    component: <NormalformParabola />,
-  },
-  'scheitelform-1': {
-    title: 'Scheitelform einer Parabel',
-    subtitle: 'Quadratische Funktionen',
-    calculatorAllowed: false,
-    track: 2,
-    component: <VertexParabola />,
-  },
-
-  'abcformel-1': {
-    title: 'ABC-Formel',
-    subtitle: 'Quadratische Gleichungen',
-    calculatorAllowed: false,
-    track: 2,
-    component: <ABCFormular />,
-  },
-  'value-set-parabolas': {
-    title: 'Wertemenge von Parabeln',
-    subtitle: 'Quadratische Funktionen',
-    calculatorAllowed: false,
-    track: 2,
-    component: <ValueSetParabola />,
-  },
-  'modelling-parabolas': {
-    title: 'Modellieren mit Parabeln',
-    subtitle: 'Quadratische Funktionen',
-    calculatorAllowed: false,
-    track: 2,
-    component: <ModellingParabola />,
   },
   'parabolas-by-characteristics': {
     title: 'Parabel aus Punkten bestimmen',
