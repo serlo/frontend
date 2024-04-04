@@ -92,7 +92,7 @@ export function Parallelogram1() {
             Parallelogramme OR<sub>n</sub>S<sub>n</sub>T auf.
           </p>
           <p className="mt-4 text-2xl">
-            Berechnen Sie die Koordination des Pfeils{' '}
+            Berechnen Sie die Koordinaten des Pfeils{' '}
             {buildVec(
               <>
                 OR<sub>1</sub>
@@ -109,6 +109,9 @@ export function Parallelogram1() {
       )}
       renderSolution={(data) => (
         <>
+          Setze {phi} = {data.deg}° ein und verwende, dass Sinus und Kosinus
+          besondere Werte für diesen Winkel annehmen:
+          <br />
           {buildBlock(
             'green',
             <>
@@ -186,10 +189,52 @@ export function Parallelogram1() {
               )}
             </>
           )}
+          <br />
+          <br />
+          Zeiche die Pfeile {buildVec('OT')} und{' '}
+          {buildVec(
+            <>
+              OR<sub>1</sub>
+            </>
+          )}{' '}
+          in das Koordinatensystem ein. <br />
+          Hänge anschließend den Pfeil {buildVec('OT')} an die Spitze von{' '}
+          {buildVec(
+            <>
+              OR<sub>1</sub>
+            </>
+          )}
+          , um zum Punkt S<sub>1</sub> zu kommen.
+          <br />
+          Verbinde die Punkte zu einem Parallelogram:
+          <br />
           <SubComponent data={data} />
         </>
       )}
       centAmount={35}
+      renderHint={() => {
+        return (
+          <>
+            Sinus und Kosinus nehmen für die Winkel 30°, 60° und 90° besondere
+            Werte an:
+            <br />
+            <span className="mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+              · sin(30°) = 0,5
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cos(30°)
+              = {buildFrac(1, 2)}
+              {buildSqrt(3)}
+              <br />· sin(60°) = {buildFrac(1, 2)}
+              {buildSqrt(3)}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cos(60°) =
+              0,5
+              <sup>2</sup>
+              <br />· sin(90°) =
+              1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              cos(90°) = 0
+            </span>
+          </>
+        )
+      }}
     />
   )
 }
