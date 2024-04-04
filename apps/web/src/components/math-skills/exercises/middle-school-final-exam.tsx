@@ -71,35 +71,35 @@ export const middleSchoolFinalExam = {
     track: 3,
     component: <ObliqueImage />,
   },
-  'trigonometrie-1': {
+  strahlensatz: {
     title: 'Strahlensatz',
     subtitle: 'Geometrie',
     calculatorAllowed: false,
     track: 3,
     component: <Trigonometry1 />,
   },
-  'trigonometrie-2': {
+  kosinussatz: {
     title: 'Kosinussatz',
     subtitle: 'Trigonometrie',
     calculatorAllowed: false,
     track: 3,
     component: <Trigonometry />,
   },
-  'parallelogramm-1': {
+  'parallelogramm-einzeichnen': {
     title: 'Parallelogramm einzeichnen',
     subtitle: 'Trigonometrie',
     calculatorAllowed: false,
     track: 1,
     component: <Parallelogram1 />,
   },
-  'parallelogramm-2': {
+  'winkelmass-berechnen': {
     title: 'Winkelmaß berechnen',
     subtitle: 'Trigonometrie',
     calculatorAllowed: false,
     track: 1,
     component: <Parallelogram2 />,
   },
-  'parallelogramm-3': {
+  'punkt-darstellen-in-abhaengigkeit': {
     title: 'Punkt darstellen in Abhängigkeit',
     subtitle: 'Trigonometrie',
     calculatorAllowed: false,
@@ -158,7 +158,7 @@ export const middleSchoolFinalExam = {
     track: 3,
     component: <WheelOfFortune />,
   },
-  drehung: {
+  'punkt-drehen': {
     title: 'Punkt drehen',
     subtitle: 'Abbildungen',
     calculatorAllowed: false,
