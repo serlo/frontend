@@ -34,20 +34,20 @@ import { TemplatePluginType } from '@editor/types/template-plugin-type'
 export interface CreateBasicPluginsConfig {
   language?: SupportedLanguage
   allowedChildPlugins?: string[]
-  exerciseVisibleInSuggestion: boolean
+  exerciseVisibleInSuggestion?: boolean
   enableTextAreaExercise?: boolean
-  allowImageInTableCells: boolean
+  allowImageInTableCells?: boolean
   multimediaConfig?: MultimediaConfig
 }
 
 export function createBasicPlugins({
   language = 'de',
   enableTextAreaExercise = false,
-  exerciseVisibleInSuggestion,
+  exerciseVisibleInSuggestion = true,
+  allowImageInTableCells = true,
   allowedChildPlugins,
-  allowImageInTableCells,
   multimediaConfig,
-}: CreateBasicPluginsConfig) {
+}: CreateBasicPluginsConfig = {}) {
   const editorStrings = editorData[language].loggedInData.strings.editor
 
   return [
