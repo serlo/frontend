@@ -8,7 +8,7 @@ import { PleaseLogIn } from '@/components/user/please-log-in'
 import { ProfileSettings } from '@/components/user/profile-settings'
 import { useInstanceData } from '@/contexts/instance-context'
 import { User } from '@/fetcher/query-types'
-import { userQuery } from '@/fetcher/user/query'
+import { userByUsernameQuery } from '@/fetcher/user/query-by-username'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (
@@ -18,15 +18,16 @@ export default renderedPageNoHooks(() => (
 ))
 
 function Content() {
-  const { lang, strings } = useInstanceData()
+  const { strings } = useInstanceData()
   const auth = useAuthentication()
 
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { data, error } = useFetch(auth?.id ? `/${auth?.id}` : undefined, lang)
+  const { data, error } = useFetch(auth?.username)
+
+  const userData = data?.user?.userByUsername
 
   const rawDescription =
-    data?.uuid.description && data.uuid.description !== 'NULL'
-      ? data.uuid.description
+    userData?.description && userData.description !== 'NULL'
+      ? userData.description
       : ''
 
   return (
@@ -49,20 +50,18 @@ function Content() {
     return (
       <>
         <Guard data={data} error={error} needsAuth>
-          <>
-            <ProfileSettings rawDescription={rawDescription} />
-          </>
+          <ProfileSettings rawDescription={rawDescription} />
         </Guard>
       </>
     )
   }
 }
 
-function useFetch(path?: string, instance?: string) {
-  return useGraphqlSwr<{ uuid: User }>({
-    query: userQuery,
-    variables: { path, instance },
-    noKey: path === undefined,
+function useFetch(username?: string) {
+  return useGraphqlSwr<{ user: { userByUsername: User } }>({
+    query: userByUsernameQuery,
+    variables: { username },
+    noKey: username === undefined,
     config: {
       refreshInterval: 10 * 60 * 1000, //10min
     },
