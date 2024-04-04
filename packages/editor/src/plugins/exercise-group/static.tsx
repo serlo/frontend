@@ -14,7 +14,7 @@ export function ExerciseGroupStaticRenderer(
   const { content, exercises, intermediateTasks } = state
   if (!exercises) return null
 
-  const rendered = exercises.map((exercise, index) => {
+  const renderedExercises = exercises.map((exercise, index) => {
     const id = `${exercise.id ?? index}`
     return {
       id,
@@ -27,14 +27,12 @@ export function ExerciseGroupStaticRenderer(
   })
 
   return (
-    <div className="relative">
-      <ExerciseGroupRenderer
-        content={
-          <StaticRenderer document={content as unknown as EditorRowsDocument} />
-        }
-        exercises={rendered}
-      />
-    </div>
+    <ExerciseGroupRenderer
+      content={
+        <StaticRenderer document={content as unknown as EditorRowsDocument} />
+      }
+      exercises={renderedExercises}
+    />
   )
 
   function renderIntermediateTask(exerciseIndex: number) {

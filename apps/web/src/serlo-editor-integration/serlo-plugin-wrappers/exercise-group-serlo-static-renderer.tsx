@@ -1,5 +1,4 @@
 import { ExerciseGroupStaticRenderer } from '@editor/plugins/exercise-group/static'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { EditorExerciseGroupDocument } from '@editor/types/editor-plugins'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
@@ -7,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { useAuthentication } from '@/auth/use-authentication'
 import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
+import { ExerciseGroupIdProvider } from '@/contexts/exercise-group-id-context'
 import { ExerciseInlineType } from '@/data-types'
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
@@ -19,10 +19,11 @@ const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
 export function ExerciseGroupSerloStaticRenderer(
   props: EditorExerciseGroupDocument
 ) {
-  const { state, serloContext: context } = props
+  const auth = useAuthentication()
   const [loaded, setLoaded] = useState(false)
   useEffect(() => setLoaded(true), [])
-  const auth = useAuthentication()
+
+  const context = props.serloContext
 
   return (
     <div className="relative">
@@ -43,10 +44,12 @@ export function ExerciseGroupSerloStaticRenderer(
           />
         ) : null}
       </div>
-      <ExerciseGroupStaticRenderer
-        state={state}
-        plugin={EditorPluginType.ExerciseGroup}
-      />
+      {/* Provide parent uuids for nested exercises plugins */}
+      <ExerciseGroupIdProvider value={context?.uuid}>
+        <div className="-mt-block">
+          <ExerciseGroupStaticRenderer {...props} />
+        </div>
+      </ExerciseGroupIdProvider>
     </div>
   )
 }

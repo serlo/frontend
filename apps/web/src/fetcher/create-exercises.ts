@@ -1,9 +1,8 @@
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import {
   EditorExerciseDocument,
-  EditorTemplateExerciseGroupDocument,
+  EditorExerciseGroupDocument,
 } from '@editor/types/editor-plugins'
-import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 import { MainUuidType } from './query-types'
 
@@ -39,15 +38,13 @@ export function createExerciseGroup(
     Extract<MainUuidType, { __typename: 'ExerciseGroup' }>,
     'date' | 'taxonomyTerms'
   >
-): EditorTemplateExerciseGroupDocument | undefined {
+): EditorExerciseGroupDocument | undefined {
   if (!uuid.currentRevision?.content) return undefined
 
   return {
-    plugin: TemplatePluginType.TextExerciseGroup,
-    state: {
-      // @ts-expect-error not sure why string is expected here
-      content: parseDocumentString(uuid.currentRevision.content),
-    },
+    ...(parseDocumentString(
+      uuid.currentRevision.content
+    ) as EditorExerciseGroupDocument),
     serloContext: {
       uuid: uuid.id,
       trashed: uuid.trashed,
