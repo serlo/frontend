@@ -198,7 +198,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         hideEditProfile={!isOwnProfile}
         data={{
           type: UuidType.User,
-          id,
+          id: id,
         }}
       />
     )

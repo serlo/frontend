@@ -22,7 +22,7 @@ export function UserLink({
 
   return (
     <>
-      <Link href={`/user/profile/${user.username}`} className={className}>
+      <Link href={`/user/${user.id}/${user.username}`} className={className}>
         {withIcon && (
           // eslint-disable-next-line @next/next/no-img-element
           <img

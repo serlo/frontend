@@ -27,7 +27,7 @@ export function useUserSetDescriptionMutation() {
     return successHandler({
       success,
       toastKey: 'save',
-      redirectUrl: `/user/profile/${auth.username}`,
+      redirectUrl: `/user/${auth.id}/${auth.username}`,
     })
   }
 }

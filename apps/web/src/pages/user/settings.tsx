@@ -35,7 +35,7 @@ function Content() {
         data={[
           {
             label: strings.entities.userProfile,
-            url: auth ? `/user/profile/${auth.username}` : '/user/me',
+            url: auth ? `/user/${auth.id}/${auth.username}` : '/user/me',
           },
         ]}
         asBackButton

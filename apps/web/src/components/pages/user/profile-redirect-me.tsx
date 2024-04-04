@@ -13,7 +13,7 @@ export const ProfileRedirectMe: NextPage = () => {
 
   useEffect(() => {
     const url = auth
-      ? `/user/profile/${auth.username}${window.location.hash}`
+      ? `/user/${auth.id}/${auth.username}${window.location.hash}`
       : loginUrl
     void router.replace(url)
   }, [auth, router])
