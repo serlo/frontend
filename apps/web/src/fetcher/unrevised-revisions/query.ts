@@ -1,7 +1,7 @@
 // These types are auto-generated from the GraphQL schema
 import { gql } from 'graphql-request'
 
-import { basicUserDataFragment } from '../user/query'
+import { basicUserDataFragment } from '../user/query-by-username'
 
 export const unrevisedEntitiesFragment = gql`
   fragment unrevisedEntitiesData on AbstractEntityConnection {

@@ -1,5 +1,4 @@
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { Root, List } from '@radix-ui/react-navigation-menu'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
@@ -11,20 +10,13 @@ import { Share } from './share/share'
 import { UserToolsItem } from './user-tools-item'
 import { useAuthentication } from '@/auth/use-authentication'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import { cn } from '@/helper/cn'
 
 interface UserToolsProps {
-  id?: number
-  hideEditProfile?: boolean
   data?: AuthorToolsData
   unrevisedRevisions?: number
   aboveContent?: boolean
-}
-
-export interface UserToolsData {
-  editHref: string
 }
 
 const RevisionTools = dynamic<MoreAuthorToolsProps>(() =>
@@ -54,14 +46,11 @@ const TaxAddOrInvite = dynamic<TaxAddOrInviteProps>(() =>
 )
 
 export function UserTools({
-  // id,
   data,
   unrevisedRevisions,
   aboveContent,
-  hideEditProfile,
 }: UserToolsProps) {
   const auth = useAuthentication()
-  const loggedInData = useLoggedInData()
 
   const isRevision = data && data.type.includes('Revision')
   const isTaxonomy = data && data.type === UuidType.TaxonomyTerm
@@ -114,8 +103,6 @@ export function UserTools({
         />
       ) : null
 
-    if (data && data.type === UuidType.User) return renderProfileButtons()
-
     return (
       <>
         {isRevision ? (
@@ -143,19 +130,6 @@ export function UserTools({
         ) : null}
         <Share data={data} aboveContent={aboveContent} />
       </>
-    )
-  }
-
-  function renderProfileButtons() {
-    if (!loggedInData || hideEditProfile) return null
-
-    return (
-      <UserToolsItem
-        title={loggedInData.strings.authorMenu.editProfile}
-        href="/user/settings"
-        aboveContent={aboveContent}
-        icon={faPencilAlt}
-      />
     )
   }
 }

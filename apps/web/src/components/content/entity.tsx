@@ -145,7 +145,6 @@ export function Entity({ data }: EntityProps) {
     return (
       <UserTools
         aboveContent={setting?.aboveContent}
-        id={data.id}
         unrevisedRevisions={data.unrevisedRevisions}
         data={{
           type: data.typename,
