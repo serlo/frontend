@@ -1,11 +1,4 @@
-import {
-  SerloEditorProps,
-  SerloEditor,
-  editorPlugins,
-  editorRenderers,
-  createBasicPlugins,
-  createRenderers,
-} from '@serlo/editor'
+import { SerloEditorProps, SerloEditor } from '@serlo/editor'
 import React, { ReactNode } from 'react'
 import * as ReactDOM from 'react-dom/client'
 
@@ -299,35 +292,6 @@ export class EditorWebComponent extends HTMLElement {
       throw new Error('Initial state is not of type InitialState')
     }
 
-    editorPlugins.init(
-      createBasicPlugins({
-        allowImageInTableCells: false,
-        exerciseVisibleInSuggestion: true,
-      })
-    )
-    // {
-    // enableTextAreaExercise: true,
-    // allowImageInTableCells: false,
-    // exerciseVisibleInSuggestion: true,
-    // allowedChildPlugins: [
-    //   EditorPluginType.Text,
-    //   EditorPluginType.Equations,
-    //   EditorPluginType.Highlight,
-    //   'edusharingAsset',
-    // ],
-    // multimediaConfig: {
-    //   explanation: {
-    //     plugin: EditorPluginType.Rows,
-    //     config: {
-    //       allowedPlugins: [EditorPluginType.Text],
-    //     },
-    //   },
-    //   allowedPlugins: ['edusharingAsset'],
-    // },
-    // })
-
-    editorRenderers.init(createRenderers())
-
     console.log('Mounting React Component', initialState)
 
     // const instanceData = this.getAttribute('instance-data')
@@ -336,8 +300,16 @@ export class EditorWebComponent extends HTMLElement {
     if (this.reactRoot) {
       this.reactRoot.render(
         <React.StrictMode>
-          <SerloEditor initialState={initialState}>
-            {(editor: { element: ReactNode } & Record<string, unknown>) => {
+          <SerloEditor
+            initialState={initialState}
+            pluginsConfig={{
+              basicPluginsConfig: {
+                allowImageInTableCells: true,
+                exerciseVisibleInSuggestion: true,
+              },
+            }}
+          >
+            {(editor) => {
               return <div>{editor.element}</div>
             }}
           </SerloEditor>
