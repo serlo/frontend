@@ -447,6 +447,21 @@ function ComponentPrisma({ data }: { data: BodyData }) {
       boundingbox: [-1, 6, 7, -2],
       showNavigation: false,
       showCopyright: false,
+      axis: true,
+      defaultAxes: {
+        x: {
+          ticks: {
+            ticksDistance: 1,
+            insertTicks: false,
+          },
+        },
+        y: {
+          ticks: {
+            ticksDistance: 1,
+            insertTicks: false,
+          },
+        },
+      },
     })
 
     const pointA = b.create('point', [1, 0], {
@@ -540,6 +555,21 @@ function ComponentPyraDrei({ data }: { data: BodyData }) {
       boundingbox: [-1, 6, 7, -2],
       showNavigation: false,
       showCopyright: false,
+      axis: true,
+      defaultAxes: {
+        x: {
+          ticks: {
+            ticksDistance: 1,
+            insertTicks: false,
+          },
+        },
+        y: {
+          ticks: {
+            ticksDistance: 1,
+            insertTicks: false,
+          },
+        },
+      },
     })
 
     const pointA = b.create('point', [1, 0], {
@@ -628,6 +658,23 @@ function SolPyra({ data }: { data: BodyData }) {
       boundingbox: [-1, 18, 18, -1],
       showNavigation: false,
       showCopyright: false,
+      axis: true,
+      defaultAxes: {
+        x: {
+          ticks: {
+            ticksDistance: 1,
+            insertTicks: false,
+            label: { visible: false },
+          },
+        },
+        y: {
+          ticks: {
+            ticksDistance: 1,
+            insertTicks: false,
+            label: { visible: false },
+          },
+        },
+      },
     })
     const pointA = x.create('point', [0, 0], { name: 'A', fixed: true })
     const pointB = x.create('point', [data.ab, 0], { name: 'B', fixed: true })
@@ -737,6 +784,23 @@ function SolQuader({ data }: { data: BodyData }) {
       boundingbox: [-1, 18, 18, -1],
       showNavigation: false,
       showCopyright: false,
+      axis: true,
+      defaultAxes: {
+        x: {
+          ticks: {
+            ticksDistance: 1,
+            insertTicks: false,
+            label: { visible: false },
+          },
+        },
+        y: {
+          ticks: {
+            ticksDistance: 1,
+            insertTicks: false,
+            label: { visible: false },
+          },
+        },
+      },
     })
     const pointA = x.create('point', [0, 0], { name: 'A', fixed: true })
     const pointB = x.create('point', [data.ab, 0], { name: 'B', fixed: true })

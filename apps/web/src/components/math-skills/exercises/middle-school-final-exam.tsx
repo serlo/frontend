@@ -17,7 +17,7 @@ import { ObliqueImage } from '../exercise-implementations/oblique-image'
 import { ParabolaCharacteristics } from '../exercise-implementations/parabola-by-characteristics'
 import { Parallelogram1 } from '../exercise-implementations/parallelogram-1'
 import { Parallelogram2 } from '../exercise-implementations/parallelogram-2'
-import { Parallelogram3 } from '../exercise-implementations/parallelogram-3'
+// import { Parallelogram3 } from '../exercise-implementations/parallelogram-3'
 import { PlotFunction } from '../exercise-implementations/plot-function-1'
 import { PlotFunction2 } from '../exercise-implementations/plot-function-2'
 import { RootEquations } from '../exercise-implementations/root-equations'
@@ -64,6 +64,13 @@ export const middleSchoolFinalExam = {
     track: 1,
     component: <LogarithmExercise2 />,
   },
+  'schraegbild-zeichnen': {
+    title: 'Schrägbild zeichnen',
+    subtitle: 'Geometrie',
+    calculatorAllowed: false,
+    track: 1,
+    component: <ObliqueImage />,
+  },
   'trigonometrie-1': {
     title: 'Strahlensatz',
     subtitle: 'Geometrie',
@@ -92,13 +99,13 @@ export const middleSchoolFinalExam = {
     track: 1,
     component: <Parallelogram2 />,
   },
-  'parallelogramm-3': {
+  /*'parallelogramm-3': {
     title: 'Punkt darstellen in Abhängigkeit',
     subtitle: 'Trigonometrie, TODO',
     calculatorAllowed: false,
     track: 1,
     component: <Parallelogram3 />,
-  },
+  },*/
   eisdiele: {
     title: 'Eisdiele',
     subtitle: 'Daten und Zufall',
@@ -169,13 +176,6 @@ export const middleSchoolFinalExam = {
     calculatorAllowed: true,
     track: 1,
     component: <Asymptote2 />,
-  },
-  'oblique-image-1': {
-    title: 'Schrägbilder zeichnen',
-    subtitle: 'Geometrie',
-    calculatorAllowed: true,
-    track: 1,
-    component: <ObliqueImage />,
   },
   'mapping-graphs-1': {
     title: 'Graphen verschieben',
