@@ -4,7 +4,7 @@ import Head from 'next/head'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Profile } from '@/components/pages/user/profile'
 import { UserProps, UserPage } from '@/data-types'
-import { requestUser } from '@/fetcher/user/request'
+import { requestUserByUsername } from '@/fetcher/user/request-user-by-username'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<UserProps>(({ pageData }) => {
@@ -30,8 +30,7 @@ export const getStaticProps: GetStaticProps<UserProps> = async (context) => {
   const username = String(context.params?.username)
   if (!username) return { notFound: true }
 
-  const path = `/user/profile/${username}`
-  const pageData = await requestUser(path, context.locale ?? 'de')
+  const pageData = await requestUserByUsername(username)
   if (pageData.kind === 'not-found') return { notFound: true }
 
   return {

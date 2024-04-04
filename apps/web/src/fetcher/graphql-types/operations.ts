@@ -2468,6 +2468,7 @@ export interface UserMutationSetEmailArgs {
 export interface UserQuery {
   __typename?: 'UserQuery';
   potentialSpamUsers: UserConnection;
+  userByUsername?: Maybe<User>;
   usersByRole: UserWithPermissionsConnection;
 }
 
@@ -2475,6 +2476,11 @@ export interface UserQuery {
 export interface UserQueryPotentialSpamUsersArgs {
   after?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
+}
+
+
+export interface UserQueryUserByUsernameArgs {
+  username: Scalars['String']['input'];
 }
 
 
@@ -2995,13 +3001,6 @@ export type IsSubscribedQueryVariables = Exact<{
 
 export type IsSubscribedQuery = { __typename?: 'Query', subscription: { __typename?: 'SubscriptionQuery', currentUserHasSubscribed: boolean } };
 
-export type CreateExerciseSubmissionMutationVariables = Exact<{
-  input: ExerciseSubmissionInput;
-}>;
-
-
-export type CreateExerciseSubmissionMutation = { __typename?: 'Mutation', experiment: { __typename?: 'ExperimentMutation', createExerciseSubmission: { __typename?: 'DefaultResponse', success: boolean } } };
-
 export type TaxonomyTermCreateEntityLinkMutationVariables = Exact<{
   input: TaxonomyEntityLinksInput;
 }>;
@@ -3099,6 +3098,13 @@ export type UpdateLicenseMutationVariables = Exact<{
 
 
 export type UpdateLicenseMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', updateLicense: { __typename?: 'EntityUpdateLicenseResponse', success: boolean } } };
+
+export type CreateExerciseSubmissionMutationVariables = Exact<{
+  input: ExerciseSubmissionInput;
+}>;
+
+
+export type CreateExerciseSubmissionMutation = { __typename?: 'Mutation', experiment: { __typename?: 'ExperimentMutation', createExerciseSubmission: { __typename?: 'DefaultResponse', success: boolean } } };
 
 export type RejectRevisionMutationVariables = Exact<{
   input: RejectRevisionInput;
