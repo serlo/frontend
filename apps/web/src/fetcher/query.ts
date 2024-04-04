@@ -43,10 +43,6 @@ export const dataQuery = gql`
         }
       }
 
-      ... on User {
-        username
-      }
-
       ... on Video {
         currentRevision {
           ...videoRevision

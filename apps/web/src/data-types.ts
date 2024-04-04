@@ -136,7 +136,6 @@ export type RequestPageData =
   | PageNotFound
   | SingleEntityPage
   | TaxonomyPage
-  | UserEventsPage
   | Redirect
 
 export interface PageNotFound {
@@ -447,15 +446,6 @@ export interface UserPage extends EntityPageBase {
     isActiveAuthor: boolean
     isActiveDonor: boolean
     activityByType: User['activityByType']
-  }
-}
-
-export interface UserEventsPage {
-  kind: 'user/events'
-  userData: {
-    id: number
-    title: string
-    alias: string
   }
 }
 
