@@ -201,9 +201,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           className="serlo-link cursor-pointer"
         >
           <FaIcon icon={faPencilAlt} />{' '}
-          {motivation
-            ? strings.profiles.editMotivation
-            : strings.profiles.addMotivation}
+          {strings.profiles[motivation ? 'editMotivation' : 'addMotivation']}
         </Link>
       </p>
     )
