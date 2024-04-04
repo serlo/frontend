@@ -2,8 +2,8 @@ import { extractStringFromTextDocument } from '@editor/plugins/text/utils/static
 import {
   AnyEditorDocument,
   EditorExerciseDocument,
+  EditorExerciseGroupDocument,
   EditorRowsDocument,
-  EditorTemplateExerciseGroupDocument,
 } from '@editor/types/editor-plugins'
 import {
   isMultimediaDocument,
@@ -14,7 +14,7 @@ import { InstanceData } from '@/data-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
 
 export function getPreviewStringFromExercise(
-  document: EditorExerciseDocument | EditorTemplateExerciseGroupDocument,
+  document: EditorExerciseDocument | EditorExerciseGroupDocument,
   strings: InstanceData['strings']
 ) {
   const typeString = getTranslatedType(strings, document.plugin)

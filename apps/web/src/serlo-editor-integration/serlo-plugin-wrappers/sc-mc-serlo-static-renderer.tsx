@@ -13,6 +13,7 @@ import {
   ExerciseSubmissionData,
   exerciseSubmission,
 } from '@/helper/exercise-submission'
+import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
 
 export function ScMcSerloStaticRenderer(props: EditorScMcExerciseDocument) {
   const { asPath } = useRouter()
@@ -20,6 +21,7 @@ export function ScMcSerloStaticRenderer(props: EditorScMcExerciseDocument) {
   const entityId = useEntityId()
   const revisionId = useRevisionId()
   const isRevisionView = useContext(RevisionViewContext)
+  const trackExperiment = useCreateExerciseSubmissionMutation()
 
   const exStrings = useInstanceData().strings.content.exercises
 
@@ -47,7 +49,8 @@ export function ScMcSerloStaticRenderer(props: EditorScMcExerciseDocument) {
         result: correct ? 'correct' : 'wrong',
         type,
       },
-      ab
+      ab,
+      trackExperiment
     )
   }
 

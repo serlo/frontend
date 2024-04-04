@@ -7,17 +7,15 @@ import {
   EditorInjectionDocument,
 } from '@editor/types/editor-plugins'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
-import { endpoint } from '@serlo/frontend/src/api/endpoint'
-import { InfoPanel } from '@serlo/frontend/src/components/info-panel'
-import { LoadingSpinner } from '@serlo/frontend/src/components/loading/loading-spinner'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { triggerSentry } from '@serlo/frontend/src/helper/trigger-sentry'
 import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
 
-import { ExtraInfoIfRevisionView } from '../extra-info-if-revision-view'
-import { Lazy } from '@/components/content/lazy'
-import { type InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
+import { endpoint } from '@/api/endpoint'
+import { InfoPanel } from '@/components/info-panel'
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
+import { useInstanceData } from '@/contexts/instance-context'
+import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
+import { triggerSentry } from '@/helper/trigger-sentry'
 
 export function InjectionSerloStaticRenderer({
   state: href,
@@ -86,8 +84,8 @@ export function InjectionSerloStaticRenderer({
 
             // use id in hash to load one exercise out of the group
             if (hash) {
-              const exercise = content.state.exercises.find(
-                (exercise) => exercise.id?.startsWith(hash)
+              const exercise = content.state.exercises.find((exercise) =>
+                exercise.id?.startsWith(hash)
               )
               if (exercise) {
                 setContent([exercise])
