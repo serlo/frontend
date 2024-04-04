@@ -16,10 +16,10 @@ type TaxonomyTerm = Extract<
   { __typename: 'TaxonomyTerm' }
 >
 
-type TaxonomyTermChildrenLevel1 = TaxonomyTerm['children']['nodes'][0]
+type TaxonomyTermChildrenLevel1 = TaxonomyTerm['children']['nodes'][number]
 
 type TaxonomyTermChildrenLevel2 = Extract<
-  TaxonomyTerm['children']['nodes'][0],
+  TaxonomyTermChildrenLevel1,
   { __typename: 'TaxonomyTerm' }
 >['children']['nodes'][0]
 
@@ -65,7 +65,7 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
       if (exercise) result.push(exercise)
     }
     if (child.__typename === UuidType.ExerciseGroup && child.currentRevision) {
-      const group = createExerciseGroup(child, child.revisions.totalCount)
+      const group = createExerciseGroup(child)
       if (group) result.push(group)
     }
   })

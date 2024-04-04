@@ -206,6 +206,8 @@ export const dataQuery = gql`
       totalCount
       nodes {
         title
+        trashed
+        id
       }
     }
 

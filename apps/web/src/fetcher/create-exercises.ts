@@ -36,7 +36,7 @@ export function createExercise(
 export function createExerciseGroup(
   uuid: Omit<
     Extract<MainUuidType, { __typename: 'ExerciseGroup' }>,
-    'date' | 'taxonomyTerms' | 'unrevisedRevisions'
+    'date' | 'taxonomyTerms'
   >
 ): EditorExerciseGroupDocument | undefined {
   if (!uuid.currentRevision?.content) return undefined
