@@ -125,7 +125,7 @@ const BotHunt = () => {
         if (removedIds.includes(id)) return null
         if (isActiveAuthor || isActiveReviewer || isActiveDonor) return null
 
-        const profileUrl = `/user/${id}/${username}`
+        const profileUrl = `/user/profile/${username}`
 
         return (
           <li key={id}>
