@@ -19,7 +19,7 @@ export function ExponentialEquation() {
         return (
           <>
             <p className="mb-8 text-2xl">
-              Lösen Sie die Gleichung:
+              Lösen Sie die Gleichung (G = ℝ):
               <br />
               <HighlightGreen>
                 0 = {sign ? '(' : null}

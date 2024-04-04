@@ -6,7 +6,9 @@ import { DescribeGraphPowerFunction } from '../exercise-implementations/describe
 import { ExponentialFunction } from '../exercise-implementations/exponential-function-1'
 import { ExponentialFunctionTime } from '../exercise-implementations/exponential-function-2'
 import { ExponentialEquation } from '../exercise-implementations/exponential-function-3'
+import { FindExponentialFunction } from '../exercise-implementations/find-exponential-function'
 import { IceCreamShop } from '../exercise-implementations/ice-cream-shop'
+import { LogarithmEquation } from '../exercise-implementations/logarithm-equation'
 import { LogarithmExercise1 } from '../exercise-implementations/logarithm-exercise-1'
 import { LogarithmExercise2 } from '../exercise-implementations/logarithm-exericse-2'
 import { AbbildungGraphen } from '../exercise-implementations/mapping-graphs-1'
@@ -43,12 +45,26 @@ export const middleSchoolFinalExam = {
     track: 1,
     component: <DescribeGraphPowerFunction />,
   },
+  'exponential-funktion-aufstellen': {
+    title: 'Funktion aufstellen',
+    subtitle: 'Exponentialfunktion, TODO',
+    calculatorAllowed: false,
+    track: 3,
+    component: <FindExponentialFunction />,
+  },
   'exponential-funktion-gleichung-loesen': {
     title: 'Gleichung lösen',
     subtitle: 'Exponentialfunktion',
     calculatorAllowed: false,
     track: 3,
     component: <ExponentialEquation />,
+  },
+  'logarithmus-gleichung-loesen': {
+    title: 'Gleichung lösen',
+    subtitle: 'Logarithmus, TODO',
+    calculatorAllowed: false,
+    track: 3,
+    component: <LogarithmEquation />,
   },
   'logarithmus-1': {
     title: 'Terme zusammenfassen 1',

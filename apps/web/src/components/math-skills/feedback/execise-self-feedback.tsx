@@ -5,6 +5,7 @@ import { ExStatus } from './execise-feedback'
 import { SkillPoints } from '../math-skills-wrapper/skill-points'
 import { useExerciseData } from '../utils/math-skills-data-context'
 import { FaIcon } from '@/components/fa-icon'
+import { submitEvent } from '@/helper/submit-event'
 
 interface ExerciseSelfFeedbackProps {
   exStatus: ExStatus
@@ -33,6 +34,11 @@ export function ExerciseSelfFeedback({
   }
 
   function selfEvaluate(isCorrect: boolean) {
+    if (isCorrect) {
+      submitEvent('selfeval_correct')
+    } else {
+      submitEvent('selfeval_incorrect')
+    }
     setExerciseData(isCorrect, centAmount)
     setExStatus(isCorrect ? 'correct' : 'incorrect')
   }
