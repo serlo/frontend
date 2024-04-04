@@ -57,7 +57,10 @@ export function WelcomeSection() {
             <b>Willkommen!</b>
             <br />
             <br />
-            Hier kannst Du dich in Ruhe auf deine Mathe-Abschlussprüfung
+            Hier kannst Du dich in Ruhe auf deine{' '}
+            <strong>
+              Mathe-Abschlussprüfung an der Realschule Bayern
+            </strong>{' '}
             vorbereiten.
             <br />
             <br />
