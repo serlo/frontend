@@ -17,9 +17,9 @@ import { ProfileActivityGraphs } from '@/components/user/profile-activity-graphs
 import { ProfileBadges } from '@/components/user/profile-badges'
 import { ProfileChatButton } from '@/components/user/profile-chat-button'
 import { ProfileRoles } from '@/components/user/profile-roles'
-import { UserTools } from '@/components/user-tools/user-tools'
+import { ProfileUserTools } from '@/components/user-tools/profile-user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
-import { UserPage, UuidType } from '@/data-types'
+import { UserPage } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { isProduction } from '@/helper/is-production'
@@ -68,10 +68,11 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     <>
       {renderHeader()}
       {renderDescription()}
+      {isOwnProfile ? <ProfileUserTools aboveContent /> : null}
       <ProfileActivityGraphs values={activityByType} />
       {renderRecentActivities()}
       {renderRoles()}
-      {renderUserTools()}
+      {isOwnProfile ? <ProfileUserTools /> : null}
     </>
   )
 
@@ -188,19 +189,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           </p>
         ) : null}
       </aside>
-    )
-  }
-
-  function renderUserTools() {
-    return (
-      <UserTools
-        id={id}
-        hideEditProfile={!isOwnProfile}
-        data={{
-          type: UuidType.User,
-          id,
-        }}
-      />
     )
   }
 

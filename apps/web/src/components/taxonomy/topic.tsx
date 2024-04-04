@@ -205,7 +205,6 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
     return (
       <UserTools
         data={{ type: UuidType.TaxonomyTerm, ...data }}
-        id={data.id}
         aboveContent={setting?.aboveContent}
       />
     )
