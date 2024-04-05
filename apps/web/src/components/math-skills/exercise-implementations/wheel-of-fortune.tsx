@@ -329,7 +329,7 @@ function SubComponent({ data }: { data: WofData }) {
 
     const rotationInterval = setInterval(() => {
       currentStep++
-      const angle = (currentStep / steps) * 2 * Math.PI
+      const angle = (currentStep / steps) * 2.1 * Math.PI
       for (let i = 0; i < data.sections; i++) {
         const line = lines[i]
         const text = texts[i]
