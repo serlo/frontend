@@ -22,6 +22,7 @@
     "check:api": "yarn workspace @serlo/frontend check:api",
     "check:tailwind": "yarn workspace @serlo/frontend check:tailwind",
     "codegen": "yarn workspace @serlo/frontend codegen",
+    "commit:codegen": "git add apps/web/graphql.schema.json apps/web/src/fetcher/graphql-types/operations.ts && git commit -m 'chore: update graphql schema'",
     "dev": "yarn workspace @serlo/frontend dev",
     "e2e": "cd e2e-tests && yarn e2e",
     "e2e-firefox": "cd e2e-tests && yarn e2e-firefox",
@@ -54,6 +55,6 @@
   },
   "packageManager": "yarn@3.6.1",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   }
 }
