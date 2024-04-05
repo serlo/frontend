@@ -55,6 +55,7 @@ export const middleSchoolFinalExam = {
   'potenzfunktionen-graphen-beschreiben': {
     title: 'Funktionsgraph beschreiben',
     subtitle: 'Potenzfunktionen',
+    difficulty: 1,
     calculatorAllowed: false,
     track: 1,
     component: <DescribeGraphPowerFunction />,
@@ -62,6 +63,7 @@ export const middleSchoolFinalExam = {
   'exponential-funktion-aufstellen': {
     title: 'Funktion aufstellen',
     subtitle: 'Exponentialfunktion',
+    difficulty: 1,
     calculatorAllowed: false,
     track: 3,
     component: <FindExponentialFunction />,
@@ -69,6 +71,7 @@ export const middleSchoolFinalExam = {
   'exponential-funktion-gleichung-loesen': {
     title: 'Gleichung lösen',
     subtitle: 'Exponentialfunktion',
+    difficulty: 1,
     calculatorAllowed: false,
     track: 3,
     component: <ExponentialEquation />,
@@ -76,6 +79,7 @@ export const middleSchoolFinalExam = {
   'logarithmus-im-kopf': {
     title: 'Im Kopf rechnen',
     subtitle: 'Logarithmus',
+    difficulty: 1,
     calculatorAllowed: false,
     track: 3,
     component: <LogarithmEquation />,
@@ -83,6 +87,7 @@ export const middleSchoolFinalExam = {
   'logarithmus-1': {
     title: 'Terme zusammenfassen 1',
     subtitle: 'Logarithmus',
+    difficulty: 2,
     calculatorAllowed: false,
     track: 1,
     component: <LogarithmExercise1 />,
@@ -90,6 +95,7 @@ export const middleSchoolFinalExam = {
   'logarithmus-2': {
     title: 'Terme zusammenfassen 2',
     subtitle: 'Logarithmus',
+    difficulty: 3,
     calculatorAllowed: false,
     track: 1,
     component: <LogarithmExercise2 />,
@@ -97,6 +103,7 @@ export const middleSchoolFinalExam = {
   'schraegbild-zeichnen': {
     title: 'Schrägbild zeichnen',
     subtitle: 'Raumgeometrie',
+    difficulty: 1,
     calculatorAllowed: false,
     track: 3,
     component: <ObliqueImage />,
@@ -104,6 +111,7 @@ export const middleSchoolFinalExam = {
   strahlensatz: {
     title: 'Strahlensatz',
     subtitle: 'Geometrie',
+    difficulty: 1,
     calculatorAllowed: false,
     track: 3,
     component: <Trigonometry1 />,
@@ -111,6 +119,7 @@ export const middleSchoolFinalExam = {
   kosinussatz: {
     title: 'Kosinussatz',
     subtitle: 'Trigonometrie',
+    difficulty: 1,
     calculatorAllowed: false,
     track: 3,
     component: <Trigonometry />,
@@ -118,6 +127,7 @@ export const middleSchoolFinalExam = {
   'parallelogramm-einzeichnen': {
     title: 'Parallelogramm einzeichnen',
     subtitle: 'Trigonometrie',
+    difficulty: 1,
     calculatorAllowed: false,
     track: 1,
     component: <Parallelogram1 />,
@@ -125,6 +135,7 @@ export const middleSchoolFinalExam = {
   'winkelmass-berechnen': {
     title: 'Winkelmaß berechnen',
     subtitle: 'Trigonometrie',
+    difficulty: 2,
     calculatorAllowed: false,
     track: 1,
     component: <Parallelogram2 />,
@@ -132,6 +143,7 @@ export const middleSchoolFinalExam = {
   'punkt-darstellen-in-abhaengigkeit': {
     title: 'Punkt darstellen in Abhängigkeit',
     subtitle: 'Trigonometrie',
+    difficulty: 2,
     calculatorAllowed: false,
     track: 1,
     component: <Parallelogram3 />,
@@ -140,6 +152,7 @@ export const middleSchoolFinalExam = {
   'normalform-parabel': {
     title: 'Normalform einer Parabel',
     subtitle: 'Quadratische Funktionen',
+    difficulty: 1,
     calculatorAllowed: false,
     track: 2,
     component: <NormalformParabola />,
@@ -147,6 +160,7 @@ export const middleSchoolFinalExam = {
   'scheitelform-parabel': {
     title: 'Scheitelform einer Parabel',
     subtitle: 'Quadratische Funktionen',
+    difficulty: 1,
     calculatorAllowed: false,
     track: 2,
     component: <VertexParabola />,
@@ -154,6 +168,7 @@ export const middleSchoolFinalExam = {
   'losesungsformel-quadratische-gleichung': {
     title: 'Lösungsformel',
     subtitle: 'Quadratische Gleichungen',
+    difficulty: 1,
     calculatorAllowed: false,
     track: 2,
     component: <ABCFormular />,
@@ -161,7 +176,7 @@ export const middleSchoolFinalExam = {
   'quadratische-ergaenzung': {
     title: 'Quadratische Ergänzung',
     subtitle: 'Quadratische Funktionen',
-    difficulty: 2,
+    difficulty: 3,
     calculatorAllowed: false,
     track: 2,
     component: <CompletingTheSquare />,
@@ -169,6 +184,7 @@ export const middleSchoolFinalExam = {
   'wertemenge-parabel': {
     title: 'Wertemenge der Parabel',
     subtitle: 'Quadratische Funktionen',
+    difficulty: 1,
     calculatorAllowed: false,
     track: 2,
     component: <ValueSetParabola />,
@@ -176,6 +192,7 @@ export const middleSchoolFinalExam = {
   'modellierung-mit-parabeln': {
     title: 'Modellieren mit Parabeln',
     subtitle: 'Quadratische Funktionen',
+    difficulty: 2,
     calculatorAllowed: false,
     track: 2,
     component: <ModellingParabola />,
@@ -184,6 +201,7 @@ export const middleSchoolFinalExam = {
   eisdiele: {
     title: 'Eisdiele',
     subtitle: 'Daten und Zufall',
+    difficulty: 1,
     calculatorAllowed: false,
     track: 3,
     component: <IceCreamShop />,
@@ -191,6 +209,7 @@ export const middleSchoolFinalExam = {
   gluecksrad: {
     title: 'Glücksrad',
     subtitle: 'Daten und Zufall',
+    difficulty: 1,
     calculatorAllowed: false,
     track: 3,
     component: <WheelOfFortune />,
@@ -198,6 +217,7 @@ export const middleSchoolFinalExam = {
   'punkt-drehen': {
     title: 'Punkt drehen',
     subtitle: 'Abbildungen',
+    difficulty: 2,
     calculatorAllowed: false,
     track: 1,
     component: <RotatePoint />,
