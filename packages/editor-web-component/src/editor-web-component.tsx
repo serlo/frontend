@@ -1,218 +1,12 @@
-import { SerloEditorProps, SerloEditor } from '@serlo/editor'
+import { SerloEditor } from '@serlo/editor'
 import React from 'react'
 import * as ReactDOM from 'react-dom/client'
 
-type InitialState = SerloEditorProps['initialState']
-
-function isInitialState(obj: any): obj is InitialState {
-  return (
-    obj !== null &&
-    obj !== undefined &&
-    typeof obj === 'object' &&
-    'plugin' in obj
-  )
-}
-
-const exampleInitialState: InitialState = {
-  plugin: 'rows',
-  state: [
-    {
-      plugin: 'text',
-      state: [
-        {
-          type: 'h',
-          level: 2,
-          children: [
-            {
-              text: 'Beispiel',
-            },
-          ],
-        },
-        {
-          type: 'p',
-          children: [
-            {
-              text: 'Bestimme den Differenzenquotient der Funktion ',
-            },
-            {
-              type: 'math',
-              src: 'f(x)=x^2',
-              inline: true,
-              children: [
-                {
-                  text: 'f(x)=x^2',
-                },
-              ],
-            },
-            {
-              text: ' im Intervall  ',
-            },
-            {
-              type: 'math',
-              src: '\\\\left[1;3\\\\right]',
-              inline: true,
-              children: [
-                {
-                  text: '\\\\left[1;3\\\\right]',
-                },
-              ],
-            },
-            {
-              text: ' ',
-            },
-            {
-              type: 'math',
-              src: '\\\\Rightarrow x_1=1',
-              inline: true,
-              children: [
-                {
-                  text: '\\\\Rightarrow x_1=1\\\\;x_2=3',
-                },
-              ],
-            },
-            {
-              text: ' und ',
-            },
-            {
-              type: 'math',
-              src: 'x_2=3',
-              inline: true,
-              children: [
-                {
-                  text: '',
-                },
-              ],
-            },
-            {
-              text: '.',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      plugin: 'equations',
-      state: {
-        transformationTarget: 'equation',
-        firstExplanation: {
-          plugin: 'text',
-          state: [
-            {
-              type: 'p',
-              children: [{}],
-            },
-          ],
-        },
-        steps: [
-          {
-            left: 'm',
-            sign: 'equals',
-            right: '\\\\frac{f(3)-f(1)}{3-1}',
-            transform: '',
-            explanation: {
-              plugin: 'text',
-              state: [
-                {
-                  type: 'p',
-                  children: [
-                    {
-                      text: 'Ausrechnen',
-                    },
-                  ],
-                },
-              ],
-            },
-          },
-          {
-            left: '',
-            sign: 'equals',
-            right: '4',
-            transform: '',
-            explanation: {
-              plugin: 'text',
-              state: [
-                {
-                  type: 'p',
-                  children: [{}],
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-    {
-      plugin: 'text',
-      state: [
-        {
-          type: 'h',
-          level: 2,
-          children: [
-            {
-              text: 'Applet',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      plugin: 'text',
-      state: [
-        {
-          type: 'p',
-          children: [
-            {
-              text: 'Im folgenden Applet kannst du dir für eine beliebige Funktion ',
-            },
-            {
-              type: 'math',
-              src: 'f',
-              inline: true,
-              children: [
-                {
-                  text: 'f',
-                },
-              ],
-            },
-            {
-              text: ' den Differenzenquotienten anschauen und berechnen lassen. Außerdem kannst du die Lage der Stellen ',
-            },
-            {
-              type: 'math',
-              src: 'x_1',
-              inline: true,
-              children: [
-                {
-                  text: 'x_1',
-                },
-              ],
-            },
-            {
-              text: ' und ',
-            },
-            {
-              type: 'math',
-              src: 'x_2',
-              inline: true,
-              children: [
-                {
-                  text: 'x_2',
-                },
-              ],
-            },
-            {
-              text: ' frei wählen.',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      plugin: 'geogebra',
-      state: 'nnrmthf4',
-    },
-  ],
-}
+import {
+  exampleInitialState,
+  isInitialState,
+  type InitialState,
+} from './initial-state'
 
 // Could probably remove the export entirely, as the customElement is registered
 // below.
@@ -282,8 +76,7 @@ export class EditorWebComponent extends HTMLElement {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const initialState: InitialState = initialStateAttr
       ? (JSON.parse(initialStateAttr) as unknown as any)
-      : // TODO throw error here instead?
-        exampleInitialState
+      : exampleInitialState
 
     if (!isInitialState(initialState)) {
       throw new Error('Initial state is not of type InitialState')
@@ -291,25 +84,19 @@ export class EditorWebComponent extends HTMLElement {
 
     console.log('Mounting React Component', initialState)
 
-    if (this.reactRoot) {
-      this.reactRoot.render(
-        <React.StrictMode>
-          <SerloEditor
-            initialState={initialState}
-            pluginsConfig={{
-              basicPluginsConfig: {
-                allowImageInTableCells: true,
-                exerciseVisibleInSuggestion: true,
-              },
-            }}
-          >
-            {(editor) => {
-              return <div>{editor.element}</div>
-            }}
-          </SerloEditor>
-        </React.StrictMode>
-      )
+    if (!this.reactRoot) {
+      return null
     }
+
+    this.reactRoot.render(
+      <React.StrictMode>
+        <SerloEditor initialState={initialState}>
+          {(editor) => {
+            return <div>{editor.element}</div>
+          }}
+        </SerloEditor>
+      </React.StrictMode>
+    )
   }
 
   disconnectedCallback() {
