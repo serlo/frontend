@@ -34,7 +34,7 @@ export function SpoilerRenderer({
         onClick={() => handleSpoilerClick()}
         className={cn(
           `
-            serlo-input-font-reset z-10 m-0 border-none px-side py-2.5
+            serlo-input-font-reset m-0 border-none px-side py-2.5
             text-left text-lg leading-normal text-almost-black transition-colors
           `,
           isOpen ? 'bg-brand-200' : 'bg-brand-100'

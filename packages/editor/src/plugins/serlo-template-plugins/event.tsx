@@ -5,6 +5,7 @@ import {
 } from '@editor/plugin'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { UuidType } from '@serlo/frontend/src/data-types'
+import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 
 import {
   editorContent,
@@ -12,7 +13,6 @@ import {
   entityType,
   headerInputClasses,
 } from './common/common'
-import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const eventTypeState = entityType(

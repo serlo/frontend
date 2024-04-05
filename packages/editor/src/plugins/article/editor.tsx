@@ -4,7 +4,6 @@ import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-co
 import { useState } from 'react'
 
 import type { ArticleProps } from '.'
-import { ArticleAddModal } from './add-modal/article-add-modal'
 import { buttonClass } from './const/button-class'
 import { ArticleExercises } from './editor-renderer/article-exercises'
 import { ArticleRelatedContentSection } from './editor-renderer/article-related-content-section'
@@ -13,6 +12,7 @@ import { ArticleRenderer } from './renderer'
 import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
 import { FaIcon } from '@/components/fa-icon'
 import { cn } from '@/helper/cn'
+import { ArticleAddModal } from '@/serlo-editor-integration/components/article-add-modal/article-add-modal'
 
 export function ArticleEditor({ state }: ArticleProps) {
   const {
