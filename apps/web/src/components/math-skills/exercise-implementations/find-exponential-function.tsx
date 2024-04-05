@@ -17,7 +17,7 @@ export function FindExponentialFunction() {
             a: randomIntBetween(2, 8),
             factor: 'Abnahme',
             xDescription: 'die Zeit in Wochen',
-            yDescription: 'die Anzahl der richtigen Antworten',
+            yDescription: 'die Anzahl der Englischvokabeln',
           }
         }
         if (context === 2) {
