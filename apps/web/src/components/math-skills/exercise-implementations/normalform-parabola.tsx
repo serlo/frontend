@@ -28,7 +28,7 @@ export function NormalformParabola() {
       renderTask={({ x_s, isPlus, isPlus_2, y_s }) => {
         return (
           <>
-            <MainTask>Bestimme die Normalform der Parabel:</MainTask>
+            <MainTask>Bestimmen Sie die Normalform der Parabel:</MainTask>
             <HighlightGreen>
               y = (x {isPlus ? '+' : '-'} {x_s})<sup>2</sup>{' '}
               {isPlus_2 ? '+' : '-'} {y_s}

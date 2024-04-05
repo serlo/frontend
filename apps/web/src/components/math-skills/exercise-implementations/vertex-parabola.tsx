@@ -19,7 +19,7 @@ export function VertexParabola() {
     <SelfEvaluationExercise
       generator={() => {
         return {
-          b: randomIntBetween(2, 9),
+          b: randomIntBetween(1, 4) * 2,
           c: randomIntBetween(2, 9),
           isPlus: randomItemFromArray([true, false]),
           isPlus_2: randomItemFromArray([true, false]),
@@ -28,7 +28,7 @@ export function VertexParabola() {
       renderTask={({ b, isPlus, isPlus_2, c }) => {
         return (
           <>
-            <MainTask>Bestimme die Scheitelform der Parabel:</MainTask>
+            <MainTask>Bestimmen Sie die Scheitelform der Parabel:</MainTask>
             <HighlightGreen>
               y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x {isPlus_2 ? '+' : '-'}{' '}
               {c}
@@ -37,46 +37,57 @@ export function VertexParabola() {
         )
       }}
       renderSolution={({ b, isPlus, isPlus_2, c }) => {
-        if (isPlus_2 && c === (b / 2) * (b / 2))
+        const plusminusTerm = (b / 2) * (b / 2)
+        const cAlsZahl = c * (isPlus_2 ? 1 : -1)
+        const d = cAlsZahl - plusminusTerm
+
+        const dAlsJsx = (
+          <>
+            {d > 0 ? '+' : '-'} {Math.abs(d)}
+          </>
+        )
+
+        console.log('debug', plusminusTerm, cAlsZahl)
+        const intro = (
+          <>
+            Die Scheitelform der Funktion hat diese Form:
+            <br />
+            <HighlightGray>
+              y = (x - ☐)<sup>2</sup> + ☐
+            </HighlightGray>
+            <br />
+            <br />
+            Nutze die quadratische Ergänzung und bestimme die passenden Werte in
+            den Kästchen.
+            <br />
+            <br />
+            <MainTask>Wert im ersten Kästchen</MainTask>
+            <br />
+            Denke dir den mittleren Summand, wie er als Mischterm in der
+            binomischen Formel erwartet wird:
+            <br />
+            <HighlightGray>
+              y = x<sup>2</sup> {isPlus ? '+' : '-'} 2 ·{' '}
+              <strong>{(b / 2).toLocaleString('de-De')}</strong> · x{' '}
+              {isPlus_2 ? '+' : '-'} {c}
+            </HighlightGray>
+            <br />
+            <br />
+            Setze ein in das Binom:
+            <br />
+            <HighlightGray>
+              y = (x {isPlus ? '+' : '-'}{' '}
+              <strong>{(b / 2).toLocaleString('de-De')}</strong>)<sup>2</sup> +
+              ☐
+            </HighlightGray>
+            <br />
+            <br />
+          </>
+        )
+        if (d === 0)
           return (
             <>
-              Wir formen den Funktionsterm in die Scheitelform um: <br />
-              <HighlightGray>
-                y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x{' '}
-                {isPlus_2 ? '+' : '-'}
-                {c}
-              </HighlightGray>
-              <br />
-              <br />
-              Die Scheitelform der Funktion hat die Form
-              <br />
-              <HighlightGray>
-                y = (x - ☐)<sup>2</sup> + ☐
-              </HighlightGray>
-              <br />
-              <br />
-              wobei in den Kästchen die passenden Werte stehen müssen.
-              <br />
-              <br />
-              <MainTask>Wert im ersten Kästchen</MainTask>
-              <br />
-              Damit aus dem Binom der richtige Mischterm entsteht, muss aus dem
-              Funktionsterm
-              <br />
-              <HighlightGray>
-                y = x<sup>2</sup> {isPlus ? '+' : '-'} 2 · x ·{' '}
-                <strong>{b / 2}</strong> {isPlus_2 ? '+' : '-'}
-                {c}
-              </HighlightGray>
-              <br />
-              <br />
-              in das Binom eingesetzt werden:
-              <br />
-              <HighlightGray>
-                y = (x - <strong>{b / 2}</strong>)<sup>2</sup> + ☐
-              </HighlightGray>
-              <br />
-              <br />
+              {intro}
               <MainTask>Wert im zweiten Kästchen</MainTask>
               <br />
               Würden wir das Binom wieder ausschreiben, erhalten wir bereits den
@@ -91,46 +102,18 @@ export function VertexParabola() {
               <br />
               Der Wert im zweiten Kästchen ist damit <strong>0</strong>. Das ist
               ein Spezialfall!
+              <br />
+              <br />
+              Damit lautet die richtige Scheitelform: <br />
+              <HighlightGreen>
+                y = (x {isPlus ? '+' : '-'}{' '}
+                <strong>{(b / 2).toLocaleString('de-De')}</strong>)<sup>2</sup>
+              </HighlightGreen>
             </>
           )
         return (
           <>
-            Wir formen den Funktionsterm in die Scheitelform um: <br />
-            <HighlightGray>
-              y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x {isPlus_2 ? '+' : '-'}
-              {c}
-            </HighlightGray>
-            <br />
-            <br />
-            Die Scheitelform der Funktion hat die Form
-            <br />
-            <HighlightGray>
-              y = (x - ☐)<sup>2</sup> + ☐
-            </HighlightGray>
-            <br />
-            <br />
-            wobei in den Kästchen die passenden Werte stehen müssen.
-            <br />
-            <br />
-            <MainTask>Wert im ersten Kästchen</MainTask>
-            <br />
-            Damit aus dem Binom der richtige Mischterm entsteht, muss aus dem
-            Funktionsterm
-            <br />
-            <HighlightGray>
-              y = x<sup>2</sup> {isPlus ? '+' : '-'} 2 · x ·{' '}
-              <strong>{b / 2}</strong> {isPlus_2 ? '+' : '-'}
-              {c}
-            </HighlightGray>
-            <br />
-            <br />
-            in das Binom eingesetzt werden:
-            <br />
-            <HighlightGray>
-              y = (x - <strong>{b / 2}</strong>)<sup>2</sup> + ☐
-            </HighlightGray>
-            <br />
-            <br />
+            {intro}
             <MainTask>Wert im zweiten Kästchen</MainTask>
             <br />
             Würden wir das Binom so stehen lassen, wäre der Term am Ende nicht
@@ -141,49 +124,25 @@ export function VertexParabola() {
               + ☐
             </HighlightGray>
             <br />
-            <br />
-            Damit am Ende{' '}
+            Korrigiere mit dem richtigen Wert, damit am Ende{' '}
             <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
               {isPlus_2 ? '+' : '-'}
               {c}
             </span>{' '}
-            steht, müssen wir mit dem richtigen Wert korrigieren:
+            steht:
             <br />
             <HighlightGray>
               y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x + {(b / 2) * (b / 2)}{' '}
-              <strong>
-                {c - (b / 2) * (b / 2) === 0 ? (
-                  <></>
-                ) : (
-                  <>
-                    {isPlus_2 && c - (b / 2) * (b / 2) > 0 ? '+' : ''}{' '}
-                    {isPlus_2
-                      ? (c - (b / 2) * (b / 2)).toString().replace('.', ',')
-                      : (-c - (b / 2) * (b / 2)).toString().replace('.', ',')}
-                  </>
-                )}
-              </strong>{' '}
+              <strong>{dAlsJsx}</strong>{' '}
             </HighlightGray>
             <br />
             <br />
-            Damit ist die richtige Scheitelform: <br />
+            Damit lautet die Scheitelform: <br />
             <HighlightGreen>
               y = <span className="inline-block scale-y-[1.5]">(</span>x{' '}
               {isPlus ? '+' : '-'} {(b / 2).toString().replace('.', ',')}
               <span className="inline-block scale-y-[1.5]">)</span>
-              <sup>2</sup>{' '}
-              <strong>
-                {c - (b / 2) * (b / 2) === 0 ? (
-                  <></>
-                ) : (
-                  <>
-                    {isPlus_2 && c - (b / 2) * (b / 2) > 0 ? '+' : ''}{' '}
-                    {isPlus_2
-                      ? (c - (b / 2) * (b / 2)).toString().replace('.', ',')
-                      : (-c - (b / 2) * (b / 2)).toString().replace('.', ',')}
-                  </>
-                )}
-              </strong>
+              <sup>2</sup> <strong>{dAlsJsx}</strong>
             </HighlightGreen>
           </>
         )
