@@ -35,16 +35,20 @@ Scenario('Add new plugins', async ({ I }) => {
     I.pressKey('ArrowDown')
   }
   // Spoiler
+  I.say('I insert a spoiler plugin')
   I.pressKey('Enter')
 
-  I.seeElement('input[placeholder="Titel eingeben"]')
+  I.see('Spoiler')
+  I.see('Titel eingeben')
 
+  I.pressKey('ArrowDown')
   I.pressKey('/')
   for (let i = 0; i < 4; i++) {
     I.pressKey('ArrowDown')
   }
   // Box
   I.pressKey('Enter')
+  I.say('I insert a box plugin')
 
   I.see('Art der Box')
   I.click('Merke')
