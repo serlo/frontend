@@ -2,6 +2,7 @@
 import { ABCFormular } from '../exercise-implementations/abc-formular'
 import { Asymptote1 } from '../exercise-implementations/asymptote-1'
 import { Asymptote2 } from '../exercise-implementations/asymptote-2'
+import { CompletingTheSquare } from '../exercise-implementations/completing-the-square'
 import { DescribeGraphPowerFunction } from '../exercise-implementations/describe-graph-power-function'
 import { ExponentialFunction } from '../exercise-implementations/exponential-function-1'
 import { ExponentialFunctionTime } from '../exercise-implementations/exponential-function-2'
@@ -123,27 +124,33 @@ export const middleSchoolFinalExam = {
     component: <Parallelogram3 />,
   },
   // Einschub Zweig 2
-  'normalform-1': {
+  'normalform-parabel': {
     title: 'Normalform einer Parabel',
     subtitle: 'Quadratische Funktionen',
     calculatorAllowed: false,
     track: 2,
     component: <NormalformParabola />,
   },
-  'scheitelform-1': {
+  'scheitelform-parabel': {
     title: 'Scheitelform einer Parabel',
-    subtitle: 'Quadratische Funktionen',
+    subtitle: 'Quadratische Funktionen, TODO',
     calculatorAllowed: false,
     track: 2,
     component: <VertexParabola />,
   },
-
-  'abcformel-1': {
+  'losesungsformel-quadratische-gleichung': {
     title: 'Lösungsformel',
     subtitle: 'Quadratische Gleichungen',
     calculatorAllowed: false,
     track: 2,
     component: <ABCFormular />,
+  },
+  'quadratische-ergaenzung': {
+    title: 'Quadratische Ergänzung (Profi)',
+    subtitle: 'Quadratische Funktionen',
+    calculatorAllowed: false,
+    track: 2,
+    component: <CompletingTheSquare />,
   },
   'value-set-parabolas': {
     title: 'Wertemenge von Parabeln',

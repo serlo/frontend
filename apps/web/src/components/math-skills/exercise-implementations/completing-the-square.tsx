@@ -14,7 +14,7 @@ import { randomItemFromArray } from '@/helper/random-item-from-array'
 
 // JXG.Options.label.autoPosition = true
 
-export function VertexParabola() {
+export function CompletingTheSquare() {
   return (
     <SelfEvaluationExercise
       generator={() => {
@@ -47,9 +47,95 @@ export function VertexParabola() {
           </>
         )
 
+        const intro = (
+          <>
+            Die Scheitelform der Funktion hat diese Form:
+            <br />
+            <HighlightGray>
+              y = (x - ☐)<sup>2</sup> + ☐
+            </HighlightGray>
+            <br />
+            <br />
+            Nutze die quadratische Ergänzung und bestimme die passenden Werte in
+            den Kästchen.
+            <br />
+            <br />
+            <MainTask>Wert im ersten Kästchen</MainTask>
+            <br />
+            Denke dir den mittleren Summand, wie er als Mischterm in der
+            binomischen Formel erwartet wird:
+            <br />
+            <HighlightGray>
+              y = x<sup>2</sup> {isPlus ? '+' : '-'} 2 ·{' '}
+              <strong>{(b / 2).toLocaleString('de-De')}</strong> · x{' '}
+              {isPlus_2 ? '+' : '-'} {c}
+            </HighlightGray>
+            <br />
+            <br />
+            Setze ein in das Binom:
+            <br />
+            <HighlightGray>
+              y = (x {isPlus ? '+' : '-'}{' '}
+              <strong>{(b / 2).toLocaleString('de-De')}</strong>)<sup>2</sup> +
+              ☐
+            </HighlightGray>
+            <br />
+            <br />
+          </>
+        )
+        if (d === 0)
+          return (
+            <>
+              {intro}
+              <MainTask>Wert im zweiten Kästchen</MainTask>
+              <br />
+              Würden wir das Binom wieder ausschreiben, erhalten wir bereits den
+              richtigen Funktionsterm wieder:
+              <br />
+              <HighlightGray>
+                y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x{' '}
+                {isPlus_2 ? '+' : '-'}
+                {c}
+              </HighlightGray>
+              <br />
+              <br />
+              Der Wert im zweiten Kästchen ist damit <strong>0</strong>. Das ist
+              ein Spezialfall!
+              <br />
+              <br />
+              Damit lautet die richtige Scheitelform: <br />
+              <HighlightGreen>
+                y = (x {isPlus ? '+' : '-'}{' '}
+                <strong>{(b / 2).toLocaleString('de-De')}</strong>)<sup>2</sup>
+              </HighlightGreen>
+            </>
+          )
         return (
           <>
-            <p>TODO: Nutze direkte Lösungsformel</p>
+            {intro}
+            <MainTask>Wert im zweiten Kästchen</MainTask>
+            <br />
+            Würden wir das Binom so stehen lassen, wäre der Term am Ende nicht
+            immer der gleiche wie im ursprünglichen Funktionsterm:
+            <br />
+            <HighlightGray>
+              y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x + {(b / 2) * (b / 2)}{' '}
+              + ☐
+            </HighlightGray>
+            <br />
+            Korrigiere mit dem richtigen Wert, damit am Ende{' '}
+            <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
+              {isPlus_2 ? '+' : '-'}
+              {c}
+            </span>{' '}
+            steht:
+            <br />
+            <HighlightGray>
+              y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x + {(b / 2) * (b / 2)}{' '}
+              <strong>{dAlsJsx}</strong>{' '}
+            </HighlightGray>
+            <br />
+            <br />
             Damit lautet die Scheitelform: <br />
             <HighlightGreen>
               y = <span className="inline-block scale-y-[1.5]">(</span>x{' '}
