@@ -25,14 +25,14 @@ import { PlotFunction } from '../exercise-implementations/plot-function-1'
 import { PlotFunction2 } from '../exercise-implementations/plot-function-2'
 import { RootEquations } from '../exercise-implementations/root-equations'
 import { RotatePoint } from '../exercise-implementations/rotate-point'
-import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
-import { SurfaceThreePyramide } from '../exercise-implementations/surface-pyramide-2'
+// import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
+// import { SurfaceThreePyramide } from '../exercise-implementations/surface-pyramide-2'
 import { Trigonometry } from '../exercise-implementations/trigonometry'
 import { Trigonometry1 } from '../exercise-implementations/trigonometry-1'
 import { ValueSetParabola } from '../exercise-implementations/value-set-parabola'
 import { VertexParabola } from '../exercise-implementations/vertex-parabola'
 import { VolumePyramide } from '../exercise-implementations/volume-pyramide'
-import { VolumeThreePyramide } from '../exercise-implementations/volume-pyramide-2'
+// import { VolumeThreePyramide } from '../exercise-implementations/volume-pyramide-2'
 import { WheelOfFortune } from '../exercise-implementations/wheel-of-fortune'
 
 //track:  1 = Mathe-Zweig 1, 2 = Mathe-Zweig 2 & 3, 3 = beide Zweige
@@ -273,14 +273,14 @@ export const middleSchoolFinalExam = {
     track: 2,
     component: <ParabolaCharacteristics />,
   },
-  'volumen-pyramide-1': {
+  'volumen-pyramide': {
     title: 'Volumen einer Pyramide',
-    subtitle: 'vierseitig',
+    subtitle: 'Raumgeometrie',
     calculatorAllowed: true,
     track: 2,
     component: <VolumePyramide />,
   },
-  'volumen-pyramide-2': {
+  /*'volumen-pyramide-2': {
     title: 'Volumen einer Pyramide',
     subtitle: 'dreiseitig',
     calculatorAllowed: true,
@@ -300,7 +300,7 @@ export const middleSchoolFinalExam = {
     calculatorAllowed: true,
     track: 2,
     component: <SurfaceThreePyramide />,
-  },
+  },*/
 } as const
 
 /*
