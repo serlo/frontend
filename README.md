@@ -14,7 +14,7 @@ In our [staging](https://de.serlo-staging.dev/) and [production](https://serlo.o
 
 ### Local installation
 
-You can run the frontend on your local system. Install [Node.js v18](https://nodejs.org/en/) and yarn (`npm install --global yarn`), then run the following commands:
+You can run the frontend on your local system. Install [Node.js v20](https://nodejs.org/en/) and yarn (`npm install --global yarn`), then run the following commands:
 
 ```sh
 git clone --filter=blob:none https://github.com/serlo/frontend.git
