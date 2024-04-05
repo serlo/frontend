@@ -17,7 +17,8 @@
       "import": "./dist/editor.js",
       "require": "./dist/editor.js",
       "types": "./dist/index.d.ts"
-    }
+    },
+    "./style.css": "./dist/style.css"
   },
   "main": "./dist/editor.js",
   "module": "./dist/editor.js",

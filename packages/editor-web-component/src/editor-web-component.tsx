@@ -1,4 +1,5 @@
 import { SerloEditor } from '@serlo/editor'
+import styles from '@serlo/editor/style.css?raw'
 import React from 'react'
 import * as ReactDOM from 'react-dom/client'
 
@@ -16,33 +17,19 @@ export class EditorWebComponent extends HTMLElement {
 
   constructor() {
     super()
-    // Create a shadow root for encapsulation. Right now, the css does not work
-    // with the shadow DOM.
-    // const shadowRoot = this.attachShadow({ mode: 'open' })
+    // Create a shadow root for encapsulation
+    const shadowRoot = this.attachShadow({ mode: 'open' })
     this.container = document.createElement('div')
-    // this.appendChild(container)
-    // shadowRoot.appendChild(container)
+    shadowRoot.appendChild(this.container)
 
-    // fetch(cssUrl as string)
-    //   .then((response) => response.text())
-    //   .then((css) => {
-    //     const styleEl = document.createElement('style')
-    //     styleEl.textContent = css
-    //     shadowRoot.appendChild(styleEl)
-    //   })
-    //   .catch((error) =>
-    //     console.error('Error when trying to attach CSS string!', error)
-    //   )
+    this.loadAndApplyStyles(shadowRoot)
+  }
 
-    // if (cssString && typeof cssString === 'string') {
-    //   const styleEl = document.createElement('style')
-    //   styleEl.textContent = cssString
-    //   shadowRoot.appendChild(styleEl)
-    // } else {
-    //   console.error('No CSS string could be found!', error)
-    // }
-
-    // this.reactRoot = ReactDOM.createRoot(container)
+  loadAndApplyStyles(shadowRoot: ShadowRoot) {
+    console.log('Applying styles: ', { styles: styles as string })
+    const styleEl = document.createElement('style')
+    styleEl.textContent = styles as string
+    shadowRoot.appendChild(styleEl)
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
@@ -61,8 +48,6 @@ export class EditorWebComponent extends HTMLElement {
   }
 
   connectedCallback() {
-    this.appendChild(this.container)
-
     if (!this.reactRoot) {
       this.reactRoot = ReactDOM.createRoot(this.container)
     }
