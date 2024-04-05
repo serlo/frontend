@@ -16,33 +16,8 @@ export class EditorWebComponent extends HTMLElement {
 
   constructor() {
     super()
-    // Create a shadow root for encapsulation. Right now, the css does not work
-    // with the shadow DOM.
-    // const shadowRoot = this.attachShadow({ mode: 'open' })
+
     this.container = document.createElement('div')
-    // this.appendChild(container)
-    // shadowRoot.appendChild(container)
-
-    // fetch(cssUrl as string)
-    //   .then((response) => response.text())
-    //   .then((css) => {
-    //     const styleEl = document.createElement('style')
-    //     styleEl.textContent = css
-    //     shadowRoot.appendChild(styleEl)
-    //   })
-    //   .catch((error) =>
-    //     console.error('Error when trying to attach CSS string!', error)
-    //   )
-
-    // if (cssString && typeof cssString === 'string') {
-    //   const styleEl = document.createElement('style')
-    //   styleEl.textContent = cssString
-    //   shadowRoot.appendChild(styleEl)
-    // } else {
-    //   console.error('No CSS string could be found!', error)
-    // }
-
-    // this.reactRoot = ReactDOM.createRoot(container)
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
