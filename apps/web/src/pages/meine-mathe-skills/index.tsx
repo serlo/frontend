@@ -4,7 +4,10 @@ import { useState } from 'react'
 
 import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { middleSchoolFinalExam } from '@/components/math-skills/exercises/middle-school-final-exam'
+import {
+  MiddleSchoolTask,
+  middleSchoolFinalExam,
+} from '@/components/math-skills/exercises/middle-school-final-exam'
 import { WelcomeSection } from '@/components/math-skills/landing/welcome-section'
 import { MathSkillsWrapper } from '@/components/math-skills/math-skills-wrapper/math-skills-wrapper'
 import { animalsData } from '@/components/math-skills/utils/animal-data'
@@ -13,9 +16,15 @@ import {
   useExerciseData,
   useMathSkillsStorage,
 } from '@/components/math-skills/utils/math-skills-data-context'
+import { arrayOfLength } from '@/helper/array-of-length'
 import { cn } from '@/helper/cn'
 
 const sessionKey = 'math-skills-zweig'
+
+const examTasks = Object.entries(middleSchoolFinalExam) as [
+  string,
+  MiddleSchoolTask,
+][]
 
 const ContentPage: NextPage = () => {
   return (
@@ -41,7 +50,6 @@ function Content() {
   const { getExerciseData } = useExerciseData()
   const { data } = useMathSkillsStorage()
 
-  const examTasks = Object.entries(middleSchoolFinalExam)
   return (
     <>
       <div className="mx-4 sm:mt-10 [@media(min-width:900px)]:mx-auto [@media(min-width:900px)]:max-w-[53rem]">
@@ -90,11 +98,9 @@ function Content() {
                     .filter(
                       ([, obj]) =>
                         obj.calculatorAllowed === false &&
-                        (obj.track === 1 || (obj.track as number) === 3)
+                        (obj.track === 1 || obj.track === 3)
                     )
-                    .map(([id, obj]) =>
-                      renderCard(id, obj.title, obj.subtitle)
-                    )}
+                    .map(([id, obj]) => renderCard(id, obj))}
                 </div>
                 <h4 className="text-lg font-bold">
                   Teil B (mit Taschenrechner)
@@ -102,14 +108,11 @@ function Content() {
                 <div className="my-6 flex flex-wrap gap-3">
                   {examTasks
                     .filter(
-                      ([, obj]) =>
-                        obj.calculatorAllowed === true &&
-                        ((obj.track as number) === 1 ||
-                          (obj.track as number) === 3)
+                      ([, task]) =>
+                        task.calculatorAllowed === true &&
+                        (task.track === 1 || task.track === 3)
                     )
-                    .map(([id, obj]) =>
-                      renderCard(id, obj.title, obj.subtitle)
-                    )}
+                    .map((entry) => renderCard(...entry))}
                 </div>
               </div>
             ) : null}
@@ -121,13 +124,11 @@ function Content() {
                 <div className="my-6 flex flex-wrap gap-3">
                   {examTasks
                     .filter(
-                      ([, obj]) =>
-                        obj.calculatorAllowed === false &&
-                        (obj.track === 2 || (obj.track as number) === 3)
+                      ([, task]) =>
+                        task.calculatorAllowed === false &&
+                        (task.track === 2 || task.track === 3)
                     )
-                    .map(([id, obj]) =>
-                      renderCard(id, obj.title, obj.subtitle)
-                    )}
+                    .map((entry) => renderCard(...entry))}
                 </div>
                 <h4 className="text-lg font-bold">
                   Teil B (mit Taschenrechner)
@@ -137,12 +138,9 @@ function Content() {
                     .filter(
                       ([, obj]) =>
                         obj.calculatorAllowed === true &&
-                        ((obj.track as number) === 2 ||
-                          (obj.track as number) === 3)
+                        (obj.track === 2 || (obj.track as number) === 3)
                     )
-                    .map(([id, obj]) =>
-                      renderCard(id, obj.title, obj.subtitle)
-                    )}
+                    .map(([id, obj]) => renderCard(id, obj))}
                 </div>
               </div>
             ) : null}
@@ -153,10 +151,12 @@ function Content() {
     </>
   )
 
-  function renderCard(id: string, title: string, subtitle: string) {
+  function renderCard(id: string, task: MiddleSchoolTask) {
     const slug = `training-realschule-bayern/${id}`
     const { skillCent } = getExerciseData(slug)
     const points = Array.from({ length: getPointsAmount(skillCent) })
+
+    const { title, subtitle, difficulty } = task
 
     return (
       <Link
@@ -170,13 +170,31 @@ function Content() {
         <p className="mb-2">
           <b>{title}</b>
         </p>
-        <p className="text-base">({subtitle})</p>
+        <p className="text-base">
+          ({subtitle}){renderDifficulty(difficulty)}
+        </p>
         <p className="mt-2 text-base">
           {data?.animal
             ? points.map(() => animalsData[data.animal].emoji)
             : null}
         </p>
       </Link>
+    )
+  }
+
+  function renderDifficulty(difficulty: MiddleSchoolTask['difficulty']) {
+    if (!difficulty) return null // 0 or undefined
+
+    const title = [
+      '',
+      'Bisschen schwerere Aufgabe',
+      'Schwere Aufgabe',
+      'Profi Level',
+    ][difficulty]
+    return (
+      <span className="block" title={title}>
+        {arrayOfLength(difficulty).map(() => '🌶')}
+      </span>
     )
   }
 }

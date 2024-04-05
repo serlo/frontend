@@ -37,6 +37,19 @@ import { WheelOfFortune } from '../exercise-implementations/wheel-of-fortune'
 
 //track:  1 = Mathe-Zweig 1, 2 = Mathe-Zweig 2 & 3, 3 = beide Zweige
 
+export type TaskKey = keyof typeof middleSchoolFinalExam
+
+export interface MiddleSchoolTask {
+  title: string
+  subtitle: string
+  calculatorAllowed: boolean
+  difficulty?: 0 | 1 | 2 | 3
+  track: 1 | 2 | 3
+  component: JSX.Element
+}
+
+export type MiddleSchoolTasks = Record<TaskKey, MiddleSchoolTask>
+
 export const middleSchoolFinalExam = {
   // Mathe-Zweig Teil A
   'potenzfunktionen-graphen-beschreiben': {
@@ -146,8 +159,9 @@ export const middleSchoolFinalExam = {
     component: <ABCFormular />,
   },
   'quadratische-ergaenzung': {
-    title: 'Quadratische Ergänzung (Profi)',
+    title: 'Quadratische Ergänzung',
     subtitle: 'Quadratische Funktionen',
+    difficulty: 2,
     calculatorAllowed: false,
     track: 2,
     component: <CompletingTheSquare />,
