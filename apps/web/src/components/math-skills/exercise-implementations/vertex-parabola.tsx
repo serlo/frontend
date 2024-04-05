@@ -1,13 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import JXG from 'jsxgraph'
-import { useEffect, useState } from 'react'
-
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import {
-  MainTask,
-  HighlightGreen,
-  HighlightGray,
-} from '../components/content-components'
+import { MainTask, HighlightGreen } from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -39,6 +31,7 @@ export function VertexParabola() {
       renderSolution={({ b, isPlus, isPlus_2, c }) => {
         const plusminusTerm = (b / 2) * (b / 2)
         const cAlsZahl = c * (isPlus_2 ? 1 : -1)
+        const bAlsZahl = b * (isPlus ? 1 : -1)
         const d = cAlsZahl - plusminusTerm
 
         const dAlsJsx = (
@@ -49,61 +42,41 @@ export function VertexParabola() {
 
         return (
           <>
-            <p>TODO: Nutze direkte Lösungsformel</p>
-            Damit lautet die Scheitelform: <br />
+            <p>Für den Scheitelpunkt gilt diese Formel:</p>
+            <p className="serlo-highlight-gray">
+              S <span className="inline-block scale-y-[2.5]">(</span>{' '}
+              {buildFrac(<>-b</>, <>2a</>)}{' '}
+              <span className="inline-block scale-y-[2.5]">|</span> c -{' '}
+              {buildFrac(<>b²</>, <>4a</>)}{' '}
+              <span className="inline-block scale-y-[2.5]">)</span>
+            </p>
+            <p>
+              Setze a = 1, b = {b} und c = {c} ein:
+            </p>{' '}
+            <p className="serlo-highlight-gray">
+              S <span className="inline-block scale-y-[2.5]">(</span>{' '}
+              {buildFrac(
+                <>-{bAlsZahl > 0 ? bAlsZahl : <>({bAlsZahl})</>}</>,
+                <>2</>
+              )}{' '}
+              <span className="inline-block scale-y-[2.5]">|</span> {cAlsZahl} -{' '}
+              {buildFrac(
+                <>{bAlsZahl > 0 ? bAlsZahl : <>({bAlsZahl})</>}²</>,
+                <>4</>
+              )}{' '}
+              <span className="inline-block scale-y-[2.5]">)</span> = S ({' '}
+              {(-bAlsZahl / 2).toString().replace('.', ',')} | {dAlsJsx})
+            </p>
+            <p>
+              Damit lautet die Scheitelform y = a · (x - x<sub>s</sub>)² + y
+              <sub>s</sub>:
+            </p>
             <HighlightGreen>
               y = <span className="inline-block scale-y-[1.5]">(</span>x{' '}
               {isPlus ? '+' : '-'} {(b / 2).toString().replace('.', ',')}
               <span className="inline-block scale-y-[1.5]">)</span>
-              <sup>2</sup> <strong>{dAlsJsx}</strong>
+              <sup>2</sup> {dAlsJsx}
             </HighlightGreen>
-          </>
-        )
-      }}
-      // eslint-disable-next-line no-empty-pattern
-      renderHint={({ b, isPlus, isPlus_2, c }) => {
-        if (isPlus_2 && c === (b / 2) * (b / 2))
-          return (
-            <>
-              Schreibe den Funktionsterm in die Scheitelform:
-              <HighlightGray>
-                y = (x - ☐)<sup>2</sup> + ☐
-              </HighlightGray>
-              <br />
-              <br />
-              Bestimme dazu zuerst, welcher Wert im Binom stehen muss, um den
-              richtigen Mischterm zu ergeben:
-              <br />
-              <HighlightGray>
-                y = x<sup>2</sup> {isPlus ? '+' : '-'} <strong>{b}</strong>x{' '}
-                {isPlus_2 ? '+' : '-'}
-                {c}
-              </HighlightGray>
-              <br />
-              <br />
-              Begründe, warum im zweiten Kästchen eine 0 stehen muss.
-            </>
-          )
-        return (
-          <>
-            Schreibe den Funktionsterm in die Scheitelform:
-            <HighlightGray>
-              y = (x - ☐)<sup>2</sup> + ☐
-            </HighlightGray>
-            <br />
-            <br />
-            Bestimme dazu zuerst, welcher Wert im Binom stehen muss, um den
-            richtigen Mischterm zu ergeben:
-            <br />
-            <HighlightGray>
-              y = x<sup>2</sup> {isPlus ? '+' : '-'} <strong>{b}</strong>x{' '}
-              {isPlus_2 ? '+' : '-'}
-              {c}
-            </HighlightGray>
-            <br />
-            <br />
-            Mache eine Probe und rechne das Binom aus, um zu bestimmen, was der
-            Wert des zweiten Kästchens sein muss.
           </>
         )
       }}
