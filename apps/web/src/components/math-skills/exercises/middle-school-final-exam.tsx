@@ -23,7 +23,7 @@ import { Parallelogram2 } from '../exercise-implementations/parallelogram-2'
 import { Parallelogram3 } from '../exercise-implementations/parallelogram-3'
 import { PlotFunction } from '../exercise-implementations/plot-function-1'
 import { PlotFunction2 } from '../exercise-implementations/plot-function-2'
-import { RootEquations } from '../exercise-implementations/root-equations'
+// import { RootEquations } from '../exercise-implementations/root-equations'
 import { RotatePoint } from '../exercise-implementations/rotate-point'
 // import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
 // import { SurfaceThreePyramide } from '../exercise-implementations/surface-pyramide-2'
@@ -223,27 +223,29 @@ export const middleSchoolFinalExam = {
     component: <RotatePoint />,
   },
   // Mathe-Zweig, Teil B
-  'exponential-function-1': {
+  'kapital-berechnen': {
     title: 'Kapital berechnen',
     subtitle: 'Exponentialfunktion',
+    difficulty: 1,
     calculatorAllowed: true,
-    track: 1,
+    track: 3,
     component: <ExponentialFunction />,
   },
-  'exponential-function-2': {
+  'anlagezeit-berechnen': {
     title: 'Anlagezeit berechnen',
     subtitle: 'Exponentialfunktion',
+    difficulty: 2,
     calculatorAllowed: true,
-    track: 1,
+    track: 3,
     component: <ExponentialFunctionTime />,
   },
-  'root-equations-1': {
+  /*'root-equations-1': {
     title: 'Zinssatz berechnen',
     subtitle: 'Wurzeln',
     calculatorAllowed: true,
     track: 1,
     component: <RootEquations />,
-  },
+  },*/
   'plot-function-1': {
     title: 'Graphen skizzieren',
     subtitle: 'Ganzrationale Funktionen',

@@ -1,19 +1,9 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {
-  HighlightGray,
-  HighlightGreen,
-  MainTask,
-} from '../components/content-components'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { HighlightGray } from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { randomIntBetween } from '@/helper/random-int-between'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { randomItemFromArray } from '@/helper/random-item-from-array'
-
-// JXG.Options.label.autoPosition = true
 
 export function ExponentialFunction() {
   const { data } = useMathSkillsStorage()
@@ -23,28 +13,37 @@ export function ExponentialFunction() {
         return {
           Zins: randomIntBetween(1, 5),
           Money_Start: randomIntBetween(20, 60) * 100,
-          Ende_Anlage: randomIntBetween(0, 3),
+          Ende_Anlage: randomItemFromArray([0, 1, 2, 5]),
           Aktuelles_Jahr: new Date().getFullYear(),
           Jahr_Anlage: randomIntBetween(2010, 2024),
         }
       }}
-      renderTask={({ Jahr_Anlage, Money_Start, Ende_Anlage, Zins }) => {
+      renderTask={({
+        Jahr_Anlage,
+        Money_Start,
+        Ende_Anlage,
+        Zins,
+        Aktuelles_Jahr,
+      }) => {
         return (
-          <div className="text-lg">
-            <MainTask>Rechnen mit der Exponentialfunktion</MainTask>
-            <br />
-            <br />
-            {data.name ? `${data.name} hat` : 'Du hast'} {Money_Start} € im Jahr{' '}
-            {Jahr_Anlage} angelegt. Jedes Jahr wird das Kapital mit {Zins} %
-            verzinst. Berechne, welchen Betrag {data.name || 'Du'}{' '}
-            {Ende_Anlage === 0 ? 'heute' : null}
-            {Ende_Anlage === 1 ? 'nächstes Jahr' : null}
-            {Ende_Anlage === 2 ? 'übernächstes Jahr' : null}
-            {Ende_Anlage === 3 ? 'in 5 Jahren' : null} besitzt.
-          </div>
+          <>
+            <p className="serlo-main-task">
+              {data.name ? `${data.name} hat` : 'Du hast'} {Money_Start} € im
+              Jahr {Jahr_Anlage} angelegt. Jedes Jahr wird das Kapital mit{' '}
+              {Zins} % verzinst. Berechnen Sie, welchen Betrag{' '}
+              {data.name || 'Du'} {Ende_Anlage === 0 ? 'heute' : null}
+              {Ende_Anlage === 1 ? 'nächstes Jahr' : null}
+              {Ende_Anlage === 2 ? 'übernächstes Jahr' : null}
+              {Ende_Anlage === 5 ? 'in 5 Jahren' : null} besitzt. Runden Sie auf
+              ganze Euro.
+            </p>
+            <p>
+              Das aktuelle Jahr ist {Aktuelles_Jahr}. Zwischen den Zeitpunkten
+              liegen immer ganze Jahre.
+            </p>
+          </>
         )
       }}
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       renderSolution={({
         Jahr_Anlage,
         Money_Start,
@@ -57,40 +56,44 @@ export function ExponentialFunction() {
         const Geld =
           Math.round(Money_Start * Math.pow(Faktor, Jahre) * 100) / 100
 
-        return (
+        const end = (
           <>
-            Bei {Zins} % Zinsen wächst das Kapital jährlich mit dem Faktor{' '}
-            {Faktor.toString().replace('.', ',')}. <br />
-            <br />
-            Damit wird das Kapital durch die Exponentialfunktion
-            <br />
-            <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              y = {Money_Start} · {Faktor.toString().replace('.', ',')}
-              <sup>x</sup>
-            </span>
-            <br />
-            beschrieben. x steht dabei für die Anzahl der Jahre ab {Jahr_Anlage}
-            .
-            <br />
-            <br />
-            Von {Jahr_Anlage} bis {Ende_Anlage === 0 ? 'heute' : null}
+            {Ende_Anlage === 0 ? 'heute' : null}
             {Ende_Anlage === 1 ? 'nächstes Jahr' : null}
             {Ende_Anlage === 2 ? 'übernächstes Jahr' : null}
-            {Ende_Anlage === 3 ? 'in 5 Jahren' : null} sind es insgesamt {Jahre}{' '}
-            Jahre, womit wir {Jahre} für x in die Funktion einsetzen:
-            <br />
-            <HighlightGreen>
-              y = {Money_Start} · {Faktor.toString().replace('.', ',')}
-              <sup>{Jahre}</sup> = {Geld.toString().replace('.', ',')}
-            </HighlightGreen>
-            <br />
-            <br />
-            Das Kapital beträgt nach {Jahre} Jahren{' '}
-            {Geld.toString().replace('.', ',')} €.
+            {Ende_Anlage === 5 ? 'in 5 Jahren' : null}
+          </>
+        )
+        return (
+          <>
+            <p>Berechne den Wachstumsfaktor:</p>
+            <p className="serlo-highlight-gray">
+              a = 1 + {buildFrac(Zins, 100)} = {Faktor.toLocaleString('de-De')}
+            </p>
+            <p>
+              Stelle die passende Exponentialgleichung auf. x gibt die Anzahl
+              der Jahre ab Start der Anlage an, y gibt das Kapital an:
+            </p>
+            <p className="serlo-highlight-gray">
+              y = {Money_Start} · {Faktor.toLocaleString('de-De')}
+              <sup>x</sup>
+            </p>
+            <p>
+              Von {Jahr_Anlage} bis {end} sind es insgesamt {Jahre} Jahre. Setze
+              ein und berechne das Ergebnis:
+            </p>
+            <p className="serlo-highlight-gray">
+              y = {Money_Start} · {Faktor.toLocaleString('de-De')}
+              <sup>{Jahre}</sup> ≈{' '}
+              {Geld.toLocaleString('de-De').replace('.', ' ')}
+            </p>
+            <p>Runde und antworte auf die Ausgangsfrage:</p>
+            <p className="serlo-highlight-green">
+              {data.name} besitzt {end} {Math.round(Geld)} €.
+            </p>
           </>
         )
       }}
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       renderHint={({ Money_Start, Zins }) => {
         const Faktor = 1 + Zins / 100
         return (
