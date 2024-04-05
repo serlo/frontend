@@ -2985,7 +2985,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.15":
+"@jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.14":
   version: 1.4.15
   resolution: "@jridgewell/sourcemap-codec@npm:1.4.15"
   checksum: b881c7e503db3fc7f3c1f35a1dd2655a188cc51a3612d76efc8a6eb74728bef5606e6758ee77423e564092b4a518aba569bbb21c9bac5ab7a35b0c6ae7e344c8
@@ -3020,7 +3020,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/api-extractor@npm:7.43.0, @microsoft/api-extractor@npm:^7.38.0":
+"@microsoft/api-extractor@npm:^7.38.0":
   version: 7.43.0
   resolution: "@microsoft/api-extractor@npm:7.43.0"
   dependencies:
@@ -4575,7 +4575,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/pluginutils@npm:^5.0.5, @rollup/pluginutils@npm:^5.1.0":
+"@rollup/pluginutils@npm:^5.0.5":
   version: 5.1.0
   resolution: "@rollup/pluginutils@npm:5.1.0"
   dependencies:
@@ -4813,7 +4813,7 @@ __metadata:
     uuid: ^9.0.1
     vite: ^5.2.8
     vite-plugin-css-injected-by-js: ^3.5.0
-    vite-plugin-dts: ^3.6.4
+    vite-plugin-dts: 3.6.4
     vite-plugin-svgr: ^4.2.0
   languageName: unknown
   linkType: soft
@@ -6190,7 +6190,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/language-core@npm:1.8.27, @vue/language-core@npm:^1.8.20, @vue/language-core@npm:^1.8.27":
+"@vue/language-core@npm:1.8.27, @vue/language-core@npm:^1.8.20":
   version: 1.8.27
   resolution: "@vue/language-core@npm:1.8.27"
   dependencies:
@@ -13090,15 +13090,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"magic-string@npm:^0.30.8":
-  version: 0.30.9
-  resolution: "magic-string@npm:0.30.9"
-  dependencies:
-    "@jridgewell/sourcemap-codec": ^1.4.15
-  checksum: a97b9a706b39e9569781dcb662b15ab085ca3af8b916cd69d8485e8565108917c17e4eb03b6b1013389387d827bb3025711ebeafe237f742bc95a90708416147
-  languageName: node
-  linkType: hard
-
 "make-dir@npm:^4.0.0":
   version: 4.0.0
   resolution: "make-dir@npm:4.0.0"
@@ -18453,27 +18444,6 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"vite-plugin-dts@npm:^3.6.4":
-  version: 3.8.1
-  resolution: "vite-plugin-dts@npm:3.8.1"
-  dependencies:
-    "@microsoft/api-extractor": 7.43.0
-    "@rollup/pluginutils": ^5.1.0
-    "@vue/language-core": ^1.8.27
-    debug: ^4.3.4
-    kolorist: ^1.8.0
-    magic-string: ^0.30.8
-    vue-tsc: ^1.8.27
-  peerDependencies:
-    typescript: "*"
-    vite: "*"
-  peerDependenciesMeta:
-    vite:
-      optional: true
-  checksum: efcec594a3acb9297393d38bc9f718990cad91ebd82c055e978380497c962cfe82deab75cd381034d9310748d1b5f24ef6ade2d291bc53a6d7708391acc0daae
-  languageName: node
-  linkType: hard
-
 "vite-plugin-svgr@npm:^4.2.0":
   version: 4.2.0
   resolution: "vite-plugin-svgr@npm:4.2.0"
@@ -18544,7 +18514,7 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"vue-tsc@npm:^1.8.20, vue-tsc@npm:^1.8.27":
+"vue-tsc@npm:^1.8.20":
   version: 1.8.27
   resolution: "vue-tsc@npm:1.8.27"
   dependencies:
