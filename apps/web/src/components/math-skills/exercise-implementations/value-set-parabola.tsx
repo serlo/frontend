@@ -38,78 +38,36 @@ export function ValueSetParabola() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>Bestimme die Wertemenge der Parabel:</MainTask>
-            <HighlightGreen>
+            <MainTask>Bestimmen Sie die Wertemenge der Parabel:</MainTask>
+            <HighlightGray>
               y = {data.a ? null : '-'} x<sup>2</sup> + bx + c
-            </HighlightGreen>
-            <br />
-            <br />
-            Der Scheitelpunkt der Parabel ist gegeben durch:{' '}
-            <HighlightGreen>
-              S({data.b}|{data.c})
-            </HighlightGreen>
+            </HighlightGray>
+            <p className="serlo-main-task">
+              Der Scheitelpunkt ist gegeben durch S ( {data.b} | {data.c} ).
+            </p>
           </>
         )
       }}
       renderSolution={({ data }) => {
-        if (data.b < 0 || data.c < 0 || data.b === 0 || data.c === 0)
-          return (
-            <>
-              Gesucht ist die Wertemenge der Parabel: <br />
-              <HighlightGray>
-                y = {data.a ? null : '-'} x<sup>2</sup> + bx + c
-              </HighlightGray>
-              <br />
-              <br />
-              Da die Parabel nach {data.a === true ? 'oben' : 'unten'} geöfnet
-              ist, ist der Wertebereich die Menge der reellen Zahlen{' '}
-              <strong>{data.a === true ? 'oberhalb' : 'unterhalb'}</strong> des
-              Scheitels:
-              <br />
-              <HighlightGreen>
-                W = {'{'} y | y {data.a === true ? '≥' : '≤'}{' '}
-                {data.c > 0 && data.c !== 0 ? data.c : '- ' + -data.c} {'}'}
-              </HighlightGreen>
-              <br />
-              <br />
-              Graph für -10 &#8804; x &#8804; 10 und -10 &#8804; y &#8804; 10
-              als Hilfe:
-              <br />
-              <SubComponent data={data} />
-            </>
-          )
-        if (data.b > 0 && data.c > 0)
-          return (
-            <>
-              Wertemenge der Parabel: <br />
-              <HighlightGray>
-                y = {data.a ? null : '-'} x<sup>2</sup> + bx + c
-              </HighlightGray>
-              <br />
-              <br />
-              Wir schreiben die Parabel in der Scheitelpunktform:
-              <br />
-              <HighlightGray>
-                y = {data.a ? null : '-'} (x - {data.b < 0 ? '(' : null}
-                {data.b}
-                {data.b < 0 ? ')' : null})<sup>2</sup> +{' '}
-                {data.c < 0 ? '(' : null}
-                {data.c}
-                {data.c < 0 ? ')' : null}
-              </HighlightGray>
-              <br />
-              <br />
-              Da die Parabel nach {data.a === true ? 'oben' : 'unten'} geöfnet
-              ist, ist der Wertebereich die Menge der reellen Zahlen{' '}
-              {data.a === true ? 'oberhalb' : 'unterhalb'} des Scheitels:
-              <br />
-              <HighlightGreen>
-                W = {'{'} y | y {data.a === true ? '≥' : '≤'}{' '}
-                {data.c > 0 && data.c !== 0 ? data.c : '- ' + -data.c} {'}'}
-              </HighlightGreen>
-            </>
-          )
-        return <></>
+        return (
+          <>
+            Da die Parabel nach {data.a === true ? 'oben' : 'unten'} geöfnet
+            ist, ist der Wertebereich die Menge der reellen Zahlen{' '}
+            <strong>{data.a === true ? 'oberhalb' : 'unterhalb'}</strong> des
+            Scheitels:
+            <br />
+            <HighlightGreen>
+              W = {'{'} y | y {data.a === true ? '≥' : '≤'}{' '}
+              {data.c > 0 || data.c === 0 ? data.c : '- ' + -data.c} {'}'}
+            </HighlightGreen>
+            <br />
+            <br />
+            Graph für -10 &#8804; x &#8804; 10 und -10 &#8804; y &#8804; 10 als
+            Hilfe:
+            <br />
+            <SubComponent data={data} />
+          </>
+        )
       }}
       // eslint-disable-next-line no-empty-pattern
       renderHint={({ data }) => {

@@ -133,7 +133,7 @@ export const middleSchoolFinalExam = {
   },
   'scheitelform-parabel': {
     title: 'Scheitelform einer Parabel',
-    subtitle: 'Quadratische Funktionen, TODO',
+    subtitle: 'Quadratische Funktionen',
     calculatorAllowed: false,
     track: 2,
     component: <VertexParabola />,
@@ -152,8 +152,8 @@ export const middleSchoolFinalExam = {
     track: 2,
     component: <CompletingTheSquare />,
   },
-  'value-set-parabolas': {
-    title: 'Wertemenge von Parabeln',
+  'wertemenge-parabel': {
+    title: 'Wertemenge der Parabel',
     subtitle: 'Quadratische Funktionen',
     calculatorAllowed: false,
     track: 2,

@@ -68,8 +68,11 @@ export function VertexParabola() {
               {(-bAlsZahl / 2).toString().replace('.', ',')} | {dAlsJsx})
             </p>
             <p>
-              Damit lautet die Scheitelform y = a · (x - x<sub>s</sub>)² + y
-              <sub>s</sub>:
+              Damit lautet die Scheitelform{' '}
+              <span className="text-xl">
+                y = a · (x - x<sub>s</sub>)² + y<sub>s</sub>
+              </span>{' '}
+              für diese Parabel:
             </p>
             <HighlightGreen>
               y = <span className="inline-block scale-y-[1.5]">(</span>x{' '}
