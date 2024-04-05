@@ -211,7 +211,7 @@ export function BlanksExerciseRenderer(props: BlanksExerciseRendererProps) {
           ) : null}
 
           {/* Only debug output from here on */}
-          <div className="hidden">
+          <div className="">
             Blanks state:
             {blanks.map((blank, index) => (
               <div key={index}>{JSON.stringify(blank)}</div>
