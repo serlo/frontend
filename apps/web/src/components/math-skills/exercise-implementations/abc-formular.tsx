@@ -31,7 +31,7 @@ export function ABCFormular() {
 
         return (
           <>
-            <MainTask>Bestimme die Lösungsmenge der Gleichung:</MainTask>
+            <MainTask>Bestimmen Sie die Lösungsmenge der Gleichung:</MainTask>
             <HighlightGreen>
               0 = {a > 1 ? a : ''}x<sup>2</sup> {b > 0 ? '+' : ''} {b}x{' '}
               {c > 0 ? '+' : ''} {c}
@@ -44,15 +44,7 @@ export function ABCFormular() {
         const c = n_1 * n_2 * a
         return (
           <>
-            Löse die Gleichung:
-            <br />
-            <HighlightGray>
-              0 = {a > 1 ? a : ''}x<sup>2</sup> {b > 0 ? '+' : ''} {b}x{' '}
-              {c > 0 ? '+' : ''} {c}
-            </HighlightGray>
-            <br />
-            <br />
-            Wir verwenden die abc-Formel um die Gleichung zu lösen:
+            Verwende die allgemeine Lösungsformel, um die Gleichung zu lösen:
             <HighlightGray>
               x<sub>1,2</sub> ={' '}
               {buildFrac(
@@ -64,7 +56,7 @@ export function ABCFormular() {
             </HighlightGray>
             <br />
             <br />
-            Wir setzen{' '}
+            Setze{' '}
             <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
               a = {a}
             </span>
@@ -183,7 +175,7 @@ export function ABCFormular() {
       renderHint={({}) => {
         return (
           <>
-            Löse die Gleichung mit der abc-Formel:
+            Löse die Gleichung mit der allgemeinen Lösungsformel:
             <br />
             <HighlightGray>
               x<sub>1,2</sub> ={' '}
@@ -195,7 +187,7 @@ export function ABCFormular() {
               )}
             </HighlightGray>
             <br />
-            Bestimme dazu <strong>a</strong>,<strong>b</strong> und{' '}
+            Bestimme dazu <strong>a</strong>, <strong>b</strong> und{' '}
             <strong>c</strong> aus der Gleichung und setze ein.
           </>
         )

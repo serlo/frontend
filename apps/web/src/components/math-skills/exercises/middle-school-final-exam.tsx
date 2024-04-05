@@ -139,7 +139,7 @@ export const middleSchoolFinalExam = {
   },
 
   'abcformel-1': {
-    title: 'ABC-Formel',
+    title: 'Lösungsformel',
     subtitle: 'Quadratische Gleichungen',
     calculatorAllowed: false,
     track: 2,
