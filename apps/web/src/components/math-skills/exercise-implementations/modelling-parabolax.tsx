@@ -23,14 +23,21 @@ interface PlotData {
 }
 
 export function ModellingParabola() {
-  const { data } = useMathSkillsStorage()
+  const {
+    data: { name },
+  } = useMathSkillsStorage()
 
   return (
     <SelfEvaluationExercise
       generator={() => {
-        const b = randomIntBetween(7, 12)
-
         const context = randomIntBetween(1, 4)
+        const b =
+          context === 1
+            ? randomIntBetween(1, 3) * 2
+            : context === 2
+              ? randomIntBetween(4, 10) * 2
+              : randomIntBetween(2, 11) * 2
+
         const data: PlotData = {
           context,
           b,
@@ -42,43 +49,58 @@ export function ModellingParabola() {
           <>
             <MainTask>
               {data.context === 1
-                ? 'Sophie macht einen Weitsprung. Der Sprung kann mit dem Graphen der Funktion '
+                ? name +
+                  ' macht einen Weitsprung. Der Sprung kann mit dem Graphen der Funktion '
                 : null}
               {data.context === 2
-                ? 'Sophie sieht beim Autofahren den Eingang eines Tunnels. Der Eingang kann mit dem Graphen der Funktion '
+                ? name +
+                  ' sieht beim Autofahren den Eingang eines Tunnels. Der Eingang kann mit dem Graphen der Funktion '
                 : null}
               {data.context === 3
-                ? 'Sophie wirft einen Stein in einen See. Der Wurf kann mit dem Graphen der Funktion '
+                ? name +
+                  ' wirft einen Stein in einen See. Der Wurf kann mit dem Graphen der Funktion '
                 : null}
               {data.context === 4
-                ? 'Sophie beobachtet einen Einsatz der Feuerwehr. Der Wasserstrahl, der ein brennendes Auto löscht kann mit dem Graphen der Funktion '
+                ? name +
+                  ' beobachtet einen Einsatz der Feuerwehr. Der Wasserstrahl, der ein brennendes Auto löscht kann mit dem Graphen der Funktion '
                 : null}
+              <span className="serlo-highlight-green">
+                y = - x<sup>2</sup> +{' '}
+                {data.context === 1
+                  ? (data.b / 2).toString().replace('.', ',')
+                  : data.b.toString().replace('.', ',')}
+                x
+              </span>{' '}
+              beschrieben werden.
             </MainTask>
-            <HighlightGreen>
-              y = - x<sup>2</sup> +{' '}
+            <p className="serlo-main-task">
               {data.context === 1
-                ? (data.b / 2).toString().replace('.', ',')
-                : data.b.toString().replace('.', ',')}
-              x
-            </HighlightGreen>
-            <br />
-            <br />
-            <MainTask>beschrieben werden.</MainTask>
-            <br />
-            <br />
-            <MainTask>
-              {data.context === 1
-                ? 'Berechne die Sprungweite und wo Sophie am höchsten in der Luft war.'
+                ? `x gibt die Weite in Meter, y die Höhe in Meter an. ${name} springt vom x-Wert 0 nach rechts ab.`
                 : null}
 
               {data.context === 2
-                ? 'Berechne die maximale Breite und Höhe des Eingangs.'
+                ? 'x gibt die Breite in Meter, y die Höhe in Meter an. Die x-Achse bildet den Boden.'
                 : null}
               {data.context === 3
-                ? 'Berechne die maximale Weite des Wurfs und wie hoch der Stein am höchsten Punkt war.'
+                ? 'x gibt die Weite in Meter, y die Höhe in Meter an. Der Stein wird vom x-Wert 0 nach rechts abgeworfen. Es darf angenommen werden, dass der Stein beim Abwurf auf der Höhe 0 war.'
                 : null}
               {data.context === 4
-                ? 'Berechne wie weit der Strahl maximal kommt und wie hoch er am höchsten Punkt war.'
+                ? 'x gibt die Weite in Meter, y die Höhe in Meter an. Der Strahl beginnt und endet beim y-Wert 0.'
+                : null}
+            </p>
+            <MainTask>
+              {data.context === 1
+                ? `Berechnen Sie die Sprungweite und wie hoch ${name} am höchsten in der Luft war.`
+                : null}
+
+              {data.context === 2
+                ? 'Berechnen Sie die maximale Breite und Höhe des Eingangs.'
+                : null}
+              {data.context === 3
+                ? 'Berechnen Sie die maximale Weite des Wurfs und wie hoch der Stein am höchsten Punkt war.'
+                : null}
+              {data.context === 4
+                ? 'Berechnen Sie wie weit der Strahl maximal kommt und wie hoch er am höchsten Punkt war.'
                 : null}
             </MainTask>{' '}
           </>
@@ -87,27 +109,10 @@ export function ModellingParabola() {
       renderSolution={({ data }) => {
         return (
           <>
-            Für die {data.context === 2 ? 'maximale Breite' : 'maximale Weite'}{' '}
-            müssen die Nullstellen der Parabel berechnet werden:
+            Finde die Nullstellen der Parabel. Klammere dazu - x aus:
             <br />
             <HighlightGray>
-              0 = - x<sup>2</sup> +{' '}
-              {data.context === 1
-                ? (data.b / 2).toString().replace('.', ',')
-                : data.b.toString().replace('.', ',')}
-              x
-            </HighlightGray>
-            <br />
-            <br />
-            Wir lösen die Gleichung mit dem Satz des Nullprodukts. Dazu klammern
-            wir - x aus:
-            <br />
-            <HighlightGray>
-              0 = - x · (x -{' '}
-              {data.context === 1
-                ? (data.b / 2).toString().replace('.', ',')
-                : data.b.toString().replace('.', ',')}
-              )
+              0 = - x · (x - {data.b.toString().replace('.', ',')})
             </HighlightGray>
             <br />
             Am ersten Faktor erkennen wir die erste Lösung:{' '}
@@ -117,10 +122,7 @@ export function ModellingParabola() {
             <br />
             Der zweite Faktor - die Klammer - ist dann 0, wenn:{' '}
             <HighlightGray>
-              x<sub>2</sub> ={' '}
-              {data.context === 1
-                ? (data.b / 2).toString().replace('.', ',')
-                : data.b.toString().replace('.', ',')}
+              x<sub>2</sub> = {data.b.toString().replace('.', ',')}
             </HighlightGray>
             <br />
             <br />
@@ -128,9 +130,7 @@ export function ModellingParabola() {
             damit: <br />
             <HighlightGreen>
               x<sub>2</sub> - x<sub>1</sub> ={' '}
-              {data.context === 1
-                ? (data.b / 2).toString().replace('.', ',')
-                : data.b.toString().replace('.', ',')}
+              {data.b.toString().replace('.', ',')} m
             </HighlightGreen>
             <br />
             <br />
@@ -146,36 +146,20 @@ export function ModellingParabola() {
                 </>,
                 <>2</>
               )}{' '}
-              ={' '}
-              {data.context === 1
-                ? (data.b / 4).toString().replace('.', ',')
-                : (data.b / 2).toString().replace('.', ',')}
+              = {(data.b / 2).toString().replace('.', ',')}
             </HighlightGray>
             <br />
             <br />
             Die Höhe ist damit:
             <br />
             <HighlightGreen>
-              y<sub>s</sub> = -{' '}
-              {data.context === 1
-                ? (data.b / 4).toString().replace('.', ',')
-                : (data.b / 2).toString().replace('.', ',')}
-              <sup>2</sup> +{' '}
-              {data.context === 1
-                ? (data.b / 2).toString().replace('.', ',')
-                : data.b.toString().replace('.', ',')}{' '}
-              ·{' '}
-              {data.context === 1
-                ? (data.b / 4).toString().replace('.', ',')
-                : (data.b / 2).toString().replace('.', ',')}{' '}
-              ={' '}
-              {data.context === 1
-                ? (-(data.b / 4) * (data.b / 4) + (data.b / 2) * (data.b / 4))
-                    .toString()
-                    .replace('.', ',')
-                : (-(data.b / 2) * (data.b / 2) + (data.b / 2) * data.b)
-                    .toString()
-                    .replace('.', ',')}
+              y<sub>s</sub> = - {(data.b / 2).toString().replace('.', ',')}
+              <sup>2</sup> + {data.b.toString().replace('.', ',')} ·{' '}
+              {(data.b / 2).toString().replace('.', ',')} ={' '}
+              {(-(data.b / 2) * (data.b / 2) + (data.b / 2) * data.b)
+                .toString()
+                .replace('.', ',')}{' '}
+              m
             </HighlightGreen>
             <br />
             <br />

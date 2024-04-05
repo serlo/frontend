@@ -159,7 +159,7 @@ export const middleSchoolFinalExam = {
     track: 2,
     component: <ValueSetParabola />,
   },
-  'modelling-parabolas': {
+  'modellierung-mit-parabeln': {
     title: 'Modellieren mit Parabeln',
     subtitle: 'Quadratische Funktionen',
     calculatorAllowed: false,
