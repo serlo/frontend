@@ -2,6 +2,7 @@ import { Editor, type EditorProps } from '@editor/core'
 import {
   type CreateBasicPluginsConfig,
   createBasicPlugins,
+  defaultPluginConfig,
 } from '@editor/editor-integration/create-basic-plugins'
 import { createRenderers } from '@editor/editor-integration/create-renderers'
 import {
@@ -49,7 +50,9 @@ const emptyState = {
 /** For exporting the editor */
 export function SerloEditor(props: SerloEditorProps) {
   const { children, pluginsConfig, initialState, language = 'de' } = props
-  const { basicPluginsConfig, customPlugins = [] } = pluginsConfig || {}
+  const { basicPluginsConfig, customPlugins = [] } = pluginsConfig || {
+    basicPluginsConfig: defaultPluginConfig,
+  }
   const { instanceData, loggedInData } = editorData[language]
 
   const basicPlugins = createBasicPlugins(basicPluginsConfig)

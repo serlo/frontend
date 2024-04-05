@@ -40,6 +40,13 @@ export interface CreateBasicPluginsConfig {
   multimediaConfig?: MultimediaConfig
 }
 
+export const defaultPluginConfig = {
+  language: 'de' as const,
+  enableTextAreaExercise: false,
+  exerciseVisibleInSuggestion: true,
+  allowImageInTableCells: true,
+}
+
 export function createBasicPlugins({
   language = 'de',
   enableTextAreaExercise = false,
@@ -47,7 +54,7 @@ export function createBasicPlugins({
   allowImageInTableCells = true,
   allowedChildPlugins,
   multimediaConfig,
-}: CreateBasicPluginsConfig = {}) {
+}: CreateBasicPluginsConfig = defaultPluginConfig) {
   const editorStrings = editorData[language].loggedInData.strings.editor
 
   return [
