@@ -73,7 +73,7 @@ export function Parallelogram3() {
             {data.fixed !== 2 && <sub>n</sub>} auf.
           </p>
           <p className="serlo-main-task">
-            Weisen Sie durch Rechnung nach, dass sich die Koordinaten der Punkte
+            Weisen Sie durch Rechnung nach, dass sich die Koordinaten der Punkte{' '}
             {data.names[1]}
             <sub>n</sub> in Abhängigkeit von {phi} wie folgt darstellen lassen:
           </p>
