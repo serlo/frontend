@@ -1,8 +1,8 @@
 import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
-import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { buildBlock, buildFrac } from '../utils/math-builder'
+import { buildBlock, buildFrac } from '../../utils/math-builder'
+import { SelfEvaluationExercise } from '../self-evaluation-exercise'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 

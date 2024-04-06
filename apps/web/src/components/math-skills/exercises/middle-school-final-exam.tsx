@@ -33,7 +33,8 @@ import { ValueSetParabola } from '../exercise-implementations/value-set-parabola
 import { VertexParabola } from '../exercise-implementations/vertex-parabola'
 import { VolumePyramide } from '../exercise-implementations/volume-pyramide'
 import { VolumeThreePyramide } from '../exercise-implementations/volume-pyramide-2'
-import { WheelOfFortune } from '../exercise-implementations/wheel-of-fortune'
+import { WheelOfFortune } from '../exercise-implementations/wheel-of-fortune/wheel-of-fortune'
+import { WheelOfFortuneStepByStep } from '../exercise-implementations/wheel-of-fortune/wheel-of-fortune-step-by-step'
 
 //track:  1 = Mathe-Zweig 1, 2 = Mathe-Zweig 2 & 3, 3 = beide Zweige
 
@@ -185,8 +186,17 @@ export const middleSchoolFinalExam = {
     title: 'Eisdiele',
     subtitle: 'Daten und Zufall',
     calculatorAllowed: false,
+    difficulty: 0,
     track: 3,
     component: <IceCreamShop />,
+  },
+  gluecksradEinfach: {
+    title: 'Glücksrad Einführung',
+    subtitle: 'Daten und Zufall',
+    calculatorAllowed: false,
+    difficulty: 2,
+    track: 3,
+    component: <WheelOfFortuneStepByStep />,
   },
   gluecksrad: {
     title: 'Glücksrad',

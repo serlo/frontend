@@ -55,7 +55,10 @@ export function buildVec2(
   )
 }
 
-export function buildBlock(color: 'gray' | 'green' | 'orange', x: JSX.Element) {
+export function buildBlock(
+  color: 'gray' | 'green' | 'orange',
+  x: JSX.Element | string
+) {
   return (
     <div
       className={cn(
