@@ -49,13 +49,12 @@ export function StepByStepFeedback({ data }: { data: WofData }) {
         {step === 0 ? (
           <>
             <h2 className="mr-12 mt-2 pb-5 text-2xl text-almost-black">
-              Wir fangen ganz einfach an und sammeln alle Infos die wir
-              brauchen:
+              Wir fangen ganz einfach an und du sammelst nach und nach alle
+              Infos die Du brauchst:
             </h2>
             <p>Wie viele Felder hat das Rad?</p>
-
             <div className="my-4 flex items-center">
-              {arrayOfLength(8).map((_, index) => {
+              {arrayOfLength(6).map((_, index) => {
                 return renderSegmentAnswerOption(index + 1, sections.length)
               })}
             </div>
@@ -150,7 +149,7 @@ export function StepByStepFeedback({ data }: { data: WofData }) {
 
             <div className="my-4 flex items-center">
               {step === 2 ? (
-                arrayOfLength(8).map((_, index) => {
+                arrayOfLength(6).map((_, index) => {
                   return renderSegmentAnswerOption(index + 1, sections.length)
                 })
               ) : (
@@ -356,20 +355,30 @@ export function StepByStepFeedback({ data }: { data: WofData }) {
               richige Antwort:
             </p>
             <div className="my-4 flex items-center">
-              {renderAnswerOption(
-                <>
-                  {buildFrac(
-                    yellow + yellow,
-                    sections.length * sections.length
-                  )}{' '}
-                  + {buildFrac(blue + blue, sections.length * sections.length)}
-                </>,
-                false,
-                <>
-                  Denk dran, wenn du Brücke multiplizierst musst du{' '}
-                  <b>Nenner und Zähler jeweils miteinander multiplizieren</b>.
-                </>
-              )}
+              {yellow * yellow !== yellow + yellow &&
+              blue * blue !== blue + blue
+                ? renderAnswerOption(
+                    <>
+                      {buildFrac(
+                        yellow + yellow,
+                        sections.length * sections.length
+                      )}{' '}
+                      +{' '}
+                      {buildFrac(
+                        blue + blue,
+                        sections.length * sections.length
+                      )}
+                    </>,
+                    false,
+                    <>
+                      Denk dran, wenn du Brücke multiplizierst musst du{' '}
+                      <b>
+                        Nenner und Zähler jeweils miteinander multiplizieren
+                      </b>
+                      .
+                    </>
+                  )
+                : null}
               {renderAnswerOption(
                 <>
                   {buildFrac(yellow * yellow, sections.length)} +{' '}
@@ -417,7 +426,7 @@ export function StepByStepFeedback({ data }: { data: WofData }) {
               Super!
               <br />
               Jetzt nur noch addieren
-              {result[0] !== resultSimplified[0] ? 'und vereinfachen ' : ''}.
+              {result[0] !== resultSimplified[0] ? ' und vereinfachen ' : ''}.
             </p>
             <div className="my-4 flex items-center">
               {result[0] !== resultSimplified[0]

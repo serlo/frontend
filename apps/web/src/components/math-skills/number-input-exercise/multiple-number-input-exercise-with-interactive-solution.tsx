@@ -9,7 +9,6 @@ interface MultipleNumberInputExerciseWithInteractiveSolutionProps<DATA> {
   numberOfInputs: number
   validateInputs: (inputData: string[], data: DATA) => boolean[]
   renderTask: (inputs: JSX.Element[], data: DATA) => JSX.Element
-  renderSolution: (data: DATA) => JSX.Element
   renderHint: () => JSX.Element
   renderStepByStep: (data: DATA) => JSX.Element
   widthForDigits?: number
@@ -23,7 +22,6 @@ export function MultipleNumberInputExerciseWithInteractiveSolution<T>({
   validateInputs,
   renderTask,
   renderHint,
-  renderSolution,
   renderStepByStep,
   widthForDigits = 7,
   centAmount,
@@ -176,7 +174,6 @@ export function MultipleNumberInputExerciseWithInteractiveSolution<T>({
       ) : null}
 
       <div className="h-24"></div>
-      {renderSolution(data)}
     </>
   )
 }
