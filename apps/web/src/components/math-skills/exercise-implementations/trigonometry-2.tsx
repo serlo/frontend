@@ -10,7 +10,6 @@ import {
 import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
-import de from 'timeago.js/lib/lang/de'
 
 // JXG.Options.label.autoPosition = true
 
