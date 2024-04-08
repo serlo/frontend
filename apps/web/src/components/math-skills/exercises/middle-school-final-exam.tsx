@@ -29,6 +29,7 @@ import { RotatePoint } from '../exercise-implementations/rotate-point'
 // import { SurfaceThreePyramide } from '../exercise-implementations/surface-pyramide-2'
 import { Trigonometry } from '../exercise-implementations/trigonometry'
 import { Trigonometry1 } from '../exercise-implementations/trigonometry-1'
+import { Trigonometry2 } from '../exercise-implementations/trigonometry-2'
 import { ValueSetParabola } from '../exercise-implementations/value-set-parabola'
 import { VertexParabola } from '../exercise-implementations/vertex-parabola'
 import { VolumePyramide } from '../exercise-implementations/volume-pyramide'
@@ -301,6 +302,13 @@ export const middleSchoolFinalExam = {
     calculatorAllowed: true,
     track: 2,
     component: <VolumePyramide />,
+  },
+  'sinussatz-1': {
+    title: 'Sinussatz im Dreieck',
+    subtitle: 'Trigonometrie',
+    calculatorAllowed: true,
+    track: 1,
+    component: <Trigonometry2 />,
   },
   /*'volumen-pyramide-2': {
     title: 'Volumen einer Pyramide',
