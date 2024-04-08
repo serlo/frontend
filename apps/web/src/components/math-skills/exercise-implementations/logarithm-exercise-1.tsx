@@ -73,26 +73,6 @@ export function LogarithmExercise1() {
         )
       }}
       renderSolution={({ summands, varName, logBase }) => {
-        function renderSummand(summand: (typeof summands)[0], index: number) {
-          return (
-            <>
-              {index === 0 && summand.isPlus
-                ? null
-                : summand.isPlus
-                  ? ' + '
-                  : ' - '}
-              {summand.isOutside && Math.abs(summand.exponent) !== 1 ? (
-                <>{Math.abs(summand.exponent)} </>
-              ) : null}
-              log&#8202;<sub>{logBase}</sub> {varName}
-              <sup>
-                {summand.isOutside || Math.abs(summand.exponent) === 1
-                  ? null
-                  : Math.abs(summand.exponent)}
-              </sup>
-            </>
-          )
-        }
         function renderSummandAllInside(
           summand: (typeof summands)[0],
           index: number
@@ -117,12 +97,6 @@ export function LogarithmExercise1() {
         const resultExp = summands.reduce((acc, obj) => obj.exponent + acc, 0)
         return (
           <>
-            Aufgabenstellung: <br />
-            <HighlightGray>
-              {summands.map((el, i) => renderSummand(el, i))}
-            </HighlightGray>
-            <br />
-            <br />
             {summands.some(
               (s) => s.isOutside && Math.abs(s.exponent) !== 1
             ) && (

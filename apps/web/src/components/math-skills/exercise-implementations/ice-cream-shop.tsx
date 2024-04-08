@@ -36,6 +36,8 @@ export function IceCreamShop() {
               <p className="mt-3 text-2xl">
                 Berechnen Sie die Anzahl der Möglichkeiten, dass eine Kundin{' '}
                 {kugeln} Eis wählt.
+                {numberOfIce > 1 &&
+                  ' Die Reihenfolge bei der Auswahl der Sorten ist zu berücksichtigen.'}
               </p>
             )}
             {mode === 'twoSame' && (
@@ -43,6 +45,8 @@ export function IceCreamShop() {
                 Berechnen Sie die Wahrscheinlichkeit dafür, dass zwei Kundinnen
                 die gleiche {numberOfIce === 1 ? 'Auswahl' : 'Zusammenstellung'}{' '}
                 für {kugeln} Eis {numberOfIce === 1 ? 'treffen' : 'wählen'}.
+                {numberOfIce > 1 &&
+                  ' Die Reihenfolge bei der Auswahl der Sorten ist zu berücksichtigen.'}
               </p>
             )}
           </>

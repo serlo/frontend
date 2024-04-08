@@ -44,12 +44,12 @@ export function VolumePyramide() {
             </small>
             <ol>
               <li className="text-2xl">
-                Berechne das Volumen der Pyramide{' '}
+                Berechnen Sie das Volumen der Pyramide{' '}
                 <b className="rounded-md bg-newgreen bg-opacity-20 p-1">
                   ABCDE
                 </b>{' '}
-                und runde auf <span className="inline-block">2 Stellen</span>{' '}
-                nach dem Komma.
+                und runden Sie auf{' '}
+                <span className="inline-block">2 Stellen</span> nach dem Komma.
               </li>
             </ol>
           </>

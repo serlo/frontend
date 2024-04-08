@@ -1,18 +1,10 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HighlightGray, HighlightGreen } from '../components/content-components'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { HighlightGray } from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { randomIntBetween } from '@/helper/random-int-between'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { randomItemFromArray } from '@/helper/random-item-from-array'
-
-// JXG.Options.label.autoPosition = true
 
 export function ExponentialFunctionTime() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data } = useMathSkillsStorage()
   return (
     <SelfEvaluationExercise
@@ -20,107 +12,69 @@ export function ExponentialFunctionTime() {
         return {
           Jahr_Anlage: randomIntBetween(1995, 2006),
           Geld_Ende: randomIntBetween(60, 75) * 100,
-          Zins: randomIntBetween(3, 6),
+          Zins: randomIntBetween(3, 39) / 10,
           Money_Start: randomIntBetween(45, 55) * 100,
         }
       }}
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       renderTask={({ Jahr_Anlage, Money_Start, Zins, Geld_Ende }) => {
         return (
           <>
-            <p className="mb-8 text-2xl">
-              Im Jahr {Jahr_Anlage} {data.name ? `hat ${data.name}` : 'hast Du'}{' '}
-              {Money_Start} € angelegt.
-              <br />
-              Jedes Jahr wurde das Kapital mit {Zins} % verzinst, sodass das
-              Kapital am Ende {Geld_Ende} € betragen hat.
-              <br />
-              <br />
-              Berechne, wie viele Jahre das Geld angelegt wurde.
+            <p className="serlo-main-task">
+              Im Jahr {Jahr_Anlage}{' '}
+              {data.name ? `legt ${data.name}` : 'legst Du'} {Money_Start} € an.
+              Jedes Jahr wird das Kapital mit {Zins.toLocaleString('de-De')} %
+              verzinst.
             </p>
-            <p>
-              <i>
-                Rechne mit der Exponentialfunktion und am besten mit Stift und
-                Papier.
-              </i>
+            <p className="serlo-main-task">
+              Bestimmen Sie, nach wie vielen Jahren das Kapital erstmal mehr als{' '}
+              {Geld_Ende} € beträgt.
             </p>
           </>
         )
       }}
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      renderSolution={({ Money_Start, Jahr_Anlage, Zins, Geld_Ende }) => {
+      renderSolution={({ Money_Start, Zins, Geld_Ende }) => {
         const Faktor = Zins / 100 + 1
+
+        const yDurchk = Math.round((Geld_Ende / Money_Start) * 100) / 100
+
         const Zeit =
-          Math.round(
-            (Math.log2(Geld_Ende / Money_Start) / Math.log2(Faktor)) * 100
-          ) / 100
-        const Zeit_Jahre = Math.ceil(
-          Math.round(
-            (Math.log2(Geld_Ende / Money_Start) / Math.log2(Faktor)) * 100
-          ) / 100
-        )
+          Math.round((Math.log2(yDurchk) / Math.log2(Faktor)) * 100) / 100
+        const Zeit_Jahre = Math.ceil(Zeit)
         return (
           <>
-            Bei {Zins} % Zinsen wächst das Kapital jährlich mit dem Faktor{' '}
-            {Faktor.toString().replace('.', ',')}.
-            <br />
-            <br />
-            Damit wird das Kapital durch die Exponentialfunktion
-            <br />
-            <HighlightGray>
-              y = {Money_Start} · {Faktor.toString().replace('.', ',')}
+            <p>Berechne den Wachstumsfaktor:</p>
+            <p className="serlo-highlight-gray">
+              a = 1 + {buildFrac(Zins.toLocaleString('de-De'), 100)} ={' '}
+              {Faktor.toLocaleString('de-De')}
+            </p>
+            <p>
+              Stelle die passende Exponentialgleichung auf. x gibt die Anzahl
+              der Jahre ab Start der Anlage an, y gibt das Kapital an:
+            </p>
+            <p className="serlo-highlight-gray">
+              y = {Money_Start} · {Faktor.toLocaleString('de-De')}
               <sup>x</sup>
-            </HighlightGray>
-            <br />
-            <br />
-            beschrieben. x steht dabei für die gesuchte Anzahl der Jahre ab{' '}
-            {Jahr_Anlage}.
-            <br />
-            <br />
-            Wir setzen für y den Endbetrag {Geld_Ende} € ein, weil wir
-            untersuchen, wann das Kapital diesen Wert erreicht hat.
-            <br />
-            <HighlightGray>
-              {Geld_Ende} = {Money_Start} ·{' '}
-              {Faktor.toString().replace('.', ',')}
+            </p>
+            <p>Setze {Geld_Ende} für y ein und löse die Gleichung:</p>
+            <p className="serlo-highlight-gray">
+              {Geld_Ende} = {Money_Start} · {Faktor.toLocaleString('de-De')}
+              <sup>x</sup> &nbsp;&nbsp;&nbsp;&nbsp;| : {Money_Start}
+              <br />
+              {yDurchk.toLocaleString('de-De')} ={' '}
+              {Faktor.toLocaleString('de-De')}
               <sup>x</sup>
-            </HighlightGray>
-            <br />
-            Wir lösen die Gleichung, indem wir zuerst beide Seiten durch{' '}
-            <span className="mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3 text-xl">
-              {Money_Start}{' '}
-            </span>{' '}
-            teilen.
-            <br />
-            <HighlightGray>
-              {buildFrac(<>{Geld_Ende}</>, <>{Money_Start}</>)} ={' '}
-              {Faktor.toString().replace('.', ',')}
-              <sup>x</sup>
-            </HighlightGray>
-            <br />
-            <br /> Um x zu bestimmen, muss der Logarithmus zur Basis{' '}
-            {Faktor.toString().replace('.', ',')} angewendet werden:
-            <HighlightGray>
-              log <sub>{Faktor.toString().replace('.', ',')}</sub>
-              <span className="inline-block scale-y-[3] ">(</span>
-              {buildFrac(<>{Geld_Ende}</>, <>{Money_Start}</>)}
-              <span className="inline-block scale-y-[3] ">)</span> = x
-            </HighlightGray>
-            <br />
-            <br />
-            Mit dem Taschenrechner ergibt sich:
-            <br />
-            <HighlightGreen>
-              x = {Zeit.toString().replace('.', ',')}
-            </HighlightGreen>
-            <br />
-            <br />
-            Das Geld wurde also {Zeit.toString().replace('.', ',')} Jahre bzw.{' '}
-            {Zeit_Jahre.toString().replace('.', ',')} ganze Jahre angelegt.
+              <br />x = log<sub>{Faktor.toLocaleString('de-De')}</sub>{' '}
+              {yDurchk.toLocaleString('de-De')}
+              <br />x = {Zeit.toLocaleString('de-De')}
+            </p>
+            <p>Antworte:</p>
+            <p className="serlo-highlight-green">
+              Nach {Zeit_Jahre} Jahren beträgt das Kapital erstmals mehr als{' '}
+              {Geld_Ende} Euro.
+            </p>
           </>
         )
       }}
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       renderHint={({ Money_Start, Zins }) => {
         const Faktor = 1 + Zins / 100
         return (
