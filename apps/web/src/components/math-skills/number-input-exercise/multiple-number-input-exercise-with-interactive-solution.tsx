@@ -41,7 +41,7 @@ export function MultipleNumberInputExerciseWithInteractiveSolution<T>({
   const isCorrect = isCorrectArray.every(Boolean)
   const incorrectAmount =
     !isCorrect && isCorrectArray.filter((value) => !value).length
-  const isDisabled = exStatus === 'correct' || exStatus === 'revealed'
+  const isDisabled = exStatus === 'correct'
 
   return (
     <>

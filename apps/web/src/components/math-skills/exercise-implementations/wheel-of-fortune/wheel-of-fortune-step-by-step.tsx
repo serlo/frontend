@@ -1,5 +1,7 @@
+import { StepByStepFeedback } from './step-by-step-solution'
 import { WheelDiagram } from './wheel-diagram'
 import { MultipleNumberInputExerciseWithInteractiveSolution } from '../../number-input-exercise/multiple-number-input-exercise-with-interactive-solution'
+import { getGcd } from '../../utils/get-gcd'
 import { buildBlock, buildFrac } from '../../utils/math-builder'
 import { arrayOfLength } from '@/helper/array-of-length'
 import { randomIntBetween } from '@/helper/random-int-between'
@@ -8,10 +10,6 @@ import { randomItemFromArray } from '@/helper/random-item-from-array'
 export interface WofData {
   sections: boolean[]
   event: number
-}
-const gcd = function (a: number, b: number): number {
-  if (b === 0) return a
-  return gcd(b, a % b)
 }
 
 export function WheelOfFortuneStepByStep() {
@@ -74,8 +72,8 @@ export function WheelOfFortuneStepByStep() {
         const counterYellow = sections.filter(Boolean).length
         const counterPurple = sections.length - counterYellow
 
-        const gcdA = gcd(counterYellow, sections.length)
-        const gcdB = gcd(counterPurple, sections.length)
+        const gcdA = getGcd(counterYellow, sections.length)
+        const gcdB = getGcd(counterPurple, sections.length)
 
         // function getC(val: string) {
         //   if (val === 'A') return counterYellow
@@ -83,7 +81,7 @@ export function WheelOfFortuneStepByStep() {
         // }
 
         function buildSimplifyFrac(a: number, b: number) {
-          const d = gcd(a, b)
+          const d = getGcd(a, b)
           return buildFrac(a / d, b / d)
         }
 
@@ -267,19 +265,18 @@ export function WheelOfFortuneStepByStep() {
 
         const over = counter_A * counter_B + counter_B * counter_A
         const under = sections.length * sections.length
-        const d = gcd(over, under)
+        const d = getGcd(over, under)
         const correct = [over / d, under / d]
 
         const inputOver = parseInt(inputValues[0])
         const inputUnder = parseInt(inputValues[1])
-        const inputD = gcd(inputOver, inputUnder)
+        const inputD = getGcd(inputOver, inputUnder)
         const input = [over / inputD, under / inputD]
 
         return [correct[0] === input[0], correct[1] === input[1]]
       }}
       renderStepByStep={(data: WofData) => {
-        return <>wip {data.event}</>
-        // return <StepByStepFeedback data={data} />
+        return <StepByStepFeedback data={data} />
       }}
       centAmount={52}
     />
