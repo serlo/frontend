@@ -27,7 +27,7 @@ export function WheelOfFortuneStepByStep() {
           sections[flipIndex] = !sections[flipIndex]
         }
 
-        const event = 2 //randomIntBetween(1, 4)
+        const event = 2
         return { sections, event }
       }}
       renderTask={(inputs, data) => {
@@ -41,14 +41,7 @@ export function WheelOfFortuneStepByStep() {
             <p className="text-2xl">
               Bestimmen Sie die Wahrscheinlichkeit, dass man beim zweimaligen
               Drehen{' '}
-              {/* {data.event === 1
-                ? 'höchstens einmal Preis ' + sections[0] + ' erhält.'
-                : null} */}
               {data.event === 2 ? ' den gleichen Preis zweimal erhält.' : null}
-              {/* {data.event === 3
-                ? 'mindestens einmal Preis ' + sections[0] + ' erhält.'
-                : null}
-              {data.event === 4 ? ' zwei verschiedene Preise erhält.' : null} */}
             </p>
             <br />
             {buildBlock(
@@ -74,11 +67,6 @@ export function WheelOfFortuneStepByStep() {
 
         const gcdA = getGcd(counterYellow, sections.length)
         const gcdB = getGcd(counterPurple, sections.length)
-
-        // function getC(val: string) {
-        //   if (val === 'A') return counterYellow
-        //   return counterPurple
-        // }
 
         function buildSimplifyFrac(a: number, b: number) {
           const d = getGcd(a, b)
@@ -118,37 +106,6 @@ export function WheelOfFortuneStepByStep() {
             )}
           </>
         )
-        // if (data.event === 1)
-        //   return (
-        //     <>
-        //       {intro}
-        //       <p>
-        //         Um höchstens einmal den Preis {data.number_1} zu erhalten, gibt
-        //         es die Kombinationen{' '}
-        //         <span className="text-lg">
-        //           (A; B), (B; A) und ({data.number_2}; {data.number_2})
-        //         </span>
-        //         . Berechne daraus die Gesamtwahrscheinlichkeit:
-        //       </p>
-        //       {buildBlock(
-        //         'green',
-        //         <>
-        //           P(höchstens einmal {data.number_1}) ={' '}
-        //           {buildSimplifyFrac(counterYellow, data.sections)} ·{' '}
-        //           {buildSimplifyFrac(counterPurple, data.sections)} +{' '}
-        //           {buildSimplifyFrac(counterPurple, data.sections)} ·{' '}
-        //           {buildSimplifyFrac(counterYellow, data.sections)} +{' '}
-        //           {buildSimplifyFrac(getC(data.number_2), data.sections)} ·{' '}
-        //           {buildSimplifyFrac(getC(data.number_2), data.sections)} ={' '}
-        //           {buildSimplifyFrac(
-        //             getC(data.number_2) * getC(data.number_2) +
-        //               counterYellow * counterPurple * 2,
-        //             data.sections * data.sections
-        //           )}
-        //         </>
-        //       )}
-        //     </>
-        //   )
         if (data.event === 2)
           return (
             <>
@@ -175,63 +132,6 @@ export function WheelOfFortuneStepByStep() {
               )}
             </>
           )
-        // if (data.event === 3)
-        //   return (
-        //     <>
-        //       {intro}
-        //       <p>
-        //         Um mindestens einmal den Preis {data.number_1} zu erhalten, gibt
-        //         es die Kombinationen{' '}
-        //         <span className="text-lg">
-        //           (A; B), (B; A) und ({data.number_1}; {data.number_1})
-        //         </span>
-        //         . Berechne daraus die Gesamtwahrscheinlichkeit:
-        //       </p>
-        //       {buildBlock(
-        //         'green',
-        //         <>
-        //           P(mindestens einmal {data.number_1}) ={' '}
-        //           {buildSimplifyFrac(counterYellow, data.sections)} ·{' '}
-        //           {buildSimplifyFrac(counterPurple, data.sections)} +{' '}
-        //           {buildSimplifyFrac(counterPurple, data.sections)} ·{' '}
-        //           {buildSimplifyFrac(counterYellow, data.sections)} +{' '}
-        //           {buildSimplifyFrac(getC(data.number_1), data.sections)} ·{' '}
-        //           {buildSimplifyFrac(getC(data.number_1), data.sections)} ={' '}
-        //           {buildSimplifyFrac(
-        //             getC(data.number_1) * getC(data.number_1) +
-        //               counterYellow * counterPurple * 2,
-        //             data.sections * data.sections
-        //           )}
-        //         </>
-        //       )}
-        //     </>
-        //   )
-        // if (data.event === 4)
-        //   return (
-        //     <>
-        //       {intro}
-        //       <p>
-        //         Um zwei verschiedene Preise zu erhalten, gibt es die
-        //         Kombinationen <span className="text-lg">(A; B) und (B; A)</span>
-        //         . Berechne daraus die Gesamtwahrscheinlichkeit:
-        //       </p>
-        //       {buildBlock(
-        //         'green',
-        //         <>
-        //           P(verschiedene Preise) ={' '}
-        //           {buildSimplifyFrac(counterYellow, data.sections)} ·{' '}
-        //           {buildSimplifyFrac(counterPurple, data.sections)} +{' '}
-        //           {buildSimplifyFrac(counterPurple, data.sections)} ·{' '}
-        //           {buildSimplifyFrac(counterYellow, data.sections)} ={' '}
-        //           {buildSimplifyFrac(
-        //             counterYellow * counterPurple +
-        //               counterPurple * counterYellow,
-        //             data.sections * data.sections
-        //           )}
-        //         </>
-        //       )}
-        //     </>
-        //   )
         return <></>
       }}
       renderHint={() => {
