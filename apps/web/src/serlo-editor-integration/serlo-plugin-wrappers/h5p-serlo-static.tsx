@@ -15,7 +15,7 @@ export function H5pSerloStaticRenderer(props: EditorH5PDocument) {
   const ab = useAB()
   const entityId = useEntityId()
   const revisionId = useRevisionId()
-  const trackExperiment = useCreateExerciseSubmissionMutation()
+  const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
 
   useEffect(() => {
     const handleSubmissionEvent = (e: Event) => {

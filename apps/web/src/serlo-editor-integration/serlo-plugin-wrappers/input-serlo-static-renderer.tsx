@@ -18,7 +18,7 @@ export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
   const { asPath } = useRouter()
   const ab = useAB()
   const isRevisionView = useContext(RevisionViewContext)
-  const trackExperiment = useCreateExerciseSubmissionMutation()
+  const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
 
   return (
     <>
