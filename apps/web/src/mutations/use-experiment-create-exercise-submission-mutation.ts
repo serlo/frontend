@@ -15,8 +15,8 @@ const mutation = gql`
 
 export function useCreateExerciseSubmissionMutation(path: string) {
   const mutationFetch = useMutationFetch()
-  const isExperimentPath = [30680, 23869, 66809].find((id) =>
-    path.includes(`/${id}`)
+  const isExperimentPath = Boolean(
+    [30680, 23869, 66809].find((id) => path.includes(`/${id}`))
   )
   if (!isExperimentPath) return () => Promise.resolve()
 
