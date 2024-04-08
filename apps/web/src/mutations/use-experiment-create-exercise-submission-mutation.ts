@@ -15,12 +15,10 @@ const mutation = gql`
 
 export function useCreateExerciseSubmissionMutation(path: string) {
   const mutationFetch = useMutationFetch()
-  const splitPath = path.split('/').filter((p) => p.length > 0)
-  const experimentIds = [30680, 23869, 66809]
-  const pathContainsExperimentId = splitPath.some((p) =>
-    experimentIds.includes(+p)
+  const isExperimentPath = [30680, 23869, 66809].find((id) =>
+    path.includes(`/${id}`)
   )
-  if (!pathContainsExperimentId) return () => Promise.resolve()
+  if (!isExperimentPath) return () => Promise.resolve()
 
   return async function (input: ExerciseSubmissionInput) {
     return await mutationFetch(mutation, input)
