@@ -21,10 +21,7 @@ export function SpoilerSerloStaticRenderer({
 
   const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
   const trackSpoilerOpened = () => {
-    const experimentIds = [30680, 23869, 66809]
-    const shouldTrackSpoilerOpen = entityId && experimentIds.includes(entityId)
-
-    if (!shouldTrackSpoilerOpen || !ab || hasSentSpoilerTrackingEvent) return
+    if (hasSentSpoilerTrackingEvent) return
     // send tracking event
     exerciseSubmission(
       {

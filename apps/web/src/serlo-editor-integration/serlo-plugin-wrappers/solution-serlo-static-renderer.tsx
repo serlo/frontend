@@ -70,18 +70,16 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
     )
 
   function onSolutionOpen() {
-    {
-      exerciseSubmission(
-        {
-          path: asPath,
-          entityId: context?.exerciseId ?? exerciseUuid,
-          type: 'text',
-          result: 'open',
-        },
-        ab,
-        trackExperiment
-      )
-    }
+    exerciseSubmission(
+      {
+        path: asPath,
+        entityId: context?.exerciseId ?? exerciseUuid,
+        type: 'text',
+        result: 'open',
+      },
+      ab,
+      trackExperiment
+    )
   }
 
   return (
