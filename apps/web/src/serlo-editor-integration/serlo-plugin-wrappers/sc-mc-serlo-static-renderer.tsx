@@ -21,7 +21,7 @@ export function ScMcSerloStaticRenderer(props: EditorScMcExerciseDocument) {
   const entityId = useEntityId()
   const revisionId = useRevisionId()
   const isRevisionView = useContext(RevisionViewContext)
-  const trackExperiment = useCreateExerciseSubmissionMutation()
+  const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
 
   const exStrings = useInstanceData().strings.content.exercises
 

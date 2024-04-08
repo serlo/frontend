@@ -35,7 +35,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
 
   const exerciseUuid = useEntityId()
 
-  const trackExperiment = useCreateExerciseSubmissionMutation()
+  const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
 
   if (isPrintMode && !printModeSolutionVisible) return null
 
