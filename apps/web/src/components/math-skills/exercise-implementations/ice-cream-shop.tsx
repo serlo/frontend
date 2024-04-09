@@ -7,90 +7,82 @@ export function IceCreamShop() {
   return (
     <SelfEvaluationExercise
       generator={() => {
-        const mode = randomItemFromArray(['twoSame', 'count'])
-        const numberOfIce = randomIntBetween(
-          mode === 'count' ? 2 : 1,
-          mode === 'count' ? 4 : 2
-        )
-        const numberOfSorts = randomIntBetween(
-          2,
-          mode === 'count' && numberOfIce <= 2 ? 8 : 5
-        )
+        const mode = randomItemFromArray(['count', 'twoSame'])
+
+        const kugeln = randomIntBetween(2, 3)
+        const n = randomIntBetween(3, kugeln === 3 ? 6 : 11)
+
         return {
-          numberOfSorts,
-          numberOfIce,
           mode,
+          kugeln,
+          n,
         }
       }}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      renderTask={({ mode, numberOfIce, numberOfSorts }) => {
-        const kugeln =
-          numberOfIce === 1 ? 'eine Kugel' : `${numberOfIce} Kugeln`
+      renderTask={({ mode, n, kugeln }) => {
+        const kugelnStr =
+          kugeln === 1
+            ? 'eine Kugel'
+            : kugeln === 2
+              ? 'zwei verschiedene Kugeln'
+              : 'drei verschiedene Kugeln'
         return (
           <>
             <p className="text-2xl">
-              In der besten Eisdiele Bayerns gibt es {numberOfSorts} Sorten Eis,
-              die alle gleich beliebt sind.
+              In der besten Eisdiele Bayerns gibt es {n} Sorten Eis, die alle
+              gleich beliebt sind.
             </p>
             {mode === 'count' && (
-              <p className="mt-3 text-2xl">
+              <p className="serlo-main-task">
                 Berechnen Sie die Anzahl der Möglichkeiten, dass eine Kundin{' '}
-                {kugeln} Eis wählt.
-                {numberOfIce > 1 &&
-                  ' Die Reihenfolge bei der Auswahl der Sorten ist zu berücksichtigen.'}
+                {kugelnStr} Eis wählt.
               </p>
             )}
             {mode === 'twoSame' && (
-              <p className="mt-3 text-2xl">
-                Berechnen Sie die Wahrscheinlichkeit dafür, dass zwei Kundinnen
-                die gleiche {numberOfIce === 1 ? 'Auswahl' : 'Zusammenstellung'}{' '}
-                für {kugeln} Eis {numberOfIce === 1 ? 'treffen' : 'wählen'}.
-                {numberOfIce > 1 &&
-                  ' Die Reihenfolge bei der Auswahl der Sorten ist zu berücksichtigen.'}
+              <p className="serlo-main-task">
+                Berechnen Sie die Wahrscheinlichkeit, dass zwei Kundinnen die
+                gleiche Zusammenstellung von {kugelnStr} Eis wählen.
               </p>
             )}
           </>
         )
       }}
-      renderSolution={({ numberOfSorts, numberOfIce, mode }) => {
+      renderSolution={({ kugeln, n, mode }) => {
         const product = []
-        for (let i = 0; i < numberOfIce; i++) {
-          product.push(numberOfSorts.toString())
+        let val = 1
+        for (let i = 0; i < kugeln; i++) {
+          product.push((n - i).toString())
+          val = val * (n - i)
         }
-        const productN = Math.pow(numberOfSorts, numberOfIce)
-        const needIntermediate = numberOfIce > 1
         return (
           <>
-            {needIntermediate && (
+            <p>
+              Berechne die Anzahl der Möglichkeiten für eine Kundin, indem du
+              für jede der {kugeln} Kugeln einmal die Anzahl der Sorten
+              multiplizierst. Damit sich die Sorten nicht wiederholen,
+              verkleinert sich der Faktor jedes Mal um 1:
+            </p>
+            {buildBlock(
+              mode === 'count' ? 'green' : 'gray',
               <>
-                <p>
-                  Berechne die Anzahl der Möglichkeiten für eine Kundin, indem
-                  du für jede der {numberOfIce} Kugeln einmal die Anzahl der
-                  Sorten multiplizierst:
-                </p>
-                {buildBlock(
-                  mode === 'count' ? 'green' : 'gray',
-                  <>
-                    {product.join(' · ')} = {productN}
-                  </>
-                )}
+                {product.join(' · ')} = {val}
               </>
             )}
             {mode === 'twoSame' && (
               <>
                 <p>
-                  Eins geteilt durch{' '}
-                  {needIntermediate ? 'diese Zahl' : 'die Anzahl der Sorten'}{' '}
-                  ist die Wahrscheinlichkeit, dass eine Kundin diese bestimmte
-                  Kombination auswählt. Damit beide Kundinnen das gleiche
-                  Produkt auswählen, multipliziere zweimal diese
-                  Wahrscheinlichkeit:
+                  Die erste Kundin darf jede Zusammenstellung wählen, für sie
+                  gibt es keine Einschränkungen, daher ist die
+                  Wahrscheinlichkeit 1. Die zweite Kundin hat dann nur noch eine
+                  günstige Möglichkeit, nämlich die Zusammenstellung der ersten
+                  Kundin. Die Wahrscheinlichkeit dafür beträgt{' '}
+                  {buildFrac(1, val)}:
                 </p>
                 {buildBlock(
                   'green',
                   <>
-                    {buildFrac(1, productN)} · {buildFrac(1, productN)} ={' '}
-                    {buildFrac(1, productN * productN)}
+                    P(zwei Kundinnen gleich) = 1 · {buildFrac(1, val)} ={' '}
+                    {buildFrac(1, val)}
                   </>
                 )}
               </>
