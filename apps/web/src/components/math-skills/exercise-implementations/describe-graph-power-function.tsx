@@ -144,7 +144,7 @@ export function DescribeGraphPowerFunction() {
                 {data.n % 2 !== 0
                   ? 'zum Ursprung punktsymmetrische'
                   : 'zur y-Achse symmetrische'}{' '}
-                Hyperbel mit dem Öffnungsfaktor{' '}
+                Hyperbel mit dem Vorfaktor{' '}
                 {Math.abs(data.k).toLocaleString('de-De')}. Die
                 Koordinatenachsen sind die Asymptoten. Der Graph verläuft durch
                 den{' '}
@@ -168,7 +168,7 @@ export function DescribeGraphPowerFunction() {
               {data.n % 2 !== 0
                 ? 'zum Ursprung punktsymmetrische'
                 : 'zur y-Achse symmetrische'}{' '}
-              Potenzfunktion mit dem Öffnungsfaktor{' '}
+              Potenzfunktion mit dem Vorfaktor{' '}
               {Math.abs(data.k).toLocaleString('de-De')}. Der Graph verläuft
               durch den Ursprung und den{' '}
               {data.n % 2 === 0

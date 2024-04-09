@@ -36,7 +36,7 @@ export function FindExponentialFunction() {
             k: randomIntBetween(30, 80) * 10000,
             a: randomIntBetween(3, 30) / 10,
             factor: 'Abnahme',
-            xDescription: 'die Zeit in Jahren',
+            xDescription: 'die Zeit in Monaten',
             yDescription: 'das Restguthaben in Euro',
           }
         }
