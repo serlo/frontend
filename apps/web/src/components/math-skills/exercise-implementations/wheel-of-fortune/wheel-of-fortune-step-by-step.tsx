@@ -47,7 +47,7 @@ export function WheelOfFortuneStepByStep() {
             {buildBlock(
               'gray',
               <div className="flex items-center">
-                P(verschiedene Preise) ={' '}
+                P(gleiche Preise) ={' '}
                 <div className="ml-2 inline-flex flex-col py-1 [&_input]:text-center">
                   <div className="mb-1.5 border border-transparent border-b-almost-black pb-1.5">
                     {inputs[0]}
