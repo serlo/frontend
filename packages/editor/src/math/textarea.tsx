@@ -33,10 +33,7 @@ export const MathEditorTextarea = ({
         text-black outline-none focus:border-editor-primary`
       )}
       ref={textareaRef}
-      onChange={(e) => {
-        const { value } = e.currentTarget
-        onChange(value)
-      }}
+      onChange={(e) => onChange(e.currentTarget.value)}
       onCopy={(e) => e.stopPropagation()}
       onCut={(e) => e.stopPropagation()}
       value={state}
