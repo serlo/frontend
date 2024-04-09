@@ -29,7 +29,7 @@ export const MathEditorTextarea = ({
     <textarea
       className={cn(
         `mx-0 my-1 h-24 w-[80vw] max-w-[600px] resize-none rounded-md
-        !border-2 border-transparent p-2.5 font-mono
+        border-2 border-transparent p-2.5 font-mono
         text-black outline-none focus:border-editor-primary`
       )}
       ref={textareaRef}
