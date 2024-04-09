@@ -160,7 +160,7 @@ export function MultipleNumberInputExerciseWithInteractiveSolution<T>({
                   {renderHint()}
                   <p className="mt-5">
                     <button
-                      className="hover:bg-opacity-35 serlo-button-light bg-animal bg-opacity-30 px-2.5 py-1.5 text-almost-black hover:text-black"
+                      className="serlo-button-light bg-animal bg-opacity-30 px-2.5 py-1.5 text-almost-black hover:bg-opacity-35 hover:text-black"
                       onClick={() => setExStatus('revealed')}
                     >
                       Schritt für Schritt rechnen
