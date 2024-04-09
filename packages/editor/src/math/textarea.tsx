@@ -9,7 +9,7 @@ interface MathEditorTextareaProps
 }
 
 export const MathEditorTextarea = ({
-  state,
+  state: latex,
   onChange,
   onMoveOutLeft,
   onMoveOutRight,
@@ -36,7 +36,7 @@ export const MathEditorTextarea = ({
       onChange={(e) => onChange(e.currentTarget.value)}
       onCopy={(e) => e.stopPropagation()}
       onCut={(e) => e.stopPropagation()}
-      value={state}
+      value={latex}
       data-qa="plugin-math-latex-editor"
       onKeyDown={(e) => {
         const { selectionStart, selectionEnd, value } = e.currentTarget
