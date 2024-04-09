@@ -1,7 +1,7 @@
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { createRef, useEffect } from 'react'
 
-import type { MathEditorProps } from './editor'
+import type { MathEditorProps } from './editor.jsx'
 
 interface MathEditorTextareaProps
   extends Pick<MathEditorProps, 'onMoveOutLeft' | 'onMoveOutRight' | 'state'> {

@@ -3,7 +3,7 @@ import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 import type { MathEditorProps } from './editor'
-import { MathEditorTextarea } from './textarea'
+import { MathEditorTextarea } from './math-editor-textarea'
 
 export function MathEditorOverlay({
   hasError,
