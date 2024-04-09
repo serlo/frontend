@@ -164,6 +164,7 @@ export const instanceData = {
         printModeChooseOption: 'Check one of the options.',
         strategy: 'Strategy',
         solution: 'Proposed Solution',
+        showHiddenInteractive: 'Check your solution here',
       },
       boxTypes: {
         blank: 'Blank',
@@ -200,6 +201,7 @@ export const instanceData = {
     },
     comments: {
       question: 'Do you have a question?',
+      questionLink: 'Write it below',
       commentsOne: 'Comment',
       commentsMany: 'Comments',
       submit: 'Submit',
@@ -901,6 +903,11 @@ export const loggedInData = {
           title: 'Exercise',
           description: 'Interactive or text based exercise',
           placeholder: 'Type the assignment here (Optional)',
+          hideInteractiveInitially: {
+            info: 'Interactive element collapsed on load',
+            deactivate: 'Load Interactive Element visible',
+            activate: 'Load Interactive Element collapsed',
+          },
         },
         inputExercise: {
           title: 'Input Exercise',
@@ -1051,6 +1058,9 @@ export const loggedInData = {
           kindOfExerciseGroup: 'Kind of exercise group',
           notCohesive: 'not cohesive',
           cohesive: 'cohesive',
+          addIntermediateTask: 'Add Intermediate Task',
+          removeIntermediateTask: 'Remove intermediate Task',
+          intermediateTask: 'Intermediate Task',
         },
       },
       edtrIo: {

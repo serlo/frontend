@@ -1,11 +1,14 @@
 export function getCleanUrl(inputUrl: string, instance?: string) {
-  const testId = parseInt(inputUrl.match(/[1-9]?[0-9]+/)?.[0] ?? 'NaN')
+  const testId = parseInt(
+    inputUrl.match(
+      /https?:\/\/([a-z]{2}\.)?serlo\.org(\/[a-z]+)?\/([1-9]?[0-9]+)/
+    )?.[3] ?? 'NaN'
+  )
 
   const hashPart = inputUrl.split('#')[1]
   const hash = hashPart ? `#${hashPart}` : ''
 
-  if (!isNaN(testId) && inputUrl.includes('serlo.org/'))
-    return `/${testId}${hash}`
+  if (!isNaN(testId)) return `/${testId}${hash}`
 
   const cleanedUrl = instance
     ? inputUrl

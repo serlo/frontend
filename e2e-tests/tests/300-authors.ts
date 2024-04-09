@@ -8,7 +8,7 @@ Before(({ login }) => {
 
 // Articles only for now
 Scenario('Saving without changes', ({ I }) => {
-  I.amOnPage('/entity/repository/add-revision/74888')
+  I.amOnPage('/entity/repository/add-revision/55437')
   I.click('Speichern')
   I.waitForText('Bisher hast du nichts geändert')
   I.dontSee('Beschreibe deine Änderungen am Inhalt')
@@ -109,15 +109,15 @@ Scenario('Add Revision and reject', async ({ I }) => {
 // Logout in second Tab…
 
 Scenario('Sort taxonomy entities', async ({ I }) => {
-  I.amOnPage('/taxonomy/term/sort/entities/75211')
+  I.amOnPage('/taxonomy/term/sort/entities/60730')
   I.see('Artikel')
-  I.see('Codierungen')
+  I.see('Zylinder')
 
-  I.see('Kurse')
-  I.see('Webseite selbst erstellen')
+  I.see('Aufgaben')
+  I.see('Aufgaben zur Pyramide')
 
   I.see('Bereiche')
-  I.see('Technische Informatik')
+  I.see('Kugel')
 })
 
 Scenario('Sort exercise folder', async ({ I }) => {

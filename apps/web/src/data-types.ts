@@ -1,8 +1,8 @@
 import type {
   AnyEditorDocument,
   EditorExerciseDocument,
+  EditorExerciseGroupDocument,
   EditorRowsDocument,
-  EditorTemplateExerciseGroupDocument,
 } from '@editor/types/editor-plugins'
 import { type AuthorizationPayload } from '@serlo/authorization'
 import { type CSSProperties, type FunctionComponent } from 'react'
@@ -495,10 +495,7 @@ export interface TaxonomyData extends TaxonomyTermBase {
   trashed: boolean
   taxonomyType: TaxonomyTermType
   subterms: TaxonomySubTerm[]
-  exercisesContent: (
-    | EditorExerciseDocument
-    | EditorTemplateExerciseGroupDocument
-  )[]
+  exercisesContent: (EditorExerciseDocument | EditorExerciseGroupDocument)[]
   licenseData?: LicenseData
 }
 

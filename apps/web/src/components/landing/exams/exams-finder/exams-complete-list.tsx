@@ -22,7 +22,7 @@ export function ExamsCompleteList({ region }: { region: SupportedRegion }) {
           return (
             <div
               key={schoolTypeKey}
-              className="mt-6 min-w-[10rem] text-lg sm:mx-4 sm:min-w-[14rem] md:min-w-[14rem]"
+              className="mt-6 min-w-[10rem] text-lg sm:mx-4 sm:min-w-[14rem] sm:max-w-[16rem]"
             >
               <h2 className="mb-2 font-bold">{title}</h2>
               {exams.map((exam) => {
@@ -32,20 +32,14 @@ export function ExamsCompleteList({ region }: { region: SupportedRegion }) {
                       <Link href={exam.url}>{exam.title}</Link>
                     </b>
                     <br />
-                    {exam.years.slice(0, 3).map((year, index) => {
+                    {exam.years.map((year, index) => {
                       return (
                         <Fragment key={year.url}>
                           <Link href={year.url}>{year.title}</Link>
-                          {index !== 2 ? ', ' : ''}
+                          {index === exam.years.length - 1 ? '' : ', '}
                         </Fragment>
                       )
                     })}
-                    {exam.years.length > 3 ? (
-                      <>
-                        {', '}
-                        <Link href={exam.url}>weitere ...</Link>
-                      </>
-                    ) : null}
                   </p>
                 )
               })}

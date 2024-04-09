@@ -9,6 +9,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
+import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
 
 export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
   const entityId = useEntityId()
@@ -17,6 +18,7 @@ export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
   const { asPath } = useRouter()
   const ab = useAB()
   const isRevisionView = useContext(RevisionViewContext)
+  const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
 
   return (
     <>
@@ -34,7 +36,8 @@ export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
         result: correct ? 'correct' : 'wrong',
         type: 'input',
       },
-      ab
+      ab,
+      trackExperiment
     )
     exerciseSubmission(
       {
@@ -44,7 +47,8 @@ export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
         result: val.substring(0, 200),
         type: 'ival',
       },
-      ab
+      ab,
+      trackExperiment
     )
   }
 
