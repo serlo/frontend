@@ -133,7 +133,6 @@ export function PlotFunction2() {
           </>
         )
       }}
-      centAmount={35}
     />
   )
 }

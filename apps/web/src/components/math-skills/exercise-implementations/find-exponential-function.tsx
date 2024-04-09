@@ -113,7 +113,6 @@ export function FindExponentialFunction() {
           </>
         )
       }}
-      centAmount={35}
     />
   )
 }

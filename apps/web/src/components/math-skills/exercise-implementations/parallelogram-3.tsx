@@ -175,7 +175,6 @@ export function Parallelogram3() {
           </p>
         </>
       )}
-      centAmount={35}
     />
   )
 }

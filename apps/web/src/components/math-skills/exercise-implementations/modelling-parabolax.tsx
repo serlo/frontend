@@ -195,7 +195,6 @@ export function ModellingParabola() {
           </>
         )
       }}
-      centAmount={35}
     />
   )
 }

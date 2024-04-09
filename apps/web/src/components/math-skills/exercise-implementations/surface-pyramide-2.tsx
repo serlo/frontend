@@ -164,7 +164,6 @@ export function SurfaceThreePyramide() {
           </>
         )
       }}
-      centAmount={52}
     />
   )
 }

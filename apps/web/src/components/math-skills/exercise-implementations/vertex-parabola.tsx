@@ -83,7 +83,6 @@ export function VertexParabola() {
           </>
         )
       }}
-      centAmount={35}
     />
   )
 }

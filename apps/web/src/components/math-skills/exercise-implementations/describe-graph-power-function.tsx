@@ -184,7 +184,6 @@ export function DescribeGraphPowerFunction() {
           </>
         )
       }}
-      centAmount={35}
     />
   )
 }

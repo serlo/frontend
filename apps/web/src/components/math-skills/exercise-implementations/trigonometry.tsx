@@ -118,7 +118,6 @@ export function Trigonometry() {
           </>
         )
       }}
-      centAmount={52}
     />
   )
 }

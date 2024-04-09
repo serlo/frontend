@@ -100,7 +100,6 @@ export function NormalformParabola() {
           </>
         )
       }}
-      centAmount={52}
     />
   )
 }

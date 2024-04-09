@@ -345,7 +345,6 @@ export function RotatePoint() {
       generator={() => null}
       renderTask={() => <></>}
       renderSolution={() => <></>}
-      centAmount={35}
     />
   )
 }

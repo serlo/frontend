@@ -165,7 +165,6 @@ export function Asymptote1() {
           </>
         )
       }}
-      centAmount={35}
     />
   )
 }

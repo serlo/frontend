@@ -267,7 +267,6 @@ export function WheelOfFortune() {
           </>
         )
       }}
-      centAmount={52}
     />
   )
 }

@@ -156,7 +156,6 @@ export function ParabolaCharacteristics() {
           </>
         )
       }}
-      centAmount={35}
     />
   )
 }

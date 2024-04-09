@@ -236,7 +236,6 @@ export function RotatePoint() {
           <SubComponent data={data} />
         </>
       )}
-      centAmount={35}
     />
   )
 }
