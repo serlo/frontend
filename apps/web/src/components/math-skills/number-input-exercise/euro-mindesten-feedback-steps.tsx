@@ -84,8 +84,8 @@ export function EuroMindestensFeedbackSteps({
             {step > 0 ? (
               <div className="text-lg">
                 Und dann machen wir genau so weiter:
-                <br /> Welche Münze hat jetzt einen Wert, der{' '}
-                <b>möglichst groß ist</b>, die kleiner ist als der{' '}
+                <br /> Welche Münze hat einen Wert, der{' '}
+                <b>möglichst groß ist</b>, aber kleiner oder gleich als der{' '}
                 <b>verbleibende Betrag</b> (
                 <span className="inline-block">
                   {cent - alreadyPaidSum} Cent) ?
@@ -198,7 +198,7 @@ export function EuroMindestensFeedbackSteps({
       <button
         className={cn(
           'mr-3 inline-flex aspect-square items-center justify-around rounded-lg text-center font-bold',
-          'w-12 bg-gray-200 outline outline-[3px] outline-animal hover:opacity-80'
+          'outline-animal w-12 bg-gray-200 outline outline-[3px] hover:opacity-80'
         )}
         onClick={() => {
           setFeedback({ element: null })
