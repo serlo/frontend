@@ -59,7 +59,6 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const [activePageIndex, setActivePageIndex] = useState(0)
 
-  // const templateStrings = useEditorStrings().templatePlugins
   const staticState = selectStaticDocument(store.getState(), props.id)
     ?.state as PrettyStaticState<CourseTypePluginState>
   const staticPages = staticState[
@@ -68,10 +67,12 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
 
   useEffect(() => {
     const hashId = parseInt(window.location.hash.substring(1))
-    setActivePageIndex(staticPages.findIndex(({ id }) => id === hashId))
+    if (!hashId) return
+    const index = staticPages.findIndex(({ id }) => id === hashId)
+    setActivePageIndex(Math.max(index, 0))
   }, [staticPages])
 
-  if (!staticState) return null
+  if (!staticPages) return null
 
   return (
     <>
@@ -137,31 +138,33 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
           />
         }
         pages={staticPages.map(({ title, id }, index) => {
+          const isActive = activePageIndex === index
           return {
             key: title + id + index,
             element: (
               <div className="group">
                 <button
                   onClick={() => {
-                    if (index === activePageIndex) return
+                    if (isActive) return
+                    window.location.hash = `#${staticPages[index].id}`
                     setActivePageIndex(index)
-                    window.location.hash = `#${staticPages[activePageIndex].id}`
                   }}
                   className={cn(
                     'serlo-link text-lg leading-browser',
-                    index === activePageIndex &&
+                    isActive &&
                       'font-semibold text-almost-black hover:no-underline'
                   )}
                 >
                   {title.trim().length ? title : '___'}
                 </button>{' '}
+                {/* This code becomes relevant when coursePages are not standalone entities any more */}
                 {/* {index > 0 ? (
                   <button
                     className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100"
                     onClick={() => {
                       const newIndex = index - 1
                       children.move(index, newIndex)
-                      setActivePageIndex(() => newIndex)
+                      // setActivePageIndex(() => newIndex)
                     }}
                   >
                     <EditorTooltip text={templateStrings.article.moveUpLabel} />
