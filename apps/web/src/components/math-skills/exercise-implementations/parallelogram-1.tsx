@@ -211,7 +211,6 @@ export function Parallelogram1() {
           <SubComponent data={data} />
         </>
       )}
-      centAmount={35}
       renderHint={() => {
         return (
           <>

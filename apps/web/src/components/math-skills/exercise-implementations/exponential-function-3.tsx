@@ -96,7 +96,6 @@ export function ExponentialEquation() {
           </>
         )
       }}
-      centAmount={35}
     />
   )
 }

@@ -97,7 +97,6 @@ export function ValueSetParabola() {
           </>
         )
       }}
-      centAmount={35}
     />
   ) // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function SubComponent({ data }: { data: PlotData }) {

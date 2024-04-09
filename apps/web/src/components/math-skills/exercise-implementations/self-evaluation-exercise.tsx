@@ -66,7 +66,7 @@ export function SelfEvaluationExercise<T>({
                   setData(generator())
                   setShowSolution(false)
                 }}
-                centAmount={centAmount}
+                centAmount={centAmount ?? 52}
               />
             </div>
           }

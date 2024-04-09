@@ -58,7 +58,6 @@ export function LogarithmEquation() {
           </p>
         </>
       )}
-      centAmount={35}
     />
   )
 }

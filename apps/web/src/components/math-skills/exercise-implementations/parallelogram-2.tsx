@@ -110,7 +110,6 @@ export function Parallelogram2() {
           )}
         </>
       )}
-      centAmount={35}
     />
   )
 }

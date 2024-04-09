@@ -202,7 +202,6 @@ export function VertexParabolaBackup() {
           </>
         )
       }}
-      centAmount={35}
     />
   )
 }

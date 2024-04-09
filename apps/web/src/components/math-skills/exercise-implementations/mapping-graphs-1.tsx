@@ -425,7 +425,6 @@ export function AbbildungGraphen() {
           </>
         )
       }}
-      centAmount={35}
     />
   )
 }

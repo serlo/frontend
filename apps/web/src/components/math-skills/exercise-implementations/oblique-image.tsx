@@ -140,7 +140,6 @@ export function ObliqueImage() {
           )
         return <></>
       }}
-      centAmount={52}
     />
   )
 }

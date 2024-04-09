@@ -104,7 +104,6 @@ export function ExponentialFunctionTime() {
           </>
         )
       }}
-      centAmount={35}
     />
   )
 }

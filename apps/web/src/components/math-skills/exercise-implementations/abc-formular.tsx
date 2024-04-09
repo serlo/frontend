@@ -192,7 +192,6 @@ export function ABCFormular() {
           </>
         )
       }}
-      centAmount={35}
     />
   )
 }

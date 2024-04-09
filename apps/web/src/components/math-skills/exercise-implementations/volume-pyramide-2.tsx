@@ -117,7 +117,6 @@ export function VolumeThreePyramide() {
           </>
         )
       }}
-      centAmount={52}
     />
   )
 }

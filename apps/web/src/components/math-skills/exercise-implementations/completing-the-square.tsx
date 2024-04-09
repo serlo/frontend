@@ -193,7 +193,6 @@ export function CompletingTheSquare() {
           </>
         )
       }}
-      centAmount={35}
     />
   )
 }

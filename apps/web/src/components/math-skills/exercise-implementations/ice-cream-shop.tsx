@@ -98,7 +98,6 @@ export function IceCreamShop() {
           </>
         )
       }}
-      centAmount={35}
     />
   )
 }

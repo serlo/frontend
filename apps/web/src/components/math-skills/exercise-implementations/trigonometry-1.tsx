@@ -83,7 +83,11 @@ export function Trigonometry1() {
                   </>,
                   <>{data.ab} cm</>
                 )}{' '}
-                = {buildFrac(<>{data.as + data.ac} cm</>, <>{data.as} cm</>)}
+                ={' '}
+                {buildFrac(
+                  <>{data.as + data.ac} cm</>,
+                  <>{data.as.toLocaleString('de-De')} cm</>
+                )}
               </HighlightGray>
             ) : (
               buildBlock(
@@ -95,7 +99,11 @@ export function Trigonometry1() {
                     </>,
                     <>{data.cd} cm</>
                   )}{' '}
-                  = {buildFrac(<>{data.as} cm</>, <>{data.as + data.ac} cm</>)}
+                  ={' '}
+                  {buildFrac(
+                    <>{data.as.toLocaleString('de-De')} cm</>,
+                    <>{data.as + data.ac} cm</>
+                  )}
                 </>
               )
             )}
@@ -107,7 +115,7 @@ export function Trigonometry1() {
               <HighlightGray>
                 ⇔ |<span className="overline">CD</span>| ={' '}
                 {buildFrac(<>{data.as + data.ac} cm</>, <>{data.as} cm</>)} ·{' '}
-                {data.ab} cm
+                {data.ab.toLocaleString('de-De')} cm
               </HighlightGray>
             ) : (
               buildBlock(
@@ -115,7 +123,7 @@ export function Trigonometry1() {
                 <>
                   ⇔ |<span className="overline">CD</span>| ={' '}
                   {buildFrac(<>{data.as} cm</>, <>{data.as + data.ac} cm</>)} ·{' '}
-                  {data.cd} cm
+                  {data.cd.toLocaleString('de-De')} cm
                 </>
               )
             )}
@@ -172,7 +180,6 @@ export function Trigonometry1() {
           </>
         )
       }}
-      centAmount={52}
     />
   )
 }
@@ -222,27 +229,27 @@ function SubComponent({ data }: { data: Trig1Data }) {
     })
 
     if (data.otherRay) {
-      b.create('text', [0, 2, `${data.as} cm`], {})
+      b.create('text', [0, 2, `${data.as.toLocaleString('de-De')} cm`], {})
       setBoard(b)
 
-      b.create('text', [1.6, 3.8, `${data.ac} cm`], {})
+      b.create('text', [1.6, 3.8, `${data.ac.toLocaleString('de-De')} cm`], {})
       setBoard(b)
     } else {
-      b.create('text', [2, 0, `${data.as} cm`], {
+      b.create('text', [2, 0, `${data.as.toLocaleString('de-De')} cm`], {
         anchorX: 'middle',
         anchorY: 'top',
       })
-      b.create('text', [5.3, 0, `${data.ac} cm`], {
+      b.create('text', [5.3, 0, `${data.ac.toLocaleString('de-De')} cm`], {
         anchorX: 'middle',
         anchorY: 'top',
       })
     }
 
     if (data.mode === 'cd') {
-      b.create('text', [2.8, 2, `${data.ab} cm`], {})
+      b.create('text', [2.8, 2, `${data.ab.toLocaleString('de-De')} cm`], {})
       setBoard(b)
     } else {
-      b.create('text', [4.6, 2.4, `${data.cd} cm`], {})
+      b.create('text', [4.6, 2.4, `${data.cd.toLocaleString('de-De')} cm`], {})
       setBoard(b)
     }
 

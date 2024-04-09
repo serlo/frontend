@@ -206,7 +206,6 @@ export function LogarithmExercise1() {
           </>
         )
       }}
-      centAmount={52}
     />
   )
 }

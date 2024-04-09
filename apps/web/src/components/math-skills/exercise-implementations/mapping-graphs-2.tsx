@@ -529,7 +529,6 @@ export function AbbildungGraphen2() {
           </>
         )
       }}
-      centAmount={35}
     />
   )
 }

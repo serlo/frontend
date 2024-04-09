@@ -137,7 +137,6 @@ export function RootEquations() {
           </>
         )
       }}
-      centAmount={35}
     />
   )
 }
