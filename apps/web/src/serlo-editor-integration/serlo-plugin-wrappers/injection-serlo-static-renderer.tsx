@@ -164,7 +164,7 @@ export function InjectionSerloStaticRenderer({
   }
 
   return (
-    <div className="border-b-3 border-brand-200 pb-4 text-gray-900">
+    <div className="border-b-3 border-brand-200 py-4 text-gray-900">
       <StaticRenderer document={content} />
     </div>
   )
