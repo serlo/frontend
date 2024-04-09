@@ -309,6 +309,7 @@ export const middleSchoolFinalExam = {
     title: 'Volumen einer Pyramide',
     subtitle: 'Raumgeometrie',
     calculatorAllowed: true,
+    difficulty: 1,
     track: 2,
     component: <VolumePyramide />,
   },
