@@ -1,5 +1,5 @@
 import JXG from 'jsxgraph'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { type WofData } from './wheel-of-fortune-step-by-step'
 import { arrayOfLength } from '@/helper/array-of-length'
@@ -7,14 +7,12 @@ import { cn } from '@/helper/cn'
 import { randomIntBetween } from '@/helper/random-int-between'
 
 export function WheelDiagram({ data }: { data: WofData }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
+  const board = useRef<JXG.Board | null>(null)
 
   const { sections } = data
 
   function setRotation(deg: number, relative?: boolean) {
-    const svg = board?.containerObj.querySelector('svg')
+    const svg = board.current?.containerObj.querySelector('svg')
     if (!svg) return
     const currentDeg = relative
       ? parseInt(svg.style.rotate.replace('deg', ''))
@@ -28,6 +26,7 @@ export function WheelDiagram({ data }: { data: WofData }) {
       showNavigation: false,
       showCopyright: false,
     })
+    board.current = b
 
     const colors = sections.map((value) => (value ? '#FFBE5E' : '#007EC1'))
     const parts = arrayOfLength(sections.length).map(() => 1)
@@ -45,12 +44,10 @@ export function WheelDiagram({ data }: { data: WofData }) {
       fontSize: '20',
     })
 
-    setBoard(b)
-
     setTimeout(() => setRotation(randomIntBetween(310, 420)))
 
     return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
+      if (board.current) JXG.JSXGraph.freeBoard(board.current)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sections])
