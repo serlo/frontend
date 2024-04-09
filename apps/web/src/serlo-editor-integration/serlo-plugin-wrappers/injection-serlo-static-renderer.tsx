@@ -7,77 +7,17 @@ import {
   EditorInjectionDocument,
 } from '@editor/types/editor-plugins'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
-import { endpoint } from '@serlo/frontend/src/api/endpoint'
-import { InfoPanel } from '@serlo/frontend/src/components/info-panel'
-import { LoadingSpinner } from '@serlo/frontend/src/components/loading/loading-spinner'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { triggerSentry } from '@serlo/frontend/src/helper/trigger-sentry'
 import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
 
-// TODO: move query into frontend
-export interface InjectionOnlyContentQuery {
-  __typename?: 'Query'
-  uuid?:
-    | {
-        __typename: 'Applet'
-        currentRevision?: {
-          __typename?: 'AppletRevision'
-          url: string
-          content: string
-        } | null
-      }
-    | { __typename: 'AppletRevision' }
-    | { __typename: 'Article'; alias: string; title: string }
-    | { __typename: 'ArticleRevision' }
-    | { __typename: 'Comment' }
-    | { __typename: 'Course' }
-    | { __typename: 'CoursePage'; alias: string; title: string }
-    | { __typename: 'CoursePageRevision' }
-    | { __typename: 'CourseRevision' }
-    | {
-        __typename: 'Event'
-        currentRevision?: {
-          __typename?: 'EventRevision'
-          content: string
-        } | null
-      }
-    | { __typename: 'EventRevision' }
-    | {
-        __typename: 'Exercise'
-        currentRevision?: {
-          __typename?: 'ExerciseRevision'
-          content: string
-        } | null
-        licenseId: number
-      }
-    | {
-        __typename: 'ExerciseGroup'
-        currentRevision?: {
-          __typename?: 'ExerciseGroupRevision'
-          content: string
-        } | null
-        licenseId: number
-      }
-    | { __typename: 'ExerciseGroupRevision' }
-    | { __typename: 'ExerciseRevision' }
-    | { __typename: 'Page' }
-    | { __typename: 'PageRevision' }
-    | { __typename: 'TaxonomyTerm'; alias: string; title: string }
-    | { __typename: 'User' }
-    | {
-        __typename: 'Video'
-        currentRevision?: {
-          __typename?: 'VideoRevision'
-          url: string
-          title: string
-        } | null
-      }
-    | { __typename: 'VideoRevision' }
-    | null
-}
+import { endpoint } from '@/api/endpoint'
+import { InfoPanel } from '@/components/info-panel'
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
+import { useInstanceData } from '@/contexts/instance-context'
+import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
+import { triggerSentry } from '@/helper/trigger-sentry'
 
-export function InjectionStaticRenderer({
+export function InjectionSerloStaticRenderer({
   state: href,
 }: EditorInjectionDocument) {
   const [content, setContent] = useState<

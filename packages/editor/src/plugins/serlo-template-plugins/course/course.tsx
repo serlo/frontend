@@ -15,6 +15,8 @@ import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { UuidType } from '@serlo/frontend/src/data-types'
 import { cn } from '@serlo/frontend/src/helper/cn'
+import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
+import { RevisionHistoryLoader } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/revision-history-loader'
 import { useState } from 'react'
 
 import { CourseNavigation } from './course-navigation'
@@ -25,8 +27,6 @@ import {
   serializedChild,
   entityType,
 } from '../common/common'
-import { ContentLoaders } from '../helpers/content-loaders/content-loaders'
-import { RevisionHistoryLoader } from '../helpers/content-loaders/revision-history-loader'
 import { SettingsTextarea } from '../helpers/settings-textarea'
 import { ToolbarMain } from '../toolbar-main/toolbar-main'
 

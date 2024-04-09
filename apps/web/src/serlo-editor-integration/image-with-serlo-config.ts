@@ -1,25 +1,12 @@
 import { LoadedFile, UploadValidator } from '@editor/plugin'
-import { createAuthAwareGraphqlFetch } from '@serlo/frontend/src/api/graphql-fetch'
-import { getAuthPayloadFromSession } from '@serlo/frontend/src/auth/auth-provider'
-import { fetchAndPersistAuthSession } from '@serlo/frontend/src/auth/cookie/fetch-and-persist-auth-session'
-import { MediaType } from '@serlo/frontend/src/fetcher/graphql-types/operations'
-import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
+import { createImagePlugin } from '@editor/plugins/image'
 import { gql } from 'graphql-request'
 
-import { createImagePlugin as createCoreImagePlugin } from '.'
-
-// TODO: move into frontend
-export interface MediaUploadQuery {
-  __typename?: 'Query'
-  media: {
-    __typename?: 'MediaQuery'
-    newUpload: {
-      __typename?: 'MediaUpload'
-      uploadUrl: string
-      urlAfterUpload: string
-    }
-  }
-}
+import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
+import { getAuthPayloadFromSession } from '@/auth/auth-provider'
+import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
+import { MediaType, MediaUploadQuery } from '@/fetcher/graphql-types/operations'
+import { showToastNotice } from '@/helper/show-toast-notice'
 
 const maxFileSize = 2 * 1024 * 1024
 const allowedExtensions = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'webp']
@@ -70,7 +57,7 @@ const validateFile: UploadValidator<FileError[]> = (file) => {
   return { valid: false, errors: handleErrors(uploadErrors) }
 }
 
-export const imagePlugin = createCoreImagePlugin({
+export const imagePlugin = createImagePlugin({
   upload: createUploadImageHandler(),
   validate: validateFile,
 })

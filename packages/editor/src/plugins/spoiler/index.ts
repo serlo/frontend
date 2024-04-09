@@ -7,11 +7,18 @@ import {
   type EditorPluginProps,
   object,
   string,
+  optional,
 } from '../../plugin'
 
 function createSpoilerState(config: SpoilerConfig) {
   return object({
-    title: string(''),
+    title: optional(string('')),
+    richTitle: optional(
+      child({
+        plugin: EditorPluginType.Text,
+        config: { noLinebreaks: true },
+      })
+    ),
     content: child({
       plugin: EditorPluginType.Rows,
       ...(config.allowedPlugins !== undefined && {

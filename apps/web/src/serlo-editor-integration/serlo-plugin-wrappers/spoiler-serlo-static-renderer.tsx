@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { useAB } from '@/contexts/ab'
 import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
+import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
 
 export function SpoilerSerloStaticRenderer({
   ...props
@@ -18,11 +19,9 @@ export function SpoilerSerloStaticRenderer({
   const revisionId = useRevisionId()
   const { asPath } = useRouter()
 
+  const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
   const trackSpoilerOpened = () => {
-    const experimentIds = [30680, 23869, 66809]
-    const shouldTrackSpoilerOpen = entityId && experimentIds.includes(entityId)
-
-    if (!shouldTrackSpoilerOpen || !ab || hasSentSpoilerTrackingEvent) return
+    if (hasSentSpoilerTrackingEvent) return
     // send tracking event
     exerciseSubmission(
       {
@@ -32,7 +31,8 @@ export function SpoilerSerloStaticRenderer({
         result: 'open',
         type: 'spoiler',
       },
-      ab
+      ab,
+      trackExperiment
     )
     setHasSentSpoilerTrackingEvent(true)
   }

@@ -33,7 +33,6 @@ import { ComponentProps } from 'react'
 import { ExtraInfoIfRevisionView } from './extra-info-if-revision-view'
 import { GeogebraSerloStaticRenderer } from './serlo-plugin-wrappers/geogebra-serlo-static-renderer'
 import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-static-renderer'
-import { SpoilerSerloStaticRenderer } from './serlo-plugin-wrappers/spoiler-serlo-static-renderer'
 import { VideoSerloStaticRenderer } from './serlo-plugin-wrappers/video-serlo-static-renderer'
 import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
@@ -66,9 +65,16 @@ const BlanksExerciseSerloStaticRenderer = dynamic<EditorBlanksExerciseDocument>(
       '@/serlo-editor-integration/serlo-plugin-wrappers/blanks-exercise-static-renderer'
     ).then((mod) => mod.BlanksExerciseSerloStaticRenderer)
 )
-const InjectionStaticRenderer = dynamic<EditorInjectionDocument>(() =>
-  import('@editor/plugins/injection/static').then(
-    (mod) => mod.InjectionStaticRenderer
+const InjectionSerloStaticRenderer = dynamic<EditorInjectionDocument>(() =>
+  import(
+    '@/serlo-editor-integration/serlo-plugin-wrappers/injection-serlo-static-renderer'
+  ).then((mod) => mod.InjectionSerloStaticRenderer)
+)
+const SpoilerSerloStaticRenderer = dynamic<
+  EditorSpoilerDocument & { openOverwrite?: boolean; onOpen?: () => void }
+>(() =>
+  import('./serlo-plugin-wrappers/spoiler-serlo-static-renderer').then(
+    (mod) => mod.SpoilerSerloStaticRenderer
   )
 )
 
@@ -152,7 +158,7 @@ export function createRenderers(): InitRenderersArgs {
           if (!props.state) return null
           return (
             <Lazy>
-              <InjectionStaticRenderer {...props} />
+              <InjectionSerloStaticRenderer {...props} />
               <ExtraInfoIfRevisionView>{props.state}</ExtraInfoIfRevisionView>
             </Lazy>
           )

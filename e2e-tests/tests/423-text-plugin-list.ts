@@ -137,7 +137,8 @@ Scenario('Inserting a plugin right after a list using suggestions', ({ I }) => {
   I.say('Add a Spoiler plugin using suggestions')
   I.type('/Spo')
   I.pressKey('Enter')
-  I.seeElement(locate('input').withAttr({ placeholder: 'Titel eingeben' }))
+  I.click('Titel eingeben')
+  I.see('Spoiler')
 
   I.say('Check that the list still exists')
   I.see('Some text', 'ul')
