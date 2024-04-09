@@ -63,6 +63,17 @@ export function BlanksExerciseRenderer(props: BlanksExerciseRendererProps) {
     return getBlanksWithinObject(childPluginState)
   }, [childPluginState])
 
+  // All blanks minus the ones that have no answer or "", " " as an answer
+  const blanksWithCorrectAnswer = useMemo(() => {
+    return blanks.filter((blank) => {
+      const firstCorrectAnswer = blank.correctAnswers.at(0)
+      return (
+        firstCorrectAnswer !== undefined &&
+        firstCorrectAnswer.answer.trim().length > 0
+      )
+    })
+  }, [blanks])
+
   // Maps blankId to the text entered by the user. Modified when user types into a blank and causes rerender.
   const [textUserTypedIntoBlanks, setTextUserTypedIntoBlanks] = useState(
     new Map<BlankId, { text: string }>()
@@ -87,10 +98,12 @@ export function BlanksExerciseRenderer(props: BlanksExerciseRendererProps) {
   }, [blanks, textUserTypedIntoBlanks, initialTextInBlank])
 
   const draggables = useMemo(() => {
-    const sorted = blanks.map(({ blankId, correctAnswers }) => ({
-      draggableId: `solution-${blankId}`,
-      text: correctAnswers[0]?.answer,
-    }))
+    const sorted = blanksWithCorrectAnswer.map(
+      ({ blankId, correctAnswers }) => ({
+        draggableId: `solution-${blankId}`,
+        text: correctAnswers[0]?.answer,
+      })
+    )
     if (isEditing) return sorted
 
     const extraIncorrectAnswers =
@@ -104,7 +117,7 @@ export function BlanksExerciseRenderer(props: BlanksExerciseRendererProps) {
       .sort((a, b) => a.sort - b.sort)
       .map(({ draggable }) => draggable)
     return shuffled
-  }, [extraDraggableAnswers, blanks, isEditing])
+  }, [extraDraggableAnswers, blanksWithCorrectAnswer, isEditing])
 
   // Maps DraggableId to the BlankId where this draggable element is currently located
   const [locationOfDraggables, setLocationOfDraggables] = useState(
@@ -125,12 +138,20 @@ export function BlanksExerciseRenderer(props: BlanksExerciseRendererProps) {
   )
 
   const shouldShowCheckButton = useMemo(() => {
-    if (blanks.length < 1) return false
-    if (mode === 'typing') {
-      return [...textInBlanks.values()].every(({ text }) => text.length > 0)
-    }
-    return blanks.length === locationOfDraggables.size
-  }, [blanks.length, locationOfDraggables.size, mode, textInBlanks])
+    if (blanksWithCorrectAnswer.length === 0) return false
+
+    return blanksWithCorrectAnswer.every((blank) => {
+      if (mode === 'typing') {
+        const textInBlank = textInBlanks.get(blank.blankId)
+        return textInBlank !== undefined && textInBlank.text.length > 0
+      }
+      if (mode === 'drag-and-drop') {
+        return [...locationOfDraggables].some(
+          (entry) => entry[1] === blank.blankId
+        )
+      }
+    })
+  }, [blanksWithCorrectAnswer, locationOfDraggables, mode, textInBlanks])
 
   // Clear the blanks state when the type of the child plugin changes
   useEffect(() => {
@@ -255,7 +276,7 @@ export function BlanksExerciseRenderer(props: BlanksExerciseRendererProps) {
       { isCorrect: boolean | undefined }
     >()
 
-    blanks.forEach((blankState) => {
+    blanksWithCorrectAnswer.forEach((blankState) => {
       const trimmedBlankText = getTrimmedBlankText(blankState.blankId)
 
       // Go through all solutions and evaluate the submission against them
