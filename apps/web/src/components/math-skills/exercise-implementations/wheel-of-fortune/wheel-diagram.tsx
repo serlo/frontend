@@ -13,6 +13,15 @@ export function WheelDiagram({ data }: { data: WofData }) {
 
   const { sections } = data
 
+  function setRotation(deg: number, relative?: boolean) {
+    const svg = board?.containerObj.querySelector('svg')
+    if (!svg) return
+    const currentDeg = relative
+      ? parseInt(svg.style.rotate.replace('deg', ''))
+      : 0
+    svg.style.rotate = currentDeg + deg + 'deg'
+  }
+
   useEffect(() => {
     const b = JXG.JSXGraph.initBoard('jxgbox', {
       boundingbox: [-5, 5, 5, -5],
@@ -29,19 +38,16 @@ export function WheelDiagram({ data }: { data: WofData }) {
       center: [0, 0],
       strokeColor: '#222',
       strokeWidth: 2,
-      highlightOnSector: true,
-      hightlightStrokeColor: '#cc0022',
     })
 
-    b.create('text', [-0.2, 4, '⧪'], { color: '#222', fontSize: 24 })
+    b.create('text', [-0.2, 4, '⧪'], {
+      color: '#222',
+      fontSize: '20',
+    })
 
     setBoard(b)
 
-    setTimeout(() => {
-      const svg = b.containerObj.querySelector('svg')
-      const deg = randomIntBetween(310, 420)
-      if (svg) svg.style.rotate = deg + 'deg'
-    }, 0)
+    setTimeout(() => setRotation(randomIntBetween(310, 420)))
 
     return () => {
       if (board) JXG.JSXGraph.freeBoard(board)
@@ -57,16 +63,8 @@ export function WheelDiagram({ data }: { data: WofData }) {
           'jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200',
           '[&_svg]:transition-[rotate] [&_svg]:ease-out [&_svg]:[transition-duration:1500ms]	'
         )}
+        onClickCapture={() => setRotation(randomIntBetween(0, 360), true)}
       ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
     </>
   )
 }
