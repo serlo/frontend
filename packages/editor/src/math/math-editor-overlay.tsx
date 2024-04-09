@@ -11,7 +11,6 @@ export function MathEditorOverlay({
   ...props
 }: { hasError: boolean; isVisualMode: boolean } & MathEditorProps) {
   const mathStrings = useEditorStrings().plugins.text.math
-  const { state } = props
 
   return (
     <div
@@ -33,7 +32,7 @@ export function MathEditorOverlay({
           <FaIcon icon={faXmark} />
         </button>
       </div>
-      {!isVisualMode && <MathEditorTextarea {...props} defaultValue={state} />}
+      {!isVisualMode && <MathEditorTextarea {...props} />}
     </div>
   )
 }
