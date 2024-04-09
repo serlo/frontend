@@ -88,6 +88,11 @@ export function StaticSlate({
       return <MathRenderer {...element} />
     }
     if (element.type === 'textBlank') {
+      const isCorrectAnswerEmpty =
+        element.correctAnswers.at(0) === undefined ||
+        element.correctAnswers.at(0)?.answer.trim().length === 0
+      if (isCorrectAnswerEmpty) return null
+
       return <BlankRendererStatic blankId={element.blankId} />
     }
 
