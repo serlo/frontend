@@ -86,11 +86,8 @@ export function JsonLd({ data, id }: JsonLdProps) {
       ? [
           {
             id: getIRI(data.breadcrumbsData[0].id),
-            prefLabel: {
-              [lang]: data.breadcrumbsData[0].label,
-              '@none': data.breadcrumbsData[0].label,
-            },
-            type: 'Concept',
+            name: data.breadcrumbsData[0].label,
+            type: 'Thing',
           },
         ]
       : undefined
