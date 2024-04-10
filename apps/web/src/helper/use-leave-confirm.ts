@@ -7,6 +7,8 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 // we use this hash to make sure we don't block redirects after an successful save
 export const successHash = '#success'
 
+let confirmationBypassed = false
+
 // needed because of https://github.com/vercel/next.js/issues/2476
 export function useLeaveConfirm(protect: boolean) {
   const Router = useRouter()
@@ -15,7 +17,32 @@ export function useLeaveConfirm(protect: boolean) {
   const onRouteChangeStart = useCallback(
     (targetUrl?: string) => {
       if (targetUrl && targetUrl.includes(successHash)) return
-      if (protect) {
+
+      if (targetUrl) {
+        const urlObject = new URL(targetUrl, window.location.href)
+
+        if (urlObject.searchParams.has('noConfirmation')) {
+          if (confirmationBypassed) {
+            // Reset for future navigation
+            confirmationBypassed = false
+            return
+          }
+
+          urlObject.searchParams.delete('noConfirmation')
+
+          const cleanUrl =
+            urlObject.pathname + urlObject.search + urlObject.hash
+
+          // Remove "noConfirm" from the URL
+          return Router.replace(cleanUrl, undefined, { shallow: true })
+            .then(() => {
+              confirmationBypassed = true
+            })
+            .catch(() => void null)
+        }
+      }
+
+      if (protect && !confirmationBypassed) {
         if (window.confirm(loggedInData?.strings.editor.confirmRouteChange)) {
           return true
         }
@@ -26,7 +53,7 @@ export function useLeaveConfirm(protect: boolean) {
         throw "Abort route change by user's confirmation."
       }
     },
-    [protect, loggedInData?.strings.editor.confirmRouteChange, Router.asPath]
+    [protect, loggedInData?.strings.editor.confirmRouteChange, Router]
   )
 
   useEffect(() => {

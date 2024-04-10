@@ -17,6 +17,7 @@ import { UuidType } from '@serlo/frontend/src/data-types'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 import { RevisionHistoryLoader } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/revision-history-loader'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { CourseNavigation } from './course-navigation'
@@ -53,6 +54,7 @@ export const courseTypePlugin: EditorPlugin<CourseTypePluginState> = {
 
 function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
   const { title, meta_description, 'course-page': children } = props.state
+  const router = useRouter()
   const editorStrings = useEditorStrings()
   const courseStrings = editorStrings.templatePlugins.course
   const [courseNavOpen, setCourseNavOpen] = useState(true)
@@ -94,8 +96,24 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
         <div className="ml-side mt-4">
           <AddButton
             onClick={() => {
-              children.insert()
-              setActivePageIndex(staticPages.length)
+              // We want to show the newly inserted course page. Reset the hash
+              // (for conflicts in the useEffect - without clashing with
+              // useLeaveConfirm) and open the navigation menu
+              const url = new URL(window.location.href)
+              const queryParams = new URLSearchParams(url.search)
+              queryParams.set('noConfirmation', 'true')
+              url.search = queryParams.toString()
+              const newUrl = `${url.pathname}${url.search}`
+
+              router
+                .replace(newUrl, undefined, { shallow: true })
+                .then(() => {
+                  setActivePageIndex(staticPages.length)
+                  setCourseNavOpen(true)
+
+                  children.insert()
+                })
+                .catch(() => void null)
             }}
           >
             {courseStrings.addCoursePage}
