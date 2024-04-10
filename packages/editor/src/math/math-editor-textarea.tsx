@@ -47,13 +47,9 @@ export const MathEditorTextarea = ({
         const caretAtRightEnd = selectionEnd === value.length
         const caretAtLeftEnd = selectionStart === 0
 
-        if (e.key === 'ArrowRight' && !e.shiftKey && caretAtRightEnd) {
-          onMoveOutRight?.()
-        }
-
-        if (e.key === 'ArrowLeft' && !e.shiftKey && caretAtLeftEnd) {
-          onMoveOutLeft?.()
-        }
+        if (e.shiftKey) return
+        if (e.key === 'ArrowRight' && caretAtRightEnd) onMoveOutRight?.()
+        if (e.key === 'ArrowLeft' && caretAtLeftEnd) onMoveOutLeft?.()
       }}
     />
   )
