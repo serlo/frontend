@@ -95,7 +95,10 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
           <AddButton
             onClick={() => {
               children.insert()
-              setActivePageIndex(staticPages.length)
+              setTimeout(() => {
+                setActivePageIndex(staticPages.length)
+                window.location.hash = `#${staticPages[staticPages.length - 1].id}`
+              })
             }}
           >
             {courseStrings.addCoursePage}
