@@ -1,57 +1,39 @@
 import { gql } from 'graphql-request'
 
 export const sharedRevisionFragments = gql`
-  fragment articleRevision on ArticleRevision {
+  fragment anyRevision on AbstractRevision {
     id
     title
     content
-    metaTitle
-    metaDescription
     date
   }
 
-  fragment pageRevision on PageRevision {
-    id
-    title
-    content
+  fragment articleRevision on ArticleRevision {
+    ...anyRevision
+    metaTitle
+    metaDescription
   }
 
   fragment videoRevision on VideoRevision {
-    id
-    title
+    ...anyRevision
     url
-    content
   }
 
   fragment appletRevision on AppletRevision {
-    id
-    title
-    content
+    ...anyRevision
     url
     metaTitle
     metaDescription
-    date
   }
 
   fragment coursePageRevision on CoursePageRevision {
-    id
+    ...anyRevision
     alias
-    content
-    title
-    date
   }
 
   fragment exerciseGroupRevision on ExerciseGroupRevision {
-    id
-    content
+    ...anyRevision
     cohesive
-    date
-  }
-
-  fragment eventRevision on EventRevision {
-    id
-    title
-    content
   }
 `
 

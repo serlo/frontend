@@ -12,9 +12,9 @@ export const dataQuery = gql`
     uuid(id: $id, alias: $alias) {
       __typename
       id
+      title
       trashed
       alias
-      title
 
       ... on AbstractRepository {
         instance
@@ -39,7 +39,7 @@ export const dataQuery = gql`
 
       ... on Page {
         currentRevision {
-          ...pageRevision
+          ...anyRevision
         }
       }
 
@@ -103,7 +103,7 @@ export const dataQuery = gql`
 
       ... on Event {
         currentRevision {
-          ...eventRevision
+          ...anyRevision
         }
       }
 
@@ -127,6 +127,7 @@ export const dataQuery = gql`
 
       ... on TaxonomyTerm {
         alias
+        title
         instance
         type
         name
@@ -194,6 +195,7 @@ export const dataQuery = gql`
 
   fragment taxonomyTermChild on AbstractEntity {
     alias
+    title
     id
     date
     currentRevision {

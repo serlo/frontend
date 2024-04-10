@@ -11,6 +11,7 @@ export const revisionQuery = gql`
     uuid(id: $id) {
       ... on AbstractRevision {
         __typename
+        title
         id
         alias
         trashed
@@ -50,7 +51,7 @@ export const revisionQuery = gql`
         }
       }
       ... on PageRevision {
-        ...pageRevision
+        ...anyRevision
         repository {
           licenseId
           trashed
@@ -58,8 +59,7 @@ export const revisionQuery = gql`
           id
           alias
           currentRevision {
-            id
-            ...pageRevision
+            ...anyRevision
           }
           revisions(unrevised: false) {
             totalCount
@@ -81,7 +81,6 @@ export const revisionQuery = gql`
           id
           alias
           currentRevision {
-            id
             ...appletRevision
           }
           revisions(unrevised: false) {
@@ -95,7 +94,7 @@ export const revisionQuery = gql`
         }
       }
       ... on CourseRevision {
-        ...courseRevision
+        ...anyRevision
         repository {
           ...taxonomyTermsV2
           licenseId
@@ -104,8 +103,7 @@ export const revisionQuery = gql`
           id
           alias
           currentRevision {
-            id
-            ...courseRevision
+            ...anyRevision
           }
           revisions(unrevised: false) {
             totalCount
@@ -135,7 +133,6 @@ export const revisionQuery = gql`
           id
           alias
           currentRevision {
-            id
             ...coursePageRevision
           }
           revisions(unrevised: false) {
@@ -173,7 +170,7 @@ export const revisionQuery = gql`
         }
       }
       ... on EventRevision {
-        ...eventRevision
+        ...anyRevision
         repository {
           licenseId
           ...taxonomyTermsV2
@@ -182,8 +179,7 @@ export const revisionQuery = gql`
           id
           alias
           currentRevision {
-            id
-            ...eventRevision
+            ...anyRevision
           }
           revisions(unrevised: false) {
             totalCount
@@ -205,9 +201,7 @@ export const revisionQuery = gql`
           id
           alias
           currentRevision {
-            id
-            content
-            date
+            ...anyRevision
           }
           licenseId
           revisions(unrevised: false) {
@@ -231,7 +225,6 @@ export const revisionQuery = gql`
           id
           alias
           currentRevision {
-            id
             ...exerciseGroupRevision
           }
           revisions(unrevised: false) {
@@ -254,7 +247,6 @@ export const revisionQuery = gql`
           id
           alias
           currentRevision {
-            id
             ...videoRevision
           }
           revisions(unrevised: false) {
@@ -276,13 +268,6 @@ export const revisionQuery = gql`
         ...pathToRoot
       }
     }
-  }
-
-  fragment courseRevision on CourseRevision {
-    alias
-    content
-    title
-    metaDescription
   }
 
   ${sharedTaxonomyParents}
