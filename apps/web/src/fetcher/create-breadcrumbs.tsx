@@ -21,15 +21,13 @@ export function taxonomyParentsToRootToBreadcrumbsData(
 
   const { secondaryMenus } = getInstanceDataByLang(instance)
 
-  const breadcrumbs = term.path
-    .filter((entry) => entry?.id !== 3) // TODO: maybe remove in API
-    .map((entry) => {
-      return {
-        label: entry!.title,
-        url: entry!.alias,
-        id: entry!.id,
-      }
-    })
+  const breadcrumbs = term.path.map((entry) => {
+    return {
+      label: entry!.title,
+      url: entry!.alias,
+      id: entry!.id,
+    }
+  })
 
   if (includeFirstParent) {
     breadcrumbs.push({
