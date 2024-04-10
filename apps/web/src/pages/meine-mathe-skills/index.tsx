@@ -183,7 +183,7 @@ function Content() {
   }
 
   function renderDifficulty(difficulty: MiddleSchoolTask['difficulty']) {
-    if (!difficulty) return null // 0 or undefined
+    if (!difficulty || difficulty < 2) return null // 0 or undefined
 
     const title = [
       '',

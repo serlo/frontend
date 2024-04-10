@@ -45,7 +45,7 @@ export interface MiddleSchoolTask {
   title: string
   subtitle: string
   calculatorAllowed: boolean
-  difficulty?: 0 | 1 | 2 | 3
+  difficulty?: 1 | 2 | 3
   track: 1 | 2 | 3
   component: JSX.Element
 }
