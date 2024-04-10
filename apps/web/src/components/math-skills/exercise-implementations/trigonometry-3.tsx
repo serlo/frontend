@@ -121,16 +121,18 @@ export function Trigonometry3() {
               )}
             </HighlightGray>
             <br />
-            <HighlightGray>𝛼 = {zw}°</HighlightGray>
+            <HighlightGray>𝛼 = {zw}.toLocaleString('de-DE')°</HighlightGray>
             <br />
             <HighlightGray>
               |<span className="overline">BD</span>| ={' '}
-              {buildFrac(<>1</>, <>8</>)} · {data.ab} cm = {achtelbd} cm
+              {buildFrac(<>1</>, <>8</>)} · {data.ab} cm ={' '}
+              {achtelbd.toLocaleString('de-DE')} cm
             </HighlightGray>{' '}
             <br />
             <HighlightGray>
               |<span className="overline">CE</span>| ={' '}
-              {buildFrac(<>1</>, <>8</>)} · {data.ac} cm = {achtelce} cm
+              {buildFrac(<>1</>, <>8</>)} · {data.ac} cm ={' '}
+              {achtelce.toLocaleString('de-DE')} cm
             </HighlightGray>{' '}
             <br /> <br />
             So ist der Flächeninhalt des Dreiecks ABC: <br />
@@ -142,13 +144,14 @@ export function Trigonometry3() {
             Der Flächeninhalt des Dreicks ADE: <br />
             <HighlightGray>
               A<sub>ADE</sub> = 0,5 · ({data.ab} - {data.ab / 8}) cm · (
-              {data.ac} - {Math.round((data.ac / 8) * 100) / 100}) cm · sin {zw}
+              {data.ac} - {Math.round((data.ac / 8) * 100) / 100}) cm · sin{' '}
+              {zw.toLocaleString('de-DE')}
               ° <br />= {A2} cm²
             </HighlightGray>{' '}
             <br /> <br />
             Somit ist der Flächeninhalt des Vierecks DBCE: <br />
             <HighlightGreen>
-              A = {A1} cm² - {A2} cm² = {Erg} cm²
+              A = {A1} cm² - {A2} cm² = {Erg.toLocaleString('de-DE')} cm²
             </HighlightGreen>
           </>
         )
