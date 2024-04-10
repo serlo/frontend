@@ -14,6 +14,7 @@ export const dataQuery = gql`
       id
       trashed
       alias
+      title
 
       ... on AbstractRepository {
         instance

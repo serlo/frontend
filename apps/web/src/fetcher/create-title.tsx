@@ -10,20 +10,19 @@ import { getTranslatedType } from '@/helper/get-translated-type'
 
 export function createTitle(uuid: MainUuidType, instance: Instance): string {
   const instanceData = getServerSideStrings(instance)
-  const suffix = ` - ${instanceData.title}`
 
   const title = getRawTitle(uuid, instance)
 
   if (!title) return 'Serlo'
   if (uuid.__typename.endsWith('Revision')) return title
-  return title + suffix
+  return `${title} - ${instanceData.title}`
 }
 
 // subscriptions need the raw title, so it's easier to reuse their type
 export function getRawTitle(
   uuid: SubscriptionNode['object'] | MainUuidType,
   instance: Instance
-): string | null {
+): string {
   const { strings } = getInstanceDataByLang(instance)
 
   if (uuid.__typename.endsWith('Revision')) {
@@ -44,5 +43,5 @@ export function getRawTitle(
     // missing: special behaviour on curriculum term
   }
 
-  return Object.hasOwn(uuid, 'title') ? uuid.title : null
+  return uuid.title
 }
