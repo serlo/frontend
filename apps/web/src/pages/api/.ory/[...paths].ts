@@ -53,12 +53,19 @@ export default async function customCreateApiHandler(
     if (userId) {
       void fetch(API_KRATOS_WEBHOOK_URL, {
         method: 'POST',
-        headers: { 'x-kratos-key': process.env.API_KRATOS_SECRET },
+        headers: {
+          'x-kratos-key': process.env.API_KRATOS_SECRET,
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ userId }),
       })
         .then(async (result) => {
           const text = await result.text()
-          console.log(text)
+          if (result.status !== 200) {
+            console.log(result.status)
+            console.log({ userId })
+            console.log(text)
+          }
         })
         .catch((e) => {
           console.error(e)
