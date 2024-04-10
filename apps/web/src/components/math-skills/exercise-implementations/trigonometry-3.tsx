@@ -121,7 +121,7 @@ export function Trigonometry3() {
               )}
             </HighlightGray>
             <br />
-            <HighlightGray>𝛼 = {zw}.toLocaleString('de-DE')°</HighlightGray>
+            <HighlightGray>𝛼 = {zw.toLocaleString('de-DE')}°</HighlightGray>
             <br />
             <HighlightGray>
               |<span className="overline">BD</span>| ={' '}
