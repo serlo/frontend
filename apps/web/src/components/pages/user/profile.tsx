@@ -162,7 +162,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     return (
       <section>
         <h2 className="serlo-h2">{strings.profiles.recentActivities}</h2>
-        <Events userId={id} perPage={5} />
+        <Events username={username} perPage={5} />
 
         <p className="serlo-p">
           <Link

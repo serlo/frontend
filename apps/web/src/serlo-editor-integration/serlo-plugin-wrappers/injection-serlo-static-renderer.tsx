@@ -10,9 +10,7 @@ import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
 
-import { ExtraInfoIfRevisionView } from '../extra-info-if-revision-view'
 import { endpoint } from '@/api/endpoint'
-import { Lazy } from '@/components/content/lazy'
 import { InfoPanel } from '@/components/info-panel'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -167,12 +165,9 @@ export function InjectionSerloStaticRenderer({
   }
 
   return (
-    <Lazy>
-      <div className="border-b-3 border-brand-200 pb-4 text-gray-900">
-        <StaticRenderer document={content} />
-      </div>
-      <ExtraInfoIfRevisionView>{href}</ExtraInfoIfRevisionView>
-    </Lazy>
+    <div className="border-b-3 border-brand-200 py-4 text-gray-900">
+      <StaticRenderer document={content} />
+    </div>
   )
 }
 
