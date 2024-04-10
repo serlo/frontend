@@ -54,14 +54,6 @@ export const MathEditorTextarea = ({
         if (e.key === 'ArrowLeft' && !e.shiftKey && caretAtLeftEnd) {
           onMoveOutLeft?.()
         }
-
-        if (e.key === 'ArrowUp' && !caretAtLeftEnd) {
-          e.stopPropagation()
-        }
-
-        if (e.key === 'ArrowDown' && !caretAtRightEnd) {
-          e.stopPropagation()
-        }
       }}
     />
   )
