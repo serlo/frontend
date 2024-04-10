@@ -34,21 +34,14 @@ export function ProfileChatButton({
   const [pending, setPending] = useState(false)
   const [message, setMessage] = useState('')
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  useEffect(() => setMounted(true), [])
 
-  if (!mounted) return null
-  if (auth === null) return null
+  if (!mounted || !auth) return null
   const isRegistered = !!chatUrl
 
   const text = isOwnProfile
-    ? isRegistered
-      ? strings.profiles.goToChat
-      : strings.profiles.registerChat
-    : isRegistered
-      ? strings.profiles.directMessage
-      : strings.profiles.inviteToChat
+    ? strings.profiles[isRegistered ? 'goToChat' : 'registerChat']
+    : strings.profiles[isRegistered ? 'directMessage' : 'inviteToChat']
 
   const url = isOwnProfile ? 'https://community.serlo.org/' : chatUrl
   const onClickAction =

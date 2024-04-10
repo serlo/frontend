@@ -12,6 +12,8 @@ export function createTitle(uuid: MainUuidType, instance: Instance): string {
   const instanceData = getServerSideStrings(instance)
   const suffix = ` - ${instanceData.title}`
 
+  // TODO: will be solved with upcoming graphql refactoring PR
+  if (uuid.__typename === UuidType.User) return 'Profil'
   const title = getRawTitle(uuid, instance)
 
   if (!title) return 'Serlo'
@@ -56,9 +58,6 @@ export function getRawTitle(
     return subject + ' ' + typenameString
   }
 
-  if (uuid.__typename === UuidType.User) {
-    return uuid.username
-  }
   if (
     uuid.__typename === UuidType.Page ||
     uuid.__typename === UuidType.Article ||

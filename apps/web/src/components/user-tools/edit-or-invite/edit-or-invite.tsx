@@ -41,7 +41,6 @@ export function EditOrInvite({
     UuidType.Page,
     UuidType.Event,
     UuidType.TaxonomyTerm,
-    UuidType.User,
   ].includes(data.type as UuidType)
 
   const isInvite = !auth && showInvite
