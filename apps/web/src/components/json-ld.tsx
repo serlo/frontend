@@ -125,14 +125,8 @@ export function JsonLd({ data, id }: JsonLdProps) {
       audience: [
         {
           id: 'http://purl.org/dcx/lrmi-vocabs/educationalAudienceRole/student',
-          prefLabel: {
-            en: 'student',
-            de: 'Schüler*in',
-          },
-          type: 'Concept',
-          inScheme: {
-            id: 'http://purl.org/dcx/lrmi-vocabs/educationalAudienceRole/',
-          },
+          audienceType: 'student',
+          type: 'Audience',
         },
       ],
       isPartOf,
