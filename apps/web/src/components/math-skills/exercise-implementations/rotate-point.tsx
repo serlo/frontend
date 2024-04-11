@@ -33,12 +33,13 @@ export function RotatePoint() {
       </>
     ) : data.deg === 30 ? (
       <>
-        C ( {data.ax} + {data.len > 2 ? 0.5 * data.len : ''}
+        C ( {data.ax === 0 ? null : <>{data.ax} + </>}
+        {data.len > 2 ? 0.5 * data.len : ''}
         {buildSqrt(3)} | {Math.round(data.cy)} )
       </>
     ) : (
       <>
-        C ( {Math.round(data.cx)} | {data.ay} +{' '}
+        C ( {Math.round(data.cx)} | {data.ay === 0 ? null : <>{data.ay} + </>}
         {data.len > 2 ? 0.5 * data.len : ''}
         {buildSqrt(3)} )
       </>
