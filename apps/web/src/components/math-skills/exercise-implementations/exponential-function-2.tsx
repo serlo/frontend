@@ -26,8 +26,8 @@ export function ExponentialFunctionTime() {
               verzinst.
             </p>
             <p className="serlo-main-task">
-              Bestimmen Sie, nach wie vielen Jahren das Kapital erstmal mehr als{' '}
-              {Geld_Ende} € beträgt.
+              Bestimmen Sie, am Ende von wie vielen Jahren das Kapital erstmal
+              mehr als {Geld_Ende} € beträgt.
             </p>
           </>
         )
@@ -69,8 +69,8 @@ export function ExponentialFunctionTime() {
             </p>
             <p>Antworte:</p>
             <p className="serlo-highlight-green">
-              Nach {Zeit_Jahre} Jahren beträgt das Kapital erstmals mehr als{' '}
-              {Geld_Ende} Euro.
+              Am Ende von {Zeit_Jahre} Jahren beträgt das Kapital erstmals mehr
+              als {Geld_Ende} Euro.
             </p>
           </>
         )
