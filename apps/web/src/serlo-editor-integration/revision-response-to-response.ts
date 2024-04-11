@@ -23,10 +23,9 @@ export function revisionResponseToResponse(
     instance,
     alias,
   }
+  const { id, content } = uuid
   const title = uuid.title ?? ''
-  const content = uuid.content
   const date = uuid.date ?? ''
-  const id = uuid.id
   const metaTitle = Object.hasOwn(uuid, 'metaTitle') ? uuid.metaTitle : ''
   const metaDescription = Object.hasOwn(uuid, 'metaDescription')
     ? uuid.metaDescription
@@ -126,6 +125,7 @@ export function revisionResponseToResponse(
       __typename: UuidType.Exercise,
       title,
       currentRevision: {
+        title,
         content,
         date,
         id: -1,
