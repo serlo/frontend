@@ -219,30 +219,44 @@ export function EquationsEditor(props: EquationsProps) {
                     })
                   }
                 >
-                  {transformationTarget === TransformationTarget.Equation && (
-                    <td />
-                  )}
-                  {!selectIsDocumentEmpty(
-                    store.getState(),
-                    step.explanation.id
-                  ) ? (
-                    renderDownArrow()
+                  <td />
+                  {transformationTarget === 'term' ? (
+                    <td colSpan={2}>
+                      <div className="flex">
+                        {renderArrow()}
+                        {renderExplanation()}
+                      </div>
+                    </td>
                   ) : (
-                    <td />
+                    <>
+                      <td>{renderArrow()}</td>
+                      <td colSpan={2}>{renderExplanation()}</td>
+                    </>
                   )}
-                  <td colSpan={2} className="min-w-[10rem]">
-                    {step.explanation.render({
-                      config: {
-                        isInlineChildEditor: true,
-                        placeholder:
-                          row === 0 &&
-                          transformationTarget === TransformationTarget.Term
-                            ? equationsStrings.combineLikeTerms
-                            : equationsStrings.explanation,
-                      },
-                    })}
-                  </td>
                 </tr>
+              )
+            }
+
+            function renderArrow() {
+              if (!selectIsDocumentEmpty(store.getState(), step.explanation.id))
+                return <div className="text-center">{renderDownArrow()}</div>
+              return null
+            }
+
+            function renderExplanation() {
+              return (
+                <div className=" min-w-[10rem]">
+                  {step.explanation.render({
+                    config: {
+                      isInlineChildEditor: true,
+                      placeholder:
+                        row === 0 &&
+                        transformationTarget === TransformationTarget.Term
+                          ? equationsStrings.combineLikeTerms
+                          : equationsStrings.explanation,
+                    },
+                  })}
+                </div>
               )
             }
           })}
@@ -270,9 +284,12 @@ export function EquationsEditor(props: EquationsProps) {
         </tr>
         <tr className="h-8">
           <td />
-          {!selectIsDocumentEmpty(store.getState(), state.firstExplanation.id)
-            ? renderDownArrow()
-            : null}
+          {!selectIsDocumentEmpty(
+            store.getState(),
+            state.firstExplanation.id
+          ) ? (
+            <div className="text-center">{renderDownArrow()}</div>
+          ) : null}
         </tr>
       </tbody>
     )
