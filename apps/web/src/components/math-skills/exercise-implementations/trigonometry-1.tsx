@@ -52,7 +52,8 @@ export function Trigonometry1() {
               cm² und |{buildOverline(data.otherRay ? 'BD' : 'AC')}| = {data.ac}{' '}
               cm² <br /> sowie |
               {buildOverline(data.mode === 'cd' ? 'AB' : 'CD')}| ={' '}
-              {data.mode === 'cd' ? data.ab : data.cd} cm².
+              {(data.mode === 'cd' ? data.ab : data.cd).toLocaleString('de-De')}{' '}
+              cm².
             </p>
             <SubComponent data={data} />
             <small className="mb-6 block">
@@ -97,7 +98,7 @@ export function Trigonometry1() {
                     <>
                       |<span className="overline">AB</span>|
                     </>,
-                    <>{data.cd} cm</>
+                    <>{data.cd.toLocaleString('de-De')} cm</>
                   )}{' '}
                   ={' '}
                   {buildFrac(
