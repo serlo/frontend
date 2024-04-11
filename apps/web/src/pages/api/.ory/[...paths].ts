@@ -60,11 +60,11 @@ export default async function customCreateApiHandler(
         body: JSON.stringify({ userId }),
       })
         .then(async (result) => {
-          const text = await result.text()
           if (result.status !== 200) {
+            const text = await result.text()
             console.log(result.status)
             console.log({ userId })
-            console.log(text)
+            console.error(text)
           }
         })
         .catch((e) => {
