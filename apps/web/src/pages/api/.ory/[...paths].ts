@@ -43,7 +43,8 @@ export default async function customCreateApiHandler(
     if (
       req.method !== 'POST' ||
       !req.url?.startsWith('/api/.ory/self-service/registration?flow=') ||
-      !process.env.API_KRATOS_SECRET
+      !process.env.API_KRATOS_SECRET ||
+      process.env.NEXT_PUBLIC_ENV === 'production'
     ) {
       return
     }
