@@ -10,12 +10,13 @@ export function ExponentialFunction() {
   return (
     <SelfEvaluationExercise
       generator={() => {
+        const Aktuelles_Jahr = new Date().getFullYear()
         return {
           Zins: randomIntBetween(1, 5),
           Money_Start: randomIntBetween(20, 60) * 100,
           Ende_Anlage: randomItemFromArray([0, 1, 2, 5]),
-          Aktuelles_Jahr: new Date().getFullYear(),
-          Jahr_Anlage: randomIntBetween(2010, 2024),
+          Aktuelles_Jahr,
+          Jahr_Anlage: randomIntBetween(2010, Aktuelles_Jahr - 1),
         }
       }}
       renderTask={({
@@ -61,7 +62,7 @@ export function ExponentialFunction() {
             {Ende_Anlage === 0 ? 'heute' : null}
             {Ende_Anlage === 1 ? 'nächstes Jahr' : null}
             {Ende_Anlage === 2 ? 'übernächstes Jahr' : null}
-            {Ende_Anlage === 5 ? 'in 5 Jahren' : null}
+            {Ende_Anlage === 5 ? 'heute in 5 Jahren' : null}
           </>
         )
         return (
