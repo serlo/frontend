@@ -96,7 +96,7 @@ export function WheelOfFortuneStepByStep() {
         const inputOver = parseInt(inputValues[0])
         const inputUnder = parseInt(inputValues[1])
         const inputD = getGcd(inputOver, inputUnder)
-        const input = [over / inputD, under / inputD]
+        const input = [inputOver / inputD, inputUnder / inputD]
 
         return [correct[0] === input[0], correct[1] === input[1]]
       }}
