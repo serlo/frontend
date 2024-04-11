@@ -44,6 +44,10 @@ export function IceCreamShop() {
                 gleiche Zusammenstellung von {kugelnStr} Eis wählen.
               </p>
             )}
+            <p>
+              Bei einer Zusammenstellung wird die Reihenfolge der Kugeln
+              beachtet.
+            </p>
           </>
         )
       }}
