@@ -1,11 +1,7 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { MainTask } from '../components/content-components'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { buildBigSqrt, buildFrac, buildSqrt } from '../utils/math-builder'
+import { buildLatex } from '../utils/math-builder'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
 import { randomIntBetween } from '@/helper/random-int-between'
-
-// JXG.Options.label.autoPosition = true
 
 export function RootEquations() {
   const { data } = useMathSkillsStorage()
@@ -15,107 +11,95 @@ export function RootEquations() {
         return {
           Money_Start: randomIntBetween(200, 400) * 10,
           Start_Jahr: randomIntBetween(2010, 2020),
-          Money_Ende: randomIntBetween(500, 650) * 10,
+          Money_Ende: randomIntBetween(1500, 6500) * 10,
           Aktuelles_Jahr: new Date().getFullYear(),
         }
       }}
-      renderTask={({ Money_Start, Start_Jahr, Money_Ende }) => {
+      renderTask={({ Money_Start, Start_Jahr, Money_Ende, Aktuelles_Jahr }) => {
         return (
           <>
             <div className="text-lg">
-              <MainTask>Rechnen mit der Exponentialfunktion</MainTask>
-              <br />
-              <br />
-              {data.name ? `${data.name} hat` : 'Du hast'} {Money_Start} € im
-              Jahr {Start_Jahr} angelegt. <br />
-              Heute beträgt das Kapital {Money_Ende} €.
-              <br />
-              <br />
-              Berechne den Zinssatz in Prozent, zu dem das Geld angelegt wurde.
-              <br />
-              <br />
-              <i>
-                Rechne mit Stift und Papier und runde am Ende auf eine
-                Nachkommastelle.
-              </i>
+              <p className="serlo-main-task">
+                {data.name ?? 'Tea'} hatte im Jahr {Start_Jahr} auf ihrem
+                Ink-Star-Account {Money_Start} Follower. Heute beträgt die
+                Anzahl der Follower {Money_Ende}. Gehen Sie von einem
+                exponentiellen Wachstum aus.
+              </p>
+              <p className="serlo-main-task">
+                Berechnen Sie, um wie viel Prozent die Anzahl der Follower pro
+                Jahr gestiegen ist. Runden Sie das Ergebnis auf eine Stelle nach
+                dem Komma.
+              </p>
+              <p>
+                Das aktuelle Jahr ist {Aktuelles_Jahr}. Zwischen Start und Ende
+                liegen ganze Jahre.
+              </p>
             </div>
           </>
         )
       }}
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty-pattern
       renderSolution={({
         Money_Start,
         Start_Jahr,
         Money_Ende,
         Aktuelles_Jahr,
       }) => {
+        const intermediate = Math.round((Money_Ende / Money_Start) * 100) / 100
         const result =
           Math.round(
-            Math.pow(
-              Money_Ende / Money_Start,
-              1 / (Aktuelles_Jahr - Start_Jahr)
-            ) * 1000
+            Math.pow(intermediate, 1 / (Aktuelles_Jahr - Start_Jahr)) * 1000
           ) / 1000
         const zinssatz = Math.round((result * 100 - 100) * 1000) / 1000
 
         return (
           <>
-            Das Kapital wird beschrieben durch die Funktion: <br />
-            <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            <p>Stelle eine Exponentialgleichung auf:</p>
+            <p className="serlo-highlight-gray">
               y = {Money_Start} · x <sup>k</sup>
-            </span>
-            <br />
-            Hierbei steht:
-            <ol>
-              <li>· {Money_Start} für den Anfangswert</li>
-              <li>· x für den gesuchten Zinssatz</li>
-              <li>· k für die Anzahl der Jahre</li>
-            </ol>
-            <br />
-            <br />
-            Nach {Aktuelles_Jahr - Start_Jahr} Jahren soll das Kapital{' '}
-            {Money_Ende} € betragen. Setze ein:
-            <br />
-            <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
+            </p>
+            <p>
+              Dabei steht {Money_Start} für den Anfangswert, x für den gesuchten
+              Wachstumsfaktor und k für die Anzahl der Jahre.
+            </p>
+            <p className="mt-3">
+              Nach {Aktuelles_Jahr - Start_Jahr} Jahren soll die Anzahl der
+              Follower {Money_Ende} betragen, setze ein:
+            </p>
+            <p className="serlo-highlight-gray">
               {Money_Ende} = {Money_Start} · x{' '}
               <sup>{Aktuelles_Jahr - Start_Jahr}</sup>
-            </span>
-            <br />
-            <br />
-            Wir lösen die Gleichung, indem wir beide Seiten durch den
-            Anfangswert teilen:
-            <br />
-            <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              {buildFrac(<>{Money_Ende}</>, <>{Money_Start}</>)} = x{' '}
+            </p>
+            <p>
+              Vereinfache die Gleichung, indem du beide Seiten durch{' '}
+              {Money_Start} teilst:
+            </p>
+            <p className="serlo-highlight-gray">
+              {intermediate.toLocaleString('de-De')} = x{' '}
               <sup>{Aktuelles_Jahr - Start_Jahr}</sup>
-            </span>
-            <br />
-            Um x zu bestimmen, verwenden wir die {Aktuelles_Jahr - Start_Jahr}
-            -te Wurzel auf beiden Seiten:
-            <br />
-            <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              <sup>{Aktuelles_Jahr - Start_Jahr}</sup>
-              {buildBigSqrt(
-                <>{buildFrac(<>{Money_Ende}</>, <>{Money_Start}</>)}</>
-              )}
+            </p>
+            <p>
+              Ziehe die {Aktuelles_Jahr - Start_Jahr}
+              -te Wurzel:
+            </p>
+            <p className="serlo-highlight-gray">
+              {buildLatex(
+                `\\sqrt[${Aktuelles_Jahr - Start_Jahr}]{${intermediate.toLocaleString('de-De')}}`
+              )}{' '}
               = x
-            </span>
-            <br />
-            Mit dem Taschenrechner berechnet sich das Ergebnis zu:
-            <br />
-            <span className="my-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-              x = {result.toString().replace('.', ',')}
-            </span>
-            <br /> Aus diesem Wert entnehmen wir:{' '}
-            <strong>
-              Der Zinssatz musste jährlich{' '}
-              {zinssatz.toString().replace('.', ',')} % betragen.
-            </strong>
+            </p>
+            <p>Mit dem Taschenrechner berechnet sich das Ergebnis zu:</p>
+            <p className="serlo-highlight-gray">
+              x = {result.toLocaleString('de-De')}
+            </p>
+            <p>Entnehme aus dem Wert den Prozentsatz:</p>
+            <p className="serlo-highlight-green">
+              Das jährliche Wachstum beträgt {zinssatz.toLocaleString('de-De')}{' '}
+              %.
+            </p>
           </>
         )
       }}
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty-pattern
-      renderHint={({}) => {
+      /*renderHint={() => {
         return (
           <>
             Stelle eine Funktion der Form
@@ -133,10 +117,10 @@ export function RootEquations() {
             </ol>
             <br />
             Setze für y den Betrag von heute ein und löse die Gleichung mithilfe
-            der Wurzel.
+            der Wurzel (Umkehrfunktion zur Potenz).
           </>
         )
-      }}
+      }}*/
     />
   )
 }

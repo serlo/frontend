@@ -1,24 +1,15 @@
 import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
-/* eslint-disable no-empty-pattern */
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {
   MainTask,
   HighlightGreen,
   HighlightGray,
 } from '../components/content-components'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { buildFrac } from '../utils/math-builder'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { randomIntBetween } from '@/helper/random-int-between'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
-// JXG.Options.label.autoPosition = true
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface PlotData {
   a: number
   b: number
@@ -31,7 +22,7 @@ export function PlotFunction2() {
       generator={() => {
         const a = randomItemFromArray([-2, -1, 2, 0.5])
 
-        const b = randomItemFromArray([2, 3, 0.5, 0.25, 2.718])
+        const b = randomItemFromArray([2, 3, 0.5, 0.25])
 
         const c = randomIntBetween(-2, 2)
         const data: PlotData = {
@@ -41,42 +32,29 @@ export function PlotFunction2() {
         }
         return { data }
       }}
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>Skizziere den Graphen der Funktion:</MainTask>
+            <MainTask>Skizzieren Sie den Graphen der Funktion:</MainTask>
             <HighlightGreen>
               y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
               {data.a === -1 ? null : '·'}{' '}
               {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
-              <sup>x</sup> {data.c > 0 ? '+' : null}{' '}
-              {data.c !== 0 ? data.c : null}
+              <sup>x</sup> {data.c > 0 ? '+' : data.c < 0 ? '-' : null}{' '}
+              {data.c !== 0 ? Math.abs(data.c) : null}
             </HighlightGreen>
             <br />
             <br />
             <i>
-              Lege dafür ein Koordinatensystem mit -6 &#8804; x &#8804; 6 und -6
+              Platzbedarf für Koordinatensystem: -6 &#8804; x &#8804; 6 und -6
               &#8804; y &#8804; 6 an.
             </i>
           </>
         )
       }}
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       renderSolution={({ data }) => {
         return (
           <>
-            Skizziere den Graphen der Funktion:
-            <br />
-            <HighlightGreen>
-              y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
-              {data.a === -1 ? null : '·'}{' '}
-              {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
-              <sup>x</sup> {data.c > 0 ? '+' : null}{' '}
-              {data.c !== 0 ? data.c : null}
-            </HighlightGreen>
-            <br />
-            <br />
             Zeichne dazu zuerst die Asymptote mit der Gleichung:
             <br />
             <HighlightGray>y = {data.c}</HighlightGray>
@@ -88,27 +66,34 @@ export function PlotFunction2() {
               y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
               {data.a === -1 ? null : '·'}{' '}
               {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
-              <sup>0</sup> {data.c > 0 ? '+' : null}{' '}
-              {data.c !== 0 ? data.c : null} ={' '}
+              <sup>0</sup> {data.c > 0 ? '+' : data.c < 0 ? '-' : null}{' '}
+              {data.c !== 0 ? Math.abs(data.c) : null} ={' '}
               {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
-              {data.a === -1 ? null : '·'} 1 {data.c > 0 ? '+' : null}{' '}
-              {data.c !== 0 ? data.c : null} ={' '}
+              {data.a === -1 ? null : '·'} 1{' '}
+              {data.c > 0 ? '+' : data.c < 0 ? '-' : null}{' '}
+              {data.c !== 0 ? Math.abs(data.c) : null} ={' '}
               {(data.a + data.c).toString().replace('.', ',')}
             </HighlightGray>
-            <br />
-            <br />
-            Skizziere den Graphen mithilfe der Asymptote und dem Durchgang durch
-            die y-Achse.
-            <br />
-            <br />
-            Graph für -6 &#8804; x &#8804; 6 und -6 &#8804; y &#8804; 6:
-            <br />
+            <p className="mt-3">
+              Die Basis ist {data.b > 1 ? 'größer' : 'kleiner'} als 1, daher{' '}
+              {data.b > 1
+                ? 'entfernt sich der Graph von der Asymptote'
+                : 'nähert sich der Graph der Asymptote'}{' '}
+              nach rechts. Der Vorfaktor ist{' '}
+              {data.a > 0 ? 'positiv' : 'negativ'}, der Graph verläuft{' '}
+              {data.a > 0 ? 'über' : 'unter'} der Asymptote.
+            </p>
+            <p className="mt-3">
+              Skizziere den Graphen mithilfe der ermittelten Informationen.
+            </p>
+            <p className="mt-3">
+              Graph für -6 &#8804; x &#8804; 6 und -6 &#8804; y &#8804; 6:
+            </p>
             <SubComponent data={data} />
           </>
         )
       }}
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      renderHint={({ data }) => {
+      renderHint={() => {
         return (
           <>
             Die Exponentialfunktion hat die Form:
@@ -136,9 +121,7 @@ export function PlotFunction2() {
     />
   )
 }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function SubComponent({ data }: { data: PlotData }) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [board, setBoard] = useState<ReturnType<
     typeof JXG.JSXGraph.initBoard
   > | null>(null)
@@ -160,14 +143,32 @@ function SubComponent({ data }: { data: PlotData }) {
 
     x.create('text', [5.5, 0.75, `x`], {})
     x.create('text', [0.5, 5.5, `y`], {})
-    x.create('functiongraph', [
-      function (x: number) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        return data.a * Math.pow(data.b, x) + data.c
-      },
-      -6,
-      6,
-    ])
+    x.create(
+      'functiongraph',
+      [
+        function (x: number) {
+          return data.a * Math.pow(data.b, x) + data.c
+        },
+        -6,
+        6,
+      ],
+      { strokeWidth: 3 }
+    )
+    x.create(
+      'functiongraph',
+      [
+        function () {
+          return data.c
+        },
+        -6,
+        6,
+      ],
+      { strokeColor: 'salmon' }
+    )
+    x.create('point', [0, data.a + data.c], {
+      label: { visible: false },
+      fixed: true,
+    })
     setBoard(x)
 
     return () => {

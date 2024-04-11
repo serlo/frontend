@@ -1,7 +1,9 @@
 /* eslint-disable import/no-cycle */
 import { ABCFormular } from '../exercise-implementations/abc-formular'
+import { AnimalsInForest } from '../exercise-implementations/animals-in-forest'
 import { Asymptote1 } from '../exercise-implementations/asymptote-1'
 import { Asymptote2 } from '../exercise-implementations/asymptote-2'
+import { CompareGrowth } from '../exercise-implementations/compare-growth'
 import { CompletingTheSquare } from '../exercise-implementations/completing-the-square'
 import { DescribeGraphPowerFunction } from '../exercise-implementations/describe-graph-power-function'
 import { ExponentialFunction } from '../exercise-implementations/exponential-function-1'
@@ -23,7 +25,7 @@ import { Parallelogram2 } from '../exercise-implementations/parallelogram-2'
 import { Parallelogram3 } from '../exercise-implementations/parallelogram-3'
 import { PlotFunction } from '../exercise-implementations/plot-function-1'
 import { PlotFunction2 } from '../exercise-implementations/plot-function-2'
-// import { RootEquations } from '../exercise-implementations/root-equations'
+import { RootEquations } from '../exercise-implementations/root-equations'
 import { RotatePoint } from '../exercise-implementations/rotate-point'
 // import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
 // import { SurfaceThreePyramide } from '../exercise-implementations/surface-pyramide-2'
@@ -201,7 +203,7 @@ export const middleSchoolFinalExam = {
     component: <ModellingParabola />,
   },
   // Ende Einschub
-  gluecksradEinfach: {
+  'gluecksrad-einfuehrung': {
     title: 'Glücksrad Einführung',
     subtitle: 'Daten und Zufall',
     calculatorAllowed: false,
@@ -234,6 +236,20 @@ export const middleSchoolFinalExam = {
     component: <RotatePoint />,
   },
   // Mathe-Zweig, Teil B
+  'graphen-skizzieren-exponentialfunktion': {
+    title: 'Graphen skizzieren',
+    subtitle: 'Exponentialfunktionen',
+    calculatorAllowed: true,
+    track: 1,
+    component: <PlotFunction2 />,
+  },
+  'eigenschaften-exponentialfunktion': {
+    title: 'Eigenschaften bestimmen',
+    subtitle: 'Exponentialfunktionen',
+    calculatorAllowed: true,
+    track: 1,
+    component: <Asymptote2 />,
+  },
   'kapital-berechnen': {
     title: 'Kapital berechnen',
     subtitle: 'Exponentialfunktion',
@@ -250,13 +266,30 @@ export const middleSchoolFinalExam = {
     track: 3,
     component: <ExponentialFunctionTime />,
   },
-  /*'root-equations-1': {
-    title: 'Zinssatz berechnen',
-    subtitle: 'Wurzeln',
+  'wachstum-vergleichen': {
+    title: 'Wachstum vergleichen',
+    subtitle: 'Exponentialfunktion 🚧',
+    calculatorAllowed: true,
+    track: 3,
+    difficulty: 1,
+    component: <CompareGrowth />,
+  },
+  'tiere-im-wald-exponentialfunktion': {
+    title: 'Tiere im Wald',
+    subtitle: 'Exponentialfunktion 🚧',
+    calculatorAllowed: true,
+    track: 3,
+    difficulty: 2,
+    component: <AnimalsInForest />,
+  },
+  'follower-wachstum-exponentialfunktion': {
+    title: 'Follower-Wachstum',
+    subtitle: 'Exponentialfunktion',
     calculatorAllowed: true,
     track: 1,
+    difficulty: 3,
     component: <RootEquations />,
-  },*/
+  },
   'plot-function-1': {
     title: 'Graphen skizzieren',
     subtitle: 'Ganzrationale Funktionen 🚧',
@@ -264,26 +297,12 @@ export const middleSchoolFinalExam = {
     track: 1,
     component: <PlotFunction />,
   },
-  'plot-function-2': {
-    title: 'Graphen skizzieren',
-    subtitle: 'Exponentialfunktionen 🚧',
-    calculatorAllowed: true,
-    track: 1,
-    component: <PlotFunction2 />,
-  },
   'asymptote-1': {
     title: 'Definitions-, Wertebereich und Asymptote',
     subtitle: 'Ganzrationale Funktionen 🚧',
     calculatorAllowed: true,
     track: 1,
     component: <Asymptote1 />,
-  },
-  'asymptote-2': {
-    title: 'Definitions-, Wertebereich und Asymptote',
-    subtitle: 'Exponentialfunktionen 🚧',
-    calculatorAllowed: true,
-    track: 1,
-    component: <Asymptote2 />,
   },
   'mapping-graphs-1': {
     title: 'Graphen verschieben',

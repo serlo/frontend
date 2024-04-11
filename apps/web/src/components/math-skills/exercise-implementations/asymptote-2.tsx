@@ -1,24 +1,16 @@
 import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
-/* eslint-disable no-empty-pattern */
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {
   HighlightGray,
   HighlightGreen,
   MainTask,
 } from '../components/content-components'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { buildFrac } from '../utils/math-builder'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { buildLatex } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
-// JXG.Options.label.autoPosition = true
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface PlotData {
   a: number
   b: number
@@ -31,7 +23,7 @@ export function Asymptote2() {
       generator={() => {
         const a = randomItemFromArray([-2, -1, 2, 0.5])
 
-        const b = randomItemFromArray([2, 3, 0.5, 0.25, 2.718])
+        const b = randomItemFromArray([2, 3, 0.5, 0.25, 5])
 
         const c = randomIntBetween(-2, 2)
         const data: PlotData = {
@@ -41,54 +33,39 @@ export function Asymptote2() {
         }
         return { data }
       }}
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       renderTask={({ data }) => {
         return (
           <>
             <MainTask>
-              Bestimme die Definitions-, Wertemenge und Asymptote der Funktion:
+              Bestimmen Sie die Definitions-, Wertemenge und Asymptote der
+              Funktion mit x, y {buildLatex('\\in \\R')}:
             </MainTask>
             <HighlightGreen>
               y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
               {data.a === -1 ? null : '·'}{' '}
               {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
-              <sup>x</sup> {data.c > 0 ? '+' : null}{' '}
+              <sup>x</sup> {data.c > 0 ? '+' : data.c < 0 ? '-' : null}{' '}
               {data.c !== 0 ? data.c : null}
             </HighlightGreen>
           </>
         )
       }}
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       renderSolution={({ data }) => {
         return (
           <>
-            Bestimme Definitions- und Wertebereich, sowie Asymptoten der
-            Funktion:
-            <br />
-            <HighlightGray>
-              y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
-              {data.a === -1 ? null : '·'}{' '}
-              {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
-              <sup>x</sup> {data.c > 0 ? '+' : null}{' '}
-              {data.c !== 0 ? data.c : null}
-            </HighlightGray>
-            <br />
-            <br />
-            Die Definitionsmenge ist bei allen Exponentialfunktionen die Menge
-            der reellen Zahlen.
-            <br />
-            <HighlightGreen>D = R</HighlightGreen>
-            <br />
-            <br />
-            Der Graph hat eine Asymptote mit der Gleichung:
-            <br />
-            <HighlightGreen>y = {data.c}</HighlightGreen>
-            <br />
-            <br />
-            Der Wertebereich setzt sich aus allen Werten{' '}
-            {data.a > 0 ? 'oberhalb' : 'unterhalb'} der Asymptote zusammen (der
-            Faktor der Funktion ist {data.a > 0 ? 'positiv' : 'negativ'}):
-            <br />
+            <p>
+              Bei der Definitionsmenge für die Exponentialfunktion gibt es keine
+              Einschränkungen. Sie ist gleich der Menge der reellen Zahlen.
+            </p>
+            <p className="serlo-highlight-green">D = {buildLatex('\\R')}</p>
+            <p>Lies die Gleichung der Asymptote ab:</p>
+            <p className="serlo-highlight-green">y = {data.c}</p>
+            <p>
+              Der Wertebereich setzt sich aus allen Werten{' '}
+              {data.a > 0 ? 'oberhalb' : 'unterhalb'} der Asymptote zusammen
+              (der Faktor der Funktion ist {data.a > 0 ? 'positiv' : 'negativ'}
+              ):
+            </p>
             <HighlightGreen>
               W = {'{'} y |{data.a > 0 ? ' y > ' + data.c : ' y < ' + data.c}
               {'}'}
@@ -128,9 +105,7 @@ export function Asymptote2() {
     />
   )
 }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function SubComponent({ data }: { data: PlotData }) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [board, setBoard] = useState<ReturnType<
     typeof JXG.JSXGraph.initBoard
   > | null>(null)
@@ -154,7 +129,6 @@ function SubComponent({ data }: { data: PlotData }) {
     x.create('text', [0.5, 5.5, `y`], {})
     x.create('functiongraph', [
       function (x: number) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         return data.a * Math.pow(data.b, x) + data.c
       },
       -6,

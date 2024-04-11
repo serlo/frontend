@@ -1,23 +1,16 @@
 import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
-/* eslint-disable no-empty-pattern */
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {
   HighlightGray,
   HighlightGreen,
   MainTask,
 } from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { randomIntBetween } from '@/helper/random-int-between'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
-// JXG.Options.label.autoPosition = true
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface PlotData {
   a: number
   b: number
@@ -41,7 +34,6 @@ export function PlotFunction() {
         }
         return { data }
       }}
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       renderTask={({ data }) => {
         return (
           <>
@@ -69,7 +61,6 @@ export function PlotFunction() {
           </>
         )
       }}
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       renderSolution={({ data }) => {
         return (
           <>
@@ -112,7 +103,6 @@ export function PlotFunction() {
           </>
         )
       }}
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       renderHint={({ data }) => {
         return (
           <>
@@ -151,9 +141,7 @@ export function PlotFunction() {
     />
   )
 }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function SubComponent({ data }: { data: PlotData }) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [board, setBoard] = useState<ReturnType<
     typeof JXG.JSXGraph.initBoard
   > | null>(null)
@@ -178,7 +166,6 @@ function SubComponent({ data }: { data: PlotData }) {
     x.create('functiongraph', [
       function (x: number) {
         const nenner = Math.pow(x + data.b, data.c)
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         return data.a * nenner + data.d
       },
       -6,
