@@ -1,3 +1,5 @@
+import { StaticMath } from '@editor/plugins/text/static-components/static-math'
+
 import { cn } from '@/helper/cn'
 
 export function buildFrac(
@@ -53,6 +55,10 @@ export function buildVec2(
       <span className="inline-block scale-y-[2.6]">)</span>
     </>
   )
+}
+
+export function buildLatex(src: string) {
+  return <StaticMath src={src} inline type="math" />
 }
 
 export function buildBlock(
