@@ -144,6 +144,67 @@ function Content() {
                 </div>
               </div>
             ) : null}
+            <h4 className="mt-8 text-lg font-bold">Nützliche Links</h4>
+            <ul className="serlo-ul">
+              <li>
+                <a
+                  className="serlo-link"
+                  href="https://www.isb.bayern.de/fileadmin/user_upload/Realschule/Mathematik/Formelsammlung_Realschule/merkhilfe_mathematik_2019.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Merkhilfe Mathematik
+                </a>
+              </li>
+              <li>
+                <a
+                  className="serlo-link"
+                  href={
+                    track === 1
+                      ? 'https://blickinsbuch.westermann.de/978-3-14-123671-2/index-h5.html#page=1'
+                      : 'https://blickinsbuch.westermann.de/978-3-14-123680-4/index-h5.html#page=1'
+                  }
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Westermann Schulbuch
+                </a>
+              </li>
+              <li>
+                <a
+                  className="serlo-link"
+                  href="https://realmath.de"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Übungen zum Grundwissen auf realmath
+                </a>
+              </li>
+              <li>
+                <a
+                  className="serlo-link"
+                  href={
+                    track === 1
+                      ? 'https://de.serlo.org/mathe/75049/abschlusspr%C3%BCfungen-mathematik-mit-l%C3%B6sung-zweig-i'
+                      : 'https://de.serlo.org/mathe/76750/abschlusspr%C3%BCfungen-mathematik-mit-l%C3%B6sungen-zweig-ii-und-iii'
+                  }
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Serlo: Abschlussprüfungen der letzten Jahre mit Lösungen
+                </a>
+              </li>
+              <li>
+                <a
+                  className="serlo-link"
+                  href="https://pruefungsarchiv.mebis.bycs.de/archiv.php?doc=record&identifier=BY-00303812"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Abschlussprüfung 2023 im mebis Prüfungsarchiv
+                </a>
+              </li>
+            </ul>
             <div className="h-24"></div>
           </>
         ) : null}
