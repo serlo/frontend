@@ -52,6 +52,8 @@ export function taxonomyParentsToRootToBreadcrumbsData(
     }
   })
 
+  if (!breadcrumbs?.length) return undefined
+
   if (includeFirstParent) {
     breadcrumbs.push({
       label: term.title,
