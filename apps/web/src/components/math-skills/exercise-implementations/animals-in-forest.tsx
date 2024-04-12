@@ -1,6 +1,7 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
+import { buildFrac } from '../utils/math-builder'
 
 const wildtiereInWäldern = [
   'Rothirsche',
@@ -23,7 +24,7 @@ export function AnimalsInForest() {
 
         const animal = randomItemFromArray(wildtiereInWäldern)
 
-        const afterYears = randomIntBetween(3, 15)
+        const afterYears = randomIntBetween(5, 15)
         const a = 1 + growth / 100
 
         const prevPrevYearVal = startVal * Math.pow(a, afterYears - 2)
@@ -32,9 +33,13 @@ export function AnimalsInForest() {
         const lowerBound = Math.ceil(prevYearVal - prevPrevYearVal)
         const upperBound = Math.floor(curYearVal - prevYearVal)
 
-        const diff = randomIntBetween(lowerBound, upperBound)
+        const diff =
+          randomIntBetween(
+            Math.ceil(lowerBound / 5),
+            Math.floor(upperBound / 5)
+          ) * 5
 
-        return { startYear, startVal, growth, animal, a, diff }
+        return { startYear, startVal, growth, animal, a, diff, afterYears }
       }}
       renderTask={(data) => (
         <>
@@ -54,12 +59,82 @@ export function AnimalsInForest() {
           </p>
           <p className="serlo-main-task">
             Bestimmen Sie, im welchem Jahr sich die Anzahl der {data.animal}{' '}
-            erstmals innerhalb eines Jahre um mehr als {data.diff} Tiere erhöht
-            hat.
+            erstmals innerhalb eines Jahre um mehr als {data.diff} Tiere erhöht.
           </p>
         </>
       )}
-      renderSolution={() => <></>}
+      renderSolution={(data) => {
+        const intermediate =
+          Math.round(
+            (data.diff / (data.startVal - data.startVal / data.a)) * 10000
+          ) / 10000
+        const x =
+          Math.round((Math.log(intermediate) / Math.log(data.a)) * 1000) / 1000
+        return (
+          <>
+            <p>
+              Bestimme die Anzahl der {data.animal} am Ende von x Jahren ab{' '}
+              {data.startYear}:
+            </p>
+            <p className="serlo-highlight-gray">
+              Anzahl Ende des aktuellen Jahres: &nbsp;&nbsp;&nbsp;&nbsp;
+              {data.startVal} · {data.a.toLocaleString('de-De')}
+              <sup>x</sup>
+            </p>
+            <p>Erhalte für (x - 1) die Anzahl im Vorjahr:</p>
+            <p className="serlo-highlight-gray">
+              Anzahl Ende des Vorjahrs: &nbsp;&nbsp;&nbsp;&nbsp;
+              {data.startVal} · {data.a.toLocaleString('de-De')}
+              <sup>x - 1</sup>
+            </p>
+            <p>Bilde die Differenz und erhalte den Zuwachs:</p>
+
+            <p className="serlo-highlight-gray">
+              Zuwachs: &nbsp;&nbsp;&nbsp;&nbsp;
+              {data.startVal} · {data.a.toLocaleString('de-De')}
+              <sup>x</sup> - {data.startVal} · {data.a.toLocaleString('de-De')}
+              <sup>x - 1</sup>
+            </p>
+            <p>
+              Setze den Zuwachs gleich {data.diff} und löse die Gleichung nach x
+              auf:
+            </p>
+            <p className="serlo-highlight-gray">
+              {data.startVal} · {data.a.toLocaleString('de-De')}
+              <sup>x</sup> - {data.startVal} · {data.a.toLocaleString('de-De')}
+              <sup>x - 1</sup> = {data.diff}
+              <br />
+              <br />
+              {data.startVal} · {data.a.toLocaleString('de-De')}
+              <sup>x</sup> - {data.startVal} ·{' '}
+              {buildFrac(1, data.a.toLocaleString('de-De'))} ·{' '}
+              {data.a.toLocaleString('de-De')}
+              <sup>x</sup> = {data.diff} <br />
+              <br />({data.startVal} -{' '}
+              {buildFrac(data.startVal, data.a.toLocaleString('de-De'))}) ·{' '}
+              {data.a.toLocaleString('de-De')}
+              <sup>x</sup> = {data.diff}
+              <br />
+              <br />
+              {data.a.toLocaleString('de-De')}
+              <sup>x</sup> = {intermediate.toLocaleString('de-De')}
+              <br />
+              <br />x = log <sub>{data.a.toLocaleString('de-De')}</sub>{' '}
+              {intermediate.toLocaleString('de-De')}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x ={' '}
+              {x.toLocaleString('de-De')}
+            </p>
+            <p>
+              <strong>Runde an dieser Stelle auf</strong>. Bestimme das konkrete
+              Jahr {data.startYear} + {Math.ceil(x)} und antworte:
+            </p>
+            <p className="serlo-highlight-green">
+              Im Jahr {data.startYear + data.afterYears} erhöht sich die Anzahl
+              der {data.animal} erstmals um mehr als {data.diff} Tiere.
+            </p>
+          </>
+        )
+      }}
     />
   )
 }
