@@ -12,9 +12,11 @@ export interface UserToolsItemProps {
   aboveContent?: boolean
 }
 
-const aboveClasses = cn(`serlo-button-green m-0.5 ml-1 text-sm leading-browser`)
+export const aboveClasses = cn(
+  `serlo-button-green m-0.5 ml-1 text-sm leading-browser`
+)
 
-const belowClasses = cn(
+export const belowClasses = cn(
   `serlo-button-green-transparent m-1 py-1 text-base leading-browser`
 )
 

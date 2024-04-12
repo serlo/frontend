@@ -130,7 +130,6 @@ export const footerData: InstanceData['footerData'] = {
       title: 'Allgemein',
       children: [
         { title: 'Über Serlo', url: '/serlo' },
-        { title: 'Presse', url: '/presse' },
         { title: 'Kontakt', url: '/kontakt' },
         {
           title: 'Other Languages',

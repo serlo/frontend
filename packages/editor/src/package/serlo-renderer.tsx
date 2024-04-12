@@ -4,7 +4,11 @@ import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 import type { SupportedLanguage } from '@editor/types/language-data'
 
-import type { PluginsConfig } from './editor'
+import {
+  type PluginsConfig,
+  defaultPluginsConfig,
+  defaultSerloEditorProps,
+} from './config'
 import { editorData } from './editor-data'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
@@ -15,12 +19,10 @@ export interface SerloRendererProps {
   document?: AnyEditorDocument | AnyEditorDocument[]
 }
 
-export function SerloRenderer({
-  pluginsConfig,
-  language = 'de',
-  ...props
-}: SerloRendererProps) {
-  const { customPlugins = [] } = pluginsConfig || {}
+export function SerloRenderer(props: SerloRendererProps) {
+  const { pluginsConfig, language } = { ...defaultSerloEditorProps, ...props }
+  const { customPlugins } = { ...defaultPluginsConfig, ...pluginsConfig }
+
   const { instanceData, loggedInData } = editorData[language]
 
   const basicRenderers = createRenderers(customPlugins)
