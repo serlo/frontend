@@ -110,14 +110,7 @@ export function createRenderers(
       },
       ...customPluginRenderers,
     ],
-    mathRenderer: (element: MathElement) =>
-      element.inline ? (
-        <StaticMath {...element} />
-      ) : (
-        <Lazy slim>
-          <StaticMath {...element} />
-        </Lazy>
-      ),
+    mathRenderer: (element: MathElement) => <StaticMath {...element} />,
     linkRenderer: ({ href, children }: ComponentProps<LinkRenderer>) => {
       return (
         <a
