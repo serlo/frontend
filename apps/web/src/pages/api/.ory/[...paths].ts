@@ -37,9 +37,11 @@ export default async function customCreateApiHandler(
   req: NextApiRequest,
   res: NextApiResponse<string>
 ): Promise<void> {
+  console.log(req.url)
   // injecting a function here to trigger an api call because
   // unfortunately the kratos webhook ist not reliable atm.
   function afterRegisterApiCall(body: string) {
+    console.log('afterRegisterApiCall function')
     if (
       req.method !== 'POST' ||
       !req.url?.startsWith('/api/.ory/self-service/registration?flow=') ||
@@ -51,6 +53,10 @@ export default async function customCreateApiHandler(
 
     const result = JSON.parse(body) as { identity: { id: string } }
     const userId = result?.identity?.id
+
+    console.log({ userId })
+    console.log(result)
+
     if (userId) {
       void fetch(API_KRATOS_WEBHOOK_URL, {
         method: 'POST',
@@ -66,6 +72,8 @@ export default async function customCreateApiHandler(
             console.log(result.status)
             console.log({ userId })
             console.error(text)
+          } else {
+            console.log('jup, seems to work')
           }
         })
         .catch((e) => {
