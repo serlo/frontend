@@ -284,7 +284,7 @@ export const middleSchoolFinalExam = {
   },
   'tiere-im-wald-exponentialfunktion': {
     title: 'Tiere im Wald',
-    subtitle: 'Exponentialfunktion 🚧',
+    subtitle: 'Exponentialfunktion',
     calculatorAllowed: true,
     track: 3,
     difficulty: 3,
