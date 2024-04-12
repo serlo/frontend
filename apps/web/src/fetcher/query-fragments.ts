@@ -240,7 +240,6 @@ export const sharedExerciseFragments = gql`
   }
 `
 
-// only 10 levels
 export const sharedTaxonomyParents = gql`
   fragment pathToRoot on TaxonomyTerm {
     title
