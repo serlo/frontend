@@ -30,8 +30,6 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { ComponentProps } from 'react'
 
-import { Lazy } from '@/components/content/lazy'
-
 export function createRenderers(
   customPluginRenderers: PluginStaticRenderer[]
 ): InitRenderersArgs {
