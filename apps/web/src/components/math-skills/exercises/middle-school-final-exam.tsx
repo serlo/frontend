@@ -268,7 +268,7 @@ export const middleSchoolFinalExam = {
   },
   'wachstum-vergleichen': {
     title: 'Wachstum vergleichen',
-    subtitle: 'Exponentialfunktion 🚧',
+    subtitle: 'Exponentialfunktion',
     calculatorAllowed: true,
     track: 3,
     difficulty: 1,
