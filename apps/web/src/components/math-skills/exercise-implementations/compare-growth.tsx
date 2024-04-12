@@ -74,8 +74,7 @@ export function CompareGrowth() {
       renderTask={(data) => (
         <>
           <p className="serlo-main-task">
-            Im Jahr {data.year} wurden zeitgleich die beiden viralen Videos
-            &quot;{data.nameA}&quot; und &quot;{data.nameB}&quot;
+            Im Jahr {data.year} wurden zeitgleich zwei virale Videos
             veröffentlicht.
           </p>
           <p className="serlo-main-task">
