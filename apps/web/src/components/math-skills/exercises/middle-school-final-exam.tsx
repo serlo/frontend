@@ -27,6 +27,7 @@ import { PlotFunction } from '../exercise-implementations/plot-function-1'
 import { PlotFunction2 } from '../exercise-implementations/plot-function-2'
 import { RootEquations } from '../exercise-implementations/root-equations'
 import { RotatePoint } from '../exercise-implementations/rotate-point'
+import { TimeToDouble } from '../exercise-implementations/time-to-double'
 // import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
 // import { SurfaceThreePyramide } from '../exercise-implementations/surface-pyramide-2'
 import { Trigonometry } from '../exercise-implementations/trigonometry'
@@ -266,6 +267,14 @@ export const middleSchoolFinalExam = {
     track: 3,
     component: <ExponentialFunctionTime />,
   },
+  'zeit-bis-verdopplung-exponentialfunktion': {
+    title: 'Zeit bis Verdopplung',
+    subtitle: 'Exponentialfunktion',
+    calculatorAllowed: true,
+    track: 3,
+    difficulty: 1,
+    component: <TimeToDouble />,
+  },
   'wachstum-vergleichen': {
     title: 'Wachstum vergleichen',
     subtitle: 'Exponentialfunktion',
@@ -373,6 +382,8 @@ export const middleSchoolFinalExam = {
 } as const
 
 /*
+
+Construction sign:  🚧
 
 Template for new exercise
 
