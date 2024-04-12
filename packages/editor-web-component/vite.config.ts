@@ -9,6 +9,10 @@ import svgr from 'vite-plugin-svgr'
 
 // https://vitejs.dev/guide/build.html#library-mode
 
+// Read https://github.com/serlo/frontend/pull/3554/files#r1554542699 for why we
+// may need this
+// process = { env: 'production' }
+
 // eslint-disable-next-line import/no-default-export
 export default defineConfig({
   build: {

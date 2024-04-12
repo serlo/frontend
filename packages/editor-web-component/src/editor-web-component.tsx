@@ -13,26 +13,51 @@ import {
 export class EditorWebComponent extends HTMLElement {
   private reactRoot: ReactDOM.Root | null = null
   private container: HTMLDivElement
+  private broadcastChannel: BroadcastChannel
+
+  private _initialState: InitialState = exampleInitialState
 
   constructor() {
     super()
 
     this.container = document.createElement('div')
-  }
 
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    console.log('AttributeChangedCallback', {
-      name,
-      oldValue,
-      newValue,
-    })
-    if (oldValue !== newValue) {
-      this.mountReactComponent()
-    }
+    this.broadcastChannel = new BroadcastChannel('serlo_editor_channel')
   }
 
   static get observedAttributes() {
     return ['initial-state']
+  }
+
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    if (name === 'initial-state' && oldValue !== newValue) {
+      try {
+        this.initialState = JSON.parse(newValue) as InitialState
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error('Could not parse initialState:', e)
+      }
+    } else {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `Unhandled attribute change in Editor Web Component for '${name}' from value: ${oldValue} to value: ${newValue}`
+      )
+    }
+  }
+
+  get initialState() {
+    return this._initialState
+  }
+
+  set initialState(newState) {
+    if (isInitialState(newState)) {
+      this._initialState = newState
+      // Update the attribute
+      this.setAttribute('initial-state', JSON.stringify(newState))
+      this.mountReactComponent()
+    } else {
+      throw new Error('Invalid initial state provided')
+    }
   }
 
   connectedCallback() {
@@ -43,6 +68,13 @@ export class EditorWebComponent extends HTMLElement {
     }
 
     this.mountReactComponent()
+  }
+
+  broadcastNewState(newState: unknown): void {
+    this.broadcastChannel.postMessage({
+      type: 'serlo-editor-update',
+      newState,
+    })
   }
 
   mountReactComponent() {
@@ -57,7 +89,8 @@ export class EditorWebComponent extends HTMLElement {
       throw new Error('Initial state is not of type InitialState')
     }
 
-    console.log('Mounting React Component', initialState)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    console.log('Mounting React Component with state:', initialState)
 
     if (!this.reactRoot) {
       return null
@@ -65,7 +98,15 @@ export class EditorWebComponent extends HTMLElement {
 
     this.reactRoot.render(
       <React.StrictMode>
-        <SerloEditor initialState={initialState}>
+        <SerloEditor
+          initialState={initialState}
+          onChange={({ changed, getDocument }) => {
+            if (changed) {
+              const newState = getDocument()
+              this.broadcastNewState(newState)
+            }
+          }}
+        >
           {(editor) => {
             return <div>{editor.element}</div>
           }}
@@ -79,11 +120,9 @@ export class EditorWebComponent extends HTMLElement {
       this.reactRoot.unmount()
       this.reactRoot = null
     }
-  }
 
-  updateProps(/*newProps: any*/) {
-    // Method to update props if necessary, calling this.mountReactComponent() again with new props
+    this.broadcastChannel.close()
   }
 }
 
-customElements.define('editor-web-component', EditorWebComponent)
+customElements.define('serlo-editor', EditorWebComponent)
