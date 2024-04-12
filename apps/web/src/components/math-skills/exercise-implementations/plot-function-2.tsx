@@ -55,7 +55,14 @@ export function PlotFunction2() {
       renderSolution={({ data }) => {
         return (
           <>
-            Zeichne dazu zuerst die Asymptote mit der Gleichung:
+            <p>
+              Du kannst diese Aufgabe mithilfe einer Wertetabelle lösen. Diese
+              Lösung nutzt den alternativen Weg über die Eigenschaften der
+              Funktion. Beide Wege sind gleichwertig. Entsheide, welcher für
+              dich besser funktioniert.
+            </p>
+            <br />
+            Zeichne zuerst die Asymptote mit der Gleichung:
             <br />
             <HighlightGray>y = {data.c}</HighlightGray>
             <br />
