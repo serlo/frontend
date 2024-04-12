@@ -286,7 +286,7 @@ export const middleSchoolFinalExam = {
     title: 'Tiere im Wald',
     subtitle: 'Exponentialfunktion',
     calculatorAllowed: true,
-    track: 3,
+    track: 1,
     difficulty: 3,
     component: <AnimalsInForest />,
   },
