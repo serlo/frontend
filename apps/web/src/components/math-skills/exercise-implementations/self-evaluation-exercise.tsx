@@ -98,8 +98,7 @@ export function SelfEvaluationExercise<T>({
           <span>
             {calculatorAllowed ? (
               <>
-                <FaIcon icon={faCalculator} />
-                Taschenrechner ist erlaubt &nbsp;
+                <FaIcon icon={faCalculator} /> Taschenrechner ist erlaubt &nbsp;
               </>
             ) : (
               <>
@@ -109,7 +108,7 @@ export function SelfEvaluationExercise<T>({
                     className="absolute -top-3 left-1"
                   />
                   <FaIcon icon={faSlash} className="absolute -top-3" />
-                </span>
+                </span>{' '}
                 Ohne Taschenrechner
               </>
             )}
