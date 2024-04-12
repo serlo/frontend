@@ -29,7 +29,6 @@ export const sharedRevisionFragments = gql`
 
   fragment exerciseGroupRevision on ExerciseGroupRevision {
     cohesive
-    content
   }
 `
 
