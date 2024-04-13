@@ -318,7 +318,7 @@ export const middleSchoolFinalExam = {
     component: <ImportantApps />,
   },
   'wahrscheinlichkeiten-berechnen': {
-    title: 'Wahrscheinlichkeiten berechnen',
+    title: 'Mehrstufiges Experiment',
     subtitle: 'Daten und Zufall 🚧',
     calculatorAllowed: true,
     track: 3,
