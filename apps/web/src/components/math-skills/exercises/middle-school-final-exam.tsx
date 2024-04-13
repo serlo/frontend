@@ -28,6 +28,7 @@ import { PlotFunction2 } from '../exercise-implementations/plot-function-2'
 import { RootEquations } from '../exercise-implementations/root-equations'
 import { RotatePoint } from '../exercise-implementations/rotate-point'
 import { TimeToDouble } from '../exercise-implementations/time-to-double'
+import { TreeDiagram } from '../exercise-implementations/tree-diagram'
 // import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
 // import { SurfaceThreePyramide } from '../exercise-implementations/surface-pyramide-2'
 import { Trigonometry } from '../exercise-implementations/trigonometry'
@@ -297,6 +298,30 @@ export const middleSchoolFinalExam = {
     calculatorAllowed: true,
     track: 1,
     difficulty: 3,
+    component: <AnimalsInForest />,
+  },
+  'baumdiagramm-zeichnen': {
+    title: 'Baumdiagramm zeichnen',
+    subtitle: 'Daten und Zufall',
+    calculatorAllowed: true,
+    track: 3,
+    difficulty: 1,
+    component: <TreeDiagram />,
+  },
+  'daten-auslesen': {
+    title: 'Daten auslesen (vielleicht interessanterer Titel?',
+    subtitle: 'Daten und Zufall 🚧',
+    calculatorAllowed: true,
+    track: 3,
+    difficulty: 1,
+    component: <AnimalsInForest />,
+  },
+  'wahrscheinlichkeiten-berechnen': {
+    title: 'Wahrscheinlichkeiten berechnen',
+    subtitle: 'Daten und Zufall 🚧',
+    calculatorAllowed: true,
+    track: 3,
+    difficulty: 1,
     component: <AnimalsInForest />,
   },
   'plot-function-1': {
