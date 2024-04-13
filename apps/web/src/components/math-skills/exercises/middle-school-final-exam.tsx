@@ -29,6 +29,7 @@ import { PlotFunction2 } from '../exercise-implementations/plot-function-2'
 import { RootEquations } from '../exercise-implementations/root-equations'
 import { RotatePoint } from '../exercise-implementations/rotate-point'
 import { TimeToDouble } from '../exercise-implementations/time-to-double'
+import { Tombola } from '../exercise-implementations/tombola'
 import { TreeDiagram } from '../exercise-implementations/tree-diagram'
 // import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
 // import { SurfaceThreePyramide } from '../exercise-implementations/surface-pyramide-2'
@@ -317,13 +318,13 @@ export const middleSchoolFinalExam = {
     difficulty: 1,
     component: <ImportantApps />,
   },
-  'wahrscheinlichkeiten-berechnen': {
-    title: 'Mehrstufiges Experiment',
-    subtitle: 'Daten und Zufall 🚧',
+  'verlosung-wahrscheinlichkeit-berechnen': {
+    title: 'Verlosung',
+    subtitle: 'Daten und Zufall',
     calculatorAllowed: true,
     track: 3,
     difficulty: 1,
-    component: <AnimalsInForest />,
+    component: <Tombola />,
   },
   'plot-function-1': {
     title: 'Graphen skizzieren',
