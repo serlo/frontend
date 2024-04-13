@@ -5,6 +5,7 @@ import { eqBy, mapObjIndexed } from 'ramda'
 import { setAbstractEntityMutation } from './set-abstract-entity-mutation'
 import {
   ChildFieldsData,
+  OnSaveData,
   SetEntityMutationData,
   SetEntityMutationRunnerData,
 } from './types'
@@ -148,11 +149,13 @@ export function useSetEntityMutation() {
         ? initialState.state
         : undefined
 
-      if (data.__typename === UuidType.Course && data['course-page']) {
+      if (data.__typename === UuidType.Course) {
+        const course = data as CourseSerializedState & OnSaveData
+        if (!course['course-page']) return success
         success =
           success &&
           (await mapField(
-            data['course-page'],
+            course['course-page'],
             UuidType.CoursePage,
             (initialStateState as CourseSerializedState)?.['course-page']
           ))

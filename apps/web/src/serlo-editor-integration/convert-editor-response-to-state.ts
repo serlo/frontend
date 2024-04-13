@@ -31,22 +31,22 @@ export function convertEditorResponseToState(
   const config: Record<
     string,
     {
-      convert: (
+      convert?: (
         entityType: MainUuidType['__typename'],
         state: any
       ) => StaticDocument<StateType>
     }
   > = {
-    Applet: { convert: convertAbstractEntity },
-    Article: { convert: convertAbstractEntity },
+    Applet: {},
+    Article: {},
+    Event: {},
+    Exercise: {},
+    ExerciseGroup: {},
+    Video: {},
     Course: { convert: convertCourse },
     CoursePage: { convert: convertCoursePage },
-    Event: { convert: convertAbstractEntity },
     Page: { convert: convertPage },
-    Exercise: { convert: convertAbstractEntity },
-    ExerciseGroup: { convert: convertAbstractEntity },
     User: { convert: convertUser },
-    Video: { convert: convertAbstractEntity },
     TaxonomyTerm: { convert: convertTaxonomy },
   }
 
@@ -85,7 +85,9 @@ export function convertEditorResponseToState(
       }
     }
     const { convert } = config[uuid.__typename]
-    return convert(uuid.__typename, uuid)
+    return convert
+      ? convert(uuid.__typename, uuid)
+      : convertAbstractEntity(uuid.__typename, uuid)
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e)
@@ -265,25 +267,16 @@ export function convertUserByDescription(description?: string | null) {
   }
 }
 
-// TODO: simplify with AbstractEntity
-
-export interface AppletSerializedState extends Entity {
-  __typename?: UuidType.Applet
+export interface AbstractSerializedState extends Entity {
+  __typename?: UuidType[number]
   title?: string
+  content: SerializedStaticState
+  reasoning?: SerializedStaticState
+  description: SerializedStaticState
+  meta_title?: string
+  meta_description?: string
   url?: string
-  content: SerializedStaticState
-  reasoning?: SerializedStaticState
-  meta_title?: string
-  meta_description?: string
-}
-
-export interface ArticleSerializedState extends Entity {
-  __typename?: UuidType.Article
-  title?: string
-  content: SerializedStaticState
-  reasoning?: SerializedStaticState
-  meta_title?: string
-  meta_description?: string
+  cohesive?: string
 }
 
 export interface CourseSerializedState extends Entity {
@@ -301,14 +294,6 @@ export interface CoursePageSerializedState extends Entity {
   title?: string
   icon?: 'explanation' | 'play' | 'question'
   content: SerializedStaticState
-}
-
-export interface EventSerializedState extends Entity {
-  __typename?: UuidType.Event
-  title?: string
-  content: SerializedStaticState
-  meta_title?: string
-  meta_description?: string
 }
 
 export interface PageSerializedState extends Uuid {
@@ -329,52 +314,9 @@ export interface TaxonomySerializedState extends Uuid {
   position: number
 }
 
-export interface TextExerciseSerializedState extends Entity {
-  __typename?: UuidType.Exercise
-  content: SerializedStaticState
-  'single-choice-right-answer'?: {
-    content: SerializedStaticState
-    feedback: SerializedStaticState
-  }
-  'single-choice-wrong-answer'?: {
-    content: SerializedStaticState
-    feedback: SerializedStaticState
-  }[]
-  'multiple-choice-right-answer'?: { content: SerializedStaticState }[]
-  'multiple-choice-wrong-answer'?: {
-    content: SerializedStaticState
-    feedback: SerializedStaticState
-  }[]
-  'input-expression-equal-match-challenge'?: InputType
-  'input-number-exact-match-challenge'?: InputType
-  'input-string-normalized-match-challenge': InputType
-}
-
-interface InputType {
-  solution: string
-  feedback: SerializedStaticState
-  'input-expression-equal-match-challenge'?: InputType[]
-  'input-number-exact-match-challenge'?: InputType[]
-  'input-string-normalized-match-challenge'?: InputType[]
-}
-
-export interface TextExerciseGroupSerializedState extends Entity {
-  __typename?: UuidType.ExerciseGroup
-  cohesive?: string
-  content: SerializedStaticState
-}
-
 export interface UserSerializedState extends Uuid {
   __typename?: UuidType.User
   description: SerializedStaticState
-}
-
-export interface VideoSerializedState extends Entity {
-  __typename?: UuidType.Video
-  title?: string
-  description: SerializedStaticState
-  content?: string
-  reasoning?: SerializedStaticState
 }
 
 interface StaticDocument<T extends StateType> {
