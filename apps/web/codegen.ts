@@ -3,7 +3,7 @@ import { CodegenConfig } from '@graphql-codegen/cli'
 const config: CodegenConfig = {
   overwrite: true,
   emitLegacyCommonJSImports: false,
-  schema: 'https://api.serlo-staging.dev/graphql',
+  schema: 'http://localhost:3001/graphql',
   documents: ['src/**/*.tsx', 'src/**/*.ts', '!src/helper/mutations/**/*.ts'],
   generates: {
     'src/fetcher/graphql-types/operations.ts': {

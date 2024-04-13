@@ -265,6 +265,8 @@ export function convertUserByDescription(description?: string | null) {
   }
 }
 
+// TODO: simplify with AbstractEntity
+
 export interface AppletSerializedState extends Entity {
   __typename?: UuidType.Applet
   title?: string

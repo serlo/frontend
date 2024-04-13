@@ -2,7 +2,7 @@
 import { useRouter } from 'next/router'
 import { eqBy, mapObjIndexed } from 'ramda'
 
-import { getSetMutation } from './get-set-mutation'
+import { setAbstractEntityMutation } from './set-abstract-entity-mutation'
 import {
   ChildFieldsData,
   SetEntityMutationData,
@@ -12,7 +12,7 @@ import { showToastNotice } from '../../helper/show-toast-notice'
 import { useMutationFetch } from '../helper/use-mutation-fetch'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData, UuidType } from '@/data-types'
-import { SetGenericEntityInput } from '@/fetcher/graphql-types/operations'
+import { SetAbstractEntityInput } from '@/fetcher/graphql-types/operations'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { successHash } from '@/helper/use-leave-confirm'
 import type { CourseSerializedState } from '@/serlo-editor-integration/convert-editor-response-to-state'
@@ -72,6 +72,7 @@ export function useSetEntityMutation() {
           data,
           needsReview
         )
+        if (!genericInput) return
         const additionalInput = getAdditionalInputData(mutationStrings, data)
         input = {
           ...genericInput,
@@ -91,7 +92,7 @@ export function useSetEntityMutation() {
       let savedId = undefined
       try {
         //here we rely on the api not to create an empty revision
-        savedId = await mutationFetch(getSetMutation(data.__typename), input)
+        savedId = await mutationFetch(setAbstractEntityMutation, input)
         if (!Number.isInteger(savedId)) return false
       } catch (error) {
         // eslint-disable-next-line no-console
@@ -227,11 +228,13 @@ function getGenericInputData(
   mutationStrings: LoggedInData['strings']['mutations'],
   data: SetEntityMutationData,
   needsReview: boolean
-): SetGenericEntityInput {
+): SetAbstractEntityInput | undefined {
+  if (!data.__typename) return
   const content =
     data.__typename === UuidType.Course ? data.description : data.content
 
   return {
+    entityType: data.__typename,
     changes: getRequiredString(mutationStrings, 'changes', data.changes),
     content: getRequiredString(mutationStrings, 'content', content),
     entityId: data.id ? data.id : undefined,

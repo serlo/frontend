@@ -878,14 +878,7 @@ export interface EntityMutation {
   __typename?: 'EntityMutation';
   checkoutRevision: CheckoutRevisionResponse;
   rejectRevision: RejectRevisionResponse;
-  setApplet: SetEntityResponse;
-  setArticle: SetEntityResponse;
-  setCourse: SetEntityResponse;
-  setCoursePage: SetEntityResponse;
-  setEvent: SetEntityResponse;
-  setExercise: SetEntityResponse;
-  setExerciseGroup: SetEntityResponse;
-  setVideo: SetEntityResponse;
+  setAbstractEntity: SetEntityResponse;
   sort: EntitySortResponse;
   updateLicense: EntityUpdateLicenseResponse;
 }
@@ -901,43 +894,8 @@ export interface EntityMutationRejectRevisionArgs {
 }
 
 
-export interface EntityMutationSetAppletArgs {
-  input: SetAppletInput;
-}
-
-
-export interface EntityMutationSetArticleArgs {
-  input: SetArticleInput;
-}
-
-
-export interface EntityMutationSetCourseArgs {
-  input: SetCourseInput;
-}
-
-
-export interface EntityMutationSetCoursePageArgs {
-  input: SetCoursePageInput;
-}
-
-
-export interface EntityMutationSetEventArgs {
-  input: SetEventInput;
-}
-
-
-export interface EntityMutationSetExerciseArgs {
-  input: SetGenericEntityInput;
-}
-
-
-export interface EntityMutationSetExerciseGroupArgs {
-  input: SetExerciseGroupInput;
-}
-
-
-export interface EntityMutationSetVideoArgs {
-  input: SetVideoInput;
+export interface EntityMutationSetAbstractEntityArgs {
+  input: SetAbstractEntityInput;
 }
 
 
@@ -1789,54 +1747,20 @@ export interface ScopedRoleCursor {
   node: ScopedRole;
 }
 
-export interface SetAppletInput {
+export interface SetAbstractEntityInput {
   changes: Scalars['String']['input'];
-  content: Scalars['String']['input'];
-  entityId?: InputMaybe<Scalars['Int']['input']>;
-  metaDescription?: InputMaybe<Scalars['String']['input']>;
-  metaTitle?: InputMaybe<Scalars['String']['input']>;
-  needsReview: Scalars['Boolean']['input'];
-  parentId?: InputMaybe<Scalars['Int']['input']>;
-  subscribeThis: Scalars['Boolean']['input'];
-  subscribeThisByEmail: Scalars['Boolean']['input'];
-  title: Scalars['String']['input'];
-  url: Scalars['String']['input'];
-}
-
-export interface SetArticleInput {
-  changes: Scalars['String']['input'];
-  content: Scalars['String']['input'];
-  entityId?: InputMaybe<Scalars['Int']['input']>;
-  metaDescription?: InputMaybe<Scalars['String']['input']>;
-  metaTitle?: InputMaybe<Scalars['String']['input']>;
-  needsReview: Scalars['Boolean']['input'];
-  parentId?: InputMaybe<Scalars['Int']['input']>;
-  subscribeThis: Scalars['Boolean']['input'];
-  subscribeThisByEmail: Scalars['Boolean']['input'];
-  title: Scalars['String']['input'];
-}
-
-export interface SetCourseInput {
-  changes: Scalars['String']['input'];
+  cohesive?: InputMaybe<Scalars['Boolean']['input']>;
   content?: InputMaybe<Scalars['String']['input']>;
   entityId?: InputMaybe<Scalars['Int']['input']>;
+  entityType: Scalars['String']['input'];
   metaDescription?: InputMaybe<Scalars['String']['input']>;
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
   needsReview: Scalars['Boolean']['input'];
   parentId?: InputMaybe<Scalars['Int']['input']>;
   subscribeThis: Scalars['Boolean']['input'];
   subscribeThisByEmail: Scalars['Boolean']['input'];
-  title: Scalars['String']['input'];
-}
-
-export interface SetCoursePageInput {
-  changes: Scalars['String']['input'];
-  content: Scalars['String']['input'];
-  entityId?: InputMaybe<Scalars['Int']['input']>;
-  needsReview: Scalars['Boolean']['input'];
-  parentId?: InputMaybe<Scalars['Int']['input']>;
-  subscribeThis: Scalars['Boolean']['input'];
-  subscribeThisByEmail: Scalars['Boolean']['input'];
-  title: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
 }
 
 export interface SetEntityResponse {
@@ -1844,40 +1768,6 @@ export interface SetEntityResponse {
   query: Query;
   record?: Maybe<AbstractEntity>;
   success: Scalars['Boolean']['output'];
-}
-
-export interface SetEventInput {
-  changes: Scalars['String']['input'];
-  content: Scalars['String']['input'];
-  entityId?: InputMaybe<Scalars['Int']['input']>;
-  metaDescription?: InputMaybe<Scalars['String']['input']>;
-  metaTitle?: InputMaybe<Scalars['String']['input']>;
-  needsReview: Scalars['Boolean']['input'];
-  parentId?: InputMaybe<Scalars['Int']['input']>;
-  subscribeThis: Scalars['Boolean']['input'];
-  subscribeThisByEmail: Scalars['Boolean']['input'];
-  title: Scalars['String']['input'];
-}
-
-export interface SetExerciseGroupInput {
-  changes: Scalars['String']['input'];
-  cohesive: Scalars['Boolean']['input'];
-  content: Scalars['String']['input'];
-  entityId?: InputMaybe<Scalars['Int']['input']>;
-  needsReview: Scalars['Boolean']['input'];
-  parentId?: InputMaybe<Scalars['Int']['input']>;
-  subscribeThis: Scalars['Boolean']['input'];
-  subscribeThisByEmail: Scalars['Boolean']['input'];
-}
-
-export interface SetGenericEntityInput {
-  changes: Scalars['String']['input'];
-  content: Scalars['String']['input'];
-  entityId?: InputMaybe<Scalars['Int']['input']>;
-  needsReview: Scalars['Boolean']['input'];
-  parentId?: InputMaybe<Scalars['Int']['input']>;
-  subscribeThis: Scalars['Boolean']['input'];
-  subscribeThisByEmail: Scalars['Boolean']['input'];
 }
 
 export interface SetLicenseNotificationEvent extends AbstractNotificationEvent, InstanceAware {
@@ -1932,18 +1822,6 @@ export interface SetUuidStateNotificationEvent extends AbstractNotificationEvent
   object: AbstractUuid;
   objectId: Scalars['Int']['output'];
   trashed: Scalars['Boolean']['output'];
-}
-
-export interface SetVideoInput {
-  changes: Scalars['String']['input'];
-  content: Scalars['String']['input'];
-  entityId?: InputMaybe<Scalars['Int']['input']>;
-  needsReview: Scalars['Boolean']['input'];
-  parentId?: InputMaybe<Scalars['Int']['input']>;
-  subscribeThis: Scalars['Boolean']['input'];
-  subscribeThisByEmail: Scalars['Boolean']['input'];
-  title: Scalars['String']['input'];
-  url: Scalars['String']['input'];
 }
 
 export interface Subject {
@@ -3202,61 +3080,12 @@ export type CheckoutPageRevisionMutationVariables = Exact<{
 
 export type CheckoutPageRevisionMutation = { __typename?: 'Mutation', page: { __typename?: 'PageMutation', checkoutRevision: { __typename?: 'CheckoutRevisionResponse', success: boolean } } };
 
-export type SetAppletMutationVariables = Exact<{
-  input: SetAppletInput;
+export type SetAbstractEntityMutationVariables = Exact<{
+  input: SetAbstractEntityInput;
 }>;
 
 
-export type SetAppletMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setApplet: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'Video', id: number } | null } } };
-
-export type SetArticleMutationVariables = Exact<{
-  input: SetArticleInput;
-}>;
-
-
-export type SetArticleMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setArticle: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'Video', id: number } | null } } };
-
-export type SetCourseMutationVariables = Exact<{
-  input: SetCourseInput;
-}>;
-
-
-export type SetCourseMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setCourse: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'Video', id: number } | null } } };
-
-export type SetCoursePageMutationVariables = Exact<{
-  input: SetCoursePageInput;
-}>;
-
-
-export type SetCoursePageMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setCoursePage: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'Video', id: number } | null } } };
-
-export type SetEventMutationVariables = Exact<{
-  input: SetEventInput;
-}>;
-
-
-export type SetEventMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setEvent: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'Video', id: number } | null } } };
-
-export type SetExerciseMutationVariables = Exact<{
-  input: SetGenericEntityInput;
-}>;
-
-
-export type SetExerciseMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setExercise: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'Video', id: number } | null } } };
-
-export type SetExerciseGroupMutationVariables = Exact<{
-  input: SetExerciseGroupInput;
-}>;
-
-
-export type SetExerciseGroupMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setExerciseGroup: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'Video', id: number } | null } } };
-
-export type SetVideoMutationVariables = Exact<{
-  input: SetVideoInput;
-}>;
-
-
-export type SetVideoMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setVideo: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'Video', id: number } | null } } };
+export type SetAbstractEntityMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setAbstractEntity: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'Video', id: number } | null } } };
 
 export type NotificationSetStateMutationVariables = Exact<{
   input: NotificationSetStateInput;

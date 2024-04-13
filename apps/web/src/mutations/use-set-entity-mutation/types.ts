@@ -1,13 +1,3 @@
-import {
-  SetAppletInput,
-  SetGenericEntityInput,
-  SetArticleInput,
-  SetCourseInput,
-  SetCoursePageInput,
-  SetEventInput,
-  SetExerciseGroupInput,
-  SetVideoInput,
-} from '@/fetcher/graphql-types/operations'
 import type {
   AppletSerializedState,
   ArticleSerializedState,
@@ -28,16 +18,6 @@ export interface OnSaveData {
     noReview: boolean // this entity needs no Review or user choose to skip review
   }
 }
-
-export type SetEntityInputTypes =
-  | SetGenericEntityInput
-  | SetAppletInput
-  | SetArticleInput
-  | SetCourseInput
-  | SetCoursePageInput
-  | SetEventInput
-  | SetExerciseGroupInput
-  | SetVideoInput
 
 export type SupportedTypesSerializedState =
   | AppletSerializedState
