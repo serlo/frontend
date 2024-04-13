@@ -11,6 +11,7 @@ import { ExponentialFunctionTime } from '../exercise-implementations/exponential
 import { ExponentialEquation } from '../exercise-implementations/exponential-function-3'
 import { FindExponentialFunction } from '../exercise-implementations/find-exponential-function'
 import { IceCreamShop } from '../exercise-implementations/ice-cream-shop'
+import { ImportantApps } from '../exercise-implementations/important-apps'
 import { LogarithmEquation } from '../exercise-implementations/logarithm-equation'
 import { LogarithmExercise1 } from '../exercise-implementations/logarithm-exercise-1'
 import { LogarithmExercise2 } from '../exercise-implementations/logarithm-exericse-2'
@@ -308,13 +309,13 @@ export const middleSchoolFinalExam = {
     difficulty: 1,
     component: <TreeDiagram />,
   },
-  'daten-auslesen': {
-    title: 'Daten auslesen (vielleicht interessanterer Titel?',
-    subtitle: 'Daten und Zufall 🚧',
+  'wichtige-apps-daten-auslesen': {
+    title: 'Wichtige Apps',
+    subtitle: 'Daten und Zufall',
     calculatorAllowed: true,
     track: 3,
     difficulty: 1,
-    component: <AnimalsInForest />,
+    component: <ImportantApps />,
   },
   'wahrscheinlichkeiten-berechnen': {
     title: 'Wahrscheinlichkeiten berechnen',
