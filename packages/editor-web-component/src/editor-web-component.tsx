@@ -13,7 +13,6 @@ import {
 export class EditorWebComponent extends HTMLElement {
   private reactRoot: ReactDOM.Root | null = null
   private container: HTMLDivElement
-  private broadcastChannel: BroadcastChannel
 
   private _initialState: InitialState = exampleInitialState
 
@@ -21,8 +20,6 @@ export class EditorWebComponent extends HTMLElement {
     super()
 
     this.container = document.createElement('div')
-
-    this.broadcastChannel = new BroadcastChannel('serlo_editor_channel')
   }
 
   static get observedAttributes() {
@@ -71,10 +68,10 @@ export class EditorWebComponent extends HTMLElement {
   }
 
   broadcastNewState(newState: unknown): void {
-    this.broadcastChannel.postMessage({
-      type: 'serlo-editor-update',
-      newState,
+    const event = new CustomEvent('serlo-editor-state-change', {
+      detail: { newState },
     })
+    this.dispatchEvent(event)
   }
 
   mountReactComponent() {
@@ -120,8 +117,6 @@ export class EditorWebComponent extends HTMLElement {
       this.reactRoot.unmount()
       this.reactRoot = null
     }
-
-    this.broadcastChannel.close()
   }
 }
 
