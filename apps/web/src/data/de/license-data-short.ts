@@ -101,4 +101,12 @@ export const licenses: LicenseData[] = [
     url: '/license/detail/27',
     agreement: `Mit dem Speichern dieser Seite versicherst du, dass du in deinem Beitrag (damit sind auch Änderungen gemeint) die Aufgabenstellung vom Land NRW nicht inhaltlich verändert hast, keine Rechte Dritter verletzt und dich an die <a href="/terms">Nutzungsbedingungen</a> gehalten hast.`,
   },
+  {
+    id: 28,
+    title:
+      'Dieses Werk wurde vom Bayerischen Staatsministerium für Unterricht und Kultus zur Verfügung gestellt.',
+    shortTitle: 'Bayerisches Staatsministerium für Unterricht und Kultus',
+    url: 'https://www.bycs.de/hilfe-und-tutorials/pruefungsarchiv/lizenzen-und-verwendungsmoeglichkeiten',
+    agreement: `Mit dem Speichern dieser Seite versicherst du, dass du in deinem Beitrag (damit sind auch Änderungen gemeint) die Aufgabenstellung vom Land Bayern nicht inhaltlich verändert hast, keine Rechte Dritter verletzt und dich an die <a href="https://www.bycs.de/hilfe-und-tutorials/pruefungsarchiv/lizenzen-und-verwendungsmoeglichkeiten">Nutzungsbedingungen</a> gehalten hast.`,
+  },
 ]
