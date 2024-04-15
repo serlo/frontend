@@ -1,14 +1,20 @@
 import { BoxRenderer } from '@editor/plugins/box/renderer'
 import { faDiscord } from '@fortawesome/free-brands-svg-icons'
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
+import Head from 'next/head'
 
 import { Link } from './content/link'
 import { FaIcon } from './fa-icon'
-import { mathExamTaxBY } from '@/data/de/math-exams-taxonomies'
+import { extraMetaTags, mathExamTaxBY } from '@/data/de/math-exams-taxonomies'
 import { cn } from '@/helper/cn'
 
 export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
   const isInBYTax = mathExamTaxBY.includes(examsFolderId)
+
+  const extraMeta = Object.hasOwn(extraMetaTags, examsFolderId)
+    ? extraMetaTags[examsFolderId as keyof typeof extraMetaTags]
+    : undefined
+
   return (
     <>
       <div
@@ -94,6 +100,13 @@ export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
             ) : null}
           </>
         </BoxRenderer>
+        {extraMeta ? (
+          <Head>
+            <title>{extraMeta.title}</title>
+            <meta name="description" content={extraMeta.metaDescription} />
+          </Head>
+        ) : null}
+
         <style jsx global>
           {`
             #secondary-menu {

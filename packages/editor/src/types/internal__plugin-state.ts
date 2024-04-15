@@ -92,11 +92,8 @@ export interface FocusableChild {
  * Maps a [[StateType]] to the type of its static state
  *
  */
-export type StateTypeStaticType<D extends StateType> = D extends StateType<
-  infer S
->
-  ? S
-  : never
+export type StateTypeStaticType<D extends StateType> =
+  D extends StateType<infer S> ? S : never
 
 export type StateTypesStaticType<Ds extends Record<string, StateType>> = {
   [K in keyof Ds]: StateTypeStaticType<Ds[K]>
@@ -106,12 +103,8 @@ export type StateTypesStaticType<Ds extends Record<string, StateType>> = {
  * Maps a [[StateType]] to the type of its store state
  *
  */
-export type StateTypeValueType<D extends StateType> = D extends StateType<
-  any,
-  infer T
->
-  ? T
-  : never
+export type StateTypeValueType<D extends StateType> =
+  D extends StateType<any, infer T> ? T : never
 
 export type StateTypesValueType<Ds extends Record<string, StateType>> = {
   [K in keyof Ds]: StateTypeValueType<Ds[K]>
@@ -121,13 +114,8 @@ export type StateTypesValueType<Ds extends Record<string, StateType>> = {
  * Maps a [[StateType]] to the type of its public API for usage in plugin components
  *
  */
-export type StateTypeReturnType<D extends StateType> = D extends StateType<
-  any,
-  any,
-  infer R
->
-  ? R
-  : never
+export type StateTypeReturnType<D extends StateType> =
+  D extends StateType<any, any, infer R> ? R : never
 
 export type StateTypesReturnType<Ds extends Record<string, StateType>> = {
   [K in keyof Ds]: StateTypeReturnType<Ds[K]>

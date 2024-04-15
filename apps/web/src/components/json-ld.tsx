@@ -86,25 +86,26 @@ export function JsonLd({ data, id }: JsonLdProps) {
       ? [
           {
             id: getIRI(data.breadcrumbsData[0].id),
-            prefLabel: {
-              [lang]: data.breadcrumbsData[0].label,
-              '@none': data.breadcrumbsData[0].label,
-            },
-            type: 'Concept',
+            name: data.breadcrumbsData[0].label,
+            type: 'Thing',
           },
         ]
       : undefined
 
     return {
-      '@context': [
-        'https://w3id.org/kim/lrmi-profile/draft/context.jsonld',
-        {
-          '@language': lang,
-          '@vocab': 'http://schema.org/',
-          type: '@type',
-          id: '@id',
+      '@context': {
+        id: '@id',
+        type: '@type',
+        '@language': lang,
+        '@vocab': 'http://schema.org/',
+        skos: 'http://www.w3.org/2004/02/skos/core#',
+        prefLabel: {
+          '@id': 'skos:prefLabel',
+          '@container': '@language',
         },
-      ],
+        inScheme: 'skos:inScheme',
+        Concept: 'skos:Concept',
+      },
       id: getIRI(id),
       type,
       learningResourceType,
@@ -121,14 +122,8 @@ export function JsonLd({ data, id }: JsonLdProps) {
       audience: [
         {
           id: 'http://purl.org/dcx/lrmi-vocabs/educationalAudienceRole/student',
-          prefLabel: {
-            en: 'student',
-            de: 'Schüler*in',
-          },
-          type: 'Concept',
-          inScheme: {
-            id: 'http://purl.org/dcx/lrmi-vocabs/educationalAudienceRole/',
-          },
+          audienceType: 'student',
+          type: 'Audience',
         },
       ],
       isPartOf,

@@ -17,7 +17,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UserPage } from '@/data-types'
 import { PotentialSpamUsersQuery } from '@/fetcher/graphql-types/operations'
-import { sharedUserFragments } from '@/fetcher/user/query'
+import { sharedUserFragments } from '@/fetcher/user/query-by-username'
 import { isMac } from '@/helper/client-detection'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useMutationFetch } from '@/mutations/helper/use-mutation-fetch'
@@ -125,7 +125,7 @@ const BotHunt = () => {
         if (removedIds.includes(id)) return null
         if (isActiveAuthor || isActiveReviewer || isActiveDonor) return null
 
-        const profileUrl = `/user/${id}/${username}`
+        const profileUrl = `/user/profile/${username}`
 
         return (
           <li key={id}>

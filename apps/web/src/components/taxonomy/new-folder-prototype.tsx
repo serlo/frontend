@@ -1,10 +1,10 @@
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
-  EditorExerciseDocument,
-  EditorTemplateExerciseGroupDocument,
+  type EditorExerciseDocument,
+  type EditorExerciseGroupDocument,
 } from '@editor/types/editor-plugins'
-import { isTemplateExerciseGroupDocument } from '@editor/types/plugin-type-guards'
+import { isExerciseGroupDocument } from '@editor/types/plugin-type-guards'
 import {
   faCaretLeft,
   faCaretRight,
@@ -138,7 +138,7 @@ export function NewFolderPrototype({ data }: NewFolderPrototypeProps) {
               ) as number[])
             : undefined
 
-        const solvedPercentage = isTemplateExerciseGroupDocument(exercise)
+        const solvedPercentage = isExerciseGroupDocument(exercise)
           ? exercise.state.exercises.filter(
               (exercise) =>
                 exercise.serloContext?.uuid &&
@@ -245,7 +245,7 @@ function ExerciseWrapper({
   title,
   close,
 }: {
-  element: EditorExerciseDocument | EditorTemplateExerciseGroupDocument
+  element: EditorExerciseDocument | EditorExerciseGroupDocument
   title: string
   close: () => void
 }) {
@@ -268,7 +268,7 @@ function ExerciseWrapper({
     val > 1 &&
     ((element.serloContext?.uuid &&
       solved?.includes(element.serloContext.uuid)) ||
-      (isTemplateExerciseGroupDocument(element) &&
+      (isExerciseGroupDocument(element) &&
         element.state.exercises[index].serloContext?.uuid &&
         solved?.includes(
           element.state.exercises[index].serloContext?.uuid as number

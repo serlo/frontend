@@ -34,7 +34,6 @@ const pages = [
   '/paedagogik-konzept',
   '/partner',
   '/plenum',
-  '/presse',
   '/qualitaet',
   '/richtlinien-horizont',
   '/schule',

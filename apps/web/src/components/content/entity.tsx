@@ -153,7 +153,6 @@ export function Entity({ data }: EntityProps) {
     return (
       <UserTools
         aboveContent={setting?.aboveContent}
-        id={data.id}
         unrevisedRevisions={data.unrevisedRevisions}
         data={{
           type: data.typename,
@@ -176,7 +175,28 @@ export function Entity({ data }: EntityProps) {
         open={courseNavOpen}
         onOverviewButtonClick={openCourseNav}
         title={data.courseData.title}
-        pages={data.courseData.pages}
+        pages={data.courseData.pages.map(
+          ({ id, title, active, noCurrentRevision, url }) => {
+            return {
+              key: id + title,
+              element: (
+                <Link
+                  className={cn(
+                    'text-lg leading-browser',
+                    active &&
+                      'font-semibold text-almost-black hover:no-underline',
+                    noCurrentRevision && 'text-brand-300'
+                  )}
+                  href={active ? undefined : url}
+                >
+                  {noCurrentRevision
+                    ? '(' + strings.course.noRevisionForPage + ')'
+                    : title}
+                </Link>
+              ),
+            }
+          }
+        )}
       />
     )
   }

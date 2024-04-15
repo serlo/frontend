@@ -8,7 +8,7 @@ Before(({ login }) => {
 
 // Articles only for now
 Scenario('Saving without changes', ({ I }) => {
-  I.amOnPage('/entity/repository/add-revision/74888')
+  I.amOnPage('/entity/repository/add-revision/55437')
   I.click('Speichern')
   I.waitForText('Bisher hast du nichts geändert')
   I.dontSee('Beschreibe deine Änderungen am Inhalt')

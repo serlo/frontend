@@ -91,7 +91,6 @@ export function Registration() {
       })
       .then(() => {
         setIsSuccessfullySubmitted(true)
-        window.scrollTo({ top: 0, behavior: 'smooth' })
       })
       .catch(
         handleFlowError(
@@ -103,6 +102,7 @@ export function Registration() {
       )
       .finally(() => {
         nProgress.done()
+        window.scrollTo({ top: 0, behavior: 'smooth' })
       })
   }
 
