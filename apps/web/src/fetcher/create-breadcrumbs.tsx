@@ -44,6 +44,8 @@ export function taxonomyParentsToRootToBreadcrumbsData(
 
   const { secondaryMenus } = getInstanceDataByLang(instance)
 
+  if (!term.path) return undefined
+
   let breadcrumbs = term.path.map((entry) => {
     return {
       label: entry!.title,
@@ -52,9 +54,7 @@ export function taxonomyParentsToRootToBreadcrumbsData(
     }
   })
 
-  if (!breadcrumbs?.length) return undefined
-
-  if (includeFirstParent) {
+  if (includeFirstParent || !term.path.length) {
     breadcrumbs.push({
       label: term.title,
       url: term.alias,
@@ -62,9 +62,11 @@ export function taxonomyParentsToRootToBreadcrumbsData(
     })
   }
 
+  if (!breadcrumbs?.length) return undefined
+
   // get the subject from the secondary menu data so we link to the correct landing pages
   const subject = secondaryMenus.find(
-    (menu) => menu.rootId === breadcrumbs[0].id
+    (menu) => menu.rootId === breadcrumbs[0]?.id ?? term.id
   )
 
   if (subject) {
