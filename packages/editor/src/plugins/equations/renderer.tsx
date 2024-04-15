@@ -64,10 +64,19 @@ export function EquationsRenderer({
         {step.explanation ? (
           <tr className="text-brandgreen-darker whitespace-normal">
             <td />
-            {renderDownArrow()}
-            <td colSpan={2} className="relative -left-side px-1 pb-3 pt-1">
-              {step.explanation}
-            </td>
+            {transformationTarget === 'term' ? (
+              <td colSpan={2}>
+                <div className="flex">
+                  {renderDownArrow()}
+                  {step.explanation}
+                </div>
+              </td>
+            ) : (
+              <>
+                <td className="text-center">{renderDownArrow()}</td>
+                <td colSpan={2}>{step.explanation}</td>
+              </>
+            )}
           </tr>
         ) : null}
       </Fragment>
@@ -101,7 +110,7 @@ export function EquationsRenderer({
         </tr>
         <tr className="text-brandgreen-darker">
           <td />
-          {renderDownArrow()}
+          <td className="text-center">{renderDownArrow()}</td>
         </tr>
       </>
     )
@@ -109,9 +118,5 @@ export function EquationsRenderer({
 }
 
 export function renderDownArrow() {
-  return (
-    <td className="text-center font-[serif] text-4xl">
-      <div className="-mt-3">&darr;</div>
-    </td>
-  )
+  return <div className="self-center font-[serif] text-4xl">&darr;</div>
 }

@@ -48,7 +48,7 @@ export function createExerciseGroup(
     serloContext: {
       uuid: uuid.id,
       trashed: uuid.trashed,
-      unrevisedRevisions: uuid.revisions.totalCount,
+      unrevisedRevisions: uuid.revisions?.totalCount,
       licenseId: uuid.licenseId,
     },
   }

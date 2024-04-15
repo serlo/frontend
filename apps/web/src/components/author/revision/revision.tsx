@@ -97,7 +97,6 @@ export function Revision({ data }: RevisionProps) {
   function renderUserTools(above: boolean) {
     return (
       <UserTools
-        id={data.thisRevision.id}
         aboveContent={above}
         data={{
           type: data.typename,

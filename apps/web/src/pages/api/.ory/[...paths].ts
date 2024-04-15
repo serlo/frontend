@@ -1,4 +1,5 @@
 import { createApiHandler, config } from '@ory/integrations/next-edge'
+import { NextApiRequest, NextApiResponse } from 'next/types'
 
 export { config }
 
@@ -7,6 +8,11 @@ const COOKIE_DOMAINS = {
   staging: 'serlo-staging.dev',
   local: 'localhost',
 }
+
+const API_KRATOS_WEBHOOK_URL =
+  process.env.NEXT_PUBLIC_ENV === 'production'
+    ? 'https://api.serlo.org/kratos/register'
+    : 'https://api.serlo-staging.dev/kratos/register'
 
 export const COOKIE_DOMAIN =
   process.env.NEXT_PUBLIC_ENV === 'production'
@@ -27,8 +33,58 @@ const KRATOS_HOST =
     process.env.NEXT_PUBLIC_ENV ? process.env.NEXT_PUBLIC_ENV : 'staging'
   ]
 
-export default createApiHandler({
-  apiBaseUrlOverride: KRATOS_HOST,
-  forceCookieSecure: true,
-  forceCookieDomain: COOKIE_DOMAIN,
-})
+export default async function customCreateApiHandler(
+  req: NextApiRequest,
+  res: NextApiResponse<string>
+): Promise<void> {
+  // injecting a function here to trigger an api call because
+  // unfortunately the kratos webhook ist not reliable atm.
+  // this is not used for the SSO flow (that still uses the kratos webhook)
+  function afterRegisterApiCall(body: string) {
+    if (
+      req.method !== 'POST' ||
+      !req.url?.startsWith('/api/.ory/self-service/registration?flow=') ||
+      !process.env.API_KRATOS_SECRET
+    ) {
+      return
+    }
+
+    const result = JSON.parse(body) as { identity: { id: string } }
+    const userId = result?.identity?.id
+
+    if (userId) {
+      void fetch(API_KRATOS_WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+          'x-kratos-key': process.env.API_KRATOS_SECRET,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId }),
+      })
+        .then(async (result) => {
+          if (result.status !== 200) {
+            const text = await result.text()
+            console.log(result.status)
+            console.log({ userId })
+            console.error(text)
+          }
+        })
+        .catch((e) => {
+          console.error(e)
+        })
+    }
+  }
+
+  function sendOverwrite(body: string) {
+    afterRegisterApiCall(body)
+    res.send(body)
+  }
+
+  // continue with default kratos handler
+  return createApiHandler({
+    apiBaseUrlOverride: KRATOS_HOST,
+    forceCookieSecure: true,
+    forceCookieDomain: COOKIE_DOMAIN,
+    // @ts-expect-error missing the correct type
+  })(req, { ...res, send: sendOverwrite })
+}
