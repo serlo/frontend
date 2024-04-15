@@ -60,6 +60,7 @@ export async function requestRevision(
             ...uuid,
             licenseId: uuid.repository.licenseId,
             currentRevision: {
+              title: uuid.title,
               content: uuid.content,
               id: uuid.id,
               date: uuid.date,

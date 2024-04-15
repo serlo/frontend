@@ -39,18 +39,19 @@ export default async function customCreateApiHandler(
 ): Promise<void> {
   // injecting a function here to trigger an api call because
   // unfortunately the kratos webhook ist not reliable atm.
+  // this is not used for the SSO flow (that still uses the kratos webhook)
   function afterRegisterApiCall(body: string) {
     if (
       req.method !== 'POST' ||
       !req.url?.startsWith('/api/.ory/self-service/registration?flow=') ||
-      !process.env.API_KRATOS_SECRET ||
-      process.env.NEXT_PUBLIC_ENV === 'production'
+      !process.env.API_KRATOS_SECRET
     ) {
       return
     }
 
     const result = JSON.parse(body) as { identity: { id: string } }
     const userId = result?.identity?.id
+
     if (userId) {
       void fetch(API_KRATOS_WEBHOOK_URL, {
         method: 'POST',

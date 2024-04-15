@@ -30,8 +30,6 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { ComponentProps } from 'react'
 
-import { Lazy } from '@/components/content/lazy'
-
 export function createRenderers(
   customPluginRenderers: PluginStaticRenderer[]
 ): InitRenderersArgs {
@@ -110,14 +108,7 @@ export function createRenderers(
       },
       ...customPluginRenderers,
     ],
-    mathRenderer: (element: MathElement) =>
-      element.inline ? (
-        <StaticMath {...element} />
-      ) : (
-        <Lazy slim>
-          <StaticMath {...element} />
-        </Lazy>
-      ),
+    mathRenderer: (element: MathElement) => <StaticMath {...element} />,
     linkRenderer: ({ href, children }: ComponentProps<LinkRenderer>) => {
       return (
         <a

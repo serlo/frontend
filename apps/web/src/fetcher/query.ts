@@ -27,6 +27,9 @@ export const dataQuery = gql`
 
       ... on AbstractEntity {
         date
+        currentRevision {
+          ...anyRevision
+        }
         revisions(unrevised: true) {
           totalCount
           nodes {
@@ -101,12 +104,6 @@ export const dataQuery = gql`
         }
       }
 
-      ... on Event {
-        currentRevision {
-          ...anyRevision
-        }
-      }
-
       ... on Course {
         pages(trashed: false) {
           alias
@@ -118,8 +115,6 @@ export const dataQuery = gql`
           }
         }
         currentRevision {
-          title
-          content
           metaDescription
         }
         ...taxonomyTermsV2
