@@ -16,7 +16,7 @@ const deutscheFlughäfen = [
   'Flughafen Hannover "Langenhagen"',
   'Flughafen Leipzig/Halle',
   'Flughafen Bremen "Hans Koschnick"',
-  'Flughafen Dortmund "Wickede"',
+  'Flughafen Dortmund',
   'Flughafen Dresden "Klotzsche"',
   'Flughafen Memmingen "Allgäu"',
   'Flughafen Karlsruhe/Baden-Baden "Söllingen"',
