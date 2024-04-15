@@ -250,50 +250,10 @@ export const sharedTaxonomyParents = gql`
     title
     alias
     id
-    parent {
+    path {
       title
       alias
       id
-      parent {
-        title
-        alias
-        id
-        parent {
-          title
-          alias
-          id
-          parent {
-            title
-            alias
-            id
-            parent {
-              title
-              alias
-              id
-              parent {
-                title
-                alias
-                id
-                parent {
-                  title
-                  alias
-                  id
-                  parent {
-                    title
-                    alias
-                    id
-                    parent {
-                      title
-                      alias
-                      id
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
     }
   }
 `
