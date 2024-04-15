@@ -8,7 +8,7 @@ export const licenses: LicenseData[] = [
     shortTitle: 'CC BY-SA 4.0',
     url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
     agreement:
-      'Mit dem Speichern dieser Seite versicherst du, dass du deinen Beitrag (damit sind auch Änderungen gemeint) selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/21654">Nutzungsbedingungen</a> festlegen darf. Falls du den Beitrag nicht selbst verfasst hast, muss er unter den <a href="/21654">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, notwendigen Lizenzanforderungen zu folgen.',
+      'Mit dem Speichern dieser Seite versicherst du, dass du deinen Beitrag (damit sind auch Änderungen gemeint) selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/terms">Nutzungsbedingungen</a> festlegen darf. Falls du den Beitrag nicht selbst verfasst hast, muss er unter den <a href="/terms">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, notwendigen Lizenzanforderungen zu folgen.',
   },
   {
     id: 4,
@@ -17,7 +17,7 @@ export const licenses: LicenseData[] = [
     shortTitle: '123mathe.de',
     url: 'https://123mathe.de',
     agreement:
-      'Mit dem Speichern dieser Seite versicherst du, dass du die Veränderung des Beitrags von Herrn Rudolf Brinkmann selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/21654">Nutzungsbedingungen</a> festlegen darf. Der Beitrag von Herrn Rudolf Brinkmann muss unter den <a href="/21654">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, notwendigen Lizenzanforderungen zu folgen.',
+      'Mit dem Speichern dieser Seite versicherst du, dass du die Veränderung des Beitrags von Herrn Rudolf Brinkmann selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/terms">Nutzungsbedingungen</a> festlegen darf. Der Beitrag von Herrn Rudolf Brinkmann muss unter den <a href="/terms">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, notwendigen Lizenzanforderungen zu folgen.',
   },
   {
     id: 6,
@@ -27,7 +27,7 @@ export const licenses: LicenseData[] = [
     url: 'http://www.strobl-f.de',
 
     agreement:
-      'Mit dem Speichern dieser Seite versicherst du, dass du die Veränderung des Beitrags von Herrn Franz Strobl selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/21654">Nutzungsbedingungen</a> festlegen darf. Der Beitrag von Herrn Franz Strobl muss unter den <a href="/21654">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, notwendigen Lizenzanforderungen zu folgen.\r\n',
+      'Mit dem Speichern dieser Seite versicherst du, dass du die Veränderung des Beitrags von Herrn Franz Strobl selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/terms">Nutzungsbedingungen</a> festlegen darf. Der Beitrag von Herrn Franz Strobl muss unter den <a href="/terms">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, notwendigen Lizenzanforderungen zu folgen.\r\n',
   },
   {
     id: 7,
@@ -37,7 +37,7 @@ export const licenses: LicenseData[] = [
     url: 'http://www.raschweb.de',
 
     agreement:
-      'Mit dem Speichern dieser Seite versicherst du, dass du die Veränderung des Beitrags von Herrn Günther Rasch selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/21654">Nutzungsbedingungen</a> festlegen darf. Der Beitrag von Herrn Günther Rasch muss unter den <a href="/21654">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, den notwendigen Lizenzanforderungen zu folgen.',
+      'Mit dem Speichern dieser Seite versicherst du, dass du die Veränderung des Beitrags von Herrn Günther Rasch selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/terms">Nutzungsbedingungen</a> festlegen darf. Der Beitrag von Herrn Günther Rasch muss unter den <a href="/terms">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, den notwendigen Lizenzanforderungen zu folgen.',
   },
   {
     id: 10,
@@ -54,7 +54,7 @@ export const licenses: LicenseData[] = [
     url: 'https://creativecommons.org/licenses/by-nd/4.0',
 
     agreement:
-      'Mit dem Speichern dieser Seite versicherst du, dass du deinen Beitrag (damit sind auch Änderungen gemeint) selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/21654">Nutzungsbedingungen</a> festlegen darf. Falls du den Beitrag nicht selbst verfasst hast, muss er unter den <a href="/21654">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, notwendigen Lizenzanforderungen zu folgen.\r\n\r\nDas Video steht unter der Lizenz CC BY-ND, d.h. es dürfen keine Änderungen vorgenommen werden.\r\n',
+      'Mit dem Speichern dieser Seite versicherst du, dass du deinen Beitrag (damit sind auch Änderungen gemeint) selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/terms">Nutzungsbedingungen</a> festlegen darf. Falls du den Beitrag nicht selbst verfasst hast, muss er unter den <a href="/terms">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, notwendigen Lizenzanforderungen zu folgen.\r\n\r\nDas Video steht unter der Lizenz CC BY-ND, d.h. es dürfen keine Änderungen vorgenommen werden.\r\n',
   },
   {
     id: 19,
@@ -73,7 +73,7 @@ export const licenses: LicenseData[] = [
     url: 'https://mnweg.org',
 
     agreement:
-      'Mit dem Speichern dieser Seite versicherst du, dass du die Veränderung des Beitrags von MNWeG selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/21654">Nutzungsbedingungen</a> festlegen darf. Der Beitrag von MNWeG muss unter den <a href="/21654">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, notwendigen Lizenzanforderungen zu folgen.',
+      'Mit dem Speichern dieser Seite versicherst du, dass du die Veränderung des Beitrags von MNWeG selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/terms">Nutzungsbedingungen</a> festlegen darf. Der Beitrag von MNWeG muss unter den <a href="/terms">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, notwendigen Lizenzanforderungen zu folgen.',
   },
   {
     id: 25,
@@ -108,5 +108,14 @@ export const licenses: LicenseData[] = [
     shortTitle: 'Bayerisches Staatsministerium für Unterricht und Kultus',
     url: 'https://www.bycs.de/hilfe-und-tutorials/pruefungsarchiv/lizenzen-und-verwendungsmoeglichkeiten',
     agreement: `Mit dem Speichern dieser Seite versicherst du, dass du in deinem Beitrag (damit sind auch Änderungen gemeint) die Aufgabenstellung vom Land Bayern nicht inhaltlich verändert hast, keine Rechte Dritter verletzt und dich an die <a href="https://www.bycs.de/hilfe-und-tutorials/pruefungsarchiv/lizenzen-und-verwendungsmoeglichkeiten">Nutzungsbedingungen</a> gehalten hast.`,
+  },
+  {
+    id: 29,
+    title:
+      'Dieses Werk wurde vom Ministerium für Bildung, Jugend und Sport des Landes Brandenburg zur Verfügung gestellt.',
+    shortTitle:
+      'Ministerium für Bildung, Jugend und Sport des Landes Brandenburg',
+    url: 'https://bildungsserver.berlin-brandenburg.de/unterricht/pruefungen/pruefungen-10/pruefungsaufgaben-mathematik',
+    agreement: `Mit dem Speichern dieser Seite versicherst du, dass du in deinem Beitrag (damit sind auch Änderungen gemeint) die Aufgabenstellung vom Land Brandenburg nicht inhaltlich verändert hast, keine Rechte Dritter verletzt und dich an die <a href="/terms">Nutzungsbedingungen</a> gehalten hast.`,
   },
 ]

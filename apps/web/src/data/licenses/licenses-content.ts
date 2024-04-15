@@ -60,6 +60,11 @@ export const licensesContent = [
     content:
       '{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Diese Aufgabe stammt vom Bayerischen Staatsministerium für Unterricht und Kultus. Sie unterliegt nicht den Standard-Nutzungsbedingungen für Inhalte auf serlo.org, sondern den "},{"type":"a","href":"https://www.bycs.de/hilfe-und-tutorials/pruefungsarchiv/lizenzen-und-verwendungsmoeglichkeiten","children":[{"text":"Lizenzen und Verwendungsmöglichkeiten des Ministeriums","strong":true}]},{"text":"."}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"Wichtig:","strong":true},{"text":" Bei den "},{"text":"Lösungsvorschlägen","strong":true},{"text":" zu dieser Aufgabenstellung handelt es sich "},{"text":"nicht","strong":true},{"text":" um Lösungsvorgaben des Landes Bayern. Diese sind von Autor*innen auf serlo.org erstellt oder kommen aus anderen Quellen."}]}],"id":"afc5e2bf-0199-40a3-86d6-7b28d5dc3fe3"}]}',
   },
+  {
+    id: 29,
+    content:
+      '{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Diese Aufgabe stammt vom Ministerium für Bildung, Jugend und Sport des Landes Brandenburg. Sie unterliegt nicht den Standard-Nutzungsbedingungen für Inhalte auf serlo.org."}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"Wichtig","strong":true},{"text":": Bei den "},{"text":"Lösungsvorschlägen","strong":true},{"text":" zu dieser Aufgabenstellung handelt es sich "},{"text":"nicht","strong":true},{"text":" um Lösungsvorgaben des Landes Brandenburg. Diese sind von Autor*innen auf serlo.org erstellt oder kommen aus anderen Quellen."}]},{"type":"p","children":[{"text":""}]}],"id":"946f51ad-5429-4df4-a08e-60916cdc8082"}]}',
+  },
   // other instances
   {
     id: 9,
