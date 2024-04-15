@@ -9,29 +9,36 @@ export function revisionResponseToResponse(
 
   if (!Object.hasOwn(uuid, 'repository')) return null
 
-  const { licenseId, trashed, instance, id, alias } = uuid.repository
+  const {
+    licenseId,
+    trashed,
+    instance,
+    id: repositoryId,
+    alias,
+  } = uuid.repository
   const repositoryFields = {
     licenseId,
     trashed,
-    id,
+    id: repositoryId,
     instance,
     alias,
   }
-
-  const title = Object.hasOwn(uuid, 'title') ? uuid.title : ''
+  const title = uuid.title ?? ''
   const content = uuid.content
+  const date = uuid.date ?? ''
+  const id = uuid.id
   const metaTitle = Object.hasOwn(uuid, 'metaTitle') ? uuid.metaTitle : ''
   const metaDescription = Object.hasOwn(uuid, 'metaDescription')
     ? uuid.metaDescription
     : ''
-  const date = '' // just to make type happy, not used
 
   if (uuid.__typename === UuidRevType.Applet) {
     uuid.__typename
     return {
       __typename: UuidType.Applet,
+      title,
       currentRevision: {
-        id: uuid.id,
+        id,
         url: uuid.url,
         title,
         content,
@@ -51,10 +58,11 @@ export function revisionResponseToResponse(
     return {
       __typename: UuidType.Article,
       date,
+      title,
       currentRevision: {
-        id: uuid.id,
-        title,
+        id,
         content,
+        title,
         metaTitle,
         metaDescription,
         date,
@@ -66,12 +74,14 @@ export function revisionResponseToResponse(
   }
 
   if (uuid.__typename === UuidRevType.Course) {
-    uuid.__typename
     return {
       __typename: UuidType.Course,
       ...repositoryFields,
+      title,
       pages: uuid.repository.pages,
       taxonomyTerms: uuid.repository.taxonomyTerms,
+      revisions: uuid.repository.revisions,
+      date: uuid.date,
     }
   }
 
@@ -79,8 +89,9 @@ export function revisionResponseToResponse(
     uuid.__typename
     return {
       __typename: UuidType.CoursePage,
+      title,
       currentRevision: {
-        id: uuid.id,
+        id,
         alias: uuid.alias,
         title,
         content,
@@ -94,23 +105,26 @@ export function revisionResponseToResponse(
   }
 
   if (uuid.__typename === UuidRevType.Event) {
-    uuid.__typename
     return {
       __typename: UuidType.Event,
+      title,
       currentRevision: {
-        id: uuid.id,
+        id,
         title,
+        date,
         content,
       },
       ...repositoryFields,
+      date: uuid.date,
       taxonomyTerms: uuid.repository.taxonomyTerms,
+      revisions: uuid.repository.revisions,
     }
   }
 
   if (uuid.__typename === UuidRevType.Exercise) {
-    uuid.__typename
     return {
       __typename: UuidType.Exercise,
+      title,
       currentRevision: {
         content,
         date,
@@ -124,12 +138,13 @@ export function revisionResponseToResponse(
   }
 
   if (uuid.__typename === UuidRevType.ExerciseGroup) {
-    uuid.__typename
     return {
       __typename: UuidType.ExerciseGroup,
+      title,
       currentRevision: {
-        id: uuid.id,
+        id,
         content,
+        title,
         cohesive: uuid.cohesive,
         date,
       },
@@ -142,12 +157,13 @@ export function revisionResponseToResponse(
 
   // probably not needed
   if (uuid.__typename === UuidRevType.Page) {
-    uuid.__typename
     return {
       __typename: UuidType.Page,
+      title,
       currentRevision: {
-        id: uuid.id,
+        id,
         title,
+        date,
         content,
       },
       ...repositoryFields,
@@ -155,16 +171,18 @@ export function revisionResponseToResponse(
   }
 
   if (uuid.__typename === UuidRevType.Video) {
-    uuid.__typename
     return {
       __typename: UuidType.Video,
+      title,
       currentRevision: {
-        id: uuid.id,
+        id,
         url: uuid.url,
         title,
+        date,
         content,
       },
       taxonomyTerms: uuid.repository.taxonomyTerms,
+      date: uuid.date,
       ...repositoryFields,
       revisions: uuid.repository.revisions,
     }

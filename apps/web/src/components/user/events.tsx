@@ -9,7 +9,7 @@ import { GetEventDataQuery, Instance } from '@/fetcher/graphql-types/operations'
 import { sharedEventFragments } from '@/fetcher/query-fragments'
 
 interface EventsProps {
-  userId?: number
+  username?: string
   objectId?: number
   perPage?: number
   moreButton?: boolean
@@ -17,7 +17,7 @@ interface EventsProps {
 }
 
 export function Events({
-  userId,
+  username,
   objectId,
   perPage,
   moreButton,
@@ -27,7 +27,7 @@ export function Events({
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { data, error, loadMore, loading } = useEventsFetch(
-    userId,
+    username,
     objectId,
     perPage,
     oldest,
@@ -81,7 +81,7 @@ export function Events({
 }
 
 function useEventsFetch(
-  actorId?: number,
+  actorUsername?: string,
   objectId?: number,
   amount?: number,
   oldest?: boolean,
@@ -92,7 +92,7 @@ function useEventsFetch(
   >({
     query: eventsQuery,
     variables: {
-      actorId,
+      actorUsername,
       objectId,
       instance,
       first: oldest ? undefined : amount ?? 20,
@@ -110,7 +110,7 @@ function useEventsFetch(
 
 const eventsQuery = gql`
   query getEventData(
-    $actorId: Int
+    $actorUsername: String
     $objectId: Int
     $instance: Instance
     $first: Int
@@ -118,7 +118,7 @@ const eventsQuery = gql`
     $after: String
   ) {
     events(
-      actorId: $actorId
+      actorUsername: $actorUsername
       objectId: $objectId
       instance: $instance
       first: $first

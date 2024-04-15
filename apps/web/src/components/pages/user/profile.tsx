@@ -17,9 +17,9 @@ import { ProfileActivityGraphs } from '@/components/user/profile-activity-graphs
 import { ProfileBadges } from '@/components/user/profile-badges'
 import { ProfileChatButton } from '@/components/user/profile-chat-button'
 import { ProfileRoles } from '@/components/user/profile-roles'
-import { UserTools } from '@/components/user-tools/user-tools'
+import { ProfileUserTools } from '@/components/user-tools/profile-user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
-import { UserPage, UuidType } from '@/data-types'
+import { UserPage } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { isProduction } from '@/helper/is-production'
@@ -68,10 +68,11 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     <>
       {renderHeader()}
       {renderDescription()}
+      {isOwnProfile ? <ProfileUserTools aboveContent /> : null}
       <ProfileActivityGraphs values={activityByType} />
       {renderRecentActivities()}
       {renderRoles()}
-      {renderUserTools()}
+      {isOwnProfile ? <ProfileUserTools /> : null}
     </>
   )
 
@@ -161,12 +162,12 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     return (
       <section>
         <h2 className="serlo-h2">{strings.profiles.recentActivities}</h2>
-        <Events userId={id} perPage={5} />
+        <Events username={username} perPage={5} />
 
         <p className="serlo-p">
           <Link
             className="serlo-button-blue mt-4"
-            href={`/event/history/${id}#activities`}
+            href={`/event/history/user/profile/${username}#activities`}
           >
             {strings.profiles.showAllActivities}
           </Link>
@@ -191,19 +192,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     )
   }
 
-  function renderUserTools() {
-    return (
-      <UserTools
-        id={id}
-        hideEditProfile={!isOwnProfile}
-        data={{
-          type: UuidType.User,
-          id: id,
-        }}
-      />
-    )
-  }
-
   function renderEditMotivationLink() {
     if (lang !== Instance.De) return null
     return (
@@ -213,9 +201,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           className="serlo-link cursor-pointer"
         >
           <FaIcon icon={faPencilAlt} />{' '}
-          {motivation
-            ? strings.profiles.editMotivation
-            : strings.profiles.addMotivation}
+          {strings.profiles[motivation ? 'editMotivation' : 'addMotivation']}
         </Link>
       </p>
     )

@@ -38,11 +38,11 @@ export const basicUserDataFragment = gql`
   }
 `
 
-export const userQuery = gql`
-  query userUuid($path: String!, $instance: Instance!) {
+export const userByUsernameQuery = gql`
+  query userByUsername($username: String!) {
     authorization
-    uuid(alias: { path: $path, instance: $instance }) {
-      ... on User {
+    user {
+      userByUsername(username: $username) {
         id
         __typename
         trashed

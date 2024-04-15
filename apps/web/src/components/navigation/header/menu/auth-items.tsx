@@ -15,8 +15,8 @@ export function AuthItems() {
   if (!auth || !loggedInData || !auth.username)
     return <NoAuthItem hidden={false} />
 
-  const { id, username } = auth
-  const userMeReplacement = `user/${id}/${username}`
+  const { username } = auth
+  const userMeReplacement = `user/profile/${username}`
 
   const [notificationLinkData, userLinkData] = loggedInData.authMenu
   const updatedSubData = {
