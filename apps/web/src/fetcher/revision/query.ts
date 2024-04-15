@@ -25,34 +25,10 @@ export const revisionQuery = gql`
         }
       }
       ... on AbstractEntityRevision {
+        ...anyRevision
         changes
-      }
-      ... on ArticleRevision {
-        ...articleRevision
         repository {
           ...taxonomyTermsV2
-          licenseId
-          trashed
-          instance
-          id
-          alias
-          currentRevision {
-            id
-            ...articleRevision
-          }
-          revisions(unrevised: false) {
-            totalCount
-            nodes {
-              id
-              title
-              trashed
-            }
-          }
-        }
-      }
-      ... on PageRevision {
-        ...anyRevision
-        repository {
           licenseId
           trashed
           instance
@@ -68,58 +44,32 @@ export const revisionQuery = gql`
               title
               trashed
             }
+          }
+        }
+      }
+      ... on ArticleRevision {
+        ...articleRevision
+        repository {
+          currentRevision {
+            ...articleRevision
           }
         }
       }
       ... on AppletRevision {
         ...appletRevision
         repository {
-          ...taxonomyTermsV2
-          licenseId
-          trashed
-          instance
-          id
-          alias
           currentRevision {
             ...appletRevision
-          }
-          revisions(unrevised: false) {
-            totalCount
-            nodes {
-              id
-              title
-              trashed
-            }
           }
         }
       }
       ... on CourseRevision {
-        ...anyRevision
         repository {
-          ...taxonomyTermsV2
-          licenseId
-          trashed
-          instance
-          id
-          alias
-          currentRevision {
-            ...anyRevision
-          }
-          revisions(unrevised: false) {
-            totalCount
-            nodes {
-              id
-              title
-              trashed
-            }
-          }
-          pages {
-            alias
+          pages(trashed: false, hasCurrentRevision: true) {
             id
+            alias
             currentRevision {
-              id
-              title
-              content
+              ...anyRevision
             }
           }
         }
@@ -127,21 +77,8 @@ export const revisionQuery = gql`
       ... on CoursePageRevision {
         ...coursePageRevision
         repository {
-          licenseId
-          trashed
-          instance
-          id
-          alias
           currentRevision {
             ...coursePageRevision
-          }
-          revisions(unrevised: false) {
-            totalCount
-            nodes {
-              id
-              title
-              trashed
-            }
           }
           course {
             licenseId
@@ -169,85 +106,32 @@ export const revisionQuery = gql`
           }
         }
       }
-      ... on EventRevision {
-        ...anyRevision
-        repository {
-          licenseId
-          ...taxonomyTermsV2
-          trashed
-          instance
-          id
-          alias
-          currentRevision {
-            ...anyRevision
-          }
-          revisions(unrevised: false) {
-            totalCount
-            nodes {
-              id
-              title
-              trashed
-            }
-          }
-        }
-      }
-      ... on ExerciseRevision {
-        content
-        repository {
-          ...taxonomyTermsV2
-          licenseId
-          trashed
-          instance
-          id
-          alias
-          currentRevision {
-            ...anyRevision
-          }
-          licenseId
-          revisions(unrevised: false) {
-            totalCount
-            nodes {
-              id
-              title
-              trashed
-            }
-          }
-        }
-      }
       ... on ExerciseGroupRevision {
         ...exerciseGroupRevision
-        cohesive
         repository {
-          licenseId
-          ...taxonomyTermsV2
-          trashed
-          instance
-          id
-          alias
           currentRevision {
             ...exerciseGroupRevision
-          }
-          revisions(unrevised: false) {
-            totalCount
-            nodes {
-              id
-              title
-              trashed
-            }
           }
         }
       }
       ... on VideoRevision {
         ...videoRevision
         repository {
-          ...taxonomyTermsV2
+          currentRevision {
+            ...videoRevision
+          }
+        }
+      }
+      ... on PageRevision {
+        ...anyRevision
+        repository {
           licenseId
           trashed
           instance
           id
           alias
           currentRevision {
-            ...videoRevision
+            ...anyRevision
           }
           revisions(unrevised: false) {
             totalCount

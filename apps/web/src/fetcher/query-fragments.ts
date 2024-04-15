@@ -9,30 +9,25 @@ export const sharedRevisionFragments = gql`
   }
 
   fragment articleRevision on ArticleRevision {
-    ...anyRevision
     metaTitle
     metaDescription
   }
 
   fragment videoRevision on VideoRevision {
-    ...anyRevision
     url
   }
 
   fragment appletRevision on AppletRevision {
-    ...anyRevision
     url
     metaTitle
     metaDescription
   }
 
   fragment coursePageRevision on CoursePageRevision {
-    ...anyRevision
     alias
   }
 
   fragment exerciseGroupRevision on ExerciseGroupRevision {
-    ...anyRevision
     cohesive
   }
 `
@@ -244,7 +239,6 @@ export const sharedExerciseFragments = gql`
   }
 `
 
-// only 10 levels
 export const sharedTaxonomyParents = gql`
   fragment pathToRoot on TaxonomyTerm {
     title
