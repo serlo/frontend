@@ -88,7 +88,7 @@ export function Asymptote1() {
             </HighlightGray>
             <br />
             <br />
-            Die Definitionsmenge ist die Menge aller reellen Zahlen, sodass der
+            Die Definitionsmenge ist die Menge aller reellen Zahlen, so dass der
             Nenner nicht 0 ist:
             <br />
             <HighlightGreen>
@@ -110,10 +110,10 @@ export function Asymptote1() {
             <br />
             <br />
             {data.c % 2 === 0 && data.a > 0
-              ? 'Diese Funktion hat einen geraden Grad und ist nicht gespiegelt. Sie kommt von oben und geht nach oben. Dabei bleibt sie immer oberhalb der Asymptote:'
+              ? 'Diese Funktion hat einen geraden Grad und ist nicht gespiegelt. Bei der senkrechten Asymptote kommt sie von oben und geht nach oben. Dabei bleibt sie immer oberhalb der Asymptote:'
               : null}
             {data.c % 2 === 0 && data.a < 0
-              ? 'Diese Funktion hat einen geraden Grad und ist gespiegelt. Sie kommt von unten und geht nach unten. Dabei bleibt sie immer unterhalb der Asymptote:'
+              ? 'Diese Funktion hat einen geraden Grad und ist gespiegelt. Bei der senkrechten Asymptote kommt sie von unten und geht nach unten. Dabei bleibt sie immer unterhalb der Asymptote:'
               : null}
             {data.c % 2 === -1
               ? 'Diese Funktion hat einen ungeraden Grad. Sie nimmt alle Werte an, bis auf den der Asymptote:'
@@ -140,7 +140,7 @@ export function Asymptote1() {
       renderHint={({ data }) => {
         return (
           <>
-            Der <strong>Definitionsbereich</strong> einer Exponentialfunktion
+            Der <strong>Definitionsbereich</strong> einer Funktion der Form
             <HighlightGray>
               y ={' '}
               {buildFrac(
