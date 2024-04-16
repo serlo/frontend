@@ -61,6 +61,7 @@ export async function requestRevision(
             licenseId: uuid.repository.licenseId,
             currentRevision: {
               title: uuid.title,
+              alias: uuid.alias,
               content: uuid.content,
               id: uuid.id,
               date: uuid.date,
@@ -119,15 +120,15 @@ export async function requestRevision(
           trashed: uuid.trashed,
           title: Object.hasOwn(uuid, 'title') ? uuid.title : undefined,
           metaTitle: Object.hasOwn(uuid, 'metaTitle')
-            ? uuid.metaTitle
+            ? uuid.metaTitle ?? ''
             : undefined,
           metaDescription: Object.hasOwn(uuid, 'metaDescription')
-            ? uuid.metaDescription
+            ? uuid.metaDescription ?? ''
             : undefined,
           content: thisExercise
             ? (thisExercise as unknown as EditorExerciseDocument)
             : parseDocumentString(uuid.content),
-          url: Object.hasOwn(uuid, 'url') ? uuid.url : undefined,
+          url: Object.hasOwn(uuid, 'url') ? uuid.url ?? '' : undefined,
         },
         currentRevision: {
           id: uuid.repository.currentRevision?.id,
@@ -137,18 +138,18 @@ export async function requestRevision(
               : undefined,
           metaTitle:
             currentRevision && Object.hasOwn(currentRevision, 'metaTitle')
-              ? currentRevision.metaTitle
+              ? currentRevision.metaTitle ?? ''
               : undefined,
           metaDescription:
             currentRevision && Object.hasOwn(currentRevision, 'metaDescription')
-              ? currentRevision.metaDescription
+              ? currentRevision.metaDescription ?? ''
               : undefined,
           content: currentExercise
             ? (currentExercise as unknown as EditorExerciseDocument)
             : parseDocumentString(uuid.repository.currentRevision?.content),
           url:
             currentRevision && Object.hasOwn(currentRevision, 'url')
-              ? currentRevision.url
+              ? currentRevision.url ?? ''
               : undefined,
         },
         changes: Object.hasOwn(uuid, 'changes') ? uuid.changes : undefined,
