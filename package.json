@@ -19,7 +19,6 @@
     "build:next": "yarn workspace @serlo/frontend build:next",
     "build:prisma": "yarn workspace @serlo/frontend build:prisma",
     "check:all": "yarn workspace @serlo/frontend check:all",
-    "check:api": "yarn workspace @serlo/frontend check:api",
     "check:tailwind": "yarn workspace @serlo/frontend check:tailwind",
     "codegen": "yarn workspace @serlo/frontend codegen",
     "commit:codegen": "git add apps/web/graphql.schema.json apps/web/src/fetcher/graphql-types/operations.ts && git commit -m 'chore: update graphql schema'",
