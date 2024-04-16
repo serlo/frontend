@@ -3,6 +3,7 @@ import {
   type EditorPlugin,
   type EditorPluginProps,
   PrettyStaticState,
+  optional,
 } from '@editor/plugin'
 import { selectStaticDocument, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
@@ -21,10 +22,6 @@ export const textExerciseGroupTypeState = entityType(
   {
     ...entity,
     content: editorContent(EditorPluginType.ExerciseGroup),
-    /* cohesive field would indicate whether the children of a grouped exercise are cohesive
-    this field might be used in the future, but currently it has no effect and can not be changed
-    */
-    cohesive: boolean(false),
   },
   {}
 )
