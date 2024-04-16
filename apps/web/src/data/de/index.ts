@@ -974,8 +974,6 @@ export const loggedInData = {
           removeExercise: "Teilaufgabe entfernen",
           addExercise: "Teilaufgabe hinzufügen",
           kindOfExerciseGroup: "Art der Aufgabengruppe",
-          notCohesive: "nicht zusammenhängend",
-          cohesive: "zusammenhängend",
           addIntermediateTask: "Zwischentext hinzufügen",
           removeIntermediateTask: "Zwischentext entfernen",
           intermediateTask: "Zwischentext"

@@ -120,7 +120,6 @@ export const dataQuery = gql`
                 content
                 id
                 date
-                cohesive
               }
               licenseId
             }

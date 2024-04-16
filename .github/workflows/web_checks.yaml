@@ -1,19 +1,9 @@
-name: Javascript
+name: web
+
 on:
-  push:
-    branches:
-      - staging
-      - production
   pull_request:
+
 jobs:
-  yarn:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: yarn --check-cache
   eslint:
     runs-on: ubuntu-latest
     steps:
@@ -24,6 +14,7 @@ jobs:
       - run: yarn
       - run: yarn build:prisma
       - run: yarn lint:eslint
+
   prettier:
     runs-on: ubuntu-latest
     steps:
@@ -33,6 +24,7 @@ jobs:
           node-version: 20
       - run: yarn
       - run: yarn lint:prettier
+
   tsc:
     runs-on: ubuntu-latest
     steps:
@@ -42,6 +34,7 @@ jobs:
           node-version: 20
       - run: yarn
       - run: yarn lint:tsc
+
   test:
     runs-on: ubuntu-latest
     steps:
@@ -51,12 +44,3 @@ jobs:
           node-version: 20
       - run: yarn
       - run: yarn test
-  api:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: yarn
-      - run: yarn check:api

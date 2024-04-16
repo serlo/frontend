@@ -281,7 +281,7 @@ function getAdditionalInputData(
     case UuidType.Exercise:
       return {}
     case UuidType.ExerciseGroup:
-      return { cohesive: data.cohesive === 'true' }
+      return {}
     case UuidType.Video:
       return {
         title: getRequiredString(mutationStrings, 'title', data.title),
