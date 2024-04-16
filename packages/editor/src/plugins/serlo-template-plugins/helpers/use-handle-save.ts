@@ -1,6 +1,5 @@
 import { store, selectStaticDocument } from '@editor/store'
 import { ROOT } from '@editor/store/root/constants'
-import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import type { SupportedTypesSerializedState } from '@serlo/frontend/src/mutations/use-set-entity-mutation/types'
 import { storeStateToLocalStorage } from '@serlo/frontend/src/serlo-editor-integration/components/local-storage-notice'
 import { SaveContext } from '@serlo/frontend/src/serlo-editor-integration/context/save-context'
@@ -26,16 +25,6 @@ export function useHandleSave(
   const serializedRoot = selectStaticDocument(store.getState(), ROOT)
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const serialized = has('state', serializedRoot) ? serializedRoot.state : null
-
-  // Currently still needed
-  if (
-    serialized !== null &&
-    serializedRoot?.plugin === TemplatePluginType.TextExerciseGroup &&
-    has('cohesive', serialized)
-  ) {
-    // backend can only handle string attributes
-    serialized.cohesive = String(serialized.cohesive)
-  }
 
   const handleSave = (
     notificationSubscription?: boolean,
