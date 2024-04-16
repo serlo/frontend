@@ -1,9 +1,11 @@
 name: web
+
 on:
   push:
     branches:
       - production
   pull_request:
+
 jobs:
   yarn:
     runs-on: ubuntu-latest
@@ -13,6 +15,7 @@ jobs:
         with:
           node-version: 20
       - run: yarn --check-cache
+
   eslint:
     runs-on: ubuntu-latest
     steps:
@@ -23,6 +26,7 @@ jobs:
       - run: yarn
       - run: yarn build:prisma
       - run: yarn lint:eslint
+
   prettier:
     runs-on: ubuntu-latest
     steps:
@@ -32,6 +36,7 @@ jobs:
           node-version: 20
       - run: yarn
       - run: yarn lint:prettier
+
   tsc:
     runs-on: ubuntu-latest
     steps:
@@ -41,6 +46,7 @@ jobs:
           node-version: 20
       - run: yarn
       - run: yarn lint:tsc
+
   test:
     runs-on: ubuntu-latest
     steps:
@@ -50,3 +56,18 @@ jobs:
           node-version: 20
       - run: yarn
       - run: yarn test
+
+  codegen-staging:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: yarn codegen
+      - name: Check for uncommitted changes
+        run: |
+          if ! git diff --exit-code; then
+            echo "There are uncommitted changes in the repository."
+            exit 1
+          fi
