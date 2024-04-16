@@ -4,7 +4,6 @@ import {
   child,
   list,
   object,
-  boolean,
   optional,
   number,
 } from '@editor/plugin'

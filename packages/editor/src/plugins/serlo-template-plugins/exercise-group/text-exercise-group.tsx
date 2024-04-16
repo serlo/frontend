@@ -1,9 +1,7 @@
 import {
-  boolean,
   type EditorPlugin,
   type EditorPluginProps,
   PrettyStaticState,
-  optional,
 } from '@editor/plugin'
 import { selectStaticDocument, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
