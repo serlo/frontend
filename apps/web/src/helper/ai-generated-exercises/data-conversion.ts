@@ -152,7 +152,6 @@ function createExerciseGroupDocument(
         state: [createExerciseHeadingTextDocument(heading)],
       },
       exercises,
-      cohesive: false,
       intermediateTasks: undefined,
     },
   }
@@ -365,7 +364,6 @@ export function transformEditorDataToExerciseGroup(
       licenseId: license.id,
       changes: '[KI generiert]: ',
       revision: 0,
-      cohesive: false,
       //@ts-expect-error ignoring this while exercise group migration is going on
       content: JSON.stringify(
         createExerciseGroupDocument(editorData.heading, editorData.exercises)

@@ -358,7 +358,6 @@ interface InputType {
 
 export interface TextExerciseGroupSerializedState extends Entity {
   __typename?: UuidType.ExerciseGroup
-  cohesive?: string
   content: SerializedStaticState
 }
 

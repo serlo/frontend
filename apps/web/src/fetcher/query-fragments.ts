@@ -15,7 +15,6 @@ export const sharedRevisionFragments = gql`
     metaDescription
 
     url
-    cohesive
   }
 `
 
