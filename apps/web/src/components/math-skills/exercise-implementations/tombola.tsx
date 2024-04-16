@@ -15,7 +15,8 @@ export function Tombola() {
           'keinpreis',
           'preis',
         ])
-        return { lose, gewinne, question }
+        const nieten = lose - gewinne
+        return { lose, gewinne, question, nieten }
       }}
       renderTask={(data) => (
         <>
@@ -49,10 +50,13 @@ export function Tombola() {
           return (
             <>
               <p>Berechne die Wahrscheinlichkeit für eine Niete:</p>
+              <p>
+                Es gibt {data.lose}-{data.gewinne}={data.nieten} Nieten.
+              </p>
               <p className="serlo-highlight-green">
-                P(Niete) = {buildFrac(data.gewinne, data.lose)} ={' '}
+                P(Niete) = {buildFrac(data.lose - data.gewinne, data.lose)} ={' '}
                 {(
-                  Math.round((data.gewinne / data.lose) * 10000) / 100
+                  Math.round((data.nieten / data.lose) * 10000) / 100
                 ).toLocaleString('de-De')}{' '}
                 %
               </p>
@@ -67,11 +71,9 @@ export function Tombola() {
                 man ein Gewinn-Los zieht. Berechne dafür die Wahrscheinlichkeit:
               </p>
               <p className="serlo-highlight-green">
-                P(Gewinn-Los) = {buildFrac(data.lose - data.gewinne, data.lose)}{' '}
-                ={' '}
+                P(Gewinn-Los) = {buildFrac(data.gewinne, data.lose)} ={' '}
                 {(
-                  Math.round(((data.lose - data.gewinne) / data.lose) * 10000) /
-                  100
+                  Math.round((data.gewinne / data.lose) * 10000) / 100
                 ).toLocaleString('de-De')}{' '}
                 %
               </p>
@@ -87,13 +89,10 @@ export function Tombola() {
                 und nutze die Multiplikationsregel:
               </p>
               <p className="serlo-highlight-green">
-                P(Gewinn-Los; 6) ={' '}
-                {buildFrac(data.lose - data.gewinne, data.lose)} ·{' '}
+                P(Gewinn-Los; 6) = {buildFrac(data.gewinne, data.lose)} ·{' '}
                 {buildFrac(1, 6)} ={' '}
                 {(
-                  Math.round(
-                    (((data.lose - data.gewinne) / data.lose) * 10000) / 6
-                  ) / 100
+                  Math.round(((data.gewinne / data.lose) * 10000) / 6) / 100
                 ).toLocaleString('de-De')}{' '}
                 %
               </p>
@@ -108,13 +107,10 @@ export function Tombola() {
               nutze die Multiplikationsregel:
             </p>
             <p className="serlo-highlight-green">
-              P(Gewinn-Los; keine 6) ={' '}
-              {buildFrac(data.lose - data.gewinne, data.lose)} ·{' '}
+              P(Gewinn-Los; keine 6) = {buildFrac(data.gewinne, data.lose)} ·{' '}
               {buildFrac(5, 6)} ={' '}
               {(
-                Math.round(
-                  (((data.lose - data.gewinne) / data.lose) * 10000 * 5) / 6
-                ) / 100
+                Math.round(((data.gewinne / data.lose) * 10000 * 5) / 6) / 100
               ).toLocaleString('de-De')}{' '}
               %
             </p>
