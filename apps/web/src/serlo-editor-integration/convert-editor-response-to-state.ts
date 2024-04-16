@@ -30,18 +30,23 @@ export function convertEditorResponseToState(
 
   const config: Record<
     string,
-    { convert: (state: any) => StaticDocument<StateType> }
+    {
+      convert?: (
+        entityType: MainUuidType['__typename'],
+        state: any
+      ) => StaticDocument<StateType>
+    }
   > = {
-    Applet: { convert: convertApplet },
-    Article: { convert: convertArticle },
+    Applet: {},
+    Article: {},
+    Event: {},
+    Exercise: {},
+    ExerciseGroup: {},
+    Video: {},
     Course: { convert: convertCourse },
     CoursePage: { convert: convertCoursePage },
-    Event: { convert: convertEvent },
     Page: { convert: convertPage },
-    Exercise: { convert: convertTextExercise },
-    ExerciseGroup: { convert: convertTextExerciseGroup },
     User: { convert: convertUser },
-    Video: { convert: convertVideo },
     TaxonomyTerm: { convert: convertTaxonomy },
   }
 
@@ -49,21 +54,22 @@ export function convertEditorResponseToState(
     ? uuid.licenseId
     : undefined
 
-  const { id } = uuid
+  const { id, title } = uuid
 
   const currentRev =
     'currentRevision' in uuid ? uuid.currentRevision : undefined
-  const title = currentRev && 'title' in currentRev ? currentRev.title : ''
   const content =
     currentRev && 'content' in currentRev ? currentRev.content : ''
   const meta_title =
-    currentRev && Object.hasOwn(currentRev, 'metaTitle')
+    (currentRev && Object.hasOwn(currentRev, 'metaTitle')
       ? currentRev.metaTitle
-      : ''
+      : '') ?? ''
   const meta_description =
-    currentRev && Object.hasOwn(currentRev, 'metaDescription')
+    (currentRev && Object.hasOwn(currentRev, 'metaDescription')
       ? currentRev.metaDescription
-      : ''
+      : '') ?? ''
+  const url =
+    (currentRev && Object.hasOwn(currentRev, 'url') ? currentRev.url : '') ?? ''
   const revision =
     currentRev && Object.hasOwn(currentRev, 'id') ? currentRev.id : 0
 
@@ -79,7 +85,9 @@ export function convertEditorResponseToState(
       }
     }
     const { convert } = config[uuid.__typename]
-    return convert(uuid)
+    return convert
+      ? convert(uuid.__typename, uuid)
+      : convertAbstractEntity(uuid.__typename, uuid)
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e)
@@ -93,29 +101,17 @@ export function convertEditorResponseToState(
     }
   }
 
-  function convertApplet(
-    uuid: Extract<MainUuidType, { __typename: 'Applet' }>
-  ): StaticDocument<AppletTypePluginState> {
-    stack.push({ id: uuid.id, type: 'applet' })
-    return {
-      plugin: TemplatePluginType.Applet,
-      state: {
-        ...entityFields,
-        revision,
-        changes: '',
-        title,
-        url: uuid.currentRevision?.url || '',
-        content: serializeStaticDocument(parseStaticString(content)),
-        meta_title,
-        meta_description,
-      },
-    }
-  }
-
-  function convertArticle(
-    uuid: Extract<MainUuidType, { __typename: 'Article' }>
-  ): StaticDocument<ArticleTypePluginState> {
-    stack.push({ id: uuid.id, type: 'article' })
+  function convertAbstractEntity(
+    entityType: MainUuidType['__typename'],
+    uuid: Extract<MainUuidType, { __typename: typeof entityType }>
+  ):
+    | StaticDocument<ArticleTypePluginState>
+    | StaticDocument<AppletTypePluginState>
+    | StaticDocument<EventTypePluginState>
+    | StaticDocument<TextExerciseTypePluginState>
+    | StaticDocument<TextExerciseGroupTypePluginState>
+    | StaticDocument<VideoTypePluginState> {
+    stack.push({ id: uuid.id, type: entityType })
     return {
       plugin: TemplatePluginType.Article,
       state: {
@@ -124,12 +120,16 @@ export function convertEditorResponseToState(
         changes: '',
         title,
         content: getContent(),
-        meta_title,
-        meta_description,
+        ...(url ? { url } : {}),
+        ...(meta_title ? { meta_title } : {}),
+        ...(meta_description ? { meta_description } : {}),
       },
     }
 
     function getContent() {
+      if (entityType !== 'Article')
+        return serializeStaticDocument(parseStaticString(content))
+
       const convertedContent = parseStaticString(content)
 
       if (convertedContent?.plugin === EditorPluginType.Article) {
@@ -155,9 +155,10 @@ export function convertEditorResponseToState(
   }
 
   function convertCourse(
+    entityType: MainUuidType['__typename'],
     uuid: Extract<MainUuidType, { __typename: 'Course' }>
   ): StaticDocument<CourseTypePluginState> {
-    stack.push({ id: uuid.id, type: 'course' })
+    stack.push({ id: uuid.id, type: entityType })
     return {
       plugin: TemplatePluginType.Course,
       state: {
@@ -170,7 +171,7 @@ export function convertEditorResponseToState(
         'course-page': (uuid.pages || [])
           .filter((page) => page.currentRevision !== null)
           .map((page) => {
-            return convertCoursePage({
+            return convertCoursePage('CoursePage', {
               ...page,
               currentRevision: {
                 id: page.id,
@@ -186,12 +187,13 @@ export function convertEditorResponseToState(
   }
 
   function convertCoursePage(
+    entityType: MainUuidType['__typename'],
     uuid: Pick<
       Extract<MainUuidType, { __typename: 'CoursePage' }>,
       'id' | 'currentRevision'
     >
   ): StaticDocument<CoursePageTypePluginState> {
-    stack.push({ id: uuid.id, type: 'course-page' })
+    stack.push({ id: uuid.id, type: entityType })
     return {
       plugin: TemplatePluginType.CoursePage,
       state: {
@@ -208,28 +210,11 @@ export function convertEditorResponseToState(
     }
   }
 
-  function convertEvent(
-    uuid: Extract<MainUuidType, { __typename: 'Event' }>
-  ): StaticDocument<EventTypePluginState> {
-    stack.push({ id: uuid.id, type: 'event' })
-    return {
-      plugin: TemplatePluginType.Event,
-      state: {
-        ...entityFields,
-        revision,
-        changes: '',
-        title,
-        content: serializeStaticDocument(parseStaticString(content)),
-        meta_title,
-        meta_description,
-      },
-    }
-  }
-
   function convertPage(
+    entityType: MainUuidType['__typename'],
     uuid: Extract<MainUuidType, { __typename: 'Page' }>
   ): StaticDocument<PageTypePluginState> {
-    stack.push({ id: uuid.id, type: 'page' })
+    stack.push({ id: uuid.id, type: entityType })
     return {
       plugin: TemplatePluginType.Page,
       state: {
@@ -241,9 +226,10 @@ export function convertEditorResponseToState(
   }
 
   function convertTaxonomy(
+    entityType: MainUuidType['__typename'],
     uuid: Extract<MainUuidType, { __typename: 'TaxonomyTerm' }>
   ): StaticDocument<TaxonomyTypePluginState> {
-    stack.push({ id: uuid.id, type: 'taxonomy' })
+    stack.push({ id: uuid.id, type: entityType })
     return {
       plugin: TemplatePluginType.Taxonomy,
       state: {
@@ -261,62 +247,12 @@ export function convertEditorResponseToState(
     }
   }
 
-  function convertTextExercise(
-    uuid: Extract<MainUuidType, { __typename: 'Exercise' }>
-  ): StaticDocument<TextExerciseTypePluginState> {
-    stack.push({ id: uuid.id, type: 'text-exercise' })
-
-    return {
-      plugin: TemplatePluginType.TextExercise,
-      state: {
-        id: uuid.id,
-        licenseId,
-        changes: '',
-        revision,
-        content:
-          serializeStaticDocument(
-            parseStaticString(uuid.currentRevision?.content)
-          ) ?? '',
-      },
-    }
-  }
-
-  function convertTextExerciseGroup(
-    uuid: Extract<MainUuidType, { __typename: 'ExerciseGroup' }>
-  ): StaticDocument<TextExerciseGroupTypePluginState> {
-    stack.push({ id: uuid.id, type: 'text-exercise-group' })
-
-    return {
-      plugin: TemplatePluginType.TextExerciseGroup,
-      state: {
-        ...entityFields,
-        changes: '',
-        revision,
-        content: serializeStaticDocument(parseStaticString(content)),
-      },
-    }
-  }
-
-  function convertUser(uuid: User): StaticDocument<UserTypePluginState> {
-    stack.push({ id: uuid.id, type: 'user' })
+  function convertUser(
+    entityType: MainUuidType['__typename'],
+    uuid: User
+  ): StaticDocument<UserTypePluginState> {
+    stack.push({ id: uuid.id, type: entityType })
     return convertUserByDescription(uuid.description)
-  }
-
-  function convertVideo(
-    uuid: Extract<MainUuidType, { __typename: 'Video' }>
-  ): StaticDocument<VideoTypePluginState> {
-    stack.push({ id: uuid.id, type: EditorPluginType.Video })
-    return {
-      plugin: TemplatePluginType.Video,
-      state: {
-        ...entityFields,
-        changes: '',
-        title,
-        revision,
-        description: serializeStaticDocument(parseStaticString(content)),
-        content: uuid.currentRevision?.url ?? '',
-      },
-    }
   }
 }
 
@@ -331,23 +267,16 @@ export function convertUserByDescription(description?: string | null) {
   }
 }
 
-export interface AppletSerializedState extends Entity {
-  __typename?: UuidType.Applet
+export interface AbstractSerializedState extends Entity {
+  __typename?: UuidType[number]
   title?: string
+  content: SerializedStaticState
+  reasoning?: SerializedStaticState
+  description: SerializedStaticState
+  meta_title?: string
+  meta_description?: string
   url?: string
-  content: SerializedStaticState
-  reasoning?: SerializedStaticState
-  meta_title?: string
-  meta_description?: string
-}
-
-export interface ArticleSerializedState extends Entity {
-  __typename?: UuidType.Article
-  title?: string
-  content: SerializedStaticState
-  reasoning?: SerializedStaticState
-  meta_title?: string
-  meta_description?: string
+  cohesive?: string
 }
 
 export interface CourseSerializedState extends Entity {
@@ -365,14 +294,6 @@ export interface CoursePageSerializedState extends Entity {
   title?: string
   icon?: 'explanation' | 'play' | 'question'
   content: SerializedStaticState
-}
-
-export interface EventSerializedState extends Entity {
-  __typename?: UuidType.Event
-  title?: string
-  content: SerializedStaticState
-  meta_title?: string
-  meta_description?: string
 }
 
 export interface PageSerializedState extends Uuid {
@@ -393,51 +314,9 @@ export interface TaxonomySerializedState extends Uuid {
   position: number
 }
 
-export interface TextExerciseSerializedState extends Entity {
-  __typename?: UuidType.Exercise
-  content: SerializedStaticState
-  'single-choice-right-answer'?: {
-    content: SerializedStaticState
-    feedback: SerializedStaticState
-  }
-  'single-choice-wrong-answer'?: {
-    content: SerializedStaticState
-    feedback: SerializedStaticState
-  }[]
-  'multiple-choice-right-answer'?: { content: SerializedStaticState }[]
-  'multiple-choice-wrong-answer'?: {
-    content: SerializedStaticState
-    feedback: SerializedStaticState
-  }[]
-  'input-expression-equal-match-challenge'?: InputType
-  'input-number-exact-match-challenge'?: InputType
-  'input-string-normalized-match-challenge': InputType
-}
-
-interface InputType {
-  solution: string
-  feedback: SerializedStaticState
-  'input-expression-equal-match-challenge'?: InputType[]
-  'input-number-exact-match-challenge'?: InputType[]
-  'input-string-normalized-match-challenge'?: InputType[]
-}
-
-export interface TextExerciseGroupSerializedState extends Entity {
-  __typename?: UuidType.ExerciseGroup
-  content: SerializedStaticState
-}
-
 export interface UserSerializedState extends Uuid {
   __typename?: UuidType.User
   description: SerializedStaticState
-}
-
-export interface VideoSerializedState extends Entity {
-  __typename?: UuidType.Video
-  title?: string
-  description: SerializedStaticState
-  content?: string
-  reasoning?: SerializedStaticState
 }
 
 interface StaticDocument<T extends StateType> {

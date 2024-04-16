@@ -25,7 +25,7 @@ export const revisionQuery = gql`
         }
       }
       ... on AbstractEntityRevision {
-        ...anyRevision
+        ...abstractEntityRevision
         changes
         repository {
           ...taxonomyTermsV2
@@ -35,7 +35,7 @@ export const revisionQuery = gql`
           id
           alias
           currentRevision {
-            ...anyRevision
+            ...abstractEntityRevision
           }
           revisions(unrevised: false) {
             totalCount
@@ -47,39 +47,20 @@ export const revisionQuery = gql`
           }
         }
       }
-      ... on ArticleRevision {
-        ...articleRevision
-        repository {
-          currentRevision {
-            ...articleRevision
-          }
-        }
-      }
-      ... on AppletRevision {
-        ...appletRevision
-        repository {
-          currentRevision {
-            ...appletRevision
-          }
-        }
-      }
+
       ... on CourseRevision {
         repository {
           pages(trashed: false, hasCurrentRevision: true) {
             id
             alias
             currentRevision {
-              ...anyRevision
+              ...abstractEntityRevision
             }
           }
         }
       }
       ... on CoursePageRevision {
-        ...coursePageRevision
         repository {
-          currentRevision {
-            ...coursePageRevision
-          }
           course {
             licenseId
             ...taxonomyTermsV2
@@ -106,16 +87,8 @@ export const revisionQuery = gql`
           }
         }
       }
-      ... on VideoRevision {
-        ...videoRevision
-        repository {
-          currentRevision {
-            ...videoRevision
-          }
-        }
-      }
       ... on PageRevision {
-        ...anyRevision
+        ...abstractRevision
         repository {
           licenseId
           trashed
@@ -123,7 +96,7 @@ export const revisionQuery = gql`
           id
           alias
           currentRevision {
-            ...anyRevision
+            ...abstractRevision
           }
           revisions(unrevised: false) {
             totalCount

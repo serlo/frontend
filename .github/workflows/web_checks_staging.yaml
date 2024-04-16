@@ -1,0 +1,32 @@
+name: web
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  yarn:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: yarn --check-cache
+
+  codegen-staging:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: yarn
+      - run: yarn codegen
+      - name: Check for uncommitted changes
+        run: |
+          if ! git diff --exit-code; then
+            echo "Please make sure you run `yarn codegen` to get the current API types"
+            exit 1
+          fi
