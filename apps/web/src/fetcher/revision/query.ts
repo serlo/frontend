@@ -106,14 +106,6 @@ export const revisionQuery = gql`
           }
         }
       }
-      ... on ExerciseGroupRevision {
-        ...exerciseGroupRevision
-        repository {
-          currentRevision {
-            ...exerciseGroupRevision
-          }
-        }
-      }
       ... on VideoRevision {
         ...videoRevision
         repository {
