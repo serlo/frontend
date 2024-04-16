@@ -15,6 +15,7 @@
     "check:all": "./scripts/check-all.sh",
     "check:tailwind": "node ./scripts/check-tailwind.js",
     "codegen": "graphql-codegen",
+    "codegen-production": "cross-env PRODUCTION=true graphql-codegen",
     "dev": "next",
     "format": "npm-run-all --continue-on-error \"format:*\"",
     "format:eslint": "yarn _eslint --fix",

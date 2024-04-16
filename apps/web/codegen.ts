@@ -1,9 +1,15 @@
 import { CodegenConfig } from '@graphql-codegen/cli'
+import dotenv from 'dotenv'
+
+dotenv.config()
+const schema = process.env.PRODUCTION
+  ? 'https://api.serlo.org/graphql'
+  : 'https://api.serlo-staging.dev/graphql'
 
 const config: CodegenConfig = {
   overwrite: true,
   emitLegacyCommonJSImports: false,
-  schema: 'https://api.serlo-staging.dev/graphql',
+  schema,
   documents: ['src/**/*.tsx', 'src/**/*.ts', '!src/helper/mutations/**/*.ts'],
   generates: {
     'src/fetcher/graphql-types/operations.ts': {
