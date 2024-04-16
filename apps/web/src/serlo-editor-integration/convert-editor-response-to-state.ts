@@ -293,7 +293,6 @@ export function convertEditorResponseToState(
         changes: '',
         revision,
         content: serializeStaticDocument(parseStaticString(content)),
-        cohesive: uuid.currentRevision?.cohesive ?? false,
       },
     }
   }
@@ -425,7 +424,6 @@ interface InputType {
 
 export interface TextExerciseGroupSerializedState extends Entity {
   __typename?: UuidType.ExerciseGroup
-  cohesive?: string
   content: SerializedStaticState
 }
 

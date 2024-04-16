@@ -98,12 +98,6 @@ export const dataQuery = gql`
         ...exercise
       }
 
-      ... on ExerciseGroup {
-        currentRevision {
-          ...exerciseGroupRevision
-        }
-      }
-
       ... on Course {
         pages(trashed: false) {
           alias
@@ -150,7 +144,6 @@ export const dataQuery = gql`
                 content
                 id
                 date
-                cohesive
               }
               licenseId
             }

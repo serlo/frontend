@@ -145,7 +145,6 @@ export function revisionResponseToResponse(
         id,
         content,
         title,
-        cohesive: uuid.cohesive,
         date,
       },
       taxonomyTerms: uuid.repository.taxonomyTerms,
