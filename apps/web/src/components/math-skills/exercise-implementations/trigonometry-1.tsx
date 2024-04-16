@@ -49,11 +49,11 @@ export function Trigonometry1() {
             </MainTask>
             <p className="mt-2 text-2xl">
               Es gilt |{buildOverline(data.otherRay ? 'SB' : 'SA')}| = {data.as}{' '}
-              cm² und |{buildOverline(data.otherRay ? 'BD' : 'AC')}| = {data.ac}{' '}
-              cm² <br /> sowie |
-              {buildOverline(data.mode === 'cd' ? 'AB' : 'CD')}| ={' '}
+              cm und |{buildOverline(data.otherRay ? 'BD' : 'AC')}| = {data.ac}{' '}
+              cm <br /> sowie |{buildOverline(data.mode === 'cd' ? 'AB' : 'CD')}
+              | ={' '}
               {(data.mode === 'cd' ? data.ab : data.cd).toLocaleString('de-De')}{' '}
-              cm².
+              cm.
             </p>
             <SubComponent data={data} />
             <small className="mb-6 block">
