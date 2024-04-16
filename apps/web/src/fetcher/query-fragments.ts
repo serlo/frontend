@@ -26,10 +26,6 @@ export const sharedRevisionFragments = gql`
   fragment coursePageRevision on CoursePageRevision {
     alias
   }
-
-  fragment exerciseGroupRevision on ExerciseGroupRevision {
-    cohesive
-  }
 `
 
 export const sharedEventFragments = gql`
