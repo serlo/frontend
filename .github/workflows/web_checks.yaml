@@ -1,4 +1,4 @@
-name: Javascript
+name: web
 on:
   push:
     branches:

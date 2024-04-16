@@ -1,4 +1,4 @@
-name: Javascript
+name: repository
 on:
   push:
     branches:
