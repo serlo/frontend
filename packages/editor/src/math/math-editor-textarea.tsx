@@ -1,5 +1,5 @@
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { createRef, useEffect } from 'react'
+import { createRef, useEffect, useState } from 'react'
 
 import type { MathEditorProps } from './editor.jsx'
 
@@ -14,6 +14,8 @@ export const MathEditorTextarea = ({
   onMoveOutLeft,
   onMoveOutRight,
 }: MathEditorTextareaProps) => {
+  const [value, setValue] = useState(latex)
+
   // Autofocus textarea
   const textareaRef = createRef<HTMLTextAreaElement>()
   useEffect(() => {
@@ -33,10 +35,13 @@ export const MathEditorTextarea = ({
         text-black outline-none focus:border-editor-primary`
       )}
       ref={textareaRef}
-      onChange={(e) => onChange(e.currentTarget.value)}
+      onChange={(e) => {
+        setValue(e.currentTarget.value)
+        onChange(e.currentTarget.value)
+      }}
       onCopy={(e) => e.stopPropagation()}
       onCut={(e) => e.stopPropagation()}
-      value={latex}
+      value={value}
       data-qa="plugin-math-latex-editor"
       onKeyDown={(e) => {
         const { selectionStart, selectionEnd, value } = e.currentTarget
