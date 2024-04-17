@@ -72,16 +72,6 @@ export default class MyDocument extends Document {
             type="font/woff2"
             crossOrigin=""
           />
-          {process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined && (
-            // script is very small and bootstraps sentry
-            // eslint-disable-next-line @next/next/no-sync-scripts
-            <script
-              src={`/_assets/sentry/${process.env.NEXT_PUBLIC_SENTRY_DSN.substring(
-                8,
-                40
-              )}.min.js`}
-            />
-          )}
           <script
             dangerouslySetInnerHTML={{
               __html: `window.sa_event=window.sa_event||function(){a=[].slice.call(arguments);sa_event.q?sa_event.q.push(a):sa_event.q=[a]};`,
