@@ -10,31 +10,6 @@ const bodyStyles = {
   backgroundColor: '#fff',
 }
 
-// See https://docs.sentry.io/platforms/javascript/install/lazy-load-sentry/
-const sentryLoader = `
-  if (window.Sentry) {
-    window.Sentry.init({
-      environment: "${process.env.NEXT_PUBLIC_ENV}",
-      release: "frontend@${
-        process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.substring(0, 7) ?? ''
-      }",
-      beforeSend(event, hint) {
-        /* ignore safari warning in JsonLd component */
-        const error = hint.originalException;
-        if (
-          error &&
-          error.message &&
-          error.message.startsWith('r["@context"].toLowerCase')
-        ) {
-          return null
-        }
-        return event;
-      },
-    });
-    window.Sentry.forceLoad();
-  }
-`
-
 export default class MyDocument extends Document {
   render() {
     const langData = this.props.__NEXT_DATA__.locale
@@ -107,14 +82,6 @@ export default class MyDocument extends Document {
               )}.min.js`}
             />
           )}
-          {process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined &&
-            process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA !== undefined && (
-              <script
-                dangerouslySetInnerHTML={{
-                  __html: sentryLoader,
-                }}
-              />
-            )}
           <script
             dangerouslySetInnerHTML={{
               __html: `window.sa_event=window.sa_event||function(){a=[].slice.call(arguments);sa_event.q?sa_event.q.push(a):sa_event.q=[a]};`,
@@ -133,7 +100,12 @@ export default class MyDocument extends Document {
             />
           )}
           <NextScript />
-          <script async defer src="https://sa.serlo.org/latest.js" />
+          <script
+            data-collect-dnt="true"
+            async
+            defer
+            src="https://sa.serlo.org/latest.js"
+          />
           <noscript>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="https://sa.serlo.org/noscript.gif" alt="" />
