@@ -66,13 +66,12 @@ export function InjectionSerloStaticRenderer({
           }
 
           if (uuid.__typename === 'Exercise') {
-            const exerciseContext = {
-              serloContext: {
-                licenseId: uuid.licenseId,
-              },
+            const serloContext = {
+              licenseId: uuid.licenseId,
+              uuid: uuid.id,
             }
             setContent([
-              { ...JSON.parse(uuid.currentRevision.content), exerciseContext },
+              { ...JSON.parse(uuid.currentRevision.content), serloContext },
             ])
             return
           }
@@ -179,6 +178,7 @@ const query = gql`
       title
 
       ... on AbstractEntity {
+        id
         currentRevision {
           content
         }
