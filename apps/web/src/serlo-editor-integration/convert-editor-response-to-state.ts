@@ -12,14 +12,13 @@ import type { TextExerciseGroupTypePluginState } from '@editor/plugins/serlo-tem
 import type { PageTypePluginState } from '@editor/plugins/serlo-template-plugins/page'
 import type { TaxonomyTypePluginState } from '@editor/plugins/serlo-template-plugins/taxonomy'
 import type { TextExerciseTypePluginState } from '@editor/plugins/serlo-template-plugins/text-exercise'
-import type { UserTypePluginState } from '@editor/plugins/serlo-template-plugins/user'
 import type { VideoTypePluginState } from '@editor/plugins/serlo-template-plugins/video'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 import { UuidType } from '@/data-types'
-import type { User, MainUuidType } from '@/fetcher/query-types'
+import type { MainUuidType } from '@/fetcher/query-types'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 /** Converts graphql query response to static editor document */
@@ -27,28 +26,6 @@ export function convertEditorResponseToState(
   uuid: MainUuidType
 ): DeserializedStaticResult {
   const stack: { id: number; type: string }[] = []
-
-  const config: Record<
-    string,
-    {
-      convert?: (
-        entityType: MainUuidType['__typename'],
-        state: any
-      ) => StaticDocument<StateType>
-    }
-  > = {
-    Applet: {},
-    Article: {},
-    Event: {},
-    Exercise: {},
-    ExerciseGroup: {},
-    Video: {},
-    Course: { convert: convertCourse },
-    CoursePage: { convert: convertCoursePage },
-    Page: { convert: convertPage },
-    User: { convert: convertUser },
-    TaxonomyTerm: { convert: convertTaxonomy },
-  }
 
   const licenseId = Object.hasOwn(uuid, 'licenseId')
     ? uuid.licenseId
@@ -79,15 +56,34 @@ export function convertEditorResponseToState(
   }
 
   try {
-    if (config[uuid.__typename] === undefined) {
-      return {
-        error: 'type-unsupported',
-      }
+    if (
+      [
+        UuidType.Applet,
+        UuidType.Article,
+        UuidType.Event,
+        UuidType.Exercise,
+        UuidType.ExerciseGroup,
+        UuidType.Video,
+      ].includes(uuid.__typename as UuidType)
+    )
+      return convertAbstractEntity(uuid.__typename, uuid)
+
+    if (UuidType.Course === uuid.__typename) {
+      return convertCourse(uuid.__typename, uuid)
     }
-    const { convert } = config[uuid.__typename]
-    return convert
-      ? convert(uuid.__typename, uuid)
-      : convertAbstractEntity(uuid.__typename, uuid)
+    if (UuidType.CoursePage === uuid.__typename) {
+      return convertCoursePage(uuid.__typename, uuid)
+    }
+    if (UuidType.Page === uuid.__typename) {
+      return convertPage(uuid.__typename, uuid)
+    }
+    if (UuidType.TaxonomyTerm === uuid.__typename) {
+      return convertTaxonomy(uuid.__typename, uuid)
+    }
+
+    // Users and Revisions are not handled here
+
+    return { error: 'type-unsupported' }
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e)
@@ -245,14 +241,6 @@ export function convertEditorResponseToState(
         ),
       },
     }
-  }
-
-  function convertUser(
-    entityType: MainUuidType['__typename'],
-    uuid: User
-  ): StaticDocument<UserTypePluginState> {
-    stack.push({ id: uuid.id, type: entityType })
-    return convertUserByDescription(uuid.description)
   }
 }
 
