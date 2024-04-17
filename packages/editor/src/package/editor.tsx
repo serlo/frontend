@@ -4,13 +4,13 @@ import { createRenderers } from '@editor/editor-integration/create-renderers'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { SupportedLanguage } from '@editor/types/language-data'
+import { mergeDeepRight } from 'ramda'
 import React from 'react'
 
 import {
-  defaultPluginsConfig,
-  defaultBasicPluginConfig,
   type PluginsConfig,
   defaultSerloEditorProps,
+  type CustomPlugin,
 } from './config.js'
 import { editorData } from './editor-data.js'
 import { InstanceDataProvider } from '@/contexts/instance-context'
@@ -21,41 +21,24 @@ import '@/assets-webkit/styles/serlo-tailwind.css'
 export interface SerloEditorProps {
   children: EditorProps['children']
   pluginsConfig?: PluginsConfig
+  customPlugins?: CustomPlugin[]
   initialState?: EditorProps['initialState']
   language?: SupportedLanguage
 }
 
 /** For exporting the editor */
 export function SerloEditor(props: SerloEditorProps) {
-  const { children, pluginsConfig, initialState, language } = {
-    ...defaultSerloEditorProps,
-    ...props,
-  }
-  const { basicPluginsConfig, customPlugins } = {
-    ...defaultPluginsConfig,
-    ...pluginsConfig,
-  }
   const {
-    allowedChildPlugins,
-    allowImageInTableCells,
-    enableTextAreaExercise,
-    exerciseVisibleInSuggestion,
-    multimediaConfig,
-  } = {
-    ...defaultBasicPluginConfig,
-    ...basicPluginsConfig,
-  }
+    children,
+    pluginsConfig,
+    customPlugins = [],
+    initialState,
+    language,
+  } = mergeDeepRight(defaultSerloEditorProps, props)
 
   const { instanceData, loggedInData } = editorData[language]
 
-  const basicPlugins = createBasicPlugins({
-    allowedChildPlugins,
-    allowImageInTableCells,
-    enableTextAreaExercise,
-    exerciseVisibleInSuggestion,
-    language,
-    multimediaConfig,
-  })
+  const basicPlugins = createBasicPlugins(pluginsConfig)
   editorPlugins.init([...basicPlugins, ...customPlugins])
 
   const basicRenderers = createRenderers(customPlugins)
