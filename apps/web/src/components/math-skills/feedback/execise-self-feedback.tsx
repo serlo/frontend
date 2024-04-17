@@ -4,8 +4,8 @@ import { Dispatch, SetStateAction, useEffect } from 'react'
 import { ExStatus } from './execise-feedback'
 import { SkillPoints } from '../math-skills-wrapper/skill-points'
 import { useExerciseData } from '../utils/math-skills-data-context'
+import { useSubmitEvent } from '../utils/math-skills-submit-event'
 import { FaIcon } from '@/components/fa-icon'
-import { submitEvent } from '@/helper/submit-event'
 
 interface ExerciseSelfFeedbackProps {
   exStatus: ExStatus
@@ -25,6 +25,7 @@ export function ExerciseSelfFeedback({
   exStatus,
   onNewExecise,
 }: ExerciseSelfFeedbackProps) {
+  const submitEvent = useSubmitEvent()
   const { setExerciseData } = useExerciseData()
   const isNextButton = exStatus === 'correct' || exStatus === 'incorrect'
 

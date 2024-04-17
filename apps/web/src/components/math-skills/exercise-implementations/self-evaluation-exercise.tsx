@@ -6,8 +6,8 @@ import { ExStatus } from '../feedback/execise-feedback'
 import { ExerciseSelfFeedback } from '../feedback/execise-self-feedback'
 import { SkipExerciseButton } from '../feedback/skip-exercise-button'
 import { CalculatorAllowedContext } from '../utils/calculator-allowed-context'
+import { useSubmitEvent } from '../utils/math-skills-submit-event'
 import { FaIcon } from '@/components/fa-icon'
-import { submitEvent } from '@/helper/submit-event'
 
 interface SelfEvaluationExerciseProps<DATA> {
   generator: () => DATA
@@ -29,6 +29,7 @@ export function SelfEvaluationExercise<T>({
   const [showSolution, setShowSolution] = useState(false)
   const [showStrategy, setShowStrategy] = useState(false)
   const calculatorAllowed = useContext(CalculatorAllowedContext)
+  const submitEvent = useSubmitEvent()
 
   return (
     <>

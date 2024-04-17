@@ -17,6 +17,7 @@ export interface ExerciseData {
 export interface MathSkillsStorageData {
   name: string
   animal: Animal
+  startTs?: number
   exercises: Map<string, ExerciseData>
 }
 

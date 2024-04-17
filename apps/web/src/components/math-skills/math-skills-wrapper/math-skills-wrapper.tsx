@@ -32,7 +32,14 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
 
   const [data, setData] = useState<MathSkillsStorageData>(getEmptyData())
 
-  useEffect(() => setData(getStored()), [])
+  useEffect(() => {
+    setData(getStored())
+    // TODO
+    /*updateData((data) => {
+      data.startTs = new Date().getTime()
+      console.log('update Data')
+    })*/
+  }, [])
 
   const [, setRenderCounter] = useState(1)
 
