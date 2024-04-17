@@ -21,6 +21,16 @@ import { UuidType } from '@/data-types'
 import type { MainUuidType } from '@/fetcher/query-types'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
+const entityTypes = [
+  UuidType.Applet,
+  UuidType.Article,
+  UuidType.Event,
+  UuidType.Exercise,
+  UuidType.ExerciseGroup,
+  UuidType.Video,
+] as const
+type EntityType = (typeof entityTypes)[number]
+
 /** Converts graphql query response to static editor document */
 export function convertEditorResponseToState(
   uuid: MainUuidType
@@ -56,18 +66,6 @@ export function convertEditorResponseToState(
   }
 
   try {
-    if (
-      [
-        UuidType.Applet,
-        UuidType.Article,
-        UuidType.Event,
-        UuidType.Exercise,
-        UuidType.ExerciseGroup,
-        UuidType.Video,
-      ].includes(uuid.__typename as UuidType)
-    )
-      return convertAbstractEntity(uuid.__typename, uuid)
-
     if (UuidType.Course === uuid.__typename) {
       return convertCourse(uuid.__typename, uuid)
     }
@@ -80,6 +78,11 @@ export function convertEditorResponseToState(
     if (UuidType.TaxonomyTerm === uuid.__typename) {
       return convertTaxonomy(uuid.__typename, uuid)
     }
+    if (entityTypes.includes(uuid.__typename as EntityType))
+      return convertAbstractEntity(
+        uuid.__typename as EntityType,
+        uuid as Extract<MainUuidType, { __typename: 'Article' }>
+      )
 
     // Users and Revisions are not handled here
 
@@ -98,8 +101,8 @@ export function convertEditorResponseToState(
   }
 
   function convertAbstractEntity(
-    entityType: MainUuidType['__typename'],
-    uuid: Extract<MainUuidType, { __typename: typeof entityType }>
+    entityType: EntityType,
+    uuid: Extract<MainUuidType, { __typename: 'Article' }>
   ):
     | StaticDocument<ArticleTypePluginState>
     | StaticDocument<AppletTypePluginState>
@@ -109,7 +112,7 @@ export function convertEditorResponseToState(
     | StaticDocument<VideoTypePluginState> {
     stack.push({ id: uuid.id, type: entityType })
     return {
-      plugin: TemplatePluginType.Article,
+      plugin: TemplatePluginType[uuid.__typename],
       state: {
         ...entityFields,
         revision,
