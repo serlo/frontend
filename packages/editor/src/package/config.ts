@@ -54,6 +54,7 @@ export const emptyDocumentState = {
 
 export const defaultSerloEditorProps = {
   pluginsConfig: defaultPluginsConfig,
+  customPlugins: [],
   initialState: emptyDocumentState,
   language: 'de' as SupportedLanguage,
 }

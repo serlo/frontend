@@ -17,7 +17,7 @@ export interface SerloRendererProps {
 }
 
 export function SerloRenderer(props: SerloRendererProps) {
-  const { customPlugins = [], language } = mergeDeepRight(
+  const { customPlugins, language } = mergeDeepRight(
     defaultSerloEditorProps,
     props
   )

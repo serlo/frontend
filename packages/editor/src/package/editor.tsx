@@ -28,13 +28,8 @@ export interface SerloEditorProps {
 
 /** For exporting the editor */
 export function SerloEditor(props: SerloEditorProps) {
-  const {
-    children,
-    pluginsConfig,
-    customPlugins = [],
-    initialState,
-    language,
-  } = mergeDeepRight(defaultSerloEditorProps, props)
+  const { children, pluginsConfig, customPlugins, initialState, language } =
+    mergeDeepRight(defaultSerloEditorProps, props)
 
   const { instanceData, loggedInData } = editorData[language]
 
