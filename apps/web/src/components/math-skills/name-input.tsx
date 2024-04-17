@@ -1,7 +1,10 @@
 import { useState } from 'react'
 
 import { useMathSkillsStorage } from './utils/math-skills-data-context'
-import { useSubmitEvent } from './utils/math-skills-submit-event'
+import {
+  nameIsMathSkillsReviewer,
+  useSubmitEvent,
+} from './utils/math-skills-submit-event'
 import { cn } from '@/helper/cn'
 
 export function NameInput() {
@@ -16,7 +19,9 @@ export function NameInput() {
     updateData((data) => {
       data.name = trimmedName
     })
-    submitEvent('enter_name')
+    if (!nameIsMathSkillsReviewer(trimmedName)) {
+      submitEvent('enter_name')
+    }
   }
 
   return (

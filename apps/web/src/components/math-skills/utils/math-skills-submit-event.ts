@@ -3,11 +3,12 @@ import { submitEvent } from '@/helper/submit-event'
 
 export function useSubmitEvent() {
   const { data } = useMathSkillsStorage()
-  if (
-    data.name.toLowerCase() === 'kurti' ||
-    data.name.toLowerCase() === 'tea'
-  ) {
+  if (nameIsMathSkillsReviewer(data.name)) {
     return (_: string) => {}
   }
   return submitEvent
+}
+
+export function nameIsMathSkillsReviewer(name: string) {
+  return name.toLowerCase() === 'kurti' || name.toLowerCase() === 'tea'
 }

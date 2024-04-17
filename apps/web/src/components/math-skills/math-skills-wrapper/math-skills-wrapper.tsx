@@ -15,8 +15,10 @@ import {
   isUsingLocal,
   updateStored,
 } from '../utils/math-skills-data-context'
+import { nameIsMathSkillsReviewer } from '../utils/math-skills-submit-event'
 import { HeadTags } from '@/components/head-tags'
 import { isProduction } from '@/helper/is-production'
+import { submitEvent } from '@/helper/submit-event'
 
 enableMapSet()
 
@@ -33,13 +35,39 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
   const [data, setData] = useState<MathSkillsStorageData>(getEmptyData())
 
   useEffect(() => {
-    setData(getStored())
-    // TODO
-    /*updateData((data) => {
-      data.startTs = new Date().getTime()
-      console.log('update Data')
-    })*/
+    const data = getStored()
+    setData(data)
+    if (!data.startTs) {
+      // set starting time - only update after rendering finished and data available to avoid races
+      // this is not scalalbe, refactor if something like that happens more often
+      setTimeout(() => {
+        updateData((data) => {
+          data.startTs = new Date().getTime()
+        })
+      }, 100)
+    }
   }, [])
+
+  useEffect(() => {
+    if (data.startTs) {
+      const elapsed = Math.floor(
+        (new Date().getTime() - data.startTs) / 1000 / 60
+      ) // minutes
+      const heartbeat = buildHeartbeat(elapsed)
+      if (heartbeat) {
+        if (data.name && !nameIsMathSkillsReviewer(data.name)) {
+          if (heartbeat !== data.lastHeartbeat) {
+            setTimeout(() => {
+              updateData((data) => {
+                data.lastHeartbeat = heartbeat
+              })
+              submitEvent(`heartbeat_${heartbeat}`)
+            }, 100)
+          }
+        }
+      }
+    }
+  }, [data])
 
   const [, setRenderCounter] = useState(1)
 
@@ -141,4 +169,20 @@ export function MathSkillsWrapper({ children }: { children: ReactNode }) {
       `}</style>
     </>
   )
+}
+
+function buildHeartbeat(m: number) {
+  if (m < 1) {
+    return null
+  }
+  if (m < 10) {
+    return `${m}_min`
+  }
+  if (m < 60) {
+    return `${Math.floor(m / 5) * 5}_min`
+  }
+  if (m < 3 * 24 * 60) {
+    return `${Math.floor(m / 60)}_h`
+  }
+  return `${Math.floor(m / 60 / 24)}_d`
 }
