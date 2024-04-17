@@ -45,6 +45,10 @@ This is an early beta version of the [Serlo Editor](https://de.serlo.org/editor)
 
 - Serlo Editor plugins can be configured to an extent, this configuration is currently done via the `pluginsConfig` prop of the `SerloEditor` component.
 
+- Pass in an `initialState` to the `SerloEditor` component to prevent seeing an empty editor state.
+
+- To receive state changes of the editor and persist the content into your own infrastructure, use the `onChange` callback of the `SerloEditor` component. It's a function with the signature `({ changed, getDocument }) => void` of which you can call `getDocument()` to fetch the latest editor state.
+
 - Custom plugins are currently supported for the Edusharing integration, but will not be supported in the future.
 
 ## Releasing a new version to npm
