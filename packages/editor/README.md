@@ -2,46 +2,40 @@
 
 This is an early beta version of the [Serlo Editor](https://de.serlo.org/editor). Be aware that we are currently working on this package and thus there will be breaking changes. The repository [serlo/serlo-editor-for-edusharing](https://github.com/serlo/serlo-editor-for-edusharing) shows how this package can be used.
 
-### Current API Documentation
+## Current Editor package API
 
-#### 1. `SerloEditor`
+#### 1. `SerloEditor`, `SerloEditorProps`
 
-- **Why Exported/How Used**:
-  - This is the core component of the `@serlo/editor` package, providing the main editor functionality. It's exported to allow users to embed the editor into their applications, passing in initial state, configuration, and custom render props to tailor the editor's functionality to their needs.
-- **Long-Term Support**: Will Stay
-- **Needs Change?**: Unclear
+- **Why Exported/How Used**: `SerloEditor` is the core component of the `@serlo/editor` package, providing the main editor functionality. It's exported to allow users to embed the editor into their applications, passing in initial state, configuration, and custom render props to tailor the editor's functionality to their needs. `SerloEditorProps` export provides TypeScript type definitions for the props accepted by the `SerloEditor` component.
+- **Long-Term Support**: Will stay
+- **Needs Change?**: Configuration props need restructuring
 
-#### 2. `SerloEditorProps`
-
-- **Why Exported/How Used**:
-  - This export provides TypeScript type definitions for the props accepted by the `SerloEditor` component.
-- **Long-Term Support**: Will Stay
-- **Needs Change?**: - Yes, props can be streamlined [[Props]]
-
-#### 3.`StaticRenderer`
-
-- **Why Exported/How Used**: `StaticRenderer` is a component for rendering a static (non-editable) version of the document, used when the editor is in a read-only mode.
-- **Long-Term Support**: Unclear
-- **Needs Change?**: Unclear
-
-#### 4. - **`SerloRenderer`, `SerloRendererProps`**
+#### 2. `SerloRenderer`, `SerloRendererProps`
 
 - **Why Exported/How Used**: `SerloRenderer` is a component provided by the `@serlo/editor` for rendering content in a non-editable format. This is particularly useful for displaying the content to users who are not currently editing or are not allowed to edit. The `SerloRendererProps` are used for type safety, ensuring the correct data shape is passed to the renderer.
-- **Long-Term Support**: Unclear
-- **Needs Change?**: We can probably improve/simplify the props
+- **Long-Term Support**: Will stay
+- **Needs Change?**: Same changes as `SerloEditor`
 
-### Additional Functionality in `SerloEditor` Component
+#### 3. `BaseEditor`
 
-- The `SerloEditor` component conditionally renders either the editable `Editor` or the `SerloRenderer` based on the `mayEdit` prop. This design allows for a single component to handle both viewing and editing states of the document, leveraging the dynamic capabilities of Next.js for loading the appropriate editor component as needed.
+- **Why Exported/How Used**: This type describes the `editor` render prop provided by the `SerloEditor` component.
+- **Long-Term Support**: Will stay unless a better solution is found
+- **Needs Change?**: Unclear
 
-- When passed in a function as the `children` prop, the `SerloEditor` component provides an `editor` object as the argument to the `children` function. The `editor` object provides:
+#### 4. Exports from from `@editor/plugin`, `@/components/fa-icon`, `@editor/editor-ui`
+
+- **Why Exported/How Used**: These exports are currently necessary for defining custom Edusharing plugins. We don't plan to support custom plugins in the future.
+- **Long-Term Support**: To be deprecated
+- **Needs Change?**: No
+
+#### Additional Functionality in `SerloEditor` Component
+
+- When passed in a function as the `children` prop, the `SerloEditor` component provides an `editor` render prop as the argument to the `children` function. This `editor` object provides:
 
   - `element` - a React node for rendering the editor
-  - `languageData` - for customizing translation strings
-  - `historyData` - for persisting, undo, redo
-  - `selectEditorState` - a function for selecting the current state
-
-- The `LtikContext.Provider` is used to provide the `ltik` token to any components that need it, encapsulating the editor or renderer within this context to ensure they have access to authentication tokens if required.
+  - `i18n` - for customizing translation strings
+  - `history` - for persisting, undo, redo
+  - `selectRootDocument` - a function for selecting the current state
 
 - Serlo Editor plugins can be configured to an extent, this configuration is currently done via the `pluginsConfig` prop of the `SerloEditor` component.
 
