@@ -43,14 +43,18 @@ export default async function customCreateApiHandler(
   function afterRegisterApiCall(body: string) {
     if (
       req.method !== 'POST' ||
-      !req.url?.startsWith('/api/.ory/self-service/registration?flow=') ||
+      !req.url?.startsWith('/api/.ory/self-service/registration') ||
       !process.env.API_KRATOS_SECRET
     ) {
       return
     }
 
+    console.log('afterRegisterApiCall: trying to call API')
+
     const result = JSON.parse(body) as { identity: { id: string } }
     const userId = result?.identity?.id
+
+    console.log({ userId })
 
     if (userId) {
       void fetch(API_KRATOS_WEBHOOK_URL, {
@@ -62,12 +66,11 @@ export default async function customCreateApiHandler(
         body: JSON.stringify({ userId }),
       })
         .then(async (result) => {
-          if (result.status !== 200) {
-            const text = await result.text()
-            console.log(result.status)
-            console.log({ userId })
-            console.error(text)
-          }
+          const text = await result.text()
+          console.log(result.status)
+          console.error(text)
+          // if (result.status !== 200) {
+          // }
         })
         .catch((e) => {
           console.error(e)
