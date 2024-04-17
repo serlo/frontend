@@ -10,6 +10,7 @@ import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { UuidType } from '@serlo/frontend/src/data-types'
+import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 import { useEffect, useRef, useState } from 'react'
 
 import {
@@ -18,7 +19,6 @@ import {
   entityType,
   headerInputClasses,
 } from './common/common'
-import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { SettingsTextarea } from './helpers/settings-textarea'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 

@@ -9,164 +9,87 @@ export function revisionResponseToResponse(
 
   if (!Object.hasOwn(uuid, 'repository')) return null
 
-  const { licenseId, trashed, instance, id, alias } = uuid.repository
+  const {
+    licenseId,
+    trashed,
+    instance,
+    id: repositoryId,
+    alias,
+  } = uuid.repository
   const repositoryFields = {
     licenseId,
     trashed,
-    id,
+    id: repositoryId,
     instance,
     alias,
   }
+  const { id, content } = uuid
+  const title = uuid.title ?? ''
+  const date = uuid.date ?? ''
 
-  const title = Object.hasOwn(uuid, 'title') ? uuid.title : ''
-  const content = uuid.content
-  const metaTitle = Object.hasOwn(uuid, 'metaTitle') ? uuid.metaTitle : ''
-  const metaDescription = Object.hasOwn(uuid, 'metaDescription')
-    ? uuid.metaDescription
-    : ''
-  const date = '' // just to make type happy, not used
+  const abstractRevisionData = {
+    id,
+    alias,
+    title,
+    date,
+    content,
+  }
 
-  if (uuid.__typename === UuidRevType.Applet) {
-    uuid.__typename
+  if (uuid.__typename === UuidRevType.Page) {
     return {
-      __typename: UuidType.Applet,
-      currentRevision: {
-        id: uuid.id,
-        url: uuid.url,
-        title,
-        content,
-        metaTitle,
-        metaDescription,
-        date,
-      },
+      __typename: UuidType.Page,
+      title,
+      currentRevision: abstractRevisionData,
       ...repositoryFields,
-      taxonomyTerms: uuid.repository.taxonomyTerms,
-      revisions: uuid.repository.revisions,
-      date,
     }
   }
 
-  if (uuid.__typename === UuidRevType.Article) {
-    uuid.__typename
-    return {
-      __typename: UuidType.Article,
-      date,
-      currentRevision: {
-        id: uuid.id,
-        title,
-        content,
-        metaTitle,
-        metaDescription,
-        date,
-      },
-      taxonomyTerms: uuid.repository.taxonomyTerms,
-      ...repositoryFields,
-      revisions: uuid.repository.revisions,
-    }
+  const abstractEntityRevisionData = {
+    ...abstractRevisionData,
+    url: uuid.url ?? '',
+    metaTitle: uuid.metaTitle ?? '',
+    metaDescription: uuid.metaDescription ?? '',
   }
 
   if (uuid.__typename === UuidRevType.Course) {
-    uuid.__typename
     return {
       __typename: UuidType.Course,
       ...repositoryFields,
+      title,
+      date,
       pages: uuid.repository.pages,
       taxonomyTerms: uuid.repository.taxonomyTerms,
+      revisions: uuid.repository.revisions,
     }
   }
 
   if (uuid.__typename === UuidRevType.CoursePage) {
-    uuid.__typename
     return {
       __typename: UuidType.CoursePage,
-      currentRevision: {
-        id: uuid.id,
-        alias: uuid.alias,
-        title,
-        content,
-        date,
-      },
+      title,
+      date,
+      currentRevision: abstractEntityRevisionData,
       ...repositoryFields,
       revisions: uuid.repository.revisions,
       course: uuid.repository.course,
+    }
+  }
+
+  if (
+    uuid.__typename === UuidRevType.Applet ||
+    uuid.__typename === UuidRevType.Article ||
+    uuid.__typename === UuidRevType.Event ||
+    uuid.__typename === UuidRevType.Video ||
+    uuid.__typename === UuidRevType.ExerciseGroup ||
+    uuid.__typename === UuidRevType.Exercise
+  ) {
+    return {
+      __typename: uuid.__typename,
       date,
-    }
-  }
-
-  if (uuid.__typename === UuidRevType.Event) {
-    uuid.__typename
-    return {
-      __typename: UuidType.Event,
-      currentRevision: {
-        id: uuid.id,
-        title,
-        content,
-      },
+      title,
+      currentRevision: abstractEntityRevisionData,
       ...repositoryFields,
       taxonomyTerms: uuid.repository.taxonomyTerms,
-    }
-  }
-
-  if (uuid.__typename === UuidRevType.Exercise) {
-    uuid.__typename
-    return {
-      __typename: UuidType.Exercise,
-      currentRevision: {
-        content,
-        date,
-        id: -1,
-      },
-      taxonomyTerms: uuid.repository.taxonomyTerms,
-      ...repositoryFields,
-      revisions: uuid.repository.revisions,
-      date,
-    }
-  }
-
-  if (uuid.__typename === UuidRevType.ExerciseGroup) {
-    uuid.__typename
-    return {
-      __typename: UuidType.ExerciseGroup,
-      currentRevision: {
-        id: uuid.id,
-        content,
-        cohesive: uuid.cohesive,
-        date,
-      },
-      exercises: uuid.repository.exercises,
-      taxonomyTerms: uuid.repository.taxonomyTerms,
-      ...repositoryFields,
-      revisions: uuid.repository.revisions,
-      date,
-    }
-  }
-
-  // probably not needed
-  if (uuid.__typename === UuidRevType.Page) {
-    uuid.__typename
-    return {
-      __typename: UuidType.Page,
-      currentRevision: {
-        id: uuid.id,
-        title,
-        content,
-      },
-      ...repositoryFields,
-    }
-  }
-
-  if (uuid.__typename === UuidRevType.Video) {
-    uuid.__typename
-    return {
-      __typename: UuidType.Video,
-      currentRevision: {
-        id: uuid.id,
-        url: uuid.url,
-        title,
-        content,
-      },
-      taxonomyTerms: uuid.repository.taxonomyTerms,
-      ...repositoryFields,
       revisions: uuid.repository.revisions,
     }
   }

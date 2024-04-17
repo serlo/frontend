@@ -28,6 +28,7 @@ import type {
   EditorUnsupportedDocument,
   EditorVideoDocument,
   EditorTemplateExerciseGroupDocument,
+  EditorExerciseGroupDocument,
 } from './editor-plugins'
 import { TemplatePluginType } from './template-plugin-type'
 
@@ -65,6 +66,11 @@ export function isExerciseDocument(
   document: AnyEditorDocument
 ): document is EditorExerciseDocument {
   return document.plugin === EditorPluginType.Exercise
+}
+export function isExerciseGroupDocument(
+  document: AnyEditorDocument
+): document is EditorExerciseGroupDocument {
+  return document.plugin === EditorPluginType.ExerciseGroup
 }
 export function isGeogebraDocument(
   document: AnyEditorDocument

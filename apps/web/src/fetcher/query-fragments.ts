@@ -1,57 +1,20 @@
 import { gql } from 'graphql-request'
 
 export const sharedRevisionFragments = gql`
-  fragment articleRevision on ArticleRevision {
-    id
-    title
-    content
-    metaTitle
-    metaDescription
-    date
-  }
-
-  fragment pageRevision on PageRevision {
-    id
-    title
-    content
-  }
-
-  fragment videoRevision on VideoRevision {
-    id
-    title
-    url
-    content
-  }
-
-  fragment appletRevision on AppletRevision {
-    id
-    title
-    content
-    url
-    metaTitle
-    metaDescription
-    date
-  }
-
-  fragment coursePageRevision on CoursePageRevision {
+  fragment abstractRevision on AbstractRevision {
     id
     alias
-    content
-    title
-    date
-  }
-
-  fragment exerciseGroupRevision on ExerciseGroupRevision {
-    id
-    content
-    cohesive
-    date
-  }
-
-  fragment eventRevision on EventRevision {
-    id
     title
     content
+    date
+  }
+  fragment abstractEntityRevision on AbstractEntityRevision {
+    ...abstractRevision
+
+    metaTitle
+    metaDescription
+
+    url
   }
 `
 
@@ -112,31 +75,7 @@ export const sharedEventFragments = gql`
     ... on CreateEntityRevisionNotificationEvent {
       entityRevision {
         id
-        ... on AppletRevision {
-          changes
-        }
-        ... on ArticleRevision {
-          changes
-        }
-        ... on CourseRevision {
-          changes
-        }
-        ... on CoursePageRevision {
-          changes
-        }
-        ... on EventRevision {
-          changes
-        }
-        ... on ExerciseRevision {
-          changes
-        }
-        ... on ExerciseGroupRevision {
-          changes
-        }
-        ... on GroupedExerciseRevision {
-          changes
-        }
-        ... on VideoRevision {
+        ... on AbstractEntityRevision {
           changes
         }
       }
@@ -238,8 +177,8 @@ export const sharedEventFragments = gql`
     }
     ... on SetUuidStateNotificationEvent {
       object {
-        ...entityInfo
         ...withTaxonomyTerms
+        ...entityInfo
       }
       trashed
     }
@@ -271,7 +210,7 @@ export const sharedEventFragments = gql`
 `
 
 export const sharedExerciseFragments = gql`
-  fragment exercise on AbstractExercise {
+  fragment exercise on Exercise {
     id
     alias
     instance
@@ -286,56 +225,15 @@ export const sharedExerciseFragments = gql`
   }
 `
 
-// only 10 levels
 export const sharedTaxonomyParents = gql`
   fragment pathToRoot on TaxonomyTerm {
     title
     alias
     id
-    parent {
+    path {
       title
       alias
       id
-      parent {
-        title
-        alias
-        id
-        parent {
-          title
-          alias
-          id
-          parent {
-            title
-            alias
-            id
-            parent {
-              title
-              alias
-              id
-              parent {
-                title
-                alias
-                id
-                parent {
-                  title
-                  alias
-                  id
-                  parent {
-                    title
-                    alias
-                    id
-                    parent {
-                      title
-                      alias
-                      id
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
     }
   }
 `

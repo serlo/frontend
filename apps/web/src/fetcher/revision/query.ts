@@ -1,7 +1,6 @@
 import { gql } from 'graphql-request'
 
 import {
-  sharedExerciseFragments,
   sharedRevisionFragments,
   sharedTaxonomyParents,
 } from '../query-fragments'
@@ -12,6 +11,7 @@ export const revisionQuery = gql`
     uuid(id: $id) {
       ... on AbstractRevision {
         __typename
+        title
         id
         alias
         trashed
@@ -24,132 +24,53 @@ export const revisionQuery = gql`
           isActiveReviewer
         }
       }
+      ... on AbstractEntityRevision {
+        ...abstractEntityRevision
+        changes
+        repository {
+          ...taxonomyTermsV2
+          licenseId
+          trashed
+          instance
+          id
+          alias
+          currentRevision {
+            ...abstractEntityRevision
+          }
+          revisions(unrevised: false) {
+            totalCount
+            nodes {
+              id
+              title
+              trashed
+            }
+          }
+        }
+      }
 
-      ... on ArticleRevision {
-        ...articleRevision
-        changes
-        repository {
-          ...taxonomyTermsV2
-          licenseId
-          trashed
-          instance
-          id
-          alias
-          currentRevision {
-            id
-            ...articleRevision
-          }
-          revisions(unrevised: false) {
-            totalCount
-            nodes {
-              id
-              title
-              trashed
-            }
-          }
-        }
-      }
-      ... on PageRevision {
-        ...pageRevision
-        repository {
-          licenseId
-          trashed
-          instance
-          id
-          alias
-          currentRevision {
-            id
-            ...pageRevision
-          }
-          revisions(unrevised: false) {
-            nodes {
-              id
-              trashed
-            }
-          }
-        }
-      }
-      ... on AppletRevision {
-        ...appletRevision
-        changes
-        repository {
-          ...taxonomyTermsV2
-          licenseId
-          trashed
-          instance
-          id
-          alias
-          currentRevision {
-            id
-            ...appletRevision
-          }
-          revisions(unrevised: false) {
-            totalCount
-            nodes {
-              id
-              title
-              trashed
-            }
-          }
-        }
-      }
       ... on CourseRevision {
-        ...courseRevision
-        changes
         repository {
-          ...taxonomyTermsV2
-          licenseId
-          trashed
-          instance
-          id
-          alias
-          currentRevision {
+          pages(trashed: false, hasCurrentRevision: true) {
             id
-            ...courseRevision
-          }
-          revisions(unrevised: false) {
-            nodes {
-              id
-              trashed
-            }
-          }
-          pages {
             alias
-            id
             currentRevision {
-              id
-              title
-              content
+              ...abstractEntityRevision
             }
           }
         }
       }
       ... on CoursePageRevision {
-        ...coursePageRevision
-        changes
         repository {
-          licenseId
-          trashed
-          instance
-          id
-          alias
-          currentRevision {
-            id
-            ...coursePageRevision
-          }
-          revisions(unrevised: false) {
-            totalCount
-            nodes {
-              id
-              title
-              trashed
-            }
-          }
           course {
             licenseId
             ...taxonomyTermsV2
             revisions(unrevised: true) {
               totalCount
+              nodes {
+                id
+                title
+                trashed
+              }
             }
             id
             currentRevision {
@@ -166,96 +87,16 @@ export const revisionQuery = gql`
           }
         }
       }
-      ... on EventRevision {
-        ...eventRevision
-        changes
+      ... on PageRevision {
+        ...abstractRevision
         repository {
-          licenseId
-          ...taxonomyTermsV2
-          trashed
-          instance
-          id
-          alias
-          currentRevision {
-            id
-            ...eventRevision
-          }
-          revisions(unrevised: false) {
-            nodes {
-              id
-              trashed
-            }
-          }
-        }
-      }
-      ... on ExerciseRevision {
-        content
-        changes
-        repository {
-          ...taxonomyTermsV2
           licenseId
           trashed
           instance
           id
           alias
           currentRevision {
-            id
-            content
-            date
-          }
-          licenseId
-          revisions(unrevised: false) {
-            totalCount
-            nodes {
-              id
-              trashed
-            }
-          }
-        }
-      }
-      ... on ExerciseGroupRevision {
-        ...exerciseGroupRevision
-        changes
-        cohesive
-        repository {
-          licenseId
-          ...taxonomyTermsV2
-          trashed
-          instance
-          id
-          alias
-          currentRevision {
-            id
-            ...exerciseGroupRevision
-          }
-          revisions(unrevised: false) {
-            totalCount
-            nodes {
-              id
-              trashed
-            }
-          }
-          exercises {
-            ...exercise
-            revisions(unrevised: true) {
-              totalCount
-            }
-          }
-        }
-      }
-      ... on VideoRevision {
-        ...videoRevision
-        changes
-        repository {
-          ...taxonomyTermsV2
-          licenseId
-          trashed
-          instance
-          id
-          alias
-          currentRevision {
-            id
-            ...videoRevision
+            ...abstractRevision
           }
           revisions(unrevised: false) {
             totalCount
@@ -278,14 +119,6 @@ export const revisionQuery = gql`
     }
   }
 
-  fragment courseRevision on CourseRevision {
-    alias
-    content
-    title
-    metaDescription
-  }
-
   ${sharedTaxonomyParents}
-  ${sharedExerciseFragments}
   ${sharedRevisionFragments}
 `

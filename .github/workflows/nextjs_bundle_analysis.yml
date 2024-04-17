@@ -3,7 +3,7 @@
 # Info: This workflow is generated with npx -p github:hashicorp/nextjs-bundle-analysis generate
 # Line 115 was manually modified to fix find-comment
 
-name: 'Next.js Bundle Analysis'
+name: web-bundle
 
 on:
   pull_request:

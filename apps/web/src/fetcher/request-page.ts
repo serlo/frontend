@@ -43,6 +43,8 @@ export async function requestPage(
   if (!uuid) return { kind: 'not-found' }
 
   if (uuid.__typename === UuidType.Comment) return { kind: 'not-found' } // no content for comments
+  // users are not handled in uuid query any more
+  if (uuid.__typename === UuidType.User) return { kind: 'not-found' }
 
   if (
     uuid.__typename === UuidRevType.Article ||
@@ -74,18 +76,6 @@ export async function requestPage(
   const cacheKey = `/${instance}${alias}`
   const title = createTitle(uuid, instance)
   const metaImage = getMetaImage(uuid.alias)
-
-  // Special case for event history, User profiles are requested in user/request.ts
-  if (uuid.__typename === UuidType.User) {
-    return {
-      kind: 'user/events',
-      userData: {
-        id: uuid.id,
-        title: uuid.username,
-        alias: uuid.alias,
-      },
-    }
-  }
 
   if (uuid.__typename === UuidType.Course) {
     const firstPage = uuid.pages.filter(
@@ -184,6 +174,7 @@ export async function requestPage(
       entityData: {
         id: uuid.id,
         alias: uuid.alias,
+        trashed: uuid.trashed,
         typename: UuidType.ExerciseGroup,
         content: exerciseGroup,
         unrevisedRevisions: uuid.revisions?.totalCount,
@@ -203,14 +194,6 @@ export async function requestPage(
       cacheKey,
       authorization,
     }
-  }
-
-  // TODO: remove after migration, api changes and codegen
-  if (
-    uuid.__typename === 'GroupedExerciseRevision' ||
-    uuid.__typename === 'GroupedExercise'
-  ) {
-    return { kind: 'not-found' }
   }
 
   const content = (await prettifyLinksInState(

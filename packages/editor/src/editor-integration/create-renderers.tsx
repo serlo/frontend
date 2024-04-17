@@ -1,6 +1,7 @@
-import {
+import type {
   InitRenderersArgs,
   LinkRenderer,
+  PluginStaticRenderer,
 } from '@editor/plugin/helpers/editor-renderer'
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
@@ -29,10 +30,9 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { ComponentProps } from 'react'
 
-import { Lazy } from '@/components/content/lazy'
-import { Link } from '@/components/content/link'
-
-export function createRenderers(): InitRenderersArgs {
+export function createRenderers(
+  customPluginRenderers: PluginStaticRenderer[]
+): InitRenderersArgs {
   return {
     pluginRenderers: [
       // plugins
@@ -106,17 +106,20 @@ export function createRenderers(): InitRenderersArgs {
         type: TemplatePluginType.GenericContent,
         renderer: GenericContentTypeStaticRenderer,
       },
+      ...customPluginRenderers,
     ],
-    mathRenderer: (element: MathElement) =>
-      element.inline ? (
-        <StaticMath {...element} />
-      ) : (
-        <Lazy slim>
-          <StaticMath {...element} />
-        </Lazy>
-      ),
+    mathRenderer: (element: MathElement) => <StaticMath {...element} />,
     linkRenderer: ({ href, children }: ComponentProps<LinkRenderer>) => {
-      return <Link href={href}>{children}</Link>
+      return (
+        <a
+          className="serlo-link cursor-pointer"
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {children}
+        </a>
+      )
     },
   }
 }

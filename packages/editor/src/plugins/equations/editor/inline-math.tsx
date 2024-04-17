@@ -1,5 +1,5 @@
 import { PreferenceContext, setDefaultPreference } from '@editor/core/contexts'
-import { MathEditor } from '@editor/math'
+import { MathEditor } from '@editor/math/editor'
 import type { StateTypeReturnType, StringStateType } from '@editor/plugin'
 import { useContext } from 'react'
 

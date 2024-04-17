@@ -1,7 +1,7 @@
 export function scrollToPrevious(elem: HTMLElement | null) {
   if (elem === null) return
   const prev = elem.previousSibling as HTMLElement
-  if (prev) prev.scrollIntoView()
+  prev?.scrollIntoView()
 }
 
 export function scrollIfNeeded(elem: HTMLElement | null, center?: boolean) {

@@ -5,8 +5,8 @@ import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEffect, useState } from 'react'
 
 import type { InjectionProps } from '.'
-import { InjectionStaticRenderer } from './static'
 import { InjectionToolbar } from './toolbar'
+import { InjectionSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/injection-serlo-static-renderer'
 
 export function InjectionEditor(props: InjectionProps) {
   const { focused, state } = props
@@ -35,7 +35,7 @@ export function InjectionEditor(props: InjectionProps) {
             if (nextActive) setCache(state.value)
           }}
         >
-          <InjectionStaticRenderer
+          <InjectionSerloStaticRenderer
             plugin={EditorPluginType.Injection}
             state={cache}
           />

@@ -1,8 +1,8 @@
 import type {
   AnyEditorDocument,
   EditorExerciseDocument,
+  EditorExerciseGroupDocument,
   EditorRowsDocument,
-  EditorTemplateExerciseGroupDocument,
 } from '@editor/types/editor-plugins'
 import { type AuthorizationPayload } from '@serlo/authorization'
 import { type CSSProperties, type FunctionComponent } from 'react'
@@ -41,7 +41,6 @@ export interface EventHistoryProps {
     id: number
     title: string
     alias: string
-    isUser: boolean
   }
 }
 
@@ -137,7 +136,6 @@ export type RequestPageData =
   | PageNotFound
   | SingleEntityPage
   | TaxonomyPage
-  | UserEventsPage
   | Redirect
 
 export interface PageNotFound {
@@ -451,15 +449,6 @@ export interface UserPage extends EntityPageBase {
   }
 }
 
-export interface UserEventsPage {
-  kind: 'user/events'
-  userData: {
-    id: number
-    title: string
-    alias: string
-  }
-}
-
 // Shared attributes for first and second level.
 
 export interface TaxonomyTermBase {
@@ -495,10 +484,7 @@ export interface TaxonomyData extends TaxonomyTermBase {
   trashed: boolean
   taxonomyType: TaxonomyTermType
   subterms: TaxonomySubTerm[]
-  exercisesContent: (
-    | EditorExerciseDocument
-    | EditorTemplateExerciseGroupDocument
-  )[]
+  exercisesContent: (EditorExerciseDocument | EditorExerciseGroupDocument)[]
   licenseData?: LicenseData
 }
 

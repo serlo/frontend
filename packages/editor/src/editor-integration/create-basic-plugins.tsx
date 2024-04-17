@@ -31,21 +31,25 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { SupportedLanguage } from '@editor/types/language-data'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
-export function createBasicPlugins({
-  language = 'de',
-  enableTextAreaExercise = false,
-  exerciseVisibleInSuggestion,
-  allowedChildPlugins,
-  allowImageInTableCells,
-  multimediaConfig,
-}: {
-  language?: SupportedLanguage
-  allowedChildPlugins?: string[]
-  exerciseVisibleInSuggestion: boolean
-  enableTextAreaExercise?: boolean
+export interface CreateBasicPluginsProps {
+  allowedChildPlugins: string[]
   allowImageInTableCells: boolean
+  enableTextAreaExercise: boolean
+  exerciseVisibleInSuggestion: boolean
+  language: SupportedLanguage
   multimediaConfig?: MultimediaConfig
-}) {
+}
+
+export function createBasicPlugins(props: CreateBasicPluginsProps) {
+  const {
+    allowedChildPlugins,
+    allowImageInTableCells,
+    enableTextAreaExercise,
+    exerciseVisibleInSuggestion,
+    language,
+    multimediaConfig,
+  } = props
+
   const editorStrings = editorData[language].loggedInData.strings.editor
 
   return [
