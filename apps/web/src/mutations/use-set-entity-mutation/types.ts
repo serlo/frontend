@@ -1,24 +1,9 @@
-import {
-  SetAppletInput,
-  SetGenericEntityInput,
-  SetArticleInput,
-  SetCourseInput,
-  SetCoursePageInput,
-  SetEventInput,
-  SetExerciseGroupInput,
-  SetVideoInput,
-} from '@/fetcher/graphql-types/operations'
 import type {
-  AppletSerializedState,
-  ArticleSerializedState,
+  AbstractSerializedState,
   CoursePageSerializedState,
   CourseSerializedState,
-  EventSerializedState,
   PageSerializedState,
   TaxonomySerializedState,
-  TextExerciseGroupSerializedState,
-  TextExerciseSerializedState,
-  VideoSerializedState,
 } from '@/serlo-editor-integration/convert-editor-response-to-state'
 
 export interface OnSaveData {
@@ -29,25 +14,10 @@ export interface OnSaveData {
   }
 }
 
-export type SetEntityInputTypes =
-  | SetGenericEntityInput
-  | SetAppletInput
-  | SetArticleInput
-  | SetCourseInput
-  | SetCoursePageInput
-  | SetEventInput
-  | SetExerciseGroupInput
-  | SetVideoInput
-
 export type SupportedTypesSerializedState =
-  | AppletSerializedState
-  | ArticleSerializedState
+  | AbstractSerializedState
   | CourseSerializedState
   | CoursePageSerializedState
-  | EventSerializedState
-  | TextExerciseSerializedState
-  | TextExerciseGroupSerializedState
-  | VideoSerializedState
 
 export type SetEntityMutationData = SupportedTypesSerializedState & OnSaveData
 export type AddPageRevisionMutationData = PageSerializedState & {
@@ -68,7 +38,4 @@ export interface SetEntityMutationRunnerData {
   taxonomyParentId?: number
 }
 
-export type ChildFieldsData =
-  | CoursePageSerializedState
-  | TextExerciseGroupSerializedState
-  | TextExerciseSerializedState
+export type ChildFieldsData = CoursePageSerializedState

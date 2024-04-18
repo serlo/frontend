@@ -9,7 +9,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import type {
   EntityMutation,
   NotificationMutation,
-  SetCourseMutation,
+  SetAbstractEntityMutation,
   SetEntityResponse,
   ThreadMutation,
   UuidMutation,
@@ -20,7 +20,7 @@ type MutationResponse =
   | UuidMutation
   | NotificationMutation
   | EntityMutation
-  | SetCourseMutation
+  | SetAbstractEntityMutation
 
 type ApiErrorType =
   | 'UNAUTHENTICATED'
