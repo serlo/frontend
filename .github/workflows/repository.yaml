@@ -1,8 +1,7 @@
-name: Javascript
+name: repository
 on:
   push:
     branches:
-      - staging
       - production
   pull_request:
 jobs:

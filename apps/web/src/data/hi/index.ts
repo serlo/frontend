@@ -974,8 +974,6 @@ export const loggedInData = {
           removeExercise: 'Remove exercise',
           addExercise: 'Add exercise',
           kindOfExerciseGroup: 'Kind of exercise group',
-          notCohesive: 'not cohesive',
-          cohesive: 'cohesive',
           addIntermediateTask: 'Add Intermediate Task',
           removeIntermediateTask: 'Remove intermediate Task',
           intermediateTask: 'Intermediate Task'

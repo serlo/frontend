@@ -27,6 +27,9 @@ export const dataQuery = gql`
 
       ... on AbstractEntity {
         date
+        currentRevision {
+          ...abstractEntityRevision
+        }
         revisions(unrevised: true) {
           totalCount
           nodes {
@@ -39,32 +42,11 @@ export const dataQuery = gql`
 
       ... on Page {
         currentRevision {
-          ...anyRevision
-        }
-      }
-
-      ... on Article {
-        currentRevision {
-          ...articleRevision
-        }
-      }
-
-      ... on Video {
-        currentRevision {
-          ...videoRevision
-        }
-      }
-
-      ... on Applet {
-        currentRevision {
-          ...appletRevision
+          ...abstractRevision
         }
       }
 
       ... on CoursePage {
-        currentRevision {
-          ...coursePageRevision
-        }
         course {
           id
           licenseId
@@ -95,18 +77,6 @@ export const dataQuery = gql`
         ...exercise
       }
 
-      ... on ExerciseGroup {
-        currentRevision {
-          ...exerciseGroupRevision
-        }
-      }
-
-      ... on Event {
-        currentRevision {
-          ...anyRevision
-        }
-      }
-
       ... on Course {
         pages(trashed: false) {
           alias
@@ -116,11 +86,6 @@ export const dataQuery = gql`
             title
             content
           }
-        }
-        currentRevision {
-          title
-          content
-          metaDescription
         }
         ...taxonomyTermsV2
       }
@@ -155,7 +120,6 @@ export const dataQuery = gql`
                 content
                 id
                 date
-                cohesive
               }
               licenseId
             }
