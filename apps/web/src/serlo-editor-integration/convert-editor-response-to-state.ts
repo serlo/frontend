@@ -102,7 +102,7 @@ export function convertEditorResponseToState(
 
   function convertAbstractEntity(
     entityType: EntityType,
-    uuid: Extract<MainUuidType, { __typename: 'Article' }>
+    uuid: Extract<MainUuidType, { __typename: string }>
   ):
     | StaticDocument<ArticleTypePluginState>
     | StaticDocument<AppletTypePluginState>
@@ -111,14 +111,20 @@ export function convertEditorResponseToState(
     | StaticDocument<TextExerciseGroupTypePluginState>
     | StaticDocument<VideoTypePluginState> {
     stack.push({ id: uuid.id, type: entityType })
+
+    const description =
+      uuid.__typename === UuidType.Video ? getContent() : undefined
+
     return {
-      plugin: TemplatePluginType[uuid.__typename],
+      // simpler than other typehacks, not really Article
+      plugin: TemplatePluginType[uuid.__typename as 'Article'],
       state: {
         ...entityFields,
         revision,
         changes: '',
         title,
-        content: getContent(),
+        content: uuid.__typename === 'Video' && url ? url : getContent(),
+        ...(description ? { description } : {}),
         ...(url ? { url } : {}),
         ...(meta_title ? { meta_title } : {}),
         ...(meta_description ? { meta_description } : {}),
