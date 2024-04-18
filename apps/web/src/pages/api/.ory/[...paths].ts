@@ -54,7 +54,7 @@ export default async function customCreateApiHandler(
     const result = JSON.parse(body) as { identity: { id: string } }
     const userId = result?.identity?.id
 
-    console.log({ userId })
+    console.log({ result })
 
     if (userId) {
       void fetch(API_KRATOS_WEBHOOK_URL, {
