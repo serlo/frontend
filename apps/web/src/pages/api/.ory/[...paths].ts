@@ -54,7 +54,11 @@ export default async function customCreateApiHandler(
     const result = JSON.parse(body) as { identity: { id: string } }
     const userId = result?.identity?.id
 
-    console.log({ result })
+    console.log(result)
+    // @ts-expect-error debug
+    console.log(result.ui?.nodes)
+    // @ts-expect-error debug
+    console.log(result.ui?.messages)
 
     if (userId) {
       void fetch(API_KRATOS_WEBHOOK_URL, {
