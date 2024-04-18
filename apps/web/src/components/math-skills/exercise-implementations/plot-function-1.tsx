@@ -89,7 +89,7 @@ export function PlotFunction() {
             <br />
             Zeichne als Nächstes die senkrechte Asymptote mit der Gleichung:
             <br />
-            <HighlightGray>y = {-data.b}</HighlightGray>
+            <HighlightGray>x = {-data.b}</HighlightGray>
             <br />
             <br />
             Berücksichtige den Grad der Funktion und ob der Graph durch ein
@@ -106,7 +106,7 @@ export function PlotFunction() {
       renderHint={({ data }) => {
         return (
           <>
-            Eine ganzrationale Funktion hat immer die Form:
+            Diese Funktion hat die Form:
             <br />
             <HighlightGray>
               y ={' '}
@@ -160,6 +160,22 @@ function SubComponent({ data }: { data: PlotData }) {
       [0.0, 0.0],
       [1.0, 0.0],
     ])
+    x.create(
+      'line',
+      [
+        [-data.b, -6],
+        [-data.b, 6],
+      ],
+      { strokeColor: 'salmon' }
+    )
+    x.create(
+      'line',
+      [
+        [-6, data.d],
+        [6, data.d],
+      ],
+      { strokeColor: 'salmon' }
+    )
 
     x.create('text', [5.5, 0.75, `x`], {})
     x.create('text', [0.5, 5.5, `y`], {})
