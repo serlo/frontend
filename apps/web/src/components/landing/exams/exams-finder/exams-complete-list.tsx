@@ -17,61 +17,78 @@ export function ExamsCompleteList({
 
   const dataByExamType = Object.values(mathExamTaxDataStatic[region])
 
+  const examsBySchoolTypes = Object.entries(schoolTypes)
+    .flatMap(([schoolTypeKey, schoolTitle]) => {
+      const exams = dataByExamType.filter(
+        (data) => data.schoolType === schoolTypeKey
+      )
+      if (!exams?.length) return undefined
+      const flatExamTaxonomies = exams
+        .flatMap((exam) => {
+          if (exam.id) return { displayTitle: exam.displayTitle, id: exam.id }
+          return exam.options!
+        })
+        .map((examTax) => {
+          const examTaxData = examsTaxonomyData[`id${examTax.id}`]
+          if (!examTaxData || examTaxData.trashed) return
+          return {
+            alias: examTaxData.alias,
+            displayTitle: examTax.displayTitle,
+            children: examTaxData.children.nodes,
+          }
+        })
+
+      return {
+        title: schoolTitle,
+        exams: flatExamTaxonomies,
+      }
+    })
+    .filter(Boolean)
+
   return (
     <div className="px-side">
       <h2 className="mb-6 text-left text-2xl font-extrabold sm:text-center">
         Alle Mathe-Abschlussprüfungen für {deRegions[region].title}
       </h2>
       <div className="max-w-6xl text-left sm:mx-auto sm:flex sm:flex-wrap">
-        {Object.entries(schoolTypes).map(([schoolTypeKey, schoolTitle]) => {
-          const exams = dataByExamType.filter(
-            (data) => data.schoolType === schoolTypeKey
-          )
-          if (!exams?.length) return
+        {Object.entries(examsBySchoolTypes).map(
+          ([schoolTypeKey, schoolData]) => {
+            if (!schoolData) return null
 
-          const flatExamTaxonomies = exams.flatMap((exam) => {
-            if (exam.id) return { displayTitle: exam.displayTitle, id: exam.id }
-            return exam.options!
-          })
-
-          return (
-            <div
-              key={schoolTypeKey}
-              className={cn(
-                'mt-6 min-w-[10rem] text-lg sm:mx-4 sm:min-w-[14rem] sm:max-w-[16rem]',
-                flatExamTaxonomies.length === 1 && ' !text-center sm:!mx-auto'
-              )}
-            >
-              <h2 className="mb-2 font-bold">{schoolTitle}</h2>
-              {flatExamTaxonomies.map((examTax) => {
-                const examTaxData = examsTaxonomyData[`id${examTax.id}`]
-                if (!examTaxData || examTaxData.trashed) return
-                return (
-                  <p key={examTax.id} className="mb-3">
-                    <b>
-                      <Link href={examTaxData.alias}>
-                        {examTax.displayTitle}
-                      </Link>
-                    </b>
-                    <br />
-                    {examTaxData.children.nodes.map((year, index) => {
-                      if (year.trashed) return
-                      const title = year.title.replace(/[^0-9.]/g, '')
-                      return (
-                        <Fragment key={year.alias}>
-                          <Link href={year.alias}>{title}</Link>
-                          {index === examTaxData.children.nodes.length - 1
-                            ? ''
-                            : ', '}
-                        </Fragment>
-                      )
-                    })}
-                  </p>
-                )
-              })}
-            </div>
-          )
-        })}
+            return (
+              <div
+                key={schoolTypeKey}
+                className={cn(
+                  'mt-6 min-w-[10rem] text-lg sm:mx-4 sm:min-w-[14rem] sm:max-w-[16rem]',
+                  examsBySchoolTypes.length === 1 && ' !text-center sm:!mx-auto'
+                )}
+              >
+                <h2 className="mb-2 font-bold">{schoolData.title}</h2>
+                {schoolData.exams.map((examTax) => {
+                  if (!examTax) return
+                  return (
+                    <p key={examTax.alias} className="mb-3">
+                      <b>
+                        <Link href={examTax.alias}>{examTax.displayTitle}</Link>
+                      </b>
+                      <br />
+                      {examTax.children.map((year, index) => {
+                        if (year.trashed) return
+                        const title = year.title.replace(/[^0-9.]/g, '')
+                        return (
+                          <Fragment key={year.alias}>
+                            <Link href={year.alias}>{title}</Link>
+                            {index === examTax.children.length - 1 ? '' : ', '}
+                          </Fragment>
+                        )
+                      })}
+                    </p>
+                  )
+                })}
+              </div>
+            )
+          }
+        )}
       </div>
 
       <h2 className="mt-12 pb-12 text-2xl font-extrabold leading-10">
