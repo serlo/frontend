@@ -1,42 +1,64 @@
 import { Fragment } from 'react'
 
-import {
-  SupportedRegion,
-  regions,
-  schoolTypesWithExamsByRegion,
-} from './exams-data'
 import { Link } from '@/components/content/link'
+import {
+  deRegions,
+  mathExamTaxDataStatic,
+  schoolTypes,
+} from '@/data/de/math-exams-data'
+import { type ExamsLandingData } from '@/pages/mathe-pruefungen/[region]'
 
-export function ExamsCompleteList({ region }: { region: SupportedRegion }) {
-  const schoolTypesWithData = Object.entries(
-    schoolTypesWithExamsByRegion[region]
-  )
+export function ExamsCompleteList({
+  region,
+  examsTaxonomyData,
+}: ExamsLandingData) {
+  if (!examsTaxonomyData) return
+
+  const dataByExamType = Object.values(mathExamTaxDataStatic[region])
 
   return (
     <div className="px-side">
       <h2 className="mb-6 text-left text-2xl font-extrabold sm:text-center">
-        Alle Mathe-Abschlussprüfungen für {regions[region].title}
+        Alle Mathe-Abschlussprüfungen für {deRegions[region].title}
       </h2>
       <div className="max-w-6xl text-left sm:mx-auto sm:flex sm:flex-wrap">
-        {schoolTypesWithData.map(([schoolTypeKey, { title, exams }]) => {
+        {Object.entries(schoolTypes).map(([schoolTypeKey, schoolTitle]) => {
+          const exams = dataByExamType.filter(
+            (data) => data.schoolType === schoolTypeKey
+          )
+          if (!exams?.length) return
+
+          const flatExamTaxonomies = exams.flatMap((exam) => {
+            if (exam.id) return { displayTitle: exam.displayTitle, id: exam.id }
+            return exam.options!
+          })
+
           return (
             <div
               key={schoolTypeKey}
               className="mt-6 min-w-[10rem] text-lg sm:mx-4 sm:min-w-[14rem] sm:max-w-[16rem]"
             >
-              <h2 className="mb-2 font-bold">{title}</h2>
-              {exams.map((exam) => {
+              <h2 className="mb-2 font-bold">{schoolTitle}</h2>
+              {flatExamTaxonomies.map((examTax) => {
+                const examTaxData = examsTaxonomyData[`id${examTax.id}`]
+                if (!examTaxData || examTaxData.trashed) return
                 return (
-                  <p key={exam.url} className="mb-3">
+                  <p key={examTax.id} className="mb-3">
                     <b>
-                      <Link href={exam.url}>{exam.title}</Link>
+                      <Link href={examTaxData.alias}>
+                        {examTax.displayTitle}
+                      </Link>
                     </b>
                     <br />
-                    {exam.years.map((year, index) => {
+                    {examTaxData.children.nodes.map((year, index) => {
+                      if (year.trashed) return
+                      const title = year.title.replace(/[^0-9.]/g, '')
                       return (
-                        <Fragment key={year.url}>
-                          <Link href={year.url}>{year.title}</Link>
-                          {index === exam.years.length - 1 ? '' : ', '}
+                        <Fragment key={year.alias}>
+                          <Link href={year.alias}>{title}</Link>
+                          {index === examTaxData.children.nodes.length - 1
+                            ? ''
+                            : ', '}
                         </Fragment>
                       )
                     })}

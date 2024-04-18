@@ -1,33 +1,49 @@
+import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
 
+import { endpoint } from '@/api/endpoint'
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import { MathExamsLanding } from '@/components/pages/math-exams-landing'
 import {
   SupportedRegion,
-  regions,
-} from '@/components/landing/exams/exams-finder/exams-data'
-import { MathExamsLanding } from '@/components/pages/math-exams-landing'
+  deRegions,
+  mathExamsTaxIds,
+} from '@/data/de/math-exams-data'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-export const supportedRegions = Object.keys(regions)
-export interface RegionData {
+export const supportedRegions = Object.keys(deRegions)
+export interface ExamsLandingData {
   region: SupportedRegion
+  examsTaxonomyData: ExamsTaxonomyData
 }
 
-export default renderedPageNoHooks<RegionData>(({ region }) => {
-  return (
-    <FrontendClientBase noContainers noHeaderFooter>
-      <MathExamsLanding region={region} />
-    </FrontendClientBase>
-  )
-})
+export default renderedPageNoHooks<ExamsLandingData>(
+  ({ region, examsTaxonomyData }) => {
+    return (
+      <FrontendClientBase noContainers noHeaderFooter>
+        <MathExamsLanding
+          region={region}
+          examsTaxonomyData={examsTaxonomyData}
+        />
+      </FrontendClientBase>
+    )
+  }
+)
 
-export const getStaticProps: GetStaticProps<RegionData> = async (context) => {
+export const getStaticProps: GetStaticProps<ExamsLandingData> = async (
+  context
+) => {
   if (context.locale !== 'de') return { notFound: true }
+
+  const examsTaxonomyData = await request<ExamsTaxonomyData>(
+    endpoint,
+    buildExamsTaxonomyQuery(mathExamsTaxIds)
+  )
 
   const region = context.params?.region as SupportedRegion
   if (!supportedRegions.includes(region)) return { notFound: true }
 
-  return { props: { region } }
+  return { props: { region, examsTaxonomyData } }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -35,4 +51,46 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths: supportedRegions.map((region) => ({ params: { region } })),
     fallback: 'blocking',
   }
+}
+
+export interface ExamsTaxonomyData {
+  // key in this form `id${uuid}`
+  [key: string]: {
+    alias: string
+    trashed: boolean
+    children: {
+      nodes: {
+        alias: string
+        title: string
+        trashed: boolean
+      }[]
+    }
+  }
+}
+
+function buildExamsTaxonomyQuery(ids: number[]) {
+  return gql`
+    query examsTaxonomyQuery {
+      ${ids.map(
+        (id) => gql`
+          id${id}: uuid(id: ${id}) {
+            ... on TaxonomyTerm {
+              ... examsTaxonomyData
+            }
+      }`
+      )}
+    }
+
+    fragment examsTaxonomyData on TaxonomyTerm {
+      alias
+      trashed
+      children {
+        nodes {
+          alias
+          title
+          trashed
+        }
+      }
+    }
+  `
 }

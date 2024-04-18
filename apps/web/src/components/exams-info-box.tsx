@@ -5,7 +5,7 @@ import Head from 'next/head'
 
 import { Link } from './content/link'
 import { FaIcon } from './fa-icon'
-import { extraMetaTags, mathExamTaxBY } from '@/data/de/math-exams-taxonomies'
+import { extraMetaTags, mathExamTaxBY } from '@/data/de/math-exams-data'
 import { cn } from '@/helper/cn'
 
 export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
