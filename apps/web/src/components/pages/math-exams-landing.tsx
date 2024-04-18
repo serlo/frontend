@@ -10,7 +10,7 @@ import { FooterNew } from '../landing/rework/footer-new'
 import { SubjectIcon } from '../landing/rework/subject-icon'
 import { Header } from '../navigation/header/header'
 import { useInstanceData } from '@/contexts/instance-context'
-import { SupportedRegion, deRegions } from '@/data/de/math-exams-data'
+import { type SupportedRegion, deRegions } from '@/data/de/math-exams-data'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { cn } from '@/helper/cn'
@@ -26,6 +26,8 @@ export function MathExamsLanding({
   const [region, setRegion] = useState<SupportedRegion>(initRegion ?? 'bayern')
   const { lang } = useInstanceData()
   if (lang !== Instance.De) return null
+
+  const regionTitle = region === 'nrw' ? 'NRW' : deRegions[region].title
 
   return (
     <>
@@ -51,9 +53,7 @@ export function MathExamsLanding({
               <span className="inline-block max-w-[27rem] !whitespace-normal pb-3">
                 Mathe Prüfungen
                 <br />
-                <span className="serlo-underlined">
-                  {deRegions[region].title}
-                </span>
+                <span className="serlo-underlined">{regionTitle}</span>
               </span>
             </h1>
             <p className="text-2xl leading-cozy text-almost-black">

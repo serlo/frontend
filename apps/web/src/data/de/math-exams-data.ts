@@ -3,9 +3,21 @@ export const deRegions = {
     title: 'Bayern',
     code: 'BY',
   },
+  berlin: {
+    title: 'Berlin',
+    code: 'BE',
+  },
+  brandenburg: {
+    title: 'Brandenburg',
+    code: 'BB',
+  },
   niedersachsen: {
     title: 'Niedersachsen',
     code: 'NI',
+  },
+  nrw: {
+    title: 'Nordrhein-Westfalen',
+    code: 'NW',
   },
 } as const
 export type SupportedRegion = keyof typeof deRegions
@@ -17,6 +29,7 @@ export const schoolTypes = {
   gymnasium: 'Gymnasium',
   'fos-bos': 'FOS & BOS',
   gesamtschule: 'Gesamtschule',
+  alle: 'Alle Schultypen',
 } as const
 export type SchoolType = keyof typeof schoolTypes
 
@@ -102,9 +115,37 @@ export const examsFoldersNI: ExamsFolders = {
     schoolType: 'gymnasium',
   },
 }
+
+export const examsFoldersNW: ExamsFolders = {
+  'zentrale-pruefung': {
+    id: 305760,
+    displayTitle: 'Zentrale Prüfungen',
+    schoolType: 'alle',
+  },
+}
+
+export const examsFoldersBE: ExamsFolders = {
+  msa: {
+    id: 305819,
+    displayTitle: 'Mittlere Schulabschluss (MSA)',
+    schoolType: 'alle',
+  },
+}
+
+export const examsFoldersBB: ExamsFolders = {
+  msa: {
+    id: 305843,
+    displayTitle: 'Mittlere Schulabschluss (MSA)',
+    schoolType: 'alle',
+  },
+}
+
 export const mathExamTaxDataStatic: Record<SupportedRegion, ExamsFolders> = {
   bayern: examsFoldersBY,
+  berlin: examsFoldersBE,
+  brandenburg: examsFoldersBB,
   niedersachsen: examsFoldersNI,
+  nrw: examsFoldersNW,
 }
 
 function extractIds(folders: ExamsFolders) {
@@ -113,19 +154,18 @@ function extractIds(folders: ExamsFolders) {
   })
 }
 
-export const mathExamTaxNI = extractIds(examsFoldersNI)
-export const mathExamTaxBY = extractIds(examsFoldersBY)
-
 // "de" folder ids that include final math exams
-export const mathExamsTaxIds = [...mathExamTaxNI, ...mathExamTaxBY]
-
-export const schoolTypesWithExamsByRegion: Record<
-  SupportedRegion,
-  ExamsFolders
-> = {
-  bayern: examsFoldersBY,
-  niedersachsen: examsFoldersNI,
+export const mathExamsTaxIds: Record<SupportedRegion, number[]> = {
+  bayern: extractIds(examsFoldersBY),
+  berlin: extractIds(examsFoldersBE),
+  brandenburg: extractIds(examsFoldersBB),
+  niedersachsen: extractIds(examsFoldersNI),
+  nrw: extractIds(examsFoldersNW),
 }
+
+export const allMathExamTaxIds = Object.values(mathExamsTaxIds).flatMap(
+  (entries) => entries
+)
 
 export const schoolTaxonomies = [
   201593, 16259, 16157, 16042, 97943, 97944, 97945, 97946, 97947, 16376, 16033,
@@ -167,4 +207,26 @@ export const extraMetaTags = {
     metaDescription:
       'Deine Vorbereitung für die Mittlere Reife Zweig ii und iii: Mathe lernen mit Original Prüfungsaufgaben. Mit Serlo schaffst du das!',
   },
+  305760: {
+    title: 'Mathe Zentrale Prüfungen | NRW',
+    metaDescription:
+      'Deine Vorbereitung für die Zentrale Prüfungen in Nordrhein-Westfalen: Mathe lernen mit Original Prüfungsaufgaben und Lösungen. Mit Serlo schaffst du das!',
+  },
 } as const
+
+// TODO: add meta tags for NRW, BE and BB
+
+export interface ExamsTaxonomyData {
+  // key in this form `id${uuid}`
+  [key: string]: {
+    alias: string
+    trashed: boolean
+    children: {
+      nodes: {
+        alias: string
+        title: string
+        trashed: boolean
+      }[]
+    }
+  }
+}

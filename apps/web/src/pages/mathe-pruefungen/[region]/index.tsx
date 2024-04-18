@@ -5,9 +5,10 @@ import { endpoint } from '@/api/endpoint'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { MathExamsLanding } from '@/components/pages/math-exams-landing'
 import {
-  SupportedRegion,
+  type SupportedRegion,
   deRegions,
-  mathExamsTaxIds,
+  allMathExamTaxIds,
+  ExamsTaxonomyData,
 } from '@/data/de/math-exams-data'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
@@ -37,7 +38,7 @@ export const getStaticProps: GetStaticProps<ExamsLandingData> = async (
 
   const examsTaxonomyData = await request<ExamsTaxonomyData>(
     endpoint,
-    buildExamsTaxonomyQuery(mathExamsTaxIds)
+    buildExamsTaxonomyQuery(allMathExamTaxIds)
   )
 
   const region = context.params?.region as SupportedRegion
@@ -50,21 +51,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: supportedRegions.map((region) => ({ params: { region } })),
     fallback: 'blocking',
-  }
-}
-
-export interface ExamsTaxonomyData {
-  // key in this form `id${uuid}`
-  [key: string]: {
-    alias: string
-    trashed: boolean
-    children: {
-      nodes: {
-        alias: string
-        title: string
-        trashed: boolean
-      }[]
-    }
   }
 }
 

@@ -6,6 +6,7 @@ import {
   mathExamTaxDataStatic,
   schoolTypes,
 } from '@/data/de/math-exams-data'
+import { cn } from '@/helper/cn'
 import { type ExamsLandingData } from '@/pages/mathe-pruefungen/[region]'
 
 export function ExamsCompleteList({
@@ -36,7 +37,10 @@ export function ExamsCompleteList({
           return (
             <div
               key={schoolTypeKey}
-              className="mt-6 min-w-[10rem] text-lg sm:mx-4 sm:min-w-[14rem] sm:max-w-[16rem]"
+              className={cn(
+                'mt-6 min-w-[10rem] text-lg sm:mx-4 sm:min-w-[14rem] sm:max-w-[16rem]',
+                flatExamTaxonomies.length === 1 && ' !text-center sm:!mx-auto'
+              )}
             >
               <h2 className="mb-2 font-bold">{schoolTitle}</h2>
               {flatExamTaxonomies.map((examTax) => {
@@ -72,18 +76,19 @@ export function ExamsCompleteList({
 
       <h2 className="mt-12 pb-12 text-2xl font-extrabold leading-10">
         Andere Bundesländer: <br />
-        {region === 'bayern' ? (
-          // using regular links to make sure region and school state resets
-          // eslint-disable-next-line @next/next/no-html-link-for-pages
-          <a className="serlo-link" href="/mathe-pruefungen/niedersachsen">
-            Abschlussprüfungen für Niedersachsen
-          </a>
-        ) : (
-          // eslint-disable-next-line @next/next/no-html-link-for-pages
-          <a className="serlo-link" href="/mathe-pruefungen/bayern">
-            Abschlussprüfungen für Bayern
-          </a>
-        )}
+        {Object.entries(deRegions).map(([regionKey, otherRegion]) => {
+          if (regionKey === region) return null
+          return (
+            <>
+              {/* // using regular links to make sure region and school state resets
+              // eslint-disable-next-line @next/next/no-html-link-for-pages */}
+              <a className="serlo-link" href={`/mathe-pruefungen/${regionKey}`}>
+                {otherRegion.title}
+              </a>
+              <br />
+            </>
+          )
+        })}
       </h2>
     </div>
   )

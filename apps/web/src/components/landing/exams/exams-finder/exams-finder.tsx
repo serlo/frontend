@@ -5,15 +5,15 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
 import {
-  Exam,
-  SchoolType,
-  SupportedRegion,
+  type Exam,
+  type SchoolType,
+  type SupportedRegion,
   deRegions,
   regionKeys,
-  schoolTypesWithExamsByRegion,
+  mathExamTaxDataStatic,
+  ExamsTaxonomyData,
 } from '@/data/de/math-exams-data'
 import { cn } from '@/helper/cn'
-import { ExamsTaxonomyData } from '@/pages/mathe-pruefungen/[region]'
 
 interface ExamsFinderProps {
   region: SupportedRegion
@@ -46,7 +46,7 @@ export function ExamsFinder({
     )
     if (
       schoolType &&
-      !Object.hasOwn(schoolTypesWithExamsByRegion[newRegion], schoolType)
+      !Object.hasOwn(mathExamTaxDataStatic[newRegion], schoolType)
     ) {
       setSchoolType(undefined)
     }
@@ -89,7 +89,7 @@ export function ExamsFinder({
         Für welche Prüfung lernst du?
         <br />
         <div className="flex flex-wrap justify-center pt-4">
-          {Object.entries(schoolTypesWithExamsByRegion[region]).map(
+          {Object.entries(mathExamTaxDataStatic[region]).map(
             ([_schoolTypeKey, boxData]) => renderFeaturedBox(boxData)
           )}
         </div>
@@ -102,7 +102,7 @@ export function ExamsFinder({
       <p className="mt-2 text-2xl leading-cozy text-almost-black">
         <b className="inline-block text-base">Schulart:</b>
 
-        {Object.entries(schoolTypesWithExamsByRegion[region]).map(
+        {Object.entries(mathExamTaxDataStatic[region]).map(
           ([schoolTypeKey, { displayTitle }]) => {
             return (
               <button

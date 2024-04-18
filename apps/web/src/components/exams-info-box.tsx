@@ -5,11 +5,18 @@ import Head from 'next/head'
 
 import { Link } from './content/link'
 import { FaIcon } from './fa-icon'
-import { extraMetaTags, mathExamTaxBY } from '@/data/de/math-exams-data'
+import {
+  SupportedRegion,
+  deRegions,
+  extraMetaTags,
+  mathExamsTaxIds,
+} from '@/data/de/math-exams-data'
 import { cn } from '@/helper/cn'
 
 export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
-  const isInBYTax = mathExamTaxBY.includes(examsFolderId)
+  const region = Object.entries(mathExamsTaxIds).find(([_, ids]) => {
+    return ids.includes(examsFolderId)
+  })?.[0] as SupportedRegion
 
   const extraMeta = Object.hasOwn(extraMetaTags, examsFolderId)
     ? extraMetaTags[examsFolderId as keyof typeof extraMetaTags]
@@ -33,10 +40,7 @@ export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
             <div className="">
               <p className="serlo-p mb-0 max-w-lg font-normal leading-normal">
                 🎓 Prüfungsbereich für{' '}
-                <b className="inline-block">
-                  {isInBYTax ? 'Bayern' : 'Niedersachsen'}
-                </b>{' '}
-                <br />
+                <b className="inline-block">{deRegions[region].title}</b> <br />
                 <br />
               </p>
               <div className="sm:flex xl:block">
@@ -91,7 +95,7 @@ export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
                 </p>
               </div>
             </div>
-            {!isInBYTax ? ( // only for niedersachsen
+            {region === 'niedersachsen' ? ( // only for niedersachsen
               <div className="serlo-p mb-1 border-t pt-2 text-sm font-normal xl:mt-10">
                 Wichtig: Für die Aufgaben hier gelten{' '}
                 <Link href="/license/detail/26">andere Nutzungbedingungen</Link>
