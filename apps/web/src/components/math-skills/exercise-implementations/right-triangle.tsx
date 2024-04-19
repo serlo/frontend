@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
+import { buildFrac, buildSqrt } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -15,6 +16,8 @@ interface DATA {
   given_2_value: number
   goal_value: number
   g_alpha_rad: number
+  func?: string
+  inv?: boolean
   mode: 'pythagoras' | 'trig' | 'trig_inv'
 }
 
@@ -31,7 +34,7 @@ export function RightTriangle() {
         const mode = randomItemFromArray(['pythagoras', 'trig', 'trig_inv'])
         if (mode === 'pythagoras' || mode === 'trig_inv') {
           const goal_element = randomItemFromArray(['a', 'b', 'c'])
-          const [given_1_element, given_2_element] = ['a', 'b', 'c'].filter(
+          let [given_1_element, given_2_element] = ['a', 'b', 'c'].filter(
             (x) => x !== goal_element
           )
           const given_1_value = randomIntBetween(25, 65) / 10
@@ -70,6 +73,11 @@ export function RightTriangle() {
           } else {
             const goal = randomItemFromArray(['α', 'β'])
             const alpha = (g_alpha_rad / Math.PI) * 180
+            if (goal_element === 'c' && goal === 'β') {
+              const t = given_1_element
+              given_1_element = given_2_element
+              given_2_element = t
+            }
             return {
               given_1_element,
               given_2_element,
@@ -79,6 +87,13 @@ export function RightTriangle() {
               goal_value: goal === 'α' ? alpha : 90 - alpha,
               g_alpha_rad,
               mode,
+              func:
+                goal_element === 'c'
+                  ? 'tan'
+                  : (goal_element === 'a' && goal === 'α') ||
+                      (goal_element === 'b' && goal === 'β')
+                    ? 'cos'
+                    : 'sin',
             } as DATA
           }
         }
@@ -100,26 +115,37 @@ export function RightTriangle() {
           gegenkathete = 'b'
           ankathete = 'a'
         }
+        let func = ''
+        let inv = false
 
         if (given_2_element === ankathete && goal_element === gegenkathete) {
           goal_value = given_2_value * Math.tan((given_1_value / 180) * Math.PI)
+          func = 'tan'
         }
         if (given_2_element === gegenkathete && goal_element === ankathete) {
           goal_value = given_2_value / Math.tan((given_1_value / 180) * Math.PI)
+          func = 'tan'
+          inv = true
         }
 
         if (given_2_element === 'c' && goal_element === gegenkathete) {
           goal_value = given_2_value * Math.sin((given_1_value / 180) * Math.PI)
+          func = 'sin'
         }
         if (given_2_element === gegenkathete && goal_element === 'c') {
           goal_value = given_2_value / Math.sin((given_1_value / 180) * Math.PI)
+          func = 'sin'
+          inv = true
         }
 
         if (given_2_element === 'c' && goal_element === ankathete) {
-          goal_value = given_2_value * Math.sin((given_1_value / 180) * Math.PI)
+          goal_value = given_2_value * Math.cos((given_1_value / 180) * Math.PI)
+          func = 'cos'
         }
         if (given_2_element === ankathete && goal_element === 'c') {
-          goal_value = given_2_value / Math.sin((given_1_value / 180) * Math.PI)
+          goal_value = given_2_value / Math.cos((given_1_value / 180) * Math.PI)
+          func = 'cos'
+          inv = true
         }
 
         return {
@@ -134,6 +160,8 @@ export function RightTriangle() {
             Math.PI,
           goal_value,
           mode,
+          func,
+          inv,
         } as DATA
       }}
       renderTask={(data) => (
@@ -155,7 +183,123 @@ export function RightTriangle() {
           <SubComponent data={data} />
         </>
       )}
-      renderSolution={() => <></>}
+      renderSolution={(data) => {
+        if (data.mode === 'pythagoras') {
+          return (
+            <>
+              <p>Nutze den Satz des Pythagoras:</p>
+              <p className="serlo-highlight-gray">
+                {data.goal_element}² ={' '}
+                {data.goal_element === 'c' ? (
+                  <>a² + b²</>
+                ) : (
+                  <>c² - {data.given_1_element}²</>
+                )}
+                <br />
+                <br />
+                {data.goal_element} ={' '}
+                {buildSqrt(
+                  data.goal_element === 'c' ? (
+                    <>
+                      {' '}
+                      {data.given_1_value.toLocaleString('de-De')}² +{' '}
+                      {data.given_2_value.toLocaleString('de-De')}²
+                    </>
+                  ) : (
+                    <>
+                      {' '}
+                      {data.given_2_value.toLocaleString('de-De')}² -{' '}
+                      {data.given_1_value.toLocaleString('de-De')}²
+                    </>
+                  )
+                )}
+              </p>
+              <p>Berechne das Ergebnis:</p>
+              <p className="serlo-highlight-green">
+                {data.goal_element} ={' '}
+                {(Math.round(data.goal_value * 10) / 10).toLocaleString(
+                  'de-De'
+                )}{' '}
+                cm
+              </p>
+            </>
+          )
+        }
+        if (data.mode === 'trig') {
+          return (
+            <>
+              <p>Stelle eine Gleichung auf:</p>
+              <p className="serlo-highlight-gray">
+                {data.func} {data.given_1_element} ={' '}
+                {data.inv
+                  ? buildFrac(data.given_2_element, data.goal_element)
+                  : buildFrac(data.goal_element, data.given_2_element)}
+              </p>
+              <p>Setze die gegebenen Größen ein:</p>
+              <p className="serlo-highlight-gray">
+                {data.func} {data.given_1_value}° ={' '}
+                {data.inv
+                  ? buildFrac(
+                      data.given_2_value.toLocaleString('de-De'),
+                      data.goal_element
+                    )
+                  : buildFrac(
+                      data.goal_element,
+                      data.given_2_value.toLocaleString('de-De')
+                    )}
+              </p>
+              <p>Stelle die Gleichung um:</p>
+              <p className="serlo-highlight-gray">
+                {data.goal_element} ={' '}
+                {data.inv ? (
+                  buildFrac(
+                    data.given_2_value.toLocaleString('de-De'),
+                    <>
+                      {data.func} {data.given_1_value}°
+                    </>
+                  )
+                ) : (
+                  <>
+                    {data.func} {data.given_1_value}° ·{' '}
+                    {data.given_2_value.toLocaleString('de-De')}
+                  </>
+                )}
+              </p>
+              <p>Berechne das Ergebnis:</p>
+              <p className="serlo-highlight-green">
+                {data.goal_element} ={' '}
+                {(Math.round(data.goal_value * 10) / 10).toLocaleString(
+                  'de-De'
+                )}{' '}
+                cm
+              </p>
+            </>
+          )
+        }
+        return (
+          <>
+            <p>Stelle eine passende Gleichung auf:</p>
+            <p className="serlo-highlight-gray">
+              {data.func} {data.goal_element} ={' '}
+              {buildFrac(data.given_1_element, data.given_2_element)}
+            </p>
+            <p>Setze die Werte ein:</p>
+            <p className="serlo-highlight-gray">
+              {data.goal_element} = {data.func}
+              <sup>-1</sup>{' '}
+              {buildFrac(
+                data.given_1_value.toLocaleString('de-De'),
+                data.given_2_value.toLocaleString('de-De')
+              )}
+            </p>
+            <p>Berechne das Ergebnis:</p>
+            <p className="serlo-highlight-green">
+              {data.goal_element} ={' '}
+              {(Math.round(data.goal_value * 10) / 10).toLocaleString('de-De')}°
+            </p>
+          </>
+        )
+      }}
     />
   )
 }
