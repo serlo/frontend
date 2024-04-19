@@ -29,6 +29,7 @@ export const schoolTypes = {
   gymnasium: 'Gymnasium',
   'fos-bos': 'FOS & BOS',
   gesamtschule: 'Gesamtschule',
+  oberschule: 'Oberschule',
   alle: 'Alle Schultypen',
 } as const
 export type SchoolType = keyof typeof schoolTypes
@@ -119,7 +120,7 @@ export const examsFoldersNI: ExamsFolders = {
 export const examsFoldersNW: ExamsFolders = {
   'zentrale-pruefung': {
     id: 305760,
-    displayTitle: 'Zentrale Prüfungen',
+    displayTitle: 'Zentrale Prüfungen (ZAP)',
     schoolType: 'alle',
   },
 }
@@ -130,13 +131,23 @@ export const examsFoldersBE: ExamsFolders = {
     displayTitle: 'Mittlere Schulabschluss (MSA)',
     schoolType: 'alle',
   },
+  ebbr: {
+    id: 305819,
+    displayTitle: 'Erweiterte Berufsbildungsreife (eBBR)',
+    schoolType: 'alle',
+  },
 }
 
 export const examsFoldersBB: ExamsFolders = {
-  msa: {
+  oberschule: {
     id: 305843,
-    displayTitle: 'Mittlere Schulabschluss (MSA)',
-    schoolType: 'alle',
+    displayTitle: 'EBR & FOR (Oberschule)',
+    schoolType: 'oberschule',
+  },
+  gesamtschule: {
+    id: 305843,
+    displayTitle: 'Grund- & Erweiterungskurs (Gesamtschule)',
+    schoolType: 'gesamtschule',
   },
 }
 
@@ -208,9 +219,9 @@ export const extraMetaTags = {
       'Deine Vorbereitung für die Mittlere Reife Zweig ii und iii: Mathe lernen mit Original Prüfungsaufgaben. Mit Serlo schaffst du das!',
   },
   305760: {
-    title: 'Mathe Zentrale Prüfungen | NRW',
+    title: 'Mathe Zentrale Prüfungen (ZAP) | NRW',
     metaDescription:
-      'Deine Vorbereitung für die Zentrale Prüfungen in Nordrhein-Westfalen: Mathe lernen mit Original Prüfungsaufgaben und Lösungen. Mit Serlo schaffst du das!',
+      'Deine Vorbereitung für die Zentrale Prüfungen (ZAP) in Nordrhein-Westfalen: Mathe lernen mit Original Prüfungsaufgaben und Lösungen. Mit Serlo schaffst du das!',
   },
 } as const
 
