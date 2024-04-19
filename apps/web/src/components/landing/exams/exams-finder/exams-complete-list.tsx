@@ -66,6 +66,9 @@ export function ExamsCompleteList({
                 <h2 className="mb-2 font-bold">{schoolData.title}</h2>
                 {schoolData.exams.map((examTax) => {
                   if (!examTax) return
+                  const children = examTax.children.filter(
+                    (year) => !year.trashed
+                  )
                   return (
                     <p
                       key={examTax.alias + examTax.displayTitle}
@@ -75,13 +78,14 @@ export function ExamsCompleteList({
                         <Link href={examTax.alias}>{examTax.displayTitle}</Link>
                       </b>
                       <br />
-                      {examTax.children.map((year, index) => {
-                        if (year.trashed) return
-                        const title = year.title.replace(/[^0-9.]/g, '')
+                      {children.map((year, index) => {
+                        const yearTitle = year.title.replace(/[^0-9.]/g, '')
+                        const title = yearTitle ? yearTitle : year.title
+
                         return (
                           <Fragment key={year.alias + year.title}>
                             <Link href={year.alias}>{title}</Link>
-                            {index === examTax.children.length - 1 ? '' : ', '}
+                            {index === children.length - 1 ? '' : ', '}
                           </Fragment>
                         )
                       })}
