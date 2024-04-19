@@ -1,9 +1,6 @@
 import { Instance } from './graphql-types/operations'
 import { MainUuidType } from './query-types'
-import {
-  mathExamsTaxonomies,
-  schoolTaxonomies,
-} from '@/data/de/math-exams-taxonomies'
+import { allMathExamTaxIds, schoolTaxonomies } from '@/data/de/math-exams-data'
 import { BreadcrumbsData, UuidType } from '@/data-types'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 
@@ -118,7 +115,7 @@ function compat(breadcrumbs?: BreadcrumbsData) {
 
   // identify final exam taxonomies or their children
   const isOrInExamsFolder = !!breadcrumbs.find(
-    ({ id }) => id && mathExamsTaxonomies.includes(id)
+    ({ id }) => id && allMathExamTaxIds.includes(id)
   )
 
   // compat: remove empty entries

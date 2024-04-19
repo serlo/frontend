@@ -18,7 +18,7 @@ import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useAB } from '@/contexts/ab'
 import { useInstanceData } from '@/contexts/instance-context'
-import { mathExamsTaxonomies } from '@/data/de/math-exams-taxonomies'
+import { allMathExamTaxIds } from '@/data/de/math-exams-data'
 import {
   BreadcrumbsData,
   TaxonomyData,
@@ -60,7 +60,7 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
   // identify final exam taxonomies or their children
   const examsFolderId = breadcrumbs
     ? [...breadcrumbs, data]?.find(
-        ({ id }) => id && mathExamsTaxonomies.includes(id)
+        ({ id }) => id && allMathExamTaxIds.includes(id)
       )?.id
     : undefined
 
