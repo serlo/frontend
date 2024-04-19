@@ -41,7 +41,7 @@ export default async function customCreateApiHandler(
   // unfortunately the kratos webhook ist not reliable atm.
   // this is not used for the SSO flow (that still uses the kratos webhook)
   if (
-    req.method === 'POST' &&
+    req.method === 'GET' &&
     req.url?.startsWith('/api/.ory/self-service/verification') &&
     process.env.API_KRATOS_SECRET
   ) {
