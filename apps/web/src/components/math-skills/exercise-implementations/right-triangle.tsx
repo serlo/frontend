@@ -149,7 +149,7 @@ export function RightTriangle() {
           </p>
           <p className="serlo-main-task">
             Berechnen Sie die Größe{' '}
-            <strong style={{ color: 'violet' }}>{data.goal_element}</strong>.
+            <strong className="text-newgreen">{data.goal_element}</strong>.
             Runden Sie auf eine Stelle nach dem Komma.
           </p>
           <SubComponent data={data} />
@@ -200,12 +200,14 @@ function SubComponent({ data }: { data: DATA }) {
       label: { autoPosition: true },
     })
 
+    const newgreen = 'rgb(47 206 177)'
+
     b.create('segment', [pointA, pointB], {
       name: 'c',
       withLabel: shouldShow('c'),
       label: {
         autoPosition: true,
-        color: data.goal_element === 'c' ? 'violet' : 'black',
+        color: data.goal_element === 'c' ? newgreen : 'black',
       },
     })
     b.create('segment', [pointA, pointC], {
@@ -213,7 +215,7 @@ function SubComponent({ data }: { data: DATA }) {
       withLabel: shouldShow('b'),
       label: {
         autoPosition: true,
-        color: data.goal_element === 'b' ? 'violet' : 'black',
+        color: data.goal_element === 'b' ? newgreen : 'black',
       },
     })
     b.create('segment', [pointC, pointB], {
@@ -221,7 +223,7 @@ function SubComponent({ data }: { data: DATA }) {
       withLabel: shouldShow('a'),
       label: {
         autoPosition: true,
-        color: data.goal_element === 'a' ? 'violet' : 'black',
+        color: data.goal_element === 'a' ? newgreen : 'black',
       },
     })
 
@@ -231,7 +233,7 @@ function SubComponent({ data }: { data: DATA }) {
         withLabel: true,
         label: {
           autoPosition: true,
-          color: data.goal_element === 'α' ? 'violet' : 'black',
+          color: data.goal_element === 'α' ? newgreen : 'black',
         },
       })
     }
@@ -242,7 +244,7 @@ function SubComponent({ data }: { data: DATA }) {
         withLabel: true,
         label: {
           autoPosition: true,
-          color: data.goal_element === 'β' ? 'violet' : 'black',
+          color: data.goal_element === 'β' ? newgreen : 'black',
         },
       })
     }
