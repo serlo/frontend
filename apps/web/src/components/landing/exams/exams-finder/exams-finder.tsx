@@ -129,7 +129,7 @@ export function ExamsFinder({
 
     return (
       <Link
-        key={displayTitle}
+        key={displayTitle + id}
         className={cn(
           `
             group relative mx-2 mb-4 box-border flex min-h-[9rem] w-36 content-center

@@ -67,7 +67,10 @@ export function ExamsCompleteList({
                 {schoolData.exams.map((examTax) => {
                   if (!examTax) return
                   return (
-                    <p key={examTax.alias} className="mb-3">
+                    <p
+                      key={examTax.alias + examTax.displayTitle}
+                      className="mb-3"
+                    >
                       <b>
                         <Link href={examTax.alias}>{examTax.displayTitle}</Link>
                       </b>
@@ -76,7 +79,7 @@ export function ExamsCompleteList({
                         if (year.trashed) return
                         const title = year.title.replace(/[^0-9.]/g, '')
                         return (
-                          <Fragment key={year.alias}>
+                          <Fragment key={year.alias + year.title}>
                             <Link href={year.alias}>{title}</Link>
                             {index === examTax.children.length - 1 ? '' : ', '}
                           </Fragment>
