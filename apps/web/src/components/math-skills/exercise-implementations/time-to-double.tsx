@@ -3,11 +3,15 @@ import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 
 export function TimeToDouble() {
+  function gToText(g: number) {
+    return g === 2 ? 'verdoppelt' : g === 3 ? 'verdreifacht' : 'vervierfacht'
+  }
   return (
     <SelfEvaluationExercise
       generator={() => {
         const p = randomIntBetween(2, 22) / 10
-        return { p }
+        const g = randomIntBetween(2, 4)
+        return { p, g }
       }}
       renderTask={(data) => (
         <>
@@ -18,13 +22,13 @@ export function TimeToDouble() {
           <p className="serlo-main-task">
             Nehmen Sie an, dass Sie ihr Können durch tägliches Üben jeden Tag um{' '}
             {data.p.toLocaleString('de-De')}&nbsp;% verbessern. Nach wie vielen
-            Tagen haben Sie ihr Können verdoppelt?
+            Tagen haben Sie ihr Können {gToText(data.g)}?
           </p>
         </>
       )}
       renderSolution={(data) => {
         const a = 1 + data.p / 100
-        const x = Math.log(2) / Math.log(a)
+        const x = Math.log(data.g) / Math.log(a)
         return (
           <>
             <p>Berechne den Wachstumsfaktor:</p>
@@ -37,17 +41,18 @@ export function TimeToDouble() {
               auf und löse sie:
             </p>
             <p className="serlo-highlight-gray">
-              2 = {a.toLocaleString('de-De')}
+              {data.g} = {a.toLocaleString('de-De')}
               <sup>x</sup>
               <br />
-              <br />x = log <sub>{a.toLocaleString('de-De')}</sub> 2<br />
+              <br />x = log <sub>{a.toLocaleString('de-De')}</sub> {data.g}
+              <br />
               <br />x = {x.toLocaleString('de-De')}
             </p>
             <p>
               <strong>Runde auf.</strong> Antworte:
             </p>
             <p className="serlo-highlight-green">
-              Nach {Math.ceil(x)} Tagen habe ich mein Können verdoppelt.
+              Nach {Math.ceil(x)} Tagen habe ich mein Können {gToText(data.g)}.
             </p>
           </>
         )

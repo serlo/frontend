@@ -26,6 +26,7 @@ import { Parallelogram2 } from '../exercise-implementations/parallelogram-2'
 import { Parallelogram3 } from '../exercise-implementations/parallelogram-3'
 import { PlotFunction } from '../exercise-implementations/plot-function-1'
 import { PlotFunction2 } from '../exercise-implementations/plot-function-2'
+import { RightTriangle } from '../exercise-implementations/right-triangle'
 import { RootEquations } from '../exercise-implementations/root-equations'
 import { RotatePoint } from '../exercise-implementations/rotate-point'
 import { TimeToDouble } from '../exercise-implementations/time-to-double'
@@ -270,8 +271,8 @@ export const middleSchoolFinalExam = {
     track: 3,
     component: <ExponentialFunctionTime />,
   },
-  'zeit-bis-verdopplung-exponentialfunktion': {
-    title: 'Zeit bis Verdopplung',
+  'taegliche-uebung-exponentialfunktion': {
+    title: 'Tägliche Übung',
     subtitle: 'Exponentialfunktion',
     calculatorAllowed: true,
     track: 3,
@@ -301,6 +302,30 @@ export const middleSchoolFinalExam = {
     track: 1,
     difficulty: 3,
     component: <AnimalsInForest />,
+  },
+  'rechtwinkliges-dreieck': {
+    title: 'Rechtwinkliges Dreieck',
+    subtitle: 'Trigonometrie 🚧',
+    calculatorAllowed: true,
+    track: 3,
+    difficulty: 1,
+    component: <RightTriangle />,
+  },
+  'allgemeines-dreieck': {
+    title: 'Allgemeines Dreieck',
+    subtitle: 'Trigonometrie 🚧',
+    calculatorAllowed: true,
+    track: 3,
+    difficulty: 1,
+    component: <RightTriangle />,
+  },
+  'strahlensatz-2': {
+    title: 'Strahlensatz',
+    subtitle: 'Trigonometrie 🚧',
+    calculatorAllowed: true,
+    track: 3,
+    difficulty: 1,
+    component: <RightTriangle />,
   },
   'baumdiagramm-zeichnen': {
     title: 'Baumdiagramm zeichnen',
