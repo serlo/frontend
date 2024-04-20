@@ -13,11 +13,13 @@ import { FindExponentialFunction } from '../exercise-implementations/find-expone
 import { IceCreamShop } from '../exercise-implementations/ice-cream-shop'
 import { ImportantApps } from '../exercise-implementations/important-apps'
 import { IntersectingLines } from '../exercise-implementations/intersecting-lines'
+import { LawOfSinesCosines } from '../exercise-implementations/law-of-sines-cosines'
 import { LogarithmEquation } from '../exercise-implementations/logarithm-equation'
 import { LogarithmExercise1 } from '../exercise-implementations/logarithm-exercise-1'
 import { LogarithmExercise2 } from '../exercise-implementations/logarithm-exericse-2'
 import { AbbildungGraphen } from '../exercise-implementations/mapping-graphs-1'
 import { AbbildungGraphen2 } from '../exercise-implementations/mapping-graphs-2'
+import { MirrorLineThroughOrigin } from '../exercise-implementations/mirror-line-through-origin'
 import { ModellingParabola } from '../exercise-implementations/modelling-parabolax'
 import { NormalformParabola } from '../exercise-implementations/normalform-parabola'
 import { ObliqueImage } from '../exercise-implementations/oblique-image'
@@ -318,7 +320,7 @@ export const middleSchoolFinalExam = {
     calculatorAllowed: true,
     track: 3,
     difficulty: 1,
-    component: <RightTriangle />,
+    component: <LawOfSinesCosines />,
   },
   'strahlensatz-2': {
     title: 'Strahlensatz',
@@ -330,11 +332,11 @@ export const middleSchoolFinalExam = {
   },
   'ursprungsgerade-spiegeln': {
     title: 'An Ursprungsgerade spiegeln',
-    subtitle: 'Trigonometrie 🚧',
+    subtitle: 'Abbildungen 🚧',
     calculatorAllowed: true,
     track: 1,
     difficulty: 2,
-    component: <IntersectingLines />,
+    component: <MirrorLineThroughOrigin />,
   },
   'baumdiagramm-zeichnen': {
     title: 'Baumdiagramm zeichnen',
