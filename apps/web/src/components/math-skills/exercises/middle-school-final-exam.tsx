@@ -12,6 +12,7 @@ import { ExponentialEquation } from '../exercise-implementations/exponential-fun
 import { FindExponentialFunction } from '../exercise-implementations/find-exponential-function'
 import { IceCreamShop } from '../exercise-implementations/ice-cream-shop'
 import { ImportantApps } from '../exercise-implementations/important-apps'
+import { IntersectingLines } from '../exercise-implementations/intersecting-lines'
 import { LogarithmEquation } from '../exercise-implementations/logarithm-equation'
 import { LogarithmExercise1 } from '../exercise-implementations/logarithm-exercise-1'
 import { LogarithmExercise2 } from '../exercise-implementations/logarithm-exericse-2'
@@ -305,14 +306,14 @@ export const middleSchoolFinalExam = {
   },
   'rechtwinkliges-dreieck': {
     title: 'Rechtwinkliges Dreieck',
-    subtitle: 'Trigonometrie 🚧',
+    subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     track: 3,
     difficulty: 1,
     component: <RightTriangle />,
   },
-  'allgemeines-dreieck': {
-    title: 'Allgemeines Dreieck',
+  'sinus-oder-kosinussatz': {
+    title: 'Sinus- oder Kosinussatz?',
     subtitle: 'Trigonometrie 🚧',
     calculatorAllowed: true,
     track: 3,
@@ -321,11 +322,19 @@ export const middleSchoolFinalExam = {
   },
   'strahlensatz-2': {
     title: 'Strahlensatz',
-    subtitle: 'Trigonometrie 🚧',
+    subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     track: 3,
     difficulty: 1,
-    component: <RightTriangle />,
+    component: <IntersectingLines />,
+  },
+  'ursprungsgerade-spiegeln': {
+    title: 'An Ursprungsgerade spiegeln',
+    subtitle: 'Trigonometrie 🚧',
+    calculatorAllowed: true,
+    track: 1,
+    difficulty: 2,
+    component: <IntersectingLines />,
   },
   'baumdiagramm-zeichnen': {
     title: 'Baumdiagramm zeichnen',
