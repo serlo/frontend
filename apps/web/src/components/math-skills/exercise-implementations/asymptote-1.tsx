@@ -189,6 +189,22 @@ function SubComponent({ data }: { data: PlotData }) {
       [0.0, 0.0],
       [1.0, 0.0],
     ])
+    x.create(
+      'line',
+      [
+        [-6, data.d],
+        [6, data.d],
+      ],
+      { strokeColor: 'salmon' }
+    )
+    x.create(
+      'line',
+      [
+        [-data.b, -6],
+        [-data.b, 6],
+      ],
+      { strokeColor: 'salmon' }
+    )
 
     x.create('text', [5.5, 0.75, `x`], {})
     x.create('text', [0.5, 5.5, `y`], {})
