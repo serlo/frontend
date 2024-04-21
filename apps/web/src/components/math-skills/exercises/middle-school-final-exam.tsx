@@ -332,7 +332,7 @@ export const middleSchoolFinalExam = {
   },
   'ursprungsgerade-spiegeln': {
     title: 'An Ursprungsgerade spiegeln',
-    subtitle: 'Abbildungen 🚧',
+    subtitle: 'Abbildungen',
     calculatorAllowed: true,
     track: 1,
     difficulty: 2,
