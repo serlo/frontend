@@ -37,8 +37,8 @@ export function RightTriangle() {
           let [given_1_element, given_2_element] = ['a', 'b', 'c'].filter(
             (x) => x !== goal_element
           )
-          const given_1_value = randomIntBetween(25, 65) / 10
-          const given_2_value =
+          let given_1_value = randomIntBetween(25, 65) / 10
+          let given_2_value =
             randomIntBetween(
               given_2_element === 'c' ? given_1_value * 10 + 11 : 25,
               85
@@ -77,6 +77,9 @@ export function RightTriangle() {
               const t = given_1_element
               given_1_element = given_2_element
               given_2_element = t
+              const t2 = given_1_value
+              given_1_value = given_2_value
+              given_2_value = t2
             }
             return {
               given_1_element,
