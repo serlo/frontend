@@ -50,7 +50,18 @@ export function WelcomeSection() {
                 Was magst du probieren?
               </>
             )}
-            {/* Zeige, welche Mathe-Skills du drauf hast! */}
+            <br />
+            <br />
+            Erreiche uns über das{' '}
+            <a
+              href="https://forms.gle/jpXE8Ky8zR2dBYts5"
+              target="_blank"
+              className="serlo-link"
+              rel="noreferrer"
+            >
+              Kontakt-Formular
+            </a>
+            .{/* Zeige, welche Mathe-Skills du drauf hast! */}
           </p>
         ) : (
           <>
