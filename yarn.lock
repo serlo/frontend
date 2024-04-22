@@ -5087,7 +5087,7 @@ __metadata:
     nprogress: ^0.2.0
     prettier: ^3.0.3
     prettier-plugin-packagejson: ^2.4.6
-    prettier-plugin-tailwindcss: ^0.5.7
+    prettier-plugin-tailwindcss: ^0.5.14
     react: ^18.2.0
     react-dom: ^18.2.0
     uuid: ^9.0.1
@@ -5192,7 +5192,7 @@ __metadata:
     postcss-nested: ^6.0.1
     prettier: ^3.2.5
     prettier-plugin-packagejson: ^2.4.13
-    prettier-plugin-tailwindcss: ^0.5.13
+    prettier-plugin-tailwindcss: ^0.5.14
     prisma: ^5.12.1
     prop-types: ^15.8.1
     qrcode.react: ^3.1.0
@@ -5223,7 +5223,7 @@ __metadata:
     slate-react: ^0.99.0
     styled-jsx-plugin-postcss: ^4.0.1
     swr: ^2.2.5
-    tailwindcss: ^3.3.3
+    tailwindcss: ^3.4.3
     tailwindcss-animate: ^1.0.7
     timeago-react: ^3.0.6
     timeago.js: ^4.0.2
@@ -5356,7 +5356,7 @@ __metadata:
     postcss-nested: ^6.0.1
     prettier: ^3.2.5
     prettier-plugin-packagejson: ^2.4.13
-    prettier-plugin-tailwindcss: ^0.5.13
+    prettier-plugin-tailwindcss: ^0.5.14
     prisma: ^5.12.1
     prop-types: ^15.8.1
     qrcode.react: ^3.1.0
@@ -5386,7 +5386,7 @@ __metadata:
     slate-react: ^0.99.0
     styled-jsx-plugin-postcss: ^4.0.1
     swr: ^2.2.5
-    tailwindcss: ^3.4.1
+    tailwindcss: ^3.4.3
     tailwindcss-animate: ^1.0.7
     timeago-react: ^3.0.6
     timeago.js: ^4.0.2
@@ -12768,7 +12768,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jiti@npm:^1.17.1, jiti@npm:^1.18.2, jiti@npm:^1.19.1":
+"jiti@npm:^1.17.1, jiti@npm:^1.18.2, jiti@npm:^1.21.0":
   version: 1.21.0
   resolution: "jiti@npm:1.21.0"
   bin:
@@ -15535,9 +15535,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-tailwindcss@npm:^0.5.13, prettier-plugin-tailwindcss@npm:^0.5.7":
-  version: 0.5.13
-  resolution: "prettier-plugin-tailwindcss@npm:0.5.13"
+"prettier-plugin-tailwindcss@npm:^0.5.14":
+  version: 0.5.14
+  resolution: "prettier-plugin-tailwindcss@npm:0.5.14"
   peerDependencies:
     "@ianvs/prettier-plugin-sort-imports": "*"
     "@prettier/plugin-pug": "*"
@@ -15586,7 +15586,7 @@ __metadata:
       optional: true
     prettier-plugin-svelte:
       optional: true
-  checksum: f79a6353c813f871c7f5c2d7bbbe77d8e1477fc448ec20d337688659c8ffb454dda1d841b92cb809d171d6128e4dd55acfd02a945bca7d0aa3eb02411a5cd439
+  checksum: 205a774e53cdd9f8e61640ae3b778402758fad3d215fc57dd31172f12cf2b145095f5f973a431d495a6551b638bbb7e54c9f3a49848f0a0f755f5ad975b7c321
   languageName: node
   linkType: hard
 
@@ -17927,9 +17927,9 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.3.3":
-  version: 3.3.6
-  resolution: "tailwindcss@npm:3.3.6"
+"tailwindcss@npm:^3.4.3":
+  version: 3.4.3
+  resolution: "tailwindcss@npm:3.4.3"
   dependencies:
     "@alloc/quick-lru": ^5.2.0
     arg: ^5.0.2
@@ -17939,7 +17939,7 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
     fast-glob: ^3.3.0
     glob-parent: ^6.0.2
     is-glob: ^4.0.3
-    jiti: ^1.19.1
+    jiti: ^1.21.0
     lilconfig: ^2.1.0
     micromatch: ^4.0.5
     normalize-path: ^3.0.0
@@ -17956,40 +17956,7 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: 44632ac471248ecebcee1a2f15a0c3e9b8383513e71692b586aa2fe56dca12828ff70de3d340c898f27b27480e8475e5eb345fb2ebb813028bb2393578a34337
-  languageName: node
-  linkType: hard
-
-"tailwindcss@npm:^3.4.1":
-  version: 3.4.1
-  resolution: "tailwindcss@npm:3.4.1"
-  dependencies:
-    "@alloc/quick-lru": ^5.2.0
-    arg: ^5.0.2
-    chokidar: ^3.5.3
-    didyoumean: ^1.2.2
-    dlv: ^1.1.3
-    fast-glob: ^3.3.0
-    glob-parent: ^6.0.2
-    is-glob: ^4.0.3
-    jiti: ^1.19.1
-    lilconfig: ^2.1.0
-    micromatch: ^4.0.5
-    normalize-path: ^3.0.0
-    object-hash: ^3.0.0
-    picocolors: ^1.0.0
-    postcss: ^8.4.23
-    postcss-import: ^15.1.0
-    postcss-js: ^4.0.1
-    postcss-load-config: ^4.0.1
-    postcss-nested: ^6.0.1
-    postcss-selector-parser: ^6.0.11
-    resolve: ^1.22.2
-    sucrase: ^3.32.0
-  bin:
-    tailwind: lib/cli.js
-    tailwindcss: lib/cli.js
-  checksum: ef5a587dd32bb4e91e1549ead6162f85f0b78d3e6ffd8b4e8eeb15585b7b886cb3af6ae9df5092ed8ccb7e590608d1b3eec79ca08c862b07cd9ff7e72f73104b
+  checksum: 7d181a6aafb520c5760d23d0a199444a324dfa36538edd31934daa253ed9a7ac4bde18c4205aaa89c1269bc2ff11781efda04d2e27ded535a9a2547667a344b1
   languageName: node
   linkType: hard
 
