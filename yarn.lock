@@ -1609,7 +1609,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.20.13, @babel/runtime@npm:^7.22.5, @babel/runtime@npm:^7.23.2, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.20.13, @babel/runtime@npm:^7.23.2, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
   version: 7.23.5
   resolution: "@babel/runtime@npm:7.23.5"
   dependencies:
@@ -1618,7 +1618,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.24.0":
+"@babel/runtime@npm:^7.24.0, @babel/runtime@npm:^7.24.1":
   version: 7.24.4
   resolution: "@babel/runtime@npm:7.24.4"
   dependencies:
@@ -2778,21 +2778,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hello-pangea/dnd@npm:^16.3.0":
-  version: 16.3.0
-  resolution: "@hello-pangea/dnd@npm:16.3.0"
+"@hello-pangea/dnd@npm:^16.6.0":
+  version: 16.6.0
+  resolution: "@hello-pangea/dnd@npm:16.6.0"
   dependencies:
-    "@babel/runtime": ^7.22.5
+    "@babel/runtime": ^7.24.1
     css-box-model: ^1.2.1
     memoize-one: ^6.0.0
     raf-schd: ^4.0.3
-    react-redux: ^8.1.1
+    react-redux: ^8.1.3
     redux: ^4.2.1
     use-memo-one: ^1.1.3
   peerDependencies:
     react: ^16.8.5 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.5 || ^17.0.0 || ^18.0.0
-  checksum: b3f7f82740a11ae0fba7c482c542256958848a7cf27be62ff227376e498c38dae72e6b65c1c46a6b66e886ed6f57992055df0c8c0ae37684874d5d45765ab654
+  checksum: 00dcf9c2a7632e56c13e4a38c888081f65cec6bac0640b975b6cd17f2afa8995e8df02735db6f17de3a7ade3779386fc8375d7cedc884f8704e2e6c2977ebcec
   languageName: node
   linkType: hard
 
@@ -5075,7 +5075,7 @@ __metadata:
     "@graphql-codegen/introspection": 4.0.3
     "@graphql-codegen/typescript": 4.0.6
     "@graphql-codegen/typescript-operations": 4.2.0
-    "@hello-pangea/dnd": ^16.3.0
+    "@hello-pangea/dnd": ^16.6.0
     "@ory/client": ^1.9.0
     "@ory/integrations": ^1.1.5
     "@prezly/slate-lists": ^0.97.0
@@ -5236,7 +5236,7 @@ __metadata:
     "@graphql-codegen/introspection": 4.0.3
     "@graphql-codegen/typescript": 4.0.6
     "@graphql-codegen/typescript-operations": 4.2.0
-    "@hello-pangea/dnd": ^16.3.0
+    "@hello-pangea/dnd": ^16.6.0
     "@next/bundle-analyzer": ^13.5.6
     "@ory/client": ^1.9.0
     "@ory/integrations": ^1.1.5
@@ -15824,7 +15824,7 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"react-redux@npm:^8.1.1, react-redux@npm:^8.1.3":
+"react-redux@npm:^8.1.3":
   version: 8.1.3
   resolution: "react-redux@npm:8.1.3"
   dependencies:

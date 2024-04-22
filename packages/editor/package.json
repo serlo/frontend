@@ -56,7 +56,7 @@
     "@graphql-codegen/introspection": "4.0.3",
     "@graphql-codegen/typescript": "4.0.6",
     "@graphql-codegen/typescript-operations": "4.2.0",
-    "@hello-pangea/dnd": "^16.3.0",
+    "@hello-pangea/dnd": "^16.6.0",
     "@ory/client": "^1.9.0",
     "@ory/integrations": "^1.1.5",
     "@prezly/slate-lists": "^0.97.0",
