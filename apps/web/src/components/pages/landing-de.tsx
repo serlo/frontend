@@ -134,6 +134,9 @@ export function LandingDE({ data }: LandingDEProps) {
       </main>
       <FooterNew />
       <style jsx>{`
+        {/* :global(body) {
+          margin-top: 40px;
+        } */}
         /* special donation button on landing */
         :global(.navtrigger[href='/spenden']) {
           display: none;
