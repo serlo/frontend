@@ -1125,19 +1125,9 @@ export interface MediaUpload {
 
 export interface MetadataQuery {
   __typename?: 'MetadataQuery';
-  /** @deprecated Please use the `resources` field instead. This property will be deleted. */
-  entities: ResourceMetadataConnection;
   publisher: Scalars['JSONObject']['output'];
   resources: ResourceMetadataConnection;
   version: Scalars['String']['output'];
-}
-
-
-export interface MetadataQueryEntitiesArgs {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
-  modifiedAfter?: InputMaybe<Scalars['String']['input']>;
 }
 
 
