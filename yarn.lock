@@ -4844,6 +4844,7 @@ __metadata:
     "@reduxjs/toolkit": ^1.9.7
     "@serlo/authorization": ^0.57.3
     "@serlo/frontend": "workspace:*"
+    "@serlo/katex-styles": ^1.0.0
     "@serlo/typescript-config": "workspace:*"
     "@svgr/webpack": ^8.1.0
     "@tailwindcss/typography": ^0.5.10
@@ -4938,7 +4939,6 @@ __metadata:
     redux: ^4.2.1
     redux-saga: ^1.2.3
     reselect: ^4.1.8
-    serlo-katex-styles: ^1.0.0
     slate: ^0.94.1
     slate-react: ^0.99.0
     styled-jsx-plugin-postcss: ^4.0.1
@@ -5120,6 +5120,13 @@ __metadata:
     uuid: ^9.0.1
   languageName: unknown
   linkType: soft
+
+"@serlo/katex-styles@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@serlo/katex-styles@npm:1.0.0"
+  checksum: 69bfb75c1157c2f274dc22d561ac57091b63425ac09c99361afab99d1e25e63a12869ec395fbdf402446a860f011260a4ec7707e1077547ba168a4aa05a5d01e
+  languageName: node
+  linkType: hard
 
 "@serlo/monorepo@workspace:.":
   version: 0.0.0-use.local
@@ -16401,13 +16408,6 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   version: 2.0.2
   resolution: "serialize-query-params@npm:2.0.2"
   checksum: 6dccdbd68cbec44c99599c4f77968e8685a74cc597f473ed93b15a8d03c3a67f50c958af9af3d186e64aabd7f98b59d674a05aa4e69d997ed86a5478cf133b27
-  languageName: node
-  linkType: hard
-
-"serlo-katex-styles@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "serlo-katex-styles@npm:1.0.0"
-  checksum: 8c9f5483c14807ac71e577b0e8f957fd6b852e66aff5aa79fe65903e88741a2d01da09bdbc74253ee9d579aa701926ea4e7ab3e956620f99158b80f81c8a6726
   languageName: node
   linkType: hard
 
