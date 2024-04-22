@@ -8,7 +8,7 @@ interface StaticRendererProps {
 }
 
 /**
- * StaticRenderer expects a serialzied document and renders it.
+ * StaticRenderer expects a serialized document and renders it.
  * Compared to the edit mode this renderer should have a small bundle size
  */
 export function StaticRenderer({
