@@ -18,7 +18,7 @@ jobs:
       - run: yarn build:prisma
 
       - name: Build editor web component package
-        run: yarn editor-web-component:build
+        run: yarn editor:build && yarn editor-web-component:build
 
       - name: Check if current version is already published
         id: check_published
