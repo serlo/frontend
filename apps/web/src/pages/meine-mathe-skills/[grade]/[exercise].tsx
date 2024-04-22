@@ -71,26 +71,29 @@ function Content() {
     <CalculatorAllowedProvider value={calculatorAllowed}>
       <div
         className={cn(
-          'relative mx-4 mt-8 bg-white mobileExt:mx-auto sm:w-full md:mt-12',
-          track ? 'max-w-2xl' : 'max-w-lg '
+          'relative mx-4 bg-white mobileExt:mx-auto sm:w-full',
+          track ? 'max-w-2xl' : 'max-w-lg',
+          subtitle ? 'mt-3 md:mt-6' : 'mt-12 mt-8'
         )}
       >
-        {component}
+        {subtitle && (
+          <>
+            <p className="mb-8 mt-3">
+              <Link
+                href="/meine-mathe-skills#aufgaben"
+                className="text-brand hover:text-brand-700"
+              >
+                zurück
+              </Link>{' '}
+              |{' '}
+              <span className="font-bold">
+                {title} ({subtitle})
+              </span>
+            </p>
+          </>
+        )}
 
-        {subtitle ? (
-          <div className="text-md mt-9 hidden text-stone-600 sm:block">
-            <Link
-              href="/meine-mathe-skills#aufgaben"
-              className="!text-current hover:text-brand-700"
-            >
-              Übersicht
-            </Link>{' '}
-            {'>'}{' '}
-            <b>
-              {title} ({subtitle})
-            </b>
-          </div>
-        ) : null}
+        {component}
 
         {smallprint ? (
           <>
