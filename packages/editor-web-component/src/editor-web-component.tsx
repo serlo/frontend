@@ -86,7 +86,7 @@ export class EditorWebComponent extends HTMLElement {
       throw new Error('Initial state is not of type InitialState')
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    // eslint-disable-next-line no-console
     console.log('Mounting React Component with state:', initialState)
 
     if (!this.reactRoot) {

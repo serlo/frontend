@@ -38,7 +38,7 @@
     "yalc:publish": "yarn build && yalc publish --push --sig"
   },
   "dependencies": {
-    "@serlo/editor": "^0.6.0-beta.17",
+    "@serlo/editor": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
