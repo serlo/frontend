@@ -455,9 +455,15 @@ import { SelfEvaluationExercise } from './self-evaluation-exercise'
 export function RotatePoint() {
   return (
     <SelfEvaluationExercise
-      generator={() => null}
-      renderTask={() => <></>}
-      renderSolution={() => <></>}
+      generator={() => {
+        return null
+      }}
+      renderTask={() => {
+        return <></>
+      }}
+      renderSolution={() => {
+        return <></>
+      }}
     />
   )
 }
