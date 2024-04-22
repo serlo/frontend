@@ -95,14 +95,9 @@ export function Header() {
   function renderTempExamsBanner() {
     if (lang !== Instance.De) return null
     if (
-      ![
-        '/',
-        '/serlo',
-        '/search',
-        '/mathe',
-        '/community',
-        '/mitmachen',
-      ].includes(router.asPath)
+      !['/serlo', '/search', '/mathe', '/community', '/mitmachen'].includes(
+        router.asPath
+      )
     )
       return null
 
