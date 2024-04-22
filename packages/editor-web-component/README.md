@@ -13,7 +13,7 @@ import { EditorWebComponent } from '@serlo/editor-web-component'
 // in your render function
 return (
   <div id="serlo-root">
-    <editor-web-component></editor-web-component>
+    <serlo-editor></serlo-editor>
   </div>
 )
 ```
