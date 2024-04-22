@@ -38,8 +38,8 @@ Initial steps:
 
 After making some changes in the editor:
 
-1. From this workspace -> run `yarn yalc:publish` (pushes dist, updates version and cache)
+- From this workspace -> run `yarn yalc:publish` (pushes dist, updates version and cache)
 
 To remove the local link to Serlo Editor:
 
-1. From consumer repo -> run `yalc remove @serlo/editor-web-component`
+- From consumer repo -> run `yalc remove @serlo/editor-web-component`
