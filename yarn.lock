@@ -5093,7 +5093,7 @@ __metadata:
     "@types/iframe-resizer": ^3.5.13
     "@types/jest": ^29.5.12
     "@types/js-cookie": ^3.0.6
-    "@types/json-diff": ^1.0.0
+    "@types/json-diff": ^1.0.3
     "@types/katex": ^0.16.7
     "@types/node": ^20.12.7
     "@types/nprogress": ^0.2.3
@@ -5148,7 +5148,7 @@ __metadata:
     npm: ^10.5.2
     npm-run-all: ^4.1.5
     nprogress: ^0.2.0
-    postcss: ^8.4.31
+    postcss: ^8.4.38
     postcss-flexbugs-fixes: ^5.0.2
     postcss-nested: ^6.0.1
     prettier: ^3.2.5
@@ -5257,7 +5257,7 @@ __metadata:
     "@types/iframe-resizer": ^3.5.13
     "@types/jest": ^29.5.12
     "@types/js-cookie": ^3.0.6
-    "@types/json-diff": ^1.0.0
+    "@types/json-diff": ^1.0.3
     "@types/katex": ^0.16.7
     "@types/node": ^20.12.7
     "@types/nprogress": ^0.2.3
@@ -5312,7 +5312,7 @@ __metadata:
     next-query-params: ^4.3.0
     npm-run-all: ^4.1.5
     nprogress: ^0.2.0
-    postcss: ^8.4.31
+    postcss: ^8.4.38
     postcss-flexbugs-fixes: ^5.0.2
     postcss-nested: ^6.0.1
     prettier: ^3.2.5
@@ -5939,10 +5939,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/json-diff@npm:^1.0.0":
-  version: 1.0.2
-  resolution: "@types/json-diff@npm:1.0.2"
-  checksum: b1bc2188fb739c8f89b90f82593d4aa48f265a09375dc06b9f0e73cc914f273b468077e5a359b106667de44e404419d12b2fce60211c5cd2c6e4fb2e376770d9
+"@types/json-diff@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "@types/json-diff@npm:1.0.3"
+  checksum: 8690cdc8c9a7d7d4a987b15652aa0c5ff9023967d0cad34b7942fa6622e76d3c14a00b43a0b2bfeb9192ff5e924604a4784cfde922e30d7d9e2dba3f2a022048
   languageName: node
   linkType: hard
 
@@ -15237,7 +15237,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.23, postcss@npm:^8.4.31":
+"postcss@npm:^8.4.23":
   version: 8.4.32
   resolution: "postcss@npm:8.4.32"
   dependencies:
