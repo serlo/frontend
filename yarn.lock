@@ -4787,7 +4787,7 @@ __metadata:
   resolution: "@serlo/editor-web-component@workspace:packages/editor-web-component"
   dependencies:
     "@babel/core": ^7.23.0
-    "@serlo/editor": "workspace:*"
+    "@serlo/editor": ^0.6.0-beta.16
     "@serlo/typescript-config": "workspace:*"
     "@types/react": ^18.0.25
     "@types/react-dom": ^18.0.8
@@ -4817,6 +4817,16 @@ __metadata:
     vite-plugin-svgr: ^4.2.0
   languageName: unknown
   linkType: soft
+
+"@serlo/editor@npm:^0.6.0-beta.16":
+  version: 0.6.0-beta.16
+  resolution: "@serlo/editor@npm:0.6.0-beta.16"
+  dependencies:
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 7085de9bbfe220242e7a093da028b05bac7bb5700a7e489304658fa7b40e64038bf7f6bda1d95ba08af3ed91c5c766171eec229f4cf61b12fbd4f0fb1d97f13d
+  languageName: node
+  linkType: hard
 
 "@serlo/editor@workspace:*, @serlo/editor@workspace:packages/editor":
   version: 0.0.0-use.local
