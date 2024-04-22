@@ -35,6 +35,7 @@ Initial steps:
 
 1. From this workspace -> run `yarn yalc:publish`
 2. From consumer repo -> run `yalc add @serlo/editor-web-component`
+3. Go to package.json and use `"@serlo/editor": "workspace:*"` instead of a fixed version. This way, you don't need to release a new version of the editor to get changes made in the editor repo.
 
 After making some changes in the editor:
 
