@@ -1,23 +1,23 @@
 export const deRegions = {
   bayern: {
     title: 'Bayern',
-    metaDescription: 'BY',
+    code: 'BY',
   },
   berlin: {
     title: 'Berlin',
-    metaDescription: 'BE',
+    code: 'BE',
   },
   brandenburg: {
     title: 'Brandenburg',
-    metaDescription: 'BB',
+    code: 'BB',
   },
   niedersachsen: {
     title: 'Niedersachsen',
-    metaDescription: 'NI',
+    code: 'NI',
   },
   nrw: {
     title: 'Nordrhein-Westfalen',
-    metaDescription: 'NW',
+    code: 'NW',
   },
 } as const
 export type SupportedRegion = keyof typeof deRegions
