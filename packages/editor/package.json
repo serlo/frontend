@@ -171,7 +171,7 @@
     "ts-debounce": "^4.0.0",
     "ts-key-enum": "^2.0.12",
     "ts-unused-exports": "^10.0.1",
-    "typescript": "^5.4.3",
+    "typescript": "^5.4.5",
     "use-query-params": "^2.2.1",
     "uuid": "^9.0.1",
     "vite": "^5.2.8",
