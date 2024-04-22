@@ -9,7 +9,6 @@ import {
   faCaretLeft,
   faCaretRight,
 } from '@fortawesome/free-solid-svg-icons'
-import ExerciseGenerationLoadingSparkles from 'public/_assets/img/exercise/sparkles.svg'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
@@ -17,6 +16,7 @@ import {
   ExecutePromptStatus,
   useExecuteAIPrompt,
 } from './exercise-generation-wizard/execute-ai-prompt'
+import ExerciseGenerationLoadingSparkles from '@/assets-webkit/img/sparkles.svg'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
