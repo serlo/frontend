@@ -52,7 +52,7 @@ Scenario('Main Menu', async ({ I }) => {
 
   async function testMenu() {
     await ensureMenuState('Fächer', 'Angewandte Nachhaltigkeit', true)
-    I.see('Mathematik', 'ul.bg-white')
+    I.see('Mathe', 'ul.bg-white')
     await ensureMenuState('Fächer', 'Angewandte Nachhaltigkeit', false)
 
     await ensureMenuState('Über Uns', 'Transparenz', true)

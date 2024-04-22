@@ -40,47 +40,28 @@ export default async function customCreateApiHandler(
   // injecting a function here to trigger an api call because
   // unfortunately the kratos webhook ist not reliable atm.
   // this is not used for the SSO flow (that still uses the kratos webhook)
-  function afterRegisterApiCall(body: string) {
-    if (
-      req.method !== 'POST' ||
-      !req.url?.startsWith('/api/.ory/self-service/registration') ||
-      !process.env.API_KRATOS_SECRET
-    ) {
-      return
-    }
-
+  if (
+    req.method === 'GET' &&
+    req.url?.startsWith('/api/.ory/self-service/verification') &&
+    process.env.API_KRATOS_SECRET
+  ) {
     console.log('afterRegisterApiCall: trying to call API')
 
-    const result = JSON.parse(body) as { identity: { id: string } }
-    const userId = result?.identity?.id
-
-    console.log({ userId })
-
-    if (userId) {
-      void fetch(API_KRATOS_WEBHOOK_URL, {
-        method: 'POST',
-        headers: {
-          'x-kratos-key': process.env.API_KRATOS_SECRET,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userId }),
+    void fetch(API_KRATOS_WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'x-kratos-key': process.env.API_KRATOS_SECRET,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(async (result) => {
+        const text = await result.text()
+        console.log(result.status)
+        console.error(text)
+        // if (result.status !== 200) {
+        // }
       })
-        .then(async (result) => {
-          const text = await result.text()
-          console.log(result.status)
-          console.error(text)
-          // if (result.status !== 200) {
-          // }
-        })
-        .catch((e) => {
-          console.error(e)
-        })
-    }
-  }
-
-  function sendOverwrite(body: string) {
-    afterRegisterApiCall(body)
-    res.send(body)
+      .catch((e) => console.error(e))
   }
 
   // continue with default kratos handler
@@ -88,6 +69,5 @@ export default async function customCreateApiHandler(
     apiBaseUrlOverride: KRATOS_HOST,
     forceCookieSecure: true,
     forceCookieDomain: COOKIE_DOMAIN,
-    // @ts-expect-error missing the correct type
-  })(req, { ...res, send: sendOverwrite })
+  })(req, res)
 }
