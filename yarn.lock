@@ -3186,7 +3186,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.14":
+"@jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.15":
   version: 1.4.15
   resolution: "@jridgewell/sourcemap-codec@npm:1.4.15"
   checksum: b881c7e503db3fc7f3c1f35a1dd2655a188cc51a3612d76efc8a6eb74728bef5606e6758ee77423e564092b4a518aba569bbb21c9bac5ab7a35b0c6ae7e344c8
@@ -3231,7 +3231,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/api-extractor@npm:^7.38.0":
+"@microsoft/api-extractor@npm:7.43.0":
   version: 7.43.0
   resolution: "@microsoft/api-extractor@npm:7.43.0"
   dependencies:
@@ -4871,7 +4871,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/pluginutils@npm:^5.0.5":
+"@rollup/pluginutils@npm:^5.0.5, @rollup/pluginutils@npm:^5.1.0":
   version: 5.1.0
   resolution: "@rollup/pluginutils@npm:5.1.0"
   dependencies:
@@ -5091,9 +5091,9 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     uuid: ^9.0.1
-    vite: ^5.2.8
+    vite: ^5.2.10
     vite-plugin-css-injected-by-js: ^3.5.0
-    vite-plugin-dts: 3.6.4
+    vite-plugin-dts: 3.8.3
     vite-plugin-svgr: ^4.2.0
   languageName: unknown
   linkType: soft
@@ -5134,7 +5134,7 @@ __metadata:
     "@types/js-cookie": ^3.0.6
     "@types/json-diff": ^1.0.0
     "@types/katex": ^0.16.7
-    "@types/node": ^18.18.4
+    "@types/node": ^20.12.7
     "@types/nprogress": ^0.2.3
     "@types/prismjs": ^1.26.3
     "@types/qrcode.react": ^1.0.5
@@ -5235,9 +5235,9 @@ __metadata:
     typescript: ^5.4.5
     use-query-params: ^2.2.1
     uuid: ^9.0.1
-    vite: ^5.2.8
+    vite: ^5.2.10
     vite-plugin-css-injected-by-js: ^3.5.0
-    vite-plugin-dts: 3.6.4
+    vite-plugin-dts: 3.8.3
     vite-plugin-svgr: ^4.2.0
   languageName: unknown
   linkType: soft
@@ -5298,7 +5298,7 @@ __metadata:
     "@types/js-cookie": ^3.0.6
     "@types/json-diff": ^1.0.0
     "@types/katex": ^0.16.7
-    "@types/node": ^18.18.4
+    "@types/node": ^20.12.7
     "@types/nprogress": ^0.2.3
     "@types/prismjs": ^1.26.3
     "@types/qrcode.react": ^1.0.5
@@ -6036,12 +6036,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.18.4":
-  version: 18.19.2
-  resolution: "@types/node@npm:18.19.2"
+"@types/node@npm:^20.12.7":
+  version: 20.12.7
+  resolution: "@types/node@npm:20.12.7"
   dependencies:
     undici-types: ~5.26.4
-  checksum: 6ae1e456f469bd50cac55d01ec17cddca3e60a1ae8cf6a95c8f2c49668ac358fd68d53af32076e37418f3b07cf6d2b245a48e3b77998ac51cc6a797d9d1a4367
+  checksum: 7cc979f7e2ca9a339ec71318c3901b9978555257929ef3666987f3e447123bc6dc92afcc89f6347e09e07d602fde7d51bcddea626c23aa2bb74aeaacfd1e1686
   languageName: node
   linkType: hard
 
@@ -6543,7 +6543,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/language-core@npm:1.8.27, @vue/language-core@npm:^1.8.20":
+"@vue/language-core@npm:1.8.27, @vue/language-core@npm:^1.8.27":
   version: 1.8.27
   resolution: "@vue/language-core@npm:1.8.27"
   dependencies:
@@ -13514,6 +13514,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"magic-string@npm:^0.30.8":
+  version: 0.30.10
+  resolution: "magic-string@npm:0.30.10"
+  dependencies:
+    "@jridgewell/sourcemap-codec": ^1.4.15
+  checksum: 456fd47c39b296c47dff967e1965121ace35417eab7f45a99e681e725b8661b48e1573c366ee67a27715025b3740773c46b088f115421c7365ea4ea6fa10d399
+  languageName: node
+  linkType: hard
+
 "make-dir@npm:^4.0.0":
   version: 4.0.0
   resolution: "make-dir@npm:4.0.0"
@@ -19004,23 +19013,24 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"vite-plugin-dts@npm:3.6.4":
-  version: 3.6.4
-  resolution: "vite-plugin-dts@npm:3.6.4"
+"vite-plugin-dts@npm:3.8.3":
+  version: 3.8.3
+  resolution: "vite-plugin-dts@npm:3.8.3"
   dependencies:
-    "@microsoft/api-extractor": ^7.38.0
-    "@rollup/pluginutils": ^5.0.5
-    "@vue/language-core": ^1.8.20
+    "@microsoft/api-extractor": 7.43.0
+    "@rollup/pluginutils": ^5.1.0
+    "@vue/language-core": ^1.8.27
     debug: ^4.3.4
     kolorist: ^1.8.0
-    vue-tsc: ^1.8.20
+    magic-string: ^0.30.8
+    vue-tsc: ^1.8.27
   peerDependencies:
     typescript: "*"
     vite: "*"
   peerDependenciesMeta:
     vite:
       optional: true
-  checksum: 94930e89d0d0daca2f7bb411d5c08dbde151c309c713b3a9d2a9f4a0a4b5aef048fdd63d84a8828703a754dccc934e6a309dcc45b51bc58bb6b77f9da6e3b800
+  checksum: 753ee70e742dedabdea74b2e39a86eec753ef46dfe0fa632682695c4bac905dc2701a7767690e819fd4437dbd5fb11ab51e2e4d63bef28a79c3b15384545d11a
   languageName: node
   linkType: hard
 
@@ -19037,9 +19047,9 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.2.8":
-  version: 5.2.8
-  resolution: "vite@npm:5.2.8"
+"vite@npm:^5.2.10":
+  version: 5.2.10
+  resolution: "vite@npm:5.2.10"
   dependencies:
     esbuild: ^0.20.1
     fsevents: ~2.3.3
@@ -19073,7 +19083,7 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: c0a77271b548fce443af59a383939924ffcba8e6d0ba6ecb2e481d0ec2318465d2116ce9317599c448e6d6d8af11a67b8efc5b52cb1deab37d2e83311ac4f1b5
+  checksum: feb11be2b97259783afe1d0ff4b7ee0bef78fe8934d8b043465e039e4d8318249e2263adc724b719b9e9b45a37e012caeb7746854768f371d1a82bb189f50fe6
   languageName: node
   linkType: hard
 
@@ -19094,7 +19104,7 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"vue-tsc@npm:^1.8.20":
+"vue-tsc@npm:^1.8.27":
   version: 1.8.27
   resolution: "vue-tsc@npm:1.8.27"
   dependencies:
