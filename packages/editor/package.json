@@ -1,7 +1,6 @@
 {
   "name": "@serlo/editor",
   "version": "0.6.0-beta.17",
-  "private": false,
   "homepage": "https://de.serlo.org/editor",
   "bugs": {
     "url": "https://github.com/serlo/frontend/issues"
