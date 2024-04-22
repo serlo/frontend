@@ -5,7 +5,7 @@ import { defaultModalOverlayStyles } from '../modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
 
-Modal.setAppElement('#__next')
+Modal.setAppElement('#serlo-root')
 
 export interface LightBoxProps {
   src: string

@@ -120,15 +120,15 @@ export async function requestRevision(
           trashed: uuid.trashed,
           title: Object.hasOwn(uuid, 'title') ? uuid.title : undefined,
           metaTitle: Object.hasOwn(uuid, 'metaTitle')
-            ? uuid.metaTitle ?? ''
+            ? uuid.metaTitle ?? undefined
             : undefined,
           metaDescription: Object.hasOwn(uuid, 'metaDescription')
-            ? uuid.metaDescription ?? ''
+            ? uuid.metaDescription ?? undefined
             : undefined,
           content: thisExercise
             ? (thisExercise as unknown as EditorExerciseDocument)
             : parseDocumentString(uuid.content),
-          url: Object.hasOwn(uuid, 'url') ? uuid.url ?? '' : undefined,
+          url: Object.hasOwn(uuid, 'url') ? uuid.url ?? undefined : undefined,
         },
         currentRevision: {
           id: uuid.repository.currentRevision?.id,

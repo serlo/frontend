@@ -23,13 +23,20 @@ export interface SerloEditorProps {
   pluginsConfig?: PluginsConfig
   customPlugins?: CustomPlugin[]
   initialState?: EditorProps['initialState']
+  onChange?: EditorProps['onChange']
   language?: SupportedLanguage
 }
 
 /** For exporting the editor */
 export function SerloEditor(props: SerloEditorProps) {
-  const { children, pluginsConfig, customPlugins, initialState, language } =
-    mergeDeepRight(defaultSerloEditorProps, props)
+  const {
+    children,
+    pluginsConfig,
+    customPlugins,
+    initialState,
+    language,
+    onChange,
+  } = mergeDeepRight(defaultSerloEditorProps, props)
 
   const { instanceData, loggedInData } = editorData[language]
 
@@ -43,7 +50,9 @@ export function SerloEditor(props: SerloEditorProps) {
     <InstanceDataProvider value={instanceData}>
       <LoggedInDataProvider value={loggedInData}>
         <div className="serlo-editor-hacks">
-          <Editor initialState={initialState}>{children}</Editor>
+          <Editor initialState={initialState} onChange={onChange}>
+            {children}
+          </Editor>
         </div>
       </LoggedInDataProvider>
     </InstanceDataProvider>
