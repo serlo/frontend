@@ -10,7 +10,11 @@ import { FooterNew } from '../landing/rework/footer-new'
 import { SubjectIcon } from '../landing/rework/subject-icon'
 import { Header } from '../navigation/header/header'
 import { useInstanceData } from '@/contexts/instance-context'
-import { type SupportedRegion, deRegions } from '@/data/de/math-exams-data'
+import {
+  type SupportedRegion,
+  deRegions,
+  landingMetaTags,
+} from '@/data/de/math-exams-data'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { cn } from '@/helper/cn'
@@ -33,7 +37,8 @@ export function MathExamsLanding({
     <>
       <HeadTags
         data={{
-          title: `Mathe Abschlussprüfungen ${deRegions[region].title} – lernen mit serlo!`,
+          title: landingMetaTags[region].title,
+          metaDescription: landingMetaTags[region].metaDescription,
           metaImage: `https://de.${serloDomain}/_assets/img/meta/mathe.png`,
         }}
       />

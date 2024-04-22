@@ -1,23 +1,23 @@
 export const deRegions = {
   bayern: {
     title: 'Bayern',
-    code: 'BY',
+    metaDescription: 'BY',
   },
   berlin: {
     title: 'Berlin',
-    code: 'BE',
+    metaDescription: 'BE',
   },
   brandenburg: {
     title: 'Brandenburg',
-    code: 'BB',
+    metaDescription: 'BB',
   },
   niedersachsen: {
     title: 'Niedersachsen',
-    code: 'NI',
+    metaDescription: 'NI',
   },
   nrw: {
     title: 'Nordrhein-Westfalen',
-    code: 'NW',
+    metaDescription: 'NW',
   },
 } as const
 export type SupportedRegion = keyof typeof deRegions
@@ -224,6 +224,37 @@ export const extraMetaTags = {
       'Deine Vorbereitung für die Zentrale Prüfungen (ZAP) in Nordrhein-Westfalen: Mathe lernen mit Original Prüfungsaufgaben und Lösungen. Mit Serlo schaffst du das!',
   },
 } as const
+
+export const landingMetaTags: Record<
+  SupportedRegion,
+  { title: string; metaDescription: string }
+> = {
+  bayern: {
+    title: 'Mathe Abschlussprüfungen in Bayern',
+    metaDescription:
+      'Mathe lernen mit Prüfungsaufgaben und Lösungen der vergangenen Jahre. Für deine Abschlussprüfung in Bayern.',
+  },
+  berlin: {
+    title: 'Prüfungsaufgaben für Mathe-Prüfungen Berlin',
+    metaDescription:
+      'Original Berliner Abschlussprüfungen mit Lösungen der vergangenen Jahre. Mit Serlo schaffst du das!',
+  },
+  brandenburg: {
+    title: 'Mathe Abschlussprüfungen Brandenburg',
+    metaDescription:
+      'Ideale Vorbereitung: originale Prüfungsaufgaben mit Lösungen für deine Abschlussprüfung in Mathe in Brandenburg. ',
+  },
+  niedersachsen: {
+    title: 'Mathe Abschlussprüfungen Niedersachsen',
+    metaDescription:
+      'Mathematik für den Abschluss lernen mit original Prüfungsausgaben und Musterlösungen aus Niedersachsen. Du schaffst das!',
+  },
+  nrw: {
+    title: 'Zentrale Prüfungen (ZAP) Mathe NRW',
+    metaDescription:
+      'Mathe lernen für die ZAP in Nordrhein-Westfalen - mit den originalen Prüfungsaufgaben samt Musterlösungen der vergangenen Jahre.',
+  },
+}
 
 // TODO: add meta tags for NRW, BE and BB
 
