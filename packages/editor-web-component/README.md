@@ -2,6 +2,22 @@
 
 This is an early version of the web component wrapping the [Serlo Editor](https://de.serlo.org/editor). Be aware that we are actively working on both packages and thus there will be breaking changes in minor versions before version 1 is reached. The repository [serlo/block-serlo-editor-with-vue-js](https://github.com/serlo/block-serlo-editor-with-vue-js) shows how this package can be used.
 
+## Installation and usage
+
+1. `yarn install @serlo/editor-web-component`
+2. Define an HTML element with the id `serlo-root` in your file where you render the web component
+
+```JSX
+import { EditorWebComponent } from '@serlo/editor-web-component'
+
+// in your render function
+return (
+  <div id="serlo-root">
+    <editor-web-component></editor-web-component>
+  </div>
+)
+```
+
 ## Releasing a new version to npm
 
 Bump the version number in the package.json and
