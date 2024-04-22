@@ -1,0 +1,8 @@
+{
+  "root": true,
+  "extends": ["@serlo/eslint-config/editor.js"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": true
+  }
+}

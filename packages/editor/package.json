@@ -14,11 +14,14 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/editor.js"
+      "import": "./dist/editor.js",
+      "require": "./dist/editor.js",
+      "types": "./dist/index.d.ts"
     }
   },
+  "main": "./dist/editor.js",
   "module": "./dist/editor.js",
-  "types": "./dist/packages/editor/src/package/index.d.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -37,7 +40,8 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "serlo-katex-styles": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.0",
@@ -76,7 +80,7 @@
     "@types/nprogress": "^0.2.1",
     "@types/prismjs": "^1.26.1",
     "@types/qrcode.react": "^1.0.3",
-    "@types/ramda": "^0.29.6",
+    "@types/ramda": "^0.29.12",
     "@types/react": "^18.0.25",
     "@types/react-beautiful-dnd": "^13.1.5",
     "@types/react-dnd-multi-backend": "^6.0.6",
@@ -89,7 +93,7 @@
     "@types/uuid": "^9.0.5",
     "@typescript-eslint/eslint-plugin": "^7.4.0",
     "@typescript-eslint/parser": "^7.4.0",
-    "@vitejs/plugin-react": "^4.2.0",
+    "@vitejs/plugin-react": "^4.2.1",
     "array-move": "^4.0.0",
     "autoprefixer": "^10.4.16",
     "babel-jest": "^29.7.0",
@@ -170,9 +174,9 @@
     "typescript": "^5.4.3",
     "use-query-params": "^2.2.1",
     "uuid": "^9.0.1",
-    "vite": "^5.0.13",
-    "vite-plugin-css-injected-by-js": "^3.4.0",
-    "vite-plugin-dts": "^3.6.3",
+    "vite": "^5.2.8",
+    "vite-plugin-css-injected-by-js": "^3.5.0",
+    "vite-plugin-dts": "3.6.4",
     "vite-plugin-svgr": "^4.2.0"
   },
   "packageManager": "yarn@3.6.1",
