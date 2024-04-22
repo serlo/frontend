@@ -316,7 +316,7 @@ export const middleSchoolFinalExam = {
   },
   'sinus-oder-kosinussatz': {
     title: 'Sinus- oder Kosinussatz?',
-    subtitle: 'Trigonometrie 🚧',
+    subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     track: 3,
     difficulty: 1,

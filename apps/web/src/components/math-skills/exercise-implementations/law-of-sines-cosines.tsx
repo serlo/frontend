@@ -133,11 +133,10 @@ export function LawOfSinesCosines() {
         )
       }}
       renderSolution={(data) => {
+        const x = getElValue(data, data.variant.given[0])
+        const y = getElValue(data, data.variant.given[1])
+        const z = getElValue(data, data.variant.given[2])
         if (data.variant.method === 'SWS') {
-          const x = getElValue(data, data.variant.given[0])
-          const y = getElValue(data, data.variant.given[2])
-          const z = getElValue(data, data.variant.given[1])
-
           const result =
             Math.round(
               Math.sqrt(
@@ -173,10 +172,6 @@ export function LawOfSinesCosines() {
           )
         }
         if (data.variant.method === 'SSS') {
-          const x = getElValue(data, data.variant.given[0])
-          const y = getElValue(data, data.variant.given[1])
-          const z = getElValue(data, data.variant.given[2])
-
           const result =
             Math.round(
               (Math.acos((x * x + y * y - z * z) / (2 * x * y)) / Math.PI) *
@@ -220,7 +215,98 @@ export function LawOfSinesCosines() {
             </>
           )
         }
-        return <>TODO - Nutze Sinussatz</>
+        if (data.variant.method === 'SSWg') {
+          const result =
+            Math.round(
+              (Math.asin((y * Math.sin((z / 180) * Math.PI)) / x) / Math.PI) *
+                180 *
+                10
+            ) / 10
+          return (
+            <>
+              <p>Stelle eine Gleichung mit dem Sinussatz auf:</p>
+              <p className="serlo-highlight-gray">
+                {buildFrac(
+                  <>sin {elToString(data.variant.goal)}</>,
+                  data.variant.given[1]
+                )}{' '}
+                ={' '}
+                {buildFrac(
+                  <>sin {elToString(data.variant.given[2])}</>,
+                  data.variant.given[0]
+                )}
+              </p>
+              <p>Stelle die Gleichung um und setze gegebene Größen ein:</p>
+              <p className="serlo-highlight-gray">
+                sin {elToString(data.variant.goal)} ={' '}
+                {buildFrac(
+                  <>sin {z.toLocaleString('de-De')}°</>,
+                  x.toLocaleString('de-De')
+                )}{' '}
+                · {y.toLocaleString('de-De')}
+              </p>
+              <p>Berechne das Ergebnis:</p>
+              <p className="serlo-highlight-green">
+                {elToString(data.variant.goal)} ={' '}
+                {result.toLocaleString('de-De')}°
+              </p>
+            </>
+          )
+        }
+        // Ich muss zuerst den dritten Winkel berechnen, dann kann ich damit eine Gleichung aufstellen.
+        const lastAngleElement =
+          data.variant.given[1] === 'a'
+            ? 'alpha'
+            : data.variant.given[1] === 'b'
+              ? 'beta'
+              : 'gamma'
+
+        const w = 180 - x - z
+
+        const result =
+          Math.round(
+            (y / Math.sin((w / 180) * Math.PI)) *
+              Math.sin((z / 180) * Math.PI) *
+              10
+          ) / 10
+        return (
+          <>
+            <p>
+              Berechne den dritten Winkel über die Innenwinkelsumme im Dreieck:
+            </p>
+            <p className="serlo-highlight-gray">
+              {elToString(lastAngleElement)} = 180° -{' '}
+              {x.toLocaleString('de-De')}° - {z.toLocaleString('de-De')}° ={' '}
+              {w.toLocaleString('de-De')}°
+            </p>
+            <p>Stelle eine Gleichung mit dem Sinussatz auf:</p>
+            <p className="serlo-highlight-gray">
+              {buildFrac(
+                data.variant.goal,
+                <>sin {elToString(data.variant.given[2])}</>
+              )}{' '}
+              ={' '}
+              {buildFrac(
+                data.variant.given[1],
+                <>sin {elToString(lastAngleElement)}</>
+              )}
+            </p>
+            <p>Stelle die Gleichung um und setze gegebene Größen ein:</p>
+            <p className="serlo-highlight-gray">
+              {data.variant.goal} ={' '}
+              {buildFrac(
+                y.toLocaleString('de-De'),
+                <>sin {w.toLocaleString('de-De')}°</>
+              )}{' '}
+              · sin {z.toLocaleString('de-De')}°
+            </p>
+            <p>Berechne das Ergebnis:</p>
+            <p className="serlo-highlight-green">
+              {elToString(data.variant.goal)} = {result.toLocaleString('de-De')}{' '}
+              cm
+            </p>
+          </>
+        )
       }}
     />
   )
