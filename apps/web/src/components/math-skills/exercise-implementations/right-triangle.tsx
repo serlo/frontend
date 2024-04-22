@@ -378,6 +378,7 @@ function SubComponent({ data }: { data: DATA }) {
       b.create('angle', [pointB, pointA, pointC], {
         name: 'α',
         withLabel: true,
+        radius: 0.12 * dim,
         label: {
           autoPosition: true,
           color: data.goal_element === 'α' ? newgreen : 'black',
@@ -389,12 +390,21 @@ function SubComponent({ data }: { data: DATA }) {
       b.create('angle', [pointC, pointB, pointA], {
         name: 'β',
         withLabel: true,
+        radius: 0.12 * dim,
         label: {
           autoPosition: true,
           color: data.goal_element === 'β' ? newgreen : 'black',
         },
       })
     }
+
+    b.create('angle', [pointA, pointC, pointB], {
+      name: 'γ',
+      withLabel: false,
+      radius: 0.08 * dim,
+      strokeColor: 'black',
+      fillColor: 'white',
+    })
 
     setBoard(b)
 
