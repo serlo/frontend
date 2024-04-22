@@ -1,6 +1,7 @@
 {
   "name": "@serlo/editor-web-component",
-  "version": "0.0.3",
+  "version": "0.0.4",
+  "private": false,
   "homepage": "https://de.serlo.org/editor",
   "bugs": {
     "url": "https://github.com/serlo/frontend/issues"
@@ -33,12 +34,12 @@
     "format:eslint": "yarn _eslint --fix",
     "format:prettier": "yarn _prettier --write",
     "lint": "npm-run-all lint:eslint lint:prettier",
-    "lint:eslint": "yarn workspace @serlo/editor build && yarn _eslint",
+    "lint:eslint": "yarn _eslint",
     "lint:prettier": "yarn _prettier --check",
     "yalc:publish": "yarn build && yalc publish --push --sig"
   },
   "dependencies": {
-    "@serlo/editor": "workspace:*",
+    "@serlo/editor": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

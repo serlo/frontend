@@ -23,6 +23,10 @@ return (
 Bump the version number in the package.json and
 the github workflow seen inside `editor-web-component.yaml` will take care of the publishing.
 
+## Local development with editor package
+
+Go to the `package.json` and use `"@serlo/editor": "workspace:*"` instead of a fixed version. This way, you don't need to release a new version of the editor every time you make a change in the repo.
+
 ## Linking for local development with integrations
 
 In order to avoid publishing the editor to NPM or dealing with tarballs every time you need to test your changes in an integration locally, you can use `yalc` to link the editor web component package to your integration locally.
