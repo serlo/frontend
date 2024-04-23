@@ -4,11 +4,11 @@ import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { autoResizeBoundingBox } from '../utils/auto-resize-bounding-box'
 import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
 import { buildFrac, buildOverline } from '../utils/math-builder'
+import { rotatePoint } from '../utils/rotate-point'
+import { roundToDigits } from '../utils/round-to-digits'
+import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 import { shuffleArray } from '@/helper/shuffle-array'
-import { randomIntBetween } from '@/helper/random-int-between'
-import { roundToDigits } from '../utils/round-to-digits'
-import { rotatePoint } from '../utils/rotate-point'
 
 interface DATA {
   p1: string

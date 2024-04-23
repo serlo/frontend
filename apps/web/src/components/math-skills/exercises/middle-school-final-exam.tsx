@@ -333,7 +333,7 @@ export const middleSchoolFinalExam = {
   },
   'wip-1': {
     title: 'Flächeninhalt Dreieck',
-    subtitle: 'Trigonometrie 🚧',
+    subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     track: 3,
     difficulty: 1,
