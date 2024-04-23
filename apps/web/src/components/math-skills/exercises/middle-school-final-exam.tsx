@@ -122,7 +122,7 @@ export const middleSchoolFinalExam = {
     component: <ObliqueImage />,
   },
   strahlensatz: {
-    title: 'Strahlensatz',
+    title: 'Strahlensatz Einführung',
     subtitle: 'Geometrie',
     difficulty: 1,
     calculatorAllowed: false,
@@ -130,7 +130,7 @@ export const middleSchoolFinalExam = {
     component: <Trigonometry1 />,
   },
   kosinussatz: {
-    title: 'Kosinussatz',
+    title: 'Kosinussatz Einführung',
     subtitle: 'Trigonometrie',
     difficulty: 1,
     calculatorAllowed: false,

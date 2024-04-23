@@ -38,7 +38,8 @@ export function MathSkillsHeader() {
     if (isLanding) return null
 
     const className = cn(
-      'my-3 block rounded bg-brand-200 px-2 py-1 text-lg !no-underline hover:bg-brand-300'
+      'my-3 block rounded bg-brand-200 px-2 py-1 text-lg !no-underline hover:bg-brand-300',
+      router.asPath.includes('realschule') && 'hidden'
     )
     return isExercise ? (
       <Link href="/meine-mathe-skills#aufgaben" className={className}>
