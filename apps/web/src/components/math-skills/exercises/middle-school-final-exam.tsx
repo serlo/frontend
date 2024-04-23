@@ -331,7 +331,7 @@ export const middleSchoolFinalExam = {
     difficulty: 1,
     component: <LawOfSinesCosines />,
   },
-  'wip-1': {
+  'flaecheninhalt-dreieck': {
     title: 'Flächeninhalt Dreieck',
     subtitle: 'Trigonometrie',
     calculatorAllowed: true,
