@@ -103,7 +103,7 @@ export function TriangleArea() {
                 {data.len2.toLocaleString('de-De')}
               </p>
               <p>Berechne das Ergebnis:</p>
-              <p className="serlo-highlight-gray">
+              <p className="serlo-highlight-green">
                 A
                 <sub>
                   {data.p1}
@@ -146,7 +146,7 @@ export function TriangleArea() {
               {data.len2.toLocaleString('de-De')} · sin {data.angle}°
             </p>
             <p>Berechne das Ergebnis:</p>
-            <p className="serlo-highlight-gray">
+            <p className="serlo-highlight-green">
               A
               <sub>
                 {data.p1}
