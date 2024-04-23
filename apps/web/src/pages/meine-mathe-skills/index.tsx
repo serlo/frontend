@@ -139,11 +139,11 @@ function Content() {
               <b>Filter:</b>
               <br />
               {renderFilterButton('all', 'Alle Aufgaben 🎓')}
-              {renderFilterButton('easy', 'Nur leichtere Aufgaben ✌️')}
-              {renderFilterButton('hard', 'Nur schwere Aufgaben 🌶')}
               {allTopics.map((topic) => {
                 return renderFilterButton(`topic:${topic}`, topic)
               })}
+              {renderFilterButton('easy', 'Nur leichtere Aufgaben ✌️')}
+              {renderFilterButton('hard', 'Nur schwere Aufgaben 🌶')}
             </div>
             {track === 1 ? (
               <div>
