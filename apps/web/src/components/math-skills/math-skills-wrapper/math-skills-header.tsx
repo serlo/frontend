@@ -1,10 +1,8 @@
-import { faListDots } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/router'
 
 import { SkillPoints } from './skill-points'
 import { Link } from '../../content/link'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
-import { FaIcon } from '@/components/fa-icon'
 import { cn } from '@/helper/cn'
 
 export function MathSkillsHeader() {
@@ -15,7 +13,6 @@ export function MathSkillsHeader() {
   const isLanding = !isGradePage && !isExercise
 
   const genitiveName = addGermanGenetiveS(data.name)
-  const titlePrefix = genitiveName && !isLanding ? genitiveName : 'Meine'
 
   return (
     <header className="flex h-[4.5rem] items-center justify-between bg-yellow-100 px-4 py-2 text-center">
@@ -27,7 +24,7 @@ export function MathSkillsHeader() {
           isExercise && '!hidden sm:!block'
         )}
       >
-        {titlePrefix} Mathe-Skills
+        {genitiveName ?? 'Meine'} Mathe-Skills
       </Link>
       {isExercise ? <SkillPoints /> : null}
       {renderBackLink()}
@@ -41,11 +38,7 @@ export function MathSkillsHeader() {
       'my-3 block rounded bg-brand-200 px-2 py-1 text-lg !no-underline hover:bg-brand-300',
       router.asPath.includes('realschule') && 'hidden'
     )
-    return isExercise ? (
-      <Link href="/meine-mathe-skills#aufgaben" className={className}>
-        <FaIcon icon={faListDots} /> Aufgaben
-      </Link>
-    ) : (
+    return isExercise ? null : (
       <Link href="/meine-mathe-skills" className={className}>
         <span className="hidden sm:inline">zur </span>
         Startseite
