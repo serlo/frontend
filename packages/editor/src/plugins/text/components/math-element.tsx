@@ -1,7 +1,6 @@
 import { PreferenceContext } from '@editor/core'
 import { isElementWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { MathEditor } from '@editor/math/editor'
-import { KaTeXStyles } from '@serlo/frontend/src/../external/katexstyles'
 import React, { useContext, useMemo } from 'react'
 import { Editor, Node, Path, Range, Transforms } from 'slate'
 import {
@@ -12,6 +11,8 @@ import {
 } from 'slate-react'
 
 import { StaticMath } from '../static-components/static-math'
+// eslint-disable-next-line import/no-unassigned-import
+import 'serlo-katex-styles/styles.css'
 import type {
   MathElement as MathElementType,
   Paragraph,
@@ -65,7 +66,6 @@ export function MathElement({
     // Slate void elements need to set attributes and contentEditable={false}
     // See: https://docs.slatejs.org/api/nodes/element#rendering-void-elements
     <>
-      <KaTeXStyles />
       <VoidWrapper {...attributes} tabIndex={-1} contentEditable={false}>
         <MathEditor
           state={element.src}

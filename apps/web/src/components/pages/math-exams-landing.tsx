@@ -5,31 +5,40 @@ import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
 import { HeadTags } from '../head-tags'
 import { ExamsCompleteList } from '../landing/exams/exams-finder/exams-complete-list'
-import {
-  SupportedRegion,
-  regions,
-} from '../landing/exams/exams-finder/exams-data'
 import { ExamsFinder } from '../landing/exams/exams-finder/exams-finder'
 import { FooterNew } from '../landing/rework/footer-new'
 import { SubjectIcon } from '../landing/rework/subject-icon'
 import { Header } from '../navigation/header/header'
 import { useInstanceData } from '@/contexts/instance-context'
+import {
+  type SupportedRegion,
+  deRegions,
+  landingMetaTags,
+} from '@/data/de/math-exams-data'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { cn } from '@/helper/cn'
 import { serloDomain } from '@/helper/urls/serlo-domain'
-import type { RegionData } from '@/pages/mathe-pruefungen/[region]'
+import type { ExamsLandingData } from '@/pages/mathe-pruefungen/[region]'
 
-export function MathExamsLanding({ region: initRegion }: RegionData) {
+// TODO: persists school choice in url or sessionstorage
+
+export function MathExamsLanding({
+  region: initRegion,
+  examsTaxonomyData,
+}: ExamsLandingData) {
   const [region, setRegion] = useState<SupportedRegion>(initRegion ?? 'bayern')
   const { lang } = useInstanceData()
   if (lang !== Instance.De) return null
+
+  const regionTitle = region === 'nrw' ? 'NRW' : deRegions[region].title
 
   return (
     <>
       <HeadTags
         data={{
-          title: `Mathe Abschlussprüfungen ${regions[region].title} – lernen mit serlo!`,
+          title: landingMetaTags[region].title,
+          metaDescription: landingMetaTags[region].metaDescription,
           metaImage: `https://de.${serloDomain}/_assets/img/meta/mathe.png`,
         }}
       />
@@ -49,9 +58,7 @@ export function MathExamsLanding({ region: initRegion }: RegionData) {
               <span className="inline-block max-w-[27rem] !whitespace-normal pb-3">
                 Mathe Prüfungen
                 <br />
-                <span className="serlo-underlined">
-                  {regions[region].title}
-                </span>
+                <span className="serlo-underlined">{regionTitle}</span>
               </span>
             </h1>
             <p className="text-2xl leading-cozy text-almost-black">
@@ -71,7 +78,11 @@ export function MathExamsLanding({ region: initRegion }: RegionData) {
 
         <section className="themen relative -left-side !mt-12 min-h-[24rem] w-[calc(100%+32px)] px-side text-center">
           <div className="sm:-mt-6">
-            <ExamsFinder region={region} setRegion={setRegion} />
+            <ExamsFinder
+              region={region}
+              setRegion={setRegion}
+              examsTaxonomyData={examsTaxonomyData}
+            />
           </div>
         </section>
 
@@ -111,7 +122,10 @@ export function MathExamsLanding({ region: initRegion }: RegionData) {
         </section>
 
         <section className="relative -left-side w-[calc(100%+32px)] bg-blueWave bg-100% pt-24 text-center">
-          <ExamsCompleteList region={region} />
+          <ExamsCompleteList
+            region={region}
+            examsTaxonomyData={examsTaxonomyData}
+          />
         </section>
       </main>
       <FooterNew />

@@ -1,0 +1,88 @@
+{
+  "name": "@serlo/editor-web-component",
+  "version": "0.0.4",
+  "homepage": "https://de.serlo.org/editor",
+  "bugs": {
+    "url": "https://github.com/serlo/frontend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/serlo/frontend.git"
+  },
+  "license": "Apache-2.0",
+  "author": "Serlo Education e.V.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/serlo-editor-web-component.js",
+      "require": "./dist/serlo-editor-web-component.js",
+      "types": "./dist/editor-web-component.d.ts"
+    }
+  },
+  "main": "./dist/serlo-editor-web-component.js",
+  "module": "./dist/serlo-editor-web-component.js",
+  "types": "./dist/editor-web-component.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "_eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
+    "_prettier": "prettier .",
+    "build": "vite build",
+    "format": "npm-run-all --continue-on-error \"format:*\"",
+    "format:eslint": "yarn _eslint --fix",
+    "format:prettier": "yarn _prettier --write",
+    "lint": "npm-run-all lint:eslint lint:prettier",
+    "lint:eslint": "yarn _eslint",
+    "lint:prettier": "yarn _prettier --check",
+    "yalc:publish": "yarn build && yalc publish --push --sig"
+  },
+  "dependencies": {
+    "@serlo/editor": "latest",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@serlo/typescript-config": "workspace:*",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.8",
+    "@vitejs/plugin-react": "^4.2.1",
+    "babel-jest": "^29.7.0",
+    "dotenv": "^16.3.1",
+    "eslint": "^8.51.0",
+    "eslint-config-next": "^13.5.4",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "jest": "^27.5.1",
+    "npm": "^10.2.5",
+    "npm-run-all": "^4.1.5",
+    "nprogress": "^0.2.0",
+    "prettier": "^3.0.3",
+    "prettier-plugin-packagejson": "^2.4.6",
+    "prettier-plugin-tailwindcss": "^0.5.7",
+    "uuid": "^9.0.1",
+    "vite": "^5.2.8",
+    "vite-plugin-css-injected-by-js": "^3.5.0",
+    "vite-plugin-dts": "3.6.4",
+    "vite-plugin-svgr": "^4.2.0"
+  },
+  "packageManager": "yarn@3.6.1",
+  "engines": {
+    "node": "^18.0.0"
+  },
+  "postcss": {
+    "plugins": {
+      "tailwindcss/nesting": {},
+      "tailwindcss": {},
+      "postcss-flexbugs-fixes": {},
+      "autoprefixer": {}
+    }
+  },
+  "svgr": {
+    "svgo": false
+  }
+}

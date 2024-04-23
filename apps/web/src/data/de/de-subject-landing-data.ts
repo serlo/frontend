@@ -473,7 +473,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
       title:
         'Plastik - Von Herstellung bis Entsorgung ein Problem für Mensch und Natur',
       type: UuidType.Article,
-      url: '/nachhaltigkeit/108667/',
+      url: '/108667',
       img: 'https://assets.serlo.org/5c588f0a185b9_f059fa2e360c964e209181fe7a813f319167a40a.jpg',
     },
     {

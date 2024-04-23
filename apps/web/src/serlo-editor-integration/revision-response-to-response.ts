@@ -84,7 +84,8 @@ export function revisionResponseToResponse(
     uuid.__typename === UuidRevType.Exercise
   ) {
     return {
-      __typename: uuid.__typename,
+      // @ts-expect-error to save unnecessary code
+      __typename: uuid.__typename.replace('Revision', '') as UuidType,
       date,
       title,
       currentRevision: abstractEntityRevisionData,
