@@ -37,7 +37,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@hello-pangea/dnd": "^16.3.0",
     "@ory/client": "^1.2.11",
-    "@ory/integrations": "^1.1.5",
+    "@ory/integrations": "https://github.com/ory/integrations",
     "@prezly/slate-lists": "^0.97.0",
     "@prisma/client": "^5.6.0",
     "@radix-ui/react-navigation-menu": "^1.1.4",
