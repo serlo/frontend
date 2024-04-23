@@ -94,17 +94,21 @@ export function Header() {
 
   function renderTempExamsBanner() {
     if (lang !== Instance.De) return null
+    const isInMath = router.asPath.startsWith('/mathe/')
     if (
-      !['/serlo', '/search', '/mathe', '/community', '/mitmachen'].includes(
+      !['/serlo', '/search', '/community', '/mitmachen'].includes(
         router.asPath
-      )
+      ) &&
+      !isInMath
     )
       return null
 
     return (
       <Link
+        id="oam-banner"
         onClick={() => {
-          submitEvent('header-exams-banner-click')
+          if (isInMath) submitEvent('oam-banner-click-math')
+          else submitEvent('oam-banner-click-meta')
         }}
         href="/mathe-pruefungen"
         className="group block bg-newgreen bg-opacity-20 p-3 text-black hover:!no-underline mobile:text-center sm:py-2"

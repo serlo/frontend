@@ -58,9 +58,7 @@ export function LandingDE({ data }: LandingDEProps) {
 
         <section className="mt-10">
           <Link
-            onClick={() => {
-              submitEvent('header-exams-banner-click')
-            }}
+            onClick={() => submitEvent('oam-banner-click-landing')}
             href="/mathe-pruefungen"
             className="group mb-10 block bg-newgreen bg-opacity-20 p-3 text-lg text-black hover:!no-underline mobile:text-center sm:py-4 md:text-[22px] lg:mb-0"
           >
