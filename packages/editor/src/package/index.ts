@@ -5,8 +5,6 @@ export type { BaseEditor } from '@editor/core'
 
 export { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-export { StaticRenderer } from '@editor/static-renderer/static-renderer'
-
 export { string, object, optional, number } from '@editor/plugin'
 export type {
   EditorPlugin,

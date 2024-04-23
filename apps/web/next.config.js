@@ -78,6 +78,9 @@ const nextConfig = {
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
   transpilePackages: ['jsxgraph', 'ramda', '@serlo/editor'], // context: https://github.com/vercel/next.js/issues/40183
+  experimental: {
+    scrollRestoration: true,
+  },
   images: {
     dangerouslyAllowSVG: true,
     contentDispositionType: 'attachment',

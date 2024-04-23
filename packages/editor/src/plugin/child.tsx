@@ -51,7 +51,8 @@ export function child<K extends string, S = unknown>(
         throw new Error('No document with this id exists')
       }
       // make sure we use new ids when duplicating content
-      if (omitId) return omit(['id'], document)
+      // @ts-expect-error id is not directly part of the document type
+      if (omitId) return { plugin: document.plugin, ...omit(['id'], document) }
       // making sure existing plugins store `id` in state as well
       if (Object.hasOwn(document, 'id')) return document
       return { ...document, id }

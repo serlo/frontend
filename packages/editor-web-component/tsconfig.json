@@ -1,0 +1,12 @@
+{
+  "extends": "@serlo/typescript-config/base.json",
+  "compilerOptions": {
+    "rootDir": "../..",
+    "outDir": "dist",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": false
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules", "../../node_modules", "dist"]
+}

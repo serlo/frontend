@@ -6,7 +6,7 @@ import { FaIcon } from './fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
 
-BaseModal.setAppElement('#__next')
+BaseModal.setAppElement('#serlo-root')
 
 interface ModalWithCloseButtonProps {
   isOpen: boolean

@@ -62,4 +62,7 @@ const nextStaticPages: SitemapEntry[] = [
   { url: '/mathe-pruefungen' },
   { url: '/mathe-pruefungen/bayern' },
   { url: '/mathe-pruefungen/niedersachsen' },
+  { url: '/mathe-pruefungen/nrw' },
+  { url: '/mathe-pruefungen/berlin' },
+  { url: '/mathe-pruefungen/brandenburg' },
 ]
