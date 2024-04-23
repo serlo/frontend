@@ -44,9 +44,9 @@ const ContentPage: NextPage = () => {
 
 function Content() {
   const [track, setTrack] = useState<1 | 2>(() => {
-    if (typeof sessionStorage === 'undefined') return 1
-    const sessionTrack = parseInt(sessionStorage.getItem(sessionKey) ?? '1')
-    return [1, 2].includes(sessionTrack) ? (sessionTrack as 1 | 2) : 1
+    if (typeof sessionStorage === 'undefined') return 2
+    const sessionTrack = parseInt(sessionStorage.getItem(sessionKey) ?? '2')
+    return [1, 2].includes(sessionTrack) ? (sessionTrack as 1 | 2) : 2
   })
   const router = useRouter()
   const { getExerciseData } = useExerciseData()
