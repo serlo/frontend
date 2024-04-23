@@ -64,7 +64,7 @@
     "katex": "^0.16.10",
     "mathjs": "^12.3.1",
     "mathlive": "^0.98.4",
-    "next": "^14.2.2",
+    "next": "^13.5.4",
     "next-query-params": "^4.2.3",
     "nprogress": "^0.2.0",
     "postcss": "^8.4.31",
