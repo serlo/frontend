@@ -35,6 +35,7 @@ import { RotatePoint } from '../exercise-implementations/rotate-point'
 import { TimeToDouble } from '../exercise-implementations/time-to-double'
 import { Tombola } from '../exercise-implementations/tombola'
 import { TreeDiagram } from '../exercise-implementations/tree-diagram'
+import { TriangleArea } from '../exercise-implementations/triangle-area'
 // import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
 // import { SurfaceThreePyramide } from '../exercise-implementations/surface-pyramide-2'
 import { Trigonometry } from '../exercise-implementations/trigonometry'
@@ -336,10 +337,10 @@ export const middleSchoolFinalExam = {
     calculatorAllowed: true,
     track: 3,
     difficulty: 1,
-    component: <IntersectingLines />,
+    component: <TriangleArea />,
   },
   'wip-2': {
-    title: 'Pizzastück Geometrie',
+    title: 'Pizza-Stück / Kreissektor',
     subtitle: 'Trigonometrie 🚧',
     calculatorAllowed: true,
     track: 3,
@@ -355,7 +356,7 @@ export const middleSchoolFinalExam = {
     component: <IntersectingLines />,
   },
   'Kosinussatz-1': {
-    title: 'Kosinussatz im Dreieck',
+    title: 'Anwendung 1',
     subtitle: 'Trigonometrie 🚧',
     calculatorAllowed: true,
     difficulty: 2,
@@ -363,7 +364,7 @@ export const middleSchoolFinalExam = {
     component: <Trigonometry3 />,
   },
   'sinussatz-1': {
-    title: 'Sinussatz im Dreieck',
+    title: 'Anwendung 2',
     subtitle: 'Trigonometrie 🚧',
     calculatorAllowed: true,
     difficulty: 3,

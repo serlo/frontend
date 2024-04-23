@@ -4,6 +4,7 @@ import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { autoResizeBoundingBox } from '../utils/auto-resize-bounding-box'
 import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
 import { buildFrac, buildSqrt } from '../utils/math-builder'
+import { rotatePoint } from '../utils/rotate-point'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -320,11 +321,11 @@ function SubComponent({ data }: { data: DATA }) {
   const preB_x = data.c
   const preB_y = 0
 
-  const [preC_x, preC_y] = rotate(data.b, 0, -data.alpha)
+  const [preC_x, preC_y] = rotatePoint(data.b, 0, -data.alpha)
 
   const angle = randomIntBetween(0, 359)
-  const [Bx, By] = rotate(preB_x, preB_y, angle)
-  const [Cx, Cy] = rotate(preC_x, preC_y, angle)
+  const [Bx, By] = rotatePoint(preB_x, preB_y, angle)
+  const [Cx, Cy] = rotatePoint(preC_x, preC_y, angle)
 
   const boundingbox = autoResizeBoundingBox([
     { x: 0, y: 0 },
@@ -434,13 +435,4 @@ function SubComponent({ data }: { data: DATA }) {
   }, [data])
 
   return <JSXGraphWrapper id="jxgbox" width={300} height={300} />
-}
-
-function rotate(x: number, y: number, angle: number) {
-  const radians = (Math.PI / 180) * angle,
-    cos = Math.cos(radians),
-    sin = Math.sin(radians),
-    nx = cos * x + sin * y,
-    ny = cos * y - sin * x
-  return [nx, ny]
 }
