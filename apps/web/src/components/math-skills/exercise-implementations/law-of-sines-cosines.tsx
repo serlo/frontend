@@ -140,7 +140,7 @@ export function LawOfSinesCosines() {
           const result =
             Math.round(
               Math.sqrt(
-                x * x + y * y - 2 * x * y * Math.cos((z / 180) * Math.PI)
+                x * x + z * z - 2 * x * z * Math.cos((y / 180) * Math.PI)
               ) * 10
             ) / 10
           return (
@@ -157,10 +157,10 @@ export function LawOfSinesCosines() {
                 {data.variant.goal} ={' '}
                 {buildSqrt(
                   <>
-                    {x.toLocaleString('de-De')}² + {y.toLocaleString('de-De')}²
+                    {x.toLocaleString('de-De')}² + {z.toLocaleString('de-De')}²
                     - 2 · {x.toLocaleString('de-De')} ·{' '}
-                    {y.toLocaleString('de-De')} · cos{' '}
-                    {z.toLocaleString('de-De')}°
+                    {z.toLocaleString('de-De')} · cos{' '}
+                    {y.toLocaleString('de-De')}°
                   </>
                 )}
               </p>
