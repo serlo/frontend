@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import { NextPage } from 'next'
-import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
 import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
@@ -47,8 +48,26 @@ function Content() {
     const sessionTrack = parseInt(sessionStorage.getItem(sessionKey) ?? '1')
     return [1, 2].includes(sessionTrack) ? (sessionTrack as 1 | 2) : 1
   })
+  const router = useRouter()
   const { getExerciseData } = useExerciseData()
   const { data } = useMathSkillsStorage()
+
+  // manually restore scroll position
+  useEffect(() => {
+    const key = 'overview-scroll-pos'
+    const restoredValue = parseInt(sessionStorage.getItem(key) ?? '0')
+
+    setTimeout(() => {
+      if (restoredValue > 100) window.scroll(0, restoredValue)
+    }, 10)
+
+    const exitingFunction = () => {
+      sessionStorage.setItem(key, String(Math.round(window.scrollY)))
+    }
+    router.events.on('routeChangeStart', exitingFunction)
+    return () => router.events.off('routeChangeStart', exitingFunction)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
@@ -58,7 +77,6 @@ function Content() {
         </div>
         {data.name ? (
           <>
-            {' '}
             <h2 className="mt-10 text-2xl font-bold" id="aufgaben">
               Training Realschule Bayern (Abschlussprüfung):
             </h2>

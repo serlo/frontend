@@ -80,7 +80,7 @@ function Content() {
           <>
             <p className="mb-8 mt-3">
               <Link
-                href="/meine-mathe-skills#aufgaben"
+                href="/meine-mathe-skills"
                 className="text-brand hover:text-brand-700"
               >
                 zurück
