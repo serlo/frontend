@@ -3563,6 +3563,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ory/client@npm:^1.9.0":
+  version: 1.9.0
+  resolution: "@ory/client@npm:1.9.0"
+  dependencies:
+    axios: ^1.6.1
+  checksum: c732911c967a67a96ae8acbd5f83b3e5dc38ffbc8b2d8c8f865c2659533762939ee6fe5594540aef3cd91ea5be24af708a46950f338009b3ea2ed6356aeb7a5e
+  languageName: node
+  linkType: hard
+
 "@ory/integrations@npm:^1.1.5":
   version: 1.1.5
   resolution: "@ory/integrations@npm:1.1.5"
@@ -5008,7 +5017,7 @@ __metadata:
     "@graphql-codegen/typescript-operations": 4.0.1
     "@hello-pangea/dnd": ^16.3.0
     "@next/bundle-analyzer": ^13.5.4
-    "@ory/client": ^1.2.11
+    "@ory/client": ^1.9.0
     "@ory/integrations": ^1.1.5
     "@prezly/slate-lists": ^0.97.0
     "@prisma/client": ^5.6.0
@@ -6875,6 +6884,17 @@ __metadata:
     follow-redirects: ^1.14.9
     form-data: ^4.0.0
   checksum: 38cb7540465fe8c4102850c4368053c21683af85c5fdf0ea619f9628abbcb59415d1e22ebc8a6390d2bbc9b58a9806c874f139767389c862ec9b772235f06854
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.6.1":
+  version: 1.6.8
+  resolution: "axios@npm:1.6.8"
+  dependencies:
+    follow-redirects: ^1.15.6
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: bf007fa4b207d102459300698620b3b0873503c6d47bf5a8f6e43c0c64c90035a4f698b55027ca1958f61ab43723df2781c38a99711848d232cad7accbcdfcdd
   languageName: node
   linkType: hard
 
@@ -9943,7 +9963,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.14.9":
+"follow-redirects@npm:^1.14.9, follow-redirects@npm:^1.15.6":
   version: 1.15.6
   resolution: "follow-redirects@npm:1.15.6"
   peerDependenciesMeta:
@@ -15272,6 +15292,13 @@ __metadata:
   dependencies:
     xtend: ^4.0.0
   checksum: fcf87c6542e59a8bbe31ca0b3255a4a63ac1059b01b04469680288998bcfa97f341ca989566adbb63975f4d85339030b82320c324a511532d390910d1c583893
+  languageName: node
+  linkType: hard
+
+"proxy-from-env@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "proxy-from-env@npm:1.1.0"
+  checksum: ed7fcc2ba0a33404958e34d95d18638249a68c430e30fcb6c478497d72739ba64ce9810a24f53a7d921d0c065e5b78e3822759800698167256b04659366ca4d4
   languageName: node
   linkType: hard
 
