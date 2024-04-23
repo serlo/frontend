@@ -331,40 +331,40 @@ export const middleSchoolFinalExam = {
     component: <LawOfSinesCosines />,
   },
   'wip-1': {
-    title: 'Flächeninhalt Dreieck',
-    subtitle: 'Trigonometrie 🚧',
+    title: 'Flächeninhalt Dreieck 🚧',
+    subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     track: 3,
     difficulty: 1,
     component: <IntersectingLines />,
   },
   'wip-2': {
-    title: 'Pizzastück Geometrie',
-    subtitle: 'Trigonometrie 🚧',
+    title: 'Pizzastück Geometrie 🚧',
+    subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     track: 3,
     difficulty: 1,
     component: <IntersectingLines />,
   },
   'wip-3': {
-    title: 'Eigenschaften Trapez',
-    subtitle: 'Trigonometrie 🚧',
+    title: 'Eigenschaften Trapez 🚧',
+    subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     track: 3,
     difficulty: 1,
     component: <IntersectingLines />,
   },
   'Kosinussatz-1': {
-    title: 'Kosinussatz im Dreieck',
-    subtitle: 'Trigonometrie 🚧',
+    title: 'Kosinussatz im Dreieck 🚧',
+    subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     difficulty: 2,
     track: 3,
     component: <Trigonometry3 />,
   },
   'sinussatz-1': {
-    title: 'Sinussatz im Dreieck',
-    subtitle: 'Trigonometrie 🚧',
+    title: 'Sinussatz im Dreieck 🚧',
+    subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     difficulty: 3,
     track: 3,
@@ -403,36 +403,36 @@ export const middleSchoolFinalExam = {
     component: <Tombola />,
   },
   'plot-function-1': {
-    title: 'Graphen skizzieren',
-    subtitle: 'Potenzfunktion 🚧',
+    title: 'Graphen skizzieren 🚧',
+    subtitle: 'Potenzfunktion',
     calculatorAllowed: true,
     track: 1,
     component: <PlotFunction />,
   },
   'asymptote-1': {
-    title: 'Definitions-, Wertebereich und Asymptote',
-    subtitle: 'Potenzfunktion 🚧',
+    title: 'Definitions-, Wertebereich und Asymptote 🚧',
+    subtitle: 'Potenzfunktion',
     calculatorAllowed: true,
     track: 1,
     component: <Asymptote1 />,
   },
   'mapping-graphs-1': {
-    title: 'Graphen verschieben',
-    subtitle: 'Funktionen 🚧',
+    title: 'Graphen verschieben 🚧',
+    subtitle: 'Funktionen',
     calculatorAllowed: true,
     track: 1,
     component: <AbbildungGraphen />,
   },
   'mapping-graphs-2': {
-    title: 'Graphen spiegeln',
-    subtitle: 'Funktionen 🚧',
+    title: 'Graphen spiegeln 🚧',
+    subtitle: 'Funktionen',
     calculatorAllowed: true,
     track: 1,
     component: <AbbildungGraphen2 />,
   },
   'parabolas-by-characteristics': {
-    title: 'Parabel aus Punkten bestimmen',
-    subtitle: 'Quadratische Funktionen 🚧',
+    title: 'Parabel aus Punkten bestimmen 🚧',
+    subtitle: 'Quadratische Funktionen',
     calculatorAllowed: true,
     track: 2,
     component: <ParabolaCharacteristics />,
@@ -470,7 +470,7 @@ export const middleSchoolFinalExam = {
 
 /*
 
-Construction sign:  🚧
+Construction sign: 🚧
 
 Template for new exercise
 
