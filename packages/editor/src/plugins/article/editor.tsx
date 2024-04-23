@@ -28,6 +28,12 @@ export function ArticleEditor({ state }: ArticleProps) {
   const articleStrings = useEditorStrings().templatePlugins.article
   const modalStrings = articleStrings.addModal
 
+  // const contentState = useAppSelector((state) => {
+  //   return selectStaticDocument(state, content.get())
+  // })
+
+  // const contentContainsExercise = JSON.stringify(contentState).includes('exercise')
+
   return (
     <>
       <ArticleRenderer
@@ -35,6 +41,10 @@ export function ArticleEditor({ state }: ArticleProps) {
         content={<div data-qa="plugin-article-content">{content.render()}</div>}
         exercises={
           <>
+            <div className="m-side rounded-2xl bg-editor-primary-50 p-side">
+              Könnten die Aufgaben oben auch alleinstehende Übungsaufgaben sein
+              und hier verlinkt werden?
+            </div>
             <ArticleExercises exercises={exercises} />
             {renderButton(modalStrings.buttonEx)}
           </>

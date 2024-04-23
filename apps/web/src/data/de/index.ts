@@ -823,7 +823,7 @@ export const loggedInData = {
         },
         exercise: {
           title: "Aufgabe",
-          description: "Interaktive- oder Textaufgaben",
+          description: "Lernaufgabe (z.B. für Zwischenfragen)",
           placeholder: "Füge hier den Arbeitsauftrag ein (Optional)",
           hideInteractiveInitially: {
             info: "Interaktives Element ist versteckt beim laden",
