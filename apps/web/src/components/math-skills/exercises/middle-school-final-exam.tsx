@@ -349,8 +349,8 @@ export const middleSchoolFinalExam = {
     difficulty: 1,
     component: <CircleSector />,
   },
-  'wip-3': {
-    title: 'Trapez Akrobatik🚧',
+  'trapez-akrobatik': {
+    title: 'Trapez Akrobatik',
     subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     track: 3,
