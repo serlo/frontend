@@ -3,6 +3,7 @@ import { ABCFormular } from '../exercise-implementations/abc-formular'
 import { AnimalsInForest } from '../exercise-implementations/animals-in-forest'
 import { Asymptote1 } from '../exercise-implementations/asymptote-1'
 import { Asymptote2 } from '../exercise-implementations/asymptote-2'
+import { CircleSector } from '../exercise-implementations/circle-sector'
 import { CompareGrowth } from '../exercise-implementations/compare-growth'
 import { CompletingTheSquare } from '../exercise-implementations/completing-the-square'
 import { DescribeGraphPowerFunction } from '../exercise-implementations/describe-graph-power-function'
@@ -35,6 +36,7 @@ import { RotatePoint } from '../exercise-implementations/rotate-point'
 import { TimeToDouble } from '../exercise-implementations/time-to-double'
 import { Tombola } from '../exercise-implementations/tombola'
 import { TreeDiagram } from '../exercise-implementations/tree-diagram'
+import { TriangleArea } from '../exercise-implementations/triangle-area'
 // import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
 // import { SurfaceThreePyramide } from '../exercise-implementations/surface-pyramide-2'
 import { Trigonometry } from '../exercise-implementations/trigonometry'
@@ -330,21 +332,21 @@ export const middleSchoolFinalExam = {
     difficulty: 1,
     component: <LawOfSinesCosines />,
   },
-  'wip-1': {
-    title: 'Flächeninhalt Dreieck 🚧',
+  'flaecheninhalt-dreieck': {
+    title: 'Flächeninhalt Dreieck',
     subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     track: 3,
     difficulty: 1,
-    component: <IntersectingLines />,
+    component: <TriangleArea />,
   },
-  'wip-2': {
-    title: 'Pizzastück Geometrie 🚧',
+  'pizza-stueck-kreissektor': {
+    title: 'Pizza-Stück / Kreissektor 🚧',
     subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     track: 3,
     difficulty: 1,
-    component: <IntersectingLines />,
+    component: <CircleSector />,
   },
   'wip-3': {
     title: 'Eigenschaften Trapez 🚧',
@@ -355,7 +357,7 @@ export const middleSchoolFinalExam = {
     component: <IntersectingLines />,
   },
   'Kosinussatz-1': {
-    title: 'Kosinussatz im Dreieck 🚧',
+    title: 'Anwendung 1 🚧',
     subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     difficulty: 2,
@@ -363,7 +365,7 @@ export const middleSchoolFinalExam = {
     component: <Trigonometry3 />,
   },
   'sinussatz-1': {
-    title: 'Sinussatz im Dreieck 🚧',
+    title: 'Anwendung 2 🚧',
     subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     difficulty: 3,
