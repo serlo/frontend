@@ -8,6 +8,7 @@ import { cn } from '@/helper/cn'
 
 export interface LinkProps {
   href?: string
+  id?: string
   children: ReactNode
   className?: string
   noExternalIcon?: boolean
@@ -48,6 +49,7 @@ Link.displayName = 'Link'
 // don't use this outside this component
 function InternalLink({
   href,
+  id,
   children,
   className,
   noExternalIcon,
@@ -114,6 +116,7 @@ function InternalLink({
     return (
       // eslint-disable-next-line react/jsx-no-target-blank
       <a
+        id={id}
         href={_href}
         className={cn(className, 'serlo-link')}
         rel={openBlank ? 'ugc nofollow noreferrer' : undefined}
@@ -135,6 +138,7 @@ function InternalLink({
   function renderClientSideLink(_href: string) {
     return (
       <NextLink
+        id={id}
         prefetch={false}
         href={_href}
         className={cn(className, 'serlo-link')}
