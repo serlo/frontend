@@ -31,5 +31,9 @@ export default createApiHandler({
   apiBaseUrlOverride: KRATOS_HOST,
   forceCookieSecure: true,
   forceCookieDomain: COOKIE_DOMAIN,
-  forwardAdditionalHeaders: ['x-vercel-internal-timing']
+  forwardAdditionalHeaders: [
+    'x-vercel-internal-timing',
+    'x-vercel-cache',
+    'x-vercel-id',
+  ],
 })
