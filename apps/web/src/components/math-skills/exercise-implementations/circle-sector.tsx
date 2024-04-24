@@ -24,16 +24,23 @@ interface DATA {
 
 function elToGiven(e: Element, val: number) {
   if (e === 'r') {
-    return <>den Radius {val.toLocaleString()}&nbsp;cm</>
+    return <>den Radius {val.toLocaleString('de-De')}&nbsp;cm</>
   }
   if (e === 'alpha') {
-    return <>einen Mittelpunktswinkel α&nbsp;=&nbsp;{val.toLocaleString()}°</>
+    return (
+      <>einen Mittelpunktswinkel α&nbsp;=&nbsp;{val.toLocaleString('de-De')}°</>
+    )
   }
   if (e === 'U') {
-    return <>einen Umfang von {val.toLocaleString()}&nbsp;cm</>
+    return <>einen Umfang von {val.toLocaleString('de-De')}&nbsp;cm</>
   }
   if (e === 'A') {
-    return <>den Flächeninhalt {val.toLocaleString()}&nbsp;cm²</>
+    return (
+      <>
+        den Flächeninhalt {val.toLocaleString('de-De').replace('.', '')}
+        &nbsp;cm²
+      </>
+    )
   }
   return (
     <>

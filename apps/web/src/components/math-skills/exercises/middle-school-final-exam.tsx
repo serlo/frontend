@@ -35,6 +35,7 @@ import { RootEquations } from '../exercise-implementations/root-equations'
 import { RotatePoint } from '../exercise-implementations/rotate-point'
 import { TimeToDouble } from '../exercise-implementations/time-to-double'
 import { Tombola } from '../exercise-implementations/tombola'
+import { Trapezoid } from '../exercise-implementations/trapezoid'
 import { TreeDiagram } from '../exercise-implementations/tree-diagram'
 import { TriangleArea } from '../exercise-implementations/triangle-area'
 // import { SurfacePyramide } from '../exercise-implementations/surface-pyramide'
@@ -349,12 +350,12 @@ export const middleSchoolFinalExam = {
     component: <CircleSector />,
   },
   'wip-3': {
-    title: 'Eigenschaften Trapez 🚧',
+    title: 'Trapez Akrobatik🚧',
     subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     track: 3,
-    difficulty: 1,
-    component: <IntersectingLines />,
+    difficulty: 2,
+    component: <Trapezoid />,
   },
   'Kosinussatz-1': {
     title: 'Anwendung 1 🚧',
