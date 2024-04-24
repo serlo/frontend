@@ -1,15 +1,24 @@
 import { licenses } from './license-data-short'
-import {
-  headerData,
-  footerData,
-  landingSubjectsData,
-  secondaryMenus,
-} from './menu-data'
+
+const isBundlingEditor = Boolean(process?.env?.BUNDLE_EDITOR || false)
+
+let menuData = null;
+
+if (!isBundlingEditor) {
+  menuData = await import('./menu-data');
+}
+
+
+
 export const instanceData = {
   lang: 'en',
-  headerData,
-  footerData,
-  secondaryMenus,
+  ...(menuData
+    ?  {
+      headerData: menuData.headerData,
+      footerData: menuData.footerData,
+      secondaryMenus: menuData.secondaryMenus,
+    } :
+    {}),
   licenses,
   strings: {
     header: {
@@ -522,7 +531,11 @@ export const instanceData = {
 }
 export const instanceLandingData = {
   lang: 'en',
-  subjectsData: landingSubjectsData,
+  ...(menuData
+    ?  {
+      subjectsData: menuData.landingSubjectsData,
+    } :
+    {}),
   strings: {
     vision:
       'It is our vision to enable personalized learning and provide high quality educational resources worldwide – completely free of charge. Serlo is a grassroots organization inspired by Wikipedia. We already provide thousands of articles, videos and solved exercises for five million German students every year. Now it’s time to go international.',

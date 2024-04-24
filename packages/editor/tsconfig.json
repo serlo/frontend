@@ -7,7 +7,7 @@
       "@editor/*": ["./src/*"]
     },
     "outDir": "dist",
-    "module": "ES2022",
+    "module": "ESNext",
     "moduleResolution": "bundler"
   },
   "include": [
@@ -22,7 +22,7 @@
   "exclude": [
     "node_modules",
     "dist",
-    "../../apps/web/src/data/en/menu-data.ts",
-    "../../apps/web/src/data/de/menu-data.ts"
+    "../../apps/web/src/pages/*tsx",
+    "../../apps/web/src/pages/*ts"
   ]
 }

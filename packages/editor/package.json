@@ -28,6 +28,7 @@
   "scripts": {
     "_eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "_prettier": "prettier .",
+    "prebuild": "cross-env BUNDLE_EDITOR=true",
     "build": "vite build",
     "format": "npm-run-all --continue-on-error \"format:*\"",
     "format:eslint": "yarn _eslint --fix",

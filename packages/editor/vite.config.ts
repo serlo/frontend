@@ -9,20 +9,13 @@ import { visualizer } from 'rollup-plugin-visualizer'
 // https://vitejs.dev/guide/build.html#library-mode
 /* we use vite only for building the serlo editor package */
 
-const excludeMenuDataPlugin = {
-  name: 'exclude-menu-data',
-  transform(code, id) {
-    if (id.includes('/data/') && id.includes('menu-data.ts')) {
-      return ''
-    }
-
-    return null
-  },
-}
-
 // eslint-disable-next-line import/no-default-export
 export default defineConfig({
+  esbuild: {
+    target: 'esnext'
+  },
   build: {
+    target: 'esnext',
     lib: {
       entry: resolve(__dirname, 'src/package/index.ts'),
       name: 'editor',
@@ -31,7 +24,6 @@ export default defineConfig({
     },
     rollupOptions: {
       plugins: [
-        excludeMenuDataPlugin,
         visualizer({ open: true, filename: 'bundle-analysis.html' }),
       ],
       external: ['react', 'react-dom'],
