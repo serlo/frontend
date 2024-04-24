@@ -357,7 +357,7 @@ export const middleSchoolFinalExam = {
     difficulty: 1,
     component: <Trapezoid />,
   },
-  'Kosinussatz-1': {
+  'beach-bar-anwendung-trigonometrie': {
     title: 'Beach-Bar',
     subtitle: 'Trigonometrie',
     calculatorAllowed: true,
