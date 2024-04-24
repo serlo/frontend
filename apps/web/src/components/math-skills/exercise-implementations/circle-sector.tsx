@@ -8,7 +8,7 @@ import { roundToDigits } from '../utils/round-to-digits'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
-type Element = 'r' | 'alpha' | 'A' | 'l' | 'U'
+type Element = 'r' | 'alpha' | 'A' | 'b' | 'U'
 
 interface Variant {
   given: [Element, Element]
@@ -44,15 +44,15 @@ function elToGiven(e: Element, val: number) {
 }
 
 const variants: Variant[] = [
-  // { given: ['alpha', 'r'], goal: 'A', method: 'area1' },
-  // { given: ['A', 'alpha'], goal: 'r', method: 'area2' },
+  { given: ['alpha', 'r'], goal: 'A', method: 'area1' },
+  { given: ['A', 'alpha'], goal: 'r', method: 'area2' },
   { given: ['A', 'r'], goal: 'alpha', method: 'area3' },
 
-  // { given: ['alpha', 'r'], goal: 'l', method: 'arc1' },
-  // { given: ['l', 'alpha'], goal: 'r', method: 'arc2' },
-  // { given: ['l', 'r'], goal: 'alpha', method: 'arc3' },
+  { given: ['alpha', 'r'], goal: 'b', method: 'arc1' },
+  { given: ['b', 'alpha'], goal: 'r', method: 'arc2' },
+  { given: ['b', 'r'], goal: 'alpha', method: 'arc3' },
 
-  // { given: ['alpha', 'r'], goal: 'U', method: 'cir' },
+  { given: ['alpha', 'r'], goal: 'U', method: 'cir' },
 ]
 
 export function CircleSector() {
@@ -66,7 +66,7 @@ export function CircleSector() {
           alpha,
           r,
           A: roundToDigits(Math.PI * r * r * (alpha / 360), 0),
-          l: roundToDigits(Math.PI * r * 2 * (alpha / 360), 1),
+          b: roundToDigits(Math.PI * r * 2 * (alpha / 360), 1),
           U: roundToDigits(Math.PI * r * 2 * (alpha / 360) + r + r, 1),
         }
         return { variant, angle: alpha, values }
@@ -97,7 +97,7 @@ export function CircleSector() {
                   'den Umfang U'
                 ) : data.variant.goal === 'alpha' ? (
                   'den Mittelpunktswinkel α'
-                ) : data.variant.goal === 'l' ? (
+                ) : data.variant.goal === 'b' ? (
                   <>die Bogenlänge {buildLatex('\\overgroup{AC}')}</>
                 ) : (
                   'den Radius r'
@@ -187,9 +187,136 @@ export function CircleSector() {
                 α ={' '}
                 {roundToDigits(
                   (data.values.A / Math.pow(data.values.r, 2) / Math.PI) * 360,
-                  0
+                  1
                 ).toLocaleString('de-De')}
                 °
+              </p>
+            </>
+          )
+        }
+        if (data.variant.method === 'arc1') {
+          return (
+            <>
+              <p>Nutze die Formel für die Länge des Kreisbogen:</p>
+              <p className="serlo-highlight-gray">
+                {buildLatex('\\overgroup{AC}')} = {buildFrac('α', '360°')} · 2 ·
+                r · π
+              </p>
+              <p>Setze gegebene Größen ein:</p>
+              <p className="serlo-highlight-gray">
+                {buildLatex('\\overgroup{AC}')} ={' '}
+                {buildFrac(
+                  <>{data.values.alpha.toLocaleString('de-De')}°</>,
+                  '360°'
+                )}{' '}
+                · 2 · {data.values.r.toLocaleString('de-De')} cm · π
+              </p>
+              <p>Berechne das Ergebnis:</p>
+              <p className="serlo-highlight-green">
+                {buildLatex('\\overgroup{AC}')} ={' '}
+                {roundToDigits(
+                  (data.values.alpha / 360) * 2 * data.values.r * Math.PI,
+                  1
+                ).toLocaleString('de-De')}{' '}
+                cm
+              </p>
+            </>
+          )
+        }
+
+        if (data.variant.method === 'arc2') {
+          return (
+            <>
+              <p>Nutze die Formel für die Länge des Kreisbogen:</p>
+              <p className="serlo-highlight-gray">
+                {data.values.b.toLocaleString('de-De')} cm ={' '}
+                {buildFrac(<>{data.values.alpha}°</>, '360°')} · 2 · r · π
+              </p>
+              <p>Stelle die Gleichung nach r um:</p>
+              <p className="serlo-highlight-gray">
+                r ={' '}
+                {buildFrac(
+                  <>{data.values.b.toLocaleString('de-De')} cm</>,
+                  <>2 · π</>
+                )}{' '}
+                ·{' '}
+                {buildFrac(
+                  '360°',
+                  <>{data.values.alpha.toLocaleString('de-De')}°</>
+                )}
+              </p>
+              <p>Berechne das Ergebnis:</p>
+              <p className="serlo-highlight-green">
+                r ={' '}
+                {roundToDigits(
+                  (data.values.b * 360) / 2 / Math.PI / data.values.alpha,
+                  1
+                ).toLocaleString('de-De')}{' '}
+                cm
+              </p>
+            </>
+          )
+        }
+
+        if (data.variant.method === 'arc3') {
+          return (
+            <>
+              <p>Nutze die Formel für die Länge des Kreisbogen:</p>
+              <p className="serlo-highlight-gray">
+                {data.values.b.toLocaleString('de-De')} cm ={' '}
+                {buildFrac('α', '360°')} · 2 ·{' '}
+                {data.values.r.toLocaleString('de-De')} cm · π
+              </p>
+              <p>Stelle die Gleichung nach α um:</p>
+              <p className="serlo-highlight-gray">
+                α ={' '}
+                {buildFrac(
+                  <>{data.values.b.toLocaleString('de-De')} cm</>,
+                  <>2 · {data.values.r.toLocaleString('de-De')} cm · π</>
+                )}{' '}
+                · 360°
+              </p>
+              <p>Berechne das Ergebnis:</p>
+              <p className="serlo-highlight-green">
+                α ={' '}
+                {roundToDigits(
+                  (data.values.b / 2 / Math.PI / data.values.r) * 360,
+                  1
+                ).toLocaleString('de-De')}
+                °
+              </p>
+            </>
+          )
+        }
+
+        if (data.variant.method === 'cir') {
+          const b = roundToDigits(
+            (data.values.alpha / 360) * 2 * Math.PI * data.values.r,
+            2
+          )
+          return (
+            <>
+              <p>Berechne zuerst die Bogenlänge b:</p>
+              <p className="serlo-highlight-gray">
+                b = {buildFrac(<>{data.values.alpha}°</>, '360°')} · 2 ·{' '}
+                {data.values.r.toLocaleString('de-De')} cm · π<br />
+                <br />b = {b.toLocaleString('de-De')} cm
+              </p>
+              <p>
+                Der Umfang des Pizzastück besteht aus dem Kreisbogen und zweimal
+                dem Radius:
+              </p>
+              <p className="serlo-highlight-gray">
+                U = {b.toLocaleString('de-De')} cm + 2 ·{' '}
+                {data.values.r.toLocaleString('de-De')} cm
+              </p>
+              <p>Berechne das Ergebnis:</p>
+              <p className="serlo-highlight-green">
+                U ={' '}
+                {roundToDigits(b + data.values.r * 2, 1).toLocaleString(
+                  'de-De'
+                )}{' '}
+                cm
               </p>
             </>
           )

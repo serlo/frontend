@@ -213,7 +213,7 @@ function Content() {
                 </div>
               </div>
             ) : null}
-            <h4 className="mt-8 text-lg font-bold">Nützliche Links</h4>
+            <h4 className="mt-16 text-lg font-bold">Nützliche Links</h4>
             <ul className="serlo-ul">
               <li>
                 <a

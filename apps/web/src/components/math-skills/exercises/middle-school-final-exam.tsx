@@ -341,7 +341,7 @@ export const middleSchoolFinalExam = {
     component: <TriangleArea />,
   },
   'pizza-stueck-kreissektor': {
-    title: 'Pizza-Stück / Kreissektor 🚧',
+    title: 'Pizza-Stück / Kreissektor',
     subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     track: 3,
