@@ -44,13 +44,19 @@ const ContentPage: NextPage = () => {
 }
 
 const topicMap = {
-'Potenzfunktionen': {tracks:[1], subtitles: ['Potenzfunktion']},
-'Exponentialfunktion & Logarithmus': {tracks:[1,2], subtitles: ['Exponentialfunktion', 'Logarithmus']},
-'Daten & Zufall': {tracks:[1,2], subtitles: ['Daten und Zufall']},
-'Trigonometrie': {tracks:[1,2], subtitles: ['Trigonometrie']},
-'Abbildungen': {tracks:[1], subtitles: ['Abbildungen']},
-'Quadratische Funktionen & Gleichungen': {tracks:[1], subtitles: ['Quadratische Funktionen','Funktionen']},
-'Raumgeometrie': {tracks:[2], subtitles: ['Raumgeometrie']},
+  Potenzfunktionen: { tracks: [1], subtitles: ['Potenzfunktion'] },
+  'Exponentialfunktion & Logarithmus': {
+    tracks: [1, 2],
+    subtitles: ['Exponentialfunktion', 'Logarithmus'],
+  },
+  'Daten & Zufall': { tracks: [1, 2], subtitles: ['Daten und Zufall'] },
+  Trigonometrie: { tracks: [1, 2], subtitles: ['Trigonometrie'] },
+  Abbildungen: { tracks: [1], subtitles: ['Abbildungen'] },
+  'Quadratische Funktionen & Gleichungen': {
+    tracks: [1],
+    subtitles: ['Quadratische Funktionen', 'Funktionen'],
+  },
+  Raumgeometrie: { tracks: [2], subtitles: ['Raumgeometrie'] },
 }
 
 function Content() {
@@ -95,7 +101,9 @@ function Content() {
     if (filter.startsWith('topic:')) {
       const topicKey = filter.replace('topic:', '')
       if (!Object.hasOwn(topicMap, topicKey)) return false
-      return topicMap[topicKey as keyof typeof topicMap].subtitles.includes(task.subtitle)
+      return topicMap[topicKey as keyof typeof topicMap].subtitles.includes(
+        task.subtitle
+      )
     }
     if (filter === 'easy') return !task.difficulty || task.difficulty < 2
     if (filter === 'hard') return task.difficulty && task.difficulty > 1
@@ -151,7 +159,7 @@ function Content() {
               <br />
               {renderFilterButton('all', 'Alle Aufgaben 🎓')}
               {Object.entries(topicMap).map(([topic, data]) => {
-                if(!data.tracks.includes(track)) return null
+                if (!data.tracks.includes(track)) return null
                 return renderFilterButton(`topic:${topic}`, topic)
               })}
               {renderFilterButton('easy', 'Nur leichtere Aufgaben ✌️')}
