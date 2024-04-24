@@ -4,7 +4,7 @@ This is an early version of the web component wrapping the [Serlo Editor](https:
 
 ## Installation and usage
 
-1. `yarn install @serlo/editor-web-component`
+1. `yarn add @serlo/editor-web-component`
 2. Define an HTML element with the id `serlo-root` in your file where you render the web component
 
 ```JSX

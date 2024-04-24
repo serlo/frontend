@@ -68,7 +68,7 @@ export class EditorWebComponent extends HTMLElement {
   }
 
   broadcastNewState(newState: unknown): void {
-    const event = new CustomEvent('serlo-editor-state-change', {
+    const event = new CustomEvent('state-changed', {
       detail: { newState },
     })
     this.dispatchEvent(event)
