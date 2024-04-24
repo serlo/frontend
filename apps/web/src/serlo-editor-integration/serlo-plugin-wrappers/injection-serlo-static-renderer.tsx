@@ -6,7 +6,6 @@ import {
   EditorExerciseGroupDocument,
   EditorInjectionDocument,
 } from '@editor/types/editor-plugins'
-import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
 
