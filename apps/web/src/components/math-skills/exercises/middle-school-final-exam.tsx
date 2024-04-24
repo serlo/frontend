@@ -342,7 +342,7 @@ export const middleSchoolFinalExam = {
     component: <TriangleArea />,
   },
   'pizza-stueck-kreissektor': {
-    title: 'Pizza-Stück / Kreissektor',
+    title: 'Pizza-Stück',
     subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     track: 3,
@@ -358,7 +358,7 @@ export const middleSchoolFinalExam = {
     component: <Trapezoid />,
   },
   'Kosinussatz-1': {
-    title: 'Anwendung 1 🚧',
+    title: 'Beach-Bar',
     subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     difficulty: 2,

@@ -14,14 +14,12 @@ import { randomItemFromArray } from '@/helper/random-item-from-array'
 // JXG.Options.label.autoPosition = true
 
 interface Trig1Data {
-  as: number
   ac: number
   bc: number
   ab: number
   factor1: number
   factor2: number
   angle: number
-  sb_sq: number
 }
 
 export function Trigonometry3() {
@@ -31,19 +29,16 @@ export function Trigonometry3() {
         //siehe S. 146/6
         const factor1 = randomItemFromArray([0.61, 0.79])
         const factor2 = randomItemFromArray([0.48, 0.6])
-        const as = randomIntBetween(1, 10) * 2
-        const ab = randomIntBetween(6, 12)
-        const ac = Math.round(ab * factor1 * 10) / 10
-        const bc = Math.round(ab * factor2 * 10) / 10
+        const ab = randomIntBetween(24, 54)
+        const ac = Math.round(ab * factor1)
+        const bc = Math.round(ab * factor2)
         const data: Trig1Data = {
-          as,
           ac,
           bc,
           ab,
           factor1,
           factor2,
           angle: 104,
-          sb_sq: as * as + ab * ab - 2 * as * ab * 0.5,
         }
         return { data }
       }}
@@ -51,24 +46,24 @@ export function Trigonometry3() {
         return (
           <>
             <MainTask>
-              Gegeben ist das Dreieck{' '}
-              <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">ABC</b>.{' '}
+              Das Grundstück der Bar &quot;Sonnenuntergang&quot; hat die Form
+              des Dreiecks{' '}
+              <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">ABC</b>.
             </MainTask>
-            <SubComponent data={data} />
-            <small className="mb-6 block">
-              Skizze ist nicht maßstabsgetreu
-            </small>
-            <p className="mt-12 text-2xl">
-              Die Seiten{' '}
+            <p className="serlo-main-task">
+              Auf dem Grundstücks möchten die Betreiber einen Beach-Bereich
+              anlegen. Dazu werden die Seiten{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">
-                <span className="overline">AB</span>
-              </b>
-              &nbsp;und&nbsp;
+                <span className="overline">AB</span>&nbsp;=&nbsp;
+                {data.ab.toLocaleString('de-De')}&nbsp;m
+              </b>{' '}
+              und{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">
-                <span className="overline">AC</span>
-              </b>
-              &nbsp; des Dreiecks werden jeweils um ein Achtel ihrer Länge auf
-              die Seiten&nbsp;
+                <span className="overline">AC</span>&nbsp;=&nbsp;
+                {data.ac.toLocaleString('de-De')}&nbsp;m
+              </b>{' '}
+              des Dreiecks jeweils um ein Achtel ihrer Länge auf die
+              Seiten&nbsp;
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">
                 <span className="overline">AD</span>
               </b>
@@ -76,9 +71,19 @@ export function Trigonometry3() {
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">
                 <span className="overline">AE</span>
               </b>
-              &nbsp; verkürzt. <br /> <br />
-              Berechnen Sie den Flächeninhalt des Vierecks DBCE.
+              &nbsp; verkürzt.
             </p>
+            <SubComponent data={data} />
+            <small className="mb-6 block">
+              Skizze ist nicht maßstabsgetreu
+            </small>
+            <p className="serlo-main-task">
+              Der Bereich des Vierecks{' '}
+              <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">DBCE</b>{' '}
+              soll mit Sand aufgefüllt werden. Berechnen Sie den Flächeninhalt
+              der Sandfläche.
+            </p>
+            <p>Runden Sie auf zwei Stellen nach dem Komma.</p>
             <br />
             <br />
           </>
@@ -91,8 +96,8 @@ export function Trigonometry3() {
 
         const zw1 = Math.acos(br)
         const zw = Math.round(zw1 * (180 / Math.PI) * 100) / 100
-        const achtelbd = Math.round(((data.ab * 1) / 8) * 100) / 100
-        const achtelce = Math.round(((data.ac * 1) / 8) * 100) / 100
+        const achtelbd = Math.round(((data.ab * 1) / 8) * 7 * 100) / 100
+        const achtelce = Math.round(((data.ac * 1) / 8) * 7 * 100) / 100
         const A1 =
           Math.round(0.5 * data.ab * data.ac * Math.sin(zw1) * 100) / 100
 
@@ -113,46 +118,58 @@ export function Trigonometry3() {
               cos 𝛼 ={' '}
               {buildFrac(
                 <>
-                  ({data.ab} cm)² + ({data.ac} cm)² - ({data.bc} cm)²
+                  ({data.ab.toLocaleString('de-De')} m)² + (
+                  {data.ac.toLocaleString('de-De')} m)² - (
+                  {data.bc.toLocaleString('de-De')} m)²
                 </>,
                 <>
-                  2 · {data.ab} cm · {data.ac} cm
+                  2 · {data.ab.toLocaleString('de-De')} m ·{' '}
+                  {data.ac.toLocaleString('de-De')} m
                 </>
               )}
             </HighlightGray>
             <br />
             <HighlightGray>𝛼 = {zw.toLocaleString('de-DE')}°</HighlightGray>
             <br />
+            <p className="mt-3">Berechne die verkürzten Längen:</p>
             <HighlightGray>
-              |<span className="overline">BD</span>| ={' '}
-              {buildFrac(<>1</>, <>8</>)} · {data.ab} cm ={' '}
-              {achtelbd.toLocaleString('de-DE')} cm
+              |<span className="overline">AD</span>| ={' '}
+              {buildFrac(<>7</>, <>8</>)} · {data.ab.toLocaleString('de-De')} m
+              = {achtelbd.toLocaleString('de-DE')} m
             </HighlightGray>{' '}
             <br />
             <HighlightGray>
-              |<span className="overline">CE</span>| ={' '}
-              {buildFrac(<>1</>, <>8</>)} · {data.ac} cm ={' '}
-              {achtelce.toLocaleString('de-DE')} cm
+              |<span className="overline">AE</span>| ={' '}
+              {buildFrac(<>7</>, <>8</>)} · {data.ac.toLocaleString('de-De')} m
+              = {achtelce.toLocaleString('de-DE')} m
             </HighlightGray>{' '}
             <br /> <br />
             So ist der Flächeninhalt des Dreiecks ABC: <br />
             <HighlightGray>
-              A<sub>ABC</sub> = 0,5 · {data.ab} · {data.ac} · sin {zw}° = {A1}{' '}
-              cm²
+              A<sub>ABC</sub> = 0,5 · {data.ab.toLocaleString('de-De')} m ·{' '}
+              {data.ac.toLocaleString('de-De')} m · sin{' '}
+              {zw.toLocaleString('de-De')}° = {A1.toLocaleString('de-De')} m²
             </HighlightGray>{' '}
             <br /> <br />
             Der Flächeninhalt des Dreicks ADE: <br />
             <HighlightGray>
-              A<sub>ADE</sub> = 0,5 · ({data.ab} - {data.ab / 8}) cm · (
-              {data.ac} - {Math.round((data.ac / 8) * 100) / 100}) cm · sin{' '}
+              A<sub>ADE</sub> = 0,5 · {achtelbd.toLocaleString('de-DE')} m ·
+              {achtelce.toLocaleString('de-DE')} m · sin{' '}
               {zw.toLocaleString('de-DE')}
-              ° <br />= {A2} cm²
+              ° <br />
+              <br />A<sub>ADE</sub> = {A2.toLocaleString('de-De')} m²
             </HighlightGray>{' '}
             <br /> <br />
             Somit ist der Flächeninhalt des Vierecks DBCE: <br />
             <HighlightGreen>
-              A = {A1} cm² - {A2} cm² = {Erg.toLocaleString('de-DE')} cm²
+              A<sub>DBCE</sub> = {A1.toLocaleString('de-De')} m² -{' '}
+              {A2.toLocaleString('de-De')} m² = {Erg.toLocaleString('de-DE')} m²
             </HighlightGreen>
+            <p className="mt-3">Antworte:</p>
+            <p className="serlo-highlight-green">
+              Der Beach-Bereich der Bar hat eine Fläche von{' '}
+              {Erg.toLocaleString('de-DE')}&nbsp;m².
+            </p>
           </>
         )
       }}
@@ -239,12 +256,12 @@ function SubComponent({ data }: { data: Trig1Data }) {
       radius: 1.5,
     })
 
-    b.create('text', [2.5, 0, `${data.ab} cm`], {
+    b.create('text', [2.5, 0, `${data.ab.toLocaleString('de-De')} m`], {
       anchorX: 'middle',
       anchorY: 'top',
     })
 
-    b.create('text', [0.5, 2.5, `${data.ac} cm`], {
+    b.create('text', [0.5, 2.5, `${data.ac.toLocaleString('de-De')} m`], {
       anchorX: 'middle',
       anchorY: 'top',
     })
@@ -254,8 +271,10 @@ function SubComponent({ data }: { data: Trig1Data }) {
       anchorY: 'top',
     })
 
-    b.create('text', [4.8, 2, `${data.bc} cm`], {})
+    b.create('text', [4.8, 2, `${data.bc.toLocaleString('de-De')} m`], {})
     setBoard(b)
+
+    b.create('polygon', [pointD, pointB, pointC, pointE])
 
     return () => {
       if (board) JXG.JSXGraph.freeBoard(board)
