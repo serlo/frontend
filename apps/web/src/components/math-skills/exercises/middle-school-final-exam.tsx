@@ -3,6 +3,7 @@ import { ABCFormular } from '../exercise-implementations/abc-formular'
 import { AnimalsInForest } from '../exercise-implementations/animals-in-forest'
 import { Asymptote1 } from '../exercise-implementations/asymptote-1'
 import { Asymptote2 } from '../exercise-implementations/asymptote-2'
+import { CircleSector } from '../exercise-implementations/circle-sector'
 import { CompareGrowth } from '../exercise-implementations/compare-growth'
 import { CompletingTheSquare } from '../exercise-implementations/completing-the-square'
 import { DescribeGraphPowerFunction } from '../exercise-implementations/describe-graph-power-function'
@@ -339,13 +340,13 @@ export const middleSchoolFinalExam = {
     difficulty: 1,
     component: <TriangleArea />,
   },
-  'wip-2': {
+  'pizza-stueck-kreissektor': {
     title: 'Pizza-Stück / Kreissektor',
     subtitle: 'Trigonometrie 🚧',
     calculatorAllowed: true,
     track: 3,
     difficulty: 1,
-    component: <IntersectingLines />,
+    component: <CircleSector />,
   },
   'wip-3': {
     title: 'Eigenschaften Trapez',
