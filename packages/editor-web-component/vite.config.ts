@@ -25,11 +25,6 @@ export default defineConfig({
     // We are bundling react and react-dom by not excluding them!
     rollupOptions: {},
   },
-  resolve: {
-    alias: {
-      '@editor': resolve(__dirname, '../editor/src'),
-    },
-  },
   plugins: [
     react(),
     dts({

@@ -4,7 +4,7 @@ This is an early version of the web component wrapping the [Serlo Editor](https:
 
 ## Installation and usage
 
-1. `yarn install @serlo/editor-web-component`
+1. `yarn add @serlo/editor-web-component`
 2. Define an HTML element with the id `serlo-root` in your file where you render the web component
 
 ```JSX
@@ -13,7 +13,7 @@ import { EditorWebComponent } from '@serlo/editor-web-component'
 // in your render function
 return (
   <div id="serlo-root">
-    <editor-web-component></editor-web-component>
+    <serlo-editor></serlo-editor>
   </div>
 )
 ```
@@ -22,6 +22,10 @@ return (
 
 Bump the version number in the package.json and
 the github workflow seen inside `editor-web-component.yaml` will take care of the publishing.
+
+## Local development with editor package
+
+Go to the `package.json` and use `"@serlo/editor": "workspace:*"` instead of a fixed version. This way, you don't need to release a new version of the editor every time you make a change in the repo.
 
 ## Linking for local development with integrations
 
@@ -38,8 +42,8 @@ Initial steps:
 
 After making some changes in the editor:
 
-1. From this workspace -> run `yarn yalc:publish` (pushes dist, updates version and cache)
+- From this workspace -> run `yarn yalc:publish` (pushes dist, updates version and cache)
 
 To remove the local link to Serlo Editor:
 
-1. From consumer repo -> run `yalc remove @serlo/editor-web-component`
+- From consumer repo -> run `yalc remove @serlo/editor-web-component`
