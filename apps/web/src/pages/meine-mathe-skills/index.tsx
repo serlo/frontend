@@ -118,8 +118,9 @@ function Content() {
     return false
   })
 
-  // reset filter if result would be empty (on track change)
+  // reset filter if topic in not on new track
   useEffect(() => {
+    if (!filter.startsWith('topic:')) return
     const topicKey = filter.replace('topic:', '')
     if (
       !Object.hasOwn(topicMap, topicKey) ||
