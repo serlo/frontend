@@ -45,17 +45,25 @@ const ContentPage: NextPage = () => {
 
 const topicMap = {
   Potenzfunktionen: { tracks: [1], subtitles: ['Potenzfunktion'] },
+  'Quadratische Funktionen & Gleichungen': {
+    tracks: [2],
+    subtitles: ['Quadratische Funktionen', 'Funktionen'],
+  },
   'Exponentialfunktion & Logarithmus': {
     tracks: [1, 2],
     subtitles: ['Exponentialfunktion', 'Logarithmus'],
   },
-  'Daten & Zufall': { tracks: [1, 2], subtitles: ['Daten und Zufall'] },
-  Trigonometrie: { tracks: [1, 2], subtitles: ['Trigonometrie'] },
-  Abbildungen: { tracks: [1], subtitles: ['Abbildungen'] },
-  'Quadratische Funktionen & Gleichungen': {
+  'Geometrie & Trigonometrie': {
     tracks: [1],
-    subtitles: ['Quadratische Funktionen', 'Funktionen'],
+    subtitles: ['Trigonometrie', 'Geometrie', 'Raumgeometrie'],
   },
+  Trigonometrie: {
+    tracks: [2],
+    subtitles: ['Trigonometrie', 'Geometrie'],
+  },
+  Abbildungen: { tracks: [1], subtitles: ['Abbildungen'] },
+
+  'Daten & Zufall': { tracks: [1, 2], subtitles: ['Daten und Zufall'] },
   Raumgeometrie: { tracks: [2], subtitles: ['Raumgeometrie'] },
 }
 

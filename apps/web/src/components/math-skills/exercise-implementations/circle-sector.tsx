@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
-import { buildLatex } from '../utils/math-builder'
+import { buildBigSqrt, buildFrac, buildLatex } from '../utils/math-builder'
 import { rotatePoint } from '../utils/rotate-point'
 import { roundToDigits } from '../utils/round-to-digits'
 import { randomIntBetween } from '@/helper/random-int-between'
@@ -13,7 +13,7 @@ type Element = 'r' | 'alpha' | 'A' | 'l' | 'U'
 interface Variant {
   given: [Element, Element]
   goal: Element
-  method: 'area' | 'arc' | 'cir'
+  method: string
 }
 
 interface DATA {
@@ -44,15 +44,15 @@ function elToGiven(e: Element, val: number) {
 }
 
 const variants: Variant[] = [
-  { given: ['alpha', 'r'], goal: 'A', method: 'area' },
-  { given: ['A', 'alpha'], goal: 'r', method: 'area' },
-  { given: ['A', 'r'], goal: 'alpha', method: 'area' },
+  // { given: ['alpha', 'r'], goal: 'A', method: 'area1' },
+  // { given: ['A', 'alpha'], goal: 'r', method: 'area2' },
+  { given: ['A', 'r'], goal: 'alpha', method: 'area3' },
 
-  { given: ['alpha', 'r'], goal: 'l', method: 'arc' },
-  { given: ['l', 'alpha'], goal: 'r', method: 'arc' },
-  { given: ['l', 'r'], goal: 'alpha', method: 'arc' },
+  // { given: ['alpha', 'r'], goal: 'l', method: 'arc1' },
+  // { given: ['l', 'alpha'], goal: 'r', method: 'arc2' },
+  // { given: ['l', 'r'], goal: 'alpha', method: 'arc3' },
 
-  { given: ['alpha', 'r'], goal: 'U', method: 'cir' },
+  // { given: ['alpha', 'r'], goal: 'U', method: 'cir' },
 ]
 
 export function CircleSector() {
@@ -61,7 +61,7 @@ export function CircleSector() {
       generator={() => {
         const variant = randomItemFromArray(variants)
         const alpha = randomIntBetween(35, 222)
-        const r = randomIntBetween(119, 322) / 10
+        const r = randomIntBetween(119, 255) / 10
         const values: { [key in Element]: number } = {
           alpha,
           r,
@@ -108,7 +108,92 @@ export function CircleSector() {
           </>
         )
       }}
-      renderSolution={() => {
+      renderSolution={(data) => {
+        if (data.variant.method === 'area1') {
+          return (
+            <>
+              <p>Nutze die Formel für den Flächeninhalt eines Kreissektors:</p>
+              <p className="serlo-highlight-gray">
+                A<sub>Pizza</sub> ={' '}
+                {buildFrac(<>{data.values.alpha}°</>, '360°')} · (
+                {data.values.r.toLocaleString('de-De')} cm)² · π
+              </p>
+              <p>Berechne das Ergebnis:</p>
+              <p className="serlo-highlight-green">
+                A<sub>Pizza</sub> ={' '}
+                {roundToDigits(
+                  (data.values.alpha / 360) *
+                    Math.PI *
+                    data.values.r *
+                    data.values.r,
+                  1
+                ).toLocaleString('de-De')}{' '}
+                cm²
+              </p>
+            </>
+          )
+        }
+        if (data.variant.method === 'area2') {
+          return (
+            <>
+              <p>Nutze die Formel für den Flächeninhalt eines Kreissektors:</p>
+              <p className="serlo-highlight-gray">
+                {data.values.A} cm² ={' '}
+                {buildFrac(<>{data.values.alpha}°</>, '360°')} · r² · π
+              </p>
+              <p>Stelle die Formal nach r um:</p>
+              <p className="serlo-highlight-gray">
+                r ={' '}
+                {buildBigSqrt(
+                  <>
+                    {buildFrac(<>{data.values.A} cm²</>, 'π')} ·{' '}
+                    {buildFrac('360°', <>{data.values.alpha}°</>)}
+                  </>
+                )}
+              </p>
+              <p>Berechne das Ergebnis:</p>
+              <p className="serlo-highlight-green">
+                r ={' '}
+                {roundToDigits(
+                  Math.sqrt(
+                    ((data.values.A / Math.PI) * 360) / data.values.alpha
+                  ),
+                  1
+                ).toLocaleString('de-De')}{' '}
+                cm
+              </p>
+            </>
+          )
+        }
+        if (data.variant.method === 'area3') {
+          return (
+            <>
+              <p>Nutze die Formel für den Flächeninhalt eines Kreissektors:</p>
+              <p className="serlo-highlight-gray">
+                {data.values.A} cm² = {buildFrac('α', '360°')} · (
+                {data.values.r.toLocaleString('de-De')} cm)² · π
+              </p>
+              <p>Stelle die Formal nach α um:</p>
+              <p className="serlo-highlight-gray">
+                α ={' '}
+                {buildFrac(
+                  <>{data.values.A} cm²</>,
+                  <>({data.values.r.toLocaleString('de-De')} cm)² · π</>
+                )}{' '}
+                · 360°
+              </p>
+              <p>Berechne das Ergebnis:</p>
+              <p className="serlo-highlight-green">
+                α ={' '}
+                {roundToDigits(
+                  (data.values.A / Math.pow(data.values.r, 2) / Math.PI) * 360,
+                  0
+                ).toLocaleString('de-De')}
+                °
+              </p>
+            </>
+          )
+        }
         return <></>
       }}
     />
