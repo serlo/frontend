@@ -43,6 +43,16 @@ const ContentPage: NextPage = () => {
   )
 }
 
+const topicMap = {
+'Potenzfunktionen': {tracks:[1], subtitles: ['Potenzfunktion']},
+'Exponentialfunktion & Logarithmus': {tracks:[1,2], subtitles: ['Exponentialfunktion', 'Logarithmus']},
+'Daten & Zufall': {tracks:[1,2], subtitles: ['Daten und Zufall']},
+'Trigonometrie': {tracks:[1,2], subtitles: ['Trigonometrie']},
+'Abbildungen': {tracks:[1], subtitles: ['Abbildungen']},
+'Quadratische Funktionen & Gleichungen': {tracks:[1], subtitles: ['Quadratische Funktionen','Funktionen']},
+'Raumgeometrie': {tracks:[2], subtitles: ['Raumgeometrie']},
+}
+
 function Content() {
   const [track, setTrack] = useState<1 | 2>(() => {
     if (typeof sessionStorage === 'undefined') return 1
@@ -79,12 +89,13 @@ function Content() {
     if (task.track === 3) return true
     return task.track === track
   })
-  const allTopics = [...new Set(trackTasks.map(([, task]) => task.subtitle))]
 
   const filteredTasks = trackTasks.filter(([, task]) => {
     if (filter === 'all') return true
     if (filter.startsWith('topic:')) {
-      return task.subtitle.includes(filter.replace('topic:', ''))
+      const topicKey = filter.replace('topic:', '')
+      if (!Object.hasOwn(topicMap, topicKey)) return false
+      return topicMap[topicKey as keyof typeof topicMap].subtitles.includes(task.subtitle)
     }
     if (filter === 'easy') return !task.difficulty || task.difficulty < 2
     if (filter === 'hard') return task.difficulty && task.difficulty > 1
@@ -139,7 +150,8 @@ function Content() {
               <b>Filter:</b>
               <br />
               {renderFilterButton('all', 'Alle Aufgaben 🎓')}
-              {allTopics.map((topic) => {
+              {Object.entries(topicMap).map(([topic, data]) => {
+                if(!data.tracks.includes(track)) return null
                 return renderFilterButton(`topic:${topic}`, topic)
               })}
               {renderFilterButton('easy', 'Nur leichtere Aufgaben ✌️')}

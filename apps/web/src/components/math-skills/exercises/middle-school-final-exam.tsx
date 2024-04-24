@@ -67,7 +67,7 @@ export const middleSchoolFinalExam = {
   // Mathe-Zweig Teil A
   'potenzfunktionen-graphen-beschreiben': {
     title: 'Funktionsgraph beschreiben',
-    subtitle: 'Potenzfunktionen',
+    subtitle: 'Potenzfunktion',
     difficulty: 1,
     calculatorAllowed: false,
     track: 1,
