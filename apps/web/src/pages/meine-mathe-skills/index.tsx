@@ -120,11 +120,14 @@ function Content() {
 
   // reset filter if result would be empty (on track change)
   useEffect(() => {
-    const topicKey = filter.replace('topic:', '') 
-    if (!Object.hasOwn(topicMap, topicKey) || !topicMap[topicKey as keyof typeof topicMap].tracks.includes(track)) {
+    const topicKey = filter.replace('topic:', '')
+    if (
+      !Object.hasOwn(topicMap, topicKey) ||
+      !topicMap[topicKey as keyof typeof topicMap].tracks.includes(track)
+    ) {
       setFilter('all')
-    } 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [track, filteredTasks])
 
   return (
