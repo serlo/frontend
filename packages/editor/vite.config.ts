@@ -4,9 +4,21 @@ import { defineConfig } from 'vite'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import dts from 'vite-plugin-dts'
 import svgr from 'vite-plugin-svgr'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 // https://vitejs.dev/guide/build.html#library-mode
 /* we use vite only for building the serlo editor package */
+
+const excludeMenuDataPlugin = {
+  name: 'exclude-menu-data',
+  transform(code, id) {
+    if (id.includes('/data/') && id.includes('menu-data.ts')) {
+      return ''
+    }
+
+    return null
+  },
+}
 
 // eslint-disable-next-line import/no-default-export
 export default defineConfig({
@@ -18,6 +30,10 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
+      plugins: [
+        excludeMenuDataPlugin,
+        visualizer({ open: true, filename: 'bundle-analysis.html' }),
+      ],
       external: ['react', 'react-dom'],
       output: {
         globals: {
