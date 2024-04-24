@@ -344,7 +344,6 @@ function SubComponent({ data }: { data: DATA }) {
       fixed: true,
       label: { autoPosition: true },
     })
-
     const B = b.create('point', [0, 0], {
       name: 'B',
       fixed: true,
@@ -354,15 +353,45 @@ function SubComponent({ data }: { data: DATA }) {
       fixed: true,
       label: { autoPosition: true },
     })
-    b.create('sector', [B, A, C])
+    b.create('sector', [B, A, C], { id: 'slice' })
 
     b.create('segment', [A, B], { withLabel: true, name: 'r' })
     b.create('angle', [A, B, C], {
+      id: 'angle',
       withLabel: true,
       name: 'α',
       radius: 0.8,
-      label: { color: 'darkgray' },
     })
+
+    // inject pizza pattern
+    const svg = b.containerObj.querySelector('svg')
+    const defs = svg?.querySelector('defs')
+    if (defs) {
+      defs.innerHTML = `
+      ${defs?.innerHTML}
+      <pattern id="pizza" width="268" height="268" patternUnits="userSpaceOnUse" >
+        <image x="20" y="20" href="/_assets/img/math-skills/exercises/pizza.svg" width="268" height="268" />
+      </pattern>
+      `
+    }
+
+    const path = svg?.querySelector('#jxgbox_slice') as SVGElement
+    if (path) {
+      path.style.fillOpacity = '1'
+      path.style.fill = 'url(#pizza)'
+    }
+
+    const angleLabel = document.getElementById(
+      'jxgbox_angleLabel'
+    ) as HTMLDivElement
+    if (angleLabel) {
+      angleLabel.style.textAlign = 'center'
+      angleLabel.style.width = '28px'
+      angleLabel.style.borderRadius = '100%'
+      angleLabel.style.background = 'white'
+      angleLabel.style.opacity = '0.8'
+      angleLabel.style.marginRight = '-8px'
+    }
 
     setBoard(b)
 
