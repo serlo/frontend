@@ -354,7 +354,7 @@ export const middleSchoolFinalExam = {
     subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     track: 3,
-    difficulty: 2,
+    difficulty: 1,
     component: <Trapezoid />,
   },
   'Kosinussatz-1': {
