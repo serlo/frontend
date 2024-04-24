@@ -69,7 +69,7 @@ export const middleSchoolFinalExam = {
   // Mathe-Zweig Teil A
   'potenzfunktionen-graphen-beschreiben': {
     title: 'Funktionsgraph beschreiben',
-    subtitle: 'Potenzfunktionen',
+    subtitle: 'Potenzfunktion',
     difficulty: 1,
     calculatorAllowed: false,
     track: 1,
@@ -341,32 +341,32 @@ export const middleSchoolFinalExam = {
     component: <TriangleArea />,
   },
   'pizza-stueck-kreissektor': {
-    title: 'Pizza-Stück / Kreissektor',
-    subtitle: 'Trigonometrie 🚧',
+    title: 'Pizza-Stück / Kreissektor 🚧',
+    subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     track: 3,
     difficulty: 1,
     component: <CircleSector />,
   },
   'wip-3': {
-    title: 'Eigenschaften Trapez',
-    subtitle: 'Trigonometrie 🚧',
+    title: 'Eigenschaften Trapez 🚧',
+    subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     track: 3,
     difficulty: 1,
     component: <IntersectingLines />,
   },
   'Kosinussatz-1': {
-    title: 'Anwendung 1',
-    subtitle: 'Trigonometrie 🚧',
+    title: 'Anwendung 1 🚧',
+    subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     difficulty: 2,
     track: 3,
     component: <Trigonometry3 />,
   },
   'sinussatz-1': {
-    title: 'Anwendung 2',
-    subtitle: 'Trigonometrie 🚧',
+    title: 'Anwendung 2 🚧',
+    subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     difficulty: 3,
     track: 3,
@@ -405,36 +405,36 @@ export const middleSchoolFinalExam = {
     component: <Tombola />,
   },
   'plot-function-1': {
-    title: 'Graphen skizzieren',
-    subtitle: 'Potenzfunktion 🚧',
+    title: 'Graphen skizzieren 🚧',
+    subtitle: 'Potenzfunktion',
     calculatorAllowed: true,
     track: 1,
     component: <PlotFunction />,
   },
   'asymptote-1': {
-    title: 'Definitions-, Wertebereich und Asymptote',
-    subtitle: 'Potenzfunktion 🚧',
+    title: 'Definitions-, Wertebereich und Asymptote 🚧',
+    subtitle: 'Potenzfunktion',
     calculatorAllowed: true,
     track: 1,
     component: <Asymptote1 />,
   },
   'mapping-graphs-1': {
-    title: 'Graphen verschieben',
-    subtitle: 'Funktionen 🚧',
+    title: 'Graphen verschieben 🚧',
+    subtitle: 'Funktionen',
     calculatorAllowed: true,
     track: 1,
     component: <AbbildungGraphen />,
   },
   'mapping-graphs-2': {
-    title: 'Graphen spiegeln',
-    subtitle: 'Funktionen 🚧',
+    title: 'Graphen spiegeln 🚧',
+    subtitle: 'Funktionen',
     calculatorAllowed: true,
     track: 1,
     component: <AbbildungGraphen2 />,
   },
   'parabolas-by-characteristics': {
-    title: 'Parabel aus Punkten bestimmen',
-    subtitle: 'Quadratische Funktionen 🚧',
+    title: 'Parabel aus Punkten bestimmen 🚧',
+    subtitle: 'Quadratische Funktionen',
     calculatorAllowed: true,
     track: 2,
     component: <ParabolaCharacteristics />,
@@ -472,7 +472,7 @@ export const middleSchoolFinalExam = {
 
 /*
 
-Construction sign:  🚧
+Construction sign: 🚧
 
 Template for new exercise
 

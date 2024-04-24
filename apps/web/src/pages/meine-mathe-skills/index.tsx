@@ -21,6 +21,7 @@ import { arrayOfLength } from '@/helper/array-of-length'
 import { cn } from '@/helper/cn'
 
 const sessionKey = 'math-skills-zweig'
+const filterKey = 'math-skills-filter'
 
 const examTasks = Object.entries(middleSchoolFinalExam) as [
   string,
@@ -42,12 +43,33 @@ const ContentPage: NextPage = () => {
   )
 }
 
+const topicMap = {
+  Potenzfunktionen: { tracks: [1], subtitles: ['Potenzfunktion'] },
+  'Exponentialfunktion & Logarithmus': {
+    tracks: [1, 2],
+    subtitles: ['Exponentialfunktion', 'Logarithmus'],
+  },
+  'Daten & Zufall': { tracks: [1, 2], subtitles: ['Daten und Zufall'] },
+  Trigonometrie: { tracks: [1, 2], subtitles: ['Trigonometrie'] },
+  Abbildungen: { tracks: [1], subtitles: ['Abbildungen'] },
+  'Quadratische Funktionen & Gleichungen': {
+    tracks: [1],
+    subtitles: ['Quadratische Funktionen', 'Funktionen'],
+  },
+  Raumgeometrie: { tracks: [2], subtitles: ['Raumgeometrie'] },
+}
+
 function Content() {
   const [track, setTrack] = useState<1 | 2>(() => {
     if (typeof sessionStorage === 'undefined') return 2
     const sessionTrack = parseInt(sessionStorage.getItem(sessionKey) ?? '2')
     return [1, 2].includes(sessionTrack) ? (sessionTrack as 1 | 2) : 2
   })
+  const [filter, setFilter] = useState(() => {
+    if (typeof sessionStorage === 'undefined') return 'all'
+    return sessionStorage.getItem(filterKey) ?? 'all'
+  })
+
   const router = useRouter()
   const { getExerciseData } = useExerciseData()
   const { data } = useMathSkillsStorage()
@@ -69,6 +91,30 @@ function Content() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const trackTasks = examTasks.filter(([, task]) => {
+    if (task.track === 3) return true
+    return task.track === track
+  })
+
+  const filteredTasks = trackTasks.filter(([, task]) => {
+    if (filter === 'all') return true
+    if (filter.startsWith('topic:')) {
+      const topicKey = filter.replace('topic:', '')
+      if (!Object.hasOwn(topicMap, topicKey)) return false
+      return topicMap[topicKey as keyof typeof topicMap].subtitles.includes(
+        task.subtitle
+      )
+    }
+    if (filter === 'easy') return !task.difficulty || task.difficulty < 2
+    if (filter === 'hard') return task.difficulty && task.difficulty > 1
+    return false
+  })
+
+  // reset filter if result would be empty (on track change)
+  useEffect(() => {
+    if (!filteredTasks.length) setFilter('all')
+  }, [track, filteredTasks])
+
   return (
     <>
       <div className="mx-4 sm:mt-10 [@media(min-width:900px)]:mx-auto [@media(min-width:900px)]:max-w-[53rem]">
@@ -83,8 +129,9 @@ function Content() {
             <div>
               <button
                 className={cn(
-                  track === 1 && 'bg-animal bg-opacity-50',
-                  'my-5 inline-block rounded-lg px-2 py-1 text-2xl hover:shadow-menu'
+                  track === 1 && '!bg-opacity-50',
+                  'my-5 inline-block rounded-lg px-2 py-1 text-2xl shadow-menu',
+                  'bg-animal bg-opacity-0 hover:bg-opacity-10 active:bg-opacity-10'
                 )}
                 onClick={() => {
                   sessionStorage.setItem(sessionKey, '1')
@@ -95,8 +142,9 @@ function Content() {
               </button>
               <button
                 className={cn(
-                  track === 2 && 'bg-animal bg-opacity-50',
-                  'my-5 ml-3 inline-block rounded-lg px-2 py-1 text-2xl hover:shadow-menu'
+                  track === 2 && '!bg-opacity-50',
+                  'my-5 ml-3 inline-block rounded-lg px-2 py-1 text-2xl shadow-menu',
+                  'bg-animal bg-opacity-0 hover:bg-opacity-10 active:bg-opacity-10'
                 )}
                 onClick={() => {
                   sessionStorage.setItem(sessionKey, '2')
@@ -106,30 +154,33 @@ function Content() {
                 Zweig II/III
               </button>
             </div>
+            <div className="mb-10">
+              <b>Filter:</b>
+              <br />
+              {renderFilterButton('all', 'Alle Aufgaben 🎓')}
+              {Object.entries(topicMap).map(([topic, data]) => {
+                if (!data.tracks.includes(track)) return null
+                return renderFilterButton(`topic:${topic}`, topic)
+              })}
+              {renderFilterButton('easy', 'Nur leichtere Aufgaben ✌️')}
+              {renderFilterButton('hard', 'Nur schwere Aufgaben 🌶')}
+            </div>
             {track === 1 ? (
               <div>
                 <h4 className="text-lg font-bold">
                   Teil A (ohne Taschenrechner)
                 </h4>
                 <div className="my-6 flex flex-wrap gap-3">
-                  {examTasks
-                    .filter(
-                      ([, obj]) =>
-                        obj.calculatorAllowed === false &&
-                        (obj.track === 1 || obj.track === 3)
-                    )
+                  {filteredTasks
+                    .filter(([, obj]) => obj.calculatorAllowed === false)
                     .map(([id, obj]) => renderCard(id, obj))}
                 </div>
                 <h4 className="text-lg font-bold">
                   Teil B (mit Taschenrechner)
                 </h4>
                 <div className="my-6 flex flex-wrap gap-3">
-                  {examTasks
-                    .filter(
-                      ([, task]) =>
-                        task.calculatorAllowed === true &&
-                        (task.track === 1 || task.track === 3)
-                    )
+                  {filteredTasks
+                    .filter(([, task]) => task.calculatorAllowed === true)
                     .map((entry) => renderCard(...entry))}
                 </div>
               </div>
@@ -140,24 +191,16 @@ function Content() {
                   Teil A (ohne Taschenrechner)
                 </h4>
                 <div className="my-6 flex flex-wrap gap-3">
-                  {examTasks
-                    .filter(
-                      ([, task]) =>
-                        task.calculatorAllowed === false &&
-                        (task.track === 2 || task.track === 3)
-                    )
+                  {filteredTasks
+                    .filter(([, task]) => task.calculatorAllowed === false)
                     .map((entry) => renderCard(...entry))}
                 </div>
                 <h4 className="text-lg font-bold">
                   Teil B (mit Taschenrechner)
                 </h4>
                 <div className="my-6 flex flex-wrap gap-3">
-                  {examTasks
-                    .filter(
-                      ([, obj]) =>
-                        obj.calculatorAllowed === true &&
-                        (obj.track === 2 || (obj.track as number) === 3)
-                    )
+                  {filteredTasks
+                    .filter(([, obj]) => obj.calculatorAllowed === true)
                     .map(([id, obj]) => renderCard(id, obj))}
                 </div>
               </div>
@@ -229,6 +272,27 @@ function Content() {
       </div>
     </>
   )
+
+  function renderFilterButton(filterName: string, text: string) {
+    const isActive = filter === filterName
+
+    return (
+      <button
+        className={cn(
+          isActive && '!bg-opacity-50',
+          'my-1.5 mr-2 inline-block rounded-lg px-2 py-1 text-lg shadow-menu',
+          'bg-animal bg-opacity-0 hover:bg-opacity-10 active:bg-opacity-10'
+        )}
+        onClick={() => {
+          if (isActive) return
+          sessionStorage.setItem(filterKey, filterName)
+          setFilter(filterName)
+        }}
+      >
+        {text}
+      </button>
+    )
+  }
 
   function renderCard(id: string, task: MiddleSchoolTask) {
     const slug = `training-realschule-bayern/${id}`
