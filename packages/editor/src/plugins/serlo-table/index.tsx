@@ -66,7 +66,7 @@ export type SerloTableProps = EditorPluginProps<
 >
 
 export interface SerloTableConfig {
-  allowImageInTableCells: boolean // Used in https://github.com/serlo/serlo-editor-for-edusharing
+  allowImageInTableCells?: boolean // Used in https://github.com/serlo/serlo-editor-for-edusharing
   headerTextFormattingOptions?: TextEditorFormattingOption[]
   cellTextFormattingOptions?: TextEditorFormattingOption[]
 }

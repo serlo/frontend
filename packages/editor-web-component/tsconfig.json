@@ -2,9 +2,6 @@
   "extends": "@serlo/typescript-config/base.json",
   "compilerOptions": {
     "rootDir": "../..",
-    "paths": {
-      "@editor/*": ["../editor/src/*"]
-    },
     "outDir": "dist",
     "module": "ES2022",
     "moduleResolution": "bundler",
