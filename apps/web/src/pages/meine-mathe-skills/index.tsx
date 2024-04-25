@@ -254,7 +254,8 @@ function Content() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Westermann Schulbuch
+                  Westermann Schulbuch{' '}
+                  {track === 1 ? 'Zweig I' : 'Zweig II/III'}
                 </a>
               </li>
               <li>

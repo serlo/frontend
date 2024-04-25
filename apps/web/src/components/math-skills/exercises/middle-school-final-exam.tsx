@@ -365,21 +365,21 @@ export const middleSchoolFinalExam = {
     track: 3,
     component: <Trigonometry3 />,
   },
-  'sinussatz-1': {
-    title: 'Anwendung 2 🚧',
+  'knifflige-aufgabe': {
+    title: 'Knifflige Aufgabe',
     subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     difficulty: 3,
     track: 3,
     component: <Trigonometry2 />,
   },
-  'ursprungsgerade-spiegeln': {
-    title: 'An Ursprungsgerade spiegeln',
-    subtitle: 'Abbildungen',
+  'volumen-pyramide': {
+    title: 'Volumen einer Pyramide',
+    subtitle: 'Raumgeometrie',
     calculatorAllowed: true,
-    track: 1,
-    difficulty: 2,
-    component: <MirrorLineThroughOrigin />,
+    difficulty: 1,
+    track: 3,
+    component: <VolumePyramide />,
   },
   'baumdiagramm-zeichnen': {
     title: 'Baumdiagramm zeichnen',
@@ -404,6 +404,14 @@ export const middleSchoolFinalExam = {
     track: 3,
     difficulty: 1,
     component: <Tombola />,
+  },
+  'ursprungsgerade-spiegeln': {
+    title: 'An Ursprungsgerade spiegeln',
+    subtitle: 'Abbildungen',
+    calculatorAllowed: true,
+    track: 1,
+    difficulty: 2,
+    component: <MirrorLineThroughOrigin />,
   },
   'plot-function-1': {
     title: 'Graphen skizzieren 🚧',
@@ -439,14 +447,6 @@ export const middleSchoolFinalExam = {
     calculatorAllowed: true,
     track: 2,
     component: <ParabolaCharacteristics />,
-  },
-  'volumen-pyramide': {
-    title: 'Volumen einer Pyramide',
-    subtitle: 'Raumgeometrie',
-    calculatorAllowed: true,
-    difficulty: 1,
-    track: 2,
-    component: <VolumePyramide />,
   },
   /*'volumen-pyramide-2': {
     title: 'Volumen einer Pyramide',

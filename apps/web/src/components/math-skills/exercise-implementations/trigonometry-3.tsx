@@ -193,6 +193,9 @@ export function Trigonometry3() {
                 </>
               )}
             </HighlightGray>
+            <p className="mt-3">
+              Berechne die Fläche als Differenz zweier Dreiecksflächen.
+            </p>
           </>
         )
       }}

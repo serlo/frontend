@@ -2,12 +2,9 @@ import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import {
-  MainTask,
-  HighlightGray,
-  HighlightGreen,
-} from '../components/content-components'
-import { buildFrac } from '../utils/math-builder'
+import { MainTask } from '../components/content-components'
+import { buildFrac, buildOverline } from '../utils/math-builder'
+import { roundToDigits } from '../utils/round-to-digits'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -52,74 +49,75 @@ export function Trigonometry2() {
               <br />
               Es gilt{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">
-                <span className="overline">BD</span> = {data.bd} cm
+                |<span className="overline">BD</span>| = {data.bd} cm
               </b>
-              .
+              ;{' '}
+              <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">
+                |<span className="overline">AB</span>| = |
+                <span className="overline">AC</span>| = {data.ab} cm
+              </b>
+              und{' '}
+              <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">
+                ∢ACB = {(180 - data.angle) / 2}°
+              </b>
             </MainTask>
             <SubComponent data={data} />
             <small className="mb-6 block">
               Skizze ist nicht maßstabsgetreu
             </small>
-            <p className="mt-12 text-2xl">Berechnen Sie, den Winkel für 𝛼.</p>
+            <p className="mt-12 text-2xl">
+              Berechnen Sie die Größe des Winkel 𝛼.
+            </p>
             <br />
-            <br />
+            <p>Runden Sie auf eine Stelle nach dem Komma.</p>
           </>
         )
       }}
       renderSolution={({ data }) => {
-        const zw = data.ab / data.bd
-        const rzw = Math.round(zw * 100) / 100
-        const rad = 38 * (Math.PI / 180)
-        const zw2 = Math.sin(rad) / (zw - Math.cos(rad))
+        const ad = roundToDigits(
+          Math.sqrt(
+            data.ab * data.ab +
+              data.bd * data.bd -
+              2 * data.ab * data.bd * Math.cos((38 / 180) * Math.PI)
+          ),
+          2
+        )
 
-        const Erg0 = Math.atan(zw2)
-        const Erg = Math.round(Erg0 * (180 / Math.PI) * 100) / 100
+        const Erg = roundToDigits(
+          (Math.asin((Math.sin((38 / 180) * Math.PI) / ad) * data.bd) /
+            Math.PI) *
+            180,
+          1
+        )
 
         return (
           <>
-            Wende den Sinussatz an:
-            <br />
-            <HighlightGray>
-              {buildFrac(<>{data.bd} cm</>, <>sin(𝛼)</>)} ={' '}
-              {buildFrac(<>{data.ab} cm</>, <>sin[180° - (𝛼 + 38°)]</>)}
-            </HighlightGray>
-            <br />
-            <HighlightGray>
-              {data.ab} cm ={' '}
-              {buildFrac(<>{data.bd} · sin(𝛼 + 38°)</>, <>sin 𝛼</>)} cm
-              &nbsp;&nbsp; | · sin 𝛼
-            </HighlightGray>
-            <br />
-            <HighlightGray>
-              {data.ab} · sin 𝛼 = {data.bd} · (sin 𝛼 cos 38° + cos 𝛼 sin 38°)
-              &nbsp;&nbsp; | : {data.bd}
-            </HighlightGray>
-            <br />
-            <HighlightGray>
-              {rzw.toLocaleString('de-DE')} · sin 𝛼 = sin 𝛼 cos 38° + cos 𝛼 sin
-              38° &nbsp;&nbsp; | - sin 𝛼 cos 38°
-            </HighlightGray>
-            <br />
-            <HighlightGray>
-              {rzw.toLocaleString('de-DE')} · sin 𝛼 - sin 𝛼 cos 38° = cos 𝛼 sin
-              38°
-            </HighlightGray>
-            <br />
-            <HighlightGray>
-              sin 𝛼 · ({rzw.toLocaleString('de-DE')} - cos 38°)= cos 𝛼 sin 38°{' '}
-              <br /> | : cos 𝛼 : ({rzw.toLocaleString('de-DE')} - cos 38°)
-            </HighlightGray>
-            <br />
-            <HighlightGray>
-              tan 𝛼 ={' '}
-              {buildFrac(
-                <>sin 38°</>,
-                <>{rzw.toLocaleString('de-DE')} - cos 38°</>
-              )}{' '}
-              mit tan 𝛼 = {buildFrac(<>sin 𝛼</>, <>cos 𝛼</>)}
-            </HighlightGray>
-            <br />
-            <HighlightGreen>𝛼 = {Erg.toLocaleString('de-DE')}°</HighlightGreen>
+            <p>
+              Das Dreieck ABC ist gleichschenklig, daher ist der Winkel ∢DBA =
+              38°. Wende den Kosinussatz mit {buildOverline('AB')} und{' '}
+              {buildOverline('BD')} an:
+            </p>
+            <p className="serlo-highlight-gray">
+              |{buildOverline('AD')}|² = (4 cm)² + (6 cm)² - 2 · 4 cm · 6 cm ·
+              cos 38°
+              <br />
+              <br />|{buildOverline('AD')}| = {ad.toLocaleString('de-De')} cm
+            </p>
+            <p>Nutze den Sinussatz im Dreieck ABD:</p>
+            <p className="serlo-highlight-gray">
+              {buildFrac(<>sin(𝛼)</>, <>|{buildOverline('BD')}|</>)} ={' '}
+              {buildFrac(<>sin 38°</>, <>|{buildOverline('AD')}|</>)}
+            </p>
+            <p>Stelle die Gleichung um und setze gegebene Größen ein:</p>
+            <p className="serlo-highlight-gray">
+              sin(𝛼) ={' '}
+              {buildFrac(<>sin 38°</>, <>{ad.toLocaleString('de-De')} cm</>)} ·{' '}
+              {data.bd} cm
+            </p>
+            <p>Berechne das Ergebnis:</p>
+            <p className="serlo-highlight-green">
+              𝛼 = {Erg.toLocaleString('de-DE')}°
+            </p>
           </>
         )
       }}
@@ -127,19 +125,11 @@ export function Trigonometry2() {
       renderHint={({}) => {
         return (
           <>
-            Verwende den Sinussatz:
-            <br />
-            <HighlightGray>
-              {buildFrac(<>a</>, <>sin(𝛼)</>)} ={' '}
-              {buildFrac(<>b</>, <>sin(𝛽)</>)} ={' '}
-              {buildFrac(<>c</>, <>sin(𝛾)</>)}{' '}
-            </HighlightGray>
-            <br />
-            Tipp: Versuche es mit: <br />
-            <HighlightGray>
-              a = {buildFrac(<>a · sin(𝛼 + 38°)</>, <>sin 𝛼</>)} cm &nbsp;&nbsp;
-              | · sin 𝛼
-            </HighlightGray>
+            <p>Nutze die Eigenschaft, dass ABC gleichschenklig ist.</p>
+            <p className="mt-3">
+              Es ist hilfreich, zuerst die Länge der Strecke{' '}
+              {buildOverline('AD')} zu berechnen.
+            </p>
           </>
         )
       }}
@@ -190,10 +180,10 @@ function SubComponent({ data }: { data: Trig1Data }) {
       straightLast: false,
     })
 
-    b.create('angle', [pointB, pointA, pointC], {
+    b.create('angle', [pointA, pointC, pointB], {
       radius: 0.75,
       name: function () {
-        return `${data.angle}°`
+        return `${(180 - data.angle) / 2}°`
       },
     })
 
