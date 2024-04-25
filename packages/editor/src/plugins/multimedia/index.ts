@@ -12,7 +12,7 @@ import {
 } from '../../plugin'
 import { isProduction } from '@/helper/is-production'
 
-const defaultConfig: MultimediaConfig = {
+export const defaultConfig: MultimediaConfig = {
   allowedPlugins: [
     EditorPluginType.Image,
     EditorPluginType.Video,

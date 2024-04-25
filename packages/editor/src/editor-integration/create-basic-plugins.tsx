@@ -6,7 +6,7 @@ import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedi
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
-import { editorData } from '@editor/package/editor-data'
+import type { PluginsConfig } from '@editor/package/config'
 import { blanksExercise } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
 import { equationsPlugin } from '@editor/plugins/equations'
@@ -14,10 +14,7 @@ import { exercisePlugin } from '@editor/plugins/exercise'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
-import {
-  MultimediaConfig,
-  createMultimediaPlugin,
-} from '@editor/plugins/multimedia'
+import { createMultimediaPlugin } from '@editor/plugins/multimedia'
 import { createRowsPlugin } from '@editor/plugins/rows'
 import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
 import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
@@ -28,30 +25,9 @@ import { createTextPlugin } from '@editor/plugins/text'
 import { textAreaExercisePlugin } from '@editor/plugins/text-area-exercise'
 import { unsupportedPlugin } from '@editor/plugins/unsupported'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { SupportedLanguage } from '@editor/types/language-data'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
-export interface CreateBasicPluginsProps {
-  allowedChildPlugins: string[]
-  allowImageInTableCells: boolean
-  enableTextAreaExercise: boolean
-  exerciseVisibleInSuggestion: boolean
-  language: SupportedLanguage
-  multimediaConfig?: MultimediaConfig
-}
-
-export function createBasicPlugins(props: CreateBasicPluginsProps) {
-  const {
-    allowedChildPlugins,
-    allowImageInTableCells,
-    enableTextAreaExercise,
-    exerciseVisibleInSuggestion,
-    language,
-    multimediaConfig,
-  } = props
-
-  const editorStrings = editorData[language].loggedInData.strings.editor
-
+export function createBasicPlugins(props: Required<PluginsConfig>) {
   return [
     {
       type: EditorPluginType.Text,
@@ -61,13 +37,13 @@ export function createBasicPlugins(props: CreateBasicPluginsProps) {
     },
     {
       type: EditorPluginType.Multimedia,
-      plugin: createMultimediaPlugin(multimediaConfig),
+      plugin: createMultimediaPlugin(props.multimedia),
       visibleInSuggestions: true,
       icon: <IconMultimedia />,
     },
     {
       type: EditorPluginType.Spoiler,
-      plugin: createSpoilerPlugin({ allowedPlugins: allowedChildPlugins }),
+      plugin: createSpoilerPlugin(props.spoiler),
       visibleInSuggestions: true,
       icon: <IconSpoiler />,
     },
@@ -79,13 +55,13 @@ export function createBasicPlugins(props: CreateBasicPluginsProps) {
     },
     {
       type: EditorPluginType.Box,
-      plugin: createBoxPlugin({ allowedPlugins: allowedChildPlugins }),
+      plugin: createBoxPlugin(props.box),
       visibleInSuggestions: true,
       icon: <IconBox />,
     },
     {
       type: EditorPluginType.SerloTable,
-      plugin: createSerloTablePlugin({ allowImageInTableCells }),
+      plugin: createSerloTablePlugin(props.table),
       visibleInSuggestions: true,
       icon: <IconTable />,
     },
@@ -107,9 +83,9 @@ export function createBasicPlugins(props: CreateBasicPluginsProps) {
     {
       type: EditorPluginType.Exercise,
       plugin: exercisePlugin,
-      visibleInSuggestions: exerciseVisibleInSuggestion,
+      visibleInSuggestions: props.general.exerciseVisibleInSuggestion,
     },
-    ...(enableTextAreaExercise
+    ...(props.general.enableTextAreaExercise
       ? [
           {
             type: EditorPluginType.TextAreaExercise,
@@ -121,15 +97,7 @@ export function createBasicPlugins(props: CreateBasicPluginsProps) {
     { type: EditorPluginType.Solution, plugin: solutionPlugin },
     {
       type: EditorPluginType.InputExercise,
-      plugin: createInputExercisePlugin({
-        feedback: {
-          plugin: EditorPluginType.Text,
-          config: {
-            placeholder:
-              editorStrings.templatePlugins.inputExercise.feedbackPlaceholder,
-          },
-        },
-      }),
+      plugin: createInputExercisePlugin(),
     },
     {
       type: EditorPluginType.ScMcExercise,

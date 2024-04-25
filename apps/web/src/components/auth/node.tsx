@@ -168,6 +168,8 @@ export function Node({
     }
   }
   // Anchor, Image, Script, Text
+  // eslint-disable-next-line no-console
+  console.log(node)
   triggerSentry({
     message: 'kratos: tried to render a node which is not an input node',
   })

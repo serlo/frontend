@@ -1,4 +1,5 @@
 import type { deSubjectLandingSubjects } from './subject-landing'
+import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
 import { FooterNew } from '../landing/rework/footer-new'
 import { SubjectIcon } from '../landing/rework/subject-icon'
@@ -14,6 +15,7 @@ import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { cn } from '@/helper/cn'
 import { getServerSideStrings } from '@/helper/feature-i18n'
+import { submitEvent } from '@/helper/submit-event'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
 interface SubjectLandingContentProps {
@@ -68,25 +70,34 @@ export function SubjectLandingContent({
           </div>
           {renderIcon()}
         </section>
-
-        <section className="mx-auto mt-10 max-w-3xl text-center sm:mt-16 sm:text-left">
+        {subject === 'mathe' ? (
+          <Link
+            onClick={() => submitEvent('oam-banner-click-math-landing')}
+            href="/mathe-pruefungen"
+            className="group mb-10 mt-10 block bg-newgreen bg-opacity-20 p-3 text-lg text-black hover:!no-underline mobile:text-center sm:py-4 md:text-[22px] lg:mb-0"
+          >
+            🎓 Ui, fast schon Prüfungszeit?{' '}
+            <b className="serlo-link group-hover:underline">
+              Hier geht&apos;s zur Mathe-Prüfungsvorbereitung
+            </b>
+            .
+          </Link>
+        ) : null}
+        <section className="mx-auto mt-10 max-w-3xl text-center sm:mt-12 sm:text-left">
           <h2 className="mb-2 text-lg font-bold text-almost-black">
             Durchsuche den Bereich {data.title}
           </h2>
-
           <Quickbar
             subject={data.title}
             className="mx-auto max-w-sm sm:-ml-1 sm:px-0 md:max-w-2xl md:pr-4"
           />
         </section>
-
         <section className="themen text-center">
           <p className="mb-12 mt-4 text-3xl font-extrabold tracking-tight">
             <span>Was darf&apos;s denn heute sein?</span>
           </p>
           <SubjectLandingTopicOverview subterms={subterms} subject={subject} />
         </section>
-
         <section className="mb-8 mt-20 text-center">
           <h2
             className={cn(`
@@ -99,7 +110,6 @@ export function SubjectLandingContent({
 
           <SubjectLandingFeatured subject={subject} />
         </section>
-
         <section className="bg-blueWave bg-100% pt-4 text-center">
           <CommunityWallSubjectLanding subject={subject} />
         </section>

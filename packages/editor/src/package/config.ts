@@ -1,37 +1,45 @@
 import type { PluginWithData } from '@editor/plugin/helpers/editor-plugins'
 import type { PluginStaticRenderer } from '@editor/plugin/helpers/editor-renderer'
-import type { MultimediaConfig } from '@editor/plugins/multimedia'
+import type { BoxConfig } from '@editor/plugins/box'
+import {
+  defaultConfig as defaultMultimediaConfig,
+  type MultimediaConfig,
+} from '@editor/plugins/multimedia'
+import type { SerloTableConfig } from '@editor/plugins/serlo-table'
+import type { SpoilerConfig } from '@editor/plugins/spoiler'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { SupportedLanguage } from '@editor/types/language-data'
+import type { SupportedLanguage } from '@editor/types/language-data'
 
-interface BasicPluginsConfig {
-  allowedChildPlugins?: string[]
-  allowImageInTableCells?: boolean
-  enableTextAreaExercise?: boolean
-  exerciseVisibleInSuggestion?: boolean
-  multimediaConfig?: MultimediaConfig
+export interface PluginsConfig {
+  box?: BoxConfig
+  multimedia?: MultimediaConfig
+  spoiler?: SpoilerConfig
+  table?: SerloTableConfig
+  general?: {
+    enableTextAreaExercise: boolean
+    exerciseVisibleInSuggestion: boolean
+  }
 }
 
 // Custom plugins and renderers are an Edusharing specific feature,
 // and will not be supported in the future
-export interface PluginsConfig {
-  basicPluginsConfig?: BasicPluginsConfig
-  customPlugins?: Array<PluginWithData & PluginStaticRenderer>
-}
+export type CustomPlugin = PluginWithData & PluginStaticRenderer
 
-export const defaultBasicPluginConfig: Omit<
-  Required<BasicPluginsConfig>,
-  'multimediaConfig'
-> = {
-  allowedChildPlugins: [],
-  allowImageInTableCells: true,
-  enableTextAreaExercise: false,
-  exerciseVisibleInSuggestion: true,
-}
-
-export const defaultPluginsConfig: Required<PluginsConfig> = {
-  basicPluginsConfig: defaultBasicPluginConfig,
-  customPlugins: [],
+const defaultPluginsConfig: Required<PluginsConfig> = {
+  box: {
+    allowedPlugins: [],
+  },
+  multimedia: defaultMultimediaConfig,
+  spoiler: {
+    allowedPlugins: [],
+  },
+  table: {
+    allowImageInTableCells: true,
+  },
+  general: {
+    exerciseVisibleInSuggestion: true,
+    enableTextAreaExercise: false,
+  },
 }
 
 export const emptyDocumentState = {
@@ -45,7 +53,10 @@ export const emptyDocumentState = {
 }
 
 export const defaultSerloEditorProps = {
+  children: null,
+  onChange: undefined,
   pluginsConfig: defaultPluginsConfig,
+  customPlugins: [] as CustomPlugin[],
   initialState: emptyDocumentState,
   language: 'de' as SupportedLanguage,
 }

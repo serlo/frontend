@@ -7,10 +7,9 @@ import { SupportedLanguage } from '@editor/types/language-data'
 import React from 'react'
 
 import {
-  defaultPluginsConfig,
-  defaultBasicPluginConfig,
   type PluginsConfig,
   defaultSerloEditorProps,
+  type CustomPlugin,
 } from './config.js'
 import { editorData } from './editor-data.js'
 import { InstanceDataProvider } from '@/contexts/instance-context'
@@ -21,6 +20,7 @@ import '@/assets-webkit/styles/serlo-tailwind.css'
 export interface SerloEditorProps {
   children: EditorProps['children']
   pluginsConfig?: PluginsConfig
+  customPlugins?: CustomPlugin[]
   initialState?: EditorProps['initialState']
   onChange?: EditorProps['onChange']
   language?: SupportedLanguage
@@ -28,35 +28,18 @@ export interface SerloEditorProps {
 
 /** For exporting the editor */
 export function SerloEditor(props: SerloEditorProps) {
-  const { children, pluginsConfig, initialState, language, onChange } = {
+  const { children, customPlugins, initialState, onChange, language } = {
     ...defaultSerloEditorProps,
     ...props,
   }
-  const { basicPluginsConfig, customPlugins } = {
-    ...defaultPluginsConfig,
-    ...pluginsConfig,
-  }
-  const {
-    allowedChildPlugins,
-    allowImageInTableCells,
-    enableTextAreaExercise,
-    exerciseVisibleInSuggestion,
-    multimediaConfig,
-  } = {
-    ...defaultBasicPluginConfig,
-    ...basicPluginsConfig,
+  const pluginsConfig = {
+    ...defaultSerloEditorProps.pluginsConfig,
+    ...props.pluginsConfig,
   }
 
   const { instanceData, loggedInData } = editorData[language]
 
-  const basicPlugins = createBasicPlugins({
-    allowedChildPlugins,
-    allowImageInTableCells,
-    enableTextAreaExercise,
-    exerciseVisibleInSuggestion,
-    language,
-    multimediaConfig,
-  })
+  const basicPlugins = createBasicPlugins(pluginsConfig)
   editorPlugins.init([...basicPlugins, ...customPlugins])
 
   const basicRenderers = createRenderers(customPlugins)
