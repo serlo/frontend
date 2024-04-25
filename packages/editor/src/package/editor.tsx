@@ -4,7 +4,6 @@ import { createRenderers } from '@editor/editor-integration/create-renderers'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { SupportedLanguage } from '@editor/types/language-data'
-import { mergeDeepRight } from 'ramda'
 import React from 'react'
 
 import {
@@ -29,14 +28,14 @@ export interface SerloEditorProps {
 
 /** For exporting the editor */
 export function SerloEditor(props: SerloEditorProps) {
-  const {
-    children,
-    pluginsConfig,
-    customPlugins,
-    initialState,
-    language,
-    onChange,
-  } = mergeDeepRight(defaultSerloEditorProps, props)
+  const { children, customPlugins, initialState, onChange, language } = {
+    ...defaultSerloEditorProps,
+    ...props,
+  }
+  const pluginsConfig = {
+    ...defaultSerloEditorProps.pluginsConfig,
+    ...props.pluginsConfig,
+  }
 
   const { instanceData, loggedInData } = editorData[language]
 

@@ -16,8 +16,8 @@ export interface PluginsConfig {
   spoiler?: SpoilerConfig
   table?: SerloTableConfig
   general?: {
-    enableTextAreaExercise?: boolean
-    exerciseVisibleInSuggestion?: boolean
+    enableTextAreaExercise: boolean
+    exerciseVisibleInSuggestion: boolean
   }
 }
 
@@ -53,8 +53,10 @@ export const emptyDocumentState = {
 }
 
 export const defaultSerloEditorProps = {
+  children: null,
+  onChange: undefined,
   pluginsConfig: defaultPluginsConfig,
-  customPlugins: [],
+  customPlugins: [] as CustomPlugin[],
   initialState: emptyDocumentState,
   language: 'de' as SupportedLanguage,
 }
