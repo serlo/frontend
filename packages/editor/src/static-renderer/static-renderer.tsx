@@ -19,10 +19,12 @@ export function StaticRenderer({
   if (Array.isArray(document)) {
     return (
       <>
-        {document.map((item, index) => {
+        {document.map((item) => {
           if (!item) return null
+          // only for debugging!
+          if (!item.id) throw new Error(`${item.plugin} had not id`)
           return (
-            <Fragment key={item.id ?? `${item.plugin}${index}`}>
+            <Fragment key={item.id}>
               <StaticRenderer document={item} />
             </Fragment>
           )

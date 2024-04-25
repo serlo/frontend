@@ -25,16 +25,11 @@ export function ScMcSerloStaticRenderer(props: EditorScMcExerciseDocument) {
 
   const exStrings = useInstanceData().strings.content.exercises
 
-  // better idea anyone? 🙈
-  const idFallbackHack = props.id ?? JSON.stringify(props.state.answers)
-  // The old version used node.positionOnPage, node.context.id, node.positionInGroup AND path to generate a unique key 😅
-  // for newer revisions it would just use the documents id from database but…
-
   return (
     <ScMcExerciseStaticRenderer
       {...props}
       isPrintMode={isPrintMode}
-      idBase={`sc-mc-${idFallbackHack}`}
+      idBase={`sc-mc-${props.id}`} // TODO: can probably be simplified more now
       onEvaluate={onEvaluate}
       renderExtraAnswerContent={renderRevisionExtra}
     />
