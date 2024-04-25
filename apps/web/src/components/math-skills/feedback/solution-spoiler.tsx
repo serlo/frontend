@@ -28,7 +28,7 @@ export function SolutionSpoiler({
     <div
       className={cn(
         'mb-block flex flex-col rounded-xl border-3 mobile:mx-side',
-        '[&>div.my-block:first-of-type]:mt-5 border-animal',
+        'border-animal [&>div.my-block:first-of-type]:mt-5',
         isOpen ? 'border-opacity-20' : ' border-opacity-10'
       )}
     >
@@ -36,7 +36,7 @@ export function SolutionSpoiler({
         onClick={() => handleSpoilerClick()}
         className={cn(
           `
-            serlo-input-font-reset m-0 border-none px-side py-2.5 bg-animal rounded-t-[9px]
+            serlo-input-font-reset m-0 rounded-t-[9px] border-none bg-animal px-side py-2.5
             text-left text-lg leading-normal text-almost-black transition-colors
           `,
           isOpen ? 'bg-opacity-20' : 'bg-opacity-10'

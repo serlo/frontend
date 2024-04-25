@@ -361,7 +361,7 @@ function Content() {
       'Profi Level',
     ][difficulty]
     return (
-      <p className="font-emoji mt-1.5 text-sm" title={title}>
+      <p className="mt-1.5 font-emoji text-sm" title={title}>
         {arrayOfLength(difficulty).map(() => '🌶')}
       </p>
     )
