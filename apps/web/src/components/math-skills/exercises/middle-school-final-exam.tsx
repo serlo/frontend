@@ -365,8 +365,8 @@ export const middleSchoolFinalExam = {
     track: 3,
     component: <Trigonometry3 />,
   },
-  'sinussatz-1': {
-    title: 'Anwendung 2 🚧',
+  'knifflige-aufgabe': {
+    title: 'Knifflige Aufgabe',
     subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     difficulty: 3,
