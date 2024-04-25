@@ -139,6 +139,8 @@ export default {
       fontFamily: {
         serlo: 'Karla, sans-serif',
         handwritten: 'Caveat, sans-serif',
+        emoji:
+          'system-ui, apple color emoji, segoe ui emoji, segoe ui symbol, noto color emoji',
       },
       backgroundImage: {
         'circled-and-arrow':

@@ -178,8 +178,18 @@ function Content() {
                 if (!data.tracks.includes(track)) return null
                 return renderFilterButton(`topic:${topic}`, topic)
               })}
-              {renderFilterButton('easy', 'Nur leichtere Aufgaben ✌️')}
-              {renderFilterButton('hard', 'Nur schwere Aufgaben 🌶')}
+              {renderFilterButton(
+                'easy',
+                <>
+                  Nur leichtere Aufgaben <span className="font-emoji">✌️</span>
+                </>
+              )}
+              {renderFilterButton(
+                'hard',
+                <>
+                  Nur schwere Aufgaben <span className="font-emoji">🌶</span>
+                </>
+              )}
             </div>
             {track === 1 ? (
               <div>
@@ -289,7 +299,7 @@ function Content() {
     </>
   )
 
-  function renderFilterButton(filterName: string, text: string) {
+  function renderFilterButton(filterName: string, text: string | JSX.Element) {
     const isActive = filter === filterName
 
     return (
@@ -326,7 +336,7 @@ function Content() {
           'text-base transition-colors hover:bg-opacity-25 hover:shadow-menu active:bg-opacity-25'
         )}
       >
-        <p className="text-lg">
+        <p className="font-emoji text-lg">
           {data?.animal
             ? points.map(() => animalsData[data.animal].emoji)
             : null}
@@ -350,7 +360,7 @@ function Content() {
       'Profi Level',
     ][difficulty]
     return (
-      <p className="mt-1.5 text-sm" title={title}>
+      <p className="font-emoji mt-1.5 text-sm" title={title}>
         {arrayOfLength(difficulty).map(() => '🌶')}
       </p>
     )
