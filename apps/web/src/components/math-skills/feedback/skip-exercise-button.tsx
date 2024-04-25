@@ -1,4 +1,11 @@
-import { faStepForward } from '@fortawesome/free-solid-svg-icons'
+import {
+  faMagic,
+  faSprayCanSparkles,
+  faStepForward,
+  faWandMagic,
+  faWandMagicSparkles,
+  faWandSparkles,
+} from '@fortawesome/free-solid-svg-icons'
 
 import { FaIcon } from '../../fa-icon'
 import { useExerciseData } from '../utils/math-skills-data-context'
@@ -15,7 +22,7 @@ export function SkipExerciseButton({
   return (
     <button
       className={cn(
-        'group serlo-button-light !z-50 ml-auto flex h-9 items-center hover:bg-brand-100 hover:text-brand',
+        'group serlo-button-light !z-50 ml-auto flex h-9 items-center hover:bg-brand-200 hover:text-brand',
         'relative z-10',
         hidden && 'opacity-0'
       )}
@@ -25,18 +32,18 @@ export function SkipExerciseButton({
         makeNewExercise()
       }}
     >
+      <FaIcon icon={faWandMagicSparkles} className="h-5 w-5" />
       <span
         className={cn(
           'inline-block h-0 h-auto w-0 overflow-clip text-sm',
           // show on hover: 'group-hover:ml-1 group-hover:mr-2 group-hover:w-auto',
           // 'group-focus-visible:ml-1 group-focus-visible:mr-2 group-focus-visible:w-auto'
           // always show text:
-          'ml-1 mr-2 w-auto'
+          'ml-2 mr-1 w-auto'
         )}
       >
-        Aufgabe überspringen
+        Neu generieren
       </span>
-      <FaIcon icon={faStepForward} className="h-5 w-5" />
     </button>
   )
 }
