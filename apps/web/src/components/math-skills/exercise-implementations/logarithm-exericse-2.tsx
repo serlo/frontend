@@ -13,35 +13,49 @@ export function LogarithmExercise2() {
     <SelfEvaluationExercise
       generator={() => {
         return {
+          breaker: randomItemFromArray([true, false, false, false]),
           num: randomIntBetween(1, 9),
           isPlus: randomItemFromArray([true, false]),
           varName: randomItemFromArray(['a', 'b', 'c', 'x', 'y', 'z']),
           logBase: randomIntBetween(2, 15),
         }
       }}
-      renderTask={({ num, isPlus, varName, logBase }) => {
+      renderTask={({ num, isPlus, varName, logBase, breaker }) => {
         return (
           <>
             <MainTask>Fassen Sie zu einem Logarithmus zusammen:</MainTask>
             <HighlightGreen>
-              log&#8202;<sub>{logBase}</sub>({varName}² - {num * num}) -
-              log&#8202;
+              log&#8202;<sub>{logBase}</sub>({varName}² -{' '}
+              {breaker ? Math.pow(num + 1, 2) : num * num}) - log&#8202;
               <sub>{logBase}</sub>({varName} {isPlus ? '+' : '-'} {num})
             </HighlightGreen>
           </>
         )
       }}
-      renderSolution={({ num, isPlus, varName, logBase }) => {
+      renderSolution={({ num, isPlus, varName, logBase, breaker }) => {
+        if (breaker) {
+          return (
+            <>
+              <p> Forme um mit den Logarithmusgesetzen:</p>
+              <p className="serlo-highlight-gray">
+                log&#8202;<sub>{logBase}</sub>
+                <span className="inline-block scale-y-[2.5]">(</span>
+                {buildFrac(
+                  <>
+                    {varName}² - {breaker ? Math.pow(num + 1, 2) : num * num}
+                  </>,
+                  <>
+                    {varName} {isPlus ? '+' : '-'} {num}
+                  </>
+                )}
+                <span className="inline-block scale-y-[2.5]">)</span>
+              </p>
+              <p>Dieser Term lässt sich nicht weiter vereinfachen.</p>
+            </>
+          )
+        }
         return (
           <>
-            Aufgabenstellung: <br />
-            <HighlightGray>
-              log&#8202;<sub>{logBase}</sub>({varName}² - {num * num}) -
-              log&#8202;
-              <sub>{logBase}</sub>({varName} {isPlus ? '+' : '-'} {num})
-            </HighlightGray>
-            <br />
-            <br />
             Forme um mit den Logarithmusgesetzen:
             <br />
             <HighlightGray>
