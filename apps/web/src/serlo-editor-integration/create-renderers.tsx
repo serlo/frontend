@@ -25,6 +25,7 @@ import type {
   EditorSolutionDocument,
   EditorSpoilerDocument,
   EditorExerciseGroupDocument,
+  EditorDragDropBgDocument,
 } from '@editor/types/editor-plugins'
 import dynamic from 'next/dynamic'
 import { ComponentProps } from 'react'
@@ -74,6 +75,14 @@ const SpoilerSerloStaticRenderer = dynamic<
 >(() =>
   import('./serlo-plugin-wrappers/spoiler-serlo-static-renderer').then(
     (mod) => mod.SpoilerSerloStaticRenderer
+  )
+)
+
+const DragDropBgSerloStaticRenderer = dynamic<
+  EditorDragDropBgDocument & { openOverwrite?: boolean; onOpen?: () => void }
+>(() =>
+  import('@editor/plugins/drag-drop-bg/static').then(
+    (mod) => mod.DragDropBgStaticRenderer
   )
 )
 
@@ -149,6 +158,7 @@ export function createRenderers(): InitRenderersArgs {
           )
         },
       },
+      { type: EditorPluginType.DragDropBg, renderer: DragDropBgSerloStaticRenderer },
       { type: EditorPluginType.Box, renderer: BoxStaticRenderer },
       { type: EditorPluginType.SerloTable, renderer: SerloTableStaticRenderer },
       {

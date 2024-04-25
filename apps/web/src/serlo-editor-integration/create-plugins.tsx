@@ -16,6 +16,7 @@ import { articlePlugin } from '@editor/plugins/article'
 import { audioPlugin } from '@editor/plugins/audio'
 import { blanksExercise } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
+import { createDragDropBgPlugin } from '@editor/plugins/drag-drop-bg'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
 import { exerciseGroupPlugin } from '@editor/plugins/exercise-group'
@@ -83,6 +84,12 @@ export function createPlugins({
       plugin: createMultimediaPlugin(),
       visibleInSuggestions: true,
       icon: <IconMultimedia />,
+    },
+    {
+      type: EditorPluginType.DragDropBg,
+      plugin: createDragDropBgPlugin(),
+      visibleInSuggestions: true,
+      icon: <div>!!!!</div>,
     },
     {
       type: EditorPluginType.Spoiler,

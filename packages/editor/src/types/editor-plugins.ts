@@ -35,6 +35,7 @@ import type { VideoPluginState } from '@editor/plugins/video'
 
 import { EditorPluginType } from './editor-plugin-type'
 import { TemplatePluginType } from './template-plugin-type'
+import { DragDropBgPluginState } from '@editor/plugins/drag-drop-bg'
 
 export type SlateBlockElement = CustomElement
 export type SlateTextElement = CustomText
@@ -134,6 +135,11 @@ export interface EditorScMcExerciseDocument {
 export interface EditorBlanksExerciseDocument {
   plugin: EditorPluginType.BlanksExercise
   state: PrettyStaticState<BlanksExerciseState>
+  id?: string
+}
+export interface EditorDragDropBgDocument {
+  plugin: EditorPluginType.DragDropBg
+  state: PrettyStaticState<DragDropBgPluginState>
   id?: string
 }
 export interface EditorSpoilerDocument {

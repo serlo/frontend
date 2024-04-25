@@ -87,6 +87,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     if (!document.plugin) {
       // eslint-disable-next-line no-console
       console.warn('SubDocumentEditor -> Document is invalid')
+      console.log(document)
       return null
     }
 

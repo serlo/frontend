@@ -692,6 +692,13 @@ export const loggedInData = {
           anchorId: 'Anchor ID',
           emptyContentWarning: 'Boxes without content will not be displayed',
         },
+        dragDropBg: {
+          title: 'Drag & Drop Background',
+          description: 'Add a background image for drag & drop exercises.',
+          backgroundImage: 'Background image',
+          dropZone: 'Drop zone',
+          dropZoneTooltip: 'Choose the drop zone',
+        },
         unsupported: {
           title: 'Unsupported',
           notSupported: 'Sorry, this plugin is not supported:',

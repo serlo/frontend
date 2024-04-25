@@ -48,6 +48,12 @@ export function createBasicPlugins(props: Required<PluginsConfig>) {
       icon: <IconSpoiler />,
     },
     {
+      type: EditorPluginType.DragDropBg,
+      plugin: createSpoilerPlugin({ allowedPlugins: allowedChildPlugins }),
+      visibleInSuggestions: true,
+      icon: <div>!!!</div>,
+    },
+    {
       type: EditorPluginType.Equations,
       plugin: equationsPlugin,
       visibleInSuggestions: true,
