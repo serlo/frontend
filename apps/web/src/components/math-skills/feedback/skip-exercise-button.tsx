@@ -27,9 +27,11 @@ export function SkipExerciseButton({
     >
       <span
         className={cn(
-          'inline-block h-0 w-0 overflow-clip text-sm',
-          'group-hover:ml-1 group-hover:mr-2 group-hover:w-auto',
-          'h-auto group-focus-visible:ml-1 group-focus-visible:mr-2 group-focus-visible:w-auto'
+          'inline-block h-0 h-auto w-0 overflow-clip text-sm',
+          // show on hover: 'group-hover:ml-1 group-hover:mr-2 group-hover:w-auto',
+          // 'group-focus-visible:ml-1 group-focus-visible:mr-2 group-focus-visible:w-auto'
+          // always show text:
+          'ml-1 mr-2 w-auto'
         )}
       >
         Aufgabe überspringen
