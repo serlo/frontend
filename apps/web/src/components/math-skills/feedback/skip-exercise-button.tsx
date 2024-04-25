@@ -1,11 +1,4 @@
-import {
-  faMagic,
-  faSprayCanSparkles,
-  faStepForward,
-  faWandMagic,
-  faWandMagicSparkles,
-  faWandSparkles,
-} from '@fortawesome/free-solid-svg-icons'
+import { faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons'
 
 import { FaIcon } from '../../fa-icon'
 import { useExerciseData } from '../utils/math-skills-data-context'
