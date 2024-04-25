@@ -66,6 +66,7 @@ export function SelfEvaluationExercise<T>({
                 onNewExecise={() => {
                   setData(generator())
                   setShowSolution(false)
+                  setShowStrategy(false)
                 }}
                 centAmount={centAmount ?? 52}
               />
