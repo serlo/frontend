@@ -323,20 +323,19 @@ function Content() {
         href={`/meine-mathe-skills/training-realschule-bayern/${id}`}
         className={cn(
           'flex aspect-square w-48 flex-col items-start justify-center rounded-2xl bg-animal bg-opacity-10 p-4 text-almost-black !no-underline',
-          'text-xl transition-colors hover:bg-opacity-25 hover:shadow-menu active:bg-opacity-25'
+          'text-base transition-colors hover:bg-opacity-25 hover:shadow-menu active:bg-opacity-25'
         )}
       >
-        <p className="mb-2">
-          <b>{title}</b>
-        </p>
-        <p className="text-base">
-          ({subtitle}){renderDifficulty(difficulty)}
-        </p>
-        <p className="mt-2 text-base">
+        <p className="text-lg">
           {data?.animal
             ? points.map(() => animalsData[data.animal].emoji)
             : null}
         </p>
+        <p className="mb-2 text-xl">
+          <b>{title}</b>
+        </p>
+        <p>({subtitle})</p>
+        {renderDifficulty(difficulty)}
       </Link>
     )
   }
@@ -351,9 +350,9 @@ function Content() {
       'Profi Level',
     ][difficulty]
     return (
-      <span className="block" title={title}>
+      <p className="mt-1.5 text-sm" title={title}>
         {arrayOfLength(difficulty).map(() => '🌶')}
-      </span>
+      </p>
     )
   }
 }
