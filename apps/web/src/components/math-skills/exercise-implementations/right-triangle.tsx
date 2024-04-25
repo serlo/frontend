@@ -288,8 +288,7 @@ export function RightTriangle() {
             </p>
             <p>Setze die Werte ein:</p>
             <p className="serlo-highlight-gray">
-              {data.goal_element} = {data.func}
-              <sup>-1</sup>{' '}
+              {data.func} {data.goal_element} =
               {buildFrac(
                 data.given_1_value.toLocaleString('de-De'),
                 data.given_2_value.toLocaleString('de-De')
