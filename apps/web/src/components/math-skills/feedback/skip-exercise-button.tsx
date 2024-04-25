@@ -2,6 +2,7 @@ import { faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons'
 
 import { FaIcon } from '../../fa-icon'
 import { useExerciseData } from '../utils/math-skills-data-context'
+import { shootStars } from '../utils/shoot-stars'
 import { cn } from '@/helper/cn'
 
 export function SkipExerciseButton({
@@ -20,9 +21,10 @@ export function SkipExerciseButton({
         hidden && 'opacity-0'
       )}
       disabled={hidden}
-      onClick={() => {
+      onClick={(e) => {
         deductPoints(3)
         makeNewExercise()
+        shootStars(e)
       }}
     >
       <FaIcon icon={faWandMagicSparkles} className="h-5 w-5" />
