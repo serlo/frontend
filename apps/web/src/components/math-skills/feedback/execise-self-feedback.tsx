@@ -32,6 +32,7 @@ export function ExerciseSelfFeedback({
   function newEx() {
     setExStatus('fresh')
     onNewExecise()
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   function selfEvaluate(isCorrect: boolean) {
