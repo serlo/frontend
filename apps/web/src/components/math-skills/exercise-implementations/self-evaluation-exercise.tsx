@@ -1,10 +1,10 @@
-import { SpoilerRenderer } from '@editor/plugins/spoiler/renderer'
 import { faCalculator, faSlash } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useState } from 'react'
 
 import { ExStatus } from '../feedback/execise-feedback'
 import { ExerciseSelfFeedback } from '../feedback/execise-self-feedback'
 import { SkipExerciseButton } from '../feedback/skip-exercise-button'
+import { SolutionSpoiler } from '../feedback/solution-spoiler'
 import { CalculatorAllowedContext } from '../utils/calculator-allowed-context'
 import { useSubmitEvent } from '../utils/math-skills-submit-event'
 import { FaIcon } from '@/components/fa-icon'
@@ -48,7 +48,7 @@ export function SelfEvaluationExercise<T>({
       <div className="h-4"></div>
       Und wenn du fertig bist:
       <div className="-ml-side mt-2">
-        <SpoilerRenderer
+        <SolutionSpoiler
           openOverwrite={showSolution}
           setOpenOverwrite={(val) => {
             if (val) {
@@ -75,7 +75,7 @@ export function SelfEvaluationExercise<T>({
       </div>
       {renderHint && (
         <div className="-ml-side mt-2">
-          <SpoilerRenderer
+          <SolutionSpoiler
             openOverwrite={showStrategy}
             setOpenOverwrite={(val) => {
               if (val) {
