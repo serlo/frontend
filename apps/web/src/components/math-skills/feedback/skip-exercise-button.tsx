@@ -16,14 +16,16 @@ export function SkipExerciseButton({
   return (
     <button
       className={cn(
-        'group serlo-button-light !z-50 ml-auto flex h-9 items-center hover:bg-brand-200 hover:text-brand',
+        'group serlo-button-light !z-[1000] ml-auto flex h-9 items-center hover:bg-brand-200 hover:text-brand',
         'relative z-10',
         hidden && 'opacity-0'
       )}
       disabled={hidden}
       onClick={(e) => {
         deductPoints(3)
-        makeNewExercise()
+        setTimeout(() => {
+          makeNewExercise()
+        }, 250)
         shootStars(e)
       }}
     >
