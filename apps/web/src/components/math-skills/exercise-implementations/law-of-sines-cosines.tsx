@@ -52,7 +52,7 @@ interface DATA {
 }
 
 function elToString(el: Element) {
-  if (el === 'alpha') return 'α'
+  if (el === 'alpha') return '⍺'
   if (el === 'beta') return 'β'
   if (el === 'gamma') return 'γ'
 
@@ -387,7 +387,7 @@ function SubComponent({ data }: { data: DATA }) {
 
     if (data.variant.given.includes('alpha') || data.variant.goal === 'alpha') {
       b.create('angle', [pointB, pointA, pointC], {
-        name: 'α',
+        name: '⍺',
         withLabel: true,
         orthoType: 'sector',
         radius: 0.05 * dim,

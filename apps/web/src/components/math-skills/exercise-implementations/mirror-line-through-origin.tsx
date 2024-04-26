@@ -47,17 +47,17 @@ export function MirrorLineThroughOrigin() {
 
         return (
           <>
-            <p>Bereche das Maß α mit Hilfe der Steigung m:</p>
+            <p>Bereche das Maß ⍺ mit Hilfe der Steigung m:</p>
             <p className="serlo-highlight-gray">
               m = {factor.toLocaleString('de-De')} &nbsp;&nbsp;&nbsp;&nbsp; tan
-              α = {factor.toLocaleString('de-De')}
+              ⍺ = {factor.toLocaleString('de-De')}
               <br />
-              <br />α = {alpha.toLocaleString('de-De')}°
+              <br />⍺ = {alpha.toLocaleString('de-De')}°
             </p>
-            <p>Berechne die Hilfswerte cos 2α und sin 2α:</p>
+            <p>Berechne die Hilfswerte cos 2⍺ und sin 2⍺:</p>
             <p className="serlo-highlight-gray">
-              cos 2α = {cos2alpha.toLocaleString('de-De')}
-              &nbsp;&nbsp;&nbsp;&nbsp; sin 2α ={' '}
+              cos 2⍺ = {cos2alpha.toLocaleString('de-De')}
+              &nbsp;&nbsp;&nbsp;&nbsp; sin 2⍺ ={' '}
               {sin2alpha.toLocaleString('de-De')}
             </p>
             <p>Notiere die Abbildungsgleichung:</p>

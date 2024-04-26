@@ -30,7 +30,7 @@ export const MathHelpModal = ({
           {renderKey('_')}
         </p>
         <p>
-          π, α, β, γ: {renderKey('pi')}, {renderKey('alpha')},{' '}
+          π, ⍺, β, γ: {renderKey('pi')}, {renderKey('alpha')},{' '}
           {renderKey('beta')},{renderKey('gamma')}
         </p>
         <p>

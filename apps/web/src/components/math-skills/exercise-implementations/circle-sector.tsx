@@ -28,7 +28,7 @@ function elToGiven(e: Element, val: number) {
   }
   if (e === 'alpha') {
     return (
-      <>einen Mittelpunktswinkel α&nbsp;=&nbsp;{val.toLocaleString('de-De')}°</>
+      <>einen Mittelpunktswinkel ⍺&nbsp;=&nbsp;{val.toLocaleString('de-De')}°</>
     )
   }
   if (e === 'U') {
@@ -103,7 +103,7 @@ export function CircleSector() {
                 ) : data.variant.goal === 'U' ? (
                   'den Umfang U'
                 ) : data.variant.goal === 'alpha' ? (
-                  'den Mittelpunktswinkel α'
+                  'den Mittelpunktswinkel ⍺'
                 ) : data.variant.goal === 'b' ? (
                   <>die Bogenlänge {buildLatex('\\overgroup{AC}')}</>
                 ) : (
@@ -178,12 +178,12 @@ export function CircleSector() {
             <>
               <p>Nutze die Formel für den Flächeninhalt eines Kreissektors:</p>
               <p className="serlo-highlight-gray">
-                {data.values.A} cm² = {buildFrac('α', '360°')} · (
+                {data.values.A} cm² = {buildFrac('⍺', '360°')} · (
                 {data.values.r.toLocaleString('de-De')} cm)² · π
               </p>
-              <p>Stelle die Formal nach α um:</p>
+              <p>Stelle die Formal nach ⍺ um:</p>
               <p className="serlo-highlight-gray">
-                α ={' '}
+                ⍺ ={' '}
                 {buildFrac(
                   <>{data.values.A} cm²</>,
                   <>({data.values.r.toLocaleString('de-De')} cm)² · π</>
@@ -192,7 +192,7 @@ export function CircleSector() {
               </p>
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
-                α ={' '}
+                ⍺ ={' '}
                 {roundToDigits(
                   (data.values.A / Math.pow(data.values.r, 2) / Math.PI) * 360,
                   2
@@ -207,7 +207,7 @@ export function CircleSector() {
             <>
               <p>Nutze die Formel für die Länge des Kreisbogen:</p>
               <p className="serlo-highlight-gray">
-                {buildLatex('\\overgroup{AC}')} = {buildFrac('α', '360°')} · 2 ·
+                {buildLatex('\\overgroup{AC}')} = {buildFrac('⍺', '360°')} · 2 ·
                 r · π
               </p>
               <p>Setze gegebene Größen ein:</p>
@@ -272,12 +272,12 @@ export function CircleSector() {
               <p>Nutze die Formel für die Länge des Kreisbogen:</p>
               <p className="serlo-highlight-gray">
                 {data.values.b.toLocaleString('de-De')} cm ={' '}
-                {buildFrac('α', '360°')} · 2 ·{' '}
+                {buildFrac('⍺', '360°')} · 2 ·{' '}
                 {data.values.r.toLocaleString('de-De')} cm · π
               </p>
-              <p>Stelle die Gleichung nach α um:</p>
+              <p>Stelle die Gleichung nach ⍺ um:</p>
               <p className="serlo-highlight-gray">
-                α ={' '}
+                ⍺ ={' '}
                 {buildFrac(
                   <>{data.values.b.toLocaleString('de-De')} cm</>,
                   <>2 · {data.values.r.toLocaleString('de-De')} cm · π</>
@@ -286,7 +286,7 @@ export function CircleSector() {
               </p>
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
-                α ={' '}
+                ⍺ ={' '}
                 {roundToDigits(
                   (data.values.b / 2 / Math.PI / data.values.r) * 360,
                   2
@@ -367,7 +367,7 @@ function SubComponent({ data }: { data: DATA }) {
     b.create('angle', [A, B, C], {
       id: 'angle',
       withLabel: true,
-      name: 'α',
+      name: '⍺',
       radius: 0.8,
     })
 
