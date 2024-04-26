@@ -1,6 +1,4 @@
-import JXG from 'jsxgraph'
-import { useEffect, useState } from 'react'
-
+import { WheelDiagram } from './wheel-diagram'
 import { buildBlock, buildFrac } from '../../utils/math-builder'
 import { SelfEvaluationExercise } from '../self-evaluation-exercise'
 import { randomIntBetween } from '@/helper/random-int-between'
@@ -8,20 +6,24 @@ import { randomItemFromArray } from '@/helper/random-item-from-array'
 
 interface WofData {
   sections: number
-  number_1: string
-  number_2: string
-  number_3: string
-  number_4: string
-  number_5: string
-  number_6: string
-  number_7: string
-  number_8: string
+  number_1: boolean
+  number_2: boolean
+  number_3: boolean
+  number_4: boolean
+  number_5: boolean
+  number_6: boolean
+  number_7: boolean
+  number_8: boolean
   event: number
 }
 
-const gcd = function (a: number, b: number): number {
+function gcd(a: number, b: number): number {
   if (b === 0) return a
   return gcd(b, a % b)
+}
+
+function colorName(val: boolean) {
+  return val ? 'blau' : 'gelb'
 }
 
 export function WheelOfFortune() {
@@ -30,14 +32,14 @@ export function WheelOfFortune() {
       generator={() => {
         const sections = randomIntBetween(3, 8)
         const event = randomIntBetween(1, 4)
-        const number_1 = randomItemFromArray(['A', 'B'])
-        const number_2 = number_1 === 'A' ? 'B' : 'A'
-        const number_3 = randomItemFromArray(['A', 'B'])
-        const number_4 = randomItemFromArray(['A', 'B'])
-        const number_5 = randomItemFromArray(['A', 'B'])
-        const number_6 = randomItemFromArray(['A', 'B'])
-        const number_7 = randomItemFromArray(['A', 'B'])
-        const number_8 = randomItemFromArray(['A', 'B'])
+        const number_1 = randomItemFromArray([true, false])
+        const number_2 = number_1 === true ? false : true
+        const number_3 = randomItemFromArray([true, false])
+        const number_4 = randomItemFromArray([true, false])
+        const number_5 = randomItemFromArray([true, false])
+        const number_6 = randomItemFromArray([true, false])
+        const number_7 = randomItemFromArray([true, false])
+        const number_8 = randomItemFromArray([true, false])
 
         const data: WofData = {
           sections,
@@ -54,22 +56,38 @@ export function WheelOfFortune() {
         return { data }
       }}
       renderTask={({ data }) => {
+        const sectionsArray = [
+          data.number_1,
+          data.number_2,
+          data.number_3,
+          data.number_4,
+          data.number_5,
+          data.number_6,
+          data.number_7,
+          data.number_8,
+        ]
+        sectionsArray.splice(data.sections)
         return (
           <>
             <p className="text-2xl">
               Die Abbildung zeigt ein Glücksrad mit gleichgroßen Feldern. Es
-              gibt die Preise A und B zur Auswahl.
+              gibt gelbe und blaue Preise zur Auswahl.
             </p>
-            <SubComponent data={data} />
+            <WheelDiagram
+              data={{
+                sections: sectionsArray,
+                event: data.event,
+              }}
+            />
             <p className="text-2xl">
               Bestimmen Sie die Wahrscheinlichkeit, dass man beim zweimaligen
               Drehen{' '}
               {data.event === 1
-                ? 'höchstens einmal Preis ' + data.number_1 + ' erhält.'
+                ? `höchstens einmal den ${data.number_1 ? 'gelben' : 'blauen'} Preis erhält`
                 : null}
-              {data.event === 2 ? ' den gleichen Preis zweimal erhält.' : null}
+              {data.event === 2 ? 'den gleichen Preis zweimal erhält.' : null}
               {data.event === 3
-                ? 'mindestens einmal Preis ' + data.number_1 + ' erhält.'
+                ? `mindestens einmal den ${data.number_1 ? 'gelben' : 'blauen'} Preis erhält`
                 : null}
               {data.event === 4 ? ' zwei verschiedene Preise erhält.' : null}
             </p>
@@ -89,15 +107,14 @@ export function WheelOfFortune() {
         ]
         array.splice(data.sections)
 
-        const counter_A = array.filter((x) => x === 'A').length
-        const counter_B = array.filter((x) => x === 'B').length
+        const counterYellow = array.filter(Boolean).length
+        const counterBlue = array.length - counterYellow
 
-        const gcdA = gcd(counter_A, data.sections)
-        const gcdB = gcd(counter_B, data.sections)
+        const gcdYellow = gcd(counterYellow, data.sections)
+        const gcdBlue = gcd(counterBlue, data.sections)
 
-        function getC(val: string) {
-          if (val === 'A') return counter_A
-          return counter_B
+        function getC(val: boolean) {
+          return val ? counterYellow : counterBlue
         }
 
         function buildSimplifyFrac(a: number, b: number) {
@@ -114,9 +131,16 @@ export function WheelOfFortune() {
             {buildBlock(
               'gray',
               <>
-                P(A) = {buildFrac(counter_A, data.sections)}
-                {gcdA > 1 ? (
-                  <> = {buildFrac(counter_A / gcdA, data.sections / gcdA)}</>
+                P(gelb) = {buildFrac(counterYellow, data.sections)}
+                {gcdYellow > 1 ? (
+                  <>
+                    {' '}
+                    ={' '}
+                    {buildFrac(
+                      counterYellow / gcdYellow,
+                      data.sections / gcdYellow
+                    )}
+                  </>
                 ) : null}
               </>
             )}
@@ -124,9 +148,13 @@ export function WheelOfFortune() {
             {buildBlock(
               'gray',
               <>
-                P(B) = {buildFrac(counter_B, data.sections)}
-                {gcdB > 1 ? (
-                  <> = {buildFrac(counter_B / gcdB, data.sections / gcdB)}</>
+                P(blau) = {buildFrac(counterBlue, data.sections)}
+                {gcdBlue > 1 ? (
+                  <>
+                    {' '}
+                    ={' '}
+                    {buildFrac(counterBlue / gcdBlue, data.sections / gcdBlue)}
+                  </>
                 ) : null}
               </>
             )}
@@ -137,26 +165,27 @@ export function WheelOfFortune() {
             <>
               {intro}
               <p>
-                Um höchstens einmal den Preis {data.number_1} zu erhalten, gibt
-                es die Kombinationen{' '}
+                Um höchstens einmal den {data.number_1 ? 'gelben' : 'blauen'}
+                Preis zu erhalten, gibt es die Kombinationen{' '}
                 <span className="text-lg">
-                  (A; B), (B; A) und ({data.number_2}; {data.number_2})
+                  (gelb; blau), (blau; gelb) und ({colorName(data.number_2)};{' '}
+                  {colorName(data.number_2)})
                 </span>
                 . Berechne daraus die Gesamtwahrscheinlichkeit:
               </p>
               {buildBlock(
                 'green',
                 <>
-                  P(höchstens einmal {data.number_1}) ={' '}
-                  {buildSimplifyFrac(counter_A, data.sections)} ·{' '}
-                  {buildSimplifyFrac(counter_B, data.sections)} +{' '}
-                  {buildSimplifyFrac(counter_B, data.sections)} ·{' '}
-                  {buildSimplifyFrac(counter_A, data.sections)} +{' '}
+                  P(höchstens einmal {colorName(data.number_1)}) ={' '}
+                  {buildSimplifyFrac(counterYellow, data.sections)} ·{' '}
+                  {buildSimplifyFrac(counterBlue, data.sections)} +{' '}
+                  {buildSimplifyFrac(counterBlue, data.sections)} ·{' '}
+                  {buildSimplifyFrac(counterYellow, data.sections)} +{' '}
                   {buildSimplifyFrac(getC(data.number_2), data.sections)} ·{' '}
                   {buildSimplifyFrac(getC(data.number_2), data.sections)} ={' '}
                   {buildSimplifyFrac(
                     getC(data.number_2) * getC(data.number_2) +
-                      counter_A * counter_B * 2,
+                      counterYellow * counterBlue * 2,
                     data.sections * data.sections
                   )}
                 </>
@@ -169,19 +198,20 @@ export function WheelOfFortune() {
               {intro}
               <p>
                 Um den gleichen Preis zweimal zu erhalten, gibt es die
-                Kombinationen <span className="text-lg">(A; A) und (B; B)</span>
-                . Berechne daraus die Gesamtwahrscheinlichkeit:
+                Kombinationen{' '}
+                <span className="text-lg">(gelb; gelb) und (blau; blau)</span>.
+                Berechne daraus die Gesamtwahrscheinlichkeit:
               </p>
               {buildBlock(
                 'green',
                 <>
                   P(gleicher Preis zweimal) ={' '}
-                  {buildSimplifyFrac(counter_A, data.sections)} ·{' '}
-                  {buildSimplifyFrac(counter_A, data.sections)} +{' '}
-                  {buildSimplifyFrac(counter_B, data.sections)} ·{' '}
-                  {buildSimplifyFrac(counter_B, data.sections)} ={' '}
+                  {buildSimplifyFrac(counterYellow, data.sections)} ·{' '}
+                  {buildSimplifyFrac(counterYellow, data.sections)} +{' '}
+                  {buildSimplifyFrac(counterBlue, data.sections)} ·{' '}
+                  {buildSimplifyFrac(counterBlue, data.sections)} ={' '}
                   {buildSimplifyFrac(
-                    counter_A * counter_A + counter_B * counter_B,
+                    counterYellow * counterYellow + counterBlue * counterBlue,
                     data.sections * data.sections
                   )}
                 </>
@@ -193,26 +223,27 @@ export function WheelOfFortune() {
             <>
               {intro}
               <p>
-                Um mindestens einmal den Preis {data.number_1} zu erhalten, gibt
-                es die Kombinationen{' '}
+                Um mindestens einmal den Preis {colorName(data.number_1)} zu
+                erhalten, gibt es die Kombinationen{' '}
                 <span className="text-lg">
-                  (A; B), (B; A) und ({data.number_1}; {data.number_1})
+                  (gelb; blau), (blau; gelb) und ({colorName(data.number_1)};{' '}
+                  {colorName(data.number_1)})
                 </span>
                 . Berechne daraus die Gesamtwahrscheinlichkeit:
               </p>
               {buildBlock(
                 'green',
                 <>
-                  P(mindestens einmal {data.number_1}) ={' '}
-                  {buildSimplifyFrac(counter_A, data.sections)} ·{' '}
-                  {buildSimplifyFrac(counter_B, data.sections)} +{' '}
-                  {buildSimplifyFrac(counter_B, data.sections)} ·{' '}
-                  {buildSimplifyFrac(counter_A, data.sections)} +{' '}
+                  P(mindestens einmal {colorName(data.number_1)}) ={' '}
+                  {buildSimplifyFrac(counterYellow, data.sections)} ·{' '}
+                  {buildSimplifyFrac(counterBlue, data.sections)} +{' '}
+                  {buildSimplifyFrac(counterBlue, data.sections)} ·{' '}
+                  {buildSimplifyFrac(counterYellow, data.sections)} +{' '}
                   {buildSimplifyFrac(getC(data.number_1), data.sections)} ·{' '}
                   {buildSimplifyFrac(getC(data.number_1), data.sections)} ={' '}
                   {buildSimplifyFrac(
                     getC(data.number_1) * getC(data.number_1) +
-                      counter_A * counter_B * 2,
+                      counterYellow * counterBlue * 2,
                     data.sections * data.sections
                   )}
                 </>
@@ -225,19 +256,20 @@ export function WheelOfFortune() {
               {intro}
               <p>
                 Um zwei verschiedene Preise zu erhalten, gibt es die
-                Kombinationen <span className="text-lg">(A; B) und (B; A)</span>
-                . Berechne daraus die Gesamtwahrscheinlichkeit:
+                Kombinationen{' '}
+                <span className="text-lg">(gelb; blau) und (blau; gelb)</span>.
+                Berechne daraus die Gesamtwahrscheinlichkeit:
               </p>
               {buildBlock(
                 'green',
                 <>
                   P(verschiedene Preise) ={' '}
-                  {buildSimplifyFrac(counter_A, data.sections)} ·{' '}
-                  {buildSimplifyFrac(counter_B, data.sections)} +{' '}
-                  {buildSimplifyFrac(counter_B, data.sections)} ·{' '}
-                  {buildSimplifyFrac(counter_A, data.sections)} ={' '}
+                  {buildSimplifyFrac(counterYellow, data.sections)} ·{' '}
+                  {buildSimplifyFrac(counterBlue, data.sections)} +{' '}
+                  {buildSimplifyFrac(counterBlue, data.sections)} ·{' '}
+                  {buildSimplifyFrac(counterYellow, data.sections)} ={' '}
                   {buildSimplifyFrac(
-                    counter_A * counter_B + counter_B * counter_A,
+                    counterYellow * counterBlue + counterBlue * counterYellow,
                     data.sections * data.sections
                   )}
                 </>
@@ -268,118 +300,5 @@ export function WheelOfFortune() {
         )
       }}
     />
-  )
-}
-function SubComponent({ data }: { data: WofData }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
-  useEffect(() => {
-    const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox: [-5, 5, 5, -5],
-      showNavigation: false,
-      showCopyright: false,
-    })
-
-    b.create('circle', [
-      [0, 0],
-      [4, 0],
-    ])
-
-    const texts: JXG.Text[] = []
-    const lines: JXG.Line[] = []
-    for (let i = 0; i < data.sections; i++) {
-      const angle = ((2 * Math.PI) / data.sections) * i
-      const x_Text = 2.5 * Math.cos(angle)
-      const y_Text = 2.5 * Math.sin(angle)
-      const x = 4 * Math.cos(angle)
-      const y = 4 * Math.sin(angle)
-      const array = [
-        data.number_1,
-        data.number_2,
-        data.number_3,
-        data.number_4,
-        data.number_5,
-        data.number_6,
-        data.number_7,
-        data.number_8,
-      ]
-      lines.push(
-        b.create(
-          'line',
-          [
-            [0, 0],
-            [x, y],
-          ],
-          { straightFirst: false, straightLast: false }
-        )
-      )
-      texts.push(b.create('text', [x_Text, y_Text, array[i].toString()], {}))
-    }
-
-    b.create('text', [-0.2, 4, '⧪'], {})
-
-    // Animationszeit und Schritte definieren
-    const duration = 2000 // Gesamtdauer der Animation in ms
-    const steps = 100 // Anzahl der Schritte in der Animation
-    const stepDuration = duration / steps
-    let currentStep = 0
-
-    const rotationInterval = setInterval(() => {
-      currentStep++
-      const angle = (currentStep / steps) * 2.1 * Math.PI
-      for (let i = 0; i < data.sections; i++) {
-        const line = lines[i]
-        const text = texts[i]
-        const rotationPoint = JXG.COORDS_BY_USER
-        line.point2.setPosition(rotationPoint, [
-          4 * Math.cos(angle + (i * 2 * Math.PI) / data.sections),
-          4 * Math.sin(angle + (i * 2 * Math.PI) / data.sections),
-        ])
-        text.setPosition(rotationPoint, [
-          2.5 * Math.cos(angle + (i * 2 * Math.PI + 3) / data.sections),
-          2.5 * Math.sin(angle + (i * 2 * Math.PI + 3) / data.sections),
-        ])
-      }
-      b.update()
-
-      // Stoppe die Animation nach der letzten Drehung
-      if (currentStep >= steps) {
-        clearInterval(rotationInterval)
-      }
-    }, stepDuration)
-
-    setBoard(b)
-
-    return () => {
-      if (board) {
-        clearInterval(rotationInterval) // Stelle sicher, dass die Animation angehalten wird
-        JXG.JSXGraph.freeBoard(board)
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
   )
 }
