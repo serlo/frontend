@@ -17,7 +17,6 @@
     ":prettier": "yarn prettier . '!{apps,packages}/**/*' --check",
     "build": "yarn workspace @serlo/frontend build",
     "build:next": "yarn workspace @serlo/frontend build:next",
-    "build:prisma": "yarn workspace @serlo/frontend build:prisma",
     "check:all": "yarn workspace @serlo/frontend check:all",
     "check:tailwind": "yarn workspace @serlo/frontend check:tailwind",
     "codegen": "yarn workspace @serlo/frontend codegen",
@@ -43,8 +42,6 @@
     "lint:eslint": "cross-env FORCE_COLOR=true yarn workspaces foreach -Aip run lint:eslint",
     "lint:prettier": "cross-env FORCE_COLOR=true yarn workspaces foreach -Aip run lint:prettier",
     "lint:tsc": "yarn workspace @serlo/frontend lint:tsc",
-    "prisma:db-pull": "dotenv -e apps/web/.env.local yarn workspace @serlo/frontend prisma db pull",
-    "prisma:studio": "dotenv -e apps/web/.env.local yarn workspace @serlo/frontend prisma studio",
     "start": "yarn workspace @serlo/frontend start",
     "test": "yarn workspace @serlo/frontend test"
   },
@@ -52,9 +49,9 @@
     "@serlo/eslint-config": "workspace:*",
     "@serlo/typescript-config": "workspace:*",
     "cross-env": "^7.0.3",
-    "dotenv-cli": "^7.3.0",
-    "prettier": "^3.1.0",
-    "prettier-plugin-packagejson": "^2.4.6"
+    "dotenv-cli": "^7.4.1",
+    "prettier": "^3.2.5",
+    "prettier-plugin-packagejson": "^2.5.0"
   },
   "packageManager": "yarn@3.6.1",
   "engines": {

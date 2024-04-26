@@ -162,8 +162,7 @@ Scenario('Languages', ({ I }) => {
 */
 
 Scenario('Donation', ({ I }) => {
-  I.amOnPage('/')
-  I.click('Jetzt Spenden')
+  I.amOnPage('/spenden')
   I.see('Deine Spende macht einen Unterschied')
   I.see('Mit PayPal spenden')
 
@@ -206,8 +205,7 @@ Scenario('Legal Pages', async ({ I }) => {
 })
 
 Scenario('Consent', async ({ I }) => {
-  I.amOnPage('/')
-  I.click('Jetzt Spenden')
+  I.amOnPage('/spenden')
 
   // Make sure that twingle is activated
   const needConfirmation = await tryTo(() => {
@@ -224,8 +222,7 @@ Scenario('Consent', async ({ I }) => {
   I.see('Keine Einwilligungen gespeichert')
 
   // Go back and check
-  I.amOnPage('/')
-  I.click('Jetzt Spenden')
+  I.amOnPage('/spenden')
   I.see('Spendenformular laden')
 })
 

@@ -4,7 +4,7 @@ This is an early version of the web component wrapping the [Serlo Editor](https:
 
 ## Installation and usage
 
-1. `yarn install @serlo/editor-web-component`
+1. `yarn add @serlo/editor-web-component`
 2. Define an HTML element with the id `serlo-root` in your file where you render the web component
 
 ```JSX
@@ -22,6 +22,10 @@ return (
 
 Bump the version number in the package.json and
 the github workflow seen inside `editor-web-component.yaml` will take care of the publishing.
+
+## Local development with editor package
+
+Go to the `package.json` and use `"@serlo/editor": "workspace:*"` instead of a fixed version. This way, you don't need to release a new version of the editor every time you make a change in the repo.
 
 ## Linking for local development with integrations
 

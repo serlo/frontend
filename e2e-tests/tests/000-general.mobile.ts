@@ -161,8 +161,7 @@ Scenario('Legal Pages @mobile', async ({ I }) => {
   I.see('en@serlo.org')
 })
 Scenario('Consent @mobile', async ({ I }) => {
-  I.amOnPage('/')
-  I.click('Jetzt Spenden')
+  I.amOnPage('/spenden')
 
   // Make sure that twingle is activated
   const needConfirmation = await tryTo(() => {
@@ -179,7 +178,6 @@ Scenario('Consent @mobile', async ({ I }) => {
   I.see('Keine Einwilligungen gespeichert')
 
   // Go back and check
-  I.amOnPage('/')
-  I.click('Jetzt Spenden')
+  I.amOnPage('/spenden')
   I.see('Spendenformular laden')
 })
