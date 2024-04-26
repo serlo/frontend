@@ -9,6 +9,7 @@ import {
   faTools,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
+import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
 
@@ -16,7 +17,6 @@ import { HSpace } from './h-space'
 import { Link } from './link'
 import { FaIcon } from '../fa-icon'
 import { InfoPanel } from '../info-panel'
-import { LenabiCourseFeedback } from '../pages/lenabi/lenabi-course-feedback'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
 import { UserTools } from '@/components/user-tools/user-tools'
@@ -33,6 +33,12 @@ import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 export interface EntityProps {
   data: EntityData
 }
+
+const LenabiCourseFeedback = dynamic(() =>
+  import('../pages/lenabi/lenabi-course-feedback').then(
+    (mod) => mod.LenabiCourseFeedback
+  )
+)
 
 export function Entity({ data }: EntityProps) {
   editorRenderers.init(createRenderers())
