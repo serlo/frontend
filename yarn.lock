@@ -4844,7 +4844,7 @@ __metadata:
     "@reduxjs/toolkit": ^1.9.7
     "@serlo/authorization": ^0.57.3
     "@serlo/frontend": "workspace:*"
-    "@serlo/katex-styles": ^1.0.0
+    "@serlo/katex-styles": ^1.0.1
     "@serlo/typescript-config": "workspace:*"
     "@svgr/webpack": ^8.1.0
     "@tailwindcss/typography": ^0.5.10
@@ -5121,10 +5121,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@serlo/katex-styles@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@serlo/katex-styles@npm:1.0.0"
-  checksum: 69bfb75c1157c2f274dc22d561ac57091b63425ac09c99361afab99d1e25e63a12869ec395fbdf402446a860f011260a4ec7707e1077547ba168a4aa05a5d01e
+"@serlo/katex-styles@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@serlo/katex-styles@npm:1.0.1"
+  checksum: b8e50847d42669b78a14ee972348457573d806f487b099bf7a552d98cd734abce502be029b2125df0d20dcffc9f51ab1c365965f2c23eafec9aaeddfbc7859d1
   languageName: node
   linkType: hard
 
@@ -5144,6 +5144,12 @@ __metadata:
 "@serlo/typescript-config@workspace:*, @serlo/typescript-config@workspace:packages/typescript-config":
   version: 0.0.0-use.local
   resolution: "@serlo/typescript-config@workspace:packages/typescript-config"
+  languageName: unknown
+  linkType: soft
+
+"@serlo/workspace-katex-styles@workspace:packages/katex-styles":
+  version: 0.0.0-use.local
+  resolution: "@serlo/workspace-katex-styles@workspace:packages/katex-styles"
   languageName: unknown
   linkType: soft
 
