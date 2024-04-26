@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
 import { buildFrac, buildOverline } from '../utils/math-builder'
+import { roundToDigits } from '../utils/round-to-digits'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -224,7 +225,7 @@ export function IntersectingLines() {
           isInverted
         ) {
           // x + factor / x = b / a
-          const result = Math.round(((a * factor) / (b - a)) * 10) / 10
+          const result = roundToDigits((a * factor) / (b - a), 2)
           return (
             <>
               {intro}
@@ -272,7 +273,7 @@ export function IntersectingLines() {
           )
         }
 
-        const result = Math.round(((a / b) * factor - c) * 10) / 10
+        const result = roundToDigits((a / b) * factor - c, 2)
 
         return (
           <>
