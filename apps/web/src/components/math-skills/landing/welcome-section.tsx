@@ -77,7 +77,7 @@ export function WelcomeSection() {
             <br />
             Zu allen Aufgaben gibt es Musterlösungen
             <br />
-            und Du kannst jede Challenge so lange üben,
+            und Du kannst jedes Thema so lange üben,
             <br />
             bis du dich sicher fühlst.
             <br />

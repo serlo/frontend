@@ -88,7 +88,7 @@ export function WheelOfFortuneStepByStep() {
         const counter_A = sections.filter(Boolean).length
         const counter_B = sections.length - counter_A
 
-        const over = counter_A * counter_B + counter_B * counter_A
+        const over = counter_A * counter_A + counter_B * counter_B
         const under = sections.length * sections.length
         const d = getGcd(over, under)
         const correct = [over / d, under / d]
@@ -97,6 +97,8 @@ export function WheelOfFortuneStepByStep() {
         const inputUnder = parseInt(inputValues[1])
         const inputD = getGcd(inputOver, inputUnder)
         const input = [inputOver / inputD, inputUnder / inputD]
+
+        console.log(input, correct)
 
         return [correct[0] === input[0], correct[1] === input[1]]
       }}
