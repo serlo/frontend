@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
 import { buildFrac, buildSqrt } from '../utils/math-builder'
+import { roundToDigits } from '../utils/round-to-digits'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -178,12 +179,12 @@ export function RightTriangle() {
             {data.given_2_element} ={' '}
             {printValue(data.given_2_element, data.given_2_value)}
           </p>
+          <SubComponent data={data} />
           <p className="serlo-main-task">
             Berechnen Sie die Größe{' '}
             <strong className="text-newgreen">{data.goal_element}</strong>.
-            Runden Sie auf eine Stelle nach dem Komma.
           </p>
-          <SubComponent data={data} />
+          <p>Runden Sie auf zwei Stellen nach dem Komma.</p>
         </>
       )}
       renderSolution={(data) => {
@@ -220,9 +221,7 @@ export function RightTriangle() {
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
                 {data.goal_element} ={' '}
-                {(Math.round(data.goal_value * 10) / 10).toLocaleString(
-                  'de-De'
-                )}{' '}
+                {roundToDigits(data.goal_value * 10, 2).toLocaleString('de-De')}{' '}
                 cm
               </p>
             </>
@@ -271,9 +270,7 @@ export function RightTriangle() {
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
                 {data.goal_element} ={' '}
-                {(Math.round(data.goal_value * 10) / 10).toLocaleString(
-                  'de-De'
-                )}{' '}
+                {roundToDigits(data.goal_value * 10, 2).toLocaleString('de-De')}{' '}
                 cm
               </p>
             </>
@@ -297,7 +294,7 @@ export function RightTriangle() {
             <p>Berechne das Ergebnis:</p>
             <p className="serlo-highlight-green">
               {data.goal_element} ={' '}
-              {(Math.round(data.goal_value * 10) / 10).toLocaleString('de-De')}°
+              {roundToDigits(data.goal_value, 2).toLocaleString('de-De')}°
             </p>
           </>
         )

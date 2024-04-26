@@ -66,8 +66,8 @@ export function Trapezoid() {
               <SubComponent data={data} />
               <p className="serlo-main-task">
                 Berechnen Sie den <strong>Flächeninhalt</strong> des Trapez.
-                Runden Sie auf eine Stelle nach dem Komma.
               </p>
+              <p>Runden Sie auf zwei Stellen nach dem Komma.</p>
             </>
           )
         }
@@ -84,8 +84,8 @@ export function Trapezoid() {
               <SubComponent data={data} />
               <p className="serlo-main-task">
                 Berechnen Sie die Größe <strong>des Winkels ∢DCB</strong>.
-                Runden Sie auf eine Stelle nach dem Komma.
               </p>
+              <p>Runden Sie auf zwei Stellen nach dem Komma.</p>
             </>
           )
         }
@@ -103,9 +103,9 @@ export function Trapezoid() {
             </p>
             <SubComponent data={data} />
             <p className="serlo-main-task">
-              Berechnen Sie die <strong>Höhe</strong> des Trapez. Runden Sie auf
-              eine Stelle nach dem Komma.
+              Berechnen Sie die <strong>Höhe</strong> des Trapez.
             </p>
+            <p>Runden Sie auf zwei Stellen nach dem Komma.</p>
           </>
         )
       }}
@@ -136,7 +136,7 @@ export function Trapezoid() {
                 h ={' '}
                 {roundToDigits(
                   (data.A / (data.a + data.c)) * 2,
-                  1
+                  2
                 ).toLocaleString('de-De')}{' '}
                 cm
               </p>
@@ -181,7 +181,7 @@ export function Trapezoid() {
               A<sub>Trapez</sub> ={' '}
               {roundToDigits(
                 0.5 * (data.a + data.c) * data.h,
-                1
+                2
               ).toLocaleString('de-De')}{' '}
               cm²
             </p>

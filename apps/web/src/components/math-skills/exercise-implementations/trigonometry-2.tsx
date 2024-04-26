@@ -47,19 +47,10 @@ export function Trigonometry2() {
               Gegeben ist das gleichschenklige Dreieck{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">ABC</b>.{' '}
               <br />
-              Es gilt{' '}
-              <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">
-                |<span className="overline">BD</span>| = {data.bd} cm
-              </b>
-              ;{' '}
-              <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">
-                |<span className="overline">AB</span>| = |
-                <span className="overline">AC</span>| = {data.ab} cm
-              </b>
-              und{' '}
-              <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">
-                ∢ACB = {(180 - data.angle) / 2}°
-              </b>
+              Es gilt |<span className="overline">BD</span>| = {data.bd} cm; |
+              <span className="overline">AB</span>| = |
+              <span className="overline">AC</span>| = {data.ab} cm und ∢ACB ={' '}
+              {(180 - data.angle) / 2}°
             </MainTask>
             <SubComponent data={data} />
             <small className="mb-6 block">
@@ -68,8 +59,7 @@ export function Trigonometry2() {
             <p className="mt-12 text-2xl">
               Berechnen Sie die Größe des Winkel 𝛼.
             </p>
-            <br />
-            <p>Runden Sie auf eine Stelle nach dem Komma.</p>
+            <p className="mt-3">Runden Sie auf zwei Stellen nach dem Komma.</p>
           </>
         )
       }}
@@ -87,7 +77,7 @@ export function Trigonometry2() {
           (Math.asin((Math.sin((38 / 180) * Math.PI) / ad) * data.bd) /
             Math.PI) *
             180,
-          1
+          2
         )
 
         return (

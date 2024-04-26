@@ -5,6 +5,7 @@ import { autoResizeBoundingBox } from '../utils/auto-resize-bounding-box'
 import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
 import { buildFrac, buildSqrt } from '../utils/math-builder'
 import { rotatePoint } from '../utils/rotate-point'
+import { roundToDigits } from '../utils/round-to-digits'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -80,16 +81,17 @@ export function LawOfSinesCosines() {
     <SelfEvaluationExercise
       generator={() => {
         const c = randomIntBetween(14, 65) / 10
-        const b = randomIntBetween(14, 65) / 10
-        const alpha = randomIntBetween(25, 155)
-        const a = Math.sqrt(
-          b * b + c * c - 2 * b * c * Math.cos((alpha / 180) * Math.PI)
-        )
-        const gamma =
-          (Math.acos((a * a + b * b - c * c) / (2 * a * b)) / Math.PI) * 180
+        const alpha = randomIntBetween(35, 118)
+        const beta = randomIntBetween(30, Math.round((180 - alpha) / 2))
+        const gamma = 180 - alpha - beta
 
-        const beta =
-          (Math.acos((a * a + c * c - b * b) / (2 * a * c)) / Math.PI) * 180
+        const b =
+          (c / Math.sin((gamma / 180) * Math.PI)) *
+          Math.sin((beta / 180) * Math.PI)
+
+        const a =
+          (c / Math.sin((gamma / 180) * Math.PI)) *
+          Math.sin((alpha / 180) * Math.PI)
 
         const variant = randomItemFromArray(variants)
 
@@ -128,8 +130,9 @@ export function LawOfSinesCosines() {
               <strong className="text-newgreen">
                 {elToString(data.variant.goal)}
               </strong>
-              . Runden Sie auf eine Stelle nach dem Komma.
+              .
             </p>
+            <p>Runden Sie auf zwei Stellen nach dem Komma.</p>
           </>
         )
       }}
@@ -138,12 +141,12 @@ export function LawOfSinesCosines() {
         const y = getElValue(data, data.variant.given[1])
         const z = getElValue(data, data.variant.given[2])
         if (data.variant.method === 'SWS') {
-          const result =
-            Math.round(
-              Math.sqrt(
-                x * x + z * z - 2 * x * z * Math.cos((y / 180) * Math.PI)
-              ) * 10
-            ) / 10
+          const result = roundToDigits(
+            Math.sqrt(
+              x * x + z * z - 2 * x * z * Math.cos((y / 180) * Math.PI)
+            ),
+            2
+          )
           return (
             <>
               <p>Stelle eine Gleichung mit dem Kosinussatz auf:</p>
@@ -173,12 +176,10 @@ export function LawOfSinesCosines() {
           )
         }
         if (data.variant.method === 'SSS') {
-          const result =
-            Math.round(
-              (Math.acos((x * x + y * y - z * z) / (2 * x * y)) / Math.PI) *
-                180 *
-                10
-            ) / 10
+          const result = roundToDigits(
+            (Math.acos((x * x + y * y - z * z) / (2 * x * y)) / Math.PI) * 180,
+            2
+          )
           return (
             <>
               <p>Stelle eine Gleichung mit dem Kosinussatz auf:</p>
@@ -217,12 +218,11 @@ export function LawOfSinesCosines() {
           )
         }
         if (data.variant.method === 'SSWg') {
-          const result =
-            Math.round(
-              (Math.asin((y * Math.sin((z / 180) * Math.PI)) / x) / Math.PI) *
-                180 *
-                10
-            ) / 10
+          const result = roundToDigits(
+            (Math.asin((y * Math.sin((z / 180) * Math.PI)) / x) / Math.PI) *
+              180,
+            2
+          )
           return (
             <>
               <p>Stelle eine Gleichung mit dem Sinussatz auf:</p>
@@ -264,12 +264,10 @@ export function LawOfSinesCosines() {
 
         const w = 180 - x - z
 
-        const result =
-          Math.round(
-            (y / Math.sin((w / 180) * Math.PI)) *
-              Math.sin((z / 180) * Math.PI) *
-              10
-          ) / 10
+        const result = roundToDigits(
+          (y / Math.sin((w / 180) * Math.PI)) * Math.sin((z / 180) * Math.PI),
+          2
+        )
         return (
           <>
             <p>

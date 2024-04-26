@@ -67,9 +67,9 @@ export function TriangleArea() {
             </p>
             <SubComponent data={data} />
             <p className="serlo-main-task">
-              Berechnen Sie den Flächeninhalt des Dreiecks ABC. Runden Sie auf
-              eine Stelle nach dem Komma.
+              Berechnen Sie den Flächeninhalt des Dreiecks ABC.
             </p>
+            <p>Runden Sie auf zwei Stellen nach dem Komma.</p>
           </>
         )
       }}
@@ -111,7 +111,7 @@ export function TriangleArea() {
                   {data.p3}
                 </sub>{' '}
                 ={' '}
-                {roundToDigits((data.len * data.len2) / 2, 1).toLocaleString(
+                {roundToDigits((data.len * data.len2) / 2, 2).toLocaleString(
                   'de-De'
                 )}{' '}
                 cm²
@@ -159,7 +159,7 @@ export function TriangleArea() {
                   data.len2 *
                   Math.sin((data.angle / 180) * Math.PI)) /
                   2,
-                1
+                2
               ).toLocaleString('de-De')}{' '}
               cm²
             </p>

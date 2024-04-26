@@ -96,9 +96,9 @@ export function IntersectingLines() {
           <SubComponent data={data} />
           <p className="serlo-main-task">
             Berechnen Sie die Länge der Strecke{' '}
-            {buildOverline(data.goal_element)}. Runden Sie auf eine Stelle nach
-            dem Komma.
+            {buildOverline(data.goal_element)}.
           </p>
+          <p>Runden Sie auf zwei Stellen nach dem Komma.</p>
         </>
       )}
       renderSolution={(data) => {

@@ -110,8 +110,9 @@ export function CircleSector() {
                   'den Radius r'
                 )}
               </strong>{' '}
-              des Pizzastücks. Runden Sie auf eine Stelle nach dem Komma.
+              des Pizzastücks.
             </p>
+            <p>Runden Sie auf zwei Stellen nach dem Komma.</p>
           </>
         )
       }}
@@ -133,7 +134,7 @@ export function CircleSector() {
                     Math.PI *
                     data.values.r *
                     data.values.r,
-                  1
+                  2
                 ).toLocaleString('de-De')}{' '}
                 cm²
               </p>
@@ -165,7 +166,7 @@ export function CircleSector() {
                   Math.sqrt(
                     ((data.values.A / Math.PI) * 360) / data.values.alpha
                   ),
-                  1
+                  2
                 ).toLocaleString('de-De')}{' '}
                 cm
               </p>
@@ -194,7 +195,7 @@ export function CircleSector() {
                 α ={' '}
                 {roundToDigits(
                   (data.values.A / Math.pow(data.values.r, 2) / Math.PI) * 360,
-                  1
+                  2
                 ).toLocaleString('de-De')}
                 °
               </p>
@@ -223,7 +224,7 @@ export function CircleSector() {
                 {buildLatex('\\overgroup{AC}')} ={' '}
                 {roundToDigits(
                   (data.values.alpha / 360) * 2 * data.values.r * Math.PI,
-                  1
+                  2
                 ).toLocaleString('de-De')}{' '}
                 cm
               </p>
@@ -257,7 +258,7 @@ export function CircleSector() {
                 r ={' '}
                 {roundToDigits(
                   (data.values.b * 360) / 2 / Math.PI / data.values.alpha,
-                  1
+                  2
                 ).toLocaleString('de-De')}{' '}
                 cm
               </p>
@@ -288,7 +289,7 @@ export function CircleSector() {
                 α ={' '}
                 {roundToDigits(
                   (data.values.b / 2 / Math.PI / data.values.r) * 360,
-                  1
+                  2
                 ).toLocaleString('de-De')}
                 °
               </p>
@@ -320,7 +321,7 @@ export function CircleSector() {
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
                 U ={' '}
-                {roundToDigits(b + data.values.r * 2, 1).toLocaleString(
+                {roundToDigits(b + data.values.r * 2, 2).toLocaleString(
                   'de-De'
                 )}{' '}
                 cm
