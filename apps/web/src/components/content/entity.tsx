@@ -16,6 +16,7 @@ import { HSpace } from './h-space'
 import { Link } from './link'
 import { FaIcon } from '../fa-icon'
 import { InfoPanel } from '../info-panel'
+import { LenabiCourseFeedback } from '../pages/lenabi/lenabi-course-feedback'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
 import { UserTools } from '@/components/user-tools/user-tools'
@@ -50,6 +51,8 @@ export function Entity({ data }: EntityProps) {
     setCourseNavOpen(false)
   })
 
+  const isLenabiUserJourneyCoursePage = data.id === 306635
+
   const { strings } = useInstanceData()
   return wrapWithSchema(
     <>
@@ -60,6 +63,7 @@ export function Entity({ data }: EntityProps) {
       {renderUserTools({ aboveContent: true })}
       <div className="min-h-1/4" key={data.id}>
         {data.content && renderContent(data.content)}
+        {isLenabiUserJourneyCoursePage ? <LenabiCourseFeedback /> : null}
       </div>
       {renderCourseFooter()}
       <HSpace amount={20} />
