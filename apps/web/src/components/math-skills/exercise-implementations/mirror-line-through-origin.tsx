@@ -102,9 +102,9 @@ function SubComponent({
   useEffect(() => {
     const b = JXG.JSXGraph.initBoard('jxgbox', {
       boundingbox: autoResizeBoundingBox([
-        { x: data.x, y: data.y },
-        { x: solX, y: solY },
-        { x: 0, y: 0 },
+        [data.x, data.y],
+        [solX, solY],
+        [0, 0],
       ]),
       showNavigation: false,
       showCopyright: false,

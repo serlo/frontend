@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { MainTask } from '../components/content-components'
+import { autoResizeBoundingBox } from '../utils/auto-resize-bounding-box'
 import { buildFrac, buildOverline } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
-import { autoResizeBoundingBox } from '../utils/auto-resize-bounding-box'
 
 // JXG.Options.label.autoPosition = true
 
