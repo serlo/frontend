@@ -28,6 +28,7 @@ import { ParabolaCharacteristics } from '../exercise-implementations/parabola-by
 import { Parallelogram1 } from '../exercise-implementations/parallelogram-1'
 import { Parallelogram2 } from '../exercise-implementations/parallelogram-2'
 import { Parallelogram3 } from '../exercise-implementations/parallelogram-3'
+import { PlaceholderExercise } from '../exercise-implementations/placeholder-exercise'
 import { PlotFunction } from '../exercise-implementations/plot-function-1'
 import { PlotFunction2 } from '../exercise-implementations/plot-function-2'
 import { RightTriangle } from '../exercise-implementations/right-triangle'
@@ -380,6 +381,30 @@ export const middleSchoolFinalExam = {
     difficulty: 1,
     track: 3,
     component: <VolumePyramide />,
+  },
+  'wip-1': {
+    title: 'Zylinder 🚧',
+    subtitle: 'Raumgeometrie',
+    calculatorAllowed: true,
+    difficulty: 1,
+    track: 3,
+    component: <PlaceholderExercise />,
+  },
+  'wip-2': {
+    title: 'Kegel 🚧',
+    subtitle: 'Raumgeometrie',
+    calculatorAllowed: true,
+    difficulty: 1,
+    track: 3,
+    component: <PlaceholderExercise />,
+  },
+  'wip-3': {
+    title: 'Kugel 🚧',
+    subtitle: 'Raumgeometrie',
+    calculatorAllowed: true,
+    difficulty: 1,
+    track: 3,
+    component: <PlaceholderExercise />,
   },
   'baumdiagramm-zeichnen': {
     title: 'Baumdiagramm zeichnen',
