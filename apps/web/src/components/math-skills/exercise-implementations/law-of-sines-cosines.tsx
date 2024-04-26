@@ -326,9 +326,9 @@ function SubComponent({ data }: { data: DATA }) {
   const [Cx, Cy] = rotatePoint(preC_x, preC_y, angle)
 
   const boundingbox = autoResizeBoundingBox([
-    { x: 0, y: 0 },
-    { x: Bx, y: By },
-    { x: Cx, y: Cy },
+    [0, 0],
+    [Bx, By],
+    [Cx, Cy],
   ])
 
   const dim = boundingbox[2] - boundingbox[0]

@@ -204,10 +204,10 @@ function SubComponent({ data }: { data: DATA }) {
   const C_y = D_y
 
   const boundingbox = autoResizeBoundingBox([
-    { x: 0, y: 0 },
-    { x: B_x, y: B_y },
-    { x: C_x, y: C_y },
-    { x: D_x, y: D_y },
+    [0, 0],
+    [B_x, B_y],
+    [C_x, C_y],
+    [D_x, D_y],
   ])
 
   const dim = boundingbox[2] - boundingbox[0]

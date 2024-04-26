@@ -1,19 +1,19 @@
-export function autoResizeBoundingBox(points: { x: number; y: number }[]) {
+export function autoResizeBoundingBox(points: [number, number][]) {
   const minX = Math.min.apply(
     null,
-    points.map((p) => p.x)
+    points.map((p) => p[0])
   )
   const maxX = Math.max.apply(
     null,
-    points.map((p) => p.x)
+    points.map((p) => p[0])
   )
   const minY = Math.min.apply(
     null,
-    points.map((p) => p.y)
+    points.map((p) => p[1])
   )
   const maxY = Math.max.apply(
     null,
-    points.map((p) => p.y)
+    points.map((p) => p[1])
   )
 
   const width = maxX - minX
