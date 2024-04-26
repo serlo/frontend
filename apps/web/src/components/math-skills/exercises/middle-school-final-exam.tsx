@@ -279,7 +279,7 @@ export const middleSchoolFinalExam = {
     component: <ExponentialFunctionTime />,
   },
   'taegliche-uebung-exponentialfunktion': {
-    title: 'Tägliche Übung',
+    title: 'Tägliches Üben',
     subtitle: 'Exponentialfunktion',
     calculatorAllowed: true,
     track: 3,

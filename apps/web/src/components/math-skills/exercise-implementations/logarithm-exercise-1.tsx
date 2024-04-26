@@ -1,9 +1,5 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import {
-  MainTask,
-  HighlightGreen,
-  HighlightGray,
-} from '../components/content-components'
+import { MainTask, HighlightGray } from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -66,9 +62,9 @@ export function LogarithmExercise1() {
         return (
           <>
             <MainTask>Fassen Sie zu einem Logarithmus zusammen:</MainTask>
-            <HighlightGreen>
+            <p className="serlo-highlight-gray">
               {summands.map((el, i) => renderSummand(el, i))}
-            </HighlightGreen>{' '}
+            </p>
           </>
         )
       }}

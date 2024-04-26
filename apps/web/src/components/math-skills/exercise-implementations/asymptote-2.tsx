@@ -40,13 +40,13 @@ export function Asymptote2() {
               Bestimmen Sie die Definitions-, Wertemenge und Asymptote der
               Funktion mit x, y {buildLatex('\\in \\R')}:
             </MainTask>
-            <HighlightGreen>
+            <p className="serlo-highlight-gray">
               y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
               {data.a === -1 ? null : '·'}{' '}
               {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
               <sup>x</sup> {data.c > 0 ? '+' : data.c < 0 ? '-' : null}{' '}
               {data.c !== 0 ? data.c : null}
-            </HighlightGreen>
+            </p>
           </>
         )
       }}

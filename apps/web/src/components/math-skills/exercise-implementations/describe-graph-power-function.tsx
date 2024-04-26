@@ -70,7 +70,7 @@ export function DescribeGraphPowerFunction() {
             Gegeben ist folgende Funktionsgleichung. Beschreiben Sie Lage und
             Aussehen des dazugehörigen Graphen.
           </p>
-          {buildBlock('green', <>y = {renderF(data)}</>)}
+          {buildBlock('gray', <>y = {renderF(data)}</>)}
         </>
       )}
       renderSolution={(data) => {

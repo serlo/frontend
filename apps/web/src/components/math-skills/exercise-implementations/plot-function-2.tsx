@@ -2,11 +2,7 @@ import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import {
-  MainTask,
-  HighlightGreen,
-  HighlightGray,
-} from '../components/content-components'
+import { MainTask, HighlightGray } from '../components/content-components'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -36,13 +32,13 @@ export function PlotFunction2() {
         return (
           <>
             <MainTask>Skizzieren Sie den Graphen der Funktion:</MainTask>
-            <HighlightGreen>
+            <p className="serlo-highlight-gray">
               y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
               {data.a === -1 ? null : '·'}{' '}
               {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
               <sup>x</sup> {data.c > 0 ? '+' : data.c < 0 ? '-' : null}{' '}
               {data.c !== 0 ? Math.abs(data.c) : null}
-            </HighlightGreen>
+            </p>
             <br />
             <br />
             <i>
