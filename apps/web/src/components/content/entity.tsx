@@ -25,6 +25,7 @@ import { EntityData, UuidType } from '@/data-types'
 import { cn } from '@/helper/cn'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
+import { isProduction } from '@/helper/is-production'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
@@ -51,7 +52,7 @@ export function Entity({ data }: EntityProps) {
     setCourseNavOpen(false)
   })
 
-  const isLenabiUserJourneyCoursePage = data.id === 306635
+  const isLenabiUserJourneyCoursePage = !isProduction && data.id === 306635
 
   const { strings } = useInstanceData()
   return wrapWithSchema(

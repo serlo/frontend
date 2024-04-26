@@ -25,6 +25,7 @@ import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
+import { isProduction } from '@/helper/is-production'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
@@ -168,7 +169,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
           showToastNotice(
             strings.notices.welcome.replace('%username%', username)
           )
-          if (window.location.host.startsWith('journey')) {
+          if (!isProduction && window.location.host.startsWith('journey')) {
             window.location.href =
               'https://journey.serlo-staging.dev/willkommen'
           }

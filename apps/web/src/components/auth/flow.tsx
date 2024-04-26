@@ -40,6 +40,7 @@ import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth
 import type { AxiosError } from '@/auth/types'
 import { Node } from '@/components/auth/node'
 import type { InstanceData } from '@/data-types'
+import { isProduction } from '@/helper/is-production'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
@@ -204,7 +205,7 @@ export function handleFlowError<S>(
           unwantedPaths: [verificationUrl, loginUrl, registrationUrl],
         })
         setTimeout(() => {
-          if (window.location.host.startsWith('journey')) {
+          if (!isProduction && window.location.host.startsWith('journey')) {
             window.location.href =
               'https://journey.serlo-staging.dev/willkommen'
           }
