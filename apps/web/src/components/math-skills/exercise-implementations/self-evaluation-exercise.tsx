@@ -1,5 +1,5 @@
 import { faCalculator, faSlash } from '@fortawesome/free-solid-svg-icons'
-import { useContext, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 
 import { ExStatus } from '../feedback/execise-feedback'
 import { ExerciseSelfFeedback } from '../feedback/execise-self-feedback'
@@ -31,9 +31,12 @@ export function SelfEvaluationExercise<T>({
   const calculatorAllowed = useContext(CalculatorAllowedContext)
   const submitEvent = useSubmitEvent()
 
+  // memo rendered task so we don't rerender it on every state change
+  const renderedTask = useMemo(() => renderTask(data), [data, renderTask])
+
   return (
     <>
-      {renderTask(data)}
+      {renderedTask}
       <div className="mb-4 mt-12 border-y-2 border-stone-100 py-2 text-stone-500">
         {renderToolHints()}
       </div>
