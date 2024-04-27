@@ -7,7 +7,7 @@ import { roundToDigits } from '../utils/round-to-digits'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
-type Element = 'a' | 'b' | 'c' | 'α' | 'β'
+type Element = 'a' | 'b' | 'c' | '⍺' | 'β'
 
 interface DATA {
   given_1_element: Element
@@ -72,7 +72,7 @@ export function RightTriangle() {
               mode,
             } as DATA
           } else {
-            const goal = randomItemFromArray(['α', 'β'])
+            const goal = randomItemFromArray(['⍺', 'β'])
             const alpha = (g_alpha_rad / Math.PI) * 180
             if (goal_element === 'c' && goal === 'β') {
               const t = given_1_element
@@ -88,13 +88,13 @@ export function RightTriangle() {
               goal_element: goal,
               given_1_value,
               given_2_value,
-              goal_value: goal === 'α' ? alpha : 90 - alpha,
+              goal_value: goal === '⍺' ? alpha : 90 - alpha,
               g_alpha_rad,
               mode,
               func:
                 goal_element === 'c'
                   ? 'tan'
-                  : (goal_element === 'a' && goal === 'α') ||
+                  : (goal_element === 'a' && goal === '⍺') ||
                       (goal_element === 'b' && goal === 'β')
                     ? 'cos'
                     : 'sin',
@@ -102,7 +102,7 @@ export function RightTriangle() {
           }
         }
 
-        const given_1_element = randomItemFromArray(['α', 'β'])
+        const given_1_element = randomItemFromArray(['⍺', 'β'])
         const given_2_element = randomItemFromArray(['a', 'b', 'c'])
 
         const goal_element = randomItemFromArray(
@@ -159,7 +159,7 @@ export function RightTriangle() {
           given_1_value,
           given_2_value,
           g_alpha_rad:
-            ((given_1_element === 'α' ? given_1_value : 90 - given_1_value) /
+            ((given_1_element === '⍺' ? given_1_value : 90 - given_1_value) /
               180) *
             Math.PI,
           goal_value,
@@ -370,14 +370,14 @@ function SubComponent({ data }: { data: DATA }) {
       },
     })
 
-    if (shouldShow('α')) {
+    if (shouldShow('⍺')) {
       b.create('angle', [pointB, pointA, pointC], {
-        name: 'α',
+        name: '⍺',
         withLabel: true,
         radius: 0.12 * dim,
         label: {
           autoPosition: true,
-          color: data.goal_element === 'α' ? newgreen : 'black',
+          color: data.goal_element === '⍺' ? newgreen : 'black',
         },
       })
     }
