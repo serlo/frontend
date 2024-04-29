@@ -95,19 +95,21 @@ export class EditorWebComponent extends HTMLElement {
 
     this.reactRoot.render(
       <React.StrictMode>
-        <SerloEditor
-          initialState={initialState}
-          onChange={({ changed, getDocument }) => {
-            if (changed) {
-              const newState = getDocument()
-              this.broadcastNewState(newState)
-            }
-          }}
-        >
-          {(editor) => {
-            return <div>{editor.element}</div>
-          }}
-        </SerloEditor>
+        <div id="serlo-root">
+          <SerloEditor
+            initialState={initialState}
+            onChange={({ changed, getDocument }) => {
+              if (changed) {
+                const newState = getDocument()
+                this.broadcastNewState(newState)
+              }
+            }}
+          >
+            {(editor) => {
+              return <div>{editor.element}</div>
+            }}
+          </SerloEditor>
+        </div>
       </React.StrictMode>
     )
   }
