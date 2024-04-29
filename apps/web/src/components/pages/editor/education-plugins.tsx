@@ -95,7 +95,11 @@ const pluginData = [
       'With the GeoGebra applet, moving or interactive graphics can be integrated into the content. You can create your own applet or choose from the huge free public applet collection on geogebra.org.',
     example: (
       <StaticRenderer
-        document={{ plugin: EditorPluginType.Geogebra, state: 'd4eNMF5R' }}
+        document={{
+          plugin: EditorPluginType.Geogebra,
+          state: 'd4eNMF5R',
+          id: '1e633412-430d-453f-b621-589a05dd139e',
+        }}
       />
     ),
     category: 'educational',

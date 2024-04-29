@@ -9,6 +9,7 @@ import {
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 import { endpoint } from '@/api/endpoint'
 import { InfoPanel } from '@/components/info-panel'
@@ -98,6 +99,7 @@ export function InjectionSerloStaticRenderer({
                   content,
                   serloContext: { licenseId: uuid.licenseId },
                 },
+                id: uuid.id as unknown as string,
               },
             ])
             return
@@ -110,6 +112,7 @@ export function InjectionSerloStaticRenderer({
                 src: uuid.currentRevision.url,
                 alt: uuid.title ?? 'video',
               },
+              id: uuid.id,
             }
             setContent([state])
             return
@@ -120,6 +123,7 @@ export function InjectionSerloStaticRenderer({
               {
                 plugin: EditorPluginType.Geogebra,
                 state: uuid.currentRevision.url,
+                id: uuid.id,
               },
               parseDocumentString(uuid.currentRevision.content),
             ])
@@ -202,6 +206,7 @@ const query = gql`
 function createFallbackBox(alias: string, title: string) {
   return {
     plugin: EditorPluginType.Rows,
+    id: uuidv4(),
     state: [
       {
         plugin: EditorPluginType.Box,

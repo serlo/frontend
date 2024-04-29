@@ -310,6 +310,7 @@ export async function requestPage(
               src: uuid.currentRevision?.url ?? '',
               alt: uuid.currentRevision?.title ?? '',
             },
+            id: uuid.id as unknown as string,
           },
           ...(content ? [content] : []),
         ],
@@ -347,6 +348,7 @@ export async function requestPage(
           {
             plugin: EditorPluginType.Geogebra,
             state: uuid.currentRevision?.url ?? '',
+            id: uuid.id as unknown as string,
           },
           ...(content ? [content] : []),
         ],

@@ -41,9 +41,8 @@ export function child<K extends string, S = unknown>(
       return id
     },
     toStoreState(staticDocument, { createDocument }) {
-      const id = staticDocument?.id ?? v4()
-      createDocument({ id, ...staticDocument })
-      return id
+      createDocument(staticDocument)
+      return staticDocument.id
     },
     toStaticState(id, { getStoreDocument, omitId }: ToStaticHelpers<K, S>) {
       const document = getStoreDocument(id)
@@ -64,7 +63,7 @@ export function child<K extends string, S = unknown>(
 }
 
 export type ChildStateType<K extends string = string, S = unknown> = StateType<
-  { plugin: K; state?: S; id?: string },
+  { plugin: K; state?: S; id: string },
   string,
   {
     get(): string
