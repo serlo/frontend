@@ -119,5 +119,3 @@ export class EditorWebComponent extends HTMLElement {
     }
   }
 }
-
-customElements.define('serlo-editor', EditorWebComponent)
