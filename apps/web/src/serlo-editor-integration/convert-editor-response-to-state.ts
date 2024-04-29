@@ -16,6 +16,7 @@ import type { VideoTypePluginState } from '@editor/plugins/serlo-template-plugin
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
+import { v4 as uuidv4 } from 'uuid'
 
 import { UuidType } from '@/data-types'
 import type { MainUuidType } from '@/fetcher/query-types'
@@ -155,6 +156,7 @@ export function convertEditorResponseToState(
           },
           sources: [],
         },
+        id: uuidv4(),
       })
     }
   }

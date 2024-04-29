@@ -12,6 +12,7 @@ import * as R from 'ramda'
 import React, { useRef, useState, useMemo } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
+import { v4 as uuidv4 } from 'uuid'
 
 import type { RowsPluginConfig, RowsPluginState } from '.'
 import { RowDragButton } from './components/row-drag-button'
@@ -73,7 +74,7 @@ export function EditorRowRenderer({
           // If the dragged plugin was the only plugin in the current rows plugin,
           // add an empty text plugin to replace it
           if (rows.length <= 1) {
-            rows.insert(0, { plugin: EditorPluginType.Text })
+            rows.insert(0, { plugin: EditorPluginType.Text, id: uuidv4() })
           }
         },
       }
@@ -161,11 +162,16 @@ export function EditorRowRenderer({
 
       function handleResult(key: string, result: { state?: unknown }) {
         if (isDraggingAbove(monitor)) {
-          rows.insert(dropIndex, { plugin: key, state: result.state })
+          rows.insert(dropIndex, {
+            plugin: key,
+            state: result.state,
+            id: uuidv4(),
+          })
         } else {
           rows.insert(dropIndex + 1, {
             plugin: key,
             state: result.state,
+            id: uuidv4(),
           })
         }
       }

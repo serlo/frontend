@@ -92,6 +92,7 @@ export function EditorPresentation() {
                   src: 'https://www.youtube.com/watch?v=wjaPgGdw23w',
                   alt: 'Video introducing the Serlo Editor',
                 }}
+                id="a4a181c2-d6c5-4909-ad0a-a40a420ffab5"
               />
             </div>
           </div>

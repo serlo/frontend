@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-
 import { InputExerciseType } from '@editor/plugins/input-exercise/input-exercise-type'
 import { CustomText, MathElement } from '@editor/plugins/text'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
@@ -12,6 +11,7 @@ import {
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { either as E } from 'fp-ts'
 import { PathReporter } from 'io-ts/lib/PathReporter'
+import { v4 as uuidv4 } from 'uuid'
 
 import {
   ExpectedExerciseTypes,
@@ -115,16 +115,17 @@ export function convertAiGeneratedScExerciseToEditorDocument(
                   ),
                 },
               ],
+              id: uuidv4(),
             },
           ],
+          id: uuidv4(),
         },
         interactive,
         hideInteractiveInitially: undefined,
         solution,
         licenseId: undefined,
       },
-      // doesn't have an id yet
-      id: undefined,
+      id: uuidv4(),
     }
 
     return exerciseDocument
@@ -137,6 +138,7 @@ function createExerciseHeadingTextDocument(text: string) {
   return {
     plugin: EditorPluginType.Text,
     state: [{ type: 'h', children: [{ text }], level: 3 }],
+    id: uuidv4(),
   }
 }
 
@@ -150,10 +152,12 @@ function createExerciseGroupDocument(
       content: {
         plugin: EditorPluginType.Rows,
         state: [createExerciseHeadingTextDocument(heading)],
+        id: uuidv4(),
       },
       exercises,
       intermediateTasks: undefined,
     },
+    id: uuidv4(),
   }
 }
 
@@ -266,6 +270,7 @@ function createInteractive(exercise: ExpectedExerciseTypes): Interactive {
             },
           })),
         },
+        id: uuidv4(),
       }
       return interactive
     }
@@ -300,6 +305,7 @@ function createInteractive(exercise: ExpectedExerciseTypes): Interactive {
             // have to include wrong answers in the prompt.
           ],
         },
+        id: uuidv4(),
       }
 
       return interactive
@@ -328,6 +334,7 @@ function createSolution(
             children: [{ text: exercise.strategy }],
           },
         ],
+        id: uuidv4(),
       },
       steps: {
         plugin: EditorPluginType.Rows,
@@ -340,10 +347,10 @@ function createSolution(
             },
           ],
         })),
+        id: uuidv4(),
       },
     },
-    // doesn't have an id yet
-    id: undefined,
+    id: uuidv4(),
   }
 }
 

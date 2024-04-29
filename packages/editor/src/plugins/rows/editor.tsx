@@ -1,5 +1,6 @@
 import { selectParentPluginType, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { v4 as uuidv4 } from 'uuid'
 
 import type { RowsProps } from '.'
 import { AllowedChildPlugins } from './allowed-child-plugins-context'
@@ -19,6 +20,7 @@ export function RowsEditor({ state, config, id }: RowsProps) {
     const textPluginWithSuggestions = {
       plugin: EditorPluginType.Text,
       state: [{ type: 'p', children: [{ text: '/' }] }],
+      id: uuidv4(),
     }
     setTimeout(() => {
       state.insert(insertIndex, textPluginWithSuggestions)

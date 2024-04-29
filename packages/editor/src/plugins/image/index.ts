@@ -2,6 +2,7 @@ import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 import type { FileError } from '@serlo/frontend/src/serlo-editor-integration/image-with-serlo-config'
+import { v4 as uuidv4 } from 'uuid'
 
 import { ImageEditor } from './editor'
 import {
@@ -89,7 +90,7 @@ export function createImagePlugin(
               link: undefined,
               alt: undefined,
               maxWidth: undefined,
-              caption: { plugin: EditorPluginType.Text },
+              caption: { plugin: EditorPluginType.Text, id: uuidv4() },
             },
           }
         } else {

@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
@@ -100,7 +101,12 @@ export function ExerciseEditor(props: ExerciseProps) {
                 return (
                   <AddButton
                     key={type}
-                    onClick={() => interactive.create({ plugin: type })}
+                    onClick={() =>
+                      interactive.create({
+                        plugin: type,
+                        id: uuidv4(),
+                      })
+                    }
                     secondary
                     dataQa={`add-exercise-${type}`}
                   >

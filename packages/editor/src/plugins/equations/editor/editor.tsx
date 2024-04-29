@@ -24,6 +24,7 @@ import { cn } from '@serlo/frontend/src/helper/cn'
 import { includes } from 'ramda'
 import { useCallback, useEffect, useRef } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { v4 as uuidv4 } from 'uuid'
 
 import { toTransformationTarget, TransformationTarget } from './editor-renderer'
 import { useGridFocus } from './grid-focus'
@@ -306,7 +307,7 @@ export function EquationsEditor(props: EquationsProps) {
       sign: state.steps[index - 1].sign.value,
       right: '',
       transform: '',
-      explanation: { plugin: EditorPluginType.Text },
+      explanation: { plugin: EditorPluginType.Text, id: uuidv4() },
     })
   }
 

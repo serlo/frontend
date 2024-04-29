@@ -2,6 +2,7 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { EditorInputExerciseDocument } from '@editor/types/editor-plugins'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useEffect, useRef, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 import type { InputExerciseProps } from '.'
 import { InputExerciseStaticRenderer } from './static'
@@ -105,7 +106,7 @@ export function InputExerciseEditor(props: InputExerciseProps) {
               const wrongAnswer = {
                 value: '',
                 isCorrect: false,
-                feedback: { plugin: EditorPluginType.Text },
+                feedback: { plugin: EditorPluginType.Text, id: uuidv4() },
               }
               answers.insert(undefined, wrongAnswer)
               overwriteFocus(true)

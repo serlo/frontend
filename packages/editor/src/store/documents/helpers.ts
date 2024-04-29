@@ -67,6 +67,7 @@ export function getStaticDocument({
 
   return {
     plugin: document.plugin,
+    id,
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     state: plugin.state.toStaticState(document.state, toStaticHelpers),
   }

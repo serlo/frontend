@@ -6,6 +6,7 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { useEffect, useMemo } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 import type { SpoilerProps } from '.'
 import { SpoilerRenderer } from './renderer'
@@ -40,8 +41,12 @@ export function SpoilerEditor(props: SpoilerProps) {
       ? {
           plugin: EditorPluginType.Text,
           state: [{ type: 'p', children: [{ text: title.value }] }],
+          id: uuidv4(),
         }
-      : { plugin: EditorPluginType.Text }
+      : {
+          plugin: EditorPluginType.Text,
+          id: uuidv4(),
+        }
 
     richTitle.create(newTitle)
   })

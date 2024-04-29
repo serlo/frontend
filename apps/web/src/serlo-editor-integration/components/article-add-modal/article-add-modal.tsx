@@ -1,5 +1,6 @@
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 import { ArticleRelatedExercises } from './article-related-exercises'
 import { ArticleRelatedMagicInput } from './article-related-magic-input'
@@ -77,6 +78,7 @@ export function ArticleAddModal({
       exercises.insert(exercises.length, {
         plugin: EditorPluginType.Injection,
         state: id.toString(),
+        id: uuidv4(),
       })
     }
   }

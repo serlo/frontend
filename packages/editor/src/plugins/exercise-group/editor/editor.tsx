@@ -3,6 +3,7 @@ import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faArrowCircleUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { v4 as uuidv4 } from 'uuid'
 
 import { IntermediateTask } from './intermediate-task'
 import { type ExerciseGroupProps } from '..'
@@ -87,7 +88,7 @@ export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
             onClick={() => {
               const newTask = {
                 afterIndex: lastExerciseIndex,
-                content: { plugin: EditorPluginType.Rows },
+                content: { plugin: EditorPluginType.Rows, id: uuidv4() },
               }
               if (intermediateTasks.defined) {
                 intermediateTasks.insert(undefined, newTask)

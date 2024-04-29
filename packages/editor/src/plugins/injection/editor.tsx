@@ -9,7 +9,7 @@ import { InjectionToolbar } from './toolbar'
 import { InjectionSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/injection-serlo-static-renderer'
 
 export function InjectionEditor(props: InjectionProps) {
-  const { focused, state } = props
+  const { focused, state, id } = props
 
   const [cache, setCache] = useState(state.value)
   const [showSettingsModal, setShowSettingsModal] = useState(false)
@@ -38,6 +38,7 @@ export function InjectionEditor(props: InjectionProps) {
           <InjectionSerloStaticRenderer
             plugin={EditorPluginType.Injection}
             state={cache}
+            id={id}
           />
         </PreviewOverlay>
       ) : (

@@ -1,7 +1,8 @@
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { AnyEditorDocument } from '@editor/types/editor-plugins'
+import { v4 as uuidv4 } from 'uuid'
 
-const fallback = { plugin: EditorPluginType.Rows }
+const fallback = { plugin: EditorPluginType.Rows, id: uuidv4() }
 /**
  * Parses a serialized static editor document (e.g. from the database)
  * into an static document (`AnyEditorDocument`)

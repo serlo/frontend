@@ -75,7 +75,7 @@ export interface EditorPlugin<
       document,
     }: {
       previousSibling?: string
-      document?: { plugin: string; state?: unknown }
+      document?: { plugin: string; state?: unknown; id: string }
     }
   ): void
 

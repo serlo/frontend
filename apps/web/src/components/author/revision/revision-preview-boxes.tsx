@@ -92,11 +92,13 @@ export function RevisionPreviewBoxes({
           <VideoSerloStaticRenderer
             plugin={EditorPluginType.Video}
             state={{ src: dataSet.url, alt: dataSet.title ?? 'Video' }}
+            id={dataSet.id as unknown as string}
           />
         ) : (
           <GeogebraSerloStaticRenderer
             plugin={EditorPluginType.Geogebra}
             state={dataSet.url}
+            id={dataSet.id as unknown as string}
           />
         )}
         <span className="bg-editor-primary-100 px-1 text-sm">

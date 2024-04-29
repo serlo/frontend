@@ -7,6 +7,7 @@ import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { useEffect, useRef, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 import type { ImageProps } from '.'
 import { InlineSrcControls } from './controls/inline-src-controls'
@@ -46,7 +47,10 @@ export function ImageEditor(props: ImageProps) {
 
   useEffect(() => {
     if (!state.caption.defined) {
-      state.caption.create({ plugin: EditorPluginType.Text })
+      state.caption.create({
+        plugin: EditorPluginType.Text,
+        id: uuidv4(),
+      })
     }
   }, [state.caption])
 
