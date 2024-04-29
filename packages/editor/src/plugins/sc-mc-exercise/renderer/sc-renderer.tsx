@@ -10,7 +10,6 @@ import type { ScMcExerciseRendererProps } from './renderer'
 
 export function ScRenderer({
   answers,
-  idBase,
   onEvaluate,
   renderExtraAnswerContent,
   isPrintMode,
@@ -23,7 +22,7 @@ export function ScRenderer({
     <div className="mx-side mb-block">
       <ul className="unstyled-list m-0 flex list-none flex-col flex-wrap overflow-auto p-0">
         {answers.map((answer, i) => {
-          const id = `${idBase}${i}`
+          const id = answer.key
           return (
             <li key={id} className="mb-block">
               <div className="flex">

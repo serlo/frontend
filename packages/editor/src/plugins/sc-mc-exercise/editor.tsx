@@ -80,11 +80,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
       <PreviewOverlaySimple previewActive={previewActive} fullOpacity={!showUi}>
         {/* margin-hack */}
         <div className="[&_.ml-4.flex]:mb-block">
-          <ScMcExerciseStaticRenderer
-            {...staticDocument}
-            idBase={`sc-mc-${id}`}
-            noShuffle
-          />
+          <ScMcExerciseStaticRenderer {...staticDocument} noShuffle />
         </div>
       </PreviewOverlaySimple>
 

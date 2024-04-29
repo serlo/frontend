@@ -15,9 +15,8 @@ export function ExerciseGroupStaticRenderer(
   if (!exercises) return null
 
   const renderedExercises = exercises.map((exercise, index) => {
-    const id = `${exercise.id ?? index}`
     return {
-      id,
+      id: exercise.id,
       element: (
         <>
           <StaticRenderer document={exercise} /> {renderIntermediateTask(index)}

@@ -5198,6 +5198,7 @@ __metadata:
     "@serlo/authorization": ^0.60.0
     "@serlo/editor": "workspace:*"
     "@serlo/eslint-config": "workspace:*"
+    "@serlo/katex-styles": ^1.0.1
     "@serlo/typescript-config": "workspace:*"
     "@svgr/webpack": ^8.1.0
     "@tailwindcss/typography": ^0.5.12

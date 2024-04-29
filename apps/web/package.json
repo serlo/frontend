@@ -43,6 +43,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@serlo/authorization": "^0.60.0",
     "@serlo/editor": "workspace:*",
+    "@serlo/katex-styles": "^1.0.1",
     "@tippyjs/react": "^4.2.6",
     "array-move": "^4.0.0",
     "autoprefixer": "^10.4.19",
