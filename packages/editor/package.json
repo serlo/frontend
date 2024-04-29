@@ -39,9 +39,9 @@
     "yalc:publish": "yarn build && yalc publish --push --sig"
   },
   "dependencies": {
+    "@serlo/katex-styles": "^1.0.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "serlo-katex-styles": "^1.0.0"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.4",
