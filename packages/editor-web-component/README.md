@@ -5,10 +5,13 @@ This is an early version of the web component wrapping the [Serlo Editor](https:
 ## Installation and usage
 
 1. `yarn add @serlo/editor-web-component`
-2. Define an HTML element with the id `serlo-root` in your file where you render the web component
+2. Register the web component `customElements.define('serlo-editor', EditorWebComponent)`.
+3. Define an HTML element with the id `serlo-root` in your file where you render the web component
 
 ```JSX
 import { EditorWebComponent } from '@serlo/editor-web-component'
+
+customElements.define('serlo-editor', EditorWebComponent)
 
 // in your render function
 return (
