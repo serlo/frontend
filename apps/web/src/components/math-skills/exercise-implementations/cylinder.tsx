@@ -10,17 +10,8 @@ import {
 } from '../components/content-components'
 import { buildFrac, buildSqrt } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
-import { randomItemFromArray } from '@/helper/random-item-from-array'
-
-// JXG.Options.label.autoPosition = true
 
 interface DATA {
-  ac: number
-  bc: number
-  ab: number
-  factor1: number
-  factor2: number
-  angle: number
   c1b: number
   c2b: number
   h: number
@@ -38,23 +29,12 @@ export function Cylinder() {
         const M = c1b / 2
         const path = randomIntBetween(1, 4)
 
-        const factor1 = randomItemFromArray([0.61, 0.79])
-        const factor2 = randomItemFromArray([0.48, 0.6])
-        const ab = randomIntBetween(24, 54)
-        const ac = Math.round(ab * factor1)
-        const bc = Math.round(ab * factor2)
         const data: DATA = {
           c1b,
           h,
           path,
           c2b,
           M,
-          ac,
-          bc,
-          ab,
-          factor1,
-          factor2,
-          angle: 104,
         }
         return { data }
       }}
