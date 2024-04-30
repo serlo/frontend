@@ -1,5 +1,4 @@
 import { faHashtag } from '@fortawesome/free-solid-svg-icons'
-import { shouldUseFeature } from '@serlo/frontend/src/components/user/profile-experimental'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
@@ -18,11 +17,7 @@ export function AnchorLinkCopyTool({
   const editorStrings = useEditorStrings()
   const { strings } = useInstanceData()
 
-  if (
-    !navigator.clipboard ||
-    !window.location.href.includes('add-revision') ||
-    !shouldUseFeature('editorAnchorLinkCopyTool')
-  ) {
+  if (!navigator.clipboard || !window.location.href.includes('add-revision')) {
     return null
   }
 
@@ -34,11 +29,6 @@ export function AnchorLinkCopyTool({
         }`
         void navigator.clipboard.writeText(url)
         showToastNotice(strings.share.copySuccess, 'success', 2000)
-        showToastNotice(
-          '👉 ' + editorStrings.edtrIo.anchorLinkWarning,
-          undefined,
-          5500
-        )
       }}
       label={editorStrings.plugins.rows.copyAnchorLink}
       icon={faHashtag}
