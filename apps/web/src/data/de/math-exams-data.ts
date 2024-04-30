@@ -120,7 +120,7 @@ export const examsFoldersNI: ExamsFolders = {
 export const examsFoldersNW: ExamsFolders = {
   'zentrale-pruefung': {
     id: 305760,
-    displayTitle: 'Zentrale Prüfungen (ZAP)',
+    displayTitle: 'MSA | Zentrale Prüfungen (ZAP)',
     schoolType: 'alle',
   },
 }
@@ -223,6 +223,17 @@ export const extraMetaTags = {
     metaDescription:
       'Deine Vorbereitung für die Zentrale Prüfungen (ZAP) in Nordrhein-Westfalen: Mathe lernen mit Original Prüfungsaufgaben und Lösungen. Mit Serlo schaffst du das!',
   },
+  305819: {
+    title: 'Mathe MSA- und eBBR-Prüfungen | Berlin',
+    metaDescription:
+      'Mathe lernen für den Mittleren Schulabschluss (MSA) und die erweiterte Berufsbildungsreife (eBBR) mit den Original Prüfungsaufgaben und Lösungen aus Berlin. Mit Serlo schaffst du das!',
+  },
+  305843: {
+    title:
+      'Mathe Abschlussprüfungen in Brandenburg | Oberschule & Gesamtschule',
+    metaDescription:
+      'Kostenlose Prüfungsvorbereitung für A-Kurs/EBR-Klasse und B-Kurs/FOR-Klasse sowie Grund- und Erweiterungskurs der Gesamtschule in Brandenburg. Mit Serlo schaffst du das!',
+  },
 } as const
 
 export const landingMetaTags: Record<
@@ -255,8 +266,6 @@ export const landingMetaTags: Record<
       'Mathe lernen für die ZAP in Nordrhein-Westfalen - mit den originalen Prüfungsaufgaben samt Musterlösungen der vergangenen Jahre.',
   },
 }
-
-// TODO: add meta tags for NRW, BE and BB
 
 export interface ExamsTaxonomyData {
   // key in this form `id${uuid}`
