@@ -776,7 +776,7 @@ export const loggedInData = {
           unorderedList: "கட்டளையிடாத பட்டியல்",
           lists: "பட்டியல்கள்",
           mathFormula: 'Math formula (%ctrlOrCmd% + M)',
-          code: 'Code (%ctrlOrCmd% + ⇧ + `)',
+          code: 'Code (%ctrlOrCmd% + ⇧ + C)',
           blank: 'Blank',
           createBlank: 'Create Blank',
           removeBlank: 'Remove Blank',
