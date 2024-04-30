@@ -120,7 +120,7 @@ export const examsFoldersNI: ExamsFolders = {
 export const examsFoldersNW: ExamsFolders = {
   'zentrale-pruefung': {
     id: 305760,
-    displayTitle: 'Zentrale Prüfungen (ZAP)',
+    displayTitle: 'MSA | Zentrale Prüfungen (ZAP)',
     schoolType: 'alle',
   },
 }
