@@ -1,11 +1,12 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { buildFrac } from '../utils/math-builder'
-import { useMathSkillsStorage } from '../utils/math-skills-data-context'
+import { useMathSkillsName } from '../utils/math-skills-data-context'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
 export function FindExponentialFunction() {
-  const { data } = useMathSkillsStorage()
+  const name = useMathSkillsName()
   return (
     <SelfEvaluationExercise
       generator={() => {
@@ -58,35 +59,29 @@ export function FindExponentialFunction() {
           </p>
           {d.context === 'vokabeln' && (
             <p className="serlo-highlight-gray">
-              {data.name} konnte am Ende des Schuljahrs{' '}
-              {d.k.toLocaleString('de-De').replace('.', ' ')} Englischvokabeln.
-              Davon vergisst {data.name} während der Sommerferien jede Woche{' '}
-              {d.a}
-              %.
+              {name} konnte am Ende des Schuljahrs {pp(d.k)} Englischvokabeln.
+              Davon vergisst {name} während der Sommerferien jede Woche{' '}
+              {pp(d.a)}&nbsp;%.
             </p>
           )}
           {d.context === 'rehe' && (
             <p className="serlo-highlight-gray">
-              In einem Wald leben{' '}
-              {d.k.toLocaleString('de-De').replace('.', ' ')} Rehe. Die
-              Population wächst um {d.a.toLocaleString('de-De')} % pro Jahr.
+              In einem Wald leben {pp(d.k)} Rehe. Die Population wächst um{' '}
+              {pp(d.a)}&nbsp;% pro Jahr.
             </p>
           )}
           {d.context === 'rente' && (
             <p className="serlo-highlight-gray">
-              {data.name} ist in der Rente und besitzt ein Sparguthaben von
-              <br />
-              {d.k.toLocaleString('de-De').replace('.', ' ')} €. Von der Bank
-              lässt sich {data.name} jeden Monat {d.a.toLocaleString('de-De')} %
-              davon auszahlen.
+              {name} ist in der Rente und besitzt ein Sparguthaben von {pp(d.k)}
+              &nbsp;€. Von der Bank lässt sich {name} jeden Monat {pp(d.a)}
+              &nbsp;% davon auszahlen.
             </p>
           )}
           {d.context === 'basketball' && (
             <p className="serlo-highlight-gray">
-              Ein Basketball wird aus{' '}
-              {d.k.toLocaleString('de-De').replace('.', ' ')} m fallen gelassen.
-              Nach jedem Bodenkontakt verringert er seine Sprunghöhe um{' '}
-              {d.a.toLocaleString('de-De')} %.
+              Ein Basketball wird aus {pp(d.k)}&nbsp;m fallen gelassen. Nach
+              jedem Bodenkontakt verringert er seine Sprunghöhe um {pp(d.a)}
+              &nbsp;%.
             </p>
           )}
         </>
@@ -98,13 +93,11 @@ export function FindExponentialFunction() {
             <p>Bestimme zuerst den {d.factor}faktor a:</p>
             <p className="serlo-highlight-gray">
               a = 1 {d.factor === 'Abnahme' ? '-' : '+'}{' '}
-              {buildFrac(d.a.toLocaleString('de-De'), 100)} ={' '}
-              {a.toLocaleString('de-De')}
+              {buildFrac(pp(d.a), 100)} = {pp(a)}
             </p>
             <p>Setze dann Anfangswert und {d.factor}faktor ein:</p>
             <p className="serlo-highlight-green">
-              y = {d.k.toLocaleString('de-De').replace('.', ' ')} ·{' '}
-              {a.toLocaleString('de-De')}
+              y = {pp(d.k)} · {pp(a)}
               <sup>x</sup>
             </p>
             <p className="serlo-highlight-green">

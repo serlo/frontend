@@ -1,5 +1,7 @@
 import { StaticMath } from '@editor/plugins/text/static-components/static-math'
+import { useState, useEffect } from 'react'
 
+import { JSXGraphWrapper } from './jsx-graph-wrapper'
 import { cn } from '@/helper/cn'
 
 export function buildFrac(
@@ -129,3 +131,50 @@ const rightarrow = (
     ></path>
   </svg>
 )
+
+interface JSXOptions {
+  width?: number
+  height?: number
+}
+
+export function buildJSX(
+  f: () => Board,
+  id: string,
+  dep: object,
+  opts: JSXOptions = {}
+) {
+  if (!opts.width) opts.width = 300
+  if (!opts.height) opts.height = 300
+  return (
+    <JSXGraph f={f} id={id} dep={dep} width={opts.width} height={opts.height} />
+  )
+}
+
+type Board = ReturnType<typeof JXG.JSXGraph.initBoard>
+
+function JSXGraph({
+  f,
+  dep,
+  id,
+  width,
+  height,
+}: {
+  f: () => Board
+  dep: object
+  id: string
+  width: number
+  height: number
+}) {
+  const [board, setBoard] = useState<Board | null>(null)
+
+  useEffect(() => {
+    setBoard(f())
+
+    return () => {
+      if (board) JXG.JSXGraph.freeBoard(board)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dep])
+
+  return <JSXGraphWrapper id={id} width={width} height={height} />
+}

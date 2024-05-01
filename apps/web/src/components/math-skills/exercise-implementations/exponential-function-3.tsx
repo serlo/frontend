@@ -1,6 +1,6 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { HighlightGray } from '../components/content-components'
-import { buildBlock } from '../utils/math-builder'
+import { buildBlock, buildLatex } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -18,15 +18,14 @@ export function ExponentialEquation() {
         const power = Math.pow(b, sol)
         return (
           <>
-            <p className="mb-8 text-2xl">
-              Lösen Sie die Gleichung (G = ℝ):
-              <br />
-              <p className="serlo-highlight-gray">
-                0 = {sign ? '(' : null}
-                {sign ? '-' : null} {a}
-                {sign ? ')' : null} · {b}
-                <sup>x</sup> {sign ? '+' : '-'} {power * a}
-              </p>
+            <p className="serlo-main-task">
+              Lösen Sie die Gleichung (G = {buildLatex('\\R')}):
+            </p>
+            <p className="serlo-highlight-gray">
+              0 = {sign ? '(' : null}
+              {sign ? '-' : null} {a}
+              {sign ? ')' : null} · {b}
+              <sup>x</sup> {sign ? '+' : '-'} {power * a}
             </p>
           </>
         )

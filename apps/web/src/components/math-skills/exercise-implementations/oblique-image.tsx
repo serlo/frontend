@@ -1,18 +1,9 @@
 import JXG from 'jsxgraph'
-import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { buildFrac, buildOverline } from '../utils/math-builder'
+import { buildFrac, buildJSX, buildOverline } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
-
-interface BodyData {
-  koerper: string
-  ab: number
-  bc: number
-  h: number
-  basePoint: string
-}
 
 export function ObliqueImage() {
   return (
@@ -30,16 +21,15 @@ export function ObliqueImage() {
         )
         const basePoint = randomItemFromArray(['A', 'B', 'C', 'D'])
 
-        const data: BodyData = {
+        return {
           koerper,
           ab,
           bc,
           h,
           basePoint,
         }
-        return { data }
       }}
-      renderTask={({ data }) => {
+      renderTask={(data) => {
         return (
           <>
             {data.koerper === 'quader' ? (
@@ -79,13 +69,227 @@ export function ObliqueImage() {
           </>
         )
       }}
-      renderSolution={({ data }) => {
+      renderSolution={(data) => {
         return (
           <>
             So sieht das Schrägbild aus:
             <br />
-            {data.koerper === 'pyramide' ? <SolPyra data={data} /> : null}
-            {data.koerper === 'quader' ? <SolQuader data={data} /> : null}
+            {data.koerper === 'pyramide'
+              ? buildJSX(
+                  () => {
+                    const g = JXG.JSXGraph.initBoard('solPyra', {
+                      boundingbox: [1, 18, 18, 1],
+                      showNavigation: false,
+                      showCopyright: false,
+                      axis: true,
+                      defaultAxes: {
+                        x: {
+                          ticks: {
+                            ticksDistance: 1,
+                            insertTicks: false,
+                            label: { visible: false },
+                          },
+                        },
+                        y: {
+                          ticks: {
+                            ticksDistance: 1,
+                            insertTicks: false,
+                            label: { visible: false },
+                          },
+                        },
+                      },
+                    })
+
+                    const A = [3, 3]
+                    const B = [3 + data.ab, 3]
+                    const C = [
+                      3 + data.ab + 0.7071067 * data.bc * 0.5,
+                      3 + 0.7071067 * data.bc * 0.5,
+                    ]
+                    const D = [
+                      3 + 0.7071067 * data.bc * 0.5,
+                      3 + 0.7071067 * data.bc * 0.5,
+                    ]
+
+                    const pointA = g.create('point', A, {
+                      name: 'A',
+                      fixed: true,
+                      label: { autoPosition: true },
+                    })
+                    const pointB = g.create('point', B, {
+                      name: 'B',
+                      fixed: true,
+                      label: { autoPosition: true },
+                    })
+                    const pointC = g.create('point', C, {
+                      name: 'C',
+                      fixed: true,
+                      label: { autoPosition: true },
+                    })
+                    const pointD = g.create('point', D, {
+                      name: 'D',
+                      fixed: true,
+                      label: { autoPosition: true },
+                    })
+                    g.create('segment', [pointA, pointB])
+                    g.create('segment', [pointB, pointC])
+                    g.create('segment', [pointC, pointD])
+                    g.create('segment', [pointD, pointA])
+
+                    let x = 0
+                    let y = 0
+                    if (data.basePoint === 'A') {
+                      x = A[0]
+                      y = A[1] + data.h
+                    }
+                    if (data.basePoint === 'B') {
+                      x = B[0]
+                      y = B[1] + data.h
+                    }
+                    if (data.basePoint === 'C') {
+                      x = C[0]
+                      y = C[1] + data.h
+                    }
+                    if (data.basePoint === 'D') {
+                      x = D[0]
+                      y = D[1] + data.h
+                    }
+
+                    const pointS = g.create('point', [x, y], {
+                      name: 'S',
+                      fixed: true,
+                      label: { autoPosition: true },
+                    })
+
+                    g.create('segment', [pointA, pointS])
+                    g.create('segment', [pointB, pointS])
+                    g.create('segment', [pointC, pointS])
+                    g.create('segment', [pointD, pointS])
+                    return g
+                  },
+                  'solPyra',
+                  data
+                )
+              : null}
+            {data.koerper === 'quader'
+              ? buildJSX(
+                  () => {
+                    const x = JXG.JSXGraph.initBoard('solQuader', {
+                      boundingbox: [1, 18, 18, 1],
+                      showNavigation: false,
+                      showCopyright: false,
+                      axis: true,
+                      defaultAxes: {
+                        x: {
+                          ticks: {
+                            ticksDistance: 1,
+                            insertTicks: false,
+                            label: { visible: false },
+                          },
+                        },
+                        y: {
+                          ticks: {
+                            ticksDistance: 1,
+                            insertTicks: false,
+                            label: { visible: false },
+                          },
+                        },
+                      },
+                    })
+
+                    const pointA = x.create('point', [3, 3], {
+                      name: 'A',
+                      fixed: true,
+                      label: { autoPosition: true },
+                    })
+                    const pointB = x.create('point', [3 + data.ab, 3], {
+                      name: 'B',
+                      fixed: true,
+                      label: { autoPosition: true },
+                    })
+                    const pointC = x.create(
+                      'point',
+                      [
+                        3 + data.ab + 0.7071067 * data.bc * 0.5,
+                        3 + 0.7071067 * data.bc * 0.5,
+                      ],
+                      {
+                        name: 'C',
+                        fixed: true,
+                        label: { autoPosition: true },
+                      }
+                    )
+                    const pointD = x.create(
+                      'point',
+                      [
+                        3 + 0.7071067 * data.bc * 0.5,
+                        3 + 0.7071067 * data.bc * 0.5,
+                      ],
+                      {
+                        name: 'D',
+                        fixed: true,
+                        label: { autoPosition: true },
+                      }
+                    )
+                    x.create('segment', [pointA, pointB])
+                    x.create('segment', [pointB, pointC])
+                    x.create('segment', [pointC, pointD])
+                    x.create('segment', [pointD, pointA])
+
+                    const pointE = x.create('point', [3, 3 + data.h], {
+                      name: 'E',
+                      fixed: true,
+                      label: { autoPosition: true },
+                    })
+                    const pointF = x.create(
+                      'point',
+                      [3 + data.ab, 3 + data.h],
+                      {
+                        name: 'F',
+                        fixed: true,
+                        label: { autoPosition: true },
+                      }
+                    )
+                    const pointG = x.create(
+                      'point',
+                      [
+                        3 + data.ab + 0.7071067 * data.bc * 0.5,
+                        3 + 0.7071067 * data.bc * 0.5 + data.h,
+                      ],
+                      {
+                        name: 'G',
+                        fixed: true,
+                        label: { autoPosition: true },
+                      }
+                    )
+                    const pointH = x.create(
+                      'point',
+                      [
+                        3 + 0.7071067 * data.bc * 0.5,
+                        3 + 0.7071067 * data.bc * 0.5 + data.h,
+                      ],
+                      {
+                        name: 'H',
+                        fixed: true,
+                        label: { autoPosition: true },
+                      }
+                    )
+                    x.create('segment', [pointE, pointF])
+                    x.create('segment', [pointF, pointG])
+                    x.create('segment', [pointG, pointH])
+                    x.create('segment', [pointH, pointE])
+
+                    x.create('segment', [pointA, pointE])
+                    x.create('segment', [pointB, pointF])
+                    x.create('segment', [pointC, pointG])
+                    x.create('segment', [pointD, pointH])
+
+                    return x
+                  },
+                  'solQuader',
+                  data
+                )
+              : null}
             <br />
             <br />
             <i>
@@ -94,7 +298,7 @@ export function ObliqueImage() {
           </>
         )
       }}
-      renderHint={({ data }) => {
+      renderHint={(data) => {
         if (data.koerper === 'pyramide')
           return (
             <>
@@ -141,257 +345,5 @@ export function ObliqueImage() {
         return <></>
       }}
     />
-  )
-}
-
-function SolPyra({ data }: { data: BodyData }) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [board2, setBoard2] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-  useEffect(() => {
-    const g = JXG.JSXGraph.initBoard('jxgbox2', {
-      boundingbox: [1, 18, 18, 1],
-      showNavigation: false,
-      showCopyright: false,
-      axis: true,
-      defaultAxes: {
-        x: {
-          ticks: {
-            ticksDistance: 1,
-            insertTicks: false,
-            label: { visible: false },
-          },
-        },
-        y: {
-          ticks: {
-            ticksDistance: 1,
-            insertTicks: false,
-            label: { visible: false },
-          },
-        },
-      },
-    })
-
-    const A = [3, 3]
-    const B = [3 + data.ab, 3]
-    const C = [
-      3 + data.ab + 0.7071067 * data.bc * 0.5,
-      3 + 0.7071067 * data.bc * 0.5,
-    ]
-    const D = [3 + 0.7071067 * data.bc * 0.5, 3 + 0.7071067 * data.bc * 0.5]
-
-    const pointA = g.create('point', A, {
-      name: 'A',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    const pointB = g.create('point', B, {
-      name: 'B',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    const pointC = g.create('point', C, {
-      name: 'C',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    const pointD = g.create('point', D, {
-      name: 'D',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    g.create('segment', [pointA, pointB])
-    g.create('segment', [pointB, pointC])
-    g.create('segment', [pointC, pointD])
-    g.create('segment', [pointD, pointA])
-
-    let x = 0
-    let y = 0
-    if (data.basePoint === 'A') {
-      x = A[0]
-      y = A[1] + data.h
-    }
-    if (data.basePoint === 'B') {
-      x = B[0]
-      y = B[1] + data.h
-    }
-    if (data.basePoint === 'C') {
-      x = C[0]
-      y = C[1] + data.h
-    }
-    if (data.basePoint === 'D') {
-      x = D[0]
-      y = D[1] + data.h
-    }
-
-    const pointS = g.create('point', [x, y], {
-      name: 'S',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-
-    g.create('segment', [pointA, pointS])
-    g.create('segment', [pointB, pointS])
-    g.create('segment', [pointC, pointS])
-    g.create('segment', [pointD, pointS])
-
-    setBoard2(g)
-
-    return () => {}
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox2"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
-  )
-}
-function SolQuader({ data }: { data: BodyData }) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [board2, setBoard2] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-  useEffect(() => {
-    const x = JXG.JSXGraph.initBoard('jxgbox2', {
-      boundingbox: [1, 18, 18, 1],
-      showNavigation: false,
-      showCopyright: false,
-      axis: true,
-      defaultAxes: {
-        x: {
-          ticks: {
-            ticksDistance: 1,
-            insertTicks: false,
-            label: { visible: false },
-          },
-        },
-        y: {
-          ticks: {
-            ticksDistance: 1,
-            insertTicks: false,
-            label: { visible: false },
-          },
-        },
-      },
-    })
-
-    const pointA = x.create('point', [3, 3], {
-      name: 'A',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    const pointB = x.create('point', [3 + data.ab, 3], {
-      name: 'B',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    const pointC = x.create(
-      'point',
-      [3 + data.ab + 0.7071067 * data.bc * 0.5, 3 + 0.7071067 * data.bc * 0.5],
-      {
-        name: 'C',
-        fixed: true,
-        label: { autoPosition: true },
-      }
-    )
-    const pointD = x.create(
-      'point',
-      [3 + 0.7071067 * data.bc * 0.5, 3 + 0.7071067 * data.bc * 0.5],
-      {
-        name: 'D',
-        fixed: true,
-        label: { autoPosition: true },
-      }
-    )
-    x.create('segment', [pointA, pointB])
-    x.create('segment', [pointB, pointC])
-    x.create('segment', [pointC, pointD])
-    x.create('segment', [pointD, pointA])
-
-    const pointE = x.create('point', [3, 3 + data.h], {
-      name: 'E',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    const pointF = x.create('point', [3 + data.ab, 3 + data.h], {
-      name: 'F',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    const pointG = x.create(
-      'point',
-      [
-        3 + data.ab + 0.7071067 * data.bc * 0.5,
-        3 + 0.7071067 * data.bc * 0.5 + data.h,
-      ],
-      {
-        name: 'G',
-        fixed: true,
-        label: { autoPosition: true },
-      }
-    )
-    const pointH = x.create(
-      'point',
-      [3 + 0.7071067 * data.bc * 0.5, 3 + 0.7071067 * data.bc * 0.5 + data.h],
-      {
-        name: 'H',
-        fixed: true,
-        label: { autoPosition: true },
-      }
-    )
-    x.create('segment', [pointE, pointF])
-    x.create('segment', [pointF, pointG])
-    x.create('segment', [pointG, pointH])
-    x.create('segment', [pointH, pointE])
-
-    x.create('segment', [pointA, pointE])
-    x.create('segment', [pointB, pointF])
-    x.create('segment', [pointC, pointG])
-    x.create('segment', [pointD, pointH])
-
-    setBoard2(x)
-
-    return () => {}
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox2"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
   )
 }

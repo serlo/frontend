@@ -92,6 +92,11 @@ export function useMathSkillsStorage() {
   return context
 }
 
+export function useMathSkillsName() {
+  const { data } = useMathSkillsStorage()
+  return data.name ? data.name : 'Sophie'
+}
+
 export function useExerciseData() {
   const context = useContext(MathSkillsContext)
   if (context === null) throw new Error(errorMessage)
