@@ -60,7 +60,8 @@ export function WheelDiagram({ data }: { data: WofData }) {
           'jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200',
           '[&_svg]:transition-[rotate] [&_svg]:ease-out [&_svg]:[transition-duration:1500ms]	'
         )}
-        onClickCapture={() => setRotation(randomIntBetween(0, 360), true)}
+        style={{ rotate: '0deg' }}
+        onClickCapture={() => setRotation(randomIntBetween(220, 460), true)}
       ></div>
     </>
   )
