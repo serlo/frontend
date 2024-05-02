@@ -1,3 +1,4 @@
+/** pretty print a number */
 export function pp(
   x: number,
   mode: 'normal' | 'embrace_neg' | 'merge_op' = 'normal'
@@ -19,6 +20,7 @@ export function pp(
   return x.toString()
 }
 
+/** pretty print a polynom */
 export function ppPolynom(polynom: [number, string, number][]): JSX.Element {
   if (polynom.every((x) => x[0] === 0)) {
     return <>0</>
