@@ -120,54 +120,50 @@ export function Trigonometry() {
 }
 
 function renderDiagram(data: Trig1Data) {
-  return buildJSX(
-    () => {
-      const b = JXG.JSXGraph.initBoard('jxgbox', {
-        boundingbox: [-2, 6, 7, -2],
-        showNavigation: false,
-        showCopyright: false,
-      })
+  return buildJSX(() => {
+    const b = JXG.JSXGraph.initBoard('jxgbox', {
+      boundingbox: [-2, 6, 7, -2],
+      showNavigation: false,
+      showCopyright: false,
+    })
 
-      const pointS = b.create('point', [-0.5, 0], {
-        name: 'S',
-        fixed: true,
-        label: { autoPosition: true },
-      })
-      const pointA = b.create('point', [5.5, 0], { name: 'A', fixed: true })
-      const pointB = b.create('point', [2.1, 4.2], {
-        name: 'B',
-        fixed: true,
-      })
+    const pointS = b.create('point', [-0.5, 0], {
+      name: 'S',
+      fixed: true,
+      label: { autoPosition: true },
+    })
+    const pointA = b.create('point', [5.5, 0], { name: 'A', fixed: true })
+    const pointB = b.create('point', [2.1, 4.2], {
+      name: 'B',
+      fixed: true,
+    })
 
-      b.create('line', [pointA, pointB], {
-        straightFirst: false,
-        straightLast: false,
-      })
+    b.create('line', [pointA, pointB], {
+      straightFirst: false,
+      straightLast: false,
+    })
 
-      b.create('line', [pointS, pointB], {
-        straightFirst: false,
-        straightLast: false,
-      })
-      b.create('line', [pointS, pointA], {
-        straightFirst: false,
-        straightLast: false,
-      })
+    b.create('line', [pointS, pointB], {
+      straightFirst: false,
+      straightLast: false,
+    })
+    b.create('line', [pointS, pointA], {
+      straightFirst: false,
+      straightLast: false,
+    })
 
-      b.create('angle', [pointB, pointA, pointS], {
-        name: function () {
-          return `${data.angle}°`
-        },
-      })
+    b.create('angle', [pointB, pointA, pointS], {
+      name: function () {
+        return `${data.angle}°`
+      },
+    })
 
-      b.create('text', [2.5, 0, `${data.as} cm`], {
-        anchorX: 'middle',
-        anchorY: 'top',
-      })
+    b.create('text', [2.5, 0, `${data.as} cm`], {
+      anchorX: 'middle',
+      anchorY: 'top',
+    })
 
-      b.create('text', [4.2, 2.5, `${data.ab} cm`], {})
-      return b
-    },
-    'jxgbox',
-    data
-  )
+    b.create('text', [4.2, 2.5, `${data.ab} cm`], {})
+    return b
+  }, data)
 }

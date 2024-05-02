@@ -180,41 +180,37 @@ export function DescribeGraphPowerFunction() {
 }
 
 function renderDiagram(data: DATA) {
-  return buildJSX(
-    () => {
-      const b = JXG.JSXGraph.initBoard('jxgbox', {
-        boundingbox: [-5, 5, 5, -5],
-        showNavigation: false,
-        showCopyright: false,
-        axis: true,
+  return buildJSX(() => {
+    const b = JXG.JSXGraph.initBoard('jxgbox', {
+      boundingbox: [-5, 5, 5, -5],
+      showNavigation: false,
+      showCopyright: false,
+      axis: true,
+    })
+
+    b.create('functiongraph', [
+      function (x: number) {
+        return data.k * Math.pow(x + (data.c ?? 0), data.n) + (data.d ?? 0)
+      },
+      -5,
+      5,
+    ])
+
+    if (data.n !== 1 && data.n !== 2) {
+      b.create('text', [4.3, 4, 'I.'], {})
+      b.create('text', [-4.7, 4, 'II.'], {})
+      b.create('text', [4.3, -4, 'IV.'], {})
+      b.create('text', [-4.7, -4, 'III.'], {})
+    }
+
+    if (data.n === 2) {
+      b.create('point', [-(data.c ?? 0), data.d ?? 0], {
+        name: 'S',
+        fixed: true,
+        label: { autoPosition: true },
       })
+    }
 
-      b.create('functiongraph', [
-        function (x: number) {
-          return data.k * Math.pow(x + (data.c ?? 0), data.n) + (data.d ?? 0)
-        },
-        -5,
-        5,
-      ])
-
-      if (data.n !== 1 && data.n !== 2) {
-        b.create('text', [4.3, 4, 'I.'], {})
-        b.create('text', [-4.7, 4, 'II.'], {})
-        b.create('text', [4.3, -4, 'IV.'], {})
-        b.create('text', [-4.7, -4, 'III.'], {})
-      }
-
-      if (data.n === 2) {
-        b.create('point', [-(data.c ?? 0), data.d ?? 0], {
-          name: 'S',
-          fixed: true,
-          label: { autoPosition: true },
-        })
-      }
-
-      return b
-    },
-    'jsxbox',
-    data
-  )
+    return b
+  }, data)
 }

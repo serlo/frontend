@@ -190,56 +190,52 @@ function renderDiagram(data: DATA) {
 
   const dim = boundingbox[2] - boundingbox[0]
 
-  return buildJSX(
-    () => {
-      const b = JXG.JSXGraph.initBoard('jxgbox', {
-        boundingbox,
-        showNavigation: false,
-        showCopyright: false,
+  return buildJSX(() => {
+    const b = JXG.JSXGraph.initBoard('jxgbox', {
+      boundingbox,
+      showNavigation: false,
+      showCopyright: false,
+    })
+
+    const A = b.create('point', [0, 0], {
+      name: 'A',
+      fixed: true,
+      label: { autoPosition: true },
+    })
+
+    const B = b.create('point', [B_x, B_y], {
+      name: 'B',
+      fixed: true,
+      label: { autoPosition: true },
+    })
+
+    const C = b.create('point', [C_x, C_y], {
+      name: 'C',
+      fixed: true,
+      label: { autoPosition: true },
+    })
+
+    const D = b.create('point', [D_x, D_y], {
+      name: 'D',
+      fixed: true,
+      label: { autoPosition: true },
+    })
+
+    b.create('segment', [A, B])
+    b.create('segment', [B, C])
+    b.create('segment', [C, D])
+    b.create('segment', [D, A])
+
+    if (data.mode === 'angle') {
+      b.create('angle', [B, A, D], { withLabel: false, radius: dim * 0.1 })
+      b.create('angle', [D, C, B], {
+        withLabel: false,
+        radius: dim * 0.1,
+        fillColor: 'rgb(47 206 177)',
+        strokeColor: 'rgb(47 206 177)',
       })
+    }
 
-      const A = b.create('point', [0, 0], {
-        name: 'A',
-        fixed: true,
-        label: { autoPosition: true },
-      })
-
-      const B = b.create('point', [B_x, B_y], {
-        name: 'B',
-        fixed: true,
-        label: { autoPosition: true },
-      })
-
-      const C = b.create('point', [C_x, C_y], {
-        name: 'C',
-        fixed: true,
-        label: { autoPosition: true },
-      })
-
-      const D = b.create('point', [D_x, D_y], {
-        name: 'D',
-        fixed: true,
-        label: { autoPosition: true },
-      })
-
-      b.create('segment', [A, B])
-      b.create('segment', [B, C])
-      b.create('segment', [C, D])
-      b.create('segment', [D, A])
-
-      if (data.mode === 'angle') {
-        b.create('angle', [B, A, D], { withLabel: false, radius: dim * 0.1 })
-        b.create('angle', [D, C, B], {
-          withLabel: false,
-          radius: dim * 0.1,
-          fillColor: 'rgb(47 206 177)',
-          strokeColor: 'rgb(47 206 177)',
-        })
-      }
-
-      return b
-    },
-    'jxgbox',
-    data
-  )
+    return b
+  }, data)
 }

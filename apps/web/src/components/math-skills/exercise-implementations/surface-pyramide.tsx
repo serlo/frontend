@@ -183,75 +183,71 @@ export function SurfacePyramide() {
 }
 
 function renderDiagram(data: PyraData) {
-  return buildJSX(
-    () => {
-      const b = JXG.JSXGraph.initBoard('jxgbox', {
-        boundingbox: [-1, 6, 7, -2],
-        showNavigation: false,
-        showCopyright: false,
-      })
+  return buildJSX(() => {
+    const b = JXG.JSXGraph.initBoard('jxgbox', {
+      boundingbox: [-1, 6, 7, -2],
+      showNavigation: false,
+      showCopyright: false,
+    })
 
-      const pointA = b.create('point', [0, 0], {
-        name: 'A',
-        fixed: true,
-        label: { autoPosition: true },
-      })
-      const pointB = b.create('point', [5, 0], { name: 'B', fixed: true })
-      const pointC = b.create('point', [1, 0.5], { name: 'D', fixed: true })
-      const pointD = b.create('point', [6, 0.5], { name: 'C', fixed: true })
-      const pointM = b.create('point', [3, 0.25], {
-        name: '',
-        fixed: true,
-      })
-      const pointE = b.create('point', [3, 4], {
-        name: 'E',
-        fixed: true,
-      })
+    const pointA = b.create('point', [0, 0], {
+      name: 'A',
+      fixed: true,
+      label: { autoPosition: true },
+    })
+    const pointB = b.create('point', [5, 0], { name: 'B', fixed: true })
+    const pointC = b.create('point', [1, 0.5], { name: 'D', fixed: true })
+    const pointD = b.create('point', [6, 0.5], { name: 'C', fixed: true })
+    const pointM = b.create('point', [3, 0.25], {
+      name: '',
+      fixed: true,
+    })
+    const pointE = b.create('point', [3, 4], {
+      name: 'E',
+      fixed: true,
+    })
 
-      const poly1 = b.create('polygon', [pointA, pointB, pointE], {
-        name: 'Polygon 1',
-        withLabel: false,
-        color: 'blue',
-      })
+    const poly1 = b.create('polygon', [pointA, pointB, pointE], {
+      name: 'Polygon 1',
+      withLabel: false,
+      color: 'blue',
+    })
 
-      const poly2 = b.create('polygon', [pointA, pointB, pointD, pointC], {
-        name: 'Polygon 1',
-        withLabel: false,
-        color: 'orange',
-      })
+    const poly2 = b.create('polygon', [pointA, pointB, pointD, pointC], {
+      name: 'Polygon 1',
+      withLabel: false,
+      color: 'orange',
+    })
 
-      const poly3 = b.create('polygon', [pointB, pointD, pointE], {
-        name: 'Polygon 1',
-        withLabel: false,
-      })
+    const poly3 = b.create('polygon', [pointB, pointD, pointE], {
+      name: 'Polygon 1',
+      withLabel: false,
+    })
 
-      const poly4 = b.create('polygon', [pointA, pointC, pointE], {
-        name: 'Polygon 1',
-        withLabel: false,
-      })
-      const poly5 = b.create('polygon', [pointC, pointD, pointE], {
-        name: 'Polygon 1',
-        withLabel: false,
-      })
+    const poly4 = b.create('polygon', [pointA, pointC, pointE], {
+      name: 'Polygon 1',
+      withLabel: false,
+    })
+    const poly5 = b.create('polygon', [pointC, pointD, pointE], {
+      name: 'Polygon 1',
+      withLabel: false,
+    })
 
-      const poly6 = b.create('polygon', [pointM, pointE], {
-        name: 'Polygon 1',
-        withLabel: false,
-      })
+    const poly6 = b.create('polygon', [pointM, pointE], {
+      name: 'Polygon 1',
+      withLabel: false,
+    })
 
-      b.create('text', [2, 0, `${data.ab} cm`], {
-        anchorX: 'middle',
-        anchorY: 'top',
-      })
-      b.create('text', [6.2, 0.4, `${data.bd} cm`], {
-        anchorX: 'middle',
-        anchorY: 'top',
-      })
+    b.create('text', [2, 0, `${data.ab} cm`], {
+      anchorX: 'middle',
+      anchorY: 'top',
+    })
+    b.create('text', [6.2, 0.4, `${data.bd} cm`], {
+      anchorX: 'middle',
+      anchorY: 'top',
+    })
 
-      b.create('text', [2.6, 2, `${data.me} cm`], {})
-      return b
-    },
-    'jxgbox',
-    data
-  )
+    b.create('text', [2.6, 2, `${data.me} cm`], {})
+    return b
+  }, data)
 }

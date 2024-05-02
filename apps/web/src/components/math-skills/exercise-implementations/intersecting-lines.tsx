@@ -366,7 +366,6 @@ function renderDiagram(data: DATA) {
 
       return b
     },
-    'jxgbox',
     { height: 300, width: 450 }
   )
 }

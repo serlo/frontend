@@ -133,20 +133,23 @@ const rightarrow = (
 )
 
 interface JSXOptions {
+  id?: string
   width?: number
   height?: number
 }
 
-export function buildJSX(
-  f: () => Board,
-  id: string,
-  dep: object,
-  opts: JSXOptions = {}
-) {
+export function buildJSX(f: () => Board, dep: object, opts: JSXOptions = {}) {
   if (!opts.width) opts.width = 300
   if (!opts.height) opts.height = 300
+  if (!opts.id) opts.id = 'jxgbox'
   return (
-    <JSXGraph f={f} id={id} dep={dep} width={opts.width} height={opts.height} />
+    <JSXGraph
+      f={f}
+      id={opts.id}
+      dep={dep}
+      width={opts.width}
+      height={opts.height}
+    />
   )
 }
 

@@ -193,79 +193,75 @@ export function Trigonometry3() {
 }
 
 function renderDiagram(data: Trig1Data) {
-  return buildJSX(
-    () => {
-      const b = JXG.JSXGraph.initBoard('jxgbox', {
-        boundingbox: [-2, 6, 7, -2],
-        showNavigation: false,
-        showCopyright: false,
-      })
+  return buildJSX(() => {
+    const b = JXG.JSXGraph.initBoard('jxgbox', {
+      boundingbox: [-2, 6, 7, -2],
+      showNavigation: false,
+      showCopyright: false,
+    })
 
-      const pointA = b.create('point', [-0.5, 0], {
-        name: 'A',
-        fixed: true,
-        label: { autoPosition: true },
-      })
-      const pointB = b.create('point', [5.5, 0], { name: 'B', fixed: true })
-      const pointC = b.create('point', [3.5, 4], {
-        name: 'C',
-        fixed: true,
-      })
-      const pointD = b.create('point', [4, 0], { name: 'D', fixed: true })
+    const pointA = b.create('point', [-0.5, 0], {
+      name: 'A',
+      fixed: true,
+      label: { autoPosition: true },
+    })
+    const pointB = b.create('point', [5.5, 0], { name: 'B', fixed: true })
+    const pointC = b.create('point', [3.5, 4], {
+      name: 'C',
+      fixed: true,
+    })
+    const pointD = b.create('point', [4, 0], { name: 'D', fixed: true })
 
-      const pointE = b.create('point', [2.5, 3], { name: '', fixed: true })
+    const pointE = b.create('point', [2.5, 3], { name: '', fixed: true })
 
-      b.create('line', [pointA, pointD], {
-        straightFirst: false,
-        straightLast: false,
-      })
-      b.create('line', [pointD, pointE], {
-        straightFirst: false,
-        straightLast: false,
-      })
+    b.create('line', [pointA, pointD], {
+      straightFirst: false,
+      straightLast: false,
+    })
+    b.create('line', [pointD, pointE], {
+      straightFirst: false,
+      straightLast: false,
+    })
 
-      b.create('line', [pointA, pointB], {
-        straightFirst: false,
-        straightLast: false,
-      })
+    b.create('line', [pointA, pointB], {
+      straightFirst: false,
+      straightLast: false,
+    })
 
-      b.create('line', [pointC, pointB], {
-        straightFirst: false,
-        straightLast: false,
-      })
-      b.create('line', [pointC, pointA], {
-        straightFirst: false,
-        straightLast: false,
-      })
+    b.create('line', [pointC, pointB], {
+      straightFirst: false,
+      straightLast: false,
+    })
+    b.create('line', [pointC, pointA], {
+      straightFirst: false,
+      straightLast: false,
+    })
 
-      b.create('angle', [pointB, pointA, pointD], {
-        type: 'sector',
-        name: ' ',
-        color: 'blue',
-        radius: 1.5,
-      })
+    b.create('angle', [pointB, pointA, pointD], {
+      type: 'sector',
+      name: ' ',
+      color: 'blue',
+      radius: 1.5,
+    })
 
-      b.create('text', [2.5, 0, `${pp(data.ab)} m`], {
-        anchorX: 'middle',
-        anchorY: 'top',
-      })
+    b.create('text', [2.5, 0, `${pp(data.ab)} m`], {
+      anchorX: 'middle',
+      anchorY: 'top',
+    })
 
-      b.create('text', [0.5, 2.5, `${pp(data.ac)} m`], {
-        anchorX: 'middle',
-        anchorY: 'top',
-      })
+    b.create('text', [0.5, 2.5, `${pp(data.ac)} m`], {
+      anchorX: 'middle',
+      anchorY: 'top',
+    })
 
-      b.create('text', [2.3, 4, `E`], {
-        anchorX: 'middle',
-        anchorY: 'top',
-      })
+    b.create('text', [2.3, 4, `E`], {
+      anchorX: 'middle',
+      anchorY: 'top',
+    })
 
-      b.create('text', [4.8, 2, `${pp(data.bc)} m`], {})
-      b.create('polygon', [pointD, pointB, pointC, pointE])
+    b.create('text', [4.8, 2, `${pp(data.bc)} m`], {})
+    b.create('polygon', [pointD, pointB, pointC, pointE])
 
-      return b
-    },
-    'jxgbox',
-    data
-  )
+    return b
+  }, data)
 }

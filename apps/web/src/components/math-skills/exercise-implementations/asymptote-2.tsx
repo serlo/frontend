@@ -105,36 +105,32 @@ export function Asymptote2() {
   )
 
   function renderDiagram(data: PlotData) {
-    return buildJSX(
-      () => {
-        const x = JXG.JSXGraph.initBoard('jxgbox', {
-          boundingbox: [-6, 6, 6, -6],
-          showNavigation: false,
-          showCopyright: false,
-        })
+    return buildJSX(() => {
+      const x = JXG.JSXGraph.initBoard('jxgbox', {
+        boundingbox: [-6, 6, 6, -6],
+        showNavigation: false,
+        showCopyright: false,
+      })
 
-        x.create('axis', [
-          [0.0, 0.0],
-          [0.0, 1.0],
-        ])
-        x.create('axis', [
-          [0.0, 0.0],
-          [1.0, 0.0],
-        ])
+      x.create('axis', [
+        [0.0, 0.0],
+        [0.0, 1.0],
+      ])
+      x.create('axis', [
+        [0.0, 0.0],
+        [1.0, 0.0],
+      ])
 
-        x.create('text', [5.5, 0.75, `x`], {})
-        x.create('text', [0.5, 5.5, `y`], {})
-        x.create('functiongraph', [
-          function (x: number) {
-            return data.a * Math.pow(data.b, x) + data.c
-          },
-          -6,
-          6,
-        ])
-        return x
-      },
-      'jxgbox',
-      data
-    )
+      x.create('text', [5.5, 0.75, `x`], {})
+      x.create('text', [0.5, 5.5, `y`], {})
+      x.create('functiongraph', [
+        function (x: number) {
+          return data.a * Math.pow(data.b, x) + data.c
+        },
+        -6,
+        6,
+      ])
+      return x
+    }, data)
   }
 }

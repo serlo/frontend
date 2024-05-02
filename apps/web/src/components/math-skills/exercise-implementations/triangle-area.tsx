@@ -181,43 +181,39 @@ function renderDiagram(data: DATA) {
   ])
 
   const dim = boundingbox[2] - boundingbox[0]
-  return buildJSX(
-    () => {
-      const b = JXG.JSXGraph.initBoard('jxgbox', {
-        boundingbox,
-        showNavigation: false,
-        showCopyright: false,
-      })
+  return buildJSX(() => {
+    const b = JXG.JSXGraph.initBoard('jxgbox', {
+      boundingbox,
+      showNavigation: false,
+      showCopyright: false,
+    })
 
-      const pointA = b.create('point', [p1_x, p1_y], {
-        name: data.p1,
-        fixed: true,
-      })
+    const pointA = b.create('point', [p1_x, p1_y], {
+      name: data.p1,
+      fixed: true,
+    })
 
-      const pointB = b.create('point', [0, 0], {
-        name: data.p2,
-        fixed: true,
-      })
+    const pointB = b.create('point', [0, 0], {
+      name: data.p2,
+      fixed: true,
+    })
 
-      const pointC = b.create('point', [p3_x, p3_y], {
-        name: data.p3,
-        fixed: true,
-      })
+    const pointC = b.create('point', [p3_x, p3_y], {
+      name: data.p3,
+      fixed: true,
+    })
 
-      // const newgreen = 'rgb(47 206 177)'
+    // const newgreen = 'rgb(47 206 177)'
 
-      b.create('segment', [pointA, pointB], {})
-      b.create('segment', [pointA, pointC], {})
-      b.create('segment', [pointC, pointB], {})
+    b.create('segment', [pointA, pointB], {})
+    b.create('segment', [pointA, pointC], {})
+    b.create('segment', [pointC, pointB], {})
 
-      b.create('angle', [pointC, pointB, pointA], {
-        radius: (data.angle === 90 ? 0.05 : 0.1) * dim,
-        withLabel: false,
-      })
+    b.create('angle', [pointC, pointB, pointA], {
+      radius: (data.angle === 90 ? 0.05 : 0.1) * dim,
+      withLabel: false,
+    })
 
-      return b
-    },
-    'jxgbox',
-    data
-  )
+    return b
+  }, data)
 }

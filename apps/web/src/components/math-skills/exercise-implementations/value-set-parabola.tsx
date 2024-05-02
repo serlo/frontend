@@ -97,49 +97,45 @@ export function ValueSetParabola() {
     />
   ) // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function renderDiagram(data: PlotData) {
-    return buildJSX(
-      () => {
-        const x = JXG.JSXGraph.initBoard('jxgbox', {
-          boundingbox: [-10, 10, 10, -10],
-          showNavigation: false,
-          showCopyright: false,
-        })
+    return buildJSX(() => {
+      const x = JXG.JSXGraph.initBoard('jxgbox', {
+        boundingbox: [-10, 10, 10, -10],
+        showNavigation: false,
+        showCopyright: false,
+      })
 
-        x.create('axis', [
-          [0.0, 0.0],
-          [0.0, 1.0],
-        ])
-        x.create('axis', [
-          [0.0, 0.0],
-          [1.0, 0.0],
-        ])
+      x.create('axis', [
+        [0.0, 0.0],
+        [0.0, 1.0],
+      ])
+      x.create('axis', [
+        [0.0, 0.0],
+        [1.0, 0.0],
+      ])
 
-        x.create('text', [9, 0.75, `x`], {})
-        x.create('text', [0.5, 9, `y`], {})
+      x.create('text', [9, 0.75, `x`], {})
+      x.create('text', [0.5, 9, `y`], {})
 
-        {
-          data.a
-            ? x.create('functiongraph', [
-                function (x: number) {
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                  return (x - data.b) * (x - data.b) + data.c
-                },
-                -10,
-                10,
-              ])
-            : x.create('functiongraph', [
-                function (x: number) {
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                  return -(x - data.b) * (x - data.b) + data.c
-                },
-                -10,
-                10,
-              ])
-        }
-        return x
-      },
-      'jxgbox',
-      data
-    )
+      {
+        data.a
+          ? x.create('functiongraph', [
+              function (x: number) {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                return (x - data.b) * (x - data.b) + data.c
+              },
+              -10,
+              10,
+            ])
+          : x.create('functiongraph', [
+              function (x: number) {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                return -(x - data.b) * (x - data.b) + data.c
+              },
+              -10,
+              10,
+            ])
+      }
+      return x
+    }, data)
   }
 }

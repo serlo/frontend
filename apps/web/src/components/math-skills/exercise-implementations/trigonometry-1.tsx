@@ -184,72 +184,68 @@ export function Trigonometry1() {
 }
 
 function renderDiagram(data: Trig1Data) {
-  return buildJSX(
-    () => {
-      const b = JXG.JSXGraph.initBoard('jxgbox', {
-        boundingbox: [-1, 6, 7, -2],
-        showNavigation: false,
-        showCopyright: false,
-      })
+  return buildJSX(() => {
+    const b = JXG.JSXGraph.initBoard('jxgbox', {
+      boundingbox: [-1, 6, 7, -2],
+      showNavigation: false,
+      showCopyright: false,
+    })
 
-      const pointS = b.create('point', [0, 0], {
-        name: 'S',
+    const pointS = b.create('point', [0, 0], {
+      name: 'S',
+      fixed: true,
+      label: { autoPosition: true },
+    })
+    const pointA = b.create('point', [4, 0], { name: 'A', fixed: true })
+    const pointC = b.create('point', [6, 0], { name: 'C', fixed: true })
+    const pointB = b.create('point', [2.1, 2.7], {
+      name: 'B',
+      fixed: true,
+    })
+    const pointD = b.create(
+      'point',
+      [() => pointB.X() * 1.5, () => pointB.Y() * 1.5],
+      {
+        name: 'D',
         fixed: true,
-        label: { autoPosition: true },
-      })
-      const pointA = b.create('point', [4, 0], { name: 'A', fixed: true })
-      const pointC = b.create('point', [6, 0], { name: 'C', fixed: true })
-      const pointB = b.create('point', [2.1, 2.7], {
-        name: 'B',
-        fixed: true,
-      })
-      const pointD = b.create(
-        'point',
-        [() => pointB.X() * 1.5, () => pointB.Y() * 1.5],
-        {
-          name: 'D',
-          fixed: true,
-        }
-      )
-
-      b.create('line', [pointA, pointB])
-      b.create('line', [pointC, pointD])
-
-      b.create('line', [pointS, pointC], {
-        straightFirst: false,
-        straightLast: true,
-      })
-      b.create('line', [pointS, pointD], {
-        straightFirst: false,
-        straightLast: true,
-      })
-
-      if (data.otherRay) {
-        b.create('text', [0, 2, `${pp(data.as)} cm`], {})
-        return b
-        // ?
-        // b.create('text', [1.6, 3.8, `${pp(data.ac)} cm`], {})
-        // return b
-      } else {
-        b.create('text', [2, 0, `${pp(data.as)} cm`], {
-          anchorX: 'middle',
-          anchorY: 'top',
-        })
-        b.create('text', [5.3, 0, `${pp(data.ac)} cm`], {
-          anchorX: 'middle',
-          anchorY: 'top',
-        })
       }
+    )
 
-      if (data.mode === 'cd') {
-        b.create('text', [2.8, 2, `${pp(data.ab)} cm`], {})
-        return b
-      } else {
-        b.create('text', [4.6, 2.4, `${pp(data.cd)} cm`], {})
-        return b
-      }
-    },
-    'jxgbox',
-    data
-  )
+    b.create('line', [pointA, pointB])
+    b.create('line', [pointC, pointD])
+
+    b.create('line', [pointS, pointC], {
+      straightFirst: false,
+      straightLast: true,
+    })
+    b.create('line', [pointS, pointD], {
+      straightFirst: false,
+      straightLast: true,
+    })
+
+    if (data.otherRay) {
+      b.create('text', [0, 2, `${pp(data.as)} cm`], {})
+      return b
+      // ?
+      // b.create('text', [1.6, 3.8, `${pp(data.ac)} cm`], {})
+      // return b
+    } else {
+      b.create('text', [2, 0, `${pp(data.as)} cm`], {
+        anchorX: 'middle',
+        anchorY: 'top',
+      })
+      b.create('text', [5.3, 0, `${pp(data.ac)} cm`], {
+        anchorX: 'middle',
+        anchorY: 'top',
+      })
+    }
+
+    if (data.mode === 'cd') {
+      b.create('text', [2.8, 2, `${pp(data.ab)} cm`], {})
+      return b
+    } else {
+      b.create('text', [4.6, 2.4, `${pp(data.cd)} cm`], {})
+      return b
+    }
+  }, data)
 }

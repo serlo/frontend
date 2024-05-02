@@ -185,66 +185,62 @@ export function ModellingParabola() {
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function renderDiagram(data: PlotData) {
-  return buildJSX(
-    () => {
-      const x = JXG.JSXGraph.initBoard('jxgbox', {
-        boundingbox: [-1, 35, 13, -3],
-        showNavigation: false,
-        showCopyright: false,
-      })
+  return buildJSX(() => {
+    const x = JXG.JSXGraph.initBoard('jxgbox', {
+      boundingbox: [-1, 35, 13, -3],
+      showNavigation: false,
+      showCopyright: false,
+    })
 
-      x.create('axis', [
-        [0.0, 0.0],
-        [0.0, 1.0],
-      ])
-      x.create('axis', [
-        [0.0, 0.0],
-        [1.0, 0.0],
-      ])
+    x.create('axis', [
+      [0.0, 0.0],
+      [0.0, 1.0],
+    ])
+    x.create('axis', [
+      [0.0, 0.0],
+      [1.0, 0.0],
+    ])
 
-      x.create(
-        'arrow',
-        [
-          [0, 0],
-          [data.b, 0],
-        ],
-        {}
-      )
-      x.create(
-        'arrow',
-        [
-          [data.b, 0],
-          [0, 0],
-        ],
-        {}
-      )
-      x.create(
-        'arrow',
-        [
-          [data.b / 2, 0],
-          [data.b / 2, (data.b / 2) * (data.b / 2)],
-        ],
-        {}
-      )
-      x.create('text', [12, 1.5, `x`], {})
-      x.create('text', [0.5, 33.5, `y`], {})
-      x.create('text', [data.b / 4 - 0.8, 1.5, `maximale Breite`], {})
-      x.create(
-        'text',
-        [data.b / 2 + 0.3, ((data.b / 2) * (data.b / 2)) / 2, `maximale Höhe`],
-        {}
-      )
-      x.create('functiongraph', [
-        function (x: number) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-          return -x * x + data.b * x
-        },
-        -3,
-        15,
-      ])
-      return x
-    },
-    'jxgbox',
-    data
-  )
+    x.create(
+      'arrow',
+      [
+        [0, 0],
+        [data.b, 0],
+      ],
+      {}
+    )
+    x.create(
+      'arrow',
+      [
+        [data.b, 0],
+        [0, 0],
+      ],
+      {}
+    )
+    x.create(
+      'arrow',
+      [
+        [data.b / 2, 0],
+        [data.b / 2, (data.b / 2) * (data.b / 2)],
+      ],
+      {}
+    )
+    x.create('text', [12, 1.5, `x`], {})
+    x.create('text', [0.5, 33.5, `y`], {})
+    x.create('text', [data.b / 4 - 0.8, 1.5, `maximale Breite`], {})
+    x.create(
+      'text',
+      [data.b / 2 + 0.3, ((data.b / 2) * (data.b / 2)) / 2, `maximale Höhe`],
+      {}
+    )
+    x.create('functiongraph', [
+      function (x: number) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        return -x * x + data.b * x
+      },
+      -3,
+      15,
+    ])
+    return x
+  }, data)
 }

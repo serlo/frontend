@@ -142,52 +142,48 @@ export function PlotFunction() {
 }
 
 function renderDiagram(data: PlotData) {
-  return buildJSX(
-    () => {
-      const x = JXG.JSXGraph.initBoard('jxgbox', {
-        boundingbox: [-6, 6, 6, -6],
-        showNavigation: false,
-        showCopyright: false,
-      })
+  return buildJSX(() => {
+    const x = JXG.JSXGraph.initBoard('jxgbox', {
+      boundingbox: [-6, 6, 6, -6],
+      showNavigation: false,
+      showCopyright: false,
+    })
 
-      x.create('axis', [
-        [0.0, 0.0],
-        [0.0, 1.0],
-      ])
-      x.create('axis', [
-        [0.0, 0.0],
-        [1.0, 0.0],
-      ])
-      x.create(
-        'line',
-        [
-          [-data.b, -6],
-          [-data.b, 6],
-        ],
-        { strokeColor: 'salmon' }
-      )
-      x.create(
-        'line',
-        [
-          [-6, data.d],
-          [6, data.d],
-        ],
-        { strokeColor: 'salmon' }
-      )
+    x.create('axis', [
+      [0.0, 0.0],
+      [0.0, 1.0],
+    ])
+    x.create('axis', [
+      [0.0, 0.0],
+      [1.0, 0.0],
+    ])
+    x.create(
+      'line',
+      [
+        [-data.b, -6],
+        [-data.b, 6],
+      ],
+      { strokeColor: 'salmon' }
+    )
+    x.create(
+      'line',
+      [
+        [-6, data.d],
+        [6, data.d],
+      ],
+      { strokeColor: 'salmon' }
+    )
 
-      x.create('text', [5.5, 0.75, `x`], {})
-      x.create('text', [0.5, 5.5, `y`], {})
-      x.create('functiongraph', [
-        function (x: number) {
-          const nenner = Math.pow(x + data.b, data.c)
-          return data.a * nenner + data.d
-        },
-        -6,
-        6,
-      ])
-      return x
-    },
-    'jxgbox',
-    data
-  )
+    x.create('text', [5.5, 0.75, `x`], {})
+    x.create('text', [0.5, 5.5, `y`], {})
+    x.create('functiongraph', [
+      function (x: number) {
+        const nenner = Math.pow(x + data.b, data.c)
+        return data.a * nenner + data.d
+      },
+      -6,
+      6,
+    ])
+    return x
+  }, data)
 }

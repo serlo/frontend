@@ -82,45 +82,41 @@ export function MirrorLineThroughOrigin() {
 }
 
 function renderDiagram(data: DATA, solX: number, solY: number) {
-  return buildJSX(
-    () => {
-      const b = JXG.JSXGraph.initBoard('jxgbox', {
-        boundingbox: autoResizeBoundingBox([
-          [data.x, data.y],
-          [solX, solY],
-          [0, 0],
-        ]),
-        showNavigation: false,
-        showCopyright: false,
-        axis: true,
-      })
+  return buildJSX(() => {
+    const b = JXG.JSXGraph.initBoard('jxgbox', {
+      boundingbox: autoResizeBoundingBox([
+        [data.x, data.y],
+        [solX, solY],
+        [0, 0],
+      ]),
+      showNavigation: false,
+      showCopyright: false,
+      axis: true,
+    })
 
-      b.create('point', [data.x, data.y], {
-        name: 'P',
-        fixed: true,
-        color: 'gray',
-        label: { autoPosition: true },
-      })
-      b.create('point', [solX, solY], {
-        name: "P'",
-        fixed: true,
-        label: { autoPosition: true },
-      })
-      b.create(
-        'functiongraph',
-        [
-          function (x: number) {
-            return data.factor * x
-          },
-          -60,
-          60,
-        ],
-        { strokeWidth: 2 }
-      )
+    b.create('point', [data.x, data.y], {
+      name: 'P',
+      fixed: true,
+      color: 'gray',
+      label: { autoPosition: true },
+    })
+    b.create('point', [solX, solY], {
+      name: "P'",
+      fixed: true,
+      label: { autoPosition: true },
+    })
+    b.create(
+      'functiongraph',
+      [
+        function (x: number) {
+          return data.factor * x
+        },
+        -60,
+        60,
+      ],
+      { strokeWidth: 2 }
+    )
 
-      return b
-    },
-    'jxgbox',
-    data
-  )
+    return b
+  }, data)
 }

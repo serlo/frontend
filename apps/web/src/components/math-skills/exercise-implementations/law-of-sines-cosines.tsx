@@ -310,110 +310,97 @@ function renderDiagram(data: DATA) {
 
   const dim = boundingbox[2] - boundingbox[0]
 
-  return buildJSX(
-    () => {
-      const b = JXG.JSXGraph.initBoard('jxgbox', {
-        boundingbox,
-        showNavigation: false,
-        showCopyright: false,
-      })
+  return buildJSX(() => {
+    const b = JXG.JSXGraph.initBoard('jxgbox', {
+      boundingbox,
+      showNavigation: false,
+      showCopyright: false,
+    })
 
-      const pointA = b.create('point', [0, 0], {
-        name: 'A',
-        fixed: true,
-        label: { autoPosition: true },
-      })
+    const pointA = b.create('point', [0, 0], {
+      name: 'A',
+      fixed: true,
+      label: { autoPosition: true },
+    })
 
-      const pointB = b.create('point', [Bx, By], {
-        name: 'B',
-        fixed: true,
-        label: { autoPosition: true },
-      })
+    const pointB = b.create('point', [Bx, By], {
+      name: 'B',
+      fixed: true,
+      label: { autoPosition: true },
+    })
 
-      const pointC = b.create('point', [Cx, Cy], {
-        name: 'C',
-        fixed: true,
-        label: { autoPosition: true },
-      })
+    const pointC = b.create('point', [Cx, Cy], {
+      name: 'C',
+      fixed: true,
+      label: { autoPosition: true },
+    })
 
-      const newgreen = 'rgb(47 206 177)'
+    const newgreen = 'rgb(47 206 177)'
 
-      b.create('segment', [pointA, pointB], {
-        name: 'c',
-        withLabel:
-          data.variant.given.includes('c') || data.variant.goal === 'c',
+    b.create('segment', [pointA, pointB], {
+      name: 'c',
+      withLabel: data.variant.given.includes('c') || data.variant.goal === 'c',
+      label: {
+        autoPosition: true,
+        color: data.variant.goal === 'c' ? newgreen : 'black',
+      },
+    })
+    b.create('segment', [pointA, pointC], {
+      name: 'b',
+      withLabel: data.variant.given.includes('b') || data.variant.goal === 'b',
+      label: {
+        autoPosition: true,
+        color: data.variant.goal === 'b' ? newgreen : 'black',
+      },
+    })
+    b.create('segment', [pointC, pointB], {
+      name: 'a',
+      withLabel: data.variant.given.includes('a') || data.variant.goal === 'a',
+      label: {
+        autoPosition: true,
+        color: data.variant.goal === 'a' ? newgreen : 'black',
+      },
+    })
+
+    if (data.variant.given.includes('alpha') || data.variant.goal === 'alpha') {
+      b.create('angle', [pointB, pointA, pointC], {
+        name: '⍺',
+        withLabel: true,
+        orthoType: 'sector',
+        radius: 0.05 * dim,
         label: {
           autoPosition: true,
-          color: data.variant.goal === 'c' ? newgreen : 'black',
+          color: data.variant.goal === 'alpha' ? newgreen : 'black',
         },
       })
-      b.create('segment', [pointA, pointC], {
-        name: 'b',
-        withLabel:
-          data.variant.given.includes('b') || data.variant.goal === 'b',
+    }
+
+    if (data.variant.given.includes('beta') || data.variant.goal === 'beta') {
+      b.create('angle', [pointC, pointB, pointA], {
+        name: 'β',
+        withLabel: true,
+        orthoType: 'sector',
+        radius: 0.05 * dim,
         label: {
           autoPosition: true,
-          color: data.variant.goal === 'b' ? newgreen : 'black',
+          color: data.variant.goal === 'beta' ? newgreen : 'black',
         },
       })
-      b.create('segment', [pointC, pointB], {
-        name: 'a',
-        withLabel:
-          data.variant.given.includes('a') || data.variant.goal === 'a',
+    }
+
+    if (data.variant.given.includes('gamma') || data.variant.goal === 'gamma') {
+      b.create('angle', [pointA, pointC, pointB], {
+        name: 'γ',
+        withLabel: true,
+        orthoType: 'sector',
+        radius: 0.05 * dim,
         label: {
           autoPosition: true,
-          color: data.variant.goal === 'a' ? newgreen : 'black',
+          color: data.variant.goal === 'gamma' ? newgreen : 'black',
         },
       })
+    }
 
-      if (
-        data.variant.given.includes('alpha') ||
-        data.variant.goal === 'alpha'
-      ) {
-        b.create('angle', [pointB, pointA, pointC], {
-          name: '⍺',
-          withLabel: true,
-          orthoType: 'sector',
-          radius: 0.05 * dim,
-          label: {
-            autoPosition: true,
-            color: data.variant.goal === 'alpha' ? newgreen : 'black',
-          },
-        })
-      }
-
-      if (data.variant.given.includes('beta') || data.variant.goal === 'beta') {
-        b.create('angle', [pointC, pointB, pointA], {
-          name: 'β',
-          withLabel: true,
-          orthoType: 'sector',
-          radius: 0.05 * dim,
-          label: {
-            autoPosition: true,
-            color: data.variant.goal === 'beta' ? newgreen : 'black',
-          },
-        })
-      }
-
-      if (
-        data.variant.given.includes('gamma') ||
-        data.variant.goal === 'gamma'
-      ) {
-        b.create('angle', [pointA, pointC, pointB], {
-          name: 'γ',
-          withLabel: true,
-          orthoType: 'sector',
-          radius: 0.05 * dim,
-          label: {
-            autoPosition: true,
-            color: data.variant.goal === 'gamma' ? newgreen : 'black',
-          },
-        })
-      }
-
-      return b
-    },
-    'jxgbox',
-    data
-  )
+    return b
+  }, data)
 }

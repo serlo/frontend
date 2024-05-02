@@ -293,97 +293,93 @@ function renderDiagram(data: DATA) {
       data.goal_element === el
     )
   }
-  return buildJSX(
-    () => {
-      const h = Math.tan(data.g_alpha_rad)
-      const dim = Math.max(h, 1)
+  return buildJSX(() => {
+    const h = Math.tan(data.g_alpha_rad)
+    const dim = Math.max(h, 1)
 
-      const b = JXG.JSXGraph.initBoard('jxgbox', {
-        boundingbox: [-0.2 * dim, dim + 0.2 * dim, dim + 0.2 * dim, -0.3 * dim],
-        showNavigation: false,
-        showCopyright: false,
-      })
+    const b = JXG.JSXGraph.initBoard('jxgbox', {
+      boundingbox: [-0.2 * dim, dim + 0.2 * dim, dim + 0.2 * dim, -0.3 * dim],
+      showNavigation: false,
+      showCopyright: false,
+    })
 
-      const pointA = b.create('point', [1, 0], {
-        name: 'A',
-        fixed: true,
-        label: { autoPosition: true },
-      })
+    const pointA = b.create('point', [1, 0], {
+      name: 'A',
+      fixed: true,
+      label: { autoPosition: true },
+    })
 
-      const pointB = b.create('point', [0, h], {
-        name: 'B',
-        fixed: true,
-        label: { autoPosition: true },
-      })
+    const pointB = b.create('point', [0, h], {
+      name: 'B',
+      fixed: true,
+      label: { autoPosition: true },
+    })
 
-      const pointC = b.create('point', [0, 0], {
-        name: 'C',
-        fixed: true,
-        label: { autoPosition: true },
-      })
+    const pointC = b.create('point', [0, 0], {
+      name: 'C',
+      fixed: true,
+      label: { autoPosition: true },
+    })
 
-      const newgreen = 'rgb(47 206 177)'
+    const newgreen = 'rgb(47 206 177)'
 
-      b.create('segment', [pointA, pointB], {
-        name: 'c',
-        withLabel: shouldShow('c'),
+    b.create('segment', [pointA, pointB], {
+      name: 'c',
+      withLabel: shouldShow('c'),
+      label: {
+        autoPosition: true,
+        color: data.goal_element === 'c' ? newgreen : 'black',
+      },
+    })
+    b.create('segment', [pointA, pointC], {
+      name: 'b',
+      withLabel: shouldShow('b'),
+      label: {
+        autoPosition: true,
+        color: data.goal_element === 'b' ? newgreen : 'black',
+      },
+    })
+    b.create('segment', [pointC, pointB], {
+      name: 'a',
+      withLabel: shouldShow('a'),
+      label: {
+        autoPosition: true,
+        color: data.goal_element === 'a' ? newgreen : 'black',
+      },
+    })
+
+    if (shouldShow('⍺')) {
+      b.create('angle', [pointB, pointA, pointC], {
+        name: '⍺',
+        withLabel: true,
+        radius: 0.12 * dim,
         label: {
           autoPosition: true,
-          color: data.goal_element === 'c' ? newgreen : 'black',
+          color: data.goal_element === '⍺' ? newgreen : 'black',
         },
       })
-      b.create('segment', [pointA, pointC], {
-        name: 'b',
-        withLabel: shouldShow('b'),
+    }
+
+    if (shouldShow('β')) {
+      b.create('angle', [pointC, pointB, pointA], {
+        name: 'β',
+        withLabel: true,
+        radius: 0.12 * dim,
         label: {
           autoPosition: true,
-          color: data.goal_element === 'b' ? newgreen : 'black',
+          color: data.goal_element === 'β' ? newgreen : 'black',
         },
       })
-      b.create('segment', [pointC, pointB], {
-        name: 'a',
-        withLabel: shouldShow('a'),
-        label: {
-          autoPosition: true,
-          color: data.goal_element === 'a' ? newgreen : 'black',
-        },
-      })
+    }
 
-      if (shouldShow('⍺')) {
-        b.create('angle', [pointB, pointA, pointC], {
-          name: '⍺',
-          withLabel: true,
-          radius: 0.12 * dim,
-          label: {
-            autoPosition: true,
-            color: data.goal_element === '⍺' ? newgreen : 'black',
-          },
-        })
-      }
+    b.create('angle', [pointA, pointC, pointB], {
+      name: 'γ',
+      withLabel: false,
+      radius: 0.08 * dim,
+      strokeColor: 'black',
+      fillColor: 'white',
+    })
 
-      if (shouldShow('β')) {
-        b.create('angle', [pointC, pointB, pointA], {
-          name: 'β',
-          withLabel: true,
-          radius: 0.12 * dim,
-          label: {
-            autoPosition: true,
-            color: data.goal_element === 'β' ? newgreen : 'black',
-          },
-        })
-      }
-
-      b.create('angle', [pointA, pointC, pointB], {
-        name: 'γ',
-        withLabel: false,
-        radius: 0.08 * dim,
-        strokeColor: 'black',
-        fillColor: 'white',
-      })
-
-      return b
-    },
-    'jxgbox',
-    data
-  )
+    return b
+  }, data)
 }

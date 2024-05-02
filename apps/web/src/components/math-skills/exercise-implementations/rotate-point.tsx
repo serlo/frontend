@@ -240,41 +240,37 @@ export function RotatePoint() {
 }
 
 function renderDiagram(data: DATA) {
-  return buildJSX(
-    () => {
-      const b = JXG.JSXGraph.initBoard('jxgbox', {
-        boundingbox: [
-          data.centerx - 5,
-          data.centery + 5,
-          data.centerx + 5,
-          data.centery - 5,
-        ],
-        showNavigation: false,
-        showCopyright: false,
-        axis: true,
-      })
+  return buildJSX(() => {
+    const b = JXG.JSXGraph.initBoard('jxgbox', {
+      boundingbox: [
+        data.centerx - 5,
+        data.centery + 5,
+        data.centerx + 5,
+        data.centery - 5,
+      ],
+      showNavigation: false,
+      showCopyright: false,
+      axis: true,
+    })
 
-      const A = b.create('point', [data.ax, data.ay], {
-        name: 'A',
-        fixed: true,
-        label: { autoPosition: true },
-      })
-      const B = b.create('point', [data.bx, data.by], {
-        name: 'B',
-        fixed: true,
-        label: { autoPosition: true },
-      })
-      const C = b.create('point', [data.cx, data.cy], {
-        name: 'C',
-        fixed: true,
-        label: { autoPosition: true },
-      })
-      b.create('segment', [A, B])
-      b.create('segment', [A, C])
+    const A = b.create('point', [data.ax, data.ay], {
+      name: 'A',
+      fixed: true,
+      label: { autoPosition: true },
+    })
+    const B = b.create('point', [data.bx, data.by], {
+      name: 'B',
+      fixed: true,
+      label: { autoPosition: true },
+    })
+    const C = b.create('point', [data.cx, data.cy], {
+      name: 'C',
+      fixed: true,
+      label: { autoPosition: true },
+    })
+    b.create('segment', [A, B])
+    b.create('segment', [A, C])
 
-      return b
-    },
-    'jxgbox',
-    data
-  )
+    return b
+  }, data)
 }

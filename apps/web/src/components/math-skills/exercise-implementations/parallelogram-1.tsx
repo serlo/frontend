@@ -234,57 +234,53 @@ export function Parallelogram1() {
 }
 
 function renderDiagram(data: DATA) {
-  return buildJSX(
-    () => {
-      const b = JXG.JSXGraph.initBoard('jxgbox', {
-        boundingbox: [data.x_from, data.y_to, data.x_to, data.y_from],
-        showNavigation: false,
-        showCopyright: false,
-        axis: true,
-        defaultAxes: {
-          x: {
-            ticks: {
-              ticksDistance: 1,
-              insertTicks: false,
-            },
-          },
-          y: {
-            ticks: {
-              ticksDistance: 1,
-              insertTicks: false,
-            },
+  return buildJSX(() => {
+    const b = JXG.JSXGraph.initBoard('jxgbox', {
+      boundingbox: [data.x_from, data.y_to, data.x_to, data.y_from],
+      showNavigation: false,
+      showCopyright: false,
+      axis: true,
+      defaultAxes: {
+        x: {
+          ticks: {
+            ticksDistance: 1,
+            insertTicks: false,
           },
         },
-      })
+        y: {
+          ticks: {
+            ticksDistance: 1,
+            insertTicks: false,
+          },
+        },
+      },
+    })
 
-      const O = b.create('point', [0, 0], {
-        name: 'O',
-        label: { autoPosition: true },
-      })
+    const O = b.create('point', [0, 0], {
+      name: 'O',
+      label: { autoPosition: true },
+    })
 
-      const R = b.create('point', [data.rx, data.ry], {
-        name: 'R<sub>1</sub>',
-        label: { autoPosition: true },
-      })
+    const R = b.create('point', [data.rx, data.ry], {
+      name: 'R<sub>1</sub>',
+      label: { autoPosition: true },
+    })
 
-      const T = b.create('point', [data.tx, data.ty], {
-        name: 'T',
-        label: { autoPosition: true },
-      })
+    const T = b.create('point', [data.tx, data.ty], {
+      name: 'T',
+      label: { autoPosition: true },
+    })
 
-      const S = b.create('point', [data.tx + data.rx, data.ty + data.ry], {
-        name: 'S<sub>1</sub>',
-        label: { autoPosition: true },
-      })
+    const S = b.create('point', [data.tx + data.rx, data.ty + data.ry], {
+      name: 'S<sub>1</sub>',
+      label: { autoPosition: true },
+    })
 
-      b.create('segment', [O, R])
-      b.create('segment', [R, S])
-      b.create('segment', [S, T])
-      b.create('segment', [T, O])
+    b.create('segment', [O, R])
+    b.create('segment', [R, S])
+    b.create('segment', [S, T])
+    b.create('segment', [T, O])
 
-      return b
-    },
-    'jxgbox',
-    data
-  )
+    return b
+  }, data)
 }
