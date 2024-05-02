@@ -408,7 +408,7 @@ export const middleSchoolFinalExam = {
     component: <PlaceholderExercise />,
   },
   'parabolas-by-characteristics': {
-    title: 'Parabel aus Punkten bestimmen 🚧',
+    title: 'Parabel aus Punkten bestimmen',
     subtitle: 'Quadratische Funktionen',
     calculatorAllowed: true,
     track: 2,

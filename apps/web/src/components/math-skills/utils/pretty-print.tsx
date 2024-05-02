@@ -20,6 +20,9 @@ export function pp(
 }
 
 export function ppPolynom(polynom: [number, string, number][]): JSX.Element {
+  if (polynom.every((x) => x[0] === 0)) {
+    return <>0</>
+  }
   let isFirstElement = true
   return (
     <>
@@ -33,13 +36,17 @@ export function ppPolynom(polynom: [number, string, number][]): JSX.Element {
         return (
           <>
             {beginWithWhitespace ? ' ' : null}
-            {Math.abs(koeff) === 1
-              ? koeff > 0
-                ? beginWithWhitespace
-                  ? '+ '
-                  : ''
-                : '- '
-              : pp(koeff, 'merge_op')}
+            {beginWithWhitespace
+              ? koeff === 1 && exp !== 0
+                ? '+ '
+                : koeff === -1 && exp !== 0
+                  ? '- '
+                  : pp(koeff, 'merge_op')
+              : exp !== 0 && Math.abs(koeff) === 1
+                ? koeff > 0
+                  ? ''
+                  : '−'
+                : pp(koeff, 'normal')}
             {exp === 0 ? null : (
               <>
                 {variable}
