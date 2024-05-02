@@ -2,7 +2,6 @@
 import JXG from 'jsxgraph'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { MainTask } from '../components/content-components'
 import { autoResizeBoundingBox } from '../utils/auto-resize-bounding-box'
 import { buildFrac, buildJSX, buildOverline } from '../utils/math-builder'
 import { pp } from '../utils/pretty-print'

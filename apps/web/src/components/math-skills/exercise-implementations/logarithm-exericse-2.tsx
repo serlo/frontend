@@ -1,5 +1,4 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { HighlightGray, MainTask } from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'

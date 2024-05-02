@@ -1,7 +1,6 @@
 import JXG from 'jsxgraph'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { MainTask } from '../components/content-components'
 import { buildFrac, buildJSX, buildOverline } from '../utils/math-builder'
 import { pp } from '../utils/pretty-print'
 import { roundToDigits } from '../utils/round-to-digits'

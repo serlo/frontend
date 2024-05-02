@@ -1,5 +1,4 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { HighlightGray } from '../components/content-components'
 import { pp, ppPolynom } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 

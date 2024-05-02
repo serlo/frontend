@@ -2,11 +2,6 @@
 import JXG from 'jsxgraph'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import {
-  MainTask,
-  HighlightGreen,
-  HighlightGray,
-} from '../components/content-components'
 import { buildFrac, buildJSX } from '../utils/math-builder'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
 import { pp } from '../utils/pretty-print'

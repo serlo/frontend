@@ -2,7 +2,6 @@
 import JXG from 'jsxgraph'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { MainTask } from '../components/content-components'
 import {
   buildBigSqrt,
   buildFrac,

@@ -1,7 +1,6 @@
 import JXG from 'jsxgraph'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { MainTask, HighlightGray } from '../components/content-components'
 import {
   buildBlock,
   buildFrac,
