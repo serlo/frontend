@@ -1,5 +1,6 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { buildFrac } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -27,7 +28,7 @@ export function LogarithmEquation() {
               )}
             </sub>{' '}
             {data.val > 1 || data.base === -1
-              ? data.val.toLocaleString('de-De')
+              ? pp(data.val)
               : buildFrac(1, Math.round(1 / data.val))}
           </p>
         </>
@@ -43,13 +44,12 @@ export function LogarithmEquation() {
               )}
             </sub>{' '}
             {data.val > 1 || data.base === -1
-              ? data.val.toLocaleString('de-De')
+              ? pp(data.val)
               : buildFrac(1, Math.round(1 / data.val))}{' '}
-            &nbsp;⇔&nbsp;{' '}
-            {(data.base === -1 ? data.val : data.base).toLocaleString('de-De')}
+            &nbsp;⇔&nbsp; {pp(data.base === -1 ? data.val : data.base)}
             <sup>x</sup> ={' '}
             {data.val > 1 || data.base === -1
-              ? data.val.toLocaleString('de-De')
+              ? pp(data.val)
               : buildFrac(1, Math.round(1 / data.val))}
           </p>
           <p>Finde die Antwort durch Probieren:</p>

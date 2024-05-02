@@ -10,6 +10,7 @@ import {
 } from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -66,10 +67,7 @@ export function ModellingParabola() {
                 : null}
               <span className="serlo-highlight-green">
                 y = - x<sup>2</sup> +{' '}
-                {data.context === 1
-                  ? (data.b / 2).toString().replace('.', ',')
-                  : data.b.toString().replace('.', ',')}
-                x
+                {data.context === 1 ? pp(data.b / 2) : pp(data.b)}x
               </span>{' '}
               beschrieben werden.
             </MainTask>
@@ -111,9 +109,7 @@ export function ModellingParabola() {
           <>
             Finde die Nullstellen der Parabel. Klammere dazu - x aus:
             <br />
-            <HighlightGray>
-              0 = - x · (x - {data.b.toString().replace('.', ',')})
-            </HighlightGray>
+            <HighlightGray>0 = - x · (x - {pp(data.b)})</HighlightGray>
             <br />
             Am ersten Faktor erkennen wir die erste Lösung:{' '}
             <HighlightGray>
@@ -122,15 +118,14 @@ export function ModellingParabola() {
             <br />
             Der zweite Faktor - die Klammer - ist dann 0, wenn:{' '}
             <HighlightGray>
-              x<sub>2</sub> = {data.b.toString().replace('.', ',')}
+              x<sub>2</sub> = {pp(data.b)}
             </HighlightGray>
             <br />
             <br />
             Die {data.context === 2 ? 'maximale Breite' : 'maximale Weite'} ist
             damit: <br />
             <HighlightGreen>
-              x<sub>2</sub> - x<sub>1</sub> ={' '}
-              {data.b.toString().replace('.', ',')} m
+              x<sub>2</sub> - x<sub>1</sub> = {pp(data.b)} m
             </HighlightGreen>
             <br />
             <br />
@@ -146,20 +141,16 @@ export function ModellingParabola() {
                 </>,
                 <>2</>
               )}{' '}
-              = {(data.b / 2).toString().replace('.', ',')}
+              = {pp(data.b / 2)}
             </HighlightGray>
             <br />
             <br />
             Die Höhe ist damit:
             <br />
             <HighlightGreen>
-              y<sub>s</sub> = - {(data.b / 2).toString().replace('.', ',')}
-              <sup>2</sup> + {data.b.toString().replace('.', ',')} ·{' '}
-              {(data.b / 2).toString().replace('.', ',')} ={' '}
-              {(-(data.b / 2) * (data.b / 2) + (data.b / 2) * data.b)
-                .toString()
-                .replace('.', ',')}{' '}
-              m
+              y<sub>s</sub> = - {pp(data.b / 2)}
+              <sup>2</sup> + {pp(data.b)} · {pp(data.b / 2)} ={' '}
+              {pp(-(data.b / 2) * (data.b / 2) + (data.b / 2) * data.b)} m
             </HighlightGreen>
             <br />
             <br />
@@ -178,10 +169,7 @@ export function ModellingParabola() {
             <br />
             <HighlightGray>
               0 = - x<sup>2</sup> +{' '}
-              {data.context === 1
-                ? (data.b / 2).toString().replace('.', ',')
-                : data.b.toString().replace('.', ',')}
-              x
+              {data.context === 1 ? pp(data.b / 2) : pp(data.b)}x
             </HighlightGray>
             <br />
             <br />

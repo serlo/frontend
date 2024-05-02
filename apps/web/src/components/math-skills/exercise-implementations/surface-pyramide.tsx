@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { MainTask } from '../components/content-components'
 import { buildBigSqrt, buildFrac, buildSqrt } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -126,7 +127,7 @@ export function SurfacePyramide() {
             </span>{' '}
             <br />
             <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              h<sub>a</sub> = {ha.toLocaleString('de-DE')} cm
+              h<sub>a</sub> = {pp(ha)} cm
             </span>{' '}
             <br /> <br />
             <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
@@ -153,28 +154,24 @@ export function SurfacePyramide() {
             </span>{' '}
             <br />
             <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              h<sub>b</sub> = {hb.toLocaleString('de-DE')} cm
+              h<sub>b</sub> = {pp(hb)} cm
             </span>{' '}
             <br /> <br />
             Nun kannst du h<sub>a</sub> und h<sub>b</sub> in die
             Mantelflächenformel einsetzen: <br />
             <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               M<sub>a</sub> = {buildFrac(<>1</>, <>2</>)} · {data.ab} cm ·{' '}
-              {ha.toLocaleString('de-DE')} cm <br />M<sub>a</sub> ={' '}
-              {Ma.toLocaleString('de-DE')} cm²
+              {pp(ha)} cm <br />M<sub>a</sub> = {pp(Ma)} cm²
               <br />M<sub>b</sub> = {buildFrac(<>1</>, <>2</>)} · {data.bd} cm ·
-              {hb.toLocaleString('de-DE')} cm <br />M<sub>b</sub> ={' '}
-              {Mb.toLocaleString('de-DE')} cm² <br /> <br />M = 2 ·{' '}
-              {Ma.toLocaleString('de-DE')} cm² + 2 ·{' '}
-              {Mb.toLocaleString('de-DE')} cm²
-              <br />M = {M.toLocaleString('de-DE')} cm² <br /> <br />
-              A = G + M <br />A = {G.toLocaleString('de-DE')} cm² +{' '}
-              {M.toLocaleString('de-DE')} cm²
+              {pp(hb)} cm <br />M<sub>b</sub> = {pp(Mb)} cm² <br /> <br />M = 2
+              · {pp(Ma)} cm² + 2 · {pp(Mb)} cm²
+              <br />M = {pp(M)} cm² <br /> <br />
+              A = G + M <br />A = {pp(G)} cm² + {pp(M)} cm²
             </span>{' '}
             <br /> <br />
             <strong>Ergebnis:</strong> <br />
             <span className="mt-5 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-              A = {(G + M).toLocaleString('de-DE')} cm²
+              A = {pp(G + M)} cm²
             </span>
           </>
         )

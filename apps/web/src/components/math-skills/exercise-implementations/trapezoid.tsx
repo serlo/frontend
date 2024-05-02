@@ -4,6 +4,7 @@ import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { autoResizeBoundingBox } from '../utils/auto-resize-bounding-box'
 import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
 import { buildFrac, buildOverline } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { rotatePoint } from '../utils/rotate-point'
 import { roundToDigits } from '../utils/round-to-digits'
 import { randomIntBetween } from '@/helper/random-int-between'
@@ -55,13 +56,11 @@ export function Trapezoid() {
             <>
               <p className="serlo-main-task">
                 Gegeben sei das Trapez ABCD mit {buildOverline('AB')} ||{' '}
-                {buildOverline('CD')} und der Höhe{' '}
-                {data.h.toLocaleString('de-De')}&nbsp;cm.
+                {buildOverline('CD')} und der Höhe {pp(data.h)}&nbsp;cm.
               </p>
               <p className="serlo-main-task">
-                Es gilt: |{buildOverline('AB')}| ={' '}
-                {data.a.toLocaleString('de-De')} cm und |{buildOverline('CD')}|
-                ={data.c.toLocaleString('de-De')} cm
+                Es gilt: |{buildOverline('AB')}| = {pp(data.a)} cm und |
+                {buildOverline('CD')}| ={pp(data.c)} cm
               </p>
               <SubComponent data={data} />
               <p className="serlo-main-task">
@@ -79,7 +78,7 @@ export function Trapezoid() {
                 {buildOverline('AB')} || {buildOverline('CD')}.
               </p>
               <p className="serlo-main-task">
-                Es gilt: ∢BAD = {data.alpha.toLocaleString('de-De')}°
+                Es gilt: ∢BAD = {pp(data.alpha)}°
               </p>
               <SubComponent data={data} />
               <p className="serlo-main-task">
@@ -94,12 +93,11 @@ export function Trapezoid() {
             <p className="serlo-main-task">
               Gegeben sei das Trapez ABCD mit {buildOverline('AB')} ||{' '}
               {buildOverline('CD')} und dem Flächeninhalt A<sub>Trapez</sub> ={' '}
-              {data.A.toLocaleString('de-De')} cm².
+              {pp(data.A)} cm².
             </p>
             <p className="serlo-main-task">
-              Es gilt: |{buildOverline('AB')}| ={' '}
-              {data.a.toLocaleString('de-De')} cm und |{buildOverline('CD')}| =
-              {data.c.toLocaleString('de-De')} cm
+              Es gilt: |{buildOverline('AB')}| = {pp(data.a)} cm und |
+              {buildOverline('CD')}| ={pp(data.c)} cm
             </p>
             <SubComponent data={data} />
             <p className="serlo-main-task">
@@ -115,30 +113,23 @@ export function Trapezoid() {
             <>
               <p>Stelle mit den gegebenen Größen eine Formel auf:</p>
               <p className="serlo-highlight-gray">
-                {data.A.toLocaleString('de-De')} cm² = {buildFrac(1, 2)} · (
-                {data.a.toLocaleString('de-De')} cm +{' '}
-                {data.c.toLocaleString('de-De')} cm) · h
+                {pp(data.A)} cm² = {buildFrac(1, 2)} · ({pp(data.a)} cm +{' '}
+                {pp(data.c)} cm) · h
               </p>
               <p>Stelle die Formel nach h um:</p>
               <p className="serlo-highlight-gray">
                 h ={' '}
                 {buildFrac(
-                  <>{data.A.toLocaleString('de-De')} cm²</>,
+                  <>{pp(data.A)} cm²</>,
                   <>
-                    {data.a.toLocaleString('de-De')} cm +{' '}
-                    {data.c.toLocaleString('de-De')} cm
+                    {pp(data.a)} cm + {pp(data.c)} cm
                   </>
                 )}{' '}
                 · 2
               </p>
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
-                h ={' '}
-                {roundToDigits(
-                  (data.A / (data.a + data.c)) * 2,
-                  2
-                ).toLocaleString('de-De')}{' '}
-                cm
+                h = {pp(roundToDigits((data.A / (data.a + data.c)) * 2, 2))} cm
               </p>
             </>
           )
@@ -151,13 +142,13 @@ export function Trapezoid() {
                 die gleiche Größe. Daraus folgt:
               </p>
               <p className="serlo-highlight-gray">
-                ∢CBA = ∢BAD = {data.alpha.toLocaleString('de-De')}°
+                ∢CBA = ∢BAD = {pp(data.alpha)}°
               </p>
               <p>Anliegende Winkel im Trapez ergänzen sich zu 180°:</p>
               <p className="serlo-highlight-gray">∢DCB = 180° - ∢CBA</p>
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
-                ∢DCB = {(180 - data.alpha).toLocaleString('de-De')}°
+                ∢DCB = {pp(180 - data.alpha)}°
               </p>
             </>
           )
@@ -171,19 +162,13 @@ export function Trapezoid() {
             </p>
             <p>Setze passende Werte ein:</p>
             <p className="serlo-highlight-gray">
-              A<sub>Trapez</sub> = {buildFrac(1, 2)} · (
-              {data.a.toLocaleString('de-De')} cm +{' '}
-              {data.c.toLocaleString('de-De')} cm) ·{' '}
-              {data.h.toLocaleString('de-De')} cm
+              A<sub>Trapez</sub> = {buildFrac(1, 2)} · ({pp(data.a)} cm +{' '}
+              {pp(data.c)} cm) · {pp(data.h)} cm
             </p>
             <p>Berechne das Ergebnis:</p>
             <p className="serlo-highlight-green">
               A<sub>Trapez</sub> ={' '}
-              {roundToDigits(
-                0.5 * (data.a + data.c) * data.h,
-                2
-              ).toLocaleString('de-De')}{' '}
-              cm²
+              {pp(roundToDigits(0.5 * (data.a + data.c) * data.h, 2))} cm²
             </p>
           </>
         )

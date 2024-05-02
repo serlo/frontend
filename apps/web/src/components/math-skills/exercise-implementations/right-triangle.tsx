@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
 import { buildFrac, buildSqrt } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { roundToDigits } from '../utils/round-to-digits'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -25,9 +26,9 @@ interface DATA {
 export function RightTriangle() {
   function printValue(el: Element, val: number) {
     if (['a', 'b', 'c'].includes(el)) {
-      return <>{val.toLocaleString('de-De')} cm </>
+      return <>{pp(val)} cm </>
     }
-    return <>{val.toLocaleString('de-De')}°</>
+    return <>{pp(val)}°</>
   }
   return (
     <SelfEvaluationExercise
@@ -206,14 +207,12 @@ export function RightTriangle() {
                   data.goal_element === 'c' ? (
                     <>
                       {' '}
-                      {data.given_1_value.toLocaleString('de-De')}² +{' '}
-                      {data.given_2_value.toLocaleString('de-De')}²
+                      {pp(data.given_1_value)}² + {pp(data.given_2_value)}²
                     </>
                   ) : (
                     <>
                       {' '}
-                      {data.given_2_value.toLocaleString('de-De')}² -{' '}
-                      {data.given_1_value.toLocaleString('de-De')}²
+                      {pp(data.given_2_value)}² - {pp(data.given_1_value)}²
                     </>
                   )
                 )}
@@ -221,8 +220,7 @@ export function RightTriangle() {
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
                 {data.goal_element} ={' '}
-                {roundToDigits(data.goal_value * 10, 2).toLocaleString('de-De')}{' '}
-                cm
+                {pp(roundToDigits(data.goal_value * 10, 2))} cm
               </p>
             </>
           )
@@ -241,37 +239,29 @@ export function RightTriangle() {
               <p className="serlo-highlight-gray">
                 {data.func} {data.given_1_value}° ={' '}
                 {data.inv
-                  ? buildFrac(
-                      data.given_2_value.toLocaleString('de-De'),
-                      data.goal_element
-                    )
-                  : buildFrac(
-                      data.goal_element,
-                      data.given_2_value.toLocaleString('de-De')
-                    )}
+                  ? buildFrac(pp(data.given_2_value), data.goal_element)
+                  : buildFrac(data.goal_element, pp(data.given_2_value))}
               </p>
               <p>Stelle die Gleichung um:</p>
               <p className="serlo-highlight-gray">
                 {data.goal_element} ={' '}
                 {data.inv ? (
                   buildFrac(
-                    data.given_2_value.toLocaleString('de-De'),
+                    pp(data.given_2_value),
                     <>
                       {data.func} {data.given_1_value}°
                     </>
                   )
                 ) : (
                   <>
-                    {data.func} {data.given_1_value}° ·{' '}
-                    {data.given_2_value.toLocaleString('de-De')}
+                    {data.func} {data.given_1_value}° · {pp(data.given_2_value)}
                   </>
                 )}
               </p>
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
                 {data.goal_element} ={' '}
-                {roundToDigits(data.goal_value * 10, 2).toLocaleString('de-De')}{' '}
-                cm
+                {pp(roundToDigits(data.goal_value * 10, 2))} cm
               </p>
             </>
           )
@@ -286,15 +276,11 @@ export function RightTriangle() {
             <p>Setze die Werte ein:</p>
             <p className="serlo-highlight-gray">
               {data.func} {data.goal_element} =
-              {buildFrac(
-                data.given_1_value.toLocaleString('de-De'),
-                data.given_2_value.toLocaleString('de-De')
-              )}
+              {buildFrac(pp(data.given_1_value), pp(data.given_2_value))}
             </p>
             <p>Berechne das Ergebnis:</p>
             <p className="serlo-highlight-green">
-              {data.goal_element} ={' '}
-              {roundToDigits(data.goal_value, 2).toLocaleString('de-De')}°
+              {data.goal_element} = {pp(roundToDigits(data.goal_value, 2))}°
             </p>
           </>
         )

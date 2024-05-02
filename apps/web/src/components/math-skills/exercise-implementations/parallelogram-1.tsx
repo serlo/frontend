@@ -9,6 +9,7 @@ import {
   buildVec,
   buildVec2,
 } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -158,7 +159,7 @@ export function Parallelogram1() {
                   ={' '}
                   {buildVec2(
                     <>
-                      {data.rx_off} + {(data.w / 2).toLocaleString('de-De')}
+                      {data.rx_off} + {pp(data.w / 2)}
                     </>,
                     <>{data.h} · 0,25 · 3</>
                   )}
@@ -178,15 +179,11 @@ export function Parallelogram1() {
                     <>
                       {data.rx_off} + {data.w} · 0,25 · 3
                     </>,
-                    <>{(data.h / 2).toLocaleString('de-De')} </>
+                    <>{pp(data.h / 2)} </>
                   )}
                 </>
               )}{' '}
-              ={' '}
-              {buildVec2(
-                data.rx.toLocaleString('de-De'),
-                data.ry.toLocaleString('de-De')
-              )}
+              = {buildVec2(pp(data.rx), pp(data.ry))}
             </>
           )}
           <br />

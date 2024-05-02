@@ -9,6 +9,7 @@ import {
   HighlightGray,
 } from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -142,7 +143,7 @@ export function VertexParabolaBackup() {
             <br />
             <HighlightGreen>
               y = <span className="inline-block scale-y-[1.5]">(</span>x{' '}
-              {isPlus ? '+' : '-'} {(b / 2).toString().replace('.', ',')}
+              {isPlus ? '+' : '-'} {pp(b / 2)}
               <span className="inline-block scale-y-[1.5]">)</span>
               <sup>2</sup>{' '}
               {c - (b / 2) * (b / 2) === 0 ? (
@@ -151,8 +152,8 @@ export function VertexParabolaBackup() {
                 <>
                   {isPlus_2 && c - (b / 2) * (b / 2) > 0 ? '+' : ''}{' '}
                   {isPlus_2
-                    ? (c - (b / 2) * (b / 2)).toString().replace('.', ',')
-                    : (-c - (b / 2) * (b / 2)).toString().replace('.', ',')}
+                    ? pp(c - (b / 2) * (b / 2))
+                    : pp(-c - (b / 2) * (b / 2))}
                 </>
               )}
             </HighlightGreen>

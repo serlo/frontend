@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { MainTask } from '../components/content-components'
 import { buildFrac, buildOverline } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { roundToDigits } from '../utils/round-to-digits'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -91,7 +92,7 @@ export function Trigonometry2() {
               |{buildOverline('AD')}|² = (4 cm)² + (6 cm)² - 2 · 4 cm · 6 cm ·
               cos 38°
               <br />
-              <br />|{buildOverline('AD')}| = {ad.toLocaleString('de-De')} cm
+              <br />|{buildOverline('AD')}| = {pp(ad)} cm
             </p>
             <p>Nutze den Sinussatz im Dreieck ABD:</p>
             <p className="serlo-highlight-gray">
@@ -100,14 +101,11 @@ export function Trigonometry2() {
             </p>
             <p>Stelle die Gleichung um und setze gegebene Größen ein:</p>
             <p className="serlo-highlight-gray">
-              sin(𝛼) ={' '}
-              {buildFrac(<>sin 38°</>, <>{ad.toLocaleString('de-De')} cm</>)} ·{' '}
-              {data.bd} cm
+              sin(𝛼) = {buildFrac(<>sin 38°</>, <>{pp(ad)} cm</>)} · {data.bd}{' '}
+              cm
             </p>
             <p>Berechne das Ergebnis:</p>
-            <p className="serlo-highlight-green">
-              𝛼 = {Erg.toLocaleString('de-DE')}°
-            </p>
+            <p className="serlo-highlight-green">𝛼 = {pp(Erg)}°</p>
           </>
         )
       }}

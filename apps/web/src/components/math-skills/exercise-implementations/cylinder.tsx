@@ -9,6 +9,7 @@ import {
   //HighlightGreen,
 } from '../components/content-components'
 import { buildFrac, buildSqrt } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 
 interface DATA {
@@ -227,9 +228,7 @@ function Solution({ data }: { data: DATA }) {
           V = {Math.pow(data.M, 2)} cm² · π · {data.h} cm
         </p>{' '}
         <br />
-        <p className="serlo-highlight-green">
-          V = {result.toLocaleString('de-De')} cm³
-        </p>
+        <p className="serlo-highlight-green">V = {pp(result)} cm³</p>
       </>
     )
   }
@@ -248,9 +247,7 @@ function Solution({ data }: { data: DATA }) {
           h = {buildFrac(<>{result} cm³</>, <>({data.M} cm)² · π</>)}
         </p>{' '}
         <br />
-        <p className="serlo-highlight-green">
-          h ≈ {data.h.toLocaleString('de-De')} cm
-        </p>
+        <p className="serlo-highlight-green">h ≈ {pp(data.h)} cm</p>
       </>
     )
   }
@@ -272,9 +269,7 @@ function Solution({ data }: { data: DATA }) {
           )}
         </p>{' '}
         <br />
-        <p className="serlo-highlight-green">
-          r ≈ {data.c1b.toLocaleString('de-De')} cm
-        </p>
+        <p className="serlo-highlight-green">r ≈ {pp(data.c1b)} cm</p>
       </>
     )
   }
@@ -296,17 +291,13 @@ function Solution({ data }: { data: DATA }) {
           h = {buildFrac(<>{result} cm³</>, <>({data.M} cm)² · π</>)}
         </p>{' '}
         <br />
-        <p className="serlo-highlight-gray">
-          h ≈ {data.h.toLocaleString('de-De')} cm
-        </p>
+        <p className="serlo-highlight-gray">h ≈ {pp(data.h)} cm</p>
         <p>Setze alle Werte in die Gleichung des Oberflächeninhaltes ein:</p>
         <p className="serlo-highlight-gray">
           O = 2 · {data.M} cm · π · ({data.M} cm + {data.h} cm)
         </p>{' '}
         <br />
-        <p className="serlo-highlight-green">
-          O = {ob.toLocaleString('de-De')} cm²
-        </p>
+        <p className="serlo-highlight-green">O = {pp(ob)} cm²</p>
       </>
     )
   }

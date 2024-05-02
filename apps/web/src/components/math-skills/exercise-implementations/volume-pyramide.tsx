@@ -6,6 +6,7 @@ import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { MainTask } from '../components/content-components'
 import { autoResizeBoundingBox } from '../utils/auto-resize-bounding-box'
 import { buildFrac, buildOverline } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 
 // JXG.Options.label.autoPosition = true
@@ -90,7 +91,7 @@ export function VolumePyramide() {
             <br />
             Ergebnis: <br />
             <span className="mt-5 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-              V = {V.toLocaleString('de-DE')} cm³
+              V = {pp(V)} cm³
             </span>
           </>
         )

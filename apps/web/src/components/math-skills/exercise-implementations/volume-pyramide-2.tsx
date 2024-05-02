@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { MainTask } from '../components/content-components'
 import { buildBigSqrt, buildFrac, buildSqrt } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -94,7 +95,7 @@ export function VolumeThreePyramide() {
             <br />
             Ergebnis: <br />
             <span className="mt-5 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-              V = {V.toLocaleString('de-DE')} cm³
+              V = {pp(V)} cm³
             </span>
           </>
         )

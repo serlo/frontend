@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { MainTask, HighlightGray } from '../components/content-components'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -33,9 +34,8 @@ export function PlotFunction2() {
           <>
             <MainTask>Skizzieren Sie den Graphen der Funktion:</MainTask>
             <p className="serlo-highlight-gray">
-              y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
-              {data.a === -1 ? null : '·'}{' '}
-              {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
+              y = {data.a === -1 ? '-' : pp(data.a)}{' '}
+              {data.a === -1 ? null : '·'} {data.b === 2.718 ? 'e' : pp(data.b)}
               <sup>x</sup> {data.c > 0 ? '+' : data.c < 0 ? '-' : null}{' '}
               {data.c !== 0 ? Math.abs(data.c) : null}
             </p>
@@ -66,16 +66,13 @@ export function PlotFunction2() {
             Bestimme die Stelle, durch die der Graph an der y-Achse verläuft:
             <br />
             <HighlightGray>
-              y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
-              {data.a === -1 ? null : '·'}{' '}
-              {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
+              y = {data.a === -1 ? '-' : pp(data.a)}{' '}
+              {data.a === -1 ? null : '·'} {data.b === 2.718 ? 'e' : pp(data.b)}
               <sup>0</sup> {data.c > 0 ? '+' : data.c < 0 ? '-' : null}{' '}
               {data.c !== 0 ? Math.abs(data.c) : null} ={' '}
-              {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
-              {data.a === -1 ? null : '·'} 1{' '}
+              {data.a === -1 ? '-' : pp(data.a)} {data.a === -1 ? null : '·'} 1{' '}
               {data.c > 0 ? '+' : data.c < 0 ? '-' : null}{' '}
-              {data.c !== 0 ? Math.abs(data.c) : null} ={' '}
-              {(data.a + data.c).toString().replace('.', ',')}
+              {data.c !== 0 ? Math.abs(data.c) : null} = {pp(data.a + data.c)}
             </HighlightGray>
             <p className="mt-3">
               Die Basis ist {data.b > 1 ? 'größer' : 'kleiner'} als 1, daher{' '}

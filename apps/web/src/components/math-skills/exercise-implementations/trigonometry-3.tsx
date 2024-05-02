@@ -8,6 +8,7 @@ import {
   HighlightGreen,
 } from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -55,12 +56,12 @@ export function Trigonometry3() {
               anlegen. Dazu werden die Seiten{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">
                 <span className="overline">AB</span>&nbsp;=&nbsp;
-                {data.ab.toLocaleString('de-De')}&nbsp;m
+                {pp(data.ab)}&nbsp;m
               </b>{' '}
               und{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">
                 <span className="overline">AC</span>&nbsp;=&nbsp;
-                {data.ac.toLocaleString('de-De')}&nbsp;m
+                {pp(data.ac)}&nbsp;m
               </b>{' '}
               des Dreiecks jeweils um ein Achtel ihrer Länge auf die
               Seiten&nbsp;
@@ -118,57 +119,48 @@ export function Trigonometry3() {
               cos 𝛼 ={' '}
               {buildFrac(
                 <>
-                  ({data.ab.toLocaleString('de-De')} m)² + (
-                  {data.ac.toLocaleString('de-De')} m)² - (
-                  {data.bc.toLocaleString('de-De')} m)²
+                  ({pp(data.ab)} m)² + ({pp(data.ac)} m)² - ({pp(data.bc)} m)²
                 </>,
                 <>
-                  2 · {data.ab.toLocaleString('de-De')} m ·{' '}
-                  {data.ac.toLocaleString('de-De')} m
+                  2 · {pp(data.ab)} m · {pp(data.ac)} m
                 </>
               )}
             </HighlightGray>
             <br />
-            <HighlightGray>𝛼 = {zw.toLocaleString('de-DE')}°</HighlightGray>
+            <HighlightGray>𝛼 = {pp(zw)}°</HighlightGray>
             <br />
             <p className="mt-3">Berechne die verkürzten Längen:</p>
             <HighlightGray>
               |<span className="overline">AD</span>| ={' '}
-              {buildFrac(<>7</>, <>8</>)} · {data.ab.toLocaleString('de-De')} m
-              = {achtelbd.toLocaleString('de-DE')} m
+              {buildFrac(<>7</>, <>8</>)} · {pp(data.ab)} m = {pp(achtelbd)} m
             </HighlightGray>{' '}
             <br />
             <HighlightGray>
               |<span className="overline">AE</span>| ={' '}
-              {buildFrac(<>7</>, <>8</>)} · {data.ac.toLocaleString('de-De')} m
-              = {achtelce.toLocaleString('de-DE')} m
+              {buildFrac(<>7</>, <>8</>)} · {pp(data.ac)} m = {pp(achtelce)} m
             </HighlightGray>{' '}
             <br /> <br />
             So ist der Flächeninhalt des Dreiecks ABC: <br />
             <HighlightGray>
-              A<sub>ABC</sub> = 0,5 · {data.ab.toLocaleString('de-De')} m ·{' '}
-              {data.ac.toLocaleString('de-De')} m · sin{' '}
-              {zw.toLocaleString('de-De')}° = {A1.toLocaleString('de-De')} m²
+              A<sub>ABC</sub> = 0,5 · {pp(data.ab)} m · {pp(data.ac)} m · sin{' '}
+              {pp(zw)}° = {pp(A1)} m²
             </HighlightGray>{' '}
             <br /> <br />
             Der Flächeninhalt des Dreicks ADE: <br />
             <HighlightGray>
-              A<sub>ADE</sub> = 0,5 · {achtelbd.toLocaleString('de-DE')} m ·
-              {achtelce.toLocaleString('de-DE')} m · sin{' '}
-              {zw.toLocaleString('de-DE')}
+              A<sub>ADE</sub> = 0,5 · {pp(achtelbd)} m ·{pp(achtelce)} m · sin{' '}
+              {pp(zw)}
               ° <br />
-              <br />A<sub>ADE</sub> = {A2.toLocaleString('de-De')} m²
+              <br />A<sub>ADE</sub> = {pp(A2)} m²
             </HighlightGray>{' '}
             <br /> <br />
             Somit ist der Flächeninhalt des Vierecks DBCE: <br />
             <HighlightGreen>
-              A<sub>DBCE</sub> = {A1.toLocaleString('de-De')} m² -{' '}
-              {A2.toLocaleString('de-De')} m² = {Erg.toLocaleString('de-DE')} m²
+              A<sub>DBCE</sub> = {pp(A1)} m² - {pp(A2)} m² = {pp(Erg)} m²
             </HighlightGreen>
             <p className="mt-3">Antworte:</p>
             <p className="serlo-highlight-green">
-              Der Beach-Bereich der Bar hat eine Fläche von{' '}
-              {Erg.toLocaleString('de-DE')}&nbsp;m².
+              Der Beach-Bereich der Bar hat eine Fläche von {pp(Erg)}&nbsp;m².
             </p>
           </>
         )
@@ -259,12 +251,12 @@ function SubComponent({ data }: { data: Trig1Data }) {
       radius: 1.5,
     })
 
-    b.create('text', [2.5, 0, `${data.ab.toLocaleString('de-De')} m`], {
+    b.create('text', [2.5, 0, `${pp(data.ab)} m`], {
       anchorX: 'middle',
       anchorY: 'top',
     })
 
-    b.create('text', [0.5, 2.5, `${data.ac.toLocaleString('de-De')} m`], {
+    b.create('text', [0.5, 2.5, `${pp(data.ac)} m`], {
       anchorX: 'middle',
       anchorY: 'top',
     })
@@ -274,7 +266,7 @@ function SubComponent({ data }: { data: Trig1Data }) {
       anchorY: 'top',
     })
 
-    b.create('text', [4.8, 2, `${data.bc.toLocaleString('de-De')} m`], {})
+    b.create('text', [4.8, 2, `${pp(data.bc)} m`], {})
     setBoard(b)
 
     b.create('polygon', [pointD, pointB, pointC, pointE])

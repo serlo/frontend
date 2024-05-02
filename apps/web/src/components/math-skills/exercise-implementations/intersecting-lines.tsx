@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
 import { buildFrac, buildOverline } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { roundToDigits } from '../utils/round-to-digits'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -81,18 +82,11 @@ export function IntersectingLines() {
           </p>
           <p className="serlo-main-task">
             Es gilt: |{buildOverline(data.given_elements[0])}| ={' '}
-            {(
-              Math.round(data.lengths[data.given_elements[0]] * 10) / 10
-            ).toLocaleString('de-De')}{' '}
-            cm, |{buildOverline(data.given_elements[1])}| ={' '}
-            {(
-              Math.round(data.lengths[data.given_elements[1]] * 10) / 10
-            ).toLocaleString('de-De')}{' '}
-            cm und |{buildOverline(data.given_elements[2])}| ={' '}
-            {(
-              Math.round(data.lengths[data.given_elements[2]] * 10) / 10
-            ).toLocaleString('de-De')}{' '}
-            cm.
+            {pp(Math.round(data.lengths[data.given_elements[0]] * 10) / 10)} cm,
+            |{buildOverline(data.given_elements[1])}| ={' '}
+            {pp(Math.round(data.lengths[data.given_elements[1]] * 10) / 10)} cm
+            und |{buildOverline(data.given_elements[2])}| ={' '}
+            {pp(Math.round(data.lengths[data.given_elements[2]] * 10) / 10)} cm.
           </p>
           <SubComponent data={data} />
           <p className="serlo-main-task">
@@ -231,43 +225,33 @@ export function IntersectingLines() {
               {intro}
               <p>Multipliziere über Kreuz:</p>
               <p className="serlo-highlight-gray">
-                {b.toLocaleString('de-De')} cm · |
-                {buildOverline(data.goal_element)}| ={' '}
-                {a.toLocaleString('de-De')} cm · (|
-                {buildOverline(data.goal_element)}| +{' '}
-                {factor.toLocaleString('de-De')} cm)
+                {pp(b)} cm · |{buildOverline(data.goal_element)}| = {pp(a)} cm ·
+                (|
+                {buildOverline(data.goal_element)}| + {pp(factor)} cm)
               </p>
               <p>Multipliziere aus und stelle um:</p>
               <p className="serlo-highlight-gray">
-                {b.toLocaleString('de-De')} cm · |
-                {buildOverline(data.goal_element)}| ={' '}
-                {a.toLocaleString('de-De')} cm · |
-                {buildOverline(data.goal_element)}| +{' '}
-                {a.toLocaleString('de-De')} cm ·{' '}
-                {factor.toLocaleString('de-De')} cm
+                {pp(b)} cm · |{buildOverline(data.goal_element)}| = {pp(a)} cm ·
+                |{buildOverline(data.goal_element)}| + {pp(a)} cm · {pp(factor)}{' '}
+                cm
                 <br />
-                <br />({b.toLocaleString('de-De')} cm -{' '}
-                {a.toLocaleString('de-De')} cm) · |
-                {buildOverline(data.goal_element)}| ={' '}
-                {a.toLocaleString('de-De')} cm ·{' '}
-                {factor.toLocaleString('de-De')} cm
+                <br />({pp(b)} cm - {pp(a)} cm) · |
+                {buildOverline(data.goal_element)}| = {pp(a)} cm · {pp(factor)}{' '}
+                cm
                 <br />
                 <br />|{buildOverline(data.goal_element)}| ={' '}
                 {buildFrac(
                   <>
-                    {a.toLocaleString('de-De')} cm ·{' '}
-                    {factor.toLocaleString('de-De')} cm
+                    {pp(a)} cm · {pp(factor)} cm
                   </>,
                   <>
-                    {b.toLocaleString('de-De')} cm - {a.toLocaleString('de-De')}{' '}
-                    cm
+                    {pp(b)} cm - {pp(a)} cm
                   </>
                 )}
               </p>
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
-                |{buildOverline(data.goal_element)}| ={' '}
-                {result.toLocaleString('de-De')} cm
+                |{buildOverline(data.goal_element)}| = {pp(result)} cm
               </p>
             </>
           )
@@ -281,17 +265,12 @@ export function IntersectingLines() {
             <p>Stelle die Gleichung um:</p>
             <p className="serlo-highlight-gray">
               |{buildOverline(data.goal_element)}| ={' '}
-              {buildFrac(
-                a.toLocaleString('de-De') + ' cm',
-                b.toLocaleString('de-De') + ' cm'
-              )}{' '}
-              · {factor.toLocaleString('de-De')} cm
-              {c > 0 ? <> - {c.toLocaleString('de-De')} cm</> : null}
+              {buildFrac(pp(a) + ' cm', pp(b) + ' cm')} · {pp(factor)} cm
+              {c > 0 ? <> - {pp(c)} cm</> : null}
             </p>
             <p>Berechne das Ergebnis:</p>
             <p className="serlo-highlight-green">
-              |{buildOverline(data.goal_element)}| ={' '}
-              {result.toLocaleString('de-De')} cm
+              |{buildOverline(data.goal_element)}| = {pp(result)} cm
             </p>
           </>
         )

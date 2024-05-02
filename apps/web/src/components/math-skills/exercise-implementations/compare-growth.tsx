@@ -1,4 +1,5 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -80,12 +81,12 @@ export function CompareGrowth() {
           <p className="serlo-main-task">
             Am ersten Tag hatte &quot;{data.nameA}&quot; {data.startA}
             &nbsp;Aufrufe, die Anzahl der Aufrufe steigt täglich um{' '}
-            {data.growthA.toLocaleString('de-De')}&nbsp;%.
+            {pp(data.growthA)}&nbsp;%.
           </p>
           <p className="serlo-main-task">
             &quot;{data.nameB}&quot; hatte am ersten Tag {data.startB}
             &nbsp;Aufrufe, die Anzahl der Aufrufe steigt täglich um{' '}
-            {data.growthB.toLocaleString('de-De')}&nbsp;%.
+            {pp(data.growthB)}&nbsp;%.
           </p>
           <p className="serlo-main-task">
             Begründen Sie ohne Rechnung, dass{' '}

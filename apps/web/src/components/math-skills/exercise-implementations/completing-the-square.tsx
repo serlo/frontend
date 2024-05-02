@@ -9,6 +9,7 @@ import {
   HighlightGray,
 } from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -67,17 +68,15 @@ export function CompletingTheSquare() {
             <br />
             <HighlightGray>
               y = x<sup>2</sup> {isPlus ? '+' : '-'} 2 ·{' '}
-              <strong>{(b / 2).toLocaleString('de-De')}</strong> · x{' '}
-              {isPlus_2 ? '+' : '-'} {c}
+              <strong>{pp(b / 2)}</strong> · x {isPlus_2 ? '+' : '-'} {c}
             </HighlightGray>
             <br />
             <br />
             Setze ein in das Binom:
             <br />
             <HighlightGray>
-              y = (x {isPlus ? '+' : '-'}{' '}
-              <strong>{(b / 2).toLocaleString('de-De')}</strong>)<sup>2</sup> +
-              ☐
+              y = (x {isPlus ? '+' : '-'} <strong>{pp(b / 2)}</strong>)
+              <sup>2</sup> + ☐
             </HighlightGray>
             <br />
             <br />
@@ -105,8 +104,8 @@ export function CompletingTheSquare() {
               <br />
               Damit lautet die richtige Scheitelform: <br />
               <HighlightGreen>
-                y = (x {isPlus ? '+' : '-'}{' '}
-                <strong>{(b / 2).toLocaleString('de-De')}</strong>)<sup>2</sup>
+                y = (x {isPlus ? '+' : '-'} <strong>{pp(b / 2)}</strong>)
+                <sup>2</sup>
               </HighlightGreen>
             </>
           )
@@ -139,7 +138,7 @@ export function CompletingTheSquare() {
             Damit lautet die Scheitelform: <br />
             <HighlightGreen>
               y = <span className="inline-block scale-y-[1.5]">(</span>x{' '}
-              {isPlus ? '+' : '-'} {(b / 2).toString().replace('.', ',')}
+              {isPlus ? '+' : '-'} {pp(b / 2)}
               <span className="inline-block scale-y-[1.5]">)</span>
               <sup>2</sup> <strong>{dAlsJsx}</strong>
             </HighlightGreen>

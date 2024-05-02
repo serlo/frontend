@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { MainTask, HighlightGray } from '../components/content-components'
 import { buildBlock, buildFrac, buildOverline } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -51,9 +52,7 @@ export function Trigonometry1() {
               Es gilt |{buildOverline(data.otherRay ? 'SB' : 'SA')}| = {data.as}{' '}
               cm und |{buildOverline(data.otherRay ? 'BD' : 'AC')}| = {data.ac}{' '}
               cm <br /> sowie |{buildOverline(data.mode === 'cd' ? 'AB' : 'CD')}
-              | ={' '}
-              {(data.mode === 'cd' ? data.ab : data.cd).toLocaleString('de-De')}{' '}
-              cm.
+              | = {pp(data.mode === 'cd' ? data.ab : data.cd)} cm.
             </p>
             <SubComponent data={data} />
             <small className="mb-6 block">
@@ -85,10 +84,7 @@ export function Trigonometry1() {
                   <>{data.ab} cm</>
                 )}{' '}
                 ={' '}
-                {buildFrac(
-                  <>{data.as + data.ac} cm</>,
-                  <>{data.as.toLocaleString('de-De')} cm</>
-                )}
+                {buildFrac(<>{data.as + data.ac} cm</>, <>{pp(data.as)} cm</>)}
               </HighlightGray>
             ) : (
               buildBlock(
@@ -98,11 +94,11 @@ export function Trigonometry1() {
                     <>
                       |<span className="overline">AB</span>|
                     </>,
-                    <>{data.cd.toLocaleString('de-De')} cm</>
+                    <>{pp(data.cd)} cm</>
                   )}{' '}
                   ={' '}
                   {buildFrac(
-                    <>{data.as.toLocaleString('de-De')} cm</>,
+                    <>{pp(data.as)} cm</>,
                     <>{data.as + data.ac} cm</>
                   )}
                 </>
@@ -116,7 +112,7 @@ export function Trigonometry1() {
               <HighlightGray>
                 ⇔ |<span className="overline">CD</span>| ={' '}
                 {buildFrac(<>{data.as + data.ac} cm</>, <>{data.as} cm</>)} ·{' '}
-                {data.ab.toLocaleString('de-De')} cm
+                {pp(data.ab)} cm
               </HighlightGray>
             ) : (
               buildBlock(
@@ -124,7 +120,7 @@ export function Trigonometry1() {
                 <>
                   ⇔ |<span className="overline">CD</span>| ={' '}
                   {buildFrac(<>{data.as} cm</>, <>{data.as + data.ac} cm</>)} ·{' '}
-                  {data.cd.toLocaleString('de-De')} cm
+                  {pp(data.cd)} cm
                 </>
               )
             )}
@@ -230,27 +226,27 @@ function SubComponent({ data }: { data: Trig1Data }) {
     })
 
     if (data.otherRay) {
-      b.create('text', [0, 2, `${data.as.toLocaleString('de-De')} cm`], {})
+      b.create('text', [0, 2, `${pp(data.as)} cm`], {})
       setBoard(b)
 
-      b.create('text', [1.6, 3.8, `${data.ac.toLocaleString('de-De')} cm`], {})
+      b.create('text', [1.6, 3.8, `${pp(data.ac)} cm`], {})
       setBoard(b)
     } else {
-      b.create('text', [2, 0, `${data.as.toLocaleString('de-De')} cm`], {
+      b.create('text', [2, 0, `${pp(data.as)} cm`], {
         anchorX: 'middle',
         anchorY: 'top',
       })
-      b.create('text', [5.3, 0, `${data.ac.toLocaleString('de-De')} cm`], {
+      b.create('text', [5.3, 0, `${pp(data.ac)} cm`], {
         anchorX: 'middle',
         anchorY: 'top',
       })
     }
 
     if (data.mode === 'cd') {
-      b.create('text', [2.8, 2, `${data.ab.toLocaleString('de-De')} cm`], {})
+      b.create('text', [2.8, 2, `${pp(data.ab)} cm`], {})
       setBoard(b)
     } else {
-      b.create('text', [4.6, 2.4, `${data.cd.toLocaleString('de-De')} cm`], {})
+      b.create('text', [4.6, 2.4, `${pp(data.cd)} cm`], {})
       setBoard(b)
     }
 

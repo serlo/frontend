@@ -4,6 +4,7 @@ import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { autoResizeBoundingBox } from '../utils/auto-resize-bounding-box'
 import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
 import { buildMat2, buildVec2 } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 
 interface DATA {
@@ -25,9 +26,8 @@ export function MirrorLineThroughOrigin() {
         <>
           <p className="serlo-main-task">
             Der Punkt P( {x} | {y} ) wird durch Spiegelung an der Achse s mit
-            y&nbsp;=&nbsp;{factor.toLocaleString('de-De')}x abgebildet.
-            Berechnen Sie die Koordinaten von P&apos;. Runden Sie auf 2 Stellen
-            nach dem Komma.
+            y&nbsp;=&nbsp;{pp(factor)}x abgebildet. Berechnen Sie die
+            Koordinaten von P&apos;. Runden Sie auf 2 Stellen nach dem Komma.
           </p>
         </>
       )}
@@ -49,32 +49,29 @@ export function MirrorLineThroughOrigin() {
           <>
             <p>Bereche das Maß ⍺ mit Hilfe der Steigung m:</p>
             <p className="serlo-highlight-gray">
-              m = {factor.toLocaleString('de-De')} &nbsp;&nbsp;&nbsp;&nbsp; tan
-              ⍺ = {factor.toLocaleString('de-De')}
+              m = {pp(factor)} &nbsp;&nbsp;&nbsp;&nbsp; tan ⍺ = {pp(factor)}
               <br />
-              <br />⍺ = {alpha.toLocaleString('de-De')}°
+              <br />⍺ = {pp(alpha)}°
             </p>
             <p>Berechne die Hilfswerte cos 2⍺ und sin 2⍺:</p>
             <p className="serlo-highlight-gray">
-              cos 2⍺ = {cos2alpha.toLocaleString('de-De')}
-              &nbsp;&nbsp;&nbsp;&nbsp; sin 2⍺ ={' '}
-              {sin2alpha.toLocaleString('de-De')}
+              cos 2⍺ = {pp(cos2alpha)}
+              &nbsp;&nbsp;&nbsp;&nbsp; sin 2⍺ = {pp(sin2alpha)}
             </p>
             <p>Notiere die Abbildungsgleichung:</p>
             <p className="serlo-highlight-gray">
               {buildVec2("x'", "y'")} ={' '}
               {buildMat2(
-                cos2alpha.toLocaleString('de-De'),
-                sin2alpha.toLocaleString('de-De'),
-                sin2alpha.toLocaleString('de-De'),
-                (-cos2alpha).toLocaleString('de-De')
+                pp(cos2alpha),
+                pp(sin2alpha),
+                pp(sin2alpha),
+                pp(-cos2alpha)
               )}{' '}
               ⊙ {buildVec2(x, y)}
             </p>
             <p>Berechne das Ergebnis:</p>
             <p className="serlo-highlight-green">
-              P&apos;( {solX.toLocaleString('de-De')} |{' '}
-              {solY.toLocaleString('de-De')} )
+              P&apos;( {pp(solX)} | {pp(solY)} )
             </p>
             <p className="mt-8">
               Skizze zur Veranschaulichung (nicht Teil der Aufgabenstellung)

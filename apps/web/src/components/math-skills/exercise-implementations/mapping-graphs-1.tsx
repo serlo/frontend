@@ -9,6 +9,7 @@ import {
 } from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -160,8 +161,7 @@ export function AbbildungGraphen() {
               Der Graph der Funktion <i>f</i>
               <br />
               <span className="my-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-                y = {data.Anfangswert} ·{' '}
-                {data.Faktor.toString().replace('.', ',')}
+                y = {data.Anfangswert} · {pp(data.Faktor)}
                 <sup>x</sup>
                 {data.exp_offset > 0 ? '+ ' + data.exp_offset : null}
                 {data.exp_offset === 0 ? null : null}{' '}
@@ -329,8 +329,7 @@ export function AbbildungGraphen() {
                 Der Funktionsterm von <i>g</i> lautet:
                 <br />
                 <span className="my-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-                  y = {data.Anfangswert} ·{' '}
-                  {data.Faktor.toString().replace('.', ',')}
+                  y = {data.Anfangswert} · {pp(data.Faktor)}
                   <sup>
                     x {data.x_dir === 'links' ? ' + ' + data.x_offset : null}
                     {data.x_dir === 'rechts' ? ' - ' + data.x_offset : null}
@@ -346,8 +345,7 @@ export function AbbildungGraphen() {
                 Zusammengefasst:
                 <br />
                 <span className="my-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-                  y = {data.Anfangswert} ·{' '}
-                  {data.Faktor.toString().replace('.', ',')}
+                  y = {data.Anfangswert} · {pp(data.Faktor)}
                   <sup>
                     x {data.x_dir === 'links' ? ' + ' + data.x_offset : null}
                     {data.x_dir === 'rechts' ? ' - ' + data.x_offset : null}
@@ -375,8 +373,7 @@ export function AbbildungGraphen() {
               Der Funktionsterm von <i>g</i> lautet:
               <br />
               <span className="my-3 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-                y = {data.Anfangswert} ·{' '}
-                {data.Faktor.toString().replace('.', ',')}
+                y = {data.Anfangswert} · {pp(data.Faktor)}
                 <sup>
                   x {data.x_dir === 'links' ? ' + ' + data.x_offset : null}
                   {data.x_dir === 'rechts' ? ' - ' + data.x_offset : null}

@@ -7,6 +7,7 @@ import {
   buildVec,
   buildVec2,
 } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -67,8 +68,8 @@ export function Parallelogram2() {
                   AB<sub>1</sub>
                 </>
               )}{' '}
-              hat die {data.coord}-Koordinate {data.val.toLocaleString('de-De')}
-              . Berechnen Sie das zugehörige Winkelmaß {phi}.
+              hat die {data.coord}-Koordinate {pp(data.val)}. Berechnen Sie das
+              zugehörige Winkelmaß {phi}.
             </p>
           </>
         )
@@ -83,7 +84,7 @@ export function Parallelogram2() {
               {data.need_Sqr && <sup>2</sup>} {phi} = {data.val}
               <br />⇔ {data.func}
               {data.need_Sqr && <sup>2</sup>} {phi} ={' '}
-              {(data.val / data.factor).toLocaleString('de-De')}
+              {pp(data.val / data.factor)}
               {data.need_Sqr && (
                 <>
                   <br />⇔ {data.func} {phi} = {buildSqrt('0,5')} ={' '}

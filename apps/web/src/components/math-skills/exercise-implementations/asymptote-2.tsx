@@ -8,6 +8,7 @@ import {
   MainTask,
 } from '../components/content-components'
 import { buildLatex } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -41,9 +42,8 @@ export function Asymptote2() {
               Funktion mit x, y {buildLatex('\\in \\R')}:
             </MainTask>
             <p className="serlo-highlight-gray">
-              y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
-              {data.a === -1 ? null : '·'}{' '}
-              {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
+              y = {data.a === -1 ? '-' : pp(data.a)}{' '}
+              {data.a === -1 ? null : '·'} {data.b === 2.718 ? 'e' : pp(data.b)}
               <sup>x</sup> {data.c > 0 ? '+' : data.c < 0 ? '-' : null}{' '}
               {data.c !== 0 ? data.c : null}
             </p>
