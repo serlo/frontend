@@ -1014,7 +1014,6 @@ export const loggedInData = {
         author: "எழுத்தாளர்",
         createdAt: 'when?',
         ready: "சேமிக்கத் தயாரா?",
-        anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.',
         pluginCopyInfo: 'You can now paste this plugin into text plugins',
         pluginCopyButtonLabel: 'Copy plugin to clipboard'
       },
