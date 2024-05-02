@@ -1014,7 +1014,6 @@ export const loggedInData = {
         author: "Autor",
         createdAt: "¿Cuándo?",
         ready: "¿Listo para guardar?",
-        anchorLinkWarning: "Este enlace sólo funcionará en el frontend y para contenidos que tengan una revisión algo nueva.",
         pluginCopyInfo: "Ahora puedes pegar este plugin en plugins de texto",
         pluginCopyButtonLabel: "Copiar plugin al portapapeles"
       },
