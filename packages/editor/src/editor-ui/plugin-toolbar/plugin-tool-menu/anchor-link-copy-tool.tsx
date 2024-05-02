@@ -17,6 +17,7 @@ export function AnchorLinkCopyTool({
   const editorStrings = useEditorStrings()
   const { strings } = useInstanceData()
 
+  // only on "/add-revision/…" is a simple way to only show the tool on serlo.org and when we have a uuid
   if (!navigator.clipboard || !window.location.href.includes('add-revision')) {
     return null
   }
