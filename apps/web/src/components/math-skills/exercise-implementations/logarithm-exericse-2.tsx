@@ -33,7 +33,7 @@ export function LogarithmExercise2() {
         if (breaker) {
           return (
             <>
-              <p> Forme um mit den Logarithmusgesetzen:</p>
+              <p>Forme um mit den Logarithmusgesetzen:</p>
               <p className="serlo-highlight-gray">
                 log&#8202;<sub>{logBase}</sub>
                 <span className="inline-block scale-y-[2.5]">(</span>

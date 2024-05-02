@@ -213,13 +213,13 @@ function Solution({ data }: { data: DATA }) {
     const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
     return (
       <>
-        <p> Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
+        <p>Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
         <p className="serlo-highlight-gray">V = r² · π · h</p>
-        <p> Setze die Angaben in die Gleichung ein:</p>
+        <p>Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
           V = ({data.M} cm)² · π · {data.h} cm
         </p>
-        <p> Berechne das Ergebnis:</p>
+        <p>Berechne das Ergebnis:</p>
         <p className="serlo-highlight-gray">
           V = {Math.pow(data.M, 2)} cm² · π · {data.h} cm
         </p>{' '}
@@ -232,9 +232,9 @@ function Solution({ data }: { data: DATA }) {
     const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
     return (
       <>
-        <p> Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
+        <p>Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
         <p className="serlo-highlight-gray">V = r² · π · h</p>
-        <p> Setze die Angaben in die Gleichung ein:</p>
+        <p>Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
           {result} cm³ = ({data.M} cm)² · π · h
         </p>
@@ -251,9 +251,9 @@ function Solution({ data }: { data: DATA }) {
     const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
     return (
       <>
-        <p> Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
+        <p>Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
         <p className="serlo-highlight-gray">V = r² · π · h</p>
-        <p> Setze die Angaben in die Gleichung ein:</p>
+        <p>Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
           {result} cm³ = r² · π · {data.h} cm
         </p>
@@ -276,9 +276,9 @@ function Solution({ data }: { data: DATA }) {
       <>
         <p>Stelle die Gleichung für den Oberflächeninhalt auf:</p>
         <p className="serlo-highlight-gray">O = 2 · r · π · (r + h)</p>
-        <p> Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
+        <p>Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
         <p className="serlo-highlight-gray">V = r² · π · h</p>
-        <p> Setze die Angaben in die Gleichung ein:</p>
+        <p>Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
           {result} cm³ = ({data.M} cm)² · π · h
         </p>

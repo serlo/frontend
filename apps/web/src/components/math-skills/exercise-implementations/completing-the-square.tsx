@@ -42,30 +42,29 @@ export function CompletingTheSquare() {
 
         const intro = (
           <>
-            Die Scheitelform der Funktion hat diese Form:
-            <br />
+            <p>Die Scheitelform der Funktion hat diese Form:</p>
             <p className="serlo-highlight-gray">
               y = (x - ☐)<sup>2</sup> + ☐
             </p>
             <br />
             <br />
-            Nutze die quadratische Ergänzung und bestimme die passenden Werte in
-            den Kästchen.
-            <br />
+            <p>
+              Nutze die quadratische Ergänzung und bestimme die passenden Werte
+              in den Kästchen.
+            </p>
             <br />
             <p className="serlo-main-task">Wert im ersten Kästchen</p>
-            <br />
-            Denke dir den mittleren Summand, wie er als Mischterm in der
-            binomischen Formel erwartet wird:
-            <br />
+            <p>
+              Denke dir den mittleren Summand, wie er als Mischterm in der
+              binomischen Formel erwartet wird:
+            </p>
             <p className="serlo-highlight-gray">
               y = x<sup>2</sup> {isPlus ? '+' : '-'} 2 ·{' '}
               <strong>{pp(b / 2)}</strong> · x {isPlus_2 ? '+' : '-'} {c}
             </p>
             <br />
             <br />
-            Setze ein in das Binom:
-            <br />
+            <p>Setze ein in das Binom:</p>
             <p className="serlo-highlight-gray">
               y = (x {isPlus ? '+' : '-'} <strong>{pp(b / 2)}</strong>)
               <sup>2</sup> + ☐
@@ -79,10 +78,10 @@ export function CompletingTheSquare() {
             <>
               {intro}
               <p className="serlo-main-task">Wert im zweiten Kästchen</p>
-              <br />
-              Würden wir das Binom wieder ausschreiben, erhalten wir bereits den
-              richtigen Funktionsterm wieder:
-              <br />
+              <p>
+                Würden wir das Binom wieder ausschreiben, erhalten wir bereits
+                den richtigen Funktionsterm wieder:
+              </p>
               <p className="serlo-highlight-gray">
                 y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x{' '}
                 {isPlus_2 ? '+' : '-'}
@@ -105,29 +104,29 @@ export function CompletingTheSquare() {
           <>
             {intro}
             <p className="serlo-main-task">Wert im zweiten Kästchen</p>
-            <br />
-            Würden wir das Binom so stehen lassen, wäre der Term am Ende nicht
-            immer der gleiche wie im ursprünglichen Funktionsterm:
-            <br />
+            <p>
+              Würden wir das Binom so stehen lassen, wäre der Term am Ende nicht
+              immer der gleiche wie im ursprünglichen Funktionsterm:
+            </p>
             <p className="serlo-highlight-gray">
               y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x + {(b / 2) * (b / 2)}{' '}
               + ☐
             </p>
-            <br />
-            Korrigiere mit dem richtigen Wert, damit am Ende{' '}
-            <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
-              {isPlus_2 ? '+' : '-'}
-              {c}
-            </span>{' '}
-            steht:
-            <br />
+            <p>
+              Korrigiere mit dem richtigen Wert, damit am Ende{' '}
+              <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
+                {isPlus_2 ? '+' : '-'}
+                {c}
+              </span>{' '}
+              steht:
+            </p>
             <p className="serlo-highlight-gray">
               y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x + {(b / 2) * (b / 2)}{' '}
               <strong>{dAlsJsx}</strong>{' '}
             </p>
             <br />
             <br />
-            Damit lautet die Scheitelform: <br />
+            <p>Damit lautet die Scheitelform: </p>
             <p className="serlo-highlight-green">
               y = <span className="inline-block scale-y-[1.5]">(</span>x{' '}
               {isPlus ? '+' : '-'} {pp(b / 2)}
