@@ -1,18 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import JXG from 'jsxgraph'
-import { useEffect, useState } from 'react'
-
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import {
-  MainTask,
-  HighlightGreen,
-  HighlightGray,
-} from '../components/content-components'
-import { buildFrac } from '../utils/math-builder'
+import { HighlightGreen, HighlightGray } from '../components/content-components'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
-import { randomItemFromArray } from '@/helper/random-item-from-array'
-
-// JXG.Options.label.autoPosition = true
 
 export function ParabolaCharacteristics() {
   return (
@@ -30,15 +19,17 @@ export function ParabolaCharacteristics() {
         const p_2_y = (p_2_x - n_1) * (p_2_x - n_2)
         return (
           <>
-            <MainTask>Bestimme die Parameter b und c der Parabel:</MainTask>
-            <HighlightGreen>
+            <p className="serlo-main-task">
+              Bestimmen Sie die Parameter b und c der Parabel:
+            </p>
+            <p className="serlo-highlight-gray">
               y = x<sup>2</sup> + bx + c
-            </HighlightGreen>
+            </p>
             <br />
-            Der Graph der Funktion verläuft durch die Punkte:{' '}
-            <HighlightGreen>
-              P({p_1_x}|{p_1_y}), Q({p_2_x}|{p_2_y})
-            </HighlightGreen>{' '}
+            <p className="serlo-main-task">
+              Der Graph der Funktion verläuft durch die Punkte P( {pp(p_1_x)} |{' '}
+              {pp(p_1_y)} ) und Q( {pp(p_2_x)} | {pp(p_2_y)} ).
+            </p>
           </>
         )
       }}

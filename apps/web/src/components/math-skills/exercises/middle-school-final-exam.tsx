@@ -407,6 +407,13 @@ export const middleSchoolFinalExam = {
     track: 3,
     component: <PlaceholderExercise />,
   },
+  'parabolas-by-characteristics': {
+    title: 'Parabel aus Punkten bestimmen 🚧',
+    subtitle: 'Quadratische Funktionen',
+    calculatorAllowed: true,
+    track: 2,
+    component: <ParabolaCharacteristics />,
+  },
   'baumdiagramm-zeichnen': {
     title: 'Baumdiagramm zeichnen',
     subtitle: 'Daten und Zufall',
@@ -466,13 +473,6 @@ export const middleSchoolFinalExam = {
     calculatorAllowed: true,
     track: 1,
     component: <AbbildungGraphen2 />,
-  },
-  'parabolas-by-characteristics': {
-    title: 'Parabel aus Punkten bestimmen 🚧',
-    subtitle: 'Quadratische Funktionen',
-    calculatorAllowed: true,
-    track: 2,
-    component: <ParabolaCharacteristics />,
   },
   /*'volumen-pyramide-2': {
     title: 'Volumen einer Pyramide',
