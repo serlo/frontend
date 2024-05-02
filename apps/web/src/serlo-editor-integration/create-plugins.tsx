@@ -145,7 +145,7 @@ export function createPlugins({
     {
       type: EditorPluginType.Anchor,
       plugin: anchorPlugin,
-      visibleInSuggestions: true,
+      visibleInSuggestions: false,
     },
     {
       type: EditorPluginType.PasteHack,
