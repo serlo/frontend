@@ -1,8 +1,5 @@
-import { useState, useEffect } from 'react'
-
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
-import { buildBlock } from '../utils/math-builder'
+import { buildBlock, buildJSX } from '../utils/math-builder'
 import { pp } from '../utils/pretty-print'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -76,7 +73,7 @@ export function DescribeGraphPowerFunction() {
             <p className="mt-8 italic">
               Skizze (nicht Teil der Aufgabenstellung):
             </p>
-            <SubComponent data={data} />
+            {renderDiagram(data)}
           </>
         )
         if (data.n === 1) {
@@ -182,49 +179,42 @@ export function DescribeGraphPowerFunction() {
   )
 }
 
-function SubComponent({ data }: { data: DATA }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
-  useEffect(() => {
-    const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox: [-5, 5, 5, -5],
-      showNavigation: false,
-      showCopyright: false,
-      axis: true,
-    })
-
-    b.create('functiongraph', [
-      function (x: number) {
-        return data.k * Math.pow(x + (data.c ?? 0), data.n) + (data.d ?? 0)
-      },
-      -5,
-      5,
-    ])
-
-    if (data.n !== 1 && data.n !== 2) {
-      b.create('text', [4.3, 4, 'I.'], {})
-      b.create('text', [-4.7, 4, 'II.'], {})
-      b.create('text', [4.3, -4, 'IV.'], {})
-      b.create('text', [-4.7, -4, 'III.'], {})
-    }
-
-    if (data.n === 2) {
-      b.create('point', [-(data.c ?? 0), data.d ?? 0], {
-        name: 'S',
-        fixed: true,
-        label: { autoPosition: true },
+function renderDiagram(data: DATA) {
+  return buildJSX(
+    () => {
+      const b = JXG.JSXGraph.initBoard('jxgbox', {
+        boundingbox: [-5, 5, 5, -5],
+        showNavigation: false,
+        showCopyright: false,
+        axis: true,
       })
-    }
 
-    setBoard(b)
+      b.create('functiongraph', [
+        function (x: number) {
+          return data.k * Math.pow(x + (data.c ?? 0), data.n) + (data.d ?? 0)
+        },
+        -5,
+        5,
+      ])
 
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
+      if (data.n !== 1 && data.n !== 2) {
+        b.create('text', [4.3, 4, 'I.'], {})
+        b.create('text', [-4.7, 4, 'II.'], {})
+        b.create('text', [4.3, -4, 'IV.'], {})
+        b.create('text', [-4.7, -4, 'III.'], {})
+      }
 
-  return <JSXGraphWrapper id="jxgbox" width={300} height={300} />
+      if (data.n === 2) {
+        b.create('point', [-(data.c ?? 0), data.d ?? 0], {
+          name: 'S',
+          fixed: true,
+          label: { autoPosition: true },
+        })
+      }
+
+      return b
+    },
+    'jsxbox',
+    data
+  )
 }

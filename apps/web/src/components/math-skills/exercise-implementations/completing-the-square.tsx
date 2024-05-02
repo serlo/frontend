@@ -13,8 +13,6 @@ import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
-// JXG.Options.label.autoPosition = true
-
 export function CompletingTheSquare() {
   return (
     <SelfEvaluationExercise

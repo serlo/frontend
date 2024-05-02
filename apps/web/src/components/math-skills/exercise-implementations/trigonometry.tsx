@@ -1,5 +1,4 @@
 import JXG from 'jsxgraph'
-import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import {
@@ -7,11 +6,9 @@ import {
   HighlightGray,
   HighlightGreen,
 } from '../components/content-components'
-import { buildSqrt } from '../utils/math-builder'
+import { buildJSX, buildSqrt } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
-
-// JXG.Options.label.autoPosition = true
 
 interface Trig1Data {
   as: number
@@ -47,7 +44,7 @@ export function Trigonometry() {
               Gegeben ist das Dreieck{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">ABS</b>.
             </MainTask>
-            <SubComponent data={data} />
+            {renderDiagram(data)}
             <small className="mb-6 block">
               Skizze ist nicht maßstabsgetreu
             </small>
@@ -122,82 +119,55 @@ export function Trigonometry() {
   )
 }
 
-function SubComponent({ data }: { data: Trig1Data }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
+function renderDiagram(data: Trig1Data) {
+  return buildJSX(
+    () => {
+      const b = JXG.JSXGraph.initBoard('jxgbox', {
+        boundingbox: [-2, 6, 7, -2],
+        showNavigation: false,
+        showCopyright: false,
+      })
 
-  useEffect(() => {
-    const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox: [-2, 6, 7, -2],
-      showNavigation: false,
-      showCopyright: false,
-    })
+      const pointS = b.create('point', [-0.5, 0], {
+        name: 'S',
+        fixed: true,
+        label: { autoPosition: true },
+      })
+      const pointA = b.create('point', [5.5, 0], { name: 'A', fixed: true })
+      const pointB = b.create('point', [2.1, 4.2], {
+        name: 'B',
+        fixed: true,
+      })
 
-    const pointS = b.create('point', [-0.5, 0], {
-      name: 'S',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    const pointA = b.create('point', [5.5, 0], { name: 'A', fixed: true })
-    const pointB = b.create('point', [2.1, 4.2], {
-      name: 'B',
-      fixed: true,
-    })
+      b.create('line', [pointA, pointB], {
+        straightFirst: false,
+        straightLast: false,
+      })
 
-    b.create('line', [pointA, pointB], {
-      straightFirst: false,
-      straightLast: false,
-    })
+      b.create('line', [pointS, pointB], {
+        straightFirst: false,
+        straightLast: false,
+      })
+      b.create('line', [pointS, pointA], {
+        straightFirst: false,
+        straightLast: false,
+      })
 
-    b.create('line', [pointS, pointB], {
-      straightFirst: false,
-      straightLast: false,
-    })
-    b.create('line', [pointS, pointA], {
-      straightFirst: false,
-      straightLast: false,
-    })
+      b.create('angle', [pointB, pointA, pointS], {
+        name: function () {
+          return `${data.angle}°`
+        },
+      })
 
-    b.create('angle', [pointB, pointA, pointS], {
-      name: function () {
-        return `${data.angle}°`
-      },
-    })
+      b.create('text', [2.5, 0, `${data.as} cm`], {
+        anchorX: 'middle',
+        anchorY: 'top',
+      })
 
-    b.create('text', [2.5, 0, `${data.as} cm`], {
-      anchorX: 'middle',
-      anchorY: 'top',
-    })
-
-    b.create('text', [4.2, 2.5, `${data.ab} cm`], {})
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
+      b.create('text', [4.2, 2.5, `${data.ab} cm`], {})
+      return b
+    },
+    'jxgbox',
+    data
   )
 }

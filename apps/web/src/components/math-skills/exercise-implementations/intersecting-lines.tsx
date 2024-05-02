@@ -1,8 +1,5 @@
-import { useState, useEffect } from 'react'
-
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
-import { buildFrac, buildOverline } from '../utils/math-builder'
+import { buildFrac, buildJSX, buildOverline } from '../utils/math-builder'
 import { pp } from '../utils/pretty-print'
 import { roundToDigits } from '../utils/round-to-digits'
 import { randomIntBetween } from '@/helper/random-int-between'
@@ -88,7 +85,7 @@ export function IntersectingLines() {
             und |{buildOverline(data.given_elements[2])}| ={' '}
             {pp(Math.round(data.lengths[data.given_elements[2]] * 10) / 10)} cm.
           </p>
-          <SubComponent data={data} />
+          {renderDiagram(data)}
           <p className="serlo-main-task">
             Berechnen Sie die Länge der Strecke{' '}
             {buildOverline(data.goal_element)}.
@@ -279,102 +276,97 @@ export function IntersectingLines() {
   )
 }
 
-function SubComponent({ data }: { data: DATA }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
+function renderDiagram(data: DATA) {
+  return buildJSX(
+    () => {
+      const a_dx = 4 / Math.sqrt(17)
+      const a_dy = -1 / Math.sqrt(17)
+      const b_dx = 3 / Math.sqrt(10)
+      const b_dy = 1 / Math.sqrt(10)
 
-  useEffect(() => {
-    const a_dx = 4 / Math.sqrt(17)
-    const a_dy = -1 / Math.sqrt(17)
-    const b_dx = 3 / Math.sqrt(10)
-    const b_dy = 1 / Math.sqrt(10)
+      const len_a = 3
+      const len_b = len_a * data.graph_f
+      const len_c = len_a * data.graph_k
+      const len_d = len_b * data.graph_k
 
-    const len_a = 3
-    const len_b = len_a * data.graph_f
-    const len_c = len_a * data.graph_k
-    const len_d = len_b * data.graph_k
+      const width = Math.max(a_dx * len_c, b_dx * len_d)
+      const height = b_dy * len_d - a_dy * len_c
 
-    const width = Math.max(a_dx * len_c, b_dx * len_d)
-    const height = b_dy * len_d - a_dy * len_c
+      const adjustedWidth = Math.max(width, height * 1.5)
+      const adjustedHeight = adjustedWidth / 1.5
+      const base = a_dy * len_c
 
-    const adjustedWidth = Math.max(width, height * 1.5)
-    const adjustedHeight = adjustedWidth / 1.5
-    const base = a_dy * len_c
+      const b = JXG.JSXGraph.initBoard('jxgbox', {
+        boundingbox: [
+          -adjustedWidth * 0.2,
+          base + adjustedHeight * 1.2,
+          1.2 * adjustedWidth,
+          base - adjustedHeight * 0.2,
+        ],
+        showNavigation: false,
+        showCopyright: false,
+      })
 
-    const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox: [
-        -adjustedWidth * 0.2,
-        base + adjustedHeight * 1.2,
-        1.2 * adjustedWidth,
-        base - adjustedHeight * 0.2,
-      ],
-      showNavigation: false,
-      showCopyright: false,
-    })
+      const pointZ = b.create('point', [0, 0], {
+        name: 'Z',
+        fixed: true,
+        label: { autoPosition: true },
+      })
 
-    const pointZ = b.create('point', [0, 0], {
-      name: 'Z',
-      fixed: true,
-      label: { autoPosition: true },
-    })
+      const pointA = b.create('point', [a_dx * len_a, a_dy * len_a], {
+        name: 'A',
+        fixed: true,
+        label: { autoPosition: true },
+      })
 
-    const pointA = b.create('point', [a_dx * len_a, a_dy * len_a], {
-      name: 'A',
-      fixed: true,
-      label: { autoPosition: true },
-    })
+      const pointC = b.create('point', [a_dx * len_c, a_dy * len_c], {
+        name: 'C',
+        fixed: true,
+        label: { autoPosition: true },
+      })
 
-    const pointC = b.create('point', [a_dx * len_c, a_dy * len_c], {
-      name: 'C',
-      fixed: true,
-      label: { autoPosition: true },
-    })
+      const pointB = b.create('point', [b_dx * len_b, b_dy * len_b], {
+        name: 'B',
+        fixed: true,
+        label: { autoPosition: true },
+      })
 
-    const pointB = b.create('point', [b_dx * len_b, b_dy * len_b], {
-      name: 'B',
-      fixed: true,
-      label: { autoPosition: true },
-    })
+      const pointD = b.create('point', [b_dx * len_d, b_dy * len_d], {
+        name: 'D',
+        fixed: true,
+        label: { autoPosition: true },
+      })
 
-    const pointD = b.create('point', [b_dx * len_d, b_dy * len_d], {
-      name: 'D',
-      fixed: true,
-      label: { autoPosition: true },
-    })
+      b.create('line', [pointZ, pointA])
+      b.create('line', [pointZ, pointB])
 
-    b.create('line', [pointZ, pointA])
-    b.create('line', [pointZ, pointB])
+      b.create('line', [pointA, pointB])
+      b.create('line', [pointC, pointD])
 
-    b.create('line', [pointA, pointB])
-    b.create('line', [pointC, pointD])
+      const [start, end] = data.goal_element.split('')
 
-    const [start, end] = data.goal_element.split('')
-
-    function pTop(p: string) {
-      switch (p) {
-        case 'A':
-          return pointA
-        case 'B':
-          return pointB
-        case 'C':
-          return pointC
-        case 'D':
-          return pointD
-        case 'Z':
-          return pointZ
+      function pTop(p: string) {
+        switch (p) {
+          case 'A':
+            return pointA
+          case 'B':
+            return pointB
+          case 'C':
+            return pointC
+          case 'D':
+            return pointD
+          case 'Z':
+            return pointZ
+        }
+        return pointA
       }
-      return pointA
-    }
-    b.create('segment', [pTop(start), pTop(end)], { color: 'rgb(47 206 177)' })
+      b.create('segment', [pTop(start), pTop(end)], {
+        color: 'rgb(47 206 177)',
+      })
 
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return <JSXGraphWrapper id="jxgbox" height={300} width={450} />
+      return b
+    },
+    'jxgbox',
+    { height: 300, width: 450 }
+  )
 }

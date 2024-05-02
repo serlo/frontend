@@ -1,8 +1,5 @@
-import { useState, useEffect } from 'react'
-
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
-import { buildFrac, buildSqrt } from '../utils/math-builder'
+import { buildFrac, buildJSX, buildSqrt } from '../utils/math-builder'
 import { pp } from '../utils/pretty-print'
 import { roundToDigits } from '../utils/round-to-digits'
 import { randomIntBetween } from '@/helper/random-int-between'
@@ -180,7 +177,7 @@ export function RightTriangle() {
             {data.given_2_element} ={' '}
             {printValue(data.given_2_element, data.given_2_value)}
           </p>
-          <SubComponent data={data} />
+          {renderDiagram(data)}
           <p className="serlo-main-task">
             Berechnen Sie die Größe{' '}
             <strong className="text-newgreen">{data.goal_element}</strong>.
@@ -288,11 +285,7 @@ export function RightTriangle() {
     />
   )
 }
-function SubComponent({ data }: { data: DATA }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
+function renderDiagram(data: DATA) {
   function shouldShow(el: Element) {
     return (
       data.given_1_element === el ||
@@ -300,101 +293,97 @@ function SubComponent({ data }: { data: DATA }) {
       data.goal_element === el
     )
   }
+  return buildJSX(
+    () => {
+      const h = Math.tan(data.g_alpha_rad)
+      const dim = Math.max(h, 1)
 
-  useEffect(() => {
-    const h = Math.tan(data.g_alpha_rad)
-    const dim = Math.max(h, 1)
+      const b = JXG.JSXGraph.initBoard('jxgbox', {
+        boundingbox: [-0.2 * dim, dim + 0.2 * dim, dim + 0.2 * dim, -0.3 * dim],
+        showNavigation: false,
+        showCopyright: false,
+      })
 
-    const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox: [-0.2 * dim, dim + 0.2 * dim, dim + 0.2 * dim, -0.3 * dim],
-      showNavigation: false,
-      showCopyright: false,
-    })
+      const pointA = b.create('point', [1, 0], {
+        name: 'A',
+        fixed: true,
+        label: { autoPosition: true },
+      })
 
-    const pointA = b.create('point', [1, 0], {
-      name: 'A',
-      fixed: true,
-      label: { autoPosition: true },
-    })
+      const pointB = b.create('point', [0, h], {
+        name: 'B',
+        fixed: true,
+        label: { autoPosition: true },
+      })
 
-    const pointB = b.create('point', [0, h], {
-      name: 'B',
-      fixed: true,
-      label: { autoPosition: true },
-    })
+      const pointC = b.create('point', [0, 0], {
+        name: 'C',
+        fixed: true,
+        label: { autoPosition: true },
+      })
 
-    const pointC = b.create('point', [0, 0], {
-      name: 'C',
-      fixed: true,
-      label: { autoPosition: true },
-    })
+      const newgreen = 'rgb(47 206 177)'
 
-    const newgreen = 'rgb(47 206 177)'
-
-    b.create('segment', [pointA, pointB], {
-      name: 'c',
-      withLabel: shouldShow('c'),
-      label: {
-        autoPosition: true,
-        color: data.goal_element === 'c' ? newgreen : 'black',
-      },
-    })
-    b.create('segment', [pointA, pointC], {
-      name: 'b',
-      withLabel: shouldShow('b'),
-      label: {
-        autoPosition: true,
-        color: data.goal_element === 'b' ? newgreen : 'black',
-      },
-    })
-    b.create('segment', [pointC, pointB], {
-      name: 'a',
-      withLabel: shouldShow('a'),
-      label: {
-        autoPosition: true,
-        color: data.goal_element === 'a' ? newgreen : 'black',
-      },
-    })
-
-    if (shouldShow('⍺')) {
-      b.create('angle', [pointB, pointA, pointC], {
-        name: '⍺',
-        withLabel: true,
-        radius: 0.12 * dim,
+      b.create('segment', [pointA, pointB], {
+        name: 'c',
+        withLabel: shouldShow('c'),
         label: {
           autoPosition: true,
-          color: data.goal_element === '⍺' ? newgreen : 'black',
+          color: data.goal_element === 'c' ? newgreen : 'black',
         },
       })
-    }
-
-    if (shouldShow('β')) {
-      b.create('angle', [pointC, pointB, pointA], {
-        name: 'β',
-        withLabel: true,
-        radius: 0.12 * dim,
+      b.create('segment', [pointA, pointC], {
+        name: 'b',
+        withLabel: shouldShow('b'),
         label: {
           autoPosition: true,
-          color: data.goal_element === 'β' ? newgreen : 'black',
+          color: data.goal_element === 'b' ? newgreen : 'black',
         },
       })
-    }
+      b.create('segment', [pointC, pointB], {
+        name: 'a',
+        withLabel: shouldShow('a'),
+        label: {
+          autoPosition: true,
+          color: data.goal_element === 'a' ? newgreen : 'black',
+        },
+      })
 
-    b.create('angle', [pointA, pointC, pointB], {
-      name: 'γ',
-      withLabel: false,
-      radius: 0.08 * dim,
-      strokeColor: 'black',
-      fillColor: 'white',
-    })
+      if (shouldShow('⍺')) {
+        b.create('angle', [pointB, pointA, pointC], {
+          name: '⍺',
+          withLabel: true,
+          radius: 0.12 * dim,
+          label: {
+            autoPosition: true,
+            color: data.goal_element === '⍺' ? newgreen : 'black',
+          },
+        })
+      }
 
-    setBoard(b)
+      if (shouldShow('β')) {
+        b.create('angle', [pointC, pointB, pointA], {
+          name: 'β',
+          withLabel: true,
+          radius: 0.12 * dim,
+          label: {
+            autoPosition: true,
+            color: data.goal_element === 'β' ? newgreen : 'black',
+          },
+        })
+      }
 
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
+      b.create('angle', [pointA, pointC, pointB], {
+        name: 'γ',
+        withLabel: false,
+        radius: 0.08 * dim,
+        strokeColor: 'black',
+        fillColor: 'white',
+      })
 
-  return <JSXGraphWrapper id="jxgbox" width={300} height={300} />
+      return b
+    },
+    'jxgbox',
+    data
+  )
 }

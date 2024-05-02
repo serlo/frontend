@@ -1,9 +1,6 @@
-import { useState, useEffect } from 'react'
-
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { autoResizeBoundingBox } from '../utils/auto-resize-bounding-box'
-import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
-import { buildMat2, buildVec2 } from '../utils/math-builder'
+import { buildJSX, buildMat2, buildVec2 } from '../utils/math-builder'
 import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 
@@ -76,7 +73,7 @@ export function MirrorLineThroughOrigin() {
             <p className="mt-8">
               Skizze zur Veranschaulichung (nicht Teil der Aufgabenstellung)
             </p>
-            <SubComponent data={data} solX={solX} solY={solY} />
+            {renderDiagram(data, solX, solY)}
           </>
         )
       }}
@@ -84,60 +81,46 @@ export function MirrorLineThroughOrigin() {
   )
 }
 
-function SubComponent({
-  data,
-  solX,
-  solY,
-}: {
-  data: DATA
-  solX: number
-  solY: number
-}) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-  useEffect(() => {
-    const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox: autoResizeBoundingBox([
-        [data.x, data.y],
-        [solX, solY],
-        [0, 0],
-      ]),
-      showNavigation: false,
-      showCopyright: false,
-      axis: true,
-    })
+function renderDiagram(data: DATA, solX: number, solY: number) {
+  return buildJSX(
+    () => {
+      const b = JXG.JSXGraph.initBoard('jxgbox', {
+        boundingbox: autoResizeBoundingBox([
+          [data.x, data.y],
+          [solX, solY],
+          [0, 0],
+        ]),
+        showNavigation: false,
+        showCopyright: false,
+        axis: true,
+      })
 
-    b.create('point', [data.x, data.y], {
-      name: 'P',
-      fixed: true,
-      color: 'gray',
-      label: { autoPosition: true },
-    })
-    b.create('point', [solX, solY], {
-      name: "P'",
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    b.create(
-      'functiongraph',
-      [
-        function (x: number) {
-          return data.factor * x
-        },
-        -60,
-        60,
-      ],
-      { strokeWidth: 2 }
-    )
+      b.create('point', [data.x, data.y], {
+        name: 'P',
+        fixed: true,
+        color: 'gray',
+        label: { autoPosition: true },
+      })
+      b.create('point', [solX, solY], {
+        name: "P'",
+        fixed: true,
+        label: { autoPosition: true },
+      })
+      b.create(
+        'functiongraph',
+        [
+          function (x: number) {
+            return data.factor * x
+          },
+          -60,
+          60,
+        ],
+        { strokeWidth: 2 }
+      )
 
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return <JSXGraphWrapper id="jxgbox" width={300} height={300} />
+      return b
+    },
+    'jxgbox',
+    data
+  )
 }

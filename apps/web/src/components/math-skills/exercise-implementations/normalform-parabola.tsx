@@ -12,8 +12,6 @@ import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
-// JXG.Options.label.autoPosition = true
-
 export function NormalformParabola() {
   return (
     <SelfEvaluationExercise

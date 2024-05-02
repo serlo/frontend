@@ -12,8 +12,6 @@ import { randomIntBetween } from '@/helper/random-int-between'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
-// JXG.Options.label.autoPosition = true
-
 export function ABCFormular() {
   return (
     <SelfEvaluationExercise

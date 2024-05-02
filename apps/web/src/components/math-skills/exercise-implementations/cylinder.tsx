@@ -1,6 +1,5 @@
 import JXG from 'jsxgraph'
 import { pi } from 'mathjs'
-import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import {
@@ -8,7 +7,7 @@ import {
   //HighlightGray,
   //HighlightGreen,
 } from '../components/content-components'
-import { buildFrac, buildSqrt } from '../utils/math-builder'
+import { buildFrac, buildJSX, buildSqrt } from '../utils/math-builder'
 import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 
@@ -44,7 +43,7 @@ export function Cylinder() {
           <>
             <MainTask>Bei dem Zylinder sind folgende Größen gegeben:</MainTask>
             <Given data={data} />
-            <SubComponent data={data} />
+            {renderDiagram(data)}
             <small className="mb-6 block">
               Skizze ist nicht maßstabsgetreu
             </small>
@@ -335,148 +334,119 @@ function getX2(data: DATA) {
   }
 }
 
-function SubComponent({ data }: { data: DATA }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
+function renderDiagram(data: DATA) {
   const hi = data.h
   const hiMi = hi + 1
   const x2 = data.c1b
   const Mi = x2 / 2
+  return buildJSX(
+    () => {
+      const b = JXG.JSXGraph.initBoard('jxgbox', {
+        boundingbox: [-2, 6, 10, -2],
+        showNavigation: false,
+        showCopyright: false,
+      })
 
-  // const P2 = x2 + 0.14
+      const M = b.create('point', [Mi, 0], {
+        name: 'M',
+        fixed: true,
+        visible: true,
+        label: { autoPosition: true },
+      })
 
-  useEffect(() => {
-    const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox: [-2, 6, 10, -2],
-      showNavigation: false,
-      showCopyright: false,
-    })
+      const p1 = b.create('point', [() => getP1(data), 0], {
+        name: '',
+        fixed: true,
+        visible: false,
+        label: { autoPosition: true },
+      })
 
-    const M = b.create('point', [Mi, 0], {
-      name: 'M',
-      fixed: true,
-      visible: true,
-      label: { autoPosition: true },
-    })
+      const p2 = b.create('point', [() => getP1(data), hi], {
+        name: '',
+        fixed: true,
+        visible: false,
+        label: { autoPosition: true },
+      })
 
-    const p1 = b.create('point', [() => getP1(data), 0], {
-      name: '',
-      fixed: true,
-      visible: false,
-      label: { autoPosition: true },
-    })
+      const p3 = b.create('point', [() => getX2(data), 0], {
+        name: '',
+        fixed: true,
+        visible: false,
+        label: { autoPosition: true },
+      })
 
-    const p2 = b.create('point', [() => getP1(data), hi], {
-      name: '',
-      fixed: true,
-      visible: false,
-      label: { autoPosition: true },
-    })
+      const p4 = b.create('point', [() => getX2(data), hi], {
+        name: '',
+        fixed: true,
+        visible: false,
+        label: { autoPosition: true },
+      })
 
-    const p3 = b.create('point', [() => getX2(data), 0], {
-      name: '',
-      fixed: true,
-      visible: false,
-      label: { autoPosition: true },
-    })
+      b.create('line', [p1, p2], {
+        straightFirst: false,
+        straightLast: false,
+        strokeWidth: 2,
+      })
+      b.create('line', [p3, p4], {
+        straightFirst: false,
+        straightLast: false,
+        strokeWidth: 2,
+      })
+      b.create('line', [M, p3], {
+        straightFirst: false,
+        straightLast: false,
+        strokeWidth: 2,
+      })
 
-    const p4 = b.create('point', [() => getX2(data), hi], {
-      name: '',
-      fixed: true,
-      visible: false,
-      label: { autoPosition: true },
-    })
+      const c1a = b.create('point', [0, 0], {
+        name: 'Ursprung',
+        fixed: true,
+        visible: false,
+        label: { autoPosition: true },
+      })
 
-    b.create('line', [p1, p2], {
-      straightFirst: false,
-      straightLast: false,
-      strokeWidth: 2,
-    })
-    b.create('line', [p3, p4], {
-      straightFirst: false,
-      straightLast: false,
-      strokeWidth: 2,
-    })
-    b.create('line', [M, p3], {
-      straightFirst: false,
-      straightLast: false,
-      strokeWidth: 2,
-    })
+      const c1b = b.create('point', [x2, 0], {
+        name: '',
+        visible: false,
+        fixed: true,
+      })
 
-    const c1a = b.create('point', [0, 0], {
-      name: 'Ursprung',
-      fixed: true,
-      visible: false,
-      label: { autoPosition: true },
-    })
+      const c1c = b.create('point', [Mi, 1], {
+        name: '',
+        visible: false,
+        fixed: true,
+      })
+      const c2a = b.create('point', [0, hi], {
+        name: '',
+        fixed: true,
+        visible: false,
+        label: { autoPosition: true },
+      })
+      const c2b = b.create('point', [x2, hi], {
+        name: '',
+        visible: false,
+        fixed: true,
+      })
+      const c2c = b.create('point', [Mi, hiMi], {
+        name: '',
+        visible: false,
+        fixed: true,
+      })
 
-    const c1b = b.create('point', [x2, 0], {
-      name: '',
-      visible: false,
-      fixed: true,
-    })
+      b.create('ellipse', [c1a, c1b, c1c], {
+        straightFirst: false,
+        straightLast: false,
+        strokeWidth: 2,
+      })
 
-    const c1c = b.create('point', [Mi, 1], {
-      name: '',
-      visible: false,
-      fixed: true,
-    })
-    const c2a = b.create('point', [0, hi], {
-      name: '',
-      fixed: true,
-      visible: false,
-      label: { autoPosition: true },
-    })
-    const c2b = b.create('point', [x2, hi], {
-      name: '',
-      visible: false,
-      fixed: true,
-    })
-    const c2c = b.create('point', [Mi, hiMi], {
-      name: '',
-      visible: false,
-      fixed: true,
-    })
-
-    b.create('ellipse', [c1a, c1b, c1c], {
-      straightFirst: false,
-      straightLast: false,
-      strokeWidth: 2,
-    })
-
-    b.create('ellipse', [c2a, c2b, c2c], {
-      straightFirst: false,
-      straightLast: false,
-      strokeWidth: 2,
-    })
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
+      b.create('ellipse', [c2a, c2b, c2c], {
+        straightFirst: false,
+        straightLast: false,
+        strokeWidth: 2,
+      })
+      return b
+    },
+    'jsxgraph',
+    data
   )
 }

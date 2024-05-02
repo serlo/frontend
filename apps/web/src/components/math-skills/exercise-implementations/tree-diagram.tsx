@@ -1,5 +1,5 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { buildFrac, buildOverline } from '../utils/math-builder'
+import { buildFrac, buildJSX, buildOverline } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 

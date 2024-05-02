@@ -1,9 +1,6 @@
-import { useState, useEffect } from 'react'
-
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { autoResizeBoundingBox } from '../utils/auto-resize-bounding-box'
-import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
-import { buildFrac, buildSqrt } from '../utils/math-builder'
+import { buildFrac, buildJSX, buildSqrt } from '../utils/math-builder'
 import { pp } from '../utils/pretty-print'
 import { rotatePoint } from '../utils/rotate-point'
 import { roundToDigits } from '../utils/round-to-digits'
@@ -125,7 +122,7 @@ export function LawOfSinesCosines() {
               {printGiven(data, 0)}, {printGiven(data, 1)} und{' '}
               {printGiven(data, 2)}
             </p>
-            <SubComponent data={data} />
+            {renderDiagram(data)}
             <p className="serlo-main-task">
               Berechnen Sie die Größe{' '}
               <strong className="text-newgreen">
@@ -295,11 +292,7 @@ export function LawOfSinesCosines() {
   )
 }
 
-function SubComponent({ data }: { data: DATA }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
+function renderDiagram(data: DATA) {
   const preB_x = data.c
   const preB_y = 0
 
@@ -317,104 +310,110 @@ function SubComponent({ data }: { data: DATA }) {
 
   const dim = boundingbox[2] - boundingbox[0]
 
-  useEffect(() => {
-    const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox,
-      showNavigation: false,
-      showCopyright: false,
-    })
+  return buildJSX(
+    () => {
+      const b = JXG.JSXGraph.initBoard('jxgbox', {
+        boundingbox,
+        showNavigation: false,
+        showCopyright: false,
+      })
 
-    const pointA = b.create('point', [0, 0], {
-      name: 'A',
-      fixed: true,
-      label: { autoPosition: true },
-    })
+      const pointA = b.create('point', [0, 0], {
+        name: 'A',
+        fixed: true,
+        label: { autoPosition: true },
+      })
 
-    const pointB = b.create('point', [Bx, By], {
-      name: 'B',
-      fixed: true,
-      label: { autoPosition: true },
-    })
+      const pointB = b.create('point', [Bx, By], {
+        name: 'B',
+        fixed: true,
+        label: { autoPosition: true },
+      })
 
-    const pointC = b.create('point', [Cx, Cy], {
-      name: 'C',
-      fixed: true,
-      label: { autoPosition: true },
-    })
+      const pointC = b.create('point', [Cx, Cy], {
+        name: 'C',
+        fixed: true,
+        label: { autoPosition: true },
+      })
 
-    const newgreen = 'rgb(47 206 177)'
+      const newgreen = 'rgb(47 206 177)'
 
-    b.create('segment', [pointA, pointB], {
-      name: 'c',
-      withLabel: data.variant.given.includes('c') || data.variant.goal === 'c',
-      label: {
-        autoPosition: true,
-        color: data.variant.goal === 'c' ? newgreen : 'black',
-      },
-    })
-    b.create('segment', [pointA, pointC], {
-      name: 'b',
-      withLabel: data.variant.given.includes('b') || data.variant.goal === 'b',
-      label: {
-        autoPosition: true,
-        color: data.variant.goal === 'b' ? newgreen : 'black',
-      },
-    })
-    b.create('segment', [pointC, pointB], {
-      name: 'a',
-      withLabel: data.variant.given.includes('a') || data.variant.goal === 'a',
-      label: {
-        autoPosition: true,
-        color: data.variant.goal === 'a' ? newgreen : 'black',
-      },
-    })
-
-    if (data.variant.given.includes('alpha') || data.variant.goal === 'alpha') {
-      b.create('angle', [pointB, pointA, pointC], {
-        name: '⍺',
-        withLabel: true,
-        orthoType: 'sector',
-        radius: 0.05 * dim,
+      b.create('segment', [pointA, pointB], {
+        name: 'c',
+        withLabel:
+          data.variant.given.includes('c') || data.variant.goal === 'c',
         label: {
           autoPosition: true,
-          color: data.variant.goal === 'alpha' ? newgreen : 'black',
+          color: data.variant.goal === 'c' ? newgreen : 'black',
         },
       })
-    }
-
-    if (data.variant.given.includes('beta') || data.variant.goal === 'beta') {
-      b.create('angle', [pointC, pointB, pointA], {
-        name: 'β',
-        withLabel: true,
-        orthoType: 'sector',
-        radius: 0.05 * dim,
+      b.create('segment', [pointA, pointC], {
+        name: 'b',
+        withLabel:
+          data.variant.given.includes('b') || data.variant.goal === 'b',
         label: {
           autoPosition: true,
-          color: data.variant.goal === 'beta' ? newgreen : 'black',
+          color: data.variant.goal === 'b' ? newgreen : 'black',
         },
       })
-    }
-
-    if (data.variant.given.includes('gamma') || data.variant.goal === 'gamma') {
-      b.create('angle', [pointA, pointC, pointB], {
-        name: 'γ',
-        withLabel: true,
-        orthoType: 'sector',
-        radius: 0.05 * dim,
+      b.create('segment', [pointC, pointB], {
+        name: 'a',
+        withLabel:
+          data.variant.given.includes('a') || data.variant.goal === 'a',
         label: {
           autoPosition: true,
-          color: data.variant.goal === 'gamma' ? newgreen : 'black',
+          color: data.variant.goal === 'a' ? newgreen : 'black',
         },
       })
-    }
 
-    setBoard(b)
+      if (
+        data.variant.given.includes('alpha') ||
+        data.variant.goal === 'alpha'
+      ) {
+        b.create('angle', [pointB, pointA, pointC], {
+          name: '⍺',
+          withLabel: true,
+          orthoType: 'sector',
+          radius: 0.05 * dim,
+          label: {
+            autoPosition: true,
+            color: data.variant.goal === 'alpha' ? newgreen : 'black',
+          },
+        })
+      }
 
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
+      if (data.variant.given.includes('beta') || data.variant.goal === 'beta') {
+        b.create('angle', [pointC, pointB, pointA], {
+          name: 'β',
+          withLabel: true,
+          orthoType: 'sector',
+          radius: 0.05 * dim,
+          label: {
+            autoPosition: true,
+            color: data.variant.goal === 'beta' ? newgreen : 'black',
+          },
+        })
+      }
 
-  return <JSXGraphWrapper id="jxgbox" width={300} height={300} />
+      if (
+        data.variant.given.includes('gamma') ||
+        data.variant.goal === 'gamma'
+      ) {
+        b.create('angle', [pointA, pointC, pointB], {
+          name: 'γ',
+          withLabel: true,
+          orthoType: 'sector',
+          radius: 0.05 * dim,
+          label: {
+            autoPosition: true,
+            color: data.variant.goal === 'gamma' ? newgreen : 'black',
+          },
+        })
+      }
+
+      return b
+    },
+    'jxgbox',
+    data
+  )
 }

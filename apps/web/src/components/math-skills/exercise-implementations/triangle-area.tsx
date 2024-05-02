@@ -1,9 +1,6 @@
-import { useState, useEffect } from 'react'
-
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { autoResizeBoundingBox } from '../utils/auto-resize-bounding-box'
-import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
-import { buildFrac, buildOverline } from '../utils/math-builder'
+import { buildFrac, buildJSX, buildOverline } from '../utils/math-builder'
 import { pp } from '../utils/pretty-print'
 import { rotatePoint } from '../utils/rotate-point'
 import { roundToDigits } from '../utils/round-to-digits'
@@ -65,7 +62,7 @@ export function TriangleArea() {
               {data.p2}
               {data.p1} = {data.angle}°.
             </p>
-            <SubComponent data={data} />
+            {renderDiagram(data)}
             <p className="serlo-main-task">
               Berechnen Sie den Flächeninhalt des Dreiecks ABC.
             </p>
@@ -171,11 +168,7 @@ export function TriangleArea() {
   )
 }
 
-function SubComponent({ data }: { data: DATA }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
+function renderDiagram(data: DATA) {
   const randomAngle = randomIntBetween(0, 359)
 
   const [p1_x, p1_y] = rotatePoint(data.len2, 0, -data.angle + randomAngle)
@@ -188,47 +181,43 @@ function SubComponent({ data }: { data: DATA }) {
   ])
 
   const dim = boundingbox[2] - boundingbox[0]
+  return buildJSX(
+    () => {
+      const b = JXG.JSXGraph.initBoard('jxgbox', {
+        boundingbox,
+        showNavigation: false,
+        showCopyright: false,
+      })
 
-  useEffect(() => {
-    const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox,
-      showNavigation: false,
-      showCopyright: false,
-    })
+      const pointA = b.create('point', [p1_x, p1_y], {
+        name: data.p1,
+        fixed: true,
+      })
 
-    const pointA = b.create('point', [p1_x, p1_y], {
-      name: data.p1,
-      fixed: true,
-    })
+      const pointB = b.create('point', [0, 0], {
+        name: data.p2,
+        fixed: true,
+      })
 
-    const pointB = b.create('point', [0, 0], {
-      name: data.p2,
-      fixed: true,
-    })
+      const pointC = b.create('point', [p3_x, p3_y], {
+        name: data.p3,
+        fixed: true,
+      })
 
-    const pointC = b.create('point', [p3_x, p3_y], {
-      name: data.p3,
-      fixed: true,
-    })
+      // const newgreen = 'rgb(47 206 177)'
 
-    // const newgreen = 'rgb(47 206 177)'
+      b.create('segment', [pointA, pointB], {})
+      b.create('segment', [pointA, pointC], {})
+      b.create('segment', [pointC, pointB], {})
 
-    b.create('segment', [pointA, pointB], {})
-    b.create('segment', [pointA, pointC], {})
-    b.create('segment', [pointC, pointB], {})
+      b.create('angle', [pointC, pointB, pointA], {
+        radius: (data.angle === 90 ? 0.05 : 0.1) * dim,
+        withLabel: false,
+      })
 
-    b.create('angle', [pointC, pointB, pointA], {
-      radius: (data.angle === 90 ? 0.05 : 0.1) * dim,
-      withLabel: false,
-    })
-
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return <JSXGraphWrapper id="jxgbox" width={300} height={300} />
+      return b
+    },
+    'jxgbox',
+    data
+  )
 }

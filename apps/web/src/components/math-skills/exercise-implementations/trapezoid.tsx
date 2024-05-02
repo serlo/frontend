@@ -1,9 +1,6 @@
-import { useState, useEffect } from 'react'
-
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { autoResizeBoundingBox } from '../utils/auto-resize-bounding-box'
-import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
-import { buildFrac, buildOverline } from '../utils/math-builder'
+import { buildFrac, buildJSX, buildOverline } from '../utils/math-builder'
 import { pp } from '../utils/pretty-print'
 import { rotatePoint } from '../utils/rotate-point'
 import { roundToDigits } from '../utils/round-to-digits'
@@ -62,7 +59,7 @@ export function Trapezoid() {
                 Es gilt: |{buildOverline('AB')}| = {pp(data.a)} cm und |
                 {buildOverline('CD')}| ={pp(data.c)} cm
               </p>
-              <SubComponent data={data} />
+              {renderDiagram(data)}
               <p className="serlo-main-task">
                 Berechnen Sie den <strong>Flächeninhalt</strong> des Trapez.
               </p>
@@ -80,7 +77,7 @@ export function Trapezoid() {
               <p className="serlo-main-task">
                 Es gilt: ∢BAD = {pp(data.alpha)}°
               </p>
-              <SubComponent data={data} />
+              {renderDiagram(data)}
               <p className="serlo-main-task">
                 Berechnen Sie die Größe <strong>des Winkels ∢DCB</strong>.
               </p>
@@ -99,7 +96,7 @@ export function Trapezoid() {
               Es gilt: |{buildOverline('AB')}| = {pp(data.a)} cm und |
               {buildOverline('CD')}| ={pp(data.c)} cm
             </p>
-            <SubComponent data={data} />
+            {renderDiagram(data)}
             <p className="serlo-main-task">
               Berechnen Sie die <strong>Höhe</strong> des Trapez.
             </p>
@@ -177,11 +174,7 @@ export function Trapezoid() {
   )
 }
 
-function SubComponent({ data }: { data: DATA }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
+function renderDiagram(data: DATA) {
   const B_x = data.a
   const B_y = 0
   const [D_x, D_y] = rotatePoint(data.d, 0, -data.alpha)
@@ -197,59 +190,56 @@ function SubComponent({ data }: { data: DATA }) {
 
   const dim = boundingbox[2] - boundingbox[0]
 
-  useEffect(() => {
-    const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox,
-      showNavigation: false,
-      showCopyright: false,
-    })
-
-    const A = b.create('point', [0, 0], {
-      name: 'A',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-
-    const B = b.create('point', [B_x, B_y], {
-      name: 'B',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-
-    const C = b.create('point', [C_x, C_y], {
-      name: 'C',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-
-    const D = b.create('point', [D_x, D_y], {
-      name: 'D',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-
-    b.create('segment', [A, B])
-    b.create('segment', [B, C])
-    b.create('segment', [C, D])
-    b.create('segment', [D, A])
-
-    if (data.mode === 'angle') {
-      b.create('angle', [B, A, D], { withLabel: false, radius: dim * 0.1 })
-      b.create('angle', [D, C, B], {
-        withLabel: false,
-        radius: dim * 0.1,
-        fillColor: 'rgb(47 206 177)',
-        strokeColor: 'rgb(47 206 177)',
+  return buildJSX(
+    () => {
+      const b = JXG.JSXGraph.initBoard('jxgbox', {
+        boundingbox,
+        showNavigation: false,
+        showCopyright: false,
       })
-    }
 
-    setBoard(b)
+      const A = b.create('point', [0, 0], {
+        name: 'A',
+        fixed: true,
+        label: { autoPosition: true },
+      })
 
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
+      const B = b.create('point', [B_x, B_y], {
+        name: 'B',
+        fixed: true,
+        label: { autoPosition: true },
+      })
 
-  return <JSXGraphWrapper id="jxgbox" width={300} height={300} />
+      const C = b.create('point', [C_x, C_y], {
+        name: 'C',
+        fixed: true,
+        label: { autoPosition: true },
+      })
+
+      const D = b.create('point', [D_x, D_y], {
+        name: 'D',
+        fixed: true,
+        label: { autoPosition: true },
+      })
+
+      b.create('segment', [A, B])
+      b.create('segment', [B, C])
+      b.create('segment', [C, D])
+      b.create('segment', [D, A])
+
+      if (data.mode === 'angle') {
+        b.create('angle', [B, A, D], { withLabel: false, radius: dim * 0.1 })
+        b.create('angle', [D, C, B], {
+          withLabel: false,
+          radius: dim * 0.1,
+          fillColor: 'rgb(47 206 177)',
+          strokeColor: 'rgb(47 206 177)',
+        })
+      }
+
+      return b
+    },
+    'jxgbox',
+    data
+  )
 }

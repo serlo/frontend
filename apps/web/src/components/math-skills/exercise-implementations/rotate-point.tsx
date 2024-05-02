@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react'
-
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
 import {
   buildBlock,
+  buildJSX,
   buildMat2,
   buildSqrt,
   buildVec,
@@ -234,56 +232,49 @@ export function RotatePoint() {
             Hier ist eine Skizze zur Veranschaulichung (nicht Teil der
             Aufgabenstellung):
           </p>
-          <SubComponent data={data} />
+          {renderDiagram(data)}
         </>
       )}
     />
   )
 }
 
-function SubComponent({ data }: { data: DATA }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
+function renderDiagram(data: DATA) {
+  return buildJSX(
+    () => {
+      const b = JXG.JSXGraph.initBoard('jxgbox', {
+        boundingbox: [
+          data.centerx - 5,
+          data.centery + 5,
+          data.centerx + 5,
+          data.centery - 5,
+        ],
+        showNavigation: false,
+        showCopyright: false,
+        axis: true,
+      })
 
-  useEffect(() => {
-    const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox: [
-        data.centerx - 5,
-        data.centery + 5,
-        data.centerx + 5,
-        data.centery - 5,
-      ],
-      showNavigation: false,
-      showCopyright: false,
-      axis: true,
-    })
+      const A = b.create('point', [data.ax, data.ay], {
+        name: 'A',
+        fixed: true,
+        label: { autoPosition: true },
+      })
+      const B = b.create('point', [data.bx, data.by], {
+        name: 'B',
+        fixed: true,
+        label: { autoPosition: true },
+      })
+      const C = b.create('point', [data.cx, data.cy], {
+        name: 'C',
+        fixed: true,
+        label: { autoPosition: true },
+      })
+      b.create('segment', [A, B])
+      b.create('segment', [A, C])
 
-    const A = b.create('point', [data.ax, data.ay], {
-      name: 'A',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    const B = b.create('point', [data.bx, data.by], {
-      name: 'B',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    const C = b.create('point', [data.cx, data.cy], {
-      name: 'C',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    b.create('segment', [A, B])
-    b.create('segment', [A, C])
-
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return <JSXGraphWrapper id="jxgbox" width={300} height={300} />
+      return b
+    },
+    'jxgbox',
+    data
+  )
 }

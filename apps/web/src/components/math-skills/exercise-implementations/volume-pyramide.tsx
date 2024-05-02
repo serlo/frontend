@@ -1,15 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import JXG from 'jsxgraph'
-import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { MainTask } from '../components/content-components'
 import { autoResizeBoundingBox } from '../utils/auto-resize-bounding-box'
-import { buildFrac, buildOverline } from '../utils/math-builder'
+import { buildFrac, buildJSX, buildOverline } from '../utils/math-builder'
 import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
-
-// JXG.Options.label.autoPosition = true
 
 interface PyraData {
   ab: number
@@ -44,7 +41,7 @@ export function VolumePyramide() {
               {buildOverline('BC')}| = {data.bd} cm; |{buildOverline('EM')}| ={' '}
               {data.me} cm
             </p>
-            <SubComponent data={data} />
+            {renderDiagram(data)}
             <p className="serlo-main-task">
               Berechnen Sie das Volumen der Pyramide{' '}
               <b className="rounded-md bg-newgreen bg-opacity-20 p-1">ABCDE</b>.
@@ -115,93 +112,90 @@ export function VolumePyramide() {
   )
 }
 
-function SubComponent({ data }: { data: PyraData }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
+function renderDiagram(data: PyraData) {
+  return buildJSX(
+    () => {
+      const A_x = 0
+      const A_y = 0
+      const B_x = data.ab
+      const B_y = 0
 
-  useEffect(() => {
-    const A_x = 0
-    const A_y = 0
-    const B_x = data.ab
-    const B_y = 0
+      const f = Math.sqrt(0.5) / 2
 
-    const f = Math.sqrt(0.5) / 2
+      const D_x = f * data.bd
+      const D_y = f * data.bd
 
-    const D_x = f * data.bd
-    const D_y = f * data.bd
+      const C_x = D_x + data.ab
+      const C_y = D_y
 
-    const C_x = D_x + data.ab
-    const C_y = D_y
+      const M_x = (A_x + C_x) / 2
+      const M_y = (A_y + C_y) / 2
 
-    const M_x = (A_x + C_x) / 2
-    const M_y = (A_y + C_y) / 2
+      const E_x = M_x
+      const E_y = M_y + data.me
 
-    const E_x = M_x
-    const E_y = M_y + data.me
+      const b = JXG.JSXGraph.initBoard('jxgbox', {
+        boundingbox: autoResizeBoundingBox([
+          [A_x, A_y],
+          [B_x, B_y],
+          [C_x, C_y],
+          [D_x, D_y],
+          [M_x, M_y],
+          [E_x, E_y],
+        ]),
+        showNavigation: false,
+        showCopyright: false,
+      })
 
-    const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox: autoResizeBoundingBox([
-        [A_x, A_y],
-        [B_x, B_y],
-        [C_x, C_y],
-        [D_x, D_y],
-        [M_x, M_y],
-        [E_x, E_y],
-      ]),
-      showNavigation: false,
-      showCopyright: false,
-    })
+      const pointA = b.create('point', [A_x, A_y], {
+        name: 'A',
+        fixed: true,
+        label: { autoPosition: true },
+      })
+      const pointB = b.create('point', [B_x, B_y], { name: 'B', fixed: true })
+      const pointC = b.create('point', [D_x, D_y], { name: 'D', fixed: true })
+      const pointD = b.create('point', [C_x, C_y], { name: 'C', fixed: true })
+      const pointM = b.create('point', [M_x, M_y], {
+        name: 'M',
+        fixed: true,
+      })
+      const pointE = b.create('point', [E_x, E_y], {
+        name: 'E',
+        fixed: true,
+      })
 
-    const pointA = b.create('point', [A_x, A_y], {
-      name: 'A',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    const pointB = b.create('point', [B_x, B_y], { name: 'B', fixed: true })
-    const pointC = b.create('point', [D_x, D_y], { name: 'D', fixed: true })
-    const pointD = b.create('point', [C_x, C_y], { name: 'C', fixed: true })
-    const pointM = b.create('point', [M_x, M_y], {
-      name: 'M',
-      fixed: true,
-    })
-    const pointE = b.create('point', [E_x, E_y], {
-      name: 'E',
-      fixed: true,
-    })
+      const poly1 = b.create('polygon', [pointA, pointB, pointE], {
+        name: 'Polygon 1',
+        withLabel: false,
+        color: 'blue',
+      })
 
-    const poly1 = b.create('polygon', [pointA, pointB, pointE], {
-      name: 'Polygon 1',
-      withLabel: false,
-      color: 'blue',
-    })
+      const poly2 = b.create('polygon', [pointA, pointB, pointD, pointC], {
+        name: 'Polygon 1',
+        withLabel: false,
+        color: 'orange',
+      })
 
-    const poly2 = b.create('polygon', [pointA, pointB, pointD, pointC], {
-      name: 'Polygon 1',
-      withLabel: false,
-      color: 'orange',
-    })
+      const poly3 = b.create('polygon', [pointB, pointD, pointE], {
+        name: 'Polygon 1',
+        withLabel: false,
+      })
 
-    const poly3 = b.create('polygon', [pointB, pointD, pointE], {
-      name: 'Polygon 1',
-      withLabel: false,
-    })
+      const poly4 = b.create('polygon', [pointA, pointC, pointE], {
+        name: 'Polygon 1',
+        withLabel: false,
+      })
+      const poly5 = b.create('polygon', [pointC, pointD, pointE], {
+        name: 'Polygon 1',
+        withLabel: false,
+      })
 
-    const poly4 = b.create('polygon', [pointA, pointC, pointE], {
-      name: 'Polygon 1',
-      withLabel: false,
-    })
-    const poly5 = b.create('polygon', [pointC, pointD, pointE], {
-      name: 'Polygon 1',
-      withLabel: false,
-    })
+      const poly6 = b.create('polygon', [pointM, pointE], {
+        name: 'Polygon 1',
+        withLabel: false,
+      })
 
-    const poly6 = b.create('polygon', [pointM, pointE], {
-      name: 'Polygon 1',
-      withLabel: false,
-    })
-
-    /*b.create('text', [2, 0, `${data.ab} cm`], {
+      /*b.create('text', [2, 0, `${data.ab} cm`], {
       anchorX: 'middle',
       anchorY: 'top',
     })
@@ -211,33 +205,9 @@ function SubComponent({ data }: { data: PyraData }) {
     })
 
     b.create('text', [2.6, 2, `${data.me} cm`], {})*/
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
+      return b
+    },
+    'jxgbox',
+    data
   )
 }

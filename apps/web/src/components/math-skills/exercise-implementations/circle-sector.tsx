@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react'
-
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
-import { buildBigSqrt, buildFrac, buildLatex } from '../utils/math-builder'
+import {
+  buildBigSqrt,
+  buildFrac,
+  buildJSX,
+  buildLatex,
+} from '../utils/math-builder'
 import { pp } from '../utils/pretty-print'
 import { rotatePoint } from '../utils/rotate-point'
 import { roundToDigits } from '../utils/round-to-digits'
@@ -93,7 +95,7 @@ export function CircleSector() {
               )}
               .
             </p>
-            <SubComponent data={data} />
+            {renderDiagram(data)}
             <p className="serlo-main-task">
               Berechnen Sie{' '}
               <strong>
@@ -328,81 +330,70 @@ export function CircleSector() {
       }}
     />
   )
-}
 
-function SubComponent({ data }: { data: DATA }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
+  function renderDiagram(data: DATA) {
+    return buildJSX(() => {
+      const b = JXG.JSXGraph.initBoard('jxgbox', {
+        boundingbox: [-5, 5, 5, -5],
+        showNavigation: false,
+        showCopyright: false,
+      })
 
-  useEffect(() => {
-    const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox: [-5, 5, 5, -5],
-      showNavigation: false,
-      showCopyright: false,
-    })
+      const A = b.create('point', [0, 4], {
+        name: 'A',
+        fixed: true,
+        label: { autoPosition: true },
+      })
+      const B = b.create('point', [0, 0], {
+        name: 'B',
+        fixed: true,
+      })
+      const C = b.create('point', rotatePoint(0, 4, -data.angle), {
+        name: 'C',
+        fixed: true,
+        label: { autoPosition: true },
+      })
+      b.create('sector', [B, A, C], { id: 'slice' })
 
-    const A = b.create('point', [0, 4], {
-      name: 'A',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    const B = b.create('point', [0, 0], {
-      name: 'B',
-      fixed: true,
-    })
-    const C = b.create('point', rotatePoint(0, 4, -data.angle), {
-      name: 'C',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    b.create('sector', [B, A, C], { id: 'slice' })
+      b.create('segment', [A, B], { withLabel: true, name: 'r' })
+      b.create('angle', [A, B, C], {
+        id: 'angle',
+        withLabel: true,
+        name: '⍺',
+        radius: 0.8,
+      })
 
-    b.create('segment', [A, B], { withLabel: true, name: 'r' })
-    b.create('angle', [A, B, C], {
-      id: 'angle',
-      withLabel: true,
-      name: '⍺',
-      radius: 0.8,
-    })
-
-    // inject pizza pattern
-    const svg = b.containerObj.querySelector('svg')
-    const defs = svg?.querySelector('defs')
-    if (defs) {
-      defs.innerHTML = `
+      // inject pizza pattern
+      const svg = b.containerObj.querySelector('svg')
+      const defs = svg?.querySelector('defs')
+      if (defs) {
+        defs.innerHTML = `
       ${defs?.innerHTML}
       <pattern id="pizza" width="268" height="268" patternUnits="userSpaceOnUse" >
         <image x="20" y="20" href="/_assets/img/math-skills/exercises/pizza.svg" width="268" height="268" />
       </pattern>
       `
-    }
+      }
 
-    const path = svg?.querySelector('#jxgbox_slice') as SVGElement
-    if (path) {
-      path.style.fillOpacity = '1'
-      path.style.fill = 'url(#pizza)'
-    }
+      const path = svg?.querySelector('#jxgbox_slice') as SVGElement
+      if (path) {
+        path.style.fillOpacity = '1'
+        path.style.fill = 'url(#pizza)'
+      }
 
-    const angleLabel = document.getElementById(
-      'jxgbox_angleLabel'
-    ) as HTMLDivElement
-    if (angleLabel) {
-      angleLabel.style.textAlign = 'center'
-      angleLabel.style.width = '28px'
-      angleLabel.style.borderRadius = '100%'
-      angleLabel.style.background = 'white'
-      angleLabel.style.opacity = '0.8'
-      angleLabel.style.marginRight = '-8px'
-    }
+      const angleLabel = document.getElementById(
+        'jxgbox_angleLabel'
+      ) as HTMLDivElement
+      if (angleLabel) {
+        angleLabel.style.textAlign = 'center'
+        angleLabel.style.width = '28px'
+        angleLabel.style.borderRadius = '100%'
+        angleLabel.style.background = 'white'
+        angleLabel.style.opacity = '0.8'
+        angleLabel.style.marginRight = '-8px'
+      }
 
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return <JSXGraphWrapper id="jxgbox" width={300} height={300} />
+      return b
+    }, data)
+  }
 }

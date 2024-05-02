@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react'
-
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
 import {
   buildBlock,
   buildFrac,
+  buildJSX,
   buildSqrt,
   buildVec,
   buildVec2,
@@ -205,7 +203,7 @@ export function Parallelogram1() {
           <br />
           Verbinde die Punkte zu einem Parallelogramm:
           <br />
-          <SubComponent data={data} />
+          {renderDiagram(data)}
         </>
       )}
       renderHint={() => {
@@ -235,71 +233,58 @@ export function Parallelogram1() {
   )
 }
 
-function SubComponent({ data }: { data: DATA }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
-  useEffect(() => {
-    const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox: [data.x_from, data.y_to, data.x_to, data.y_from],
-      showNavigation: false,
-      showCopyright: false,
-      axis: true,
-      defaultAxes: {
-        x: {
-          ticks: {
-            ticksDistance: 1,
-            insertTicks: false,
+function renderDiagram(data: DATA) {
+  return buildJSX(
+    () => {
+      const b = JXG.JSXGraph.initBoard('jxgbox', {
+        boundingbox: [data.x_from, data.y_to, data.x_to, data.y_from],
+        showNavigation: false,
+        showCopyright: false,
+        axis: true,
+        defaultAxes: {
+          x: {
+            ticks: {
+              ticksDistance: 1,
+              insertTicks: false,
+            },
+          },
+          y: {
+            ticks: {
+              ticksDistance: 1,
+              insertTicks: false,
+            },
           },
         },
-        y: {
-          ticks: {
-            ticksDistance: 1,
-            insertTicks: false,
-          },
-        },
-      },
-    })
+      })
 
-    const O = b.create('point', [0, 0], {
-      name: 'O',
-      label: { autoPosition: true },
-    })
+      const O = b.create('point', [0, 0], {
+        name: 'O',
+        label: { autoPosition: true },
+      })
 
-    const R = b.create('point', [data.rx, data.ry], {
-      name: 'R<sub>1</sub>',
-      label: { autoPosition: true },
-    })
+      const R = b.create('point', [data.rx, data.ry], {
+        name: 'R<sub>1</sub>',
+        label: { autoPosition: true },
+      })
 
-    const T = b.create('point', [data.tx, data.ty], {
-      name: 'T',
-      label: { autoPosition: true },
-    })
+      const T = b.create('point', [data.tx, data.ty], {
+        name: 'T',
+        label: { autoPosition: true },
+      })
 
-    const S = b.create('point', [data.tx + data.rx, data.ty + data.ry], {
-      name: 'S<sub>1</sub>',
-      label: { autoPosition: true },
-    })
+      const S = b.create('point', [data.tx + data.rx, data.ty + data.ry], {
+        name: 'S<sub>1</sub>',
+        label: { autoPosition: true },
+      })
 
-    b.create('segment', [O, R])
-    b.create('segment', [R, S])
-    b.create('segment', [S, T])
-    b.create('segment', [T, O])
+      b.create('segment', [O, R])
+      b.create('segment', [R, S])
+      b.create('segment', [S, T])
+      b.create('segment', [T, O])
 
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <JSXGraphWrapper
-      id="jxgbox"
-      width={(340 / (data.y_to - data.y_from)) * (data.x_to - data.x_from)}
-      height={340}
-    />
+      return b
+    },
+    'jxgbox',
+    data
   )
 }
