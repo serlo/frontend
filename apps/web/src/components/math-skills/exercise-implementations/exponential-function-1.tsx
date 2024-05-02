@@ -8,6 +8,7 @@ import { randomItemFromArray } from '@/helper/random-item-from-array'
 
 export function ExponentialFunction() {
   const { data } = useMathSkillsStorage()
+
   return (
     <SelfEvaluationExercise
       generator={() => {

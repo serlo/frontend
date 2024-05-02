@@ -1,11 +1,12 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { buildLatex } from '../utils/math-builder'
-import { useMathSkillsStorage } from '../utils/math-skills-data-context'
+import { useMathSkillsName } from '../utils/math-skills-data-context'
 import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 
 export function RootEquations() {
-  const { data } = useMathSkillsStorage()
+  const name = useMathSkillsName()
+
   return (
     <SelfEvaluationExercise
       generator={() => {
@@ -21,10 +22,9 @@ export function RootEquations() {
           <>
             <div className="text-lg">
               <p className="serlo-main-task">
-                {data.name ?? 'Tea'} hatte im Jahr {Start_Jahr} auf ihrem
-                Ink-Star-Account {Money_Start} Follower. Heute beträgt die
-                Anzahl der Follower {Money_Ende}. Gehen Sie von einem
-                exponentiellen Wachstum aus.
+                {name} hatte im Jahr {Start_Jahr} auf ihrem Ink-Star-Account{' '}
+                {Money_Start} Follower. Heute beträgt die Anzahl der Follower{' '}
+                {Money_Ende}. Gehen Sie von einem exponentiellen Wachstum aus.
               </p>
               <p className="serlo-main-task">
                 Berechnen Sie, um wie viel Prozent die Anzahl der Follower pro
