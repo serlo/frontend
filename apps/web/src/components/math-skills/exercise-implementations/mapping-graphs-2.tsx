@@ -79,11 +79,13 @@ export function AbbildungGraphen2() {
         if (data.function_type === 1)
           return (
             <>
-              <MainTask>Bestimme den Graphen der Funktion g.</MainTask>
+              <p className="serlo-main-task">
+                Bestimme den Graphen der Funktion g.
+              </p>
               <br />
               Der Graph der Funktion <i>f</i>
               <br />
-              <HighlightGreen>
+              <p className="serlo-highlight-green">
                 y = {data.a === -1 ? '-' : null}{' '}
                 {buildFrac(
                   <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -96,7 +98,7 @@ export function AbbildungGraphen2() {
                 )}{' '}
                 {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
                 {data.d !== 0 ? data.d : null}
-              </HighlightGreen>
+              </p>
               <br />
               <br />
               wird auf den Graphen von <i>g</i> abgebildet:
@@ -119,11 +121,13 @@ export function AbbildungGraphen2() {
         if (data.function_type === 2)
           return (
             <>
-              <MainTask>Bestimme den Graphen der Funktion g.</MainTask>
+              <p className="serlo-main-task">
+                Bestimme den Graphen der Funktion g.
+              </p>
               <br />
               Der Graph der Funktion <i>f</i>
               <br />
-              <HighlightGreen>
+              <p className="serlo-highlight-green">
                 y = {data.a > 0 ? null : '- '}
                 {data.x_s !== 0 ? '(' : null}x {data.x_s > 0 ? '+ ' : null}
                 {data.x_s === 0 ? null : null}
@@ -132,7 +136,7 @@ export function AbbildungGraphen2() {
                 <sup>2</sup> {data.y_s > 0 ? '+ ' + data.y_s : null}
                 {data.y_s === 0 ? null : null}
                 {data.y_s < 0 ? data.y_s : null}
-              </HighlightGreen>
+              </p>
               <br />
               <br />
               wird durch folgende Verschiebungen auf den Graphen von <i>
@@ -158,7 +162,9 @@ export function AbbildungGraphen2() {
         if (data.function_type === 3)
           return (
             <>
-              <MainTask>Bestimme den Graphen der Funktion g.</MainTask>
+              <p className="serlo-main-task">
+                Bestimme den Graphen der Funktion g.
+              </p>
               <br />
               Der Graph der Funktion <i>f</i>
               <br />
@@ -205,7 +211,7 @@ export function AbbildungGraphen2() {
             <>
               Der Graph von <i>g</i> ist gegeben durch:
               <br />
-              <HighlightGray>
+              <p className="serlo-highlight-gray">
                 y = (-1) · <span className="inline-block scale-y-[3]">(</span>
                 {data.a === -1 ? '-' : null}{' '}
                 {buildFrac(
@@ -220,12 +226,12 @@ export function AbbildungGraphen2() {
                 {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
                 {data.d !== 0 ? data.d : null}
                 <span className="inline-block scale-y-[3]">)</span>
-              </HighlightGray>
+              </p>
               <br />
               <br />
               Vereinfacht:
               <br />
-              <HighlightGreen>
+              <p className="serlo-highlight-green">
                 y = {data.a === -1 ? null : '-'}{' '}
                 {buildFrac(
                   <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -239,7 +245,7 @@ export function AbbildungGraphen2() {
                 {data.d > 0 && data.d !== 0 ? '-' : null}{' '}
                 {-data.d > 0 ? '+ ' + -data.d : null}
                 {-data.d < 0 ? data.d : null}
-              </HighlightGreen>
+              </p>
             </>
           )
         if (data.function_type === 1 && data.y_reflect === true)
@@ -247,7 +253,7 @@ export function AbbildungGraphen2() {
             <>
               Der Graph von <i>g</i> ist gegeben durch:
               <br />
-              <HighlightGray>
+              <p className="serlo-highlight-gray">
                 y = (-1) · <span className="inline-block scale-y-[3]">(</span>
                 {data.a === -1 ? '-' : null}{' '}
                 {buildFrac(
@@ -260,12 +266,12 @@ export function AbbildungGraphen2() {
                 {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
                 {data.d !== 0 ? data.d : null}
                 <span className="inline-block scale-y-[3]">)</span>
-              </HighlightGray>
+              </p>
               <br />
               <br />
               Klammer auflösen:
               <br />
-              <HighlightGray>
+              <p className="serlo-highlight-gray">
                 y = {data.a === -1 ? null : '-'}{' '}
                 {buildFrac(
                   <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -278,12 +284,12 @@ export function AbbildungGraphen2() {
                 {data.d > 0 && data.d !== 0 ? '-' : null}{' '}
                 {-data.d > 0 ? '+ ' + -data.d : null}
                 {-data.d < 0 ? data.d : null}
-              </HighlightGray>
+              </p>
               <br />
               <br />
               (-1) im Nenner ausgeklammert:
               <br />
-              <HighlightGray>
+              <p className="serlo-highlight-gray">
                 y = {data.a === -1 ? null : '-'}{' '}
                 {buildFrac(
                   <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -298,12 +304,12 @@ export function AbbildungGraphen2() {
                 {data.d > 0 && data.d !== 0 ? '-' : null}{' '}
                 {-data.d > 0 ? '+ ' + -data.d : null}
                 {-data.d < 0 ? data.d : null}
-              </HighlightGray>
+              </p>
               <br />
               <br />
               Vereinfacht:
               <br />
-              <HighlightGreen>
+              <p className="serlo-highlight-green">
                 y = {data.a === -1 && data.c % 2 === 0 ? '' : null}{' '}
                 {data.a === -1 && data.c % 2 === -1 ? '-' : null}{' '}
                 {data.a === 1 && data.c % 2 === -1 ? '' : null}{' '}
@@ -321,7 +327,7 @@ export function AbbildungGraphen2() {
                 {data.d > 0 && data.d !== 0 ? '-' : null}{' '}
                 {-data.d > 0 ? '+ ' + -data.d : null}
                 {-data.d < 0 ? data.d : null}
-              </HighlightGreen>
+              </p>
             </>
           )
         if (data.function_type === 2 && data.y_reflect === false)
@@ -329,7 +335,7 @@ export function AbbildungGraphen2() {
             <>
               Der Graph von <i>g</i> ist gegeben durch:
               <br />
-              <HighlightGray>
+              <p className="serlo-highlight-gray">
                 y = (-1) · <span className="inline-block scale-y-[1.8]">(</span>{' '}
                 {data.a > 0 ? null : '- '}
                 {data.x_s !== 0 ? '(' : null}x {data.x_s > 0 ? '+ ' : null}
@@ -340,12 +346,12 @@ export function AbbildungGraphen2() {
                 {data.y_s === 0 ? null : null}
                 {data.y_s < 0 ? data.y_s : null}
                 <span className="inline-block scale-y-[1.8]">)</span>
-              </HighlightGray>
+              </p>
               <br />
               <br />
               Vereinfacht
               <br />
-              <HighlightGreen>
+              <p className="serlo-highlight-green">
                 y = {data.a < 0 ? null : '- '}
                 {data.x_s !== 0 ? '(' : null}x {data.x_s > 0 ? '+ ' : null}
                 {data.x_s === 0 ? null : null}
@@ -354,7 +360,7 @@ export function AbbildungGraphen2() {
                 <sup>2</sup> {data.y_s > 0 ? -data.y_s : null}{' '}
                 {data.y_s === 0 ? null : null}{' '}
                 {data.y_s < 0 ? '+ ' + -data.y_s : null}
-              </HighlightGreen>
+              </p>
             </>
           )
         if (data.function_type === 2 && data.y_reflect === true)
@@ -362,7 +368,7 @@ export function AbbildungGraphen2() {
             <>
               Der Graph von <i>g</i> ist gegeben durch:
               <br />
-              <HighlightGray>
+              <p className="serlo-highlight-gray">
                 y = (-1) · <span className="inline-block scale-y-[1.8]">(</span>{' '}
                 {data.a > 0 ? null : '- '}
                 {data.x_s !== 0 ? '(' : null}- x {data.x_s > 0 ? '+ ' : null}
@@ -373,12 +379,12 @@ export function AbbildungGraphen2() {
                 {data.y_s === 0 ? null : null}
                 {data.y_s < 0 ? data.y_s : null}
                 <span className="inline-block scale-y-[1.8]">)</span>
-              </HighlightGray>
+              </p>
               <br />
               <br />
               Klammer aufgelöst:
               <br />
-              <HighlightGray>
+              <p className="serlo-highlight-gray">
                 y = {data.a < 0 ? null : '- '}
                 {data.x_s !== 0 ? '(' : null}- x {data.x_s > 0 ? '+ ' : null}
                 {data.x_s === 0 ? null : null}
@@ -387,12 +393,12 @@ export function AbbildungGraphen2() {
                 <sup>2</sup> {data.y_s > 0 ? -data.y_s : null}{' '}
                 {data.y_s === 0 ? null : null}{' '}
                 {data.y_s < 0 ? '+ ' + -data.y_s : null}
-              </HighlightGray>
+              </p>
               <br />
               <br />
               (-1) aus der Klammer ziehen:
               <br />
-              <HighlightGray>
+              <p className="serlo-highlight-gray">
                 y = {data.a < 0 ? null : '- '} (-1)<sup>2</sup> ·{' '}
                 {data.x_s !== 0 ? '(' : null}x {data.x_s < 0 ? '+ ' : null}
                 {data.x_s === 0 ? null : null}
@@ -401,11 +407,11 @@ export function AbbildungGraphen2() {
                 <sup>2</sup> {data.y_s > 0 ? -data.y_s : null}{' '}
                 {data.y_s === 0 ? null : null}{' '}
                 {data.y_s < 0 ? '+ ' + -data.y_s : null}
-              </HighlightGray>
+              </p>
               <br />
               <br />
               Vereinfacht <br />
-              <HighlightGreen>
+              <p className="serlo-highlight-green">
                 y = {data.a < 0 ? null : '- '} {data.x_s !== 0 ? '(' : null}x{' '}
                 {data.x_s < 0 ? '+ ' : null}
                 {data.x_s === 0 ? null : null}
@@ -414,7 +420,7 @@ export function AbbildungGraphen2() {
                 <sup>2</sup> {data.y_s > 0 ? -data.y_s : null}{' '}
                 {data.y_s === 0 ? null : null}{' '}
                 {data.y_s < 0 ? '+ ' + -data.y_s : null}
-              </HighlightGreen>
+              </p>
             </>
           )
         if (data.function_type === 3 && data.y_reflect === false)

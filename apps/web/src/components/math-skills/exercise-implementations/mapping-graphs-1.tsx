@@ -79,11 +79,13 @@ export function AbbildungGraphen() {
         if (data.function_type === 1)
           return (
             <>
-              <MainTask>Bestimme den Graphen der Funktion g.</MainTask>
+              <p className="serlo-main-task">
+                Bestimme den Graphen der Funktion g.
+              </p>
               <br />
               Der Graph der Funktion <i>f</i>
               <br />
-              <HighlightGreen>
+              <p className="serlo-highlight-green">
                 y = {data.a === -1 ? '-' : null}{' '}
                 {buildFrac(
                   <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -96,7 +98,7 @@ export function AbbildungGraphen() {
                 )}{' '}
                 {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
                 {data.d !== 0 ? data.d : null}
-              </HighlightGreen>
+              </p>
               <br />
               <br />
               wird durch folgende Abbildungen auf den Graphen von <i>g</i>{' '}
@@ -118,11 +120,13 @@ export function AbbildungGraphen() {
         if (data.function_type === 2)
           return (
             <>
-              <MainTask>Bestimme den Graphen der Funktion g.</MainTask>
+              <p className="serlo-main-task">
+                Bestimme den Graphen der Funktion g.
+              </p>
               <br />
               Der Graph der Funktion <i>f</i>
               <br />
-              <HighlightGreen>
+              <p className="serlo-highlight-green">
                 y = {data.x_s !== 0 ? '(' : null}x{data.x_s > 0 ? '+ ' : null}
                 {data.x_s === 0 ? null : null}
                 {data.x_s !== 0 ? data.x_s : null}
@@ -130,7 +134,7 @@ export function AbbildungGraphen() {
                 <sup>2</sup> {data.y_s > 0 ? '+ ' + data.y_s : null}
                 {data.y_s === 0 ? null : null}
                 {data.y_s < 0 ? data.y_s : null}
-              </HighlightGreen>
+              </p>
               <br />
               <br />
               wird durch folgende Verschiebungen auf den Graphen von <i>
@@ -154,7 +158,9 @@ export function AbbildungGraphen() {
         if (data.function_type === 3)
           return (
             <>
-              <MainTask>Bestimme den Graphen der Funktion g.</MainTask>
+              <p className="serlo-main-task">
+                Bestimme den Graphen der Funktion g.
+              </p>
               <br />
               Der Graph der Funktion <i>f</i>
               <br />
@@ -197,7 +203,7 @@ export function AbbildungGraphen() {
             <>
               Der Funktionsterm von <i>g</i> lautet:
               <br />
-              <HighlightGray>
+              <p className="serlo-highlight-gray">
                 y = {data.a === -1 ? '-' : null}{' '}
                 {buildFrac(
                   <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -216,12 +222,12 @@ export function AbbildungGraphen() {
                 {data.y_dir === 'oben'
                   ? '+ ' + data.y_offset
                   : '- ' + data.y_offset}
-              </HighlightGray>
+              </p>
               <br />
               <br />
               Zusammengefasst:
               <br />
-              <HighlightGreen>
+              <p className="serlo-highlight-green">
                 y = {data.a === -1 ? '-' : null}{' '}
                 {buildFrac(
                   <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -253,7 +259,7 @@ export function AbbildungGraphen() {
                   : null}
                 {data.y_dir === 'unten' && y_Ende_2 === 0 ? null : null}
                 {data.y_dir === 'unten' && y_Ende_2 < 0 ? ' ' + y_Ende_2 : null}
-              </HighlightGreen>
+              </p>
             </>
           )
         if (data.function_type === 2)
@@ -277,7 +283,7 @@ export function AbbildungGraphen() {
               <br />
               Zusammengefasst:
               <br />
-              <HighlightGreen>
+              <p className="serlo-highlight-green">
                 y ={' '}
                 {data.x_dir === 'links' && data.x_s + data.x_offset !== 0
                   ? '('
@@ -317,7 +323,7 @@ export function AbbildungGraphen() {
                 {data.y_dir === 'unten' && data.y_s - data.y_offset !== 0
                   ? data.y_s - data.y_offset
                   : null}
-              </HighlightGreen>
+              </p>
             </>
           )
         if (data.function_type === 3)

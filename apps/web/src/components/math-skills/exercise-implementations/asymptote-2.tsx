@@ -1,11 +1,6 @@
 import JXG from 'jsxgraph'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import {
-  HighlightGray,
-  HighlightGreen,
-  MainTask,
-} from '../components/content-components'
 import { buildJSX, buildLatex } from '../utils/math-builder'
 import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
@@ -36,10 +31,10 @@ export function Asymptote2() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>
+            <p className="serlo-main-task">
               Bestimmen Sie die Definitions-, Wertemenge und Asymptote der
               Funktion mit x, y {buildLatex('\\in \\R')}:
-            </MainTask>
+            </p>
             <p className="serlo-highlight-gray">
               y = {data.a === -1 ? '-' : pp(data.a)}{' '}
               {data.a === -1 ? null : '·'} {data.b === 2.718 ? 'e' : pp(data.b)}
@@ -65,10 +60,10 @@ export function Asymptote2() {
               (der Faktor der Funktion ist {data.a > 0 ? 'positiv' : 'negativ'}
               ):
             </p>
-            <HighlightGreen>
+            <p className="serlo-highlight-green">
               W = {'{'} y |{data.a > 0 ? ' y > ' + data.c : ' y < ' + data.c}
               {'}'}
-            </HighlightGreen>
+            </p>
             <br />
             <br />
             Graph für -6 &#8804; x &#8804; 6 und -6 &#8804; y &#8804; 6 als
@@ -83,16 +78,16 @@ export function Asymptote2() {
         return (
           <>
             Der <strong>Definitionsbereich</strong> einer Exponentialfunktion
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = a · b<sup>x</sup> + c
-            </HighlightGray>
+            </p>
             <br />
             <br />
             ist immer die Menge der reellen Zahlen.
             <br />
             Die <strong>Asyptote</strong> hat immer die Gleichung:
             <br />
-            <HighlightGray>y = c</HighlightGray>
+            <p className="serlo-highlight-gray">y = c</p>
             <br />
             <br />
             Die Asymptote bildet die Grenze zum <strong>Wertebereich</strong>.

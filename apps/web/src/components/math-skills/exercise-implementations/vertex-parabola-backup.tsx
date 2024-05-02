@@ -27,11 +27,13 @@ export function VertexParabolaBackup() {
       renderTask={({ b, isPlus, isPlus_2, c }) => {
         return (
           <>
-            <MainTask>Bestimme die Scheitelform der Parabel:</MainTask>
-            <HighlightGreen>
+            <p className="serlo-main-task">
+              Bestimme die Scheitelform der Parabel:
+            </p>
+            <p className="serlo-highlight-green">
               y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x {isPlus_2 ? '+' : '-'}{' '}
               {c}
-            </HighlightGreen>
+            </p>
           </>
         )
       }}
@@ -39,21 +41,21 @@ export function VertexParabolaBackup() {
         return (
           <>
             Wir formen den Funktionsterm in die Scheitelform um: <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x {isPlus_2 ? '+' : '-'}
               {c}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Wir führen eine quadratische Ergänzung durch. Lies dazu den
             Parameter b im Funktionsterm aus: <br />
-            <HighlightGreen>
+            <p className="serlo-highlight-green">
               y = x<sup>2</sup>{' '}
               <strong>
                 {isPlus ? '+' : '-'} {b}
               </strong>
               x {isPlus_2 ? '+' : '-'} {c}
-            </HighlightGreen>
+            </p>
             <br />
             <br />
             Wir addieren den Term{' '}
@@ -78,7 +80,7 @@ export function VertexParabolaBackup() {
             </span>{' '}
             und subtrahieren ihn zum Schluss wieder:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = x<sup>2</sup>
               {isPlus ? '+' : '-'} <strong>{b}</strong>x +{' '}
               <span className="inline-block scale-y-[3]">(</span>
@@ -99,12 +101,12 @@ export function VertexParabolaBackup() {
               )}
               <span className="inline-block scale-y-[3]">)</span>
               <sup>2</sup>
-            </HighlightGray>
+            </p>
             <br />
             Wenn man den Mischterm etwas umformt, sieht der Term noch mehr wie
             das Ergebnis einer binomischen Formel aus:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = x<sup>2</sup>
               {isPlus ? '+' : '-'} 2 · x · {buildFrac(<>{b}</>, <>2</>)} +{' '}
               <span className="inline-block scale-y-[3]">(</span>
@@ -115,12 +117,12 @@ export function VertexParabolaBackup() {
               {buildFrac(<>{b}</>, <>2</>)}
               <span className="inline-block scale-y-[3]">)</span>
               <sup>2</sup>
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Den vorderen Teil fassen wir zu diesem Binom zusammen:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = <span className="inline-block scale-y-[3]">(</span>x{' '}
               {isPlus ? '+' : '-'} {buildFrac(<>{b}</>, <>2</>)}{' '}
               <span className="inline-block scale-y-[3]">)</span>
@@ -134,12 +136,12 @@ export function VertexParabolaBackup() {
               )}
               <span className="inline-block scale-y-[3]">)</span>
               <sup>2</sup>
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Die Zahlen hinter der Klammer werden auch zusammengefasst:
             <br />
-            <HighlightGreen>
+            <p className="serlo-highlight-green">
               y = <span className="inline-block scale-y-[1.5]">(</span>x{' '}
               {isPlus ? '+' : '-'} {pp(b / 2)}
               <span className="inline-block scale-y-[1.5]">)</span>
@@ -154,7 +156,7 @@ export function VertexParabolaBackup() {
                     : pp(-c - (b / 2) * (b / 2))}
                 </>
               )}
-            </HighlightGreen>
+            </p>
           </>
         )
       }}
@@ -165,13 +167,13 @@ export function VertexParabolaBackup() {
             Lies den Parameter <strong>b</strong> aus dem Funktionsterm ab:
             <br />
             <br />
-            <HighlightGreen>
+            <p className="serlo-highlight-green">
               y = x<sup>2</sup>{' '}
               <strong>
                 {isPlus ? '+' : '-'} {b}
               </strong>
               x {isPlus_2 ? '+' : '-'} {c}
-            </HighlightGreen>
+            </p>
             <br />
             <br />
             Führe eine quadratische Ergänzung durch mit dem Term:

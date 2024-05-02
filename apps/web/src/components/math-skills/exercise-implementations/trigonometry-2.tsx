@@ -41,7 +41,7 @@ export function Trigonometry2() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>
+            <p className="serlo-main-task">
               Gegeben ist das gleichschenklige Dreieck{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">ABC</b>.{' '}
               <br />
@@ -49,7 +49,7 @@ export function Trigonometry2() {
               <span className="overline">AB</span>| = |
               <span className="overline">AC</span>| = {data.ab} cm und ∢ACB ={' '}
               {(180 - data.angle) / 2}°
-            </MainTask>
+            </p>
             {renderDiagram(data)}
             <small className="mb-6 block">
               Skizze ist nicht maßstabsgetreu

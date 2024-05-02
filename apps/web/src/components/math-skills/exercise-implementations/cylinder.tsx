@@ -41,7 +41,9 @@ export function Cylinder() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>Bei dem Zylinder sind folgende Größen gegeben:</MainTask>
+            <p className="serlo-main-task">
+              Bei dem Zylinder sind folgende Größen gegeben:
+            </p>
             <Given data={data} />
             {renderDiagram(data)}
             <small className="mb-6 block">
@@ -99,33 +101,33 @@ function getP1(data: DATA) {
 function Given({ data }: { data: DATA }) {
   if (data.path === 1) {
     return (
-      <MainTask>
+      <p className="serlo-main-task">
         h = {data.h} cm, r = {data.M} cm
-      </MainTask>
+      </p>
     )
   }
   if (data.path === 2) {
     const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
     return (
-      <MainTask>
+      <p className="serlo-main-task">
         V = {result} cm³, r = {data.M} cm
-      </MainTask>
+      </p>
     )
   }
   if (data.path === 3) {
     const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
     return (
-      <MainTask>
+      <p className="serlo-main-task">
         V = {result} cm³, h = {data.h} cm
-      </MainTask>
+      </p>
     )
   }
   if (data.path === 4) {
     const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
     return (
-      <MainTask>
+      <p className="serlo-main-task">
         V = {result} cm³, r = {data.M} cm
-      </MainTask>
+      </p>
     )
   }
 }
@@ -133,11 +135,11 @@ function Task({ data }: { data: DATA }) {
   if (data.path === 1) {
     return (
       <>
-        <MainTask>
+        <p className="serlo-main-task">
           Berechnen Sie das Volumen{' '}
           <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">V</b> des
           Zylinders.
-        </MainTask>{' '}
+        </p>{' '}
         <br />
         <p>Runden Sie auf zwei Stellen nach dem Komma.</p>
       </>
@@ -146,11 +148,11 @@ function Task({ data }: { data: DATA }) {
   if (data.path === 2) {
     return (
       <>
-        <MainTask>
+        <p className="serlo-main-task">
           Berechnen Sie die Höhe{' '}
           <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">h</b> des
           Zylinders.
-        </MainTask>{' '}
+        </p>{' '}
         <br />
         <p>Runden Sie auf eine ganze Zahl.</p>
       </>
@@ -159,11 +161,11 @@ function Task({ data }: { data: DATA }) {
   if (data.path === 3) {
     return (
       <>
-        <MainTask>
+        <p className="serlo-main-task">
           Berechnen Sie den Radius{' '}
           <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">r</b> des
           Zylinders.
-        </MainTask>{' '}
+        </p>{' '}
         <br />
         <p>Runden Sie auf eine ganze Zahl.</p>
       </>
@@ -172,11 +174,11 @@ function Task({ data }: { data: DATA }) {
   if (data.path === 4) {
     return (
       <>
-        <MainTask>
+        <p className="serlo-main-task">
           Berechnen Sie den Oberflächeninhalt{' '}
           <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">O</b> des
           Zylinders.
-        </MainTask>{' '}
+        </p>{' '}
         <br />
         <p>Runden Sie auf zwei Stellen nach dem Komma.</p>
       </>
@@ -188,9 +190,9 @@ function Hint({ data }: { data: DATA }) {
   if (data.path === 1 || data.path === 2 || data.path === 3) {
     return (
       <>
-        <MainTask>
+        <p className="serlo-main-task">
           Verwenden Sie die Formel des Volumens eines Zylinders:
-        </MainTask>
+        </p>
         <p className="serlo-highlight-gray">V = r² · π · h</p>
       </>
     )
@@ -198,13 +200,13 @@ function Hint({ data }: { data: DATA }) {
   if (data.path === 4) {
     return (
       <>
-        <MainTask>
+        <p className="serlo-main-task">
           Verwenden Sie die Formel des Volumens eines Zylinders:
-        </MainTask>
+        </p>
         <p className="serlo-highlight-gray">V = r² · π · h</p>
-        <MainTask>
+        <p className="serlo-main-task">
           Und die Formel des Oberflächeninhalts eines Zylinders:
-        </MainTask>
+        </p>
         <p className="serlo-highlight-gray">O = 2 · r · π · (r + h)</p>
       </>
     )

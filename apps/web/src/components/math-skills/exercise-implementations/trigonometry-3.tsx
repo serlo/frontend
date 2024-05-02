@@ -43,11 +43,11 @@ export function Trigonometry3() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>
+            <p className="serlo-main-task">
               Das Grundstück der Bar &quot;Sonnenuntergang&quot; hat die Form
               des Dreiecks{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">ABC</b>.
-            </MainTask>
+            </p>
             <p className="serlo-main-task">
               Auf dem Grundstücks möchten die Betreiber einen Beach-Bereich
               anlegen. Dazu werden die Seiten{' '}
@@ -112,7 +112,7 @@ export function Trigonometry3() {
           <>
             Im Dreieck ABC gilt:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               cos 𝛼 ={' '}
               {buildFrac(
                 <>
@@ -122,39 +122,39 @@ export function Trigonometry3() {
                   2 · {pp(data.ab)} m · {pp(data.ac)} m
                 </>
               )}
-            </HighlightGray>
+            </p>
             <br />
-            <HighlightGray>𝛼 = {pp(zw)}°</HighlightGray>
+            <p className="serlo-highlight-gray">𝛼 = {pp(zw)}°</p>
             <br />
             <p className="mt-3">Berechne die verkürzten Längen:</p>
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               |<span className="overline">AD</span>| ={' '}
               {buildFrac(<>7</>, <>8</>)} · {pp(data.ab)} m = {pp(achtelbd)} m
-            </HighlightGray>{' '}
+            </p>{' '}
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               |<span className="overline">AE</span>| ={' '}
               {buildFrac(<>7</>, <>8</>)} · {pp(data.ac)} m = {pp(achtelce)} m
-            </HighlightGray>{' '}
+            </p>{' '}
             <br /> <br />
             So ist der Flächeninhalt des Dreiecks ABC: <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               A<sub>ABC</sub> = 0,5 · {pp(data.ab)} m · {pp(data.ac)} m · sin{' '}
               {pp(zw)}° = {pp(A1)} m²
-            </HighlightGray>{' '}
+            </p>{' '}
             <br /> <br />
             Der Flächeninhalt des Dreicks ADE: <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               A<sub>ADE</sub> = 0,5 · {pp(achtelbd)} m ·{pp(achtelce)} m · sin{' '}
               {pp(zw)}
               ° <br />
               <br />A<sub>ADE</sub> = {pp(A2)} m²
-            </HighlightGray>{' '}
+            </p>{' '}
             <br /> <br />
             Somit ist der Flächeninhalt des Vierecks DBCE: <br />
-            <HighlightGreen>
+            <p className="serlo-highlight-green">
               A<sub>DBCE</sub> = {pp(A1)} m² - {pp(A2)} m² = {pp(Erg)} m²
-            </HighlightGreen>
+            </p>
             <p className="mt-3">Antworte:</p>
             <p className="serlo-highlight-green">
               Der Beach-Bereich der Bar hat eine Fläche von {pp(Erg)}&nbsp;m².
@@ -168,7 +168,7 @@ export function Trigonometry3() {
           <>
             Verwende den Kosinussatz:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               cos 𝛼 ={' '}
               {buildFrac(
                 <>
@@ -181,7 +181,7 @@ export function Trigonometry3() {
                   <span className="overline">AC</span>|
                 </>
               )}
-            </HighlightGray>
+            </p>
             <p className="mt-3">
               Berechne die Fläche als Differenz zweier Dreiecksflächen.
             </p>

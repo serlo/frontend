@@ -31,11 +31,11 @@ export function VolumePyramide() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>
+            <p className="serlo-main-task">
               Das Rechteck ABCD ist die Grundfläche der vierseitigen Pyramide{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">ABCDE</b>{' '}
               mit der Höhe {buildOverline('EM')}.
-            </MainTask>
+            </p>
             <p className="serlo-main-task">
               Es gilt: |{buildOverline('AB')}| = {data.ab} cm; |
               {buildOverline('BC')}| = {data.bd} cm; |{buildOverline('EM')}| ={' '}

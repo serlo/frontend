@@ -1,11 +1,6 @@
 import JXG from 'jsxgraph'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import {
-  HighlightGray,
-  HighlightGreen,
-  MainTask,
-} from '../components/content-components'
 import { buildFrac, buildJSX } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -36,8 +31,10 @@ export function PlotFunction() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>Skizziere den Graphen der Funktion:</MainTask>
-            <HighlightGreen>
+            <p className="serlo-main-task">
+              Skizziere den Graphen der Funktion:
+            </p>
+            <p className="serlo-highlight-green">
               y = {data.a === -1 ? '-' : null}{' '}
               {buildFrac(
                 <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -50,7 +47,7 @@ export function PlotFunction() {
               )}{' '}
               {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
               {data.d !== 0 ? data.d : null}
-            </HighlightGreen>
+            </p>
             <br />
             <br />
             <i>
@@ -65,7 +62,7 @@ export function PlotFunction() {
           <>
             Skizziere den Graphen der Funktion:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = {data.a === -1 ? '-' : null}{' '}
               {buildFrac(
                 <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -78,17 +75,17 @@ export function PlotFunction() {
               )}{' '}
               {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
               {data.d !== 0 ? data.d : null}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Zeichne dazu zuerst die waagerechte Asymptote mit der Gleichung:
             <br />
-            <HighlightGray>y = {data.d}</HighlightGray>
+            <p className="serlo-highlight-gray">y = {data.d}</p>
             <br />
             <br />
             Zeichne als Nächstes die senkrechte Asymptote mit der Gleichung:
             <br />
-            <HighlightGray>x = {-data.b}</HighlightGray>
+            <p className="serlo-highlight-gray">x = {-data.b}</p>
             <br />
             <br />
             Berücksichtige den Grad der Funktion und ob der Graph durch ein
@@ -107,7 +104,7 @@ export function PlotFunction() {
           <>
             Diese Funktion hat die Form:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y ={' '}
               {buildFrac(
                 <>a</>,
@@ -116,7 +113,7 @@ export function PlotFunction() {
                 </>
               )}{' '}
               + d
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Dabei sind:

@@ -45,10 +45,10 @@ export function SurfacePyramide() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>
+            <p className="serlo-main-task">
               Das ist die vierseitige Pyramide{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">ABCDE</b>.
-            </MainTask>
+            </p>
             {renderDiagram(data)}
             <small className="mb-6 block">
               Skizze ist nicht maßstabsgetreu

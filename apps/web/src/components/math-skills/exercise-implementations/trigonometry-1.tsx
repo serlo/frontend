@@ -44,12 +44,12 @@ export function Trigonometry1() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>
+            <p className="serlo-main-task">
               Die beiden Geraden{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">AB</b> und{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">CD</b>{' '}
               sind zueinander parallel.
-            </MainTask>
+            </p>
             <p className="mt-2 text-2xl">
               Es gilt |{buildOverline(data.otherRay ? 'SB' : 'SA')}| = {data.as}{' '}
               cm und |{buildOverline(data.otherRay ? 'BD' : 'AC')}| = {data.ac}{' '}
@@ -78,7 +78,7 @@ export function Trigonometry1() {
             Stelle eine Gleichung mit dem Strahlensatz auf:
             <br />
             {data.mode === 'cd' ? (
-              <HighlightGray>
+              <p className="serlo-highlight-gray">
                 {buildFrac(
                   <>
                     |<span className="overline">CD</span>|
@@ -87,7 +87,7 @@ export function Trigonometry1() {
                 )}{' '}
                 ={' '}
                 {buildFrac(<>{data.as + data.ac} cm</>, <>{pp(data.as)} cm</>)}
-              </HighlightGray>
+              </p>
             ) : (
               buildBlock(
                 'gray',
@@ -111,11 +111,11 @@ export function Trigonometry1() {
             Forme die Gleichung nach |<span className="overline">CD</span>| um:{' '}
             <br />
             {data.mode === 'cd' ? (
-              <HighlightGray>
+              <p className="serlo-highlight-gray">
                 ⇔ |<span className="overline">CD</span>| ={' '}
                 {buildFrac(<>{data.as + data.ac} cm</>, <>{data.as} cm</>)} ·{' '}
                 {pp(data.ab)} cm
-              </HighlightGray>
+              </p>
             ) : (
               buildBlock(
                 'gray',
@@ -146,7 +146,7 @@ export function Trigonometry1() {
           <>
             Verwende den Strahlensatz, um eine Gleichung aufzustellen:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               {buildFrac(
                 <>
                   |<span className="overline">CD</span>|
@@ -172,7 +172,7 @@ export function Trigonometry1() {
                   |
                 </>
               )}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Setze die Werte der Längen ein und löse die Gleichung.

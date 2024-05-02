@@ -32,7 +32,9 @@ export function PlotFunction2() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>Skizzieren Sie den Graphen der Funktion:</MainTask>
+            <p className="serlo-main-task">
+              Skizzieren Sie den Graphen der Funktion:
+            </p>
             <p className="serlo-highlight-gray">
               y = {data.a === -1 ? '-' : pp(data.a)}{' '}
               {data.a === -1 ? null : '·'} {data.b === 2.718 ? 'e' : pp(data.b)}
@@ -60,12 +62,12 @@ export function PlotFunction2() {
             <br />
             Zeichne zuerst die Asymptote mit der Gleichung:
             <br />
-            <HighlightGray>y = {data.c}</HighlightGray>
+            <p className="serlo-highlight-gray">y = {data.c}</p>
             <br />
             <br />
             Bestimme die Stelle, durch die der Graph an der y-Achse verläuft:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = {data.a === -1 ? '-' : pp(data.a)}{' '}
               {data.a === -1 ? null : '·'} {data.b === 2.718 ? 'e' : pp(data.b)}
               <sup>0</sup> {data.c > 0 ? '+' : data.c < 0 ? '-' : null}{' '}
@@ -73,7 +75,7 @@ export function PlotFunction2() {
               {data.a === -1 ? '-' : pp(data.a)} {data.a === -1 ? null : '·'} 1{' '}
               {data.c > 0 ? '+' : data.c < 0 ? '-' : null}{' '}
               {data.c !== 0 ? Math.abs(data.c) : null} = {pp(data.a + data.c)}
-            </HighlightGray>
+            </p>
             <p className="mt-3">
               Die Basis ist {data.b > 1 ? 'größer' : 'kleiner'} als 1, daher{' '}
               {data.b > 1
@@ -98,9 +100,9 @@ export function PlotFunction2() {
           <>
             Die Exponentialfunktion hat die Form:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = a · b<sup>x</sup> + c
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Skizziere am Besten zuerst die Asymptote y = c als Hilfslinie.

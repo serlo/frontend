@@ -1,12 +1,6 @@
 /* eslint-disable no-empty-pattern */
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {
-  HighlightGray,
-  HighlightGreen,
-  MainTask,
-} from '../components/content-components'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -29,11 +23,13 @@ export function ABCFormular() {
 
         return (
           <>
-            <MainTask>Bestimmen Sie die Lösungsmenge der Gleichung:</MainTask>
-            <HighlightGreen>
+            <p className="serlo-main-task">
+              Bestimmen Sie die Lösungsmenge der Gleichung:
+            </p>
+            <p className="serlo-highlight-green">
               0 = {a > 1 ? a : ''}x<sup>2</sup> {b > 0 ? '+' : ''} {b}x{' '}
               {c > 0 ? '+' : ''} {c}
-            </HighlightGreen>
+            </p>
           </>
         )
       }}
@@ -43,7 +39,7 @@ export function ABCFormular() {
         return (
           <>
             Verwende die allgemeine Lösungsformel, um die Gleichung zu lösen:
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               x<sub>1,2</sub> ={' '}
               {buildFrac(
                 <>
@@ -51,7 +47,7 @@ export function ABCFormular() {
                 </>,
                 <>2a</>
               )}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Setze{' '}
@@ -68,7 +64,7 @@ export function ABCFormular() {
             </span>{' '}
             ein:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               x<sub>1,2</sub> ={' '}
               {buildFrac(
                 <>
@@ -79,11 +75,11 @@ export function ABCFormular() {
                 </>,
                 <>2 · {a}</>
               )}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Berechne die Potenz und das Produkt unter der Wurzel:
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               x<sub>1,2</sub> ={' '}
               {buildFrac(
                 <>
@@ -94,12 +90,12 @@ export function ABCFormular() {
                 </>,
                 <>2 · {a}</>
               )}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Fasse unter der Wurzel zusammen:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               x<sub>1,2</sub> ={' '}
               {buildFrac(
                 <>
@@ -108,12 +104,12 @@ export function ABCFormular() {
                 </>,
                 <>{2 * a}</>
               )}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Ziehe die Wurzel und fasse weiter zusammen:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               x<sub>1,2</sub> ={' '}
               {buildFrac(
                 <>
@@ -121,12 +117,12 @@ export function ABCFormular() {
                 </>,
                 <>{2 * a}</>
               )}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Daraus ergeben sich die beiden Lösungen:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               x<sub>1</sub> ={' '}
               {buildFrac(
                 <>
@@ -140,9 +136,9 @@ export function ABCFormular() {
                 <>{2 * a}</>
               )}{' '}
               = {(-b + Math.sqrt(b * b - 4 * a * c)) / 2 / a}
-            </HighlightGray>
+            </p>
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               x<sub>2</sub> ={' '}
               {buildFrac(
                 <>
@@ -156,17 +152,17 @@ export function ABCFormular() {
                 <>{2 * a}</>
               )}{' '}
               = {(-b - Math.sqrt(b * b - 4 * a * c)) / 2 / a}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Die Lösungsmenge ist:
             <br />
-            <HighlightGreen>
+            <p className="serlo-highlight-green">
               L = {'{'}
               {(-b - Math.sqrt(b * b - 4 * a * c)) / 2 / a};
               {(-b + Math.sqrt(b * b - 4 * a * c)) / 2 / a}
               {'}'}
-            </HighlightGreen>
+            </p>
           </>
         )
       }}
@@ -175,7 +171,7 @@ export function ABCFormular() {
           <>
             Löse die Gleichung mit der allgemeinen Lösungsformel:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               x<sub>1,2</sub> ={' '}
               {buildFrac(
                 <>
@@ -183,7 +179,7 @@ export function ABCFormular() {
                 </>,
                 <>2a</>
               )}
-            </HighlightGray>
+            </p>
             <br />
             Bestimme dazu <strong>a</strong>, <strong>b</strong> und{' '}
             <strong>c</strong> aus der Gleichung und setze ein.

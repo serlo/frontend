@@ -35,10 +35,12 @@ export function ValueSetParabola() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>Bestimmen Sie die Wertemenge der Parabel:</MainTask>
-            <HighlightGray>
+            <p className="serlo-main-task">
+              Bestimmen Sie die Wertemenge der Parabel:
+            </p>
+            <p className="serlo-highlight-gray">
               y = {data.a ? null : '-'} x<sup>2</sup> + bx + c
-            </HighlightGray>
+            </p>
             <p className="serlo-main-task">
               Der Scheitelpunkt ist gegeben durch S ( {data.b} | {data.c} ).
             </p>
@@ -53,10 +55,10 @@ export function ValueSetParabola() {
             <strong>{data.a === true ? 'oberhalb' : 'unterhalb'}</strong> des
             Scheitels:
             <br />
-            <HighlightGreen>
+            <p className="serlo-highlight-green">
               W = {'{'} y | y {data.a === true ? '≥' : '≤'}{' '}
               {data.c > 0 || data.c === 0 ? data.c : '- ' + -data.c} {'}'}
-            </HighlightGreen>
+            </p>
             <br />
             <br />
             Graph für -10 &#8804; x &#8804; 10 und -10 &#8804; y &#8804; 10 als
@@ -73,14 +75,14 @@ export function ValueSetParabola() {
             Für den Wertebereich untersuchen wir den Öffnungsfaktor und den
             y-Wert des Scheitel der Parabel:
             <br />
-            <HighlightGray>y =</HighlightGray>
+            <p className="serlo-highlight-gray">y =</p>
             <span className="mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3 text-2xl">
               {data.a ? '1 · ' : '(-1) · '}{' '}
             </span>
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               (x {data.b > 0 && data.b !== 0 ? '- ' + data.b : '+ ' + -data.b})
               <sup>2</sup>{' '}
-            </HighlightGray>
+            </p>
             <span className="mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3 text-2xl">
               {data.c > 0 && data.c !== 0 ? '+ ' + data.c : '- ' + -data.c}
             </span>

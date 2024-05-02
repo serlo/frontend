@@ -45,7 +45,7 @@ export function ModellingParabola() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>
+            <p className="serlo-main-task">
               {data.context === 1
                 ? name +
                   ' macht einen Weitsprung. Der Sprung kann mit dem Graphen der Funktion '
@@ -67,7 +67,7 @@ export function ModellingParabola() {
                 {data.context === 1 ? pp(data.b / 2) : pp(data.b)}x
               </span>{' '}
               beschrieben werden.
-            </MainTask>
+            </p>
             <p className="serlo-main-task">
               {data.context === 1
                 ? `x gibt die Weite in Meter, y die Höhe in Meter an. ${name} springt vom x-Wert 0 nach rechts ab.`
@@ -83,7 +83,7 @@ export function ModellingParabola() {
                 ? 'x gibt die Weite in Meter, y die Höhe in Meter an. Der Strahl beginnt und endet beim y-Wert 0.'
                 : null}
             </p>
-            <MainTask>
+            <p className="serlo-main-task">
               {data.context === 1
                 ? `Berechnen Sie die Sprungweite und wie hoch ${name} am höchsten in der Luft war.`
                 : null}
@@ -97,7 +97,7 @@ export function ModellingParabola() {
               {data.context === 4
                 ? 'Berechnen Sie wie weit der Strahl maximal kommt und wie hoch er am höchsten Punkt war.'
                 : null}
-            </MainTask>{' '}
+            </p>{' '}
           </>
         )
       }}
@@ -106,31 +106,31 @@ export function ModellingParabola() {
           <>
             Finde die Nullstellen der Parabel. Klammere dazu - x aus:
             <br />
-            <HighlightGray>0 = - x · (x - {pp(data.b)})</HighlightGray>
+            <p className="serlo-highlight-gray">0 = - x · (x - {pp(data.b)})</p>
             <br />
             Am ersten Faktor erkennen wir die erste Lösung:{' '}
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               x<sub>1</sub> = 0
-            </HighlightGray>
+            </p>
             <br />
             Der zweite Faktor - die Klammer - ist dann 0, wenn:{' '}
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               x<sub>2</sub> = {pp(data.b)}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Die {data.context === 2 ? 'maximale Breite' : 'maximale Weite'} ist
             damit: <br />
-            <HighlightGreen>
+            <p className="serlo-highlight-green">
               x<sub>2</sub> - x<sub>1</sub> = {pp(data.b)} m
-            </HighlightGreen>
+            </p>
             <br />
             <br />
             Für die maximale Höhe muss der Scheitelpunkt der Parabel berechnet
             werden. Da die Nullstellen bekannt sind, können wir die Mitte davon
             als x-Wert des Scheitels bestimmen:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               x<sub>s</sub> ={' '}
               {buildFrac(
                 <>
@@ -139,16 +139,16 @@ export function ModellingParabola() {
                 <>2</>
               )}{' '}
               = {pp(data.b / 2)}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Die Höhe ist damit:
             <br />
-            <HighlightGreen>
+            <p className="serlo-highlight-green">
               y<sub>s</sub> = - {pp(data.b / 2)}
               <sup>2</sup> + {pp(data.b)} · {pp(data.b / 2)} ={' '}
               {pp(-(data.b / 2) * (data.b / 2) + (data.b / 2) * data.b)} m
-            </HighlightGreen>
+            </p>
             <br />
             <br />
             Graph als Hilfe:
@@ -164,10 +164,10 @@ export function ModellingParabola() {
             Für die {data.context === 2 ? 'maximale Breite' : 'maximale Weite'}{' '}
             müssen die Nullstellen der Parabel berechnet werden:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               0 = - x<sup>2</sup> +{' '}
               {data.context === 1 ? pp(data.b / 2) : pp(data.b)}x
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Verwende dazu den Satz des Nullprodukts.

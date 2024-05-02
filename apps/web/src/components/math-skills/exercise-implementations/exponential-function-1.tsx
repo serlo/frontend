@@ -102,9 +102,9 @@ export function ExponentialFunction() {
           <>
             Das angelegte Geld kann mit einer Exponentialfunktion beschrieben
             werden.
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = a · b <sup>x</sup>
-            </HighlightGray>
+            </p>
             <br />
             Dabei steht a für den Anfangswert{' '}
             <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">

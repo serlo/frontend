@@ -27,11 +27,13 @@ export function CompletingTheSquare() {
       renderTask={({ b, isPlus, isPlus_2, c }) => {
         return (
           <>
-            <MainTask>Bestimmen Sie die Scheitelform der Parabel:</MainTask>
-            <HighlightGreen>
+            <p className="serlo-main-task">
+              Bestimmen Sie die Scheitelform der Parabel:
+            </p>
+            <p className="serlo-highlight-green">
               y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x {isPlus_2 ? '+' : '-'}{' '}
               {c}
-            </HighlightGreen>
+            </p>
           </>
         )
       }}
@@ -50,32 +52,32 @@ export function CompletingTheSquare() {
           <>
             Die Scheitelform der Funktion hat diese Form:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = (x - ☐)<sup>2</sup> + ☐
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Nutze die quadratische Ergänzung und bestimme die passenden Werte in
             den Kästchen.
             <br />
             <br />
-            <MainTask>Wert im ersten Kästchen</MainTask>
+            <p className="serlo-main-task">Wert im ersten Kästchen</p>
             <br />
             Denke dir den mittleren Summand, wie er als Mischterm in der
             binomischen Formel erwartet wird:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = x<sup>2</sup> {isPlus ? '+' : '-'} 2 ·{' '}
               <strong>{pp(b / 2)}</strong> · x {isPlus_2 ? '+' : '-'} {c}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Setze ein in das Binom:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = (x {isPlus ? '+' : '-'} <strong>{pp(b / 2)}</strong>)
               <sup>2</sup> + ☐
-            </HighlightGray>
+            </p>
             <br />
             <br />
           </>
@@ -84,16 +86,16 @@ export function CompletingTheSquare() {
           return (
             <>
               {intro}
-              <MainTask>Wert im zweiten Kästchen</MainTask>
+              <p className="serlo-main-task">Wert im zweiten Kästchen</p>
               <br />
               Würden wir das Binom wieder ausschreiben, erhalten wir bereits den
               richtigen Funktionsterm wieder:
               <br />
-              <HighlightGray>
+              <p className="serlo-highlight-gray">
                 y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x{' '}
                 {isPlus_2 ? '+' : '-'}
                 {c}
-              </HighlightGray>
+              </p>
               <br />
               <br />
               Der Wert im zweiten Kästchen ist damit <strong>0</strong>. Das ist
@@ -101,24 +103,24 @@ export function CompletingTheSquare() {
               <br />
               <br />
               Damit lautet die richtige Scheitelform: <br />
-              <HighlightGreen>
+              <p className="serlo-highlight-green">
                 y = (x {isPlus ? '+' : '-'} <strong>{pp(b / 2)}</strong>)
                 <sup>2</sup>
-              </HighlightGreen>
+              </p>
             </>
           )
         return (
           <>
             {intro}
-            <MainTask>Wert im zweiten Kästchen</MainTask>
+            <p className="serlo-main-task">Wert im zweiten Kästchen</p>
             <br />
             Würden wir das Binom so stehen lassen, wäre der Term am Ende nicht
             immer der gleiche wie im ursprünglichen Funktionsterm:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x + {(b / 2) * (b / 2)}{' '}
               + ☐
-            </HighlightGray>
+            </p>
             <br />
             Korrigiere mit dem richtigen Wert, damit am Ende{' '}
             <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
@@ -127,19 +129,19 @@ export function CompletingTheSquare() {
             </span>{' '}
             steht:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x + {(b / 2) * (b / 2)}{' '}
               <strong>{dAlsJsx}</strong>{' '}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Damit lautet die Scheitelform: <br />
-            <HighlightGreen>
+            <p className="serlo-highlight-green">
               y = <span className="inline-block scale-y-[1.5]">(</span>x{' '}
               {isPlus ? '+' : '-'} {pp(b / 2)}
               <span className="inline-block scale-y-[1.5]">)</span>
               <sup>2</sup> <strong>{dAlsJsx}</strong>
-            </HighlightGreen>
+            </p>
           </>
         )
       }}
@@ -149,19 +151,19 @@ export function CompletingTheSquare() {
           return (
             <>
               Schreibe den Funktionsterm in die Scheitelform:
-              <HighlightGray>
+              <p className="serlo-highlight-gray">
                 y = (x - ☐)<sup>2</sup> + ☐
-              </HighlightGray>
+              </p>
               <br />
               <br />
               Bestimme dazu zuerst, welcher Wert im Binom stehen muss, um den
               richtigen Mischterm zu ergeben:
               <br />
-              <HighlightGray>
+              <p className="serlo-highlight-gray">
                 y = x<sup>2</sup> {isPlus ? '+' : '-'} <strong>{b}</strong>x{' '}
                 {isPlus_2 ? '+' : '-'}
                 {c}
-              </HighlightGray>
+              </p>
               <br />
               <br />
               Begründe, warum im zweiten Kästchen eine 0 stehen muss.
@@ -170,19 +172,19 @@ export function CompletingTheSquare() {
         return (
           <>
             Schreibe den Funktionsterm in die Scheitelform:
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = (x - ☐)<sup>2</sup> + ☐
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Bestimme dazu zuerst, welcher Wert im Binom stehen muss, um den
             richtigen Mischterm zu ergeben:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = x<sup>2</sup> {isPlus ? '+' : '-'} <strong>{b}</strong>x{' '}
               {isPlus_2 ? '+' : '-'}
               {c}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Mache eine Probe und rechne das Binom aus, um zu bestimmen, was der

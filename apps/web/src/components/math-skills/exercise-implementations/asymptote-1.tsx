@@ -42,10 +42,10 @@ export function Asymptote1() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>
+            <p className="serlo-main-task">
               Bestimme die Definitions-, Wertemenge und Asymptote der Funktion:
-            </MainTask>
-            <HighlightGreen>
+            </p>
+            <p className="serlo-highlight-green">
               y = {data.a === -1 ? '-' : null}{' '}
               {buildFrac(
                 <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -58,7 +58,7 @@ export function Asymptote1() {
               )}{' '}
               {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
               {data.d !== 0 ? data.d : null}
-            </HighlightGreen>
+            </p>
           </>
         )
       }}
@@ -69,7 +69,7 @@ export function Asymptote1() {
             Bestimme Definitions- und Wertebereich, sowie Asymptoten der
             Funktion:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = {data.a === -1 ? '-' : null}{' '}
               {buildFrac(
                 <>{data.a !== -1 ? data.a : -data.a}</>,
@@ -82,24 +82,24 @@ export function Asymptote1() {
               )}{' '}
               {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
               {data.d !== 0 ? data.d : null}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Die Definitionsmenge ist die Menge aller reellen Zahlen, so dass der
             Nenner nicht 0 ist:
             <br />
-            <HighlightGreen>
+            <p className="serlo-highlight-green">
               D = R \ {'{'}
               {-data.b}
               {'}'}
-            </HighlightGreen>
+            </p>
             <br />
             <br />
             Der Graph hat zwei Asymptoten mit den Gleichungen:
             <br />
-            <HighlightGreen>
+            <p className="serlo-highlight-green">
               y = {data.d} und x = {-data.b}
-            </HighlightGreen>
+            </p>
             <br />
             <br />
             Der Wertebereich setzt sich aus allen reellen Zahlen zusammen, die
@@ -116,14 +116,14 @@ export function Asymptote1() {
               ? 'Diese Funktion hat einen ungeraden Grad. Sie nimmt alle Werte an, bis auf den der Asymptote:'
               : null}
             <br />
-            <HighlightGreen>
+            <p className="serlo-highlight-green">
               W = {'{'} y |
               {data.a > 0 && data.c % 2 === 0 ? ' y > ' + data.d : null}
               {data.a < 0 && data.c % 2 === 0 ? ' y < ' + data.d : null}
               {data.c % 2 !== 0 ? ' y ≠ ' : null}
               {data.c % 2 !== 0 ? data.d : null}
               {' }'}
-            </HighlightGreen>
+            </p>
             <br />
             <br />
             Graph für -6 &#8804; x &#8804; 6 und -6 &#8804; y &#8804; 6 als
@@ -138,7 +138,7 @@ export function Asymptote1() {
         return (
           <>
             Der <strong>Definitionsbereich</strong> einer Funktion der Form
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y ={' '}
               {buildFrac(
                 <>a</>,
@@ -147,14 +147,14 @@ export function Asymptote1() {
                 </>
               )}{' '}
               + d
-            </HighlightGray>
+            </p>
             <br />
             <br />
             ist immer die Menge aller reellen Zahlen außer der Stelle b.
             <br />
             Die <strong>Asymptoten</strong> haben immer die Gleichungen:
             <br />
-            <HighlightGray>y = d, x = b</HighlightGray>
+            <p className="serlo-highlight-gray">y = d, x = b</p>
             <br />
             <br />
             Der <strong>Wertebereich</strong> ist abhängig vom Grad und der

@@ -19,11 +19,13 @@ export function VertexParabola() {
       renderTask={({ b, isPlus, isPlus_2, c }) => {
         return (
           <>
-            <MainTask>Bestimmen Sie die Scheitelform der Parabel:</MainTask>
-            <HighlightGreen>
+            <p className="serlo-main-task">
+              Bestimmen Sie die Scheitelform der Parabel:
+            </p>
+            <p className="serlo-highlight-green">
               y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x {isPlus_2 ? '+' : '-'}{' '}
               {c}
-            </HighlightGreen>
+            </p>
           </>
         )
       }}
@@ -73,12 +75,12 @@ export function VertexParabola() {
               </span>{' '}
               für diese Parabel:
             </p>
-            <HighlightGreen>
+            <p className="serlo-highlight-green">
               y = <span className="inline-block scale-y-[1.5]">(</span>x{' '}
               {isPlus ? '+' : '-'} {pp(b / 2)}
               <span className="inline-block scale-y-[1.5]">)</span>
               <sup>2</sup> {dAlsJsx}
-            </HighlightGreen>
+            </p>
           </>
         )
       }}
