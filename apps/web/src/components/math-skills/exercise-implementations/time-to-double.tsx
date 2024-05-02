@@ -22,8 +22,8 @@ export function TimeToDouble() {
           </p>
           <p className="serlo-main-task">
             Nehmen Sie an, dass Sie ihr Können durch tägliches Üben jeden Tag um{' '}
-            {pp(data.p)}&nbsp;% verbessern. Nach wie vielen
-            Tagen haben Sie ihr Können {gToText(data.g)}?
+            {pp(data.p)}&nbsp;% verbessern. Nach wie vielen Tagen haben Sie ihr
+            Können {gToText(data.g)}?
           </p>
         </>
       )}
@@ -34,8 +34,7 @@ export function TimeToDouble() {
           <>
             <p>Berechne den Wachstumsfaktor:</p>
             <p className="serlo-highlight-gray">
-              a = 1 + {buildFrac(pp(data.p), 100)} ={' '}
-              {pp(a)}
+              a = 1 + {buildFrac(pp(data.p), 100)} = {pp(a)}
             </p>
             <p>
               x beschreibt die Anzahl der Tage. Stelle die passende Gleichung
