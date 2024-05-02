@@ -776,7 +776,7 @@ export const loggedInData = {
           unorderedList: "Aufzählung",
           lists: "Listen",
           mathFormula: "Matheformel (%ctrlOrCmd% + M)",
-          code: 'Code (%ctrlOrCmd% + ⇧ + `)',
+          code: 'Code (%ctrlOrCmd% + ⇧ + C)',
           blank: "Lücke",
           createBlank: "Lücke erstellen",
           removeBlank: "Lücke entfernen",
