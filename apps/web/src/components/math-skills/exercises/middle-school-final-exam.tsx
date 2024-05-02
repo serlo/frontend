@@ -118,14 +118,6 @@ export const middleSchoolFinalExam = {
     track: 1,
     component: <LogarithmExercise2 />,
   },
-  'schraegbild-zeichnen': {
-    title: 'Schrägbild zeichnen',
-    subtitle: 'Raumgeometrie',
-    difficulty: 1,
-    calculatorAllowed: false,
-    track: 3,
-    component: <ObliqueImage />,
-  },
   strahlensatz: {
     title: 'Strahlensatz Einführung',
     subtitle: 'Geometrie',
@@ -165,6 +157,14 @@ export const middleSchoolFinalExam = {
     calculatorAllowed: false,
     track: 1,
     component: <Parallelogram3 />,
+  },
+  'schraegbild-zeichnen': {
+    title: 'Schrägbild zeichnen',
+    subtitle: 'Raumgeometrie',
+    difficulty: 1,
+    calculatorAllowed: false,
+    track: 3,
+    component: <ObliqueImage />,
   },
   // Einschub Zweig 2
   'normalform-parabel': {
@@ -407,6 +407,14 @@ export const middleSchoolFinalExam = {
     track: 3,
     component: <PlaceholderExercise />,
   },
+  'wip-4': {
+    title: 'Parabel bestimmen 🚧',
+    subtitle: 'Quadratische Funktionen',
+    calculatorAllowed: true,
+    difficulty: 1,
+    track: 2,
+    component: <PlaceholderExercise />,
+  },
   'parabel-aus-punkten-bestimmen': {
     title: 'Parabel aus Punkten bestimmen',
     subtitle: 'Quadratische Funktionen',
@@ -414,6 +422,22 @@ export const middleSchoolFinalExam = {
     track: 2,
     difficulty: 2,
     component: <ParabolaCharacteristics />,
+  },
+  'wip-5': {
+    title: 'Flächeninhalt aufstellen 🚧',
+    subtitle: 'Quadratische Funktionen',
+    calculatorAllowed: true,
+    difficulty: 1,
+    track: 2,
+    component: <PlaceholderExercise />,
+  },
+  'wip-6': {
+    title: 'Flächeninhalt bestimmen 🚧',
+    subtitle: 'Quadratische Gleichungen',
+    calculatorAllowed: true,
+    difficulty: 1,
+    track: 2,
+    component: <PlaceholderExercise />,
   },
   'baumdiagramm-zeichnen': {
     title: 'Baumdiagramm zeichnen',

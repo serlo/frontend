@@ -47,7 +47,11 @@ const topicMap = {
   Potenzfunktionen: { tracks: [1], subtitles: ['Potenzfunktion'] },
   'Quadratische Funktionen & Gleichungen': {
     tracks: [2],
-    subtitles: ['Quadratische Funktionen', 'Funktionen'],
+    subtitles: [
+      'Quadratische Funktionen',
+      'Funktionen',
+      'Quadratische Gleichungen',
+    ],
   },
   'Exponentialfunktion & Logarithmus': {
     tracks: [1, 2],
