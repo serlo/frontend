@@ -25,7 +25,7 @@ export class EditorWebComponent extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['initial-state']
+    return ['initial-state', 'mode']
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
