@@ -100,7 +100,7 @@ function Given({ data }: { data: DATA }) {
   if (data.path === 1) {
     return (
       <MainTask>
-        h = {data.h} cm, r = {data.M} cm
+        h = {data.h.toLocaleString('de-De')} cm, r = {data.M.toLocaleString('de-De')} cm
       </MainTask>
     )
   }
@@ -108,7 +108,7 @@ function Given({ data }: { data: DATA }) {
     const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
     return (
       <MainTask>
-        V = {result} cm³, r = {data.M} cm
+        V = {result.toLocaleString('de-De')} cm³, r = {data.M.toLocaleString('de-De')} cm
       </MainTask>
     )
   }
@@ -116,7 +116,7 @@ function Given({ data }: { data: DATA }) {
     const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
     return (
       <MainTask>
-        V = {result} cm³, h = {data.h} cm
+        V = {result.toLocaleString('de-De')} cm³, h = {data.h.toLocaleString('de-De')} cm
       </MainTask>
     )
   }
@@ -124,7 +124,7 @@ function Given({ data }: { data: DATA }) {
     const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
     return (
       <MainTask>
-        V = {result} cm³, r = {data.M} cm
+        V = {result.toLocaleString('de-De')} cm³, r = {data.M.toLocaleString('de-De')} cm
       </MainTask>
     )
   }
@@ -220,11 +220,11 @@ function Solution({ data }: { data: DATA }) {
         <p className="serlo-highlight-gray">V = r² · π · h</p>
         <p> Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
-          V = ({data.M} cm)² · π · {data.h} cm
+          V = ({data.M.toLocaleString('de-De')} cm)² · π · {data.h.toLocaleString('de-De')} cm
         </p>
         <p> Berechne das Ergebnis:</p>
         <p className="serlo-highlight-gray">
-          V = {Math.pow(data.M, 2)} cm² · π · {data.h} cm
+          V = {Math.pow(data.M, 2).toLocaleString('de-De')} cm² · π · {data.h.toLocaleString('de-De')} cm
         </p>{' '}
         <br />
         <p className="serlo-highlight-green">
@@ -241,11 +241,11 @@ function Solution({ data }: { data: DATA }) {
         <p className="serlo-highlight-gray">V = r² · π · h</p>
         <p> Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
-          {result} cm³ = ({data.M} cm)² · π · h
+          {result.toLocaleString('de-De')} cm³ = ({data.M.toLocaleString('de-De')} cm)² · π · h
         </p>
         <p>Stelle nach h um:</p>
         <p className="serlo-highlight-gray">
-          h = {buildFrac(<>{result} cm³</>, <>({data.M} cm)² · π</>)}
+          h = {buildFrac(<>{result.toLocaleString('de-De')} cm³</>, <>({data.M.toLocaleString('de-De')} cm)² · π</>)}
         </p>{' '}
         <br />
         <p className="serlo-highlight-green">
@@ -262,18 +262,18 @@ function Solution({ data }: { data: DATA }) {
         <p className="serlo-highlight-gray">V = r² · π · h</p>
         <p> Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
-          {result} cm³ = r² · π · {data.h} cm
+          {result.toLocaleString('de-De')} cm³ = r² · π · {data.h.toLocaleString('de-De')} cm
         </p>
         <p>Stelle nach r um:</p>
         <p className="serlo-highlight-gray">
           r ={' '}
           {buildSqrt(
-            <>{buildFrac(<>{result} cm³</>, <>({data.h} cm) · π</>)}</>
+            <>{buildFrac(<>{result.toLocaleString('de-De')} cm³</>, <>({data.h.toLocaleString('de-De')} cm) · π</>)}</>
           )}
         </p>{' '}
         <br />
         <p className="serlo-highlight-green">
-          r ≈ {data.c1b.toLocaleString('de-De')} cm
+          r ≈ {data.M.toLocaleString('de-De')} cm
         </p>
       </>
     )
@@ -289,11 +289,11 @@ function Solution({ data }: { data: DATA }) {
         <p className="serlo-highlight-gray">V = r² · π · h</p>
         <p> Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
-          {result} cm³ = ({data.M} cm)² · π · h
+          {result.toLocaleString('de-De')} cm³ = ({data.M.toLocaleString('de-De')} cm)² · π · h
         </p>
         <p>Stelle nach h um:</p>
         <p className="serlo-highlight-gray">
-          h = {buildFrac(<>{result} cm³</>, <>({data.M} cm)² · π</>)}
+          h = {buildFrac(<>{result.toLocaleString('de-De')} cm³</>, <>({data.M.toLocaleString('de-De')} cm)² · π</>)}
         </p>{' '}
         <br />
         <p className="serlo-highlight-gray">
@@ -301,7 +301,7 @@ function Solution({ data }: { data: DATA }) {
         </p>
         <p>Setze alle Werte in die Gleichung des Oberflächeninhaltes ein:</p>
         <p className="serlo-highlight-gray">
-          O = 2 · {data.M} cm · π · ({data.M} cm + {data.h} cm)
+          O = 2 · {data.M.toLocaleString('de-De')} cm · π · ({data.M.toLocaleString('de-De')} cm + {data.h.toLocaleString('de-De')} cm)
         </p>{' '}
         <br />
         <p className="serlo-highlight-green">
