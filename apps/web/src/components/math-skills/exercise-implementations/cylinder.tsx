@@ -1,8 +1,7 @@
 import JXG from 'jsxgraph'
-import { pi } from 'mathjs'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { buildFrac, buildJSX, buildSqrt } from '../utils/math-builder'
+import { buildBigSqrt, buildFrac, buildJSX } from '../utils/math-builder'
 import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 
@@ -13,6 +12,8 @@ interface DATA {
   M: number
   path: number
 }
+
+const pi = 3.14159265359
 
 export function Cylinder() {
   return (
@@ -268,7 +269,7 @@ function Solution({ data }: { data: DATA }) {
         <p>Stelle nach r um:</p>
         <p className="serlo-highlight-gray">
           r ={' '}
-          {buildSqrt(
+          {buildBigSqrt(
             <>
               {buildFrac(
                 <>{result.toLocaleString('de-De')} cm³</>,
