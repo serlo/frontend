@@ -1,14 +1,9 @@
 import JXG from 'jsxgraph'
 import { pi } from 'mathjs'
-import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import {
-  MainTask,
-  //HighlightGray,
-  //HighlightGreen,
-} from '../components/content-components'
-import { buildFrac, buildSqrt } from '../utils/math-builder'
+import { buildFrac, buildJSX, buildSqrt } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 
 interface DATA {
@@ -41,9 +36,11 @@ export function Cylinder() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>Bei dem Zylinder sind folgende Größen gegeben:</MainTask>
+            <p className="serlo-main-task">
+              Bei dem Zylinder sind folgende Größen gegeben:
+            </p>
             <Given data={data} />
-            <SubComponent data={data} />
+            {renderDiagram(data)}
             <small className="mb-6 block">
               Skizze ist nicht maßstabsgetreu
             </small>
@@ -99,33 +96,33 @@ function getP1(data: DATA) {
 function Given({ data }: { data: DATA }) {
   if (data.path === 1) {
     return (
-      <MainTask>
-        h = {data.h.toLocaleString('de-De')} cm, r = {data.M.toLocaleString('de-De')} cm
-      </MainTask>
+      <p className="serlo-main-task">
+        h = {pp(data.h)} cm, r = {pp(data.M)} cm
+      </p>
     )
   }
   if (data.path === 2) {
     const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
     return (
-      <MainTask>
-        V = {result.toLocaleString('de-De')} cm³, r = {data.M.toLocaleString('de-De')} cm
-      </MainTask>
+      <p className="serlo-main-task">
+        V = {pp(result)} cm³, r = {pp(data.M)} cm
+      </p>
     )
   }
   if (data.path === 3) {
     const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
     return (
-      <MainTask>
-        V = {result.toLocaleString('de-De')} cm³, h = {data.h.toLocaleString('de-De')} cm
-      </MainTask>
+      <p className="serlo-main-task">
+        V = {pp(result)} cm³, h = {pp(data.h)} cm
+      </p>
     )
   }
   if (data.path === 4) {
     const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
     return (
-      <MainTask>
-        V = {result.toLocaleString('de-De')} cm³, r = {data.M.toLocaleString('de-De')} cm
-      </MainTask>
+      <p className="serlo-main-task">
+        V = {pp(result)} cm³, r = {pp(data.M)} cm
+      </p>
     )
   }
 }
@@ -133,11 +130,11 @@ function Task({ data }: { data: DATA }) {
   if (data.path === 1) {
     return (
       <>
-        <MainTask>
+        <p className="serlo-main-task">
           Berechnen Sie das Volumen{' '}
           <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">V</b> des
           Zylinders.
-        </MainTask>{' '}
+        </p>{' '}
         <br />
         <p>Runden Sie auf zwei Stellen nach dem Komma.</p>
       </>
@@ -146,11 +143,11 @@ function Task({ data }: { data: DATA }) {
   if (data.path === 2) {
     return (
       <>
-        <MainTask>
+        <p className="serlo-main-task">
           Berechnen Sie die Höhe{' '}
           <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">h</b> des
           Zylinders.
-        </MainTask>{' '}
+        </p>{' '}
         <br />
         <p>Runden Sie auf eine ganze Zahl.</p>
       </>
@@ -159,11 +156,11 @@ function Task({ data }: { data: DATA }) {
   if (data.path === 3) {
     return (
       <>
-        <MainTask>
+        <p className="serlo-main-task">
           Berechnen Sie den Radius{' '}
           <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">r</b> des
           Zylinders.
-        </MainTask>{' '}
+        </p>{' '}
         <br />
         <p>Runden Sie auf eine ganze Zahl.</p>
       </>
@@ -172,11 +169,11 @@ function Task({ data }: { data: DATA }) {
   if (data.path === 4) {
     return (
       <>
-        <MainTask>
+        <p className="serlo-main-task">
           Berechnen Sie den Oberflächeninhalt{' '}
           <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">O</b> des
           Zylinders.
-        </MainTask>{' '}
+        </p>{' '}
         <br />
         <p>Runden Sie auf zwei Stellen nach dem Komma.</p>
       </>
@@ -188,9 +185,9 @@ function Hint({ data }: { data: DATA }) {
   if (data.path === 1 || data.path === 2 || data.path === 3) {
     return (
       <>
-        <MainTask>
+        <p className="serlo-main-task">
           Verwenden Sie die Formel des Volumens eines Zylinders:
-        </MainTask>
+        </p>
         <p className="serlo-highlight-gray">V = r² · π · h</p>
       </>
     )
@@ -198,13 +195,13 @@ function Hint({ data }: { data: DATA }) {
   if (data.path === 4) {
     return (
       <>
-        <MainTask>
+        <p className="serlo-main-task">
           Verwenden Sie die Formel des Volumens eines Zylinders:
-        </MainTask>
+        </p>
         <p className="serlo-highlight-gray">V = r² · π · h</p>
-        <MainTask>
+        <p className="serlo-main-task">
           Und die Formel des Oberflächeninhalts eines Zylinders:
-        </MainTask>
+        </p>
         <p className="serlo-highlight-gray">O = 2 · r · π · (r + h)</p>
       </>
     )
@@ -216,20 +213,18 @@ function Solution({ data }: { data: DATA }) {
     const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
     return (
       <>
-        <p> Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
+        <p>Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
         <p className="serlo-highlight-gray">V = r² · π · h</p>
-        <p> Setze die Angaben in die Gleichung ein:</p>
+        <p>Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
           V = ({data.M.toLocaleString('de-De')} cm)² · π · {data.h.toLocaleString('de-De')} cm
         </p>
-        <p> Berechne das Ergebnis:</p>
+        <p>Berechne das Ergebnis:</p>
         <p className="serlo-highlight-gray">
           V = {Math.pow(data.M, 2).toLocaleString('de-De')} cm² · π · {data.h.toLocaleString('de-De')} cm
         </p>{' '}
         <br />
-        <p className="serlo-highlight-green">
-          V = {result.toLocaleString('de-De')} cm³
-        </p>
+        <p className="serlo-highlight-green">V = {pp(result)} cm³</p>
       </>
     )
   }
@@ -237,9 +232,9 @@ function Solution({ data }: { data: DATA }) {
     const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
     return (
       <>
-        <p> Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
+        <p>Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
         <p className="serlo-highlight-gray">V = r² · π · h</p>
-        <p> Setze die Angaben in die Gleichung ein:</p>
+        <p>Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
           {result.toLocaleString('de-De')} cm³ = ({data.M.toLocaleString('de-De')} cm)² · π · h
         </p>
@@ -248,9 +243,7 @@ function Solution({ data }: { data: DATA }) {
           h = {buildFrac(<>{result.toLocaleString('de-De')} cm³</>, <>({data.M.toLocaleString('de-De')} cm)² · π</>)}
         </p>{' '}
         <br />
-        <p className="serlo-highlight-green">
-          h ≈ {data.h.toLocaleString('de-De')} cm
-        </p>
+        <p className="serlo-highlight-green">h ≈ {pp(data.h)} cm</p>
       </>
     )
   }
@@ -258,9 +251,9 @@ function Solution({ data }: { data: DATA }) {
     const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
     return (
       <>
-        <p> Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
+        <p>Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
         <p className="serlo-highlight-gray">V = r² · π · h</p>
-        <p> Setze die Angaben in die Gleichung ein:</p>
+        <p>Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
           {result.toLocaleString('de-De')} cm³ = r² · π · {data.h.toLocaleString('de-De')} cm
         </p>
@@ -272,9 +265,7 @@ function Solution({ data }: { data: DATA }) {
           )}
         </p>{' '}
         <br />
-        <p className="serlo-highlight-green">
-          r ≈ {data.M.toLocaleString('de-De')} cm
-        </p>
+        <p className="serlo-highlight-green">r ≈ {pp(data.c1b)} cm</p>
       </>
     )
   }
@@ -285,9 +276,9 @@ function Solution({ data }: { data: DATA }) {
       <>
         <p>Stelle die Gleichung für den Oberflächeninhalt auf:</p>
         <p className="serlo-highlight-gray">O = 2 · r · π · (r + h)</p>
-        <p> Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
+        <p>Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
         <p className="serlo-highlight-gray">V = r² · π · h</p>
-        <p> Setze die Angaben in die Gleichung ein:</p>
+        <p>Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
           {result.toLocaleString('de-De')} cm³ = ({data.M.toLocaleString('de-De')} cm)² · π · h
         </p>
@@ -296,17 +287,13 @@ function Solution({ data }: { data: DATA }) {
           h = {buildFrac(<>{result.toLocaleString('de-De')} cm³</>, <>({data.M.toLocaleString('de-De')} cm)² · π</>)}
         </p>{' '}
         <br />
-        <p className="serlo-highlight-gray">
-          h ≈ {data.h.toLocaleString('de-De')} cm
-        </p>
+        <p className="serlo-highlight-gray">h ≈ {pp(data.h)} cm</p>
         <p>Setze alle Werte in die Gleichung des Oberflächeninhaltes ein:</p>
         <p className="serlo-highlight-gray">
           O = 2 · {data.M.toLocaleString('de-De')} cm · π · ({data.M.toLocaleString('de-De')} cm + {data.h.toLocaleString('de-De')} cm)
         </p>{' '}
         <br />
-        <p className="serlo-highlight-green">
-          O = {ob.toLocaleString('de-De')} cm²
-        </p>
+        <p className="serlo-highlight-green">O = {pp(ob)} cm²</p>
       </>
     )
   }
@@ -344,18 +331,12 @@ function getX2(data: DATA) {
   }
 }
 
-function SubComponent({ data }: { data: DATA }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
+function renderDiagram(data: DATA) {
   const hi = data.h
   const hiMi = hi + 1
   const x2 = data.c1b
   const Mi = x2 / 2
-
-  // const P2 = x2 + 0.14
-
-  useEffect(() => {
+  return buildJSX(() => {
     const b = JXG.JSXGraph.initBoard('jxgbox', {
       boundingbox: [-2, 6, 10, -2],
       showNavigation: false,
@@ -466,33 +447,6 @@ function SubComponent({ data }: { data: DATA }) {
       straightLast: false,
       strokeWidth: 2,
     })
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
-  )
+    return b
+  }, data)
 }

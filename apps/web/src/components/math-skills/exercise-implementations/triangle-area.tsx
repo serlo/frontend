@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react'
-
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { autoResizeBoundingBox } from '../utils/auto-resize-bounding-box'
-import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
-import { buildFrac, buildOverline } from '../utils/math-builder'
+import { buildFrac, buildJSX, buildOverline } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { rotatePoint } from '../utils/rotate-point'
 import { roundToDigits } from '../utils/round-to-digits'
 import { randomIntBetween } from '@/helper/random-int-between'
@@ -58,14 +56,13 @@ export function TriangleArea() {
               {data.p3}.
             </p>
             <p className="serlo-main-task">
-              Es gilt: |{buildOverline(data.p2 + data.p3)}| ={' '}
-              {data.len.toLocaleString('de-De')} cm, |
-              {buildOverline(data.p2 + data.p1)}| ={' '}
-              {data.len2.toLocaleString('de-De')} cm und ∢{data.p3}
+              Es gilt: |{buildOverline(data.p2 + data.p3)}| = {pp(data.len)} cm,
+              |{buildOverline(data.p2 + data.p1)}| = {pp(data.len2)} cm und ∢
+              {data.p3}
               {data.p2}
               {data.p1} = {data.angle}°.
             </p>
-            <SubComponent data={data} />
+            {renderDiagram(data)}
             <p className="serlo-main-task">
               Berechnen Sie den Flächeninhalt des Dreiecks ABC.
             </p>
@@ -99,8 +96,7 @@ export function TriangleArea() {
                   {data.p2}
                   {data.p3}
                 </sub>{' '}
-                = {buildFrac(1, 2)} · {data.len.toLocaleString('de-De')} ·{' '}
-                {data.len2.toLocaleString('de-De')}
+                = {buildFrac(1, 2)} · {pp(data.len)} · {pp(data.len2)}
               </p>
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
@@ -142,8 +138,8 @@ export function TriangleArea() {
                 {data.p2}
                 {data.p3}
               </sub>{' '}
-              = {buildFrac(1, 2)} · {data.len.toLocaleString('de-De')} ·{' '}
-              {data.len2.toLocaleString('de-De')} · sin {data.angle}°
+              = {buildFrac(1, 2)} · {pp(data.len)} · {pp(data.len2)} · sin{' '}
+              {data.angle}°
             </p>
             <p>Berechne das Ergebnis:</p>
             <p className="serlo-highlight-green">
@@ -154,13 +150,15 @@ export function TriangleArea() {
                 {data.p3}
               </sub>{' '}
               ={' '}
-              {roundToDigits(
-                (data.len *
-                  data.len2 *
-                  Math.sin((data.angle / 180) * Math.PI)) /
-                  2,
-                2
-              ).toLocaleString('de-De')}{' '}
+              {pp(
+                roundToDigits(
+                  (data.len *
+                    data.len2 *
+                    Math.sin((data.angle / 180) * Math.PI)) /
+                    2,
+                  2
+                )
+              )}{' '}
               cm²
             </p>
           </>
@@ -170,11 +168,7 @@ export function TriangleArea() {
   )
 }
 
-function SubComponent({ data }: { data: DATA }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
+function renderDiagram(data: DATA) {
   const randomAngle = randomIntBetween(0, 359)
 
   const [p1_x, p1_y] = rotatePoint(data.len2, 0, -data.angle + randomAngle)
@@ -187,8 +181,7 @@ function SubComponent({ data }: { data: DATA }) {
   ])
 
   const dim = boundingbox[2] - boundingbox[0]
-
-  useEffect(() => {
+  return buildJSX(() => {
     const b = JXG.JSXGraph.initBoard('jxgbox', {
       boundingbox,
       showNavigation: false,
@@ -221,13 +214,6 @@ function SubComponent({ data }: { data: DATA }) {
       withLabel: false,
     })
 
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return <JSXGraphWrapper id="jxgbox" width={300} height={300} />
+    return b
+  }, data)
 }

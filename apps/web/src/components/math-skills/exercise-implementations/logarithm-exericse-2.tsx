@@ -1,5 +1,4 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { HighlightGray, MainTask } from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -19,7 +18,9 @@ export function LogarithmExercise2() {
       renderTask={({ num, isPlus, varName, logBase, breaker }) => {
         return (
           <>
-            <MainTask>Fassen Sie zu einem Logarithmus zusammen:</MainTask>
+            <p className="serlo-main-task">
+              Fassen Sie zu einem Logarithmus zusammen:
+            </p>
             <p className="serlo-highlight-gray">
               log&#8202;<sub>{logBase}</sub>({varName}² -{' '}
               {breaker ? Math.pow(num + 1, 2) : num * num}) - log&#8202;
@@ -32,7 +33,7 @@ export function LogarithmExercise2() {
         if (breaker) {
           return (
             <>
-              <p> Forme um mit den Logarithmusgesetzen:</p>
+              <p>Forme um mit den Logarithmusgesetzen:</p>
               <p className="serlo-highlight-gray">
                 log&#8202;<sub>{logBase}</sub>
                 <span className="inline-block scale-y-[2.5]">(</span>
@@ -54,7 +55,7 @@ export function LogarithmExercise2() {
           <>
             Forme um mit den Logarithmusgesetzen:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               log&#8202;<sub>{logBase}</sub>
               <span className="inline-block scale-y-[2.5]">(</span>
               {buildFrac(
@@ -66,12 +67,12 @@ export function LogarithmExercise2() {
                 </>
               )}
               <span className="inline-block scale-y-[2.5]">)</span>
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Wende die 3. binomische Formel im Zähler an:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               log&#8202;<sub>{logBase}</sub>
               <span className="inline-block scale-y-[2.5]">(</span>
               {buildFrac(
@@ -83,7 +84,7 @@ export function LogarithmExercise2() {
                 </>
               )}
               <span className="inline-block scale-y-[2.5]">)</span>
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Kürze mit {varName} {isPlus ? '+' : '-'} {num} und erhalte das

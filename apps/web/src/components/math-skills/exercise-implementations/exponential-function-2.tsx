@@ -1,7 +1,7 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { HighlightGray } from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 
 export function ExponentialFunctionTime() {
@@ -22,8 +22,7 @@ export function ExponentialFunctionTime() {
             <p className="serlo-main-task">
               Im Jahr {Jahr_Anlage}{' '}
               {data.name ? `legt ${data.name}` : 'legst Du'} {Money_Start} € an.
-              Jedes Jahr wird das Kapital mit {Zins.toLocaleString('de-De')} %
-              verzinst.
+              Jedes Jahr wird das Kapital mit {pp(Zins)} % verzinst.
             </p>
             <p className="serlo-main-task">
               Bestimmen Sie, am Ende von wie vielen Jahren das Kapital erstmal
@@ -44,28 +43,25 @@ export function ExponentialFunctionTime() {
           <>
             <p>Berechne den Wachstumsfaktor:</p>
             <p className="serlo-highlight-gray">
-              a = 1 + {buildFrac(Zins.toLocaleString('de-De'), 100)} ={' '}
-              {Faktor.toLocaleString('de-De')}
+              a = 1 + {buildFrac(pp(Zins), 100)} = {pp(Faktor)}
             </p>
             <p>
               Stelle die passende Exponentialgleichung auf. x gibt die Anzahl
               der Jahre ab Start der Anlage an, y gibt das Kapital an:
             </p>
             <p className="serlo-highlight-gray">
-              y = {Money_Start} · {Faktor.toLocaleString('de-De')}
+              y = {Money_Start} · {pp(Faktor)}
               <sup>x</sup>
             </p>
             <p>Setze {Geld_Ende} für y ein und löse die Gleichung:</p>
             <p className="serlo-highlight-gray">
-              {Geld_Ende} = {Money_Start} · {Faktor.toLocaleString('de-De')}
+              {Geld_Ende} = {Money_Start} · {pp(Faktor)}
               <sup>x</sup> &nbsp;&nbsp;&nbsp;&nbsp;| : {Money_Start}
               <br />
-              {yDurchk.toLocaleString('de-De')} ={' '}
-              {Faktor.toLocaleString('de-De')}
+              {pp(yDurchk)} = {pp(Faktor)}
               <sup>x</sup>
-              <br />x = log<sub>{Faktor.toLocaleString('de-De')}</sub>{' '}
-              {yDurchk.toLocaleString('de-De')}
-              <br />x = {Zeit.toLocaleString('de-De')}
+              <br />x = log<sub>{pp(Faktor)}</sub> {pp(yDurchk)}
+              <br />x = {pp(Zeit)}
             </p>
             <p>Antworte:</p>
             <p className="serlo-highlight-green">
@@ -81,9 +77,9 @@ export function ExponentialFunctionTime() {
           <>
             Das angelegte Geld kann mit einer Exponentialfunktion beschrieben
             werden.
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = a · b <sup>x</sup>
-            </HighlightGray>
+            </p>
             <br />
             Dabei steht a für den Anfangswert{' '}
             <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
@@ -91,7 +87,7 @@ export function ExponentialFunctionTime() {
             </span>{' '}
             und b für die Wachstumsrate{' '}
             <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
-              {Faktor.toString().replace('.', ',')}.
+              {pp(Faktor)}.
             </span>
             <br />
             <br />

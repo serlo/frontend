@@ -1,17 +1,9 @@
 import JXG from 'jsxgraph'
-import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import {
-  MainTask,
-  HighlightGray,
-  HighlightGreen,
-} from '../components/content-components'
-import { buildSqrt } from '../utils/math-builder'
+import { buildJSX, buildSqrt } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
-
-// JXG.Options.label.autoPosition = true
 
 interface Trig1Data {
   as: number
@@ -43,11 +35,11 @@ export function Trigonometry() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>
+            <p className="serlo-main-task">
               Gegeben ist das Dreieck{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">ABS</b>.
-            </MainTask>
-            <SubComponent data={data} />
+            </p>
+            {renderDiagram(data)}
             <small className="mb-6 block">
               Skizze ist nicht maßstabsgetreu
             </small>
@@ -69,13 +61,13 @@ export function Trigonometry() {
           <>
             Wende den Kosinussatz an:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               |<span className="overline">SB</span>|² = ({data.as} cm)² + (
               {data.ab} cm)²
               <br />
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-
               2 · {data.as} cm · {data.ab} cm · cos 60°
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Nutze{' '}
@@ -84,19 +76,19 @@ export function Trigonometry() {
             </span>{' '}
             und berechne:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               |<span className="overline">SB</span>|² ={' '}
               {data.as * data.as + data.ab * data.ab} cm² -{' '}
               {2 * data.as * data.ab * 0.5} cm² = {data.sb_sq} cm²
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Ziehe die Wurzel. Das Ergebnis ist bestätigt.
             <br />
-            <HighlightGreen>
+            <p className="serlo-highlight-green">
               |<span className="overline">SB</span>| ={' '}
               {buildSqrt(<>{data.sb_sq}</>)} cm
-            </HighlightGreen>
+            </p>
             <br />
             <br />
           </>
@@ -108,13 +100,13 @@ export function Trigonometry() {
           <>
             Verwende den Kosinussatz:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               |<span className="overline">SB</span>|² = |
               <span className="overline">AS</span>|² + |
               <span className="overline">AB</span>|² - 2 · |
               <span className="overline">AS</span>| · |
               <span className="overline">AB</span>| · cos(&#945;)
-            </HighlightGray>
+            </p>
           </>
         )
       }}
@@ -122,12 +114,8 @@ export function Trigonometry() {
   )
 }
 
-function SubComponent({ data }: { data: Trig1Data }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
-  useEffect(() => {
+function renderDiagram(data: Trig1Data) {
+  return buildJSX(() => {
     const b = JXG.JSXGraph.initBoard('jxgbox', {
       boundingbox: [-2, 6, 7, -2],
       showNavigation: false,
@@ -171,33 +159,6 @@ function SubComponent({ data }: { data: Trig1Data }) {
     })
 
     b.create('text', [4.2, 2.5, `${data.ab} cm`], {})
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
-  )
+    return b
+  }, data)
 }

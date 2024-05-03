@@ -1,10 +1,8 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { MainTask, HighlightGreen } from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
-
-// JXG.Options.label.autoPosition = true
 
 export function VertexParabola() {
   return (
@@ -20,11 +18,13 @@ export function VertexParabola() {
       renderTask={({ b, isPlus, isPlus_2, c }) => {
         return (
           <>
-            <MainTask>Bestimmen Sie die Scheitelform der Parabel:</MainTask>
-            <HighlightGreen>
+            <p className="serlo-main-task">
+              Bestimmen Sie die Scheitelform der Parabel:
+            </p>
+            <p className="serlo-highlight-green">
               y = x<sup>2</sup> {isPlus ? '+' : '-'} {b}x {isPlus_2 ? '+' : '-'}{' '}
               {c}
-            </HighlightGreen>
+            </p>
           </>
         )
       }}
@@ -65,7 +65,7 @@ export function VertexParabola() {
                 <>4</>
               )}{' '}
               <span className="inline-block scale-y-[2.5]">)</span> = S ({' '}
-              {(-bAlsZahl / 2).toString().replace('.', ',')} | {dAlsJsx})
+              {pp(-bAlsZahl / 2)} | {dAlsJsx})
             </p>
             <p>
               Damit lautet die Scheitelform{' '}
@@ -74,12 +74,12 @@ export function VertexParabola() {
               </span>{' '}
               für diese Parabel:
             </p>
-            <HighlightGreen>
+            <p className="serlo-highlight-green">
               y = <span className="inline-block scale-y-[1.5]">(</span>x{' '}
-              {isPlus ? '+' : '-'} {(b / 2).toString().replace('.', ',')}
+              {isPlus ? '+' : '-'} {pp(b / 2)}
               <span className="inline-block scale-y-[1.5]">)</span>
               <sup>2</sup> {dAlsJsx}
-            </HighlightGreen>
+            </p>
           </>
         )
       }}

@@ -1,13 +1,8 @@
 import JXG from 'jsxgraph'
-import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import {
-  HighlightGray,
-  HighlightGreen,
-  MainTask,
-} from '../components/content-components'
-import { buildLatex } from '../utils/math-builder'
+import { buildJSX, buildLatex } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -36,14 +31,13 @@ export function Asymptote2() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>
+            <p className="serlo-main-task">
               Bestimmen Sie die Definitions-, Wertemenge und Asymptote der
               Funktion mit x, y {buildLatex('\\in \\R')}:
-            </MainTask>
+            </p>
             <p className="serlo-highlight-gray">
-              y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
-              {data.a === -1 ? null : '·'}{' '}
-              {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
+              y = {data.a === -1 ? '-' : pp(data.a)}{' '}
+              {data.a === -1 ? null : '·'} {data.b === 2.718 ? 'e' : pp(data.b)}
               <sup>x</sup> {data.c > 0 ? '+' : data.c < 0 ? '-' : null}{' '}
               {data.c !== 0 ? data.c : null}
             </p>
@@ -66,16 +60,16 @@ export function Asymptote2() {
               (der Faktor der Funktion ist {data.a > 0 ? 'positiv' : 'negativ'}
               ):
             </p>
-            <HighlightGreen>
+            <p className="serlo-highlight-green">
               W = {'{'} y |{data.a > 0 ? ' y > ' + data.c : ' y < ' + data.c}
               {'}'}
-            </HighlightGreen>
+            </p>
             <br />
             <br />
             Graph für -6 &#8804; x &#8804; 6 und -6 &#8804; y &#8804; 6 als
             Hilfe:
             <br />
-            <SubComponent data={data} />
+            {renderDiagram(data)}
           </>
         )
       }}
@@ -84,16 +78,16 @@ export function Asymptote2() {
         return (
           <>
             Der <strong>Definitionsbereich</strong> einer Exponentialfunktion
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = a · b<sup>x</sup> + c
-            </HighlightGray>
+            </p>
             <br />
             <br />
             ist immer die Menge der reellen Zahlen.
             <br />
             Die <strong>Asyptote</strong> hat immer die Gleichung:
             <br />
-            <HighlightGray>y = c</HighlightGray>
+            <p className="serlo-highlight-gray">y = c</p>
             <br />
             <br />
             Die Asymptote bildet die Grenze zum <strong>Wertebereich</strong>.
@@ -104,63 +98,34 @@ export function Asymptote2() {
       }}
     />
   )
-}
-function SubComponent({ data }: { data: PlotData }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-  useEffect(() => {
-    const x = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox: [-6, 6, 6, -6],
-      showNavigation: false,
-      showCopyright: false,
-    })
 
-    x.create('axis', [
-      [0.0, 0.0],
-      [0.0, 1.0],
-    ])
-    x.create('axis', [
-      [0.0, 0.0],
-      [1.0, 0.0],
-    ])
+  function renderDiagram(data: PlotData) {
+    return buildJSX(() => {
+      const x = JXG.JSXGraph.initBoard('jxgbox', {
+        boundingbox: [-6, 6, 6, -6],
+        showNavigation: false,
+        showCopyright: false,
+      })
 
-    x.create('text', [5.5, 0.75, `x`], {})
-    x.create('text', [0.5, 5.5, `y`], {})
-    x.create('functiongraph', [
-      function (x: number) {
-        return data.a * Math.pow(data.b, x) + data.c
-      },
-      -6,
-      6,
-    ])
-    setBoard(x)
+      x.create('axis', [
+        [0.0, 0.0],
+        [0.0, 1.0],
+      ])
+      x.create('axis', [
+        [0.0, 0.0],
+        [1.0, 0.0],
+      ])
 
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
-  )
+      x.create('text', [5.5, 0.75, `x`], {})
+      x.create('text', [0.5, 5.5, `y`], {})
+      x.create('functiongraph', [
+        function (x: number) {
+          return data.a * Math.pow(data.b, x) + data.c
+        },
+        -6,
+        6,
+      ])
+      return x
+    }, data)
+  }
 }

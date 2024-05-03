@@ -1,5 +1,6 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { buildFrac } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -55,10 +56,7 @@ export function Tombola() {
               </p>
               <p className="serlo-highlight-green">
                 P(Niete) = {buildFrac(data.lose - data.gewinne, data.lose)} ={' '}
-                {(
-                  Math.round((data.nieten / data.lose) * 10000) / 100
-                ).toLocaleString('de-De')}{' '}
-                %
+                {pp(Math.round((data.nieten / data.lose) * 10000) / 100)} %
               </p>
             </>
           )
@@ -72,10 +70,7 @@ export function Tombola() {
               </p>
               <p className="serlo-highlight-green">
                 P(Gewinn-Los) = {buildFrac(data.gewinne, data.lose)} ={' '}
-                {(
-                  Math.round((data.gewinne / data.lose) * 10000) / 100
-                ).toLocaleString('de-De')}{' '}
-                %
+                {pp(Math.round((data.gewinne / data.lose) * 10000) / 100)} %
               </p>
             </>
           )
@@ -91,9 +86,7 @@ export function Tombola() {
               <p className="serlo-highlight-green">
                 P(Gewinn-Los; 6) = {buildFrac(data.gewinne, data.lose)} ·{' '}
                 {buildFrac(1, 6)} ={' '}
-                {(
-                  Math.round(((data.gewinne / data.lose) * 10000) / 6) / 100
-                ).toLocaleString('de-De')}{' '}
+                {pp(Math.round(((data.gewinne / data.lose) * 10000) / 6) / 100)}{' '}
                 %
               </p>
             </>
@@ -109,9 +102,9 @@ export function Tombola() {
             <p className="serlo-highlight-green">
               P(Gewinn-Los; keine 6) = {buildFrac(data.gewinne, data.lose)} ·{' '}
               {buildFrac(5, 6)} ={' '}
-              {(
+              {pp(
                 Math.round(((data.gewinne / data.lose) * 10000 * 5) / 6) / 100
-              ).toLocaleString('de-De')}{' '}
+              )}{' '}
               %
             </p>
           </>

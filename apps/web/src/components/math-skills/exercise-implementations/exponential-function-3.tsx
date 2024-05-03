@@ -1,5 +1,4 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { HighlightGray } from '../components/content-components'
 import { buildBlock, buildLatex } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -83,10 +82,10 @@ export function ExponentialEquation() {
             Stelle diese Gleichung um, sodass auf einer Seite nur noch die
             Potenz steht.
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               {power} = {b}
               <sup>x</sup>
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Die Gleichung lässt sich als Frage umformulieren:

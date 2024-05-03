@@ -1,10 +1,12 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { buildLatex } from '../utils/math-builder'
-import { useMathSkillsStorage } from '../utils/math-skills-data-context'
+import { useMathSkillsName } from '../utils/math-skills-data-context'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 
 export function RootEquations() {
-  const { data } = useMathSkillsStorage()
+  const name = useMathSkillsName()
+
   return (
     <SelfEvaluationExercise
       generator={() => {
@@ -20,10 +22,9 @@ export function RootEquations() {
           <>
             <div className="text-lg">
               <p className="serlo-main-task">
-                {data.name ?? 'Tea'} hatte im Jahr {Start_Jahr} auf ihrem
-                Ink-Star-Account {Money_Start} Follower. Heute beträgt die
-                Anzahl der Follower {Money_Ende}. Gehen Sie von einem
-                exponentiellen Wachstum aus.
+                {name} hatte im Jahr {Start_Jahr} auf ihrem Ink-Star-Account{' '}
+                {Money_Start} Follower. Heute beträgt die Anzahl der Follower{' '}
+                {Money_Ende}. Gehen Sie von einem exponentiellen Wachstum aus.
               </p>
               <p className="serlo-main-task">
                 Berechnen Sie, um wie viel Prozent die Anzahl der Follower pro
@@ -74,8 +75,7 @@ export function RootEquations() {
               {Money_Start} teilst:
             </p>
             <p className="serlo-highlight-gray">
-              {intermediate.toLocaleString('de-De')} = x{' '}
-              <sup>{Aktuelles_Jahr - Start_Jahr}</sup>
+              {pp(intermediate)} = x <sup>{Aktuelles_Jahr - Start_Jahr}</sup>
             </p>
             <p>
               Ziehe die {Aktuelles_Jahr - Start_Jahr}
@@ -83,18 +83,15 @@ export function RootEquations() {
             </p>
             <p className="serlo-highlight-gray">
               {buildLatex(
-                `\\sqrt[${Aktuelles_Jahr - Start_Jahr}]{${intermediate.toLocaleString('de-De')}}`
+                `\\sqrt[${Aktuelles_Jahr - Start_Jahr}]{${pp(intermediate)}}`
               )}{' '}
               = x
             </p>
             <p>Mit dem Taschenrechner berechnet sich das Ergebnis zu:</p>
-            <p className="serlo-highlight-gray">
-              x = {result.toLocaleString('de-De')}
-            </p>
+            <p className="serlo-highlight-gray">x = {pp(result)}</p>
             <p>Entnehme aus dem Wert den Prozentsatz:</p>
             <p className="serlo-highlight-green">
-              Das jährliche Wachstum beträgt {zinssatz.toLocaleString('de-De')}{' '}
-              %.
+              Das jährliche Wachstum beträgt {pp(zinssatz)} %.
             </p>
           </>
         )

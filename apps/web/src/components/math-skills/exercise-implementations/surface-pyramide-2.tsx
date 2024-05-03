@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import JXG from 'jsxgraph'
-import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { MainTask } from '../components/content-components'
-import { buildBigSqrt, buildFrac, buildSqrt } from '../utils/math-builder'
+import {
+  buildBigSqrt,
+  buildFrac,
+  buildJSX,
+  buildSqrt,
+} from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
-
-// JXG.Options.label.autoPosition = true
 
 interface PyraData {
   ab: number
@@ -45,12 +47,12 @@ export function SurfaceThreePyramide() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>
+            <p className="serlo-main-task">
               Das ist die dreiseitige Pyramide{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">ABCE</b>{' '}
               mit einer gleichseitigen Grundfläche.
-            </MainTask>
-            <SubComponent data={data} />
+            </p>
+            {renderDiagram(data)}
             <small className="mb-6 block">
               Skizze ist nicht maßstabsgetreu
             </small>
@@ -141,25 +143,22 @@ export function SurfaceThreePyramide() {
             </span>{' '}
             <br />
             <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
-              h<sub>a</sub> = {ha.toLocaleString('de-DE')} cm
+              h<sub>a</sub> = {pp(ha)} cm
             </span>{' '}
             <br /> <br />
             Nun kannst du h<sub>a</sub> in die Mantelflächenformel einsetzen:{' '}
             <br />
             <span className="mb-5 mt-3 inline-block rounded-md bg-gray-300 bg-opacity-20 p-1 px-3 text-2xl">
               M<sub>a</sub> = {buildFrac(<>1</>, <>2</>)} · {data.ab} cm ·{' '}
-              {ha.toLocaleString('de-DE')} cm <br />M<sub>a</sub> ={' '}
-              {Ma.toLocaleString('de-DE')} cm²
-              <br />M =3 * {Ma.toLocaleString('de-DE')} cm² <br />M ={' '}
-              {M.toLocaleString('de-DE')} cm² <br /> <br />
-              A = G + M <br />A = {G.toLocaleString('de-DE')} cm² +{' '}
-              {M.toLocaleString('de-DE')} cm²
+              {pp(ha)} cm <br />M<sub>a</sub> = {pp(Ma)} cm²
+              <br />M =3 * {pp(Ma)} cm² <br />M = {pp(M)} cm² <br /> <br />
+              A = G + M <br />A = {pp(G)} cm² + {pp(M)} cm²
             </span>{' '}
             <br /> <br />
             <strong>Ergebnis:</strong>
             <br />
             <span className="mt-5 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-              A = {(G + M).toLocaleString('de-DE')} cm²
+              A = {pp(G + M)} cm²
             </span>
           </>
         )
@@ -168,12 +167,8 @@ export function SurfaceThreePyramide() {
   )
 }
 
-function SubComponent({ data }: { data: PyraData }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
-  useEffect(() => {
+function renderDiagram(data: PyraData) {
+  return buildJSX(() => {
     const b = JXG.JSXGraph.initBoard('jxgbox', {
       boundingbox: [-1, 6, 7, -2],
       showNavigation: false,
@@ -231,33 +226,6 @@ function SubComponent({ data }: { data: PyraData }) {
       anchorY: 'top',
     })
     b.create('text', [2.6, 2, `${data.me} cm`], {})
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
-  )
+    return b
+  }, data)
 }

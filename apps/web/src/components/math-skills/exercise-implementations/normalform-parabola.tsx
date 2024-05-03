@@ -3,16 +3,9 @@ import JXG from 'jsxgraph'
 import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import {
-  MainTask,
-  HighlightGreen,
-  HighlightGray,
-} from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
-
-// JXG.Options.label.autoPosition = true
 
 export function NormalformParabola() {
   return (
@@ -28,11 +21,13 @@ export function NormalformParabola() {
       renderTask={({ x_s, isPlus, isPlus_2, y_s }) => {
         return (
           <>
-            <MainTask>Bestimmen Sie die Normalform der Parabel:</MainTask>
-            <HighlightGreen>
+            <p className="serlo-main-task">
+              Bestimmen Sie die Normalform der Parabel:
+            </p>
+            <p className="serlo-highlight-green">
               y = (x {isPlus ? '+' : '-'} {x_s})<sup>2</sup>{' '}
               {isPlus_2 ? '+' : '-'} {y_s}
-            </HighlightGreen>
+            </p>
           </>
         )
       }}
@@ -40,31 +35,31 @@ export function NormalformParabola() {
         return (
           <>
             Aufgabenstellung: <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = (x {isPlus ? '+' : '-'} {x_s})<sup>2</sup>{' '}
               {isPlus_2 ? '+' : '-'} {y_s}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Wende die binomischen Formeln an:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = [ x<sup>2</sup> {isPlus ? '+' : '-'} 2 · {x_s} · x + {x_s}
               <sup>2</sup> ] {isPlus_2 ? '+' : '-'} {y_s}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Berechne den Mischterm und die Potenz:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = [ x<sup>2</sup> {isPlus ? '+' : '-'} {2 * x_s}x + {x_s * x_s}{' '}
               ] {isPlus_2 ? '+' : '-'} {y_s}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Fasse den Term zusammen:
             <br />
-            <HighlightGreen>
+            <p className="serlo-highlight-green">
               {x_s * x_s - y_s === 0 && !isPlus_2 ? (
                 <>
                   y = x<sup>2</sup> {isPlus ? '+' : '-'} {2 * x_s} x
@@ -80,7 +75,7 @@ export function NormalformParabola() {
                   {isPlus_2 ? x_s * x_s + y_s : x_s * x_s - y_s}
                 </>
               )}
-            </HighlightGreen>
+            </p>
           </>
         )
       }}
@@ -90,10 +85,10 @@ export function NormalformParabola() {
           <>
             Verwende die binomische Formel:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               (a {isPlus ? '+' : '-'} b) = a² {isPlus ? '+' : '-'} 2 · a · b +
               b²
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Fasse den Term am Ende zusammen.

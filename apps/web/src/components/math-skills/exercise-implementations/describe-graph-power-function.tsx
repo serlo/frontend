@@ -1,8 +1,6 @@
-import { useState, useEffect } from 'react'
-
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
-import { buildBlock } from '../utils/math-builder'
+import { buildBlock, buildJSX } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
 interface DATA {
@@ -16,11 +14,7 @@ export function DescribeGraphPowerFunction() {
   function renderF(data: DATA) {
     return (
       <>
-        {data.k === -1
-          ? '-'
-          : data.k === 1
-            ? null
-            : data.k.toLocaleString('de-DE')}
+        {data.k === -1 ? '-' : data.k === 1 ? null : pp(data.k)}
         {data.c === null ? (
           'x'
         ) : (
@@ -79,7 +73,7 @@ export function DescribeGraphPowerFunction() {
             <p className="mt-8 italic">
               Skizze (nicht Teil der Aufgabenstellung):
             </p>
-            <SubComponent data={data} />
+            {renderDiagram(data)}
           </>
         )
         if (data.n === 1) {
@@ -107,7 +101,7 @@ export function DescribeGraphPowerFunction() {
                 ) : (
                   <>
                     hat die Steigung {data.k > 0 ? '+' : '-'}{' '}
-                    {Math.abs(data.k).toLocaleString('de-De')}.
+                    {pp(Math.abs(data.k))}.
                   </>
                 )}
                 {data.c !== null && (
@@ -128,9 +122,8 @@ export function DescribeGraphPowerFunction() {
             <>
               <p className="text-xl">
                 Der Graph ist eine nach {data.k > 0 ? 'oben' : 'unten'}{' '}
-                geöffnete Parabel mit dem Öffnungsfaktor{' '}
-                {data.k.toLocaleString('de-De')} und dem Scheitel S ({' '}
-                {-(data.c ?? 0)} | {data.d ?? 0} ).
+                geöffnete Parabel mit dem Öffnungsfaktor {pp(data.k)} und dem
+                Scheitel S ( {-(data.c ?? 0)} | {data.d ?? 0} ).
               </p>
               {graph}
             </>
@@ -144,8 +137,7 @@ export function DescribeGraphPowerFunction() {
                 {data.n % 2 !== 0
                   ? 'zum Ursprung punktsymmetrische'
                   : 'zur y-Achse symmetrische'}{' '}
-                Hyperbel mit dem Vorfaktor{' '}
-                {Math.abs(data.k).toLocaleString('de-De')}. Die
+                Hyperbel mit dem Vorfaktor {pp(Math.abs(data.k))}. Die
                 Koordinatenachsen sind die Asymptoten. Der Graph verläuft durch
                 den{' '}
                 {data.n % 2 === 0
@@ -168,9 +160,8 @@ export function DescribeGraphPowerFunction() {
               {data.n % 2 !== 0
                 ? 'zum Ursprung punktsymmetrische'
                 : 'zur y-Achse symmetrische'}{' '}
-              Potenzfunktion mit dem Vorfaktor{' '}
-              {Math.abs(data.k).toLocaleString('de-De')}. Der Graph verläuft
-              durch den Ursprung und den{' '}
+              Potenzfunktion mit dem Vorfaktor {pp(Math.abs(data.k))}. Der Graph
+              verläuft durch den Ursprung und den{' '}
               {data.n % 2 === 0
                 ? data.k > 0
                   ? 'I. und II.'
@@ -188,12 +179,8 @@ export function DescribeGraphPowerFunction() {
   )
 }
 
-function SubComponent({ data }: { data: DATA }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
-  useEffect(() => {
+function renderDiagram(data: DATA) {
+  return buildJSX(() => {
     const b = JXG.JSXGraph.initBoard('jxgbox', {
       boundingbox: [-5, 5, 5, -5],
       showNavigation: false,
@@ -224,13 +211,6 @@ function SubComponent({ data }: { data: DATA }) {
       })
     }
 
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return <JSXGraphWrapper id="jxgbox" width={300} height={300} />
+    return b
+  }, data)
 }

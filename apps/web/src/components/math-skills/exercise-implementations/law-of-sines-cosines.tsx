@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react'
-
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { autoResizeBoundingBox } from '../utils/auto-resize-bounding-box'
-import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
-import { buildFrac, buildSqrt } from '../utils/math-builder'
+import { buildFrac, buildJSX, buildSqrt } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { rotatePoint } from '../utils/rotate-point'
 import { roundToDigits } from '../utils/round-to-digits'
 import { randomIntBetween } from '@/helper/random-int-between'
@@ -124,7 +122,7 @@ export function LawOfSinesCosines() {
               {printGiven(data, 0)}, {printGiven(data, 1)} und{' '}
               {printGiven(data, 2)}
             </p>
-            <SubComponent data={data} />
+            {renderDiagram(data)}
             <p className="serlo-main-task">
               Berechnen Sie die Größe{' '}
               <strong className="text-newgreen">
@@ -161,16 +159,13 @@ export function LawOfSinesCosines() {
                 {data.variant.goal} ={' '}
                 {buildSqrt(
                   <>
-                    {x.toLocaleString('de-De')}² + {z.toLocaleString('de-De')}²
-                    - 2 · {x.toLocaleString('de-De')} ·{' '}
-                    {z.toLocaleString('de-De')} · cos{' '}
-                    {y.toLocaleString('de-De')}°
+                    {pp(x)}² + {pp(z)}² - 2 · {pp(x)} · {pp(z)} · cos {pp(y)}°
                   </>
                 )}
               </p>
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
-                {data.variant.goal} = {result.toLocaleString('de-De')} cm
+                {data.variant.goal} = {pp(result)} cm
               </p>
             </>
           )
@@ -200,19 +195,16 @@ export function LawOfSinesCosines() {
                 cos {elToString(data.variant.goal)} ={' '}
                 {buildFrac(
                   <>
-                    {x.toLocaleString('de-De')}² + {y.toLocaleString('de-De')}²
-                    - {z.toLocaleString('de-De')}²
+                    {pp(x)}² + {pp(y)}² - {pp(z)}²
                   </>,
                   <>
-                    2 · {x.toLocaleString('de-De')} ·{' '}
-                    {y.toLocaleString('de-De')}
+                    2 · {pp(x)} · {pp(y)}
                   </>
                 )}
               </p>
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
-                {elToString(data.variant.goal)} ={' '}
-                {result.toLocaleString('de-De')}°
+                {elToString(data.variant.goal)} = {pp(result)}°
               </p>
             </>
           )
@@ -240,16 +232,11 @@ export function LawOfSinesCosines() {
               <p>Stelle die Gleichung um und setze gegebene Größen ein:</p>
               <p className="serlo-highlight-gray">
                 sin {elToString(data.variant.goal)} ={' '}
-                {buildFrac(
-                  <>sin {z.toLocaleString('de-De')}°</>,
-                  x.toLocaleString('de-De')
-                )}{' '}
-                · {y.toLocaleString('de-De')}
+                {buildFrac(<>sin {pp(z)}°</>, pp(x))} · {pp(y)}
               </p>
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
-                {elToString(data.variant.goal)} ={' '}
-                {result.toLocaleString('de-De')}°
+                {elToString(data.variant.goal)} = {pp(result)}°
               </p>
             </>
           )
@@ -274,9 +261,8 @@ export function LawOfSinesCosines() {
               Berechne den dritten Winkel über die Innenwinkelsumme im Dreieck:
             </p>
             <p className="serlo-highlight-gray">
-              {elToString(lastAngleElement)} = 180° -{' '}
-              {x.toLocaleString('de-De')}° - {z.toLocaleString('de-De')}° ={' '}
-              {w.toLocaleString('de-De')}°
+              {elToString(lastAngleElement)} = 180° - {pp(x)}° - {pp(z)}° ={' '}
+              {pp(w)}°
             </p>
             <p>Stelle eine Gleichung mit dem Sinussatz auf:</p>
             <p className="serlo-highlight-gray">
@@ -292,17 +278,12 @@ export function LawOfSinesCosines() {
             </p>
             <p>Stelle die Gleichung um und setze gegebene Größen ein:</p>
             <p className="serlo-highlight-gray">
-              {data.variant.goal} ={' '}
-              {buildFrac(
-                y.toLocaleString('de-De'),
-                <>sin {w.toLocaleString('de-De')}°</>
-              )}{' '}
-              · sin {z.toLocaleString('de-De')}°
+              {data.variant.goal} = {buildFrac(pp(y), <>sin {pp(w)}°</>)} · sin{' '}
+              {pp(z)}°
             </p>
             <p>Berechne das Ergebnis:</p>
             <p className="serlo-highlight-green">
-              {elToString(data.variant.goal)} = {result.toLocaleString('de-De')}{' '}
-              cm
+              {elToString(data.variant.goal)} = {pp(result)} cm
             </p>
           </>
         )
@@ -311,11 +292,7 @@ export function LawOfSinesCosines() {
   )
 }
 
-function SubComponent({ data }: { data: DATA }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
+function renderDiagram(data: DATA) {
   const preB_x = data.c
   const preB_y = 0
 
@@ -333,7 +310,7 @@ function SubComponent({ data }: { data: DATA }) {
 
   const dim = boundingbox[2] - boundingbox[0]
 
-  useEffect(() => {
+  return buildJSX(() => {
     const b = JXG.JSXGraph.initBoard('jxgbox', {
       boundingbox,
       showNavigation: false,
@@ -424,13 +401,6 @@ function SubComponent({ data }: { data: DATA }) {
       })
     }
 
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return <JSXGraphWrapper id="jxgbox" width={300} height={300} />
+    return b
+  }, data)
 }

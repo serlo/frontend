@@ -167,8 +167,8 @@ export function ObliqueImage() {
                     g.create('segment', [pointD, pointS])
                     return g
                   },
-                  'solPyra',
-                  data
+                  data,
+                  { id: 'solPyra' }
                 )
               : null}
             {data.koerper === 'quader'
@@ -286,8 +286,8 @@ export function ObliqueImage() {
 
                     return x
                   },
-                  'solQuader',
-                  data
+                  data,
+                  { id: 'solQuader' }
                 )
               : null}
             <br />

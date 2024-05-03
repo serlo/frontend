@@ -1,5 +1,4 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { MainTask, HighlightGray } from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -61,7 +60,9 @@ export function LogarithmExercise1() {
         }
         return (
           <>
-            <MainTask>Fassen Sie zu einem Logarithmus zusammen:</MainTask>
+            <p className="serlo-main-task">
+              Fassen Sie zu einem Logarithmus zusammen:
+            </p>
             <p className="serlo-highlight-gray">
               {summands.map((el, i) => renderSummand(el, i))}
             </p>
@@ -99,16 +100,16 @@ export function LogarithmExercise1() {
               <>
                 Ziehe die Vorfaktoren in den Logarithmus:
                 <br />
-                <HighlightGray>
+                <p className="serlo-highlight-gray">
                   {summands.map((el, i) => renderSummandAllInside(el, i))}
-                </HighlightGray>
+                </p>
                 <br />
                 <br />
               </>
             )}
             Fasse zusammen mithilfe der Logarithmusregeln:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               {summands.some((s) => s.exponent < 0) ? (
                 <>
                   log&#8202;<sub>{logBase}</sub>
@@ -156,7 +157,7 @@ export function LogarithmExercise1() {
                   )
                 </>
               )}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Vereinfache und erhalte das Ergebnis: <br />

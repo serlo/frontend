@@ -1,8 +1,8 @@
 import JXG from 'jsxgraph'
-import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { MainTask, HighlightGray } from '../components/content-components'
+import { buildJSX } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -31,11 +31,12 @@ export function PlotFunction2() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>Skizzieren Sie den Graphen der Funktion:</MainTask>
+            <p className="serlo-main-task">
+              Skizzieren Sie den Graphen der Funktion:
+            </p>
             <p className="serlo-highlight-gray">
-              y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
-              {data.a === -1 ? null : '·'}{' '}
-              {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
+              y = {data.a === -1 ? '-' : pp(data.a)}{' '}
+              {data.a === -1 ? null : '·'} {data.b === 2.718 ? 'e' : pp(data.b)}
               <sup>x</sup> {data.c > 0 ? '+' : data.c < 0 ? '-' : null}{' '}
               {data.c !== 0 ? Math.abs(data.c) : null}
             </p>
@@ -60,23 +61,20 @@ export function PlotFunction2() {
             <br />
             Zeichne zuerst die Asymptote mit der Gleichung:
             <br />
-            <HighlightGray>y = {data.c}</HighlightGray>
+            <p className="serlo-highlight-gray">y = {data.c}</p>
             <br />
             <br />
             Bestimme die Stelle, durch die der Graph an der y-Achse verläuft:
             <br />
-            <HighlightGray>
-              y = {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
-              {data.a === -1 ? null : '·'}{' '}
-              {data.b === 2.718 ? 'e' : data.b.toString().replace('.', ',')}
+            <p className="serlo-highlight-gray">
+              y = {data.a === -1 ? '-' : pp(data.a)}{' '}
+              {data.a === -1 ? null : '·'} {data.b === 2.718 ? 'e' : pp(data.b)}
               <sup>0</sup> {data.c > 0 ? '+' : data.c < 0 ? '-' : null}{' '}
               {data.c !== 0 ? Math.abs(data.c) : null} ={' '}
-              {data.a === -1 ? '-' : data.a.toString().replace('.', ',')}{' '}
-              {data.a === -1 ? null : '·'} 1{' '}
+              {data.a === -1 ? '-' : pp(data.a)} {data.a === -1 ? null : '·'} 1{' '}
               {data.c > 0 ? '+' : data.c < 0 ? '-' : null}{' '}
-              {data.c !== 0 ? Math.abs(data.c) : null} ={' '}
-              {(data.a + data.c).toString().replace('.', ',')}
-            </HighlightGray>
+              {data.c !== 0 ? Math.abs(data.c) : null} = {pp(data.a + data.c)}
+            </p>
             <p className="mt-3">
               Die Basis ist {data.b > 1 ? 'größer' : 'kleiner'} als 1, daher{' '}
               {data.b > 1
@@ -92,7 +90,7 @@ export function PlotFunction2() {
             <p className="mt-3">
               Graph für -6 &#8804; x &#8804; 6 und -6 &#8804; y &#8804; 6:
             </p>
-            <SubComponent data={data} />
+            {renderDiagram(data)}
           </>
         )
       }}
@@ -101,9 +99,9 @@ export function PlotFunction2() {
           <>
             Die Exponentialfunktion hat die Form:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = a · b<sup>x</sup> + c
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Skizziere am Besten zuerst die Asymptote y = c als Hilfslinie.
@@ -124,11 +122,8 @@ export function PlotFunction2() {
     />
   )
 }
-function SubComponent({ data }: { data: PlotData }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-  useEffect(() => {
+function renderDiagram(data: PlotData) {
+  return buildJSX(() => {
     const x = JXG.JSXGraph.initBoard('jxgbox', {
       boundingbox: [-6, 6, 6, -6],
       showNavigation: false,
@@ -172,33 +167,6 @@ function SubComponent({ data }: { data: PlotData }) {
       label: { visible: false },
       fixed: true,
     })
-    setBoard(x)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
-  )
+    return x
+  }, data)
 }

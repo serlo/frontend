@@ -1,12 +1,13 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { HighlightGray } from '../components/content-components'
 import { buildFrac } from '../utils/math-builder'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
 export function ExponentialFunction() {
   const { data } = useMathSkillsStorage()
+
   return (
     <SelfEvaluationExercise
       generator={() => {
@@ -69,14 +70,14 @@ export function ExponentialFunction() {
           <>
             <p>Berechne den Wachstumsfaktor:</p>
             <p className="serlo-highlight-gray">
-              a = 1 + {buildFrac(Zins, 100)} = {Faktor.toLocaleString('de-De')}
+              a = 1 + {buildFrac(Zins, 100)} = {pp(Faktor)}
             </p>
             <p>
               Stelle die passende Exponentialgleichung auf. x gibt die Anzahl
               der Jahre ab Start der Anlage an, y gibt das Kapital an:
             </p>
             <p className="serlo-highlight-gray">
-              y = {Money_Start} · {Faktor.toLocaleString('de-De')}
+              y = {Money_Start} · {pp(Faktor)}
               <sup>x</sup>
             </p>
             <p>
@@ -84,9 +85,8 @@ export function ExponentialFunction() {
               ein und berechne das Ergebnis:
             </p>
             <p className="serlo-highlight-gray">
-              y = {Money_Start} · {Faktor.toLocaleString('de-De')}
-              <sup>{Jahre}</sup> ≈{' '}
-              {Geld.toLocaleString('de-De').replace('.', ' ')}
+              y = {Money_Start} · {pp(Faktor)}
+              <sup>{Jahre}</sup> ≈ {pp(Geld)}
             </p>
             <p>Runde und antworte auf die Ausgangsfrage:</p>
             <p className="serlo-highlight-green">
@@ -101,9 +101,9 @@ export function ExponentialFunction() {
           <>
             Das angelegte Geld kann mit einer Exponentialfunktion beschrieben
             werden.
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               y = a · b <sup>x</sup>
-            </HighlightGray>
+            </p>
             <br />
             Dabei steht a für den Anfangswert{' '}
             <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
@@ -111,7 +111,7 @@ export function ExponentialFunction() {
             </span>{' '}
             und b für die Wachstumsrate{' '}
             <span className="text-1xl mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3">
-              {Faktor.toString().replace('.', ',')}.
+              {pp(Faktor)}.
             </span>
             <br />
             <br />

@@ -1,14 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import JXG from 'jsxgraph'
-import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { MainTask } from '../components/content-components'
 import { autoResizeBoundingBox } from '../utils/auto-resize-bounding-box'
-import { buildFrac, buildOverline } from '../utils/math-builder'
+import { buildFrac, buildJSX, buildOverline } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
-
-// JXG.Options.label.autoPosition = true
 
 interface PyraData {
   ab: number
@@ -33,17 +30,17 @@ export function VolumePyramide() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>
+            <p className="serlo-main-task">
               Das Rechteck ABCD ist die Grundfläche der vierseitigen Pyramide{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">ABCDE</b>{' '}
               mit der Höhe {buildOverline('EM')}.
-            </MainTask>
+            </p>
             <p className="serlo-main-task">
               Es gilt: |{buildOverline('AB')}| = {data.ab} cm; |
               {buildOverline('BC')}| = {data.bd} cm; |{buildOverline('EM')}| ={' '}
               {data.me} cm
             </p>
-            <SubComponent data={data} />
+            {renderDiagram(data)}
             <p className="serlo-main-task">
               Berechnen Sie das Volumen der Pyramide{' '}
               <b className="rounded-md bg-newgreen bg-opacity-20 p-1">ABCDE</b>.
@@ -90,7 +87,7 @@ export function VolumePyramide() {
             <br />
             Ergebnis: <br />
             <span className="mt-5 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-              V = {V.toLocaleString('de-DE')} cm³
+              V = {pp(V)} cm³
             </span>
           </>
         )
@@ -114,12 +111,8 @@ export function VolumePyramide() {
   )
 }
 
-function SubComponent({ data }: { data: PyraData }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
-  useEffect(() => {
+function renderDiagram(data: PyraData) {
+  return buildJSX(() => {
     const A_x = 0
     const A_y = 0
     const B_x = data.ab
@@ -210,33 +203,6 @@ function SubComponent({ data }: { data: PyraData }) {
     })
 
     b.create('text', [2.6, 2, `${data.me} cm`], {})*/
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
-  )
+    return b
+  }, data)
 }

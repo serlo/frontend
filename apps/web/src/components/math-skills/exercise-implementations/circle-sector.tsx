@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react'
-
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
-import { buildBigSqrt, buildFrac, buildLatex } from '../utils/math-builder'
+import {
+  buildBigSqrt,
+  buildFrac,
+  buildJSX,
+  buildLatex,
+} from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { rotatePoint } from '../utils/rotate-point'
 import { roundToDigits } from '../utils/round-to-digits'
 import { randomIntBetween } from '@/helper/random-int-between'
@@ -24,20 +27,18 @@ interface DATA {
 
 function elToGiven(e: Element, val: number) {
   if (e === 'r') {
-    return <>den Radius {val.toLocaleString('de-De')}&nbsp;cm</>
+    return <>den Radius {pp(val)}&nbsp;cm</>
   }
   if (e === 'alpha') {
-    return (
-      <>einen Mittelpunktswinkel ⍺&nbsp;=&nbsp;{val.toLocaleString('de-De')}°</>
-    )
+    return <>einen Mittelpunktswinkel ⍺&nbsp;=&nbsp;{pp(val)}°</>
   }
   if (e === 'U') {
-    return <>einen Umfang von {val.toLocaleString('de-De')}&nbsp;cm</>
+    return <>einen Umfang von {pp(val)}&nbsp;cm</>
   }
   if (e === 'A') {
     return (
       <>
-        den Flächeninhalt {val.toLocaleString('de-De').replace('.', '')}
+        den Flächeninhalt {pp(val)}
         &nbsp;cm²
       </>
     )
@@ -94,7 +95,7 @@ export function CircleSector() {
               )}
               .
             </p>
-            <SubComponent data={data} />
+            {renderDiagram(data)}
             <p className="serlo-main-task">
               Berechnen Sie{' '}
               <strong>
@@ -124,18 +125,20 @@ export function CircleSector() {
               <p className="serlo-highlight-gray">
                 A<sub>Pizza</sub> ={' '}
                 {buildFrac(<>{data.values.alpha}°</>, '360°')} · (
-                {data.values.r.toLocaleString('de-De')} cm)² · π
+                {pp(data.values.r)} cm)² · π
               </p>
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
                 A<sub>Pizza</sub> ={' '}
-                {roundToDigits(
-                  (data.values.alpha / 360) *
-                    Math.PI *
-                    data.values.r *
-                    data.values.r,
-                  2
-                ).toLocaleString('de-De')}{' '}
+                {pp(
+                  roundToDigits(
+                    (data.values.alpha / 360) *
+                      Math.PI *
+                      data.values.r *
+                      data.values.r,
+                    2
+                  )
+                )}{' '}
                 cm²
               </p>
             </>
@@ -162,12 +165,14 @@ export function CircleSector() {
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
                 r ={' '}
-                {roundToDigits(
-                  Math.sqrt(
-                    ((data.values.A / Math.PI) * 360) / data.values.alpha
-                  ),
-                  2
-                ).toLocaleString('de-De')}{' '}
+                {pp(
+                  roundToDigits(
+                    Math.sqrt(
+                      ((data.values.A / Math.PI) * 360) / data.values.alpha
+                    ),
+                    2
+                  )
+                )}{' '}
                 cm
               </p>
             </>
@@ -179,24 +184,27 @@ export function CircleSector() {
               <p>Nutze die Formel für den Flächeninhalt eines Kreissektors:</p>
               <p className="serlo-highlight-gray">
                 {data.values.A} cm² = {buildFrac('⍺', '360°')} · (
-                {data.values.r.toLocaleString('de-De')} cm)² · π
+                {pp(data.values.r)} cm)² · π
               </p>
               <p>Stelle die Formal nach ⍺ um:</p>
               <p className="serlo-highlight-gray">
                 ⍺ ={' '}
                 {buildFrac(
                   <>{data.values.A} cm²</>,
-                  <>({data.values.r.toLocaleString('de-De')} cm)² · π</>
+                  <>({pp(data.values.r)} cm)² · π</>
                 )}{' '}
                 · 360°
               </p>
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
                 ⍺ ={' '}
-                {roundToDigits(
-                  (data.values.A / Math.pow(data.values.r, 2) / Math.PI) * 360,
-                  2
-                ).toLocaleString('de-De')}
+                {pp(
+                  roundToDigits(
+                    (data.values.A / Math.pow(data.values.r, 2) / Math.PI) *
+                      360,
+                    2
+                  )
+                )}
                 °
               </p>
             </>
@@ -213,19 +221,18 @@ export function CircleSector() {
               <p>Setze gegebene Größen ein:</p>
               <p className="serlo-highlight-gray">
                 {buildLatex('\\overgroup{AC}')} ={' '}
-                {buildFrac(
-                  <>{data.values.alpha.toLocaleString('de-De')}°</>,
-                  '360°'
-                )}{' '}
-                · 2 · {data.values.r.toLocaleString('de-De')} cm · π
+                {buildFrac(<>{pp(data.values.alpha)}°</>, '360°')} · 2 ·{' '}
+                {pp(data.values.r)} cm · π
               </p>
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
                 {buildLatex('\\overgroup{AC}')} ={' '}
-                {roundToDigits(
-                  (data.values.alpha / 360) * 2 * data.values.r * Math.PI,
-                  2
-                ).toLocaleString('de-De')}{' '}
+                {pp(
+                  roundToDigits(
+                    (data.values.alpha / 360) * 2 * data.values.r * Math.PI,
+                    2
+                  )
+                )}{' '}
                 cm
               </p>
             </>
@@ -237,29 +244,23 @@ export function CircleSector() {
             <>
               <p>Nutze die Formel für die Länge des Kreisbogen:</p>
               <p className="serlo-highlight-gray">
-                {data.values.b.toLocaleString('de-De')} cm ={' '}
+                {pp(data.values.b)} cm ={' '}
                 {buildFrac(<>{data.values.alpha}°</>, '360°')} · 2 · r · π
               </p>
               <p>Stelle die Gleichung nach r um:</p>
               <p className="serlo-highlight-gray">
-                r ={' '}
-                {buildFrac(
-                  <>{data.values.b.toLocaleString('de-De')} cm</>,
-                  <>2 · π</>
-                )}{' '}
-                ·{' '}
-                {buildFrac(
-                  '360°',
-                  <>{data.values.alpha.toLocaleString('de-De')}°</>
-                )}
+                r = {buildFrac(<>{pp(data.values.b)} cm</>, <>2 · π</>)} ·{' '}
+                {buildFrac('360°', <>{pp(data.values.alpha)}°</>)}
               </p>
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
                 r ={' '}
-                {roundToDigits(
-                  (data.values.b * 360) / 2 / Math.PI / data.values.alpha,
-                  2
-                ).toLocaleString('de-De')}{' '}
+                {pp(
+                  roundToDigits(
+                    (data.values.b * 360) / 2 / Math.PI / data.values.alpha,
+                    2
+                  )
+                )}{' '}
                 cm
               </p>
             </>
@@ -271,26 +272,27 @@ export function CircleSector() {
             <>
               <p>Nutze die Formel für die Länge des Kreisbogen:</p>
               <p className="serlo-highlight-gray">
-                {data.values.b.toLocaleString('de-De')} cm ={' '}
-                {buildFrac('⍺', '360°')} · 2 ·{' '}
-                {data.values.r.toLocaleString('de-De')} cm · π
+                {pp(data.values.b)} cm = {buildFrac('⍺', '360°')} · 2 ·{' '}
+                {pp(data.values.r)} cm · π
               </p>
               <p>Stelle die Gleichung nach ⍺ um:</p>
               <p className="serlo-highlight-gray">
                 ⍺ ={' '}
                 {buildFrac(
-                  <>{data.values.b.toLocaleString('de-De')} cm</>,
-                  <>2 · {data.values.r.toLocaleString('de-De')} cm · π</>
+                  <>{pp(data.values.b)} cm</>,
+                  <>2 · {pp(data.values.r)} cm · π</>
                 )}{' '}
                 · 360°
               </p>
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
                 ⍺ ={' '}
-                {roundToDigits(
-                  (data.values.b / 2 / Math.PI / data.values.r) * 360,
-                  2
-                ).toLocaleString('de-De')}
+                {pp(
+                  roundToDigits(
+                    (data.values.b / 2 / Math.PI / data.values.r) * 360,
+                    2
+                  )
+                )}
                 °
               </p>
             </>
@@ -307,24 +309,19 @@ export function CircleSector() {
               <p>Berechne zuerst die Bogenlänge b:</p>
               <p className="serlo-highlight-gray">
                 b = {buildFrac(<>{data.values.alpha}°</>, '360°')} · 2 ·{' '}
-                {data.values.r.toLocaleString('de-De')} cm · π<br />
-                <br />b = {b.toLocaleString('de-De')} cm
+                {pp(data.values.r)} cm · π<br />
+                <br />b = {pp(b)} cm
               </p>
               <p>
                 Der Umfang des Pizzastück besteht aus dem Kreisbogen und zweimal
                 dem Radius:
               </p>
               <p className="serlo-highlight-gray">
-                U = {b.toLocaleString('de-De')} cm + 2 ·{' '}
-                {data.values.r.toLocaleString('de-De')} cm
+                U = {pp(b)} cm + 2 · {pp(data.values.r)} cm
               </p>
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
-                U ={' '}
-                {roundToDigits(b + data.values.r * 2, 2).toLocaleString(
-                  'de-De'
-                )}{' '}
-                cm
+                U = {pp(roundToDigits(b + data.values.r * 2, 2))} cm
               </p>
             </>
           )
@@ -333,81 +330,70 @@ export function CircleSector() {
       }}
     />
   )
-}
 
-function SubComponent({ data }: { data: DATA }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
+  function renderDiagram(data: DATA) {
+    return buildJSX(() => {
+      const b = JXG.JSXGraph.initBoard('jxgbox', {
+        boundingbox: [-5, 5, 5, -5],
+        showNavigation: false,
+        showCopyright: false,
+      })
 
-  useEffect(() => {
-    const b = JXG.JSXGraph.initBoard('jxgbox', {
-      boundingbox: [-5, 5, 5, -5],
-      showNavigation: false,
-      showCopyright: false,
-    })
+      const A = b.create('point', [0, 4], {
+        name: 'A',
+        fixed: true,
+        label: { autoPosition: true },
+      })
+      const B = b.create('point', [0, 0], {
+        name: 'B',
+        fixed: true,
+      })
+      const C = b.create('point', rotatePoint(0, 4, -data.angle), {
+        name: 'C',
+        fixed: true,
+        label: { autoPosition: true },
+      })
+      b.create('sector', [B, A, C], { id: 'slice' })
 
-    const A = b.create('point', [0, 4], {
-      name: 'A',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    const B = b.create('point', [0, 0], {
-      name: 'B',
-      fixed: true,
-    })
-    const C = b.create('point', rotatePoint(0, 4, -data.angle), {
-      name: 'C',
-      fixed: true,
-      label: { autoPosition: true },
-    })
-    b.create('sector', [B, A, C], { id: 'slice' })
+      b.create('segment', [A, B], { withLabel: true, name: 'r' })
+      b.create('angle', [A, B, C], {
+        id: 'angle',
+        withLabel: true,
+        name: '⍺',
+        radius: 0.8,
+      })
 
-    b.create('segment', [A, B], { withLabel: true, name: 'r' })
-    b.create('angle', [A, B, C], {
-      id: 'angle',
-      withLabel: true,
-      name: '⍺',
-      radius: 0.8,
-    })
-
-    // inject pizza pattern
-    const svg = b.containerObj.querySelector('svg')
-    const defs = svg?.querySelector('defs')
-    if (defs) {
-      defs.innerHTML = `
+      // inject pizza pattern
+      const svg = b.containerObj.querySelector('svg')
+      const defs = svg?.querySelector('defs')
+      if (defs) {
+        defs.innerHTML = `
       ${defs?.innerHTML}
       <pattern id="pizza" width="268" height="268" patternUnits="userSpaceOnUse" >
         <image x="20" y="20" href="/_assets/img/math-skills/exercises/pizza.svg" width="268" height="268" />
       </pattern>
       `
-    }
+      }
 
-    const path = svg?.querySelector('#jxgbox_slice') as SVGElement
-    if (path) {
-      path.style.fillOpacity = '1'
-      path.style.fill = 'url(#pizza)'
-    }
+      const path = svg?.querySelector('#jxgbox_slice') as SVGElement
+      if (path) {
+        path.style.fillOpacity = '1'
+        path.style.fill = 'url(#pizza)'
+      }
 
-    const angleLabel = document.getElementById(
-      'jxgbox_angleLabel'
-    ) as HTMLDivElement
-    if (angleLabel) {
-      angleLabel.style.textAlign = 'center'
-      angleLabel.style.width = '28px'
-      angleLabel.style.borderRadius = '100%'
-      angleLabel.style.background = 'white'
-      angleLabel.style.opacity = '0.8'
-      angleLabel.style.marginRight = '-8px'
-    }
+      const angleLabel = document.getElementById(
+        'jxgbox_angleLabel'
+      ) as HTMLDivElement
+      if (angleLabel) {
+        angleLabel.style.textAlign = 'center'
+        angleLabel.style.width = '28px'
+        angleLabel.style.borderRadius = '100%'
+        angleLabel.style.background = 'white'
+        angleLabel.style.opacity = '0.8'
+        angleLabel.style.marginRight = '-8px'
+      }
 
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return <JSXGraphWrapper id="jxgbox" width={300} height={300} />
+      return b
+    }, data)
+  }
 }

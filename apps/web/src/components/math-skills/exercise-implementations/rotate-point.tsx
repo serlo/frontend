@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react'
-
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { JSXGraphWrapper } from '../utils/jsx-graph-wrapper'
 import {
   buildBlock,
+  buildJSX,
   buildMat2,
   buildSqrt,
   buildVec,
@@ -234,19 +232,15 @@ export function RotatePoint() {
             Hier ist eine Skizze zur Veranschaulichung (nicht Teil der
             Aufgabenstellung):
           </p>
-          <SubComponent data={data} />
+          {renderDiagram(data)}
         </>
       )}
     />
   )
 }
 
-function SubComponent({ data }: { data: DATA }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
-  useEffect(() => {
+function renderDiagram(data: DATA) {
+  return buildJSX(() => {
     const b = JXG.JSXGraph.initBoard('jxgbox', {
       boundingbox: [
         data.centerx - 5,
@@ -277,13 +271,6 @@ function SubComponent({ data }: { data: DATA }) {
     b.create('segment', [A, B])
     b.create('segment', [A, C])
 
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return <JSXGraphWrapper id="jxgbox" width={300} height={300} />
+    return b
+  }, data)
 }

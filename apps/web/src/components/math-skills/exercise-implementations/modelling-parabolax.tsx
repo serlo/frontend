@@ -1,19 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import JXG from 'jsxgraph'
-import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import {
-  MainTask,
-  HighlightGreen,
-  HighlightGray,
-} from '../components/content-components'
-import { buildFrac } from '../utils/math-builder'
+import { buildFrac, buildJSX } from '../utils/math-builder'
 import { useMathSkillsStorage } from '../utils/math-skills-data-context'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
-
-// JXG.Options.label.autoPosition = true
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface PlotData {
@@ -47,7 +40,7 @@ export function ModellingParabola() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>
+            <p className="serlo-main-task">
               {data.context === 1
                 ? name +
                   ' macht einen Weitsprung. Der Sprung kann mit dem Graphen der Funktion '
@@ -66,13 +59,10 @@ export function ModellingParabola() {
                 : null}
               <span className="serlo-highlight-green">
                 y = - x<sup>2</sup> +{' '}
-                {data.context === 1
-                  ? (data.b / 2).toString().replace('.', ',')
-                  : data.b.toString().replace('.', ',')}
-                x
+                {data.context === 1 ? pp(data.b / 2) : pp(data.b)}x
               </span>{' '}
               beschrieben werden.
-            </MainTask>
+            </p>
             <p className="serlo-main-task">
               {data.context === 1
                 ? `x gibt die Weite in Meter, y die Höhe in Meter an. ${name} springt vom x-Wert 0 nach rechts ab.`
@@ -88,7 +78,7 @@ export function ModellingParabola() {
                 ? 'x gibt die Weite in Meter, y die Höhe in Meter an. Der Strahl beginnt und endet beim y-Wert 0.'
                 : null}
             </p>
-            <MainTask>
+            <p className="serlo-main-task">
               {data.context === 1
                 ? `Berechnen Sie die Sprungweite und wie hoch ${name} am höchsten in der Luft war.`
                 : null}
@@ -102,7 +92,7 @@ export function ModellingParabola() {
               {data.context === 4
                 ? 'Berechnen Sie wie weit der Strahl maximal kommt und wie hoch er am höchsten Punkt war.'
                 : null}
-            </MainTask>{' '}
+            </p>{' '}
           </>
         )
       }}
@@ -111,34 +101,31 @@ export function ModellingParabola() {
           <>
             Finde die Nullstellen der Parabel. Klammere dazu - x aus:
             <br />
-            <HighlightGray>
-              0 = - x · (x - {data.b.toString().replace('.', ',')})
-            </HighlightGray>
+            <p className="serlo-highlight-gray">0 = - x · (x - {pp(data.b)})</p>
             <br />
             Am ersten Faktor erkennen wir die erste Lösung:{' '}
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               x<sub>1</sub> = 0
-            </HighlightGray>
+            </p>
             <br />
             Der zweite Faktor - die Klammer - ist dann 0, wenn:{' '}
-            <HighlightGray>
-              x<sub>2</sub> = {data.b.toString().replace('.', ',')}
-            </HighlightGray>
+            <p className="serlo-highlight-gray">
+              x<sub>2</sub> = {pp(data.b)}
+            </p>
             <br />
             <br />
             Die {data.context === 2 ? 'maximale Breite' : 'maximale Weite'} ist
             damit: <br />
-            <HighlightGreen>
-              x<sub>2</sub> - x<sub>1</sub> ={' '}
-              {data.b.toString().replace('.', ',')} m
-            </HighlightGreen>
+            <p className="serlo-highlight-green">
+              x<sub>2</sub> - x<sub>1</sub> = {pp(data.b)} m
+            </p>
             <br />
             <br />
             Für die maximale Höhe muss der Scheitelpunkt der Parabel berechnet
             werden. Da die Nullstellen bekannt sind, können wir die Mitte davon
             als x-Wert des Scheitels bestimmen:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               x<sub>s</sub> ={' '}
               {buildFrac(
                 <>
@@ -146,26 +133,22 @@ export function ModellingParabola() {
                 </>,
                 <>2</>
               )}{' '}
-              = {(data.b / 2).toString().replace('.', ',')}
-            </HighlightGray>
+              = {pp(data.b / 2)}
+            </p>
             <br />
             <br />
             Die Höhe ist damit:
             <br />
-            <HighlightGreen>
-              y<sub>s</sub> = - {(data.b / 2).toString().replace('.', ',')}
-              <sup>2</sup> + {data.b.toString().replace('.', ',')} ·{' '}
-              {(data.b / 2).toString().replace('.', ',')} ={' '}
-              {(-(data.b / 2) * (data.b / 2) + (data.b / 2) * data.b)
-                .toString()
-                .replace('.', ',')}{' '}
-              m
-            </HighlightGreen>
+            <p className="serlo-highlight-green">
+              y<sub>s</sub> = - {pp(data.b / 2)}
+              <sup>2</sup> + {pp(data.b)} · {pp(data.b / 2)} ={' '}
+              {pp(-(data.b / 2) * (data.b / 2) + (data.b / 2) * data.b)} m
+            </p>
             <br />
             <br />
             Graph als Hilfe:
             <br />
-            <SubComponent data={data} />
+            {renderDiagram(data)}
           </>
         )
       }}
@@ -176,13 +159,10 @@ export function ModellingParabola() {
             Für die {data.context === 2 ? 'maximale Breite' : 'maximale Weite'}{' '}
             müssen die Nullstellen der Parabel berechnet werden:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               0 = - x<sup>2</sup> +{' '}
-              {data.context === 1
-                ? (data.b / 2).toString().replace('.', ',')
-                : data.b.toString().replace('.', ',')}
-              x
-            </HighlightGray>
+              {data.context === 1 ? pp(data.b / 2) : pp(data.b)}x
+            </p>
             <br />
             <br />
             Verwende dazu den Satz des Nullprodukts.
@@ -199,12 +179,8 @@ export function ModellingParabola() {
   )
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function SubComponent({ data }: { data: PlotData }) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-  useEffect(() => {
+function renderDiagram(data: PlotData) {
+  return buildJSX(() => {
     const x = JXG.JSXGraph.initBoard('jxgbox', {
       boundingbox: [-1, 35, 13, -3],
       showNavigation: false,
@@ -260,33 +236,6 @@ function SubComponent({ data }: { data: PlotData }) {
       -3,
       15,
     ])
-    setBoard(x)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
-  )
+    return x
+  }, data)
 }

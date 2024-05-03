@@ -1,18 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import JXG from 'jsxgraph'
-import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import {
-  MainTask,
-  HighlightGreen,
-  HighlightGray,
-} from '../components/content-components'
-import { buildFrac } from '../utils/math-builder'
+import { buildFrac, buildJSX } from '../utils/math-builder'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
-
-// JXG.Options.label.autoPosition = true
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface PlotData {
@@ -38,10 +30,12 @@ export function ValueSetParabola() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>Bestimmen Sie die Wertemenge der Parabel:</MainTask>
-            <HighlightGray>
+            <p className="serlo-main-task">
+              Bestimmen Sie die Wertemenge der Parabel:
+            </p>
+            <p className="serlo-highlight-gray">
               y = {data.a ? null : '-'} x<sup>2</sup> + bx + c
-            </HighlightGray>
+            </p>
             <p className="serlo-main-task">
               Der Scheitelpunkt ist gegeben durch S ( {data.b} | {data.c} ).
             </p>
@@ -56,16 +50,16 @@ export function ValueSetParabola() {
             <strong>{data.a === true ? 'oberhalb' : 'unterhalb'}</strong> des
             Scheitels:
             <br />
-            <HighlightGreen>
+            <p className="serlo-highlight-green">
               W = {'{'} y | y {data.a === true ? '≥' : '≤'}{' '}
               {data.c > 0 || data.c === 0 ? data.c : '- ' + -data.c} {'}'}
-            </HighlightGreen>
+            </p>
             <br />
             <br />
             Graph für -10 &#8804; x &#8804; 10 und -10 &#8804; y &#8804; 10 als
             Hilfe:
             <br />
-            <SubComponent data={data} />
+            {renderDiagram(data)}
           </>
         )
       }}
@@ -76,14 +70,14 @@ export function ValueSetParabola() {
             Für den Wertebereich untersuchen wir den Öffnungsfaktor und den
             y-Wert des Scheitel der Parabel:
             <br />
-            <HighlightGray>y =</HighlightGray>
+            <p className="serlo-highlight-gray">y =</p>
             <span className="mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3 text-2xl">
               {data.a ? '1 · ' : '(-1) · '}{' '}
             </span>
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               (x {data.b > 0 && data.b !== 0 ? '- ' + data.b : '+ ' + -data.b})
               <sup>2</sup>{' '}
-            </HighlightGray>
+            </p>
             <span className="mt-3 inline-block rounded-md bg-yellow bg-opacity-20 p-1 px-3 text-2xl">
               {data.c > 0 && data.c !== 0 ? '+ ' + data.c : '- ' + -data.c}
             </span>
@@ -99,12 +93,8 @@ export function ValueSetParabola() {
       }}
     />
   ) // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  function SubComponent({ data }: { data: PlotData }) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [board, setBoard] = useState<ReturnType<
-      typeof JXG.JSXGraph.initBoard
-    > | null>(null)
-    useEffect(() => {
+  function renderDiagram(data: PlotData) {
+    return buildJSX(() => {
       const x = JXG.JSXGraph.initBoard('jxgbox', {
         boundingbox: [-10, 10, 10, -10],
         showNavigation: false,
@@ -142,34 +132,7 @@ export function ValueSetParabola() {
               10,
             ])
       }
-      setBoard(x)
-
-      return () => {
-        if (board) JXG.JSXGraph.freeBoard(board)
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data])
-
-    return (
-      <div
-        onClick={(e) => {
-          e.preventDefault()
-        }}
-      >
-        <div
-          id="jxgbox"
-          className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-        ></div>
-        <style jsx global>
-          {`
-            .JXGtext {
-              font-family: Karla, sans-serif !important;
-              font-weight: bold !important;
-              font-size: 18px !important;
-            }
-          `}
-        </style>
-      </div>
-    )
+      return x
+    }, data)
   }
 }

@@ -1,17 +1,10 @@
 import JXG from 'jsxgraph'
-import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import {
-  MainTask,
-  HighlightGray,
-  HighlightGreen,
-} from '../components/content-components'
-import { buildFrac } from '../utils/math-builder'
+import { buildFrac, buildJSX } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
-
-// JXG.Options.label.autoPosition = true
 
 interface Trig1Data {
   ac: number
@@ -45,22 +38,22 @@ export function Trigonometry3() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>
+            <p className="serlo-main-task">
               Das Grundstück der Bar &quot;Sonnenuntergang&quot; hat die Form
               des Dreiecks{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">ABC</b>.
-            </MainTask>
+            </p>
             <p className="serlo-main-task">
               Auf dem Grundstücks möchten die Betreiber einen Beach-Bereich
               anlegen. Dazu werden die Seiten{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">
                 <span className="overline">AB</span>&nbsp;=&nbsp;
-                {data.ab.toLocaleString('de-De')}&nbsp;m
+                {pp(data.ab)}&nbsp;m
               </b>{' '}
               und{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">
                 <span className="overline">AC</span>&nbsp;=&nbsp;
-                {data.ac.toLocaleString('de-De')}&nbsp;m
+                {pp(data.ac)}&nbsp;m
               </b>{' '}
               des Dreiecks jeweils um ein Achtel ihrer Länge auf die
               Seiten&nbsp;
@@ -73,7 +66,7 @@ export function Trigonometry3() {
               </b>
               &nbsp; verkürzt.
             </p>
-            <SubComponent data={data} />
+            {renderDiagram(data)}
             <small className="mb-6 block">
               Skizze ist nicht maßstabsgetreu
             </small>
@@ -114,61 +107,52 @@ export function Trigonometry3() {
           <>
             Im Dreieck ABC gilt:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               cos 𝛼 ={' '}
               {buildFrac(
                 <>
-                  ({data.ab.toLocaleString('de-De')} m)² + (
-                  {data.ac.toLocaleString('de-De')} m)² - (
-                  {data.bc.toLocaleString('de-De')} m)²
+                  ({pp(data.ab)} m)² + ({pp(data.ac)} m)² - ({pp(data.bc)} m)²
                 </>,
                 <>
-                  2 · {data.ab.toLocaleString('de-De')} m ·{' '}
-                  {data.ac.toLocaleString('de-De')} m
+                  2 · {pp(data.ab)} m · {pp(data.ac)} m
                 </>
               )}
-            </HighlightGray>
+            </p>
             <br />
-            <HighlightGray>𝛼 = {zw.toLocaleString('de-DE')}°</HighlightGray>
+            <p className="serlo-highlight-gray">𝛼 = {pp(zw)}°</p>
             <br />
             <p className="mt-3">Berechne die verkürzten Längen:</p>
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               |<span className="overline">AD</span>| ={' '}
-              {buildFrac(<>7</>, <>8</>)} · {data.ab.toLocaleString('de-De')} m
-              = {achtelbd.toLocaleString('de-DE')} m
-            </HighlightGray>{' '}
+              {buildFrac(<>7</>, <>8</>)} · {pp(data.ab)} m = {pp(achtelbd)} m
+            </p>{' '}
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               |<span className="overline">AE</span>| ={' '}
-              {buildFrac(<>7</>, <>8</>)} · {data.ac.toLocaleString('de-De')} m
-              = {achtelce.toLocaleString('de-DE')} m
-            </HighlightGray>{' '}
+              {buildFrac(<>7</>, <>8</>)} · {pp(data.ac)} m = {pp(achtelce)} m
+            </p>{' '}
             <br /> <br />
             So ist der Flächeninhalt des Dreiecks ABC: <br />
-            <HighlightGray>
-              A<sub>ABC</sub> = 0,5 · {data.ab.toLocaleString('de-De')} m ·{' '}
-              {data.ac.toLocaleString('de-De')} m · sin{' '}
-              {zw.toLocaleString('de-De')}° = {A1.toLocaleString('de-De')} m²
-            </HighlightGray>{' '}
+            <p className="serlo-highlight-gray">
+              A<sub>ABC</sub> = 0,5 · {pp(data.ab)} m · {pp(data.ac)} m · sin{' '}
+              {pp(zw)}° = {pp(A1)} m²
+            </p>{' '}
             <br /> <br />
             Der Flächeninhalt des Dreicks ADE: <br />
-            <HighlightGray>
-              A<sub>ADE</sub> = 0,5 · {achtelbd.toLocaleString('de-DE')} m ·
-              {achtelce.toLocaleString('de-DE')} m · sin{' '}
-              {zw.toLocaleString('de-DE')}
+            <p className="serlo-highlight-gray">
+              A<sub>ADE</sub> = 0,5 · {pp(achtelbd)} m ·{pp(achtelce)} m · sin{' '}
+              {pp(zw)}
               ° <br />
-              <br />A<sub>ADE</sub> = {A2.toLocaleString('de-De')} m²
-            </HighlightGray>{' '}
+              <br />A<sub>ADE</sub> = {pp(A2)} m²
+            </p>{' '}
             <br /> <br />
             Somit ist der Flächeninhalt des Vierecks DBCE: <br />
-            <HighlightGreen>
-              A<sub>DBCE</sub> = {A1.toLocaleString('de-De')} m² -{' '}
-              {A2.toLocaleString('de-De')} m² = {Erg.toLocaleString('de-DE')} m²
-            </HighlightGreen>
+            <p className="serlo-highlight-green">
+              A<sub>DBCE</sub> = {pp(A1)} m² - {pp(A2)} m² = {pp(Erg)} m²
+            </p>
             <p className="mt-3">Antworte:</p>
             <p className="serlo-highlight-green">
-              Der Beach-Bereich der Bar hat eine Fläche von{' '}
-              {Erg.toLocaleString('de-DE')}&nbsp;m².
+              Der Beach-Bereich der Bar hat eine Fläche von {pp(Erg)}&nbsp;m².
             </p>
           </>
         )
@@ -179,7 +163,7 @@ export function Trigonometry3() {
           <>
             Verwende den Kosinussatz:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               cos 𝛼 ={' '}
               {buildFrac(
                 <>
@@ -192,7 +176,7 @@ export function Trigonometry3() {
                   <span className="overline">AC</span>|
                 </>
               )}
-            </HighlightGray>
+            </p>
             <p className="mt-3">
               Berechne die Fläche als Differenz zweier Dreiecksflächen.
             </p>
@@ -203,12 +187,8 @@ export function Trigonometry3() {
   )
 }
 
-function SubComponent({ data }: { data: Trig1Data }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
-  useEffect(() => {
+function renderDiagram(data: Trig1Data) {
+  return buildJSX(() => {
     const b = JXG.JSXGraph.initBoard('jxgbox', {
       boundingbox: [-2, 6, 7, -2],
       showNavigation: false,
@@ -259,12 +239,12 @@ function SubComponent({ data }: { data: Trig1Data }) {
       radius: 1.5,
     })
 
-    b.create('text', [2.5, 0, `${data.ab.toLocaleString('de-De')} m`], {
+    b.create('text', [2.5, 0, `${pp(data.ab)} m`], {
       anchorX: 'middle',
       anchorY: 'top',
     })
 
-    b.create('text', [0.5, 2.5, `${data.ac.toLocaleString('de-De')} m`], {
+    b.create('text', [0.5, 2.5, `${pp(data.ac)} m`], {
       anchorX: 'middle',
       anchorY: 'top',
     })
@@ -274,36 +254,9 @@ function SubComponent({ data }: { data: Trig1Data }) {
       anchorY: 'top',
     })
 
-    b.create('text', [4.8, 2, `${data.bc.toLocaleString('de-De')} m`], {})
-    setBoard(b)
-
+    b.create('text', [4.8, 2, `${pp(data.bc)} m`], {})
     b.create('polygon', [pointD, pointB, pointC, pointE])
 
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
-  )
+    return b
+  }, data)
 }

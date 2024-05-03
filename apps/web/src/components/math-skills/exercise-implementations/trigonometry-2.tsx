@@ -1,14 +1,11 @@
 import JXG from 'jsxgraph'
-import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { MainTask } from '../components/content-components'
-import { buildFrac, buildOverline } from '../utils/math-builder'
+import { buildFrac, buildJSX, buildOverline } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { roundToDigits } from '../utils/round-to-digits'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
-
-// JXG.Options.label.autoPosition = true
 
 interface Trig1Data {
   as: number
@@ -43,7 +40,7 @@ export function Trigonometry2() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>
+            <p className="serlo-main-task">
               Gegeben ist das gleichschenklige Dreieck{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">ABC</b>.{' '}
               <br />
@@ -51,8 +48,8 @@ export function Trigonometry2() {
               <span className="overline">AB</span>| = |
               <span className="overline">AC</span>| = {data.ab} cm und ∢ACB ={' '}
               {(180 - data.angle) / 2}°
-            </MainTask>
-            <SubComponent data={data} />
+            </p>
+            {renderDiagram(data)}
             <small className="mb-6 block">
               Skizze ist nicht maßstabsgetreu
             </small>
@@ -91,7 +88,7 @@ export function Trigonometry2() {
               |{buildOverline('AD')}|² = (4 cm)² + (6 cm)² - 2 · 4 cm · 6 cm ·
               cos 38°
               <br />
-              <br />|{buildOverline('AD')}| = {ad.toLocaleString('de-De')} cm
+              <br />|{buildOverline('AD')}| = {pp(ad)} cm
             </p>
             <p>Nutze den Sinussatz im Dreieck ABD:</p>
             <p className="serlo-highlight-gray">
@@ -100,14 +97,11 @@ export function Trigonometry2() {
             </p>
             <p>Stelle die Gleichung um und setze gegebene Größen ein:</p>
             <p className="serlo-highlight-gray">
-              sin(𝛼) ={' '}
-              {buildFrac(<>sin 38°</>, <>{ad.toLocaleString('de-De')} cm</>)} ·{' '}
-              {data.bd} cm
+              sin(𝛼) = {buildFrac(<>sin 38°</>, <>{pp(ad)} cm</>)} · {data.bd}{' '}
+              cm
             </p>
             <p>Berechne das Ergebnis:</p>
-            <p className="serlo-highlight-green">
-              𝛼 = {Erg.toLocaleString('de-DE')}°
-            </p>
+            <p className="serlo-highlight-green">𝛼 = {pp(Erg)}°</p>
           </>
         )
       }}
@@ -127,12 +121,8 @@ export function Trigonometry2() {
   )
 }
 
-function SubComponent({ data }: { data: Trig1Data }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
-  useEffect(() => {
+function renderDiagram(data: Trig1Data) {
+  return buildJSX(() => {
     const b = JXG.JSXGraph.initBoard('jxgbox', {
       boundingbox: [-2, 6, 7, -2],
       showNavigation: false,
@@ -200,33 +190,6 @@ function SubComponent({ data }: { data: Trig1Data }) {
     })
 
     b.create('text', [4.8, 1.2, `${data.bd} cm`], {})
-    setBoard(b)
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
-  )
+    return b
+  }, data)
 }

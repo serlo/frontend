@@ -1,13 +1,15 @@
 import JXG from 'jsxgraph'
-import { useEffect, useState } from 'react'
 
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { MainTask, HighlightGray } from '../components/content-components'
-import { buildBlock, buildFrac, buildOverline } from '../utils/math-builder'
+import {
+  buildBlock,
+  buildFrac,
+  buildJSX,
+  buildOverline,
+} from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
-
-// JXG.Options.label.autoPosition = true
 
 interface Trig1Data {
   as: number
@@ -41,21 +43,19 @@ export function Trigonometry1() {
       renderTask={({ data }) => {
         return (
           <>
-            <MainTask>
+            <p className="serlo-main-task">
               Die beiden Geraden{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">AB</b> und{' '}
               <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">CD</b>{' '}
               sind zueinander parallel.
-            </MainTask>
+            </p>
             <p className="mt-2 text-2xl">
               Es gilt |{buildOverline(data.otherRay ? 'SB' : 'SA')}| = {data.as}{' '}
               cm und |{buildOverline(data.otherRay ? 'BD' : 'AC')}| = {data.ac}{' '}
               cm <br /> sowie |{buildOverline(data.mode === 'cd' ? 'AB' : 'CD')}
-              | ={' '}
-              {(data.mode === 'cd' ? data.ab : data.cd).toLocaleString('de-De')}{' '}
-              cm.
+              | = {pp(data.mode === 'cd' ? data.ab : data.cd)} cm.
             </p>
-            <SubComponent data={data} />
+            {renderDiagram(data)}
             <small className="mb-6 block">
               Skizze ist nicht maßstabsgetreu
             </small>
@@ -77,7 +77,7 @@ export function Trigonometry1() {
             Stelle eine Gleichung mit dem Strahlensatz auf:
             <br />
             {data.mode === 'cd' ? (
-              <HighlightGray>
+              <p className="serlo-highlight-gray">
                 {buildFrac(
                   <>
                     |<span className="overline">CD</span>|
@@ -85,11 +85,8 @@ export function Trigonometry1() {
                   <>{data.ab} cm</>
                 )}{' '}
                 ={' '}
-                {buildFrac(
-                  <>{data.as + data.ac} cm</>,
-                  <>{data.as.toLocaleString('de-De')} cm</>
-                )}
-              </HighlightGray>
+                {buildFrac(<>{data.as + data.ac} cm</>, <>{pp(data.as)} cm</>)}
+              </p>
             ) : (
               buildBlock(
                 'gray',
@@ -98,11 +95,11 @@ export function Trigonometry1() {
                     <>
                       |<span className="overline">AB</span>|
                     </>,
-                    <>{data.cd.toLocaleString('de-De')} cm</>
+                    <>{pp(data.cd)} cm</>
                   )}{' '}
                   ={' '}
                   {buildFrac(
-                    <>{data.as.toLocaleString('de-De')} cm</>,
+                    <>{pp(data.as)} cm</>,
                     <>{data.as + data.ac} cm</>
                   )}
                 </>
@@ -113,18 +110,18 @@ export function Trigonometry1() {
             Forme die Gleichung nach |<span className="overline">CD</span>| um:{' '}
             <br />
             {data.mode === 'cd' ? (
-              <HighlightGray>
+              <p className="serlo-highlight-gray">
                 ⇔ |<span className="overline">CD</span>| ={' '}
                 {buildFrac(<>{data.as + data.ac} cm</>, <>{data.as} cm</>)} ·{' '}
-                {data.ab.toLocaleString('de-De')} cm
-              </HighlightGray>
+                {pp(data.ab)} cm
+              </p>
             ) : (
               buildBlock(
                 'gray',
                 <>
                   ⇔ |<span className="overline">CD</span>| ={' '}
                   {buildFrac(<>{data.as} cm</>, <>{data.as + data.ac} cm</>)} ·{' '}
-                  {data.cd.toLocaleString('de-De')} cm
+                  {pp(data.cd)} cm
                 </>
               )
             )}
@@ -148,7 +145,7 @@ export function Trigonometry1() {
           <>
             Verwende den Strahlensatz, um eine Gleichung aufzustellen:
             <br />
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               {buildFrac(
                 <>
                   |<span className="overline">CD</span>|
@@ -174,7 +171,7 @@ export function Trigonometry1() {
                   |
                 </>
               )}
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Setze die Werte der Längen ein und löse die Gleichung.
@@ -185,12 +182,8 @@ export function Trigonometry1() {
   )
 }
 
-function SubComponent({ data }: { data: Trig1Data }) {
-  const [board, setBoard] = useState<ReturnType<
-    typeof JXG.JSXGraph.initBoard
-  > | null>(null)
-
-  useEffect(() => {
+function renderDiagram(data: Trig1Data) {
+  return buildJSX(() => {
     const b = JXG.JSXGraph.initBoard('jxgbox', {
       boundingbox: [-1, 6, 7, -2],
       showNavigation: false,
@@ -230,55 +223,28 @@ function SubComponent({ data }: { data: Trig1Data }) {
     })
 
     if (data.otherRay) {
-      b.create('text', [0, 2, `${data.as.toLocaleString('de-De')} cm`], {})
-      setBoard(b)
-
-      b.create('text', [1.6, 3.8, `${data.ac.toLocaleString('de-De')} cm`], {})
-      setBoard(b)
+      b.create('text', [0, 2, `${pp(data.as)} cm`], {})
+      return b
+      // ?
+      // b.create('text', [1.6, 3.8, `${pp(data.ac)} cm`], {})
+      // return b
     } else {
-      b.create('text', [2, 0, `${data.as.toLocaleString('de-De')} cm`], {
+      b.create('text', [2, 0, `${pp(data.as)} cm`], {
         anchorX: 'middle',
         anchorY: 'top',
       })
-      b.create('text', [5.3, 0, `${data.ac.toLocaleString('de-De')} cm`], {
+      b.create('text', [5.3, 0, `${pp(data.ac)} cm`], {
         anchorX: 'middle',
         anchorY: 'top',
       })
     }
 
     if (data.mode === 'cd') {
-      b.create('text', [2.8, 2, `${data.ab.toLocaleString('de-De')} cm`], {})
-      setBoard(b)
+      b.create('text', [2.8, 2, `${pp(data.ab)} cm`], {})
+      return b
     } else {
-      b.create('text', [4.6, 2.4, `${data.cd.toLocaleString('de-De')} cm`], {})
-      setBoard(b)
+      b.create('text', [4.6, 2.4, `${pp(data.cd)} cm`], {})
+      return b
     }
-
-    return () => {
-      if (board) JXG.JSXGraph.freeBoard(board)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-      }}
-    >
-      <div
-        id="jxgbox"
-        className="jxgbox pointer-events-none mb-2 mt-6 h-[300px] w-[300px] rounded-2xl border border-gray-200"
-      ></div>
-      <style jsx global>
-        {`
-          .JXGtext {
-            font-family: Karla, sans-serif !important;
-            font-weight: bold !important;
-            font-size: 18px !important;
-          }
-        `}
-      </style>
-    </div>
-  )
+  }, data)
 }

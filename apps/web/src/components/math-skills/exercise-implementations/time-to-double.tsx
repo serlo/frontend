@@ -1,5 +1,6 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { buildFrac } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 
 export function TimeToDouble() {
@@ -21,8 +22,8 @@ export function TimeToDouble() {
           </p>
           <p className="serlo-main-task">
             Nehmen Sie an, dass Sie ihr Können durch tägliches Üben jeden Tag um{' '}
-            {data.p.toLocaleString('de-De')}&nbsp;% verbessern. Nach wie vielen
-            Tagen haben Sie ihr Können {gToText(data.g)}?
+            {pp(data.p)}&nbsp;% verbessern. Nach wie vielen Tagen haben Sie ihr
+            Können {gToText(data.g)}?
           </p>
         </>
       )}
@@ -33,20 +34,19 @@ export function TimeToDouble() {
           <>
             <p>Berechne den Wachstumsfaktor:</p>
             <p className="serlo-highlight-gray">
-              a = 1 + {buildFrac(data.p.toLocaleString('de-De'), 100)} ={' '}
-              {a.toLocaleString('de-De')}
+              a = 1 + {buildFrac(pp(data.p), 100)} = {pp(a)}
             </p>
             <p>
               x beschreibt die Anzahl der Tage. Stelle die passende Gleichung
               auf und löse sie:
             </p>
             <p className="serlo-highlight-gray">
-              {data.g} = {a.toLocaleString('de-De')}
+              {data.g} = {pp(a)}
               <sup>x</sup>
               <br />
-              <br />x = log <sub>{a.toLocaleString('de-De')}</sub> {data.g}
+              <br />x = log <sub>{pp(a)}</sub> {data.g}
               <br />
-              <br />x = {x.toLocaleString('de-De')}
+              <br />x = {pp(x)}
             </p>
             <p>
               <strong>Runde auf.</strong> Antworte:

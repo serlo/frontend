@@ -1,5 +1,6 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { buildFrac } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
@@ -54,7 +55,7 @@ export function AnimalsInForest() {
             näherungsweise mit folgender Funktion beschreiben:
           </p>
           <p className="serlo-highlight-gray">
-            y = {data.startVal} · {data.a.toLocaleString('de-De')}
+            y = {data.startVal} · {pp(data.a)}
             <sup>x</sup>
           </p>
           <p className="serlo-main-task">
@@ -78,21 +79,21 @@ export function AnimalsInForest() {
             </p>
             <p className="serlo-highlight-gray">
               Anzahl Ende des aktuellen Jahres: &nbsp;&nbsp;&nbsp;&nbsp;
-              {data.startVal} · {data.a.toLocaleString('de-De')}
+              {data.startVal} · {pp(data.a)}
               <sup>x</sup>
             </p>
             <p>Erhalte für (x - 1) die Anzahl im Vorjahr:</p>
             <p className="serlo-highlight-gray">
               Anzahl Ende des Vorjahrs: &nbsp;&nbsp;&nbsp;&nbsp;
-              {data.startVal} · {data.a.toLocaleString('de-De')}
+              {data.startVal} · {pp(data.a)}
               <sup>x - 1</sup>
             </p>
             <p>Bilde die Differenz und erhalte den Zuwachs:</p>
 
             <p className="serlo-highlight-gray">
               Zuwachs: &nbsp;&nbsp;&nbsp;&nbsp;
-              {data.startVal} · {data.a.toLocaleString('de-De')}
-              <sup>x</sup> - {data.startVal} · {data.a.toLocaleString('de-De')}
+              {data.startVal} · {pp(data.a)}
+              <sup>x</sup> - {data.startVal} · {pp(data.a)}
               <sup>x - 1</sup>
             </p>
             <p>
@@ -100,29 +101,25 @@ export function AnimalsInForest() {
               auf:
             </p>
             <p className="serlo-highlight-gray">
-              {data.startVal} · {data.a.toLocaleString('de-De')}
-              <sup>x</sup> - {data.startVal} · {data.a.toLocaleString('de-De')}
+              {data.startVal} · {pp(data.a)}
+              <sup>x</sup> - {data.startVal} · {pp(data.a)}
               <sup>x - 1</sup> = {data.diff}
               <br />
               <br />
-              {data.startVal} · {data.a.toLocaleString('de-De')}
-              <sup>x</sup> - {data.startVal} ·{' '}
-              {buildFrac(1, data.a.toLocaleString('de-De'))} ·{' '}
-              {data.a.toLocaleString('de-De')}
+              {data.startVal} · {pp(data.a)}
+              <sup>x</sup> - {data.startVal} · {buildFrac(1, pp(data.a))} ·{' '}
+              {pp(data.a)}
               <sup>x</sup> = {data.diff} <br />
-              <br />({data.startVal} -{' '}
-              {buildFrac(data.startVal, data.a.toLocaleString('de-De'))}) ·{' '}
-              {data.a.toLocaleString('de-De')}
+              <br />({data.startVal} - {buildFrac(data.startVal, pp(data.a))}) ·{' '}
+              {pp(data.a)}
               <sup>x</sup> = {data.diff}
               <br />
               <br />
-              {data.a.toLocaleString('de-De')}
-              <sup>x</sup> = {intermediate.toLocaleString('de-De')}
+              {pp(data.a)}
+              <sup>x</sup> = {pp(intermediate)}
               <br />
-              <br />x = log <sub>{data.a.toLocaleString('de-De')}</sub>{' '}
-              {intermediate.toLocaleString('de-De')}
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x ={' '}
-              {x.toLocaleString('de-De')}
+              <br />x = log <sub>{pp(data.a)}</sub> {pp(intermediate)}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = {pp(x)}
             </p>
             <p>
               <strong>Runde an dieser Stelle auf</strong>. Bestimme das konkrete

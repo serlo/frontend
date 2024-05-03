@@ -1,5 +1,4 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { HighlightGray } from '../components/content-components'
 import { pp, ppPolynom } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 
@@ -130,20 +129,20 @@ export function ParabolaCharacteristics() {
             Setze die Punkte P und Q jeweils in eine Funktionsgleichung ein:
             <br />
             Ɪ:{' '}
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               {p_1_y} = {p_1_x < 0 ? '(' + p_1_x + ')' : p_1_x}
               <sup>2</sup> {p_1_x < 0 ? p_1_x + ' · b' : null}
               {p_1_x === 0 ? ' + 0 · b' : null}
               {p_1_x > 0 ? ' + ' + p_1_x + ' · b' : null} + c
-            </HighlightGray>
+            </p>
             <br />
             ꞮꞮ:{' '}
-            <HighlightGray>
+            <p className="serlo-highlight-gray">
               {p_2_y} = {p_2_x < 0 ? '(' + p_2_x + ')' : p_2_x}
               <sup>2</sup> {p_2_x < 0 ? ' ' + p_2_x + ' · b' : null}
               {p_2_x === 0 ? ' + 0 · b' : null}
               {p_2_x > 0 ? ' + ' + p_2_x + ' · b' : null} + c
-            </HighlightGray>
+            </p>
             <br />
             <br />
             Damit ergibt sich ein lineares Gleichungssystem mit den Lösungen b
