@@ -1,4 +1,4 @@
-import { SerloEditor } from '@serlo/editor'
+import { SerloEditor, SerloRenderer } from '@serlo/editor'
 import React from 'react'
 import * as ReactDOM from 'react-dom/client'
 
@@ -8,11 +8,13 @@ import {
   type InitialState,
 } from './initial-state'
 
-// Could probably remove the export entirely, as the customElement is registered
-// below.
+type Mode = 'read' | 'write'
+
 export class EditorWebComponent extends HTMLElement {
   private reactRoot: ReactDOM.Root | null = null
   private container: HTMLDivElement
+
+  private _mode: Mode = 'read'
 
   private _initialState: InitialState = exampleInitialState
 
@@ -23,17 +25,17 @@ export class EditorWebComponent extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['initial-state']
+    return ['initial-state', 'mode']
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     if (name === 'initial-state' && oldValue !== newValue) {
-      try {
-        this.initialState = JSON.parse(newValue) as InitialState
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error('Could not parse initialState:', e)
-      }
+      this.initialState = JSON.parse(newValue) as InitialState
+    } else if (
+      name === 'mode' &&
+      (newValue === 'read' || newValue === 'write')
+    ) {
+      this.mode = newValue
     } else {
       // eslint-disable-next-line no-console
       console.warn(
@@ -54,6 +56,18 @@ export class EditorWebComponent extends HTMLElement {
       this.mountReactComponent()
     } else {
       throw new Error('Invalid initial state provided')
+    }
+  }
+
+  get mode() {
+    return this._mode
+  }
+
+  set mode(newMode: Mode) {
+    if (newMode === 'read' || newMode === 'write') {
+      this._mode = newMode
+      this.setAttribute('mode', newMode)
+      this.mountReactComponent()
     }
   }
 
@@ -95,19 +109,24 @@ export class EditorWebComponent extends HTMLElement {
 
     this.reactRoot.render(
       <React.StrictMode>
-        <SerloEditor
-          initialState={initialState}
-          onChange={({ changed, getDocument }) => {
-            if (changed) {
-              const newState = getDocument()
-              this.broadcastNewState(newState)
-            }
-          }}
-        >
-          {(editor) => {
-            return <div>{editor.element}</div>
-          }}
-        </SerloEditor>
+        <div id="serlo-root">
+          {this._mode === 'write' ? (
+            <SerloEditor
+              initialState={this.initialState}
+              onChange={({ changed, getDocument }) => {
+                if (changed) {
+                  this.broadcastNewState(getDocument())
+                }
+              }}
+            >
+              {(editor) => {
+                return <div>{editor.element}</div>
+              }}
+            </SerloEditor>
+          ) : (
+            <SerloRenderer document={this.initialState} />
+          )}
+        </div>
       </React.StrictMode>
     )
   }
@@ -119,5 +138,3 @@ export class EditorWebComponent extends HTMLElement {
     }
   }
 }
-
-customElements.define('serlo-editor', EditorWebComponent)
