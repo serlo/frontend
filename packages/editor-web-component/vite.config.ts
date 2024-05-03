@@ -6,6 +6,7 @@ import { defineConfig } from 'vite'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import dts from 'vite-plugin-dts'
 import svgr from 'vite-plugin-svgr'
+import replace from '@rollup/plugin-replace'
 
 // https://vitejs.dev/guide/build.html#library-mode
 
@@ -26,6 +27,10 @@ export default defineConfig({
     rollupOptions: {},
   },
   plugins: [
+    replace({
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      'process.env.NEXT_PUBLIC_ENV': JSON.stringify('production'),
+    }),
     react(),
     dts({
       outDir: 'dist',
