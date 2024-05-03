@@ -12,6 +12,7 @@ import { ExponentialFunction } from '../exercise-implementations/exponential-fun
 import { ExponentialFunctionTime } from '../exercise-implementations/exponential-function-2'
 import { ExponentialEquation } from '../exercise-implementations/exponential-function-3'
 import { FindExponentialFunction } from '../exercise-implementations/find-exponential-function'
+import { FindParabola } from '../exercise-implementations/find-parabola'
 import { IceCreamShop } from '../exercise-implementations/ice-cream-shop'
 import { ImportantApps } from '../exercise-implementations/important-apps'
 import { IntersectingLines } from '../exercise-implementations/intersecting-lines'
@@ -413,7 +414,7 @@ export const middleSchoolFinalExam = {
     calculatorAllowed: true,
     difficulty: 1,
     track: 2,
-    component: <PlaceholderExercise />,
+    component: <FindParabola />,
   },
   'parabel-aus-punkten-bestimmen': {
     title: 'Parabel aus Punkten bestimmen',
