@@ -5,7 +5,7 @@ import KaTeX from 'katex'
 import 'katex/contrib/mhchem'
 
 // eslint-disable-next-line import/no-unassigned-import
-import 'serlo-katex-styles/styles.css'
+import '@serlo/katex-styles/styles.css'
 import type { MathElement } from '../types/text-editor'
 
 export type StaticMathProps = Omit<MathElement, 'children'>

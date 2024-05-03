@@ -12,7 +12,7 @@ import {
 
 import { StaticMath } from '../static-components/static-math'
 // eslint-disable-next-line import/no-unassigned-import
-import 'serlo-katex-styles/styles.css'
+import '@serlo/katex-styles/styles.css'
 import type {
   MathElement as MathElementType,
   Paragraph,
