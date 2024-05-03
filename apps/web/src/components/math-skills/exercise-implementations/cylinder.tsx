@@ -448,10 +448,17 @@ function SubComponent({ data }: { data: DATA }) {
       fixed: true,
     })
 
-    b.create('ellipse', [c1a, c1b, c1c], {
+    b.create('ellipse', [c1a, c1b, c1c,0,pi], {
       straightFirst: false,
       straightLast: false,
       strokeWidth: 2,
+      dash: 2
+    })
+
+    b.create('ellipse', [c1a, c1b, c1c,pi,2*pi], {
+      straightFirst: false,
+      straightLast: false,
+      strokeWidth: 2
     })
 
     b.create('ellipse', [c2a, c2b, c2c], {
