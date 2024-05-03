@@ -385,7 +385,7 @@ export const middleSchoolFinalExam = {
     component: <VolumePyramide />,
   },
   'volumen-zylinder': {
-    title: 'Zylinder 🚧',
+    title: 'Zylinder',
     subtitle: 'Raumgeometrie',
     calculatorAllowed: true,
     difficulty: 1,
