@@ -41,7 +41,6 @@ export function EditOrInvite({
     UuidType.Page,
     UuidType.Event,
     UuidType.TaxonomyTerm,
-    UuidType.User,
   ].includes(data.type as UuidType)
 
   const isInvite = !auth && showInvite
@@ -49,7 +48,16 @@ export function EditOrInvite({
   const hasUnrevised =
     unrevisedRevisions !== undefined && unrevisedRevisions > 0
 
-  const href = hasUnrevised ? getHistoryUrl(data.id) : getEditHref()
+  const isCourse =
+    data.type === UuidType.Course || data.type === UuidType.CoursePage
+
+  const href = isCourse
+    ? data.unrevisedCourseRevisions && data.unrevisedCourseRevisions > 0
+      ? getHistoryUrl(data.courseId ?? data.id)
+      : getEditHref()
+    : hasUnrevised
+      ? getHistoryUrl(data.id)
+      : getEditHref()
   if (!href && !isInvite) return null
 
   const title = hasUnrevised
@@ -62,7 +70,7 @@ export function EditOrInvite({
     <>
       <UserToolsItem
         title={title}
-        href={isInvite ? undefined : href}
+        href={href}
         onClick={isInvite ? () => setInviteOpen(true) : undefined}
         aboveContent={aboveContent}
         icon={icon}
@@ -81,13 +89,17 @@ export function EditOrInvite({
     if (!data) return undefined
     const revisionId = data.revisionId
     const { type, id } = data
-    const url = getEditUrl(id, revisionId, type.startsWith('Taxonomy'))
+
+    const url = isCourse
+      ? getEditUrl(data.courseId ?? id, undefined, false) + '#' + data.id
+      : getEditUrl(id, revisionId, type.startsWith('Taxonomy'))
 
     if (type === UuidType.Page || type === UuidRevType.Page) {
       return canDo(Uuid.create(UuidRevType.Page)) ? url : undefined
     }
     if (type === UuidType.TaxonomyTerm)
       return canDo(TaxonomyTerm.set) ? url : undefined
+
     return url
   }
 }

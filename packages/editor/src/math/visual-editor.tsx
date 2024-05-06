@@ -1,3 +1,4 @@
+import { isTouchDevice } from '@editor/core/helpers/is-touch-device'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import * as MQ from 'react-mathquill'
 
@@ -5,10 +6,6 @@ import type { MathEditorProps } from './editor'
 
 if (typeof window !== 'undefined') {
   MQ.addStyles()
-}
-
-function isTouchDevice(): boolean {
-  return 'ontouchstart' in window || navigator.maxTouchPoints > 0
 }
 
 function isAndroid() {

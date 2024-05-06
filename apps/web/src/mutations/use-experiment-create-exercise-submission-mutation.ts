@@ -13,8 +13,12 @@ const mutation = gql`
   }
 `
 
-export function useCreateExerciseSubmissionMutation() {
+export function useCreateExerciseSubmissionMutation(path: string) {
   const mutationFetch = useMutationFetch()
+  const isExperimentPath = Boolean(
+    [30680, 23869, 66809].find((id) => path.includes(`/${id}`))
+  )
+  if (!isExperimentPath) return () => Promise.resolve()
 
   return async function (input: ExerciseSubmissionInput) {
     return await mutationFetch(mutation, input)

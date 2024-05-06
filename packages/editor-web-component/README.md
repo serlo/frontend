@@ -2,10 +2,31 @@
 
 This is an early version of the web component wrapping the [Serlo Editor](https://de.serlo.org/editor). Be aware that we are actively working on both packages and thus there will be breaking changes in minor versions before version 1 is reached. The repository [serlo/block-serlo-editor-with-vue-js](https://github.com/serlo/block-serlo-editor-with-vue-js) shows how this package can be used.
 
+## Installation and usage
+
+1. `yarn add @serlo/editor-web-component`
+2. Register the web component `customElements.define('serlo-editor', EditorWebComponent)`.
+3. Render the web component
+
+```JSX
+import { EditorWebComponent } from '@serlo/editor-web-component'
+
+customElements.define('serlo-editor', EditorWebComponent)
+
+// in your render function
+return (
+  <serlo-editor></serlo-editor>
+)
+```
+
 ## Releasing a new version to npm
 
 Bump the version number in the package.json and
 the github workflow seen inside `editor-web-component.yaml` will take care of the publishing.
+
+## Local development with editor package
+
+Go to the `package.json` and use `"@serlo/editor": "workspace:*"` instead of a fixed version. This way, you don't need to release a new version of the editor every time you make a change in the repo.
 
 ## Linking for local development with integrations
 
@@ -22,8 +43,8 @@ Initial steps:
 
 After making some changes in the editor:
 
-1. From this workspace -> run `yarn yalc:publish` (pushes dist, updates version and cache)
+- From this workspace -> run `yarn yalc:publish` (pushes dist, updates version and cache)
 
 To remove the local link to Serlo Editor:
 
-1. From consumer repo -> run `yalc remove @serlo/editor-web-component`
+- From consumer repo -> run `yalc remove @serlo/editor-web-component`

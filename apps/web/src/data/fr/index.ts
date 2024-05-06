@@ -776,7 +776,7 @@ export const loggedInData = {
           unorderedList: "Liste non ordonnée",
           lists: "Listes",
           mathFormula: "Formule mathématique (%ctrlOrCmd% + M)",
-          code: 'Code (%ctrlOrCmd% + ⇧ + `)',
+          code: 'Code (%ctrlOrCmd% + ⇧ + C)',
           blank: 'Blank',
           createBlank: 'Create Blank',
           removeBlank: 'Remove Blank',
@@ -974,8 +974,6 @@ export const loggedInData = {
           removeExercise: "Supprimer l'exercice",
           addExercise: "Ajouter un exercice",
           kindOfExerciseGroup: "Type de groupe d'exercice",
-          notCohesive: "pas cohérent",
-          cohesive: "cohérent",
           addIntermediateTask: 'Add Intermediate Task',
           removeIntermediateTask: 'Remove intermediate Task',
           intermediateTask: 'Intermediate Task'
@@ -1016,7 +1014,6 @@ export const loggedInData = {
         author: "Auteur·e",
         createdAt: "Créé le",
         ready: 'Ready to save?',
-        anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.',
         pluginCopyInfo: 'You can now paste this plugin into text plugins',
         pluginCopyButtonLabel: 'Copy plugin to clipboard'
       },

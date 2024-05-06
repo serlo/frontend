@@ -1,6 +1,6 @@
 import { PreferenceContext } from '@editor/core'
 import { isElementWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
-import { MathEditor } from '@editor/math'
+import { MathEditor } from '@editor/math/editor'
 import React, { useContext, useMemo } from 'react'
 import { Editor, Node, Path, Range, Transforms } from 'slate'
 import {
@@ -12,7 +12,7 @@ import {
 
 import { StaticMath } from '../static-components/static-math'
 // eslint-disable-next-line import/no-unassigned-import
-import 'serlo-katex-styles/styles.css'
+import '@serlo/katex-styles/styles.css'
 import type {
   MathElement as MathElementType,
   Paragraph,

@@ -17,7 +17,7 @@ import { UuidType } from '@serlo/frontend/src/data-types'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 import { RevisionHistoryLoader } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/revision-history-loader'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { CourseNavigation } from './course-navigation'
 import type { CoursePageTypePluginState } from './course-page'
@@ -57,14 +57,22 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
   const courseStrings = editorStrings.templatePlugins.course
   const [courseNavOpen, setCourseNavOpen] = useState(true)
   const [showSettingsModal, setShowSettingsModal] = useState(false)
+  const [activePageIndex, setActivePageIndex] = useState(0)
 
   const staticState = selectStaticDocument(store.getState(), props.id)
     ?.state as PrettyStaticState<CourseTypePluginState>
-
-  if (!staticState) return null
   const staticPages = staticState[
     'course-page'
   ] as PrettyStaticState<CoursePageTypePluginState>[]
+
+  useEffect(() => {
+    const hashId = parseInt(window.location.hash.substring(1))
+    if (!hashId) return
+    const index = staticPages.findIndex(({ id }) => id === hashId)
+    setActivePageIndex(Math.max(index, 0))
+  }, [staticPages])
+
+  if (!staticPages) return null
 
   return (
     <>
@@ -83,40 +91,20 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
       </div>
       <article className="mt-20">
         {renderCourseNavigation()}
-        {children.map((child, index) => {
-          const uniqueId = `page-${staticPages[index].id}`
-          return (
-            <div
-              key={uniqueId}
-              id={uniqueId}
-              className="mt-16 border-t-2 border-editor-primary-200 pt-2"
-            >
-              <nav className="flex justify-end">
-                <button
-                  className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
-                  onClick={() => children.remove(index)}
-                >
-                  <EditorTooltip text={courseStrings.removeCoursePage} />
-                  <FaIcon icon={faTrashAlt} />
-                </button>
-                <ContentLoaders
-                  id={staticPages[index].id}
-                  currentRevision={staticPages[index].revision}
-                  onSwitchRevision={(data) =>
-                    child.replace(TemplatePluginType.CoursePage, data)
-                  }
-                  entityType={UuidType.CoursePage}
-                />
-              </nav>
-              {child.render()}
-            </div>
-          )
-        })}
-        <div className="mt-24 border-t-2 border-editor-primary-200 pt-12">
-          <AddButton onClick={() => children.insert()}>
+        <div className="ml-side mt-4">
+          <AddButton
+            onClick={() => {
+              children.insert()
+              setTimeout(() => {
+                setActivePageIndex(staticPages.length)
+                window.location.hash = `#${staticPages[staticPages.length - 1].id}`
+              })
+            }}
+          >
             {courseStrings.addCoursePage}
           </AddButton>
         </div>
+        {renderCoursePage()}
         <ToolbarMain showSubscriptionOptions {...props.state} />
       </article>
       <ModalWithCloseButton
@@ -152,14 +140,77 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
             onChange={(e) => title.set(e.target.value)}
           />
         }
-        pages={staticPages.map((coursePage) => {
+        pages={staticPages.map(({ title, id }, index) => {
+          const isActive = activePageIndex === index
           return {
-            title: coursePage.title,
-            url: `#page-${coursePage.id}`,
-            id: coursePage.id,
+            key: title + id + index,
+            element: (
+              <div className="group">
+                <button
+                  onClick={() => {
+                    if (isActive) return
+                    window.location.hash = `#${staticPages[index].id}`
+                    setActivePageIndex(index)
+                  }}
+                  className={cn(
+                    'serlo-link text-lg leading-browser',
+                    isActive &&
+                      'font-semibold text-almost-black hover:no-underline'
+                  )}
+                >
+                  {title.trim().length ? title : '___'}
+                </button>{' '}
+                {/* This code becomes relevant when coursePages are not standalone entities any more */}
+                {/* {index > 0 ? (
+                  <button
+                    className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100"
+                    onClick={() => {
+                      const newIndex = index - 1
+                      children.move(index, newIndex)
+                      // setActivePageIndex(() => newIndex)
+                    }}
+                  >
+                    <EditorTooltip text={templateStrings.article.moveUpLabel} />
+                    <FaIcon icon={faArrowCircleUp} />
+                  </button>
+                ) : null} */}
+              </div>
+            ),
           }
         })}
       />
+    )
+  }
+
+  function renderCoursePage() {
+    const activePage = children.at(activePageIndex)
+    if (!activePage) return
+    const staticPage = staticPages[activePageIndex]
+
+    return (
+      <div
+        key={activePage.id}
+        className="mt-16 border-t-2 border-editor-primary-200 pt-2"
+      >
+        <nav className="flex justify-end">
+          <button
+            className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
+            onClick={() => children.remove(activePageIndex)}
+          >
+            <EditorTooltip text={courseStrings.removeCoursePage} />
+            <FaIcon icon={faTrashAlt} />
+          </button>
+          <ContentLoaders
+            id={staticPage.id}
+            currentRevision={staticPage.revision}
+            onSwitchRevision={(data) =>
+              activePage.replace(TemplatePluginType.CoursePage, data)
+            }
+            entityType={UuidType.CoursePage}
+          />
+        </nav>
+        {children[activePageIndex]?.render()}
+      </div>
     )
   }
 }

@@ -17,7 +17,6 @@ npm-debug.log*
 
 # Environment Variables
 .env*.local
-prisma/.env
 
 .vercel
 .idea

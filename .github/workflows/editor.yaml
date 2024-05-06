@@ -1,4 +1,4 @@
-name: Editor
+name: editor
 
 on:
   push:
@@ -16,7 +16,6 @@ jobs:
           node-version: 20
           registry-url: https://registry.npmjs.org
       - run: yarn
-      - run: yarn build:prisma
 
       - name: Build editor package
         run: yarn editor:build

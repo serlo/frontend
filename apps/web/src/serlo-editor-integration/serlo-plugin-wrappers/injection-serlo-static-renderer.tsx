@@ -6,7 +6,6 @@ import {
   EditorExerciseGroupDocument,
   EditorInjectionDocument,
 } from '@editor/types/editor-plugins'
-import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
 
@@ -66,13 +65,12 @@ export function InjectionSerloStaticRenderer({
           }
 
           if (uuid.__typename === 'Exercise') {
-            const exerciseContext = {
-              serloContext: {
-                licenseId: uuid.licenseId,
-              },
+            const serloContext = {
+              licenseId: uuid.licenseId,
+              uuid: uuid.id,
             }
             setContent([
-              { ...JSON.parse(uuid.currentRevision.content), exerciseContext },
+              { ...JSON.parse(uuid.currentRevision.content), serloContext },
             ])
             return
           }
@@ -92,15 +90,14 @@ export function InjectionSerloStaticRenderer({
                 return
               }
             }
-            setContent([
-              {
-                plugin: TemplatePluginType.TextExerciseGroup,
-                state: {
-                  content,
-                  serloContext: { licenseId: uuid.licenseId },
-                },
+            const contentWithLicenseId = {
+              ...content,
+              state: {
+                ...content.state,
+                serloContext: { licenseId: uuid.licenseId },
               },
-            ])
+            }
+            setContent([contentWithLicenseId])
             return
           }
 
@@ -109,7 +106,7 @@ export function InjectionSerloStaticRenderer({
               plugin: EditorPluginType.Video,
               state: {
                 src: uuid.currentRevision.url,
-                alt: uuid.currentRevision.title ?? 'video',
+                alt: uuid.title ?? 'video',
               },
             }
             setContent([state])
@@ -144,6 +141,7 @@ export function InjectionSerloStaticRenderer({
     }
   }, [cleanedHref, hash])
 
+  if (!href) return null
   if (!cleanedHref) return null
 
   if (content === 'loading') return <LoadingSpinner />
@@ -164,7 +162,7 @@ export function InjectionSerloStaticRenderer({
   }
 
   return (
-    <div className="border-b-3 border-brand-200 pb-4 text-gray-900">
+    <div className="border-b-3 border-brand-200 py-4 text-gray-900">
       <StaticRenderer document={content} />
     </div>
   )
@@ -174,52 +172,27 @@ const query = gql`
   query injectionOnlyContent($path: String!) {
     uuid(alias: { path: $path, instance: de }) {
       __typename
-      ... on Exercise {
-        ...injectionExercise
-      }
-      ... on ExerciseGroup {
-        licenseId
+      alias
+      title
+
+      ... on AbstractEntity {
+        id
         currentRevision {
           content
         }
+        licenseId
       }
+
       ... on Video {
         currentRevision {
           url
-          title
         }
       }
       ... on Applet {
         currentRevision {
           url
-          content
         }
       }
-      ... on Event {
-        currentRevision {
-          content
-        }
-      }
-      ### fallbacks
-      ... on Article {
-        alias
-        title
-      }
-      ... on TaxonomyTerm {
-        alias
-        title
-      }
-      ... on CoursePage {
-        alias
-        title
-      }
-    }
-  }
-
-  fragment injectionExercise on Exercise {
-    licenseId
-    currentRevision {
-      content
     }
   }
 `

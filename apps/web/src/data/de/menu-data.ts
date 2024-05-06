@@ -27,7 +27,8 @@ export const headerData: InstanceData['headerData'] = [
     title: 'Fächer',
     icon: 'subject',
     children: [
-      { url: '/mathe', title: 'Mathematik' },
+      { url: '/mathe', title: 'Mathe' },
+      { url: '/mathe-pruefungen', title: 'Mathe Abschlussprüfungen' },
       { url: '/biologie', title: 'Biologie' },
       {
         url: '/nachhaltigkeit',
@@ -130,7 +131,6 @@ export const footerData: InstanceData['footerData'] = {
       title: 'Allgemein',
       children: [
         { title: 'Über Serlo', url: '/serlo' },
-        { title: 'Presse', url: '/presse' },
         { title: 'Kontakt', url: '/kontakt' },
         {
           title: 'Other Languages',

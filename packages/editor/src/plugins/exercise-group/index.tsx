@@ -4,7 +4,6 @@ import {
   child,
   list,
   object,
-  boolean,
   optional,
   number,
 } from '@editor/plugin'
@@ -36,10 +35,6 @@ const exerciseGroupState = object({
       })
     )
   ),
-  /* cohesive field would indicate whether the children of a grouped exercise are cohesive
-    this field might be used in the future, but currently it has no effect and can not be changed
-    */
-  cohesive: boolean(false),
 })
 
 export type ExerciseGroupPluginState = typeof exerciseGroupState

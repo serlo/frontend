@@ -776,7 +776,7 @@ export const loggedInData = {
           unorderedList: "கட்டளையிடாத பட்டியல்",
           lists: "பட்டியல்கள்",
           mathFormula: 'Math formula (%ctrlOrCmd% + M)',
-          code: 'Code (%ctrlOrCmd% + ⇧ + `)',
+          code: 'Code (%ctrlOrCmd% + ⇧ + C)',
           blank: 'Blank',
           createBlank: 'Create Blank',
           removeBlank: 'Remove Blank',
@@ -974,8 +974,6 @@ export const loggedInData = {
           removeExercise: 'Remove exercise',
           addExercise: 'Add exercise',
           kindOfExerciseGroup: 'Kind of exercise group',
-          notCohesive: 'not cohesive',
-          cohesive: 'cohesive',
           addIntermediateTask: 'Add Intermediate Task',
           removeIntermediateTask: 'Remove intermediate Task',
           intermediateTask: 'Intermediate Task'
@@ -1016,7 +1014,6 @@ export const loggedInData = {
         author: "எழுத்தாளர்",
         createdAt: 'when?',
         ready: "சேமிக்கத் தயாரா?",
-        anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.',
         pluginCopyInfo: 'You can now paste this plugin into text plugins',
         pluginCopyButtonLabel: 'Copy plugin to clipboard'
       },

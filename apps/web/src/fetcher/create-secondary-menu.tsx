@@ -29,7 +29,11 @@ export function createSecondaryMenu(
     if (uuid.__typename === UuidType.TaxonomyTerm) {
       if (uuid.type === TaxonomyTermType.ExerciseFolder) return undefined
 
-      const breadcrumbs = taxonomyParentsToRootToBreadcrumbsData(uuid, instance)
+      const breadcrumbs = taxonomyParentsToRootToBreadcrumbsData(
+        uuid,
+        instance,
+        true
+      )
 
       if (!breadcrumbs) return undefined
 

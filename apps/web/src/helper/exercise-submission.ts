@@ -64,14 +64,18 @@ export function exerciseSubmission(
 
   const { revisionId, path } = data
 
-  const isValid =
-    data.path.length < 1024 &&
-    Math.floor(entityId) === entityId &&
-    revisionId &&
-    Math.floor(revisionId) === revisionId &&
-    entityId > 0
+  // eslint-disable-next-line no-warning-comments
+  // TODO: Remove commented code or fix check
+  // Shane: This is removed as we are receiving suspiciously a low number of submissions
+  //        I suspect the revisionId part of the check is the problem
+  //        Easier to filter out bad data than to fix the check in this moment
 
-  if (!isValid) return
+  // const isValid =
+  //   data.path.length < 1024 &&
+  //   Math.floor(entityId) === entityId &&
+  //   revisionId &&
+  //   Math.floor(revisionId) === revisionId &&
+  //   entityId > 0
 
   void (async () => {
     await submitFn({

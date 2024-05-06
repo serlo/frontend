@@ -33,9 +33,6 @@ function main() {
   print_header "Run linter"
   yarn lint
 
-  print_header "Run API check"
-  yarn check:api
-
   print_header "Run all tests"
   yarn test
 }
