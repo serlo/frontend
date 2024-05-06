@@ -37,7 +37,10 @@ const notProvidedKeys = [
 const envReplacements = {
   ...Object.fromEntries(productionKeys.map((key) => [key, js('production')])),
   ...Object.fromEntries(
-    notProvidedKeys.map((key) => [key, js('NOT_PROVIDED')])
+    notProvidedKeys.map((key) => [
+      `process.env.${key}`,
+      js(`NOT_PROVIDED_${key}`),
+    ])
   ),
 }
 
