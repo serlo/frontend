@@ -776,7 +776,7 @@ export const loggedInData = {
           unorderedList: "Lista sin ordenar",
           lists: "Listas",
           mathFormula: "Fórmula matemática (%ctrlOrCmd% + M)",
-          code: "Código (%ctrlOrCmd% + + + `)",
+          code: 'Code (%ctrlOrCmd% + ⇧ + C)',
           blank: "Blanco",
           createBlank: "Crear espacio en blanco",
           removeBlank: "Eliminar espacio en blanc",
@@ -1014,7 +1014,6 @@ export const loggedInData = {
         author: "Autor",
         createdAt: "¿Cuándo?",
         ready: "¿Listo para guardar?",
-        anchorLinkWarning: "Este enlace sólo funcionará en el frontend y para contenidos que tengan una revisión algo nueva.",
         pluginCopyInfo: "Ahora puedes pegar este plugin en plugins de texto",
         pluginCopyButtonLabel: "Copiar plugin al portapapeles"
       },

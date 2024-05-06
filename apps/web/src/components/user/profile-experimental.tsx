@@ -23,12 +23,6 @@ export const features = {
     activeInDev: true,
     hideInProduction: false,
   },
-  editorAnchorLinkCopyTool: {
-    cookieName: 'useEditorAnchorLinkCopyTool',
-    isActive: false,
-    activeInDev: true,
-    hideInProduction: false,
-  },
 }
 
 const showExperimentsStorageKey = 'showExperiments'
@@ -129,21 +123,6 @@ export function ProfileExperimental() {
             Content eingefügt werden. Zum einfügen einfach ein Text-Plugin
             auswählen und STRG/CMD+V oder rechtsklick&gt;einfügen benutzen. Wenn
             das Plugin an der Stelle erlaubt ist, erscheint es direkt.
-          </p>
-        </div>
-      ) : null}
-      <hr className="mx-side -mt-2 mb-4" />
-      {shouldBeVisible('editorAnchorLinkCopyTool') ? (
-        <div>
-          <h3 className="serlo-h3 mb-3">
-            {renderFeatureButton('editorAnchorLinkCopyTool')} Editor: Anker-Link
-            Tool
-          </h3>
-          <p className="serlo-p">
-            Ein neues Tool in der Editor-Toolbar um direkt Anker-Links auf
-            Editor-Plugins in die Zwischenablage zu kopieren. Wichtig:
-            Funktioniert nur, wenn der Inhalt ab Juli 2023 eine neue Revision
-            erhalten hat.
           </p>
         </div>
       ) : null}

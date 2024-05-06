@@ -79,7 +79,8 @@ export function ExamsCompleteList({
                       </b>
                       <br />
                       {children.map((year, index) => {
-                        const yearTitle = year.title.replace(/[^0-9.]/g, '')
+                        const yearTitle =
+                          year.title.match(/[1-2]{1}[0-9]{3}/)?.[0]
                         const title = yearTitle ? yearTitle : year.title
 
                         return (

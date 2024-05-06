@@ -776,7 +776,7 @@ export const loggedInData = {
           unorderedList: "Aufzählung",
           lists: "Listen",
           mathFormula: "Matheformel (%ctrlOrCmd% + M)",
-          code: 'Code (%ctrlOrCmd% + ⇧ + `)',
+          code: 'Code (%ctrlOrCmd% + ⇧ + C)',
           blank: "Lücke",
           createBlank: "Lücke erstellen",
           removeBlank: "Lücke entfernen",
@@ -1014,7 +1014,6 @@ export const loggedInData = {
         author: "Autor*in",
         createdAt: "Zeitstempel",
         ready: "Bereit zum Speichern?",
-        anchorLinkWarning: "Dieser Link funktioniert nur im Frontend und für Inhalte, die eine etwas relativ neue akzeptierte Bearbeitung haben.",
         pluginCopyInfo: "Du kannst das Plugin jetzt in Text-Plugins einfügen",
         pluginCopyButtonLabel: "Plugin in die Zwischenablage kopieren"
       },
