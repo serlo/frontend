@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 import { SerloEditor, SerloRenderer } from '@serlo/editor'
 import styles from '@serlo/editor/style.css?raw'
 import React from 'react'
@@ -31,9 +33,9 @@ export class EditorWebComponent extends HTMLElement {
   }
 
   loadAndApplyStyles(shadowRoot: ShadowRoot) {
-    console.log('Applying styles: ', { styles: styles as string })
+    console.log('Applying styles', { styles })
     const styleEl = document.createElement('style')
-    styleEl.textContent = styles as string
+    styleEl.textContent = styles
     shadowRoot.appendChild(styleEl)
   }
 
