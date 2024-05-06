@@ -408,8 +408,8 @@ export const middleSchoolFinalExam = {
     track: 3,
     component: <PlaceholderExercise />,
   },
-  'wip-4': {
-    title: 'Parabel bestimmen 🚧',
+  'parabel-bestimmen': {
+    title: 'Parabel bestimmen',
     subtitle: 'Quadratische Funktionen',
     calculatorAllowed: true,
     difficulty: 1,
