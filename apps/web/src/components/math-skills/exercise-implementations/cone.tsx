@@ -157,9 +157,11 @@ function Hint({ data }: { data: DATA }) {
     return (
       <>
         <p className="serlo-main-task">
-          Verwenden Sie die Formel des Volumens eines Zylinders:
+          Verwenden Sie die Formel des Volumens eines Kegels:
         </p>
-        <p className="serlo-highlight-gray">V = r² · π · h</p>
+        <p className="serlo-highlight-gray">
+          V = {buildFrac(<>1</>, <>3</>)} · r² · π · h
+        </p>
       </>
     )
   }
@@ -167,13 +169,14 @@ function Hint({ data }: { data: DATA }) {
     return (
       <>
         <p className="serlo-main-task">
-          Verwenden Sie die Formel des Volumens eines Zylinders:
+          Und die Formel des Oberflächeninhalts eines Kegels:
         </p>
-        <p className="serlo-highlight-gray">V = r² · π · h</p>
+        <p className="serlo-highlight-gray">O = r · π · (r + s)</p>
+
         <p className="serlo-main-task">
-          Und die Formel des Oberflächeninhalts eines Zylinders:
+          Verwenden Sie den Satz des Pythagoras:
         </p>
-        <p className="serlo-highlight-gray">O = 2 · r · π · (r + h)</p>
+        <p className="serlo-highlight-gray">r² + h² = s²</p>
       </>
     )
   }
