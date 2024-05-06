@@ -28,8 +28,7 @@ export default defineConfig({
   },
   plugins: [
     replace({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-      'process.env.NEXT_PUBLIC_ENV': JSON.stringify('production'),
+      'process.env': JSON.stringify({}),
     }),
     react(),
     dts({
