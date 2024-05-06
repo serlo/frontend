@@ -35,8 +35,10 @@ const notProvidedKeys = [
 ]
 
 const envReplacements = {
-  ...Object.fromEntries(productionKeys.map((key) => [key, 'production'])),
-  ...Object.fromEntries(notProvidedKeys.map((key) => [key, 'NOT_PROVIDED'])),
+  ...Object.fromEntries(productionKeys.map((key) => [key, js('production')])),
+  ...Object.fromEntries(
+    notProvidedKeys.map((key) => [key, js('NOT_PROVIDED')])
+  ),
 }
 
 // eslint-disable-next-line import/no-default-export
