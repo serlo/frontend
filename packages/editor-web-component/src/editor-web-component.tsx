@@ -48,14 +48,10 @@ export class EditorWebComponent extends HTMLElement {
       this.initialState = JSON.parse(newValue) as InitialState
     } else if (
       name === 'mode' &&
+      oldValue !== newValue &&
       (newValue === 'read' || newValue === 'write')
     ) {
       this.mode = newValue
-    } else {
-      // eslint-disable-next-line no-console
-      console.warn(
-        `Unhandled attribute change in Editor Web Component for '${name}' from value: ${oldValue} to value: ${newValue}`
-      )
     }
   }
 
@@ -79,6 +75,10 @@ export class EditorWebComponent extends HTMLElement {
   }
 
   set mode(newMode: Mode) {
+    if (newMode === this._mode) {
+      return
+    }
+
     if (newMode === 'read' || newMode === 'write') {
       this._mode = newMode
       this.setAttribute('mode', newMode)
