@@ -6,6 +6,7 @@ import { Asymptote2 } from '../exercise-implementations/asymptote-2'
 import { CircleSector } from '../exercise-implementations/circle-sector'
 import { CompareGrowth } from '../exercise-implementations/compare-growth'
 import { CompletingTheSquare } from '../exercise-implementations/completing-the-square'
+import { Cone } from '../exercise-implementations/cone'
 import { Cylinder } from '../exercise-implementations/cylinder'
 import { DescribeGraphPowerFunction } from '../exercise-implementations/describe-graph-power-function'
 import { ExponentialFunction } from '../exercise-implementations/exponential-function-1'
@@ -392,13 +393,13 @@ export const middleSchoolFinalExam = {
     track: 3,
     component: <Cylinder />,
   },
-  'wip-2': {
+  'volumen-kegel': {
     title: 'Kegel 🚧',
     subtitle: 'Raumgeometrie',
     calculatorAllowed: true,
     difficulty: 1,
     track: 3,
-    component: <PlaceholderExercise />,
+    component: <Cone />,
   },
   'wip-3': {
     title: 'Kugel 🚧',

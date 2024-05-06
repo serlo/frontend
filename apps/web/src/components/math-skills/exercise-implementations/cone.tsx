@@ -15,12 +15,12 @@ interface DATA {
 
 const pi = 3.14159265359
 
-export function Cylinder() {
+export function Cone() {
   return (
     <SelfEvaluationExercise
       generator={() => {
         const c1b = randomIntBetween(2, 7)
-        const h = randomIntBetween(2, 4)
+        const h = randomIntBetween(3, 5)
         const c2b = c1b
         const M = c1b / 2
         const path = randomIntBetween(1, 4)
@@ -38,7 +38,7 @@ export function Cylinder() {
         return (
           <>
             <p className="serlo-main-task">
-              Bei dem Zylinder sind folgende Größen gegeben:
+              Bei dem Kegel sind folgende Größen gegeben:
             </p>
             <Given data={data} />
             {renderDiagram(data)}
@@ -63,36 +63,6 @@ export function Cylinder() {
     />
   )
 }
-function getP1(data: DATA) {
-  if (!data) {
-    throw new Error('getP1 was called without data.')
-  }
-  const { c1b } = data
-  if (c1b === 2) {
-    const P1 = -0.41
-    return P1
-  }
-  if (c1b === 3) {
-    const P1 = -0.3
-    return P1
-  }
-  if (c1b === 4) {
-    const P1 = -0.24
-    return P1
-  }
-  if (c1b === 5) {
-    const P1 = -0.19
-    return P1
-  }
-  if (c1b === 6) {
-    const P1 = -0.16
-    return P1
-  }
-  if (c1b === 7) {
-    const P1 = -0.14
-    return P1
-  }
-}
 
 function Given({ data }: { data: DATA }) {
   if (data.path === 1) {
@@ -103,7 +73,8 @@ function Given({ data }: { data: DATA }) {
     )
   }
   if (data.path === 2) {
-    const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
+    const result =
+      Math.round((Math.pow(data.M, 2) / 3) * pi * data.h * 100) / 100
     return (
       <p className="serlo-main-task">
         V = {pp(result)} cm³, r = {pp(data.M)} cm
@@ -119,10 +90,9 @@ function Given({ data }: { data: DATA }) {
     )
   }
   if (data.path === 4) {
-    const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
     return (
       <p className="serlo-main-task">
-        V = {pp(result)} cm³, r = {pp(data.M)} cm
+        h = {pp(data.h)} cm, r = {pp(data.M)} cm
       </p>
     )
   }
@@ -134,7 +104,7 @@ function Task({ data }: { data: DATA }) {
         <p className="serlo-main-task">
           Berechnen Sie das Volumen{' '}
           <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">V</b> des
-          Zylinders.
+          Kegels.
         </p>{' '}
         <br />
         <p>Runden Sie auf zwei Stellen nach dem Komma.</p>
@@ -147,7 +117,7 @@ function Task({ data }: { data: DATA }) {
         <p className="serlo-main-task">
           Berechnen Sie die Höhe{' '}
           <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">h</b> des
-          Zylinders.
+          Kegels.
         </p>{' '}
         <br />
         <p>Runden Sie auf eine ganze Zahl.</p>
@@ -160,7 +130,7 @@ function Task({ data }: { data: DATA }) {
         <p className="serlo-main-task">
           Berechnen Sie den Radius{' '}
           <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">r</b> des
-          Zylinders.
+          Kegels.
         </p>{' '}
         <br />
         <p>Runden Sie auf eine ganze Zahl.</p>
@@ -173,7 +143,7 @@ function Task({ data }: { data: DATA }) {
         <p className="serlo-main-task">
           Berechnen Sie den Oberflächeninhalt{' '}
           <b className="rounded-md bg-gray-400 bg-opacity-20 p-1">O</b> des
-          Zylinders.
+          Kegels.
         </p>{' '}
         <br />
         <p>Runden Sie auf zwei Stellen nach dem Komma.</p>
@@ -210,20 +180,24 @@ function Hint({ data }: { data: DATA }) {
 }
 
 function Solution({ data }: { data: DATA }) {
+  const zwi = Math.pow(data.M, 2) / 3
   if (data.path === 1) {
-    const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
+    const result =
+      Math.round((Math.pow(data.M, 2) / 3) * pi * data.h * 100) / 100
     return (
       <>
-        <p>Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
-        <p className="serlo-highlight-gray">V = r² · π · h</p>
+        <p>Stelle die Gleichung für das Volumen eines Kegels auf:</p>
+        <p className="serlo-highlight-gray">
+          V = {buildFrac(<>1</>, <>3</>)} · r² · π · h
+        </p>
         <p>Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
-          V = ({data.M.toLocaleString('de-De')} cm)² · π ·{' '}
-          {data.h.toLocaleString('de-De')} cm
+          V = {buildFrac(<>1</>, <>3</>)} · ({data.M.toLocaleString('de-De')}{' '}
+          cm)² · π · {data.h.toLocaleString('de-De')} cm
         </p>
         <p>Berechne das Ergebnis:</p>
         <p className="serlo-highlight-gray">
-          V = {Math.pow(data.M, 2).toLocaleString('de-De')} cm² · π ·{' '}
+          V = {zwi.toLocaleString('de-De')} cm² · π ·{' '}
           {data.h.toLocaleString('de-De')} cm
         </p>{' '}
         <br />
@@ -232,21 +206,24 @@ function Solution({ data }: { data: DATA }) {
     )
   }
   if (data.path === 2) {
-    const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
+    const result =
+      Math.round((Math.pow(data.M, 2) / 3) * pi * data.h * 100) / 100
     return (
       <>
         <p>Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
-        <p className="serlo-highlight-gray">V = r² · π · h</p>
+        <p className="serlo-highlight-gray">
+          V = {buildFrac(<>1</>, <>3</>)} · r² · π · h
+        </p>
         <p>Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
-          {result.toLocaleString('de-De')} cm³ = (
+          {result.toLocaleString('de-De')} cm³ = {buildFrac(<>1</>, <>3</>)} · (
           {data.M.toLocaleString('de-De')} cm)² · π · h
         </p>
         <p>Stelle nach h um:</p>
         <p className="serlo-highlight-gray">
           h ={' '}
           {buildFrac(
-            <>{result.toLocaleString('de-De')} cm³</>,
+            <>{result.toLocaleString('de-De')} cm³ · 3</>,
             <>({data.M.toLocaleString('de-De')} cm)² · π</>
           )}
         </p>{' '}
@@ -256,15 +233,18 @@ function Solution({ data }: { data: DATA }) {
     )
   }
   if (data.path === 3) {
-    const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
+    const result =
+      Math.round((Math.pow(data.M, 2) / 3) * pi * data.h * 100) / 100
     return (
       <>
         <p>Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
-        <p className="serlo-highlight-gray">V = r² · π · h</p>
+        <p className="serlo-highlight-gray">
+          V = {buildFrac(<>1</>, <>3</>)} · r² · π · h
+        </p>
         <p>Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
-          {result.toLocaleString('de-De')} cm³ = r² · π ·{' '}
-          {data.h.toLocaleString('de-De')} cm
+          {result.toLocaleString('de-De')} cm³ = {buildFrac(<>1</>, <>3</>)} ·
+          r² · π · {data.h.toLocaleString('de-De')} cm
         </p>
         <p>Stelle nach r um:</p>
         <p className="serlo-highlight-gray">
@@ -272,7 +252,7 @@ function Solution({ data }: { data: DATA }) {
           {buildBigSqrt(
             <>
               {buildFrac(
-                <>{result.toLocaleString('de-De')} cm³</>,
+                <>{result.toLocaleString('de-De')} · 3</>,
                 <>({data.h.toLocaleString('de-De')} cm) · π</>
               )}
             </>
@@ -284,39 +264,59 @@ function Solution({ data }: { data: DATA }) {
     )
   }
   if (data.path === 4) {
-    const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
-    const ob = Math.round(2 * data.M * pi * (data.M + data.h) * 100) / 100
+    const cc =
+      Math.round(Math.sqrt(Math.pow(data.M, 2) + Math.pow(data.h, 2)) * 100) /
+      100
+    const result = Math.round(data.M * pi * (data.M + cc) * 100) / 100
+
     return (
       <>
         <p>Stelle die Gleichung für den Oberflächeninhalt auf:</p>
-        <p className="serlo-highlight-gray">O = 2 · r · π · (r + h)</p>
-        <p>Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
-        <p className="serlo-highlight-gray">V = r² · π · h</p>
+        <p className="serlo-highlight-gray">O = r · π · (r + s)</p>
+        <p>Stelle den Satz des Phythagoras auf:</p>
+        <p className="serlo-highlight-gray">r² + h² = s²</p>
         <p>Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
-          {result.toLocaleString('de-De')} cm³ = (
-          {data.M.toLocaleString('de-De')} cm)² · π · h
+          s² = ({data.M} cm)² + ({data.h} cm)² <br />s = {cc} cm
         </p>
-        <p>Stelle nach h um:</p>
+        <p>Setze die Werte in die Gleichung des Oberflächeninhaltes ein:</p>
         <p className="serlo-highlight-gray">
-          h ={' '}
-          {buildFrac(
-            <>{result.toLocaleString('de-De')} cm³</>,
-            <>({data.M.toLocaleString('de-De')} cm)² · π</>
-          )}
+          O = {data.M} cm · π · ({data.M} cm + {cc} cm)
         </p>{' '}
         <br />
-        <p className="serlo-highlight-gray">h ≈ {pp(data.h)} cm</p>
-        <p>Setze alle Werte in die Gleichung des Oberflächeninhaltes ein:</p>
-        <p className="serlo-highlight-gray">
-          O = 2 · {data.M.toLocaleString('de-De')} cm · π · (
-          {data.M.toLocaleString('de-De')} cm + {data.h.toLocaleString('de-De')}{' '}
-          cm)
-        </p>{' '}
-        <br />
-        <p className="serlo-highlight-green">O = {pp(ob)} cm²</p>
+        <p className="serlo-highlight-green">O = {pp(result)} cm²</p>
       </>
     )
+  }
+}
+function getP1(data: DATA) {
+  if (!data) {
+    throw new Error('getP1 was called without data.')
+  }
+  const { c1b } = data
+  if (c1b === 2) {
+    const P1 = -0.18
+    return P1
+  }
+  if (c1b === 3) {
+    const P1 = -0.12
+    return P1
+  }
+  if (c1b === 4) {
+    const P1 = -0.11
+    return P1
+  }
+  if (c1b === 5) {
+    const P1 = -0.1
+    return P1
+  }
+  if (c1b === 6) {
+    const P1 = -0.1
+    return P1
+  }
+  if (c1b === 7) {
+    const P1 = -0.09
+    return P1
   }
 }
 
@@ -327,34 +327,33 @@ function getX2(data: DATA) {
 
   const { c1b } = data
   if (c1b === 2) {
-    const X2 = c1b + 0.41
+    const X2 = c1b + 0.18
     return X2
   }
   if (c1b === 3) {
-    const X2 = c1b + 0.3
+    const X2 = c1b + 0.12
     return X2
   }
   if (c1b === 4) {
-    const X2 = c1b + 0.24
+    const X2 = c1b + 0.11
     return X2
   }
   if (c1b === 5) {
-    const X2 = c1b + 0.19
+    const X2 = c1b + 0.1
     return X2
   }
   if (c1b === 6) {
-    const X2 = c1b + 0.16
+    const X2 = c1b + 0.1
     return X2
   }
   if (c1b === 7) {
-    const X2 = c1b + 0.14
+    const X2 = c1b + 0.09
     return X2
   }
 }
 
 function renderDiagram(data: DATA) {
   const hi = data.h
-  const hiMi = hi + 1
   const x2 = data.c1b
   const Mi = x2 / 2
   return buildJSX(() => {
@@ -378,10 +377,10 @@ function renderDiagram(data: DATA) {
       label: { autoPosition: true },
     })
 
-    const p2 = b.create('point', [() => getP1(data), hi], {
-      name: '',
+    const H = b.create('point', [Mi, hi], {
+      name: 'S',
       fixed: true,
-      visible: false,
+      visible: true,
       label: { autoPosition: true },
     })
 
@@ -392,19 +391,12 @@ function renderDiagram(data: DATA) {
       label: { autoPosition: true },
     })
 
-    const p4 = b.create('point', [() => getX2(data), hi], {
-      name: '',
-      fixed: true,
-      visible: false,
-      label: { autoPosition: true },
-    })
-
-    b.create('line', [p1, p2], {
+    b.create('line', [p1, H], {
       straightFirst: false,
       straightLast: false,
       strokeWidth: 2,
     })
-    b.create('line', [p3, p4], {
+    b.create('line', [p3, H], {
       straightFirst: false,
       straightLast: false,
       strokeWidth: 2,
@@ -428,23 +420,7 @@ function renderDiagram(data: DATA) {
       fixed: true,
     })
 
-    const c1c = b.create('point', [Mi, 1], {
-      name: '',
-      visible: false,
-      fixed: true,
-    })
-    const c2a = b.create('point', [0, hi], {
-      name: '',
-      fixed: true,
-      visible: false,
-      label: { autoPosition: true },
-    })
-    const c2b = b.create('point', [x2, hi], {
-      name: '',
-      visible: false,
-      fixed: true,
-    })
-    const c2c = b.create('point', [Mi, hiMi], {
+    const c1c = b.create('point', [Mi, 0.6], {
       name: '',
       visible: false,
       fixed: true,
@@ -454,7 +430,7 @@ function renderDiagram(data: DATA) {
       straightFirst: false,
       straightLast: false,
       strokeWidth: 2,
-      dash: 2,
+      dash: 3,
     })
 
     b.create('ellipse', [c1a, c1b, c1c, pi, 2 * pi], {
@@ -463,11 +439,6 @@ function renderDiagram(data: DATA) {
       strokeWidth: 2,
     })
 
-    b.create('ellipse', [c2a, c2b, c2c], {
-      straightFirst: false,
-      straightLast: false,
-      strokeWidth: 2,
-    })
     return b
   }, data)
 }
