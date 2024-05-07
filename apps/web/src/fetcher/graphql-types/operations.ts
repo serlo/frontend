@@ -1444,9 +1444,16 @@ export interface TaxonomyTermCreateInput {
   taxonomyType: TaxonomyTypeCreateOptions;
 }
 
+export interface TaxonomyTermCreateResponse {
+  __typename?: 'TaxonomyTermCreateResponse';
+  query: Query;
+  record?: Maybe<TaxonomyTerm>;
+  success: Scalars['Boolean']['output'];
+}
+
 export interface TaxonomyTermMutation {
   __typename?: 'TaxonomyTermMutation';
-  create: DefaultResponse;
+  create: TaxonomyTermCreateResponse;
   createEntityLinks: DefaultResponse;
   deleteEntityLinks: DefaultResponse;
   setNameAndDescription: DefaultResponse;
@@ -2370,7 +2377,7 @@ export type SetAbstractEntityMutationVariables = Exact<{
 }>;
 
 
-export type SetAbstractEntityMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setAbstractEntity: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'Video', id: number } | null } } };
+export type SetAbstractEntityMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setAbstractEntity: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number, alias: string } | { __typename?: 'Article', id: number, alias: string } | { __typename?: 'Course', id: number, alias: string } | { __typename?: 'CoursePage', id: number, alias: string } | { __typename?: 'Event', id: number, alias: string } | { __typename?: 'Exercise', id: number, alias: string } | { __typename?: 'ExerciseGroup', id: number, alias: string } | { __typename?: 'Video', id: number, alias: string } | null } } };
 
 export type NotificationSetStateMutationVariables = Exact<{
   input: NotificationSetStateInput;
@@ -2405,7 +2412,7 @@ export type TaxonomyCreateMutationVariables = Exact<{
 }>;
 
 
-export type TaxonomyCreateMutation = { __typename?: 'Mutation', taxonomyTerm: { __typename?: 'TaxonomyTermMutation', create: { __typename?: 'DefaultResponse', success: boolean } } };
+export type TaxonomyCreateMutation = { __typename?: 'Mutation', taxonomyTerm: { __typename?: 'TaxonomyTermMutation', create: { __typename?: 'TaxonomyTermCreateResponse', success: boolean } } };
 
 export type AddRoleMutationVariables = Exact<{
   input: UserRoleInput;
