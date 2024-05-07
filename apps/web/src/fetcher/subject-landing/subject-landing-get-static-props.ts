@@ -14,7 +14,7 @@ export async function subjectLandingGetStaticProps(
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as TaxonomyPage, // remove undefined values
     },
-    revalidate: 60 * 60, // 1h,
+    revalidate: 60 * 60 * 24 * 2, // 2 days
     notFound: pageData.kind !== 'taxonomy',
   }
 }

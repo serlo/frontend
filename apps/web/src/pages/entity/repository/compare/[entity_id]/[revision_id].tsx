@@ -42,7 +42,7 @@ export const getStaticProps: GetStaticProps<RevisionProps> = async (
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as RevisionPage, // remove undefined values
     },
-    revalidate: 1,
+    revalidate: 60, // 1 min
   }
 }
 
