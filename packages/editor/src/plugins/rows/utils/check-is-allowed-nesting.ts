@@ -41,21 +41,25 @@ export function checkIsAllowedNesting(
     return false
   }
 
-  if (pluginType === EditorPluginType.Exercise) {
-    // never allow exercises in solutions
-    if (typesOfAncestors.includes(EditorPluginType.Solution)) return false
+  const rootPluginType = typesOfAncestors.at(0)
 
-    const rootPlugin = typesOfAncestors[0]
+  if (pluginType === EditorPluginType.Exercise) {
+    // Restrict Exercise->Exercise nesting
+    if (typesOfAncestors.includes(EditorPluginType.Exercise)) return false
+
+    // Allow exercise only inside Article, CoursePage & GenericContent and on ___editor_preview (rows plugin at the root)
     if (
-      // serlo template plugins start with "type-…"
-      // so we use this to not hide exercises in edusharing and /___editor_preview
-      rootPlugin.startsWith('type-') &&
-      rootPlugin !== TemplatePluginType.GenericContent &&
-      rootPlugin !== TemplatePluginType.Article &&
-      rootPlugin !== TemplatePluginType.CoursePage
-    ) {
-      return false
-    }
+      typesOfAncestors.some(
+        (type) =>
+          type === TemplatePluginType.Article ||
+          type === TemplatePluginType.CoursePage ||
+          type === TemplatePluginType.GenericContent
+      ) ||
+      rootPluginType === EditorPluginType.Rows
+    )
+      return true
+
+    return false
   }
 
   return true

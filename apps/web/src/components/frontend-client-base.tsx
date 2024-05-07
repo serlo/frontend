@@ -14,7 +14,7 @@ import { PrintMode } from '@/components/print-mode'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { UuidsProvider } from '@/contexts/uuids-context'
-import { InstanceData, LoggedInData } from '@/data-types'
+import { InstanceData, LoggedInData, UuidType } from '@/data-types'
 import {
   FixedInstanceData,
   featureI18nForServerOnly,
@@ -28,6 +28,7 @@ export interface FrontendClientBaseProps {
   noContainers?: boolean
   showNav?: boolean
   entityId?: number
+  entityType?: UuidType
   revisionId?: number
   authorization?: AuthorizationPayload
   loadLoggedInData?: boolean
@@ -54,6 +55,7 @@ export function FrontendClientBase({
   noContainers,
   showNav,
   entityId,
+  entityType,
   revisionId,
   authorization,
   loadLoggedInData,
@@ -115,7 +117,9 @@ export function FrontendClientBase({
       <PrintMode />
       <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
         <LoggedInDataProvider value={loggedInData}>
-          <UuidsProvider value={{ entityId, revisionId }}>
+          <UuidsProvider
+            value={{ entity: { entityId, entityType }, revisionId }}
+          >
             <Toaster />
             <ConditionalWrap
               condition={!noHeaderFooter}

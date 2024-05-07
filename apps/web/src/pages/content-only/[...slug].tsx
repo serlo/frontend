@@ -7,13 +7,13 @@ import { HeadTags } from '@/components/head-tags'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { Topic } from '@/components/taxonomy/topic'
-import { SlugProps } from '@/data-types'
+import { SlugProps, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestPage } from '@/fetcher/request-page'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 // Frontend to support Content-API
-// https://github.com/serlo/serlo.org/wiki/Content-API
+// https://github.com/serlo/documentation/wiki/iframe-API
 
 export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
   //fallback, should be handled by CFWorker, (useful for localhost only)
@@ -44,11 +44,17 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
       ? pageData.entityData.id
       : pageData.taxonomyData.id
 
+  const entityType =
+    pageData.kind === 'single-entity'
+      ? pageData.entityData.typename
+      : UuidType.TaxonomyTerm
+
   return (
     <FrontendClientBase
       noContainers
       noHeaderFooter
       entityId={entityId}
+      entityType={entityType}
       authorization={pageData.authorization}
     >
       <LazyIframeResizer />

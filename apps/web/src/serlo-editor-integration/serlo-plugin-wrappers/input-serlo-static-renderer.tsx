@@ -5,14 +5,15 @@ import { useRouter } from 'next/router'
 import { useContext } from 'react'
 
 import { useAB } from '@/contexts/ab'
+import { ExerciseIdContext } from '@/contexts/exercise-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
-import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
+import { useRevisionId } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
 
 export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
-  const entityId = useEntityId()
+  const exerciseId = useContext(ExerciseIdContext)
   const revisionId = useRevisionId()
   const exStrings = useInstanceData().strings.content.exercises
   const { asPath } = useRouter()
@@ -31,7 +32,7 @@ export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
     exerciseSubmission(
       {
         path: asPath,
-        entityId,
+        entityId: exerciseId,
         revisionId,
         result: correct ? 'correct' : 'wrong',
         type: 'input',
@@ -42,7 +43,7 @@ export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
     exerciseSubmission(
       {
         path: asPath,
-        entityId,
+        entityId: exerciseId,
         revisionId,
         result: val.substring(0, 200),
         type: 'ival',

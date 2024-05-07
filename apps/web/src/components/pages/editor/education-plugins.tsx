@@ -201,7 +201,8 @@ export function EducationPlugins() {
     return (
       <div className="m-3 mb-[3.2rem] mt-1 flex-1 text-left">
         <div className="w-full overflow-y-scroll p-8 shadow-menu md:h-[37rem]">
-          <UuidsProvider value={{ entityId: 1555 }}>
+          {/* TODO: Is providing a fake uuid avoidable here?  */}
+          <UuidsProvider value={{ entity: { entityId: 1555 } }}>
             <p className="mb-6 text-xl">{description}</p>
             {example ? (
               <>

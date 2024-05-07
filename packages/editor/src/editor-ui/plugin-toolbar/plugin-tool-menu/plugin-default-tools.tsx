@@ -27,7 +27,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
   const pluginStrings = useEditorStrings().plugins
 
   // using useContext directly so result can also be null for edusharing
-  const serloEntityId = useContext(UuidsContext)?.entityId
+  const serloEntityId = useContext(UuidsContext)?.entity.entityId
 
   const hasRowsParent = useMemo(
     () =>

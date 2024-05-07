@@ -40,6 +40,7 @@ const defaultAllowedPlugins: (EditorPluginType | string)[] = [
   EditorPluginType.Multimedia,
   EditorPluginType.SerloTable,
   EditorPluginType.Highlight,
+  EditorPluginType.Exercise,
 ]
 
 export function createBoxPlugin({

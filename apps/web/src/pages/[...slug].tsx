@@ -5,7 +5,7 @@ import { EntityBase } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Topic } from '@/components/taxonomy/topic'
-import { SlugProps } from '@/data-types'
+import { SlugProps, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestPage } from '@/fetcher/request-page'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
@@ -39,6 +39,11 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
       ? pageData.entityData.id
       : pageData.taxonomyData.id
 
+  const entityType =
+    pageData.kind === 'single-entity'
+      ? pageData.entityData.typename
+      : UuidType.TaxonomyTerm
+
   const revisionId =
     pageData.kind === 'single-entity'
       ? pageData.entityData.revisionId
@@ -48,6 +53,7 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
     <FrontendClientBase
       noContainers
       entityId={entityId}
+      entityType={entityType}
       revisionId={revisionId}
       authorization={pageData.authorization}
     >

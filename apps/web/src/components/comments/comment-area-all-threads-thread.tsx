@@ -46,7 +46,10 @@ export function CommentAreaAllThreadsThread({
       thread.comments.nodes.some((obj) => obj.author.id === auth.id))
 
   return (
-    <UuidsProvider key={thread.id} value={{ entityId: thread.object.id }}>
+    <UuidsProvider
+      key={thread.id}
+      value={{ entity: { entityId: thread.object.id } }}
+    >
       <div className="mb-16">
         <div className="mx-side mb-5 mt-16 flex items-baseline justify-between border-b-2">
           <div>

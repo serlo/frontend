@@ -12,9 +12,11 @@ import { FaIcon } from '@/components/fa-icon'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import { useAB } from '@/contexts/ab'
 import { ExerciseGroupIdContext } from '@/contexts/exercise-group-id-context'
+import { ExerciseIdContext } from '@/contexts/exercise-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
-import { useEntityId } from '@/contexts/uuids-context'
+import { useEntityId, useEntityType } from '@/contexts/uuids-context'
+import { UuidType } from '@/data-types'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
 
@@ -31,9 +33,11 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const commentStrings = useInstanceData().strings.comments
   const isRevisionView = useContext(RevisionViewContext)
   const exerciseGroupId = useContext(ExerciseGroupIdContext)
-  const context = props.serloContext
 
-  const exerciseUuid = useEntityId()
+  const entityId = useEntityId()
+  const entityType = useEntityType()
+
+  const exerciseId = useContext(ExerciseIdContext)
 
   const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
 
@@ -47,33 +51,42 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
         ? false
         : !exerciseGroupId && window.location.href.includes('#comment-')
 
-  const afterSlot =
-    isRevisionView || !exerciseUuid ? null : exerciseGroupId ? (
-      <>
-        <h2 className="serlo-h2 mt-10 border-b-0">
-          <FaIcon className="text-2xl text-brand-400" icon={faQuestionCircle} />{' '}
-          {commentStrings.question}
-        </h2>
-        <p className="serlo-p">
-          <Link
-            href={`${exerciseGroupId}/#comment-area-begin-scrollpoint`}
-            className="serlo-button-light"
-          >
-            {commentStrings.questionLink} 👇
-          </Link>
-        </p>
-      </>
-    ) : (
-      <Lazy>
-        <CommentAreaEntity entityId={exerciseUuid} />
-      </Lazy>
-    )
+  const thisExerciseHasEntityId =
+    entityId !== undefined &&
+    entityType !== undefined &&
+    entityType === UuidType.Exercise
+
+  const thisExerciseIsPartOfExerciseGroup =
+    entityId !== undefined &&
+    entityType !== undefined &&
+    entityType === UuidType.ExerciseGroup
+
+  const afterInsert = thisExerciseHasEntityId ? (
+    <Lazy>
+      <CommentAreaEntity entityId={entityId} />
+    </Lazy>
+  ) : thisExerciseIsPartOfExerciseGroup ? (
+    <>
+      <h2 className="serlo-h2 mt-10 border-b-0">
+        <FaIcon className="text-2xl text-brand-400" icon={faQuestionCircle} />{' '}
+        {commentStrings.question}
+      </h2>
+      <p className="serlo-p">
+        <Link
+          href={`${entityId}/#comment-area-begin-scrollpoint`}
+          className="serlo-button-light"
+        >
+          {commentStrings.questionLink} 👇
+        </Link>
+      </p>
+    </>
+  ) : null
 
   function onSolutionOpen() {
     exerciseSubmission(
       {
         path: asPath,
-        entityId: context?.exerciseId ?? exerciseUuid,
+        entityId: exerciseId,
         type: 'text',
         result: 'open',
       },
@@ -87,7 +100,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
       <StaticSolutionRenderer
         {...props}
         solutionVisibleOnInit={solutionVisibleOnInit}
-        afterSlot={afterSlot}
+        afterSlot={afterInsert}
         onSolutionOpen={onSolutionOpen}
       />
     </div>
