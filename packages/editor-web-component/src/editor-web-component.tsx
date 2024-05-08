@@ -93,7 +93,6 @@ export class EditorWebComponent extends HTMLElement {
   }
 
   broadcastNewState(newState: unknown): void {
-    this._currentState = newState
     const event = new CustomEvent('state-changed', {
       detail: { newState },
     })
@@ -127,7 +126,9 @@ export class EditorWebComponent extends HTMLElement {
               initialState={this.initialState}
               onChange={({ changed, getDocument }) => {
                 if (changed) {
-                  this.broadcastNewState(getDocument())
+                  const newState = getDocument()
+                  this._currentState = newState
+                  this.broadcastNewState(newState)
                 }
               }}
             >
