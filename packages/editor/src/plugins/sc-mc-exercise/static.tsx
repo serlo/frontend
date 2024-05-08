@@ -1,7 +1,7 @@
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorScMcExerciseDocument } from '@editor/types/editor-plugins'
 import { shuffleArray } from '@serlo/frontend/src/helper/shuffle-array'
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import type { Element } from 'slate'
 
 import {
@@ -13,13 +13,12 @@ import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 
 export function ScMcExerciseStaticRenderer({
   state,
+  id,
   isPrintMode,
-  idBase,
   onEvaluate,
   renderExtraAnswerContent,
   noShuffle,
 }: EditorScMcExerciseDocument & {
-  idBase: string
   isPrintMode?: boolean
   onEvaluate?: ScMcExerciseRendererProps['onEvaluate']
   renderExtraAnswerContent?: ScMcExerciseRendererProps['renderExtraAnswerContent']
@@ -37,7 +36,7 @@ export function ScMcExerciseStaticRenderer({
 
   const answers = shuffledAnswers
     .slice(0)
-    .map(({ isCorrect, feedback, content }) => {
+    .map(({ isCorrect, feedback, content }, i) => {
       const hasFeedback = !isEmptyTextDocument(feedback)
       const unwrappedFeedback = hasFeedback
         ? (feedback.state as Element[])?.[0].children
@@ -51,17 +50,19 @@ export function ScMcExerciseStaticRenderer({
         content: isEmptyTextDocument(content) ? null : (
           <StaticRenderer document={content} />
         ),
+        key: content.id ?? feedback.id ?? `sm-mc-answer-${id}-${i}`,
       }
     })
 
   return (
-    <ScMcExerciseRenderer
-      isSingleChoice={!!state.isSingleChoice}
-      idBase={idBase}
-      answers={answers}
-      isPrintMode={isPrintMode}
-      onEvaluate={onEvaluate}
-      renderExtraAnswerContent={renderExtraAnswerContent}
-    />
+    <Fragment key={id}>
+      <ScMcExerciseRenderer
+        isSingleChoice={!!state.isSingleChoice}
+        answers={answers}
+        isPrintMode={isPrintMode}
+        onEvaluate={onEvaluate}
+        renderExtraAnswerContent={renderExtraAnswerContent}
+      />
+    </Fragment>
   )
 }
