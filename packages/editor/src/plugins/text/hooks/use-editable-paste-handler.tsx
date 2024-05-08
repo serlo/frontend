@@ -17,7 +17,6 @@ import { Editor as SlateEditor } from 'slate'
 
 import { insertPlugin } from '../utils/insert-plugin'
 import { mathpixPasteHandler } from '../utils/mathpix-paste-handler'
-import { shouldUseFeature } from '@/components/user/profile-experimental'
 
 export interface UseEditablePasteHandlerArgs {
   editor: SlateEditor
@@ -55,11 +54,7 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
 
       let media
       // pasting editor document string and insert as plugins
-      if (
-        shouldUseFeature('editorPluginCopyTool') &&
-        !media &&
-        text.startsWith('{"plugin":"rows"')
-      ) {
+      if (!media && text.startsWith('{"plugin":"rows"')) {
         const rowsDocument = JSON.parse(text) as EditorRowsDocument
         if (rowsDocument.state.length !== 1) return
         const pluginDocument = rowsDocument.state.at(0)
