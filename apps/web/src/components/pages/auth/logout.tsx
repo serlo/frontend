@@ -32,23 +32,30 @@ export function Logout({ oauth }: { oauth?: boolean }) {
     checkInstance({ redirect: false })
 
     const cookieSession = AuthSessionCookie.parse()
-    const isSSO = cookieSession?.authentication_methods
-      ? cookieSession.authentication_methods[0].method === 'oidc'
-      : false
+    const ssoProvider = cookieSession?.authentication_methods
+      ? cookieSession.authentication_methods[0].provider
+      : undefined
 
-    const redirection = isSSO
-      ? 'https://aai.demo.meinbildungsraum.de/realms/nbp-aai/protocol/openid-connect/logout'
-      : filterUnwantedRedirection({
-          desiredPath: sessionStorage.getItem('previousPathname'),
-          unwantedPaths: [settingsUrl, loginUrl, registrationUrl],
-        })
+    const redirection =
+      ssoProvider === 'nbp'
+        ? 'https://aai.demo.meinbildungsraum.de/realms/nbp-aai/protocol/openid-connect/logout'
+        : ssoProvider === 'vidis' &&
+            process.env.NEXT_PUBLIC_ENV === 'production'
+          ? 'https://aai.vidis.schule/auth/realms/vidis/protocol/openid-connect/logout'
+          : ssoProvider === 'vidis' &&
+              !(process.env.NEXT_PUBLIC_ENV === 'production')
+            ? 'https://aai-test.vidis.schule/auth/realms/vidis/protocol/openid-connect/logout'
+            : filterUnwantedRedirection({
+                desiredPath: sessionStorage.getItem('previousPathname'),
+                unwantedPaths: [settingsUrl, loginUrl, registrationUrl],
+              })
 
     const redirectOnError = () => {
       window.location.href = redirection
       return
     }
 
-    // if they are problems we could add an additional check here
+    // if there are problems we could add an additional check here
     if (!auth || !cookieSession) return
 
     kratos
