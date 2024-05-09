@@ -50,6 +50,7 @@ export function StaticMath({ src, inline }: StaticMathProps) {
             '\\or': '\\vee',
             '\\arccot': '\\operatorname{arccot}',
             '\\sgn': '\\operatorname{sgn}',
+            '\\m': '\\text{ m}',
           },
         })
       : ''
