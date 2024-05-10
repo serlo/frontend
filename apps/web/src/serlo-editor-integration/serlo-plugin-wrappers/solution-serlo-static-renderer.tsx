@@ -4,12 +4,15 @@ import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 
+import { CommentAreaEntity } from '@/components/comments/comment-area-entity'
+import { Lazy } from '@/components/content/lazy'
 import { FaIcon } from '@/components/fa-icon'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import { useAB } from '@/contexts/ab'
 import { ExerciseIdsContext } from '@/contexts/exercise-ids-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
+import { useEntityId } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
 
@@ -20,6 +23,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const commentStrings = useInstanceData().strings.comments
   const isRevisionView = useContext(RevisionViewContext)
 
+  const entityId = useEntityId()
   const exerciseIds = useContext(ExerciseIdsContext)
   const exerciseGroupId = exerciseIds?.exerciseGroupEntityId
 
@@ -62,11 +66,23 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   function renderCommentLink() {
     if (isRevisionView) return null
     const exerciseId = exerciseIds?.exerciseEntityId
+    const exerciseEntityId = exerciseGroupId ?? exerciseId
+
+    const isExerciseEntityInInjectionOrTaxonomy =
+      exerciseId && exerciseId !== entityId
+
+    if (isExerciseEntityInInjectionOrTaxonomy) {
+      if (!exerciseEntityId) return null
+      return (
+        <Lazy>
+          <CommentAreaEntity entityId={exerciseEntityId} />
+        </Lazy>
+      )
+    }
+
     const linkPrefix =
-      exerciseGroupId || exerciseId ? `${exerciseGroupId ?? exerciseId}/` : ''
-
+      exerciseGroupId || exerciseId ? `${exerciseEntityId}/` : ''
     const onlyScroll = !linkPrefix
-
     return (
       <>
         <h2 className="serlo-h2 mt-10 border-b-0">
