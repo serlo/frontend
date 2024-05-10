@@ -8,7 +8,7 @@ export function ParametricArea() {
   return (
     <SelfEvaluationExercise
       generator={() => {
-        const type = randomItemFromArray(['raute'])
+        const type = randomItemFromArray(['raute', 'drache'])
         const t_nst_1 = randomIntBetween(-4, 1)
         const t_nst_2 = randomIntBetween(2, 10)
 
@@ -34,7 +34,7 @@ export function ParametricArea() {
         return { type, b, c, m, t, lower_bound, upper_bound, bd, x1 }
       }}
       renderTask={(data) => {
-        if (data.type === 'raute') {
+        if (data.type === 'raute' || data.type === 'drache') {
           return (
             <>
               <p className="serlo-main-task">
@@ -51,18 +51,31 @@ export function ParametricArea() {
                   [data.t, 'x', 0],
                 ])}{' '}
                 ) auf der Geraden g. Sie sind für x {buildLatex('\\in')} [
-                {pp(data.lower_bound)}; {pp(data.upper_bound)}] die Eckpunte von
-                Rauten A<sub>n</sub>B<sub>n</sub>C<sub>n</sub>D<sub>n</sub>.
+                {pp(data.lower_bound)}; {pp(data.upper_bound)}] die Eckpunte von{' '}
+                {data.type === 'raute' ? 'Rauten' : 'Drachenvierecken'} A
+                <sub>n</sub>B<sub>n</sub>C<sub>n</sub>D<sub>n</sub>.
               </p>
+              {data.type === 'raute' && (
+                <p className="serlo-main-task">
+                  Es gilt: C<sub>n</sub> liegt immer über A<sub>n</sub> und |
+                  <span className="border-t border-t-black">
+                    B<sub>n</sub>D<sub>n</sub>
+                  </span>
+                  | = {pp(data.bd)} LE.
+                </p>
+              )}
+
+              {data.type === 'drache' && (
+                <p className="serlo-main-task">
+                  C<sub>n</sub> liegt immer über A<sub>n</sub>. Die Strecke A
+                  <sub>n</sub>C<sub>n</sub> ist die Symmetrieachse der
+                  Drachenvierecke. Der Abstand der Punkte B<sub>n</sub> von der
+                  Symmetrieachse beträgt {pp(data.bd / 2)} LE.
+                </p>
+              )}
               <p className="serlo-main-task">
-                Es gilt: C<sub>n</sub> liegt immer über A<sub>n</sub> und |
-                <span className="border-t border-t-black">
-                  B<sub>n</sub>D<sub>n</sub>
-                </span>
-                | = {pp(data.bd)} LE.
-              </p>
-              <p className="serlo-main-task">
-                Ermitteln Sie durch Rechnung den Flächeninhalt A der Rauten in
+                Ermitteln Sie durch Rechnung den Flächeninhalt A der{' '}
+                {data.type === 'raute' ? 'Rauten' : 'Drachenvierecken'} in
                 Abhängigkeit von der Abszisse x der Punkte A<sub>n</sub> und C
                 <sub>n</sub>.
               </p>
@@ -72,7 +85,7 @@ export function ParametricArea() {
         return <></>
       }}
       renderSolution={(data) => {
-        if (data.type === 'raute') {
+        if (data.type === 'raute' || data.type === 'drache') {
           return (
             <>
               <p>
@@ -123,9 +136,26 @@ export function ParametricArea() {
                 ])}
                 ) LE
               </p>
+              {data.type === 'drache' && (
+                <>
+                  <p>
+                    Die Punkte B<sub>n</sub> und D<sub>n</sub> sind je{' '}
+                    {pp(data.bd / 2)} LE von der Symmetrieachse der
+                    Drachenvierecke entfernt. Es gilt:
+                  </p>
+                  <p className="serlo-highlight-gray">
+                    |
+                    <span className="border-t border-t-black">
+                      B<sub>n</sub>D<sub>n</sub>
+                    </span>
+                    | = {pp(data.bd)} LE
+                  </p>
+                </>
+              )}
               <p>
-                Berechne den Flächeninhalt A der Raute mithilfe der Länge der
-                beiden Diagonalen:
+                Berechne den Flächeninhalt A{' '}
+                {data.type === 'raute' ? 'der Raute' : 'des Drachenvierecks'}{' '}
+                mithilfe der Länge der beiden Diagonalen:
               </p>
               <p className="serlo-highlight-gray">
                 A(x) = 0,5 · |
