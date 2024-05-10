@@ -2,6 +2,7 @@ import type { UiNodeInputAttributes } from '@ory/client'
 import { type FormEvent } from 'react'
 
 import { cn } from '@/helper/cn'
+import { frontendOrigin } from '@/helper/urls/frontent-origin'
 
 export interface NodeProps {
   attributes: UiNodeInputAttributes
@@ -9,6 +10,9 @@ export interface NodeProps {
   onSubmit: (e: FormEvent | MouseEvent, method?: string) => Promise<void>
 }
 
+const loginUrl = `${frontendOrigin}/auth/login`
+console.log('loginUrl', loginUrl)
+const vidisScript = `<vidis-login loginurl={${loginUrl}}></vidis-login>`
 export function LoginButtonVidis({
   attributes,
   onSubmit,
@@ -31,6 +35,7 @@ export function LoginButtonVidis({
       >
         VIDIS
       </button>
+      <span dangerouslySetInnerHTML={{ __html: vidisScript }}></span>
     </div>
   )
 }
