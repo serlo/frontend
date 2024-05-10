@@ -3,6 +3,7 @@ import { ABCFormular } from '../exercise-implementations/abc-formular'
 import { AnimalsInForest } from '../exercise-implementations/animals-in-forest'
 import { Asymptote1 } from '../exercise-implementations/asymptote-1'
 import { Asymptote2 } from '../exercise-implementations/asymptote-2'
+import { Ball } from '../exercise-implementations/ball'
 import { CircleSector } from '../exercise-implementations/circle-sector'
 import { CompareGrowth } from '../exercise-implementations/compare-growth'
 import { CompletingTheSquare } from '../exercise-implementations/completing-the-square'
@@ -402,13 +403,13 @@ export const middleSchoolFinalExam = {
     track: 3,
     component: <Cone />,
   },
-  'wip-3': {
+  'volumen-kugel': {
     title: 'Kugel 🚧',
     subtitle: 'Raumgeometrie',
     calculatorAllowed: true,
     difficulty: 1,
     track: 3,
-    component: <PlaceholderExercise />,
+    component: <Ball />,
   },
   'parabel-bestimmen': {
     title: 'Parabel bestimmen',

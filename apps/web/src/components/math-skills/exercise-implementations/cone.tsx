@@ -213,7 +213,7 @@ function Solution({ data }: { data: DATA }) {
       Math.round((Math.pow(data.M, 2) / 3) * pi * data.h * 100) / 100
     return (
       <>
-        <p>Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
+        <p>Stelle die Gleichung für das Volumen eines Kegels auf:</p>
         <p className="serlo-highlight-gray">
           V = {buildFrac(<>1</>, <>3</>)} · r² · π · h
         </p>
@@ -240,7 +240,7 @@ function Solution({ data }: { data: DATA }) {
       Math.round((Math.pow(data.M, 2) / 3) * pi * data.h * 100) / 100
     return (
       <>
-        <p>Stelle die Gleichung für das Volumen eines Zylinders auf:</p>
+        <p>Stelle die Gleichung für das Volumen eines Kegels auf:</p>
         <p className="serlo-highlight-gray">
           V = {buildFrac(<>1</>, <>3</>)} · r² · π · h
         </p>
@@ -255,7 +255,7 @@ function Solution({ data }: { data: DATA }) {
           {buildBigSqrt(
             <>
               {buildFrac(
-                <>{result.toLocaleString('de-De')} · 3</>,
+                <>{result.toLocaleString('de-De')} cm · 3</>,
                 <>({data.h.toLocaleString('de-De')} cm) · π</>
               )}
             </>
