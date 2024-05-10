@@ -191,6 +191,7 @@ function Solution({ data }: { data: DATA }) {
     )
   }
   if (data.path === 2) {
+    const rrad = Math.round(rad * 100) / 100
     return (
       <>
         <p>Stelle die Gleichung für das Volumen einer Kugel auf:</p>
@@ -199,11 +200,11 @@ function Solution({ data }: { data: DATA }) {
         </p>
         <p>Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
-          r = {buildFrac(<>d</>, <>2</>)} &nbsp; &nbsp; r = {rad} cm
+          r = {buildFrac(<>d</>, <>2</>)} &nbsp; &nbsp; r = {rrad} cm
         </p>{' '}
         <br />
         <p className="serlo-highlight-gray">
-          V = {buildFrac(<>4</>, <>3</>)} · ({rad.toLocaleString('de-De')} cm)³
+          V = {buildFrac(<>4</>, <>3</>)} · ({rrad.toLocaleString('de-De')} cm)³
           · π
         </p>
         <p>Berechne das Ergebnis:</p>
