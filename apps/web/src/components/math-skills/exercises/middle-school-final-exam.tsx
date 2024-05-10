@@ -430,7 +430,7 @@ export const middleSchoolFinalExam = {
     title: 'Flächeninhalt in Abhängigkeit',
     subtitle: 'Quadratische Funktionen',
     calculatorAllowed: true,
-    difficulty: 1,
+    difficulty: 2,
     track: 2,
     component: <ParametricArea />,
   },
