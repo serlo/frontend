@@ -9,8 +9,8 @@ import { useContext, useEffect, useState } from 'react'
 import { useAuthentication } from '@/auth/use-authentication'
 import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
+import { ExerciseIdsContext } from '@/contexts/exercise-ids-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
-import { UuidsProvider } from '@/contexts/uuids-context'
 import { ExerciseInlineType } from '@/data-types'
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
@@ -33,10 +33,12 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
   const solutionLicenseId = (props.state.solution as EditorSolutionDocument)
     ?.state.licenseId
 
+  const exerciseIds = useContext(ExerciseIdsContext)
+
   // when we moved the groupedExercises into the exercises state we used the old entity uuid as editor id
   // e.g. `3743-exercise-child`. This way we can use the entity ids in injections and for exercise analytics
   const oldEntityId = context?.uuid ?? Number(props.id?.split('-')[0])
-  const entityId = isNaN(oldEntityId)
+  const exerciseTrackingId = isNaN(oldEntityId)
     ? // construct fake but persisting entityId just for evaluation
       Number(props.id?.replace(/[^0-9]/g, '').substring(0, 8))
     : oldEntityId
@@ -64,12 +66,17 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
           />
         ) : null}
       </div>
-      {/* Provide uuids for interactive exercises */}
-      <UuidsProvider value={{ entityId, revisionId: context?.revisionId }}>
+      <ExerciseIdsContext.Provider
+        value={{
+          ...exerciseIds, // spread group ids
+          exerciseId: context?.uuid,
+          exerciseTrackingId,
+        }}
+      >
         <div className="-mt-block">
           <ExerciseStaticRenderer {...props} />
         </div>
-      </UuidsProvider>
+      </ExerciseIdsContext.Provider>
     </div>
   )
 }

@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useAuthentication } from '@/auth/use-authentication'
 import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
-import { ExerciseGroupIdProvider } from '@/contexts/exercise-group-id-context'
+import { ExerciseIdsContext } from '@/contexts/exercise-ids-context'
 import { ExerciseInlineType } from '@/data-types'
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
@@ -45,11 +45,16 @@ export function ExerciseGroupSerloStaticRenderer(
         ) : null}
       </div>
       {/* Provide parent uuids for nested exercises plugins */}
-      <ExerciseGroupIdProvider value={context?.uuid}>
+      <ExerciseIdsContext.Provider
+        value={{
+          exerciseGroupId: context?.uuid,
+          exerciseGroupTrackingId: context?.uuid,
+        }}
+      >
         <div className="-mt-block">
           <ExerciseGroupStaticRenderer {...props} />
         </div>
-      </ExerciseGroupIdProvider>
+      </ExerciseIdsContext.Provider>
     </div>
   )
 }
