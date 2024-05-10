@@ -2,10 +2,9 @@ import { createContext } from 'react'
 
 export const ExerciseIdsContext = createContext<
   | {
-      exerciseId?: number
+      exerciseEntityId?: number
       exerciseTrackingId?: number
-      exerciseGroupId?: number
-      exerciseGroupTrackingId?: number
+      exerciseGroupEntityId?: number
     }
   | undefined
 >(undefined)

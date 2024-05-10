@@ -46,10 +46,7 @@ export function ExerciseGroupSerloStaticRenderer(
       </div>
       {/* Provide parent uuids for nested exercises plugins */}
       <ExerciseIdsContext.Provider
-        value={{
-          exerciseGroupId: context?.uuid,
-          exerciseGroupTrackingId: context?.uuid,
-        }}
+        value={{ exerciseGroupEntityId: context?.uuid }}
       >
         <div className="-mt-block">
           <ExerciseGroupStaticRenderer {...props} />

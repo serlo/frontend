@@ -21,7 +21,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const isRevisionView = useContext(RevisionViewContext)
 
   const exerciseIds = useContext(ExerciseIdsContext)
-  const exerciseGroupId = exerciseIds?.exerciseGroupId
+  const exerciseGroupId = exerciseIds?.exerciseGroupEntityId
 
   const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
 
@@ -61,7 +61,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
 
   function renderCommentLink() {
     if (isRevisionView) return null
-    const exerciseId = exerciseIds?.exerciseId
+    const exerciseId = exerciseIds?.exerciseEntityId
     const linkPrefix =
       exerciseGroupId || exerciseId ? `${exerciseGroupId ?? exerciseId}/` : ''
 

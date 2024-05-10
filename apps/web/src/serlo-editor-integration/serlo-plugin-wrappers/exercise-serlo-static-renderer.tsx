@@ -69,7 +69,7 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
       <ExerciseIdsContext.Provider
         value={{
           ...exerciseIds, // spread group ids
-          exerciseId: context?.uuid,
+          exerciseEntityId: context?.uuid,
           exerciseTrackingId,
         }}
       >
