@@ -1,8 +1,8 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
+import { buildLatex } from '../utils/math-builder'
 import { pp, ppPolynom } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
-import { buildLatex, buildOverline } from '../utils/math-builder'
 
 export function ParametricArea() {
   return (
@@ -29,7 +29,9 @@ export function ParametricArea() {
 
         const bd = randomIntBetween(3, 9)
 
-        return { type, b, c, m, t, lower_bound, upper_bound, bd }
+        const x1 = Math.round(lower_bound + (upper_bound - lower_bound) * 0.4)
+
+        return { type, b, c, m, t, lower_bound, upper_bound, bd, x1 }
       }}
       renderTask={(data) => {
         if (data.type === 'raute') {
@@ -53,7 +55,7 @@ export function ParametricArea() {
                 Rauten A<sub>n</sub>B<sub>n</sub>C<sub>n</sub>D<sub>n</sub>.
               </p>
               <p className="serlo-main-task">
-                Es gilt: |
+                Es gilt: C<sub>n</sub> liegt immer über A<sub>n</sub> und |
                 <span className="border-t border-t-black">
                   B<sub>n</sub>D<sub>n</sub>
                 </span>
@@ -69,7 +71,94 @@ export function ParametricArea() {
         }
         return <></>
       }}
-      renderSolution={() => {
+      renderSolution={(data) => {
+        if (data.type === 'raute') {
+          return (
+            <>
+              <p>
+                Die Strecke A<sub>n</sub>C<sub>n</sub> liegt parallel zur
+                y-Achse. Berechne die Länge durch die Differenz der y-Werte:
+              </p>
+              <p className="serlo-highlight-gray">
+                |
+                <span className="border-t border-t-black">
+                  A<sub>n</sub>C<sub>n</sub>
+                </span>
+                |(x) = (y
+                <sub>
+                  C<sub>n</sub>
+                </sub>{' '}
+                - y
+                <sub>
+                  A<sub>n</sub>
+                </sub>
+                ) LE
+                <br />
+                <br />|
+                <span className="border-t border-t-black">
+                  A<sub>n</sub>C<sub>n</sub>
+                </span>
+                |(x) = [
+                {ppPolynom([
+                  [data.m, 'x', 1],
+                  [data.t, 'x', 0],
+                ])}{' '}
+                - (
+                {ppPolynom([
+                  [1, 'x', 2],
+                  [data.b, 'x', 1],
+                  [data.c, 'x', 0],
+                ])}
+                )] LE
+                <br />
+                <br />|
+                <span className="border-t border-t-black">
+                  A<sub>n</sub>C<sub>n</sub>
+                </span>
+                |(x) = (
+                {ppPolynom([
+                  [-1, 'x', 2],
+                  [-data.b + data.m, 'x', 1],
+                  [-data.c + data.t, 'x', 0],
+                ])}
+                ) LE
+              </p>
+              <p>
+                Berechne den Flächeninhalt A der Raute mithilfe der Länge der
+                beiden Diagonalen:
+              </p>
+              <p className="serlo-highlight-gray">
+                A(x) = 0,5 · |
+                <span className="border-t border-t-black">
+                  A<sub>n</sub>C<sub>n</sub>
+                </span>
+                |(x) · |
+                <span className="border-t border-t-black">
+                  B<sub>n</sub>D<sub>n</sub>
+                </span>
+                |<br />
+                <br />
+                A(x) = 0,5 · (
+                {ppPolynom([
+                  [-1, 'x', 2],
+                  [-data.b + data.m, 'x', 1],
+                  [-data.c + data.t, 'x', 0],
+                ])}
+                ) · {pp(data.bd)} FE
+              </p>
+              <p>Vereinfache und erhalte das Ergebnis:</p>
+              <p className="serlo-highlight-green">
+                A(x) ={' '}
+                {ppPolynom([
+                  [-1 * data.bd * 0.5, 'x', 2],
+                  [(-data.b + data.m) * data.bd * 0.5, 'x', 1],
+                  [(-data.c + data.t) * data.bd * 0.5, 'x', 0],
+                ])}{' '}
+                FE
+              </p>
+            </>
+          )
+        }
         return <></>
       }}
     />

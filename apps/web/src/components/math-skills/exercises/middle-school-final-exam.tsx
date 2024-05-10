@@ -230,7 +230,7 @@ export const middleSchoolFinalExam = {
   gluecksrad: {
     title: 'Glücksrad',
     subtitle: 'Daten und Zufall',
-    difficulty: 2,
+    difficulty: 1,
     calculatorAllowed: false,
     track: 3,
     component: <WheelOfFortune />,
@@ -426,8 +426,8 @@ export const middleSchoolFinalExam = {
     difficulty: 2,
     component: <ParabolaCharacteristics />,
   },
-  'wip-5': {
-    title: 'Flächeninhalt aufstellen 🚧',
+  'flaecheninhalt-in-abhaengigkeit': {
+    title: 'Flächeninhalt in Abhängigkeit 🚧',
     subtitle: 'Quadratische Funktionen',
     calculatorAllowed: true,
     difficulty: 1,
