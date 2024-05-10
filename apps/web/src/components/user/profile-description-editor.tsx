@@ -21,7 +21,11 @@ export function ProfileDescriptionEditor({
       if (success) {
         // call revalidation api route to update description
         void fetch(`/api/frontend/revalidate-user?username=${username}`)
-          .then(() => resolve())
+          .then(() => {
+            setTimeout(() => {
+              resolve()
+            }, 200) // 200 seems to work, but it's a guess
+          })
           .catch(() => {
             // eslint-disable-next-line no-console
             console.error('problem revalidating', data)
