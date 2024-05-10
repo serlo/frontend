@@ -97,7 +97,7 @@ export function IsAreaPossible() {
                   [data.c, 'x', 0],
                 ])}
               </p>
-              <p>Stelle die Gleichung um und berechne die Determinante:</p>
+              <p>Stelle die Gleichung um und berechne die Diskriminante:</p>
               <p className="serlo-highlight-gray">
                 {ppPolynom([
                   [-1, 'x', 2],
@@ -113,14 +113,14 @@ export function IsAreaPossible() {
               <p>Folgere daraus:</p>
               {data.mode === 'impossible' && (
                 <p className="serlo-highlight-green">
-                  Die Determinante ist negativ, daher hat diese Gleichung keine
+                  Die Diskriminante ist negativ, daher hat diese Gleichung keine
                   Lösung. Der Flächeninhalt kann nie {pp(data.impossibleArea)}
                   &nbsp;FE groß sein.
                 </p>
               )}
               {data.mode === 'check' && (
                 <p className="serlo-highlight-green">
-                  Die Determinante ist {D >= 0 ? 'nicht negativ' : 'negativ'},
+                  Die Diskriminante ist {D >= 0 ? 'nicht negativ' : 'negativ'},
                   daher hat diese Gleichung{' '}
                   {D >= 0 ? 'mindestens eine' : 'keine'} Lösung. Der
                   Flächeninhalt kann {D < 0 ? 'nie ' : ''}

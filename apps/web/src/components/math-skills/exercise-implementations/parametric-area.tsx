@@ -86,8 +86,8 @@ export function ParametricArea() {
                   [data.t, 'x', 0],
                 ])}{' '}
                 ) auf der Geraden g. Sie sind für x {buildLatex('\\in')} [
-                {pp(data.lower_bound)}; {pp(data.upper_bound)}] die Eckpunte von{' '}
-                {data.type === 'raute' ? 'Rauten' : 'Drachenvierecken'} A
+                {pp(data.lower_bound)}; {pp(data.upper_bound)}] die Eckpunkte
+                von {data.type === 'raute' ? 'Rauten' : 'Drachenvierecken'} A
                 <sub>n</sub>B<sub>n</sub>C<sub>n</sub>D<sub>n</sub>.
               </p>
               {data.type === 'raute' && (
@@ -111,7 +111,7 @@ export function ParametricArea() {
               )}
               <p className="serlo-main-task">
                 Ermitteln Sie durch Rechnung den Flächeninhalt A der{' '}
-                {data.type === 'raute' ? 'Rauten' : 'Drachenvierecken'} in
+                {data.type === 'raute' ? 'Rauten' : 'Drachenvierecke'} in
                 Abhängigkeit von der Abszisse x der Punkte A<sub>n</sub> und C
                 <sub>n</sub>.
               </p>
@@ -165,7 +165,7 @@ export function ParametricArea() {
                 [data.t, 'x', 0],
               ])}{' '}
               ) auf der Geraden g. Sie sind für x {buildLatex('\\in')} [
-              {pp(data.lower_bound)}; {pp(data.upper_bound)}] die Eckpunte von
+              {pp(data.lower_bound)}; {pp(data.upper_bound)}] die Eckpunkte von
               Parallelogrammen A<sub>n</sub>B<sub>n</sub>C<sub>n</sub>D
               <sub>n</sub>.
             </p>
@@ -280,13 +280,13 @@ export function ParametricArea() {
               </p>
               <p>Vereinfache und erhalte das Ergebnis:</p>
               <p className="serlo-highlight-green">
-                A(x) ={' '}
+                A(x) =({' '}
                 {ppPolynom([
                   [-1 * data.bd * 0.5, 'x', 2],
                   [(-data.b + data.m) * data.bd * 0.5, 'x', 1],
                   [(-data.c + data.t) * data.bd * 0.5, 'x', 0],
                 ])}{' '}
-                FE
+                ) FE
               </p>
             </>
           )
