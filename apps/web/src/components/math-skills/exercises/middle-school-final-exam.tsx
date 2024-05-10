@@ -31,6 +31,7 @@ import { ParabolaCharacteristics } from '../exercise-implementations/parabola-by
 import { Parallelogram1 } from '../exercise-implementations/parallelogram-1'
 import { Parallelogram2 } from '../exercise-implementations/parallelogram-2'
 import { Parallelogram3 } from '../exercise-implementations/parallelogram-3'
+import { ParametricArea } from '../exercise-implementations/parametric-area'
 import { PlaceholderExercise } from '../exercise-implementations/placeholder-exercise'
 import { PlotFunction } from '../exercise-implementations/plot-function-1'
 import { PlotFunction2 } from '../exercise-implementations/plot-function-2'
@@ -431,7 +432,7 @@ export const middleSchoolFinalExam = {
     calculatorAllowed: true,
     difficulty: 1,
     track: 2,
-    component: <PlaceholderExercise />,
+    component: <ParametricArea />,
   },
   'wip-6': {
     title: 'Flächeninhalt bestimmen 🚧',
