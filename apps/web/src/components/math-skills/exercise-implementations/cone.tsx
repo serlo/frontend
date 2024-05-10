@@ -280,11 +280,11 @@ function Solution({ data }: { data: DATA }) {
         <p className="serlo-highlight-gray">r² + h² = s²</p>
         <p>Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
-          s² = ({data.M} cm)² + ({data.h} cm)² <br />s = {cc} cm
+          s² = ({pp(data.M)} cm)² + ({pp(data.h)} cm)² <br />s = {pp(cc)} cm
         </p>
         <p>Setze die Werte in die Gleichung des Oberflächeninhaltes ein:</p>
         <p className="serlo-highlight-gray">
-          O = {data.M} cm · π · ({data.M} cm + {cc} cm)
+          O = {pp(data.M)} cm · π · ({pp(data.M)} cm + {pp(cc)} cm)
         </p>{' '}
         <br />
         <p className="serlo-highlight-green">O = {pp(result)} cm²</p>

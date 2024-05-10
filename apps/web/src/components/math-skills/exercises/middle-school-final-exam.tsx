@@ -396,7 +396,7 @@ export const middleSchoolFinalExam = {
     component: <Cylinder />,
   },
   'volumen-kegel': {
-    title: 'Kegel 🚧',
+    title: 'Kegel',
     subtitle: 'Raumgeometrie',
     calculatorAllowed: true,
     difficulty: 1,
@@ -404,7 +404,7 @@ export const middleSchoolFinalExam = {
     component: <Cone />,
   },
   'volumen-kugel': {
-    title: 'Kugel 🚧',
+    title: 'Kugel',
     subtitle: 'Raumgeometrie',
     calculatorAllowed: true,
     difficulty: 1,
