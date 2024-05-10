@@ -1,5 +1,10 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { buildLatex } from '../utils/math-builder'
+import {
+  buildDet2,
+  buildLatex,
+  buildVec,
+  buildVec2,
+} from '../utils/math-builder'
 import { pp, ppPolynom } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -8,7 +13,7 @@ export function ParametricArea() {
   return (
     <SelfEvaluationExercise
       generator={() => {
-        const type = randomItemFromArray(['raute', 'drache'])
+        const type = randomItemFromArray(['raute', 'drache', 'dreieck'])
         const t_nst_1 = randomIntBetween(-4, 1)
         const t_nst_2 = randomIntBetween(2, 10)
 
@@ -31,7 +36,32 @@ export function ParametricArea() {
 
         const x1 = Math.round(lower_bound + (upper_bound - lower_bound) * 0.4)
 
-        return { type, b, c, m, t, lower_bound, upper_bound, bd, x1 }
+        const s_x = (t_nst_1 + t_nst_2) / 2
+        const s_y = s_x * s_x + b * s_x + c
+
+        const c_x = Math.ceil((t_nst_1 + t_nst_2) / 2 + 1)
+        const c_y = c_x * c_x + b * c_x + c
+
+        const vec_ab_x = randomIntBetween(-6, -2)
+        const vec_ab_y = randomIntBetween(1, 4)
+
+        return {
+          type,
+          b,
+          c,
+          m,
+          t,
+          lower_bound,
+          upper_bound,
+          bd,
+          x1,
+          c_x,
+          c_y,
+          vec_ab_x,
+          vec_ab_y,
+          s_x,
+          s_y,
+        }
       }}
       renderTask={(data) => {
         if (data.type === 'raute' || data.type === 'drache') {
@@ -78,6 +108,37 @@ export function ParametricArea() {
                 {data.type === 'raute' ? 'Rauten' : 'Drachenvierecken'} in
                 Abhängigkeit von der Abszisse x der Punkte A<sub>n</sub> und C
                 <sub>n</sub>.
+              </p>
+            </>
+          )
+        }
+        if (data.type === 'dreieck') {
+          return (
+            <>
+              <p className="serlo-main-task">
+                Die Punkte A<sub>n</sub> ( x |{' '}
+                {ppPolynom([
+                  [1, 'x', 2],
+                  [data.b, 'x', 1],
+                  [data.c, 'x', 0],
+                ])}
+                ) auf der Parabel p mit dem Scheitel S ( {pp(data.s_x)} |{' '}
+                {pp(data.s_y)} ) sind für x &gt; {pp(data.c_x)} zusammen mit dem
+                Punkt C ( {pp(data.c_x)} | {pp(data.c_y)} ) und B<sub>n</sub>{' '}
+                die Eckpunkte von Dreiecken A<sub>n</sub>B<sub>n</sub>C.
+              </p>
+              <p className="serlo-main-task">
+                Für die Punkte A<sub>n</sub> und B<sub>n</sub> gilt:{' '}
+                {buildVec(
+                  <>
+                    A<sub>n</sub>B<sub>n</sub>
+                  </>
+                )}{' '}
+                = {buildVec2(pp(data.vec_ab_x), pp(data.vec_ab_y))}
+              </p>
+              <p className="serlo-main-task">
+                Ermitteln Sie durch Rechnung den Flächeninhalt A der Dreiecke in
+                Abhängigkeit von der Abszisse x der Punkte A<sub>n</sub>.
               </p>
             </>
           )
@@ -185,6 +246,111 @@ export function ParametricArea() {
                   [(-data.c + data.t) * data.bd * 0.5, 'x', 0],
                 ])}{' '}
                 FE
+              </p>
+            </>
+          )
+        }
+        if (data.type === 'dreieck') {
+          return (
+            <>
+              <p>
+                Stelle den Vektor{' '}
+                {buildVec(
+                  <>
+                    A<sub>n</sub>C
+                  </>
+                )}{' '}
+                auf:
+              </p>
+              <p className="serlo-highlight-gray">
+                {buildVec(
+                  <>
+                    A<sub>n</sub>C
+                  </>
+                )}{' '}
+                ={' '}
+                {buildVec2(
+                  <>{pp(data.c_x)} - x</>,
+                  <>
+                    {pp(data.c_y)} - (
+                    {ppPolynom([
+                      [1, 'x', 2],
+                      [data.b, 'x', 1],
+                      [data.c, 'x', 0],
+                    ])}
+                    )
+                  </>
+                )}{' '}
+                ={' '}
+                {buildVec2(
+                  <>{pp(data.c_x)} - x</>,
+                  <>
+                    {ppPolynom([
+                      [-1, 'x', 2],
+                      [-data.b, 'x', 1],
+                      [data.c_y - data.c, 'x', 0],
+                    ])}
+                  </>
+                )}
+              </p>
+              <p>
+                Bereche den Flächeninhalt des Dreiecks mit den Vektoren{' '}
+                {buildVec(
+                  <>
+                    A<sub>n</sub>C
+                  </>
+                )}{' '}
+                und{' '}
+                {buildVec(
+                  <>
+                    A<sub>n</sub>B<sub>n</sub>
+                  </>
+                )}
+                :
+              </p>
+              <p className="serlo-highlight-gray">
+                A(x) = 0,5 ·{' '}
+                {buildDet2(
+                  <>{data.c_x} - x</>,
+                  data.vec_ab_x,
+                  ppPolynom([
+                    [-1, 'x', 2],
+                    [-data.b, 'x', 1],
+                    [data.c_y - data.c, 'x', 0],
+                  ]),
+                  data.vec_ab_y
+                )}{' '}
+                FE
+                <br />
+                <br />
+                A(x) = 0,5 · (
+                {ppPolynom([
+                  [-1 * data.vec_ab_y, 'x', 1],
+                  [data.c_x * data.vec_ab_y, 'x', 0],
+                ])}{' '}
+                - (
+                {ppPolynom([
+                  [-1 * data.vec_ab_x, 'x', 2],
+                  [-data.b * data.vec_ab_x, 'x', 1],
+                  [(data.c_y - data.c) * data.vec_ab_x, 'x', 0],
+                ])}
+                )) FE
+              </p>
+              <p>Vereinfache und erhalte das Ergebnis:</p>
+              <p className="serlo-highlight-green">
+                A(x) = (
+                {ppPolynom([
+                  [0.5 * (1 * data.vec_ab_x), 'x', 2],
+                  [0.5 * (data.b * data.vec_ab_x - data.vec_ab_y), 'x', 1],
+                  [
+                    0.5 *
+                      (data.c_x * data.vec_ab_y -
+                        (data.c_y - data.c) * data.vec_ab_x),
+                    'x',
+                    0,
+                  ],
+                ])}
+                ) FE
               </p>
             </>
           )

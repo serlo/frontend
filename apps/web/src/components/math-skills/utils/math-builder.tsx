@@ -114,6 +114,26 @@ export function buildMat2(
   )
 }
 
+export function buildDet2(
+  x1: JSX.Element | string | number,
+  x2: JSX.Element | string | number,
+  y1: JSX.Element | string | number,
+  y2: JSX.Element | string | number
+) {
+  return (
+    <>
+      <div className="inline-block border-l border-black pl-1 pr-2 text-center align-middle">
+        <div>{x1}</div>
+        <div>{y1}</div>
+      </div>
+      <div className="inline-block border-r border-black pl-2 pr-1 text-center align-middle">
+        <div>{x2}</div>
+        <div>{y2}</div>
+      </div>
+    </>
+  )
+}
+
 const rightarrow = (
   <svg
     height="0.522em"
