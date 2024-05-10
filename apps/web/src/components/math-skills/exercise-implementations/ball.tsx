@@ -76,7 +76,7 @@ function Given({ data }: { data: DATA }) {
     return <p className="serlo-main-task">r = {pp(rad)} cm</p>
   }
   if (data.path === 2) {
-    return <p className="serlo-main-task">d = {pp(rad)} cm</p>
+    return <p className="serlo-main-task">d = {pp(data.dia)} cm</p>
   }
   if (data.path === 3) {
     const rad = data.dia / 2
@@ -111,7 +111,7 @@ function Task({ data }: { data: DATA }) {
           Kugel.
         </p>{' '}
         <br />
-        <p>Runden Sie auf eine ganze Zahl.</p>
+        <p>Runden Sie auf auf zwei Stellen nach dem Komma.</p>
       </>
     )
   }
@@ -124,7 +124,7 @@ function Task({ data }: { data: DATA }) {
           Kugel.
         </p>{' '}
         <br />
-        <p>Runden Sie auf eine ganze Zahl.</p>
+        <p>Runden Sie auf auf zwei Stellen nach dem Komma.</p>
       </>
     )
   }
@@ -200,7 +200,7 @@ function Solution({ data }: { data: DATA }) {
         </p>
         <p>Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
-          r = {buildFrac(<>d</>, <>2</>)} &nbsp; &nbsp; r = {rrad} cm
+          r = {buildFrac(<>d</>, <>2</>)} &nbsp; &nbsp; r = {pp(rrad)} cm
         </p>{' '}
         <br />
         <p className="serlo-highlight-gray">
@@ -252,7 +252,7 @@ function Solution({ data }: { data: DATA }) {
         <p className="serlo-highlight-gray">O = 4 · π · r²</p>
 
         <p>Setze die Angaben in die Gleichung ein:</p>
-        <p className="serlo-highlight-gray">O = 4 · π · ({rad} cm)²</p>
+        <p className="serlo-highlight-gray">O = 4 · π · ({pp(rad)} cm)²</p>
         <br />
         <p className="serlo-highlight-green">O = {pp(ob)} cm²</p>
       </>
