@@ -21,7 +21,9 @@ export function ProfileDescriptionEditor({
       if (success) {
         // call revalidation api route to update description
         void fetch(`/api/frontend/revalidate-user?username=${username}`)
-        resolve()
+        setTimeout(() => {
+          resolve()
+        }, 10)
       } else {
         // eslint-disable-next-line no-console
         console.error(success)
