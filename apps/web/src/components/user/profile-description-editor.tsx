@@ -24,7 +24,7 @@ export function ProfileDescriptionEditor({
           .then(() => {
             setTimeout(() => {
               resolve()
-            }, 200) // 200 seems to work, but it's a guess
+            }, 500) // 500 seems to work, but it's a guess
           })
           .catch(() => {
             // eslint-disable-next-line no-console
