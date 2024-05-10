@@ -6,9 +6,10 @@ import { useContext } from 'react'
 
 import { isPrintMode } from '@/components/print-mode'
 import { useAB } from '@/contexts/ab'
+import { ExerciseIdsContext } from '@/contexts/exercise-ids-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
-import { useEntityId, useRevisionId } from '@/contexts/uuids-context'
+import { useRevisionId } from '@/contexts/uuids-context'
 import {
   ExerciseSubmissionData,
   exerciseSubmission,
@@ -18,7 +19,7 @@ import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-
 export function ScMcSerloStaticRenderer(props: EditorScMcExerciseDocument) {
   const { asPath } = useRouter()
   const ab = useAB()
-  const entityId = useEntityId()
+  const exerciseIds = useContext(ExerciseIdsContext)
   const revisionId = useRevisionId()
   const isRevisionView = useContext(RevisionViewContext)
   const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
@@ -38,7 +39,7 @@ export function ScMcSerloStaticRenderer(props: EditorScMcExerciseDocument) {
     exerciseSubmission(
       {
         path: asPath,
-        entityId,
+        entityId: exerciseIds?.exerciseTrackingId,
         revisionId,
         result: correct ? 'correct' : 'wrong',
         type,
