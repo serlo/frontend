@@ -66,6 +66,7 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
           />
         ) : null}
       </div>
+      {/* Provide exercise ids for analytics & comments */}
       <ExerciseIdsContext.Provider
         value={{
           ...exerciseIds, // spread group ids
