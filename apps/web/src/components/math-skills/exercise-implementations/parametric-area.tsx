@@ -14,9 +14,9 @@ export function ParametricArea() {
     <SelfEvaluationExercise
       generator={() => {
         const type = randomItemFromArray([
-          /*'raute',
+          'raute',
           'drache',
-          'dreieck',*/
+          'dreieck',
           'parallelogramm',
         ])
         const t_nst_1 = randomIntBetween(-4, 1)
