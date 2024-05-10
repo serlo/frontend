@@ -37,7 +37,10 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
       {renderHowToEditMotivation()}
 
       <h2 className="serlo-h2">{loggedInStrings.editAbout}</h2>
-      <ProfileDescriptionEditor rawDescription={rawDescription} />
+      <ProfileDescriptionEditor
+        rawDescription={rawDescription}
+        username={username}
+      />
 
       <ProfileExperimental />
 

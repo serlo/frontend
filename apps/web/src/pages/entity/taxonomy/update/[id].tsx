@@ -197,7 +197,7 @@ export const getStaticProps: GetStaticProps<UpdateTaxonomyLinksProps> = async (
         }
       }),
     },
-    revalidate: 60 * 1, // 1 min,
+    revalidate: 60, // 1 min
   }
 }
 
