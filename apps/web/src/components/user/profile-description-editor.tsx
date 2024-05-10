@@ -21,14 +21,19 @@ export function ProfileDescriptionEditor({
       if (success) {
         // call revalidation api route to update description
         void fetch(`/api/frontend/revalidate-user?username=${username}`)
-        setTimeout(() => {
-          resolve()
-        }, 10)
+          .then(() => {
+            setTimeout(() => {
+              resolve()
+            }, 200)
+          })
+          .catch(() => {
+            // eslint-disable-next-line no-console
+            console.error('problem revalidating', data)
+            reject()
+          })
       } else {
         // eslint-disable-next-line no-console
-        console.error(success)
-        // eslint-disable-next-line no-console
-        console.error(data)
+        console.error(success, data)
         reject()
       }
     })
