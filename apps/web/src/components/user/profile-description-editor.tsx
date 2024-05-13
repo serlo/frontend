@@ -18,7 +18,7 @@ export function ProfileDescriptionEditor({
     const success = await setDescription({
       description: (data as { description: string }).description,
     })
-    return new Promise((_resolve: unknown, reject) => {
+    return new Promise<void>((_resolve: unknown, reject) => {
       if (success) {
         return revalidatePath(`/user/profile/${username}`)
       } else {
