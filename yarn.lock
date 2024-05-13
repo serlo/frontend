@@ -4749,7 +4749,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@serlo/editor@0.7.0, @serlo/editor@workspace:*, @serlo/editor@workspace:packages/editor":
+"@serlo/editor@npm:0.7.0":
+  version: 0.7.0
+  resolution: "@serlo/editor@npm:0.7.0"
+  dependencies:
+    "@serlo/katex-styles": ^1.0.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: a693ebf9f14b91d7c7e0e9545d4d603e30d6c547ee0d6c1f657d5318c60d5cf989dceb5827b18c25450d9d72a60f31e988ac0d745f6d90281d184309b5594110
+  languageName: node
+  linkType: hard
+
+"@serlo/editor@workspace:*, @serlo/editor@workspace:packages/editor":
   version: 0.0.0-use.local
   resolution: "@serlo/editor@workspace:packages/editor"
   dependencies:

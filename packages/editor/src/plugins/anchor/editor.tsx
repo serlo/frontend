@@ -8,7 +8,6 @@ import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-co
 import { cn } from '@serlo/frontend/src/helper/cn'
 
 import type { AnchorProps } from '.'
-import { AnchorRenderer } from './renderer'
 
 export const AnchorEditor = (props: AnchorProps) => {
   const { focused, state, id } = props
@@ -42,7 +41,7 @@ export const AnchorEditor = (props: AnchorProps) => {
         />
       ) : null}
       <FaIcon icon={faLink} className="mr-[5px]" />
-      <AnchorRenderer {...props} />
+      <a className="invisible" id={props.state.value} />
     </>
   )
 }
