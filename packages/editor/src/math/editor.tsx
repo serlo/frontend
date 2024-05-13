@@ -160,8 +160,11 @@ export function MathEditor(props: MathEditorProps) {
 
   function renderControlsPortal(children: JSX.Element) {
     const root = containerRef.current?.getRootNode()
+
+    const isShadowRoot = root instanceof ShadowRoot
+    const isDocument = root instanceof Document
     const target =
-      (root instanceof ShadowRoot || root instanceof Document
+      (isShadowRoot || isDocument
         ? root.querySelector<HTMLDivElement>('.toolbar-controls-target')
         : document.body) ?? document.body
 
