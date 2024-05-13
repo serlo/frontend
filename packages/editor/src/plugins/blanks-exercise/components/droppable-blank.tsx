@@ -60,7 +60,7 @@ export function DroppableBlank(props: DroppableBlankProps) {
         !children && 'border-brand bg-brand-50 px-6 text-brand-50',
         isOver && 'bg-slate-400 text-slate-400'
       )}
-      ref={dropRef}
+      ref={dropRef as unknown as React.LegacyRef<HTMLSpanElement>}
     >
       {children || '_'}
       {children && isOver ? (
