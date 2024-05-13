@@ -37,6 +37,9 @@
     "lint:prettier": "yarn _prettier --check",
     "yalc:publish": "yarn build && yalc publish --push --sig"
   },
+  "resolutions": {
+    "@serlo/editor": "0.7.0"
+  },
   "dependencies": {
     "@serlo/editor": "0.7.0",
     "react": "^18.2.0",
