@@ -119,10 +119,10 @@ Scenario('Quickbar @mobile', ({ I }) => {
   I.say('Perform another search')
   I.amOnPage('/')
   I.click('$quickbar-input')
-  I.type('Aufgaben zu Urnenmodellen')
+  I.type('Beispiel zu Zufallsexperimente und Wahrscheinlichkeit')
 
-  I.click('Aufgaben zu Urnenmodellen')
-  I.seeInTitle('Aufgaben zu Urnenmodellen')
+  I.click('Beispiel zu Zufallsexperimente und Wahrscheinlichkeit')
+  I.seeInTitle('Beispiel zu Zufallsexperimente und Wahrscheinlichkeit')
   I.see('Abiturkurs Stochastik')
 })
 

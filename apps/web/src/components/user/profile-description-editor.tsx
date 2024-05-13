@@ -20,13 +20,20 @@ export function ProfileDescriptionEditor({
     })
     return new Promise((resolve: (value: void) => void, reject) => {
       if (success) {
-        revalidatePath(`/user/profile/${username}`)
-        resolve()
+        void revalidatePath(`/user/profile/${username}`)
+          .then(() => {
+            setTimeout(() => {
+              resolve()
+            }, 500) // 500 seems to work, but it's a guess
+          })
+          .catch(() => {
+            // eslint-disable-next-line no-console
+            console.error('problem revalidating', data)
+            reject()
+          })
       } else {
         // eslint-disable-next-line no-console
-        console.error(success)
-        // eslint-disable-next-line no-console
-        console.error(data)
+        console.error(success, data)
         reject()
       }
     })

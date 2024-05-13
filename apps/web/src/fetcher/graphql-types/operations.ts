@@ -1126,7 +1126,6 @@ export interface Query {
   events: AbstractNotificationEventConnection;
   media: MediaQuery;
   metadata: MetadataQuery;
-  notificationEvent?: Maybe<AbstractNotificationEvent>;
   notifications: NotificationConnection;
   page: PageQuery;
   subject: SubjectQuery;
@@ -1146,11 +1145,6 @@ export interface QueryEventsArgs {
   instance?: InputMaybe<Instance>;
   last?: InputMaybe<Scalars['Int']['input']>;
   objectId?: InputMaybe<Scalars['Int']['input']>;
-}
-
-
-export interface QueryNotificationEventArgs {
-  id: Scalars['Int']['input'];
 }
 
 
