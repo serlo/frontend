@@ -24,7 +24,7 @@ export function RowDragButton({ drag }: RowDragButtonProps) {
             serlo-tooltip-trigger -mt-[3px] mb-1.5 cursor-grab select-none
             border-0 bg-none active:cursor-grabbing
         `)}
-        ref={drag}
+        ref={drag as unknown as React.LegacyRef<HTMLButtonElement>}
       >
         <EditorTooltip
           text={editorStrings.plugins.rows.dragElement}
