@@ -1,5 +1,4 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-import Script from 'next/script'
 
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { colors } from '@/helper/colors'
@@ -121,10 +120,6 @@ export default class MyDocument extends Document {
               __html: `window.sa_event=window.sa_event||function(){a=[].slice.call(arguments);sa_event.q?sa_event.q.push(a):sa_event.q=[a]};`,
             }}
           ></script>
-          <Script
-            src="https://repo.vidis.schule/repository/vidis-
-cdn/latest/vidisLogin.umd.js"
-          />
         </Head>
         <body style={bodyStyles}>
           <Main />
