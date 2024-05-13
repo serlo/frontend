@@ -42,6 +42,7 @@ import { RootEquations } from '../exercise-implementations/root-equations'
 import { RotatePoint } from '../exercise-implementations/rotate-point'
 import { TimeToDouble } from '../exercise-implementations/time-to-double'
 import { Tombola } from '../exercise-implementations/tombola'
+import { TransformGraph } from '../exercise-implementations/transform-graph'
 import { Trapezoid } from '../exercise-implementations/trapezoid'
 import { TreeDiagram } from '../exercise-implementations/tree-diagram'
 import { TriangleArea } from '../exercise-implementations/triangle-area'
@@ -273,7 +274,7 @@ export const middleSchoolFinalExam = {
     subtitle: 'Potenzfunktionen',
     calculatorAllowed: true,
     track: 1,
-    component: <PlaceholderExercise />,
+    component: <TransformGraph />,
   },
   'wip-4': {
     title: 'Streckenlänge in Abhängigkeit 🚧',
