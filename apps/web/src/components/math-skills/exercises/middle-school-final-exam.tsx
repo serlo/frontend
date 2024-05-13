@@ -23,8 +23,8 @@ import { LawOfSinesCosines } from '../exercise-implementations/law-of-sines-cosi
 import { LogarithmEquation } from '../exercise-implementations/logarithm-equation'
 import { LogarithmExercise1 } from '../exercise-implementations/logarithm-exercise-1'
 import { LogarithmExercise2 } from '../exercise-implementations/logarithm-exericse-2'
-import { AbbildungGraphen } from '../exercise-implementations/mapping-graphs-1'
-import { AbbildungGraphen2 } from '../exercise-implementations/mapping-graphs-2'
+// import { AbbildungGraphen } from '../exercise-implementations/mapping-graphs-1'
+// import { AbbildungGraphen2 } from '../exercise-implementations/mapping-graphs-2'
 import { MirrorLineThroughOrigin } from '../exercise-implementations/mirror-line-through-origin'
 import { ModellingParabola } from '../exercise-implementations/modelling-parabolax'
 import { NormalformParabola } from '../exercise-implementations/normalform-parabola'
@@ -34,6 +34,7 @@ import { Parallelogram1 } from '../exercise-implementations/parallelogram-1'
 import { Parallelogram2 } from '../exercise-implementations/parallelogram-2'
 import { Parallelogram3 } from '../exercise-implementations/parallelogram-3'
 import { ParametricArea } from '../exercise-implementations/parametric-area'
+import { PlaceholderExercise } from '../exercise-implementations/placeholder-exercise'
 import { PlotFunction } from '../exercise-implementations/plot-function-1'
 import { PlotFunction2 } from '../exercise-implementations/plot-function-2'
 import { RightTriangle } from '../exercise-implementations/right-triangle'
@@ -76,7 +77,7 @@ export const middleSchoolFinalExam = {
   // Mathe-Zweig Teil A
   'potenzfunktionen-graphen-beschreiben': {
     title: 'Funktionsgraph beschreiben',
-    subtitle: 'Potenzfunktion',
+    subtitle: 'Potenzfunktionen',
     difficulty: 1,
     calculatorAllowed: false,
     track: 1,
@@ -253,6 +254,34 @@ export const middleSchoolFinalExam = {
     component: <RotatePoint />,
   },
   // Mathe-Zweig, Teil B
+  'wip-1': {
+    title: 'Definitions-, Wertebereich und Asymptote 🚧',
+    subtitle: 'Potenzfunktionen',
+    calculatorAllowed: true,
+    track: 1,
+    component: <Asymptote1 />,
+  },
+  'wip-2': {
+    title: 'Graphen skizzieren 🚧',
+    subtitle: 'Potenzfunktionen',
+    calculatorAllowed: true,
+    track: 1,
+    component: <PlotFunction />,
+  },
+  'wip-3': {
+    title: 'Graph verschieben/spiegeln 🚧',
+    subtitle: 'Potenzfunktionen',
+    calculatorAllowed: true,
+    track: 1,
+    component: <PlaceholderExercise />,
+  },
+  'wip-4': {
+    title: 'Streckenlänge in Abhängigkeit 🚧',
+    subtitle: 'Potenzfunktionen',
+    calculatorAllowed: true,
+    track: 1,
+    component: <PlaceholderExercise />,
+  },
   'graphen-skizzieren-exponentialfunktion': {
     title: 'Graphen skizzieren',
     subtitle: 'Exponentialfunktionen',
@@ -475,21 +504,7 @@ export const middleSchoolFinalExam = {
     difficulty: 2,
     component: <MirrorLineThroughOrigin />,
   },
-  'plot-function-1': {
-    title: 'Graphen skizzieren 🚧',
-    subtitle: 'Potenzfunktion',
-    calculatorAllowed: true,
-    track: 1,
-    component: <PlotFunction />,
-  },
-  'asymptote-1': {
-    title: 'Definitions-, Wertebereich und Asymptote 🚧',
-    subtitle: 'Potenzfunktion',
-    calculatorAllowed: true,
-    track: 1,
-    component: <Asymptote1 />,
-  },
-  'mapping-graphs-1': {
+  /*'mapping-graphs-1': {
     title: 'Graphen verschieben 🚧',
     subtitle: 'Funktionen',
     calculatorAllowed: true,
@@ -502,7 +517,7 @@ export const middleSchoolFinalExam = {
     calculatorAllowed: true,
     track: 1,
     component: <AbbildungGraphen2 />,
-  },
+  },*/
   /*'volumen-pyramide-2': {
     title: 'Volumen einer Pyramide',
     subtitle: 'dreiseitig',

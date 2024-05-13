@@ -44,7 +44,7 @@ const ContentPage: NextPage = () => {
 }
 
 const topicMap = {
-  Potenzfunktionen: { tracks: [1], subtitles: ['Potenzfunktion'] },
+  Potenzfunktionen: { tracks: [1], subtitles: ['Potenzfunktionen'] },
   'Quadratische Funktionen & Gleichungen': {
     tracks: [2],
     subtitles: [
