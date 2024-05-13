@@ -142,7 +142,8 @@ Scenario('Geogebra', ({ I }) => {
 })
 
 Scenario('Video + Injection', ({ I }) => {
-  I.amOnPage('/18524')
+  I.amOnPage('/277232')
+  I.scrollTo('#f7f13990')
   I.see('dass externe Inhalte von')
   I.click('Video abspielen von YouTube')
   I.switchTo('iframe')
