@@ -254,8 +254,8 @@ export const middleSchoolFinalExam = {
     component: <RotatePoint />,
   },
   // Mathe-Zweig, Teil B
-  'wip-1': {
-    title: 'Definitions-, Wertebereich und Asymptote 🚧',
+  'definitions-wertemenge-asymptoten-potenzfunktionen': {
+    title: 'Definitions-, Wertemenge und Asymptoten',
     subtitle: 'Potenzfunktionen',
     calculatorAllowed: true,
     track: 1,

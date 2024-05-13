@@ -1,15 +1,12 @@
 import JXG from 'jsxgraph'
 
-/* eslint-disable no-empty-pattern */
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { buildFrac, buildJSX } from '../utils/math-builder'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { buildJSX, buildLatex } from '../utils/math-builder'
+import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { randomItemFromArray } from '@/helper/random-item-from-array'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface PlotData {
+interface DATA {
   a: number
   b: number
   c: number
@@ -20,146 +17,119 @@ export function Asymptote1() {
   return (
     <SelfEvaluationExercise
       generator={() => {
-        const a = randomItemFromArray([-1, 1, 2])
-        const b = randomIntBetween(-3, 3)
+        const a = randomItemFromArray([-1, 1, 2, -2, -3, 3, 0.5, 0.2, 1.5])
+        const b = randomIntBetween(-4, 4)
         const c = randomIntBetween(-4, -1)
         const d = randomIntBetween(-4, 4)
-        const data: PlotData = {
+        const data: DATA = {
           a,
           b,
           c,
           d,
         }
-        return { data }
+        return data
       }}
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      renderTask={({ data }) => {
+      renderTask={(data) => {
         return (
           <>
             <p className="serlo-main-task">
-              Bestimme die Definitions-, Wertemenge und Asymptote der Funktion:
+              Bestimmen Sie die Definitions-, Wertemenge und Asymptoten der
+              Funktion:
             </p>
-            <p className="serlo-highlight-green">
-              y = {data.a === -1 ? '-' : null}{' '}
-              {buildFrac(
-                <>{data.a !== -1 ? data.a : -data.a}</>,
-                <>
-                  {data.b === 0 || data.c === -1 ? null : '('}x{' '}
-                  {data.b > 0 ? '+' : null} {data.b !== 0 ? data.b : null}
-                  {data.b === 0 || data.c === -1 ? null : ')'}
-                  <sup>{data.c !== -1 ? -data.c : null}</sup>
-                </>
-              )}{' '}
-              {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
-              {data.d !== 0 ? data.d : null}
+            <p className="serlo-highlight-gray">
+              y = {data.a === -1 ? '-' : data.a === 1 ? null : pp(data.a)}
+              {data.b === 0 ? 'x' : '(x ' + pp(-data.b, 'merge_op') + ')'}
+              <sup>{pp(data.c)}</sup>{' '}
+              {data.d === 0 ? null : pp(data.d, 'merge_op')}
             </p>
           </>
         )
       }}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      renderSolution={({ data }) => {
+      renderSolution={(data) => {
         return (
           <>
-            Bestimme Definitions- und Wertebereich, sowie Asymptoten der
-            Funktion:
-            <br />
-            <p className="serlo-highlight-gray">
-              y = {data.a === -1 ? '-' : null}{' '}
-              {buildFrac(
-                <>{data.a !== -1 ? data.a : -data.a}</>,
-                <>
-                  {data.b === 0 || data.c === -1 ? null : '('}x{' '}
-                  {data.b > 0 ? '+' : null} {data.b !== 0 ? data.b : null}
-                  {data.b === 0 || data.c === -1 ? null : ')'}
-                  <sup>{data.c !== -1 ? -data.c : null}</sup>
-                </>
-              )}{' '}
-              {data.d > 0 && data.d !== 0 ? '+' : null}{' '}
-              {data.d !== 0 ? data.d : null}
+            <p>
+              Beachte, für welche x-Werte der Term{' '}
+              {data.b === 0 ? 'x' : '(x ' + pp(data.b, 'merge_op') + ')'}
+              <sup>{pp(data.c)}</sup> nicht definiert ist. Folgere daraus die
+              Definitionsmenge:
             </p>
-            <br />
-            <br />
-            Die Definitionsmenge ist die Menge aller reellen Zahlen, so dass der
-            Nenner nicht 0 ist:
-            <br />
             <p className="serlo-highlight-green">
-              D = R \ {'{'}
-              {-data.b}
+              D = {buildLatex('\\R')}\{'{'}
+              {pp(data.b)}
               {'}'}
             </p>
-            <br />
-            <br />
-            Der Graph hat zwei Asymptoten mit den Gleichungen:
-            <br />
+            <p>Bestimme die Asymptoten:</p>
             <p className="serlo-highlight-green">
-              y = {data.d} und x = {-data.b}
+              x = {pp(-data.b)} und y = {pp(data.d)}
             </p>
-            <br />
-            <br />
-            Der Wertebereich setzt sich aus allen reellen Zahlen zusammen, die
-            von der Funktion angenommen werden.
-            <br />
-            <br />
-            {data.c % 2 === 0 && data.a > 0
-              ? 'Diese Funktion hat einen geraden Grad und ist nicht gespiegelt. Bei der senkrechten Asymptote kommt sie von oben und geht nach oben. Dabei bleibt sie immer oberhalb der Asymptote:'
-              : null}
-            {data.c % 2 === 0 && data.a < 0
-              ? 'Diese Funktion hat einen geraden Grad und ist gespiegelt. Bei der senkrechten Asymptote kommt sie von unten und geht nach unten. Dabei bleibt sie immer unterhalb der Asymptote:'
-              : null}
-            {data.c % 2 === -1
-              ? 'Diese Funktion hat einen ungeraden Grad. Sie nimmt alle Werte an, bis auf den der Asymptote:'
-              : null}
-            <br />
-            <p className="serlo-highlight-green">
-              W = {'{'} y |
-              {data.a > 0 && data.c % 2 === 0 ? ' y > ' + data.d : null}
-              {data.a < 0 && data.c % 2 === 0 ? ' y < ' + data.d : null}
-              {data.c % 2 !== 0 ? ' y ≠ ' : null}
-              {data.c % 2 !== 0 ? data.d : null}
-              {' }'}
+            {data.c % 2 === 0 && (
+              <>
+                <p>
+                  Der Term{' '}
+                  {data.a === -1 ? '-' : data.a === 1 ? null : pp(data.a)}
+                  {data.b === 0 ? 'x' : '(x ' + pp(-data.b, 'merge_op') + ')'}
+                  <sup>{pp(data.c)}</sup> bleibt immer{' '}
+                  {data.a < 0 ? 'negativ' : 'positiv'}, für die Wertemenge gilt
+                  daher:
+                </p>
+                <p className="serlo-highlight-green">
+                  W = {'{'}y | y {data.a > 0 ? '>' : '<'} {pp(data.d)}
+                  {'}'}
+                </p>
+              </>
+            )}
+            {data.c % 2 !== 0 && (
+              <>
+                <p>
+                  Der Term{' '}
+                  {data.a === -1 ? '-' : data.a === 1 ? null : pp(data.a)}
+                  {data.b === 0 ? 'x' : '(x ' + pp(-data.b, 'merge_op') + ')'}
+                  <sup>{pp(data.c)}</sup> wird nie null, für die Wertemenge gilt
+                  daher:
+                </p>
+                <p className="serlo-highlight-green">
+                  W = {buildLatex('\\R')}\{'{'}
+                  {pp(data.d)}
+                  {'}'}
+                </p>
+              </>
+            )}
+
+            <p className="mt-5">
+              Graph für -6 &#8804; x &#8804; 6 und -6 &#8804; y &#8804; 6 als
+              Hilfe:
             </p>
-            <br />
-            <br />
-            Graph für -6 &#8804; x &#8804; 6 und -6 &#8804; y &#8804; 6 als
-            Hilfe:
-            <br />
             {renderDiagram(data)}
           </>
         )
       }}
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      renderHint={({ data }) => {
+      renderHint={() => {
         return (
           <>
-            Der <strong>Definitionsbereich</strong> einer Funktion der Form
-            <p className="serlo-highlight-gray">
-              y ={' '}
-              {buildFrac(
-                <>a</>,
-                <>
-                  (x - b) <sup>c</sup>
-                </>
-              )}{' '}
-              + d
+            <p>
+              Der <strong>Definitionsbereich</strong> einer Funktion der Form
             </p>
-            <br />
-            <br />
-            ist immer die Menge aller reellen Zahlen außer der Stelle b.
-            <br />
-            Die <strong>Asymptoten</strong> haben immer die Gleichungen:
-            <br />
+            <p className="serlo-highlight-gray">
+              y = a(x - b)<sup>c</sup> + d
+            </p>
+            <p>ist immer die Menge aller reellen Zahlen außer der Stelle b.</p>
+            <p className="mt-3">
+              Die <strong>Asymptoten</strong> haben immer die Gleichungen:
+            </p>
             <p className="serlo-highlight-gray">y = d, x = b</p>
-            <br />
-            <br />
-            Der <strong>Wertebereich</strong> ist abhängig vom Grad und der
-            Verschiebung in y-Richtung.
+            <p>
+              Der <strong>Wertebereich</strong> ist abhängig vom Grad und der
+              Verschiebung in y-Richtung.
+            </p>
           </>
         )
       }}
     />
   )
 
-  function renderDiagram(data: PlotData) {
+  function renderDiagram(data: DATA) {
     return buildJSX(() => {
       const x = JXG.JSXGraph.initBoard('jxgbox', {
         boundingbox: [-6, 6, 6, -6],
@@ -197,7 +167,6 @@ export function Asymptote1() {
       x.create('functiongraph', [
         function (x: number) {
           const nenner = Math.pow(x + data.b, data.c)
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           return data.a * nenner + data.d
         },
         -6,
