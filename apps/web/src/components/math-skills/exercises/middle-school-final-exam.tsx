@@ -269,8 +269,8 @@ export const middleSchoolFinalExam = {
     track: 1,
     component: <PlotFunction />,
   },
-  'wip-3': {
-    title: 'Graph verschieben/spiegeln 🚧',
+  'potenzfunktion-verschieben-spiegeln': {
+    title: 'Graph verschieben/spiegeln',
     subtitle: 'Potenzfunktionen',
     calculatorAllowed: true,
     track: 1,

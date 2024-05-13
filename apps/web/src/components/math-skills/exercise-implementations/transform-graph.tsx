@@ -1,5 +1,5 @@
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
-import { buildVec, buildVec2 } from '../utils/math-builder'
+import { buildLatex, buildVec, buildVec2 } from '../utils/math-builder'
 import { pp } from '../utils/pretty-print'
 import { randomIntBetween } from '@/helper/random-int-between'
 import { randomItemFromArray } from '@/helper/random-item-from-array'
@@ -8,22 +8,30 @@ export function TransformGraph() {
   return (
     <SelfEvaluationExercise
       generator={() => {
-        const a = randomItemFromArray([-1, 1, 2, -2, -3, 3, 0.5, 0.2, 1.5])
-        const b = randomIntBetween(-4, 4)
+        let a = randomItemFromArray([-1, 1, 2, -2, -3, 3, 0.5, 0.2, 1.5])
+        let b = randomIntBetween(-4, 4)
         const c = randomIntBetween(-4, -1)
-        const d = randomIntBetween(-4, 4)
+        let d = randomIntBetween(-4, 4)
         const dx = randomIntBetween(1, 4) * randomItemFromArray([1, -1])
         const dy = randomIntBetween(1, 4) * randomItemFromArray([1, -1])
 
-        /*const mode = randomItemFromArray([
+        const mode = randomItemFromArray([
           'parallel',
           'parallel',
           'x-achse',
           'x-achse',
           'y-achse',
           'invers',
-        ])*/
-        const mode = 'y-achse'
+        ])
+        if (mode === 'invers') {
+          a = 1
+          if (d === 0) {
+            d = randomIntBetween(1, 4)
+          }
+          if (b === c) {
+            b = randomIntBetween(1, 4)
+          }
+        }
         return {
           a,
           b,
@@ -190,6 +198,12 @@ export function TransformGraph() {
             </>
           )
         }
+        const inverseExp =
+          data.c === -1 ? (
+            <sup>{pp(data.c)}</sup>
+          ) : (
+            buildLatex(`^{-\\frac{1}{${Math.abs(data.c)}}}`)
+          )
         return (
           <>
             <p>Überlege dir die Abbildungsgleichungen:</p>
@@ -198,8 +212,47 @@ export function TransformGraph() {
               <br />
               y&apos; = x
             </p>
-            <p>Ersetze y druch den Funktionsterm und x durch y&apos;:</p>
-            <p>TODO</p>
+            <p>Ersetze y durch den Funktionsterm und x durch y&apos;:</p>
+            <p className="serlo-highlight-gray">
+              x&apos; = {data.a === -1 ? '-' : data.a === 1 ? null : pp(data.a)}
+              {"(y'" +
+                (data.b === 0 ? '' : ' ' + pp(-data.b, 'merge_op')) +
+                ')'}
+              <sup>{pp(data.c)}</sup> {pp(data.d, 'merge_op')}
+            </p>
+            <p>Löse nach y auf:</p>
+            <p className="serlo-highlight-gray">
+              x&apos; = {data.a === -1 ? '-' : data.a === 1 ? null : pp(data.a)}
+              {"(y'" +
+                (data.b === 0 ? '' : ' ' + pp(-data.b, 'merge_op')) +
+                ')'}
+              <sup>{pp(data.c)}</sup> {pp(data.d, 'merge_op')}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| {pp(-data.d, 'merge_op')}
+              <br />
+              <br />
+              x&apos; {pp(-data.d, 'merge_op')} ={' '}
+              {data.a === -1 ? '-' : data.a === 1 ? null : pp(data.a)}
+              {"(y'" +
+                (data.b === 0 ? '' : ' ' + pp(-data.b, 'merge_op')) +
+                ')'}
+              <sup>{pp(data.c)}</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|{' '}
+              {inverseExp}
+              <br />
+              <br />
+              (x&apos; {pp(-data.d, 'merge_op')}){inverseExp} ={' '}
+              {data.a === -1 ? '-' : data.a === 1 ? null : pp(data.a)}
+              {"y'" + (data.b === 0 ? '' : ' ' + pp(-data.b, 'merge_op')) + ''}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| {pp(data.b, 'merge_op')}
+              <br />
+              <br />
+              (x&apos; {pp(-data.d, 'merge_op')}){inverseExp}{' '}
+              {pp(data.b, 'merge_op')} = y&apos;
+            </p>
+            <p>Schreibe ohne Hochstriche:</p>
+            <p className="serlo-highlight-green">
+              y = (x {pp(-data.d, 'merge_op')}){inverseExp}{' '}
+              {pp(data.b, 'merge_op')}
+            </p>
           </>
         )
       }}
