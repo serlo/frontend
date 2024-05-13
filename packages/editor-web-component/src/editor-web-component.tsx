@@ -17,6 +17,7 @@ export class EditorWebComponent extends HTMLElement {
   private _mode: Mode = 'read'
 
   private _initialState: InitialState = exampleInitialState
+  private _currentState: unknown
 
   constructor() {
     super()
@@ -71,6 +72,16 @@ export class EditorWebComponent extends HTMLElement {
     }
   }
 
+  get currentState() {
+    return this._currentState
+  }
+
+  set currentState(_) {
+    throw new Error(
+      'currentState is a readonly property. To modify state, please change the initialState.'
+    )
+  }
+
   connectedCallback() {
     this.appendChild(this.container)
 
@@ -115,7 +126,9 @@ export class EditorWebComponent extends HTMLElement {
               initialState={this.initialState}
               onChange={({ changed, getDocument }) => {
                 if (changed) {
-                  this.broadcastNewState(getDocument())
+                  const newState = getDocument()
+                  this._currentState = newState
+                  this.broadcastNewState(newState)
                 }
               }}
             >
