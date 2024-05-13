@@ -18,6 +18,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: yarn          
       - run: yarn
       - run: yarn playwright install --with-deps firefox
       - uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
