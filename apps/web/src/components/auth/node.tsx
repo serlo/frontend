@@ -5,6 +5,7 @@ import { type FormEvent, useState } from 'react'
 
 import { FlowType } from './flow-type'
 import { LoginButtonBildungsraum } from './login-button-bildungsraum'
+import { LoginButtonVidis } from './login-button-vidis'
 import { FaIcon } from '../fa-icon'
 import { Message, getKratosMessageString } from '@/components/auth/message'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -96,6 +97,15 @@ export function Node({
         if (attributes.name === 'provider' && attributes.value === 'nbp') {
           return (
             <LoginButtonBildungsraum
+              attributes={attributes}
+              onSubmit={onSubmit}
+              disabled={disabled}
+            />
+          )
+        }
+        if (attributes.name === 'provider' && attributes.value === 'vidis') {
+          return (
+            <LoginButtonVidis
               attributes={attributes}
               onSubmit={onSubmit}
               disabled={disabled}

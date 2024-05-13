@@ -54,7 +54,7 @@ export const getStaticProps: GetStaticProps<EventHistoryProps> = async (
 
   return {
     props: { pageData: { id, title, alias } },
-    revalidate: 1,
+    revalidate: 60, // 1 min
   }
 }
 

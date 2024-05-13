@@ -40,7 +40,7 @@ export const getStaticProps: GetStaticProps<LicenseDetailProps> = async (
         },
       },
     },
-    revalidate: 60 * 60 * 24, //one day in seconds
+    revalidate: 60 * 60 * 24, // 1 day
   }
 }
 

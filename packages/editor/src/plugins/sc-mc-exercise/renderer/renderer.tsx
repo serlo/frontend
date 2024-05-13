@@ -7,11 +7,11 @@ export interface ScMcExerciseRendererAnswer {
   isCorrect: boolean
   feedback: JSX.Element | null
   content: JSX.Element | null
+  key: string
 }
 
 export interface ScMcExerciseRendererProps {
   isSingleChoice: boolean
-  idBase: string
   answers: ScMcExerciseRendererAnswer[]
   onEvaluate?: (correct: boolean, type: ExerciseSubmissionData['type']) => void
   renderExtraAnswerContent?: (

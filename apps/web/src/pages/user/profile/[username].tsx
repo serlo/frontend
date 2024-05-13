@@ -37,7 +37,7 @@ export const getStaticProps: GetStaticProps<UserProps> = async (context) => {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as UserPage, // remove undefined values
     },
-    revalidate: 1,
+    revalidate: 60 * 60 * 24, // 1 day
   }
 }
 

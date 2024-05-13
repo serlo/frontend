@@ -247,7 +247,7 @@ export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as TaxonomyPage, // remove undefined values
     },
-    revalidate: 60 * 2, // 2 min,
+    revalidate: 60 * 2, // 2 min
   }
 }
 
