@@ -56,11 +56,12 @@ export function useAddPageRevision() {
           ...sharedInput,
           pageId: data.id,
         })
-        revalidate(savedEntity)
-        return successHandler({
-          success: !!savedEntity,
-          toastKey: 'save',
-          redirectUrl: `/${data.id}`,
+        void revalidate(savedEntity).then(() => {
+          return successHandler({
+            success: !!savedEntity,
+            toastKey: 'save',
+            redirectUrl: `/${data.id}`,
+          })
         })
       } else {
         // create new page
@@ -70,12 +71,13 @@ export function useAddPageRevision() {
           instance: lang,
           licenseId: 1,
         })
-        revalidate(savedEntity)
-        return successHandler({
-          success: !!savedEntity,
-          toastKey: 'save',
-          redirectUrl: `/pages`,
-          useHardRedirect: true,
+        void revalidate(savedEntity).then(() => {
+          return successHandler({
+            success: !!savedEntity,
+            toastKey: 'save',
+            redirectUrl: `/pages`,
+            useHardRedirect: true,
+          })
         })
       }
     } catch (error) {
@@ -86,7 +88,16 @@ export function useAddPageRevision() {
   }
 }
 
-function revalidate(savedEntity: boolean | { id: number; alias: string }) {
+async function revalidate(
+  savedEntity: boolean | { id: number; alias: string }
+) {
   if (typeof savedEntity === 'boolean') return
-  revalidatePath(savedEntity.alias)
+
+  await revalidatePath(savedEntity.alias)
+    .then(() => {
+      return true
+    })
+    .catch(() => {
+      return false
+    })
 }

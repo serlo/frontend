@@ -139,9 +139,14 @@ export function useSetEntityMutation() {
         void router.push(redirectHref + successHash)
       }
 
-      revalidatePath(savedEntity.alias)
-
-      return true
+      await revalidatePath(savedEntity.alias)
+        .then(() => {
+          console.log('waited')
+          return true
+        })
+        .catch(() => {
+          return false
+        })
     }
 
     async function loopNestedChildren({

@@ -18,19 +18,9 @@ export function ProfileDescriptionEditor({
     const success = await setDescription({
       description: (data as { description: string }).description,
     })
-    return new Promise((resolve: (value: void) => void, reject) => {
+    return new Promise((_resolve: unknown, reject) => {
       if (success) {
-        void revalidatePath(`/user/profile/${username}`)
-          .then(() => {
-            setTimeout(() => {
-              resolve()
-            }, 500) // 500 seems to work, but it's a guess
-          })
-          .catch(() => {
-            // eslint-disable-next-line no-console
-            console.error('problem revalidating', data)
-            reject()
-          })
+        return revalidatePath(`/user/profile/${username}`)
       } else {
         // eslint-disable-next-line no-console
         console.error(success, data)
