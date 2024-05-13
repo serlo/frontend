@@ -17,6 +17,7 @@ exports.config = {
       keepBrowserState: true,
       keepCookies: true,
       show: isCI ? false : true,
+      waitForTimeout: 30_000,
       ...(isCI && isChromium
         ? {
             chromium: {
@@ -40,7 +41,9 @@ exports.config = {
       inject: 'login',
       users: {
         admin: {
-          login: (I) => {
+          login: (I: CodeceptJS.I) => {
+            I.amOnPage('/')
+            I.amOnPage('/')
             I.amOnPage('/')
             I.see('Anmelden')
             I.click('Anmelden')
@@ -52,7 +55,7 @@ exports.config = {
             // Wait as a fix for: https://github.com/microsoft/playwright/issues/20749
             I.wait(1)
           },
-          check: (I) => {
+          check: (I: CodeceptJS.I) => {
             I.amOnPage('/')
             I.waitForElement(`header nav img[alt='Avatar']`, 15)
           },
