@@ -15,7 +15,6 @@ jobs:
           node-version: 20
           registry-url: https://registry.npmjs.org
       - run: yarn
-      - run: yarn build:prisma
 
       - name: Build editor web component package
         run: yarn editor:build && yarn editor-web-component:build

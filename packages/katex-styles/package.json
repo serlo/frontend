@@ -1,0 +1,23 @@
+{
+  "name": "@serlo/workspace-katex-styles",
+  "version": "1.0.1",
+  "description": "CSS styles for katex",
+  "keywords": [
+    "css",
+    "katex"
+  ],
+  "homepage": "https://github.com/serlo/frontend",
+  "bugs": {
+    "url": "https://github.com/serlo/frontend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/serlo/frontend.git"
+  },
+  "license": "Apache-2.0",
+  "author": "Serlo Education e.V",
+  "main": "style.css",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

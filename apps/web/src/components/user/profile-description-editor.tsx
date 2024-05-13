@@ -3,10 +3,12 @@ import { convertUserByDescription } from '@/serlo-editor-integration/convert-edi
 import { SerloEditor } from '@/serlo-editor-integration/serlo-editor'
 
 export interface ProfileDescriptionEditorProps {
+  username: string
   rawDescription?: string | null
 }
 
 export function ProfileDescriptionEditor({
+  username,
   rawDescription,
 }: ProfileDescriptionEditorProps) {
   const setDescription = useUserSetDescriptionMutation()
@@ -16,12 +18,22 @@ export function ProfileDescriptionEditor({
       description: (data as { description: string }).description,
     })
     return new Promise((resolve: (value: void) => void, reject) => {
-      if (success) resolve()
-      else {
+      if (success) {
+        // call revalidation api route to update description
+        void fetch(`/api/frontend/revalidate-user?username=${username}`)
+          .then(() => {
+            setTimeout(() => {
+              resolve()
+            }, 500) // 500 seems to work, but it's a guess
+          })
+          .catch(() => {
+            // eslint-disable-next-line no-console
+            console.error('problem revalidating', data)
+            reject()
+          })
+      } else {
         // eslint-disable-next-line no-console
-        console.error(success)
-        // eslint-disable-next-line no-console
-        console.error(data)
+        console.error(success, data)
         reject()
       }
     })

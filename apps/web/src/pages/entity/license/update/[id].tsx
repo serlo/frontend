@@ -89,7 +89,7 @@ export const getStaticProps: GetStaticProps<UpdateLicenseProps> = (context) => {
     props: {
       id,
     },
-    revalidate: 60 * 60 * 24, //one day in seconds
+    revalidate: 60 * 60 * 24, // 1 day
   }
 }
 

@@ -95,7 +95,7 @@ export const getStaticProps: GetStaticProps<JobsProps> = async (context) => {
 
   return {
     props: { positions, jobId },
-    revalidate: 2 * 60 * 60, // 2h,
+    revalidate: 60 * 60 * 2, // 2h
   }
 }
 

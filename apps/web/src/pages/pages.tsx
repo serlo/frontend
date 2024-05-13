@@ -123,7 +123,7 @@ export const getStaticProps: GetStaticProps<PagesProps> = async (context) => {
     props: {
       pages: result.page.pages,
     },
-    revalidate: 60 * 2, // 2 min,
+    revalidate: 60 * 2, // 2 min
   }
 }
 

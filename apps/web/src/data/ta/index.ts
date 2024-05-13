@@ -776,7 +776,7 @@ export const loggedInData = {
           unorderedList: "கட்டளையிடாத பட்டியல்",
           lists: "பட்டியல்கள்",
           mathFormula: 'Math formula (%ctrlOrCmd% + M)',
-          code: 'Code (%ctrlOrCmd% + ⇧ + `)',
+          code: 'Code (%ctrlOrCmd% + ⇧ + C)',
           blank: 'Blank',
           createBlank: 'Create Blank',
           removeBlank: 'Remove Blank',
@@ -1014,7 +1014,6 @@ export const loggedInData = {
         author: "எழுத்தாளர்",
         createdAt: 'when?',
         ready: "சேமிக்கத் தயாரா?",
-        anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.',
         pluginCopyInfo: 'You can now paste this plugin into text plugins',
         pluginCopyButtonLabel: 'Copy plugin to clipboard'
       },

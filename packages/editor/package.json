@@ -1,6 +1,6 @@
 {
   "name": "@serlo/editor",
-  "version": "0.6.0-beta.17",
+  "version": "0.7.0",
   "homepage": "https://de.serlo.org/editor",
   "bugs": {
     "url": "https://github.com/serlo/frontend/issues"
@@ -17,7 +17,8 @@
       "import": "./dist/editor.js",
       "require": "./dist/editor.js",
       "types": "./dist/index.d.ts"
-    }
+    },
+    "./style.css": "./dist/style.css"
   },
   "main": "./dist/editor.js",
   "module": "./dist/editor.js",
@@ -39,9 +40,9 @@
     "yalc:publish": "yarn build && yalc publish --push --sig"
   },
   "dependencies": {
+    "@serlo/katex-styles": "^1.0.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "serlo-katex-styles": "^1.0.0"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.4",
@@ -60,7 +61,6 @@
     "@ory/client": "^1.9.0",
     "@ory/integrations": "^1.1.5",
     "@prezly/slate-lists": "^0.97.0",
-    "@prisma/client": "^5.12.1",
     "@radix-ui/react-navigation-menu": "^1.1.4",
     "@radix-ui/react-select": "^1.2.2",
     "@reduxjs/toolkit": "^1.9.7",
@@ -135,7 +135,6 @@
     "prettier": "^3.2.5",
     "prettier-plugin-packagejson": "^2.5.0",
     "prettier-plugin-tailwindcss": "^0.5.14",
-    "prisma": "^5.12.1",
     "prop-types": "^15.8.1",
     "qrcode.react": "^3.1.0",
     "ramda": "^0.29.1",
