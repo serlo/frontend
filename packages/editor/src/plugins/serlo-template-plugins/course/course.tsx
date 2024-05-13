@@ -19,8 +19,8 @@ import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/com
 import { RevisionHistoryLoader } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/revision-history-loader'
 import { useEffect, useState } from 'react'
 
-import { CourseNavigation } from './course-navigation'
 import type { CoursePageTypePluginState } from './course-page'
+import { CourseNavigationRenderer } from '../../course/renderer/course-navigation'
 import {
   editorContent,
   entity,
@@ -125,7 +125,7 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
 
   function renderCourseNavigation() {
     return (
-      <CourseNavigation
+      <CourseNavigationRenderer
         open={courseNavOpen}
         onOverviewButtonClick={() => setCourseNavOpen(!courseNavOpen)}
         title={

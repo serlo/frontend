@@ -4,6 +4,7 @@ import type { ArticlePluginState } from '@editor/plugins/article'
 import { AudioPluginState } from '@editor/plugins/audio'
 import { BlanksExerciseState } from '@editor/plugins/blanks-exercise'
 import { BoxPluginState } from '@editor/plugins/box'
+import { CoursePluginState } from '@editor/plugins/course'
 import { EquationsPluginState } from '@editor/plugins/equations'
 import type { ExercisePluginState } from '@editor/plugins/exercise'
 import { ExerciseGroupPluginState } from '@editor/plugins/exercise-group'
@@ -59,6 +60,11 @@ export interface EditorArticleIntroductionDocument {
 export interface EditorBoxDocument {
   plugin: EditorPluginType.Box
   state: PrettyStaticState<BoxPluginState>
+  id?: string
+}
+export interface EditorCourseDocument {
+  plugin: EditorPluginType.Course
+  state: PrettyStaticState<CoursePluginState>
   id?: string
 }
 export interface EditorUnsupportedDocument {

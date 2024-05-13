@@ -10,8 +10,8 @@ export interface CourseNavigationProps {
   open: boolean
   onOverviewButtonClick: (e?: MouseEvent<HTMLButtonElement>) => void
 }
-// this is a renderer
-export function CourseNavigation({
+
+export function CourseNavigationRenderer({
   title,
   pages,
   open,

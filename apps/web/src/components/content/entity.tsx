@@ -1,7 +1,7 @@
 // Temporary file while working on unified renderer
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { isEmptyArticle } from '@editor/plugins/article/utils/static-is-empty'
-import { CourseNavigation } from '@editor/plugins/serlo-template-plugins/course/course-navigation'
+import { CourseNavigationRenderer } from '@editor/plugins/course/renderer/course-navigation'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { isArticleDocument } from '@editor/types/plugin-type-guards'
 import {
@@ -70,6 +70,8 @@ export function Entity({ data }: EntityProps) {
 
   function renderStyledH1() {
     if (!data.title) return null
+    if (data.typename === UuidType.Course) return null
+
     return (
       <h1 className="serlo-h1 mt-12" itemProp="name">
         {renderCoursePageNumber()}
@@ -161,9 +163,10 @@ export function Entity({ data }: EntityProps) {
   }
 
   function renderCourseNavigation() {
+    if (data.typename === UuidType.Course) return null
     if (!data.courseData) return null
     return (
-      <CourseNavigation
+      <CourseNavigationRenderer
         open={courseNavOpen}
         onOverviewButtonClick={openCourseNav}
         title={data.courseData.title}
@@ -209,15 +212,16 @@ export function Entity({ data }: EntityProps) {
   }
 
   function renderCourseFooter() {
-    if (data.courseData) {
-      return (
-        <CourseFooter
-          onOverviewButtonClick={openCourseNav}
-          pages={data.courseData.pages}
-          index={data.courseData.index}
-        />
-      )
-    } else return null
+    if (data.typename === UuidType.Course) return null
+    if (!data.courseData) return null
+
+    return (
+      <CourseFooter
+        onOverviewButtonClick={openCourseNav}
+        pages={data.courseData.pages}
+        index={data.courseData.index}
+      />
+    )
   }
 
   function renderNotices() {

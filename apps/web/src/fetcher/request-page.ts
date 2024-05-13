@@ -77,49 +77,6 @@ export async function requestPage(
   const title = createTitle(uuid, instance)
   const metaImage = getMetaImage(uuid.alias)
 
-  if (uuid.__typename === UuidType.Course) {
-    const firstPage = uuid.pages.filter(
-      (page) => page.currentRevision !== null
-    )[0]?.alias
-    if (firstPage) {
-      return await requestPage(firstPage, instance)
-    } else {
-      const pages = uuid.pages.map((page) => {
-        return {
-          id: page.id,
-          title: page.currentRevision?.title ?? '',
-          url: !hasSpecialUrlChars(page.alias) ? page.alias : `/${page.id}`,
-          noCurrentRevision: !page.currentRevision,
-        }
-      })
-
-      return {
-        // show warning if no pages exist or are reviewed yet
-        kind: 'single-entity',
-        newsletterPopup: false,
-        entityData: {
-          id: uuid.id,
-          alias: uuid.alias,
-          typename: UuidType.Course,
-          title: uuid.currentRevision?.title ?? '',
-          isUnrevised: !uuid.currentRevision,
-          courseData: {
-            id: uuid.id,
-            title: uuid.currentRevision?.title ?? '',
-            pages,
-            index: 0,
-          },
-        },
-        metaData: {
-          title: uuid.currentRevision?.title ?? '',
-          contentType: 'course',
-        },
-        authorization,
-        breadcrumbsData,
-      }
-    }
-  }
-
   if (uuid.__typename === UuidType.TaxonomyTerm) {
     return {
       kind: 'taxonomy',
@@ -201,6 +158,32 @@ export async function requestPage(
       ? parseDocumentString(uuid.currentRevision?.content)
       : undefined
   )) as EditorRowsDocument
+
+  if (uuid.__typename === UuidType.Course) {
+    // TODO: get coursePage metadata?
+    return {
+      kind: 'single-entity',
+      entityData: {
+        id: uuid.id,
+        alias: uuid.alias,
+        trashed: uuid.trashed,
+        typename: UuidType.Course,
+        title: uuid.currentRevision?.title ?? '',
+        content,
+        isUnrevised: false,
+      },
+      newsletterPopup: false,
+      horizonData,
+      metaData: {
+        title,
+        contentType: 'course',
+        metaImage,
+        metaDescription: getMetaDescription(content),
+      },
+      cacheKey,
+      authorization,
+    }
+  }
 
   if (uuid.__typename === UuidType.Event) {
     return {
