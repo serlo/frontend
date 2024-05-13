@@ -34,7 +34,6 @@ export class EditorWebComponent extends HTMLElement {
   }
 
   loadAndApplyStyles(shadowRoot: ShadowRoot) {
-    console.log('Applying styles', { styles })
     const styleEl = document.createElement('style')
     styleEl.textContent = styles
     shadowRoot.appendChild(styleEl)
