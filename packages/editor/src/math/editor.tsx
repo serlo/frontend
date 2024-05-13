@@ -4,7 +4,7 @@ import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { Key } from 'ts-key-enum'
@@ -34,6 +34,8 @@ export interface MathEditorProps {
 export function MathEditor(props: MathEditorProps) {
   const [isHelpOpen, setIsHelpOpen] = useState(false)
   const [hasError, setHasError] = useState(false)
+  // Need to attach a ref to the container to be able to select the shadow DOM
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const mathStrings = useEditorStrings().plugins.text.math
 
@@ -53,10 +55,10 @@ export function MathEditor(props: MathEditorProps) {
   const isVisualMode = (visual && !hasError) || false
 
   return (
-    <>
+    <div ref={containerRef}>
       <MathHelpModal isHelpOpen={isHelpOpen} setIsHelpOpen={setIsHelpOpen} />
       {renderChildren()}
-    </>
+    </div>
   )
 
   function renderChildren() {
@@ -157,10 +159,15 @@ export function MathEditor(props: MathEditorProps) {
   }
 
   function renderControlsPortal(children: JSX.Element) {
-    return createPortal(
-      children,
-      document.querySelector<HTMLDivElement>('.toolbar-controls-target') ??
-        document.body
-    )
+    const root = containerRef.current?.getRootNode()
+
+    const isShadowRoot = root instanceof ShadowRoot
+    const isDocument = root instanceof Document
+    const target =
+      (isShadowRoot || isDocument
+        ? root.querySelector<HTMLDivElement>('.toolbar-controls-target')
+        : document.body) ?? document.body
+
+    return createPortal(children, target)
   }
 }

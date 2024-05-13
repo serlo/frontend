@@ -10,10 +10,13 @@ export function useBlurOnOutsideClick(
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      const clickedElement = event.target as Element
+    const root = editorWrapperRef.current?.shadowRoot || document.body
+
+    function handleClickOutside(event: Event) {
+      const mouseEvent = event as MouseEvent
+      const clickedElement = mouseEvent.target as Element
       if (
-        document.body.contains(clickedElement) && // clicked element is present in the document
+        root.contains(clickedElement) && // clicked element is present in the document
         editorWrapperRef.current && // provided wrapper is defined
         !editorWrapperRef.current.contains(clickedElement) && // clicked element is not a child of the provided wrapper
         !clickedElement.closest('.ReactModalPortal') // clicked element is not a part of a modal
@@ -22,11 +25,12 @@ export function useBlurOnOutsideClick(
       }
     }
 
+    const rootListener = editorWrapperRef.current?.shadowRoot || document
     // Bind the event listener
-    document.addEventListener('mousedown', handleClickOutside)
+    rootListener.addEventListener('mousedown', handleClickOutside)
     return () => {
       // Unbind the event listener on clean up
-      document.removeEventListener('mousedown', handleClickOutside)
+      rootListener.removeEventListener('mousedown', handleClickOutside)
     }
   }, [editorWrapperRef, dispatch])
 }
