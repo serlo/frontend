@@ -261,8 +261,8 @@ export const middleSchoolFinalExam = {
     track: 1,
     component: <Asymptote1 />,
   },
-  'wip-2': {
-    title: 'Graphen skizzieren 🚧',
+  'graph-zeichnen-potenzfunktion': {
+    title: 'Graph zeichnen',
     subtitle: 'Potenzfunktionen',
     calculatorAllowed: true,
     track: 1,
@@ -282,8 +282,8 @@ export const middleSchoolFinalExam = {
     track: 1,
     component: <PlaceholderExercise />,
   },
-  'graphen-skizzieren-exponentialfunktion': {
-    title: 'Graphen skizzieren',
+  'graph-skizzieren-exponentialfunktion': {
+    title: 'Graph skizzieren',
     subtitle: 'Exponentialfunktionen',
     calculatorAllowed: true,
     track: 1,
