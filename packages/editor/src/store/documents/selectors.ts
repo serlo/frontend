@@ -49,6 +49,9 @@ export const selectIsDocumentEmpty = createSelector(
   [selectSelf, (_state, id: string) => id],
   (documents, id: string) => {
     const document = documents[id]
+
+    if (!document) return true
+
     const plugin = editorPlugins.getByType(document.plugin)
 
     if (typeof plugin.isEmpty === 'function') {
