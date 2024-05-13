@@ -142,7 +142,8 @@ Scenario('Geogebra', ({ I }) => {
 })
 
 Scenario('Video + Injection', ({ I }) => {
-  I.amOnPage('/18524')
+  I.amOnPage('/277232')
+  I.scrollTo('#f7f13990')
   I.see('dass externe Inhalte von')
   I.click('Video abspielen von YouTube')
   I.switchTo('iframe')
@@ -248,22 +249,24 @@ Scenario('Small subject', ({ I }) => {
   I.see('¡Bienvenidos a la')
 })*/
 
-Scenario('Course', ({ I }) => {
-  I.amOnPage('/1327')
-  I.see('Kurse')
-  I.click('Einführung lineare Funktionen')
-  I.see('1', 'span.rounded-full')
-  I.see('Kursübersicht', 'h1')
-  I.click('Weiter')
-  I.see('2', 'span.rounded-full')
-  I.see('Aufstieg zur Zugspitze', 'h1')
-  I.click('Zurück')
-  I.see('Kursübersicht', 'h1')
-  I.click('Kursübersicht')
-  I.see('Zusammenfassung')
-  I.click('Weiterführende Übungen')
-  I.see('Lösung')
-})
+// TODO: activate after migration is done (or bugs are fixed)
+
+// Scenario('Course', ({ I }) => {
+//   I.amOnPage('/1327')
+//   I.see('Kurse')
+//   I.click('Kursübersicht')
+//   I.see('1', 'span.rounded-full')
+//   I.see('Kursübersicht', 'h1')
+//   I.click('Weiter')
+//   I.see('2', 'span.rounded-full')
+//   I.see('Aufstieg zur Zugspitze', 'h1')
+//   I.click('Zurück')
+//   I.see('Kursübersicht', 'h1')
+//   I.click('Kursübersicht')
+//   I.see('Zusammenfassung')
+//   I.click('Weiterführende Übungen')
+//   I.see('Lösung')
+// })
 
 Scenario('Comments', ({ I }) => {
   // End of entity

@@ -77,6 +77,9 @@ export default async function handler(
     )
   }
 
+  // remove cf rocket loader tags
+  prepared = prepared.replace(/type="[\w]+-text\/javascript"/g, '')
+
   //console.log(prepared)
   res.setHeader('Content-Type', lumiRes.headers.get('Content-Type') ?? '')
 
