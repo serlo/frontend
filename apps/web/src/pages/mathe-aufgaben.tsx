@@ -282,28 +282,34 @@ export const getStaticProps: GetStaticProps<FolderData> = async () => {
       ids.push(folder.id)
     })
   })
-  const prettyLinks = await request<IdsQueryReturn>(
-    endpoint,
-    idsQuery(ids, { withTitle: true })
-  )
-  folderData.sections.forEach((section) => {
-    section.folders.forEach((folder) => {
-      const prettyAlias =
-        prettyLinks[`uuid${folder.id}`]?.alias ?? `/${folder.id}`
 
-      const prettyTitle =
-        prettyLinks[`uuid${folder.id}`]?.title ?? `${folder.id}`
+  try {
+    const prettyLinks = await request<IdsQueryReturn>(
+      endpoint,
+      idsQuery(ids, { withTitle: true })
+    )
 
-      folder.alias = prettyAlias
-      folder.title = prettyTitle
-      if (top10.includes(folder.id)) {
-        folder.top10 = true
-      }
-      if (top40.includes(folder.id)) {
-        folder.top40 = true
-      }
+    folderData.sections.forEach((section) => {
+      section.folders.forEach((folder) => {
+        const prettyAlias =
+          prettyLinks[`uuid${folder.id}`]?.alias ?? `/${folder.id}`
+
+        const prettyTitle =
+          prettyLinks[`uuid${folder.id}`]?.title ?? `${folder.id}`
+
+        folder.alias = prettyAlias
+        folder.title = prettyTitle
+        if (top10.includes(folder.id)) {
+          folder.top10 = true
+        }
+        if (top40.includes(folder.id)) {
+          folder.top40 = true
+        }
+      })
     })
-  })
+  } catch (e) {
+    // ignore
+  }
 
   let i = 0
 
