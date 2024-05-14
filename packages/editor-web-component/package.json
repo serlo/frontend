@@ -65,7 +65,7 @@
     "prettier-plugin-tailwindcss": "^0.5.14",
     "uuid": "^9.0.1",
     "vite": "^5.2.10",
-    "vite-plugin-css-injected-by-js": "^3.5.0",
+    "vite-plugin-css-injected-by-js": "^3.5.1",
     "vite-plugin-dts": "3.8.3",
     "vite-plugin-svgr": "^4.2.0"
   },
