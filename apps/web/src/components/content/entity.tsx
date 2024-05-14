@@ -58,7 +58,7 @@ export function Entity({ data }: EntityProps) {
     setCourseNavOpen(false)
   })
 
-  const isLenabiUserJourneyCoursePage = !isProduction && data.id === 306635
+  const isLenabiUserJourneyCoursePage = !isProduction && data.id === 307527
 
   const { strings } = useInstanceData()
   return wrapWithSchema(
