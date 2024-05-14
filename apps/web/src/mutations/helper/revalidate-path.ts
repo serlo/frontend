@@ -42,8 +42,11 @@ export async function getAliasById(id: number): Promise<string | null> {
     const data = (await response.json()) as { data: AliasByUuidQuery }
     if (!data.data.uuid) return null
     const { uuid } = data.data
-    if (uuid.alias) return uuid.alias
-    return Object.hasOwn(uuid, 'repository') ? uuid.repository.alias : null
+    const revisionAlias = Object.hasOwn(uuid, 'repository')
+      ? uuid.repository.alias
+      : null
+    if (revisionAlias) return revisionAlias
+    return uuid.alias ?? null
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error)
