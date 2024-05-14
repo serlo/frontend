@@ -57,7 +57,7 @@ export default defineConfig({
     rollupOptions: {},
   },
   plugins: [
-    replace(envReplacements),
+    replace({ ...envReplacements, preventAssignment: false }),
     react(),
     dts({
       outDir: 'dist',

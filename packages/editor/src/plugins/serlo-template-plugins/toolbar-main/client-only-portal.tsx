@@ -4,17 +4,21 @@ import { createPortal } from 'react-dom'
 interface ClientOnlyPortalProps {
   children: ReactNode
   selector: string
+  shadowRootRef?: MutableRefObject<ShadowRoot | null> | null
 }
 
 export function ClientOnlyPortal(props: ClientOnlyPortalProps) {
-  const { children, selector } = props
-  const ref: MutableRefObject<Element | null> = useRef(null)
+  const { children, selector, shadowRootRef } = props
+  const ref: MutableRefObject<HTMLDivElement | null> = useRef(null)
   const [mount, setMount] = useState(false)
 
   useEffect(() => {
-    ref.current = document.querySelector(selector)
+    ref.current =
+      shadowRootRef?.current?.querySelector<HTMLDivElement>(selector) ??
+      document.querySelector<HTMLDivElement>(selector)
+
     setMount(true)
-  }, [selector])
+  }, [selector, shadowRootRef])
 
   if (!mount || !ref.current) return null
 

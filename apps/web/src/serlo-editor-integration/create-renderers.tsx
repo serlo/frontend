@@ -11,7 +11,6 @@ import { TextStaticRenderer } from '@editor/plugins/text/static'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type {
   EditorBlanksExerciseDocument,
-  EditorAnchorDocument,
   EditorEquationsDocument,
   EditorExerciseDocument,
   EditorH5PDocument,
@@ -175,14 +174,7 @@ export function createRenderers(): InitRenderersArgs {
       },
       {
         type: EditorPluginType.Anchor,
-        renderer: (props: EditorAnchorDocument) => {
-          return (
-            <>
-              <AnchorStaticRenderer {...props} />
-              <ExtraInfoIfRevisionView>{props.state}</ExtraInfoIfRevisionView>
-            </>
-          )
-        },
+        renderer: AnchorStaticRenderer,
       },
       {
         type: EditorPluginType.Highlight,

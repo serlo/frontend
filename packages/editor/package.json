@@ -45,7 +45,6 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.4",
     "@fortawesome/fontawesome-svg-core": "6.5.2",
     "@fortawesome/free-brands-svg-icons": "6.5.2",
     "@fortawesome/free-regular-svg-icons": "6.5.2",
@@ -96,7 +95,6 @@
     "@vitejs/plugin-react": "^4.2.1",
     "array-move": "^4.0.0",
     "autoprefixer": "^10.4.19",
-    "babel-jest": "^29.7.0",
     "clsx": "^2.1.0",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
