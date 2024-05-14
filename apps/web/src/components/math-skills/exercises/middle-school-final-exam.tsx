@@ -34,9 +34,11 @@ import { Parallelogram1 } from '../exercise-implementations/parallelogram-1'
 import { Parallelogram2 } from '../exercise-implementations/parallelogram-2'
 import { Parallelogram3 } from '../exercise-implementations/parallelogram-3'
 import { ParametricArea } from '../exercise-implementations/parametric-area'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { PlaceholderExercise } from '../exercise-implementations/placeholder-exercise'
 import { PlotFunction } from '../exercise-implementations/plot-function-1'
 import { PlotFunction2 } from '../exercise-implementations/plot-function-2'
+import { PowerFunctionTriangle } from '../exercise-implementations/power-function-triangle'
 import { RightTriangle } from '../exercise-implementations/right-triangle'
 import { RootEquations } from '../exercise-implementations/root-equations'
 import { RotatePoint } from '../exercise-implementations/rotate-point'
@@ -274,14 +276,16 @@ export const middleSchoolFinalExam = {
     subtitle: 'Potenzfunktionen',
     calculatorAllowed: true,
     track: 1,
+    difficulty: 2,
     component: <TransformGraph />,
   },
-  'wip-4': {
-    title: 'Streckenlänge in Abhängigkeit 🚧',
+  'dreiecksflaeche-in-abhaengigkeit': {
+    title: 'Dreiecksfläche in Abhängigkeit 🚧',
     subtitle: 'Potenzfunktionen',
     calculatorAllowed: true,
     track: 1,
-    component: <PlaceholderExercise />,
+    difficulty: 2,
+    component: <PowerFunctionTriangle />,
   },
   'graph-skizzieren-exponentialfunktion': {
     title: 'Graph skizzieren',
