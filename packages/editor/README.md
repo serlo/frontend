@@ -30,8 +30,8 @@ This is an early beta version of the [Serlo Editor](https://de.serlo.org/editor)
 
 #### 5. Style (css) export `@serlo/editor/styles.css`
 
-- **Why Exported/How Used**: Styles the editor with our custom css. Just import `import '@serlo/editor/style.css'` wherever you render the editor.
-- **Long-Term Support**: To be deprecated
+- **Why Exported/How Used**: Styles the editor with our custom css. Just import `import '@serlo/editor/style.css'` wherever you render the editor. Mostly used in the web component. The css already comes bundled within the JS of the editor package. Therefore, you shouldn't need to import this, unless you plan to render the editor within the Shadow DOM.
+- **Long-Term Support**: Yes
 - **Needs Change?**: No
 
 ### `SerloEditor` component props
