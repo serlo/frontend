@@ -15,7 +15,7 @@ import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-co
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 import { SaveModal } from '@serlo/frontend/src/serlo-editor-integration/components/save-modal'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { ClientOnlyPortal } from './client-only-portal'
 import { LeaveConfirmationRenderNull } from './leave-confirmation-render-null'
@@ -41,14 +41,25 @@ export function ToolbarMain({
   const redoable = useAppSelector(selectHasRedoActions)
   const isChanged = useAppSelector(selectHasPendingChanges)
   const [saveModalOpen, setSaveModalOpen] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [shadowRoot, setShadowRoot] = useState<ShadowRoot | null>(null)
 
   const editorStrings = useEditorStrings()
 
+  useEffect(() => {
+    if (containerRef.current) {
+      setShadowRoot(containerRef.current.shadowRoot)
+    }
+  }, [])
+
   return (
-    <>
+    <div ref={containerRef}>
       {/* For the web component export, we don't want to call the useLeaveConfirm hook as the next router won't be available */}
       {isNextApp() && <LeaveConfirmationRenderNull isChanged={isChanged} />}
-      <ClientOnlyPortal selector=".controls-portal">
+      <ClientOnlyPortal
+        selector=".controls-portal"
+        shadowRootRef={{ current: shadowRoot }}
+      >
         <nav className="flex h-14 w-full justify-between pl-5 pr-3 pt-6">
           <div className="pointer-events-auto md:-ml-28 lg:-ml-52">
             {renderHistoryButton('undo')}
@@ -64,7 +75,7 @@ export function ToolbarMain({
         licenseId={licenseId}
         showSubscriptionOptions={showSubscriptionOptions}
       />
-    </>
+    </div>
   )
 
   function renderHistoryButton(type: 'undo' | 'redo') {

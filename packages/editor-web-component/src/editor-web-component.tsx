@@ -1,4 +1,7 @@
+/// <reference types="vite/client" />
+
 import { SerloEditor, SerloRenderer } from '@serlo/editor'
+import styles from '@serlo/editor/style.css?raw'
 import React from 'react'
 import * as ReactDOM from 'react-dom/client'
 
@@ -22,7 +25,18 @@ export class EditorWebComponent extends HTMLElement {
   constructor() {
     super()
 
+    // Create a shadow root for encapsulation
+    const shadow = this.attachShadow({ mode: 'open' })
     this.container = document.createElement('div')
+    shadow.appendChild(this.container)
+
+    this.loadAndApplyStyles(shadow)
+  }
+
+  loadAndApplyStyles(shadowRoot: ShadowRoot) {
+    const styleEl = document.createElement('style')
+    styleEl.textContent = styles
+    shadowRoot.appendChild(styleEl)
   }
 
   static get observedAttributes() {
@@ -34,14 +48,10 @@ export class EditorWebComponent extends HTMLElement {
       this.initialState = JSON.parse(newValue) as InitialState
     } else if (
       name === 'mode' &&
+      oldValue !== newValue &&
       (newValue === 'read' || newValue === 'write')
     ) {
       this.mode = newValue
-    } else {
-      // eslint-disable-next-line no-console
-      console.warn(
-        `Unhandled attribute change in Editor Web Component for '${name}' from value: ${oldValue} to value: ${newValue}`
-      )
     }
   }
 
@@ -65,6 +75,10 @@ export class EditorWebComponent extends HTMLElement {
   }
 
   set mode(newMode: Mode) {
+    if (newMode === this._mode) {
+      return
+    }
+
     if (newMode === 'read' || newMode === 'write') {
       this._mode = newMode
       this.setAttribute('mode', newMode)
@@ -83,8 +97,6 @@ export class EditorWebComponent extends HTMLElement {
   }
 
   connectedCallback() {
-    this.appendChild(this.container)
-
     if (!this.reactRoot) {
       this.reactRoot = ReactDOM.createRoot(this.container)
     }
