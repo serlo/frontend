@@ -17,7 +17,7 @@ interface CommentFormProps {
     content: string,
     reply?: boolean,
     threadId?: string
-  ) => Promise<boolean | number>
+  ) => Promise<boolean | { id: number; alias: string }>
   placeholder: string
   reply?: boolean
   threadId?: string

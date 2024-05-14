@@ -10,6 +10,7 @@ import {
   SetEntityMutationRunnerData,
 } from './types'
 import { showToastNotice } from '../../helper/show-toast-notice'
+import { revalidatePath } from '../helper/revalidate-path'
 import { useMutationFetch } from '../helper/use-mutation-fetch'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData, UuidType } from '@/data-types'
@@ -90,11 +91,15 @@ export function useSetEntityMutation() {
         return false
       }
 
-      let savedId = undefined
+      let savedEntity = undefined
       try {
         //here we rely on the api not to create an empty revision
-        savedId = await mutationFetch(setAbstractEntityMutation, input)
-        if (!Number.isInteger(savedId)) return false
+        savedEntity = await mutationFetch(setAbstractEntityMutation, input)
+        if (
+          typeof savedEntity !== 'object' ||
+          !Number.isInteger(savedEntity.id)
+        )
+          return false
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error('error saving main uuid')
@@ -106,11 +111,11 @@ export function useSetEntityMutation() {
       try {
         childrenResult = await loopNestedChildren({
           data,
-          savedParentId: savedId as number,
+          savedParentId: savedEntity.id,
         })
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(`error saving children of ${savedId as number}`)
+        console.error(`error saving children of ${savedEntity.id}`)
         return false
       }
 
@@ -124,17 +129,17 @@ export function useSetEntityMutation() {
         )
         const id =
           data.id === 0
-            ? savedId === 0
+            ? savedEntity.id === 0
               ? undefined
-              : (savedId as number)
+              : savedEntity.id
             : data.id
         const redirectHref = id
           ? getHistoryUrl(id)
           : `/${taxonomyParentId as number}`
+
+        await revalidatePath(savedEntity.alias)
         void router.push(redirectHref + successHash)
       }
-
-      return true
     }
 
     async function loopNestedChildren({

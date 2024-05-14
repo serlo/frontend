@@ -1,5 +1,6 @@
 import { gql } from 'graphql-request'
 
+import { revalidatePath } from './helper/revalidate-path'
 import { useMutationFetch } from './helper/use-mutation-fetch'
 import { useSuccessHandler } from './helper/use-success-handler'
 import { getRequiredString } from './use-set-entity-mutation/use-set-entity-mutation'
@@ -51,29 +52,31 @@ export function useAddPageRevision() {
 
       if (data.id) {
         // change on existing page
-        const success = await mutationFetch(addMutation, {
+        const savedEntity = await mutationFetch(addMutation, {
           ...sharedInput,
           pageId: data.id,
         })
+        if (typeof savedEntity !== 'boolean') {
+          await revalidatePath(savedEntity.alias)
+        }
 
         return successHandler({
-          success,
+          success: !!savedEntity,
           toastKey: 'save',
           redirectUrl: `/${data.id}`,
         })
       } else {
         // create new page
-        const success = await mutationFetch(createMutation, {
+        const savedEntity = await mutationFetch(createMutation, {
           ...sharedInput,
           discussionsEnabled: false,
           instance: lang,
           licenseId: 1,
         })
-
         return successHandler({
-          success,
+          success: !!savedEntity,
           toastKey: 'save',
-          redirectUrl: `/pages`,
+          redirectUrl: '/pages',
           useHardRedirect: true,
         })
       }
