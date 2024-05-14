@@ -10,7 +10,7 @@ import {
   SetEntityMutationRunnerData,
 } from './types'
 import { showToastNotice } from '../../helper/show-toast-notice'
-import { revalidatePath } from '../helper/revalidate-path'
+import { getAliasById, revalidatePath } from '../helper/revalidate-path'
 import { useMutationFetch } from '../helper/use-mutation-fetch'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData, UuidType } from '@/data-types'
@@ -66,6 +66,9 @@ export function useSetEntityMutation() {
       taxonomyParentId,
     }: SetEntityMutationRunnerData) {
       if (!data.__typename) return
+
+      // persist current alias here since it might change on mutation
+      const oldAlias = await getAliasById(data.id)
 
       let input = {}
       try {
@@ -137,7 +140,8 @@ export function useSetEntityMutation() {
           ? getHistoryUrl(id)
           : `/${taxonomyParentId as number}`
 
-        await revalidatePath(savedEntity.alias)
+        if (oldAlias) await revalidatePath(oldAlias)
+
         void router.push(redirectHref + successHash)
       }
     }
