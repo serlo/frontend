@@ -28,6 +28,12 @@ This is an early beta version of the [Serlo Editor](https://de.serlo.org/editor)
 - **Long-Term Support**: To be deprecated
 - **Needs Change?**: No
 
+#### 5. Style (css) export `@serlo/editor/styles.css`
+
+- **Why Exported/How Used**: Styles the editor with our custom css. Just import `import '@serlo/editor/style.css'` wherever you render the editor.
+- **Long-Term Support**: To be deprecated
+- **Needs Change?**: No
+
 ### `SerloEditor` component props
 
 - **`children`**: When passed in a function as the `children` prop, the `SerloEditor` component provides an `editor` render prop as the argument to the `children` function. This `editor` object provides:
