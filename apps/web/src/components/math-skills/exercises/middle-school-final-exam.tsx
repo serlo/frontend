@@ -280,7 +280,7 @@ export const middleSchoolFinalExam = {
     component: <TransformGraph />,
   },
   'dreiecksflaeche-in-abhaengigkeit': {
-    title: 'Dreiecksfläche in Abhängigkeit 🚧',
+    title: 'Dreiecksfläche in Abhängigkeit',
     subtitle: 'Potenzfunktionen',
     calculatorAllowed: true,
     track: 1,

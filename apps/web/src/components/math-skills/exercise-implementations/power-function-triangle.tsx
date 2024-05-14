@@ -19,9 +19,12 @@ export function PowerFunctionTriangle() {
         const d = randomIntBetween(1, 5) * randomItemFromArray([1, -1])
         const mode = randomItemFromArray(['det', 'formula'])
         const isInverse = a < 0
-        const base_y = isInverse
+        let base_y = isInverse
           ? d + randomIntBetween(3, 8)
           : d - randomIntBetween(3, 8)
+        if (base_y === 0) {
+          base_y = -1
+        }
         const left_x = randomIntBetween(-5, -1)
         const right_x = randomIntBetween(3, 8)
         return { a, b, c, d, mode, isInverse, base_y, left_x, right_x }
@@ -115,29 +118,50 @@ export function PowerFunctionTriangle() {
               <p>Stelle die Determinante auf:</p>
               <p className="serlo-highlight-gray">
                 A(x) = {buildFrac(1, 2)}{' '}
-                {buildDet2(
-                  diff,
-                  <>x {pp(-data.left_x, 'merge_op')}</>,
-                  0,
-                  <>
-                    {pp(data.a)}(x {pp(-data.b, 'merge_op')})
-                    <sup>{pp(data.c)}</sup>{' '}
-                    {pp(data.d - data.base_y, 'merge_op')}
-                  </>
-                )}{' '}
+                {data.isInverse
+                  ? buildDet2(
+                      <>x {pp(-data.left_x, 'merge_op')}</>,
+                      diff,
+                      <>
+                        {pp(data.a)}(x {pp(-data.b, 'merge_op')})
+                        <sup>{pp(data.c)}</sup>{' '}
+                        {pp(data.d - data.base_y, 'merge_op')}
+                      </>,
+                      0
+                    )
+                  : buildDet2(
+                      diff,
+                      <>x {pp(-data.left_x, 'merge_op')}</>,
+                      0,
+                      <>
+                        {pp(data.a)}(x {pp(-data.b, 'merge_op')})
+                        <sup>{pp(data.c)}</sup>{' '}
+                        {pp(data.d - data.base_y, 'merge_op')}
+                      </>
+                    )}{' '}
                 FE
               </p>
               <p>Berechne:</p>
               <p className="serlo-highlight-gray">
-                A(x) = {buildFrac(1, 2)} [ {pp(data.a * diff)}(x{' '}
+                A(x) = {buildFrac(1, 2)} [{' '}
+                {pp(data.a * diff * (data.isInverse ? -1 : 1))}(x{' '}
                 {pp(-data.b, 'merge_op')})<sup>{pp(data.c)}</sup>{' '}
-                {pp((data.d - data.base_y) * diff, 'merge_op')} ] FE
+                {pp(
+                  (data.d - data.base_y) * diff * (data.isInverse ? -1 : 1),
+                  'merge_op'
+                )}{' '}
+                ] FE
               </p>
               <p>Erhalte das Ergebnis:</p>
               <p className="serlo-highlight-green">
-                A(x) = ( {pp((data.a * diff) / 2)}(x {pp(-data.b, 'merge_op')})
-                <sup>{pp(data.c)}</sup>{' '}
-                {pp(((data.d - data.base_y) * diff) / 2, 'merge_op')} ) FE
+                A(x) = ( {pp(((data.a * diff) / 2) * (data.isInverse ? -1 : 1))}
+                (x {pp(-data.b, 'merge_op')})<sup>{pp(data.c)}</sup>{' '}
+                {pp(
+                  (((data.d - data.base_y) * diff) / 2) *
+                    (data.isInverse ? -1 : 1),
+                  'merge_op'
+                )}{' '}
+                ) FE
               </p>
             </>
           )
@@ -210,9 +234,14 @@ export function PowerFunctionTriangle() {
             </p>
             <p>Vereinfache und erhalte das Ergebnis:</p>
             <p className="serlo-highlight-green">
-              A(x) = ( {pp((data.a * diff) / 2)}(x {pp(-data.b, 'merge_op')})
-              <sup>{pp(data.c)}</sup>{' '}
-              {pp(((data.d - data.base_y) * diff) / 2, 'merge_op')} ) FE
+              A(x) = ( {pp(((data.a * diff) / 2) * (data.isInverse ? -1 : 1))}(x{' '}
+              {pp(-data.b, 'merge_op')})<sup>{pp(data.c)}</sup>{' '}
+              {pp(
+                (((data.d - data.base_y) * diff) / 2) *
+                  (data.isInverse ? -1 : 1),
+                'merge_op'
+              )}{' '}
+              ) FE
             </p>
           </>
         )
