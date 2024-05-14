@@ -69,14 +69,14 @@ export function useAddPageRevision() {
         })
       } else {
         // create new page
-        const savedEntity = await mutationFetch(createMutation, {
+        const success = await mutationFetch(createMutation, {
           ...sharedInput,
           discussionsEnabled: false,
           instance: lang,
           licenseId: 1,
         })
         return successHandler({
-          success: !!savedEntity,
+          success: success,
           toastKey: 'save',
           redirectUrl: '/pages',
           useHardRedirect: true,

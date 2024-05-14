@@ -43,7 +43,7 @@ export function useMutationFetch() {
   async function mutationFetch(
     query: string,
     input: unknown
-  ): Promise<boolean | { id: number; alias: string }> {
+  ): Promise<boolean | number> {
     if (auth === null) return handleError('UNAUTHENTICATED', errorStrings)
     try {
       const result =
@@ -54,11 +54,7 @@ export function useMutationFetch() {
         const entity = result.entity as EntityMutation
         if (Object.keys(entity)[0].startsWith('set')) {
           const entityResponse = Object.values(entity)[0] as SetEntityResponse
-          if (!entityResponse.record?.id) return false
-          return {
-            id: entityResponse.record.id,
-            alias: entityResponse.record.alias,
-          }
+          return entityResponse.record?.id ?? false
         }
       }
       return !!result
