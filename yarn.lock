@@ -4913,7 +4913,7 @@ __metadata:
     "@reduxjs/toolkit": ^1.9.7
     "@serlo/authorization": ^0.60.0
     "@serlo/frontend": "workspace:*"
-    "@serlo/katex-styles": ^1.0.1
+    "@serlo/katex-styles": 1.0.1
     "@serlo/typescript-config": "workspace:*"
     "@svgr/webpack": ^8.1.0
     "@tailwindcss/typography": ^0.5.12
@@ -5072,7 +5072,7 @@ __metadata:
     "@serlo/authorization": ^0.60.0
     "@serlo/editor": "workspace:*"
     "@serlo/eslint-config": "workspace:*"
-    "@serlo/katex-styles": ^1.0.1
+    "@serlo/katex-styles": 1.0.1
     "@serlo/typescript-config": "workspace:*"
     "@svgr/webpack": ^8.1.0
     "@tailwindcss/typography": ^0.5.12
@@ -5185,7 +5185,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@serlo/katex-styles@npm:^1.0.1":
+"@serlo/katex-styles@npm:1.0.1, @serlo/katex-styles@npm:^1.0.1":
   version: 1.0.1
   resolution: "@serlo/katex-styles@npm:1.0.1"
   checksum: b8e50847d42669b78a14ee972348457573d806f487b099bf7a552d98cd734abce502be029b2125df0d20dcffc9f51ab1c365965f2c23eafec9aaeddfbc7859d1
