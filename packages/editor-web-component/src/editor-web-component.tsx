@@ -1,4 +1,7 @@
-import { SerloEditor } from '@serlo/editor'
+/// <reference types="vite/client" />
+
+import { SerloEditor, SerloRenderer } from '@serlo/editor'
+import styles from '@serlo/editor/style.css?raw'
 import React from 'react'
 import * as ReactDOM from 'react-dom/client'
 
@@ -8,37 +11,47 @@ import {
   type InitialState,
 } from './initial-state'
 
-// Could probably remove the export entirely, as the customElement is registered
-// below.
+type Mode = 'read' | 'write'
+
 export class EditorWebComponent extends HTMLElement {
   private reactRoot: ReactDOM.Root | null = null
   private container: HTMLDivElement
 
+  private _mode: Mode = 'read'
+
   private _initialState: InitialState = exampleInitialState
+  private _currentState: unknown
 
   constructor() {
     super()
 
+    // Create a shadow root for encapsulation
+    const shadow = this.attachShadow({ mode: 'open' })
     this.container = document.createElement('div')
+    shadow.appendChild(this.container)
+
+    this.loadAndApplyStyles(shadow)
+  }
+
+  loadAndApplyStyles(shadowRoot: ShadowRoot) {
+    const styleEl = document.createElement('style')
+    styleEl.textContent = styles
+    shadowRoot.appendChild(styleEl)
   }
 
   static get observedAttributes() {
-    return ['initial-state']
+    return ['initial-state', 'mode']
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     if (name === 'initial-state' && oldValue !== newValue) {
-      try {
-        this.initialState = JSON.parse(newValue) as InitialState
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error('Could not parse initialState:', e)
-      }
-    } else {
-      // eslint-disable-next-line no-console
-      console.warn(
-        `Unhandled attribute change in Editor Web Component for '${name}' from value: ${oldValue} to value: ${newValue}`
-      )
+      this.initialState = JSON.parse(newValue) as InitialState
+    } else if (
+      name === 'mode' &&
+      oldValue !== newValue &&
+      (newValue === 'read' || newValue === 'write')
+    ) {
+      this.mode = newValue
     }
   }
 
@@ -57,9 +70,33 @@ export class EditorWebComponent extends HTMLElement {
     }
   }
 
-  connectedCallback() {
-    this.appendChild(this.container)
+  get mode() {
+    return this._mode
+  }
 
+  set mode(newMode: Mode) {
+    if (newMode === this._mode) {
+      return
+    }
+
+    if (newMode === 'read' || newMode === 'write') {
+      this._mode = newMode
+      this.setAttribute('mode', newMode)
+      this.mountReactComponent()
+    }
+  }
+
+  get currentState() {
+    return this._currentState
+  }
+
+  set currentState(_) {
+    throw new Error(
+      'currentState is a readonly property. To modify state, please change the initialState.'
+    )
+  }
+
+  connectedCallback() {
     if (!this.reactRoot) {
       this.reactRoot = ReactDOM.createRoot(this.container)
     }
@@ -95,19 +132,26 @@ export class EditorWebComponent extends HTMLElement {
 
     this.reactRoot.render(
       <React.StrictMode>
-        <SerloEditor
-          initialState={initialState}
-          onChange={({ changed, getDocument }) => {
-            if (changed) {
-              const newState = getDocument()
-              this.broadcastNewState(newState)
-            }
-          }}
-        >
-          {(editor) => {
-            return <div>{editor.element}</div>
-          }}
-        </SerloEditor>
+        <div id="serlo-root">
+          {this._mode === 'write' ? (
+            <SerloEditor
+              initialState={this.initialState}
+              onChange={({ changed, getDocument }) => {
+                if (changed) {
+                  const newState = getDocument()
+                  this._currentState = newState
+                  this.broadcastNewState(newState)
+                }
+              }}
+            >
+              {(editor) => {
+                return <div>{editor.element}</div>
+              }}
+            </SerloEditor>
+          ) : (
+            <SerloRenderer document={this.initialState} />
+          )}
+        </div>
       </React.StrictMode>
     )
   }
@@ -119,5 +163,3 @@ export class EditorWebComponent extends HTMLElement {
     }
   }
 }
-
-customElements.define('serlo-editor', EditorWebComponent)

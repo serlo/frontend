@@ -23,22 +23,12 @@ export interface AbstractEntity {
   alias: Scalars['String']['output'];
   currentRevision?: Maybe<AbstractEntityRevision>;
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   instance: Instance;
   licenseId: Scalars['Int']['output'];
   revisions: AbstractEntityRevisionConnection;
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
-}
-
-
-export interface AbstractEntityEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -60,7 +50,6 @@ export interface AbstractEntityRevision {
   changes: Scalars['String']['output'];
   content: Scalars['String']['output'];
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   metaDescription?: Maybe<Scalars['String']['output']>;
   metaTitle?: Maybe<Scalars['String']['output']>;
@@ -68,15 +57,6 @@ export interface AbstractEntityRevision {
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
   url?: Maybe<Scalars['String']['output']>;
-}
-
-
-export interface AbstractEntityRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 export interface AbstractEntityRevisionConnection {
@@ -102,22 +82,12 @@ export interface AbstractNotificationEventConnection {
 export interface AbstractRepository {
   alias: Scalars['String']['output'];
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   instance: Instance;
   licenseId: Scalars['Int']['output'];
   threads: ThreadConnection;
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
-}
-
-
-export interface AbstractRepositoryEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -133,20 +103,10 @@ export interface AbstractRevision {
   author: User;
   content: Scalars['String']['output'];
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   threads: ThreadConnection;
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
-}
-
-
-export interface AbstractRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -160,22 +120,12 @@ export interface AbstractRevisionThreadsArgs {
 export interface AbstractTaxonomyTermChild {
   alias: Scalars['String']['output'];
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   instance: Instance;
   licenseId: Scalars['Int']['output'];
   taxonomyTerms: TaxonomyTermConnection;
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
-}
-
-
-export interface AbstractTaxonomyTermChildEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -186,19 +136,9 @@ export interface AbstractTaxonomyTermChildTaxonomyTermsArgs {
 
 export interface AbstractUuid {
   alias: Scalars['String']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
-}
-
-
-export interface AbstractUuidEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 export interface AbstractUuidConnection {
@@ -228,7 +168,6 @@ export interface Applet extends AbstractEntity, AbstractRepository, AbstractTaxo
   alias: Scalars['String']['output'];
   currentRevision?: Maybe<AppletRevision>;
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   instance: Instance;
   licenseId: Scalars['Int']['output'];
@@ -237,15 +176,6 @@ export interface Applet extends AbstractEntity, AbstractRepository, AbstractTaxo
   threads: ThreadConnection;
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
-}
-
-
-export interface AppletEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -276,7 +206,6 @@ export interface AppletRevision extends AbstractEntityRevision, AbstractRevision
   changes: Scalars['String']['output'];
   content: Scalars['String']['output'];
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   metaDescription: Scalars['String']['output'];
   metaTitle: Scalars['String']['output'];
@@ -285,15 +214,6 @@ export interface AppletRevision extends AbstractEntityRevision, AbstractRevision
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
   url: Scalars['String']['output'];
-}
-
-
-export interface AppletRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -316,7 +236,6 @@ export interface Article extends AbstractEntity, AbstractRepository, AbstractTax
   alias: Scalars['String']['output'];
   currentRevision?: Maybe<ArticleRevision>;
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   instance: Instance;
   licenseId: Scalars['Int']['output'];
@@ -325,15 +244,6 @@ export interface Article extends AbstractEntity, AbstractRepository, AbstractTax
   threads: ThreadConnection;
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
-}
-
-
-export interface ArticleEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -364,7 +274,6 @@ export interface ArticleRevision extends AbstractEntityRevision, AbstractRevisio
   changes: Scalars['String']['output'];
   content: Scalars['String']['output'];
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   metaDescription: Scalars['String']['output'];
   metaTitle: Scalars['String']['output'];
@@ -373,15 +282,6 @@ export interface ArticleRevision extends AbstractEntityRevision, AbstractRevisio
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
   url?: Maybe<Scalars['String']['output']>;
-}
-
-
-export interface ArticleRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -466,7 +366,6 @@ export interface Course extends AbstractEntity, AbstractRepository, AbstractTaxo
   alias: Scalars['String']['output'];
   currentRevision?: Maybe<CourseRevision>;
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   instance: Instance;
   licenseId: Scalars['Int']['output'];
@@ -476,15 +375,6 @@ export interface Course extends AbstractEntity, AbstractRepository, AbstractTaxo
   threads: ThreadConnection;
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
-}
-
-
-export interface CourseEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -520,7 +410,6 @@ export interface CoursePage extends AbstractEntity, AbstractRepository, Abstract
   course: Course;
   currentRevision?: Maybe<CoursePageRevision>;
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   instance: Instance;
   licenseId: Scalars['Int']['output'];
@@ -528,15 +417,6 @@ export interface CoursePage extends AbstractEntity, AbstractRepository, Abstract
   threads: ThreadConnection;
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
-}
-
-
-export interface CoursePageEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -561,7 +441,6 @@ export interface CoursePageRevision extends AbstractEntityRevision, AbstractRevi
   changes: Scalars['String']['output'];
   content: Scalars['String']['output'];
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   metaDescription?: Maybe<Scalars['String']['output']>;
   metaTitle?: Maybe<Scalars['String']['output']>;
@@ -570,15 +449,6 @@ export interface CoursePageRevision extends AbstractEntityRevision, AbstractRevi
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
   url?: Maybe<Scalars['String']['output']>;
-}
-
-
-export interface CoursePageRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -603,7 +473,6 @@ export interface CourseRevision extends AbstractEntityRevision, AbstractRevision
   changes: Scalars['String']['output'];
   content: Scalars['String']['output'];
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   metaDescription: Scalars['String']['output'];
   metaTitle?: Maybe<Scalars['String']['output']>;
@@ -612,15 +481,6 @@ export interface CourseRevision extends AbstractEntityRevision, AbstractRevision
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
   url?: Maybe<Scalars['String']['output']>;
-}
-
-
-export interface CourseRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -802,7 +662,6 @@ export interface Event extends AbstractEntity, AbstractRepository, AbstractTaxon
   alias: Scalars['String']['output'];
   currentRevision?: Maybe<EventRevision>;
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   instance: Instance;
   licenseId: Scalars['Int']['output'];
@@ -811,15 +670,6 @@ export interface Event extends AbstractEntity, AbstractRepository, AbstractTaxon
   threads: ThreadConnection;
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
-}
-
-
-export interface EventEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -850,7 +700,6 @@ export interface EventRevision extends AbstractEntityRevision, AbstractRevision,
   changes: Scalars['String']['output'];
   content: Scalars['String']['output'];
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   metaDescription: Scalars['String']['output'];
   metaTitle: Scalars['String']['output'];
@@ -859,15 +708,6 @@ export interface EventRevision extends AbstractEntityRevision, AbstractRevision,
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
   url?: Maybe<Scalars['String']['output']>;
-}
-
-
-export interface EventRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -896,7 +736,6 @@ export interface Exercise extends AbstractEntity, AbstractRepository, AbstractTa
   alias: Scalars['String']['output'];
   currentRevision?: Maybe<ExerciseRevision>;
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   instance: Instance;
   licenseId: Scalars['Int']['output'];
@@ -905,15 +744,6 @@ export interface Exercise extends AbstractEntity, AbstractRepository, AbstractTa
   threads: ThreadConnection;
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
-}
-
-
-export interface ExerciseEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -942,7 +772,6 @@ export interface ExerciseGroup extends AbstractEntity, AbstractRepository, Abstr
   alias: Scalars['String']['output'];
   currentRevision?: Maybe<ExerciseGroupRevision>;
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   instance: Instance;
   licenseId: Scalars['Int']['output'];
@@ -951,15 +780,6 @@ export interface ExerciseGroup extends AbstractEntity, AbstractRepository, Abstr
   threads: ThreadConnection;
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
-}
-
-
-export interface ExerciseGroupEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -990,7 +810,6 @@ export interface ExerciseGroupRevision extends AbstractEntityRevision, AbstractR
   changes: Scalars['String']['output'];
   content: Scalars['String']['output'];
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   metaDescription?: Maybe<Scalars['String']['output']>;
   metaTitle?: Maybe<Scalars['String']['output']>;
@@ -999,15 +818,6 @@ export interface ExerciseGroupRevision extends AbstractEntityRevision, AbstractR
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
   url?: Maybe<Scalars['String']['output']>;
-}
-
-
-export interface ExerciseGroupRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -1032,7 +842,6 @@ export interface ExerciseRevision extends AbstractEntityRevision, AbstractRevisi
   changes: Scalars['String']['output'];
   content: Scalars['String']['output'];
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   metaDescription?: Maybe<Scalars['String']['output']>;
   metaTitle?: Maybe<Scalars['String']['output']>;
@@ -1041,15 +850,6 @@ export interface ExerciseRevision extends AbstractEntityRevision, AbstractRevisi
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
   url?: Maybe<Scalars['String']['output']>;
-}
-
-
-export interface ExerciseRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -1222,7 +1022,6 @@ export interface Page extends AbstractRepository, AbstractUuid, InstanceAware, T
   alias: Scalars['String']['output'];
   currentRevision?: Maybe<PageRevision>;
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   instance: Instance;
   licenseId: Scalars['Int']['output'];
@@ -1230,15 +1029,6 @@ export interface Page extends AbstractRepository, AbstractUuid, InstanceAware, T
   threads: ThreadConnection;
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
-}
-
-
-export interface PageEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -1306,21 +1096,11 @@ export interface PageRevision extends AbstractRevision, AbstractUuid, ThreadAwar
   author: User;
   content: Scalars['String']['output'];
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   repository: Page;
   threads: ThreadConnection;
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
-}
-
-
-export interface PageRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -1346,7 +1126,6 @@ export interface Query {
   events: AbstractNotificationEventConnection;
   media: MediaQuery;
   metadata: MetadataQuery;
-  notificationEvent?: Maybe<AbstractNotificationEvent>;
   notifications: NotificationConnection;
   page: PageQuery;
   subject: SubjectQuery;
@@ -1366,11 +1145,6 @@ export interface QueryEventsArgs {
   instance?: InputMaybe<Instance>;
   last?: InputMaybe<Scalars['Int']['input']>;
   objectId?: InputMaybe<Scalars['Int']['input']>;
-}
-
-
-export interface QueryNotificationEventArgs {
-  id: Scalars['Int']['input'];
 }
 
 
@@ -1623,7 +1397,6 @@ export interface TaxonomyTerm extends AbstractUuid, InstanceAware, ThreadAware {
   alias: Scalars['String']['output'];
   children: AbstractUuidConnection;
   description?: Maybe<Scalars['String']['output']>;
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   instance: Instance;
   name: Scalars['String']['output'];
@@ -1641,15 +1414,6 @@ export interface TaxonomyTerm extends AbstractUuid, InstanceAware, ThreadAware {
 export interface TaxonomyTermChildrenArgs {
   after?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-}
-
-
-export interface TaxonomyTermEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -1674,9 +1438,16 @@ export interface TaxonomyTermCreateInput {
   taxonomyType: TaxonomyTypeCreateOptions;
 }
 
+export interface TaxonomyTermCreateResponse {
+  __typename?: 'TaxonomyTermCreateResponse';
+  query: Query;
+  record?: Maybe<TaxonomyTerm>;
+  success: Scalars['Boolean']['output'];
+}
+
 export interface TaxonomyTermMutation {
   __typename?: 'TaxonomyTermMutation';
-  create: DefaultResponse;
+  create: TaxonomyTermCreateResponse;
   createEntityLinks: DefaultResponse;
   deleteEntityLinks: DefaultResponse;
   setNameAndDescription: DefaultResponse;
@@ -1875,8 +1646,6 @@ export interface User extends AbstractUuid, ThreadAware {
   chatUrl?: Maybe<Scalars['String']['output']>;
   date: Scalars['DateTime']['output'];
   description?: Maybe<Scalars['String']['output']>;
-  events: AbstractNotificationEventConnection;
-  eventsByUser: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   imageUrl: Scalars['String']['output'];
   isActiveAuthor: Scalars['Boolean']['output'];
@@ -1892,23 +1661,6 @@ export interface User extends AbstractUuid, ThreadAware {
   trashed: Scalars['Boolean']['output'];
   unrevisedEntities: AbstractEntityConnection;
   username: Scalars['String']['output'];
-}
-
-
-export interface UserEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
-}
-
-
-export interface UserEventsByUserArgs {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
-  objectId?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
@@ -2063,7 +1815,6 @@ export interface Video extends AbstractEntity, AbstractRepository, AbstractTaxon
   alias: Scalars['String']['output'];
   currentRevision?: Maybe<VideoRevision>;
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   instance: Instance;
   licenseId: Scalars['Int']['output'];
@@ -2072,15 +1823,6 @@ export interface Video extends AbstractEntity, AbstractRepository, AbstractTaxon
   threads: ThreadConnection;
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
-}
-
-
-export interface VideoEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -2111,7 +1853,6 @@ export interface VideoRevision extends AbstractEntityRevision, AbstractRevision,
   changes: Scalars['String']['output'];
   content: Scalars['String']['output'];
   date: Scalars['DateTime']['output'];
-  events: AbstractNotificationEventConnection;
   id: Scalars['Int']['output'];
   metaDescription?: Maybe<Scalars['String']['output']>;
   metaTitle?: Maybe<Scalars['String']['output']>;
@@ -2120,15 +1861,6 @@ export interface VideoRevision extends AbstractEntityRevision, AbstractRevision,
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
   url: Scalars['String']['output'];
-}
-
-
-export interface VideoRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']['input']>;
-  actorUsername?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  instance?: InputMaybe<Instance>;
 }
 
 
@@ -2508,6 +2240,13 @@ export type IsSubscribedQueryVariables = Exact<{
 
 export type IsSubscribedQuery = { __typename?: 'Query', subscription: { __typename?: 'SubscriptionQuery', currentUserHasSubscribed: boolean } };
 
+export type AliasByUuidQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type AliasByUuidQuery = { __typename?: 'Query', uuid?: { __typename?: 'Applet', alias: string } | { __typename?: 'AppletRevision', alias: string, repository: { __typename?: 'Applet', alias: string } } | { __typename?: 'Article', alias: string } | { __typename?: 'ArticleRevision', alias: string, repository: { __typename?: 'Article', alias: string } } | { __typename?: 'Comment', alias: string } | { __typename?: 'Course', alias: string } | { __typename?: 'CoursePage', alias: string } | { __typename?: 'CoursePageRevision', alias: string, repository: { __typename?: 'CoursePage', alias: string } } | { __typename?: 'CourseRevision', alias: string, repository: { __typename?: 'Course', alias: string } } | { __typename?: 'Event', alias: string } | { __typename?: 'EventRevision', alias: string, repository: { __typename?: 'Event', alias: string } } | { __typename?: 'Exercise', alias: string } | { __typename?: 'ExerciseGroup', alias: string } | { __typename?: 'ExerciseGroupRevision', alias: string, repository: { __typename?: 'ExerciseGroup', alias: string } } | { __typename?: 'ExerciseRevision', alias: string, repository: { __typename?: 'Exercise', alias: string } } | { __typename?: 'Page', alias: string } | { __typename?: 'PageRevision', alias: string } | { __typename?: 'TaxonomyTerm', alias: string } | { __typename?: 'User', alias: string } | { __typename?: 'Video', alias: string } | { __typename?: 'VideoRevision', alias: string, repository: { __typename?: 'Video', alias: string } } | null };
+
 export type TaxonomyTermCreateEntityLinkMutationVariables = Exact<{
   input: TaxonomyEntityLinksInput;
 }>;
@@ -2674,7 +2413,7 @@ export type TaxonomyCreateMutationVariables = Exact<{
 }>;
 
 
-export type TaxonomyCreateMutation = { __typename?: 'Mutation', taxonomyTerm: { __typename?: 'TaxonomyTermMutation', create: { __typename?: 'DefaultResponse', success: boolean } } };
+export type TaxonomyCreateMutation = { __typename?: 'Mutation', taxonomyTerm: { __typename?: 'TaxonomyTermMutation', create: { __typename?: 'TaxonomyTermCreateResponse', success: boolean } } };
 
 export type AddRoleMutationVariables = Exact<{
   input: UserRoleInput;

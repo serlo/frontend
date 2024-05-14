@@ -118,9 +118,14 @@ export const examsFoldersNI: ExamsFolders = {
 }
 
 export const examsFoldersNW: ExamsFolders = {
-  'zentrale-pruefung': {
-    id: 305760,
-    displayTitle: 'Zentrale Prüfungen (ZAP)',
+  gym: {
+    id: 307335,
+    displayTitle: 'GYM | Zentrale Prüfungen (ZAP)',
+    schoolType: 'gymnasium',
+  },
+  msa: {
+    id: 307336,
+    displayTitle: 'MSA | Zentrale Prüfungen (ZAP)',
     schoolType: 'alle',
   },
 }
@@ -180,6 +185,7 @@ export const allMathExamTaxIds = Object.values(mathExamsTaxIds).flatMap(
 
 export const schoolTaxonomies = [
   201593, 16259, 16157, 16042, 97943, 97944, 97945, 97946, 97947, 16376, 16033,
+  305760, 307330,
 ]
 
 export const extraMetaTags = {
@@ -201,7 +207,7 @@ export const extraMetaTags = {
   302433: {
     title: 'IGS-Prüfungen Mathe G-Kurs mit Lösungen',
     metaDescription:
-      'Mathe lernen mit Original Aufgaben und Lösungen für die Abschlussprüfungen an der Gesamtschule. Mit Serlo schaffst du das!',
+      'Mathe lernen mit originalen Aufgaben und Lösungen für die Abschlussprüfungen an der Gesamtschule. Mit Serlo schaffst du das!',
   },
   20852: {
     title: 'Mathe Abiturprüfungen mit Lösung',
@@ -211,17 +217,33 @@ export const extraMetaTags = {
   75049: {
     title: 'Mathe Abschlussprüfungen mit Lösung | Mittlere Reife',
     metaDescription:
-      'Deine Vorbereitung für die Mittlere Reife Zweig i: Mathe lernen mit Original Prüfungsaufgaben. Mit Serlo schaffst du das!',
+      'Deine Vorbereitung für die Mittlere Reife Zweig i: Mathe lernen mit originalen Prüfungsaufgaben. Mit Serlo schaffst du das!',
   },
   76750: {
     title: 'Mathe Abschlussprüfungen mit Lösung | Mittlere Reife',
     metaDescription:
-      'Deine Vorbereitung für die Mittlere Reife Zweig ii und iii: Mathe lernen mit Original Prüfungsaufgaben. Mit Serlo schaffst du das!',
+      'Deine Vorbereitung für die Mittlere Reife Zweig ii und iii: Mathe lernen mit originalen Prüfungsaufgaben. Mit Serlo schaffst du das!',
   },
-  305760: {
-    title: 'Mathe Zentrale Prüfungen (ZAP) | NRW',
+  307335: {
+    title: 'GYM Mathe – Zentrale Prüfungen (ZAP) | NRW',
     metaDescription:
-      'Deine Vorbereitung für die Zentrale Prüfungen (ZAP) in Nordrhein-Westfalen: Mathe lernen mit Original Prüfungsaufgaben und Lösungen. Mit Serlo schaffst du das!',
+      'Deine Vorbereitung für die zentrale Prüfung (ZAP) am Gymnasium in Nordrhein-Westfalen: Mathe lernen mit originalen Prüfungsaufgaben und Lösungen. Mit Serlo schaffst du das!',
+  },
+  307336: {
+    title: 'MSA Mathe – Zentrale Prüfungen (ZAP) | NRW',
+    metaDescription:
+      'Deine Vorbereitung für den Mittleren Schulabschluss – Zentrale Prüfungen (ZAP) in Nordrhein-Westfalen: Mathe lernen mit originalen Prüfungsaufgaben und Lösungen. Mit Serlo schaffst du das!',
+  },
+  305819: {
+    title: 'Mathe MSA- und eBBR-Prüfungen | Berlin',
+    metaDescription:
+      'Mathe lernen für den Mittleren Schulabschluss (MSA) und die erweiterte Berufsbildungsreife (eBBR) mit den originalen Prüfungsaufgaben und Lösungen aus Berlin. Mit Serlo schaffst du das!',
+  },
+  305843: {
+    title:
+      'Mathe Abschlussprüfungen in Brandenburg | Oberschule & Gesamtschule',
+    metaDescription:
+      'Kostenlose Prüfungsvorbereitung für A-Kurs/EBR-Klasse und B-Kurs/FOR-Klasse sowie Grund- und Erweiterungskurs der Gesamtschule in Brandenburg. Mit Serlo schaffst du das!',
   },
 } as const
 
@@ -255,8 +277,6 @@ export const landingMetaTags: Record<
       'Mathe lernen für die ZAP in Nordrhein-Westfalen - mit den originalen Prüfungsaufgaben samt Musterlösungen der vergangenen Jahre.',
   },
 }
-
-// TODO: add meta tags for NRW, BE and BB
 
 export interface ExamsTaxonomyData {
   // key in this form `id${uuid}`

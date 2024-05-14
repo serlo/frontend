@@ -94,6 +94,11 @@ const registeredHotkeys = [
     handler: toggleMath,
   },
   {
+    hotkey: 'mod+shift+c',
+    option: TextEditorFormattingOption.code,
+    handler: toggleCode,
+  },
+  {
     hotkey: 'mod+shift+`',
     option: TextEditorFormattingOption.code,
     handler: toggleCode,

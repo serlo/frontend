@@ -28,7 +28,7 @@ export function BlankDraggableArea(props: BlankDraggableAreaProps) {
         isOver ? 'bg-slate-200' : ''
       )}
       data-qa="blank-solution-area"
-      ref={dropRef}
+      ref={dropRef as unknown as React.LegacyRef<HTMLDivElement>}
     >
       {children}
     </div>

@@ -128,7 +128,7 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
       entityNeedsReview: !isTestArea,
       subject: breadcrumbsData?.[0]?.label || 'Unknown subject',
     },
-    revalidate: 60 * 30, // 0.5 hours,
+    revalidate: 60 * 30, // 30 min
   }
 }
 

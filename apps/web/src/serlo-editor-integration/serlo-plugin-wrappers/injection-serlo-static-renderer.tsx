@@ -6,7 +6,6 @@ import {
   EditorExerciseGroupDocument,
   EditorInjectionDocument,
 } from '@editor/types/editor-plugins'
-import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
 
@@ -91,15 +90,14 @@ export function InjectionSerloStaticRenderer({
                 return
               }
             }
-            setContent([
-              {
-                plugin: TemplatePluginType.TextExerciseGroup,
-                state: {
-                  content,
-                  serloContext: { licenseId: uuid.licenseId },
-                },
+            const contentWithLicenseId = {
+              ...content,
+              state: {
+                ...content.state,
+                serloContext: { licenseId: uuid.licenseId },
               },
-            ])
+            }
+            setContent([contentWithLicenseId])
             return
           }
 

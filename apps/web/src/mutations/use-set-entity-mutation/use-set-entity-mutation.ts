@@ -10,6 +10,7 @@ import {
   SetEntityMutationRunnerData,
 } from './types'
 import { showToastNotice } from '../../helper/show-toast-notice'
+import { getAliasById, revalidatePath } from '../helper/revalidate-path'
 import { useMutationFetch } from '../helper/use-mutation-fetch'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData, UuidType } from '@/data-types'
@@ -66,6 +67,9 @@ export function useSetEntityMutation() {
     }: SetEntityMutationRunnerData) {
       if (!data.__typename) return
 
+      // persist current alias here since it might change on mutation
+      const oldAlias = await getAliasById(data.id)
+
       let input = {}
       try {
         const genericInput = getGenericInputData(
@@ -110,7 +114,7 @@ export function useSetEntityMutation() {
         })
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(`error saving children of ${savedId as number}`)
+        console.error(`error saving children of ${savedId}`)
         return false
       }
 
@@ -131,10 +135,11 @@ export function useSetEntityMutation() {
         const redirectHref = id
           ? getHistoryUrl(id)
           : `/${taxonomyParentId as number}`
+
+        if (oldAlias) await revalidatePath(oldAlias)
+
         void router.push(redirectHref + successHash)
       }
-
-      return true
     }
 
     async function loopNestedChildren({

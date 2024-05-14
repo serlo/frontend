@@ -1,6 +1,6 @@
 {
   "name": "@serlo/editor-web-component",
-  "version": "0.0.4",
+  "version": "0.0.7",
   "homepage": "https://de.serlo.org/editor",
   "bugs": {
     "url": "https://github.com/serlo/frontend/issues"
@@ -37,18 +37,20 @@
     "lint:prettier": "yarn _prettier --check",
     "yalc:publish": "yarn build && yalc publish --push --sig"
   },
+  "resolutions": {
+    "@serlo/editor": "0.7.0"
+  },
   "dependencies": {
-    "@serlo/editor": "latest",
+    "@serlo/editor": "0.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.4",
+    "@rollup/plugin-replace": "^5.0.5",
     "@serlo/typescript-config": "workspace:*",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
     "@vitejs/plugin-react": "^4.2.1",
-    "babel-jest": "^29.7.0",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.2",
@@ -66,7 +68,7 @@
     "prettier-plugin-tailwindcss": "^0.5.14",
     "uuid": "^9.0.1",
     "vite": "^5.2.10",
-    "vite-plugin-css-injected-by-js": "^3.5.0",
+    "vite-plugin-css-injected-by-js": "^3.5.1",
     "vite-plugin-dts": "3.8.3",
     "vite-plugin-svgr": "^4.2.0"
   },

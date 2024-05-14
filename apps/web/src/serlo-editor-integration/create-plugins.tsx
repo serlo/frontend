@@ -145,7 +145,7 @@ export function createPlugins({
     {
       type: EditorPluginType.Anchor,
       plugin: anchorPlugin,
-      visibleInSuggestions: true,
+      visibleInSuggestions: false,
     },
     {
       type: EditorPluginType.PasteHack,
@@ -179,7 +179,7 @@ export function createPlugins({
     {
       type: EditorPluginType.Exercise,
       plugin: exercisePlugin,
-      visibleInSuggestions: !isProduction,
+      visibleInSuggestions: shouldUseFeature('editorExercisesInContent'),
     },
     { type: EditorPluginType.Solution, plugin: solutionPlugin },
     { type: EditorPluginType.H5p, plugin: H5pPlugin },

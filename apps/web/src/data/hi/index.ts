@@ -776,7 +776,7 @@ export const loggedInData = {
           unorderedList: 'Unordered list',
           lists: 'Lists',
           mathFormula: 'Math formula (%ctrlOrCmd% + M)',
-          code: 'Code (%ctrlOrCmd% + ⇧ + `)',
+          code: 'Code (%ctrlOrCmd% + ⇧ + C)',
           blank: 'Blank',
           createBlank: 'Create Blank',
           removeBlank: 'Remove Blank',
@@ -1014,7 +1014,6 @@ export const loggedInData = {
         author: "लेखक",
         createdAt: 'when?',
         ready: 'Ready to save?',
-        anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.',
         pluginCopyInfo: 'You can now paste this plugin into text plugins',
         pluginCopyButtonLabel: 'Copy plugin to clipboard'
       },

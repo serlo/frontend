@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import { useState, useEffect } from 'react'
-import { default as ToastNotice } from 'react-notify-toast'
+import { Toaster } from 'react-hot-toast'
 
 import { ConditionalWrap } from './conditional-wrap'
 import { HeaderFooter } from './header-footer'
@@ -116,6 +116,7 @@ export function FrontendClientBase({
       <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
         <LoggedInDataProvider value={loggedInData}>
           <UuidsProvider value={{ entityId, revisionId }}>
+            <Toaster />
             <ConditionalWrap
               condition={!noHeaderFooter}
               wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
@@ -133,7 +134,6 @@ export function FrontendClientBase({
                 {children}
               </ConditionalWrap>
             </ConditionalWrap>
-            <ToastNotice />
           </UuidsProvider>
         </LoggedInDataProvider>
       </AuthProvider>
