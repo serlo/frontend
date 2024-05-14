@@ -18,15 +18,12 @@ export function ProfileDescriptionEditor({
     const success = await setDescription({
       description: (data as { description: string }).description,
     })
-    return new Promise<void>((_resolve: unknown, reject) => {
-      if (success) {
-        return revalidatePath(`/user/profile/${username}`)
-      } else {
-        // eslint-disable-next-line no-console
-        console.error(success, data)
-        reject()
-      }
-    })
+    if (!success) {
+      // eslint-disable-next-line no-console
+      console.error(success, data)
+      return false
+    }
+    return revalidatePath(`/user/profile/${username}`)
   }
 
   const initialState = convertUserByDescription(rawDescription)

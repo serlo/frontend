@@ -136,17 +136,10 @@ export function useSetEntityMutation() {
         const redirectHref = id
           ? getHistoryUrl(id)
           : `/${taxonomyParentId as number}`
+
+        await revalidatePath(savedEntity.alias)
         void router.push(redirectHref + successHash)
       }
-
-      await revalidatePath(savedEntity.alias)
-        .then(() => {
-          console.log('waited')
-          return true
-        })
-        .catch(() => {
-          return false
-        })
     }
 
     async function loopNestedChildren({

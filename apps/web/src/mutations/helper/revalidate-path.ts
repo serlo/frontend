@@ -1,18 +1,21 @@
-export async function revalidatePath(path: string) {
-  // call revalidation api route
-  await fetch(
-    `/api/frontend/revalidate-path?path=${encodeURIComponent(path)}`
-  ).then(() => {
-    return new Promise<void>((resolve) => {
-      setTimeout(() => {
-        resolve()
-      }, 500) // 500 seems to work, but it's a guess
-    }).catch((e) => {
+export async function revalidatePath(path: string): Promise<boolean> {
+  try {
+    const response = await fetch(
+      `/api/frontend/revalidate-path?path=${encodeURIComponent(path)}`
+    )
+    if (!response.ok) {
       // eslint-disable-next-line no-console
-      console.error('problem revalidating', path, e)
-      return new Promise<void>((_resolve, reject) => {
-        reject()
-      })
-    })
-  })
+      console.error('Fetch failed', response.status, response.statusText)
+      return false
+    }
+    console.log('revalidatePath ran successfully')
+    // delay for 500ms to allow the cache to update
+    await new Promise((resolve) => setTimeout(resolve, 500))
+    console.log('after delay')
+    return true
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(error)
+    return false
+  }
 }
