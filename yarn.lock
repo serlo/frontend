@@ -5192,6 +5192,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@serlo/katex-styles@workspace:packages/katex-styles":
+  version: 0.0.0-use.local
+  resolution: "@serlo/katex-styles@workspace:packages/katex-styles"
+  languageName: unknown
+  linkType: soft
+
 "@serlo/monorepo@workspace:.":
   version: 0.0.0-use.local
   resolution: "@serlo/monorepo@workspace:."
@@ -5208,12 +5214,6 @@ __metadata:
 "@serlo/typescript-config@workspace:*, @serlo/typescript-config@workspace:packages/typescript-config":
   version: 0.0.0-use.local
   resolution: "@serlo/typescript-config@workspace:packages/typescript-config"
-  languageName: unknown
-  linkType: soft
-
-"@serlo/workspace-katex-styles@workspace:packages/katex-styles":
-  version: 0.0.0-use.local
-  resolution: "@serlo/workspace-katex-styles@workspace:packages/katex-styles"
   languageName: unknown
   linkType: soft
 
