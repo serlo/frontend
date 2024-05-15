@@ -18,10 +18,17 @@ export function LoginButtonVidis({
     <div className="-mb-8 mt-10">
       <hr />
       <button
-        className={cn(`
-        mt-10 block inline-block w-full border border-transparent px-[22px] py-2 py-2
-        text-lg font-bold shadow-menu transition-all hover:border-black focus-visible:border-black
-        `)}
+        className={cn(
+          `bg-vidis-lightBlue
+          text-vidis-blue
+          hover:bg-vidis-blue
+          rounded-md
+          px-4
+          py-2
+          transition-colors
+          duration-300
+          hover:text-white`
+        )}
         name={attributes.name}
         onClick={(e) => {
           void onSubmit(e, (attributes as { value: string }).value)

@@ -64,6 +64,10 @@ export default {
           DEFAULT: colors.red[900],
           100: colors.red[100],
         },
+        vidis: {
+          blue: '#4338CA',
+          lightBlue: '#d2eeff',
+        },
       },
       borderWidth: {
         3: '3px',
