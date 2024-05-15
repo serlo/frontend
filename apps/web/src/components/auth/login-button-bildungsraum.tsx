@@ -26,7 +26,7 @@ export function LoginButtonBildungsraum({
         `)}
         name={attributes.name}
         onClick={(e) => {
-          void onSubmit(e, (attributes as { value: string }).value)
+          void onSubmit(e, attributes.value as string)
         }}
         value={(attributes.value as string) || ''}
         disabled={attributes.disabled || disabled}
