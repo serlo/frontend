@@ -373,8 +373,8 @@ export const middleSchoolFinalExam = {
     difficulty: 1,
     component: <IntersectingLines />,
   },
-  'rechtwinkliges-dreieck': {
-    title: 'Rechtwinkliges Dreieck',
+  'sinus-kosinus-tangens': {
+    title: 'Sinus, Kosinus, Tangens',
     subtitle: 'Trigonometrie',
     calculatorAllowed: true,
     track: 3,
