@@ -104,13 +104,13 @@ export function Flow<T extends SubmitPayload>({
       <Messages messages={messages} />
 
       <div className="mx-side">
-        {filteredNodes.map((node) => {
+        {filteredNodes.map((node, index) => {
           const isLastTrait =
             Object.hasOwn(node.attributes, 'name') &&
             node.attributes.name === 'traits.interest'
           const id = getNodeId(node)
           return (
-            <Fragment key={id}>
+            <Fragment key={id + index}>
               <Node
                 node={node}
                 disabled={isLoading}
