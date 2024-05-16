@@ -2,7 +2,7 @@ import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { endpoint } from '@/api/endpoint'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { MathExamsLanding } from '@/components/pages/math-exams-landing'
 import {
   type SupportedRegion,

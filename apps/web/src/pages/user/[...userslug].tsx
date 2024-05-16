@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 // frontend redirect for routes the old form of `/user/${userId}/${username}`

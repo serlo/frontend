@@ -1,7 +1,7 @@
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { useAuthentication } from '@/auth/use-authentication'
 import { PageTitle } from '@/components/content/page-title'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { PleaseLogIn } from '@/components/user/please-log-in'

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 import { useAuthentication } from '@/auth/use-authentication'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { loginUrl } from '@/components/pages/auth/utils'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 

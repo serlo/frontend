@@ -1,6 +1,6 @@
 import { GetStaticProps } from 'next/types'
 
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { LenabiWelcome } from '@/components/pages/lenabi/lenabi-welcome'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
