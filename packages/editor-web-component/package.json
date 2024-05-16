@@ -40,7 +40,6 @@
   "resolutions": {
     "@serlo/editor": "0.7.0"
   },
-  "dependencies": {},
   "devDependencies": {
     "@rollup/plugin-replace": "^5.0.5",
     "@serlo/editor": "0.7.0",
