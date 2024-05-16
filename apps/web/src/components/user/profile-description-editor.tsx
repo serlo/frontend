@@ -1,3 +1,4 @@
+import { revalidatePath } from '@/mutations/helper/revalidate-path'
 import { useUserSetDescriptionMutation } from '@/mutations/use-user-set-description-mutation'
 import { convertUserByDescription } from '@/serlo-editor-integration/convert-editor-response-to-state'
 import { SerloEditor } from '@/serlo-editor-integration/serlo-editor'
@@ -17,26 +18,12 @@ export function ProfileDescriptionEditor({
     const success = await setDescription({
       description: (data as { description: string }).description,
     })
-    return new Promise((resolve: (value: void) => void, reject) => {
-      if (success) {
-        // call revalidation api route to update description
-        void fetch(`/api/frontend/revalidate-user?username=${username}`)
-          .then(() => {
-            setTimeout(() => {
-              resolve()
-            }, 500) // 500 seems to work, but it's a guess
-          })
-          .catch(() => {
-            // eslint-disable-next-line no-console
-            console.error('problem revalidating', data)
-            reject()
-          })
-      } else {
-        // eslint-disable-next-line no-console
-        console.error(success, data)
-        reject()
-      }
-    })
+    if (!success) {
+      // eslint-disable-next-line no-console
+      console.error(success, data)
+      return false
+    }
+    return revalidatePath(`/user/profile/${username}`)
   }
 
   const initialState = convertUserByDescription(rawDescription)

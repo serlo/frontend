@@ -9,6 +9,7 @@ import {
   faTools,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
+import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
 
@@ -24,6 +25,7 @@ import { EntityData, UuidType } from '@/data-types'
 import { cn } from '@/helper/cn'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
+import { isProduction } from '@/helper/is-production'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
@@ -31,6 +33,12 @@ import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 export interface EntityProps {
   data: EntityData
 }
+
+const LenabiCourseFeedback = dynamic(() =>
+  import('../pages/lenabi/lenabi-course-feedback').then(
+    (mod) => mod.LenabiCourseFeedback
+  )
+)
 
 export function Entity({ data }: EntityProps) {
   editorRenderers.init(createRenderers())
@@ -50,6 +58,8 @@ export function Entity({ data }: EntityProps) {
     setCourseNavOpen(false)
   })
 
+  const isLenabiUserJourneyCoursePage = !isProduction && data.id === 307527
+
   const { strings } = useInstanceData()
   return wrapWithSchema(
     <>
@@ -60,6 +70,7 @@ export function Entity({ data }: EntityProps) {
       {renderUserTools({ aboveContent: true })}
       <div className="min-h-1/4" key={data.id}>
         {data.content && renderContent(data.content)}
+        {isLenabiUserJourneyCoursePage ? <LenabiCourseFeedback /> : null}
       </div>
       {renderCourseFooter()}
       <HSpace amount={20} />

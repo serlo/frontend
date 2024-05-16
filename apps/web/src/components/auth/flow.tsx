@@ -9,6 +9,7 @@ import type {
   UpdateRegistrationFlowBody,
   UpdateSettingsFlowBody,
   UpdateVerificationFlowBody,
+  Session,
 } from '@ory/client'
 import { getNodeId, isUiNodeInputAttributes } from '@ory/integrations/ui'
 import type { NextRouter } from 'next/router'
@@ -40,6 +41,7 @@ import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth
 import type { AxiosError } from '@/auth/types'
 import { Node } from '@/components/auth/node'
 import type { InstanceData } from '@/data-types'
+import { isProduction } from '@/helper/is-production'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
@@ -104,13 +106,13 @@ export function Flow<T extends SubmitPayload>({
       <Messages messages={messages} />
 
       <div className="mx-side">
-        {filteredNodes.map((node) => {
+        {filteredNodes.map((node, index) => {
           const isLastTrait =
             Object.hasOwn(node.attributes, 'name') &&
             node.attributes.name === 'traits.interest'
           const id = getNodeId(node)
           return (
-            <Fragment key={id}>
+            <Fragment key={id + index}>
               <Node
                 node={node}
                 disabled={isLoading}
@@ -196,7 +198,8 @@ export function handleFlowError<S>(
         window.location.href = data.redirect_browser_to
         return
       case 'session_already_available': {
-        if (!checkLoggedIn()) void fetchAndPersistAuthSession()
+        let session: Session | null = null
+        if (!checkLoggedIn()) session = await fetchAndPersistAuthSession()
         showToastNotice(strings.notices.alreadyLoggedIn, 'default', 3000)
 
         const redirection = filterUnwantedRedirection({
@@ -204,6 +207,14 @@ export function handleFlowError<S>(
           unwantedPaths: [verificationUrl, loginUrl, registrationUrl],
         })
         setTimeout(() => {
+          if (
+            !isProduction &&
+            session?.authentication_methods?.[0]?.provider === 'nbp'
+          ) {
+            window.location.href = '/willkommen'
+            return
+          }
+
           window.location.href = redirection
         }, 3000)
 

@@ -157,9 +157,14 @@ export function Login({ oauth }: { oauth?: boolean }) {
       unwantedPaths: [verificationUrl, logoutUrl, loginUrl, recoveryUrl],
     })
 
+    const hackedValues = // @ts-expect-error try
+      values.method === 'nbp' // @ts-expect-error try
+        ? ({ ...values, provider: 'nbp' } as UpdateLoginFlowBody)
+        : values
+
     try {
       await kratos
-        .updateLoginFlow({ flow: flow.id, updateLoginFlowBody: values })
+        .updateLoginFlow({ flow: flow.id, updateLoginFlowBody: hackedValues })
         .then(({ data }) => {
           void fetchAndPersistAuthSession(refreshAuth, data.session)
           if (oauth) return oauthHandler('login', String(loginChallenge))

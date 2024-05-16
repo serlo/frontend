@@ -6,7 +6,9 @@ import {
   string,
 } from '../../plugin'
 
-// will probably be replaced. refactoring not necessary
+// new anchor plugins are not supported
+// this is only here to support existing anchor plugins
+// and the need for this plugin could be removed with a migration
 
 export type AnchorPluginState = StringStateType
 export type AnchorProps = EditorPluginProps<AnchorPluginState>
