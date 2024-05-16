@@ -1,6 +1,6 @@
-# serlo-katex-styles
+# Serlo KaTeX styles
 
-Our custom CSS styles for KaTeX
+Custom CSS styles for KaTeX.
 
 ## Installation
 
