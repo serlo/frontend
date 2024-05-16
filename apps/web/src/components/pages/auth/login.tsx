@@ -169,9 +169,11 @@ export function Login({ oauth }: { oauth?: boolean }) {
           showToastNotice(
             strings.notices.welcome.replace('%username%', username)
           )
-          if (!isProduction && window.location.host.startsWith('journey')) {
-            window.location.href =
-              'https://journey.serlo-staging.dev/willkommen'
+          if (!isProduction) {
+            // TODO: wip, only redirect when provider is nbp
+            console.log(data)
+            // window.location.href =
+            //   'https://journey.serlo-staging.dev/willkommen'
           }
           void router.push(flow.return_to ?? redirection)
           return

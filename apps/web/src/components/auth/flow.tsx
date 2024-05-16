@@ -205,9 +205,11 @@ export function handleFlowError<S>(
           unwantedPaths: [verificationUrl, loginUrl, registrationUrl],
         })
         setTimeout(() => {
-          if (!isProduction && window.location.host.startsWith('journey')) {
-            window.location.href =
-              'https://journey.serlo-staging.dev/willkommen'
+          if (!isProduction) {
+            // TODO: wip, only redirect when provider is nbp
+            console.log(data)
+            // window.location.href =
+            //   'https://journey.serlo-staging.dev/willkommen'
           }
           window.location.href = redirection
         }, 3000)
