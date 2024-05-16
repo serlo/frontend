@@ -19,7 +19,7 @@ import {
   entityType,
   headerInputClasses,
 } from './common/common'
-import { SettingsTextarea } from './helpers/settings-textarea'
+import { MetadataFields } from './common/metadata-fields'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const articleTypeState = entityType(
@@ -27,8 +27,6 @@ export const articleTypeState = entityType(
     ...entity,
     title: string(),
     content: editorContent(EditorPluginType.Article),
-    meta_title: string(),
-    meta_description: string(),
   },
   {}
 )
@@ -42,9 +40,14 @@ export const articleTypePlugin: EditorPlugin<ArticleTypePluginState> = {
 }
 
 function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
-  const { title, content, meta_title, meta_description } = props.state
+  const {
+    title,
+    content,
+    meta_title: metaTitle,
+    meta_description: metaDescription,
+  } = props.state
   const [showSettingsModal, setShowSettingsModal] = useState(false)
-  const articleStrings = useEditorStrings().templatePlugins.article
+  const entityStrings = useEditorStrings().templatePlugins.entity
   const titleRef = useRef<HTMLInputElement>(null)
 
   const dispatch = useAppDispatch()
@@ -79,7 +82,7 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
         <input
           ref={titleRef}
           className={headerInputClasses}
-          placeholder={articleStrings.title}
+          placeholder={entityStrings.titlePlaceholder}
           value={title.value}
           onChange={(e) => title.set(e.target.value)}
         />
@@ -93,17 +96,10 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
         onCloseClick={() => setShowSettingsModal(false)}
         className="top-8 max-w-xl translate-y-0 sm:top-1/3"
       >
-        <div className="mx-side mb-3 mt-12">
-          <SettingsTextarea
-            label={articleStrings.seoTitle}
-            state={meta_title}
-            autoFocus
-          />
-          <SettingsTextarea
-            label={articleStrings.seoDesc}
-            state={meta_description}
-          />
-        </div>
+        <MetadataFields
+          metaTitle={metaTitle}
+          metaDescription={metaDescription}
+        />
       </ModalWithCloseButton>
     </>
   )

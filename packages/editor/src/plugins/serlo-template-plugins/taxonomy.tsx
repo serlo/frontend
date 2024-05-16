@@ -40,7 +40,7 @@ function TaxonomyTypeEditor(props: EditorPluginProps<TaxonomyTypePluginState>) {
           <input
             autoFocus
             className={headerInputClasses}
-            placeholder={editorStrings.taxonomy.title}
+            placeholder={editorStrings.templatePlugins.entity.titlePlaceholder}
             value={term.name.value}
             onChange={(e) => term.name.set(e.target.value)}
           />

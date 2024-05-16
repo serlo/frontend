@@ -944,15 +944,12 @@ export const loggedInData = {
         },
       },
       templatePlugins: {
-        applet: {
+        entity: {
+          titlePlaceholder: 'Title',
           seoTitle: 'Title for search engines',
           seoDesc: 'Description for search engines',
-          placeholder: 'Title',
         },
         article: {
-          seoTitle: 'Title for search engines',
-          seoDesc: 'Description for search engines',
-          title: 'Title',
           writeShortIntro: 'Write a short introduction',
           stillWantMore: 'Still want more?',
           moreOnTopic: 'You can find more content on this topic here',
@@ -987,8 +984,6 @@ export const loggedInData = {
           },
         },
         course: {
-          seoDesc: 'Description for search engines',
-          title: 'Title',
           removeCoursePage: 'Remove course page',
           addCoursePage: 'Add course page',
         },
@@ -1010,11 +1005,6 @@ export const loggedInData = {
           createSolution: 'Create solution',
           removeSolution: 'Remove solution',
         },
-        event: {
-          seoTitle: 'Title for search engines',
-          seoDesc: 'Description for search engines',
-          title: 'Title',
-        },
         inputExercise: {
           chooseType: 'Choose the exercise type',
           unit: 'Unit',
@@ -1029,9 +1019,6 @@ export const loggedInData = {
             'input-expression-equal-match-challenge':
               "Mathematical expression (equivalent, e.g. '0.5' or '1/2' or '2/4'",
           },
-        },
-        page: {
-          title: 'Title',
         },
         scMcExercise: {
           singleChoice: 'Single-choice',
@@ -1104,9 +1091,6 @@ export const loggedInData = {
         ready: 'Ready to save?',
         pluginCopyInfo: 'You can now paste this plugin into text plugins',
         pluginCopyButtonLabel: 'Copy plugin to clipboard',
-      },
-      taxonomy: {
-        title: 'Title',
       },
     },
     profileSettings: {

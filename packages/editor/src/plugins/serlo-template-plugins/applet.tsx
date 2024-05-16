@@ -19,7 +19,7 @@ import {
   entityType,
   headerInputClasses,
 } from './common/common'
-import { SettingsTextarea } from './helpers/settings-textarea'
+import { MetadataFields } from './common/metadata-fields'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const appletTypeState = entityType(
@@ -27,8 +27,6 @@ export const appletTypeState = entityType(
     ...entity,
     title: string(),
     content: editorContent(),
-    meta_title: string(),
-    meta_description: string(),
     url: serializedChild(EditorPluginType.Geogebra),
   },
   {}
@@ -47,13 +45,13 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
     title,
     url,
     content,
-    meta_title,
-    meta_description,
+    meta_title: metaTitle,
+    meta_description: metaDescription,
     id,
     revision,
     replaceOwnState,
   } = props.state
-  const appletStrings = useEditorStrings().templatePlugins.applet
+  const entityStrings = useEditorStrings().templatePlugins.entity
   const [showSettingsModal, setShowSettingsModal] = useState(false)
 
   return (
@@ -76,7 +74,7 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
         <input
           autoFocus
           className={headerInputClasses}
-          placeholder={appletStrings.placeholder}
+          placeholder={entityStrings.titlePlaceholder}
           value={title.value}
           onChange={(e) => title.set(e.target.value)}
         />
@@ -91,17 +89,10 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
         onCloseClick={() => setShowSettingsModal(false)}
         className="top-8 max-w-xl translate-y-0 sm:top-1/3"
       >
-        <div className="mx-side mb-3 mt-12">
-          <SettingsTextarea
-            autoFocus
-            label={appletStrings.seoTitle}
-            state={meta_title}
-          />
-          <SettingsTextarea
-            label={appletStrings.seoDesc}
-            state={meta_description}
-          />
-        </div>
+        <MetadataFields
+          metaTitle={metaTitle}
+          metaDescription={metaDescription}
+        />
       </ModalWithCloseButton>
     </>
   )

@@ -20,8 +20,6 @@ export const eventTypeState = entityType(
     ...entity,
     title: string(),
     content: editorContent(),
-    meta_title: string(),
-    meta_description: string(),
   },
   {}
 )
@@ -36,7 +34,7 @@ export const eventTypePlugin: EditorPlugin<EventTypePluginState> = {
 
 function EventTypeEditor(props: EditorPluginProps<EventTypePluginState>) {
   const { content, title, id, revision, replaceOwnState } = props.state
-  const placeholder = useEditorStrings().templatePlugins.event.title
+  const placeholder = useEditorStrings().templatePlugins.entity.titlePlaceholder
 
   return (
     <>

@@ -126,8 +126,8 @@ export function convertEditorResponseToState(
         content: uuid.__typename === 'Video' && url ? url : getContent(),
         ...(description ? { description } : {}),
         ...(url ? { url } : {}),
-        ...(meta_title ? { meta_title } : {}),
-        ...(meta_description ? { meta_description } : {}),
+        meta_title,
+        meta_description,
       },
     }
 
@@ -172,6 +172,7 @@ export function convertEditorResponseToState(
         changes: '',
         title,
         description: serializeStaticDocument(parseStaticString(content)),
+        meta_title,
         meta_description,
         'course-page': (uuid.pages || [])
           .filter((page) => page.currentRevision !== null)
@@ -211,6 +212,8 @@ export function convertEditorResponseToState(
         content: serializeStaticDocument(
           parseStaticString(uuid.currentRevision?.content || '')
         ),
+        meta_title,
+        meta_description,
       },
     }
   }

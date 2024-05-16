@@ -28,7 +28,7 @@ export const pageTypePlugin: EditorPlugin<PageTypePluginState> = {
 
 function PageTypeEditor(props: EditorPluginProps<PageTypePluginState>) {
   const { title, content } = props.state
-  const placeholder = useEditorStrings().templatePlugins.page.title
+  const placeholder = useEditorStrings().templatePlugins.entity.titlePlaceholder
 
   return (
     <article>

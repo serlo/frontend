@@ -12,6 +12,7 @@ import {
   object,
   string,
   optional,
+  EditorPluginProps,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { cn } from '@serlo/frontend/src/helper/cn'
@@ -26,7 +27,12 @@ export const entity = {
   revision: number(),
   licenseId: optional(number()),
   changes: string(),
+  meta_title: optional(string()),
+  meta_description: optional(string()),
 }
+
+const entityTypeHelper = entityType(entity, {})
+export type EntityStateProps = EditorPluginProps<typeof entityTypeHelper>
 
 export type Uuid = StateTypesStaticType<typeof uuid>
 export type Entity = Uuid & {

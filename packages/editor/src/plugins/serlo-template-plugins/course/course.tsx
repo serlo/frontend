@@ -27,7 +27,7 @@ import {
   serializedChild,
   entityType,
 } from '../common/common'
-import { SettingsTextarea } from '../helpers/settings-textarea'
+import { MetadataFields } from '../common/metadata-fields'
 import { ToolbarMain } from '../toolbar-main/toolbar-main'
 
 export const courseTypeState = entityType(
@@ -35,10 +35,8 @@ export const courseTypeState = entityType(
     ...entity,
     title: string(),
     description: editorContent(),
-    meta_description: string(),
   },
   {
-    // I think this is not correct because it meant for strings?
     'course-page': list(serializedChild('type-course-page')),
   }
 )
@@ -52,9 +50,14 @@ export const courseTypePlugin: EditorPlugin<CourseTypePluginState> = {
 }
 
 function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
-  const { title, meta_description, 'course-page': children } = props.state
+  const {
+    title,
+    meta_description: metaDescription,
+    'course-page': children,
+  } = props.state
   const editorStrings = useEditorStrings()
   const courseStrings = editorStrings.templatePlugins.course
+  const entityStrings = editorStrings.templatePlugins.entity
   const [courseNavOpen, setCourseNavOpen] = useState(true)
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const [activePageIndex, setActivePageIndex] = useState(0)
@@ -112,13 +115,7 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
         onCloseClick={() => setShowSettingsModal(false)}
         className="max-w-xl"
       >
-        <div className="mx-side mb-3 mt-12">
-          <SettingsTextarea
-            autoFocus
-            label={courseStrings.seoDesc}
-            state={meta_description}
-          />
-        </div>
+        <MetadataFields metaDescription={metaDescription} />
       </ModalWithCloseButton>
     </>
   )
@@ -135,7 +132,7 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
                 -ml-2 mt-1 min-w-[70%] rounded-xl border-2 border-transparent
                 bg-editor-primary-100 px-2 py-0 focus:border-editor-primary focus:outline-none
               `)}
-            placeholder={courseStrings.title}
+            placeholder={entityStrings.titlePlaceholder}
             value={title.value}
             onChange={(e) => title.set(e.target.value)}
           />
