@@ -34,24 +34,27 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
         breadcrumbs={pageData.breadcrumbsData}
       />
     )
-  const entityId =
-    pageData.kind === 'single-entity'
-      ? pageData.entityData.id
-      : pageData.taxonomyData.id
 
-  const revisionId =
+  const serloEntityData =
     pageData.kind === 'single-entity'
-      ? pageData.entityData.revisionId
-      : undefined
+      ? {
+          entityId: pageData.entityData.id,
+          revisionId: pageData.entityData.revisionId,
+          title: pageData.entityData.title,
+        }
+      : {
+          entityId: pageData.taxonomyData.id,
+          revisionId: undefined,
+          title: pageData.taxonomyData.title,
+        }
 
   return (
     <FrontendClientBase
       noContainers
-      entityId={entityId}
-      revisionId={revisionId}
+      serloEntityData={serloEntityData}
       authorization={pageData.authorization}
     >
-      <EntityBase page={pageData} entityId={entityId}>
+      <EntityBase page={pageData} entityId={serloEntityData.entityId}>
         {page}
       </EntityBase>
     </FrontendClientBase>

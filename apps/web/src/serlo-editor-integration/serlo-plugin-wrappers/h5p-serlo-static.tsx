@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 import { useAB } from '@/contexts/ab'
-import { useEntityData } from '@/contexts/uuids-context'
+import { useEntityData } from '@/contexts/serlo-entity-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
 

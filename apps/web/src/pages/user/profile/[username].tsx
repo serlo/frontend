@@ -12,7 +12,7 @@ export default renderedPageNoHooks<UserProps>(({ pageData }) => {
     pageData.userData
   return (
     <FrontendClientBase
-      entityId={pageData.userData.id}
+      serloEntityData={{ entityId: pageData.userData.id }}
       authorization={pageData.authorization}
     >
       <Head>

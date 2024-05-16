@@ -10,7 +10,7 @@ import {
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faClone, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { UuidsContext } from '@serlo/frontend/src/contexts/uuids-context'
+import { SerloEntityContext } from '@serlo/frontend/src/contexts/uuids-context'
 import { useCallback, useContext, useMemo } from 'react'
 
 import { AnchorLinkCopyTool } from './anchor-link-copy-tool'
@@ -27,7 +27,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
   const pluginStrings = useEditorStrings().plugins
 
   // using useContext directly so result can also be null for edusharing
-  const serloEntityId = useContext(UuidsContext)?.entityId
+  const serloEntityId = useContext(SerloEntityContext)?.entityId
 
   const hasRowsParent = useMemo(
     () =>

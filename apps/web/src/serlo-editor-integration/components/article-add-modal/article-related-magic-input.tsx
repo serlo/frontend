@@ -4,7 +4,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { useEntityData } from '@/contexts/uuids-context'
+import { useEntityData } from '@/contexts/serlo-entity-context'
 import { UuidType, type UuidWithRevType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 

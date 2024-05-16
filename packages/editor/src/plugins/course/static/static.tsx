@@ -9,9 +9,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 export function CourseStaticRenderer({ state }: EditorCourseDocument) {
   const { content } = state
 
-  // const [interactiveHidden, setInteractiveHidden] = useState(
-  //   hideInteractiveInitially
-  // )
   const { strings } = useInstanceData()
   if (!content) return null
 
@@ -28,18 +25,8 @@ export function CourseStaticRenderer({ state }: EditorCourseDocument) {
       ) : (
         <StaticRenderer document={content} />
       )}
-      {/* {interactiveHidden ? (
-        <button
-          className="serlo-button-blue-transparent ml-side text-base hover:bg-brand-100 hover:text-brand-700"
-          onClick={() => setInteractiveHidden(false)}
-        >
-          <FaIcon icon={faCircleCheck} />{' '}
-          {strings.content.exercises.showHiddenInteractive}
-        </button>
-      ) : (
-        <StaticRenderer document={interactive} />
-      )} */}
-      {/* <StaticRenderer document={solution} /> */}
+
+      {/* TODO: pages */}
     </>
   )
 }

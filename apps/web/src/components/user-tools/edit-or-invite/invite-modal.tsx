@@ -4,7 +4,7 @@ import { Link } from '../../content/link'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { loginUrl, registrationUrl } from '@/components/pages/auth/utils'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useEntityData } from '@/contexts/uuids-context'
+import { useEntityData } from '@/contexts/serlo-entity-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { submitEvent } from '@/helper/submit-event'
 

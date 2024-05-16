@@ -7,7 +7,7 @@ import { useContext } from 'react'
 import { useAB } from '@/contexts/ab'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
-import { useEntityData } from '@/contexts/uuids-context'
+import { useEntityData } from '@/contexts/serlo-entity-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
 

@@ -30,7 +30,7 @@ export default renderedPageNoHooks<EditorPageData>((props) => {
       noContainers
       noHeaderFooter
       loadLoggedInData /* warn: enables preview editor without login */
-      entityId={props.id}
+      serloEntityData={{ entityId: props.id }}
     >
       <div className="relative">
         <QueryParamProvider adapter={NextAdapterPages}>
