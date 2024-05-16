@@ -1,10 +1,10 @@
 import { faPencilAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
-import { EntityStateProps } from './common.jsx'
-import { SettingsTextarea } from './settings-textarea.jsx'
+import { EntityStateProps } from './common'
+import { SettingsTextarea } from './settings-textarea'
 import { FaIcon } from '@/components/fa-icon'
-import { ModalWithCloseButton } from '@/components/modal-with-close-button.jsx'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function MetadataFieldsModal({
