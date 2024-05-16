@@ -3749,17 +3749,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prezly/slate-lists@npm:^0.97.0":
-  version: 0.97.0
-  resolution: "@prezly/slate-lists@npm:0.97.0"
+"@prezly/slate-lists@npm:^0.107.0":
+  version: 0.107.0
+  resolution: "@prezly/slate-lists@npm:0.107.0"
   dependencies:
     is-hotkey: ^0.2.0
     uuid: ^8.3.0
   peerDependencies:
-    react: ^16.14.0 || ^17.0.0 || ^18.0.0
-    slate: ^0.94.1
-    slate-react: ^0.97.0
-  checksum: 8a9ed39046e99633025c0b2a67a987ce06d3c779c31d2b045e2d2516ad30933819ef25c346e824d73e97f1653d2ae16659c369ce3f832e5e043c0553a030f7a4
+    react: ^18.3.0
+    react-dom: ^18.3.0
+    slate: ^0.101.5
+    slate-react: ^0.101.5
+  checksum: 137ec2356f4422078ba802b092d46fed3535408e548d2eea146a6a9a84f911c678b65305609d829cabc1314443425ee36d1cbf6417ef1aa881610398dfa5c50d
   languageName: node
   linkType: hard
 
@@ -4907,7 +4908,7 @@ __metadata:
     "@hello-pangea/dnd": ^16.6.0
     "@ory/client": ^1.9.0
     "@ory/integrations": ^1.1.5
-    "@prezly/slate-lists": ^0.97.0
+    "@prezly/slate-lists": ^0.107.0
     "@radix-ui/react-navigation-menu": ^1.1.4
     "@radix-ui/react-select": ^1.2.2
     "@reduxjs/toolkit": ^1.9.7
@@ -5006,8 +5007,8 @@ __metadata:
     redux: ^4.2.1
     redux-saga: ^1.3.0
     reselect: ^4.1.8
-    slate: ^0.94.1
-    slate-react: ^0.99.0
+    slate: ^0.103.0
+    slate-react: ^0.104.0
     styled-jsx-plugin-postcss: ^4.0.1
     swr: ^2.2.5
     tailwindcss: ^3.4.3
@@ -5065,7 +5066,7 @@ __metadata:
     "@next/bundle-analyzer": ^13.5.6
     "@ory/client": ^1.9.0
     "@ory/integrations": ^1.1.5
-    "@prezly/slate-lists": ^0.97.0
+    "@prezly/slate-lists": ^0.107.0
     "@radix-ui/react-navigation-menu": ^1.1.4
     "@radix-ui/react-select": ^1.2.2
     "@reduxjs/toolkit": ^1.9.7
@@ -5166,8 +5167,8 @@ __metadata:
     redux: ^4.2.1
     redux-saga: ^1.3.0
     reselect: ^4.1.8
-    slate: ^0.94.1
-    slate-react: ^0.99.0
+    slate: ^0.103.0
+    slate-react: ^0.104.0
     styled-jsx-plugin-postcss: ^4.0.1
     swr: ^2.2.5
     tailwindcss: ^3.4.3
@@ -5712,7 +5713,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/is-hotkey@npm:^0.1.1, @types/is-hotkey@npm:^0.1.8":
+"@types/is-hotkey@npm:^0.1.8":
   version: 0.1.10
   resolution: "@types/is-hotkey@npm:0.1.10"
   checksum: 9ecc49fb3822b3cfa8335132d54c6e577d0b14bb52d0bf1f817cdd19c442555b7523945e2ae72f6098e3c7f64b4777390f38afec3e4660343cfb471377e7fd82
@@ -5810,7 +5811,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.14.149, @types/lodash@npm:^4.14.200":
+"@types/lodash@npm:^4.14.200":
   version: 4.14.202
   resolution: "@types/lodash@npm:4.14.202"
   checksum: a91acf3564a568c6f199912f3eb2c76c99c5a0d7e219394294213b3f2d54f672619f0fde4da22b29dc5d4c31457cd799acc2e5cb6bd90f9af04a1578483b6ff7
@@ -8031,13 +8032,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"compute-scroll-into-view@npm:^1.0.20":
-  version: 1.0.20
-  resolution: "compute-scroll-into-view@npm:1.0.20"
-  checksum: f15fab29221953620735393ac1866541aab0d27d28078bedbba071a291ee9c8cc1a72bee302cf0bc06ed83c5e55afb74ebcbd634a63671ba33cf1fb1c51d3308
-  languageName: node
-  linkType: hard
-
 "compute-scroll-into-view@npm:^3.0.2":
   version: 3.1.0
   resolution: "compute-scroll-into-view@npm:3.1.0"
@@ -8646,7 +8640,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"direction@npm:^1.0.3, direction@npm:^1.0.4":
+"direction@npm:^1.0.4":
   version: 1.0.4
   resolution: "direction@npm:1.0.4"
   bin:
@@ -10932,7 +10926,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"immer@npm:^9.0.21, immer@npm:^9.0.6":
+"immer@npm:^10.0.3":
+  version: 10.1.1
+  resolution: "immer@npm:10.1.1"
+  checksum: 07c67970b7d22aded73607193d84861bf786f07d47f7d7c98bb10016c7a88f6654ad78ae1e220b3c623695b133aabbf24f5eb8d9e8060cff11e89ccd81c9c10b
+  languageName: node
+  linkType: hard
+
+"immer@npm:^9.0.21":
   version: 9.0.21
   resolution: "immer@npm:9.0.21"
   checksum: 70e3c274165995352f6936695f0ef4723c52c92c92dd0e9afdfe008175af39fa28e76aafb3a2ca9d57d1fb8f796efc4dd1e1cc36f18d33fa5b74f3dfb0375432
@@ -11365,13 +11366,6 @@ __metadata:
   version: 1.0.4
   resolution: "is-hexadecimal@npm:1.0.4"
   checksum: a452e047587b6069332d83130f54d30da4faf2f2ebaa2ce6d073c27b5703d030d58ed9e0b729c8e4e5b52c6f1dab26781bb77b7bc6c7805f14f320e328ff8cd5
-  languageName: node
-  linkType: hard
-
-"is-hotkey@npm:^0.1.6":
-  version: 0.1.8
-  resolution: "is-hotkey@npm:0.1.8"
-  checksum: 793d0cccaf804583d8f4b835e040d4b6a74cb3f8d4094cb8188ed7cc86e6edf8f650fc80fabd4309e6c29938f5b0e9a17b45504b29dbf92735ef8d780d613aa0
   languageName: node
   linkType: hard
 
@@ -12981,7 +12975,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:^4.17.4, lodash@npm:^4.7.0, lodash@npm:~4.17.0, lodash@npm:~4.17.15":
+"lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:^4.7.0, lodash@npm:~4.17.0, lodash@npm:~4.17.15":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
@@ -16366,15 +16360,6 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"scroll-into-view-if-needed@npm:^2.2.20":
-  version: 2.2.31
-  resolution: "scroll-into-view-if-needed@npm:2.2.31"
-  dependencies:
-    compute-scroll-into-view: ^1.0.20
-  checksum: 93b28f3723a462245b40d4120c40c542c8449473e2b157a5f8e18f04d95d66cd35249d96c625e8a440a56891f7d8905b1d026c690bdda07fcfb4f1a48d643ad1
-  languageName: node
-  linkType: hard
-
 "scroll-into-view-if-needed@npm:^3.1.0":
   version: 3.1.0
   resolution: "scroll-into-view-if-needed@npm:3.1.0"
@@ -16698,35 +16683,35 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"slate-react@npm:^0.99.0":
-  version: 0.99.0
-  resolution: "slate-react@npm:0.99.0"
+"slate-react@npm:^0.104.0":
+  version: 0.104.0
+  resolution: "slate-react@npm:0.104.0"
   dependencies:
     "@juggle/resize-observer": ^3.4.0
-    "@types/is-hotkey": ^0.1.1
-    "@types/lodash": ^4.14.149
-    direction: ^1.0.3
-    is-hotkey: ^0.1.6
+    "@types/is-hotkey": ^0.1.8
+    "@types/lodash": ^4.14.200
+    direction: ^1.0.4
+    is-hotkey: ^0.2.0
     is-plain-object: ^5.0.0
-    lodash: ^4.17.4
-    scroll-into-view-if-needed: ^2.2.20
-    tiny-invariant: 1.0.6
+    lodash: ^4.17.21
+    scroll-into-view-if-needed: ^3.1.0
+    tiny-invariant: 1.3.1
   peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-    slate: ">=0.65.3"
-  checksum: 36da861cc66f7222c0d8abed765b8bce69e29f745b8e296eeb71a941746109dfcfb4e059a360a553a6e8ab4803d05ea7c0d76dbb01b9dfcc6f3693c59a8a5742
+    react: ">=18.2.0"
+    react-dom: ">=18.2.0"
+    slate: ">=0.99.0"
+  checksum: 47d2173df1d0a59f02186736b781921d2e09a81cc19853ca57c6fbd481b31dd0cd3e97cc8f6869c8baf58c6c6c7e3649c2a9edfeef33dbf7150d5c93bb25d8dc
   languageName: node
   linkType: hard
 
-"slate@npm:^0.94.1":
-  version: 0.94.1
-  resolution: "slate@npm:0.94.1"
+"slate@npm:^0.103.0":
+  version: 0.103.0
+  resolution: "slate@npm:0.103.0"
   dependencies:
-    immer: ^9.0.6
+    immer: ^10.0.3
     is-plain-object: ^5.0.0
     tiny-warning: ^1.0.3
-  checksum: 07666fe3373e59aaa19261366fd3cf1df546edfc0162fb88d675d71f158ebd1bf0630fd00ecc9152ab6547080f3e90c9f6d1504e09c25b3bf980cceb9b15c3c1
+  checksum: 50a2f79f80b11be7f475c74d666bdccd39720354cb08932864161dd48094e991f10f66a4d8ecc455fff9327895a6d7cf8591d113c606ca2565404d56d4d7fea3
   languageName: node
   linkType: hard
 
@@ -17521,13 +17506,6 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   version: 2.1.0
   resolution: "tiny-emitter@npm:2.1.0"
   checksum: fbcfb5145751a0e3b109507a828eb6d6d4501352ab7bb33eccef46e22e9d9ad3953158870a6966a59e57ab7c3f9cfac7cab8521db4de6a5e757012f4677df2dd
-  languageName: node
-  linkType: hard
-
-"tiny-invariant@npm:1.0.6":
-  version: 1.0.6
-  resolution: "tiny-invariant@npm:1.0.6"
-  checksum: c90b34beea3cb10c49531e754afb0999033a2d7edffef6602922de27678d8a96dcbc0e8f0a959bc272859281b0cd1305b711e25d5edfb1da5fc7135e2a992961
   languageName: node
   linkType: hard
 
