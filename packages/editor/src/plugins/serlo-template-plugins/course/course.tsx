@@ -27,6 +27,7 @@ import {
   serializedChild,
   entityType,
 } from '../common/common'
+import { EntityTitleInput } from '../common/entity-title-input'
 import { MetadataFields } from '../common/metadata-fields'
 import { ToolbarMain } from '../toolbar-main/toolbar-main'
 
@@ -57,7 +58,6 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
   } = props.state
   const editorStrings = useEditorStrings()
   const courseStrings = editorStrings.templatePlugins.course
-  const entityStrings = editorStrings.templatePlugins.entity
   const [courseNavOpen, setCourseNavOpen] = useState(true)
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const [activePageIndex, setActivePageIndex] = useState(0)
@@ -126,15 +126,10 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
         open={courseNavOpen}
         onOverviewButtonClick={() => setCourseNavOpen(!courseNavOpen)}
         title={
-          <input
-            autoFocus
-            className={cn(`
-                -ml-2 mt-1 min-w-[70%] rounded-xl border-2 border-transparent
-                bg-editor-primary-100 px-2 py-0 focus:border-editor-primary focus:outline-none
-              `)}
-            placeholder={entityStrings.titlePlaceholder}
-            value={title.value}
-            onChange={(e) => title.set(e.target.value)}
+          <EntityTitleInput
+            title={title}
+            compact
+            className="!mt-1 -ml-2 max-w-xl rounded-xl !border-2 !border-solid border-transparent bg-editor-primary-100 px-2 focus:border-editor-primary"
           />
         }
         pages={staticPages.map(({ title, id }, index) => {

@@ -5,9 +5,9 @@ import {
   string,
   number,
 } from '@editor/plugin'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
-import { editorContent, headerInputClasses, uuid } from './common/common'
+import { editorContent, uuid } from './common/common'
+import { EntityTitleInput } from './common/entity-title-input'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const taxonomyTypeState = object({
@@ -31,20 +31,11 @@ export const taxonomyTypePlugin: EditorPlugin<TaxonomyTypePluginState> = {
 
 function TaxonomyTypeEditor(props: EditorPluginProps<TaxonomyTypePluginState>) {
   const { term, description } = props.state
-  const editorStrings = useEditorStrings()
 
   return (
     <>
       <header>
-        <h1 className="serlo-h1" itemProp="name">
-          <input
-            autoFocus
-            className={headerInputClasses}
-            placeholder={editorStrings.templatePlugins.entity.titlePlaceholder}
-            value={term.name.value}
-            onChange={(e) => term.name.set(e.target.value)}
-          />
-        </h1>
+        <EntityTitleInput title={term.name} />
       </header>
 
       {description.render()}

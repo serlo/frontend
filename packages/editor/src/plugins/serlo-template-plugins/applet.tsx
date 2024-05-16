@@ -7,7 +7,6 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { UuidType } from '@serlo/frontend/src/data-types'
 import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 import { useState } from 'react'
@@ -17,8 +16,8 @@ import {
   editorContent,
   serializedChild,
   entityType,
-  headerInputClasses,
 } from './common/common'
+import { EntityTitleInput } from './common/entity-title-input'
 import { MetadataFields } from './common/metadata-fields'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 
@@ -51,7 +50,6 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
     revision,
     replaceOwnState,
   } = props.state
-  const entityStrings = useEditorStrings().templatePlugins.entity
   const [showSettingsModal, setShowSettingsModal] = useState(false)
 
   return (
@@ -70,15 +68,7 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
           entityType={UuidType.Applet}
         />
       </div>
-      <h1 className="serlo-h1 mt-20">
-        <input
-          autoFocus
-          className={headerInputClasses}
-          placeholder={entityStrings.titlePlaceholder}
-          value={title.value}
-          onChange={(e) => title.set(e.target.value)}
-        />
-      </h1>
+      <EntityTitleInput title={title} />
 
       {url.render()}
       {content.render()}

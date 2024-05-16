@@ -6,9 +6,9 @@ import {
   optional,
   string,
 } from '@editor/plugin'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
-import { editorContent, headerInputClasses, uuid } from './common/common'
+import { editorContent, uuid } from './common/common'
+import { EntityTitleInput } from './common/entity-title-input'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const pageTypeState = object({
@@ -28,19 +28,11 @@ export const pageTypePlugin: EditorPlugin<PageTypePluginState> = {
 
 function PageTypeEditor(props: EditorPluginProps<PageTypePluginState>) {
   const { title, content } = props.state
-  const placeholder = useEditorStrings().templatePlugins.entity.titlePlaceholder
 
   return (
     <article>
-      <h1 className="serlo-h1" itemProp="name">
-        <input
-          autoFocus
-          className={headerInputClasses}
-          placeholder={placeholder}
-          value={title.value}
-          onChange={(e) => title.set(e.target.value)}
-        />
-      </h1>
+      <EntityTitleInput title={title} />
+
       <section itemProp="articleBody">{content.render()}</section>
       <ToolbarMain {...props.state} />
     </article>

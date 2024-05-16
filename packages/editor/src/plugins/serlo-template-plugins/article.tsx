@@ -3,22 +3,16 @@ import {
   type EditorPluginProps,
   string,
 } from '@editor/plugin'
-import { useAppDispatch, focus } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { UuidType } from '@serlo/frontend/src/data-types'
 import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 
-import {
-  editorContent,
-  entity,
-  entityType,
-  headerInputClasses,
-} from './common/common'
+import { editorContent, entity, entityType } from './common/common'
+import { EntityTitleInput } from './common/entity-title-input'
 import { MetadataFields } from './common/metadata-fields'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 
@@ -47,20 +41,6 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
     meta_description: metaDescription,
   } = props.state
   const [showSettingsModal, setShowSettingsModal] = useState(false)
-  const entityStrings = useEditorStrings().templatePlugins.entity
-  const titleRef = useRef<HTMLInputElement>(null)
-
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    // focus on title, remove focus from content
-    setTimeout(() => {
-      dispatch(focus(null))
-      titleRef.current?.focus()
-    })
-    // only after creating plugin
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   return (
     <>
@@ -78,15 +58,7 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
           entityType={UuidType.Article}
         />
       </div>
-      <h1 className="serlo-h1 mt-20" itemProp="name">
-        <input
-          ref={titleRef}
-          className={headerInputClasses}
-          placeholder={entityStrings.titlePlaceholder}
-          value={title.value}
-          onChange={(e) => title.set(e.target.value)}
-        />
-      </h1>
+      <EntityTitleInput title={title} forceFocus />
 
       <section itemProp="articleBody">{content.render()}</section>
 

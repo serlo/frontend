@@ -15,12 +15,9 @@ import {
   EditorPluginProps,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { mapObjIndexed } from 'ramda'
 
-export const uuid = {
-  id: number(),
-}
+export const uuid = { id: number() }
 
 export const entity = {
   ...uuid,
@@ -202,7 +199,3 @@ export function optionalSerializedChild(plugin: string): StateType<
     },
   }
 }
-
-export const headerInputClasses = cn(
-  `mt-4 w-full border-b-2 border-none border-transparent focus:border-brand focus:outline-none`
-)
