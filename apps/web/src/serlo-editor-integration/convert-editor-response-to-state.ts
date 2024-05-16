@@ -60,9 +60,18 @@ export function convertEditorResponseToState(
   const revision =
     currentRev && Object.hasOwn(currentRev, 'id') ? currentRev.id : 0
 
-  const entityFields = {
+  const idAndLicense = {
     id,
     licenseId,
+  }
+
+  const entityFields = {
+    ...idAndLicense,
+    revision,
+    changes: '',
+    title,
+    meta_title,
+    meta_description,
   }
 
   try {
@@ -120,14 +129,9 @@ export function convertEditorResponseToState(
       plugin: TemplatePluginType[uuid.__typename as 'Article'],
       state: {
         ...entityFields,
-        revision,
-        changes: '',
-        title,
         content: uuid.__typename === 'Video' && url ? url : getContent(),
         ...(description ? { description } : {}),
         ...(url ? { url } : {}),
-        meta_title,
-        meta_description,
       },
     }
 
@@ -168,12 +172,7 @@ export function convertEditorResponseToState(
       plugin: TemplatePluginType.Course,
       state: {
         ...entityFields,
-        revision,
-        changes: '',
-        title,
         description: serializeStaticDocument(parseStaticString(content)),
-        meta_title,
-        meta_description,
         'course-page': (uuid.pages || [])
           .filter((page) => page.currentRevision !== null)
           .map((page) => {
@@ -226,7 +225,7 @@ export function convertEditorResponseToState(
     return {
       plugin: TemplatePluginType.Page,
       state: {
-        ...entityFields,
+        ...idAndLicense,
         title,
         content: serializeStaticDocument(parseStaticString(content)),
       },
