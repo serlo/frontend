@@ -99,10 +99,13 @@ export function FrontendClientBase({
     getCachedLoggedInData(instanceData.lang)
   )
 
+  const isLoggedIn = checkLoggedIn()
+
   useEffect(() => {
-    if (loggedInData || !checkLoggedIn() || !loadLoggedInData) return
+    if (loggedInData) return
+    if (!isLoggedIn && !loadLoggedInData) return
     fetchLoggedInData({ lang: instanceData.lang, setLoggedInData })
-  }, [instanceData.lang, loggedInData, loadLoggedInData, locale])
+  }, [instanceData.lang, loggedInData, isLoggedIn, loadLoggedInData, locale])
 
   // dev
   //console.dir(initialProps)
