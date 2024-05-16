@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 
-import { Entity } from '@/components/entity/entity'
 import { LazyIframeResizer } from '@/components/content/lazy-iframe-resizer'
+import { Entity } from '@/components/entity/entity'
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
