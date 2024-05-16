@@ -9,9 +9,8 @@ import {
 } from '@editor/plugin'
 import { selectStaticDocument, store } from '@editor/store'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
-import { faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { UuidType } from '@serlo/frontend/src/data-types'
 import { cn } from '@serlo/frontend/src/helper/cn'
@@ -28,7 +27,7 @@ import {
   entityType,
 } from '../common/common'
 import { EntityTitleInput } from '../common/entity-title-input'
-import { MetadataFields } from '../common/metadata-fields'
+import { MetadataFieldsModal } from '../common/metadata-fields-modal'
 import { ToolbarMain } from '../toolbar-main/toolbar-main'
 
 export const courseTypeState = entityType(
@@ -59,7 +58,6 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
   const editorStrings = useEditorStrings()
   const courseStrings = editorStrings.templatePlugins.course
   const [courseNavOpen, setCourseNavOpen] = useState(true)
-  const [showSettingsModal, setShowSettingsModal] = useState(false)
   const [activePageIndex, setActivePageIndex] = useState(0)
 
   const staticState = selectStaticDocument(store.getState(), props.id)
@@ -80,12 +78,8 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
   return (
     <>
       <div className="absolute right-0 -mt-10 mr-side flex">
-        <button
-          onClick={() => setShowSettingsModal(true)}
-          className="serlo-button-editor-secondary mr-2 text-base"
-        >
-          Metadata <FaIcon icon={faPencilAlt} />
-        </button>
+        <MetadataFieldsModal metaDescription={metaDescription} />
+
         <RevisionHistoryLoader
           id={props.state.id.value}
           currentRevision={props.state.revision.value}
@@ -110,13 +104,6 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
         {renderCoursePage()}
         <ToolbarMain showSubscriptionOptions {...props.state} />
       </article>
-      <ModalWithCloseButton
-        isOpen={showSettingsModal}
-        onCloseClick={() => setShowSettingsModal(false)}
-        className="max-w-xl"
-      >
-        <MetadataFields metaDescription={metaDescription} />
-      </ModalWithCloseButton>
     </>
   )
 

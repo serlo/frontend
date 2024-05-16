@@ -4,12 +4,8 @@ import {
   string,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
 import { UuidType } from '@serlo/frontend/src/data-types'
 import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
-import { useState } from 'react'
 
 import {
   entity,
@@ -18,7 +14,7 @@ import {
   entityType,
 } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
-import { MetadataFields } from './common/metadata-fields'
+import { MetadataFieldsModal } from './common/metadata-fields-modal'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const appletTypeState = entityType(
@@ -50,17 +46,15 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
     revision,
     replaceOwnState,
   } = props.state
-  const [showSettingsModal, setShowSettingsModal] = useState(false)
 
   return (
     <>
       <div className="absolute right-0 -mt-10 mr-side flex">
-        <button
-          onClick={() => setShowSettingsModal(true)}
-          className="serlo-button-editor-secondary mr-2 text-base"
-        >
-          Metadata <FaIcon icon={faPencilAlt} />
-        </button>
+        <MetadataFieldsModal
+          metaTitle={metaTitle}
+          metaDescription={metaDescription}
+        />
+
         <ContentLoaders
           id={id.value}
           currentRevision={revision.value}
@@ -74,16 +68,6 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
       {content.render()}
 
       <ToolbarMain showSubscriptionOptions {...props.state} />
-      <ModalWithCloseButton
-        isOpen={showSettingsModal}
-        onCloseClick={() => setShowSettingsModal(false)}
-        className="top-8 max-w-xl translate-y-0 sm:top-1/3"
-      >
-        <MetadataFields
-          metaTitle={metaTitle}
-          metaDescription={metaDescription}
-        />
-      </ModalWithCloseButton>
     </>
   )
 }
