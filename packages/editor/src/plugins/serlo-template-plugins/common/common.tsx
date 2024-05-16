@@ -12,21 +12,24 @@ import {
   object,
   string,
   optional,
+  EditorPluginProps,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { mapObjIndexed } from 'ramda'
 
-export const uuid = {
-  id: number(),
-}
+export const uuid = { id: number() }
 
 export const entity = {
   ...uuid,
   revision: number(),
   licenseId: optional(number()),
   changes: string(),
+  meta_title: optional(string()),
+  meta_description: optional(string()),
 }
+
+const entityTypeHelper = entityType(entity, {})
+export type EntityStateProps = EditorPluginProps<typeof entityTypeHelper>
 
 export type Uuid = StateTypesStaticType<typeof uuid>
 export type Entity = Uuid & {
@@ -196,7 +199,3 @@ export function optionalSerializedChild(plugin: string): StateType<
     },
   }
 }
-
-export const headerInputClasses = cn(
-  `mt-4 w-full border-b-2 border-none border-transparent focus:border-brand focus:outline-none`
-)
