@@ -13,8 +13,8 @@ import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
 
-import { HSpace } from './h-space'
-import { Link } from './link'
+import { HSpace } from '../content/h-space'
+import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
 import { InfoPanel } from '../info-panel'
 import { LicenseNotice } from '@/components/content/license/license-notice'
@@ -158,14 +158,8 @@ export function Entity({ data }: EntityProps) {
         aboveContent={setting?.aboveContent}
         unrevisedRevisions={data.unrevisedRevisions}
         data={{
-          type: data.typename,
-          id: data.id,
-          alias: data.alias,
-          revisionId: data.revisionId,
+          ...data,
           courseId: data.courseData?.id,
-          trashed: data.trashed,
-          unrevisedRevisions: data.unrevisedRevisions,
-          unrevisedCourseRevisions: data.unrevisedCourseRevisions,
         }}
       />
     )
@@ -211,11 +205,9 @@ export function Entity({ data }: EntityProps) {
     )
     if (validPages.length > 0) return null
     return (
-      <>
-        <InfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
-          {strings.course.noPagesWarning}
-        </InfoPanel>
-      </>
+      <InfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
+        {strings.course.noPagesWarning}
+      </InfoPanel>
     )
   }
 

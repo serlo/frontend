@@ -1,7 +1,7 @@
 import { XMLParser } from 'fast-xml-parser'
 import { GetStaticPaths, GetStaticProps } from 'next'
 
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { Job } from '@/components/pages/jobs/job'
 import { Overview } from '@/components/pages/jobs/overview'
 import { renderedPageNoHooks } from '@/helper/rendered-page'

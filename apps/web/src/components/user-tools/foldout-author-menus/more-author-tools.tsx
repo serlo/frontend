@@ -18,7 +18,7 @@ export interface MoreAuthorToolsProps {
   title?: string
 }
 
-const supportedTypes: AuthorToolsData['type'][] = [
+const supportedTypes: AuthorToolsData['typename'][] = [
   UuidType.Page,
   UuidType.Article,
   UuidType.Video,
@@ -43,7 +43,7 @@ export function MoreAuthorTools({
 
   if (!data || !loggedInData) return null
 
-  if (!supportedTypes.includes(data.type)) return null
+  if (!supportedTypes.includes(data.typename)) return null
 
   return (
     <Item>
@@ -75,7 +75,7 @@ export function MoreAuthorTools({
 
   function getToolsArray(): Tool[] {
     if (!data) return []
-    switch (data.type) {
+    switch (data.typename) {
       case UuidType.Page:
         return [Tool.Abo, Tool.History, Tool.Log, Tool.AnalyticsLink]
       case UuidType.Article:

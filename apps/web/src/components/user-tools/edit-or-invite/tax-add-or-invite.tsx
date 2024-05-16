@@ -38,7 +38,7 @@ export function TaxAddOrInvite({ data, aboveContent }: TaxAddOrInviteProps) {
   const { strings } = useInstanceData()
   const [inviteOpen, setInviteOpen] = useState<string | false>(false)
 
-  if (!data || data.type !== UuidType.TaxonomyTerm) return null
+  if (!data || data.typename !== UuidType.TaxonomyTerm) return null
 
   const isExerciseFolder = data.taxonomyType === TaxonomyTermType.ExerciseFolder
   const isInvite = !auth

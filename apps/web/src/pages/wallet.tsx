@@ -1,6 +1,6 @@
 import { GetStaticProps } from 'next'
 
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { DataWallet } from '@/components/pages/data-wallet'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
