@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 
-import { revalidatePath } from './helper/revalidate-path'
+import { getAliasById, revalidatePath } from './helper/revalidate-path'
 import { useMutationFetch } from './helper/use-mutation-fetch'
 import { useSuccessHandler } from './helper/use-success-handler'
 import { getRequiredString } from './use-set-entity-mutation/use-set-entity-mutation'
@@ -44,6 +44,9 @@ export function useAddPageRevision() {
     }
     const mutationStrings = loggedInData.strings.mutations
 
+    // persist current alias here since it might change on mutation
+    const oldAlias = await getAliasById(data.id)
+
     try {
       const sharedInput = {
         content: getRequiredString(mutationStrings, 'content', data.content),
@@ -56,9 +59,8 @@ export function useAddPageRevision() {
           ...sharedInput,
           pageId: data.id,
         })
-        if (typeof savedEntity !== 'boolean') {
-          await revalidatePath(savedEntity.alias)
-        }
+
+        if (oldAlias) await revalidatePath(oldAlias)
 
         return successHandler({
           success: !!savedEntity,
@@ -67,14 +69,14 @@ export function useAddPageRevision() {
         })
       } else {
         // create new page
-        const savedEntity = await mutationFetch(createMutation, {
+        const success = await mutationFetch(createMutation, {
           ...sharedInput,
           discussionsEnabled: false,
           instance: lang,
           licenseId: 1,
         })
         return successHandler({
-          success: !!savedEntity,
+          success: success,
           toastKey: 'save',
           redirectUrl: '/pages',
           useHardRedirect: true,

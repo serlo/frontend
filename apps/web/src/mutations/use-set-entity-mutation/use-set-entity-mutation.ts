@@ -10,7 +10,7 @@ import {
   SetEntityMutationRunnerData,
 } from './types'
 import { showToastNotice } from '../../helper/show-toast-notice'
-import { revalidatePath } from '../helper/revalidate-path'
+import { getAliasById, revalidatePath } from '../helper/revalidate-path'
 import { useMutationFetch } from '../helper/use-mutation-fetch'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData, UuidType } from '@/data-types'
@@ -67,6 +67,9 @@ export function useSetEntityMutation() {
     }: SetEntityMutationRunnerData) {
       if (!data.__typename) return
 
+      // persist current alias here since it might change on mutation
+      const oldAlias = await getAliasById(data.id)
+
       let input = {}
       try {
         const genericInput = getGenericInputData(
@@ -91,15 +94,11 @@ export function useSetEntityMutation() {
         return false
       }
 
-      let savedEntity = undefined
+      let savedId = undefined
       try {
         //here we rely on the api not to create an empty revision
-        savedEntity = await mutationFetch(setAbstractEntityMutation, input)
-        if (
-          typeof savedEntity !== 'object' ||
-          !Number.isInteger(savedEntity.id)
-        )
-          return false
+        savedId = await mutationFetch(setAbstractEntityMutation, input)
+        if (!Number.isInteger(savedId)) return false
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error('error saving main uuid')
@@ -111,11 +110,11 @@ export function useSetEntityMutation() {
       try {
         childrenResult = await loopNestedChildren({
           data,
-          savedParentId: savedEntity.id,
+          savedParentId: savedId as number,
         })
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(`error saving children of ${savedEntity.id}`)
+        console.error(`error saving children of ${savedId}`)
         return false
       }
 
@@ -129,15 +128,16 @@ export function useSetEntityMutation() {
         )
         const id =
           data.id === 0
-            ? savedEntity.id === 0
+            ? savedId === 0
               ? undefined
-              : savedEntity.id
+              : (savedId as number)
             : data.id
         const redirectHref = id
           ? getHistoryUrl(id)
           : `/${taxonomyParentId as number}`
 
-        await revalidatePath(savedEntity.alias)
+        if (oldAlias) await revalidatePath(oldAlias)
+
         void router.push(redirectHref + successHash)
       }
     }

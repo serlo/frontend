@@ -2240,6 +2240,13 @@ export type IsSubscribedQueryVariables = Exact<{
 
 export type IsSubscribedQuery = { __typename?: 'Query', subscription: { __typename?: 'SubscriptionQuery', currentUserHasSubscribed: boolean } };
 
+export type AliasByUuidQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type AliasByUuidQuery = { __typename?: 'Query', uuid?: { __typename?: 'Applet', alias: string } | { __typename?: 'AppletRevision', alias: string, repository: { __typename?: 'Applet', alias: string } } | { __typename?: 'Article', alias: string } | { __typename?: 'ArticleRevision', alias: string, repository: { __typename?: 'Article', alias: string } } | { __typename?: 'Comment', alias: string } | { __typename?: 'Course', alias: string } | { __typename?: 'CoursePage', alias: string } | { __typename?: 'CoursePageRevision', alias: string, repository: { __typename?: 'CoursePage', alias: string } } | { __typename?: 'CourseRevision', alias: string, repository: { __typename?: 'Course', alias: string } } | { __typename?: 'Event', alias: string } | { __typename?: 'EventRevision', alias: string, repository: { __typename?: 'Event', alias: string } } | { __typename?: 'Exercise', alias: string } | { __typename?: 'ExerciseGroup', alias: string } | { __typename?: 'ExerciseGroupRevision', alias: string, repository: { __typename?: 'ExerciseGroup', alias: string } } | { __typename?: 'ExerciseRevision', alias: string, repository: { __typename?: 'Exercise', alias: string } } | { __typename?: 'Page', alias: string } | { __typename?: 'PageRevision', alias: string } | { __typename?: 'TaxonomyTerm', alias: string } | { __typename?: 'User', alias: string } | { __typename?: 'Video', alias: string } | { __typename?: 'VideoRevision', alias: string, repository: { __typename?: 'Video', alias: string } } | null };
+
 export type TaxonomyTermCreateEntityLinkMutationVariables = Exact<{
   input: TaxonomyEntityLinksInput;
 }>;
@@ -2371,7 +2378,7 @@ export type SetAbstractEntityMutationVariables = Exact<{
 }>;
 
 
-export type SetAbstractEntityMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setAbstractEntity: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number, alias: string } | { __typename?: 'Article', id: number, alias: string } | { __typename?: 'Course', id: number, alias: string } | { __typename?: 'CoursePage', id: number, alias: string } | { __typename?: 'Event', id: number, alias: string } | { __typename?: 'Exercise', id: number, alias: string } | { __typename?: 'ExerciseGroup', id: number, alias: string } | { __typename?: 'Video', id: number, alias: string } | null } } };
+export type SetAbstractEntityMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setAbstractEntity: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'Video', id: number } | null } } };
 
 export type NotificationSetStateMutationVariables = Exact<{
   input: NotificationSetStateInput;

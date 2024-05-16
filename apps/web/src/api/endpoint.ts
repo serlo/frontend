@@ -6,3 +6,5 @@ export const endpointBaseUrl =
     : `https://api.${serloDomain}`
 
 export const endpoint = `${endpointBaseUrl}/graphql`
+
+export const endpointEnmeshed = `${endpointBaseUrl}/enmeshed`

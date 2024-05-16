@@ -7,7 +7,7 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 import { successHash } from '@/helper/use-leave-confirm'
 
 interface SuccessHandlerInput {
-  success: boolean | { id: number; alias: string }
+  success: boolean | number
   toastKey?: keyof typeof loggedInData.strings.mutations.success
   redirectUrl?: string
   timeout?: number
