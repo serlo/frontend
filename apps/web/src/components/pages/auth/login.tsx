@@ -25,7 +25,6 @@ import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
-import { isProduction } from '@/helper/is-production'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
@@ -174,16 +173,6 @@ export function Login({ oauth }: { oauth?: boolean }) {
           showToastNotice(
             strings.notices.welcome.replace('%username%', username)
           )
-          if (!isProduction) {
-            // TODO: wip, only redirect when provider is nbp
-            console.log('login')
-            console.log(data.session)
-
-            setTimeout(() => {
-              void router.push(flow.return_to ?? redirection)
-            }, 10000)
-            return
-          }
           void router.push(flow.return_to ?? redirection)
           return
         })

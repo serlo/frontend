@@ -214,9 +214,8 @@ export function handleFlowError<S>(
             console.log(data.error)
             console.log(session)
 
-            setTimeout(() => {
-              window.location.href = redirection
-            }, 10000)
+            void router.push(data.redirect_browser_to ?? redirection)
+            return
           }
           window.location.href = redirection
         }, 3000)
