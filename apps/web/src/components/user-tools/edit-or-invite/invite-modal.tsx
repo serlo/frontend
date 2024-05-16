@@ -1,10 +1,10 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { Link } from '../../content/link'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { loginUrl, registrationUrl } from '@/components/pages/auth/utils'
 import { useInstanceData } from '@/contexts/instance-context'
-import { UuidsContext } from '@/contexts/uuids-context'
+import { useEntityData } from '@/contexts/uuids-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { submitEvent } from '@/helper/submit-event'
 
@@ -17,13 +17,13 @@ export interface InviteModalProps {
 export function InviteModal({ isOpen, onClose, type }: InviteModalProps) {
   const { lang, strings, footerData } = useInstanceData()
   const modalStrings = strings.editOrAdd.inviteModal
-  const id = useContext(UuidsContext)
+  const { entityId } = useEntityData()
 
   useEffect(() => {
     if (isOpen) submitEvent('invite2edit-open-modal-' + type)
   })
 
-  if (!isOpen || !id) return null
+  if (!isOpen || !entityId) return null
 
   return (
     <ModalWithCloseButton

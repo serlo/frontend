@@ -30,7 +30,7 @@ export function CheckoutRejectButtons({
   const isCurrent = data.revisionData.current
   const isRejected = data.revisionData.rejected
   const revisionId = data.revisionId
-  const isPage = data.type === UuidRevType.Page
+  const isPage = data.typename === UuidRevType.Page
 
   if (isCurrent || !revisionId) return null
 

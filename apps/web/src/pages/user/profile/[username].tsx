@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { Profile } from '@/components/pages/user/profile'
 import { UserProps, UserPage } from '@/data-types'
 import { requestUserByUsername } from '@/fetcher/user/request-user-by-username'

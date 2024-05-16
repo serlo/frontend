@@ -21,7 +21,7 @@ export function MoreAuthorToolsCourse({
 
   if (!data || !loggedInData) return null
 
-  const isEmptyCourse = data.type === UuidType.Course
+  const isEmptyCourse = data.typename === UuidType.Course
 
   return (
     <>

@@ -55,10 +55,9 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
         {loaded && auth && context?.uuid && !isRevisionView ? (
           <AuthorToolsExercises
             data={{
-              type: ExerciseInlineType.Exercise,
               id: context?.uuid,
-              trashed: context?.trashed,
-              grouped: context?.grouped,
+              ...context,
+              typename: ExerciseInlineType.Exercise,
               unrevisedRevisions: context?.unrevisedRevisions,
             }}
           />

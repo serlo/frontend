@@ -195,7 +195,7 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
           }}
         />
         <div className={cn('mt-3', hasFeedback ? '' : 'invisible')}>
-          Danke für dein Feedback! &#10084;
+          Danke für dein Feedback! ❤
         </div>
       </div>
     )
@@ -204,7 +204,7 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
   function renderUserTools(setting?: { aboveContent?: boolean }) {
     return (
       <UserTools
-        data={{ type: UuidType.TaxonomyTerm, ...data }}
+        data={{ typename: UuidType.TaxonomyTerm, ...data }}
         aboveContent={setting?.aboveContent}
       />
     )

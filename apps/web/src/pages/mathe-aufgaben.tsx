@@ -4,7 +4,7 @@ import { GetStaticProps, NextPage } from 'next'
 import React from 'react'
 
 import { endpoint } from '@/api/endpoint'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
 import { FolderData, FolderOverview } from '@/components/pages/folder-overview'
 import { idsQuery } from '@/fetcher/prettify-links-state/ids-query'
