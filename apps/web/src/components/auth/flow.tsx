@@ -207,16 +207,14 @@ export function handleFlowError<S>(
           unwantedPaths: [verificationUrl, loginUrl, registrationUrl],
         })
         setTimeout(() => {
-          if (!isProduction) {
-            // TODO: wip, only redirect when provider is nbp
-            console.log('flow')
-            console.log(data.redirect_browser_to)
-            console.log(data.error)
-            console.log(session)
-
-            void router.push(data.redirect_browser_to ?? redirection)
+          if (
+            !isProduction &&
+            session?.authentication_methods?.[0]?.provider === 'nbp'
+          ) {
+            void router.push('/willkommen')
             return
           }
+
           window.location.href = redirection
         }, 3000)
 
