@@ -43,8 +43,6 @@ exports.config = {
         admin: {
           login: (I: CodeceptJS.I) => {
             I.amOnPage('/')
-            I.amOnPage('/')
-            I.amOnPage('/')
             I.see('Anmelden')
             I.click('Anmelden')
             I.waitForText('Benutzername oder E-Mailadresse', 10)
