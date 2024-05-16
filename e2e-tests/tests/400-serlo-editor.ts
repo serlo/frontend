@@ -211,7 +211,7 @@ Scenario(
   async ({ I }) => {
     I.amOnPage('/entity/create/Article/1377')
 
-    const articleHeadingInput = { xpath: '//input[@placeholder="Titel"]' }
+    const articleHeadingInput = '$entity-title-input'
     I.click(articleHeadingInput)
 
     const firstWord = 'Some '
