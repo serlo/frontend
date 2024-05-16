@@ -43,6 +43,7 @@ export function EntityTitleInput({
         placeholder={titlePlaceholder}
         value={title.value}
         onChange={(e) => title.set(e.target.value)}
+        data-qa="entity-title-input"
       />
     </h1>
   )
