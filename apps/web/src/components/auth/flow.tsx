@@ -211,7 +211,7 @@ export function handleFlowError<S>(
             !isProduction &&
             session?.authentication_methods?.[0]?.provider === 'nbp'
           ) {
-            void router.push('/willkommen')
+            window.location.href = '/willkommen'
             return
           }
 
