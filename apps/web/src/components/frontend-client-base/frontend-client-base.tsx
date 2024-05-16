@@ -4,13 +4,13 @@ import NProgress from 'nprogress'
 import { useState, useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 
-import { ConditionalWrap } from './conditional-wrap.jsx'
-import { HeaderFooter } from './header-footer.jsx'
+import { ConditionalWrap } from './conditional-wrap'
+import { HeaderFooter } from './header-footer'
 import {
   fetchLoggedInData,
   getCachedLoggedInData,
 } from './logged-on-data-helper'
-import { MaxWidthDiv } from '../navigation/max-width-div.jsx'
+import { MaxWidthDiv } from '../navigation/max-width-div'
 import { AuthProvider } from '@/auth/auth-provider'
 import { checkLoggedIn } from '@/auth/cookie/check-logged-in'
 import { PrintMode } from '@/components/print-mode'

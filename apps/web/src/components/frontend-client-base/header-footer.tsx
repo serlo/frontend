@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
-import { Footer } from '../navigation/footer.jsx'
-import { Header } from '../navigation/header/header.jsx'
+import { Footer } from '../navigation/footer'
+import { Header } from '../navigation/header/header'
 
 export interface HeaderFooterProps {
   children: ReactNode

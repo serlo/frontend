@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { FaIcon } from './fa-icon.jsx'
+import { FaIcon } from './fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
 
