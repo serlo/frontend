@@ -3,16 +3,11 @@ import {
   type EditorPluginProps,
   string,
 } from '@editor/plugin'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { UuidType } from '@serlo/frontend/src/data-types'
 import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 
-import {
-  editorContent,
-  entity,
-  entityType,
-  headerInputClasses,
-} from './common/common'
+import { editorContent, entity, entityType } from './common/common'
+import { EntityTitleInput } from './common/entity-title-input'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const eventTypeState = entityType(
@@ -20,8 +15,6 @@ export const eventTypeState = entityType(
     ...entity,
     title: string(),
     content: editorContent(),
-    meta_title: string(),
-    meta_description: string(),
   },
   {}
 )
@@ -36,7 +29,6 @@ export const eventTypePlugin: EditorPlugin<EventTypePluginState> = {
 
 function EventTypeEditor(props: EditorPluginProps<EventTypePluginState>) {
   const { content, title, id, revision, replaceOwnState } = props.state
-  const placeholder = useEditorStrings().templatePlugins.event.title
 
   return (
     <>
@@ -48,15 +40,7 @@ function EventTypeEditor(props: EditorPluginProps<EventTypePluginState>) {
           entityType={UuidType.Event}
         />
       </div>
-      <h1 className="serlo-h1 mt-20">
-        <input
-          autoFocus
-          className={headerInputClasses}
-          placeholder={placeholder}
-          value={title.value}
-          onChange={(e) => title.set(e.target.value)}
-        />
-      </h1>
+      <EntityTitleInput title={title} />
 
       {content.render()}
 

@@ -9,9 +9,8 @@ import {
 } from '@editor/plugin'
 import { selectStaticDocument, store } from '@editor/store'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
-import { faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { UuidType } from '@serlo/frontend/src/data-types'
 import { cn } from '@serlo/frontend/src/helper/cn'
@@ -27,7 +26,8 @@ import {
   serializedChild,
   entityType,
 } from '../common/common'
-import { SettingsTextarea } from '../helpers/settings-textarea'
+import { EntityTitleInput } from '../common/entity-title-input'
+import { MetadataFieldsModal } from '../common/metadata-fields-modal'
 import { ToolbarMain } from '../toolbar-main/toolbar-main'
 
 export const courseTypeState = entityType(
@@ -35,10 +35,8 @@ export const courseTypeState = entityType(
     ...entity,
     title: string(),
     description: editorContent(),
-    meta_description: string(),
   },
   {
-    // I think this is not correct because it meant for strings?
     'course-page': list(serializedChild('type-course-page')),
   }
 )
@@ -52,11 +50,14 @@ export const courseTypePlugin: EditorPlugin<CourseTypePluginState> = {
 }
 
 function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
-  const { title, meta_description, 'course-page': children } = props.state
+  const {
+    title,
+    meta_description: metaDescription,
+    'course-page': children,
+  } = props.state
   const editorStrings = useEditorStrings()
   const courseStrings = editorStrings.templatePlugins.course
   const [courseNavOpen, setCourseNavOpen] = useState(true)
-  const [showSettingsModal, setShowSettingsModal] = useState(false)
   const [activePageIndex, setActivePageIndex] = useState(0)
 
   const staticState = selectStaticDocument(store.getState(), props.id)
@@ -77,12 +78,8 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
   return (
     <>
       <div className="absolute right-0 -mt-10 mr-side flex">
-        <button
-          onClick={() => setShowSettingsModal(true)}
-          className="serlo-button-editor-secondary mr-2 text-base"
-        >
-          Metadata <FaIcon icon={faPencilAlt} />
-        </button>
+        <MetadataFieldsModal metaDescription={metaDescription} />
+
         <RevisionHistoryLoader
           id={props.state.id.value}
           currentRevision={props.state.revision.value}
@@ -107,19 +104,6 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
         {renderCoursePage()}
         <ToolbarMain showSubscriptionOptions {...props.state} />
       </article>
-      <ModalWithCloseButton
-        isOpen={showSettingsModal}
-        onCloseClick={() => setShowSettingsModal(false)}
-        className="max-w-xl"
-      >
-        <div className="mx-side mb-3 mt-12">
-          <SettingsTextarea
-            autoFocus
-            label={courseStrings.seoDesc}
-            state={meta_description}
-          />
-        </div>
-      </ModalWithCloseButton>
     </>
   )
 
@@ -129,15 +113,10 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
         open={courseNavOpen}
         onOverviewButtonClick={() => setCourseNavOpen(!courseNavOpen)}
         title={
-          <input
-            autoFocus
-            className={cn(`
-                -ml-2 mt-1 min-w-[70%] rounded-xl border-2 border-transparent
-                bg-editor-primary-100 px-2 py-0 focus:border-editor-primary focus:outline-none
-              `)}
-            placeholder={courseStrings.title}
-            value={title.value}
-            onChange={(e) => title.set(e.target.value)}
+          <EntityTitleInput
+            title={title}
+            compact
+            className="!mt-1 -ml-2 max-w-xl rounded-xl !border-2 !border-solid border-transparent bg-editor-primary-100 px-2 focus:border-editor-primary"
           />
         }
         pages={staticPages.map(({ title, id }, index) => {
