@@ -158,14 +158,8 @@ export function Entity({ data }: EntityProps) {
         aboveContent={setting?.aboveContent}
         unrevisedRevisions={data.unrevisedRevisions}
         data={{
-          type: data.typename,
-          id: data.id,
-          alias: data.alias,
-          revisionId: data.revisionId,
+          ...data,
           courseId: data.courseData?.id,
-          trashed: data.trashed,
-          unrevisedRevisions: data.unrevisedRevisions,
-          unrevisedCourseRevisions: data.unrevisedCourseRevisions,
         }}
       />
     )
@@ -211,11 +205,9 @@ export function Entity({ data }: EntityProps) {
     )
     if (validPages.length > 0) return null
     return (
-      <>
-        <InfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
-          {strings.course.noPagesWarning}
-        </InfoPanel>
-      </>
+      <InfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
+        {strings.course.noPagesWarning}
+      </InfoPanel>
     )
   }
 
