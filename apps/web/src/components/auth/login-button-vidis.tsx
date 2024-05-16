@@ -1,6 +1,7 @@
 import type { UiNodeInputAttributes } from '@ory/client'
 import { type FormEvent } from 'react'
 
+import VidisLogo from '@/assets-webkit/img/auth/vidis-logo.svg'
 import { cn } from '@/helper/cn'
 
 export interface NodeProps {
@@ -19,8 +20,9 @@ export function LoginButtonVidis({
       <hr />
       <button
         className={cn(`
-        mt-10 block inline-block w-full border border-transparent px-[22px] py-2 py-2
+         mt-10 w-full items-center border border-transparent px-[22px] py-2 py-2 text-center
         text-lg font-bold shadow-menu transition-all hover:border-black focus-visible:border-black
+        sm:flex sm:text-left
         `)}
         name={attributes.name}
         onClick={(e) => {
@@ -29,7 +31,7 @@ export function LoginButtonVidis({
         value={(attributes.value as string) || ''}
         disabled={attributes.disabled || disabled}
       >
-        VIDIS
+        <span>Anmelden mit</span> <VidisLogo className="scale-90" />
       </button>
     </div>
   )

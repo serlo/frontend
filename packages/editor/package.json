@@ -1,6 +1,6 @@
 {
   "name": "@serlo/editor",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "homepage": "https://de.serlo.org/editor",
   "bugs": {
     "url": "https://github.com/serlo/frontend/issues"
@@ -45,7 +45,6 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.4",
     "@fortawesome/fontawesome-svg-core": "6.5.2",
     "@fortawesome/free-brands-svg-icons": "6.5.2",
     "@fortawesome/free-regular-svg-icons": "6.5.2",
@@ -96,7 +95,6 @@
     "@vitejs/plugin-react": "^4.2.1",
     "array-move": "^4.0.0",
     "autoprefixer": "^10.4.19",
-    "babel-jest": "^29.7.0",
     "clsx": "^2.1.0",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
@@ -174,7 +172,7 @@
     "use-query-params": "^2.2.1",
     "uuid": "^9.0.1",
     "vite": "^5.2.10",
-    "vite-plugin-css-injected-by-js": "^3.5.0",
+    "vite-plugin-css-injected-by-js": "^3.5.1",
     "vite-plugin-dts": "3.8.3",
     "vite-plugin-svgr": "^4.2.0"
   },
