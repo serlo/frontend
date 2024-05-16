@@ -9,6 +9,7 @@ import type {
   UpdateRegistrationFlowBody,
   UpdateSettingsFlowBody,
   UpdateVerificationFlowBody,
+  Session,
 } from '@ory/client'
 import { getNodeId, isUiNodeInputAttributes } from '@ory/integrations/ui'
 import type { NextRouter } from 'next/router'
@@ -197,7 +198,8 @@ export function handleFlowError<S>(
         window.location.href = data.redirect_browser_to
         return
       case 'session_already_available': {
-        if (!checkLoggedIn()) void fetchAndPersistAuthSession()
+        let session: Session | null = null
+        if (!checkLoggedIn()) session = await fetchAndPersistAuthSession()
         showToastNotice(strings.notices.alreadyLoggedIn, 'default', 3000)
 
         const redirection = filterUnwantedRedirection({
@@ -207,9 +209,14 @@ export function handleFlowError<S>(
         setTimeout(() => {
           if (!isProduction) {
             // TODO: wip, only redirect when provider is nbp
-            console.log(data)
-            // window.location.href =
-            //   'https://journey.serlo-staging.dev/willkommen'
+            console.log('flow')
+            console.log(data.redirect_browser_to)
+            console.log(data.error)
+            console.log(session)
+
+            setTimeout(() => {
+              window.location.href = redirection
+            }, 10000)
           }
           window.location.href = redirection
         }, 3000)

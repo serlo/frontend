@@ -176,9 +176,13 @@ export function Login({ oauth }: { oauth?: boolean }) {
           )
           if (!isProduction) {
             // TODO: wip, only redirect when provider is nbp
-            console.log(data)
-            // window.location.href =
-            //   'https://journey.serlo-staging.dev/willkommen'
+            console.log('login')
+            console.log(data.session)
+
+            setTimeout(() => {
+              void router.push(flow.return_to ?? redirection)
+            }, 10000)
+            return
           }
           void router.push(flow.return_to ?? redirection)
           return
