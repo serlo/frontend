@@ -1,6 +1,7 @@
 // Temporary file while working on unified renderer
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { isEmptyArticle } from '@editor/plugins/article/utils/static-is-empty'
+import { CourseHeader } from '@editor/plugins/course/renderer/course-header'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { isArticleDocument } from '@editor/types/plugin-type-guards'
 import {
@@ -58,7 +59,8 @@ export function Entity({ data }: EntityProps) {
 
   function renderStyledH1() {
     if (!data.title) return null
-    if (data.typename === UuidType.Course) return null
+    if (data.typename === UuidType.Course)
+      return <CourseHeader title={<>{data.title}</>} />
 
     return (
       <h1 className="serlo-h1 mt-12" itemProp="name">

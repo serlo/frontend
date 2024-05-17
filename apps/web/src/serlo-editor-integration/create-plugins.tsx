@@ -16,6 +16,7 @@ import { articlePlugin } from '@editor/plugins/article'
 import { audioPlugin } from '@editor/plugins/audio'
 import { blanksExercise } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
+import { coursePlugin } from '@editor/plugins/course'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
 import { exerciseGroupPlugin } from '@editor/plugins/exercise-group'
@@ -209,7 +210,7 @@ export function createPlugins({
         allowedPlugins: [EditorPluginType.Image],
       }),
     },
-
+    { type: EditorPluginType.Course, plugin: coursePlugin },
     // Internal plugins for our content types
     // ===================================================
     { type: TemplatePluginType.Applet, plugin: appletTypePlugin },

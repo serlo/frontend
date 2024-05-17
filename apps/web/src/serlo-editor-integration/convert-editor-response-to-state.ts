@@ -6,7 +6,6 @@ import {
   type Uuid,
 } from '@editor/plugins/serlo-template-plugins/common/common'
 import type { CourseTypePluginState } from '@editor/plugins/serlo-template-plugins/course/course'
-import type { CoursePageTypePluginState } from '@editor/plugins/serlo-template-plugins/course/course-page'
 import type { EventTypePluginState } from '@editor/plugins/serlo-template-plugins/event'
 import type { TextExerciseGroupTypePluginState } from '@editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
 import type { PageTypePluginState } from '@editor/plugins/serlo-template-plugins/page'
@@ -24,6 +23,7 @@ import { triggerSentry } from '@/helper/trigger-sentry'
 const entityTypes = [
   UuidType.Applet,
   UuidType.Article,
+  UuidType.Course,
   UuidType.Event,
   UuidType.Exercise,
   UuidType.ExerciseGroup,
@@ -75,9 +75,6 @@ export function convertEditorResponseToState(
   }
 
   try {
-    if (UuidType.Course === uuid.__typename) {
-      return convertCourse(uuid.__typename, uuid)
-    }
     if (UuidType.Page === uuid.__typename) {
       return convertPage(uuid.__typename, uuid)
     }
@@ -112,6 +109,7 @@ export function convertEditorResponseToState(
   ):
     | StaticDocument<ArticleTypePluginState>
     | StaticDocument<AppletTypePluginState>
+    | StaticDocument<CourseTypePluginState>
     | StaticDocument<EventTypePluginState>
     | StaticDocument<TextExerciseTypePluginState>
     | StaticDocument<TextExerciseGroupTypePluginState>
@@ -157,60 +155,6 @@ export function convertEditorResponseToState(
           sources: [],
         },
       })
-    }
-  }
-
-  function convertCourse(
-    entityType: MainUuidType['__typename'],
-    uuid: Extract<MainUuidType, { __typename: 'Course' }>
-  ): StaticDocument<CourseTypePluginState> {
-    stack.push({ id: uuid.id, type: entityType })
-    return {
-      plugin: TemplatePluginType.Course,
-      state: {
-        ...entityFields,
-        description: serializeStaticDocument(parseStaticString(content)),
-        'course-page': (uuid.pages || [])
-          .filter((page) => page.currentRevision !== null)
-          .map((page) => {
-            return convertCoursePage('CoursePage', {
-              ...page,
-              currentRevision: {
-                id: page.id,
-                alias: page.alias,
-                title: page.currentRevision?.title ?? '',
-                content: page.currentRevision?.content ?? '',
-                date: '', // not used
-              },
-            }).state
-          }),
-      },
-    }
-  }
-
-  function convertCoursePage(
-    entityType: MainUuidType['__typename'],
-    uuid: Pick<
-      Extract<MainUuidType, { __typename: 'CoursePage' }>,
-      'id' | 'currentRevision'
-    >
-  ): StaticDocument<CoursePageTypePluginState> {
-    stack.push({ id: uuid.id, type: entityType })
-    return {
-      plugin: TemplatePluginType.CoursePage,
-      state: {
-        id: uuid.id,
-        licenseId,
-        revision,
-        changes: '',
-        icon: 'explanation',
-        title: uuid.currentRevision?.title || '',
-        content: serializeStaticDocument(
-          parseStaticString(uuid.currentRevision?.content || '')
-        ),
-        meta_title,
-        meta_description,
-      },
     }
   }
 
