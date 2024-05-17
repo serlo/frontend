@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { TaxonomyMoveCopy } from '@/components/taxonomy/taxonomy-move-copy/taxonomy-move-copy'
 import { SlugProps, TaxonomyPage } from '@/data-types'
@@ -40,7 +40,7 @@ export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as TaxonomyPage, // remove undefined values
     },
-    revalidate: 60 * 2, // 2 min,
+    revalidate: 60 * 2, // 2 min
   }
 }
 

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 import { oauthHandler } from '@/auth/oauth-handler'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 

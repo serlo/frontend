@@ -3,7 +3,7 @@ import { NextPage } from 'next'
 import Script from 'next/script'
 
 import { EquationsAppV2 } from '@/components/equations-app/equations-app-v2'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
 
 const ContentPage: NextPage = () => {

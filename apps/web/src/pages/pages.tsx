@@ -11,7 +11,7 @@ import { endpoint } from '@/api/endpoint'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -123,7 +123,7 @@ export const getStaticProps: GetStaticProps<PagesProps> = async (context) => {
     props: {
       pages: result.page.pages,
     },
-    revalidate: 60 * 2, // 2 min,
+    revalidate: 60 * 2, // 2 min
   }
 }
 

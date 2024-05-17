@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { PageTitle } from '@/components/content/page-title'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { Events } from '@/components/user/events'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -54,7 +54,7 @@ export const getStaticProps: GetStaticProps<EventHistoryProps> = async (
 
   return {
     props: { pageData: { id, title, alias } },
-    revalidate: 1,
+    revalidate: 60, // 1 min
   }
 }
 

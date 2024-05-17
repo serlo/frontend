@@ -11,17 +11,17 @@ export const features = {
     activeInDev: true,
     hideInProduction: false,
   },
+  editorExercisesInContent: {
+    cookieName: 'useEditorExercisesInContent',
+    isActive: false,
+    activeInDev: true,
+    hideInProduction: false,
+  },
   edtrPasteHack: {
     cookieName: 'useEdtrPasteHack',
     isActive: false,
     activeInDev: true,
     hideInProduction: true,
-  },
-  editorPluginCopyTool: {
-    cookieName: 'useEditorPluginCopyTool',
-    isActive: false,
-    activeInDev: true,
-    hideInProduction: false,
   },
 }
 
@@ -88,6 +88,15 @@ export function ProfileExperimental() {
       <h2 className="serlo-h2" id="experiments">
         🧪 Experimente
       </h2>
+      {shouldBeVisible('editorExercisesInContent') ? (
+        <div>
+          <h3 className="serlo-h3 mb-3">
+            {renderFeatureButton('editorExercisesInContent')} Editor: Exercises
+            In Content
+          </h3>
+          <p className="serlo-p">Wird bald für Alle freigegeben.</p>
+        </div>
+      ) : null}
       {shouldBeVisible('editorIntermediateTasks') ? (
         <div>
           <h3 className="serlo-h3 mb-3">
@@ -107,22 +116,6 @@ export function ProfileExperimental() {
           </h3>
           <p className="serlo-p">
             Experimentelles Feature: nur aktivieren wenn du weißt was du tust.
-          </p>
-        </div>
-      ) : null}
-      <hr className="mx-side -mt-2 mb-4" />
-      {shouldBeVisible('editorPluginCopyTool') ? (
-        <div>
-          <h3 className="serlo-h3 mb-3">
-            {renderFeatureButton('editorPluginCopyTool')} Editor: Plugin Copy
-            Tool
-          </h3>
-          <p className="serlo-p">
-            In der Editor-Toolbar der Plugins kannst du das Plugin in die
-            Zwischenablage kopieren und im gleichen oder einem anderen Editor
-            Content eingefügt werden. Zum einfügen einfach ein Text-Plugin
-            auswählen und STRG/CMD+V oder rechtsklick&gt;einfügen benutzen. Wenn
-            das Plugin an der Stelle erlaubt ist, erscheint es direkt.
           </p>
         </div>
       ) : null}

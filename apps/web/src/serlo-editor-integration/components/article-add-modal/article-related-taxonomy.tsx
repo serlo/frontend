@@ -6,7 +6,7 @@ import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { useEntityId } from '@/contexts/uuids-context'
+import { useEntityData } from '@/contexts/uuids-context'
 import { UuidType, type UuidWithRevType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
@@ -24,7 +24,7 @@ export function ArticleRelatedTaxonomy({
   checkDuplicates,
   showExerciseFolderPreview,
 }: ArticleRelatedTaxonomyProps) {
-  const entityId = useEntityId()
+  const { entityId } = useEntityData()
   const { data, error } = useFetchParentTaxonomy(entityId ?? 0)
 
   const { strings } = useInstanceData()

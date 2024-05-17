@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
 import { LazyLoadExerciseGenerationWrapperOrNull } from '@/components/exercise-generation/lazy-load-exercise-generation-wrapper-or-null'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { AddRevision } from '@/components/pages/add-revision'
@@ -128,7 +128,7 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
       entityNeedsReview: !isTestArea,
       subject: breadcrumbsData?.[0]?.label || 'Unknown subject',
     },
-    revalidate: 60 * 30, // 0.5 hours,
+    revalidate: 60 * 30, // 30 min
   }
 }
 

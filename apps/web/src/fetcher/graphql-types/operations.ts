@@ -1126,7 +1126,6 @@ export interface Query {
   events: AbstractNotificationEventConnection;
   media: MediaQuery;
   metadata: MetadataQuery;
-  notificationEvent?: Maybe<AbstractNotificationEvent>;
   notifications: NotificationConnection;
   page: PageQuery;
   subject: SubjectQuery;
@@ -1146,11 +1145,6 @@ export interface QueryEventsArgs {
   instance?: InputMaybe<Instance>;
   last?: InputMaybe<Scalars['Int']['input']>;
   objectId?: InputMaybe<Scalars['Int']['input']>;
-}
-
-
-export interface QueryNotificationEventArgs {
-  id: Scalars['Int']['input'];
 }
 
 
@@ -1444,9 +1438,16 @@ export interface TaxonomyTermCreateInput {
   taxonomyType: TaxonomyTypeCreateOptions;
 }
 
+export interface TaxonomyTermCreateResponse {
+  __typename?: 'TaxonomyTermCreateResponse';
+  query: Query;
+  record?: Maybe<TaxonomyTerm>;
+  success: Scalars['Boolean']['output'];
+}
+
 export interface TaxonomyTermMutation {
   __typename?: 'TaxonomyTermMutation';
-  create: DefaultResponse;
+  create: TaxonomyTermCreateResponse;
   createEntityLinks: DefaultResponse;
   deleteEntityLinks: DefaultResponse;
   setNameAndDescription: DefaultResponse;
@@ -2239,6 +2240,13 @@ export type IsSubscribedQueryVariables = Exact<{
 
 export type IsSubscribedQuery = { __typename?: 'Query', subscription: { __typename?: 'SubscriptionQuery', currentUserHasSubscribed: boolean } };
 
+export type AliasByUuidQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type AliasByUuidQuery = { __typename?: 'Query', uuid?: { __typename?: 'Applet', alias: string } | { __typename?: 'AppletRevision', alias: string, repository: { __typename?: 'Applet', alias: string } } | { __typename?: 'Article', alias: string } | { __typename?: 'ArticleRevision', alias: string, repository: { __typename?: 'Article', alias: string } } | { __typename?: 'Comment', alias: string } | { __typename?: 'Course', alias: string } | { __typename?: 'CoursePage', alias: string } | { __typename?: 'CoursePageRevision', alias: string, repository: { __typename?: 'CoursePage', alias: string } } | { __typename?: 'CourseRevision', alias: string, repository: { __typename?: 'Course', alias: string } } | { __typename?: 'Event', alias: string } | { __typename?: 'EventRevision', alias: string, repository: { __typename?: 'Event', alias: string } } | { __typename?: 'Exercise', alias: string } | { __typename?: 'ExerciseGroup', alias: string } | { __typename?: 'ExerciseGroupRevision', alias: string, repository: { __typename?: 'ExerciseGroup', alias: string } } | { __typename?: 'ExerciseRevision', alias: string, repository: { __typename?: 'Exercise', alias: string } } | { __typename?: 'Page', alias: string } | { __typename?: 'PageRevision', alias: string } | { __typename?: 'TaxonomyTerm', alias: string } | { __typename?: 'User', alias: string } | { __typename?: 'Video', alias: string } | { __typename?: 'VideoRevision', alias: string, repository: { __typename?: 'Video', alias: string } } | null };
+
 export type TaxonomyTermCreateEntityLinkMutationVariables = Exact<{
   input: TaxonomyEntityLinksInput;
 }>;
@@ -2405,7 +2413,7 @@ export type TaxonomyCreateMutationVariables = Exact<{
 }>;
 
 
-export type TaxonomyCreateMutation = { __typename?: 'Mutation', taxonomyTerm: { __typename?: 'TaxonomyTermMutation', create: { __typename?: 'DefaultResponse', success: boolean } } };
+export type TaxonomyCreateMutation = { __typename?: 'Mutation', taxonomyTerm: { __typename?: 'TaxonomyTermMutation', create: { __typename?: 'TaxonomyTermCreateResponse', success: boolean } } };
 
 export type AddRoleMutationVariables = Exact<{
   input: UserRoleInput;

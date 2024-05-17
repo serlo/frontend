@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { Revision } from '@/components/author/revision/revision'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { RevisionViewProvider } from '@/contexts/revision-view-context'
 import { RevisionProps, RevisionPage } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
@@ -42,7 +42,7 @@ export const getStaticProps: GetStaticProps<RevisionProps> = async (
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as RevisionPage, // remove undefined values
     },
-    revalidate: 1,
+    revalidate: 60, // 1 min
   }
 }
 

@@ -41,7 +41,7 @@ export function EditOrInvite({
     UuidType.Page,
     UuidType.Event,
     UuidType.TaxonomyTerm,
-  ].includes(data.type as UuidType)
+  ].includes(data.typename as UuidType)
 
   const isInvite = !auth && showInvite
 
@@ -49,7 +49,7 @@ export function EditOrInvite({
     unrevisedRevisions !== undefined && unrevisedRevisions > 0
 
   const isCourse =
-    data.type === UuidType.Course || data.type === UuidType.CoursePage
+    data.typename === UuidType.Course || data.typename === UuidType.CoursePage
 
   const href = isCourse
     ? data.unrevisedCourseRevisions && data.unrevisedCourseRevisions > 0
@@ -77,7 +77,7 @@ export function EditOrInvite({
       />
       {isInvite && inviteOpen ? (
         <InviteModal
-          type={data.type}
+          type={data.typename}
           isOpen={inviteOpen}
           onClose={() => setInviteOpen(false)}
         />
@@ -88,16 +88,16 @@ export function EditOrInvite({
   function getEditHref(): string | undefined {
     if (!data) return undefined
     const revisionId = data.revisionId
-    const { type, id } = data
+    const { typename, id } = data
 
     const url = isCourse
       ? getEditUrl(data.courseId ?? id, undefined, false) + '#' + data.id
-      : getEditUrl(id, revisionId, type.startsWith('Taxonomy'))
+      : getEditUrl(id, revisionId, typename.startsWith('Taxonomy'))
 
-    if (type === UuidType.Page || type === UuidRevType.Page) {
+    if (typename === UuidType.Page || typename === UuidRevType.Page) {
       return canDo(Uuid.create(UuidRevType.Page)) ? url : undefined
     }
-    if (type === UuidType.TaxonomyTerm)
+    if (typename === UuidType.TaxonomyTerm)
       return canDo(TaxonomyTerm.set) ? url : undefined
 
     return url

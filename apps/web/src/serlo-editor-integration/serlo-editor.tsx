@@ -22,7 +22,7 @@ import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/
 export interface SerloEditorProps {
   children?: ReactNode
   entityNeedsReview: boolean
-  onSave: (data: SetEntityMutationData) => Promise<void>
+  onSave: (data: SetEntityMutationData) => Promise<void | boolean>
   initialState: EditorProps['initialState']
   type: UuidWithRevType | 'User'
 }

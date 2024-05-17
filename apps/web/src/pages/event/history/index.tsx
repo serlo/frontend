@@ -1,5 +1,5 @@
 import { PageTitle } from '@/components/content/page-title'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { Events } from '@/components/user/events'
 import { useInstanceData } from '@/contexts/instance-context'
 import { renderedPageNoHooks } from '@/helper/rendered-page'

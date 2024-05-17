@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { useState } from 'react'
 
 import { PageTitle } from '@/components/content/page-title'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -89,7 +89,7 @@ export const getStaticProps: GetStaticProps<UpdateLicenseProps> = (context) => {
     props: {
       id,
     },
-    revalidate: 60 * 60 * 24, //one day in seconds
+    revalidate: 60 * 60 * 24, // 1 day
   }
 }
 

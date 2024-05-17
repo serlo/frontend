@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -188,7 +188,7 @@ export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as TaxonomyPage, // remove undefined values
     },
-    revalidate: 60 * 2, // 2 min,
+    revalidate: 60 * 2, // 2 min
   }
 }
 

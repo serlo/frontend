@@ -1,6 +1,7 @@
 import { gql } from 'graphql-request'
 import NProgress from 'nprogress'
 
+import { getAliasById, revalidatePath } from './helper/revalidate-path'
 import { useMutationFetch } from './helper/use-mutation-fetch'
 import { useSuccessHandler } from './helper/use-success-handler'
 import { RejectRevisionInput } from '@/fetcher/graphql-types/operations'
@@ -52,7 +53,10 @@ export function useRevisionDecideMutation() {
         : rejectEntityMutation
     NProgress.start()
 
+    // persist current alias here since it might change on mutation
+    const oldAlias = await getAliasById(input.revisionId)
     const success = await mutationFetch(mutation, input)
+    if (oldAlias) await revalidatePath(oldAlias)
 
     return successHandler({
       success,

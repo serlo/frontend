@@ -1,8 +1,8 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 
-import { Entity } from '@/components/content/entity'
 import { LazyIframeResizer } from '@/components/content/lazy-iframe-resizer'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { Entity } from '@/components/entity/entity'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
@@ -96,7 +96,7 @@ export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as SlugProps['pageData'], // remove undefined values
     },
-    revalidate: 60 * 15, // 15 min,
+    revalidate: 60 * 60 * 24, // 1 day
   }
 }
 

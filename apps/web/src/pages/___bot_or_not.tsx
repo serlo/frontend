@@ -9,7 +9,7 @@ import { MouseEvent, useRef, useState } from 'react'
 
 import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { useCanDo } from '@/auth/use-can-do'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { TimeAgo } from '@/components/time-ago'
 import { ProfileRoles } from '@/components/user/profile-roles'

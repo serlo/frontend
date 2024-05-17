@@ -5,17 +5,66 @@ This is an early version of the web component wrapping the [Serlo Editor](https:
 ## Installation and usage
 
 1. `yarn add @serlo/editor-web-component`
-2. Define an HTML element with the id `serlo-root` in your file where you render the web component
+2. Register the web component `customElements.define('serlo-editor', EditorWebComponent)`.
+3. Render the web component
 
-```JSX
+Below is an example of how to use the web component in a Vue.js application.
+
+```vue
+<template>
+  <div>
+    <button @click="toggleMode">{{ isEditing ? 'READ' : 'EDIT' }}</button>
+    <serlo-editor
+      :mode="isEditing ? 'write' : 'read'"
+      :initial-state="initialExampleState"
+      @state-changed="handleStateChange"
+    ></serlo-editor>
+  </div>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue'
 import { EditorWebComponent } from '@serlo/editor-web-component'
 
-// in your render function
-return (
-  <div id="serlo-root">
-    <serlo-editor></serlo-editor>
-  </div>
-)
+customElements.define('serlo-editor', EditorWebComponent)
+
+export default defineComponent({
+  name: 'SerloEditorComponent',
+  setup() {
+    const isEditing = ref(false)
+    const initialExampleState = ref({
+      plugin: 'rows',
+      state: [
+        {
+          plugin: 'text',
+          state: [
+            {
+              type: 'h',
+              level: 1,
+              children: [{ text: 'Example Heading' }],
+            },
+          ],
+        },
+      ],
+    })
+
+    const toggleMode = () => {
+      isEditing.value = !isEditing.value
+    }
+
+    const handleStateChange = (event) => {
+      console.log('New state:', event.detail.newState)
+    }
+
+    return {
+      isEditing,
+      initialExampleState,
+      toggleMode,
+      handleStateChange,
+    }
+  },
+})
+</script>
 ```
 
 ## Releasing a new version to npm

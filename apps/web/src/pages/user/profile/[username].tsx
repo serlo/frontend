@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { Profile } from '@/components/pages/user/profile'
 import { UserProps, UserPage } from '@/data-types'
 import { requestUserByUsername } from '@/fetcher/user/request-user-by-username'
@@ -37,7 +37,7 @@ export const getStaticProps: GetStaticProps<UserProps> = async (context) => {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as UserPage, // remove undefined values
     },
-    revalidate: 1,
+    revalidate: 60 * 60 * 24, // 1 day
   }
 }
 

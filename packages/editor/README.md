@@ -2,9 +2,52 @@
 
 This is an early beta version of the [Serlo Editor](https://de.serlo.org/editor). Be aware that we are currently working on this package and thus there will be breaking changes. The repository [serlo/serlo-editor-for-edusharing](https://github.com/serlo/serlo-editor-for-edusharing) shows how this package can be used.
 
+## Using the Serlo Editor
+
+### Installation
+
+In your React project
+
+```bash
+yarn add @serlo/editor
+```
+
+### Usage
+
+You can see a complete working example of the usage [here](https://github.com/serlo/serlo-editor-for-edusharing/blob/main/src/frontend/editor.tsx#L32).
+
+```tsx
+import { SerloEditor, SerloEditorProps } from '@serlo/editor'
+
+type InitialState = SerloEditorProps['initialState']
+
+function MyCustomSerloEditor({ initialState }: { initialState: InitialState }) {
+  return (
+    <SerloEditor
+      initialState={initialState}
+      onChange={({ changed, getDocument }) => {
+        if (changed){
+          console.log(`New state: `, getDocument())
+        }
+      }}
+    >
+      {({ editor }) => (
+        {/* Optionally configure plugins or i18n strings via the editor object */}
+        <div>
+          {/* Renders the actual editor content */}
+          {editor.element}
+        </div>
+      )}
+    </SerloEditor>
+  )
+}
+```
+
+See below for the current API specification.
+
 ## Current Editor package API
 
-#### 1. `SerloEditor`, `type SerloEditorProps`
+### 1. `SerloEditor`, `type SerloEditorProps`
 
 - **Why Exported/How Used**: `SerloEditor` is the core component of the `@serlo/editor` package, providing the main editor functionality. It's exported to allow users to embed the editor into their applications, passing in initial state, configuration, and custom render props to tailor the editor's functionality to their needs.
 - **Long-Term Support**: Will stay
@@ -26,6 +69,12 @@ This is an early beta version of the [Serlo Editor](https://de.serlo.org/editor)
 
 - **Why Exported/How Used**: These exports are currently necessary for defining custom Edusharing plugins. We don't plan to support custom plugins in the future.
 - **Long-Term Support**: To be deprecated
+- **Needs Change?**: No
+
+#### 5. Style (css) export `@serlo/editor/styles.css`
+
+- **Why Exported/How Used**: Styles the editor with our custom css. Just import `import '@serlo/editor/style.css'` wherever you render the editor. Mostly used in the web component. The css already comes bundled within the JS of the editor package. Therefore, you shouldn't need to import this, unless you plan to render the editor within the Shadow DOM.
+- **Long-Term Support**: Yes
 - **Needs Change?**: No
 
 ### `SerloEditor` component props

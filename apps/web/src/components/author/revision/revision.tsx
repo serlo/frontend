@@ -99,7 +99,7 @@ export function Revision({ data }: RevisionProps) {
       <UserTools
         aboveContent={above}
         data={{
-          type: data.typename,
+          typename: data.typename,
           id: data.repository.id,
           revisionId: data.thisRevision.id,
           revisionData: {

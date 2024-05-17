@@ -61,7 +61,7 @@ interface ToolConfig {
 type ToolsConfig = Record<Tool, ToolConfig>
 
 export interface AuthorToolsData {
-  type: UuidWithRevType | ExerciseInlineType
+  typename: UuidWithRevType | ExerciseInlineType
   id: number
   alias?: string
   taxonomyType?: TaxonomyTermType
@@ -135,7 +135,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       url: `/entity/taxonomy/update/${entityId}`,
       title: loggedInStrings.authorMenu.editAssignments,
       canDo:
-        !(data.type === ExerciseInlineType.Exercise && data.grouped) &&
+        !(data.typename === ExerciseInlineType.Exercise && data.grouped) &&
         canDo(TaxonomyTerm.set) &&
         canDo(TaxonomyTerm.orderChildren) &&
         canDo(TaxonomyTerm.change) &&
@@ -143,7 +143,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     },
     trash: {
       renderer: trash,
-      canDo: canDo(Uuid.setState(typeToAuthorizationType(data.type))),
+      canDo: canDo(Uuid.setState(typeToAuthorizationType(data.typename))),
     },
     newEntitySubmenu: {
       renderer: renderNewEntity,
@@ -277,7 +277,8 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 
   function renderNewEntity() {
-    if (data.type !== UuidType.TaxonomyTerm || !data.taxonomyType) return null
+    if (data.typename !== UuidType.TaxonomyTerm || !data.taxonomyType)
+      return null
 
     const allowedTypes: Record<
       TaxonomyTermType,
@@ -365,7 +366,9 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 }
 
-function typeToAuthorizationType(type: AuthorToolsData['type']): AuthUuidType {
+function typeToAuthorizationType(
+  type: AuthorToolsData['typename']
+): AuthUuidType {
   if (type === UuidType.Page) return 'Page'
   if (type === UuidRevType.Page) return 'PageRevision'
   if (type.includes('Revision')) return 'EntityRevision'
