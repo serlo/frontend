@@ -146,7 +146,7 @@ export function LenabiWelcome() {
               (erstellt von Lehrkraft)
             </p>
           ),
-          link: '/244309',
+          link: '/307521',
         })}
       </>
     )
