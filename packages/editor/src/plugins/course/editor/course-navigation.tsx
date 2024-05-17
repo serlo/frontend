@@ -96,11 +96,12 @@ export function CourseNavigation({
             <FaIcon icon={faArrowCircleDown} />
           </button>
         ) : null}
-
-        <button className={toolButtonClassnames} onClick={onRemove}>
-          <EditorTooltip text={templateStrings.course.removeCoursePage} />
-          <FaIcon icon={faTrashAlt} />
-        </button>
+        {pages.length > 1 ? (
+          <button className={toolButtonClassnames} onClick={onRemove}>
+            <EditorTooltip text={templateStrings.course.removeCoursePage} />
+            <FaIcon icon={faTrashAlt} />
+          </button>
+        ) : null}
       </>
     )
   }

@@ -17,7 +17,8 @@ const courseState = object({
       id: string(),
       title: string(),
       content: child({ plugin: EditorPluginType.Rows }),
-    })
+    }),
+    1
   ),
 })
 

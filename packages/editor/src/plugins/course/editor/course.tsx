@@ -19,6 +19,14 @@ export function CourseEditor(props: CourseProps) {
 
   const activePage = pages.at(activePageIndex)
 
+  // make sure that is at least one page
+  useEffect(() => {
+    if (pages.length) return
+    createPage()
+    // only on first load
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   useEffect(() => {
     const hashId = window.location.hash.substring(1)
     if (!hashId) return
@@ -51,16 +59,21 @@ export function CourseEditor(props: CourseProps) {
     </>
   )
 
+  function createPage() {
+    const id = generateNewId()
+    pages.insert(pages.length, {
+      id,
+      title: '',
+      content: { plugin: EditorPluginType.Rows },
+    })
+    return id
+  }
+
   function renderAddButton() {
     return (
       <AddButton
         onClick={() => {
-          const id = generateNewId()
-          pages.insert(pages.length, {
-            id,
-            title: '',
-            content: { plugin: EditorPluginType.Rows },
-          })
+          const id = createPage()
           setTimeout(() => {
             setActivePageIndex(pages.length)
             window.location.hash = `#${id}`
