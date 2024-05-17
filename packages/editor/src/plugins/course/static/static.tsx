@@ -1,6 +1,7 @@
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { isRowsDocument } from '@editor/types/plugin-type-guards'
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useState, MouseEvent } from 'react'
@@ -8,6 +9,8 @@ import { useState, MouseEvent } from 'react'
 import { CourseFooter } from './course-footer'
 import { CourseNavigation } from './course-navigation'
 import { isEmptyTextDocument } from '../../text/utils/static-is-empty'
+import { InfoPanel } from '@/components/info-panel'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useEntityData } from '@/contexts/serlo-entity-context'
 import { cn } from '@/helper/cn'
 
@@ -18,6 +21,15 @@ export function CourseStaticRenderer({ state }: EditorCourseDocument) {
   const { title: courseTitle } = useEntityData()
   // courseNav: start opened when only some entries
   const [courseNavOpen, setCourseNavOpen] = useState(pages.length < 4 ?? false)
+  const { strings } = useInstanceData()
+
+  if (!pages.length) {
+    return (
+      <InfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
+        {strings.course.noPagesWarning}
+      </InfoPanel>
+    )
+  }
 
   const isEmptyContent =
     !content ||
@@ -51,7 +63,6 @@ export function CourseStaticRenderer({ state }: EditorCourseDocument) {
       ) : (
         <StaticRenderer document={content} />
       )}
-      {/* renderNoCoursePages */}
       {renderCoursePageTitle()}
       <StaticRenderer document={activePage?.content} />
       <CourseFooter
