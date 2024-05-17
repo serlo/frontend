@@ -33,25 +33,11 @@ export const courseTypePlugin: EditorPlugin<CourseTypePluginState> = {
 function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
   const { title, content, meta_description: metaDescription } = props.state
 
-  // useEffect(() => {
-  //   const hashId = parseInt(window.location.hash.substring(1))
-  //   if (!hashId) return
-  //   const index = staticPages.findIndex(({ id }) => id === hashId)
-  //   setActivePageIndex(Math.max(index, 0))
-  // }, [staticPages])
-
-  // if (!staticPages) return null
-
   return (
     <>
       <div className="absolute right-0 -mt-10 mr-side flex">
         <MetadataFieldsModal metaDescription={metaDescription} />
 
-        {/* <RevisionHistoryLoader
-          id={props.state.id.value}
-          currentRevision={props.state.revision.value}
-          onSwitchRevision={props.state.replaceOwnState}
-        /> */}
         <ContentLoaders
           id={props.state.id.value}
           currentRevision={props.state.revision.value}

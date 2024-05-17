@@ -1,4 +1,3 @@
-// Temporary file while working on unified renderer
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { isEmptyArticle } from '@editor/plugins/article/utils/static-is-empty'
 import { CourseHeader } from '@editor/plugins/course/renderer/course-header'

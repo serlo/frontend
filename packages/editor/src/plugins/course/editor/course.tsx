@@ -1,9 +1,10 @@
 import { AddButton } from '@editor/editor-ui'
+import { EntityTitleInput } from '@editor/plugins/serlo-template-plugins/common/entity-title-input'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useEffect, useState } from 'react'
 
 import { CourseNavigation } from './course-navigation'
-import { CoursePage } from './course-page'
 import type { CourseProps } from '..'
 
 export function CourseEditor(props: CourseProps) {
@@ -25,7 +26,7 @@ export function CourseEditor(props: CourseProps) {
     setActivePageIndex(Math.max(index, 0))
     // only on first load
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pages])
+  }, [])
 
   return (
     <>
@@ -38,15 +39,15 @@ export function CourseEditor(props: CourseProps) {
       />
       <br />
       {renderAddButton()}
-      {activePage ? <CoursePage coursePage={activePage} /> : null}
-      <div>
-        {/* {isSerlo ? (
-        <SerloLicenseChooser
-          licenseId={licenseId}
-          className="!right-[84px] !top-[-30px]"
-        />
-      ) : null} */}
-      </div>
+      {activePage ? (
+        <div
+          key={activePage.id.value}
+          className="mt-16 border-t-2 border-editor-primary-200 pt-2"
+        >
+          <EntityTitleInput title={activePage.title} forceFocus />
+          {activePage.content.render()}
+        </div>
+      ) : null}
     </>
   )
 
@@ -54,15 +55,28 @@ export function CourseEditor(props: CourseProps) {
     return (
       <AddButton
         onClick={() => {
-          pages.insert()
+          const id = generateNewId()
+          pages.insert(pages.length, {
+            id,
+            title: '',
+            content: { plugin: EditorPluginType.Rows },
+          })
           setTimeout(() => {
             setActivePageIndex(pages.length)
-            window.location.hash = `#${pages.at(pages.length - 1)?.id.value ?? pages[0].id.value}`
-          })
+            window.location.hash = `#${id}`
+          }, 30)
         }}
       >
         {courseStrings.addCoursePage}
       </AddButton>
     )
+  }
+
+  function generateNewId() {
+    const newId = Math.random().toString(36).substring(2, 6)
+    if (pages.some(({ id }) => id.value === newId)) {
+      return generateNewId()
+    }
+    return newId
   }
 }
