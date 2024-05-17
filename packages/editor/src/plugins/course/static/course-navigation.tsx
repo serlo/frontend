@@ -11,7 +11,7 @@ export function CourseNavigation({
   activePageId,
 }: {
   pages: EditorCourseDocument['state']['pages']
-  activePageId: string
+  activePageId?: string
 }) {
   const [courseNavOpen, setCourseNavOpen] = useState(pages?.length < 4)
   const { title, entityId } = useEntityData()
