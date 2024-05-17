@@ -5,7 +5,6 @@ import { useState, MouseEvent } from 'react'
 import { CourseNavigationRenderer } from '../renderer/course-navigation'
 import { useEntityData } from '@/contexts/serlo-entity-context'
 import { cn } from '@/helper/cn'
-import { scrollIfNeeded } from '@/helper/scroll'
 
 export function CourseNavigation({
   pages,
@@ -50,7 +49,9 @@ export function CourseNavigation({
                 void router.push(`/${entityId}?page=${id}`, undefined, {
                   shallow: true,
                 })
-                scrollIfNeeded(document.querySelector('#course-title'))
+                setTimeout(() => {
+                  setCourseNavOpen(false)
+                }, 100)
               }}
             >
               {title}
