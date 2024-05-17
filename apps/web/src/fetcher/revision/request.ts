@@ -30,10 +30,7 @@ export async function requestRevision(
 
   const uuid = response.uuid
 
-  if (!uuid)
-    return {
-      kind: 'not-found',
-    }
+  if (!uuid) return { kind: 'not-found' }
 
   const authorization = response.authorization as AuthorizationPayload
 
@@ -165,7 +162,5 @@ export async function requestRevision(
     }
   }
 
-  return {
-    kind: 'not-found',
-  }
+  return { kind: 'not-found' }
 }

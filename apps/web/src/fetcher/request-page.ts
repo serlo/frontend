@@ -207,35 +207,45 @@ export async function requestPage(
 
   const { licenseId } = uuid
 
+  const sharedEntityData = {
+    id: uuid.id,
+    alias: uuid.alias,
+    trashed: uuid.trashed,
+    title: uuid.title,
+    licenseId,
+    content,
+    isUnrevised: !uuid.currentRevision,
+    unrevisedRevisions: uuid.revisions?.totalCount,
+  }
+
+  const sharedMetadata = {
+    title,
+    metaImage,
+    metaDescription:
+      uuid.currentRevision?.metaDescription ?? getMetaDescription(content),
+    dateCreated: uuid.date,
+    dateModified: uuid.currentRevision?.date,
+  }
+
   if (uuid.__typename === UuidType.Article) {
     return {
       kind: 'single-entity',
       newsletterPopup: false,
       entityData: {
-        id: uuid.id,
-        alias: uuid.alias,
-        trashed: uuid.trashed,
+        ...sharedEntityData,
         typename: UuidType.Article,
-        title: uuid.currentRevision?.title ?? uuid.revisions?.nodes[0]?.title,
-        content,
-        licenseId,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
           useArticleTag: true,
           setContentAsSection: true,
         },
-        unrevisedRevisions: uuid.revisions?.totalCount,
-        isUnrevised: !uuid.currentRevision,
       },
       metaData: {
-        title,
+        ...sharedMetadata,
         contentType: 'article',
-        metaImage,
         metaDescription: uuid.currentRevision?.metaDescription
           ? uuid.currentRevision?.metaDescription
           : getArticleMetaDescription(content),
-        dateCreated: uuid.date,
-        dateModified: uuid.currentRevision?.date,
       },
       horizonData,
       breadcrumbsData,
@@ -249,23 +259,12 @@ export async function requestPage(
       kind: 'single-entity',
       newsletterPopup: false,
       entityData: {
-        id: uuid.id,
-        alias: uuid.alias,
-        trashed: uuid.trashed,
+        ...sharedEntityData,
         typename: UuidType.Course,
-        title: uuid.title,
-        content,
-        licenseId,
-        unrevisedRevisions: uuid.revisions?.totalCount,
-        isUnrevised: !uuid.currentRevision,
       },
       metaData: {
-        title,
+        ...sharedMetadata,
         contentType: 'course',
-        metaImage,
-        metaDescription: uuid.currentRevision?.metaDescription,
-        // dateCreated: uuid.date,
-        // dateModified: uuid.currentRevision?.date,
       },
       horizonData,
       breadcrumbsData,
@@ -278,11 +277,8 @@ export async function requestPage(
       kind: 'single-entity',
       newsletterPopup: false,
       entityData: {
-        id: uuid.id,
-        alias: uuid.alias,
-        trashed: uuid.trashed,
+        ...sharedEntityData,
         typename: UuidType.Video,
-        title: uuid.currentRevision?.title ?? '',
         content: [
           {
             plugin: EditorPluginType.Video,
@@ -296,15 +292,10 @@ export async function requestPage(
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
-        licenseId,
-        unrevisedRevisions: uuid.revisions?.totalCount,
-        isUnrevised: !uuid.currentRevision,
       },
       metaData: {
-        title,
+        ...sharedMetadata,
         contentType: 'video',
-        metaImage,
-        metaDescription: getMetaDescription(content),
       },
       horizonData,
       breadcrumbsData,
@@ -317,11 +308,8 @@ export async function requestPage(
       kind: 'single-entity',
       newsletterPopup: false,
       entityData: {
-        id: uuid.id,
-        alias: uuid.alias,
-        trashed: uuid.trashed,
         typename: UuidType.Applet,
-        title: uuid.currentRevision?.title ?? '',
+        ...sharedEntityData,
         content: [
           {
             plugin: EditorPluginType.Geogebra,
@@ -332,17 +320,10 @@ export async function requestPage(
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
-        licenseId,
-        unrevisedRevisions: uuid.revisions?.totalCount,
-        isUnrevised: !uuid.currentRevision,
       },
       metaData: {
-        title,
+        ...sharedMetadata,
         contentType: 'applet',
-        metaImage,
-        metaDescription: uuid.currentRevision?.metaDescription
-          ? uuid.currentRevision?.metaDescription
-          : getMetaDescription(content),
       },
       horizonData,
       breadcrumbsData,
@@ -380,12 +361,8 @@ export async function requestPage(
       kind: 'single-entity',
       newsletterPopup: false,
       entityData: {
-        id: uuid.id,
-        alias: uuid.alias,
-        trashed: uuid.trashed,
+        ...sharedEntityData,
         typename: UuidType.CoursePage,
-        title: uuid.currentRevision?.title ?? '',
-        content,
         licenseId: uuid.course.licenseId,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
@@ -398,15 +375,11 @@ export async function requestPage(
           pages,
           index: currentPageIndex,
         },
-        unrevisedRevisions: uuid.revisions?.totalCount,
         unrevisedCourseRevisions: uuid.course.revisions?.totalCount,
-        isUnrevised: !uuid.currentRevision,
       },
       metaData: {
-        title,
+        ...sharedMetadata,
         contentType: 'course-page',
-        metaImage,
-        metaDescription: getMetaDescription(content),
       },
       horizonData,
       breadcrumbsData,
