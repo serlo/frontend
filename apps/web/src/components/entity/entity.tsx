@@ -11,7 +11,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
-import { useState, MouseEvent } from 'react'
+import { useState } from 'react'
 
 import { HSpace } from '../content/h-space'
 import { Link } from '../content/link'
@@ -48,10 +48,7 @@ export function Entity({ data }: EntityProps) {
     (data && data.courseData && data.courseData.pages.length < 4) ?? false
   )
 
-  const openCourseNav = (e?: MouseEvent) => {
-    e?.preventDefault()
-    setCourseNavOpen(!courseNavOpen)
-  }
+  const toggleCourseNav = () => setCourseNavOpen(!courseNavOpen)
 
   // auto close courseNav when switching pages
   Router.events.on('routeChangeComplete', () => {
@@ -173,7 +170,7 @@ export function Entity({ data }: EntityProps) {
     return (
       <CourseNavigationRenderer
         open={courseNavOpen}
-        onOverviewButtonClick={openCourseNav}
+        onOverviewButtonClick={toggleCourseNav}
         title={data.courseData.title}
         pages={data.courseData.pages.map(
           ({ id, title, active, noCurrentRevision, url }) => {
@@ -220,7 +217,7 @@ export function Entity({ data }: EntityProps) {
 
     return (
       <CourseFooter
-        onOverviewButtonClick={openCourseNav}
+        onOverviewButtonClick={toggleCourseNav}
         pages={data.courseData.pages}
         index={data.courseData.index}
       />

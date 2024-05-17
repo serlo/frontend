@@ -2,13 +2,12 @@ import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { type MouseEvent } from 'react'
 
 export interface CourseNavigationProps {
   title: string | JSX.Element
   pages: { key: string; element: JSX.Element }[]
   open: boolean
-  onOverviewButtonClick: (e?: MouseEvent<HTMLButtonElement>) => void
+  onOverviewButtonClick: () => void
 }
 
 export function CourseNavigationRenderer({

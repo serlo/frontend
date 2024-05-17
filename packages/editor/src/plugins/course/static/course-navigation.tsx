@@ -1,6 +1,6 @@
 import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { useRouter } from 'next/router'
-import { useState, MouseEvent } from 'react'
+import { useState } from 'react'
 
 import { CourseNavigationRenderer } from '../renderer/course-navigation'
 import { useEntityData } from '@/contexts/serlo-entity-context'
@@ -18,15 +18,12 @@ export function CourseNavigation({
   const router = useRouter()
   if (!pages) return null
 
-  const openCourseNav = (e?: MouseEvent) => {
-    e?.preventDefault()
-    setCourseNavOpen(!courseNavOpen)
-  }
+  const toggleCourseNav = () => setCourseNavOpen(!courseNavOpen)
 
   return (
     <CourseNavigationRenderer
       open={courseNavOpen}
-      onOverviewButtonClick={openCourseNav}
+      onOverviewButtonClick={toggleCourseNav}
       title={title ?? ''}
       pages={pages.map(({ id: rawId, title }) => {
         const id = rawId.split('-')[0]
