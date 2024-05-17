@@ -14,7 +14,7 @@ export function CourseNavigation({
   activePageId?: string
 }) {
   const [courseNavOpen, setCourseNavOpen] = useState(pages?.length < 4)
-  const { title, entityId } = useEntityData()
+  const { entityId } = useEntityData()
   const router = useRouter()
   if (!pages) return null
 
@@ -24,7 +24,6 @@ export function CourseNavigation({
     <CourseNavigationRenderer
       open={courseNavOpen}
       onOverviewButtonClick={toggleCourseNav}
-      title={title ?? ''}
       pages={pages.map(({ id: rawId, title }) => {
         const id = rawId.split('-')[0]
         const active = activePageId && activePageId.startsWith(id)

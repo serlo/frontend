@@ -3,7 +3,6 @@ import { createContext, useContext } from 'react'
 export interface SerloEntityContextData {
   entityId?: number
   revisionId?: number
-  title?: string // currently only used for course title
 }
 
 export const SerloEntityContext = createContext<SerloEntityContextData | null>(

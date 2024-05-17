@@ -40,12 +40,10 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
       ? {
           entityId: pageData.entityData.id,
           revisionId: pageData.entityData.revisionId,
-          title: pageData.entityData.title,
         }
       : {
           entityId: pageData.taxonomyData.id,
           revisionId: undefined,
-          title: pageData.taxonomyData.title,
         }
 
   return (

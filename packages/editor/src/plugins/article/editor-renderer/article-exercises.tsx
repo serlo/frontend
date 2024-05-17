@@ -11,6 +11,7 @@ interface ArticleExercisesProps {
 }
 
 export function ArticleExercises({ exercises }: ArticleExercisesProps) {
+  const entityStrings = useEditorStrings().templatePlugins.entity
   const articleStrings = useEditorStrings().templatePlugins.article
 
   return (
@@ -25,7 +26,7 @@ export function ArticleExercises({ exercises }: ArticleExercisesProps) {
                     onClick={() => exercises.move(index, index - 1)}
                     className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
                   >
-                    <EditorTooltip text={articleStrings.moveUpLabel} />
+                    <EditorTooltip text={entityStrings.moveUpLabel} />
                     <FaIcon icon={faArrowCircleUp} />
                   </button>
                 )}

@@ -36,7 +36,7 @@ export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
                       }}
                     >
                       <EditorTooltip
-                        text={templateStrings.article.moveUpLabel}
+                        text={templateStrings.entity.moveUpLabel}
                       />
                       <FaIcon icon={faArrowCircleUp} />
                     </button>
