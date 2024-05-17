@@ -24,7 +24,10 @@ export function CourseStaticRenderer({
   const { strings } = useInstanceData()
 
   const activePageIndex = queryPageId
-    ? pages.findIndex((page) => page.id.startsWith(queryPageId)) ?? 0
+    ? Math.max(
+        pages.findIndex((page) => page.id.startsWith(queryPageId)),
+        0
+      )
     : 0
   const activePage = pages.at(activePageIndex)
 
@@ -56,6 +59,7 @@ export function CourseStaticRenderer({
   )
 
   function renderCoursePageTitle() {
+    console.log(activePageIndex, 'activePageIndex')
     return (
       <h1 className="serlo-h1 mt-12" itemProp="name" id="course-title">
         <span

@@ -4,6 +4,7 @@ import { useState } from 'react'
 
 import { CourseNavigationRenderer } from '../renderer/course-navigation'
 import { cn } from '@/helper/cn'
+import { buildNewPathWithCourseId } from '../helper/get-course-id-from-path'
 
 export function CourseNavigation({
   pages,
@@ -40,12 +41,12 @@ export function CourseNavigation({
                 e.preventDefault()
                 if (active) return
 
-                const base = router.asPath.split('/').slice(0, -1).join('/')
-                const slugTitle = title
-                  .toLocaleLowerCase()
-                  .replace(/['"`=+*&^%$#@!.<>?]/g, '')
-                  .replace(/[[\]{}() ,;:/|-]+/g, '-')
-                void router.push(`${base}/${id}-${slugTitle}`, undefined, {
+                const newPath = buildNewPathWithCourseId(
+                  router.asPath,
+                  title,
+                  id
+                )
+                void router.push(newPath, undefined, {
                   shallow: true,
                 })
                 setTimeout(() => setCourseNavOpen(false), 100)

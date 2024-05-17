@@ -7,9 +7,9 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { MouseEvent } from 'react'
 
+import { buildNewPathWithCourseId } from '../helper/get-course-id-from-path'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useEntityData } from '@/contexts/serlo-entity-context'
 import { cn } from '@/helper/cn'
 import { scrollIfNeeded } from '@/helper/scroll'
 
@@ -27,7 +27,6 @@ export function CourseFooter({
     onOverviewButtonClick(e)
   }
   const router = useRouter()
-  const { entityId } = useEntityData()
   const previousIndex = index - 1
   const nextIndex = index + 1
   const previousPage = pages[previousIndex]
@@ -37,9 +36,9 @@ export function CourseFooter({
 
   const { strings } = useInstanceData()
 
-  function navigate(pageId: string) {
-    // find a way to use alias or current path here
-    void router.push(`/${entityId}?page=${pageId}`, undefined, {
+  function navigate(page: EditorCourseDocument['state']['pages'][number]) {
+    const newPath = buildNewPathWithCourseId(router.asPath, page.title, page.id)
+    void router.push(newPath, undefined, {
       shallow: true,
     })
     scrollIfNeeded(document.querySelector('#course-title'))
@@ -57,7 +56,7 @@ export function CourseFooter({
             href={previousHref}
             onClick={(e) => {
               e.preventDefault()
-              navigate(previousPage.id)
+              navigate(previousPage)
             }}
             className="serlo-button-light mx-side h-fit hover:no-underline"
           >
@@ -70,7 +69,7 @@ export function CourseFooter({
             href={nextHref}
             onClick={(e) => {
               e.preventDefault()
-              navigate(nextPage.id)
+              navigate(nextPage)
             }}
             className="ml-auto mr-side text-right hover:no-underline"
           >
