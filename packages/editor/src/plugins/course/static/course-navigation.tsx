@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 
 import { CourseNavigationRenderer } from '../renderer/course-navigation'
-import { useEntityData } from '@/contexts/serlo-entity-context'
 import { cn } from '@/helper/cn'
 
 export function CourseNavigation({
@@ -14,7 +13,6 @@ export function CourseNavigation({
   activePageId?: string
 }) {
   const [courseNavOpen, setCourseNavOpen] = useState(pages?.length < 4)
-  const { entityId } = useEntityData()
   const router = useRouter()
   if (!pages) return null
 
@@ -41,13 +39,16 @@ export function CourseNavigation({
               onClick={(e) => {
                 e.preventDefault()
                 if (active) return
-                // find a way to use alias or current path here
-                void router.push(`/${entityId}?page=${id}`, undefined, {
+
+                const base = router.asPath.split('/').slice(0, -1).join('/')
+                const slugTitle = title
+                  .toLocaleLowerCase()
+                  .replace(/['"`=+*&^%$#@!.<>?]/g, '')
+                  .replace(/[[\]{}() ,;:/|-]+/g, '-')
+                void router.push(`${base}/${id}-${slugTitle}`, undefined, {
                   shallow: true,
                 })
-                setTimeout(() => {
-                  setCourseNavOpen(false)
-                }, 100)
+                setTimeout(() => setCourseNavOpen(false), 100)
               }}
             >
               {title}

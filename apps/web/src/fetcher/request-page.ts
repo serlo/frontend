@@ -1,3 +1,4 @@
+import { getCourseIdFromPath } from '@editor/plugins/course/helper/get-course-id-from-path'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
@@ -263,9 +264,7 @@ export async function requestPage(
   }
 
   if (uuid.__typename === UuidType.Course) {
-    // unfortunately currently we don't know which course page is selected at this point
-
-    const coursePageId = requestPath.split('/').at(-1)?.split('-')[0]
+    const coursePageId = getCourseIdFromPath(requestPath)
     const coursePages = (content as unknown as EditorCourseDocument).state.pages
     if (!coursePages || !coursePages.length) return { kind: 'not-found' }
 
@@ -278,6 +277,11 @@ export async function requestPage(
       newsletterPopup: false,
       entityData: {
         ...sharedEntityData,
+        content: {
+          ...content,
+          // @ts-expect-error passing down additional data
+          serloContext: { activeCoursePageId: coursePageId },
+        },
         typename: UuidType.Course,
         title: coursePage?.title ?? uuid.title,
         schemaData: {
