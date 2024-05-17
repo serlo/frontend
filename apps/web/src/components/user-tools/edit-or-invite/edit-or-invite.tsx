@@ -1,6 +1,7 @@
 import { faClock, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { TaxonomyTerm, Uuid } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 
 import type { InviteModalProps } from './invite-modal'
@@ -32,6 +33,7 @@ export function EditOrInvite({
 }: EditOrInviteProps) {
   const auth = useAuthentication()
   const canDo = useCanDo()
+  const router = useRouter()
   const { strings } = useInstanceData()
   const [inviteOpen, setInviteOpen] = useState(false)
 
@@ -90,8 +92,12 @@ export function EditOrInvite({
     const revisionId = data.revisionId
     const { typename, id } = data
 
+    const coursePageId = router.query.page
+      ? String(router.query.page)?.split('-')[0]
+      : undefined
+
     const url = isCourse
-      ? getEditUrl(data.courseId ?? id, undefined, false) + '#' + data.id
+      ? getEditUrl(data.courseId ?? id, undefined, false) + '#' + coursePageId
       : getEditUrl(id, revisionId, typename.startsWith('Taxonomy'))
 
     if (typename === UuidType.Page || typename === UuidRevType.Page) {
