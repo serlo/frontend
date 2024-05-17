@@ -181,6 +181,7 @@ export async function requestPage(
         metaDescription: getMetaDescription(content),
       },
       cacheKey,
+      breadcrumbsData,
       authorization,
     }
   }
