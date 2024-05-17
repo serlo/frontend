@@ -83,19 +83,19 @@ Scenario(
     addBoxPlugin(I, 'blank')
 
     I.say('Empty warning message visible after creating new box')
-    I.click('input[placeholder="Titel"]') // unfocus box plugin
+    I.click('$entity-title-input') // unfocus box plugin
     I.seeElement('$plugin-box-empty-content-warning')
 
     I.say('Empty warning message visible even if title is not empty')
     I.click('$plugin-text-editor', '$plugin-box-title')
     I.type('Boxtitel')
-    I.click('input[placeholder="Titel"]') // unfocus box plugin
+    I.click('$entity-title-input') // unfocus box plugin
     I.seeElement('$plugin-box-empty-content-warning')
 
     I.say('Empty warning message not visible if content not empty')
     I.click('$plugin-text-editor', '$plugin-box-content')
     I.type('Boxinhalt')
-    I.click('input[placeholder="Titel"]') // unfocus box plugin
+    I.click('$entity-title-input') // unfocus box plugin
     I.dontSeeElement('$plugin-box-empty-content-warning')
   }
 )
