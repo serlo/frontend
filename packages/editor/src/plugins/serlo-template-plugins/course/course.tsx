@@ -8,13 +8,10 @@ import {
   string,
 } from '@editor/plugin'
 import { selectStaticDocument, store } from '@editor/store'
-import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { UuidType } from '@serlo/frontend/src/data-types'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 import { RevisionHistoryLoader } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/revision-history-loader'
 import { useEffect, useState } from 'react'
 
@@ -164,7 +161,7 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
   function renderCoursePage() {
     const activePage = children.at(activePageIndex)
     if (!activePage) return
-    const staticPage = staticPages[activePageIndex]
+    // const staticPage = staticPages[activePageIndex]
 
     return (
       <div
@@ -179,14 +176,15 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
             <EditorTooltip text={courseStrings.removeCoursePage} />
             <FaIcon icon={faTrashAlt} />
           </button>
-          <ContentLoaders
+          {/* TODO */}
+          {/* <ContentLoaders
             id={staticPage.id}
             currentRevision={staticPage.revision}
             onSwitchRevision={(data) =>
               activePage.replace(TemplatePluginType.CoursePage, data)
             }
             entityType={UuidType.CoursePage}
-          />
+          /> */}
         </nav>
         {children[activePageIndex]?.render()}
       </div>

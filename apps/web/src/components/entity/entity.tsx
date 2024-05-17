@@ -1,7 +1,6 @@
 // Temporary file while working on unified renderer
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { isEmptyArticle } from '@editor/plugins/article/utils/static-is-empty'
-import { CourseNavigationRenderer } from '@editor/plugins/course/renderer/course-navigation'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { isArticleDocument } from '@editor/types/plugin-type-guards'
 import {
@@ -10,19 +9,15 @@ import {
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
-import { Router } from 'next/router'
-import { useState } from 'react'
 
 import { HSpace } from '../content/h-space'
 import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
 import { InfoPanel } from '../info-panel'
 import { LicenseNotice } from '@/components/content/license/license-notice'
-import { CourseFooter } from '@/components/navigation/course-footer'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, UuidType } from '@/data-types'
-import { cn } from '@/helper/cn'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { isProduction } from '@/helper/is-production'
@@ -43,25 +38,11 @@ const LenabiCourseFeedback = dynamic(() =>
 export function Entity({ data }: EntityProps) {
   editorRenderers.init(createRenderers())
 
-  // courseNav: start opened when only some entries
-  const [courseNavOpen, setCourseNavOpen] = useState(
-    (data && data.courseData && data.courseData.pages.length < 4) ?? false
-  )
-
-  const toggleCourseNav = () => setCourseNavOpen(!courseNavOpen)
-
-  // auto close courseNav when switching pages
-  Router.events.on('routeChangeComplete', () => {
-    setCourseNavOpen(false)
-  })
-
   const isLenabiUserJourneyCoursePage = !isProduction && data.id === 307527
 
   const { strings } = useInstanceData()
   return wrapWithSchema(
     <>
-      {renderCourseNavigation()}
-      {renderNoCoursePages()}
       {renderNotices()}
       {renderStyledH1()}
       {renderUserTools({ aboveContent: true })}
@@ -69,9 +50,8 @@ export function Entity({ data }: EntityProps) {
         {data.content && renderContent(data.content)}
         {isLenabiUserJourneyCoursePage ? <LenabiCourseFeedback /> : null}
       </div>
-      {renderCourseFooter()}
       <HSpace amount={20} />
-      {renderUserTools()}
+      {renderUserTools({ aboveContent: false })}
       {data.licenseId ? <LicenseNotice licenseId={data.licenseId} /> : null}
     </>
   )
@@ -82,34 +62,14 @@ export function Entity({ data }: EntityProps) {
 
     return (
       <h1 className="serlo-h1 mt-12" itemProp="name">
-        {renderCoursePageNumber()}
         {data.title}
         {renderEntityIcon()}
       </h1>
     )
   }
 
-  function renderCoursePageNumber() {
-    if (!data.courseData) return null
-    return (
-      <span
-        className={cn(`
-          -mt-1.5 mr-1.5 inline-block h-7 w-7
-          justify-center rounded-full bg-brand-200 text-center align-middle
-          text-xl font-bold text-brand
-        `)}
-      >
-        {data.courseData.index + 1}
-      </span>
-    )
-  }
-
   function renderEntityIcon() {
-    if (
-      data.typename === UuidType.CoursePage ||
-      data.typename === UuidType.Page
-    )
-      return null
+    if (data.typename === UuidType.Page) return null
     return (
       <span title={getTranslatedType(strings, data.typename)}>
         {' '}
@@ -156,70 +116,7 @@ export function Entity({ data }: EntityProps) {
       <UserTools
         aboveContent={setting?.aboveContent}
         unrevisedRevisions={data.unrevisedRevisions}
-        data={{
-          ...data,
-          courseId: data.courseData?.id,
-        }}
-      />
-    )
-  }
-
-  function renderCourseNavigation() {
-    if (data.typename === UuidType.Course) return null
-    if (!data.courseData) return null
-    return (
-      <CourseNavigationRenderer
-        open={courseNavOpen}
-        onOverviewButtonClick={toggleCourseNav}
-        title={data.courseData.title}
-        pages={data.courseData.pages.map(
-          ({ id, title, active, noCurrentRevision, url }) => {
-            return {
-              key: id + title,
-              element: (
-                <Link
-                  className={cn(
-                    'text-lg leading-browser',
-                    active &&
-                      'font-semibold text-almost-black hover:no-underline',
-                    noCurrentRevision && 'text-brand-300'
-                  )}
-                  href={active ? undefined : url}
-                >
-                  {noCurrentRevision
-                    ? '(' + strings.course.noRevisionForPage + ')'
-                    : title}
-                </Link>
-              ),
-            }
-          }
-        )}
-      />
-    )
-  }
-
-  function renderNoCoursePages() {
-    if (!data.courseData) return null
-    const validPages = data.courseData.pages.filter(
-      (page) => !page.noCurrentRevision
-    )
-    if (validPages.length > 0) return null
-    return (
-      <InfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
-        {strings.course.noPagesWarning}
-      </InfoPanel>
-    )
-  }
-
-  function renderCourseFooter() {
-    if (data.typename === UuidType.Course) return null
-    if (!data.courseData) return null
-
-    return (
-      <CourseFooter
-        onOverviewButtonClick={toggleCourseNav}
-        pages={data.courseData.pages}
-        index={data.courseData.index}
+        data={data}
       />
     )
   }

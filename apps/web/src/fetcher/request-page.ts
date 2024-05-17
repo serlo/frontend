@@ -1,6 +1,9 @@
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { EditorRowsDocument } from '@editor/types/editor-plugins'
+import {
+  EditorCourseDocument,
+  EditorRowsDocument,
+} from '@editor/types/editor-plugins'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
@@ -24,25 +27,31 @@ import { dataQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData, UuidRevType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
-import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
-// ALWAYS start alias with slash
+// ALWAYS start requestPath with slash
 export async function requestPage(
-  alias: string,
+  requestPath: string,
   instance: Instance
 ): Promise<RequestPageData> {
   const response = await request<MainUuidQuery, MainUuidQueryVariables>(
     endpoint,
     dataQuery,
     {
-      alias: { instance, path: alias },
+      alias: { instance, path: requestPath },
     }
   )
   const uuid = response.uuid
   const authorization = response.authorization as AuthorizationPayload
   if (!uuid) return { kind: 'not-found' }
 
-  if (uuid.__typename === UuidType.Comment) return { kind: 'not-found' } // no content for comments
+  // tmp: return Course when CoursePage is requested
+  if (uuid.__typename === UuidType.CoursePage) {
+    return requestPage(`/${uuid.course.id}/${uuid.id}-slug`, instance)
+  }
+
+  // no content for comments
+  if (uuid.__typename === UuidType.Comment) return { kind: 'not-found' }
+
   // users are not handled in uuid query any more
   if (uuid.__typename === UuidType.User) return { kind: 'not-found' }
 
@@ -255,12 +264,27 @@ export async function requestPage(
 
   if (uuid.__typename === UuidType.Course) {
     // unfortunately currently we don't know which course page is selected at this point
+
+    const coursePageId = requestPath.split('/').at(-1)?.split('-')[0]
+    const coursePages = (content as unknown as EditorCourseDocument).state.pages
+    if (!coursePages || !coursePages.length) return { kind: 'not-found' }
+
+    const coursePage = coursePageId
+      ? coursePages.find((page) => page.id === coursePageId)
+      : coursePages[0]
+
     return {
       kind: 'single-entity',
       newsletterPopup: false,
       entityData: {
         ...sharedEntityData,
         typename: UuidType.Course,
+        title: coursePage?.title ?? uuid.title,
+        schemaData: {
+          wrapWithItemType: 'http://schema.org/Article',
+          useArticleTag: true,
+          setContentAsSection: true,
+        },
       },
       metaData: {
         ...sharedMetadata,
@@ -324,62 +348,6 @@ export async function requestPage(
       metaData: {
         ...sharedMetadata,
         contentType: 'applet',
-      },
-      horizonData,
-      breadcrumbsData,
-      authorization,
-    }
-  }
-
-  if (uuid.__typename === UuidType.CoursePage) {
-    const pagesToShow =
-      uuid.course && uuid.course.pages
-        ? uuid.course.pages.filter(
-            (page) =>
-              page.alias &&
-              page.currentRevision &&
-              !page.currentRevision.trashed &&
-              page.currentRevision.title &&
-              page.currentRevision.title !== ''
-          )
-        : []
-
-    let currentPageIndex = -1
-    const pages = pagesToShow.map((page, i) => {
-      const active = page.id === uuid.id
-      if (active) {
-        currentPageIndex = i
-      }
-      return {
-        title: page.currentRevision?.title ?? '',
-        id: page.id,
-        url: !hasSpecialUrlChars(page.alias) ? page.alias : `/${page.id}`,
-        active,
-      }
-    })
-    return {
-      kind: 'single-entity',
-      newsletterPopup: false,
-      entityData: {
-        ...sharedEntityData,
-        typename: UuidType.CoursePage,
-        licenseId: uuid.course.licenseId,
-        schemaData: {
-          wrapWithItemType: 'http://schema.org/Article',
-          useArticleTag: true,
-          setContentAsSection: true,
-        },
-        courseData: {
-          id: uuid.course.id,
-          title: uuid.course.currentRevision?.title ?? '',
-          pages,
-          index: currentPageIndex,
-        },
-        unrevisedCourseRevisions: uuid.course.revisions?.totalCount,
-      },
-      metaData: {
-        ...sharedMetadata,
-        contentType: 'course-page',
       },
       horizonData,
       breadcrumbsData,

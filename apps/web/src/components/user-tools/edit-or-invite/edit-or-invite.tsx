@@ -50,8 +50,7 @@ export function EditOrInvite({
   const hasUnrevised =
     unrevisedRevisions !== undefined && unrevisedRevisions > 0
 
-  const isCourse =
-    data.typename === UuidType.Course || data.typename === UuidType.CoursePage
+  const isCourse = data.typename === UuidType.Course
 
   const href = isCourse
     ? data.unrevisedCourseRevisions && data.unrevisedCourseRevisions > 0
@@ -92,6 +91,7 @@ export function EditOrInvite({
     const revisionId = data.revisionId
     const { typename, id } = data
 
+    // TODO: Course Page Id getter
     const coursePageId = router.query.page
       ? String(router.query.page)?.split('-')[0]
       : undefined

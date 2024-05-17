@@ -35,7 +35,6 @@ import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
 import { appletTypePlugin } from '@editor/plugins/serlo-template-plugins/applet'
 import { articleTypePlugin } from '@editor/plugins/serlo-template-plugins/article'
 import { courseTypePlugin } from '@editor/plugins/serlo-template-plugins/course/course'
-import { coursePageTypePlugin } from '@editor/plugins/serlo-template-plugins/course/course-page'
 import { eventTypePlugin } from '@editor/plugins/serlo-template-plugins/event'
 import { textExerciseGroupTypePlugin } from '@editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
 import { pageTypePlugin } from '@editor/plugins/serlo-template-plugins/page'
@@ -216,7 +215,6 @@ export function createPlugins({
     { type: TemplatePluginType.Applet, plugin: appletTypePlugin },
     { type: TemplatePluginType.Article, plugin: articleTypePlugin },
     { type: TemplatePluginType.Course, plugin: courseTypePlugin },
-    { type: TemplatePluginType.CoursePage, plugin: coursePageTypePlugin },
     { type: TemplatePluginType.Event, plugin: eventTypePlugin },
     { type: TemplatePluginType.Page, plugin: pageTypePlugin },
     { type: TemplatePluginType.Taxonomy, plugin: taxonomyTypePlugin },

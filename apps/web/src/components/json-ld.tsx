@@ -55,14 +55,9 @@ export function JsonLd({ data, id }: JsonLdProps) {
         ? { id: getLicense(licenses, data.entityData.licenseId).url }
         : undefined
 
-    const isPartOf =
-      entityType === UuidType.CoursePage && isEntity
-        ? data.entityData?.courseData?.id
-          ? getIRI(data.entityData.courseData.id)
-          : undefined
-        : data.breadcrumbsData
-            ?.map((node) => (node.id ? getIRI(node.id) : null))
-            .filter(Boolean)
+    const isPartOf = data.breadcrumbsData
+      ?.map((node) => (node.id ? getIRI(node.id) : null))
+      .filter(Boolean)
 
     const taxonomyDataChildren = isTaxonomy
       ? [

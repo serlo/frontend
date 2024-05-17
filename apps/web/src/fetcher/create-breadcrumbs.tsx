@@ -14,10 +14,6 @@ export function createBreadcrumbs(uuid: MainUuidType, instance: Instance) {
     return compat(taxonomyParentsToRootToBreadcrumbsData(uuid, instance))
   }
 
-  if (uuid.__typename === UuidType.CoursePage) {
-    return compat(buildFromTaxTerms(uuid.course?.taxonomyTerms.nodes, instance))
-  }
-
   if (
     uuid.__typename === UuidType.Article ||
     uuid.__typename === UuidType.Video ||

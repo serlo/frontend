@@ -166,33 +166,6 @@ const articleBanners = [
   },
 ]
 
-const courseBanner = {
-  id: 'banner-course-1',
-  isLong: false,
-  call: 'Hat dir dieser Kurs weitergeholfen?',
-  text: (
-    <div className="text-left">
-      <p className="serlo-p hyphens-manual leading-6">
-        Wir möchten <b>mehr kleinschrittige Kurse</b> entwickeln, die
-        Nutzbarkeit auf Smartphones verbessern und es Schüler*innen ermöglichen,
-        eigene Lernziele zu definieren und ihren eigenen Lernstand zu speichern.
-      </p>
-      <p className="serlo-p hyphens-manual leading-6">
-        All das kostet Geld. Und weil Serlo als gemeinnütziges Projekt für immer
-        kostenlos und frei von Werbung bleiben wird, sind wir auf Spenden
-        angewiesen.
-      </p>
-      <p className="serlo-p hyphens-manual font-bold leading-6">
-        Es wäre großartig, wenn du uns hilfst, Serlo noch besser zu machen!
-      </p>
-    </div>
-  ),
-  imageSrc: '/_assets/img/donations/donation-bird.svg',
-  buttonText: '',
-  roles: [],
-  username: '',
-}
-
 type Banner = (typeof articleBanners)[number]
 
 export interface DonationsBannerProps {
@@ -209,16 +182,9 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
   useEffect(() => {
     globalThis.hack__id = id
 
-    const isCourse = entityData.typename === UuidType.CoursePage
-    const isLastCoursePage =
-      isCourse &&
-      entityData.courseData &&
-      entityData.courseData.pages.length === entityData.courseData.index + 1
-
-    const chanceShow = isCourse ? true : Math.random() < reducedChance
+    const chanceShow = Math.random() < reducedChance
 
     const showOnType =
-      isLastCoursePage ||
       entityData.typename === UuidType.Article ||
       entityData.typename === UuidType.TaxonomyTerm
 
@@ -230,11 +196,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
       return undefined
     }
 
-    setBanner(
-      isCourse
-        ? courseBanner
-        : articleBanners[Math.floor(Math.random() * articleBanners.length)]
-    )
+    setBanner(articleBanners[Math.floor(Math.random() * articleBanners.length)])
 
     const horizon = document.getElementById('horizon')
     if (horizon) horizon.style.display = 'none'

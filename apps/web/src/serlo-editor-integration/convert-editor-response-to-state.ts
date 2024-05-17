@@ -78,9 +78,6 @@ export function convertEditorResponseToState(
     if (UuidType.Course === uuid.__typename) {
       return convertCourse(uuid.__typename, uuid)
     }
-    if (UuidType.CoursePage === uuid.__typename) {
-      return convertCoursePage(uuid.__typename, uuid)
-    }
     if (UuidType.Page === uuid.__typename) {
       return convertPage(uuid.__typename, uuid)
     }

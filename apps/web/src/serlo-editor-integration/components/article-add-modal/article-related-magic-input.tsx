@@ -27,7 +27,6 @@ export function ArticleRelatedMagicInput({
       supportedEntityTypes={[
         UuidType.Article,
         UuidType.Course,
-        UuidType.CoursePage,
         UuidType.Video,
         UuidType.Exercise,
         UuidType.ExerciseGroup,
