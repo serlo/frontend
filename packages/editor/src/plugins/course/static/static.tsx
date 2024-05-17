@@ -59,7 +59,6 @@ export function CourseStaticRenderer({
   )
 
   function renderCoursePageTitle() {
-    console.log(activePageIndex, 'activePageIndex')
     return (
       <h1 className="serlo-h1 mt-12" itemProp="name" id="course-title">
         <span
