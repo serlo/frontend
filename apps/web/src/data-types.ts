@@ -208,7 +208,6 @@ export interface EntityPageBase {
   metaData?: HeadData
   horizonData?: HorizonData
   newsletterPopup: boolean
-  cacheKey?: string // save page data to session storage
   authorization: AuthorizationPayload
 }
 

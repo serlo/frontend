@@ -37,8 +37,6 @@ export async function requestRevision(
 
   const authorization = response.authorization as AuthorizationPayload
 
-  const cacheKey = `/${instance}/${revisionId}`
-
   if (
     uuid.__typename === UuidRevType.Article ||
     uuid.__typename === UuidRevType.Page ||
@@ -163,7 +161,6 @@ export async function requestRevision(
         contentType: 'revision',
         metaDescription: '',
       },
-      cacheKey,
       authorization,
     }
   }

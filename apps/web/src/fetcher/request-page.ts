@@ -73,7 +73,6 @@ export async function requestPage(
   )
   const breadcrumbsData = createBreadcrumbs(uuid, instance)
   const horizonData = instance === Instance.De ? createHorizon() : undefined
-  const cacheKey = `/${instance}${alias}`
   const title = createTitle(uuid, instance)
   const metaImage = getMetaImage(uuid.alias)
 
@@ -90,7 +89,6 @@ export async function requestPage(
             ? 'topic-folder'
             : 'topic',
       },
-      cacheKey,
       breadcrumbsData,
       secondaryMenuData: secondaryMenuData,
       authorization,
@@ -119,7 +117,6 @@ export async function requestPage(
         metaDescription: getMetaDescription(exercise?.state.content),
       },
       horizonData,
-      cacheKey,
       authorization,
     }
   }
@@ -148,7 +145,6 @@ export async function requestPage(
         ),
       },
       horizonData,
-      cacheKey,
       authorization,
     }
   }
@@ -158,33 +154,6 @@ export async function requestPage(
       ? parseDocumentString(uuid.currentRevision?.content)
       : undefined
   )) as EditorRowsDocument
-
-  if (uuid.__typename === UuidType.Course) {
-    // TODO: get coursePage metadata?
-    return {
-      kind: 'single-entity',
-      entityData: {
-        id: uuid.id,
-        alias: uuid.alias,
-        trashed: uuid.trashed,
-        typename: UuidType.Course,
-        title: uuid.currentRevision?.title ?? '',
-        content,
-        isUnrevised: false,
-      },
-      newsletterPopup: false,
-      horizonData,
-      metaData: {
-        title,
-        contentType: 'course',
-        metaImage,
-        metaDescription: getMetaDescription(content),
-      },
-      cacheKey,
-      breadcrumbsData,
-      authorization,
-    }
-  }
 
   if (uuid.__typename === UuidType.Event) {
     return {
@@ -205,7 +174,6 @@ export async function requestPage(
         metaImage,
         metaDescription: getMetaDescription(content),
       },
-      cacheKey,
       authorization,
     }
   }
@@ -231,7 +199,6 @@ export async function requestPage(
         metaDescription: getMetaDescription(content),
       },
       horizonData,
-      cacheKey,
       secondaryMenuData: secondaryMenuData,
       breadcrumbsData: secondaryMenuData ? undefined : breadcrumbsData,
       authorization,
@@ -271,7 +238,36 @@ export async function requestPage(
         dateModified: uuid.currentRevision?.date,
       },
       horizonData,
-      cacheKey,
+      breadcrumbsData,
+      authorization,
+    }
+  }
+
+  if (uuid.__typename === UuidType.Course) {
+    // unfortunately currently we don't know which course page is selected at this point
+    return {
+      kind: 'single-entity',
+      newsletterPopup: false,
+      entityData: {
+        id: uuid.id,
+        alias: uuid.alias,
+        trashed: uuid.trashed,
+        typename: UuidType.Course,
+        title: uuid.title,
+        content,
+        licenseId,
+        unrevisedRevisions: uuid.revisions?.totalCount,
+        isUnrevised: !uuid.currentRevision,
+      },
+      metaData: {
+        title,
+        contentType: 'course',
+        metaImage,
+        metaDescription: uuid.currentRevision?.metaDescription,
+        // dateCreated: uuid.date,
+        // dateModified: uuid.currentRevision?.date,
+      },
+      horizonData,
       breadcrumbsData,
       authorization,
     }
@@ -311,7 +307,6 @@ export async function requestPage(
         metaDescription: getMetaDescription(content),
       },
       horizonData,
-      cacheKey,
       breadcrumbsData,
       authorization,
     }
@@ -350,7 +345,6 @@ export async function requestPage(
           : getMetaDescription(content),
       },
       horizonData,
-      cacheKey,
       breadcrumbsData,
       authorization,
     }
@@ -415,7 +409,6 @@ export async function requestPage(
         metaDescription: getMetaDescription(content),
       },
       horizonData,
-      cacheKey,
       breadcrumbsData,
       authorization,
     }
