@@ -1,15 +1,16 @@
 import { AddButton } from '@editor/editor-ui'
-import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+// import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import {
   type EditorPlugin,
   type EditorPluginProps,
   type PrettyStaticState,
   list,
   string,
+  optional,
 } from '@editor/plugin'
 import { selectStaticDocument, store } from '@editor/store'
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
+// import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+// import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { RevisionHistoryLoader } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/revision-history-loader'
@@ -31,10 +32,12 @@ export const courseTypeState = entityType(
   {
     ...entity,
     title: string(),
-    description: editorContent(),
+    // not actually used, remove at some point
+    description: optional(editorContent()),
   },
   {
-    'course-page': list(serializedChild('type-course-page')),
+    // remove after migration
+    'course-page': optional(list(serializedChild('type-course-page'))),
   }
 )
 
@@ -47,11 +50,7 @@ export const courseTypePlugin: EditorPlugin<CourseTypePluginState> = {
 }
 
 function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
-  const {
-    title,
-    meta_description: metaDescription,
-    'course-page': children,
-  } = props.state
+  const { title, meta_description: metaDescription } = props.state
   const editorStrings = useEditorStrings()
   const courseStrings = editorStrings.templatePlugins.course
   const [courseNavOpen, setCourseNavOpen] = useState(true)
@@ -88,7 +87,7 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
         <div className="ml-side mt-4">
           <AddButton
             onClick={() => {
-              children.insert()
+              // children.insert()
               setTimeout(() => {
                 setActivePageIndex(staticPages.length)
                 window.location.hash = `#${staticPages[staticPages.length - 1].id}`
@@ -159,35 +158,39 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
   }
 
   function renderCoursePage() {
-    const activePage = children.at(activePageIndex)
-    if (!activePage) return
+    // const activePage = children.at(activePageIndex)
+    // if (!activePage) return
     // const staticPage = staticPages[activePageIndex]
 
-    return (
-      <div
-        key={activePage.id}
-        className="mt-16 border-t-2 border-editor-primary-200 pt-2"
-      >
-        <nav className="flex justify-end">
-          <button
-            className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
-            onClick={() => children.remove(activePageIndex)}
-          >
-            <EditorTooltip text={courseStrings.removeCoursePage} />
-            <FaIcon icon={faTrashAlt} />
-          </button>
-          {/* TODO */}
-          {/* <ContentLoaders
+    return null
+    // <div
+    //   key={activePage.id}
+    //   className="mt-16 border-t-2 border-editor-primary-200 pt-2"
+    // >
+    //   <nav className="flex justify-end">
+    //     <button
+    //       className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
+    //       onClick={() => children.remove(activePageIndex)}
+    //     >
+    //       <EditorTooltip text={courseStrings.removeCoursePage} />
+    //       <FaIcon icon={faTrashAlt} />
+    //     </button>
+    {
+      /* TODO */
+    }
+    {
+      /* <ContentLoaders
             id={staticPage.id}
             currentRevision={staticPage.revision}
             onSwitchRevision={(data) =>
               activePage.replace(TemplatePluginType.CoursePage, data)
             }
             entityType={UuidType.CoursePage}
-          /> */}
-        </nav>
-        {children[activePageIndex]?.render()}
-      </div>
-    )
+          /> */
+    }
+    //   </nav>
+    //   {children[activePageIndex]?.render()}
+    // </div>
+    // )
   }
 }
