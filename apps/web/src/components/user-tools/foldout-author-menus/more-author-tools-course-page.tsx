@@ -11,7 +11,8 @@ import {
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 
-export function MoreAuthorToolsCourse({
+// TODO: remove after migration
+export function MoreAuthorToolsCoursePage({
   data,
   aboveContent,
 }: MoreAuthorToolsProps) {

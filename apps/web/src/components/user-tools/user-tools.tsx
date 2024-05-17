@@ -33,8 +33,8 @@ const MoreAuthorTools = dynamic<MoreAuthorToolsProps>(() =>
 
 const MoreAuthorToolsCourse = dynamic<MoreAuthorToolsProps>(() =>
   import(
-    '@/components/user-tools/foldout-author-menus/more-author-tools-course'
-  ).then((mod) => mod.MoreAuthorToolsCourse)
+    '@/components/user-tools/foldout-author-menus/more-author-tools-course-page'
+  ).then((mod) => mod.MoreAuthorToolsCoursePage)
 )
 
 const EditOrInvite = dynamic<EditOrInviteProps>(() =>
@@ -121,8 +121,7 @@ export function UserTools({
         ) : null}
 
         {auth ? (
-          data?.typename === UuidType.CoursePage ||
-          data?.typename === UuidType.Course ? (
+          data?.typename === UuidType.CoursePage ? (
             <MoreAuthorToolsCourse data={data} aboveContent={aboveContent} />
           ) : (
             <MoreAuthorTools data={data} aboveContent={aboveContent} />
