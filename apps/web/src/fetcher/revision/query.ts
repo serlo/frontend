@@ -48,17 +48,6 @@ export const revisionQuery = gql`
         }
       }
 
-      ... on CourseRevision {
-        repository {
-          pages(trashed: false, hasCurrentRevision: true) {
-            id
-            alias
-            currentRevision {
-              ...abstractEntityRevision
-            }
-          }
-        }
-      }
       ... on CoursePageRevision {
         repository {
           course {
@@ -75,14 +64,6 @@ export const revisionQuery = gql`
             id
             currentRevision {
               title
-            }
-            pages(trashed: false, hasCurrentRevision: true) {
-              id
-              alias
-              currentRevision {
-                title
-                trashed
-              }
             }
           }
         }

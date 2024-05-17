@@ -47,7 +47,7 @@ export function RevisionHistoryLoader<T>({
   const revisions = revisionsResponse.data?.uuid.revisions.nodes
 
   const onSelectRevision = (id: number) => {
-    //don't select the selected
+    // don't select the selected
     const isCurrentlyLoaded = currentRevision === id
     if (isCurrentlyLoaded) return null
     fetchRevisionData(id)

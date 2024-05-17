@@ -13,6 +13,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { UuidRevType, UuidType } from '@/data-types'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
+import { getCourseIdFromPath } from '@editor/plugins/course/helper/get-course-id-from-path'
 
 const InviteModal = dynamic<InviteModalProps>(() =>
   import('@/components/user-tools/edit-or-invite/invite-modal').then(
@@ -91,10 +92,7 @@ export function EditOrInvite({
     const revisionId = data.revisionId
     const { typename, id } = data
 
-    // TODO: Course Page Id getter
-    const coursePageId = router.query.page
-      ? String(router.query.page)?.split('-')[0]
-      : undefined
+    const coursePageId = getCourseIdFromPath(router.asPath)
 
     const url = isCourse
       ? getEditUrl(data.courseId ?? id, undefined, false) + '#' + coursePageId

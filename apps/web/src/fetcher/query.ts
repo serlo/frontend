@@ -61,14 +61,6 @@ export const dataQuery = gql`
               title
             }
           }
-          pages(trashed: false, hasCurrentRevision: true) {
-            alias
-            id
-            currentRevision {
-              title
-              trashed
-            }
-          }
           ...taxonomyTermsV2
         }
       }
@@ -78,15 +70,6 @@ export const dataQuery = gql`
       }
 
       ... on Course {
-        pages(trashed: false) {
-          alias
-          id
-          currentRevision {
-            id
-            title
-            content
-          }
-        }
         ...taxonomyTermsV2
       }
 
@@ -171,15 +154,6 @@ export const dataQuery = gql`
         title
         trashed
         id
-      }
-    }
-
-    ... on Course {
-      pages {
-        id
-        currentRevision {
-          id
-        }
       }
     }
   }

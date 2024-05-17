@@ -51,33 +51,10 @@ export function revisionResponseToResponse(
     metaDescription: uuid.metaDescription ?? '',
   }
 
-  if (uuid.__typename === UuidRevType.Course) {
-    return {
-      __typename: UuidType.Course,
-      ...repositoryFields,
-      title,
-      date,
-      pages: uuid.repository.pages,
-      taxonomyTerms: uuid.repository.taxonomyTerms,
-      revisions: uuid.repository.revisions,
-    }
-  }
-
-  if (uuid.__typename === UuidRevType.CoursePage) {
-    return {
-      __typename: UuidType.CoursePage,
-      title,
-      date,
-      currentRevision: abstractEntityRevisionData,
-      ...repositoryFields,
-      revisions: uuid.repository.revisions,
-      course: uuid.repository.course,
-    }
-  }
-
   if (
     uuid.__typename === UuidRevType.Applet ||
     uuid.__typename === UuidRevType.Article ||
+    uuid.__typename === UuidRevType.Course ||
     uuid.__typename === UuidRevType.Event ||
     uuid.__typename === UuidRevType.Video ||
     uuid.__typename === UuidRevType.ExerciseGroup ||

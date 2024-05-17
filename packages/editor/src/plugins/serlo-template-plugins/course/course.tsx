@@ -51,7 +51,7 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
             <EntityTitleInput
               title={title}
               compact
-              className="!mt-1 -ml-2 max-w-xl rounded-xl !border-2 !border-solid border-transparent bg-editor-primary-100 px-2 focus:border-editor-primary"
+              className="!mt-1 -ml-2 rounded-xl !border-2 !border-solid border-transparent bg-editor-primary-100 px-2 focus:border-editor-primary"
             />
           }
         />
