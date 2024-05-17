@@ -52,7 +52,6 @@ export function checkIsAllowedNesting(
       rootPlugin.startsWith('type-') &&
       rootPlugin !== TemplatePluginType.GenericContent &&
       rootPlugin !== TemplatePluginType.Article &&
-      rootPlugin !== TemplatePluginType.CoursePage &&
       rootPlugin !== TemplatePluginType.Course
     ) {
       return false

@@ -46,25 +46,6 @@ export const dataQuery = gql`
         }
       }
 
-      ... on CoursePage {
-        course {
-          id
-          licenseId
-          currentRevision {
-            title
-          }
-          revisions(unrevised: true) {
-            totalCount
-            nodes {
-              id
-              trashed
-              title
-            }
-          }
-          ...taxonomyTermsV2
-        }
-      }
-
       ... on Exercise {
         ...exercise
       }

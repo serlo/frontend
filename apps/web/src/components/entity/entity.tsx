@@ -38,7 +38,8 @@ const LenabiCourseFeedback = dynamic(() =>
 export function Entity({ data }: EntityProps) {
   editorRenderers.init(createRenderers())
 
-  const isLenabiUserJourneyCoursePage = !isProduction && data.id === 307527
+  // TODO: test
+  const isLenabiUserJourneyCoursePage = !isProduction && data.id === 307521
 
   const { strings } = useInstanceData()
   return wrapWithSchema(

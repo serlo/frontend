@@ -43,7 +43,6 @@ export enum Tool {
   Log = 'log',
   NewEntitySubmenu = 'newEntitySubmenu',
   Separator = 'separator',
-  SortCoursePages = 'sortCoursePages',
   SortEntities = 'sortEntities',
   Trash = 'trash',
   DirectLink = 'directLink',
@@ -114,10 +113,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     history: {
       url: getHistoryUrl(entityId),
       canDo: true,
-    },
-    sortCoursePages: {
-      url: `/entity/link/order/${entityId}/link`,
-      canDo: canDo(Entity.orderChildren),
     },
     edit: {
       url: getEditUrl(entityId),

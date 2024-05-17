@@ -15,7 +15,6 @@ const typeStrings: Partial<Record<UuidType, string>> = {
   Article: 'Article',
   Applet: 'WebApplication',
   Course: 'Article',
-  CoursePage: 'Article',
   Exercise: 'Quiz',
   ExerciseGroup: 'Quiz',
   TaxonomyTerm: 'Collection',

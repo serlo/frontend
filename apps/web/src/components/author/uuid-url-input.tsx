@@ -131,11 +131,6 @@ const uuidSimpleQuery = gql`
       id
       __typename
       title
-      ... on CoursePage {
-        course {
-          id
-        }
-      }
       ... on TaxonomyTerm {
         type
       }

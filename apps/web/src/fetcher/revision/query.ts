@@ -47,27 +47,6 @@ export const revisionQuery = gql`
           }
         }
       }
-
-      ... on CoursePageRevision {
-        repository {
-          course {
-            licenseId
-            ...taxonomyTermsV2
-            revisions(unrevised: true) {
-              totalCount
-              nodes {
-                id
-                title
-                trashed
-              }
-            }
-            id
-            currentRevision {
-              title
-            }
-          }
-        }
-      }
       ... on PageRevision {
         ...abstractRevision
         repository {

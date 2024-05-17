@@ -45,11 +45,6 @@ export async function requestPage(
   const authorization = response.authorization as AuthorizationPayload
   if (!uuid) return { kind: 'not-found' }
 
-  // tmp: return Course when CoursePage is requested
-  if (uuid.__typename === UuidType.CoursePage) {
-    return requestPage(`/${uuid.course.id}/${uuid.id}-slug`, instance)
-  }
-
   // no content for comments
   if (uuid.__typename === UuidType.Comment) return { kind: 'not-found' }
 

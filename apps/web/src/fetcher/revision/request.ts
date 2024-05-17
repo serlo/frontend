@@ -37,7 +37,6 @@ export async function requestRevision(
   if (
     uuid.__typename === UuidRevType.Article ||
     uuid.__typename === UuidRevType.Page ||
-    uuid.__typename === UuidRevType.CoursePage ||
     uuid.__typename === UuidRevType.Video ||
     uuid.__typename === UuidRevType.Event ||
     uuid.__typename === UuidRevType.Applet ||

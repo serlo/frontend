@@ -592,10 +592,6 @@ export const loggedInData = {
     authorMenu: {
       log: 'Log',
       settings: 'Settings',
-      moveCoursePage: 'Move this page to another course',
-      thisCoursePage: 'This course-page',
-      addCoursePage: 'Add course-page',
-      wholeCourse: 'Whole course',
       moveOrCopyItems: 'Move or copy items',
       addGroupedTextExercise: 'Add grouped-text-exercise',
       changeLicense: 'Change License',

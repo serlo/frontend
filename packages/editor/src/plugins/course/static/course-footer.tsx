@@ -13,17 +13,15 @@ import { useEntityData } from '@/contexts/serlo-entity-context'
 import { cn } from '@/helper/cn'
 import { scrollIfNeeded } from '@/helper/scroll'
 
-export interface CourseFooterProps {
-  activePageIndex: number
-  pages: EditorCourseDocument['state']['pages']
-  onOverviewButtonClick: (e: MouseEvent<HTMLButtonElement>) => void
-}
-
 export function CourseFooter({
   activePageIndex: index,
   pages,
   onOverviewButtonClick,
-}: CourseFooterProps) {
+}: {
+  activePageIndex: number
+  pages: EditorCourseDocument['state']['pages']
+  onOverviewButtonClick: (e: MouseEvent<HTMLButtonElement>) => void
+}) {
   const onOverviewClick = (e: MouseEvent<HTMLButtonElement>) => {
     location.href = '#course-overview'
     onOverviewButtonClick(e)

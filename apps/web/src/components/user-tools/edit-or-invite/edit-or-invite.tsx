@@ -1,3 +1,4 @@
+import { getCourseIdFromPath } from '@editor/plugins/course/helper/get-course-id-from-path'
 import { faClock, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { TaxonomyTerm, Uuid } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
@@ -13,7 +14,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { UuidRevType, UuidType } from '@/data-types'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
-import { getCourseIdFromPath } from '@editor/plugins/course/helper/get-course-id-from-path'
 
 const InviteModal = dynamic<InviteModalProps>(() =>
   import('@/components/user-tools/edit-or-invite/invite-modal').then(

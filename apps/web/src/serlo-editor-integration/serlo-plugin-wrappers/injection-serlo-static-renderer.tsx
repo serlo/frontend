@@ -49,8 +49,7 @@ export function InjectionSerloStaticRenderer({
           const uuid = data.data.uuid
           if (
             uuid.__typename === 'Article' ||
-            uuid.__typename === 'TaxonomyTerm' ||
-            uuid.__typename === 'CoursePage'
+            uuid.__typename === 'TaxonomyTerm'
           ) {
             if (!uuid.alias) setContent([])
             setContent([createFallbackBox(uuid.alias, uuid.title)])

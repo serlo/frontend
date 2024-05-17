@@ -238,12 +238,9 @@ function getCategorisedDataAndTerm(data?: FetchParentType, error?: object) {
     const isTax = child.__typename === UuidType.TaxonomyTerm
 
     if (
-      ![
-        UuidType.Article,
-        UuidType.Course,
-        UuidType.CoursePage,
-        UuidType.Video,
-      ].includes(child.__typename as UuidType) &&
+      ![UuidType.Article, UuidType.Course, UuidType.Video].includes(
+        child.__typename as UuidType
+      ) &&
       !isEx &&
       !isTax
     )

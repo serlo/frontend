@@ -5,7 +5,7 @@ import {
   type Entity,
   type Uuid,
 } from '@editor/plugins/serlo-template-plugins/common/common'
-import type { CourseTypePluginState } from '@editor/plugins/serlo-template-plugins/course/course'
+import type { CourseTypePluginState } from '@editor/plugins/serlo-template-plugins/course'
 import type { EventTypePluginState } from '@editor/plugins/serlo-template-plugins/event'
 import type { TextExerciseGroupTypePluginState } from '@editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
 import type { PageTypePluginState } from '@editor/plugins/serlo-template-plugins/page'
@@ -217,23 +217,6 @@ export interface AbstractSerializedState extends Entity {
   meta_description?: string
   url?: string
   cohesive?: string
-}
-
-export interface CourseSerializedState extends Entity {
-  __typename?: UuidType.Course
-  title?: string
-  description: SerializedStaticState
-  content?: SerializedStaticState // just to simplify types, will not be set
-  reasoning?: SerializedStaticState
-  meta_description?: string
-  'course-page'?: CoursePageSerializedState[]
-}
-
-export interface CoursePageSerializedState extends Entity {
-  __typename?: UuidType.CoursePage
-  title?: string
-  icon?: 'explanation' | 'play' | 'question'
-  content: SerializedStaticState
 }
 
 export interface PageSerializedState extends Uuid {

@@ -74,7 +74,7 @@ export function ExternalRevisionLoader<T>({
                 id: number,
                 _title: string,
                 _taxType?: unknown,
-                coursePageId?: number
+                coursePageId?: number // TODO: investigate / test
               ) => (
                 <SerloAddButton
                   text={editorStrings.edtrIo.importOtherButton}

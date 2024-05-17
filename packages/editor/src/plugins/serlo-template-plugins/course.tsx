@@ -6,10 +6,10 @@ import {
 import { CourseHeader } from '@editor/plugins/course/renderer/course-header'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { editorContent, entity, entityType } from '../common/common'
-import { EntityTitleInput } from '../common/entity-title-input'
-import { MetadataFieldsModal } from '../common/metadata-fields-modal'
-import { ToolbarMain } from '../toolbar-main/toolbar-main'
+import { editorContent, entity, entityType } from './common/common'
+import { EntityTitleInput } from './common/entity-title-input'
+import { MetadataFieldsModal } from './common/metadata-fields-modal'
+import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { UuidType } from '@/data-types'
 import { ContentLoaders } from '@/serlo-editor-integration/components/content-loaders/content-loaders'
 
