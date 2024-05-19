@@ -165,18 +165,13 @@ function SearchPanel({
       `/api/experimental/search-datenraum?q=${query}`
     )
 
-    setResults([
-      {
-        url: 'https://serlo.org/1855',
-        title: 'Addition',
-        description: 'Artikel zur Addition',
-      },
-      {
-        url: 'https://vhs.de/1666',
-        title: 'Kurs',
-        description: 'Kurs der VHS',
-      },
-    ])
+    if (!response.ok) {
+      alert('Failed to fetch search results: ' + (await response.text()))
+      setResults([])
+      return
+    }
+
+    setResults((await response.json()) as LearningResource[])
   }
 }
 
