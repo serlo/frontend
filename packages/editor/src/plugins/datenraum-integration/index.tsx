@@ -1,3 +1,5 @@
+import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
+import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
@@ -30,6 +32,7 @@ function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
 
   return (
     <>
+      {renderPluginToolbar()}
       {renderSearchModal()}
       {resource.defined
         ? renderResource({
@@ -55,7 +58,11 @@ function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
   }
 
   function renderResource(resource: LearningResource) {
-    return <LearningResourceComponent resource={resource} />
+    return (
+      <div>
+        <LearningResourceComponent resource={resource} />
+      </div>
+    )
   }
 
   function renderSearchModal() {
@@ -93,6 +100,28 @@ function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
     }
 
     setShowSearch(false)
+  }
+
+  function renderPluginToolbar() {
+    if (!props.focused) return null
+
+    return (
+      <PluginToolbar
+        pluginType="Edu-sharing Inhalt"
+        pluginControls={<PluginDefaultTools pluginId={props.id} />}
+        pluginSettings={
+          <>
+            <button
+              onClick={() => setShowSearch(true)}
+              className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+              data-qa="plugin-edusharing-select-content-button"
+            >
+              Anderes Element auswählen
+            </button>
+          </>
+        }
+      />
+    )
   }
 }
 
