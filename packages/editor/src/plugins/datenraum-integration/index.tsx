@@ -55,12 +55,7 @@ function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
   }
 
   function renderResource(resource: LearningResource) {
-    return (
-      <LearningResourceComponent
-        resource={resource}
-        onClick={() => alert(resource.title)}
-      />
-    )
+    return <LearningResourceComponent resource={resource} />
   }
 
   function renderSearchModal() {
@@ -176,11 +171,11 @@ function SearchPanel({
 }
 
 function LearningResourceComponent({
-  onClick,
+  onClick = () => {},
   resource,
 }: {
   resource: LearningResource
-  onClick: (resource: LearningResource) => void
+  onClick?: (resource: LearningResource) => void
 }) {
   const { url, description, title } = resource
 
