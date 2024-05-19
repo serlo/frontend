@@ -5,6 +5,7 @@ import {
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
+import { DatenraumIntegrationDocument } from '@editor/plugins/datenraum-integraton/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
 import type { MathElement } from '@editor/plugins/text'
 import { TextStaticRenderer } from '@editor/plugins/text/static'
@@ -38,6 +39,12 @@ import { Link } from '@/components/content/link'
 import { isPrintMode } from '@/components/print-mode'
 import { MultimediaSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/multimedia-serlo-static-renderer'
 
+const DatenraumIntegrationStaticRenderer =
+  dynamic<DatenraumIntegrationDocument>(() =>
+    import('@editor/plugins/datenraum-integration/static').then(
+      (mod) => mod.DatenraumIntegrationStaticRenderer
+    )
+  )
 const EquationsStaticRenderer = dynamic<EditorEquationsDocument>(() =>
   import('@editor/plugins/equations/static').then(
     (mod) => mod.EquationsStaticRenderer
@@ -231,6 +238,11 @@ export function createRenderers(): InitRenderersArgs {
           console.warn('unsupported renderer: ', state)
           return null
         },
+      },
+      // experimental plugins
+      {
+        type: EditorPluginType.DatenraumIntegration,
+        renderer: DatenraumIntegrationStaticRenderer,
       },
     ],
     mathRenderer: (element: MathElement) =>
