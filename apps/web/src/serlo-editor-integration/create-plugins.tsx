@@ -55,6 +55,7 @@ import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { type LoggedInData, UuidType } from '@/data-types'
 import { isProduction } from '@/helper/is-production'
 import { imagePlugin } from '@/serlo-editor-integration/image-with-serlo-config'
+import {datenraumIntegrationPlugin} from '@editor/plugins/datenraum-integration'
 
 export function createPlugins({
   editorStrings,
@@ -140,6 +141,15 @@ export function createPlugins({
             plugin: audioPlugin,
             visibleInSuggestions: true,
             icon: <IconAudio />,
+          },
+        ]),
+    ...(isProduction
+      ? []
+      : [
+          {
+            type: EditorPluginType.DatenraumIntegration,
+            plugin: datenraumIntegrationPlugin,
+            visibleInSuggestions: true,
           },
         ]),
     {

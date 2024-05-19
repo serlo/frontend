@@ -33,4 +33,6 @@ export enum EditorPluginType {
   Solution = 'solution',
 
   Unsupported = 'unsupported',
+
+  DatenraumIntegration = 'datenraumIntegration',
 }
