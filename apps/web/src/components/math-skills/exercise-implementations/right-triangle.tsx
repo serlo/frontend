@@ -216,8 +216,7 @@ export function RightTriangle() {
               </p>
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
-                {data.goal_element} ={' '}
-                {pp(roundToDigits(data.goal_value * 10, 2))} cm
+                {data.goal_element} = {pp(roundToDigits(data.goal_value, 2))} cm
               </p>
             </>
           )
@@ -257,8 +256,7 @@ export function RightTriangle() {
               </p>
               <p>Berechne das Ergebnis:</p>
               <p className="serlo-highlight-green">
-                {data.goal_element} ={' '}
-                {pp(roundToDigits(data.goal_value * 10, 2))} cm
+                {data.goal_element} = {pp(roundToDigits(data.goal_value, 2))} cm
               </p>
             </>
           )
