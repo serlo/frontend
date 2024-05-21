@@ -1,19 +1,15 @@
+import { H5pRenderer } from '@editor/plugins/h5p/renderer'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 
-import {
-  LearningResourceComponent,
-  LearningResource,
-} from './learning-resource'
-
 interface SearchPanelProps {
-  onSelect: (resource: LearningResource) => void
+  onSelect: () => void
 }
 
 export function SearchPanel({ onSelect }: SearchPanelProps) {
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState<LearningResource[]>([])
+  const [showResults, setShowResults] = useState<boolean>(false)
   const [loading, setLoading] = useState(false)
 
   const handleSearch = async () => {
@@ -56,13 +52,13 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
 
       {loading && <FontAwesomeIcon icon={faSpinner} spin />}
 
-      {results.map((resource, index) => (
-        <LearningResourceComponent
-          resource={resource}
-          key={index}
-          onClick={() => onSelect(resource)}
-        />
-      ))}
+      {showResults && (
+        <div onClick={onSelect} className="cursor-pointer">
+          <div className="pointer-events-none">
+            <H5pRenderer url="https://app.lumi.education/run/J3j0eR" />
+          </div>
+        </div>
+      )}
     </div>
   )
 
@@ -73,10 +69,10 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
 
     if (!response.ok) {
       alert('Failed to fetch search results: ' + (await response.text()))
-      setResults([])
+      setShowResults(false)
       return
     }
 
-    setResults((await response.json()) as LearningResource[])
+    setShowResults(true)
   }
 }

@@ -1,32 +1,38 @@
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import {
+  insertPluginChildBefore,
+  removePluginChild,
+  selectChildTreeOfParent,
+  store,
+  useAppDispatch,
+} from '@editor/store'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import Modal from 'react-modal'
 
 import type { DatenraumIntegrationProps } from '.'
-import {
-  LearningResourceComponent,
-  LearningResource,
-} from './components/learning-resource'
 import { SearchPanel } from './components/search-panel'
+import { hardcodedExerciseState } from './const'
+import { H5pRenderer } from '../h5p/renderer'
 
 export function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
   const [showSearch, setShowSearch] = useState(false)
-  const { resource } = props.state
+  const [isConverted, setIsConverted] = useState(false)
+
+  const dispatch = useAppDispatch()
 
   return (
     <>
       {renderPluginToolbar()}
       {renderSearchModal()}
-      {resource.defined
-        ? renderResource({
-            title: resource.title.value,
-            url: resource.url.value,
-            description: resource.description.value,
-          })
-        : renderEmptyPlugin()}
+      {!props.state.showResource.value && !isConverted
+        ? renderEmptyPlugin()
+        : null}
+      {props.state.showResource.value && !isConverted ? renderResource() : null}
+      {renderConvertedResource()}
     </>
   )
 
@@ -43,10 +49,22 @@ export function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
     )
   }
 
-  function renderResource(resource: LearningResource) {
+  function renderResource() {
     return (
       <div>
-        <LearningResourceComponent resource={resource} />
+        <H5pRenderer url={props.state.resource.value} />
+      </div>
+    )
+  }
+
+  function renderConvertedResource() {
+    return (
+      <div
+        className={
+          props.state.showResource.value && isConverted ? '' : 'hidden'
+        }
+      >
+        {props.state.convertedResource.render({})}
       </div>
     )
   }
@@ -74,17 +92,8 @@ export function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
     )
   }
 
-  function handleSelectResource(resource: LearningResource) {
-    const resourceState = props.state.resource
-
-    if (resourceState.defined) {
-      resourceState.description.set(resource.description)
-      resourceState.title.set(resource.title)
-      resourceState.url.set(resource.url)
-    } else {
-      resourceState.create(resource)
-    }
-
+  function handleSelectResource() {
+    props.state.showResource.set(true)
     setShowSearch(false)
   }
 
@@ -93,7 +102,7 @@ export function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
 
     return (
       <PluginToolbar
-        pluginType="Edu-sharing Inhalt"
+        pluginType={EditorPluginType.DatenraumIntegration}
         pluginControls={<PluginDefaultTools pluginId={props.id} />}
         pluginSettings={
           <>
@@ -104,9 +113,37 @@ export function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
             >
               Anderes Element auswählen
             </button>
+            <button
+              onClick={handleConvertResource}
+              className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+              data-qa="plugin-edusharing-select-content-button"
+            >
+              Convert to Serlo element
+            </button>
           </>
         }
       />
     )
+  }
+
+  function handleConvertResource() {
+    const parentPlugin = selectChildTreeOfParent(store.getState(), props.id)
+
+    if (!parentPlugin) return null
+
+    dispatch(
+      insertPluginChildBefore({
+        parent: parentPlugin.id,
+        sibling: props.id,
+        document: {
+          plugin: EditorPluginType.Exercise,
+          state: hardcodedExerciseState,
+        },
+      })
+    )
+
+    dispatch(removePluginChild({ parent: parentPlugin.id, child: props.id }))
+
+    setIsConverted(true)
   }
 }
