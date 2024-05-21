@@ -5,7 +5,7 @@ import {
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
-import { DatenraumIntegrationDocument } from '@editor/plugins/datenraum-integraton/static'
+import { DatenraumIntegrationDocument } from '@editor/plugins/datenraum-integration/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
 import type { MathElement } from '@editor/plugins/text'
 import { TextStaticRenderer } from '@editor/plugins/text/static'
