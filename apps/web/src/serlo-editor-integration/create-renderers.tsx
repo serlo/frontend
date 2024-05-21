@@ -158,7 +158,10 @@ export function createRenderers(): InitRenderersArgs {
           )
         },
       },
-      { type: EditorPluginType.DragDropBg, renderer: DragDropBgSerloStaticRenderer },
+      {
+        type: EditorPluginType.DragDropBg,
+        renderer: DragDropBgSerloStaticRenderer,
+      },
       { type: EditorPluginType.Box, renderer: BoxStaticRenderer },
       { type: EditorPluginType.SerloTable, renderer: SerloTableStaticRenderer },
       {

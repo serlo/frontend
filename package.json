@@ -45,6 +45,9 @@
     "start": "yarn workspace @serlo/frontend start",
     "test": "yarn workspace @serlo/frontend test"
   },
+  "dependencies": {
+    "react-resizable": "^3.0.5"
+  },
   "devDependencies": {
     "@serlo/eslint-config": "workspace:*",
     "@serlo/typescript-config": "workspace:*",
@@ -57,8 +60,5 @@
   "packageManager": "yarn@3.6.1",
   "engines": {
     "node": ">=20"
-  },
-  "dependencies": {
-    "react-resizable": "^3.0.5"
   }
 }
