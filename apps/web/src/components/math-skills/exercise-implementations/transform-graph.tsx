@@ -28,7 +28,7 @@ export function TransformGraph() {
           if (d === 0) {
             d = randomIntBetween(1, 4)
           }
-          if (b === c) {
+          if (b === 0) {
             b = randomIntBetween(1, 4)
           }
         }
