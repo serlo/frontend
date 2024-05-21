@@ -37,9 +37,8 @@ export function Asymptote2() {
             </p>
             <p className="serlo-highlight-gray">
               y = {data.a === -1 ? '-' : pp(data.a)}{' '}
-              {data.a === -1 ? null : '·'} {data.b === 2.718 ? 'e' : pp(data.b)}
-              <sup>x</sup> {data.c > 0 ? '+' : data.c < 0 ? '-' : null}{' '}
-              {data.c !== 0 ? data.c : null}
+              {data.a === -1 ? null : '·'} {pp(data.b)}
+              <sup>x</sup> {data.c !== 0 ? pp(data.c, 'merge_op') : null}
             </p>
           </>
         )
