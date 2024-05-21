@@ -16,6 +16,7 @@ import { articlePlugin } from '@editor/plugins/article'
 import { audioPlugin } from '@editor/plugins/audio'
 import { blanksExercise } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
+import { datenraumIntegrationPlugin } from '@editor/plugins/datenraum-integration'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
 import { exerciseGroupPlugin } from '@editor/plugins/exercise-group'
@@ -55,7 +56,6 @@ import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { type LoggedInData, UuidType } from '@/data-types'
 import { isProduction } from '@/helper/is-production'
 import { imagePlugin } from '@/serlo-editor-integration/image-with-serlo-config'
-import {datenraumIntegrationPlugin} from '@editor/plugins/datenraum-integration'
 
 export function createPlugins({
   editorStrings,
