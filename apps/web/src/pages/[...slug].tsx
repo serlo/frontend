@@ -1,8 +1,8 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 
-import { Entity } from '@/components/content/entity'
-import { EntityBase } from '@/components/entity-base'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { Entity } from '@/components/entity/entity'
+import { EntityBase } from '@/components/entity/entity-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Topic } from '@/components/taxonomy/topic'
 import { SlugProps } from '@/data-types'
@@ -62,11 +62,12 @@ export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
   const alias = (context.params?.slug as string[]).join('/')
   const pageData = await requestPage('/' + alias, context.locale! as Instance)
 
+  const isEntity = pageData.kind === 'single-entity'
   // we only support theses three kinds - 404 for everything else
   if (
     pageData.kind !== 'taxonomy' &&
     pageData.kind !== 'redirect' &&
-    pageData.kind !== 'single-entity'
+    !isEntity
   ) {
     return { notFound: true }
   }
@@ -75,7 +76,7 @@ export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as SlugProps['pageData'], // remove undefined values
     },
-    revalidate: 60 * 15, // 15 min
+    revalidate: isEntity ? 60 * 60 * 24 : 60 * 15, // 1 day for entities or 15 min for taxonomies
   }
 }
 

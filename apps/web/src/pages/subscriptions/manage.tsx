@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { PageTitle } from '@/components/content/page-title'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { InfoPanel } from '@/components/info-panel'
 import {

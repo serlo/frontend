@@ -3,7 +3,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { PageTitle } from '@/components/content/page-title'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { RevisionHistory } from '@/components/pages/revision-history'

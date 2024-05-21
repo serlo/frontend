@@ -1,5 +1,4 @@
 import type { AuthorizationPayload } from '@serlo/authorization'
-import Cookies from 'js-cookie'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import { useState, useEffect } from 'react'
@@ -7,7 +6,11 @@ import { Toaster } from 'react-hot-toast'
 
 import { ConditionalWrap } from './conditional-wrap'
 import { HeaderFooter } from './header-footer'
-import { MaxWidthDiv } from './navigation/max-width-div'
+import {
+  fetchLoggedInData,
+  getCachedLoggedInData,
+} from './logged-on-data-helper'
+import { MaxWidthDiv } from '../navigation/max-width-div'
 import { AuthProvider } from '@/auth/auth-provider'
 import { checkLoggedIn } from '@/auth/cookie/check-logged-in'
 import { PrintMode } from '@/components/print-mode'
@@ -20,7 +23,6 @@ import {
   featureI18nForServerOnly,
 } from '@/helper/feature-i18n-for-server-only'
 import { triggerSentry } from '@/helper/trigger-sentry'
-import { frontendOrigin } from '@/helper/urls/frontent-origin'
 
 export interface FrontendClientBaseProps {
   children: JSX.Element | (JSX.Element | null)[]
@@ -94,18 +96,16 @@ export function FrontendClientBase({
   })
 
   const [loggedInData, setLoggedInData] = useState<LoggedInData | null>(
-    getCachedLoggedInData()
+    getCachedLoggedInData(instanceData.lang)
   )
 
   const isLoggedIn = checkLoggedIn()
 
-  useEffect(fetchLoggedInData, [
-    instanceData.lang,
-    loggedInData,
-    loadLoggedInData,
-    isLoggedIn,
-    locale,
-  ])
+  useEffect(() => {
+    if (loggedInData) return
+    if (!isLoggedIn && !loadLoggedInData) return
+    fetchLoggedInData({ lang: instanceData.lang, setLoggedInData })
+  }, [instanceData.lang, loggedInData, isLoggedIn, loadLoggedInData, locale])
 
   // dev
   //console.dir(initialProps)
@@ -139,40 +139,4 @@ export function FrontendClientBase({
       </AuthProvider>
     </InstanceDataProvider>
   )
-
-  function getCachedLoggedInData() {
-    if (
-      typeof window === 'undefined' ||
-      window.location.hostname === 'localhost'
-    )
-      return null
-    const cacheValue = sessionStorage.getItem(
-      `___loggedInData_${instanceData.lang}`
-    )
-    if (!cacheValue) return null
-    return JSON.parse(cacheValue) as LoggedInData
-  }
-
-  function fetchLoggedInData() {
-    const cookies = typeof window === 'undefined' ? {} : Cookies.get()
-    if (loggedInData) return
-    if (isLoggedIn || loadLoggedInData) {
-      fetch(frontendOrigin + '/api/locale/' + instanceData.lang)
-        .then((res) => res.json())
-        .then((value) => {
-          if (value) {
-            sessionStorage.setItem(
-              `___loggedInData_${instanceData.lang}`,
-              JSON.stringify(value)
-            )
-            setLoggedInData(value as LoggedInData)
-          }
-        })
-        .catch(() => {})
-      if (!cookies['__serlo_preview__']) {
-        // bypass cache
-        fetch('/api/frontend/preview').catch(() => {})
-      }
-    }
-  }
 }

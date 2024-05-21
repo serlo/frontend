@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { TaxonomyMoveCopy } from '@/components/taxonomy/taxonomy-move-copy/taxonomy-move-copy'
 import { SlugProps, TaxonomyPage } from '@/data-types'

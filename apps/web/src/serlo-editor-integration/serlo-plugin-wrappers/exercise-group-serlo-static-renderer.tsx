@@ -36,7 +36,7 @@ export function ExerciseGroupSerloStaticRenderer(
         {loaded && auth && context?.uuid ? (
           <AuthorToolsExercises
             data={{
-              type: ExerciseInlineType.ExerciseGroup,
+              typename: ExerciseInlineType.ExerciseGroup,
               id: context?.uuid,
               trashed: context?.trashed,
               unrevisedRevisions: context?.unrevisedRevisions,

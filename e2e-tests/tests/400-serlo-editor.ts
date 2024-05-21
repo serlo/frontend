@@ -28,7 +28,7 @@ Scenario('Add new plugins', async ({ I }) => {
 
   // workaround: plugin toolbar is hiding add-new-plugin-row-button
   // unfocus to make it visible
-  I.click('input[placeholder="Titel"]')
+  I.click('$entity-title-input')
   I.click('$add-new-plugin-row-button')
 
   for (let i = 0; i < 3; i++) {
@@ -149,7 +149,7 @@ Scenario(
   async ({ I }) => {
     I.amOnPage('/entity/create/Article/1377')
 
-    const articleHeadingInput = 'input[placeholder="Titel"]'
+    const articleHeadingInput = '$entity-title-input'
     I.click(articleHeadingInput)
 
     const firstWord = 'Some '
@@ -211,7 +211,7 @@ Scenario(
   async ({ I }) => {
     I.amOnPage('/entity/create/Article/1377')
 
-    const articleHeadingInput = { xpath: '//input[@placeholder="Titel"]' }
+    const articleHeadingInput = '$entity-title-input'
     I.click(articleHeadingInput)
 
     const firstWord = 'Some '

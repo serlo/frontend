@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 import { kratos } from '@/auth/kratos'
 import type { AxiosError } from '@/auth/types'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { triggerSentry } from '@/helper/trigger-sentry'
 

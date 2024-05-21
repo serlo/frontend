@@ -4,7 +4,7 @@ import type { GetStaticProps } from 'next'
 import type { LegalData } from './legal'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { fetchAndConvertLegalMarkdown } from '@/fetcher/fetch-and-convert-legal-markdown'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 

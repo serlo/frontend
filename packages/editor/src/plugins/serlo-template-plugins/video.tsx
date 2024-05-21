@@ -4,16 +4,11 @@ import {
   string,
 } from '@editor/plugin'
 import { videoPlugin } from '@editor/plugins/video'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { UuidType } from '@serlo/frontend/src/data-types'
 import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 
-import {
-  entity,
-  editorContent,
-  entityType,
-  headerInputClasses,
-} from './common/common'
+import { entity, editorContent, entityType } from './common/common'
+import { EntityTitleInput } from './common/entity-title-input'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const videoTypeState = entityType(
@@ -37,7 +32,6 @@ export const videoTypePlugin: EditorPlugin<VideoTypePluginState> = {
 function VideoTypeEditor(props: EditorPluginProps<VideoTypePluginState>) {
   const { title, content, description, id, revision, replaceOwnState } =
     props.state
-  const editorStrings = useEditorStrings()
 
   return (
     <>
@@ -49,15 +43,8 @@ function VideoTypeEditor(props: EditorPluginProps<VideoTypePluginState>) {
           entityType={UuidType.Video}
         />
       </div>
-      <h1 className="serlo-h1 mt-32">
-        <input
-          autoFocus
-          className={headerInputClasses}
-          placeholder={editorStrings.plugins.video.titlePlaceholder}
-          value={title.value}
-          onChange={(e) => title.set(e.target.value)}
-        />
-      </h1>
+      <EntityTitleInput title={title} />
+
       <article>
         <videoPlugin.Component
           {...props}
