@@ -36,8 +36,8 @@ export function ExponentialFunction() {
               {data.name || 'Du'} {Ende_Anlage === 0 ? 'heute' : null}
               {Ende_Anlage === 1 ? 'nächstes Jahr' : null}
               {Ende_Anlage === 2 ? 'übernächstes Jahr' : null}
-              {Ende_Anlage === 5 ? 'in 5 Jahren' : null} besitzt. Runden Sie auf
-              ganze Euro.
+              {Ende_Anlage === 5 ? 'heute in 5 Jahren' : null} besitzt. Runden
+              Sie auf ganze Euro.
             </p>
             <p>
               Das aktuelle Jahr ist {Aktuelles_Jahr}. Zwischen den Zeitpunkten
