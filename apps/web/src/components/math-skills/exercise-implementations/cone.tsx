@@ -3,6 +3,7 @@ import JXG from 'jsxgraph'
 import { SelfEvaluationExercise } from './self-evaluation-exercise'
 import { buildBigSqrt, buildFrac, buildJSX } from '../utils/math-builder'
 import { pp } from '../utils/pretty-print'
+import { roundToDigits } from '../utils/round-to-digits'
 import { randomIntBetween } from '@/helper/random-int-between'
 
 interface DATA {
@@ -11,6 +12,7 @@ interface DATA {
   h: number
   M: number
   path: number
+  V: number
 }
 
 const pi = 3.14159265359
@@ -24,6 +26,7 @@ export function Cone() {
         const c2b = c1b
         const M = c1b / 2
         const path = randomIntBetween(1, 4)
+        const V = Math.round((Math.pow(M, 2) / 3) * pi * h)
 
         const data: DATA = {
           c1b,
@@ -31,6 +34,7 @@ export function Cone() {
           path,
           c2b,
           M,
+          V,
         }
         return { data }
       }}
@@ -73,19 +77,16 @@ function Given({ data }: { data: DATA }) {
     )
   }
   if (data.path === 2) {
-    const result =
-      Math.round((Math.pow(data.M, 2) / 3) * pi * data.h * 100) / 100
     return (
       <p className="serlo-main-task">
-        V = {pp(result)} cm³, r = {pp(data.M)} cm
+        V = {pp(data.V)} cm³, r = {pp(data.M)} cm
       </p>
     )
   }
   if (data.path === 3) {
-    const result = Math.round(Math.pow(data.M, 2) * pi * data.h * 100) / 100
     return (
       <p className="serlo-main-task">
-        V = {pp(result)} cm³, h = {pp(data.h)} cm
+        V = {pp(data.V)} cm³, h = {pp(data.h)} cm
       </p>
     )
   }
@@ -120,7 +121,7 @@ function Task({ data }: { data: DATA }) {
           Kegels.
         </p>{' '}
         <br />
-        <p>Runden Sie auf eine ganze Zahl.</p>
+        <p>Runden Sie auf zwei Stellen nach dem Komma.</p>
       </>
     )
   }
@@ -133,7 +134,7 @@ function Task({ data }: { data: DATA }) {
           Kegels.
         </p>{' '}
         <br />
-        <p>Runden Sie auf eine ganze Zahl.</p>
+        <p>Runden Sie auf zwei Stellen nach dem Komma.</p>
       </>
     )
   }
@@ -185,8 +186,7 @@ function Hint({ data }: { data: DATA }) {
 function Solution({ data }: { data: DATA }) {
   const zwi = Math.pow(data.M, 2) / 3
   if (data.path === 1) {
-    const result =
-      Math.round((Math.pow(data.M, 2) / 3) * pi * data.h * 100) / 100
+    const result_V = roundToDigits((Math.pow(data.M, 2) / 3) * pi * data.h, 2)
     return (
       <>
         <p>Stelle die Gleichung für das Volumen eines Kegels auf:</p>
@@ -195,22 +195,23 @@ function Solution({ data }: { data: DATA }) {
         </p>
         <p>Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
-          V = {buildFrac(<>1</>, <>3</>)} · ({data.M.toLocaleString('de-De')}{' '}
-          cm)² · π · {data.h.toLocaleString('de-De')} cm
+          V = {buildFrac(<>1</>, <>3</>)} · ({pp(data.M)} cm)² · π ·{' '}
+          {pp(data.h)} cm
         </p>
         <p>Berechne das Ergebnis:</p>
         <p className="serlo-highlight-gray">
-          V = {zwi.toLocaleString('de-De')} cm² · π ·{' '}
-          {data.h.toLocaleString('de-De')} cm
+          V = {pp(zwi)} cm² · π · {pp(data.h)} cm
         </p>{' '}
         <br />
-        <p className="serlo-highlight-green">V = {pp(result)} cm³</p>
+        <p className="serlo-highlight-green">V = {pp(result_V)} cm³</p>
       </>
     )
   }
   if (data.path === 2) {
-    const result =
-      Math.round((Math.pow(data.M, 2) / 3) * pi * data.h * 100) / 100
+    const result_h = roundToDigits(
+      (data.V * 3) / Math.PI / Math.pow(data.M, 2),
+      2
+    )
     return (
       <>
         <p>Stelle die Gleichung für das Volumen eines Kegels auf:</p>
@@ -219,25 +220,23 @@ function Solution({ data }: { data: DATA }) {
         </p>
         <p>Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
-          {result.toLocaleString('de-De')} cm³ = {buildFrac(<>1</>, <>3</>)} · (
-          {data.M.toLocaleString('de-De')} cm)² · π · h
+          {data.V} cm³ = {buildFrac(<>1</>, <>3</>)} · ({pp(data.M)} cm)² · π ·
+          h
         </p>
         <p>Stelle nach h um:</p>
         <p className="serlo-highlight-gray">
-          h ={' '}
-          {buildFrac(
-            <>{result.toLocaleString('de-De')} cm³ · 3</>,
-            <>({data.M.toLocaleString('de-De')} cm)² · π</>
-          )}
+          h = {buildFrac(<>{data.V} cm³ · 3</>, <>({pp(data.M)} cm)² · π</>)}
         </p>{' '}
         <br />
-        <p className="serlo-highlight-green">h ≈ {pp(data.h)} cm</p>
+        <p className="serlo-highlight-green">h = {pp(result_h)} cm</p>
       </>
     )
   }
   if (data.path === 3) {
-    const result =
-      Math.round((Math.pow(data.M, 2) / 3) * pi * data.h * 100) / 100
+    const result_r = roundToDigits(
+      Math.sqrt((data.V * 3) / data.h / Math.PI),
+      2
+    )
     return (
       <>
         <p>Stelle die Gleichung für das Volumen eines Kegels auf:</p>
@@ -246,31 +245,28 @@ function Solution({ data }: { data: DATA }) {
         </p>
         <p>Setze die Angaben in die Gleichung ein:</p>
         <p className="serlo-highlight-gray">
-          {result.toLocaleString('de-De')} cm³ = {buildFrac(<>1</>, <>3</>)} ·
-          r² · π · {data.h.toLocaleString('de-De')} cm
+          {data.V} cm³ = {buildFrac(<>1</>, <>3</>)} · r² · π · {pp(data.h)} cm
         </p>
         <p>Stelle nach r um:</p>
         <p className="serlo-highlight-gray">
           r ={' '}
           {buildBigSqrt(
             <>
-              {buildFrac(
-                <>{result.toLocaleString('de-De')} cm · 3</>,
-                <>({data.h.toLocaleString('de-De')} cm) · π</>
-              )}
+              {buildFrac(<>{pp(data.V)} cm³ · 3</>, <>{pp(data.h)} cm · π</>)}
             </>
           )}
         </p>{' '}
         <br />
-        <p className="serlo-highlight-green">r ≈ {pp(data.M)} cm</p>
+        <p className="serlo-highlight-green">r = {pp(result_r)} cm</p>
       </>
     )
   }
   if (data.path === 4) {
-    const cc =
-      Math.round(Math.sqrt(Math.pow(data.M, 2) + Math.pow(data.h, 2)) * 100) /
-      100
-    const result = Math.round(data.M * pi * (data.M + cc) * 100) / 100
+    const cc = roundToDigits(
+      Math.sqrt(Math.pow(data.M, 2) + Math.pow(data.h, 2)),
+      2
+    )
+    const result = roundToDigits(data.M * pi * (data.M + cc), 2)
 
     return (
       <>
