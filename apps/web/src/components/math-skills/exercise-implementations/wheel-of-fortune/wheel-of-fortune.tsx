@@ -223,18 +223,18 @@ export function WheelOfFortune() {
             <>
               {intro}
               <p>
-                Um mindestens einmal den Preis {colorName(data.number_1)} zu
+                Um mindestens einmal den Preis {colorName(!data.number_1)} zu
                 erhalten, gibt es die Kombinationen{' '}
                 <span className="text-lg">
-                  (gelb; blau), (blau; gelb) und ({colorName(data.number_1)};{' '}
-                  {colorName(data.number_1)})
+                  (gelb; blau), (blau; gelb) und ({colorName(!data.number_1)};{' '}
+                  {colorName(!data.number_1)})
                 </span>
                 . Berechne daraus die Gesamtwahrscheinlichkeit:
               </p>
               {buildBlock(
                 'green',
                 <>
-                  P(mindestens einmal {colorName(data.number_1)}) ={' '}
+                  P(mindestens einmal {colorName(!data.number_1)}) ={' '}
                   {buildSimplifyFrac(counterYellow, data.sections)} ·{' '}
                   {buildSimplifyFrac(counterBlue, data.sections)} +{' '}
                   {buildSimplifyFrac(counterBlue, data.sections)} ·{' '}
