@@ -43,7 +43,7 @@ function createBoxExample(title: string, content: string, type: BoxType) {
   } as EditorBoxDocument
 }
 
-export const boxExample = (
+export const BoxExample = (
   <>
     {[
       createBoxExample('A Box', 'This box is of the type "Note"', 'note'),
@@ -63,7 +63,22 @@ export const boxExample = (
   </>
 )
 
-export const inputExample = (
+export const FillInTheGapExample = (
+  <div className="pt-2">
+    <StaticRenderer
+      document={parseDocumentString(
+        '{"plugin":"blanksExercise","state":{"text":{"plugin":"text","state":[{"type":"p","children":[{"text":"Whales are the biggest "},{"type":"textBlank","blankId":"9070d7e2-f087-41f7-bb65-a7a05c643c88","correctAnswers":[{"answer":"mammals"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" in the world. They communicate over long "},{"type":"textBlank","blankId":"3b0cfadb-eae6-48dd-aa08-18fa21686405","correctAnswers":[{"answer":"distances"}, {"answer":"distance"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" through long songs up to thousands of kilometers."}]}]},"mode":"typing"}}'
+      )}
+    />
+    <StaticRenderer
+      document={parseDocumentString(
+        '{"plugin":"blanksExercise","state":{"text":{"plugin":"text","state":[{"type":"p","children":[{"text":"Some species of spiders are able to detect "},{"type":"textBlank","blankId":"1070e7e2-f087-41f7-bb65-a7a05c643c88","correctAnswers":[{"answer":"magnetic fields"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" . They also have extraordinary "},{"type":"textBlank","blankId":"ab0cfadb-eae6-48dd-aa08-18fa21686402","correctAnswers":[{"answer":"sensory abilities"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" in their leg hairs and have special receptors to detect even the slightest "},{"type":"textBlank","blankId":"8a0cfadb-eae6-48dd-aa08-18fa21686405","correctAnswers":[{"answer":"vibrations"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" and air currents to identify their prey and predators."}]}]},"mode":"drag-and-drop"}}'
+      )}
+    />
+  </div>
+)
+
+export const InputExample = (
   <div className="pt-2">
     <StaticRenderer
       document={parseDocumentString(
@@ -78,7 +93,7 @@ export const inputExample = (
   </div>
 )
 
-export const textExExample = (
+export const TextExerciseExample = (
   <div className="pt-2">
     <StaticRenderer
       document={parseDocumentString(
@@ -113,7 +128,7 @@ export const MCExample = (
   </div>
 )
 
-export const highlighExample = (
+export const HighlightExample = (
   <HighlightRenderer
     code={`// global variable: read & write from everywhere
 var cookieAmount = 100
@@ -131,8 +146,7 @@ const cookieSize = 5`}
     showLineNumbers
   />
 )
-
-export const spoilerExample = (
+export const SpoilerExample = (
   <>
     <div className="slate-container mb-block">
       <h4 className="serlo-h4">

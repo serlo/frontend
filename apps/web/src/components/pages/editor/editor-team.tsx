@@ -32,6 +32,15 @@ export const teamDataKulla: TeamDataEntry = {
 export const teamData: TeamDataEntry[] = [
   teamDataVicky,
   {
+    firstName: 'Gregor ',
+    lastName: 'Zupan ',
+    position: 'Design | Product Owner',
+    extraLinkUrl: 'mailto:gregor@serlo.org',
+    extraLinkText: 'gregor@serlo.org',
+    photo:
+      'https://assets.serlo.org/98f93f80-a09b-11ed-95de-a79d3d5d7bc4/image.png',
+  },
+  {
     firstName: 'Sebastian',
     lastName: 'Sapiatz',
     position: 'Product Management',
@@ -61,7 +70,7 @@ export const teamData: TeamDataEntry[] = [
   // For developers we do not want to show extra links on the editor page
   { ...teamDataKulla, extraLinkText: '', extraLinkUrl: '' },
   {
-    firstName: 'David',
+    firstName: 'Quinn',
     lastName: 'Li',
     position: 'Software',
     extraLinkUrl: '',
@@ -79,15 +88,14 @@ export const teamData: TeamDataEntry[] = [
       'https://assets.serlo.org/16618150-a09a-11ed-95de-a79d3d5d7bc4/image.jpg',
   },
   {
-    firstName: 'Anna',
-    lastName: 'Steinberg',
+    firstName: 'Mikey',
+    lastName: 'Stengel',
     position: 'Software',
     extraLinkUrl: '',
     extraLinkText: '',
     photo:
-      'https://assets.serlo.org/e8aa0a40-3d96-11ed-b861-af1c5dc40fe0/image.jpg',
+      'https://assets.serlo.org/20711390-d20e-11ed-a343-eba572d2a65c/image.png',
   },
-  //Mikey (Softwareentwicklung, ab März)
   {
     firstName: 'Botho',
     lastName: 'Willer',
@@ -96,15 +104,6 @@ export const teamData: TeamDataEntry[] = [
     extraLinkText: '',
     photo:
       'https://assets.serlo.org/legacy/555b0ce89c0fd_a88af44ea94ef2e7139d475f2ec3d4a5df06128c.jpg',
-  },
-  {
-    firstName: 'Gregor ',
-    lastName: 'Zupan ',
-    position: 'Design',
-    extraLinkUrl: '',
-    extraLinkText: '',
-    photo:
-      'https://assets.serlo.org/98f93f80-a09b-11ed-95de-a79d3d5d7bc4/image.png',
   },
 ]
 
