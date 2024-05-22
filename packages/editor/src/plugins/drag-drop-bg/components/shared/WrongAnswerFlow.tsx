@@ -10,49 +10,27 @@ export interface NewAnswerZoneFormProps {
   newWrongAnswer: wrongAnswerType
 }
 
-export function WrongAnswerFlow(props: NewAnswerZoneFormProps) {
+export function WrongAnswerFlow({ newWrongAnswer }: NewAnswerZoneFormProps) {
   const [currentStep, setCurrentStep] = useState(0)
-
-  const { newWrongAnswer } = props
-
   const [stepOneType, setStepOneType] = useState<'text' | 'image'>('image')
 
   const goToStepOne = (newStepOneType: 'text' | 'image') => {
-    // eslint-disable-next-line no-console
     setStepOneType(newStepOneType)
     setCurrentStep(1)
   }
-  const btnStyle = {
-    padding: '10px',
-    paddingRight: '20px',
-    backgroundColor: '#ffedd5',
-    margin: '20px',
-    borderRadius: '5px',
-  }
 
   const stepZero = (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
+    <div className="flex flex-row items-center justify-center">
       <button
-        style={btnStyle}
-        onClick={() => {
-          goToStepOne('text')
-        }}
+        className="m-4 rounded bg-orange-100 px-4 py-2"
+        onClick={() => goToStepOne('text')}
       >
         Text <FaIcon icon={faFont} />
       </button>
       <span>oder</span>
       <button
-        style={btnStyle}
-        onClick={() => {
-          goToStepOne('image')
-        }}
+        className="m-4 rounded bg-orange-100 px-4 py-2"
+        onClick={() => goToStepOne('image')}
       >
         Image <FaIcon icon={faImage} />
       </button>
@@ -62,28 +40,21 @@ export function WrongAnswerFlow(props: NewAnswerZoneFormProps) {
   const stepOneText = <div>Text {newWrongAnswer?.answer.text.render()}</div>
 
   // TODO: Image settings after image upload
-
-  const addButtonStyle: React.CSSProperties = {
-    display: 'flex',
-    backgroundColor: '#ffedd5', // Light orange background
-    borderRadius: '5px', // Rounded corners
-    padding: '5px 10px 5px 10px',
-  }
-
   // TODO: Make add button work
+
   const stepOneImage = (
     <div>
       Image! {newWrongAnswer?.answer.image.render()}
       <div>
-        <button style={addButtonStyle}> + Ablageobject hinzufügen </button>
+        <button className="mt-2 flex rounded bg-orange-100 px-4 py-2">
+          + Ablageobject hinzufügen
+        </button>
       </div>
     </div>
   )
 
   const stepOne = stepOneType === 'text' ? stepOneText : stepOneImage
-
   const stepTwo = <div>Step Two</div>
-
   const steps = [stepZero, stepOne, stepTwo]
 
   return steps[currentStep]

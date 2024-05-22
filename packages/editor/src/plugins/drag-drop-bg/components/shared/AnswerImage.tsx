@@ -8,17 +8,13 @@ interface AnswerImageProps {
 export function AnswerImage({ url, isPreview }: AnswerImageProps) {
   if (!url) return null
 
-  const commonStyles: React.CSSProperties = {
-    objectFit: 'contain',
-  }
-
   return (
     <img
       src={url}
-      style={
+      className={
         isPreview
-          ? { height: '70px', border: '2px solid lightblue', ...commonStyles }
-          : { height: '100%', width: '100%', ...commonStyles }
+          ? 'border-lightblue h-16 border-2 object-contain'
+          : 'h-full w-full object-contain'
       }
     />
   )

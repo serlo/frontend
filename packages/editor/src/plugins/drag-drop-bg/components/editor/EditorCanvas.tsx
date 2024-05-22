@@ -5,18 +5,16 @@ import { useState } from 'react'
 
 import type { DragDropBgProps } from '../..'
 import { useAnswerZones } from '../../hooks/useAnswerZones'
-import { defaultContainerStyles } from '../../styles'
 import { answerZoneType, wrongAnswerType } from '../../types'
-import { AnswerZone } from '../answer-zone/AnswerZone'
-import { AnswerZoneSettingsForm } from '../answer-zone/AnswerZoneSettingsForm'
-import { NewAnswerZoneFlow } from '../answer-zone/NewAnswerZoneFlow'
+import { AnswerZone } from '../AnswerZone/AnswerZone'
+import { AnswerZoneSettingsForm } from '../AnswerZone/AnswerZoneSettingsForm'
+import { NewAnswerZoneFlow } from '../AnswerZone/NewAnswerZoneFlow'
 import { PossibleAnswers } from '../shared/PossibleAnswers'
 import { WrongAnswerFlow } from '../shared/WrongAnswerFlow'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 export function EditorCanvas(props: DragDropBgProps) {
   const { state } = props
-
   const { answerZones, backgroundImage, extraDraggableAnswers } = state
 
   const {
@@ -41,29 +39,15 @@ export function EditorCanvas(props: DragDropBgProps) {
     const zoneImageId = zone.answer.image.get()
     const zoneImageDoc = selectStaticDocument(store.getState(), zoneImageId)
     const zoneImgUrl = zoneImageDoc?.state?.src || ''
-
-    return {
-      id: zoneImageId,
-      imageUrl: zoneImgUrl,
-    }
+    return { id: zoneImageId, imageUrl: zoneImgUrl }
   }
+
   const correctAnswers = answerZones.map(zoneToPossibleAnswer)
-
   const wrongAnswers = extraDraggableAnswers.map(zoneToPossibleAnswer)
-
-  // TODO: shuffle answers
-  const possibleAnswers = [...correctAnswers, ...wrongAnswers]
-
-  const dynamicStyles = {
-    ...defaultContainerStyles,
-    backgroundImage: `url(${backgroundImageUrl})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center center',
-  }
+  const possibleAnswers = [...correctAnswers, ...wrongAnswers] // TODO: shuffle answers
 
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const [showCreateDropZoneModal, setShowCreateDropZoneModal] = useState(false)
-
   const [showCreateWrongAnswerModal, setShowCreateWrongAnswerModal] =
     useState(false)
 
@@ -77,12 +61,9 @@ export function EditorCanvas(props: DragDropBgProps) {
     setShowCreateDropZoneModal(true)
   }
 
-  const onClickAddWrongAnswer = () => {
-    createWrongAnswer()
-  }
+  const onClickAddWrongAnswer = () => createWrongAnswer()
 
   const onClickWrongAnswerPlus = (id: string) => {
-    console.log('clickedplus', id)
     selectWrongAnswer(id)
     setShowCreateWrongAnswerModal(true)
   }
@@ -103,8 +84,6 @@ export function EditorCanvas(props: DragDropBgProps) {
     return answerTextDocument?.state[0]?.children[0].text || ''
   }
 
-  //TODO: editor strings
-  // TODO: "Vorschau" button and preview mode
   return (
     <>
       <ModalWithCloseButton
@@ -138,7 +117,11 @@ export function EditorCanvas(props: DragDropBgProps) {
           <WrongAnswerFlow newWrongAnswer={currentWrongAnswer} />
         )}
       </ModalWithCloseButton>
-      <div ref={drop} style={dynamicStyles}>
+      <div
+        ref={drop}
+        className="relative h-[786px] w-[786px] bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${backgroundImageUrl})` }}
+      >
         {answerZones.map((answerZone, index) => (
           <AnswerZone
             key={index}
@@ -152,7 +135,10 @@ export function EditorCanvas(props: DragDropBgProps) {
         ))}
       </div>
       <div className="mt-4">
-        <button onClick={() => onClickAddWrongAnswer()}>
+        <button
+          className="rounded bg-blue-500 p-2 text-white"
+          onClick={onClickAddWrongAnswer}
+        >
           + Add wrong answer
         </button>
         <PossibleAnswers

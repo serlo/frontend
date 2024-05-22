@@ -4,6 +4,7 @@ import type { ArticlePluginState } from '@editor/plugins/article'
 import { AudioPluginState } from '@editor/plugins/audio'
 import { BlanksExerciseState } from '@editor/plugins/blanks-exercise'
 import { BoxPluginState } from '@editor/plugins/box'
+import { DragDropBgPluginState } from '@editor/plugins/drag-drop-bg'
 import { EquationsPluginState } from '@editor/plugins/equations'
 import type { ExercisePluginState } from '@editor/plugins/exercise'
 import { ExerciseGroupPluginState } from '@editor/plugins/exercise-group'
@@ -35,7 +36,6 @@ import type { VideoPluginState } from '@editor/plugins/video'
 
 import { EditorPluginType } from './editor-plugin-type'
 import { TemplatePluginType } from './template-plugin-type'
-import { DragDropBgPluginState } from '@editor/plugins/drag-drop-bg'
 
 export type SlateBlockElement = CustomElement
 export type SlateTextElement = CustomText

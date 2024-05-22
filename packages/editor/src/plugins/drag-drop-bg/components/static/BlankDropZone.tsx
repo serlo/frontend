@@ -3,7 +3,6 @@ import type { FC } from 'react'
 import { memo, useState } from 'react'
 import { useDrop } from 'react-dnd'
 
-import { answerZoneStyle } from '../../styles'
 import { BlankDropZoneSpec, PossibleAnswerType } from '../../types'
 import { AnswerImage } from '../shared/AnswerImage'
 
@@ -20,15 +19,8 @@ export const BlankDropZone: FC<BlankDropZoneProps> = memo(
     const [lastDroppedItem, setLastDroppedItem] =
       useState<PossibleAnswerType | null>(null)
 
-    const { left, top } = dropZone.position ?? {
-      left: 0,
-      top: 0,
-    }
-
-    const { height, width } = dropZone.layout ?? {
-      height: 0,
-      width: 0,
-    }
+    const { left, top } = dropZone.position ?? { left: 0, top: 0 }
+    const { height, width } = dropZone.layout ?? { height: 0, width: 0 }
 
     const [{ isOver, canDrop }, drop] = useDrop({
       accept: 'all',
@@ -43,27 +35,23 @@ export const BlankDropZone: FC<BlankDropZoneProps> = memo(
     })
 
     const isActive = isOver && canDrop
-    let backgroundColor = 'white'
-    if (isActive) {
-      backgroundColor = 'darkgrey'
-    } else if (canDrop) {
-      backgroundColor = 'lightgrey'
-    }
-
-    let borderColor = 'black'
-    if (isCorrect === true) {
-      borderColor = 'green'
-    } else if (isCorrect === false) {
-      borderColor = 'red'
-    }
+    const backgroundColor = isActive
+      ? 'bg-gray-700'
+      : canDrop
+        ? 'bg-gray-300'
+        : 'bg-white'
+    const borderColor =
+      isCorrect === true
+        ? 'border-green-500'
+        : isCorrect === false
+          ? 'border-red-500'
+          : 'border-black'
 
     return (
       <div
         ref={drop}
+        className={`absolute cursor-move rounded border-2 p-1 ${backgroundColor} ${borderColor}`}
         style={{
-          ...answerZoneStyle,
-          backgroundColor,
-          borderColor,
           left,
           top,
           height,

@@ -1,18 +1,7 @@
 import { faClone, faTrashCan } from '@fortawesome/free-regular-svg-icons'
 import { useEffect, useState } from 'react'
 
-import {
-  alignLabelStyle,
-  buttonStyle,
-  checkboxStyle,
-  containerStyle,
-  iconStyle,
-  inputStyle,
-  labelStyle,
-  sizeContainerStyle,
-  spanStyle,
-} from '../../styles'
-import type { answerZoneType } from '../../types'
+import type { answerZoneType } from '../../types.js'
 import { FaIcon } from '@/components/fa-icon'
 
 interface AnswerZoneSettingsFormProps {
@@ -56,52 +45,61 @@ export function AnswerZoneSettingsForm({
   }
 
   return (
-    <div style={containerStyle}>
-      <button onClick={onDuplicate} style={buttonStyle}>
-        <FaIcon icon={faClone} style={iconStyle} />
+    <div className="flex flex-col gap-4 rounded-lg bg-white p-4 shadow-md">
+      <button
+        onClick={onDuplicate}
+        className="flex cursor-pointer items-center rounded border-none bg-orange-100 p-2"
+      >
+        <FaIcon icon={faClone} className="mr-2" />
         Zone duplizieren
       </button>
 
-      <label style={alignLabelStyle}>
+      <label className="mb-2 flex items-center">
         Visible
         <input
           checked={settings.visible}
           onClick={() => handleInputChange('visible', !settings.visible)}
           type="checkbox"
-          style={checkboxStyle}
+          className="ml-auto rounded border border-gray-300 bg-orange-100"
         />
       </label>
 
-      <label style={labelStyle}>
+      <label className="mb-2 block">
         Größe der Zone manuell festlegen
-        <div style={sizeContainerStyle}>
+        <div className="mt-2 flex gap-2">
           <input
             type="number"
             value={settings.height}
             onChange={(e) =>
               handleInputChange('height', parseInt(e.target.value))
             }
-            style={inputStyle}
+            className="w-full rounded border border-gray-300 bg-orange-100 p-2"
           />
-          <span style={spanStyle}>x</span>
+          <span className="self-center">x</span>
           <input
             type="number"
             value={settings.width}
             onChange={(e) =>
               handleInputChange('width', parseInt(e.target.value))
             }
-            style={inputStyle}
+            className="w-full rounded border border-gray-300 bg-orange-100 p-2"
           />
         </div>
       </label>
 
-      <label style={alignLabelStyle}>
+      <label className="mb-2 flex items-center">
         Automatisches Ausrichten
-        <input type="checkbox" style={checkboxStyle} />
+        <input
+          type="checkbox"
+          className="ml-auto rounded border border-gray-300 bg-orange-100"
+        />
       </label>
 
-      <button onClick={onDelete} style={buttonStyle}>
-        <FaIcon icon={faTrashCan} style={iconStyle} />
+      <button
+        onClick={onDelete}
+        className="flex cursor-pointer items-center rounded border-none bg-orange-100 p-2"
+      >
+        <FaIcon icon={faTrashCan} className="mr-2" />
         Zone löschen
       </button>
     </div>

@@ -3,7 +3,7 @@
 import { faFont, faImage } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
-import type { answerZoneType } from '../../types'
+import type { answerZoneType } from '../../types.js'
 import { FaIcon } from '@/components/fa-icon'
 
 export interface NewAnswerZoneFormProps {
@@ -22,25 +22,11 @@ export function NewAnswerZoneFlow(props: NewAnswerZoneFormProps) {
     setStepOneType(newStepOneType)
     setCurrentStep(1)
   }
-  const btnStyle = {
-    padding: '10px',
-    paddingRight: '20px',
-    backgroundColor: '#ffedd5',
-    margin: '20px',
-    borderRadius: '5px',
-  }
 
   const stepZero = (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
+    <div className="flex flex-row items-center justify-center">
       <button
-        style={btnStyle}
+        className="m-4 rounded bg-orange-100 px-4 py-2"
         onClick={() => {
           goToStepOne('text')
         }}
@@ -49,7 +35,7 @@ export function NewAnswerZoneFlow(props: NewAnswerZoneFormProps) {
       </button>
       <span>oder</span>
       <button
-        style={btnStyle}
+        className="m-4 rounded bg-orange-100 px-4 py-2"
         onClick={() => {
           goToStepOne('image')
         }}
@@ -63,19 +49,15 @@ export function NewAnswerZoneFlow(props: NewAnswerZoneFormProps) {
 
   // TODO: Image settings after image upload
 
-  const addButtonStyle: React.CSSProperties = {
-    display: 'flex',
-    backgroundColor: '#ffedd5', // Light orange background
-    borderRadius: '5px', // Rounded corners
-    padding: '5px 10px 5px 10px',
-  }
-
   // TODO: Make add button work
   const stepOneImage = (
     <div>
       Image {newAnswerZone?.answer.image.render()}
       <div>
-        <button style={addButtonStyle}> + Ablageobject hinzufügen </button>
+        <button className="mt-2 flex rounded bg-orange-100 px-2 py-1">
+          {' '}
+          + Ablageobject hinzufügen{' '}
+        </button>
       </div>
     </div>
   )

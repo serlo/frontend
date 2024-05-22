@@ -5,7 +5,6 @@ import { useDrag } from 'react-dnd'
 import { AnswerImage } from './AnswerImage'
 import { AnswerText } from './AnswerText'
 import type { DraggableAnswerType } from '../../types'
-import { plusButtonStyle } from '../answer-zone/styles'
 import { cn } from '@/helper/cn'
 
 export const blankDraggableAnswerDragType = 'blank-solution'
@@ -22,16 +21,14 @@ interface DraggableAnswerProps {
 export const dragAnswerStyle =
   'cursor-grab rounded-full border border-brand bg-brand-50 px-2'
 
-export function DraggableAnswer(props: DraggableAnswerProps) {
-  const {
-    draggableId,
-    text,
-    isAnswerCorrect,
-    imageUrl,
-    canEdit = false,
-    onClickEdit,
-  } = props
-
+export function DraggableAnswer({
+  draggableId,
+  text,
+  isAnswerCorrect,
+  imageUrl,
+  canEdit = false,
+  onClickEdit,
+}: DraggableAnswerProps) {
   const dragItem = useMemo<DraggableAnswerType>(
     () => ({
       id: draggableId,
@@ -51,8 +48,9 @@ export function DraggableAnswer(props: DraggableAnswerProps) {
   return (
     <span
       className={cn(
-        isAnswerCorrect && 'border-green-500',
-        isAnswerCorrect === false && 'border-red-500'
+        dragAnswerStyle,
+        isAnswerCorrect ? 'border-green-500' : '',
+        isAnswerCorrect === false ? 'border-red-500' : ''
       )}
       ref={dragRef}
     >
@@ -61,7 +59,7 @@ export function DraggableAnswer(props: DraggableAnswerProps) {
       {!imageUrl && !text && canEdit && (
         <button
           onClick={() => onClickEdit && onClickEdit(draggableId)}
-          style={plusButtonStyle}
+          className="rounded bg-orange-100 p-2"
         >
           +
         </button>

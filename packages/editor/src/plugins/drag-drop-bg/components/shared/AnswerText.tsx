@@ -4,18 +4,15 @@ interface AnswerTextProps {
   width?: number
 }
 
-export function AnswerText(props: AnswerTextProps) {
-  const { text, height, width } = props
+export function AnswerText({ text, height, width }: AnswerTextProps) {
   if (!text) return null
 
   return (
     <div
+      className="flex items-center justify-center"
       style={{
-        display: 'flex',
-        height: `${height}px`,
-        width: `${width}px`,
-        alignItems: 'center',
-        justifyContent: 'center',
+        height: height ? `${height}px` : 'auto',
+        width: width ? `${width}px` : 'auto',
       }}
     >
       <span>{text}</span>

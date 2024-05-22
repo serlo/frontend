@@ -43,19 +43,12 @@ export function DragDropBgEditor({ state, id }: DragDropBgProps) {
     </button>
   )
 
-  const btnStyle = {
-    padding: '10px 20px 10px 10px',
-    backgroundColor: '#ffedd5',
-    margin: '20px',
-    borderRadius: '5px',
-  }
-
   const blankVsImage = (
     <>
       <DragDropBgToolbar id={id}>{addButton}</DragDropBgToolbar>
       <div className="flex flex-row items-center justify-center">
         <button
-          style={btnStyle}
+          className="m-[20px] rounded-[5px] bg-orange-100 p-[10px] pr-[20px]"
           onClick={() => {
             backgroundType.set('text')
           }}
@@ -63,16 +56,21 @@ export function DragDropBgEditor({ state, id }: DragDropBgProps) {
           Blank
         </button>
         <span>oder</span>
-        <button style={btnStyle} onClick={() => backgroundType.set('image')}>
+        <button
+          className="m-[20px] rounded-[5px] bg-orange-100 p-[10px] pr-[20px]"
+          onClick={() => backgroundType.set('image')}
+        >
           Image <FaIcon icon={faImage} />
         </button>
       </div>
     </>
   )
 
-  const isBackgroundDefined =
-    backgroundType.get() === 'text' || backgroundImageUrlFromPlugin
+  const isBlankBg = backgroundType.get() === 'text'
+  const isBackgroundImageDefined =
+    backgroundType.get() === 'image' && backgroundImage.get() !== ''
 
+  const isBackgroundDefined = isBlankBg || isBackgroundImageDefined
   const canvas = (
     <>
       <div className={!isBackgroundDefined ? '' : '-left-[999px] hidden'}>

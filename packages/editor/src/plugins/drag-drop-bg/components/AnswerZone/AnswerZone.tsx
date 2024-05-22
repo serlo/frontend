@@ -4,13 +4,7 @@ import { useDrag } from 'react-dnd'
 import { ResizableBox, ResizableBoxProps } from 'react-resizable'
 import 'react-resizable/css/styles.css'
 
-import {
-  buttonsContainerStyle,
-  plusButtonStyle,
-  settingsButtonStyle,
-} from './styles'
-import { answerZoneStyle } from '../../styles'
-import type { answerZoneType } from '../../types.js'
+import type { answerZoneType } from '../../types'
 import { AnswerImage } from '../shared/AnswerImage'
 import { AnswerText } from '../shared/AnswerText'
 import { FaIcon } from '@/components/fa-icon'
@@ -57,7 +51,6 @@ export const AnswerZone = forwardRef<HTMLDivElement, AnswerZoneProps>(
       [answerZone, isDraggingEnabled, isResizing]
     )
 
-    // TODO: Check exactly what this does
     useImperativeHandle(ref, () => ({
       getBoundingClientRect: () => dimensions,
     }))
@@ -73,26 +66,24 @@ export const AnswerZone = forwardRef<HTMLDivElement, AnswerZoneProps>(
     }
 
     const renderButtons = () => (
-      <div
-        style={{
-          ...buttonsContainerStyle,
-          height: dimensions.height,
-          width: dimensions.width,
-        }}
-      >
-        <button
-          style={settingsButtonStyle}
-          onClick={() => onClickSettingsButton?.(answerZone.id.get())}
-        >
-          <FaIcon icon={faCog} />
-        </button>
-        <button
-          style={plusButtonStyle}
-          onClick={() => onClickPlusButton?.(answerZone.id.get())}
-        >
-          <FaIcon icon={faPlus} />
-        </button>
-      </div>
+      <>
+        <div className="absolute right-2 top-2">
+          <button
+            className="rounded bg-orange-100 p-1"
+            onClick={() => onClickSettingsButton?.(answerZone.id.get())}
+          >
+            <FaIcon icon={faCog} />
+          </button>
+        </div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <button
+            className="rounded bg-orange-100 p-3"
+            onClick={() => onClickPlusButton?.(answerZone.id.get())}
+          >
+            <FaIcon icon={faPlus} />
+          </button>
+        </div>
+      </>
     )
 
     const left = answerZone.position.left.get()
@@ -103,8 +94,8 @@ export const AnswerZone = forwardRef<HTMLDivElement, AnswerZoneProps>(
     return (
       <div
         ref={dragPreview}
+        className="absolute flex cursor-move items-center justify-center rounded border-2 border-blue-500 bg-white p-1"
         style={{
-          ...answerZoneStyle,
           left,
           top,
           width: dimensions.width,
@@ -122,10 +113,7 @@ export const AnswerZone = forwardRef<HTMLDivElement, AnswerZoneProps>(
           resizeHandles={['nw', 'ne', 'sw', 'se']}
           style={{ width: '100%', height: '100%' }}
         >
-          <div
-            ref={drag}
-            style={{ width: '100%', height: '100%', position: 'relative' }}
-          >
+          <div ref={drag} className="relative h-full w-full">
             {answerImageUrl ? (
               <AnswerImage
                 width={dimensions.width}

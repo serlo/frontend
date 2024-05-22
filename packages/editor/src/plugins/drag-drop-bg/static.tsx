@@ -7,7 +7,6 @@ import { useState } from 'react'
 
 import { PossibleAnswers } from './components/shared/PossibleAnswers'
 import { BlankDropZone } from './components/static/BlankDropZone'
-import { defaultContainerStyles } from './styles'
 
 export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
   const { answerZones, backgroundImage, extraDraggableAnswers } = state
@@ -27,14 +26,6 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
   })
 
   const possibleAnswers = [...correctAnswers, ...extraDraggableAnswers]
-  const staticDivStyle = {
-    ...defaultContainerStyles,
-    overflow: 'hidden',
-    // clear: 'both',
-    backgroundImage: `url(${backgroundImageUrlFromPlugin})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center center',
-  }
 
   const [dropzoneAnswerMap, setDropzoneAnswerMap] = useState(
     new Map<string, string>()
@@ -63,7 +54,12 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
 
   return (
     <DndWrapper>
-      <div style={staticDivStyle}>
+      <div
+        className="relative h-[786px] w-[786px] overflow-hidden border border-black bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url(${backgroundImageUrlFromPlugin})`,
+        }}
+      >
         {answerZones.map((answerZone, index) => {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { answer, id, ...rest } = answerZone
