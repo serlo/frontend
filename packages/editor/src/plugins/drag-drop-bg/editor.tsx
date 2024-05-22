@@ -14,7 +14,8 @@ export function DragDropBgEditor({ state, id }: DragDropBgProps) {
   const bgImagePluginState = useAppSelector((state) =>
     selectDocument(state, backgroundImage.get())
   ) as EditorImageDocument
-  const backgroundImageUrlFromPlugin = bgImagePluginState?.state?.src || ''
+  const backgroundImageUrlFromPlugin =
+    bgImagePluginState?.state?.src || ('' as string)
 
   const onClickAddAnswerZone = () => {
     const currentLength = state.answerZones.length
@@ -67,21 +68,23 @@ export function DragDropBgEditor({ state, id }: DragDropBgProps) {
   )
 
   const isBlankBg = backgroundType.get() === 'text'
-  const isBackgroundImageDefined =
-    backgroundType.get() === 'image' && backgroundImage.get() !== ''
+  const isImageBg = backgroundType.get() === 'image'
 
-  const isBackgroundDefined = isBlankBg || isBackgroundImageDefined
-  const canvas = (
+  const isBgTypeSelected = isBlankBg || isImageBg
+
+  if (!isBgTypeSelected) return blankVsImage
+
+  const hasImgUrl = !!backgroundImageUrlFromPlugin
+  const isBackgroundDefined = isBlankBg || (isImageBg && hasImgUrl)
+
+  if (!isBackgroundDefined) {
+    return backgroundImage.render({ config: {} })
+  }
+
+  return (
     <>
-      <div className={!isBackgroundDefined ? '' : '-left-[999px] hidden'}>
-        {backgroundImage.render({ config: {} })}
-      </div>
       <DragDropBgToolbar id={id}>{addButton}</DragDropBgToolbar>
-      <div className={isBackgroundDefined ? '' : '-left-[999px] hidden'}>
-        <EditorCanvas state={state} config={{}} id="" focused={false} />
-      </div>
+      <EditorCanvas state={state} config={{}} id={id} focused={false} />
     </>
   )
-
-  return isBackgroundDefined ? canvas : blankVsImage
 }
