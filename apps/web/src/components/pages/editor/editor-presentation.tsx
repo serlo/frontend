@@ -52,9 +52,6 @@ export function EditorPresentation() {
             `)}
           >
             <span className="serlo-underlined !pr-0 pb-2">Serlo Editor</span>
-            <sup className="relative -top-6 ml-2 inline-block text-base text-brand">
-              beta
-            </sup>
           </h1>
         </section>
 
