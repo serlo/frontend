@@ -146,7 +146,7 @@ export function EditorPresentation() {
               <ul className="serlo-ul text-xl">
                 <li>JavaScript library</li>
                 <li>Docker container</li>
-                <li>Plugins for the most popular LMS</li>
+                <li>Plugins for the most popular LMS (Moodle & Edu-Sharing)</li>
                 <li>Software as a service</li>
               </ul>
               <p className="mt-20 flex-1 text-center text-xl leading-cozy">
