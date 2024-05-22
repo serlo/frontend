@@ -73,6 +73,7 @@ export function EditorCanvas(props: DragDropBgProps) {
       store.getState(),
       answerZoneImageId
     )
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return answerImageDocument?.state?.src || ''
   }
 
@@ -81,6 +82,7 @@ export function EditorCanvas(props: DragDropBgProps) {
       store.getState(),
       answerZoneTextId
     )
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return answerTextDocument?.state[0]?.children[0].text || ''
   }
 

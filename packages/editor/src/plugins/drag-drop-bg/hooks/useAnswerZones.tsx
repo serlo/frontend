@@ -1,9 +1,13 @@
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useCallback, useState } from 'react'
-import { useDrop } from 'react-dnd'
+import { XYCoord, useDrop } from 'react-dnd'
 
 import type { DragDropBgProps } from '..'
-import type { answerZoneType, wrongAnswerType } from '../types'
+import type {
+  AnswerZoneSettings,
+  answerZoneType,
+  wrongAnswerType,
+} from '../types'
 
 export function useAnswerZones({ state, id }: DragDropBgProps) {
   const { answerZones, extraDraggableAnswers } = state
@@ -32,11 +36,11 @@ export function useAnswerZones({ state, id }: DragDropBgProps) {
     }
   }
 
-  const onChangeAnswerZone = (id: string, settings: any) => {
+  const onChangeAnswerZone = (id: string, settings: AnswerZoneSettings) => {
     const answerZone = answerZones.find((zone) => zone.id.get() === id)
     if (!answerZone) return
 
-    answerZone.layout.visible.set(settings?.visible)
+    settings?.visible && answerZone.layout.visible.set(settings?.visible)
     answerZone.layout.height.set(settings?.height)
     answerZone.layout.width.set(settings?.width)
     answerZone.layout.lockedAspectRatio.set(settings?.lockedAspectRatio)
@@ -84,7 +88,8 @@ export function useAnswerZones({ state, id }: DragDropBgProps) {
     () => ({
       accept: 'all',
       drop(answerZone: answerZoneType, monitor) {
-        const delta = monitor.getDifferenceFromInitialOffset() as XYCoord
+        const change = monitor.getDifferenceFromInitialOffset()
+        const delta = change || ({ x: 0, y: 0 } as XYCoord)
         const left = Math.round(answerZone.position.left.get() + delta.x)
         const top = Math.round(answerZone.position.top.get() + delta.y)
         moveAnswerZone(answerZone, left, top)

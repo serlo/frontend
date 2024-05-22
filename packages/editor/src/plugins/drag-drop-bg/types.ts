@@ -1,6 +1,6 @@
 import { StateTypeReturnType } from '@editor/plugin'
 
-import type { answerZoneProps, wrongAnswerProps } from '.'
+import type { answerZoneState, wrongAnswerState } from '.'
 
 export interface PossibleAnswerType {
   id: string
@@ -36,8 +36,15 @@ export interface BlankDropZoneSpec extends BasicDropZone {
   lastDroppedItem?: { id: string; imageUrl?: string }
 }
 
+export interface AnswerZoneSettings {
+  visible: boolean
+  height: number
+  width: number
+  lockedAspectRatio: boolean
+}
+
 export interface answerZoneType
-  extends StateTypeReturnType<typeof answerZoneProps> {}
+  extends StateTypeReturnType<typeof answerZoneState> {}
 
 export interface wrongAnswerType
-  extends StateTypeReturnType<typeof wrongAnswerProps> {}
+  extends StateTypeReturnType<typeof wrongAnswerState> {}

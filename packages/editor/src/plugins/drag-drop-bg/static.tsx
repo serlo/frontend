@@ -66,7 +66,7 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
           const dropZone = { ...rest, id: index.toString() }
           return (
             <BlankDropZone
-              key={`dustbin-${index}`}
+              key={id}
               accept={['answer']}
               dropZone={dropZone}
               onDropAnswer={onDropAnswer}

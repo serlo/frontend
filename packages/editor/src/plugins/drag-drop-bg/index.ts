@@ -12,9 +12,6 @@ import {
   list,
 } from '../../plugin'
 
-export const answerZoneImageProps = child({ plugin: EditorPluginType.Image })
-export const answerZoneTextProps = child({ plugin: EditorPluginType.Text })
-
 export const positionData = object({
   top: number(0),
   left: number(0),
@@ -28,27 +25,27 @@ export const layoutData = object({
 })
 
 export const answerData = object({
-  image: answerZoneImageProps,
-  text: answerZoneTextProps,
+  image: child({ plugin: EditorPluginType.Image }),
+  text: child({ plugin: EditorPluginType.Text }),
 })
 
-export const answerZoneProps = object({
+export const answerZoneState = object({
   id: string(''),
   position: positionData,
   layout: layoutData,
   answer: answerData,
 })
 
-export const wrongAnswerProps = object({
+export const wrongAnswerState = object({
   id: string(''),
   answer: answerData,
 })
 
 const dragDropBgState = object({
-  answerZones: list(answerZoneProps, 0),
+  answerZones: list(answerZoneState, 0),
   backgroundType: string(''),
   backgroundImage: child({ plugin: EditorPluginType.Image }),
-  extraDraggableAnswers: list(wrongAnswerProps, 0),
+  extraDraggableAnswers: list(wrongAnswerState, 0),
 })
 
 export const defaultConfig: DragDropBgConfig = {}

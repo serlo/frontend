@@ -1,13 +1,13 @@
 import { faClone, faTrashCan } from '@fortawesome/free-regular-svg-icons'
 import { useEffect, useState } from 'react'
 
-import type { answerZoneType } from '../../types.js'
+import type { AnswerZoneSettings, answerZoneType } from '../../types.js'
 import { FaIcon } from '@/components/fa-icon'
 
 interface AnswerZoneSettingsFormProps {
   answerZone: answerZoneType
   onDuplicate: () => void
-  onChange: (id: string, settings: any) => void
+  onChange: (id: string, settings: AnswerZoneSettings) => void
   onDelete: () => void
 }
 
@@ -21,6 +21,7 @@ export function AnswerZoneSettingsForm({
     visible: answerZone?.layout.visible.value,
     height: answerZone?.layout.height.value,
     width: answerZone?.layout.width.value,
+    lockedAspectRatio: true,
   }
 
   const answerZoneId = answerZone?.id.get()
