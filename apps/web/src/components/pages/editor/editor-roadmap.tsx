@@ -6,9 +6,6 @@ const roadmapData = [
     steps: [
       'Fill-in-the-gap exercise (new plugin)',
       'Exercise generation with AI ✨',
-      'Directly link to content sections',
-      'Improved focus management',
-      'Impact dashboard – supporting authors with usage data',
       'Copy & Paste content across plugins',
       'Web Component release',
     ],
