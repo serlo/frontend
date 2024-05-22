@@ -16,7 +16,7 @@ export async function subjectLandingGetStaticProps(
     return {
       notFound: true,
       props: { pageData: {} as TaxonomyPage },
-      revalidate: isProduction ? undefined : 60 * 5,
+      revalidate: isProduction ? undefined : 60 * 5, // 5 mins
     }
   }
 

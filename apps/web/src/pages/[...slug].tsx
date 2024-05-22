@@ -73,11 +73,14 @@ export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
     return { notFound: true, revalidate: isProduction ? undefined : 60 * 5 }
   }
 
+  // revalidation settings: prod: 20 mins, staging: 20 mins for taxonomies, 24h for entities
+  const revalidate = isProduction || !isEntity ? 60 * 20 : 60 * 60 * 24
+
   return {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as SlugProps['pageData'], // remove undefined values
     },
-    revalidate: isEntity ? 60 * 60 * 24 : 60 * 15, // 1 day for entities or 15 min for taxonomies
+    revalidate,
   }
 }
 
