@@ -1,3 +1,4 @@
+import { AIExerciseFeedback } from '@editor/editor-ui/exercises/ai-exercise-feedback'
 import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
@@ -14,7 +15,7 @@ export interface InputExerciseAnswer {
   feedback: JSX.Element | null
 }
 
-interface InputExersiseRendererProps {
+interface InputExerciseRendererProps {
   type: InputExerciseType
   unit: string
   answers: InputExerciseAnswer[]
@@ -31,7 +32,7 @@ export function InputExerciseRenderer({
   unit,
   answers,
   onEvaluate,
-}: InputExersiseRendererProps) {
+}: InputExerciseRendererProps) {
   const [feedback, setFeedback] = useState<FeedbackData | null>(null)
   const [value, setValue] = useState('')
   const exStrings = useInstanceData().strings.content.exercises
@@ -79,7 +80,7 @@ export function InputExerciseRenderer({
       />{' '}
       {unit}
       <br />
-      <div className="mt-4 flex">
+      <div className={cn('mt-4 flex')}>
         <button
           className={cn(
             'serlo-button-blue h-8',
@@ -90,9 +91,16 @@ export function InputExerciseRenderer({
           {exStrings.check}
         </button>
         {feedback && value ? (
-          <ExerciseFeedback correct={feedback.correct}>
-            {feedback.message}
-          </ExerciseFeedback>
+          type === InputExerciseType.AiFeedback && !feedback.correct ? (
+            <>
+              <br />
+              <AIExerciseFeedback value={value} />
+            </>
+          ) : (
+            <ExerciseFeedback correct={feedback.correct}>
+              {feedback.message}
+            </ExerciseFeedback>
+          )
         ) : null}
       </div>
     </div>

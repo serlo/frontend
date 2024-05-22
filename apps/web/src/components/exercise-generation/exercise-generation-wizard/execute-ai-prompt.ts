@@ -1,7 +1,10 @@
 // execute-ai-prompt.tsx
 import { useState, useCallback, useEffect, useRef } from 'react'
 
-import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
+import {
+  createAuthAwareGraphqlFetch,
+  createGraphqlFetch,
+} from '@/api/graphql-fetch'
 import { useAuthentication } from '@/auth/use-authentication'
 import { submitEvent } from '@/helper/submit-event'
 
@@ -30,6 +33,7 @@ export interface ChatCompletionMessageParam {
 interface UseExecuteAIPromptProps {
   messages: ChatCompletionMessageParam[]
   submitEventPrefix: string
+  skipAuth?: boolean
 }
 
 interface UseExecuteAIPromptReturn<T extends UnknownRecord> {
@@ -44,6 +48,7 @@ interface UseExecuteAIPromptReturn<T extends UnknownRecord> {
 export function useExecuteAIPrompt<T extends UnknownRecord>({
   messages,
   submitEventPrefix,
+  skipAuth = false,
 }: UseExecuteAIPromptProps): UseExecuteAIPromptReturn<T> {
   const auth = useAuthentication()
   const [data, setData] = useState<T | null>(null)
@@ -66,7 +71,9 @@ export function useExecuteAIPrompt<T extends UnknownRecord>({
       isExecutingPrompt.current = true
       setStatus(ExecutePromptStatus.Loading)
 
-      const graphQlFetch = createAuthAwareGraphqlFetch(auth)
+      const graphQlFetch = skipAuth
+        ? createGraphqlFetch()
+        : createAuthAwareGraphqlFetch(auth)
 
       if (signal?.aborted) {
         return
@@ -145,7 +152,7 @@ export function useExecuteAIPrompt<T extends UnknownRecord>({
     } finally {
       isExecutingPrompt.current = false
     }
-  }, [messages, auth, submitEventPrefix, numberOfRegenerations])
+  }, [messages, auth, submitEventPrefix, numberOfRegenerations, skipAuth])
 
   useEffect(() => {
     if (isExecutingPrompt.current) {

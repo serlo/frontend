@@ -1018,6 +1018,7 @@ export const loggedInData = {
             'input-number-exact-match-challenge': "Number (exact, e.g. '0.5')",
             'input-expression-equal-match-challenge':
               "Mathematical expression (equivalent, e.g. '0.5' or '1/2' or '2/4'",
+            'input-with-ai-feedback': 'Personalized AI feedback',
           },
         },
         scMcExercise: {

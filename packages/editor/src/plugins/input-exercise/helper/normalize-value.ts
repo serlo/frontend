@@ -15,6 +15,8 @@ export function normalizeValue(
       return Number(mathjsEvaluate(normalizeNumber(_value)))
     case InputExerciseType.StringNormalized:
       return _value.toUpperCase()
+    case InputExerciseType.AiFeedback:
+      return _value
   }
 }
 

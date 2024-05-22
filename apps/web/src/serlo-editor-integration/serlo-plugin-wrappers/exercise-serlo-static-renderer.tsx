@@ -9,6 +9,10 @@ import { useContext, useEffect, useState } from 'react'
 import { useAuthentication } from '@/auth/use-authentication'
 import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
+import {
+  ExerciseProvider,
+  useBuildExerciseContext,
+} from '@/contexts/exercise-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { UuidsProvider } from '@/contexts/uuids-context'
 import { ExerciseInlineType } from '@/data-types'
@@ -26,6 +30,8 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
   useEffect(() => setLoaded(true), [])
 
   const isRevisionView = useContext(RevisionViewContext)
+
+  const exerciseContextValue = useBuildExerciseContext(props)
 
   const context = props.serloContext
 
@@ -65,9 +71,11 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
       </div>
       {/* Provide uuids for interactive exercises */}
       <UuidsProvider value={{ entityId, revisionId: context?.revisionId }}>
-        <div className="-mt-block">
-          <ExerciseStaticRenderer {...props} />
-        </div>
+        <ExerciseProvider value={exerciseContextValue}>
+          <div className="-mt-block">
+            <ExerciseStaticRenderer {...props} />
+          </div>
+        </ExerciseProvider>
       </UuidsProvider>
     </div>
   )
