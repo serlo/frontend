@@ -70,7 +70,7 @@ export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
     pageData.kind !== 'redirect' &&
     !isEntity
   ) {
-    return { notFound: true, revalidate: isProduction ? false : 60 * 5 }
+    return { notFound: true, revalidate: isProduction ? undefined : 60 * 5 }
   }
 
   return {
