@@ -2,9 +2,9 @@ import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
+import { buildNewPathWithCourseId } from '../helper/get-course-id-from-path'
 import { CourseNavigationRenderer } from '../renderer/course-navigation'
 import { cn } from '@/helper/cn'
-import { buildNewPathWithCourseId } from '../helper/get-course-id-from-path'
 
 export function CourseNavigation({
   pages,
