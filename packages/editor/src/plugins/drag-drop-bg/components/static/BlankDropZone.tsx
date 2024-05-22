@@ -57,7 +57,7 @@ export const BlankDropZone: FC<BlankDropZoneProps> = memo(
           height,
           width,
         }}
-        data-testid="dustbin"
+        data-qa={`blank-drop-zone-${dropZone.id}`}
       >
         {lastDroppedItem && <AnswerImage url={lastDroppedItem.imageUrl} />}
       </div>

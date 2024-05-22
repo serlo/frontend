@@ -101,7 +101,7 @@ export const AnswerZone = forwardRef<HTMLDivElement, AnswerZoneProps>(
           width: dimensions.width,
           height: dimensions.height,
         }}
-        data-testid="box"
+        data-qa={`answer-zone-${answerZone.id.get()}`}
       >
         <ResizableBox
           width={dimensions.width}

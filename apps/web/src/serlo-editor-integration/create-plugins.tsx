@@ -88,7 +88,7 @@ export function createPlugins({
     {
       type: EditorPluginType.DragDropBg,
       plugin: createDragDropBgPlugin(),
-      visibleInSuggestions: true,
+      visibleInSuggestions: !isProduction,
       icon: <div>!!!!</div>,
     },
     {
