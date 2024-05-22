@@ -1,5 +1,5 @@
 import { SubjectLandingContent } from './subject-landing-content'
-import { FrontendClientBase } from '../frontend-client-base'
+import { FrontendClientBase } from '../frontend-client-base/frontend-client-base'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import type { TaxonomyPage } from '@/data-types'
 

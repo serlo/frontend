@@ -3,7 +3,7 @@ import { useState, ReactNode } from 'react'
 
 import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { PageTitle } from '@/components/content/page-title'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { Notifications } from '@/components/pages/user/notifications'
 import { UnreadNotificationsCount } from '@/components/user-tools/unread-notifications-count'

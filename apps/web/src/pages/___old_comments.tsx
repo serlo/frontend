@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { endpoint } from '@/api/endpoint'
 import { useAuthentication } from '@/auth/use-authentication'
 import { CommentAreaAllThreadsThread } from '@/components/comments/comment-area-all-threads-thread'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import data from '@/data/old_comment_ids.json'
 import {
   CommentStatus,

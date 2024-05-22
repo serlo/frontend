@@ -17,7 +17,7 @@ export function SlateOverlay(props: SlateOverlayProps) {
   useEffect(() => {
     if (!wrapper.current) return
 
-    const anchorRect = getAnchorRect(editor, anchor)
+    const anchorRect = getAnchorRect(editor, anchor, wrapper.current)
 
     const parentRect = wrapper.current
       .closest('.rows-editor-renderer-container')
@@ -51,15 +51,52 @@ export function SlateOverlay(props: SlateOverlayProps) {
   )
 }
 
-// If provided an anchor element, returns its size and position (DOMRect).
-// Otherwise, checks for native DOM selection, and provides a DOMRect based on it.
-function getAnchorRect(editor: ReactEditor, anchor: CustomElement | undefined) {
+// If provided an anchor element, returns its size and position (DOMRect). Also
+// checks the Shadow DOM, otherwise retrieves the native DOM selection, and
+// yields a DOMRect based on it.
+function getAnchorRect(
+  editor: ReactEditor,
+  anchor: CustomElement | undefined,
+  wrapper: HTMLDivElement
+) {
   if (anchor) {
     return ReactEditor.toDOMNode(editor, anchor)?.getBoundingClientRect()
   }
 
-  const nativeDomSelection = window.getSelection()
-  if (nativeDomSelection && nativeDomSelection.rangeCount > 0) {
-    return nativeDomSelection.getRangeAt(0).getBoundingClientRect()
+  const getRectWithinShadowDom = (): DOMRect | null => {
+    const rootNode = wrapper.getRootNode() as ShadowRoot | Document
+
+    if (!(rootNode instanceof ShadowRoot)) {
+      return null
+    }
+
+    const activeElement = rootNode.activeElement as HTMLElement
+    if (activeElement) {
+      const rect = activeElement.getBoundingClientRect()
+      return rect
+    } else {
+      const shadowHostRect = rootNode.host.getBoundingClientRect()
+      return new DOMRect(
+        shadowHostRect.left,
+        shadowHostRect.top,
+        shadowHostRect.width,
+        shadowHostRect.height
+      )
+    }
   }
+
+  const shadowRect = getRectWithinShadowDom()
+  if (shadowRect) {
+    return shadowRect
+  }
+
+  // Fallback to the native DOM selection if not within the Shadow DOM
+  const nativeDomSelection = window.getSelection()
+
+  if (nativeDomSelection && nativeDomSelection.rangeCount > 0) {
+    const range = nativeDomSelection.getRangeAt(0)
+    return range.getBoundingClientRect()
+  }
+
+  return null
 }

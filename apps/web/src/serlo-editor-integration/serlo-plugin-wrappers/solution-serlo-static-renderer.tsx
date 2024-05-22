@@ -14,7 +14,7 @@ import { useAB } from '@/contexts/ab'
 import { ExerciseGroupIdContext } from '@/contexts/exercise-group-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
-import { useEntityId } from '@/contexts/uuids-context'
+import { useEntityData } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
 
@@ -33,7 +33,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const exerciseGroupId = useContext(ExerciseGroupIdContext)
   const context = props.serloContext
 
-  const exerciseUuid = useEntityId()
+  const { entityId: exerciseUuid } = useEntityData()
 
   const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
 

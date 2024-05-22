@@ -4,14 +4,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const username = String(req.query.username)
+  const path = String(req.query.path)
   // Check for secret to confirm this is a valid request
-  if (!username) {
-    return res.status(401).json({ message: 'no username provided' })
+  if (!path) {
+    return res.status(401).json({ message: 'no path provided' })
   }
 
   try {
-    await res.revalidate(`/user/profile/${username}`)
+    await res.revalidate(decodeURIComponent(path))
     return res.json({ revalidated: true })
   } catch (err) {
     // If there was an error, Next.js will continue

@@ -15,7 +15,7 @@ import {
   withDefault,
 } from 'use-query-params'
 
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'

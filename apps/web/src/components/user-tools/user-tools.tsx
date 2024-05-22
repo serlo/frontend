@@ -52,8 +52,8 @@ export function UserTools({
 }: UserToolsProps) {
   const auth = useAuthentication()
 
-  const isRevision = data && data.type.includes('Revision')
-  const isTaxonomy = data && data.type === UuidType.TaxonomyTerm
+  const isRevision = data && data.typename.includes('Revision')
+  const isTaxonomy = data && data.typename === UuidType.TaxonomyTerm
 
   // note: we hide the ui on ssr and fade it in on the client
   const [firstPass, setFirstPass] = useState(true)
@@ -121,8 +121,8 @@ export function UserTools({
         ) : null}
 
         {auth ? (
-          data?.type === UuidType.CoursePage ||
-          data?.type === UuidType.Course ? (
+          data?.typename === UuidType.CoursePage ||
+          data?.typename === UuidType.Course ? (
             <MoreAuthorToolsCourse data={data} aboveContent={aboveContent} />
           ) : (
             <MoreAuthorTools data={data} aboveContent={aboveContent} />

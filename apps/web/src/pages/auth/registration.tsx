@@ -1,4 +1,4 @@
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { Registration } from '@/components/pages/auth/registration'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 

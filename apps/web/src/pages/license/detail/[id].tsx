@@ -2,7 +2,7 @@ import { parseDocumentString } from '@editor/static-renderer/helper/parse-docume
 import type { EditorRowsDocument } from '@editor/types/editor-plugins'
 import { GetStaticPaths, GetStaticProps } from 'next'
 
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { LicenseDetail } from '@/components/pages/license-detail'
 import { licensesContent } from '@/data/licenses/licenses-content'
 import { LicenseDetailProps } from '@/data-types'
