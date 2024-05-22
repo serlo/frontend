@@ -15,7 +15,8 @@ export async function subjectLandingGetStaticProps(
   if (pageData.kind !== 'taxonomy') {
     return {
       notFound: true,
-      revalidate: isProduction ? false : 60 * 5,
+      props: { pageData: {} as TaxonomyPage },
+      revalidate: isProduction ? undefined : 60 * 5,
     }
   }
 
