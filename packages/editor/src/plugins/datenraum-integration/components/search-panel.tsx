@@ -12,11 +12,13 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
   const [showResults, setShowResults] = useState<boolean>(false)
   const [loading, setLoading] = useState(false)
 
-  const handleSearch = async () => {
+  const handleSearch = () => {
     if (!loading) {
       setLoading(true)
-      await search(query)
-      setLoading(false)
+      setTimeout(() => {
+        setLoading(false)
+        setShowResults(true)
+      }, 500)
     }
   }
 
@@ -61,18 +63,4 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
       )}
     </div>
   )
-
-  async function search(query: string) {
-    const response = await fetch(
-      `/api/experimental/search-datenraum?q=${query}`
-    )
-
-    if (!response.ok) {
-      alert('Failed to fetch search results: ' + (await response.text()))
-      setShowResults(false)
-      return
-    }
-
-    setShowResults(true)
-  }
 }
