@@ -8,6 +8,7 @@ import { Topic } from '@/components/taxonomy/topic'
 import { SlugProps } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestPage } from '@/fetcher/request-page'
+import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
@@ -69,7 +70,7 @@ export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
     pageData.kind !== 'redirect' &&
     !isEntity
   ) {
-    return { notFound: true }
+    return { notFound: true, revalidate: isProduction ? false : 60 * 5 }
   }
 
   return {
