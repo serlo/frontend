@@ -73,6 +73,16 @@ export function createPlugins({
       visibleInSuggestions: true,
       icon: <IconText />,
     },
+    ...(isProduction
+      ? []
+      : [
+          {
+            type: EditorPluginType.DatenraumIntegration,
+            plugin: datenraumIntegrationPlugin,
+            visibleInSuggestions: true,
+            icon: <IconInjection />,
+          },
+        ]),
     {
       type: EditorPluginType.Image,
       plugin: imagePlugin,
@@ -141,15 +151,6 @@ export function createPlugins({
             plugin: audioPlugin,
             visibleInSuggestions: true,
             icon: <IconAudio />,
-          },
-        ]),
-    ...(isProduction
-      ? []
-      : [
-          {
-            type: EditorPluginType.DatenraumIntegration,
-            plugin: datenraumIntegrationPlugin,
-            visibleInSuggestions: true,
           },
         ]),
     {

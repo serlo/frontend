@@ -942,6 +942,10 @@ export const loggedInData = {
           alternativeAnswers: 'Alternative answers',
           acceptMathEquivalents: 'Accept all equivalent mathematical values',
         },
+        datenraumIntegration: {
+          title: 'Datenraum Inhalte',
+          description: 'Importiere und Editiere Inhalte aus dem Datenraum',
+        },
       },
       templatePlugins: {
         entity: {

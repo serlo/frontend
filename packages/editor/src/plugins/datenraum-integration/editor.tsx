@@ -11,15 +11,15 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
-import Modal from 'react-modal'
 
 import type { DatenraumIntegrationProps } from '.'
 import { SearchPanel } from './components/search-panel'
 import { hardcodedExerciseState } from './const'
 import { H5pRenderer } from '../h5p/renderer'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 export function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
-  const [showSearch, setShowSearch] = useState(false)
+  const [showSearch, setShowSearch] = useState(true)
   const [isConverted, setIsConverted] = useState(false)
 
   const dispatch = useAppDispatch()
@@ -40,7 +40,7 @@ export function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
     return (
       <div className="flex min-h-64 items-center justify-center bg-gray-100">
         <button
-          className="rounded-full bg-blue-500 p-2 text-white"
+          className="serlo-button-editor-primary p-3"
           onClick={() => setShowSearch(true)}
         >
           <FontAwesomeIcon icon={faSearch} /> Suche im Datenraum
@@ -64,37 +64,27 @@ export function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
           props.state.showResource.value && isConverted ? '' : 'hidden'
         }
       >
-        {props.state.convertedResource.render({})}
+        {props.state.convertedResource.render()}
       </div>
     )
   }
 
   function renderSearchModal() {
     return (
-      <Modal
+      <ModalWithCloseButton
+        title=""
         isOpen={showSearch}
-        onRequestClose={() => setShowSearch(false)}
-        style={{
-          content: {
-            width: '80%',
-            height: '80vh',
-            top: '50%',
-            left: '50%',
-            bottom: 'auto',
-            right: 'auto',
-            transform: 'translate(-50%, -50%)',
-          },
-          overlay: { zIndex: 100 },
-        }}
+        className="top-1/2 max-h-[80vh] min-h-[60vh] w-[900px] max-w-[90vw] -translate-x-1/2 overflow-y-auto"
+        onCloseClick={() => setShowSearch(false)}
       >
         <SearchPanel onSelect={handleSelectResource} />
-      </Modal>
+      </ModalWithCloseButton>
     )
   }
 
   function handleSelectResource() {
-    props.state.showResource.set(true)
     setShowSearch(false)
+    props.state.showResource.set(true)
   }
 
   function renderPluginToolbar() {
