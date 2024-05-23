@@ -85,8 +85,8 @@ function renderDiagram(data: DATA) {
       x.create(
         'line',
         [
-          [-data.b, -6],
-          [-data.b, 6],
+          [data.b, -6],
+          [data.b, 6],
         ],
         { strokeColor: 'PeachPuff' }
       )
@@ -103,7 +103,7 @@ function renderDiagram(data: DATA) {
       x.create('text', [0.5, 5.5, `y`], {})
       x.create('functiongraph', [
         function (x: number) {
-          const nenner = Math.pow(x + data.b, data.c)
+          const nenner = Math.pow(x - data.b, data.c)
           return data.a * nenner + data.d
         },
         -6,
