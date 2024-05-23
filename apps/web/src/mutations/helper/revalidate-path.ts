@@ -5,16 +5,36 @@ import { AliasByUuidQuery } from '@/fetcher/graphql-types/operations'
 
 export async function revalidatePath(path: string): Promise<boolean> {
   try {
-    const response = await fetch(
-      `/api/frontend/revalidate-path?path=${encodeURIComponent(path)}`
+    const encodedPath = encodeURIComponent(path)
+    const responsePath = await fetch(
+      `/api/frontend/revalidate-path?path=${encodedPath}`
     )
-    if (!response.ok) {
+    if (!responsePath.ok) {
       // eslint-disable-next-line no-console
-      console.error('Fetch failed', response.status, response.statusText)
+      console.error(
+        'Fetch failed',
+        responsePath.status,
+        responsePath.statusText
+      )
       return false
     }
     // eslint-disable-next-line no-console
     console.log('revalidatePath ran:', path)
+
+    const serloId = encodedPath.match(/\/([1-9]?[0-9]+)\//)?.[1]
+    if (serloId) {
+      const responseId = await fetch(
+        `/api/frontend/revalidate-path?path=${serloId}`
+      )
+      if (!responseId.ok) {
+        // eslint-disable-next-line no-console
+        console.error('Fetch failed', responseId.status, responseId.statusText)
+        return false
+      }
+      // eslint-disable-next-line no-console
+      console.log('revalidatePath ran:', path)
+    }
+
     // delay for 500ms to allow the cache to update
     await new Promise((resolve) => setTimeout(resolve, 500))
     return true
