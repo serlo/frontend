@@ -88,8 +88,6 @@ export function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
   }
 
   function renderPluginToolbar() {
-    if (!props.focused) return null
-
     return (
       <PluginToolbar
         pluginType={EditorPluginType.DatenraumIntegration}
