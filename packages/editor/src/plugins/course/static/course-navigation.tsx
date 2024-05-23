@@ -26,7 +26,7 @@ export function CourseNavigation({
       pages={pages.map(({ id: rawId, title }) => {
         const id = rawId.split('-')[0]
         const active = activePageId && activePageId.startsWith(id)
-        const url = active ? undefined : `?page=${id}`
+        const href = active ? undefined : `?page=${id}`
 
         return {
           key: id + title,
@@ -36,7 +36,7 @@ export function CourseNavigation({
                 'serlo-link text-lg leading-browser',
                 active && 'font-semibold text-almost-black hover:no-underline'
               )}
-              href={active ? undefined : url}
+              href={href}
               onClick={(e) => {
                 e.preventDefault()
                 if (active) return
