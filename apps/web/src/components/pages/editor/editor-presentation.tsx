@@ -185,7 +185,7 @@ export function EditorPresentation() {
           <h3 className={cn(h2Class, 'mb-8 mt-20 font-handwritten text-brand')}>
             Partners
           </h3>
-          <div className="mx-auto max-w-[85rem]">
+          <div className="mx-auto max-w-[60rem]">
             <EditorPartnerList />
           </div>
 
