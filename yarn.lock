@@ -5133,6 +5133,7 @@ __metadata:
     micromark: ^4.0.0
     msw: ^0.47.4
     next: ^14.2.2
+    next-plausible: ^3.12.0
     next-query-params: ^4.3.0
     npm-run-all: ^4.1.5
     nprogress: ^0.2.0
@@ -13766,6 +13767,17 @@ __metadata:
   version: 0.6.3
   resolution: "negotiator@npm:0.6.3"
   checksum: b8ffeb1e262eff7968fc90a2b6767b04cfd9842582a9d0ece0af7049537266e7b2506dfb1d107a32f06dd849ab2aea834d5830f7f4d0e5cb7d36e1ae55d021d9
+  languageName: node
+  linkType: hard
+
+"next-plausible@npm:^3.12.0":
+  version: 3.12.0
+  resolution: "next-plausible@npm:3.12.0"
+  peerDependencies:
+    next: ^11.1.0 || ^12.0.0 || ^13.0.0 || ^14.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: e59070f36b9c98d141b5e18e97ef91a90247b9ba13cccdae542d05248785011db4c7a24fd81d34691222deda3adfd39148c56a1beef335a8d6c4e5462ab8efae
   languageName: node
   linkType: hard
 

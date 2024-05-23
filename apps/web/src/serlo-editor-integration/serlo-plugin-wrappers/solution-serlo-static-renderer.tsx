@@ -3,6 +3,7 @@ import type { EditorSolutionDocument } from '@editor/types/editor-plugins'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
+import { usePlausible } from 'next-plausible'
 import { useContext } from 'react'
 
 import type { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
@@ -32,6 +33,8 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const isRevisionView = useContext(RevisionViewContext)
   const exerciseGroupId = useContext(ExerciseGroupIdContext)
   const context = props.serloContext
+
+  const plausible = usePlausible()
 
   const { entityId: exerciseUuid } = useEntityData()
 
@@ -80,6 +83,8 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
       ab,
       trackExperiment
     )
+    // send plausible analytics tracking event
+    plausible('solution-open')
   }
 
   return (
