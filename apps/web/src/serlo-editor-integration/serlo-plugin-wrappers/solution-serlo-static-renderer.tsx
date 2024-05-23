@@ -16,8 +16,10 @@ import { ExerciseGroupIdContext } from '@/contexts/exercise-group-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { useEntityData } from '@/contexts/uuids-context'
-import { exerciseSubmission } from '@/helper/exercise-submission'
-import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
+import {
+  ExerciseSubmissionData,
+  exerciseSubmission,
+} from '@/helper/exercise-submission'
 
 const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
   import('@/components/comments/comment-area-entity').then(
@@ -36,9 +38,13 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
 
   const plausible = usePlausible()
 
-  const { entityId: exerciseUuid } = useEntityData()
+  const { entityId: exerciseUuid, revisionId } = useEntityData()
 
-  const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
+  const trackExperiment = (data: ExerciseSubmissionData) => {
+    plausible('solution-open', {
+      props: data,
+    })
+  }
 
   if (isPrintMode && !printModeSolutionVisible) return null
 
@@ -79,12 +85,11 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
         entityId: context?.exerciseId ?? exerciseUuid,
         type: 'text',
         result: 'open',
+        revisionId,
       },
       ab,
       trackExperiment
     )
-    // send plausible analytics tracking event
-    plausible('solution-open')
   }
 
   return (

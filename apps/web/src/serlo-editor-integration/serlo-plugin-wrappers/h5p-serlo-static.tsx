@@ -2,20 +2,28 @@ import { parseH5pUrl } from '@editor/plugins/h5p/renderer'
 import { H5pStaticRenderer } from '@editor/plugins/h5p/static'
 import type { EditorH5PDocument } from '@editor/types/editor-plugins'
 import { useRouter } from 'next/router'
+import { usePlausible } from 'next-plausible'
 import { useEffect } from 'react'
 
 import { useAB } from '@/contexts/ab'
 import { useEntityData } from '@/contexts/uuids-context'
-import { exerciseSubmission } from '@/helper/exercise-submission'
-import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
+import {
+  ExerciseSubmissionData,
+  exerciseSubmission,
+} from '@/helper/exercise-submission'
 
 // Special version for serlo.org with exercise submission events
 export function H5pSerloStaticRenderer(props: EditorH5PDocument) {
   const { asPath } = useRouter()
   const ab = useAB()
   const { entityId, revisionId } = useEntityData()
-  const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
+  const plausible = usePlausible()
 
+  const trackExperiment = (data: ExerciseSubmissionData) => {
+    plausible('exercise-submission', {
+      props: data,
+    })
+  }
   useEffect(() => {
     const handleSubmissionEvent = (e: Event) => {
       const e_id = (e as CustomEvent).detail as string
