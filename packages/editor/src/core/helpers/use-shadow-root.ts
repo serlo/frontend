@@ -8,7 +8,7 @@ export function useShadowRoot(containerRef: React.RefObject<HTMLElement>) {
     // getRootNode() will not consistently return the shadow root...
     const timeout = setTimeout(() => {
       const possibleShadowRoot = containerRef.current?.getRootNode()
-      if (containerRef.current && possibleShadowRoot instanceof ShadowRoot) {
+      if (possibleShadowRoot instanceof ShadowRoot) {
         // containerRef..current.shadowRoot is always null which is why we
         // use getRootNode.
         setShadowRoot(possibleShadowRoot)
