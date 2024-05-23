@@ -10,7 +10,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
 import {
-  ExerciseProvider,
+  ExerciseContext,
   useBuildExerciseContext,
 } from '@/contexts/exercise-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
@@ -71,11 +71,11 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
       </div>
       {/* Provide uuids for interactive exercises */}
       <UuidsProvider value={{ entityId, revisionId: context?.revisionId }}>
-        <ExerciseProvider value={exerciseContextValue}>
+        <ExerciseContext.Provider value={exerciseContextValue}>
           <div className="-mt-block">
             <ExerciseStaticRenderer {...props} />
           </div>
-        </ExerciseProvider>
+        </ExerciseContext.Provider>
       </UuidsProvider>
     </div>
   )

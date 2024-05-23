@@ -4,7 +4,7 @@ import {
   isExerciseDocument,
   isSolutionDocument,
 } from '@editor/types/plugin-type-guards'
-import { createContext, ReactNode, useContext } from 'react'
+import { createContext, useContext } from 'react'
 
 interface ExerciseContextProps {
   question: string
@@ -12,22 +12,9 @@ interface ExerciseContextProps {
   steps: string
 }
 
-interface ExerciseProviderProps {
-  children: ReactNode
-  value: ExerciseContextProps
-}
-
-const ExerciseContext = createContext<ExerciseContextProps | undefined>(
+export const ExerciseContext = createContext<ExerciseContextProps | undefined>(
   undefined
 )
-
-export function ExerciseProvider({ children, value }: ExerciseProviderProps) {
-  return (
-    <ExerciseContext.Provider value={value}>
-      {children}
-    </ExerciseContext.Provider>
-  )
-}
 
 export function useExerciseContext(): ExerciseContextProps {
   const context = useContext(ExerciseContext)
