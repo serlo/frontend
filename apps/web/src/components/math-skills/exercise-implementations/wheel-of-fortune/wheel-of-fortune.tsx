@@ -83,11 +83,11 @@ export function WheelOfFortune() {
               Bestimmen Sie die Wahrscheinlichkeit, dass man beim zweimaligen
               Drehen{' '}
               {data.event === 1
-                ? `höchstens einmal den ${data.number_1 ? 'gelben' : 'blauen'} Preis erhält`
+                ? `höchstens einmal den ${colorName(data.number_1)}en Preis erhält`
                 : null}
               {data.event === 2 ? 'den gleichen Preis zweimal erhält.' : null}
               {data.event === 3
-                ? `mindestens einmal den ${data.number_1 ? 'gelben' : 'blauen'} Preis erhält`
+                ? `mindestens einmal den ${colorName(data.number_1)}en Preis erhält`
                 : null}
               {data.event === 4 ? ' zwei verschiedene Preise erhält.' : null}
             </p>
@@ -114,7 +114,7 @@ export function WheelOfFortune() {
         const gcdBlue = gcd(counterBlue, data.sections)
 
         function getC(val: boolean) {
-          return val ? counterYellow : counterBlue
+          return val ? counterBlue : counterYellow
         }
 
         function buildSimplifyFrac(a: number, b: number) {
@@ -223,18 +223,18 @@ export function WheelOfFortune() {
             <>
               {intro}
               <p>
-                Um mindestens einmal den Preis {colorName(!data.number_1)} zu
+                Um mindestens einmal den Preis {colorName(data.number_1)} zu
                 erhalten, gibt es die Kombinationen{' '}
                 <span className="text-lg">
-                  (gelb; blau), (blau; gelb) und ({colorName(!data.number_1)};{' '}
-                  {colorName(!data.number_1)})
+                  (gelb; blau), (blau; gelb) und ({colorName(data.number_1)};{' '}
+                  {colorName(data.number_1)})
                 </span>
                 . Berechne daraus die Gesamtwahrscheinlichkeit:
               </p>
               {buildBlock(
                 'green',
                 <>
-                  P(mindestens einmal {colorName(!data.number_1)}) ={' '}
+                  P(mindestens einmal {colorName(data.number_1)}) ={' '}
                   {buildSimplifyFrac(counterYellow, data.sections)} ·{' '}
                   {buildSimplifyFrac(counterBlue, data.sections)} +{' '}
                   {buildSimplifyFrac(counterBlue, data.sections)} ·{' '}
