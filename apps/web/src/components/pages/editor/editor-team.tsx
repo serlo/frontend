@@ -34,7 +34,7 @@ export const teamData: TeamDataEntry[] = [
   {
     firstName: 'Gregor ',
     lastName: 'Zupan ',
-    position: 'Design | Product Owner',
+    position: 'Design Lead | Product Owner',
     extraLinkUrl: 'mailto:gregor@serlo.org',
     extraLinkText: 'gregor@serlo.org',
     photo:
