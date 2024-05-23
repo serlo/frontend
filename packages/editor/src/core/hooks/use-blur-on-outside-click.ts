@@ -1,7 +1,7 @@
 import { focus, useAppDispatch } from '@editor/store'
 import { MutableRefObject, useEffect } from 'react'
 
-import { useShadowRoot } from '../helpers/use-get-shadow-root'
+import { useShadowRoot } from '../helpers/use-shadow-root'
 
 /**
  * Hook that handler clicks (mousedown) outside of the editor

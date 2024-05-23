@@ -1,4 +1,4 @@
-import { useShadowRoot } from '@editor/core/helpers/use-get-shadow-root'
+import { useShadowRoot } from '@editor/core/helpers/use-shadow-root'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import type { StateTypeReturnType } from '@editor/plugin'
 import {
