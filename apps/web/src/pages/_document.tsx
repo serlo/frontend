@@ -122,7 +122,6 @@ export default class MyDocument extends Document {
           ></script>
 
           {process.env.NEXT_PUBLIC_USE_PLAUSIBLE_ANALYTICS !== undefined && (
-            // script is very small and bootstraps sentry
             // eslint-disable-next-line @next/next/no-sync-scripts
             <script
               defer
