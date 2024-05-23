@@ -1,6 +1,8 @@
 import { focus, useAppDispatch } from '@editor/store'
 import { MutableRefObject, useEffect } from 'react'
 
+import { useShadowRoot } from '../helpers/use-shadow-root'
+
 /**
  * Hook that handler clicks (mousedown) outside of the editor
  */
@@ -8,9 +10,10 @@ export function useBlurOnOutsideClick(
   editorWrapperRef: MutableRefObject<HTMLDivElement | null>
 ) {
   const dispatch = useAppDispatch()
+  const shadowRoot = useShadowRoot(editorWrapperRef)
 
   useEffect(() => {
-    const root = editorWrapperRef.current?.shadowRoot || document.body
+    const root = shadowRoot || document.body
 
     function handleClickOutside(event: Event) {
       const mouseEvent = event as MouseEvent
@@ -25,12 +28,12 @@ export function useBlurOnOutsideClick(
       }
     }
 
-    const rootListener = editorWrapperRef.current?.shadowRoot || document
+    const rootListener = shadowRoot || document
     // Bind the event listener
     rootListener.addEventListener('mousedown', handleClickOutside)
     return () => {
       // Unbind the event listener on clean up
       rootListener.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [editorWrapperRef, dispatch])
+  }, [editorWrapperRef, dispatch, shadowRoot])
 }

@@ -1,12 +1,15 @@
 import { SpoilerStaticRenderer } from '@editor/plugins/spoiler/static'
 import { EditorSpoilerDocument } from '@editor/types/editor-plugins'
 import { useRouter } from 'next/router'
+import { usePlausible } from 'next-plausible'
 import { useState } from 'react'
 
 import { useAB } from '@/contexts/ab'
 import { useEntityData } from '@/contexts/uuids-context'
-import { exerciseSubmission } from '@/helper/exercise-submission'
-import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
+import {
+  ExerciseSubmissionData,
+  exerciseSubmission,
+} from '@/helper/exercise-submission'
 
 export function SpoilerSerloStaticRenderer({
   ...props
@@ -18,7 +21,13 @@ export function SpoilerSerloStaticRenderer({
   const { entityId, revisionId } = useEntityData()
   const { asPath } = useRouter()
 
-  const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
+  const plausible = usePlausible()
+
+  const trackExperiment = (data: ExerciseSubmissionData) => {
+    plausible('spoiler-opened', {
+      props: data,
+    })
+  }
   const trackSpoilerOpened = () => {
     if (hasSentSpoilerTrackingEvent) return
     // send tracking event

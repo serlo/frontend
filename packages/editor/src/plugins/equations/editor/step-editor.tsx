@@ -82,30 +82,32 @@ export function StepEditor(props: StepEditorProps) {
         />
       </td>
       {transformationTarget === TransformationTarget.Equation && (
-        <td
-          className="pl-[5px] align-baseline"
-          onClick={() =>
-            gridFocus.setFocus({ row, column: StepSegment.Transform })
-          }
-        >
-          |{' '}
-          <InlineMath
-            focused={gridFocus.isFocused({
-              row,
-              column: StepSegment.Transform,
-            })}
-            placeholder={
-              row === 0
-                ? equationsStrings.transformationExample
-                : `[${equationsStrings.transformation}]`
+        <>
+          <td>| </td>
+          <td
+            className="pl-[5px] align-baseline"
+            onClick={() =>
+              gridFocus.setFocus({ row, column: StepSegment.Transform })
             }
-            state={state.transform}
-            onChange={(src) => state.transform.set(src)}
-            onFocusNext={() => gridFocus.moveRight()}
-            onFocusPrevious={() => gridFocus.moveLeft()}
-            closeMathEditorOverlay={resetFocus}
-          />
-        </td>
+          >
+            <InlineMath
+              focused={gridFocus.isFocused({
+                row,
+                column: StepSegment.Transform,
+              })}
+              placeholder={
+                row === 0
+                  ? equationsStrings.transformationExample
+                  : `[${equationsStrings.transformation}]`
+              }
+              state={state.transform}
+              onChange={(src) => state.transform.set(src)}
+              onFocusNext={() => gridFocus.moveRight()}
+              onFocusPrevious={() => gridFocus.moveLeft()}
+              closeMathEditorOverlay={resetFocus}
+            />
+          </td>
+        </>
       )}
     </>
   )

@@ -3,6 +3,7 @@ import type { EditorSolutionDocument } from '@editor/types/editor-plugins'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
+import { usePlausible } from 'next-plausible'
 import { useContext } from 'react'
 
 import type { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
@@ -15,8 +16,10 @@ import { ExerciseGroupIdContext } from '@/contexts/exercise-group-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { useEntityData } from '@/contexts/uuids-context'
-import { exerciseSubmission } from '@/helper/exercise-submission'
-import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
+import {
+  ExerciseSubmissionData,
+  exerciseSubmission,
+} from '@/helper/exercise-submission'
 
 const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
   import('@/components/comments/comment-area-entity').then(
@@ -33,9 +36,15 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const exerciseGroupId = useContext(ExerciseGroupIdContext)
   const context = props.serloContext
 
-  const { entityId: exerciseUuid } = useEntityData()
+  const plausible = usePlausible()
 
-  const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
+  const { entityId: exerciseUuid, revisionId } = useEntityData()
+
+  const trackExperiment = (data: ExerciseSubmissionData) => {
+    plausible('solution-open', {
+      props: data,
+    })
+  }
 
   if (isPrintMode && !printModeSolutionVisible) return null
 
@@ -76,6 +85,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
         entityId: context?.exerciseId ?? exerciseUuid,
         type: 'text',
         result: 'open',
+        revisionId,
       },
       ab,
       trackExperiment

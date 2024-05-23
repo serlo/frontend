@@ -8,6 +8,7 @@ import { Topic } from '@/components/taxonomy/topic'
 import { SlugProps } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestPage } from '@/fetcher/request-page'
+import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
@@ -69,14 +70,17 @@ export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
     pageData.kind !== 'redirect' &&
     !isEntity
   ) {
-    return { notFound: true }
+    return { notFound: true, revalidate: isProduction ? undefined : 60 * 5 }
   }
+
+  // revalidation settings: prod: 20 mins, staging: 20 mins for taxonomies, 24h for entities
+  const revalidate = isProduction || !isEntity ? 60 * 20 : 60 * 60 * 24
 
   return {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as SlugProps['pageData'], // remove undefined values
     },
-    revalidate: isEntity ? 60 * 60 * 24 : 60 * 15, // 1 day for entities or 15 min for taxonomies
+    revalidate,
   }
 }
 

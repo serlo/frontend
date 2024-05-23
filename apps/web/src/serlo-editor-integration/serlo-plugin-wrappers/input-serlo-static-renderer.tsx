@@ -2,14 +2,17 @@ import { InputExerciseStaticRenderer } from '@editor/plugins/input-exercise/stat
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorInputExerciseDocument } from '@editor/types/editor-plugins'
 import { useRouter } from 'next/router'
+import { usePlausible } from 'next-plausible'
 import { useContext } from 'react'
 
 import { useAB } from '@/contexts/ab'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { useEntityData } from '@/contexts/uuids-context'
-import { exerciseSubmission } from '@/helper/exercise-submission'
-import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
+import {
+  ExerciseSubmissionData,
+  exerciseSubmission,
+} from '@/helper/exercise-submission'
 
 export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
   const { entityId, revisionId } = useEntityData()
@@ -17,8 +20,14 @@ export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
   const { asPath } = useRouter()
   const ab = useAB()
   const isRevisionView = useContext(RevisionViewContext)
-  const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
 
+  const plausible = usePlausible()
+
+  const trackExperiment = (data: ExerciseSubmissionData) => {
+    plausible('exercise-submission', {
+      props: data,
+    })
+  }
   return (
     <>
       <InputExerciseStaticRenderer {...props} onEvaluate={onEvaluate} />

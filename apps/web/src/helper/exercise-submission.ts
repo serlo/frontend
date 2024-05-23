@@ -1,6 +1,4 @@
-import { v4 as uuidv4 } from 'uuid'
-
-import { isProduction } from './is-production'
+// import { isProduction } from './is-production'
 import { ABValue } from '@/contexts/ab'
 
 export interface ExerciseSubmissionData {
@@ -10,8 +8,6 @@ export interface ExerciseSubmissionData {
   type: 'sc' | 'mc' | 'input' | 'h5p' | 'text' | 'ival' | 'blanks' | 'spoiler'
   result: 'correct' | 'wrong' | 'open' | string
 }
-
-const sesionStorageKey = 'frontend_exercise_submission_session_id'
 
 const handleDreisatzNewDesign = (
   data: ExerciseSubmissionData,
@@ -41,7 +37,7 @@ const handleDreisatzNewDesign = (
 export function exerciseSubmission(
   data: ExerciseSubmissionData,
   ab: ABValue,
-  submitFn: (data: any) => Promise<any>
+  submitFn: (data: ExerciseSubmissionData) => void
 ) {
   const entityId = data.entityId ?? -1
 
@@ -49,42 +45,12 @@ export function exerciseSubmission(
     handleDreisatzNewDesign(data, entityId)
   }
 
-  if (!isProduction) {
-    // eslint-disable-next-line no-console
-    console.log(data)
-    return // don't submit outside of production
-  }
+  // Shane: This can be restored later, right now we want to test on staging
+  // if (!isProduction) {
+  //   // eslint-disable-next-line no-console
+  //   console.log(data)
+  //   return // don't submit outside of production
+  // }
 
-  if (!sessionStorage.getItem(sesionStorageKey)) {
-    // set new session id
-    sessionStorage.setItem(sesionStorageKey, uuidv4())
-  }
-
-  const sessionId = sessionStorage.getItem(sesionStorageKey)
-
-  const { revisionId, path } = data
-
-  // eslint-disable-next-line no-warning-comments
-  // TODO: Remove commented code or fix check
-  // Shane: This is removed as we are receiving suspiciously a low number of submissions
-  //        I suspect the revisionId part of the check is the problem
-  //        Easier to filter out bad data than to fix the check in this moment
-
-  // const isValid =
-  //   data.path.length < 1024 &&
-  //   Math.floor(entityId) === entityId &&
-  //   revisionId &&
-  //   Math.floor(revisionId) === revisionId &&
-  //   entityId > 0
-
-  void (async () => {
-    await submitFn({
-      path: path,
-      entityId: data.entityId || -1,
-      type: data.type,
-      result: data.result,
-      revisionId: revisionId || -1,
-      sessionId,
-    })
-  })()
+  submitFn(data)
 }
