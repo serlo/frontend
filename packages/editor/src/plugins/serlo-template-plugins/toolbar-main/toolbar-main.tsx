@@ -1,4 +1,4 @@
-import { useGetShadowRoot } from '@editor/core/helpers/use-get-shadow-root'
+import { useShadowRoot } from '@editor/core/helpers/use-get-shadow-root'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import type { StateTypeReturnType } from '@editor/plugin'
 import {
@@ -43,7 +43,7 @@ export function ToolbarMain({
   const isChanged = useAppSelector(selectHasPendingChanges)
   const [saveModalOpen, setSaveModalOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
-  const shadowRoot = useGetShadowRoot(containerRef)
+  const shadowRoot = useShadowRoot(containerRef)
 
   const editorStrings = useEditorStrings()
 

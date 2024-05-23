@@ -1,7 +1,7 @@
 import { focus, useAppDispatch } from '@editor/store'
 import { MutableRefObject, useEffect } from 'react'
 
-import { useGetShadowRoot } from '../helpers/use-get-shadow-root'
+import { useShadowRoot } from '../helpers/use-get-shadow-root'
 
 /**
  * Hook that handler clicks (mousedown) outside of the editor
@@ -10,7 +10,7 @@ export function useBlurOnOutsideClick(
   editorWrapperRef: MutableRefObject<HTMLDivElement | null>
 ) {
   const dispatch = useAppDispatch()
-  const shadowRoot = useGetShadowRoot(editorWrapperRef)
+  const shadowRoot = useShadowRoot(editorWrapperRef)
 
   useEffect(() => {
     const root = shadowRoot || document.body
@@ -24,12 +24,6 @@ export function useBlurOnOutsideClick(
         !editorWrapperRef.current.contains(clickedElement) && // clicked element is not a child of the provided wrapper
         !clickedElement.closest('.ReactModalPortal') // clicked element is not a part of a modal
       ) {
-        console.log('Outside click detected, blur editor', {
-          shadowRoot,
-          clickedElement,
-          root,
-          editorWrapperRef,
-        })
         dispatch(focus(null)) // reset the focus state (blur the editor)
       }
     }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export function useGetShadowRoot(containerRef: React.RefObject<HTMLElement>) {
+export function useShadowRoot(containerRef: React.RefObject<HTMLElement>) {
   const [shadowRoot, setShadowRoot] = useState<ShadowRoot | null>(null)
 
   useEffect(() => {

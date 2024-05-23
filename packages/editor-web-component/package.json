@@ -38,7 +38,7 @@
     "yalc:publish": "yarn build && yalc publish --push --sig"
   },
   "resolutions": {
-    "@serlo/editor": "0.7.0"
+    "@serlo/editor": "0.7.2"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "^5.0.5",

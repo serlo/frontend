@@ -30,11 +30,9 @@ export class EditorWebComponent extends HTMLElement {
     super()
 
     // Create a shadow root for encapsulation
-    // const shadow = this.attachShadow({ mode: 'open' })
     this.attachShadow({ mode: 'open' })
 
     this.container = document.createElement('div')
-    // shadow.appendChild(this.container)
 
     this.shadowRoot!.appendChild(this.container)
 
