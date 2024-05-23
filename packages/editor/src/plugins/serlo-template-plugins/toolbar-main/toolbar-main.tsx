@@ -1,3 +1,4 @@
+import { useGetShadowRoot } from '@editor/core/helpers/use-get-shadow-root'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import type { StateTypeReturnType } from '@editor/plugin'
 import {
@@ -15,7 +16,7 @@ import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-co
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 import { SaveModal } from '@serlo/frontend/src/serlo-editor-integration/components/save-modal'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { ClientOnlyPortal } from './client-only-portal'
 import { LeaveConfirmationRenderNull } from './leave-confirmation-render-null'
@@ -42,15 +43,9 @@ export function ToolbarMain({
   const isChanged = useAppSelector(selectHasPendingChanges)
   const [saveModalOpen, setSaveModalOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
-  const [shadowRoot, setShadowRoot] = useState<ShadowRoot | null>(null)
+  const shadowRoot = useGetShadowRoot(containerRef)
 
   const editorStrings = useEditorStrings()
-
-  useEffect(() => {
-    if (containerRef.current) {
-      setShadowRoot(containerRef.current.shadowRoot)
-    }
-  }, [])
 
   return (
     <div ref={containerRef}>

@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-replace": "^5.0.5",
-    "@serlo/editor": "0.7.0",
+    "@serlo/editor": "0.7.2",
     "@serlo/typescript-config": "workspace:*",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
