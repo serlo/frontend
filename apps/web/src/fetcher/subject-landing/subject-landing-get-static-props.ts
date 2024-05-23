@@ -2,7 +2,6 @@ import { fetchPageData } from '../fetch-page-data'
 import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import { TaxonomyPage } from '@/data-types'
-import { isProduction } from '@/helper/is-production'
 
 export async function subjectLandingGetStaticProps(
   locale: string,
@@ -16,7 +15,7 @@ export async function subjectLandingGetStaticProps(
     return {
       notFound: true,
       props: { pageData: {} as TaxonomyPage },
-      revalidate: isProduction ? undefined : 60 * 5, // 5 mins
+      revalidate: 60 * 5, // 5 mins
     }
   }
 
