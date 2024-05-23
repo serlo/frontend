@@ -30,6 +30,7 @@ export function useBuildExerciseContext(
   document: AnyEditorDocument
 ): ExerciseContextProps {
   if (!isExerciseDocument(document)) {
+    // eslint-disable-next-line no-console
     console.error('useBuildExerciseContext must be used with an exercise')
     return { question: '', strategy: '', steps: '' }
   }
