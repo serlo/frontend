@@ -1,8 +1,8 @@
 /// <reference types="vite/client" />
 
-import { SerloEditor, SerloRenderer } from '@serlo/editor'
+import { SerloRenderer } from '@serlo/editor'
 import styles from '@serlo/editor/style.css?raw'
-import React from 'react'
+import React, { Suspense, lazy } from 'react'
 import * as ReactDOM from 'react-dom/client'
 
 import {
@@ -10,6 +10,10 @@ import {
   isInitialState,
   type InitialState,
 } from './initial-state'
+
+const LazySerloEditor = lazy(() =>
+  import('@serlo/editor').then((module) => ({ default: module.SerloEditor }))
+)
 
 type Mode = 'read' | 'write'
 
@@ -26,17 +30,19 @@ export class EditorWebComponent extends HTMLElement {
     super()
 
     // Create a shadow root for encapsulation
-    const shadow = this.attachShadow({ mode: 'open' })
-    this.container = document.createElement('div')
-    shadow.appendChild(this.container)
+    this.attachShadow({ mode: 'open' })
 
-    this.loadAndApplyStyles(shadow)
+    this.container = document.createElement('div')
+
+    this.shadowRoot!.appendChild(this.container)
+
+    this.loadAndApplyStyles()
   }
 
-  loadAndApplyStyles(shadowRoot: ShadowRoot) {
+  loadAndApplyStyles() {
     const styleEl = document.createElement('style')
     styleEl.textContent = styles
-    shadowRoot.appendChild(styleEl)
+    this.shadowRoot!.appendChild(styleEl)
   }
 
   static get observedAttributes() {
@@ -134,20 +140,22 @@ export class EditorWebComponent extends HTMLElement {
       <React.StrictMode>
         <div id="serlo-root">
           {this._mode === 'write' ? (
-            <SerloEditor
-              initialState={this.initialState}
-              onChange={({ changed, getDocument }) => {
-                if (changed) {
-                  const newState = getDocument()
-                  this._currentState = newState
-                  this.broadcastNewState(newState)
-                }
-              }}
-            >
-              {(editor) => {
-                return <div>{editor.element}</div>
-              }}
-            </SerloEditor>
+            <Suspense fallback={<div>Loading editor...</div>}>
+              <LazySerloEditor
+                initialState={this.initialState}
+                onChange={({ changed, getDocument }) => {
+                  if (changed) {
+                    const newState = getDocument()
+                    this._currentState = newState
+                    this.broadcastNewState(newState)
+                  }
+                }}
+              >
+                {(editor) => {
+                  return <div>{editor.element}</div>
+                }}
+              </LazySerloEditor>
+            </Suspense>
           ) : (
             <SerloRenderer document={this.initialState} />
           )}
