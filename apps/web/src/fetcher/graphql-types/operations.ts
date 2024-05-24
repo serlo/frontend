@@ -1126,6 +1126,7 @@ export interface Query {
   events: AbstractNotificationEventConnection;
   media: MediaQuery;
   metadata: MetadataQuery;
+  notificationEvent?: Maybe<AbstractNotificationEvent>;
   notifications: NotificationConnection;
   page: PageQuery;
   subject: SubjectQuery;
@@ -1145,6 +1146,11 @@ export interface QueryEventsArgs {
   instance?: InputMaybe<Instance>;
   last?: InputMaybe<Scalars['Int']['input']>;
   objectId?: InputMaybe<Scalars['Int']['input']>;
+}
+
+
+export interface QueryNotificationEventArgs {
+  id: Scalars['Int']['input'];
 }
 
 
@@ -1438,16 +1444,9 @@ export interface TaxonomyTermCreateInput {
   taxonomyType: TaxonomyTypeCreateOptions;
 }
 
-export interface TaxonomyTermCreateResponse {
-  __typename?: 'TaxonomyTermCreateResponse';
-  query: Query;
-  record?: Maybe<TaxonomyTerm>;
-  success: Scalars['Boolean']['output'];
-}
-
 export interface TaxonomyTermMutation {
   __typename?: 'TaxonomyTermMutation';
-  create: TaxonomyTermCreateResponse;
+  create: DefaultResponse;
   createEntityLinks: DefaultResponse;
   deleteEntityLinks: DefaultResponse;
   setNameAndDescription: DefaultResponse;
@@ -2413,7 +2412,7 @@ export type TaxonomyCreateMutationVariables = Exact<{
 }>;
 
 
-export type TaxonomyCreateMutation = { __typename?: 'Mutation', taxonomyTerm: { __typename?: 'TaxonomyTermMutation', create: { __typename?: 'TaxonomyTermCreateResponse', success: boolean } } };
+export type TaxonomyCreateMutation = { __typename?: 'Mutation', taxonomyTerm: { __typename?: 'TaxonomyTermMutation', create: { __typename?: 'DefaultResponse', success: boolean } } };
 
 export type AddRoleMutationVariables = Exact<{
   input: UserRoleInput;
