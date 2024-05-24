@@ -23,16 +23,10 @@ export function ScMcSerloStaticRenderer(props: EditorScMcExerciseDocument) {
   const plausible = usePlausible()
 
   const trackExperiment = (data: ExerciseSubmissionData) => {
-    if (data.result === 'correct') {
-      plausible('exercise-submission-correct', {
-        props: data,
-      })
-      return
-    }
-
-    plausible('exercise-submission-false', {
-      props: data,
-    })
+    plausible(
+      `exercise-submission-${data.result === 'correct' ? 'correct' : 'false'}`,
+      { props: data }
+    )
   }
   const exStrings = useInstanceData().strings.content.exercises
 

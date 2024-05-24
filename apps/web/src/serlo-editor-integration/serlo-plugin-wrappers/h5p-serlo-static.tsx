@@ -20,17 +20,12 @@ export function H5pSerloStaticRenderer(props: EditorH5PDocument) {
   const plausible = usePlausible()
 
   const trackExperiment = (data: ExerciseSubmissionData) => {
-    if (data.result === 'correct') {
-      plausible('exercise-submission-correct', {
-        props: data,
-      })
-      return
-    }
-
-    plausible('exercise-submission-false', {
-      props: data,
-    })
+    plausible(
+      `exercise-submission-${data.result === 'correct' ? 'correct' : 'false'}`,
+      { props: data }
+    )
   }
+
   useEffect(() => {
     const handleSubmissionEvent = (e: Event) => {
       const e_id = (e as CustomEvent).detail as string
