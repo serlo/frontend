@@ -70,7 +70,9 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
       <div className="mx-side">
         {results && results.length > 0 ? (
           <>
-            {renderEntry(<>Lumi – Dreisatz Lückentext</>)}
+            {renderEntry(
+              <>Lumi – Vokabeln A1 Deutsch als Fremdsprache Lückentext</>
+            )}
             {results.map((result) => {
               return renderEntry(
                 <>
