@@ -42,7 +42,7 @@ const sessionStorageKey = 'frontend_exercise_submission_session_id'
 export function exerciseSubmission(
   data: ExerciseSubmissionData,
   ab: ABValue,
-  submitFn: (data: ExerciseSubmissionData) => void
+  submitFn: (data: any) => Promise<any>
 ) {
   const entityId = data.entityId ?? -1
 
@@ -56,7 +56,7 @@ export function exerciseSubmission(
   }
 
   const sessionId = sessionStorage.getItem(sessionStorageKey) as string
-
+  const { revisionId, path } = data
   // Shane: This can be restored later, right now we want to test on staging
   // if (!isProduction) {
   //   // eslint-disable-next-line no-console
@@ -64,5 +64,14 @@ export function exerciseSubmission(
   //   return // don't submit outside of production
   // }
 
-  submitFn({ ...data, sessionId })
+  void (async () => {
+    await submitFn({
+      path: path,
+      entityId: data.entityId || -1,
+      type: data.type,
+      result: data.result,
+      revisionId: revisionId || -1,
+      sessionId,
+    })
+  })()
 }

@@ -44,7 +44,8 @@ export function useMutationFetch() {
     query: string,
     input: unknown
   ): Promise<boolean | number> {
-    if (auth === null) return handleError('UNAUTHENTICATED', errorStrings)
+    if (auth === null && !query.includes('mutation createExerciseSubmission'))
+      return handleError('UNAUTHENTICATED', errorStrings)
     try {
       const result =
         window.location.hostname === 'localhost'

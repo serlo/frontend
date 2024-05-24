@@ -2,7 +2,6 @@ import { ScMcExerciseRendererAnswer } from '@editor/plugins/sc-mc-exercise/rende
 import { ScMcExerciseStaticRenderer } from '@editor/plugins/sc-mc-exercise/static'
 import { EditorScMcExerciseDocument } from '@editor/types/editor-plugins'
 import { useRouter } from 'next/router'
-import { usePlausible } from 'next-plausible'
 import { useContext } from 'react'
 
 import { isPrintMode } from '@/components/print-mode'
@@ -14,20 +13,14 @@ import {
   ExerciseSubmissionData,
   exerciseSubmission,
 } from '@/helper/exercise-submission'
+import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
 
 export function ScMcSerloStaticRenderer(props: EditorScMcExerciseDocument) {
   const { asPath } = useRouter()
   const ab = useAB()
   const { entityId, revisionId } = useEntityData()
   const isRevisionView = useContext(RevisionViewContext)
-  const plausible = usePlausible()
-
-  const trackExperiment = (data: ExerciseSubmissionData) => {
-    plausible(
-      `exercise-submission-${data.result === 'correct' ? 'correct' : 'false'}`,
-      { props: data }
-    )
-  }
+  const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
   const exStrings = useInstanceData().strings.content.exercises
 
   return (
