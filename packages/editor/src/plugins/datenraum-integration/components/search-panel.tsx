@@ -70,7 +70,12 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
           <>
             {renderEntry(<>Lumi – Dreisatz Lückentext</>)}
             {results.map((result) => {
-              return renderEntry(<>Serlo – {result.title}</>, result.url)
+              return renderEntry(
+                <>
+                  {getSource(result)} – {result.title}
+                </>,
+                result.url
+              )
             })}
           </>
         ) : null}
@@ -145,6 +150,16 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
     }
 
     setResults((await response.json()) as LearningResource[])
+  }
+}
+
+function getSource(resource: LearningResource) {
+  if (resource.url.includes('serlo')) {
+    return 'Serlo'
+  } else if (resource.url.includes('vhs')) {
+    return 'VHS'
+  } else {
+    return 'Datenraum'
   }
 }
 
