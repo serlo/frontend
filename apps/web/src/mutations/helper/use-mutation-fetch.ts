@@ -44,6 +44,8 @@ export function useMutationFetch() {
     query: string,
     input: unknown
   ): Promise<boolean | number> {
+    // TODO: write simpler helper for non auth mutations
+    // or to just copy paste the relavant code to use-experiment-create-exercise-submission-mutation.ts
     if (auth === null && !query.includes('mutation createExerciseSubmission'))
       return handleError('UNAUTHENTICATED', errorStrings)
     try {
