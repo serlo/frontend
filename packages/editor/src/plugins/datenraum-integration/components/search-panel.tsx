@@ -66,7 +66,7 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
         ) : null}
       </div>
       <div className="mx-side">
-        {results ? (
+        {results && results.length > 0 ? (
           <>
             {renderEntry(<>Lumi – Dreisatz Lückentext</>)}
             {results.map((result) => {
