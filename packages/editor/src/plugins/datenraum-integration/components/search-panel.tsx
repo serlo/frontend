@@ -17,25 +17,27 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
   const [results, setResults] = useState<LearningResource[] | null>(null)
   const [loading, setLoading] = useState(false)
 
-  const inputTimeout = useRef<NodeJS.Timeout | null>(null)
+  const lastInputChange = useRef<number | null>(null)
 
-  const handleSearch = async () => {
+  const handleSearch = async (_query = query) => {
     if (loading) return
 
     setLoading(true)
-    await search(query)
+    await search(_query)
     setLoading(false)
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value)
+    const currentTime = Date.now()
 
-    if (inputTimeout.current) {
-      clearTimeout(inputTimeout.current)
-    }
-    inputTimeout.current = setTimeout(() => {
-      void handleSearch()
+    setTimeout(() => {
+      if (lastInputChange.current === currentTime) {
+        void handleSearch(e.target.value)
+      }
     }, 500)
+
+    lastInputChange.current = currentTime
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -78,6 +80,8 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
               )
             })}
           </>
+        ) : query ? (
+          'Keine Ergebnisse gefunden'
         ) : null}
         {}
         {/* {results ? results.map(() => {
