@@ -139,6 +139,11 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
   }
 
   async function search(query: string) {
+    if (query === '') {
+      setResults(null)
+      return
+    }
+
     const response = await fetch(
       `/api/experimental/search-datenraum?q=${query}`
     )
