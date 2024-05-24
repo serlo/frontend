@@ -1,4 +1,6 @@
 // import { isProduction } from './is-production'
+import { v4 as uuidv4 } from 'uuid'
+
 import { ABValue } from '@/contexts/ab'
 
 export interface ExerciseSubmissionData {
@@ -7,6 +9,7 @@ export interface ExerciseSubmissionData {
   revisionId?: number
   type: 'sc' | 'mc' | 'input' | 'h5p' | 'text' | 'ival' | 'blanks' | 'spoiler'
   result: 'correct' | 'wrong' | 'open' | string
+  sessionId?: string
 }
 
 const handleDreisatzNewDesign = (
@@ -34,6 +37,8 @@ const handleDreisatzNewDesign = (
   }
 }
 
+const sessionStorageKey = 'frontend_exercise_submission_session_id'
+
 export function exerciseSubmission(
   data: ExerciseSubmissionData,
   ab: ABValue,
@@ -45,6 +50,13 @@ export function exerciseSubmission(
     handleDreisatzNewDesign(data, entityId)
   }
 
+  if (!sessionStorage.getItem(sessionStorageKey)) {
+    // set new session id
+    sessionStorage.setItem(sessionStorageKey, uuidv4())
+  }
+
+  const sessionId = sessionStorage.getItem(sessionStorageKey) as string
+
   // Shane: This can be restored later, right now we want to test on staging
   // if (!isProduction) {
   //   // eslint-disable-next-line no-console
@@ -52,5 +64,5 @@ export function exerciseSubmission(
   //   return // don't submit outside of production
   // }
 
-  submitFn(data)
+  submitFn({ ...data, sessionId })
 }

@@ -24,9 +24,10 @@ export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
   const plausible = usePlausible()
 
   const trackExperiment = (data: ExerciseSubmissionData) => {
-    plausible('exercise-submission', {
-      props: data,
-    })
+    plausible(
+      `exercise-submission-${data.result === 'correct' ? 'correct' : 'false'}`,
+      { props: data }
+    )
   }
   return (
     <>
