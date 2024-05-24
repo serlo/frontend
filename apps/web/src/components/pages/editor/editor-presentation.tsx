@@ -52,9 +52,6 @@ export function EditorPresentation() {
             `)}
           >
             <span className="serlo-underlined !pr-0 pb-2">Serlo Editor</span>
-            <sup className="relative -top-6 ml-2 inline-block text-base text-brand">
-              beta
-            </sup>
           </h1>
         </section>
 
@@ -149,7 +146,7 @@ export function EditorPresentation() {
               <ul className="serlo-ul text-xl">
                 <li>JavaScript library</li>
                 <li>Docker container</li>
-                <li>Plugins for the most popular LMS</li>
+                <li>Plugins for the most popular LMS (Moodle & Edu-Sharing)</li>
                 <li>Software as a service</li>
               </ul>
               <p className="mt-20 flex-1 text-center text-xl leading-cozy">
@@ -188,7 +185,7 @@ export function EditorPresentation() {
           <h3 className={cn(h2Class, 'mb-8 mt-20 font-handwritten text-brand')}>
             Partners
           </h3>
-          <div className="mx-auto max-w-[85rem]">
+          <div className="mx-auto max-w-[60rem]">
             <EditorPartnerList />
           </div>
 

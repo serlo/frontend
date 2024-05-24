@@ -4848,7 +4848,7 @@ __metadata:
   resolution: "@serlo/editor-web-component@workspace:packages/editor-web-component"
   dependencies:
     "@rollup/plugin-replace": ^5.0.5
-    "@serlo/editor": 0.7.0
+    "@serlo/editor": 0.7.3
     "@serlo/typescript-config": "workspace:*"
     "@types/react": ^18.0.25
     "@types/react-dom": ^18.0.8
@@ -4878,14 +4878,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@serlo/editor@npm:0.7.0":
-  version: 0.7.0
-  resolution: "@serlo/editor@npm:0.7.0"
+"@serlo/editor@npm:0.7.3":
+  version: 0.7.3
+  resolution: "@serlo/editor@npm:0.7.3"
   dependencies:
-    "@serlo/katex-styles": ^1.0.1
+    "@serlo/katex-styles": 1.0.1
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: a693ebf9f14b91d7c7e0e9545d4d603e30d6c547ee0d6c1f657d5318c60d5cf989dceb5827b18c25450d9d72a60f31e988ac0d745f6d90281d184309b5594110
+  checksum: d65aafaaa1206e6970197572f315bcf289812bf48e549ddf406c4be6d4ec4e6618610b7b1a097ad23cf3df37ddb0e5a66a8d436d487943af6ebf0d935aea8144
   languageName: node
   linkType: hard
 
@@ -5185,7 +5185,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@serlo/katex-styles@npm:1.0.1, @serlo/katex-styles@npm:^1.0.1":
+"@serlo/katex-styles@npm:1.0.1":
   version: 1.0.1
   resolution: "@serlo/katex-styles@npm:1.0.1"
   checksum: b8e50847d42669b78a14ee972348457573d806f487b099bf7a552d98cd734abce502be029b2125df0d20dcffc9f51ab1c365965f2c23eafec9aaeddfbc7859d1
