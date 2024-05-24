@@ -47,14 +47,14 @@ Some of the features we use:
 
 ### How to work in frontend with local backend
 
-In the default settings you use `api.serlo-staging.dev` when you run `yarn dev`. However it is also possible to use the frontend completely with local resources. For this do the following:
+We use our staging API (`api.serlo-staging.dev`) as our backend when you run `yarn dev`. However it is also possible to use the frontend with a API instance running on you local machine:
 
 1. Clone [`api.serlo.org`](https://github.com/serlo/api.serlo.org) or update your local repo with `git pull`.
 2. Run `yarn` and `yarn start` in your local `api.serlo.org` repo.
 3. Set `NEXT_PUBLIC_ENV=local` in [`apps/web/.env`](./apps/web/.env).
-4. Run `yarn dev` in frontend
+4. Run `yarn dev` in the frontend
 
-When you need to simulate an authenticaed user, set `userId: 1` in [`graphql-middleware.ts`](https://github.com/serlo/api.serlo.org/blob/5565f39285f983ff87c66362395cbf7d3368a9b3/packages/server/src/internals/server/graphql-middleware.ts#L67).
+When you need to simulate an authenticated user, set `userId: 1` in [`graphql-middleware.ts`](https://github.com/serlo/api.serlo.org/blob/5565f39285f983ff87c66362395cbf7d3368a9b3/packages/server/src/internals/server/graphql-middleware.ts#L67).
 
 ## Repository Overview
 
