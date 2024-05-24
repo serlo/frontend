@@ -19,10 +19,18 @@ export function BlanksExerciseSerloStaticRenderer(
   const plausible = usePlausible()
 
   const trackExperiment = (data: ExerciseSubmissionData) => {
-    plausible('exercise-submission', {
+    if (data.result === 'correct') {
+      plausible('exercise-submission-correct', {
+        props: data,
+      })
+      return
+    }
+
+    plausible('exercise-submission-false', {
       props: data,
     })
   }
+
   return <BlanksExerciseStaticRenderer {...props} onEvaluate={onEvaluate} />
 
   function onEvaluate(correct: boolean) {
