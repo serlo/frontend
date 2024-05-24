@@ -1,6 +1,6 @@
-// import { isProduction } from './is-production'
 import { v4 as uuidv4 } from 'uuid'
 
+import { isProduction } from './is-production'
 import { ABValue } from '@/contexts/ab'
 
 export interface ExerciseSubmissionData {
@@ -57,12 +57,12 @@ export function exerciseSubmission(
 
   const sessionId = sessionStorage.getItem(sessionStorageKey) as string
   const { revisionId, path } = data
-  // Shane: This can be restored later, right now we want to test on staging
-  // if (!isProduction) {
-  //   // eslint-disable-next-line no-console
-  //   console.log(data)
-  //   return // don't submit outside of production
-  // }
+
+  if (!isProduction) {
+    // eslint-disable-next-line no-console
+    console.log(data)
+    return // don't submit outside of production
+  }
 
   void (async () => {
     await submitFn({
