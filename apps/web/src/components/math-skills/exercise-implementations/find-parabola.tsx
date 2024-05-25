@@ -15,7 +15,11 @@ export function FindParabola() {
 
         const a = randomItemFromArray([0.1, 0.2, 0.5, 1, 2, 3])
 
-        const px = randomIntBetween(-10, 10)
+        let px = randomIntBetween(-10, 10)
+
+        if (mode === '2.1' && px === 0) {
+          px = 1
+        }
 
         const b = 2 * -sx * a
         const c = a * sx * sx + sy
