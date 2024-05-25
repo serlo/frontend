@@ -85,8 +85,8 @@ export function Trigonometry2() {
               {buildOverline('BD')} an:
             </p>
             <p className="serlo-highlight-gray">
-              |{buildOverline('AD')}|² = (4 cm)² + (6 cm)² - 2 · 4 cm · 6 cm ·
-              cos 38°
+              |{buildOverline('AD')}|² = ({pp(data.ab)} cm)² + ({pp(data.bd)}{' '}
+              cm)² - 2 · {pp(data.ab)} cm · {pp(data.ab)} cm · cos 38°
               <br />
               <br />|{buildOverline('AD')}| = {pp(ad)} cm
             </p>
