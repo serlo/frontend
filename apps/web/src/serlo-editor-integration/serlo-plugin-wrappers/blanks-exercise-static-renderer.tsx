@@ -1,14 +1,11 @@
 import { BlanksExerciseStaticRenderer } from '@editor/plugins/blanks-exercise/static'
 import { EditorBlanksExerciseDocument } from '@editor/types/editor-plugins'
 import { useRouter } from 'next/router'
-import { usePlausible } from 'next-plausible'
 
 import { useAB } from '@/contexts/ab'
 import { useEntityData } from '@/contexts/uuids-context'
-import {
-  ExerciseSubmissionData,
-  exerciseSubmission,
-} from '@/helper/exercise-submission'
+import { exerciseSubmission } from '@/helper/exercise-submission'
+import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
 
 export function BlanksExerciseSerloStaticRenderer(
   props: EditorBlanksExerciseDocument
@@ -16,14 +13,8 @@ export function BlanksExerciseSerloStaticRenderer(
   const { asPath } = useRouter()
   const ab = useAB()
   const { entityId, revisionId } = useEntityData()
-  const plausible = usePlausible()
 
-  const trackExperiment = (data: ExerciseSubmissionData) => {
-    plausible(
-      `exercise-submission-${data.result === 'correct' ? 'correct' : 'false'}`,
-      { props: data }
-    )
-  }
+  const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
 
   return <BlanksExerciseStaticRenderer {...props} onEvaluate={onEvaluate} />
 

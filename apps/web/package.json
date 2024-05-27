@@ -67,7 +67,6 @@
     "mathjs": "^12.4.1",
     "mathlive": "^0.98.6",
     "next": "^14.2.2",
-    "next-plausible": "^3.12.0",
     "next-query-params": "^4.3.0",
     "nprogress": "^0.2.0",
     "postcss": "^8.4.38",

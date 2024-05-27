@@ -120,15 +120,6 @@ export default class MyDocument extends Document {
               __html: `window.sa_event=window.sa_event||function(){a=[].slice.call(arguments);sa_event.q?sa_event.q.push(a):sa_event.q=[a]};`,
             }}
           ></script>
-
-          {process.env.NEXT_PUBLIC_USE_PLAUSIBLE_ANALYTICS !== undefined && (
-            // eslint-disable-next-line @next/next/no-sync-scripts
-            <script
-              defer
-              data-domain="de.serlo-staging.dev"
-              src="https://plausible.io/js/script.js"
-            ></script>
-          )}
         </Head>
         <body style={bodyStyles}>
           <Main />
