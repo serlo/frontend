@@ -119,7 +119,7 @@ export function Trigonometry1() {
               buildBlock(
                 'gray',
                 <>
-                  ⇔ |<span className="overline">CD</span>| ={' '}
+                  ⇔ |<span className="overline">AB</span>| ={' '}
                   {buildFrac(<>{data.as} cm</>, <>{data.as + data.ac} cm</>)} ·{' '}
                   {pp(data.cd)} cm
                 </>
@@ -129,7 +129,7 @@ export function Trigonometry1() {
             <br />
             Ergebnis: <br />
             <span className="mt-5 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-              |<span className="overline">CD</span>| ={' '}
+              |<span className="overline">{data.mode === 'cd' ? 'CD' : 'AB'}</span>| ={' '}
               {(data.mode === 'cd' ? data.cd : data.ab)
                 .toString()
                 .replace('.', ',')}{' '}
