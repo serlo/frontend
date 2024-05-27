@@ -129,7 +129,11 @@ export function Trigonometry1() {
             <br />
             Ergebnis: <br />
             <span className="mt-5 inline-block rounded-md bg-newgreen bg-opacity-20 p-1 px-3 text-2xl">
-              |<span className="overline">{data.mode === 'cd' ? 'CD' : 'AB'}</span>| ={' '}
+              |
+              <span className="overline">
+                {data.mode === 'cd' ? 'CD' : 'AB'}
+              </span>
+              | ={' '}
               {(data.mode === 'cd' ? data.cd : data.ab)
                 .toString()
                 .replace('.', ',')}{' '}
