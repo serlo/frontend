@@ -51,7 +51,7 @@ export function Asymptote1() {
           <>
             <p>
               Beachte, für welche x-Werte der Term{' '}
-              {data.b === 0 ? 'x' : '(x ' + pp(data.b, 'merge_op') + ')'}
+              {data.b === 0 ? 'x' : '(x ' + pp(-data.b, 'merge_op') + ')'}
               <sup>{pp(data.c)}</sup> nicht definiert ist. Folgere daraus die
               Definitionsmenge:
             </p>
@@ -62,7 +62,7 @@ export function Asymptote1() {
             </p>
             <p>Bestimme die Asymptoten:</p>
             <p className="serlo-highlight-green">
-              x = {pp(-data.b)} und y = {pp(data.d)}
+              x = {pp(data.b)} und y = {pp(data.d)}
             </p>
             {data.c % 2 === 0 && (
               <>
@@ -156,8 +156,8 @@ export function Asymptote1() {
       x.create(
         'line',
         [
-          [-data.b, -6],
-          [-data.b, 6],
+          [data.b, -6],
+          [data.b, 6],
         ],
         { strokeColor: 'salmon' }
       )
@@ -166,7 +166,7 @@ export function Asymptote1() {
       x.create('text', [0.5, 5.5, `y`], {})
       x.create('functiongraph', [
         function (x: number) {
-          const nenner = Math.pow(x + data.b, data.c)
+          const nenner = Math.pow(x - data.b, data.c)
           return data.a * nenner + data.d
         },
         -6,
