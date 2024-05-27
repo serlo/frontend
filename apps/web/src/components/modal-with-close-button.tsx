@@ -17,6 +17,7 @@ interface ModalWithCloseButtonProps {
   confirmCloseDescription?: string | undefined
   extraTitleClassName?: string
   extraCloseButtonClassName?: string
+  parentSelector?: () => HTMLElement
 }
 
 export function ModalWithCloseButton({
@@ -28,6 +29,7 @@ export function ModalWithCloseButton({
   extraTitleClassName,
   confirmCloseDescription,
   extraCloseButtonClassName,
+  parentSelector,
 }: ModalWithCloseButtonProps) {
   const { strings } = useInstanceData()
   const [showConfirmation, setShowConfirmation] = useState(false)
@@ -44,6 +46,7 @@ export function ModalWithCloseButton({
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       className={cn('serlo-modal', className)}
+      parentSelector={parentSelector}
     >
       {title ? (
         <h2 className={cn('serlo-h2', extraTitleClassName)}>{title}</h2>
