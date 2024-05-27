@@ -2,7 +2,7 @@ import { SerloEditorProps } from '@serlo/editor'
 
 export type InitialState = SerloEditorProps['initialState']
 
-export function isInitialState(obj: any): obj is InitialState {
+export function isValidState(obj: any): obj is InitialState {
   return (
     obj !== null &&
     obj !== undefined &&

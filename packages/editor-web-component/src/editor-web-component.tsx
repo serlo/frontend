@@ -7,7 +7,7 @@ import * as ReactDOM from 'react-dom/client'
 
 import {
   exampleInitialState,
-  isInitialState,
+  isValidState,
   type InitialState,
 } from './initial-state'
 
@@ -66,8 +66,9 @@ export class EditorWebComponent extends HTMLElement {
   }
 
   set initialState(newState) {
-    if (isInitialState(newState)) {
+    if (isValidState(newState)) {
       this._initialState = newState
+      this._currentState = newState
       // Update the attribute
       this.setAttribute('initial-state', JSON.stringify(newState))
       this.mountReactComponent()
@@ -125,8 +126,15 @@ export class EditorWebComponent extends HTMLElement {
       ? (JSON.parse(initialStateAttr) as unknown as any)
       : exampleInitialState
 
-    if (!isInitialState(initialState)) {
+    if (!isValidState(initialState)) {
       throw new Error('Initial state is not of type InitialState')
+    }
+
+    // This works even with subsequent mounts and renders because the
+    // currentState is only null upon first render. Even if you delete all the
+    // contents of the editor, there is an empty text plugin or similar present.
+    if (!this._currentState && initialState) {
+      this._currentState = initialState
     }
 
     // eslint-disable-next-line no-console
