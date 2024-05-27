@@ -24,9 +24,9 @@ export function IntersectingLines() {
 
         const lengths: { [key: string]: number } = {}
         lengths['ZA'] = base_len
-        lengths['ZB'] = base_len * graph_f
-        lengths['ZC'] = base_len * graph_k
-        lengths['ZD'] = lengths['ZB'] * graph_k
+        lengths['ZB'] = roundToDigits(base_len * graph_f, 1)
+        lengths['ZC'] = roundToDigits(base_len * graph_k, 1)
+        lengths['ZD'] = roundToDigits(lengths['ZB'] * graph_k, 1)
         lengths['AC'] = lengths['ZC'] - lengths['ZA']
         lengths['BD'] = lengths['ZD'] - lengths['ZB']
         const a = lengths['ZA']
