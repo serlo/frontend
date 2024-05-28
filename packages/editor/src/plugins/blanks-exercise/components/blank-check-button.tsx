@@ -13,7 +13,7 @@ export function BlankCheckButton(props: BlankCheckButtonProps) {
 
   const exercisesStrings = useInstanceData().strings.content.exercises
 
-  if (!isVisible || feedback.size === 0) return null
+  if (!isVisible) return null
 
   const isCorrect = [...feedback].every((entry) => entry[1].isCorrect)
 
