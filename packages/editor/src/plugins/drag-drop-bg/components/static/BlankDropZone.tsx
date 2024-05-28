@@ -5,6 +5,7 @@ import { useDrop } from 'react-dnd'
 
 import { BlankDropZoneSpec, PossibleAnswerType } from '../../types'
 import { AnswerImage } from '../shared/AnswerImage'
+import { AnswerText } from '../shared/AnswerText'
 
 export interface BlankDropZoneProps {
   accept: string[]
@@ -47,6 +48,8 @@ export const BlankDropZone: FC<BlankDropZoneProps> = memo(
           ? 'border-red-500'
           : 'border-black'
 
+    const isImageAnswer = lastDroppedItem?.imageUrl
+    const isTextAnswer = lastDroppedItem?.text
     return (
       <div
         ref={drop}
@@ -59,7 +62,8 @@ export const BlankDropZone: FC<BlankDropZoneProps> = memo(
         }}
         data-qa={`blank-drop-zone-${dropZone.id}`}
       >
-        {lastDroppedItem && <AnswerImage url={lastDroppedItem.imageUrl} />}
+        {isImageAnswer && <AnswerImage url={lastDroppedItem.imageUrl} />}
+        {isTextAnswer && <AnswerText text={lastDroppedItem.text} />}
       </div>
     )
   }
