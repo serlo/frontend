@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { selectStaticDocument, store } from '@editor/store'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
 import type { DragDropBgProps } from '../..'
+import { AnswerZonesContext } from '../../context/context'
 import { useAnswerZones } from '../../hooks/useAnswerZones'
 import { answerZoneType, wrongAnswerType } from '../../types'
 import { AnswerZone } from '../AnswerZone/AnswerZone'
@@ -17,6 +18,9 @@ export function EditorCanvas(props: DragDropBgProps) {
   const { state } = props
   const { answerZones, backgroundImage, extraDraggableAnswers } = state
 
+  const context = useContext(AnswerZonesContext)
+
+  const { zones } = context || {}
   const {
     currentAnswerZone,
     selectAnswerZone,
@@ -62,13 +66,6 @@ export function EditorCanvas(props: DragDropBgProps) {
       return { id: zoneImageId, imageUrl: zoneImgUrl, text: zoneText }
     })
     return answers
-    // const zoneImageId = zone.answer.image.get()
-    // const zoneImgUrl = getAnswerZoneImageSrc(zoneImageId)
-
-    // const zoneTextId = zone.answer.text.get()
-    // const zoneText = getAnswerZoneText(zoneTextId)
-    return { id: 'zoneImageId', imageUrl: 'zoneImgUrl', text: 'zoneText' }
-    // return { id: zoneImageId, imageUrl: zoneImgUrl, text: zoneText }
   }
 
   const correctAnswers = answerZones.map(zoneToPossibleAnswer).flat()
@@ -83,11 +80,6 @@ export function EditorCanvas(props: DragDropBgProps) {
   const onClickSettingsButton = (id: string) => {
     selectAnswerZone(id)
     setShowSettingsModal(true)
-  }
-
-  const onClickPlusButton = (id: string) => {
-    selectAnswerZone(id)
-    setShowCreateDropZoneModal(true)
   }
 
   const onClickAddWrongAnswer = () => createWrongAnswer()
@@ -124,7 +116,7 @@ export function EditorCanvas(props: DragDropBgProps) {
           />
         )}
         {showCreateDropZoneModal && (
-          <NewAnswerZoneFlow newAnswerZone={currentAnswerZone} />
+          <NewAnswerZoneFlow zoneId={currentAnswerZone.id.get()} />
         )}
         {showCreateWrongAnswerModal && (
           <WrongAnswerFlow newWrongAnswer={currentWrongAnswer} />
@@ -135,17 +127,22 @@ export function EditorCanvas(props: DragDropBgProps) {
         className="border-grey relative h-[786px] w-[786px] overflow-hidden border bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${backgroundImageUrl})` }}
       >
-        {answerZones.map((answerZone, index) => (
-          <AnswerZone
-            key={index}
-            onClickSettingsButton={onClickSettingsButton}
-            onClickPlusButton={onClickPlusButton}
-            getAnswerZoneImageSrc={getAnswerZoneImageSrc}
-            getAnswerZoneText={getAnswerZoneText}
-            answerZone={answerZone}
-            onChangeDimensions={onChangeDimensions}
-          />
-        ))}
+        {zones?.map((answerZone, index) => {
+          return (
+            <AnswerZone
+              key={index}
+              onClickSettingsButton={onClickSettingsButton}
+              onClickPlusButton={() => {
+                selectAnswerZone(answerZone.id.get())
+                setShowCreateDropZoneModal(true)
+              }}
+              getAnswerZoneImageSrc={getAnswerZoneImageSrc}
+              getAnswerZoneText={getAnswerZoneText}
+              answerZone={answerZone}
+              onChangeDimensions={onChangeDimensions}
+            />
+          )
+        })}
       </div>
       <div className="mt-4">
         <button

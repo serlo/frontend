@@ -76,14 +76,32 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   const left = answerZone.position.left.get()
   const top = answerZone.position.top.get()
 
-  const zoneAnswers = answerZone.answers.map((answer) => {
+  const answers = answerZone.answers.map((answer, index) => {
     const answerImageUrl = getAnswerZoneImageSrc(answer.image.get())
     const answerText = getAnswerZoneText(answer.text.get())
 
-    return { answerImageUrl, answerText }
-  })
-  const { answerImageUrl, answerText } = zoneAnswers[0]
+    const hasImage = !!answerImageUrl
+    const hasText = !!answerText
 
+    if (index === 0 && !hasImage && !hasText) {
+      return renderButtons()
+    }
+    return answerImageUrl ? (
+      <AnswerImage
+        key={index}
+        width={dimensions.width}
+        height={dimensions.height}
+        url={answerImageUrl}
+      />
+    ) : answerText ? (
+      <AnswerText
+        key={index}
+        width={dimensions.width}
+        height={dimensions.height}
+        text={answerText}
+      />
+    ) : null
+  })
   return (
     <div
       ref={dragPreview}
@@ -112,22 +130,20 @@ export const AnswerZone = (props: AnswerZoneProps) => {
       >
         <div
           ref={drag}
-          className="relative h-full w-full border-2 border-blue-500"
+          className="relative flex h-full w-full flex-row border-2 border-blue-500"
         >
-          {answerImageUrl ? (
-            <AnswerImage
-              width={dimensions.width}
-              height={dimensions.height}
-              url={answerImageUrl}
-            />
-          ) : answerText ? (
-            <AnswerText
-              width={dimensions.width}
-              height={dimensions.height}
-              text={answerText}
-            />
-          ) : (
-            renderButtons()
+          {answerZone.answers.length === 0 && renderButtons()}
+          {answers}
+          {answerZone.answers.length > 0 && (
+            <button
+              className="absolute right-2 top-2 z-20 rounded bg-orange-100 p-1"
+              style={{ fontSize: '.5rem' }}
+              onClick={() =>
+                onClickPlusButton && onClickPlusButton(answerZone.id.get())
+              }
+            >
+              <FaIcon icon={faPlus} />
+            </button>
           )}
         </div>
       </ResizableBox>

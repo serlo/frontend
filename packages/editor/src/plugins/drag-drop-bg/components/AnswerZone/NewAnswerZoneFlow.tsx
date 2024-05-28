@@ -1,24 +1,27 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faFont, faImage } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
-import type { answerZoneType } from '../../types.js'
+import { AnswerZonesContext } from '../../context/context'
 import { FaIcon } from '@/components/fa-icon'
 
-export interface NewAnswerZoneFormProps {
-  newAnswerZone: answerZoneType
-}
-
-export function NewAnswerZoneFlow(props: NewAnswerZoneFormProps) {
+export function NewAnswerZoneFlow({ zoneId }: { zoneId: string }) {
   const [currentStep, setCurrentStep] = useState(0)
 
-  const { newAnswerZone } = props
+  const context = useContext(AnswerZonesContext)
+  const { zones } = context || {}
 
+  const newAnswerZone = zones?.find((z) => z.id.get() === zoneId)
   const [stepOneType, setStepOneType] = useState<'text' | 'image'>('image')
 
   const goToStepOne = (newStepOneType: 'text' | 'image') => {
     // eslint-disable-next-line no-console
+    newAnswerZone?.answers.insert(newAnswerZone.answers.length, {
+      text: { plugin: EditorPluginType.Text },
+      image: { plugin: EditorPluginType.Image },
+    })
     setStepOneType(newStepOneType)
     setCurrentStep(1)
   }
@@ -45,14 +48,22 @@ export function NewAnswerZoneFlow(props: NewAnswerZoneFormProps) {
     </div>
   )
 
-  const stepOneText = <div>Text {newAnswerZone?.answers[0].text.render()}</div>
+  const stepOneText = (
+    <div>
+      Text{' '}
+      {newAnswerZone?.answers[newAnswerZone?.answers.length - 1]?.text.render()}
+    </div>
+  )
 
   // TODO: Image settings after image upload
 
   // TODO: Make add button work
   const stepOneImage = (
     <div>
-      Image {newAnswerZone?.answers[0].image.render()}
+      Image{' '}
+      {newAnswerZone?.answers[
+        newAnswerZone?.answers.length - 1
+      ]?.image.render()}
       <div>
         <button className="mt-2 flex rounded bg-orange-100 px-2 py-1">
           {' '}

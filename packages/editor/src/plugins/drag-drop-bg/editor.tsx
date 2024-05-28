@@ -1,16 +1,15 @@
 import { selectDocument, useAppSelector } from '@editor/store'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
 import { faImage } from '@fortawesome/free-solid-svg-icons'
 
 import type { DragDropBgProps } from '.'
 import { EditorCanvas } from './components/editor/EditorCanvas'
+import { AnswerZonesContext } from './context/context'
 import { DragDropBgToolbar } from './toolbar'
 import { FaIcon } from '@/components/fa-icon'
 
 export function DragDropBgEditor({ state, id }: DragDropBgProps) {
   const { backgroundImage, backgroundType, canvasShape } = state
-
   const bgImagePluginState = useAppSelector((state) =>
     selectDocument(state, backgroundImage.get())
   ) as EditorImageDocument
@@ -28,12 +27,7 @@ export function DragDropBgEditor({ state, id }: DragDropBgProps) {
         visible: true,
         lockedAspectRatio: true,
       },
-      answers: [
-        {
-          image: { plugin: EditorPluginType.Image },
-          text: { plugin: EditorPluginType.Text },
-        },
-      ],
+      answers: [],
     })
   }
 
@@ -119,8 +113,14 @@ export function DragDropBgEditor({ state, id }: DragDropBgProps) {
 
   return (
     <>
-      <DragDropBgToolbar id={id}>{addButton}</DragDropBgToolbar>
-      <EditorCanvas state={state} config={{}} id={id} focused={false} />
+      <AnswerZonesContext.Provider
+        value={{
+          zones: state.answerZones,
+        }}
+      >
+        <DragDropBgToolbar id={id}>{addButton}</DragDropBgToolbar>
+        <EditorCanvas state={state} config={{}} id={id} focused={false} />
+      </AnswerZonesContext.Provider>
     </>
   )
 }

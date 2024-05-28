@@ -15,20 +15,21 @@ export function PossibleAnswers(props: PossibleAnswersProps) {
   const { possibleAnswers, canEdit, onClickEdit } = props
   return (
     <>
-      <h1>{possibleAnswers.length}</h1>
       <BlankDraggableArea onDrop={() => {}}>
-        {possibleAnswers.map((possibleAnswer, index) => {
-          return (
-            <DraggableAnswer
-              draggableId={possibleAnswer.id}
-              canEdit={canEdit}
-              onClickEdit={onClickEdit}
-              key={index}
-              imageUrl={possibleAnswer.imageUrl}
-              text={possibleAnswer.text}
-            />
-          )
-        })}
+        {possibleAnswers
+          .filter((p) => p !== undefined)
+          .map((possibleAnswer, index) => {
+            return (
+              <DraggableAnswer
+                draggableId={possibleAnswer.id}
+                canEdit={canEdit}
+                onClickEdit={onClickEdit}
+                key={index}
+                imageUrl={possibleAnswer.imageUrl}
+                text={possibleAnswer.text}
+              />
+            )
+          })}
       </BlankDraggableArea>
     </>
   )
