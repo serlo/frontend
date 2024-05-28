@@ -85,7 +85,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   return (
     <div
       ref={dragPreview}
-      className="absolute flex cursor-move items-center justify-center rounded border-2 border-blue-500 bg-white p-1"
+      className="absolute flex cursor-move items-center justify-center rounded bg-white"
       style={{
         left,
         top,
@@ -102,9 +102,16 @@ export const AnswerZone = (props: AnswerZoneProps) => {
         onResize={handleResize}
         onResizeStop={handleResizeStop}
         resizeHandles={['nw', 'ne', 'sw', 'se']}
-        style={{ width: '100%', height: '100%' }}
+        style={{
+          width: '100%',
+          height: '100%',
+          padding: '6px',
+        }}
       >
-        <div ref={drag} className="relative h-full w-full">
+        <div
+          ref={drag}
+          className="relative h-full w-full border-2 border-blue-500"
+        >
           {answerImageUrl ? (
             <AnswerImage
               width={dimensions.width}
