@@ -1,12 +1,15 @@
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
-import { defineConfig } from 'vite'
+import { Plugin, defineConfig } from 'vite'
 // I wonder how many plugins we can get rid off here. Probably everything but
 // the React one?
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import dts from 'vite-plugin-dts'
 import svgr from 'vite-plugin-svgr'
 import replace from '@rollup/plugin-replace'
+import * as acorn from 'acorn'
+import * as estraverse from 'estraverse'
+import * as escodegen from 'escodegen'
 
 // https://vitejs.dev/guide/build.html#library-mode
 
@@ -44,6 +47,89 @@ const envReplacements = {
   ),
 }
 
+// Custom Rollup plugin to remove global style injection from the @editor
+// package. This basically undos the cssInjectedByJsPlugin inside the editor
+// package. The reason why we don't remove it from there, is because we want to
+// keep the convenience of importing from the @serlo/editor package without
+// having to worry about styling.
+function removeGlobalEditorStyles(): Plugin {
+  return {
+    name: 'remove-global-styles',
+    generateBundle(_, bundle) {
+      let foundMatch = false
+
+      for (const file of Object.values(bundle)) {
+        if (file.type === 'chunk') {
+          const chunk = file
+
+          // Parse the code into an AST
+          const ast = acorn.parse(chunk.code, {
+            ecmaVersion: 2020,
+            sourceType: 'module',
+          })
+
+          // Traverses the AST and look for the specific try-catch block that
+          // looks something like this
+          // try {
+          //   if (typeof document < "u") {
+          //     var t = document.createElement("style");
+          //     t.appendChild(document.createTextNode(`.katex{font:....
+          //   }
+          // } catch (e) {
+          //   console.error("vite-plugin-css-injected-by-js", e);
+          // }
+          estraverse.replace(ast, {
+            enter(node) {
+              if (
+                node.type === 'TryStatement' &&
+                node.handler &&
+                node.handler.body &&
+                node.handler.body.body.some(
+                  (n) =>
+                    n.type === 'ExpressionStatement' &&
+                    n.expression.type === 'CallExpression' &&
+                    n.expression.callee.type === 'MemberExpression' &&
+                    n.expression.callee.object.name === 'console' &&
+                    n.expression.callee.property.name === 'error' &&
+                    n.expression.arguments.length > 0 &&
+                    n.expression.arguments[0].value ===
+                      'vite-plugin-css-injected-by-js'
+                )
+              ) {
+                foundMatch = true
+                // Replace the entire try-catch block with a NO_OP
+                return {
+                  type: 'VariableDeclaration',
+                  declarations: [
+                    {
+                      type: 'VariableDeclarator',
+                      id: {
+                        type: 'Identifier',
+                        name: 'NO_OPERATION_INSTEAD_OF_GLOBAL_STYLE',
+                      },
+                      init: { type: 'Literal', value: null },
+                    },
+                  ],
+                  kind: 'const',
+                }
+              }
+            },
+          })
+
+          // Turn AST back into code and write it into the chunk.
+          chunk.code = escodegen.generate(ast)
+        }
+      }
+
+      if (!foundMatch) {
+        throw new Error(
+          'No global style injection pattern was found and removed.'
+        )
+      }
+    },
+  }
+}
+
 // eslint-disable-next-line import/no-default-export
 export default defineConfig({
   build: {
@@ -66,5 +152,6 @@ export default defineConfig({
     }),
     svgr({ include: '**/*.svg' }),
     cssInjectedByJsPlugin(),
+    removeGlobalEditorStyles(),
   ],
 })
