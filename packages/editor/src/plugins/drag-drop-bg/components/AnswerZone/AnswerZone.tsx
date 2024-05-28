@@ -57,24 +57,20 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   }
 
   const renderButtons = () => (
-    <>
-      <div className="absolute right-2 top-2">
-        <button
-          className="rounded bg-orange-100 p-1"
-          onClick={() => onClickSettingsButton?.(answerZone.id.get())}
-        >
-          <FaIcon icon={faCog} />
-        </button>
-      </div>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <button
-          className="rounded bg-orange-100 p-3"
-          onClick={() => onClickPlusButton?.(answerZone.id.get())}
-        >
-          <FaIcon icon={faPlus} />
-        </button>
-      </div>
-    </>
+    <div className="absolute inset-0 flex items-center justify-center">
+      <button
+        className="absolute right-2 top-2 z-10 rounded bg-orange-100 p-1"
+        onClick={() => onClickSettingsButton?.(answerZone.id.get())}
+      >
+        <FaIcon icon={faCog} />
+      </button>
+      <button
+        className="rounded bg-orange-100 p-3"
+        onClick={() => onClickPlusButton?.(answerZone.id.get())}
+      >
+        <FaIcon icon={faPlus} />
+      </button>
+    </div>
   )
 
   const left = answerZone.position.left.get()
