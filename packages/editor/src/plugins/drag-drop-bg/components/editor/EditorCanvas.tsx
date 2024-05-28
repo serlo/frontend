@@ -35,11 +35,31 @@ export function EditorCanvas(props: DragDropBgProps) {
   )
   const backgroundImageUrl = backgroundImageDocument?.state?.src || ''
 
+  const getAnswerZoneImageSrc = (answerZoneImageId: string) => {
+    const answerImageDocument = selectStaticDocument(
+      store.getState(),
+      answerZoneImageId
+    )
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return answerImageDocument?.state?.src || ''
+  }
+
+  const getAnswerZoneText = (answerZoneTextId: string) => {
+    const answerTextDocument = selectStaticDocument(
+      store.getState(),
+      answerZoneTextId
+    )
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return answerTextDocument?.state[0]?.children[0].text || ''
+  }
+
   const zoneToPossibleAnswer = (zone: answerZoneType | wrongAnswerType) => {
     const zoneImageId = zone.answer.image.get()
-    const zoneImageDoc = selectStaticDocument(store.getState(), zoneImageId)
-    const zoneImgUrl = zoneImageDoc?.state?.src || ''
-    return { id: zoneImageId, imageUrl: zoneImgUrl }
+    const zoneImgUrl = getAnswerZoneImageSrc(zoneImageId)
+
+    const zoneTextId = zone.answer.text.get()
+    const zoneText = getAnswerZoneText(zoneTextId)
+    return { id: zoneImageId, imageUrl: zoneImgUrl, text: zoneText }
   }
 
   const correctAnswers = answerZones.map(zoneToPossibleAnswer)
@@ -66,24 +86,6 @@ export function EditorCanvas(props: DragDropBgProps) {
   const onClickWrongAnswerPlus = (id: string) => {
     selectWrongAnswer(id)
     setShowCreateWrongAnswerModal(true)
-  }
-
-  const getAnswerZoneImageSrc = (answerZoneImageId: string) => {
-    const answerImageDocument = selectStaticDocument(
-      store.getState(),
-      answerZoneImageId
-    )
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return answerImageDocument?.state?.src || ''
-  }
-
-  const getAnswerZoneText = (answerZoneTextId: string) => {
-    const answerTextDocument = selectStaticDocument(
-      store.getState(),
-      answerZoneTextId
-    )
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return answerTextDocument?.state[0]?.children[0].text || ''
   }
 
   return (

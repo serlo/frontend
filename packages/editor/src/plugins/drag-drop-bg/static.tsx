@@ -18,10 +18,11 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
   const correctAnswers = answerZones.map((zone) => {
     const zoneImageId = zone.id
     const zoneImgUrl = zone.answer.image.state.src || ''
-
+    const zoneText = zone.answer.text.state[0].children[0].text || ''
     return {
       id: zoneImageId,
       imageUrl: zoneImgUrl,
+      text: zoneText,
     }
   })
 
