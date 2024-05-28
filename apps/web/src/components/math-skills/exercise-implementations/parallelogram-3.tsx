@@ -42,7 +42,7 @@ export function Parallelogram3() {
       renderTask={(data) => (
         <>
           <p className="serlo-main-task">
-            Seien die Pfeile {buildVec(<>O{data.names[data.fixed]}</>)} ={' '}
+            Gegeben sind die Pfeile {buildVec(<>O{data.names[data.fixed]}</>)} ={' '}
             {buildVec2(data.x, data.y)} und{' '}
             {buildVec(
               <>
@@ -60,8 +60,8 @@ export function Parallelogram3() {
                 {data.h} · {data.func2}
                 {data.hasSqrt2 && <sup>2</sup>} {phi}
               </>
-            )}{' '}
-            gegeben.
+            )}
+            .
           </p>
           <p className="serlo-main-task">
             Diese spannen mit dem Ursprung O ( 0 | 0 ) für {phi} ∈ [0°; 90°]

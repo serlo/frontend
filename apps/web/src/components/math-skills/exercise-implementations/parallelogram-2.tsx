@@ -48,7 +48,7 @@ export function Parallelogram2() {
         return (
           <>
             <p className="text-2xl">
-              Es seien Pfeile{' '}
+              Es sind Pfeile{' '}
               {buildVec(
                 <>
                   AB<sub>n</sub>

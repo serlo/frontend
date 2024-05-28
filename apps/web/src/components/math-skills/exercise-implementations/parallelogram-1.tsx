@@ -67,8 +67,8 @@ export function Parallelogram1() {
       renderTask={(data) => (
         <>
           <p className="text-2xl">
-            Seien die Pfeile {buildVec('OT')} = {buildVec2(data.tx, data.ty)}{' '}
-            und{' '}
+            Gegeben sind die Pfeile {buildVec('OT')} ={' '}
+            {buildVec2(data.tx, data.ty)} und{' '}
             {buildVec(
               <>
                 OR<sub>n</sub>
@@ -83,8 +83,8 @@ export function Parallelogram1() {
               <>
                 {data.h} · sin{data.deg === 60 ? <sup>2</sup> : null} {phi}
               </>
-            )}{' '}
-            gegeben.
+            )}
+            .
           </p>
           <p className="mt-4 text-2xl">
             Diese spannen mit dem Ursprung O ( 0 | 0 ) für {phi} ∈ [0°; 90°]
