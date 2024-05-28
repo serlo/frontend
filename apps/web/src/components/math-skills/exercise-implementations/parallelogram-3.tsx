@@ -140,7 +140,7 @@ export function Parallelogram3() {
           <p className="serlo-highlight-gray">
             {buildVec(
               <>
-                O{data.names[data.fixed]}
+                O{data.names[1]}
                 <sub>n</sub>
               </>
             )}{' '}
@@ -169,7 +169,8 @@ export function Parallelogram3() {
           </p>
           <p>Schreibe den Ortsvektor schließlich in Koordinaten:</p>
           <p className="serlo-highlight-green">
-            S<sub>n</sub> ( {data.x + data.x_off} + {data.w} · {data.func1}
+            {data.names[1]}
+            <sub>n</sub> ( {data.x + data.x_off} + {data.w} · {data.func1}
             {data.hasSqrt1 && <sup>2</sup>} {phi} | {data.h} · {data.func2}
             {data.hasSqrt2 && <sup>2</sup>} {phi} + {data.y})
           </p>
