@@ -10,7 +10,7 @@ export function TransformGraph() {
       generator={() => {
         let a = randomItemFromArray([-1, 1, 2, -2, -3, 3, 0.5, 0.2, 1.5])
         let b = randomIntBetween(-4, 4)
-        const c = randomIntBetween(-4, -1)
+        let c = randomIntBetween(-4, -1)
         let d = randomIntBetween(-4, 4)
         const dx = randomIntBetween(1, 4) * randomItemFromArray([1, -1])
         const dy = randomIntBetween(1, 4) * randomItemFromArray([1, -1])
@@ -31,6 +31,7 @@ export function TransformGraph() {
           if (b === 0) {
             b = randomIntBetween(1, 4)
           }
+          c = Math.abs(c) + 1
         }
         return {
           a,
@@ -202,7 +203,7 @@ export function TransformGraph() {
           data.c === -1 ? (
             <sup>{pp(data.c)}</sup>
           ) : (
-            buildLatex(`^{-\\frac{1}{${Math.abs(data.c)}}}`)
+            buildLatex(`^{\\frac{1}{${Math.abs(data.c)}}}`)
           )
         return (
           <>
