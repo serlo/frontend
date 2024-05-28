@@ -9,7 +9,7 @@ import { DragDropBgToolbar } from './toolbar'
 import { FaIcon } from '@/components/fa-icon'
 
 export function DragDropBgEditor({ state, id }: DragDropBgProps) {
-  const { backgroundImage, backgroundType } = state
+  const { backgroundImage, backgroundType, canvasShape } = state
 
   const bgImagePluginState = useAppSelector((state) =>
     selectDocument(state, backgroundImage.get())
@@ -52,6 +52,7 @@ export function DragDropBgEditor({ state, id }: DragDropBgProps) {
           className="m-[20px] rounded-[5px] bg-orange-100 p-[10px] pr-[20px]"
           onClick={() => {
             backgroundType.set('text')
+            canvasShape.set('')
           }}
         >
           Blank
@@ -59,7 +60,10 @@ export function DragDropBgEditor({ state, id }: DragDropBgProps) {
         <span>oder</span>
         <button
           className="m-[20px] rounded-[5px] bg-orange-100 p-[10px] pr-[20px]"
-          onClick={() => backgroundType.set('image')}
+          onClick={() => {
+            backgroundType.set('image')
+            canvasShape.set('')
+          }}
         >
           Image <FaIcon icon={faImage} />
         </button>
@@ -67,12 +71,42 @@ export function DragDropBgEditor({ state, id }: DragDropBgProps) {
     </>
   )
 
+  const shapeSelection = (
+    <div>
+      <h1 className="flex flex-row items-center justify-center">
+        Default shape:
+      </h1>
+      <div className="flex flex-row items-center justify-center">
+        <button
+          className="m-[20px] rounded-[5px] bg-orange-100 p-[10px] pr-[20px]"
+          onClick={() => canvasShape.set('square')}
+        >
+          Square
+        </button>
+        <button
+          className="m-[20px] rounded-[5px] bg-orange-100 p-[10px] pr-[20px]"
+          onClick={() => canvasShape.set('portrait')}
+        >
+          Portrait
+        </button>
+        <button
+          className="m-[20px] rounded-[5px] bg-orange-100 p-[10px] pr-[20px]"
+          onClick={() => canvasShape.set('landscape')}
+        >
+          Landscape
+        </button>
+      </div>
+    </div>
+  )
+
   const isBlankBg = backgroundType.get() === 'text'
   const isImageBg = backgroundType.get() === 'image'
 
   const isBgTypeSelected = isBlankBg || isImageBg
+  const isShapeSelected = canvasShape.get()
 
   if (!isBgTypeSelected) return blankVsImage
+  if (!isShapeSelected) return shapeSelection
 
   const hasImgUrl = !!backgroundImageUrlFromPlugin
   const isBackgroundDefined = isBlankBg || (isImageBg && hasImgUrl)

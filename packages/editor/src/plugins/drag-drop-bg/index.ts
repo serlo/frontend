@@ -43,6 +43,7 @@ export const wrongAnswerState = object({
 
 const dragDropBgState = object({
   answerZones: list(answerZoneState, 0),
+  canvasShape: string(''),
   backgroundType: string(''),
   backgroundImage: child({ plugin: EditorPluginType.Image }),
   extraDraggableAnswers: list(wrongAnswerState, 0),
