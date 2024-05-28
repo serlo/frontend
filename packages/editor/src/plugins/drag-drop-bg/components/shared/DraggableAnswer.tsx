@@ -53,16 +53,6 @@ export function DraggableAnswer({
     >
       {imageUrl && <AnswerImage isPreview url={imageUrl} />}
       {text && <AnswerText text={text} />}
-      {/* {!imageUrl && !text && canEdit && (
-        <div className="flex h-full flex-col items-center justify-center">
-          <button
-            onClick={() => onClickEdit && onClickEdit(draggableId)}
-            className="rounded bg-orange-100 p-2"
-          >
-            +
-          </button>
-        </div>
-      )} */}
     </span>
   )
 }
