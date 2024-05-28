@@ -18,8 +18,8 @@ export const positionData = object({
 })
 
 export const layoutData = object({
-  width: number(0),
-  height: number(0),
+  width: number(200),
+  height: number(70),
   visible: boolean(true),
   lockedAspectRatio: boolean(true),
 })

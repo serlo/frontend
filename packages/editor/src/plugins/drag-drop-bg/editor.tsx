@@ -23,8 +23,8 @@ export function DragDropBgEditor({ state, id }: DragDropBgProps) {
       id: `${id}-answerZone-${currentLength}`,
       position: { left: 20 * currentLength + 1, top: 20 },
       layout: {
-        width: 100,
-        height: 100,
+        width: 200,
+        height: 70,
         visible: true,
         lockedAspectRatio: true,
       },

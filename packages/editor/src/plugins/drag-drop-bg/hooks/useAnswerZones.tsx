@@ -72,8 +72,8 @@ export function useAnswerZones({ state, id }: DragDropBgProps) {
       id: `${id}-${answerZones.length}`,
       position: { left: 20, top: 20 },
       layout: {
-        width: 100,
-        height: 100,
+        width: 200,
+        height: 70,
         lockedAspectRatio: true,
         visible: true,
       },
