@@ -54,16 +54,25 @@ export function EditorCanvas(props: DragDropBgProps) {
   }
 
   const zoneToPossibleAnswer = (zone: answerZoneType | wrongAnswerType) => {
-    const zoneImageId = zone.answer.image.get()
-    const zoneImgUrl = getAnswerZoneImageSrc(zoneImageId)
+    const answers = zone.answers.map((answer) => {
+      const zoneImageId = answer.image.get()
+      const zoneImgUrl = getAnswerZoneImageSrc(zoneImageId)
+      const zoneTextId = answer.text.get()
+      const zoneText = getAnswerZoneText(zoneTextId)
+      return { id: zoneImageId, imageUrl: zoneImgUrl, text: zoneText }
+    })
+    return answers
+    // const zoneImageId = zone.answer.image.get()
+    // const zoneImgUrl = getAnswerZoneImageSrc(zoneImageId)
 
-    const zoneTextId = zone.answer.text.get()
-    const zoneText = getAnswerZoneText(zoneTextId)
-    return { id: zoneImageId, imageUrl: zoneImgUrl, text: zoneText }
+    // const zoneTextId = zone.answer.text.get()
+    // const zoneText = getAnswerZoneText(zoneTextId)
+    return { id: 'zoneImageId', imageUrl: 'zoneImgUrl', text: 'zoneText' }
+    // return { id: zoneImageId, imageUrl: zoneImgUrl, text: zoneText }
   }
 
-  const correctAnswers = answerZones.map(zoneToPossibleAnswer)
-  const wrongAnswers = extraDraggableAnswers.map(zoneToPossibleAnswer)
+  const correctAnswers = answerZones.map(zoneToPossibleAnswer).flat()
+  const wrongAnswers = extraDraggableAnswers.map(zoneToPossibleAnswer).flat()
   const possibleAnswers = [...correctAnswers, ...wrongAnswers] // TODO: shuffle answers
 
   const [showSettingsModal, setShowSettingsModal] = useState(false)
@@ -123,7 +132,7 @@ export function EditorCanvas(props: DragDropBgProps) {
       </ModalWithCloseButton>
       <div
         ref={drop}
-        className="relative h-[786px] w-[786px] bg-center bg-no-repeat"
+        className="border-grey relative h-[786px] w-[786px] overflow-hidden border bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${backgroundImageUrl})` }}
       >
         {answerZones.map((answerZone, index) => (

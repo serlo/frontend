@@ -33,12 +33,7 @@ export const answerZoneState = object({
   id: string(''),
   position: positionData,
   layout: layoutData,
-  answer: answerData,
-})
-
-export const wrongAnswerState = object({
-  id: string(''),
-  answer: answerData,
+  answers: list(answerData, 0),
 })
 
 const dragDropBgState = object({
@@ -46,7 +41,7 @@ const dragDropBgState = object({
   canvasShape: string(''),
   backgroundType: string(''),
   backgroundImage: child({ plugin: EditorPluginType.Image }),
-  extraDraggableAnswers: list(wrongAnswerState, 0),
+  extraDraggableAnswers: list(answerZoneState, 0),
 })
 
 export const defaultConfig: DragDropBgConfig = {}

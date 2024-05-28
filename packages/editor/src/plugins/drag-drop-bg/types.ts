@@ -1,6 +1,6 @@
 import { StateTypeReturnType } from '@editor/plugin'
 
-import type { answerZoneState, wrongAnswerState } from '.'
+import type { answerZoneState } from '.'
 
 export interface PossibleAnswerType {
   id: string
@@ -47,4 +47,4 @@ export interface answerZoneType
   extends StateTypeReturnType<typeof answerZoneState> {}
 
 export interface wrongAnswerType
-  extends StateTypeReturnType<typeof wrongAnswerState> {}
+  extends StateTypeReturnType<typeof answerZoneState> {}

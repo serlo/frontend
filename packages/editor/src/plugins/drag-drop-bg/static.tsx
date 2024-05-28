@@ -16,14 +16,17 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
     '') as string
 
   const correctAnswers = answerZones.map((zone) => {
-    const zoneImageId = zone.id
-    const zoneImgUrl = zone.answer.image.state.src || ''
-    const zoneText = zone.answer.text.state[0].children[0].text || ''
-    return {
-      id: zoneImageId,
-      imageUrl: zoneImgUrl,
-      text: zoneText,
-    }
+    const answersForZone = zone.answers.map((answer) => {
+      const zoneImageId = zone.id
+      const zoneImgUrl = answer.image.state.src || ''
+      const zoneText = answer.text.state[0].children[0].text || ''
+      return {
+        id: zoneImageId,
+        imageUrl: zoneImgUrl,
+        text: zoneText,
+      }
+    })
+    return answersForZone[0]
   })
 
   const possibleAnswers = [...correctAnswers, ...extraDraggableAnswers]

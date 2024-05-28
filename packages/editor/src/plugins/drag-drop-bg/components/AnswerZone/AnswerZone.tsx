@@ -75,8 +75,14 @@ export const AnswerZone = (props: AnswerZoneProps) => {
 
   const left = answerZone.position.left.get()
   const top = answerZone.position.top.get()
-  const answerImageUrl = getAnswerZoneImageSrc(answerZone.answer.image.get())
-  const answerText = getAnswerZoneText(answerZone.answer.text.get())
+
+  const zoneAnswers = answerZone.answers.map((answer) => {
+    const answerImageUrl = getAnswerZoneImageSrc(answer.image.get())
+    const answerText = getAnswerZoneText(answer.text.get())
+
+    return { answerImageUrl, answerText }
+  })
+  const { answerImageUrl, answerText } = zoneAnswers[0]
 
   return (
     <div

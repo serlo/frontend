@@ -28,10 +28,12 @@ export function DragDropBgEditor({ state, id }: DragDropBgProps) {
         visible: true,
         lockedAspectRatio: true,
       },
-      answer: {
-        image: { plugin: EditorPluginType.Image },
-        text: { plugin: EditorPluginType.Text },
-      },
+      answers: [
+        {
+          image: { plugin: EditorPluginType.Image },
+          text: { plugin: EditorPluginType.Text },
+        },
+      ],
     })
   }
 

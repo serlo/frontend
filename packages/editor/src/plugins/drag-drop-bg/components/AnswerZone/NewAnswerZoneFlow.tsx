@@ -45,14 +45,14 @@ export function NewAnswerZoneFlow(props: NewAnswerZoneFormProps) {
     </div>
   )
 
-  const stepOneText = <div>Text {newAnswerZone?.answer.text.render()}</div>
+  const stepOneText = <div>Text {newAnswerZone?.answers[0].text.render()}</div>
 
   // TODO: Image settings after image upload
 
   // TODO: Make add button work
   const stepOneImage = (
     <div>
-      Image {newAnswerZone?.answer.image.render()}
+      Image {newAnswerZone?.answers[0].image.render()}
       <div>
         <button className="mt-2 flex rounded bg-orange-100 px-2 py-1">
           {' '}
