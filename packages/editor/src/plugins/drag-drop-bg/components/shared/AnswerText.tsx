@@ -4,15 +4,15 @@ interface AnswerTextProps {
   width?: number
 }
 
-export function AnswerText({ text, height, width }: AnswerTextProps) {
+export function AnswerText({ text }: AnswerTextProps) {
   if (!text) return null
 
   return (
     <div
-      className="flex items-center justify-center"
+      className="h-100 w-100 flex items-center justify-center"
       style={{
-        height: height ? `${height}px` : 'auto',
-        width: width ? `${width}px` : 'auto',
+        height: '100%',
+        width: '100%',
       }}
     >
       <span>{text}</span>

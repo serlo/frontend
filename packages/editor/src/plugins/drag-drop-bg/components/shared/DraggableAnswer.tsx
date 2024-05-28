@@ -18,16 +18,13 @@ interface DraggableAnswerProps {
   onClickEdit?: (id: string) => void
 }
 
-export const dragAnswerStyle =
-  'cursor-grab rounded-full border border-brand bg-brand-50 px-2'
-
 export function DraggableAnswer({
   draggableId,
   text,
   isAnswerCorrect,
   imageUrl,
-  canEdit = false,
-  onClickEdit,
+  // canEdit = false,
+  // onClickEdit,
 }: DraggableAnswerProps) {
   const dragItem = useMemo<DraggableAnswerType>(
     () => ({
@@ -48,7 +45,7 @@ export function DraggableAnswer({
   return (
     <span
       className={cn(
-        dragAnswerStyle,
+        'cursor-grab bg-brand-50',
         isAnswerCorrect ? 'border-green-500' : '',
         isAnswerCorrect === false ? 'border-red-500' : ''
       )}
@@ -56,14 +53,16 @@ export function DraggableAnswer({
     >
       {imageUrl && <AnswerImage isPreview url={imageUrl} />}
       {text && <AnswerText text={text} />}
-      {!imageUrl && !text && canEdit && (
-        <button
-          onClick={() => onClickEdit && onClickEdit(draggableId)}
-          className="rounded bg-orange-100 p-2"
-        >
-          +
-        </button>
-      )}
+      {/* {!imageUrl && !text && canEdit && (
+        <div className="flex h-full flex-col items-center justify-center">
+          <button
+            onClick={() => onClickEdit && onClickEdit(draggableId)}
+            className="rounded bg-orange-100 p-2"
+          >
+            +
+          </button>
+        </div>
+      )} */}
     </span>
   )
 }
