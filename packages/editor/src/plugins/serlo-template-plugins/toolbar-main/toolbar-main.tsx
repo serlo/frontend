@@ -51,10 +51,7 @@ export function ToolbarMain({
     <div ref={containerRef}>
       {/* For the web component export, we don't want to call the useLeaveConfirm hook as the next router won't be available */}
       {isNextApp() && <LeaveConfirmationRenderNull isChanged={isChanged} />}
-      <ClientOnlyPortal
-        selector=".controls-portal"
-        shadowRootRef={{ current: shadowRoot }}
-      >
+      <ClientOnlyPortal selector=".controls-portal" shadowRootRef={shadowRoot}>
         <nav className="flex h-14 w-full justify-between pl-5 pr-3 pt-6">
           <div className="pointer-events-auto md:-ml-28 lg:-ml-52">
             {renderHistoryButton('undo')}

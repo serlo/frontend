@@ -1,12 +1,27 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { useState, type ReactNode, useCallback } from 'react'
+import { useState, type ReactNode, useCallback, useEffect } from 'react'
 import BaseModal from 'react-modal'
 
 import { FaIcon } from './fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
 
-BaseModal.setAppElement('#serlo-root')
+let isAppElementSet = false
+
+export function useLazySetAppElement(
+  selectorOrElement: string | HTMLElement = '#serlo-root'
+) {
+  console.log('useLazySetAppElement called with', { selectorOrElement })
+  useEffect(() => {
+    if (!isAppElementSet) {
+      // const element = document.querySelector(selector)
+      // if (element) {
+      BaseModal.setAppElement(selectorOrElement)
+      isAppElementSet = true
+      // }
+    }
+  }, [selectorOrElement])
+}
 
 interface ModalWithCloseButtonProps {
   isOpen: boolean
@@ -18,6 +33,7 @@ interface ModalWithCloseButtonProps {
   extraTitleClassName?: string
   extraCloseButtonClassName?: string
   parentSelector?: () => HTMLElement
+  appElement?: HTMLElement
 }
 
 export function ModalWithCloseButton({
@@ -30,9 +46,12 @@ export function ModalWithCloseButton({
   confirmCloseDescription,
   extraCloseButtonClassName,
   parentSelector,
+  appElement,
 }: ModalWithCloseButtonProps) {
   const { strings } = useInstanceData()
   const [showConfirmation, setShowConfirmation] = useState(false)
+
+  useLazySetAppElement(appElement)
 
   const onRequestClose = useCallback(
     () =>

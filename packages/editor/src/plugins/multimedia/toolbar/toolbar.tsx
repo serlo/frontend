@@ -1,4 +1,7 @@
-import { useShadowRoot } from '@editor/core/helpers/use-shadow-root'
+import {
+  isShadowRoot,
+  useShadowRoot,
+} from '@editor/core/helpers/use-shadow-root'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
@@ -19,7 +22,12 @@ export const MultimediaToolbar = ({ id, children }: MultimediaToolbarProps) => {
   const ref = useRef<HTMLButtonElement>(null)
 
   const shadowRoot = useShadowRoot(ref)
-  console.log('Parent selector: ', shadowRoot?.host as HTMLElement)
+  // console.log('Parent selector: ',  shadowRoot?.host as HTMLElement)
+
+  console.log('Image Toolbar Shadowoot: ', {
+    shadowRoot,
+    isShadowRoot: isShadowRoot(shadowRoot),
+  })
 
   return (
     <PluginToolbar
@@ -34,21 +42,43 @@ export const MultimediaToolbar = ({ id, children }: MultimediaToolbarProps) => {
           >
             {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
           </button>
-          <ModalWithCloseButton
-            isOpen={showSettingsModal}
-            onCloseClick={() => setShowSettingsModal(false)}
-            className="top-8 max-w-xl translate-y-0 sm:top-1/3"
-            parentSelector={
-              shadowRoot ? () => shadowRoot.host as HTMLElement : undefined
-            }
-          >
-            <h3 className="serlo-h3 mt-4">
-              {editorStrings.edtrIo.settings}:{' '}
-              {editorStrings.plugins.multimedia.title}
-            </h3>
+          {shadowRoot === null ? (
+            <span>{/* null */}</span>
+          ) : isShadowRoot(shadowRoot) ? (
+            <ModalWithCloseButton
+              isOpen={showSettingsModal}
+              onCloseClick={() => setShowSettingsModal(false)}
+              className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+              parentSelector={() => {
+                console.log(
+                  'Marking shadowRoot as parentSelector in multimedia plugin toolbar',
+                  { shadowRoot, host: shadowRoot.host }
+                )
+                return shadowRoot.host as HTMLElement
+              }}
+              appElement={shadowRoot?.host as HTMLElement}
+            >
+              <h3 className="serlo-h3 mt-4">
+                {editorStrings.edtrIo.settings}:{' '}
+                {editorStrings.plugins.multimedia.title}
+              </h3>
 
-            <div className="mx-side mb-3">{children}</div>
-          </ModalWithCloseButton>
+              <div className="mx-side mb-3">{children}</div>
+            </ModalWithCloseButton>
+          ) : (
+            <ModalWithCloseButton
+              isOpen={showSettingsModal}
+              onCloseClick={() => setShowSettingsModal(false)}
+              className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+            >
+              <h3 className="serlo-h3 mt-4">
+                {editorStrings.edtrIo.settings}:{' '}
+                {editorStrings.plugins.multimedia.title}
+              </h3>
+
+              <div className="mx-side mb-3">{children}</div>
+            </ModalWithCloseButton>
+          )}
         </>
       }
       pluginControls={<PluginDefaultTools pluginId={id} />}

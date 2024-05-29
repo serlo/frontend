@@ -1,11 +1,14 @@
 import { ReactNode } from 'react'
 import Modal from 'react-modal'
 
-import { defaultModalOverlayStyles } from '../modal-with-close-button'
+import {
+  defaultModalOverlayStyles,
+  useLazySetAppElement,
+} from '../modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
 
-Modal.setAppElement('#serlo-root')
+// Modal.setAppElement('#serlo-root')
 
 export interface LightBoxProps {
   src: string
@@ -16,6 +19,8 @@ export interface LightBoxProps {
 
 export function LightBox({ label, src, alt, onClose }: LightBoxProps) {
   const pictureString = useInstanceData().strings.content.picture
+
+  useLazySetAppElement()
 
   return (
     <>
