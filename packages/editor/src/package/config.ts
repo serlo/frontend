@@ -18,6 +18,7 @@ export interface PluginsConfig {
   general?: {
     enableTextAreaExercise: boolean
     exerciseVisibleInSuggestion: boolean
+    _enableImagePlugin?: boolean // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
   }
 }
 
@@ -39,6 +40,7 @@ const defaultPluginsConfig: Required<PluginsConfig> = {
   general: {
     exerciseVisibleInSuggestion: true,
     enableTextAreaExercise: false,
+    _enableImagePlugin: false,
   },
 }
 

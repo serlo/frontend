@@ -1,8 +1,11 @@
 import { Editor, type EditorProps } from '@editor/core'
 import { createBasicPlugins } from '@editor/editor-integration/create-basic-plugins'
 import { createRenderers } from '@editor/editor-integration/create-renderers'
+import ImageIcon from '@editor/editor-ui/assets/plugin-icons/icon-image.svg'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
+import { createImagePlugin } from '@editor/plugins/image'
+import { ImageStaticRenderer } from '@editor/plugins/image/static'
 import { SupportedLanguage } from '@editor/types/language-data'
 import React from 'react'
 
@@ -40,7 +43,32 @@ export function SerloEditor(props: SerloEditorProps) {
   const { instanceData, loggedInData } = editorData[language]
 
   const basicPlugins = createBasicPlugins(pluginsConfig)
-  editorPlugins.init([...basicPlugins, ...customPlugins])
+  let allPlugins = [...basicPlugins, ...customPlugins]
+  // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
+  if (props.pluginsConfig?.general?._enableImagePlugin) {
+    const imagePluginNoFileUpload = createImagePlugin({
+      disableFileUpload: true,
+      upload: (_) => {
+        return new Promise<string>((resolve, _) => {
+          resolve('')
+        })
+      },
+      validate: (_) => {
+        return { valid: false, errors: [] }
+      },
+    })
+    allPlugins = [
+      ...allPlugins,
+      {
+        type: 'image',
+        plugin: imagePluginNoFileUpload,
+        renderer: ImageStaticRenderer,
+        visibleInSuggestions: true,
+        icon: <ImageIcon />,
+      },
+    ]
+  }
+  editorPlugins.init(allPlugins)
 
   const basicRenderers = createRenderers(customPlugins)
   editorRenderers.init(basicRenderers)
