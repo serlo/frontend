@@ -4,9 +4,8 @@ import { useDrag } from 'react-dnd'
 import { ResizableBox, ResizableBoxProps } from 'react-resizable'
 import 'react-resizable/css/styles.css'
 
+import { AnswerContent } from './AnswerContent'
 import type { answerZoneType } from '../../types'
-import { AnswerImage } from '../shared/AnswerImage'
-import { AnswerText } from '../shared/AnswerText'
 import { FaIcon } from '@/components/fa-icon'
 
 /**
@@ -105,21 +104,15 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     if (index === 0 && !hasImage && !hasText) {
       return renderButtons()
     }
-    return answerImageUrl ? (
-      <AnswerImage
+
+    return (
+      <AnswerContent
         key={index}
-        width={dimensions.width}
-        height={dimensions.height}
         url={answerImageUrl}
-      />
-    ) : answerText ? (
-      <AnswerText
-        key={index}
-        width={dimensions.width}
-        height={dimensions.height}
         text={answerText}
+        isPreview={false}
       />
-    ) : null
+    )
   })
 
   /**

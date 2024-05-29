@@ -2,9 +2,8 @@ import { useEmptyPreview } from '@editor/core/helpers/use-empty-preview'
 import { useMemo } from 'react'
 import { useDrag } from 'react-dnd'
 
-import { AnswerImage } from './AnswerImage'
-import { AnswerText } from './AnswerText'
 import type { DraggableAnswerType } from '../../types'
+import { AnswerContent } from '../AnswerZone/AnswerContent'
 import { cn } from '@/helper/cn'
 
 export const blankDraggableAnswerDragType = 'blank-solution'
@@ -46,12 +45,11 @@ export function DraggableAnswer({
         'cursor-grab bg-brand-50',
         isAnswerCorrect ? 'border-green-500' : '',
         isAnswerCorrect === false ? 'border-red-500' : '',
-        text ? 'rounded border border-brand' : 'p-1'
+        text || imageUrl ? 'rounded border border-brand' : 'p-1'
       )}
       ref={dragRef}
     >
-      {imageUrl && <AnswerImage isPreview url={imageUrl} />}
-      {text && <AnswerText text={text} />}
+      <AnswerContent url={imageUrl} text={text} isPreview />
     </span>
   )
 }
