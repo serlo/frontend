@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import { SerloRenderer } from '@serlo/editor'
+import { SerloRenderer, BaseEditor } from '@serlo/editor'
 import styles from '@serlo/editor/style.css?raw'
 import React, { Suspense, lazy } from 'react'
 import * as ReactDOM from 'react-dom/client'
@@ -17,11 +17,15 @@ const LazySerloEditor = lazy(() =>
 
 type Mode = 'read' | 'write'
 
+type EditorHistory = BaseEditor['history']
+
 export class EditorWebComponent extends HTMLElement {
   private reactRoot: ReactDOM.Root | null = null
   private container: HTMLDivElement
 
   private _mode: Mode = 'read'
+
+  private _history: EditorHistory | null = null
 
   private _initialState: InitialState = exampleInitialState
   private _currentState: unknown
@@ -103,6 +107,10 @@ export class EditorWebComponent extends HTMLElement {
     )
   }
 
+  get history(): EditorHistory | null {
+    return this._history
+  }
+
   connectedCallback() {
     if (!this.reactRoot) {
       this.reactRoot = ReactDOM.createRoot(this.container)
@@ -151,7 +159,8 @@ export class EditorWebComponent extends HTMLElement {
             <Suspense fallback={<div>Loading editor...</div>}>
               <LazySerloEditor
                 initialState={this.initialState}
-                _enableImagePlugin // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
+                // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
+                _enableImagePlugin
                 onChange={({ changed, getDocument }) => {
                   if (changed) {
                     const newState = getDocument()
@@ -161,6 +170,7 @@ export class EditorWebComponent extends HTMLElement {
                 }}
               >
                 {(editor) => {
+                  this._history = editor.history
                   return <div>{editor.element}</div>
                 }}
               </LazySerloEditor>
