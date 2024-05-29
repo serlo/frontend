@@ -22,7 +22,6 @@ export class EditorWebComponent extends HTMLElement {
   private container: HTMLDivElement
 
   private _mode: Mode = 'read'
-  private _imagePluginEnabled = 'false'
 
   private _initialState: InitialState = exampleInitialState
   private _currentState: unknown
@@ -94,16 +93,6 @@ export class EditorWebComponent extends HTMLElement {
     }
   }
 
-  get imagePluginEnabled() {
-    return this._imagePluginEnabled
-  }
-
-  set imagePluginEnabled(newValue: string) {
-    this._imagePluginEnabled = newValue
-    this.setAttribute('imagePluginEnabled', newValue)
-    this.mountReactComponent()
-  }
-
   get currentState() {
     return this._currentState
   }
@@ -162,9 +151,7 @@ export class EditorWebComponent extends HTMLElement {
             <Suspense fallback={<div>Loading editor...</div>}>
               <LazySerloEditor
                 initialState={this.initialState}
-                _enableImagePlugin={
-                  this._imagePluginEnabled === 'true' ? true : false
-                }
+                _enableImagePlugin // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
                 onChange={({ changed, getDocument }) => {
                   if (changed) {
                     const newState = getDocument()
