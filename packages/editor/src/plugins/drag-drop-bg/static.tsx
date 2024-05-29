@@ -15,19 +15,21 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
   const backgroundImageUrlFromPlugin = (bgImagePluginState?.state?.src ||
     '') as string
 
-  const correctAnswers = answerZones.map((zone) => {
-    const answersForZone = zone.answers.map((answer) => {
-      const zoneImageId = zone.id
-      const zoneImgUrl = answer.image.state.src || ''
-      const zoneText = answer.text.state[0].children[0].text || ''
-      return {
-        id: zoneImageId,
-        imageUrl: zoneImgUrl,
-        text: zoneText,
-      }
+  const correctAnswers = answerZones
+    .map((zone) => {
+      const answersForZone = zone.answers.map((answer) => {
+        const zoneImageId = zone.id
+        const zoneImgUrl = answer.image.state.src || ''
+        const zoneText = answer.text.state[0].children[0].text || ''
+        return {
+          id: zoneImageId,
+          imageUrl: zoneImgUrl,
+          text: zoneText,
+        }
+      })
+      return answersForZone
     })
-    return answersForZone[0]
-  })
+    .flat()
 
   const possibleAnswers = [...correctAnswers, ...extraDraggableAnswers]
 
@@ -66,7 +68,7 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
       >
         {answerZones.map((answerZone, index) => {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const { answer, id, ...rest } = answerZone
+          const { answers, id, ...rest } = answerZone
           const dropZone = { ...rest, id: index.toString() }
           return (
             <BlankDropZone
