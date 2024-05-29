@@ -47,7 +47,8 @@ export function DraggableAnswer({
       className={cn(
         'cursor-grab bg-brand-50',
         isAnswerCorrect ? 'border-green-500' : '',
-        isAnswerCorrect === false ? 'border-red-500' : ''
+        isAnswerCorrect === false ? 'border-red-500' : '',
+        text ? 'rounded border border-brand' : 'p-1'
       )}
       ref={dragRef}
     >
