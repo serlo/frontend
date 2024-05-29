@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import { faClone, faTrashCan } from '@fortawesome/free-regular-svg-icons'
+import React from 'react'
 
 import type { answerZoneType } from '../../types.js'
 import { FaIcon } from '@/components/fa-icon'
@@ -9,20 +11,40 @@ interface AnswerZoneSettingsFormProps {
   onDelete: () => void
 }
 
+/**
+ * AnswerZoneSettingsForm component
+ *
+ * This component renders a settings form for configuring an answer zone.
+ * It allows users to duplicate, delete, and adjust settings such as
+ * name, visibility, height, and width of the answer zone.
+ *
+ * @param {AnswerZoneSettingsFormProps} props - The properties for the component.
+ * @returns {JSX.Element | null} - The rendered component or null if no answer zone is provided.
+ */
 export function AnswerZoneSettingsForm({
   answerZone,
   onDuplicate,
   onDelete,
-}: AnswerZoneSettingsFormProps) {
+}: AnswerZoneSettingsFormProps): JSX.Element | null {
+  if (!answerZone) return null
+
   const initialSettings = {
-    name: answerZone?.name.value,
-    visible: answerZone?.layout.visible.value,
-    height: answerZone?.layout.height.value,
-    width: answerZone?.layout.width.value,
+    name: answerZone.name.value,
+    visible: answerZone.layout.visible.value,
+    height: answerZone.layout.height.value,
+    width: answerZone.layout.width.value,
     lockedAspectRatio: true,
   }
 
-  if (!answerZone) return null
+  const handleInputChange =
+    (setter: (value: any) => void) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const value =
+        event.target.type === 'checkbox'
+          ? event.target.checked
+          : event.target.value
+      setter(value)
+    }
 
   return (
     <div className="flex flex-col gap-4 rounded-lg bg-white p-4 shadow-md">
@@ -40,24 +62,18 @@ export function AnswerZoneSettingsForm({
           <input
             type="text"
             defaultValue={initialSettings.name}
-            onChange={(e) => {
-              const newName = e.target.value
-              answerZone.name.set(newName)
-            }}
+            onChange={handleInputChange(answerZone.name.set)}
             className="w-full rounded border border-gray-300 bg-orange-100 p-2"
           />
         </div>
       </label>
 
       <label className="mb-2 flex items-center">
-        Visible
+        Sichtbar
         <input
-          defaultChecked={initialSettings.visible}
-          onChange={(e) => {
-            const newVisible = e.target.value
-            answerZone.layout.visible.set(Boolean(newVisible))
-          }}
           type="checkbox"
+          defaultChecked={initialSettings.visible}
+          onChange={handleInputChange(answerZone.layout.visible.set)}
           className="ml-auto rounded border border-gray-300 bg-orange-100"
         />
       </label>
@@ -68,20 +84,18 @@ export function AnswerZoneSettingsForm({
           <input
             type="number"
             defaultValue={initialSettings.height}
-            onChange={(e) => {
-              const newHeight = parseInt(e.target.value)
-              answerZone.layout.height.set(newHeight)
-            }}
+            onChange={handleInputChange((value: string) =>
+              answerZone.layout.height.set(parseInt(value))
+            )}
             className="w-full rounded border border-gray-300 bg-orange-100 p-2"
           />
           <span className="self-center">x</span>
           <input
             type="number"
             defaultValue={initialSettings.width}
-            onChange={(e) => {
-              const newWidth = parseInt(e.target.value)
-              answerZone.layout.width.set(newWidth)
-            }}
+            onChange={handleInputChange((value: string) =>
+              answerZone.layout.width.set(parseInt(value))
+            )}
             className="w-full rounded border border-gray-300 bg-orange-100 p-2"
           />
         </div>
