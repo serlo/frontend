@@ -23,8 +23,6 @@ export function DraggableAnswer({
   text,
   isAnswerCorrect,
   imageUrl,
-  // canEdit = false,
-  // onClickEdit,
 }: DraggableAnswerProps) {
   const dragItem = useMemo<DraggableAnswerType>(
     () => ({

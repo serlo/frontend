@@ -11,9 +11,16 @@ import { AnswerZone } from '../AnswerZone/AnswerZone'
 import { AnswerZoneSettingsForm } from '../AnswerZone/AnswerZoneSettingsForm'
 import { NewAnswerZoneFlow } from '../AnswerZone/NewAnswerZoneFlow'
 import { PossibleAnswers } from '../shared/PossibleAnswers'
-import { WrongAnswerFlow } from '../shared/WrongAnswerFlow'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
+/**
+ * EditorCanvas component
+ *
+ * This component represents the canvas area where answer zones and possible answers are managed and displayed.
+ * It supports adding, editing, and deleting answer zones as well as managing possible answers.
+ *
+ * @param {DragDropBgProps} props - The properties for the EditorCanvas component.
+ */
 export function EditorCanvas(props: DragDropBgProps) {
   const { state } = props
   const { answerZones, backgroundImage, extraDraggableAnswers } = state
@@ -21,14 +28,8 @@ export function EditorCanvas(props: DragDropBgProps) {
   const context = useContext(AnswerZonesContext)
 
   const { zones } = context || {}
-  const {
-    currentAnswerZone,
-    selectAnswerZone,
-    drop,
-    selectWrongAnswer,
-    currentWrongAnswer,
-    onChangeDimensions,
-  } = useAnswerZones(props)
+  const { currentAnswerZone, selectAnswerZone, drop, onChangeDimensions } =
+    useAnswerZones(props)
 
   const bgImgId = backgroundImage.get()
   const backgroundImageDocument = selectStaticDocument(
@@ -37,6 +38,11 @@ export function EditorCanvas(props: DragDropBgProps) {
   )
   const backgroundImageUrl = backgroundImageDocument?.state?.src || ''
 
+  /**
+   * Get the image source URL for an answer zone.
+   * @param {string} answerZoneImageId - The ID of the answer zone image.
+   * @returns {string} The image source URL.
+   */
   const getAnswerZoneImageSrc = (answerZoneImageId: string) => {
     const answerImageDocument = selectStaticDocument(
       store.getState(),
@@ -46,6 +52,11 @@ export function EditorCanvas(props: DragDropBgProps) {
     return answerImageDocument?.state?.src || ''
   }
 
+  /**
+   * Get the text content for an answer zone.
+   * @param {string} answerZoneTextId - The ID of the answer zone text.
+   * @returns {string} The text content.
+   */
   const getAnswerZoneText = (answerZoneTextId: string) => {
     const answerTextDocument = selectStaticDocument(
       store.getState(),
@@ -55,6 +66,11 @@ export function EditorCanvas(props: DragDropBgProps) {
     return answerTextDocument?.state[0]?.children[0].text || ''
   }
 
+  /**
+   * Convert an answer zone to possible answer format.
+   * @param {answerZoneType | wrongAnswerType} zone - The answer zone or wrong answer zone.
+   * @returns {Array} The possible answers.
+   */
   const zoneToPossibleAnswer = (zone: answerZoneType | wrongAnswerType) => {
     const answers = zone.answers.map((answer) => {
       const zoneImageId = answer.image.get()
@@ -75,14 +91,13 @@ export function EditorCanvas(props: DragDropBgProps) {
   const [showCreateWrongAnswerModal, setShowCreateWrongAnswerModal] =
     useState(false)
 
+  /**
+   * Handle the click event for the settings button.
+   * @param {string} id - The ID of the answer zone.
+   */
   const onClickSettingsButton = (id: string) => {
     selectAnswerZone(id)
     setShowSettingsModal(true)
-  }
-
-  const onClickWrongAnswerPlus = (id: string) => {
-    selectWrongAnswer(id)
-    setShowCreateWrongAnswerModal(true)
   }
 
   return (
@@ -119,9 +134,6 @@ export function EditorCanvas(props: DragDropBgProps) {
         {showCreateDropZoneModal && (
           <NewAnswerZoneFlow zoneId={currentAnswerZone.id.get()} />
         )}
-        {showCreateWrongAnswerModal && (
-          <WrongAnswerFlow newWrongAnswer={currentWrongAnswer} />
-        )}
       </ModalWithCloseButton>
       <div
         ref={drop}
@@ -146,11 +158,7 @@ export function EditorCanvas(props: DragDropBgProps) {
         })}
       </div>
       <div className="mt-4">
-        <PossibleAnswers
-          onClickEdit={onClickWrongAnswerPlus}
-          canEdit
-          possibleAnswers={possibleAnswers}
-        />
+        <PossibleAnswers canEdit possibleAnswers={possibleAnswers} />
       </div>
     </>
   )

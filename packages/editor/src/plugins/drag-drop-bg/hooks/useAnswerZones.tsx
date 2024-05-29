@@ -1,38 +1,20 @@
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useCallback, useState } from 'react'
 import { XYCoord, useDrop } from 'react-dnd'
 
 import type { DragDropBgProps } from '..'
-import type {
-  AnswerZoneSettings,
-  answerZoneType,
-  wrongAnswerType,
-} from '../types'
+import type { AnswerZoneSettings, answerZoneType } from '../types'
 
 export function useAnswerZones({ state, id }: DragDropBgProps) {
-  const { answerZones, extraDraggableAnswers } = state
+  const { answerZones } = state
 
   const [currentAnswerZone, setCurrentAnswerZone] = useState<answerZoneType>(
     answerZones[0]
-  )
-
-  const [currentWrongAnswer, setCurrentWrongAnswer] = useState<wrongAnswerType>(
-    extraDraggableAnswers[0]
   )
 
   const selectAnswerZone = (id: string) => {
     const answerZone = answerZones.find((zone) => zone.id.get() === id)
     if (answerZone) {
       setCurrentAnswerZone(answerZone)
-    }
-  }
-
-  const selectWrongAnswer = (id: string) => {
-    const wrongAnswer = extraDraggableAnswers.find(
-      (answer) => answer.id.get() === id
-    )
-    if (wrongAnswer) {
-      setCurrentWrongAnswer(wrongAnswer)
     }
   }
 
@@ -57,8 +39,6 @@ export function useAnswerZones({ state, id }: DragDropBgProps) {
     [answerZones]
   )
 
-  const getAnswerZoneAtIndex = (index: number) => answerZones[index]
-
   const moveAnswerZone = useCallback(
     (answerZone: answerZoneType, left: number, top: number) => {
       answerZone.position.left.set(left)
@@ -66,23 +46,6 @@ export function useAnswerZones({ state, id }: DragDropBgProps) {
     },
     []
   )
-
-  const insertAnswerZone = () => {
-    answerZones.insert(answerZones.length, {
-      id: `${id}-${answerZones.length}`,
-      position: { left: 20, top: 20 },
-      layout: {
-        width: 200,
-        height: 70,
-        lockedAspectRatio: true,
-        visible: true,
-      },
-      answer: {
-        image: { plugin: EditorPluginType.Image },
-        text: { plugin: EditorPluginType.Text },
-      },
-    })
-  }
 
   const [, drop] = useDrop(
     () => ({
@@ -98,28 +61,11 @@ export function useAnswerZones({ state, id }: DragDropBgProps) {
     [answerZones]
   )
 
-  const createWrongAnswer = () => {
-    const newId = `${id}-${extraDraggableAnswers.length}`
-    extraDraggableAnswers.insert(extraDraggableAnswers.length, {
-      id: newId,
-      answer: {
-        image: { plugin: EditorPluginType.Image },
-        text: { plugin: EditorPluginType.Text },
-      },
-    })
-  }
-
   return {
     currentAnswerZone,
-    currentWrongAnswer,
-    selectWrongAnswer,
     selectAnswerZone,
-    insertAnswerZone,
-    getAnswerZoneAtIndex,
-    moveAnswerZone,
     onChangeAnswerZone,
     drop,
-    createWrongAnswer,
     onChangeDimensions,
   }
 }

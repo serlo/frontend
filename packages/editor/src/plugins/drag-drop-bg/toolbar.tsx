@@ -9,7 +9,7 @@ import { ReactNode, useState } from 'react'
 
 interface DragDropBgToolbarProps {
   id: string
-  children: ReactNode
+  children?: ReactNode
   onClickAddAnswerZone: () => void
 }
 

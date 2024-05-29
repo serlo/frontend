@@ -9,6 +9,9 @@ import { AnswerImage } from '../shared/AnswerImage'
 import { AnswerText } from '../shared/AnswerText'
 import { FaIcon } from '@/components/fa-icon'
 
+/**
+ * AnswerZone component props
+ */
 export interface AnswerZoneProps {
   answerZone: answerZoneType
   hideSourceOnDrag?: boolean
@@ -23,6 +26,13 @@ export interface AnswerZoneProps {
   ) => void
 }
 
+/**
+ * AnswerZone component
+ *
+ * This component represents a draggable and resizable answer zone
+ * which can display images or text answers. It also has buttons
+ * for settings and adding new answers.
+ */
 export const AnswerZone = (props: AnswerZoneProps) => {
   const [isResizing, setIsResizing] = useState(false)
   const [dimensions, setDimensions] = useState({ width: 200, height: 70 })
@@ -57,6 +67,9 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     setIsResizing(false)
   }
 
+  /**
+   * Renders the settings and plus buttons
+   */
   const renderButtons = () => (
     <div className="absolute inset-0 flex items-center justify-center">
       <button
@@ -74,9 +87,12 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     </div>
   )
 
+  /**
+   * Renders the answers to be displayed inside the AnswerZone
+   */
+
   const left = answerZone.position.left.get()
   const top = answerZone.position.top.get()
-
   const name = answerZone.name.get()
 
   const answers = answerZone.answers.map((answer, index) => {
@@ -106,9 +122,16 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     ) : null
   })
 
+  /**
+   * Hide source element while dragging
+   */
   if (collected.isDragging) {
     return <div ref={dragPreview} />
   }
+
+  /**
+   * Renders the answers to be displayed inside the AnswerZone
+   */
   return (
     <div
       ref={dragPreview}

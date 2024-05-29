@@ -50,7 +50,6 @@ export function NewAnswerZoneFlow({ zoneId }: { zoneId: string }) {
 
   const stepOneText = (
     <div>
-      Text{' '}
       {newAnswerZone?.answers[newAnswerZone?.answers.length - 1]?.text.render()}
     </div>
   )
@@ -60,7 +59,6 @@ export function NewAnswerZoneFlow({ zoneId }: { zoneId: string }) {
   // TODO: Make add button work
   const stepOneImage = (
     <div>
-      Image{' '}
       {newAnswerZone?.answers[
         newAnswerZone?.answers.length - 1
       ]?.image.render()}

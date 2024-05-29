@@ -8,6 +8,18 @@ import { AnswerZonesContext } from './context/context'
 import { DragDropBgToolbar } from './toolbar'
 import { FaIcon } from '@/components/fa-icon'
 
+/**
+ * DragDropBgEditor component
+ *
+ * This component represents the drag-and-drop background editor.
+ *
+ * It allows users to:
+ *    select a background type (blank or image),
+ *    choose a canvas shape
+ *    add / manage answer zones.
+ *
+ * @param {DragDropBgProps} props - The properties for the DragDropBgEditor component.
+ */
 export function DragDropBgEditor({ state, id }: DragDropBgProps) {
   const { backgroundImage, backgroundType, canvasShape } = state
   const bgImagePluginState = useAppSelector((state) =>
@@ -16,6 +28,9 @@ export function DragDropBgEditor({ state, id }: DragDropBgProps) {
   const backgroundImageUrlFromPlugin =
     bgImagePluginState?.state?.src || ('' as string)
 
+  /**
+   * Handler for adding a new answer zone.
+   */
   const onClickAddAnswerZone = () => {
     const currentLength = state.answerZones.length
     state.answerZones.insert(currentLength, {
@@ -32,6 +47,9 @@ export function DragDropBgEditor({ state, id }: DragDropBgProps) {
     })
   }
 
+  /**
+   * Renders the UI for selecting between a blank or image background.
+   */
   const blankVsImage = (
     <>
       <DragDropBgToolbar onClickAddAnswerZone={onClickAddAnswerZone} id={id}>
@@ -61,6 +79,9 @@ export function DragDropBgEditor({ state, id }: DragDropBgProps) {
     </>
   )
 
+  /**
+   * Renders the UI for selecting the default shape of the canvas.
+   */
   const shapeSelection = (
     <div>
       <h1 className="flex flex-row items-center justify-center">
@@ -112,9 +133,10 @@ export function DragDropBgEditor({ state, id }: DragDropBgProps) {
           zones: state.answerZones,
         }}
       >
-        <DragDropBgToolbar onClickAddAnswerZone={onClickAddAnswerZone} id={id}>
-          <></>
-        </DragDropBgToolbar>
+        <DragDropBgToolbar
+          onClickAddAnswerZone={onClickAddAnswerZone}
+          id={id}
+        />
         <EditorCanvas state={state} config={{}} id={id} focused={false} />
       </AnswerZonesContext.Provider>
     </>
