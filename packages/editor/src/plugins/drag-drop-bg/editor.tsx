@@ -31,18 +31,11 @@ export function DragDropBgEditor({ state, id }: DragDropBgProps) {
     })
   }
 
-  const addButton = (
-    <button
-      onClick={onClickAddAnswerZone}
-      className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
-    >
-      Ablagezone
-    </button>
-  )
-
   const blankVsImage = (
     <>
-      <DragDropBgToolbar id={id}>{addButton}</DragDropBgToolbar>
+      <DragDropBgToolbar onClickAddAnswerZone={onClickAddAnswerZone} id={id}>
+        <></>
+      </DragDropBgToolbar>
       <div className="flex flex-row items-center justify-center">
         <button
           className="m-[20px] rounded-[5px] bg-orange-100 p-[10px] pr-[20px]"
@@ -118,7 +111,9 @@ export function DragDropBgEditor({ state, id }: DragDropBgProps) {
           zones: state.answerZones,
         }}
       >
-        <DragDropBgToolbar id={id}>{addButton}</DragDropBgToolbar>
+        <DragDropBgToolbar onClickAddAnswerZone={onClickAddAnswerZone} id={id}>
+          <></>
+        </DragDropBgToolbar>
         <EditorCanvas state={state} config={{}} id={id} focused={false} />
       </AnswerZonesContext.Provider>
     </>

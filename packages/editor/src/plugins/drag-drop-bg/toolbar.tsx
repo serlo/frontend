@@ -10,9 +10,14 @@ import { ReactNode, useState } from 'react'
 interface DragDropBgToolbarProps {
   id: string
   children: ReactNode
+  onClickAddAnswerZone: () => void
 }
 
-export const DragDropBgToolbar = ({ id, children }: DragDropBgToolbarProps) => {
+export const DragDropBgToolbar = ({
+  id,
+  children,
+  onClickAddAnswerZone,
+}: DragDropBgToolbarProps) => {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const editorStrings = useEditorStrings()
 
@@ -21,9 +26,19 @@ export const DragDropBgToolbar = ({ id, children }: DragDropBgToolbarProps) => {
       <PluginDefaultTools pluginId={id} />
     </>
   )
+
+  const addButton = (
+    <button
+      onClick={onClickAddAnswerZone}
+      className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+    >
+      Ablagezone
+    </button>
+  )
   return (
     <PluginToolbar
       pluginType={EditorPluginType.DragDropBg}
+      contentControls={addButton}
       pluginSettings={
         <>
           <button
