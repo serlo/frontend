@@ -10,6 +10,7 @@ import replace from '@rollup/plugin-replace'
 import * as acorn from 'acorn'
 import * as estraverse from 'estraverse'
 import * as escodegen from 'escodegen'
+import { type Program, type Node } from 'estree'
 
 // https://vitejs.dev/guide/build.html#library-mode
 
@@ -47,23 +48,23 @@ const envReplacements = {
   ),
 }
 
-function parseCodeToAST(code: string): acorn.Program {
+function parseCodeToAST(code: string): Program {
   return acorn.parse(code, {
     ecmaVersion: 2020,
     sourceType: 'module',
-  })
+  }) as Program
 }
 
-function generateCodeFromAST(ast: acorn.Program) {
+function generateCodeFromAST(ast: Node) {
   return escodegen.generate(ast)
 }
 
-type PatternMatcher = (node: acorn.Program) => boolean
+type PatternMatcher = (node: Node) => boolean
 
 function removePattern(
-  ast: acorn.Program,
+  ast: Program,
   patternMatcher: PatternMatcher,
-  replacement: Record<string, unknown>
+  replacement: Node
 ) {
   let foundMatch = false
 
@@ -71,7 +72,22 @@ function removePattern(
     enter(node) {
       if (patternMatcher(node)) {
         foundMatch = true
-        return replacement
+
+        // We only want to replace the body of functions, and not the whole
+        // function!
+        if (node.type === 'FunctionDeclaration') {
+          if (replacement.type !== 'BlockStatement') {
+            throw new Error(
+              'Replacement for function body must be a BlockStatement'
+            )
+          }
+
+          // Replace function body, no need to return
+          node.body = replacement
+        } else {
+          // Replace entire node
+          return replacement
+        }
       }
     },
   })
@@ -89,33 +105,48 @@ function removePattern(
 // } catch (e) {
 //   console.error("vite-plugin-css-injected-by-js", e);
 // }
-function matchGlobalStyleInjection(node) {
+function matchGlobalStyleInjection(node: Node): boolean {
   return (
     node.type === 'TryStatement' &&
-    node.handler &&
-    node.handler.body &&
+    node.handler !== undefined &&
+    node.handler !== null &&
+    node.handler.body !== undefined &&
     node.handler.body.body.some(
       (n) =>
         n.type === 'ExpressionStatement' &&
         n.expression.type === 'CallExpression' &&
         n.expression.callee.type === 'MemberExpression' &&
+        n.expression.callee.object.type === 'Identifier' &&
         n.expression.callee.object.name === 'console' &&
+        n.expression.callee.property.type === 'Identifier' &&
         n.expression.callee.property.name === 'error' &&
         n.expression.arguments.length > 0 &&
+        n.expression.arguments[0].type === 'Literal' &&
         n.expression.arguments[0].value === 'vite-plugin-css-injected-by-js'
     )
   )
 }
 
-// Traverses the AST and look for the specific try-catch block that
-// looks something like this
-// function Ee() {
-//   if (document.getElementById("react-mathquill-styles") == null) {
-//     var ke = document.createElement("style");
-//     ke.setAttribute("id", "react-mathquill-styles"), ke.innerHTML = ve.Z[0][1], document.getElementsByTagName("head")[0].appendChild(ke);
+// Traverses the AST and matches the addStyle function body that looks something
+// like this (see function l to see why we only replace the function body and
+// not the whole function):
+
+// return (() => {
+//   o.r(a), o.d(a, {
+//       addStyles: () => l,
+//       EditableMathField: () => c,
+//       StaticMathField: () => u,
+//       default: () => d
+//   });
+//   var s = o(527);
+//   function l() {
+//       if (document.getElementById('react-mathquill-styles') == null) {
+//           var m = document.createElement('style');
+//           m.setAttribute('id', 'react-mathquill-styles'), m.innerHTML = s.Z[0][1], document.getElementsByTagName('head')[0].appendChild(m);
+//       }
 //   }
-// }
-function matchMathQuillStyleInjection(node) {
+// })
+function matchMathQuillStyleInjection(node: Node): boolean {
   return (
     node.type === 'FunctionDeclaration' &&
     node.body.body.some(
@@ -124,8 +155,12 @@ function matchMathQuillStyleInjection(node) {
         n.test.type === 'BinaryExpression' &&
         n.test.left.type === 'CallExpression' &&
         n.test.left.callee.type === 'MemberExpression' &&
+        n.test.left.callee.object.type === 'Identifier' &&
         n.test.left.callee.object.name === 'document' &&
+        n.test.left.callee.property.type === 'Identifier' &&
         n.test.left.callee.property.name === 'getElementById' &&
+        n.test.left.arguments.length > 0 &&
+        n.test.left.arguments[0].type === 'Literal' &&
         n.test.left.arguments[0].value === 'react-mathquill-styles' &&
         n.test.right.type === 'Literal' &&
         n.test.right.value === null
@@ -133,10 +168,7 @@ function matchMathQuillStyleInjection(node) {
   )
 }
 
-/**
- * TODO define type here
- */
-function getNoOpReplacement(identifier: string) {
+function getNoOpReplacement(identifier: string): Node {
   return {
     type: 'VariableDeclaration',
     declarations: [
@@ -151,6 +183,13 @@ function getNoOpReplacement(identifier: string) {
     ],
     kind: 'const',
   }
+}
+
+function getNoOpFunctionBodyReplacement(identifier: string): Node {
+  return {
+    type: 'BlockStatement',
+    body: [getNoOpReplacement(identifier)],
+  } as Node
 }
 
 // Custom Rollup plugin to remove global style injection from the @editor
@@ -178,7 +217,7 @@ function removeGlobalStylesPlugin(): Plugin {
           ;({ ast, foundMatch: mathQuillStyleMatch } = removePattern(
             ast,
             matchMathQuillStyleInjection,
-            getNoOpReplacement('MATH_QUILL')
+            getNoOpFunctionBodyReplacement('MATH_QUILL')
           ))
 
           // Turn AST back into code and write it into the chunk.

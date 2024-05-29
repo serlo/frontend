@@ -4850,6 +4850,8 @@ __metadata:
     "@rollup/plugin-replace": ^5.0.5
     "@serlo/editor": 0.7.3
     "@serlo/typescript-config": "workspace:*"
+    "@types/escodegen": ^0.0.10
+    "@types/estraverse": ^5.1.7
     "@types/react": ^18.0.25
     "@types/react-dom": ^18.0.8
     "@vitejs/plugin-react": ^4.2.1
@@ -5670,6 +5672,22 @@ __metadata:
   version: 1.0.4
   resolution: "@types/escape-html@npm:1.0.4"
   checksum: 61c1409df141268bdb2b40e511614193a9f2d3fed224788a14454ba9504787efa01bbd083826f163a6d33a97815b71e161ce1bdf6b77dd7b3569f3a885ad7722
+  languageName: node
+  linkType: hard
+
+"@types/escodegen@npm:^0.0.10":
+  version: 0.0.10
+  resolution: "@types/escodegen@npm:0.0.10"
+  checksum: 270fb286cc2a901963ecab0273435ca30dbd1cbd69c9562be9826342888a938e30fd8446af0cd1c0a679420f5923d1ef10696c6fbad2a1e249d5f04a5ee43729
+  languageName: node
+  linkType: hard
+
+"@types/estraverse@npm:^5.1.7":
+  version: 5.1.7
+  resolution: "@types/estraverse@npm:5.1.7"
+  dependencies:
+    "@types/estree": "*"
+  checksum: e598a73ec90c0b1989b55d55271742a7abfaa873ebe5041bfb1fbfe44fa5e64e5d759a60f4cb0a3f24b90c4ba98d87955aa836a8eea796ad4d880e4def92c23d
   languageName: node
   linkType: hard
 

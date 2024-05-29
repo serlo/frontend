@@ -44,6 +44,8 @@
     "@rollup/plugin-replace": "^5.0.5",
     "@serlo/editor": "0.7.3",
     "@serlo/typescript-config": "workspace:*",
+    "@types/escodegen": "^0.0.10",
+    "@types/estraverse": "^5.1.7",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
     "@vitejs/plugin-react": "^4.2.1",
