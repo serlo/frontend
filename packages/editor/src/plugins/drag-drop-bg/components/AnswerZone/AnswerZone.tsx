@@ -37,12 +37,13 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     getAnswerZoneText,
   } = props
 
-  const [, drag, dragPreview] = useDrag({
+  const [collected, drag, dragPreview] = useDrag({
     type: 'all',
     item: answerZone,
     canDrag: isDraggingEnabled && !isResizing,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
+      hideSourceOnDrag: true,
     }),
   })
 
@@ -104,6 +105,10 @@ export const AnswerZone = (props: AnswerZoneProps) => {
       />
     ) : null
   })
+
+  if (collected.isDragging) {
+    return <div ref={dragPreview} />
+  }
   return (
     <div
       ref={dragPreview}

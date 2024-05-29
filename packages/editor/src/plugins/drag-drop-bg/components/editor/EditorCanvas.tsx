@@ -25,7 +25,6 @@ export function EditorCanvas(props: DragDropBgProps) {
     currentAnswerZone,
     selectAnswerZone,
     drop,
-    createWrongAnswer,
     selectWrongAnswer,
     currentWrongAnswer,
     onChangeDimensions,
@@ -80,8 +79,6 @@ export function EditorCanvas(props: DragDropBgProps) {
     selectAnswerZone(id)
     setShowSettingsModal(true)
   }
-
-  const onClickAddWrongAnswer = () => createWrongAnswer()
 
   const onClickWrongAnswerPlus = (id: string) => {
     selectWrongAnswer(id)
@@ -149,12 +146,6 @@ export function EditorCanvas(props: DragDropBgProps) {
         })}
       </div>
       <div className="mt-4">
-        <button
-          className="rounded bg-blue-500 p-2 text-white"
-          onClick={onClickAddWrongAnswer}
-        >
-          + Add wrong answer
-        </button>
         <PossibleAnswers
           onClickEdit={onClickWrongAnswerPlus}
           canEdit
