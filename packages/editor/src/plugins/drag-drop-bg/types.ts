@@ -10,6 +10,7 @@ export interface PossibleAnswerType {
 
 export interface BasicDropZone {
   id: string
+  name: string
 
   position: {
     top: number

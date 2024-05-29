@@ -20,6 +20,7 @@ export const BlankDropZone: FC<BlankDropZoneProps> = memo(
     const [lastDroppedItem, setLastDroppedItem] =
       useState<PossibleAnswerType | null>(null)
 
+    const { name } = dropZone
     const { left, top } = dropZone.position ?? { left: 0, top: 0 }
     const { height, width } = dropZone.layout ?? { height: 0, width: 0 }
 
@@ -62,6 +63,11 @@ export const BlankDropZone: FC<BlankDropZoneProps> = memo(
         }}
         data-qa={`blank-drop-zone-${dropZone.id}`}
       >
+        {name && name.length > 0 && (
+          <div className="absolute left-0 top-0 bg-white p-1 text-xs">
+            {name}
+          </div>
+        )}
         {isImageAnswer && <AnswerImage url={lastDroppedItem.imageUrl} />}
         {isTextAnswer && <AnswerText text={lastDroppedItem.text} />}
       </div>
