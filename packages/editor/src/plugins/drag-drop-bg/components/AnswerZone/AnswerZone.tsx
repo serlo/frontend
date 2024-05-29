@@ -130,20 +130,32 @@ export const AnswerZone = (props: AnswerZoneProps) => {
       >
         <div
           ref={drag}
-          className="relative flex h-full w-full flex-row border-2 border-blue-500"
+          className="group relative flex h-full w-full flex-row border-2 border-blue-500"
         >
           {answerZone.answers.length === 0 && renderButtons()}
           {answers}
           {answerZone.answers.length > 0 && (
-            <button
-              className="absolute right-2 top-2 z-20 rounded bg-orange-100 p-1"
-              style={{ fontSize: '.5rem' }}
-              onClick={() =>
-                onClickPlusButton && onClickPlusButton(answerZone.id.get())
-              }
-            >
-              <FaIcon icon={faPlus} />
-            </button>
+            <>
+              <button
+                className="absolute right-2 top-1 z-20 rounded bg-orange-100 p-1"
+                style={{ fontSize: '.5rem' }}
+                onClick={() =>
+                  onClickPlusButton && onClickPlusButton(answerZone.id.get())
+                }
+              >
+                <FaIcon icon={faPlus} />
+              </button>
+              <button
+                className="absolute bottom-1 right-2 z-20 hidden rounded bg-orange-100 p-1 group-hover:block"
+                style={{ fontSize: '.5rem' }}
+                onClick={() =>
+                  onClickSettingsButton &&
+                  onClickSettingsButton(answerZone.id.get())
+                }
+              >
+                <FaIcon icon={faCog} />
+              </button>
+            </>
           )}
         </div>
       </ResizableBox>
