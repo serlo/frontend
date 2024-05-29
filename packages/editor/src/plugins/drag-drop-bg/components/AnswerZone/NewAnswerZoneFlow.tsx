@@ -7,17 +7,29 @@ import { useContext, useState } from 'react'
 import { AnswerZonesContext } from '../../context/context'
 import { FaIcon } from '@/components/fa-icon'
 
-export function NewAnswerZoneFlow({ zoneId }: { zoneId: string }) {
+interface NewAnswerZoneFlowProps {
+  zoneId: string
+}
+
+/**
+ * NewAnswerZoneFlow component
+ *
+ * This component handles the flow for creating a new answer zone.
+ * It guides the user through selecting either text or image and configuring the answer zone.
+ *
+ * @param {NewAnswerZoneFlowProps} props - The properties for the component.
+ * @returns {JSX.Element} - The rendered component.
+ */
+export function NewAnswerZoneFlow({
+  zoneId,
+}: NewAnswerZoneFlowProps): JSX.Element {
   const [currentStep, setCurrentStep] = useState(0)
-
-  const context = useContext(AnswerZonesContext)
-  const { zones } = context || {}
-
-  const newAnswerZone = zones?.find((z) => z.id.get() === zoneId)
   const [stepOneType, setStepOneType] = useState<'text' | 'image'>('image')
 
+  const { zones } = useContext(AnswerZonesContext) || {}
+  const newAnswerZone = zones?.find((z) => z.id.get() === zoneId)
+
   const goToStepOne = (newStepOneType: 'text' | 'image') => {
-    // eslint-disable-next-line no-console
     newAnswerZone?.answers.insert(newAnswerZone.answers.length, {
       text: { plugin: EditorPluginType.Text },
       image: { plugin: EditorPluginType.Image },
@@ -30,18 +42,14 @@ export function NewAnswerZoneFlow({ zoneId }: { zoneId: string }) {
     <div className="flex flex-row items-center justify-center">
       <button
         className="m-4 rounded bg-orange-100 px-4 py-2"
-        onClick={() => {
-          goToStepOne('text')
-        }}
+        onClick={() => goToStepOne('text')}
       >
         Text <FaIcon icon={faFont} />
       </button>
       <span>oder</span>
       <button
         className="m-4 rounded bg-orange-100 px-4 py-2"
-        onClick={() => {
-          goToStepOne('image')
-        }}
+        onClick={() => goToStepOne('image')}
       >
         Image <FaIcon icon={faImage} />
       </button>
@@ -55,8 +63,6 @@ export function NewAnswerZoneFlow({ zoneId }: { zoneId: string }) {
   )
 
   // TODO: Image settings after image upload
-
-  // TODO: Make add button work
   const stepOneImage = (
     <div>
       {newAnswerZone?.answers[
@@ -64,15 +70,13 @@ export function NewAnswerZoneFlow({ zoneId }: { zoneId: string }) {
       ]?.image.render()}
       <div>
         <button className="mt-2 flex rounded bg-orange-100 px-2 py-1">
-          {' '}
-          + Ablageobject hinzufügen{' '}
+          + Ablageobject hinzufügen
         </button>
       </div>
     </div>
   )
 
   const stepOne = stepOneType === 'text' ? stepOneText : stepOneImage
-
   const stepTwo = <div>Step Two</div>
 
   const steps = [stepZero, stepOne, stepTwo]
