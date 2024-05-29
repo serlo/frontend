@@ -18,6 +18,7 @@ export const ImageToolbar = (
   }
 ) => {
   const { id, showSettingsModal, setShowSettingsModal } = props
+  const disableFileUpload = props.config.disableFileUpload // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
   const editorStrings = useEditorStrings()
   const imageStrings = editorStrings.plugins.image
 
@@ -47,7 +48,7 @@ export const ImageToolbar = (
             </div>
           </ModalWithCloseButton>
 
-          <UploadButton {...props} />
+          {disableFileUpload ? null : <UploadButton {...props} />}
         </>
       }
       pluginControls={<PluginDefaultTools pluginId={id} />}

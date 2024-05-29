@@ -151,6 +151,7 @@ export class EditorWebComponent extends HTMLElement {
             <Suspense fallback={<div>Loading editor...</div>}>
               <LazySerloEditor
                 initialState={this.initialState}
+                _enableImagePlugin // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
                 onChange={({ changed, getDocument }) => {
                   if (changed) {
                     const newState = getDocument()
