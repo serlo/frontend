@@ -20,6 +20,7 @@ export function DragDropBgEditor({ state, id }: DragDropBgProps) {
     const currentLength = state.answerZones.length
     state.answerZones.insert(currentLength, {
       id: `${id}-answerZone-${currentLength}`,
+      name: '',
       position: { left: 20 * currentLength + 1, top: 20 },
       layout: {
         width: 200,

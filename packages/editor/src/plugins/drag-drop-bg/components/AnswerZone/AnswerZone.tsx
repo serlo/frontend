@@ -76,6 +76,8 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   const left = answerZone.position.left.get()
   const top = answerZone.position.top.get()
 
+  const name = answerZone.name.get()
+
   const answers = answerZone.answers.map((answer, index) => {
     const answerImageUrl = getAnswerZoneImageSrc(answer.image.get())
     const answerText = getAnswerZoneText(answer.text.get())
@@ -132,6 +134,11 @@ export const AnswerZone = (props: AnswerZoneProps) => {
           ref={drag}
           className="group relative flex h-full w-full flex-row border-2 border-blue-500"
         >
+          {name && name.length > 0 && (
+            <div className="absolute left-0 top-0 bg-white p-1 text-xs">
+              {name}
+            </div>
+          )}
           {answerZone.answers.length === 0 && renderButtons()}
           {answers}
           {answerZone.answers.length > 0 && (

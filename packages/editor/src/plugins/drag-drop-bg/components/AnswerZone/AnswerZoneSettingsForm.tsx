@@ -1,49 +1,28 @@
 import { faClone, faTrashCan } from '@fortawesome/free-regular-svg-icons'
-import { useEffect, useState } from 'react'
 
-import type { AnswerZoneSettings, answerZoneType } from '../../types.js'
+import type { answerZoneType } from '../../types.js'
 import { FaIcon } from '@/components/fa-icon'
 
 interface AnswerZoneSettingsFormProps {
   answerZone: answerZoneType
   onDuplicate: () => void
-  onChange: (id: string, settings: AnswerZoneSettings) => void
   onDelete: () => void
 }
 
 export function AnswerZoneSettingsForm({
   answerZone,
   onDuplicate,
-  onChange,
   onDelete,
 }: AnswerZoneSettingsFormProps) {
   const initialSettings = {
+    name: answerZone?.name.value,
     visible: answerZone?.layout.visible.value,
     height: answerZone?.layout.height.value,
     width: answerZone?.layout.width.value,
     lockedAspectRatio: true,
   }
 
-  const answerZoneId = answerZone?.id.get()
-  const [settings, setSettings] = useState(initialSettings)
-  const [isFirstRun, setIsFirstRun] = useState(true)
-
-  useEffect(() => {
-    if (isFirstRun) {
-      setIsFirstRun(false)
-      return
-    }
-    onChange(answerZoneId, settings)
-  }, [settings])
-
   if (!answerZone) return null
-
-  const handleInputChange = (key: string, value: number | boolean) => {
-    setSettings((prevSettings) => ({
-      ...prevSettings,
-      [key]: value,
-    }))
-  }
 
   return (
     <div className="flex flex-col gap-4 rounded-lg bg-white p-4 shadow-md">
@@ -55,11 +34,29 @@ export function AnswerZoneSettingsForm({
         Zone duplizieren
       </button>
 
+      <label className="mb-2 block">
+        Beschriftung (optional)
+        <div className="mt-2 flex gap-2">
+          <input
+            type="text"
+            defaultValue={initialSettings.name}
+            onChange={(e) => {
+              const newName = e.target.value
+              answerZone.name.set(newName)
+            }}
+            className="w-full rounded border border-gray-300 bg-orange-100 p-2"
+          />
+        </div>
+      </label>
+
       <label className="mb-2 flex items-center">
         Visible
         <input
-          checked={settings.visible}
-          onClick={() => handleInputChange('visible', !settings.visible)}
+          defaultChecked={initialSettings.visible}
+          onChange={(e) => {
+            const newVisible = e.target.value
+            answerZone.layout.visible.set(Boolean(newVisible))
+          }}
           type="checkbox"
           className="ml-auto rounded border border-gray-300 bg-orange-100"
         />
@@ -70,19 +67,21 @@ export function AnswerZoneSettingsForm({
         <div className="mt-2 flex gap-2">
           <input
             type="number"
-            value={settings.height}
-            onChange={(e) =>
-              handleInputChange('height', parseInt(e.target.value))
-            }
+            defaultValue={initialSettings.height}
+            onChange={(e) => {
+              const newHeight = parseInt(e.target.value)
+              answerZone.layout.height.set(newHeight)
+            }}
             className="w-full rounded border border-gray-300 bg-orange-100 p-2"
           />
           <span className="self-center">x</span>
           <input
             type="number"
-            value={settings.width}
-            onChange={(e) =>
-              handleInputChange('width', parseInt(e.target.value))
-            }
+            defaultValue={initialSettings.width}
+            onChange={(e) => {
+              const newWidth = parseInt(e.target.value)
+              answerZone.layout.width.set(newWidth)
+            }}
             className="w-full rounded border border-gray-300 bg-orange-100 p-2"
           />
         </div>

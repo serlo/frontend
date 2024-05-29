@@ -24,7 +24,6 @@ export function EditorCanvas(props: DragDropBgProps) {
   const {
     currentAnswerZone,
     selectAnswerZone,
-    onChangeAnswerZone,
     drop,
     createWrongAnswer,
     selectWrongAnswer,
@@ -110,9 +109,14 @@ export function EditorCanvas(props: DragDropBgProps) {
         {showSettingsModal && (
           <AnswerZoneSettingsForm
             answerZone={currentAnswerZone}
-            onChange={onChangeAnswerZone}
             onDuplicate={() => {}}
-            onDelete={() => {}}
+            onDelete={() => {
+              setShowSettingsModal(false)
+              const index = answerZones.findIndex(
+                (a) => a.id.get() === currentAnswerZone.id.get()
+              )
+              answerZones.remove(index)
+            }}
           />
         )}
         {showCreateDropZoneModal && (
