@@ -27,6 +27,7 @@ export interface SerloEditorProps {
   initialState?: EditorProps['initialState']
   onChange?: EditorProps['onChange']
   language?: SupportedLanguage
+  _enableImagePlugin?: boolean // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
 }
 
 /** For exporting the editor */
@@ -45,7 +46,7 @@ export function SerloEditor(props: SerloEditorProps) {
   const basicPlugins = createBasicPlugins(pluginsConfig)
   let allPlugins = [...basicPlugins, ...customPlugins]
   // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
-  if (props.pluginsConfig?.general?._enableImagePlugin) {
+  if (props._enableImagePlugin) {
     const imagePluginNoFileUpload = createImagePlugin({
       disableFileUpload: true,
       upload: (_) => {
