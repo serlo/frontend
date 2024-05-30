@@ -42,6 +42,7 @@ const dragDropBgState = object({
   canvasShape: string(''),
   backgroundType: string(''),
   backgroundImage: child({ plugin: EditorPluginType.Image }),
+  visibleDropZones: boolean(true),
   extraDraggableAnswers: list(answerZoneState, 0),
 })
 

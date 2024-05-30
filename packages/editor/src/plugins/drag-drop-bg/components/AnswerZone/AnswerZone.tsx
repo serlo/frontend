@@ -1,5 +1,5 @@
 import { faCog, faPlus } from '@fortawesome/free-solid-svg-icons'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { useDrag } from 'react-dnd'
 import { ResizableBox, ResizableBoxProps } from 'react-resizable'
 
@@ -8,7 +8,6 @@ import { ResizableBox, ResizableBoxProps } from 'react-resizable'
 import 'react-resizable/css/styles.css'
 
 import { AnswerContent } from './AnswerContent'
-import { AnswerZonesContext } from '../../context/context'
 import type { answerZoneType } from '../../types'
 import { FaIcon } from '@/components/fa-icon'
 
@@ -17,8 +16,6 @@ import { FaIcon } from '@/components/fa-icon'
  */
 export interface AnswerZoneProps {
   answerZone: answerZoneType
-  hideSourceOnDrag?: boolean
-  isDraggingEnabled?: boolean
   onClickSettingsButton?: (id: string) => void
   onClickPlusButton?: (id: string) => void
   getAnswerZoneImageSrc: (id: string) => string
@@ -38,7 +35,6 @@ export const AnswerZone = (props: AnswerZoneProps) => {
 
   const {
     answerZone,
-    isDraggingEnabled,
     onClickSettingsButton,
     onClickPlusButton,
     getAnswerZoneImageSrc,
@@ -48,20 +44,18 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   const [collected, drag, dragPreview] = useDrag({
     type: 'all',
     item: answerZone,
-    canDrag: isDraggingEnabled && !isResizing,
+    canDrag: !isResizing,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
       hideSourceOnDrag: true,
     }),
   })
 
-  const context = useContext(AnswerZonesContext)
-  const { onChangeDimensions } = context || {}
-
   const handleResize: ResizableBoxProps['onResize'] = (_, { size }) => {
     setIsResizing(true)
     setDimensions(size)
-    onChangeDimensions && onChangeDimensions(answerZone.id.get(), size)
+    answerZone.layout.width.set(size.width)
+    answerZone.layout.height.set(size.height)
   }
 
   const handleResizeStop: ResizableBoxProps['onResizeStop'] = () => {

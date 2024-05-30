@@ -36,7 +36,6 @@ The `AnswerZone` component represents an individual answer zone that can display
 - `onClickPlusButton`: Function to handle the click event on the plus button.
 - `getAnswerZoneImageSrc`: Function to get the image source URL for an answer zone.
 - `getAnswerZoneText`: Function to get the text content for an answer zone.
-- `onChangeDimensions`: Function to handle dimension changes.
 
 ### AnswerZoneSettingsForm
 

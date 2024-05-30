@@ -23,14 +23,10 @@ export const AnswerContent = ({
       }
     />
   ) : (
-    <div
-      className="h-100 w-100 flex items-center justify-center"
-      style={{
-        height: '100%',
-        width: '100%',
-      }}
-    >
-      <span>{text}</span>
+    <div className="h-100 w-100 flex items-center justify-center">
+      <span className="rounded-full border border-brand bg-brand-50 px-2">
+        <span>{text}</span>
+      </span>
     </div>
   )
 }

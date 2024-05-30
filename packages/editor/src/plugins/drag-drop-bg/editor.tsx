@@ -1,7 +1,6 @@
 import { selectDocument, useAppSelector } from '@editor/store'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
-import { faImage } from '@fortawesome/free-solid-svg-icons'
-import { useCallback } from 'react'
+import { faImage, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 import type { DragDropBgProps } from '.'
 import { EditorCanvas } from './components/editor/EditorCanvas'
@@ -24,57 +23,17 @@ import { FaIcon } from '@/components/fa-icon'
  */
 export function DragDropBgEditor(props: DragDropBgProps) {
   const { state, id } = props
-  const { backgroundImage, backgroundType, canvasShape } = state
+  const { backgroundImage, backgroundType, canvasShape, visibleDropZones } =
+    state
   const bgImagePluginState = useAppSelector((state) =>
     selectDocument(state, backgroundImage.get())
   ) as EditorImageDocument
-  const backgroundImageUrlFromPlugin =
-    bgImagePluginState?.state?.src || ('' as string)
+  const backgroundImageUrlFromPlugin = bgImagePluginState?.state?.src || ''
 
-  const {
-    currentAnswerZone,
-    selectAnswerZone,
-    moveAnswerZone,
-    getCanvasDimensions,
-  } = useAnswerZones(props)
+  const { currentAnswerZone, selectAnswerZone, insertAnswerZone } =
+    useAnswerZones(props)
 
-  /**
-   * Handler for adding a new answer zone.
-   */
-  const onClickAddAnswerZone = () => {
-    const currentLength = state.answerZones.length
-    state.answerZones.insert(currentLength, {
-      id: `${id}-answerZone-${currentLength}`,
-      name: '',
-      position: { left: 20 * currentLength + 1, top: 20 },
-      layout: {
-        width: 200,
-        height: 70,
-        visible: true,
-        lockedAspectRatio: true,
-      },
-      answers: [],
-    })
-  }
-
-  /**
-   * Handler for changing the dimensions of an answer zone.
-   */
-  const onChangeDimensions = useCallback(
-    (id: string, dimensions: { width: number; height: number }) => {
-      const answerZone = state.answerZones.find((zone) => zone.id.get() === id)
-      if (!answerZone) return
-
-      answerZone.layout.width.set(dimensions.width)
-      answerZone.layout.height.set(dimensions.height)
-    },
-    [state.answerZones]
-  )
-
-  /**
-   * Renders the UI for selecting between a blank or image background.
-   */
-  const blankVsImage = (
+  const renderBlankVsImage = () => (
     <>
       <DragDropBgToolbar id={id} />
       <div className="flex flex-row items-center justify-center">
@@ -101,9 +60,18 @@ export function DragDropBgEditor(props: DragDropBgProps) {
     </>
   )
 
-  /**
-   * Renders the UI for selecting the default shape of the canvas.
-   */
+  const renderShapeSelection = () => (
+    <div>
+      <DragDropBgToolbar id={id} />
+      <h1 className="flex flex-row items-center justify-center pt-5">
+        Default shape:
+      </h1>
+      <div className="flex flex-row items-center justify-center">
+        {shapeOptions.map(renderButton)}
+      </div>
+    </div>
+  )
+
   const shapeOptions = ['square', 'portrait', 'landscape']
 
   const renderButton = (shape: string) => (
@@ -116,26 +84,13 @@ export function DragDropBgEditor(props: DragDropBgProps) {
     </button>
   )
 
-  const shapeSelection = (
-    <div>
-      <DragDropBgToolbar id={id} />
-      <h1 className="flex flex-row items-center justify-center pt-5">
-        Default shape:
-      </h1>
-      <div className="flex flex-row items-center justify-center">
-        {shapeOptions.map(renderButton)}
-      </div>
-    </div>
-  )
-
   const isBlankBg = backgroundType.get() === 'text'
   const isImageBg = backgroundType.get() === 'image'
-
   const isBgTypeSelected = isBlankBg || isImageBg
   const isShapeSelected = canvasShape.get()
 
-  if (!isBgTypeSelected) return blankVsImage
-  if (!isShapeSelected) return shapeSelection
+  if (!isBgTypeSelected) return renderBlankVsImage()
+  if (!isShapeSelected) return renderShapeSelection()
 
   const hasBackgroundImgUrl = !!backgroundImageUrlFromPlugin
   const isBackgroundDefined = isBlankBg || (isImageBg && hasBackgroundImgUrl)
@@ -144,31 +99,37 @@ export function DragDropBgEditor(props: DragDropBgProps) {
     return backgroundImage.render({ config: {} })
   }
 
-  const { canvasHeight, canvasWidth } = getCanvasDimensions()
-
   return (
-    <>
-      <AnswerZonesContext.Provider
-        value={{
-          zones: state.answerZones,
-          onChangeDimensions: onChangeDimensions,
-          canvasShape: state.canvasShape.get() as
-            | 'square'
-            | 'landscape'
-            | 'portrait',
-          currentAnswerZone: currentAnswerZone,
-          selectAnswerZone: selectAnswerZone,
-          moveAnswerZone: moveAnswerZone,
-          canvasHeight: canvasHeight,
-          canvasWidth: canvasWidth,
-        }}
+    <AnswerZonesContext.Provider
+      value={{
+        zones: state.answerZones,
+        canvasShape: state.canvasShape.get() as
+          | 'square'
+          | 'landscape'
+          | 'portrait',
+        currentAnswerZone: currentAnswerZone,
+        selectAnswerZone: selectAnswerZone,
+      }}
+    >
+      <DragDropBgToolbar
+        onClickAddAnswerZone={insertAnswerZone}
+        id={id}
+        showSettingsButton={isImageBg}
       >
-        <DragDropBgToolbar
-          onClickAddAnswerZone={onClickAddAnswerZone}
-          id={id}
-        />
-        <EditorCanvas state={state} config={{}} id={id} focused={false} />
-      </AnswerZonesContext.Provider>
-    </>
+        <div className="h-100 border-1 flex flex-row items-center justify-center border-black">
+          <button
+            onClick={() => {
+              visibleDropZones.set(!visibleDropZones.get())
+            }}
+            className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+            data-qa="plugin-multimedia-visibility-button"
+          >
+            {/* {editorStrings.edtrIo.visibility} */}
+            <FaIcon icon={faMagnifyingGlass} /> Visibility
+          </button>
+        </div>
+      </DragDropBgToolbar>
+      <EditorCanvas state={state} config={{}} id={id} focused={false} />
+    </AnswerZonesContext.Provider>
   )
 }

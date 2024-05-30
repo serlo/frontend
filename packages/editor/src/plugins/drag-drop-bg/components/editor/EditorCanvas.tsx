@@ -14,6 +14,34 @@ import { PossibleAnswers } from '../shared/PossibleAnswers'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 /**
+ * Get the image source URL for an answer zone.
+ * @param {string} answerZoneImageId - The ID of the answer zone image.
+ * @returns {string} The image source URL.
+ */
+const getAnswerZoneImageSrc = (answerZoneImageId: string) => {
+  const answerImageDocument = selectStaticDocument(
+    store.getState(),
+    answerZoneImageId
+  )
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return answerImageDocument?.state?.src || ''
+}
+
+/**
+ * Get the text content for an answer zone.
+ * @param {string} answerZoneTextId - The ID of the answer zone text.
+ * @returns {string} The text content.
+ */
+const getAnswerZoneText = (answerZoneTextId: string) => {
+  const answerTextDocument = selectStaticDocument(
+    store.getState(),
+    answerZoneTextId
+  )
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return answerTextDocument?.state[0]?.children[0].text || ''
+}
+
+/**
  * EditorCanvas component
  *
  * This component represents the canvas area where answer zones and possible answers are managed and displayed.
@@ -21,20 +49,30 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
  *
  * @param {DragDropBgProps} props - The properties for the EditorCanvas component.
  */
+
+const getCanvasDimensions = (shape: string) => {
+  switch (shape) {
+    case 'square':
+      return { canvasHeight: '786px', canvasWidth: '786px' }
+    case 'landscape':
+      return { canvasHeight: '786px', canvasWidth: '1024px' }
+    case 'portrait':
+      return { canvasHeight: '500px', canvasWidth: '786px' }
+    default:
+      return { canvasHeight: '1px', canvasWidth: '1px' }
+  }
+}
+
 export function EditorCanvas(props: DragDropBgProps) {
   const { state } = props
   const { answerZones, backgroundImage, extraDraggableAnswers } = state
 
   const context = useContext(AnswerZonesContext)
 
-  const {
-    zones,
-    selectAnswerZone,
-    moveAnswerZone,
-    currentAnswerZone,
-    canvasWidth,
-    canvasHeight,
-  } = context || {}
+  const { zones, selectAnswerZone, currentAnswerZone, canvasShape } =
+    context || {}
+
+  const { canvasHeight, canvasWidth } = getCanvasDimensions(canvasShape)
 
   const [, drop] = useDrop(
     () => ({
@@ -44,10 +82,11 @@ export function EditorCanvas(props: DragDropBgProps) {
         const delta = change || ({ x: 0, y: 0 } as XYCoord)
         const left = Math.round(answerZone.position.left.get() + delta.x)
         const top = Math.round(answerZone.position.top.get() + delta.y)
-        moveAnswerZone(answerZone, left, top)
+        answerZone.position.left.set(left)
+        answerZone.position.top.set(top)
       },
     }),
-    [answerZones]
+    [zones]
   )
 
   const bgImgId = backgroundImage.get()
@@ -56,34 +95,6 @@ export function EditorCanvas(props: DragDropBgProps) {
     bgImgId
   )
   const backgroundImageUrl = backgroundImageDocument?.state?.src || ''
-
-  /**
-   * Get the image source URL for an answer zone.
-   * @param {string} answerZoneImageId - The ID of the answer zone image.
-   * @returns {string} The image source URL.
-   */
-  const getAnswerZoneImageSrc = (answerZoneImageId: string) => {
-    const answerImageDocument = selectStaticDocument(
-      store.getState(),
-      answerZoneImageId
-    )
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return answerImageDocument?.state?.src || ''
-  }
-
-  /**
-   * Get the text content for an answer zone.
-   * @param {string} answerZoneTextId - The ID of the answer zone text.
-   * @returns {string} The text content.
-   */
-  const getAnswerZoneText = (answerZoneTextId: string) => {
-    const answerTextDocument = selectStaticDocument(
-      store.getState(),
-      answerZoneTextId
-    )
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return answerTextDocument?.state[0]?.children[0].text || ''
-  }
 
   /**
    * Convert an answer zone to possible answer format.
@@ -101,7 +112,7 @@ export function EditorCanvas(props: DragDropBgProps) {
     return answers
   }
 
-  const correctAnswers = answerZones.map(zoneToPossibleAnswer).flat()
+  const correctAnswers = zones.map(zoneToPossibleAnswer).flat()
   const wrongAnswers = extraDraggableAnswers.map(zoneToPossibleAnswer).flat()
   const possibleAnswers = [...correctAnswers, ...wrongAnswers] // TODO: shuffle answers
 
@@ -109,15 +120,6 @@ export function EditorCanvas(props: DragDropBgProps) {
   const [showCreateDropZoneModal, setShowCreateDropZoneModal] = useState(false)
   const [showCreateWrongAnswerModal, setShowCreateWrongAnswerModal] =
     useState(false)
-
-  /**
-   * Handle the click event for the settings button.
-   * @param {string} id - The ID of the answer zone.
-   */
-  const onClickSettingsButton = (id: string) => {
-    selectAnswerZone(id)
-    setShowSettingsModal(true)
-  }
 
   return (
     <>
@@ -132,7 +134,7 @@ export function EditorCanvas(props: DragDropBgProps) {
           setShowCreateDropZoneModal(false)
           setShowCreateWrongAnswerModal(false)
         }}
-        className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+        className=" max-w-md translate-y-0 sm:top-1/4"
       >
         <h3 className="serlo-h3 mt-4">
           {showSettingsModal ? 'Settings' : 'Neues Ablageobjekt'}
@@ -156,14 +158,17 @@ export function EditorCanvas(props: DragDropBgProps) {
       </ModalWithCloseButton>
       <div
         ref={drop}
-        className={`border-grey relative h-[${canvasHeight}] w-[${canvasWidth}] overflow-hidden border bg-center bg-no-repeat`}
+        className={`mx-auto border-almost-black h-[${canvasHeight}] w-[${canvasWidth}] overflow-hidden rounded-lg border bg-center bg-no-repeat`}
         style={{ backgroundImage: `url(${backgroundImageUrl})` }}
       >
         {zones?.map((answerZone, index) => {
           return (
             <AnswerZone
               key={index}
-              onClickSettingsButton={onClickSettingsButton}
+              onClickSettingsButton={() => {
+                selectAnswerZone(answerZone.id.get())
+                setShowSettingsModal(true)
+              }}
               onClickPlusButton={() => {
                 selectAnswerZone(answerZone.id.get())
                 setShowCreateDropZoneModal(true)

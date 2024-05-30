@@ -47,18 +47,10 @@ export function AnswerZoneSettingsForm({
     }
 
   return (
-    <div className="flex flex-col gap-4 rounded-lg bg-white p-4 shadow-md">
-      <button
-        onClick={onDuplicate}
-        className="flex cursor-pointer items-center rounded border-none bg-orange-100 p-2"
-      >
-        <FaIcon icon={faClone} className="mr-2" />
-        Zone duplizieren
-      </button>
-
-      <label className="mb-2 block">
+    <div className="mx-auto flex w-full max-w-sm flex-col items-center justify-center rounded-lg bg-white p-2">
+      <label className="mb-4 w-full">
         Beschriftung (optional)
-        <div className="mt-2 flex gap-2">
+        <div className="mt-2 flex justify-center">
           <input
             type="text"
             defaultValue={initialSettings.name}
@@ -68,26 +60,16 @@ export function AnswerZoneSettingsForm({
         </div>
       </label>
 
-      <label className="mb-2 flex items-center">
-        Sichtbar
-        <input
-          type="checkbox"
-          defaultChecked={initialSettings.visible}
-          onChange={handleInputChange(answerZone.layout.visible.set)}
-          className="ml-auto rounded border border-gray-300 bg-orange-100"
-        />
-      </label>
-
-      <label className="mb-2 block">
+      <label className="mb-4 w-full">
         Größe der Zone manuell festlegen
-        <div className="mt-2 flex gap-2">
+        <div className="mt-2 flex  gap-2">
           <input
             type="number"
             defaultValue={initialSettings.height}
             onChange={handleInputChange((value: string) =>
               answerZone.layout.height.set(parseInt(value))
             )}
-            className="w-full rounded border border-gray-300 bg-orange-100 p-2"
+            className="w-16 rounded border border-gray-300 bg-orange-100 p-2 text-center"
           />
           <span className="self-center">x</span>
           <input
@@ -96,26 +78,36 @@ export function AnswerZoneSettingsForm({
             onChange={handleInputChange((value: string) =>
               answerZone.layout.width.set(parseInt(value))
             )}
-            className="w-full rounded border border-gray-300 bg-orange-100 p-2"
+            className="w-16 rounded border border-gray-300 bg-orange-100 p-2 text-center"
           />
         </div>
       </label>
 
-      <label className="mb-2 flex items-center">
+      <label className="items-left mb-4 flex w-full ">
         Automatisches Ausrichten
         <input
           type="checkbox"
-          className="ml-auto rounded border border-gray-300 bg-orange-100"
+          className="ml-2 rounded border border-gray-300 bg-orange-100"
         />
       </label>
 
-      <button
-        onClick={onDelete}
-        className="flex cursor-pointer items-center rounded border-none bg-orange-100 p-2"
-      >
-        <FaIcon icon={faTrashCan} className="mr-2" />
-        Zone löschen
-      </button>
+      <div className="flex w-full gap-4">
+        <button
+          onClick={onDuplicate}
+          className="flex flex-1 cursor-pointer items-center justify-center rounded border-none bg-orange-100 p-2"
+        >
+          <FaIcon icon={faClone} className="mr-2" />
+          Zone duplizieren
+        </button>
+
+        <button
+          onClick={onDelete}
+          className="flex flex-1 cursor-pointer items-center justify-center rounded border-none bg-orange-100 p-2"
+        >
+          <FaIcon icon={faTrashCan} className="mr-2" />
+          Zone löschen
+        </button>
+      </div>
     </div>
   )
 }

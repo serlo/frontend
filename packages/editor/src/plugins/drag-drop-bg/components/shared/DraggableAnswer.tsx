@@ -1,4 +1,4 @@
-import { useEmptyPreview } from '@editor/core/helpers/use-empty-preview'
+// import { useEmptyPreview } from '@editor/core/helpers/use-empty-preview'
 import { useMemo } from 'react'
 import { useDrag } from 'react-dnd'
 
@@ -33,19 +33,27 @@ export function DraggableAnswer({
     [draggableId, imageUrl, text]
   )
 
-  const [, dragRef, preview] = useDrag({
+  const [collected, dragRef, dragPreview] = useDrag({
     type: 'all',
     item: dragItem,
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+      hideSourceOnDrag: true,
+    }),
   })
-  useEmptyPreview(preview)
-
+  /**
+   * Hide source element while dragging
+   */
+  if (collected.isDragging) {
+    return <div ref={dragPreview} />
+  }
   return (
     <span
       className={cn(
-        'cursor-grab bg-brand-50',
+        'flex cursor-grab items-center justify-center bg-brand-50',
         isAnswerCorrect ? 'border-green-500' : '',
         isAnswerCorrect === false ? 'border-red-500' : '',
-        text || imageUrl ? 'rounded border border-brand' : 'p-1'
+        imageUrl ? 'rounded border border-brand' : 'p-1'
       )}
       ref={dragRef}
     >

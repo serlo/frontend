@@ -10,7 +10,12 @@ import { PossibleAnswers } from './components/shared/PossibleAnswers'
 import { BlankDropZone } from './components/static/BlankDropZone'
 
 export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
-  const { answerZones, backgroundImage, extraDraggableAnswers } = state
+  const {
+    answerZones,
+    backgroundImage,
+    extraDraggableAnswers,
+    visibleDropZones,
+  } = state
 
   const bgImagePluginState = backgroundImage as EditorImageDocument
   const backgroundImageUrlFromPlugin = (bgImagePluginState?.state?.src ||
@@ -67,7 +72,7 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
   return (
     <DndWrapper>
       <div
-        className="relative h-[786px] w-[786px] overflow-hidden border border-black bg-center bg-no-repeat"
+        className="mx-auto h-[786px] w-[786px] overflow-hidden rounded-lg border border-almost-black bg-center bg-no-repeat"
         style={{
           backgroundImage: `url(${backgroundImageUrlFromPlugin})`,
         }}
@@ -79,6 +84,7 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
           return (
             <BlankDropZone
               key={id}
+              isVisible={visibleDropZones}
               accept={['answer']}
               dropZone={dropZone}
               onDropAnswer={onDropAnswer}

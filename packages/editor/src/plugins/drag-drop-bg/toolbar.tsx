@@ -11,21 +11,23 @@ interface DragDropBgToolbarProps {
   id: string
   children?: ReactNode
   onClickAddAnswerZone?: () => void
+  showSettingsButton?: boolean
 }
+
+// Buttons:
+// Blank canvas: preview button
+// Image canvas: preview button, settings button
 
 export const DragDropBgToolbar = ({
   id,
-  children,
   onClickAddAnswerZone,
+  showSettingsButton = false,
+  children,
 }: DragDropBgToolbarProps) => {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const editorStrings = useEditorStrings()
 
-  const pluginControls = (
-    <>
-      <PluginDefaultTools pluginId={id} />
-    </>
-  )
+  const pluginControls = <PluginDefaultTools pluginId={id} />
 
   const addButton = onClickAddAnswerZone ? (
     <button
@@ -37,19 +39,22 @@ export const DragDropBgToolbar = ({
   ) : (
     <></>
   )
+
   return (
     <PluginToolbar
       pluginType={EditorPluginType.DragDropBg}
       contentControls={addButton}
       pluginSettings={
         <>
-          <button
-            onClick={() => setShowSettingsModal(true)}
-            className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
-            data-qa="plugin-multimedia-settings-button"
-          >
-            {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
-          </button>
+          {showSettingsButton && (
+            <button
+              onClick={() => setShowSettingsModal(true)}
+              className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+              data-qa="plugin-multimedia-settings-button"
+            >
+              {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
+            </button>
+          )}
           <ModalWithCloseButton
             isOpen={showSettingsModal}
             onCloseClick={() => setShowSettingsModal(false)}
@@ -60,7 +65,7 @@ export const DragDropBgToolbar = ({
               {editorStrings.plugins.dragDropBg.title}
             </h3>
           </ModalWithCloseButton>
-          <div className="mx-side mb-3">{children}</div>
+          <div className="mx-side">{children}</div>
         </>
       }
       pluginControls={pluginControls}

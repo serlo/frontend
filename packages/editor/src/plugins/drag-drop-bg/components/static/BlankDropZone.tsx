@@ -11,12 +11,14 @@ interface BlankDropZoneProps {
   dropZone: BlankDropZoneSpec
   onDropAnswer: (answerId: string, dropzoneId: string) => void
   isCorrect?: boolean | null
+  isVisible?: boolean
 }
 
 export const BlankDropZone = memo(function BlankDropZone({
   dropZone,
   onDropAnswer,
   isCorrect,
+  isVisible,
 }: BlankDropZoneProps) {
   const [lastDroppedItem, setLastDroppedItem] =
     useState<PossibleAnswerType | null>(null)
@@ -39,21 +41,21 @@ export const BlankDropZone = memo(function BlankDropZone({
 
   const isActive = isOver && canDrop
   const backgroundColor = isActive
-    ? 'bg-gray-700'
+    ? 'bg-brand-400'
     : canDrop
-      ? 'bg-gray-300'
+      ? 'bg-brand-200'
       : 'bg-white'
   const borderColor =
     isCorrect === true
       ? 'border-green-500'
       : isCorrect === false
         ? 'border-red-500'
-        : 'border-black'
+        : 'border-brand-500'
 
   return (
     <div
       ref={drop}
-      className={`absolute cursor-move rounded border-2 p-1 ${backgroundColor} ${borderColor}`}
+      className={` absolute cursor-move rounded border-${isVisible ? '2' : '0'} p-1 ${isVisible ? backgroundColor : ''} ${isVisible ? borderColor : ''}`}
       style={{
         left,
         top,
@@ -62,7 +64,7 @@ export const BlankDropZone = memo(function BlankDropZone({
       }}
       data-qa={`blank-drop-zone-${dropZone.id}`}
     >
-      {name && name.length > 0 && (
+      {isVisible && name && name.length > 0 && (
         <div className="absolute left-0 top-0 bg-white p-1 text-xs">{name}</div>
       )}
       <AnswerContent
