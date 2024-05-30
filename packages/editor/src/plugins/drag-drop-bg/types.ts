@@ -1,6 +1,6 @@
 import { StateTypeReturnType } from '@editor/plugin'
 
-import type { answerZoneState } from '.'
+import type { answerData, answerZoneState } from '.'
 
 export interface PossibleAnswerType {
   id: string
@@ -43,6 +43,9 @@ export interface AnswerZoneSettings {
   width: number
   lockedAspectRatio: boolean
 }
+
+export interface answerDataType
+  extends StateTypeReturnType<typeof answerData> {}
 
 export interface answerZoneType
   extends StateTypeReturnType<typeof answerZoneState> {}

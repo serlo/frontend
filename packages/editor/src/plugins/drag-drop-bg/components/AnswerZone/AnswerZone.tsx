@@ -1,5 +1,5 @@
 import { faCog, faPlus } from '@fortawesome/free-solid-svg-icons'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useDrag } from 'react-dnd'
 import { ResizableBox, ResizableBoxProps } from 'react-resizable'
 
@@ -8,6 +8,7 @@ import { ResizableBox, ResizableBoxProps } from 'react-resizable'
 import 'react-resizable/css/styles.css'
 
 import { AnswerContent } from './AnswerContent'
+import { AnswerZonesContext } from '../../context/context'
 import type { answerZoneType } from '../../types'
 import { FaIcon } from '@/components/fa-icon'
 
@@ -22,10 +23,6 @@ export interface AnswerZoneProps {
   onClickPlusButton?: (id: string) => void
   getAnswerZoneImageSrc: (id: string) => string
   getAnswerZoneText: (text: string) => string
-  onChangeDimensions: (
-    id: string,
-    dimensions: { width: number; height: number }
-  ) => void
 }
 
 /**
@@ -45,7 +42,6 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     onClickSettingsButton,
     onClickPlusButton,
     getAnswerZoneImageSrc,
-    onChangeDimensions,
     getAnswerZoneText,
   } = props
 
@@ -59,10 +55,13 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     }),
   })
 
+  const context = useContext(AnswerZonesContext)
+  const { onChangeDimensions } = context || {}
+
   const handleResize: ResizableBoxProps['onResize'] = (_, { size }) => {
     setIsResizing(true)
     setDimensions(size)
-    onChangeDimensions(answerZone.id.get(), size)
+    onChangeDimensions && onChangeDimensions(answerZone.id.get(), size)
   }
 
   const handleResizeStop: ResizableBoxProps['onResizeStop'] = () => {

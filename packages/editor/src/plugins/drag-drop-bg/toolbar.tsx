@@ -10,7 +10,7 @@ import { ReactNode, useState } from 'react'
 interface DragDropBgToolbarProps {
   id: string
   children?: ReactNode
-  onClickAddAnswerZone: () => void
+  onClickAddAnswerZone?: () => void
 }
 
 export const DragDropBgToolbar = ({
@@ -27,13 +27,15 @@ export const DragDropBgToolbar = ({
     </>
   )
 
-  const addButton = (
+  const addButton = onClickAddAnswerZone ? (
     <button
       onClick={onClickAddAnswerZone}
       className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
     >
       Ablagezone
     </button>
+  ) : (
+    <></>
   )
   return (
     <PluginToolbar

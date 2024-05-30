@@ -2,10 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { selectStaticDocument, store } from '@editor/store'
 import { useContext, useState } from 'react'
+import { XYCoord, useDrop } from 'react-dnd'
 
 import type { DragDropBgProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
-import { useAnswerZones } from '../../hooks/useAnswerZones'
 import { answerZoneType, wrongAnswerType } from '../../types'
 import { AnswerZone } from '../AnswerZone/AnswerZone'
 import { AnswerZoneSettingsForm } from '../AnswerZone/AnswerZoneSettingsForm'
@@ -27,9 +27,28 @@ export function EditorCanvas(props: DragDropBgProps) {
 
   const context = useContext(AnswerZonesContext)
 
-  const { zones } = context || {}
-  const { currentAnswerZone, selectAnswerZone, drop, onChangeDimensions } =
-    useAnswerZones(props)
+  const {
+    zones,
+    selectAnswerZone,
+    moveAnswerZone,
+    currentAnswerZone,
+    canvasWidth,
+    canvasHeight,
+  } = context || {}
+
+  const [, drop] = useDrop(
+    () => ({
+      accept: 'all',
+      drop(answerZone: answerZoneType, monitor) {
+        const change = monitor.getDifferenceFromInitialOffset()
+        const delta = change || ({ x: 0, y: 0 } as XYCoord)
+        const left = Math.round(answerZone.position.left.get() + delta.x)
+        const top = Math.round(answerZone.position.top.get() + delta.y)
+        moveAnswerZone(answerZone, left, top)
+      },
+    }),
+    [answerZones]
+  )
 
   const bgImgId = backgroundImage.get()
   const backgroundImageDocument = selectStaticDocument(
@@ -137,7 +156,7 @@ export function EditorCanvas(props: DragDropBgProps) {
       </ModalWithCloseButton>
       <div
         ref={drop}
-        className="border-grey relative h-[786px] w-[786px] overflow-hidden border bg-center bg-no-repeat"
+        className={`border-grey relative h-[${canvasHeight}] w-[${canvasWidth}] overflow-hidden border bg-center bg-no-repeat`}
         style={{ backgroundImage: `url(${backgroundImageUrl})` }}
       >
         {zones?.map((answerZone, index) => {
@@ -152,7 +171,6 @@ export function EditorCanvas(props: DragDropBgProps) {
               getAnswerZoneImageSrc={getAnswerZoneImageSrc}
               getAnswerZoneText={getAnswerZoneText}
               answerZone={answerZone}
-              onChangeDimensions={onChangeDimensions}
             />
           )
         })}

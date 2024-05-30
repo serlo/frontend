@@ -1,15 +1,27 @@
 import { useCallback, useState } from 'react'
-import { XYCoord, useDrop } from 'react-dnd'
 
 import type { DragDropBgProps } from '..'
 import type { AnswerZoneSettings, answerZoneType } from '../types'
 
-export function useAnswerZones({ state, id }: DragDropBgProps) {
-  const { answerZones } = state
+export function useAnswerZones({ state }: DragDropBgProps) {
+  const { answerZones, canvasShape } = state
 
   const [currentAnswerZone, setCurrentAnswerZone] = useState<answerZoneType>(
     answerZones[0]
   )
+
+  const getCanvasDimensions = () => {
+    switch (canvasShape.get()) {
+      case 'square':
+        return { canvasHeight: '786px', canvasWidth: '786px' }
+      case 'landscape':
+        return { canvasHeight: '786px', canvasWidth: '1024px' }
+      case 'portrait':
+        return { canvasHeight: '500px', canvasWidth: '786px' }
+      default:
+        return { canvasHeight: '1px', canvasWidth: '1px' }
+    }
+  }
 
   const selectAnswerZone = (id: string) => {
     const answerZone = answerZones.find((zone) => zone.id.get() === id)
@@ -28,17 +40,6 @@ export function useAnswerZones({ state, id }: DragDropBgProps) {
     answerZone.layout.lockedAspectRatio.set(settings?.lockedAspectRatio)
   }
 
-  const onChangeDimensions = useCallback(
-    (id: string, dimensions: { width: number; height: number }) => {
-      const answerZone = answerZones.find((zone) => zone.id.get() === id)
-      if (!answerZone) return
-
-      answerZone.layout.width.set(dimensions.width)
-      answerZone.layout.height.set(dimensions.height)
-    },
-    [answerZones]
-  )
-
   const moveAnswerZone = useCallback(
     (answerZone: answerZoneType, left: number, top: number) => {
       answerZone.position.left.set(left)
@@ -47,25 +48,11 @@ export function useAnswerZones({ state, id }: DragDropBgProps) {
     []
   )
 
-  const [, drop] = useDrop(
-    () => ({
-      accept: 'all',
-      drop(answerZone: answerZoneType, monitor) {
-        const change = monitor.getDifferenceFromInitialOffset()
-        const delta = change || ({ x: 0, y: 0 } as XYCoord)
-        const left = Math.round(answerZone.position.left.get() + delta.x)
-        const top = Math.round(answerZone.position.top.get() + delta.y)
-        moveAnswerZone(answerZone, left, top)
-      },
-    }),
-    [answerZones]
-  )
-
   return {
     currentAnswerZone,
     selectAnswerZone,
     onChangeAnswerZone,
-    drop,
-    onChangeDimensions,
+    moveAnswerZone,
+    getCanvasDimensions,
   }
 }
