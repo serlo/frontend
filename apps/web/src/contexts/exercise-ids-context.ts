@@ -1,10 +1,7 @@
 import { createContext } from 'react'
 
-// @@@ Rename in exercise context
-export const ExerciseIdsContext = createContext<{
+export const ExerciseContext = createContext<{
   exerciseTrackingId?: number
   isInExerciseGroup?: boolean
   hasEntityId?: boolean
 }>({})
-
-export const ExerciseIdsProvider = ExerciseIdsContext.Provider

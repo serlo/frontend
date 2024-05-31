@@ -18,7 +18,7 @@ import type { DonationsBannerProps } from '@/components/content/donations-banner
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useAB } from '@/contexts/ab'
-import { ExerciseIdsProvider } from '@/contexts/exercise-ids-context'
+import { ExerciseContext } from '@/contexts/exercise-ids-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidsProvider } from '@/contexts/uuids-context'
 import { allMathExamTaxIds } from '@/data/de/math-exams-data'
@@ -175,7 +175,7 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
           return (
             <li key={exerciseOrGroup.id ?? entityId} className="pb-10">
               <UuidsProvider value={{ entityId }}>
-                <ExerciseIdsProvider
+                <ExerciseContext.Provider
                   value={{
                     hasEntityId:
                       exerciseOrGroup.plugin === EditorPluginType.Exercise, // Exercises have an entityId, Exercises in ExerciseGroups don't have an entityId
@@ -184,7 +184,7 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
                   <ExerciseNumbering href={`/${entityId}`} index={i} />
                   <StaticRenderer document={exerciseOrGroup} />
                   {i === 1 && renderSurvey()}
-                </ExerciseIdsProvider>
+                </ExerciseContext.Provider>
               </UuidsProvider>
             </li>
           )

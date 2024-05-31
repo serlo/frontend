@@ -10,7 +10,7 @@ import { Lazy } from '@/components/content/lazy'
 import { FaIcon } from '@/components/fa-icon'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import { useAB } from '@/contexts/ab'
-import { ExerciseIdsContext } from '@/contexts/exercise-ids-context'
+import { ExerciseContext } from '@/contexts/exercise-ids-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { useEntityData } from '@/contexts/uuids-context'
@@ -30,9 +30,9 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const commentStrings = useInstanceData().strings.comments
   const isRevisionView = useContext(RevisionViewContext)
 
-  const { entityId } = useEntityData()
+  const { entityId, revisionId } = useEntityData()
   const { exerciseTrackingId, isInExerciseGroup, hasEntityId } =
-    useContext(ExerciseIdsContext)
+    useContext(ExerciseContext)
 
   const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
 
@@ -71,10 +71,10 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
     </div>
   )
 
-  // @@@ Rename to renderCommentSection ?
   function renderCommentSection() {
     if (isRevisionView || !entityId) return null
 
+    // Exercise has its own entity ID
     if (hasEntityId) {
       return (
         <Lazy>
@@ -83,24 +83,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
       )
     }
 
-    // const exerciseId = exerciseContext?.exerciseEntityId
-    // const exerciseEntityId = exerciseGroupId ?? exerciseId
-
-    // const isExerciseEntityInInjectionOrTaxonomy =
-    //   exerciseId && exerciseId !== entityId
-
-    // if (isExerciseEntityInInjectionOrTaxonomy) {
-    //   if (!exerciseEntityId) return null
-    //   return (
-    //     <Lazy>
-    //       <CommentAreaEntity entityId={entityId} />
-    //     </Lazy>
-    //   )
-    // }
-
-    // In exerciseGroup navigate to its url. Otherwise only scroll to comment section.
-    const linkPrefix = isInExerciseGroup ? `${entityId}/` : ''
-    const onlyScroll = !linkPrefix
+    // Exercise is part of another entity
     return (
       <>
         <h2 className="serlo-h2 mt-10 border-b-0">
@@ -109,12 +92,12 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
         </h2>
         <p className="serlo-p">
           <a
-            target={onlyScroll ? undefined : '_blank'}
-            rel={onlyScroll ? undefined : 'noreferrer'}
-            href={`${linkPrefix}#comment-area-begin-scrollpoint`}
+            target="_blank"
+            rel="noreferrer"
+            href={`/${entityId}#comment-area-begin-scrollpoint`}
             className="serlo-button-light"
           >
-            {commentStrings.questionLink} {onlyScroll ? '👇' : '👉'}
+            {commentStrings.questionLink} 👉
           </a>
         </p>
       </>

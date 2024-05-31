@@ -6,7 +6,7 @@ import { useContext } from 'react'
 
 import { isPrintMode } from '@/components/print-mode'
 import { useAB } from '@/contexts/ab'
-import { ExerciseIdsContext } from '@/contexts/exercise-ids-context'
+import { ExerciseContext } from '@/contexts/exercise-ids-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { useEntityData } from '@/contexts/uuids-context'
@@ -20,7 +20,7 @@ export function ScMcSerloStaticRenderer(props: EditorScMcExerciseDocument) {
   const { asPath } = useRouter()
   const ab = useAB()
   const { revisionId } = useEntityData()
-  const { exerciseTrackingId } = useContext(ExerciseIdsContext)
+  const { exerciseTrackingId } = useContext(ExerciseContext)
   const isRevisionView = useContext(RevisionViewContext)
   const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
   const exStrings = useInstanceData().strings.content.exercises

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { useContext } from 'react'
 
 import { useAB } from '@/contexts/ab'
-import { ExerciseIdsContext } from '@/contexts/exercise-ids-context'
+import { ExerciseContext } from '@/contexts/exercise-ids-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { useEntityData } from '@/contexts/uuids-context'
@@ -14,7 +14,7 @@ import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-
 
 export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
   const { revisionId } = useEntityData()
-  const { exerciseTrackingId } = useContext(ExerciseIdsContext)
+  const { exerciseTrackingId } = useContext(ExerciseContext)
   const exStrings = useInstanceData().strings.content.exercises
   const { asPath } = useRouter()
   const ab = useAB()

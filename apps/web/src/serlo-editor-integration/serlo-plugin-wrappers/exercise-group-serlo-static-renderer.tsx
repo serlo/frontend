@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from 'react'
 import { useAuthentication } from '@/auth/use-authentication'
 import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
-import { ExerciseIdsContext } from '@/contexts/exercise-ids-context'
+import { ExerciseContext } from '@/contexts/exercise-ids-context'
 import { ExerciseInlineType } from '@/data-types'
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
@@ -21,7 +21,7 @@ export function ExerciseGroupSerloStaticRenderer(
 ) {
   const auth = useAuthentication()
   const [loaded, setLoaded] = useState(false)
-  const exerciseContext = useContext(ExerciseIdsContext)
+  const exerciseContext = useContext(ExerciseContext)
   useEffect(() => setLoaded(true), [])
 
   const context = props.serloContext
@@ -45,7 +45,7 @@ export function ExerciseGroupSerloStaticRenderer(
           />
         ) : null}
       </div>
-      <ExerciseIdsContext.Provider
+      <ExerciseContext.Provider
         value={{
           ...exerciseContext, // Use what was provided already (from topic.tsx)
           isInExerciseGroup: true,
@@ -54,7 +54,7 @@ export function ExerciseGroupSerloStaticRenderer(
         <div className="-mt-block">
           <ExerciseGroupStaticRenderer {...props} />
         </div>
-      </ExerciseIdsContext.Provider>
+      </ExerciseContext.Provider>
     </div>
   )
 }

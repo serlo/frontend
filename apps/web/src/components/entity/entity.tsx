@@ -3,6 +3,7 @@ import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { isEmptyArticle } from '@editor/plugins/article/utils/static-is-empty'
 import { CourseNavigation } from '@editor/plugins/serlo-template-plugins/course/course-navigation'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { isArticleDocument } from '@editor/types/plugin-type-guards'
 import {
   faExclamationCircle,
@@ -20,6 +21,7 @@ import { InfoPanel } from '../info-panel'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
 import { UserTools } from '@/components/user-tools/user-tools'
+import { ExerciseContext } from '@/contexts/exercise-ids-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, UuidType } from '@/data-types'
 import { cn } from '@/helper/cn'
@@ -144,7 +146,23 @@ export function Entity({ data }: EntityProps) {
   }
 
   function renderContent(document: EntityData['content']) {
-    const content = <StaticRenderer document={document} />
+    const isExercise =
+      document &&
+      !Array.isArray(document) &&
+      document.plugin === EditorPluginType.Exercise
+    const content = isExercise ? (
+      <ExerciseContext.Provider
+        value={{
+          hasEntityId: true,
+          isInExerciseGroup: false,
+        }}
+      >
+        {' '}
+        <StaticRenderer document={document} />
+      </ExerciseContext.Provider>
+    ) : (
+      <StaticRenderer document={document} />
+    )
 
     if (data.schemaData?.setContentAsSection) {
       return <section itemProp="articleBody">{content}</section>

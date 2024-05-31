@@ -9,7 +9,7 @@ import { useContext, useEffect, useState } from 'react'
 import { useAuthentication } from '@/auth/use-authentication'
 import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
-import { ExerciseIdsContext } from '@/contexts/exercise-ids-context'
+import { ExerciseContext } from '@/contexts/exercise-ids-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { ExerciseInlineType } from '@/data-types'
 
@@ -33,7 +33,7 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
   const solutionLicenseId = (props.state.solution as EditorSolutionDocument)
     ?.state.licenseId
 
-  const exerciseContext = useContext(ExerciseIdsContext)
+  const exerciseContext = useContext(ExerciseContext)
 
   // when we moved the groupedExercises into the exercises state we used the old entity uuid as editor id
   // e.g. `3743-exercise-child`. This way we can use the entity ids in injections and for exercise analytics
@@ -66,17 +66,16 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
         ) : null}
       </div>
       {/* Provide exercise ids for analytics & comments */}
-      {/* @@@ Remove all occurences of ExerciseIdsContext.Provider */}
-      <ExerciseIdsContext.Provider
+      <ExerciseContext.Provider
         value={{
-          ...exerciseContext, // Use what was provided already (from topic.tsx)
+          ...exerciseContext, // Use what was provided already (from topic.tsx or entity.txs)
           exerciseTrackingId,
         }}
       >
         <div className="-mt-block">
           <ExerciseStaticRenderer {...props} />
         </div>
-      </ExerciseIdsContext.Provider>
+      </ExerciseContext.Provider>
     </div>
   )
 }

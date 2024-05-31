@@ -28,7 +28,6 @@ export interface CommentAreaProps {
     archived?: ThreadsData
   }
   commentCount?: number
-  // @@@ Make this non-optional?
   entityId?: number
   noForms?: boolean
   highlightedCommentId?: number
