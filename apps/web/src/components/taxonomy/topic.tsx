@@ -1,5 +1,6 @@
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { EditorRowsDocument } from '@editor/types/editor-plugins'
 import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
@@ -17,7 +18,9 @@ import type { DonationsBannerProps } from '@/components/content/donations-banner
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useAB } from '@/contexts/ab'
+import { ExerciseIdsProvider } from '@/contexts/exercise-ids-context'
 import { useInstanceData } from '@/contexts/instance-context'
+import { UuidsProvider } from '@/contexts/uuids-context'
 import { allMathExamTaxIds } from '@/data/de/math-exams-data'
 import {
   BreadcrumbsData,
@@ -167,13 +170,22 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
     return (
       <ol className="mt-12">
         {data.exercisesContent.map((exerciseOrGroup, i) => {
-          const exerciseUuid = exerciseOrGroup.serloContext?.uuid
+          const entityId = exerciseOrGroup.serloContext?.uuid
 
           return (
-            <li key={exerciseOrGroup.id ?? exerciseUuid} className="pb-10">
-              <ExerciseNumbering href={`/${exerciseUuid}`} index={i} />
-              <StaticRenderer document={exerciseOrGroup} />
-              {i === 1 && renderSurvey()}
+            <li key={exerciseOrGroup.id ?? entityId} className="pb-10">
+              <UuidsProvider value={{ entityId }}>
+                <ExerciseIdsProvider
+                  value={{
+                    hasEntityId:
+                      exerciseOrGroup.plugin === EditorPluginType.Exercise, // Exercises have an entityId, Exercises in ExerciseGroups don't have an entityId
+                  }}
+                >
+                  <ExerciseNumbering href={`/${entityId}`} index={i} />
+                  <StaticRenderer document={exerciseOrGroup} />
+                  {i === 1 && renderSurvey()}
+                </ExerciseIdsProvider>
+              </UuidsProvider>
             </li>
           )
         })}

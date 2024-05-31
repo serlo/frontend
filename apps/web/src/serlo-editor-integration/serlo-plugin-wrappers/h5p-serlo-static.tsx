@@ -2,9 +2,10 @@ import { parseH5pUrl } from '@editor/plugins/h5p/renderer'
 import { H5pStaticRenderer } from '@editor/plugins/h5p/static'
 import type { EditorH5PDocument } from '@editor/types/editor-plugins'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 
 import { useAB } from '@/contexts/ab'
+import { ExerciseIdsContext } from '@/contexts/exercise-ids-context'
 import { useEntityData } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
@@ -13,7 +14,8 @@ import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-
 export function H5pSerloStaticRenderer(props: EditorH5PDocument) {
   const { asPath } = useRouter()
   const ab = useAB()
-  const { entityId, revisionId } = useEntityData()
+  const { revisionId } = useEntityData()
+  const { exerciseTrackingId } = useContext(ExerciseIdsContext)
   const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
 
   useEffect(() => {
@@ -25,7 +27,7 @@ export function H5pSerloStaticRenderer(props: EditorH5PDocument) {
         exerciseSubmission(
           {
             path: asPath,
-            entityId,
+            entityId: exerciseTrackingId,
             revisionId,
             result: e.type === 'h5pExerciseCorrect' ? 'correct' : 'wrong',
             type: 'h5p',

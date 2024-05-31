@@ -7,11 +7,10 @@ import { useContext } from 'react'
 
 import type { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
 import { Lazy } from '@/components/content/lazy'
-import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import { useAB } from '@/contexts/ab'
-import { ExerciseGroupIdContext } from '@/contexts/exercise-group-id-context'
+import { ExerciseIdsContext } from '@/contexts/exercise-ids-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { useEntityData } from '@/contexts/uuids-context'
@@ -30,10 +29,10 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const ab = useAB()
   const commentStrings = useInstanceData().strings.comments
   const isRevisionView = useContext(RevisionViewContext)
-  const exerciseGroupId = useContext(ExerciseGroupIdContext)
-  const context = props.serloContext
 
-  const { entityId: exerciseUuid } = useEntityData()
+  const { entityId } = useEntityData()
+  const { exerciseTrackingId, isInExerciseGroup, hasEntityId } =
+    useContext(ExerciseIdsContext)
 
   const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
 
@@ -45,35 +44,13 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
       ? printModeSolutionVisible
       : typeof window === 'undefined'
         ? false
-        : !exerciseGroupId && window.location.href.includes('#comment-')
-
-  const afterSlot =
-    isRevisionView || !exerciseUuid ? null : exerciseGroupId ? (
-      <>
-        <h2 className="serlo-h2 mt-10 border-b-0">
-          <FaIcon className="text-2xl text-brand-400" icon={faQuestionCircle} />{' '}
-          {commentStrings.question}
-        </h2>
-        <p className="serlo-p">
-          <Link
-            href={`${exerciseGroupId}/#comment-area-begin-scrollpoint`}
-            className="serlo-button-light"
-          >
-            {commentStrings.questionLink} 👇
-          </Link>
-        </p>
-      </>
-    ) : (
-      <Lazy>
-        <CommentAreaEntity entityId={exerciseUuid} />
-      </Lazy>
-    )
+        : !isInExerciseGroup && window.location.href.includes('#comment-')
 
   function onSolutionOpen() {
     exerciseSubmission(
       {
         path: asPath,
-        entityId: context?.exerciseId ?? exerciseUuid,
+        entityId: exerciseTrackingId,
         type: 'text',
         result: 'open',
       },
@@ -87,9 +64,59 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
       <StaticSolutionRenderer
         {...props}
         solutionVisibleOnInit={solutionVisibleOnInit}
-        afterSlot={afterSlot}
+        afterSlot={renderCommentSection()}
         onSolutionOpen={onSolutionOpen}
       />
     </div>
   )
+
+  // @@@ Rename to renderCommentSection ?
+  function renderCommentSection() {
+    if (isRevisionView || !entityId) return null
+
+    if (hasEntityId) {
+      return (
+        <Lazy>
+          <CommentAreaEntity entityId={entityId} />
+        </Lazy>
+      )
+    }
+
+    // const exerciseId = exerciseContext?.exerciseEntityId
+    // const exerciseEntityId = exerciseGroupId ?? exerciseId
+
+    // const isExerciseEntityInInjectionOrTaxonomy =
+    //   exerciseId && exerciseId !== entityId
+
+    // if (isExerciseEntityInInjectionOrTaxonomy) {
+    //   if (!exerciseEntityId) return null
+    //   return (
+    //     <Lazy>
+    //       <CommentAreaEntity entityId={entityId} />
+    //     </Lazy>
+    //   )
+    // }
+
+    // In exerciseGroup navigate to its url. Otherwise only scroll to comment section.
+    const linkPrefix = isInExerciseGroup ? `${entityId}/` : ''
+    const onlyScroll = !linkPrefix
+    return (
+      <>
+        <h2 className="serlo-h2 mt-10 border-b-0">
+          <FaIcon className="text-2xl text-brand-400" icon={faQuestionCircle} />{' '}
+          {commentStrings.question}
+        </h2>
+        <p className="serlo-p">
+          <a
+            target={onlyScroll ? undefined : '_blank'}
+            rel={onlyScroll ? undefined : 'noreferrer'}
+            href={`${linkPrefix}#comment-area-begin-scrollpoint`}
+            className="serlo-button-light"
+          >
+            {commentStrings.questionLink} {onlyScroll ? '👇' : '👉'}
+          </a>
+        </p>
+      </>
+    )
+  }
 }
