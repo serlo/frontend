@@ -86,12 +86,7 @@ export function InjectionSerloStaticRenderer({
                 exercise.id?.startsWith(hash)
               )
               if (exercise) {
-                setContent([
-                  {
-                    ...exercise,
-                    serloContext: { licenseId: uuid.licenseId, uuid: uuid.id },
-                  },
-                ])
+                setContent([exercise])
                 return
               }
             }
@@ -99,8 +94,8 @@ export function InjectionSerloStaticRenderer({
               ...content,
               state: {
                 ...content.state,
+                serloContext: { licenseId: uuid.licenseId },
               },
-              serloContext: { licenseId: uuid.licenseId, uuid: uuid.id },
             }
             setContent([contentWithLicenseId])
             return
