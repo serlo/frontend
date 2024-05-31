@@ -53,6 +53,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
         entityId: exerciseTrackingId,
         type: 'text',
         result: 'open',
+        revisionId,
       },
       ab,
       trackExperiment

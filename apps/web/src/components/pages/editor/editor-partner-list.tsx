@@ -37,6 +37,11 @@ export const partners = [
     logo: '/_assets/img/editor/partners/logo_dataport.svg',
     padding: 23,
   },
+  {
+    name: 'FWU Medieninstitut der Länder',
+    logo: '/_assets/img/editor/partners/logo_fwu.svg',
+    padding: 15,
+  },
 ]
 
 export function EditorPartnerList() {

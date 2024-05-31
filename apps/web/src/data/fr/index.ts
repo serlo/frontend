@@ -866,15 +866,12 @@ export const loggedInData = {
         }
       },
       templatePlugins: {
-        applet: {
+        entity: {
+          titlePlaceholder: "Titre",
           seoTitle: "Titre pour les moteurs de recherche",
-          seoDesc: "Description pour les moteurs de recherche",
-          placeholder: "Titre"
+          seoDesc: "Description pour les moteurs de recherche"
         },
         article: {
-          seoTitle: "Titre pour les moteurs de recherche",
-          seoDesc: "Description pour les moteurs de recherche",
-          title: "Titre",
           writeShortIntro: "Écrire une courte introduction",
           stillWantMore: "Tu en veux encore plus?",
           moreOnTopic: "Tu peux en trouver plus ici :",
@@ -907,8 +904,6 @@ export const loggedInData = {
           }
         },
         course: {
-          seoDesc: "Description pour les moteurs de recherche",
-          title: "Titre",
           removeCoursePage: "Supprimer la page de cours",
           addCoursePage: "Ajouter une page de cours"
         },
@@ -930,11 +925,6 @@ export const loggedInData = {
           createSolution: "Créer une solution",
           removeSolution: "Supprimer la solution"
         },
-        event: {
-          seoTitle: "Titre pour les moteurs de recherche",
-          seoDesc: "Description pour les moteurs de recherche",
-          title: "Titre"
-        },
         inputExercise: {
           chooseType: "Choisissez le type d'exercice",
           unit: "Unité",
@@ -947,9 +937,6 @@ export const loggedInData = {
             'input-number-exact-match-challenge': "Number (exact, e.g. '0.5')",
             'input-expression-equal-match-challenge': "Mathematical expression (equivalent, e.g. '0.5' or '1/2' or '2/4'"
           }
-        },
-        page: {
-          title: "Titre"
         },
         scMcExercise: {
           singleChoice: "Choix unique",
@@ -1016,9 +1003,6 @@ export const loggedInData = {
         ready: 'Ready to save?',
         pluginCopyInfo: 'You can now paste this plugin into text plugins',
         pluginCopyButtonLabel: 'Copy plugin to clipboard'
-      },
-      taxonomy: {
-        title: "Titre"
       }
     },
     profileSettings: {

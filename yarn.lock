@@ -4848,12 +4848,16 @@ __metadata:
   resolution: "@serlo/editor-web-component@workspace:packages/editor-web-component"
   dependencies:
     "@rollup/plugin-replace": ^5.0.5
-    "@serlo/editor": 0.7.0
+    "@serlo/editor": 0.8.0
     "@serlo/typescript-config": "workspace:*"
+    "@types/escodegen": ^0.0.10
+    "@types/estraverse": ^5.1.7
     "@types/react": ^18.0.25
     "@types/react-dom": ^18.0.8
     "@vitejs/plugin-react": ^4.2.1
+    acorn: ^8.11.3
     dotenv: ^16.4.5
+    escodegen: ^2.1.0
     eslint: ^8.57.0
     eslint-config-next: ^14.2.2
     eslint-config-prettier: ^9.1.0
@@ -4861,6 +4865,7 @@ __metadata:
     eslint-plugin-import: ^2.29.1
     eslint-plugin-react: ^7.34.1
     eslint-plugin-react-hooks: ^4.6.0
+    estraverse: ^5.3.0
     jest: ^27.5.1
     npm: ^10.5.2
     npm-run-all: ^4.1.5
@@ -4878,14 +4883,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@serlo/editor@npm:0.7.0":
-  version: 0.7.0
-  resolution: "@serlo/editor@npm:0.7.0"
+"@serlo/editor@npm:0.8.0":
+  version: 0.8.0
+  resolution: "@serlo/editor@npm:0.8.0"
   dependencies:
-    "@serlo/katex-styles": ^1.0.1
+    "@serlo/katex-styles": 1.0.1
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: a693ebf9f14b91d7c7e0e9545d4d603e30d6c547ee0d6c1f657d5318c60d5cf989dceb5827b18c25450d9d72a60f31e988ac0d745f6d90281d184309b5594110
+  checksum: dcaa13c1194779abf95d248aad7def17f2d8e768a8e9897a63167eb6cdb40be84fbbb7c55eb0b0c178da23853030cb54f3e9e153f1bb2da980fc5b2fff76317e
   languageName: node
   linkType: hard
 
@@ -5185,7 +5190,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@serlo/katex-styles@npm:1.0.1, @serlo/katex-styles@npm:^1.0.1":
+"@serlo/katex-styles@npm:1.0.1":
   version: 1.0.1
   resolution: "@serlo/katex-styles@npm:1.0.1"
   checksum: b8e50847d42669b78a14ee972348457573d806f487b099bf7a552d98cd734abce502be029b2125df0d20dcffc9f51ab1c365965f2c23eafec9aaeddfbc7859d1
@@ -5667,6 +5672,22 @@ __metadata:
   version: 1.0.4
   resolution: "@types/escape-html@npm:1.0.4"
   checksum: 61c1409df141268bdb2b40e511614193a9f2d3fed224788a14454ba9504787efa01bbd083826f163a6d33a97815b71e161ce1bdf6b77dd7b3569f3a885ad7722
+  languageName: node
+  linkType: hard
+
+"@types/escodegen@npm:^0.0.10":
+  version: 0.0.10
+  resolution: "@types/escodegen@npm:0.0.10"
+  checksum: 270fb286cc2a901963ecab0273435ca30dbd1cbd69c9562be9826342888a938e30fd8446af0cd1c0a679420f5923d1ef10696c6fbad2a1e249d5f04a5ee43729
+  languageName: node
+  linkType: hard
+
+"@types/estraverse@npm:^5.1.7":
+  version: 5.1.7
+  resolution: "@types/estraverse@npm:5.1.7"
+  dependencies:
+    "@types/estree": "*"
+  checksum: e598a73ec90c0b1989b55d55271742a7abfaa873ebe5041bfb1fbfe44fa5e64e5d759a60f4cb0a3f24b90c4ba98d87955aa836a8eea796ad4d880e4def92c23d
   languageName: node
   linkType: hard
 
@@ -6518,6 +6539,15 @@ __metadata:
   bin:
     acorn: bin/acorn
   checksum: 818450408684da89423e3daae24e4dc9b68692db8ab49ea4569c7c5abb7a3f23669438bf129cc81dfdada95e1c9b944ee1bfca2c57a05a4dc73834a612fbf6a7
+  languageName: node
+  linkType: hard
+
+"acorn@npm:^8.11.3":
+  version: 8.11.3
+  resolution: "acorn@npm:8.11.3"
+  bin:
+    acorn: bin/acorn
+  checksum: 76d8e7d559512566b43ab4aadc374f11f563f0a9e21626dd59cb2888444e9445923ae9f3699972767f18af61df89cd89f5eaaf772d1327b055b45cb829b4a88c
   languageName: node
   linkType: hard
 
@@ -9264,7 +9294,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"escodegen@npm:^2.0.0":
+"escodegen@npm:^2.0.0, escodegen@npm:^2.1.0":
   version: 2.1.0
   resolution: "escodegen@npm:2.1.0"
   dependencies:

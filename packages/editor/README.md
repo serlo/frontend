@@ -1,6 +1,8 @@
 # Serlo Editor
 
-This is an early beta version of the [Serlo Editor](https://de.serlo.org/editor). Be aware that we are currently working on this package and thus there will be breaking changes. The repository [serlo/serlo-editor-for-edusharing](https://github.com/serlo/serlo-editor-for-edusharing) shows how this package can be used.
+This is an early version of the [Serlo Editor](https://de.serlo.org/editor). Be aware that we are actively working on this package and thus there will be breaking changes before v1 is reached. The repository [serlo/serlo-editor-for-edusharing](https://github.com/serlo/serlo-editor-for-edusharing) shows an example of how this package can be used in production.
+
+If you are not using React, consider using the Serlo Editor as a [web component](https://www.npmjs.com/package/@serlo/editor-web-component).
 
 ## Using the Serlo Editor
 

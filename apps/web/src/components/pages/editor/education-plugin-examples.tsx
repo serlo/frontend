@@ -43,7 +43,7 @@ function createBoxExample(title: string, content: string, type: BoxType) {
   } as EditorBoxDocument
 }
 
-export const boxExample = (
+export const BoxExample = (
   <>
     {[
       createBoxExample('A Box', 'This box is of the type "Note"', 'note'),
@@ -63,7 +63,32 @@ export const boxExample = (
   </>
 )
 
-export const inputExample = (
+export const FillInTheGapExample = (
+  <div className="flex flex-col gap-2 pt-2">
+    <h1 className="ml-[32px] text-xl font-bold">Typing</h1>
+    <StaticRenderer
+      document={parseDocumentString(
+        '{"plugin":"blanksExercise","state":{"text":{"plugin":"text","state":[{"type":"p","children":[{"text":"Whales are the biggest "},{"type":"textBlank","blankId":"9070d7e2-f087-41f7-bb65-a7a05c643c88","correctAnswers":[{"answer":"mammals"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" in the world. They communicate over long "},{"type":"textBlank","blankId":"3b0cfadb-eae6-48dd-aa08-18fa21686405","correctAnswers":[{"answer":"distances"}, {"answer":"distance"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" through long songs up to thousands of kilometers."}]}]},"mode":"typing"}}'
+      )}
+    />
+    <h1 className="ml-[32px] text-xl font-bold">Drag & Drop</h1>
+    <StaticRenderer
+      document={parseDocumentString(
+        '{"plugin":"blanksExercise","state":{"text":{"plugin":"text","state":[{"type":"p","children":[{"text":"Some species of spiders are able to detect "},{"type":"textBlank","blankId":"1070e7e2-f087-41f7-bb65-a7a05c643c88","correctAnswers":[{"answer":"magnetic fields"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" . They also have extraordinary "},{"type":"textBlank","blankId":"ab0cfadb-eae6-48dd-aa08-18fa21686402","correctAnswers":[{"answer":"sensory abilities"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" in their leg hairs and have special receptors to detect even the slightest "},{"type":"textBlank","blankId":"8a0cfadb-eae6-48dd-aa08-18fa21686405","correctAnswers":[{"answer":"vibrations"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" and air currents to identify their prey and predators."}]}]},"mode":"drag-and-drop"}}'
+      )}
+    />
+    <h1 className="ml-side text-xl font-bold">
+      Exercise with table drag & drop
+    </h1>
+    <StaticRenderer
+      document={parseDocumentString(
+        '{"plugin":"rows","state":[{"plugin":"exercise","state":{"content":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Vervollständige die Vierfeldertafel. Die Wahrscheinlichkeit "},{"type":"math","src":"P(A~\\\\cap~B)","inline":true,"children":[{"text":""}]},{"text":" beträgt "},{"type":"math","src":"21~\\\\%","inline":true,"children":[{"text":""}]},{"text":"."}]}]}]},"interactive":{"plugin":"blanksExercise","state":{"text":{"plugin":"serloTable","state":{"rows":[{"columns":[{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"A","inline":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"\\\\bar{A}","inline":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}]}}]},{"columns":[{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"B","inline":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"textBlank","blankId":"16c4d09d-a4d5-4792-b975-4594700b8486","correctAnswers":[{"answer":"21 %"}],"acceptMathEquivalents":true,"children":[{"text":""}]},{"text":" "}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"14~\\\\%","inline":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"textBlank","blankId":"884597fa-ea00-47da-8404-eb7db26512de","correctAnswers":[{"answer":"35 %"}],"acceptMathEquivalents":true,"children":[{"text":""}]},{"text":" "}]}]}}]},{"columns":[{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"\\\\bar{B}","inline":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"19 ~\\\\%","inline":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"textBlank","blankId":"b85fde19-284e-457c-b054-8ea42180f933","correctAnswers":[{"answer":"46 %"}],"acceptMathEquivalents":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"textBlank","blankId":"b91deb33-3c1f-4b27-9d89-59f0bdc94e48","correctAnswers":[{"answer":"65 %"}],"acceptMathEquivalents":true,"children":[{"text":""}]},{"text":""}]}]}}]},{"columns":[{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"textBlank","blankId":"5bccafac-d0d2-46e7-a737-bb3e462d4218","correctAnswers":[{"answer":"40 %"}],"acceptMathEquivalents":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"textBlank","blankId":"80a57af9-e968-4ead-8c06-6a9183be0e10","correctAnswers":[{"answer":"60 %"}],"acceptMathEquivalents":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"100~\\\\%","inline":true,"children":[{"text":""}]},{"text":""}]}]}}]}],"tableType":"RowAndColumnHeader"}},"mode":"drag-and-drop"}},"solution":{"plugin":"solution","state":{"strategy":{"plugin":"text","state":[{"children":[{"children":[{"type":"list-item-child","children":[{"text":"Setze für die Wahrscheinlichkeit "},{"type":"math","src":"","inline":true,"children":[{"text":""}]},{"text":""},{"type":"math","src":"P(A\\\\cap B)","inline":true,"children":[{"text":""}]},{"text":" "},{"type":"math","src":"21~\\\\%","inline":true,"children":[{"text":""}]},{"text":" ein."}]}],"type":"list-item"},{"children":[{"type":"list-item-child","children":[{"text":"Berechne die fehlenden Werte in den Zeilen und Spalten. Die Summe der Werte im Inneren der "},{"type":"a","href":"/1875","children":[{"text":"Tafel"}]},{"text":" ergeben den Wert am Rand der Tafel."}]}],"type":"list-item"}],"type":"unordered-list"}]},"steps":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"h","children":[{"text":"Ausgefüllte Vierfeldertafel"}],"level":3}]},{"plugin":"multimedia","state":{"explanation":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Die Wahrscheinlichkeit "},{"type":"math","src":"P(A\\\\cap B)","inline":true,"children":[{"text":""}]},{"text":" beträgt nach Angabe "},{"type":"math","src":"21~\\\\%","inline":true,"children":[{"text":""}]},{"text":". Diese tragen wir in die Tafel ein."}]}]}]},"multimedia":{"plugin":"image","state":{"src":"https://assets.serlo.org/8d7f6370-18e8-11ef-890b-238e2c9e9d69/image.png","caption":{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}]}}},"illustrating":true,"width":50}},{"plugin":"multimedia","state":{"explanation":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"In jeder Zeile und Spalte gilt:"}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"Die Werte im Inneren der Tafel ergeben als "},{"text":"Summe","strong":true},{"text":" den Wert am Rand."}]},{"type":"p","children":[{"text":""}]}]}]},"multimedia":{"plugin":"image","state":{"src":"https://assets.serlo.org/e427af20-18e8-11ef-890b-238e2c9e9d69/image.png","caption":{"plugin":"text","state":[{"type":"p","children":[{"text":"Ausfüllen der Zeilen und Spalten"}]}]}}},"illustrating":true,"width":50}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Damit kann die Tafel vollständig ausgefüllt werden:"}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/20e463e0-18e9-11ef-890b-238e2c9e9d69/image.png","caption":{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}]}}}]},"prerequisite":{"id":"1875","title":"Vierfeldertafel"}}}}}]}'
+      )}
+    />
+  </div>
+)
+
+export const InputExample = (
   <div className="pt-2">
     <StaticRenderer
       document={parseDocumentString(
@@ -78,7 +103,7 @@ export const inputExample = (
   </div>
 )
 
-export const textExExample = (
+export const TextExerciseExample = (
   <div className="pt-2">
     <StaticRenderer
       document={parseDocumentString(
@@ -97,7 +122,7 @@ export const SCExample = (
   <div className="pt-3.5">
     <StaticRenderer
       document={parseDocumentString(
-        '{"plugin":"exercise","state":{"content":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"If I had worn my glasses, I ______________(not step) on the toys."}]}]}]},"interactive":{"plugin":"scMcExercise","state":{"isSingleChoice":true,"answers":[{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":"would not have stepped"}]}]},"isCorrect":true,"feedback":{"plugin":"text","state":[{"type":"p","children":[{"text":"The past perfect "},{"text":"had worn ","strong":true},{"text":"in the subordinate clause, indicates that this is "},{"text":"type III if clause","strong":true},{"text":". Therefore you need to use "},{"text":"would not + present perfect","strong":true},{"text":" in the main clause."}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":"will not have stepped"}]}]},"isCorrect":false,"feedback":{"plugin":"text","state":[{"type":"p","children":[{"text":"This is the "},{"text":"future perfect","strong":true},{"text":" and not used in "},{"text":"if clauses","strong":true},{"text":"."}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":"will not step"}]}]},"isCorrect":false,"feedback":{"plugin":"text","state":[{"type":"p","children":[{"text":"The past perfect "},{"text":"had worn ","strong":true},{"text":"in the subordinate clause, indicates that this is "},{"text":"type III if clause","strong":true},{"text":". W"},{"text":"ill + infinitive","strong":true},{"text":" is used in "},{"text":"type I if clauses","strong":true},{"text":" and therefore wrong in this case."}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":"would not step"}]}]},"isCorrect":false,"feedback":{"plugin":"text","state":[{"type":"p","children":[{"text":"The past perfect "},{"text":"had worn ","strong":true},{"text":"in the subordinate clause, indicates that this is "},{"text":"type III if clause","strong":true},{"text":". "},{"text":"would + infinitive","strong":true},{"text":" is used in "},{"text":"type II if clauses","strong":true},{"text":" and therefore wrong in this case."}]}]}}]}}}}'
+        '{"plugin":"exercise","state":{"content":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"What is the value of "},{"type":"math","src":"3x + 5","inline":true,"children":[{"text":"3x + 5"}]},{"text":" when "},{"type":"math","src":"x = 2","inline":true,"children":[{"text":"x = 2"}]},{"text":"?"}]}]}]},"interactive":{"plugin":"scMcExercise","state":{"isSingleChoice":true,"answers":[{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":"11"}]}]},"isCorrect":false,"feedback":{"plugin":"text","state":[{"type":"p","children":[{"text":"When X is substituted, its value gets "},{"text":"multiplied ","strong":true},{"text":"with 3."}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":"10"}]}]},"isCorrect":true,"feedback":{"plugin":"text","state":[{"type":"p","children":[{"text":"Great!"}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":"9"}]}]},"isCorrect":false,"feedback":{"plugin":"text","state":[{"type":"p","children":[{"text":"Try again!"}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":"8"}]}]},"isCorrect":false,"feedback":{"plugin":"text","state":[{"type":"p","children":[{"text":"You need to substitute x with 2!"}]}]}}]}}}}'
       )}
     />
   </div>
@@ -113,7 +138,7 @@ export const MCExample = (
   </div>
 )
 
-export const highlighExample = (
+export const HighlightExample = (
   <HighlightRenderer
     code={`// global variable: read & write from everywhere
 var cookieAmount = 100
@@ -124,15 +149,14 @@ function feed(){
   let cookieAmount = 20
 }
 
-// constant: local variable that can only be read after initialisation
+// constant: local variable that can only be read after initialization
 // this will always be 5
 const cookieSize = 5`}
     language="javascript"
     showLineNumbers
   />
 )
-
-export const spoilerExample = (
+export const SpoilerExample = (
   <>
     <div className="slate-container mb-block">
       <h4 className="serlo-h4">
