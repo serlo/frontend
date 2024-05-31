@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from 'react'
 import { useAuthentication } from '@/auth/use-authentication'
 import { ExerciseLicenseNotice } from '@/components/content/license/exercise-license-notice'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
-import { ExerciseContext } from '@/contexts/exercise-ids-context'
+import { ExerciseContext } from '@/contexts/exercise-context'
 import { ExerciseInlineType } from '@/data-types'
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>

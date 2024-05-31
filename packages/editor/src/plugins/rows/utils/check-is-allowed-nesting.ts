@@ -56,7 +56,7 @@ export function checkIsAllowedNesting(
       rootPluginType &&
       [
         TemplatePluginType.Article,
-        TemplatePluginType.CoursePage,
+        TemplatePluginType.Course,
         TemplatePluginType.GenericContent,
         EditorPluginType.Rows,
       ].includes(rootPluginType as TemplatePluginType)

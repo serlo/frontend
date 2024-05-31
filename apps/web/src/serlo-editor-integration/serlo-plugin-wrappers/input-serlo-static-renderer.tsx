@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { useContext } from 'react'
 
 import { useAB } from '@/contexts/ab'
-import { ExerciseContext } from '@/contexts/exercise-ids-context'
+import { ExerciseContext } from '@/contexts/exercise-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { useEntityData } from '@/contexts/uuids-context'

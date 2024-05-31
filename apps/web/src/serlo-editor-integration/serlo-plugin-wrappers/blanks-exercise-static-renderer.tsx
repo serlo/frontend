@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useContext } from 'react'
 
 import { useAB } from '@/contexts/ab'
-import { ExerciseContext } from '@/contexts/exercise-ids-context'
+import { ExerciseContext } from '@/contexts/exercise-context'
 import { useEntityData } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'

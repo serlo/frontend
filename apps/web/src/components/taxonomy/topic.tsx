@@ -18,7 +18,7 @@ import type { DonationsBannerProps } from '@/components/content/donations-banner
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useAB } from '@/contexts/ab'
-import { ExerciseContext } from '@/contexts/exercise-ids-context'
+import { ExerciseContext } from '@/contexts/exercise-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidsProvider } from '@/contexts/uuids-context'
 import { allMathExamTaxIds } from '@/data/de/math-exams-data'
