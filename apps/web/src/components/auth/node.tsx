@@ -94,7 +94,11 @@ export function Node({
       }
       // provider: Mein Bildungsraum
       case 'button': {
-        if (attributes.name === 'provider' && attributes.value === 'nbp') {
+        if (
+          !isProduction &&
+          attributes.name === 'provider' &&
+          attributes.value === 'nbp'
+        ) {
           return (
             <LoginButtonBildungsraum
               attributes={attributes}
@@ -103,7 +107,11 @@ export function Node({
             />
           )
         }
-        if (attributes.name === 'provider' && attributes.value === 'vidis') {
+        if (
+          !isProduction &&
+          attributes.name === 'provider' &&
+          attributes.value === 'vidis'
+        ) {
           return (
             <LoginButtonVidis
               attributes={attributes}
