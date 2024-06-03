@@ -85,8 +85,6 @@ export function EditorCanvas(props: DragDropBgProps) {
 
   /**
    * Convert an answer zone to possible answer format.
-   * @param {answerZoneType | wrongAnswerType} zone - The answer zone or wrong answer zone.
-   * @returns {Array} The possible answers.
    */
   const zoneToPossibleAnswer = (zone: answerZoneType | wrongAnswerType) => {
     const answers = zone.answers.map((answer) => {
