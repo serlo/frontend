@@ -72,7 +72,7 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
   return (
     <DndWrapper>
       <div
-        className="mx-auto h-[786px] w-[786px] overflow-hidden rounded-lg border border-almost-black bg-center bg-no-repeat"
+        className="relative mx-auto h-[786px] w-[786px] overflow-hidden rounded-lg border border-brand-500 bg-center bg-no-repeat"
         style={{
           backgroundImage: `url(${backgroundImageUrlFromPlugin})`,
         }}
