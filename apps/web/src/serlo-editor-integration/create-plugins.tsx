@@ -1,5 +1,6 @@
 import IconAudio from '@editor/editor-ui/assets/plugin-icons/icon-audio.svg'
 import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg'
+import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg'
 import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg'
 import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
@@ -89,7 +90,7 @@ export function createPlugins({
       type: EditorPluginType.DragDropBg,
       plugin: createDragDropBgPlugin(),
       visibleInSuggestions: !isProduction,
-      icon: <div>!!!!</div>,
+      icon: <IconDropzones />,
     },
     {
       type: EditorPluginType.Spoiler,
