@@ -10,6 +10,7 @@ import {
   number,
   boolean,
   list,
+  optional,
 } from '../../plugin'
 
 export const positionData = object({
@@ -41,7 +42,7 @@ const dragDropBgState = object({
   answerZones: list(answerZoneState, 0),
   canvasShape: string(''),
   backgroundType: string(''),
-  backgroundImage: child({ plugin: EditorPluginType.Image }),
+  backgroundImage: optional(child({ plugin: EditorPluginType.Image })),
   visibleDropZones: boolean(true),
   extraDraggableAnswers: list(answerZoneState, 0),
 })

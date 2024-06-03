@@ -1,118 +1,65 @@
 import { selectDocument, useAppSelector } from '@editor/store'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
-import { faImage, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 
 import type { DragDropBgProps } from '.'
+import { BackgroundShapeSelect } from './components/background-shape-select'
+import { BackgroundTypeSelect } from './components/background-type-select'
 import { EditorCanvas } from './components/editor/editor-canvas'
 import { AnswerZonesContext } from './context/context'
 import { useAnswerZones } from './hooks/use-answer-zones'
 import { DragDropBgToolbar } from './toolbar'
-import { FaIcon } from '@/components/fa-icon'
+import type { BackgroundShape } from './types'
 
-/**
- *
- * This component represents the drag-and-drop background editor.
- *
- * It allows users to:
- *    select a background type (blank or image),
- *    choose a canvas shape
- *    add / manage answer zones.
- *
- */
 export function DragDropBgEditor(props: DragDropBgProps) {
   const { state, id } = props
-  const { backgroundImage, backgroundType, canvasShape, visibleDropZones } =
-    state
-  const bgImagePluginState = useAppSelector((state) =>
-    selectDocument(state, backgroundImage.get())
+  const { backgroundImage, visibleDropZones } = state
+  const isBackgroundImagePluginDefined = backgroundImage.defined
+
+  const backgroundImagePluginState = useAppSelector((state) =>
+    selectDocument(
+      state,
+      isBackgroundImagePluginDefined ? backgroundImage.get() : null
+    )
   ) as EditorImageDocument
-  const backgroundImageUrlFromPlugin = bgImagePluginState?.state?.src || ''
+  const backgroundImageUrlFromPlugin =
+    backgroundImagePluginState?.state?.src || ''
 
   const { currentAnswerZone, selectAnswerZone, insertAnswerZone } =
     useAnswerZones(props)
 
-  const renderBlankVsImage = () => (
-    <>
-      <DragDropBgToolbar id={id} />
-      <div className="flex flex-row items-center justify-center">
-        <button
-          className="m-[20px] rounded-[5px] bg-orange-100 p-[10px] pr-[20px]"
-          onClick={() => {
-            backgroundType.set('text')
-            canvasShape.set('')
-          }}
-        >
-          Blank
-        </button>
-        <span>oder</span>
-        <button
-          className="m-[20px] rounded-[5px] bg-orange-100 p-[10px] pr-[20px]"
-          onClick={() => {
-            backgroundType.set('image')
-            canvasShape.set('')
-          }}
-        >
-          Image <FaIcon icon={faImage} />
-        </button>
-      </div>
-    </>
-  )
+  const backgroundType = state.backgroundType.get()
+  const isBackgroundTypeBlank = backgroundType === 'blank'
+  const isBackgroundTypeImage = backgroundType === 'image'
 
-  const renderShapeSelection = () => (
-    <div>
-      <DragDropBgToolbar id={id} />
-      <h1 className="flex flex-row items-center justify-center pt-5">
-        Default shape:
-      </h1>
-      <div className="flex flex-row items-center justify-center">
-        {shapeOptions.map(renderButton)}
-      </div>
-    </div>
-  )
+  if (backgroundType === '') return <BackgroundTypeSelect {...props} />
 
-  const shapeOptions = ['square', 'portrait', 'landscape']
+  const canvasShape = state.canvasShape.get()
 
-  const renderButton = (shape: string) => (
-    <button
-      key={shape}
-      className="m-[20px] rounded-[5px] bg-orange-100 p-[10px] pr-[20px]"
-      onClick={() => canvasShape.set(shape)}
-    >
-      {shape.charAt(0).toUpperCase() + shape.slice(1)}
-    </button>
-  )
+  if (!canvasShape) return <BackgroundShapeSelect {...props} />
 
-  const isBlankBg = backgroundType.get() === 'text'
-  const isImageBg = backgroundType.get() === 'image'
-  const isBgTypeSelected = isBlankBg || isImageBg
-  const isShapeSelected = canvasShape.get()
+  const hasBackgroundImageUrl = !!backgroundImageUrlFromPlugin
+  const isBackgroundSelected =
+    isBackgroundTypeBlank || (isBackgroundTypeImage && hasBackgroundImageUrl)
 
-  if (!isBgTypeSelected) return renderBlankVsImage()
-  if (!isShapeSelected) return renderShapeSelection()
-
-  const hasBackgroundImgUrl = !!backgroundImageUrlFromPlugin
-  const isBackgroundDefined = isBlankBg || (isImageBg && hasBackgroundImgUrl)
-
-  if (!isBackgroundDefined) {
-    return backgroundImage.render({ config: {} })
+  if (!isBackgroundSelected && isBackgroundImagePluginDefined) {
+    return backgroundImage.render()
   }
 
   return (
     <AnswerZonesContext.Provider
       value={{
         zones: state.answerZones,
-        canvasShape: state.canvasShape.get() as
-          | 'square'
-          | 'landscape'
-          | 'portrait',
-        currentAnswerZone: currentAnswerZone,
-        selectAnswerZone: selectAnswerZone,
+        canvasShape: canvasShape as BackgroundShape,
+        currentAnswerZone,
+        selectAnswerZone,
       }}
     >
       <DragDropBgToolbar
         onClickAddAnswerZone={insertAnswerZone}
         id={id}
-        showSettingsButton={isImageBg}
+        showSettingsButton={isBackgroundTypeImage}
       >
         <div className="h-100 border-1 flex flex-row items-center justify-center border-black">
           <button

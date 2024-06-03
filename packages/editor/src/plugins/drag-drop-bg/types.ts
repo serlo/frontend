@@ -53,3 +53,5 @@ export interface answerZoneType
 
 export interface wrongAnswerType
   extends StateTypeReturnType<typeof answerZoneState> {}
+
+export type BackgroundShape = 'square' | 'landscape' | 'portrait'

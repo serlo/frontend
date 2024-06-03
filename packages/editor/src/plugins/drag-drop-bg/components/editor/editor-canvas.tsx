@@ -1,4 +1,5 @@
 import { selectStaticDocument, store } from '@editor/store'
+import type { EditorImageDocument } from '@editor/types/editor-plugins'
 import {
   isImageDocument,
   isTextDocument,
@@ -43,7 +44,7 @@ const getCanvasDimensions = (shape: string) => {
     case 'landscape':
       return { canvasHeight: '786px', canvasWidth: '1024px' }
     case 'portrait':
-      return { canvasHeight: '500px', canvasWidth: '786px' }
+      return { canvasHeight: '1024px', canvasWidth: '786px' }
     default:
       return { canvasHeight: '1px', canvasWidth: '1px' }
   }
@@ -82,13 +83,14 @@ export function EditorCanvas(props: DragDropBgProps) {
     [zones]
   )
 
-  const bgImgId = backgroundImage.get()
-  const backgroundImageDocument = selectStaticDocument(
-    store.getState(),
-    bgImgId
-  )
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-  const backgroundImageUrl = backgroundImageDocument?.state?.src || ''
+  const backgroundImageDocument = backgroundImage.defined
+    ? (selectStaticDocument(
+        store.getState(),
+        backgroundImage.get()
+      ) as EditorImageDocument)
+    : null
+  const backgroundImageUrl = (backgroundImageDocument?.state?.src ||
+    '') as string
 
   /**
    * Convert an answer zone to possible answer format.
@@ -150,8 +152,12 @@ export function EditorCanvas(props: DragDropBgProps) {
       </ModalWithCloseButton>
       <div
         ref={drop}
-        className={`mx-auto border-almost-black h-[${canvasHeight}] w-[${canvasWidth}] overflow-hidden rounded-lg border bg-center bg-no-repeat`}
-        style={{ backgroundImage: `url(${backgroundImageUrl})` }}
+        className="mx-auto overflow-hidden rounded-lg border border-almost-black bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url(${backgroundImageUrl})`,
+          height: canvasHeight,
+          width: canvasWidth,
+        }}
       >
         {zones?.map((answerZone, index) => {
           return (
