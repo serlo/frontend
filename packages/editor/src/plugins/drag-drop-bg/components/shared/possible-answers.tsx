@@ -10,7 +10,6 @@ interface PossibleAnswersProps {
   onClickEdit?: (id: string) => void
 }
 
-// TODO: Styling
 export function PossibleAnswers(props: PossibleAnswersProps) {
   const { possibleAnswers, canEdit, onClickEdit } = props
   return (

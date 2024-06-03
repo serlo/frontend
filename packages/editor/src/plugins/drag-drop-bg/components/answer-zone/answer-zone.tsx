@@ -2,11 +2,10 @@ import { faCog, faPlus } from '@fortawesome/free-solid-svg-icons'
 import React, { useState } from 'react'
 import { useDrag } from 'react-dnd'
 import { ResizableBox, ResizableBoxProps } from 'react-resizable'
+import { Descendant } from 'slate'
 
 // eslint-disable-next-line import/no-unassigned-import
 import 'react-resizable/css/styles.css'
-
-import { Descendant } from 'slate'
 
 import { AnswerContent } from './answer-content'
 import type { answerZoneType } from '../../types'
