@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { useDrag } from 'react-dnd'
 import { ResizableBox, ResizableBoxProps } from 'react-resizable'
 
-// TODO: Correctly import styles
 // eslint-disable-next-line import/no-unassigned-import
 import 'react-resizable/css/styles.css'
 
@@ -11,9 +10,6 @@ import { AnswerContent } from './AnswerContent'
 import type { answerZoneType } from '../../types'
 import { FaIcon } from '@/components/fa-icon'
 
-/**
- * AnswerZone component props
- */
 export interface AnswerZoneProps {
   answerZone: answerZoneType
   onClickSettingsButton?: (id: string) => void
@@ -23,8 +19,6 @@ export interface AnswerZoneProps {
 }
 
 /**
- * AnswerZone component
- *
  * This component represents a draggable and resizable answer zone
  * which can display images or text answers. It also has buttons
  * for settings and adding new answers.
@@ -94,8 +88,8 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     const answerImageUrl = getAnswerZoneImageSrc(answer.image.get())
     const answerText = getAnswerZoneText(answer.text.get())
 
-    const hasImage = !!answerImageUrl
-    const hasText = !!answerText
+    const hasImage = Boolean(answerImageUrl)
+    const hasText = Boolean(answerText)
 
     if (index === 0 && !hasImage && !hasText) {
       return renderButtons()
@@ -134,6 +128,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
       data-qa={`answer-zone-${answerZone.id.get()}`}
     >
       <ResizableBox
+        className="h-full w-full p-[6px]"
         width={dimensions.width}
         height={dimensions.height}
         minConstraints={[100, 50]}
@@ -141,11 +136,6 @@ export const AnswerZone = (props: AnswerZoneProps) => {
         onResize={handleResize}
         onResizeStop={handleResizeStop}
         resizeHandles={['nw', 'ne', 'sw', 'se']}
-        style={{
-          width: '100%',
-          height: '100%',
-          padding: '6px',
-        }}
       >
         <div
           ref={drag}
@@ -161,8 +151,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
           {answerZone.answers.length > 0 && (
             <>
               <button
-                className="absolute right-2 top-1 z-20 rounded bg-orange-100 p-1"
-                style={{ fontSize: '.5rem' }}
+                className="absolute right-2 top-1 z-20 rounded bg-orange-100 p-1 text-[0.5rem]"
                 onClick={() =>
                   onClickPlusButton && onClickPlusButton(answerZone.id.get())
                 }
@@ -170,8 +159,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
                 <FaIcon icon={faPlus} />
               </button>
               <button
-                className="absolute bottom-1 right-2 z-20 hidden rounded bg-orange-100 p-1 group-hover:block"
-                style={{ fontSize: '.5rem' }}
+                className="absolute bottom-1 right-2 z-20 hidden rounded bg-orange-100 p-1  text-[0.5rem] group-hover:block"
                 onClick={() =>
                   onClickSettingsButton &&
                   onClickSettingsButton(answerZone.id.get())

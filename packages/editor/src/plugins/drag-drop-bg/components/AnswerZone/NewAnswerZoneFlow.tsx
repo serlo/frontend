@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faFont, faImage } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useState } from 'react'
@@ -12,13 +10,10 @@ interface NewAnswerZoneFlowProps {
 }
 
 /**
- * NewAnswerZoneFlow component
  *
  * This component handles the flow for creating a new answer zone.
  * It guides the user through selecting either text or image and configuring the answer zone.
  *
- * @param {NewAnswerZoneFlowProps} props - The properties for the component.
- * @returns {JSX.Element} - The rendered component.
  */
 export function NewAnswerZoneFlow({
   zoneId,
@@ -62,7 +57,6 @@ export function NewAnswerZoneFlow({
     </div>
   )
 
-  // TODO: Image settings after image upload
   const stepOneImage = (
     <div>
       {newAnswerZone?.answers[

@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import { faClone, faTrashCan } from '@fortawesome/free-regular-svg-icons'
 import React from 'react'
 
-import type { answerZoneType } from '../../types.js'
+import type { answerZoneType } from '../../types'
 import { FaIcon } from '@/components/fa-icon'
 
 interface AnswerZoneSettingsFormProps {
@@ -12,14 +11,11 @@ interface AnswerZoneSettingsFormProps {
 }
 
 /**
- * AnswerZoneSettingsForm component
  *
  * This component renders a settings form for configuring an answer zone.
  * It allows users to duplicate, delete, and adjust settings such as
  * name, visibility, height, and width of the answer zone.
  *
- * @param {AnswerZoneSettingsFormProps} props - The properties for the component.
- * @returns {JSX.Element | null} - The rendered component or null if no answer zone is provided.
  */
 export function AnswerZoneSettingsForm({
   answerZone,
@@ -54,7 +50,7 @@ export function AnswerZoneSettingsForm({
           <input
             type="text"
             defaultValue={initialSettings.name}
-            onChange={handleInputChange(answerZone.name.set)}
+            onChange={(e) => answerZone.name.set(e.target.value)}
             className="w-full rounded border border-gray-300 bg-orange-100 p-2"
           />
         </div>

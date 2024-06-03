@@ -10,7 +10,6 @@ import { DragDropBgToolbar } from './toolbar'
 import { FaIcon } from '@/components/fa-icon'
 
 /**
- * DragDropBgEditor component
  *
  * This component represents the drag-and-drop background editor.
  *
@@ -19,7 +18,6 @@ import { FaIcon } from '@/components/fa-icon'
  *    choose a canvas shape
  *    add / manage answer zones.
  *
- * @param {DragDropBgProps} props - The properties for the DragDropBgEditor component.
  */
 export function DragDropBgEditor(props: DragDropBgProps) {
   const { state, id } = props

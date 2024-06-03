@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { selectStaticDocument, store } from '@editor/store'
 import { useContext, useState } from 'react'
 import { XYCoord, useDrop } from 'react-dnd'
@@ -13,42 +11,23 @@ import { NewAnswerZoneFlow } from '../AnswerZone/NewAnswerZoneFlow'
 import { PossibleAnswers } from '../shared/PossibleAnswers'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
-/**
- * Get the image source URL for an answer zone.
- * @param {string} answerZoneImageId - The ID of the answer zone image.
- * @returns {string} The image source URL.
- */
 const getAnswerZoneImageSrc = (answerZoneImageId: string) => {
   const answerImageDocument = selectStaticDocument(
     store.getState(),
     answerZoneImageId
   )
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return answerImageDocument?.state?.src || ''
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
+  return (answerImageDocument?.state?.src || '') as string
 }
 
-/**
- * Get the text content for an answer zone.
- * @param {string} answerZoneTextId - The ID of the answer zone text.
- * @returns {string} The text content.
- */
 const getAnswerZoneText = (answerZoneTextId: string) => {
   const answerTextDocument = selectStaticDocument(
     store.getState(),
     answerZoneTextId
   )
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return answerTextDocument?.state[0]?.children[0].text || ''
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
+  return (answerTextDocument?.state[0]?.children[0].text || '') as string
 }
-
-/**
- * EditorCanvas component
- *
- * This component represents the canvas area where answer zones and possible answers are managed and displayed.
- * It supports adding, editing, and deleting answer zones as well as managing possible answers.
- *
- * @param {DragDropBgProps} props - The properties for the EditorCanvas component.
- */
 
 const getCanvasDimensions = (shape: string) => {
   switch (shape) {
@@ -62,6 +41,13 @@ const getCanvasDimensions = (shape: string) => {
       return { canvasHeight: '1px', canvasWidth: '1px' }
   }
 }
+
+/**
+ *
+ * This component represents the canvas area where answer zones and possible answers are managed and displayed.
+ * It supports adding, editing, and deleting answer zones as well as managing possible answers.
+ *
+ */
 
 export function EditorCanvas(props: DragDropBgProps) {
   const { state } = props
@@ -94,6 +80,7 @@ export function EditorCanvas(props: DragDropBgProps) {
     store.getState(),
     bgImgId
   )
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
   const backgroundImageUrl = backgroundImageDocument?.state?.src || ''
 
   /**
