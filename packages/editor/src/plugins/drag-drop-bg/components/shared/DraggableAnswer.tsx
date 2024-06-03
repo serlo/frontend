@@ -1,6 +1,7 @@
 // import { useEmptyPreview } from '@editor/core/helpers/use-empty-preview'
 import { useMemo } from 'react'
 import { useDrag } from 'react-dnd'
+import { Descendant } from 'slate'
 
 import type { DraggableAnswerType } from '../../types'
 import { AnswerContent } from '../AnswerZone/AnswerContent'
@@ -9,7 +10,7 @@ import { cn } from '@/helper/cn'
 export const blankDraggableAnswerDragType = 'blank-solution'
 
 interface DraggableAnswerProps {
-  text?: string
+  text?: Descendant[]
   imageUrl?: string
   draggableId: string
   isAnswerCorrect?: boolean

@@ -1,11 +1,12 @@
 import { StateTypeReturnType } from '@editor/plugin'
+import { Descendant } from 'slate'
 
 import type { answerData, answerZoneState } from '.'
 
 export interface PossibleAnswerType {
   id: string
   imageUrl?: string
-  text?: string
+  text?: Descendant[]
 }
 
 export interface BasicDropZone {
@@ -28,7 +29,7 @@ export interface BasicDropZone {
 
 export interface DraggableAnswerType {
   draggableId: string
-  text?: string
+  text?: Descendant[]
   imageUrl?: string
 }
 

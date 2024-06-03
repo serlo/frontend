@@ -2,8 +2,8 @@ import { DndWrapper } from '@editor/core/components/dnd-wrapper'
 import {
   EditorDragDropBgDocument,
   EditorImageDocument,
-  EditorTextDocument,
 } from '@editor/types/editor-plugins'
+import { isTextDocument } from '@editor/types/plugin-type-guards'
 import { useState } from 'react'
 
 import { PossibleAnswers } from './components/shared/PossibleAnswers'
@@ -25,12 +25,14 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
     .map((zone) => {
       const answersForZone = zone.answers.map((answer) => {
         const zoneId = zone.id
+
         const answerImageState = answer.image as EditorImageDocument
-        const answerImageUrl = (answerImageState?.state.src || '') as string
-        const answerTextState = answer.text as EditorTextDocument
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        const answerText = (answerTextState?.state[0]?.children[0].text ||
-          '') as string
+
+        const answerImageUrl = answerImageState.state.src as string
+
+        const answerText = isTextDocument(answer.text)
+          ? answer.text.state
+          : undefined
 
         return {
           id: zoneId,

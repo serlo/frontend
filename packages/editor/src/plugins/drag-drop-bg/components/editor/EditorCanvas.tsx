@@ -1,4 +1,8 @@
 import { selectStaticDocument, store } from '@editor/store'
+import {
+  isImageDocument,
+  isTextDocument,
+} from '@editor/types/plugin-type-guards'
 import { useContext, useState } from 'react'
 import { XYCoord, useDrop } from 'react-dnd'
 
@@ -16,8 +20,9 @@ const getAnswerZoneImageSrc = (answerZoneImageId: string) => {
     store.getState(),
     answerZoneImageId
   )
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
-  return (answerImageDocument?.state?.src || '') as string
+  return isImageDocument(answerImageDocument)
+    ? (answerImageDocument.state.src as string)
+    : ''
 }
 
 const getAnswerZoneText = (answerZoneTextId: string) => {
@@ -25,8 +30,10 @@ const getAnswerZoneText = (answerZoneTextId: string) => {
     store.getState(),
     answerZoneTextId
   )
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
-  return (answerTextDocument?.state[0]?.children[0].text || '') as string
+
+  return isTextDocument(answerTextDocument)
+    ? answerTextDocument.state
+    : undefined
 }
 
 const getCanvasDimensions = (shape: string) => {

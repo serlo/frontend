@@ -6,6 +6,8 @@ import { ResizableBox, ResizableBoxProps } from 'react-resizable'
 // eslint-disable-next-line import/no-unassigned-import
 import 'react-resizable/css/styles.css'
 
+import { Descendant } from 'slate'
+
 import { AnswerContent } from './AnswerContent'
 import type { answerZoneType } from '../../types'
 import { FaIcon } from '@/components/fa-icon'
@@ -15,7 +17,7 @@ export interface AnswerZoneProps {
   onClickSettingsButton?: (id: string) => void
   onClickPlusButton?: (id: string) => void
   getAnswerZoneImageSrc: (id: string) => string
-  getAnswerZoneText: (text: string) => string
+  getAnswerZoneText: (text: string) => Descendant[] | undefined
 }
 
 /**

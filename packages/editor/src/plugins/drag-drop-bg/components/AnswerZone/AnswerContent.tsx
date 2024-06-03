@@ -1,8 +1,10 @@
+import { StaticSlate } from '@editor/plugins/text/static-components/static-slate'
 import React from 'react'
+import { Descendant } from 'slate'
 
 interface AnswerContentProps {
   url?: string
-  text?: string
+  text?: Descendant[]
   isPreview?: boolean
 }
 
@@ -22,11 +24,7 @@ export const AnswerContent = ({
           : 'h-full w-full object-contain'
       }
     />
-  ) : (
-    <div className="h-100 w-100 flex items-center justify-center">
-      <span className="rounded-full border border-brand bg-brand-50 px-2">
-        <span>{text}</span>
-      </span>
-    </div>
-  )
+  ) : text ? (
+    <StaticSlate element={text} />
+  ) : null
 }
