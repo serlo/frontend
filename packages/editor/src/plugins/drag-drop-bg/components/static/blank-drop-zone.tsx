@@ -2,7 +2,7 @@ import React, { memo, useState } from 'react'
 import { useDrop } from 'react-dnd'
 
 import { BlankDropZoneSpec, PossibleAnswerType } from '../../types'
-import { AnswerContent } from '../AnswerZone/AnswerContent'
+import { AnswerContent } from '../answer-zone/answer-content'
 
 interface BlankDropZoneProps {
   accept: string[]

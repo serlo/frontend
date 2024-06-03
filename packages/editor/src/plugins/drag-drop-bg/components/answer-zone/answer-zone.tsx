@@ -8,7 +8,7 @@ import 'react-resizable/css/styles.css'
 
 import { Descendant } from 'slate'
 
-import { AnswerContent } from './AnswerContent'
+import { AnswerContent } from './answer-content'
 import type { answerZoneType } from '../../types'
 import { FaIcon } from '@/components/fa-icon'
 

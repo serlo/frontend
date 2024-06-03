@@ -4,7 +4,7 @@ import { useDrag } from 'react-dnd'
 import { Descendant } from 'slate'
 
 import type { DraggableAnswerType } from '../../types'
-import { AnswerContent } from '../AnswerZone/AnswerContent'
+import { AnswerContent } from '../answer-zone/answer-content'
 import { cn } from '@/helper/cn'
 
 export const blankDraggableAnswerDragType = 'blank-solution'

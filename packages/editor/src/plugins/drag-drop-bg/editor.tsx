@@ -3,9 +3,9 @@ import type { EditorImageDocument } from '@editor/types/editor-plugins'
 import { faImage, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 import type { DragDropBgProps } from '.'
-import { EditorCanvas } from './components/editor/EditorCanvas'
+import { EditorCanvas } from './components/editor/editor-canvas'
 import { AnswerZonesContext } from './context/context'
-import { useAnswerZones } from './hooks/useAnswerZones'
+import { useAnswerZones } from './hooks/use-answer-zones'
 import { DragDropBgToolbar } from './toolbar'
 import { FaIcon } from '@/components/fa-icon'
 

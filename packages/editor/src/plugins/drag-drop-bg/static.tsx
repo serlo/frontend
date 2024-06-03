@@ -6,8 +6,8 @@ import {
 import { isTextDocument } from '@editor/types/plugin-type-guards'
 import { useState } from 'react'
 
-import { PossibleAnswers } from './components/shared/PossibleAnswers'
-import { BlankDropZone } from './components/static/BlankDropZone'
+import { PossibleAnswers } from './components/shared/possible-answers'
+import { BlankDropZone } from './components/static/blank-drop-zone'
 
 export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
   const {
