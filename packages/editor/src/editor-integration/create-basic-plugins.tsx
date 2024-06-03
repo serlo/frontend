@@ -49,7 +49,7 @@ export function createBasicPlugins(props: Required<PluginsConfig>) {
     },
     {
       type: EditorPluginType.DragDropBg,
-      plugin: createSpoilerPlugin({ allowedPlugins: allowedChildPlugins }),
+      plugin: createSpoilerPlugin(),
       visibleInSuggestions: true,
       icon: <div>!!!</div>,
     },
