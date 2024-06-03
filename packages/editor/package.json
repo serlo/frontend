@@ -44,7 +44,6 @@
   },
   "dependencies": {
     "@serlo/katex-styles": "1.0.1",
-    "@types/react-resizable": "^3.0.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-resizable": "^3.0.5"
@@ -92,6 +91,7 @@
     "@types/react-lazyload": "^3.2.1",
     "@types/react-modal": "^3.16.1",
     "@types/react-notify-toast": "^0.5.6",
+    "@types/react-resizable": "^3.0.7",
     "@types/react-syntax-highlighter": "^15.5.11",
     "@types/slate-react": "^0.50.1",
     "@types/uuid": "^9.0.8",

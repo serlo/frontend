@@ -1,4 +1,3 @@
-/* eslint-disable no-duplicate-imports */
 import React, { memo, useState } from 'react'
 import { useDrop } from 'react-dnd'
 
