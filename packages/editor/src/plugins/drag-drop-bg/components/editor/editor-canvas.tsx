@@ -193,7 +193,7 @@ export function EditorCanvas(props: DragDropBgProps) {
         }}
         className=" max-w-md translate-y-0 sm:top-1/4"
       >
-        <h3 className="serlo-h3 mt-4">
+        <h3 className="serlo-h3 mt-4 px-3">
           {showSettingsModal ? 'Settings' : 'Neues Ablageobjekt'}
         </h3>
         {showSettingsModal && (
