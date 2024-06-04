@@ -14,6 +14,7 @@ import { FaIcon } from '@/components/fa-icon'
 export interface AnswerZoneProps {
   answerZone: answerZoneType
   onClickSettingsButton?: (id: string) => void
+  onClick?: (id: string) => void
   onClickPlusButton?: (id: string) => void
   getAnswerZoneImageSrc: (id: string) => string
   getAnswerZoneText: (text: string) => Descendant[] | undefined
@@ -30,6 +31,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
 
   const {
     answerZone,
+    onClick,
     onClickSettingsButton,
     onClickPlusButton,
     getAnswerZoneImageSrc,
@@ -120,6 +122,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     <div
       ref={dragPreview}
       className="absolute flex cursor-move items-center justify-center rounded bg-white"
+      onClick={() => onClick && onClick(answerZone.id.get())}
       style={{
         left,
         top,

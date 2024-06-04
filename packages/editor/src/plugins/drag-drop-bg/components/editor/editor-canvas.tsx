@@ -1,4 +1,5 @@
 import { selectStaticDocument, store } from '@editor/store'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
 import {
   isImageDocument,
@@ -6,6 +7,7 @@ import {
 } from '@editor/types/plugin-type-guards'
 import { useContext, useState } from 'react'
 import { XYCoord, useDrop } from 'react-dnd'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 import type { DragDropBgProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
@@ -24,6 +26,14 @@ const getAnswerZoneImageSrc = (answerZoneImageId: string) => {
   return isImageDocument(answerImageDocument)
     ? (answerImageDocument.state.src as string)
     : ''
+}
+
+const getAnswerZoneImageState = (answerZoneImageId: string) => {
+  const answerImageDocument = selectStaticDocument(
+    store.getState(),
+    answerZoneImageId
+  )
+  return isImageDocument(answerImageDocument) ? answerImageDocument.state : ''
 }
 
 const getAnswerZoneText = (answerZoneTextId: string) => {
@@ -66,6 +76,9 @@ export function EditorCanvas(props: DragDropBgProps) {
   const { zones, selectAnswerZone, currentAnswerZone, canvasShape } =
     context || {}
 
+  const [answerZoneClipboardItem, setAnswerZoneClipboardItem] =
+    useState<answerZoneType | null>(null)
+
   const { canvasHeight, canvasWidth } = getCanvasDimensions(canvasShape)
 
   const [, drop] = useDrop(
@@ -82,6 +95,47 @@ export function EditorCanvas(props: DragDropBgProps) {
     }),
     [zones]
   )
+
+  useHotkeys(['ctrl+c, meta+c'], (event) => {
+    setAnswerZoneClipboardItem(currentAnswerZone)
+    event.preventDefault()
+  })
+
+  useHotkeys(['ctrl+v, meta+v'], (event) => {
+    if (!answerZoneClipboardItem) return
+    const currentLength = answerZones.length
+    const toCopy = answerZones.find(
+      (zone) => zone.id.get() === answerZoneClipboardItem.id.get()
+    )
+    if (toCopy) {
+      const newZone = {
+        id: `answerZone-${currentLength}`,
+        name: toCopy.name.get(),
+        position: {
+          left: toCopy.position.left.get() + 70,
+          top: toCopy.position.top.get() + 50,
+        },
+        layout: {
+          width: toCopy.layout.width.get(),
+          height: toCopy.layout.height.get(),
+          visible: true,
+          lockedAspectRatio: true,
+        },
+        answers: toCopy.answers.map((answer) => ({
+          image: {
+            plugin: EditorPluginType.Image,
+            state: getAnswerZoneImageState(answer.image.get()),
+          },
+          text: {
+            plugin: EditorPluginType.Text,
+            state: getAnswerZoneText(answer.text.get()),
+          },
+        })),
+      }
+      answerZones.insert(currentLength, newZone)
+    }
+    event.preventDefault()
+  })
 
   const backgroundImageDocument = backgroundImage.defined
     ? (selectStaticDocument(
@@ -163,6 +217,7 @@ export function EditorCanvas(props: DragDropBgProps) {
           return (
             <AnswerZone
               key={index}
+              onClick={() => selectAnswerZone(answerZone.id.get())}
               onClickSettingsButton={() => {
                 selectAnswerZone(answerZone.id.get())
                 setShowSettingsModal(true)
