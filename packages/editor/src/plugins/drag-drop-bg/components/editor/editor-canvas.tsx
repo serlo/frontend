@@ -173,7 +173,7 @@ export function EditorCanvas(props: DragDropBgProps) {
 
   const correctAnswers = zones.map(zoneToPossibleAnswer).flat()
   const wrongAnswers = extraDraggableAnswers.map(zoneToPossibleAnswer).flat()
-  const possibleAnswers = [...correctAnswers, ...wrongAnswers] // TODO: shuffle answers
+  const possibleAnswers = [...correctAnswers, ...wrongAnswers]
 
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const [showCreateDropZoneModal, setShowCreateDropZoneModal] = useState(false)

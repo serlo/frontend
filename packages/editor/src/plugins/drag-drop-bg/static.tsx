@@ -4,7 +4,7 @@ import {
   EditorImageDocument,
 } from '@editor/types/editor-plugins'
 import { isTextDocument } from '@editor/types/plugin-type-guards'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { PossibleAnswers } from './components/shared/possible-answers'
 import { BlankDropZone } from './components/static/blank-drop-zone'
@@ -44,7 +44,12 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
     })
     .flat()
 
-  const possibleAnswers = [...correctAnswers, ...extraDraggableAnswers]
+  const possibleAnswers = useMemo(() => {
+    return [...correctAnswers, ...extraDraggableAnswers]
+      .map((possibleAnswer) => ({ possibleAnswer, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ possibleAnswer }) => possibleAnswer)
+  }, [correctAnswers, extraDraggableAnswers])
 
   const [dropzoneAnswerMap, setDropzoneAnswerMap] = useState(
     new Map<string, string>()
