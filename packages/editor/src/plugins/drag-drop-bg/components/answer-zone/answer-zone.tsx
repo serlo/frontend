@@ -8,11 +8,11 @@ import { Descendant } from 'slate'
 import 'react-resizable/css/styles.css'
 
 import { AnswerContent } from './answer-content'
-import type { answerZoneType } from '../../types'
+import type { AnswerZoneState } from '../../types'
 import { FaIcon } from '@/components/fa-icon'
 
 export interface AnswerZoneProps {
-  answerZone: answerZoneType
+  answerZone: AnswerZoneState
   onClickSettingsButton?: (id: string) => void
   onClick?: (id: string) => void
   onClickPlusButton?: (id: string) => void

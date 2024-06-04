@@ -10,7 +10,7 @@ import { EditorCanvas } from './components/editor/editor-canvas'
 import { AnswerZonesContext } from './context/context'
 import { useAnswerZones } from './hooks/use-answer-zones'
 import { DragDropBgToolbar } from './toolbar'
-import type { BackgroundShape } from './types'
+import { BackgroundType, BackgroundShape } from './types'
 
 export function DragDropBgEditor(props: DragDropBgProps) {
   const { state, id } = props
@@ -30,12 +30,12 @@ export function DragDropBgEditor(props: DragDropBgProps) {
     useAnswerZones(props)
 
   const backgroundType = state.backgroundType.get()
-  const isBackgroundTypeBlank = backgroundType === 'blank'
-  const isBackgroundTypeImage = backgroundType === 'image'
+  const isBackgroundTypeBlank = backgroundType === BackgroundType.Blank
+  const isBackgroundTypeImage = backgroundType === BackgroundType.Image
 
   if (backgroundType === '') return <BackgroundTypeSelect {...props} />
 
-  const canvasShape = state.canvasShape.get()
+  const canvasShape = state.canvasShape.get() as BackgroundShape
 
   if (!canvasShape) return <BackgroundShapeSelect {...props} />
 
@@ -51,7 +51,7 @@ export function DragDropBgEditor(props: DragDropBgProps) {
     <AnswerZonesContext.Provider
       value={{
         zones: state.answerZones,
-        canvasShape: canvasShape as BackgroundShape,
+        canvasShape,
         currentAnswerZone,
         selectAnswerZone,
       }}

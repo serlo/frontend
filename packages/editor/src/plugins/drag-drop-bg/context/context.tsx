@@ -1,6 +1,6 @@
 import { createContext } from 'react'
 
-import type { answerZoneType } from '../types'
+import { BackgroundShape, type AnswerZoneState } from '../types'
 
 // Define default values for state management
 const emptyVal = {
@@ -21,17 +21,17 @@ const emptyStrVal = {
   set: (_value: string) => {},
 }
 
-const emptyAnswersArray = [] as any[] as answerZoneType['answers']
+const emptyAnswersArray = [] as any[] as AnswerZoneState['answers']
 
 export interface AnswerZonesContextType {
-  zones: answerZoneType[]
-  canvasShape: 'square' | 'landscape' | 'portrait'
-  currentAnswerZone: answerZoneType
+  zones: AnswerZoneState[]
+  canvasShape: BackgroundShape
+  currentAnswerZone: AnswerZoneState
   selectAnswerZone: (id: string) => void
 }
 
 // Provide a default structure for answerZoneType
-const defaultAnswerZone: answerZoneType = {
+const defaultAnswerZone: AnswerZoneState = {
   id: emptyStrVal,
   name: emptyStrVal,
   layout: {
@@ -49,7 +49,7 @@ const defaultAnswerZone: answerZoneType = {
 
 export const defaultAnswerZonesContext: AnswerZonesContextType = {
   zones: [],
-  canvasShape: 'square',
+  canvasShape: BackgroundShape.Square,
   currentAnswerZone: defaultAnswerZone,
   selectAnswerZone: (_id: string) => {},
 }

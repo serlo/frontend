@@ -1,11 +1,11 @@
 import { faClone, faTrashCan } from '@fortawesome/free-regular-svg-icons'
 import React from 'react'
 
-import type { answerZoneType } from '../../types'
+import type { AnswerZoneState } from '../../types'
 import { FaIcon } from '@/components/fa-icon'
 
 interface AnswerZoneSettingsFormProps {
-  answerZone: answerZoneType
+  answerZone: AnswerZoneState
   onDuplicate: () => void
   onDelete: () => void
 }

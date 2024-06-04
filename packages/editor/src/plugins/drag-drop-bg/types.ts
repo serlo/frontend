@@ -48,10 +48,17 @@ export interface AnswerZoneSettings {
 export interface answerDataType
   extends StateTypeReturnType<typeof answerData> {}
 
-export interface answerZoneType
+export interface AnswerZoneState
   extends StateTypeReturnType<typeof answerZoneState> {}
 
-export interface wrongAnswerType
-  extends StateTypeReturnType<typeof answerZoneState> {}
+export enum BackgroundType {
+  Blank = 'blank',
+  Image = 'image',
+}
 
-export type BackgroundShape = 'square' | 'landscape' | 'portrait'
+export enum BackgroundShape {
+  Unset = '',
+  Square = 'square',
+  Landscape = 'landscape',
+  Portrait = 'portrait',
+}

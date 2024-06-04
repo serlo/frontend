@@ -1,12 +1,12 @@
 import { useState } from 'react'
 
 import type { DragDropBgProps } from '..'
-import type { answerZoneType } from '../types'
+import type { AnswerZoneState } from '../types'
 
 export function useAnswerZones({ state }: DragDropBgProps) {
   const { answerZones } = state
 
-  const [currentAnswerZone, setCurrentAnswerZone] = useState<answerZoneType>(
+  const [currentAnswerZone, setCurrentAnswerZone] = useState<AnswerZoneState>(
     answerZones[0]
   )
 

@@ -11,7 +11,7 @@ import { useHotkeys } from 'react-hotkeys-hook'
 
 import type { DragDropBgProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
-import { answerZoneType, wrongAnswerType } from '../../types'
+import { AnswerZoneState } from '../../types'
 import { AnswerZone } from '../answer-zone/answer-zone'
 import { AnswerZoneSettingsForm } from '../answer-zone/answer-zone-settings-form'
 import { NewAnswerZoneFlow } from '../answer-zone/new-answer-zone-flow'
@@ -77,14 +77,14 @@ export function EditorCanvas(props: DragDropBgProps) {
     context || {}
 
   const [answerZoneClipboardItem, setAnswerZoneClipboardItem] =
-    useState<answerZoneType | null>(null)
+    useState<AnswerZoneState | null>(null)
 
   const { canvasHeight, canvasWidth } = getCanvasDimensions(canvasShape)
 
   const [, drop] = useDrop(
     () => ({
       accept: 'all',
-      drop(answerZone: answerZoneType, monitor) {
+      drop(answerZone: AnswerZoneState, monitor) {
         const change = monitor.getDifferenceFromInitialOffset()
         const delta = change || ({ x: 0, y: 0 } as XYCoord)
         const left = Math.round(answerZone.position.left.get() + delta.x)
@@ -160,7 +160,7 @@ export function EditorCanvas(props: DragDropBgProps) {
   /**
    * Convert an answer zone to possible answer format.
    */
-  const zoneToPossibleAnswer = (zone: answerZoneType | wrongAnswerType) => {
+  const zoneToPossibleAnswer = (zone: AnswerZoneState) => {
     const answers = zone.answers.map((answer) => {
       const zoneImageId = answer.image.get()
       const zoneImgUrl = getAnswerZoneImageSrc(zoneImageId)

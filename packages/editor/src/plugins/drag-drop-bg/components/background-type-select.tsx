@@ -4,6 +4,7 @@ import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 
 import type { DragDropBgProps } from '..'
 import { DragDropBgToolbar } from '../toolbar'
+import { BackgroundShape, BackgroundType } from '../types'
 
 export function BackgroundTypeSelect(props: DragDropBgProps) {
   const { state, id } = props
@@ -16,8 +17,8 @@ export function BackgroundTypeSelect(props: DragDropBgProps) {
         <button
           className="m-[20px] rounded-[5px] bg-orange-100 p-[10px] pr-[20px]"
           onClick={() => {
-            backgroundType.set('blank')
-            canvasShape.set('')
+            backgroundType.set(BackgroundType.Blank)
+            canvasShape.set(BackgroundShape.Unset)
           }}
         >
           Blank
@@ -26,11 +27,11 @@ export function BackgroundTypeSelect(props: DragDropBgProps) {
         <button
           className="m-[20px] rounded-[5px] bg-orange-100 p-[10px] pr-[20px]"
           onClick={() => {
-            backgroundType.set('image')
+            backgroundType.set(BackgroundType.Image)
             if (!backgroundImage.defined)
               backgroundImage.create({ plugin: EditorPluginType.Image })
 
-            canvasShape.set('')
+            canvasShape.set(BackgroundShape.Unset)
           }}
         >
           Image <FaIcon icon={faImage} />
