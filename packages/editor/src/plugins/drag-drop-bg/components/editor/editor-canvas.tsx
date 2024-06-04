@@ -96,6 +96,37 @@ export function EditorCanvas(props: DragDropBgProps) {
     [zones]
   )
 
+  const duplicateZone = (idToDuplicate: string) => {
+    const toCopy = answerZones.find((zone) => zone.id.get() === idToDuplicate)
+    if (!toCopy) return
+    const currentLength = answerZones.length
+    const newZone = {
+      id: `answerZone-${currentLength}`,
+      name: toCopy.name.get(),
+      position: {
+        left: toCopy.position.left.get() + 70,
+        top: toCopy.position.top.get() + 50,
+      },
+      layout: {
+        width: toCopy.layout.width.get(),
+        height: toCopy.layout.height.get(),
+        visible: true,
+        lockedAspectRatio: true,
+      },
+      answers: toCopy.answers.map((answer) => ({
+        image: {
+          plugin: EditorPluginType.Image,
+          state: getAnswerZoneImageState(answer.image.get()),
+        },
+        text: {
+          plugin: EditorPluginType.Text,
+          state: getAnswerZoneText(answer.text.get()),
+        },
+      })),
+    }
+    answerZones.insert(currentLength, newZone)
+  }
+
   useHotkeys('backspace, del', (event) => {
     if (!currentAnswerZone) return
     const index = answerZones.findIndex(
@@ -112,37 +143,8 @@ export function EditorCanvas(props: DragDropBgProps) {
 
   useHotkeys(['ctrl+v, meta+v'], (event) => {
     if (!answerZoneClipboardItem) return
-    const currentLength = answerZones.length
-    const toCopy = answerZones.find(
-      (zone) => zone.id.get() === answerZoneClipboardItem.id.get()
-    )
-    if (toCopy) {
-      const newZone = {
-        id: `answerZone-${currentLength}`,
-        name: toCopy.name.get(),
-        position: {
-          left: toCopy.position.left.get() + 70,
-          top: toCopy.position.top.get() + 50,
-        },
-        layout: {
-          width: toCopy.layout.width.get(),
-          height: toCopy.layout.height.get(),
-          visible: true,
-          lockedAspectRatio: true,
-        },
-        answers: toCopy.answers.map((answer) => ({
-          image: {
-            plugin: EditorPluginType.Image,
-            state: getAnswerZoneImageState(answer.image.get()),
-          },
-          text: {
-            plugin: EditorPluginType.Text,
-            state: getAnswerZoneText(answer.text.get()),
-          },
-        })),
-      }
-      answerZones.insert(currentLength, newZone)
-    }
+    const idToDuplicate = answerZoneClipboardItem.id.get()
+    duplicateZone(idToDuplicate)
     event.preventDefault()
   })
 
@@ -199,7 +201,9 @@ export function EditorCanvas(props: DragDropBgProps) {
         {showSettingsModal && (
           <AnswerZoneSettingsForm
             answerZone={currentAnswerZone}
-            onDuplicate={() => {}}
+            onDuplicate={() => {
+              duplicateZone(currentAnswerZone.id.get())
+            }}
             onDelete={() => {
               setShowSettingsModal(false)
               const index = answerZones.findIndex(
