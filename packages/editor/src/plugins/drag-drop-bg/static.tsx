@@ -53,24 +53,29 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
   }, [correctAnswers, extraDraggableAnswers])
 
   const [dropzoneAnswerMap, setDropzoneAnswerMap] = useState(
-    new Map<string, string>()
+    new Map<string, string[]>()
   )
-
-  const onDropAnswer = (answerId: string, dropzoneId: string) => {
-    setDropzoneAnswerMap((prev) => new Map(prev.set(dropzoneId, answerId)))
-    setIsCorrectMap((prev) => new Map(prev.set(dropzoneId, null)))
-  }
 
   // dropzone id to true/false
   const [isCorrectMap, setIsCorrectMap] = useState(
     new Map<string, boolean | null>()
   )
 
+  const onDropAnswer = (answerId: string, dropzoneId: string) => {
+    setDropzoneAnswerMap((prev) => {
+      const updatedMap = new Map(prev)
+      const existingAnswers = updatedMap.get(dropzoneId) || []
+      updatedMap.set(dropzoneId, [...existingAnswers, answerId])
+      return updatedMap
+    })
+    setIsCorrectMap((prev) => new Map(prev.set(dropzoneId, null)))
+  }
+
   const checkAnswers = () => {
     answerZones.forEach((answerZone, index) => {
       const expectedAnswerId = answerZone.id
-      const droppedAnswerId = dropzoneAnswerMap.get(index.toString())
-      const isAnswerCorrect = expectedAnswerId === droppedAnswerId
+      const droppedAnswerIds = dropzoneAnswerMap.get(index.toString()) || []
+      const isAnswerCorrect = droppedAnswerIds.includes(expectedAnswerId)
       setIsCorrectMap(
         (prev) => new Map(prev.set(index.toString(), isAnswerCorrect))
       )
