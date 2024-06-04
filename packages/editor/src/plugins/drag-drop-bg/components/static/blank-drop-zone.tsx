@@ -23,8 +23,7 @@ export const BlankDropZone = memo(function BlankDropZone({
   isCorrect,
   visibility,
 }: BlankDropZoneProps) {
-  const [lastDroppedItem, setLastDroppedItem] =
-    useState<PossibleAnswerType | null>(null)
+  const [droppedAnswers, setDroppedAnswers] = useState<PossibleAnswerType[]>([])
 
   const { name } = dropZone
   const { left, top } = dropZone.position ?? { left: 0, top: 0 }
@@ -33,7 +32,7 @@ export const BlankDropZone = memo(function BlankDropZone({
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: 'all',
     drop: (answer: PossibleAnswerType) => {
-      setLastDroppedItem(answer)
+      setDroppedAnswers((prev) => [...prev, answer])
       onDropAnswer(answer.id, dropZone.id)
     },
     collect: (monitor) => ({
@@ -72,10 +71,9 @@ export const BlankDropZone = memo(function BlankDropZone({
       {isVisible && name && name.length > 0 && (
         <div className="absolute left-0 top-0 bg-white p-1 text-xs">{name}</div>
       )}
-      <AnswerContent
-        url={lastDroppedItem?.imageUrl}
-        text={lastDroppedItem?.text}
-      />
+      {droppedAnswers.map((answer, index) => (
+        <AnswerContent key={index} url={answer.imageUrl} text={answer.text} />
+      ))}
     </div>
   )
 })
