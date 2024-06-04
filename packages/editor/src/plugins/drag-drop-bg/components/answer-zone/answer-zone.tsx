@@ -143,7 +143,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
       >
         <div
           ref={drag}
-          className="group relative flex h-full w-full flex-row border-2 border-blue-500"
+          className="group relative flex h-full w-full flex-row items-center justify-center border-2 border-blue-500"
         >
           {name && name.length > 0 && (
             <div className="absolute left-0 top-0 bg-white p-1 text-xs">

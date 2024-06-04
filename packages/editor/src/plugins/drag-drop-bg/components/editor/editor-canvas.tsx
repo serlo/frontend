@@ -101,7 +101,6 @@ export function EditorCanvas(props: DragDropBgProps) {
     const index = answerZones.findIndex(
       (a) => a.id.get() === currentAnswerZone.id.get()
     )
-
     index !== -1 && answerZones.remove(index)
     event.preventDefault()
   })
