@@ -62,3 +62,9 @@ export enum BackgroundShape {
   Landscape = 'landscape',
   Portrait = 'portrait',
 }
+
+export enum DropzoneVisibility {
+  Full = 'full',
+  Partial = 'partial',
+  None = 'none',
+}

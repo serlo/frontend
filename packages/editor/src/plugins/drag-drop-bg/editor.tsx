@@ -9,7 +9,7 @@ import { EditorCanvas } from './components/editor/editor-canvas'
 import { AnswerZonesContext } from './context/context'
 import { useAnswerZones } from './hooks/use-answer-zones'
 import { DragDropBgToolbar } from './toolbar'
-import { BackgroundType, BackgroundShape } from './types'
+import { BackgroundType, BackgroundShape, DropzoneVisibility } from './types'
 
 export function DragDropBgEditor(props: DragDropBgProps) {
   const { state, id } = props
@@ -46,6 +46,12 @@ export function DragDropBgEditor(props: DragDropBgProps) {
     return backgroundImage.render()
   }
 
+  const visibilityOptions = [
+    DropzoneVisibility.Full,
+    DropzoneVisibility.Partial,
+    DropzoneVisibility.None,
+  ]
+
   return (
     <AnswerZonesContext.Provider
       value={{
@@ -70,11 +76,10 @@ export function DragDropBgEditor(props: DragDropBgProps) {
             value={dropzoneVisibility.value}
             dataQa="plugin-blanks-mode-switch"
             changeValue={(value) => dropzoneVisibility.set(value)}
-            options={[
-              { value: 'full', text: 'Full' },
-              { value: 'partial', text: 'Partial' },
-              { value: 'none', text: 'None' },
-            ]}
+            options={visibilityOptions.map((option) => ({
+              text: option.charAt(0).toUpperCase() + option.slice(1),
+              value: option,
+            }))}
           />
         </div>
       </DragDropBgToolbar>

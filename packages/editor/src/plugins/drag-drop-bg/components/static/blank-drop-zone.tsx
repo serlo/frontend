@@ -1,7 +1,11 @@
 import React, { memo, useState } from 'react'
 import { useDrop } from 'react-dnd'
 
-import { BlankDropZoneSpec, PossibleAnswerType } from '../../types'
+import {
+  BlankDropZoneSpec,
+  DropzoneVisibility,
+  PossibleAnswerType,
+} from '../../types'
 import { AnswerContent } from '../answer-zone/answer-content'
 
 interface BlankDropZoneProps {
@@ -10,7 +14,7 @@ interface BlankDropZoneProps {
   dropZone: BlankDropZoneSpec
   onDropAnswer: (answerId: string, dropzoneId: string) => void
   isCorrect?: boolean | null
-  visibility?: 'full' | 'partial' | 'none'
+  visibility?: DropzoneVisibility
 }
 
 export const BlankDropZone = memo(function BlankDropZone({

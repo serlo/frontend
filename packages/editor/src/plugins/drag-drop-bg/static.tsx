@@ -8,6 +8,7 @@ import { useMemo, useState } from 'react'
 
 import { PossibleAnswers } from './components/shared/possible-answers'
 import { BlankDropZone } from './components/static/blank-drop-zone'
+import { DropzoneVisibility } from './types'
 
 export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
   const {
@@ -91,7 +92,7 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
           return (
             <BlankDropZone
               key={id}
-              visibility={dropzoneVisibility}
+              visibility={dropzoneVisibility as DropzoneVisibility}
               accept={['answer']}
               dropZone={dropZone}
               onDropAnswer={onDropAnswer}
