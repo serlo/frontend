@@ -10,14 +10,14 @@ interface BlankDropZoneProps {
   dropZone: BlankDropZoneSpec
   onDropAnswer: (answerId: string, dropzoneId: string) => void
   isCorrect?: boolean | null
-  isVisible?: boolean
+  visibility?: 'full' | 'partial' | 'none'
 }
 
 export const BlankDropZone = memo(function BlankDropZone({
   dropZone,
   onDropAnswer,
   isCorrect,
-  isVisible,
+  visibility,
 }: BlankDropZoneProps) {
   const [lastDroppedItem, setLastDroppedItem] =
     useState<PossibleAnswerType | null>(null)
@@ -50,6 +50,8 @@ export const BlankDropZone = memo(function BlankDropZone({
       : isCorrect === false
         ? 'border-red-500'
         : 'border-brand-500'
+
+  const isVisible = visibility === 'full' || visibility === 'partial'
 
   return (
     <div

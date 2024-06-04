@@ -1,5 +1,5 @@
 import { faCog, faPlus } from '@fortawesome/free-solid-svg-icons'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useDrag } from 'react-dnd'
 import { ResizableBox, ResizableBoxProps } from 'react-resizable'
 import { Descendant } from 'slate'
@@ -8,8 +8,10 @@ import { Descendant } from 'slate'
 import 'react-resizable/css/styles.css'
 
 import { AnswerContent } from './answer-content'
+import { AnswerZonesContext } from '../../context/context'
 import type { AnswerZoneState } from '../../types'
 import { FaIcon } from '@/components/fa-icon'
+import { cn } from '@/helper/cn'
 
 export interface AnswerZoneProps {
   answerZone: AnswerZoneState
@@ -37,6 +39,10 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     getAnswerZoneImageSrc,
     getAnswerZoneText,
   } = props
+
+  const context = useContext(AnswerZonesContext)
+
+  const { dropzoneVisibility } = context || {}
 
   const [collected, drag, dragPreview] = useDrag({
     type: 'all',
@@ -121,7 +127,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   return (
     <div
       ref={dragPreview}
-      className="absolute flex cursor-move items-center justify-center rounded bg-white"
+      className="absolute flex cursor-move items-center justify-center rounded bg-transparent"
       onClick={() => onClick && onClick(answerZone.id.get())}
       style={{
         left,
@@ -143,7 +149,12 @@ export const AnswerZone = (props: AnswerZoneProps) => {
       >
         <div
           ref={drag}
-          className="group relative flex h-full w-full flex-row items-center justify-center border-2 border-blue-500"
+          className={cn(
+            'group relative flex h-full w-full flex-row items-center justify-center border-2 border-blue-500 bg-white',
+            (dropzoneVisibility === 'none' ||
+              dropzoneVisibility === 'partial') &&
+              'border-dashed'
+          )}
         >
           {name && name.length > 0 && (
             <div className="absolute left-0 top-0 bg-white p-1 text-xs">

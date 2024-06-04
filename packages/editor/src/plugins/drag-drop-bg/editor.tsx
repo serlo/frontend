@@ -1,7 +1,6 @@
+import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar/components/toolbar-select'
 import { selectDocument, useAppSelector } from '@editor/store'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 
 import type { DragDropBgProps } from '.'
 import { BackgroundShapeSelect } from './components/background-shape-select'
@@ -14,7 +13,7 @@ import { BackgroundType, BackgroundShape } from './types'
 
 export function DragDropBgEditor(props: DragDropBgProps) {
   const { state, id } = props
-  const { backgroundImage, visibleDropZones } = state
+  const { backgroundImage, dropzoneVisibility } = state
   const isBackgroundImagePluginDefined = backgroundImage.defined
 
   const backgroundImagePluginState = useAppSelector((state) =>
@@ -54,6 +53,10 @@ export function DragDropBgEditor(props: DragDropBgProps) {
         canvasShape,
         currentAnswerZone,
         selectAnswerZone,
+        dropzoneVisibility: dropzoneVisibility.get() as
+          | 'full'
+          | 'partial'
+          | 'none',
       }}
     >
       <DragDropBgToolbar
@@ -62,16 +65,17 @@ export function DragDropBgEditor(props: DragDropBgProps) {
         showSettingsButton={isBackgroundTypeImage}
       >
         <div className="h-100 border-1 flex flex-row items-center justify-center border-black">
-          <button
-            onClick={() => {
-              visibleDropZones.set(!visibleDropZones.get())
-            }}
-            className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
-            data-qa="plugin-multimedia-visibility-button"
-          >
-            {/* {editorStrings.edtrIo.visibility} */}
-            <FaIcon icon={faMagnifyingGlass} /> Visibility
-          </button>
+          <ToolbarSelect
+            tooltipText="Dropzone Visibility"
+            value={dropzoneVisibility.value}
+            dataQa="plugin-blanks-mode-switch"
+            changeValue={(value) => dropzoneVisibility.set(value)}
+            options={[
+              { value: 'full', text: 'Full' },
+              { value: 'partial', text: 'Partial' },
+              { value: 'none', text: 'None' },
+            ]}
+          />
         </div>
       </DragDropBgToolbar>
       <EditorCanvas state={state} config={{}} id={id} focused={false} />

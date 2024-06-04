@@ -28,6 +28,7 @@ export interface AnswerZonesContextType {
   canvasShape: BackgroundShape
   currentAnswerZone: AnswerZoneState
   selectAnswerZone: (id: string) => void
+  dropzoneVisibility: 'full' | 'partial' | 'none'
 }
 
 // Provide a default structure for answerZoneType
@@ -52,6 +53,7 @@ export const defaultAnswerZonesContext: AnswerZonesContextType = {
   canvasShape: BackgroundShape.Square,
   currentAnswerZone: defaultAnswerZone,
   selectAnswerZone: (_id: string) => {},
+  dropzoneVisibility: 'full',
 }
 
 export const AnswerZonesContext = createContext<AnswerZonesContextType>(

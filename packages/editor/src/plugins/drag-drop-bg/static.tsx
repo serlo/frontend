@@ -14,7 +14,7 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
     answerZones,
     backgroundImage,
     extraDraggableAnswers,
-    visibleDropZones,
+    dropzoneVisibility,
   } = state
 
   const bgImagePluginState = backgroundImage as EditorImageDocument
@@ -91,7 +91,7 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
           return (
             <BlankDropZone
               key={id}
-              isVisible={visibleDropZones}
+              visibility={dropzoneVisibility}
               accept={['answer']}
               dropZone={dropZone}
               onDropAnswer={onDropAnswer}
