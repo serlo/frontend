@@ -25,6 +25,8 @@ export const AnswerContent = ({
       }
     />
   ) : text ? (
-    <StaticSlate element={text} />
+    <span className="mx-1 rounded-full border border-brand px-0">
+      <StaticSlate element={text} />
+    </span>
   ) : null
 }

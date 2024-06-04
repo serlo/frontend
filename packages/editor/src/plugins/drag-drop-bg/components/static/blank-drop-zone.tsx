@@ -54,7 +54,7 @@ export const BlankDropZone = memo(function BlankDropZone({
   return (
     <div
       ref={drop}
-      className={` absolute cursor-move rounded border-${isVisible ? '2' : '0'} p-1 ${isVisible ? backgroundColor : ''} ${isVisible ? borderColor : ''}`}
+      className={`absolute flex flex-row items-center justify-center rounded border-${isVisible ? '2' : '0'} p-1 ${isVisible ? backgroundColor : ''} ${isVisible ? borderColor : ''}`}
       style={{
         left,
         top,
