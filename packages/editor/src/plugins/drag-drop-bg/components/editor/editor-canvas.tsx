@@ -96,6 +96,16 @@ export function EditorCanvas(props: DragDropBgProps) {
     [zones]
   )
 
+  useHotkeys('backspace, del', (event) => {
+    if (!currentAnswerZone) return
+    const index = answerZones.findIndex(
+      (a) => a.id.get() === currentAnswerZone.id.get()
+    )
+
+    index !== -1 && answerZones.remove(index)
+    event.preventDefault()
+  })
+
   useHotkeys(['ctrl+c, meta+c'], (event) => {
     setAnswerZoneClipboardItem(currentAnswerZone)
     event.preventDefault()
