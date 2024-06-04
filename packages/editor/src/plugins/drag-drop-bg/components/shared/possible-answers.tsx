@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { BlankDraggableArea } from '@editor/plugins/blanks-exercise/components/blank-draggable-area'
 
 import { DraggableAnswer } from './draggable-answer'

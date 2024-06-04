@@ -14,6 +14,7 @@ import { AnswerZonesContext } from '../../context/context'
 import { AnswerZoneState } from '../../types'
 import { AnswerZone } from '../answer-zone/answer-zone'
 import { AnswerZoneSettingsForm } from '../answer-zone/answer-zone-settings-form'
+import { EditAnswerZone } from '../answer-zone/edit-answer-zone'
 import { NewAnswerZoneFlow } from '../answer-zone/new-answer-zone-flow'
 import { PossibleAnswers } from '../shared/possible-answers'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
@@ -73,8 +74,15 @@ export function EditorCanvas(props: DragDropBgProps) {
 
   const context = useContext(AnswerZonesContext)
 
-  const { zones, selectAnswerZone, currentAnswerZone, canvasShape } =
-    context || {}
+  const {
+    zones,
+    selectAnswerZone,
+    selectCurrentAnswer,
+    currentAnswerZone,
+    currentAnswerIndex,
+    currentAnswerType,
+    canvasShape,
+  } = context || {}
 
   const [answerZoneClipboardItem, setAnswerZoneClipboardItem] =
     useState<AnswerZoneState | null>(null)
@@ -177,6 +185,7 @@ export function EditorCanvas(props: DragDropBgProps) {
 
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const [showCreateDropZoneModal, setShowCreateDropZoneModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
   const [showCreateWrongAnswerModal, setShowCreateWrongAnswerModal] =
     useState(false)
 
@@ -186,11 +195,13 @@ export function EditorCanvas(props: DragDropBgProps) {
         isOpen={
           showSettingsModal ||
           showCreateDropZoneModal ||
+          showEditModal ||
           showCreateWrongAnswerModal
         }
         onCloseClick={() => {
           setShowSettingsModal(false)
           setShowCreateDropZoneModal(false)
+          setShowEditModal(false)
           setShowCreateWrongAnswerModal(false)
         }}
         className=" max-w-md translate-y-0 sm:top-1/4"
@@ -216,6 +227,14 @@ export function EditorCanvas(props: DragDropBgProps) {
         {showCreateDropZoneModal && (
           <NewAnswerZoneFlow zoneId={currentAnswerZone.id.get()} />
         )}
+        {showEditModal && (
+          <EditAnswerZone
+            zoneId={currentAnswerZone.id.get()}
+            answerType={currentAnswerType}
+            answerIndex={currentAnswerIndex}
+            onSave={() => setShowEditModal(false)}
+          />
+        )}
       </ModalWithCloseButton>
       <div
         ref={drop}
@@ -238,6 +257,11 @@ export function EditorCanvas(props: DragDropBgProps) {
               onClickPlusButton={() => {
                 selectAnswerZone(answerZone.id.get())
                 setShowCreateDropZoneModal(true)
+              }}
+              onClickEditAnswerButton={(zoneId, answerIndex, answerType) => {
+                selectAnswerZone(zoneId)
+                selectCurrentAnswer(answerIndex, answerType)
+                setShowEditModal(true)
               }}
               getAnswerZoneImageSrc={getAnswerZoneImageSrc}
               getAnswerZoneText={getAnswerZoneText}

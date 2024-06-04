@@ -51,6 +51,12 @@ export interface answerDataType
 export interface AnswerZoneState
   extends StateTypeReturnType<typeof answerZoneState> {}
 
+export enum AnswerType {
+  Unset = '',
+  Image = 'image',
+  Text = 'text',
+}
+
 export enum BackgroundType {
   Blank = 'blank',
   Image = 'image',

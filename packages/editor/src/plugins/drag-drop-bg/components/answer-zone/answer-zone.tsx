@@ -1,4 +1,10 @@
-import { faCog, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import {
+  faCog,
+  faPencilAlt,
+  faPlus,
+  faTrashAlt,
+} from '@fortawesome/free-solid-svg-icons'
 import React, { useContext, useState } from 'react'
 import { useDrag } from 'react-dnd'
 import { ResizableBox, ResizableBoxProps } from 'react-resizable'
@@ -9,17 +15,22 @@ import 'react-resizable/css/styles.css'
 
 import { AnswerContent } from './answer-content'
 import { AnswerZonesContext } from '../../context/context'
-import type { AnswerZoneState } from '../../types'
+import { AnswerType, AnswerZoneState } from '../../types'
 import { FaIcon } from '@/components/fa-icon'
 import { cn } from '@/helper/cn'
 
 export interface AnswerZoneProps {
   answerZone: AnswerZoneState
-  onClickSettingsButton?: (id: string) => void
+  onClickSettingsButton: (id: string) => void
   onClick?: (id: string) => void
-  onClickPlusButton?: (id: string) => void
+  onClickPlusButton: (id: string) => void
+  onClickEditAnswerButton: (
+    answerZoneId: string,
+    answerIndex: number,
+    answerType: AnswerType
+  ) => void
   getAnswerZoneImageSrc: (id: string) => string
-  getAnswerZoneText: (text: string) => Descendant[] | undefined
+  getAnswerZoneText: (answerZoneId: string) => Descendant[] | undefined
 }
 
 /**
@@ -36,6 +47,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     onClick,
     onClickSettingsButton,
     onClickPlusButton,
+    onClickEditAnswerButton,
     getAnswerZoneImageSrc,
     getAnswerZoneText,
   } = props
@@ -65,65 +77,108 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     setIsResizing(false)
   }
 
-  /**
-   * Renders the settings and plus buttons
-   */
-  const renderButtons = () => (
+  // Renders the answer zone description
+  const renderDescription = () => (
+    <div className="absolute left-0 top-0 bg-white p-1 text-xs">{name}</div>
+  )
+
+  // Renders the settings and plus buttons when the answer zone has no answers
+  const renderEmptyState = () => (
     <div className="absolute inset-0 flex items-center justify-center">
       <button
         className="absolute right-2 top-2 z-10 rounded bg-orange-100 p-1"
-        onClick={() => onClickSettingsButton?.(answerZone.id.get())}
+        onClick={() => onClickSettingsButton(answerZone.id.get())}
       >
         <FaIcon icon={faCog} />
       </button>
       <button
         className="rounded bg-orange-100 p-3"
-        onClick={() => onClickPlusButton?.(answerZone.id.get())}
+        onClick={() => onClickPlusButton(answerZone.id.get())}
       >
         <FaIcon icon={faPlus} />
       </button>
     </div>
   )
 
-  /**
-   * Renders the answers to be displayed inside the AnswerZone
-   */
+  // Renders the settings and plus buttons as a sidebar, when some answers are present
+  const renderButtonsSidebar = () => (
+    <>
+      <button
+        className="absolute right-2 top-1 z-20 rounded bg-orange-100 p-1 text-[0.5rem]"
+        onClick={() => onClickPlusButton(answerZone.id.get())}
+      >
+        <FaIcon icon={faPlus} />
+      </button>
+      <button
+        className="absolute bottom-1 right-2 z-20 hidden rounded bg-orange-100 p-1  text-[0.5rem] group-hover:block"
+        onClick={() => onClickSettingsButton(answerZone.id.get())}
+      >
+        <FaIcon icon={faCog} />
+      </button>
+    </>
+  )
 
   const left = answerZone.position.left.get()
   const top = answerZone.position.top.get()
   const name = answerZone.name.get()
 
+  // Renders the answers to be displayed inside the AnswerZone
   const answers = answerZone.answers.map((answer, index) => {
     const answerImageUrl = getAnswerZoneImageSrc(answer.image.get())
     const answerText = getAnswerZoneText(answer.text.get())
-
-    const hasImage = Boolean(answerImageUrl)
-    const hasText = Boolean(answerText)
-
-    if (index === 0 && !hasImage && !hasText) {
-      return renderButtons()
-    }
+    const answerType = answerImageUrl ? AnswerType.Image : AnswerType.Text
 
     return (
-      <AnswerContent
+      <div
         key={index}
-        url={answerImageUrl}
-        text={answerText}
-        isPreview={false}
-      />
+        className={cn(`
+          group/edit relative
+          ${answerType === AnswerType.Image ? 'h-full object-contain' : ''}
+        `)}
+      >
+        <div
+          className={cn(`
+            absolute bottom-0 left-0 right-0 top-0 mx-1 hidden h-full
+            items-center justify-center rounded-full
+            bg-white bg-opacity-95 group-hover/edit:flex
+          `)}
+        >
+          <button
+            onClick={() => {
+              onClickEditAnswerButton(answerZone.id.get(), index, answerType)
+            }}
+            className="serlo-button-editor-secondary serlo-tooltip-trigger mx-1 h-6 w-6 p-0"
+          >
+            <FaIcon icon={faPencilAlt} className="text-xs" />
+            <EditorTooltip text="Edit answer" className="!-ml-2 !pb-2" />
+          </button>
+          <button
+            onClick={() => {
+              answerZone.answers.remove(index)
+            }}
+            className="serlo-button-editor-secondary serlo-tooltip-trigger mx-1 h-6 w-6 p-0"
+          >
+            <FaIcon icon={faTrashAlt} className="text-xs" />
+            <EditorTooltip text="Remove answer" className="!-ml-2 !pb-2" />
+          </button>
+        </div>
+
+        <AnswerContent
+          url={answerImageUrl}
+          text={answerText}
+          isPreview={false}
+          display="block"
+        />
+      </div>
     )
   })
 
-  /**
-   * Hide source element while dragging
-   */
+  // Hide source element while dragging
   if (collected.isDragging) {
     return <div ref={dragPreview} />
   }
 
-  /**
-   * Renders the answers to be displayed inside the AnswerZone
-   */
+  // Renders the answers to be displayed inside the AnswerZone
   return (
     <div
       ref={dragPreview}
@@ -150,40 +205,16 @@ export const AnswerZone = (props: AnswerZoneProps) => {
         <div
           ref={drag}
           className={cn(
-            'group relative flex h-full w-full flex-row items-center justify-center border-2 border-blue-500 bg-white',
+            'group relative flex h-full w-full flex-row flex-wrap items-center justify-center gap-1 border-2 border-blue-500 bg-white',
             (dropzoneVisibility === 'none' ||
               dropzoneVisibility === 'partial') &&
               'border-dashed'
           )}
         >
-          {name && name.length > 0 && (
-            <div className="absolute left-0 top-0 bg-white p-1 text-xs">
-              {name}
-            </div>
-          )}
-          {answerZone.answers.length === 0 && renderButtons()}
+          {name && name.length > 0 && renderDescription()}
+          {answerZone.answers.length === 0 && renderEmptyState()}
           {answers}
-          {answerZone.answers.length > 0 && (
-            <>
-              <button
-                className="absolute right-2 top-1 z-20 rounded bg-orange-100 p-1 text-[0.5rem]"
-                onClick={() =>
-                  onClickPlusButton && onClickPlusButton(answerZone.id.get())
-                }
-              >
-                <FaIcon icon={faPlus} />
-              </button>
-              <button
-                className="absolute bottom-1 right-2 z-20 hidden rounded bg-orange-100 p-1  text-[0.5rem] group-hover:block"
-                onClick={() =>
-                  onClickSettingsButton &&
-                  onClickSettingsButton(answerZone.id.get())
-                }
-              >
-                <FaIcon icon={faCog} />
-              </button>
-            </>
-          )}
+          {answerZone.answers.length > 0 && renderButtonsSidebar()}
         </div>
       </ResizableBox>
     </div>

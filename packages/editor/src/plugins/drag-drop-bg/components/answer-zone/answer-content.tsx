@@ -6,12 +6,15 @@ interface AnswerContentProps {
   url?: string
   text?: Descendant[]
   isPreview?: boolean
+  // TODO: This prop is a temporary solution for text border visual bug
+  display?: 'inline' | 'block'
 }
 
 export const AnswerContent = ({
   url,
   text,
   isPreview = false,
+  display = 'inline',
 }: AnswerContentProps) => {
   if (!url && !text) return null
 
@@ -25,7 +28,10 @@ export const AnswerContent = ({
       }
     />
   ) : text ? (
-    <span className="mx-1 rounded-full border border-brand px-0">
+    <span
+      className="mx-1 rounded-full border border-brand px-0"
+      style={{ display }}
+    >
       <StaticSlate element={text} />
     </span>
   ) : null

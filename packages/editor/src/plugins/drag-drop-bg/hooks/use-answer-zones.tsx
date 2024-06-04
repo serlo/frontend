@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import type { DragDropBgProps } from '..'
-import type { AnswerZoneState } from '../types'
+import { AnswerType, AnswerZoneState } from '../types'
 
 export function useAnswerZones({ state }: DragDropBgProps) {
   const { answerZones } = state
@@ -9,12 +9,21 @@ export function useAnswerZones({ state }: DragDropBgProps) {
   const [currentAnswerZone, setCurrentAnswerZone] = useState<AnswerZoneState>(
     answerZones[0]
   )
+  const [currentAnswerIndex, setCurrentAnswer] = useState<number>(0)
+  const [currentAnswerType, setCurrentAnswerType] = useState<AnswerType>(
+    AnswerType.Unset
+  )
 
   const selectAnswerZone = (id: string) => {
     const answerZone = answerZones.find((zone) => zone.id.get() === id)
     if (answerZone) {
       setCurrentAnswerZone(answerZone)
     }
+  }
+
+  const selectCurrentAnswer = (index: number, type: AnswerType) => {
+    setCurrentAnswer(index)
+    setCurrentAnswerType(type)
   }
 
   const insertAnswerZone = () => {
@@ -35,7 +44,10 @@ export function useAnswerZones({ state }: DragDropBgProps) {
 
   return {
     currentAnswerZone,
+    currentAnswerIndex,
+    currentAnswerType,
     selectAnswerZone,
+    selectCurrentAnswer,
     insertAnswerZone,
   }
 }

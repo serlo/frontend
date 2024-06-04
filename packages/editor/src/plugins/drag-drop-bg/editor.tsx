@@ -25,8 +25,14 @@ export function DragDropBgEditor(props: DragDropBgProps) {
   const backgroundImageUrlFromPlugin =
     backgroundImagePluginState?.state?.src || ''
 
-  const { currentAnswerZone, selectAnswerZone, insertAnswerZone } =
-    useAnswerZones(props)
+  const {
+    currentAnswerZone,
+    currentAnswerIndex,
+    currentAnswerType,
+    selectAnswerZone,
+    selectCurrentAnswer,
+    insertAnswerZone,
+  } = useAnswerZones(props)
 
   const backgroundType = state.backgroundType.get()
   const isBackgroundTypeBlank = backgroundType === BackgroundType.Blank
@@ -58,11 +64,11 @@ export function DragDropBgEditor(props: DragDropBgProps) {
         zones: state.answerZones,
         canvasShape,
         currentAnswerZone,
+        currentAnswerIndex,
+        currentAnswerType,
         selectAnswerZone,
-        dropzoneVisibility: dropzoneVisibility.get() as
-          | 'full'
-          | 'partial'
-          | 'none',
+        selectCurrentAnswer,
+        dropzoneVisibility: dropzoneVisibility.get() as DropzoneVisibility,
       }}
     >
       <DragDropBgToolbar
