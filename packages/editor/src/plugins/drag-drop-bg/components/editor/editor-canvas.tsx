@@ -125,6 +125,7 @@ export function EditorCanvas(props: DragDropBgProps) {
       />
 
       <div
+        data-qa="plugin-drag-drop-editor-canvas"
         ref={drop}
         className="mx-auto overflow-hidden rounded-lg border border-almost-black bg-center bg-no-repeat"
         style={{

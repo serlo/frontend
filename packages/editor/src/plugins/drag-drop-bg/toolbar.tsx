@@ -31,6 +31,7 @@ export const DragDropBgToolbar = ({
 
   const addButton = onClickAddAnswerZone ? (
     <button
+      data-qa="plugin-drag-drop-bg-add-answer-zone-button"
       onClick={onClickAddAnswerZone}
       className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
     >
