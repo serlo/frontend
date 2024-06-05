@@ -1,6 +1,6 @@
 import { DndWrapper } from '@editor/core/components/dnd-wrapper'
 import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
-import {
+import type {
   EditorDragDropBgDocument,
   EditorImageDocument,
 } from '@editor/types/editor-plugins'

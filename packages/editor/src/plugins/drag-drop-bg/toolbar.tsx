@@ -65,7 +65,7 @@ export const DragDropBgToolbar = ({
               {editorStrings.plugins.dragDropBg.title}
             </h3>
           </ModalWithCloseButton>
-          <div className="mx-side">{children}</div>
+          {children}
         </>
       }
       pluginControls={pluginControls}
