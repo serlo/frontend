@@ -2,9 +2,9 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faImage } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 
-import type { DragDropBgProps } from '..'
-import { DragDropBgToolbar } from '../toolbar'
-import { BackgroundShape, BackgroundType } from '../types'
+import type { DragDropBgProps } from '../..'
+import { DragDropBgToolbar } from '../../toolbar'
+import { BackgroundShape, BackgroundType } from '../../types'
 
 export function BackgroundTypeSelect(props: DragDropBgProps) {
   const { state, id } = props
