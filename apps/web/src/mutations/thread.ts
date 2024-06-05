@@ -4,7 +4,7 @@ import { useSWRConfig } from 'swr'
 
 import { useMutationFetch } from './helper/use-mutation-fetch'
 import { useSWRCacheMutate } from './helper/use-swr-cache-mutate'
-import { useEntityData } from '@/contexts/serlo-entity-context'
+import { useEntityData } from '@/contexts/uuids-context'
 import {
   ThreadCreateCommentInput,
   ThreadCreateThreadInput,

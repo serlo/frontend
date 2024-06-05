@@ -16,10 +16,7 @@ import { checkLoggedIn } from '@/auth/cookie/check-logged-in'
 import { PrintMode } from '@/components/print-mode'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
-import {
-  type SerloEntityContextData,
-  SerloEntityProvider,
-} from '@/contexts/serlo-entity-context'
+import { type UuidsContextData, UuidsProvider } from '@/contexts/uuids-context'
 import { InstanceData, LoggedInData } from '@/data-types'
 import {
   FixedInstanceData,
@@ -32,7 +29,7 @@ export interface FrontendClientBaseProps {
   noHeaderFooter?: boolean
   noContainers?: boolean
   showNav?: boolean
-  serloEntityData?: SerloEntityContextData
+  serloEntityData?: UuidsContextData
   authorization?: AuthorizationPayload
   loadLoggedInData?: boolean
 }
@@ -116,7 +113,7 @@ export function FrontendClientBase({
       <PrintMode />
       <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
         <LoggedInDataProvider value={loggedInData}>
-          <SerloEntityProvider value={serloEntityData ?? null}>
+          <UuidsProvider value={serloEntityData ?? null}>
             <Toaster />
             <ConditionalWrap
               condition={!noHeaderFooter}
@@ -135,7 +132,7 @@ export function FrontendClientBase({
                 {children}
               </ConditionalWrap>
             </ConditionalWrap>
-          </SerloEntityProvider>
+          </UuidsProvider>
         </LoggedInDataProvider>
       </AuthProvider>
     </InstanceDataProvider>

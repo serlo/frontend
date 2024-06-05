@@ -15,7 +15,7 @@ import { useCallback, useContext, useMemo } from 'react'
 import { AnchorLinkCopyTool } from './anchor-link-copy-tool'
 import { DropdownButton } from './dropdown-button'
 import { PluginCopyTool } from './plugin-copy-tool'
-import { SerloEntityContext } from '@/contexts/serlo-entity-context'
+import { UuidsContext } from '@/contexts/uuids-context'
 
 interface PluginDefaultToolsProps {
   pluginId: string
@@ -27,7 +27,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
   const pluginStrings = useEditorStrings().plugins
 
   // using useContext directly so result can also be null for edusharing
-  const serloEntityId = useContext(SerloEntityContext)?.entityId
+  const serloEntityId = useContext(UuidsContext)?.entityId
 
   const hasRowsParent = useMemo(
     () =>

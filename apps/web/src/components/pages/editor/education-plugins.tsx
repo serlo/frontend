@@ -31,7 +31,7 @@ import {
   TextExerciseExample,
 } from './education-plugin-examples'
 import { FaIcon } from '@/components/fa-icon'
-import { SerloEntityProvider } from '@/contexts/serlo-entity-context'
+import { UuidsProvider } from '@/contexts/uuids-context'
 import { cn } from '@/helper/cn'
 
 const h2Class =
@@ -211,7 +211,7 @@ export function EducationPlugins() {
     return (
       <div className="m-3 mb-[3.2rem] mt-1 flex-1 text-left">
         <div className="w-full overflow-y-scroll p-8 shadow-menu md:h-[37rem]">
-          <SerloEntityProvider value={{ entityId: 1555 }}>
+          <UuidsProvider value={{ entityId: 1555 }}>
             <p className="mb-6 text-xl">{description}</p>
             {example ? (
               <>
@@ -237,7 +237,7 @@ export function EducationPlugins() {
                 />
               </>
             )}
-          </SerloEntityProvider>
+          </UuidsProvider>
           <style jsx global>
             {`
               .lazyload-wrapper > .print:hidden,

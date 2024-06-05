@@ -8,7 +8,7 @@ import { isPrintMode } from '@/components/print-mode'
 import { useAB } from '@/contexts/ab'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
-import { useEntityData } from '@/contexts/serlo-entity-context'
+import { useEntityData } from '@/contexts/uuids-context'
 import {
   ExerciseSubmissionData,
   exerciseSubmission,

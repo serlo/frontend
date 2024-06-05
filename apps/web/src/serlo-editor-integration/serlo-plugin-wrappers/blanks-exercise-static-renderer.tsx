@@ -3,7 +3,7 @@ import { EditorBlanksExerciseDocument } from '@editor/types/editor-plugins'
 import { useRouter } from 'next/router'
 
 import { useAB } from '@/contexts/ab'
-import { useEntityData } from '@/contexts/serlo-entity-context'
+import { useEntityData } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
 
