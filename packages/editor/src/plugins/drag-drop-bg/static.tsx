@@ -75,7 +75,7 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
   const onAnswerDrop = (
     answerId: string,
     dropzoneId: string,
-    droppableBlankId: string
+    droppableBlankId?: string
   ) => {
     setDropzoneAnswerMap((prev) => {
       const updatedMap = new Map(prev)

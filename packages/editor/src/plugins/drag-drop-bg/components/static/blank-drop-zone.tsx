@@ -17,7 +17,7 @@ interface BlankDropZoneProps {
   onAnswerDrop: (
     answerId: string,
     dropzoneId: string,
-    droppableBlankId: string
+    droppableBlankId?: string
   ) => void
   isCorrect?: boolean | null
   visibility?: DropzoneVisibility
