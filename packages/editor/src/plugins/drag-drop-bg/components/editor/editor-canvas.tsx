@@ -4,10 +4,11 @@ import { useContext, useState } from 'react'
 import { XYCoord, useDrop } from 'react-dnd'
 import { useHotkeys } from 'react-hotkeys-hook'
 
+import { NewWrongAnswer } from './create-wrong-answer'
 import type { DragDropBgProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
 import { useAnswerZones } from '../../hooks/use-answer-zones'
-import { AnswerZoneState } from '../../types'
+import { AnswerZoneState, answerDataType } from '../../types'
 import { AnswerZone } from '../answer-zone/answer-zone'
 import { AnswerZoneSettingsForm } from '../answer-zone/answer-zone-settings-form'
 import { EditAnswerZone } from '../answer-zone/edit-answer-zone'
@@ -108,22 +109,23 @@ export function EditorCanvas(props: DragDropBgProps) {
   const backgroundImageUrl = (backgroundImageDocument?.state?.src ||
     '') as string
 
+  const convertAnswer = (answer: answerDataType) => {
+    const zoneImageId = answer.image.get()
+    const zoneImgUrl = getAnswerZoneImageSrc(zoneImageId)
+    const zoneTextId = answer.text.get()
+    const zoneText = getAnswerZoneText(zoneTextId)
+    return { id: zoneImageId, imageUrl: zoneImgUrl, text: zoneText }
+  }
   /**
    * Convert an answer zone to possible answer format.
    */
   const zoneToPossibleAnswer = (zone: AnswerZoneState) => {
-    const answers = zone.answers.map((answer) => {
-      const zoneImageId = answer.image.get()
-      const zoneImgUrl = getAnswerZoneImageSrc(zoneImageId)
-      const zoneTextId = answer.text.get()
-      const zoneText = getAnswerZoneText(zoneTextId)
-      return { id: zoneImageId, imageUrl: zoneImgUrl, text: zoneText }
-    })
+    const answers = zone.answers.map(convertAnswer)
     return answers
   }
 
   const correctAnswers = zones.map(zoneToPossibleAnswer).flat()
-  const wrongAnswers = extraDraggableAnswers.map(zoneToPossibleAnswer).flat()
+  const wrongAnswers = extraDraggableAnswers.map(convertAnswer)
   const possibleAnswers = [...correctAnswers, ...wrongAnswers]
 
   const [showSettingsModal, setShowSettingsModal] = useState(false)
@@ -178,6 +180,7 @@ export function EditorCanvas(props: DragDropBgProps) {
             onSave={() => setShowEditModal(false)}
           />
         )}
+        {showCreateWrongAnswerModal && <NewWrongAnswer />}
       </ModalWithCloseButton>
       <div
         ref={drop}
