@@ -48,12 +48,28 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
     })
     .flat()
 
+  const wrongAnswers = extraDraggableAnswers.map((answer) => {
+    const answerImageState = answer.image as EditorImageDocument
+
+    const answerImageUrl = answerImageState.state.src as string
+
+    const answerText = isTextDocument(answer.text)
+      ? answer.text.state
+      : undefined
+
+    return {
+      id: answer.id,
+      text: answerText,
+      imageUrl: answerImageUrl,
+    }
+  })
+
   const possibleAnswers = useMemo(() => {
-    return [...correctAnswers, ...extraDraggableAnswers]
+    return [...correctAnswers, ...wrongAnswers]
       .map((possibleAnswer) => ({ possibleAnswer, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
       .map(({ possibleAnswer }) => possibleAnswer)
-  }, [correctAnswers, extraDraggableAnswers])
+  }, [correctAnswers, wrongAnswers])
 
   const [dropzoneAnswerMap, setDropzoneAnswerMap] = useState(
     new Map<string, string[]>()

@@ -3,8 +3,8 @@ import { selectDocument, useAppSelector } from '@editor/store'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
 
 import type { DragDropBgProps } from '.'
-import { BackgroundShapeSelect } from './components/background-shape-select'
-import { BackgroundTypeSelect } from './components/background-type-select'
+import { BackgroundShapeSelect } from './components/editor/background-shape-select'
+import { BackgroundTypeSelect } from './components/editor/background-type-select'
 import { EditorCanvas } from './components/editor/editor-canvas'
 import { AnswerZonesContext } from './context/context'
 import { useAnswerZones } from './hooks/use-answer-zones'
@@ -13,7 +13,7 @@ import { BackgroundType, BackgroundShape, DropzoneVisibility } from './types'
 
 export function DragDropBgEditor(props: DragDropBgProps) {
   const { state, id } = props
-  const { backgroundImage, dropzoneVisibility } = state
+  const { backgroundImage, dropzoneVisibility, extraDraggableAnswers } = state
   const isBackgroundImagePluginDefined = backgroundImage.defined
 
   const backgroundImagePluginState = useAppSelector((state) =>
@@ -69,6 +69,7 @@ export function DragDropBgEditor(props: DragDropBgProps) {
         selectAnswerZone,
         selectCurrentAnswer,
         dropzoneVisibility: dropzoneVisibility.get() as DropzoneVisibility,
+        extraDraggableAnswers,
       }}
     >
       <DragDropBgToolbar

@@ -1,6 +1,6 @@
-import type { DragDropBgProps } from '..'
-import { DragDropBgToolbar } from '../toolbar'
-import { BackgroundShape } from '../types'
+import type { DragDropBgProps } from '../..'
+import { DragDropBgToolbar } from '../../toolbar'
+import { BackgroundShape } from '../../types'
 
 const shapeOptions = [
   BackgroundShape.Square,

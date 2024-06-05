@@ -32,6 +32,7 @@ export interface AnswerZonesContextType {
   selectAnswerZone: (id: string) => void
   selectCurrentAnswer: (index: number, type: AnswerType) => void
   dropzoneVisibility: 'full' | 'partial' | 'none'
+  extraDraggableAnswers: AnswerZoneState['answers']
 }
 
 // Provide a default structure for answerZoneType
@@ -60,6 +61,7 @@ export const defaultAnswerZonesContext: AnswerZonesContextType = {
   selectAnswerZone: (_id: string) => {},
   selectCurrentAnswer: (_index: number, _type: AnswerType) => {},
   dropzoneVisibility: 'full',
+  extraDraggableAnswers: emptyAnswersArray,
 }
 
 export const AnswerZonesContext = createContext<AnswerZonesContextType>(

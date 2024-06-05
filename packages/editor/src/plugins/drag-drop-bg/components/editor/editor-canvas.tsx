@@ -1,54 +1,21 @@
 import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
 import { selectStaticDocument, store } from '@editor/store'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
-import {
-  isImageDocument,
-  isTextDocument,
-} from '@editor/types/plugin-type-guards'
 import { useContext, useState } from 'react'
 import { XYCoord, useDrop } from 'react-dnd'
 import { useHotkeys } from 'react-hotkeys-hook'
-import { v4 as uuidv4 } from 'uuid'
 
+import { NewWrongAnswer } from './create-wrong-answer'
 import type { DragDropBgProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
-import { AnswerZoneState } from '../../types'
+import { useAnswerZones } from '../../hooks/use-answer-zones'
+import { AnswerZoneState, answerDataType } from '../../types'
 import { AnswerZone } from '../answer-zone/answer-zone'
 import { AnswerZoneSettingsForm } from '../answer-zone/answer-zone-settings-form'
 import { EditAnswerZone } from '../answer-zone/edit-answer-zone'
 import { NewAnswerZoneFlow } from '../answer-zone/new-answer-zone-flow'
 import { DraggableAnswer } from '../shared/draggable-answer'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-
-const getAnswerZoneImageSrc = (answerZoneImageId: string) => {
-  const answerImageDocument = selectStaticDocument(
-    store.getState(),
-    answerZoneImageId
-  )
-  return isImageDocument(answerImageDocument)
-    ? (answerImageDocument.state.src as string)
-    : ''
-}
-
-const getAnswerZoneImageState = (answerZoneImageId: string) => {
-  const answerImageDocument = selectStaticDocument(
-    store.getState(),
-    answerZoneImageId
-  )
-  return isImageDocument(answerImageDocument) ? answerImageDocument.state : ''
-}
-
-const getAnswerZoneText = (answerZoneTextId: string) => {
-  const answerTextDocument = selectStaticDocument(
-    store.getState(),
-    answerZoneTextId
-  )
-
-  return isTextDocument(answerTextDocument)
-    ? answerTextDocument.state
-    : undefined
-}
 
 const getCanvasDimensions = (shape: string) => {
   switch (shape) {
@@ -74,6 +41,9 @@ export function EditorCanvas(props: DragDropBgProps) {
   const { state } = props
   const { answerZones, backgroundImage, extraDraggableAnswers } = state
 
+  const { getAnswerZoneImageSrc, getAnswerZoneText, duplicateAnswerZone } =
+    useAnswerZones(props)
+
   const context = useContext(AnswerZonesContext)
 
   const {
@@ -91,6 +61,10 @@ export function EditorCanvas(props: DragDropBgProps) {
 
   const { canvasHeight, canvasWidth } = getCanvasDimensions(canvasShape)
 
+  const onClickAddWrongAnswer = () => {
+    setShowCreateWrongAnswerModal(true)
+  }
+
   const [, drop] = useDrop(
     () => ({
       accept: 'all',
@@ -105,38 +79,6 @@ export function EditorCanvas(props: DragDropBgProps) {
     }),
     [zones]
   )
-
-  const duplicateZone = (idToDuplicate: string) => {
-    const toCopy = answerZones.find((zone) => zone.id.get() === idToDuplicate)
-    if (!toCopy) return
-    const currentLength = answerZones.length
-    const newZone = {
-      id: `answerZone-${currentLength}`,
-      name: toCopy.name.get(),
-      position: {
-        left: toCopy.position.left.get() + 70,
-        top: toCopy.position.top.get() + 50,
-      },
-      layout: {
-        width: toCopy.layout.width.get(),
-        height: toCopy.layout.height.get(),
-        visible: true,
-        lockedAspectRatio: true,
-      },
-      answers: toCopy.answers.map((answer) => ({
-        id: uuidv4(),
-        image: {
-          plugin: EditorPluginType.Image,
-          state: getAnswerZoneImageState(answer.image.get()),
-        },
-        text: {
-          plugin: EditorPluginType.Text,
-          state: getAnswerZoneText(answer.text.get()),
-        },
-      })),
-    }
-    answerZones.insert(currentLength, newZone)
-  }
 
   useHotkeys('backspace, del', (event) => {
     if (!currentAnswerZone) return
@@ -155,7 +97,7 @@ export function EditorCanvas(props: DragDropBgProps) {
   useHotkeys(['ctrl+v, meta+v'], (event) => {
     if (!answerZoneClipboardItem) return
     const idToDuplicate = answerZoneClipboardItem.id.get()
-    duplicateZone(idToDuplicate)
+    duplicateAnswerZone(idToDuplicate)
     event.preventDefault()
   })
 
@@ -168,22 +110,23 @@ export function EditorCanvas(props: DragDropBgProps) {
   const backgroundImageUrl = (backgroundImageDocument?.state?.src ||
     '') as string
 
+  const convertAnswer = (answer: answerDataType) => {
+    const zoneImageId = answer.image.get()
+    const zoneImgUrl = getAnswerZoneImageSrc(zoneImageId)
+    const zoneTextId = answer.text.get()
+    const zoneText = getAnswerZoneText(zoneTextId)
+    return { id: zoneImageId, imageUrl: zoneImgUrl, text: zoneText }
+  }
   /**
    * Convert an answer zone to possible answer format.
    */
   const zoneToPossibleAnswer = (zone: AnswerZoneState) => {
-    const answers = zone.answers.map((answer) => {
-      const zoneImageId = answer.image.get()
-      const zoneImgUrl = getAnswerZoneImageSrc(zoneImageId)
-      const zoneTextId = answer.text.get()
-      const zoneText = getAnswerZoneText(zoneTextId)
-      return { id: zoneImageId, imageUrl: zoneImgUrl, text: zoneText }
-    })
+    const answers = zone.answers.map(convertAnswer)
     return answers
   }
 
   const correctAnswers = zones.map(zoneToPossibleAnswer).flat()
-  const wrongAnswers = extraDraggableAnswers.map(zoneToPossibleAnswer).flat()
+  const wrongAnswers = extraDraggableAnswers.map(convertAnswer)
   const possibleAnswers = [...correctAnswers, ...wrongAnswers]
 
   const [showSettingsModal, setShowSettingsModal] = useState(false)
@@ -216,7 +159,7 @@ export function EditorCanvas(props: DragDropBgProps) {
           <AnswerZoneSettingsForm
             answerZone={currentAnswerZone}
             onDuplicate={() => {
-              duplicateZone(currentAnswerZone.id.get())
+              duplicateAnswerZone(currentAnswerZone.id.get())
             }}
             onDelete={() => {
               setShowSettingsModal(false)
@@ -238,6 +181,7 @@ export function EditorCanvas(props: DragDropBgProps) {
             onSave={() => setShowEditModal(false)}
           />
         )}
+        {showCreateWrongAnswerModal && <NewWrongAnswer />}
       </ModalWithCloseButton>
       <div
         ref={drop}
@@ -284,6 +228,14 @@ export function EditorCanvas(props: DragDropBgProps) {
             />
           ))}
         </DraggableArea>
+        <div className="flex justify-center">
+          <button
+            onClick={onClickAddWrongAnswer}
+            className="rounded bg-orange-100 px-4 py-2"
+          >
+            Add wrong answer
+          </button>
+        </div>
       </div>
     </>
   )
