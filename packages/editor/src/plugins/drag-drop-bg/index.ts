@@ -44,7 +44,7 @@ const dragDropBgState = object({
   backgroundType: string(''),
   backgroundImage: optional(child({ plugin: EditorPluginType.Image })),
   dropzoneVisibility: string('full'),
-  extraDraggableAnswers: list(answerZoneState, 0),
+  extraDraggableAnswers: list(answerData, 0),
 })
 
 export const defaultConfig: DragDropBgConfig = {}

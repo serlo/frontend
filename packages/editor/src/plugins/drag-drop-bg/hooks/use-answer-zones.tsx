@@ -1,3 +1,9 @@
+import { selectStaticDocument, store } from '@editor/store'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import {
+  isImageDocument,
+  isTextDocument,
+} from '@editor/types/plugin-type-guards'
 import { useState } from 'react'
 
 import type { DragDropBgProps } from '..'
@@ -42,6 +48,66 @@ export function useAnswerZones({ state }: DragDropBgProps) {
     })
   }
 
+  const getAnswerZoneImageState = (answerZoneImageId: string) => {
+    const answerImageDocument = selectStaticDocument(
+      store.getState(),
+      answerZoneImageId
+    )
+    return isImageDocument(answerImageDocument) ? answerImageDocument.state : ''
+  }
+
+  const getAnswerZoneImageSrc = (answerZoneImageId: string) => {
+    const answerImageDocument = selectStaticDocument(
+      store.getState(),
+      answerZoneImageId
+    )
+    return isImageDocument(answerImageDocument)
+      ? (answerImageDocument.state.src as string)
+      : ''
+  }
+
+  const getAnswerZoneText = (answerZoneTextId: string) => {
+    const answerTextDocument = selectStaticDocument(
+      store.getState(),
+      answerZoneTextId
+    )
+
+    return isTextDocument(answerTextDocument)
+      ? answerTextDocument.state
+      : undefined
+  }
+
+  const duplicateAnswerZone = (idToDuplicate: string) => {
+    const toCopy = answerZones.find((zone) => zone.id.get() === idToDuplicate)
+    if (!toCopy) return
+    const currentLength = answerZones.length
+    const newZone = {
+      id: `answerZone-${currentLength}`,
+      name: toCopy.name.get(),
+      position: {
+        left: toCopy.position.left.get() + 70,
+        top: toCopy.position.top.get() + 50,
+      },
+      layout: {
+        width: toCopy.layout.width.get(),
+        height: toCopy.layout.height.get(),
+        visible: true,
+        lockedAspectRatio: true,
+      },
+      answers: toCopy.answers.map((answer) => ({
+        image: {
+          plugin: EditorPluginType.Image,
+          state: getAnswerZoneImageState(answer.image.get()),
+        },
+        text: {
+          plugin: EditorPluginType.Text,
+          state: getAnswerZoneText(answer.text.get()),
+        },
+      })),
+    }
+    answerZones.insert(currentLength, newZone)
+  }
+
   return {
     currentAnswerZone,
     currentAnswerIndex,
@@ -49,5 +115,8 @@ export function useAnswerZones({ state }: DragDropBgProps) {
     selectAnswerZone,
     selectCurrentAnswer,
     insertAnswerZone,
+    duplicateAnswerZone,
+    getAnswerZoneImageSrc,
+    getAnswerZoneText,
   }
 }

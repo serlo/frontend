@@ -13,7 +13,7 @@ import { BackgroundType, BackgroundShape, DropzoneVisibility } from './types'
 
 export function DragDropBgEditor(props: DragDropBgProps) {
   const { state, id } = props
-  const { backgroundImage, dropzoneVisibility } = state
+  const { backgroundImage, dropzoneVisibility, extraDraggableAnswers } = state
   const isBackgroundImagePluginDefined = backgroundImage.defined
 
   const backgroundImagePluginState = useAppSelector((state) =>
@@ -69,6 +69,7 @@ export function DragDropBgEditor(props: DragDropBgProps) {
         selectAnswerZone,
         selectCurrentAnswer,
         dropzoneVisibility: dropzoneVisibility.get() as DropzoneVisibility,
+        extraDraggableAnswers,
       }}
     >
       <DragDropBgToolbar
