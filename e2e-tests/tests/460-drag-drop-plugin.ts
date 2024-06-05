@@ -4,10 +4,6 @@ Feature('Serlo Editor - Blank exercise')
 
 Before(popupWarningFix)
 
-const BlanksExerciseButton = '$add-exercise-blanksExercise'
-
-const initialTextPluginCount = 1
-
 Scenario('Create a drag drop exercise with two dropzones', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
   I.click('Füge ein Element hinzu')
