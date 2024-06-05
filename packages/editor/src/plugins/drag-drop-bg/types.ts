@@ -21,8 +21,6 @@ export interface BasicDropZone {
   layout: {
     width: number
     height: number
-    visible: boolean
-    lockedAspectRatio: boolean
   }
   answer?: PossibleAnswerType
 }
@@ -41,10 +39,8 @@ export interface BlankDropZoneSpec extends BasicDropZone {
 }
 
 export interface AnswerZoneSettings {
-  visible: boolean
   height: number
   width: number
-  lockedAspectRatio: boolean
 }
 
 export interface answerDataType

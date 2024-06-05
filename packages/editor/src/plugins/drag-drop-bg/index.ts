@@ -8,7 +8,6 @@ import {
   string,
   child,
   number,
-  boolean,
   list,
   optional,
 } from '../../plugin'
@@ -21,8 +20,6 @@ export const positionData = object({
 export const layoutData = object({
   width: number(200),
   height: number(70),
-  visible: boolean(true),
-  lockedAspectRatio: boolean(true),
 })
 
 export const answerData = object({

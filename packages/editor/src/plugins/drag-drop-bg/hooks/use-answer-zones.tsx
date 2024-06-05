@@ -71,8 +71,6 @@ export function useAnswerZones({ state }: DragDropBgProps) {
       layout: {
         width: 200,
         height: 70,
-        visible: true,
-        lockedAspectRatio: true,
       },
       answers: [],
     })
@@ -92,8 +90,6 @@ export function useAnswerZones({ state }: DragDropBgProps) {
       layout: {
         width: toCopy.layout.width.get(),
         height: toCopy.layout.height.get(),
-        visible: true,
-        lockedAspectRatio: true,
       },
       answers: toCopy.answers.map((answer) => ({
         id: uuidv4(),

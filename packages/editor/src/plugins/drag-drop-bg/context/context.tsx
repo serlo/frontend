@@ -42,8 +42,6 @@ const defaultAnswerZone: AnswerZoneState = {
   layout: {
     width: emptyVal,
     height: emptyVal,
-    visible: emptyBooleanVal,
-    lockedAspectRatio: emptyBooleanVal,
   },
   position: {
     left: emptyVal,

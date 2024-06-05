@@ -26,10 +26,8 @@ export function AnswerZoneSettingsForm({
 
   const initialSettings = {
     name: answerZone.name.value,
-    visible: answerZone.layout.visible.value,
     height: answerZone.layout.height.value,
     width: answerZone.layout.width.value,
-    lockedAspectRatio: true,
   }
 
   const handleInputChange =
