@@ -10,6 +10,35 @@ import { v4 as uuidv4 } from 'uuid'
 import type { DragDropBgProps } from '..'
 import { AnswerType, AnswerZoneState } from '../types'
 
+export const getAnswerZoneImageState = (answerZoneImageId: string) => {
+  const answerImageDocument = selectStaticDocument(
+    store.getState(),
+    answerZoneImageId
+  )
+  return isImageDocument(answerImageDocument) ? answerImageDocument.state : ''
+}
+
+export const getAnswerZoneImageSrc = (answerZoneImageId: string) => {
+  const answerImageDocument = selectStaticDocument(
+    store.getState(),
+    answerZoneImageId
+  )
+  return isImageDocument(answerImageDocument)
+    ? (answerImageDocument.state.src as string)
+    : ''
+}
+
+export const getAnswerZoneText = (answerZoneTextId: string) => {
+  const answerTextDocument = selectStaticDocument(
+    store.getState(),
+    answerZoneTextId
+  )
+
+  return isTextDocument(answerTextDocument)
+    ? answerTextDocument.state
+    : undefined
+}
+
 export function useAnswerZones({ state }: DragDropBgProps) {
   const { answerZones } = state
 
@@ -47,35 +76,6 @@ export function useAnswerZones({ state }: DragDropBgProps) {
       },
       answers: [],
     })
-  }
-
-  const getAnswerZoneImageState = (answerZoneImageId: string) => {
-    const answerImageDocument = selectStaticDocument(
-      store.getState(),
-      answerZoneImageId
-    )
-    return isImageDocument(answerImageDocument) ? answerImageDocument.state : ''
-  }
-
-  const getAnswerZoneImageSrc = (answerZoneImageId: string) => {
-    const answerImageDocument = selectStaticDocument(
-      store.getState(),
-      answerZoneImageId
-    )
-    return isImageDocument(answerImageDocument)
-      ? (answerImageDocument.state.src as string)
-      : ''
-  }
-
-  const getAnswerZoneText = (answerZoneTextId: string) => {
-    const answerTextDocument = selectStaticDocument(
-      store.getState(),
-      answerZoneTextId
-    )
-
-    return isTextDocument(answerTextDocument)
-      ? answerTextDocument.state
-      : undefined
   }
 
   const duplicateAnswerZone = (idToDuplicate: string) => {

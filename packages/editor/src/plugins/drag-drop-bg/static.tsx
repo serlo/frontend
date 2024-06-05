@@ -4,11 +4,14 @@ import {
   EditorDragDropBgDocument,
   EditorImageDocument,
 } from '@editor/types/editor-plugins'
-import { isTextDocument } from '@editor/types/plugin-type-guards'
 import { useMemo, useState } from 'react'
 
 import { DraggableAnswer } from './components/shared/draggable-answer'
 import { BlankDropZone } from './components/static/blank-drop-zone'
+import {
+  getAnswerZoneImageSrc,
+  getAnswerZoneText,
+} from './hooks/use-answer-zones'
 import type {
   DraggableAnswerType,
   DropzoneVisibility,
@@ -27,42 +30,29 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
   const backgroundImageUrlFromPlugin = (bgImagePluginState?.state?.src ||
     '') as string
 
+  const convertAnswers = (
+    answers: EditorDragDropBgDocument['state']['extraDraggableAnswers']
+  ) => {
+    return answers.map((answer) => {
+      const answerImageUrl = getAnswerZoneImageSrc(answer.image.id || '')
+      const answerText = getAnswerZoneText(answer.text.id || '')
+
+      return {
+        id: answer.id,
+        text: answerText,
+        imageUrl: answerImageUrl,
+      }
+    })
+  }
+
   const correctAnswers = answerZones
     .map((zone) => {
-      const answersForZone = zone.answers.map((answer) => {
-        const answerImageState = answer.image as EditorImageDocument
-
-        const answerImageUrl = answerImageState.state.src as string
-
-        const answerText = isTextDocument(answer.text)
-          ? answer.text.state
-          : undefined
-
-        return {
-          id: answer.id,
-          text: answerText,
-          imageUrl: answerImageUrl,
-        }
-      })
+      const answersForZone = convertAnswers(zone.answers)
       return answersForZone
     })
     .flat()
 
-  const wrongAnswers = extraDraggableAnswers.map((answer) => {
-    const answerImageState = answer.image as EditorImageDocument
-
-    const answerImageUrl = answerImageState.state.src as string
-
-    const answerText = isTextDocument(answer.text)
-      ? answer.text.state
-      : undefined
-
-    return {
-      id: answer.id,
-      text: answerText,
-      imageUrl: answerImageUrl,
-    }
-  })
+  const wrongAnswers = convertAnswers(extraDraggableAnswers)
 
   const possibleAnswers = useMemo(() => {
     return [...correctAnswers, ...wrongAnswers]
