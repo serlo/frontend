@@ -39,9 +39,6 @@ export interface AnswerZoneProps {
  * for settings and adding new answers.
  */
 export const AnswerZone = (props: AnswerZoneProps) => {
-  const [isResizing, setIsResizing] = useState(false)
-  const [dimensions, setDimensions] = useState({ width: 200, height: 70 })
-
   const {
     answerZone,
     onClick,
@@ -51,6 +48,12 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     getAnswerZoneImageSrc,
     getAnswerZoneText,
   } = props
+
+  const [isResizing, setIsResizing] = useState(false)
+  const [dimensions, setDimensions] = useState({
+    width: answerZone.layout.width.get(),
+    height: answerZone.layout.height.get(),
+  })
 
   const context = useContext(AnswerZonesContext)
 
