@@ -11,6 +11,7 @@ import { FaIcon } from '@/components/fa-icon'
 interface NewAnswerFlowProps {
   isWrongAnswer?: boolean
   zoneId?: string
+  onSave: () => void
 }
 
 /**
@@ -19,10 +20,8 @@ interface NewAnswerFlowProps {
  * It guides the user through selecting either text or image and configuring the answer.
  *
  */
-export function NewAnswerFlow({
-  isWrongAnswer = false,
-  zoneId,
-}: NewAnswerFlowProps): JSX.Element {
+export function NewAnswerFlow(props: NewAnswerFlowProps) {
+  const { isWrongAnswer = false, zoneId, onSave } = props
   const [currentStep, setCurrentStep] = useState(0)
   const [stepOneType, setStepOneType] = useState<AnswerType>(AnswerType.Image)
 
@@ -63,12 +62,15 @@ export function NewAnswerFlow({
   )
 
   const stepOne = answersList ? (
-    <AnswerRenderer
-      answerType={stepOneType}
-      answerIndex={answersList.length - 1}
-      isWrongAnswer={isWrongAnswer}
-      zoneId={zoneId}
-    />
+    <div className="mt-16">
+      <AnswerRenderer
+        answerType={stepOneType}
+        answerIndex={answersList.length - 1}
+        isWrongAnswer={isWrongAnswer}
+        zoneId={zoneId}
+        onSave={onSave}
+      />
+    </div>
   ) : (
     <>Error </>
   )

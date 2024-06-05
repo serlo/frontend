@@ -72,3 +72,11 @@ export enum DropzoneVisibility {
   Partial = 'partial',
   None = 'none',
 }
+
+export enum ModalType {
+  Unset = '',
+  Settings = 'settings',
+  CreateDropZone = 'createDropZone',
+  Edit = 'edit',
+  CreateWrongAnswer = 'createWrongAnswer',
+}

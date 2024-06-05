@@ -5,16 +5,13 @@ import { useContext, useState } from 'react'
 import { XYCoord, useDrop } from 'react-dnd'
 import { useHotkeys } from 'react-hotkeys-hook'
 
+import { EditorCanvasModal } from './editor-canvas-modal'
 import type { DragDropBgProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
 import { useAnswerZones } from '../../hooks/use-answer-zones'
-import { AnswerZoneState, answerDataType } from '../../types'
+import { AnswerZoneState, ModalType, answerDataType } from '../../types'
 import { AnswerZone } from '../answer-zone/answer-zone'
-import { AnswerZoneSettingsForm } from '../answer-zone/answer-zone-settings-form'
-import { EditAnswerZone } from '../answer-zone/edit-answer-zone'
-import { NewAnswerFlow } from '../answer-zone/new-answer-flow'
 import { DraggableAnswer } from '../shared/draggable-answer'
-import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 const getCanvasDimensions = (shape: string) => {
   switch (shape) {
@@ -40,6 +37,7 @@ export function EditorCanvas(props: DragDropBgProps) {
   const { state } = props
   const { answerZones, backgroundImage, extraDraggableAnswers } = state
 
+  const [modalType, setModalType] = useState<ModalType>(ModalType.Unset)
   const { getAnswerZoneImageSrc, getAnswerZoneText, duplicateAnswerZone } =
     useAnswerZones(props)
 
@@ -50,8 +48,6 @@ export function EditorCanvas(props: DragDropBgProps) {
     selectAnswerZone,
     selectCurrentAnswer,
     currentAnswerZone,
-    currentAnswerIndex,
-    currentAnswerType,
     canvasShape,
   } = context || {}
 
@@ -59,10 +55,6 @@ export function EditorCanvas(props: DragDropBgProps) {
     useState<AnswerZoneState | null>(null)
 
   const { canvasHeight, canvasWidth } = getCanvasDimensions(canvasShape)
-
-  const onClickAddWrongAnswer = () => {
-    setShowCreateWrongAnswerModal(true)
-  }
 
   const [, drop] = useDrop(
     () => ({
@@ -116,72 +108,22 @@ export function EditorCanvas(props: DragDropBgProps) {
     const zoneText = getAnswerZoneText(zoneTextId)
     return { id: zoneImageId, imageUrl: zoneImgUrl, text: zoneText }
   }
-  /**
-   * Convert an answer zone to possible answer format.
-   */
-  const zoneToPossibleAnswer = (zone: AnswerZoneState) => {
-    const answers = zone.answers.map(convertAnswer)
-    return answers
-  }
 
-  const correctAnswers = zones.map(zoneToPossibleAnswer).flat()
+  const correctAnswers = zones
+    .map(({ answers }) => answers.map(convertAnswer))
+    .flat()
   const wrongAnswers = extraDraggableAnswers.map(convertAnswer)
   const possibleAnswers = [...correctAnswers, ...wrongAnswers]
 
-  const [showSettingsModal, setShowSettingsModal] = useState(false)
-  const [showCreateDropZoneModal, setShowCreateDropZoneModal] = useState(false)
-  const [showEditModal, setShowEditModal] = useState(false)
-  const [showCreateWrongAnswerModal, setShowCreateWrongAnswerModal] =
-    useState(false)
-
   return (
     <>
-      <ModalWithCloseButton
-        isOpen={
-          showSettingsModal ||
-          showCreateDropZoneModal ||
-          showEditModal ||
-          showCreateWrongAnswerModal
-        }
-        onCloseClick={() => {
-          setShowSettingsModal(false)
-          setShowCreateDropZoneModal(false)
-          setShowEditModal(false)
-          setShowCreateWrongAnswerModal(false)
-        }}
-        className=" max-w-md translate-y-0 sm:top-1/4"
-      >
-        <h3 className="serlo-h3 mt-4 px-3">
-          {showSettingsModal ? 'Settings' : 'Neues Ablageobjekt'}
-        </h3>
-        {showSettingsModal && (
-          <AnswerZoneSettingsForm
-            answerZone={currentAnswerZone}
-            onDuplicate={() => {
-              duplicateAnswerZone(currentAnswerZone.id.get())
-            }}
-            onDelete={() => {
-              setShowSettingsModal(false)
-              const index = answerZones.findIndex(
-                (a) => a.id.get() === currentAnswerZone.id.get()
-              )
-              answerZones.remove(index)
-            }}
-          />
-        )}
-        {showCreateDropZoneModal && (
-          <NewAnswerFlow zoneId={currentAnswerZone.id.get()} />
-        )}
-        {showEditModal && (
-          <EditAnswerZone
-            zoneId={currentAnswerZone.id.get()}
-            answerType={currentAnswerType}
-            answerIndex={currentAnswerIndex}
-            onSave={() => setShowEditModal(false)}
-          />
-        )}
-        {showCreateWrongAnswerModal && <NewAnswerFlow isWrongAnswer />}
-      </ModalWithCloseButton>
+      <EditorCanvasModal
+        answerZones={answerZones}
+        modalType={modalType}
+        duplicateAnswerZone={duplicateAnswerZone}
+        setModalType={setModalType}
+      />
+
       <div
         ref={drop}
         className="mx-auto overflow-hidden rounded-lg border border-almost-black bg-center bg-no-repeat"
@@ -198,16 +140,16 @@ export function EditorCanvas(props: DragDropBgProps) {
               onClick={() => selectAnswerZone(answerZone.id.get())}
               onClickSettingsButton={() => {
                 selectAnswerZone(answerZone.id.get())
-                setShowSettingsModal(true)
+                setModalType(ModalType.Settings)
               }}
               onClickPlusButton={() => {
                 selectAnswerZone(answerZone.id.get())
-                setShowCreateDropZoneModal(true)
+                setModalType(ModalType.CreateDropZone)
               }}
               onClickEditAnswerButton={(zoneId, answerIndex, answerType) => {
                 selectAnswerZone(zoneId)
                 selectCurrentAnswer(answerIndex, answerType)
-                setShowEditModal(true)
+                setModalType(ModalType.Edit)
               }}
               getAnswerZoneImageSrc={getAnswerZoneImageSrc}
               getAnswerZoneText={getAnswerZoneText}
@@ -216,6 +158,7 @@ export function EditorCanvas(props: DragDropBgProps) {
           )
         })}
       </div>
+
       <div className="mt-4">
         <DraggableArea accept="none">
           {possibleAnswers.map((possibleAnswer, index) => (
@@ -229,7 +172,9 @@ export function EditorCanvas(props: DragDropBgProps) {
         </DraggableArea>
         <div className="flex justify-center">
           <button
-            onClick={onClickAddWrongAnswer}
+            onClick={() => {
+              setModalType(ModalType.CreateWrongAnswer)
+            }}
             className="rounded bg-orange-100 px-4 py-2"
           >
             Add wrong answer
