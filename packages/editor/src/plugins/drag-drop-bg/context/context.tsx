@@ -1,6 +1,11 @@
 import { createContext } from 'react'
 
-import { AnswerType, BackgroundShape, type AnswerZoneState } from '../types'
+import {
+  AnswerType,
+  BackgroundShape,
+  DropzoneVisibility,
+  type AnswerZoneState,
+} from '../types'
 
 // Define default values for state management
 const emptyVal = {
@@ -25,7 +30,7 @@ export interface AnswerZonesContextType {
   currentAnswerType: AnswerType
   selectAnswerZone: (id: string) => void
   selectCurrentAnswer: (index: number, type: AnswerType) => void
-  dropzoneVisibility: 'full' | 'partial' | 'none'
+  dropzoneVisibility: DropzoneVisibility
   extraDraggableAnswers: AnswerZoneState['answers']
 }
 
@@ -52,7 +57,7 @@ export const defaultAnswerZonesContext: AnswerZonesContextType = {
   currentAnswerType: AnswerType.Unset,
   selectAnswerZone: (_id: string) => {},
   selectCurrentAnswer: (_index: number, _type: AnswerType) => {},
-  dropzoneVisibility: 'full',
+  dropzoneVisibility: DropzoneVisibility.Full,
   extraDraggableAnswers: emptyAnswersArray,
 }
 

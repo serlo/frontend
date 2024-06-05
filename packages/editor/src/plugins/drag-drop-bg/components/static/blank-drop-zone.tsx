@@ -8,6 +8,7 @@ import {
   PossibleAnswerType,
 } from '../../types'
 import { DraggableAnswer } from '../shared/draggable-answer'
+import { cn } from '@/helper/cn'
 
 interface BlankDropZoneProps {
   accept: string[]
@@ -72,12 +73,20 @@ export const BlankDropZone = memo(function BlankDropZone({
         ? 'border-red-500'
         : 'border-brand-500'
 
-  const isVisible = visibility === 'full' || visibility === 'partial'
+  const isVisible =
+    visibility === DropzoneVisibility.Full ||
+    visibility === DropzoneVisibility.Partial
 
   return (
     <div
       ref={drop}
-      className={`absolute flex flex-row items-center justify-center rounded border-${isVisible ? '2' : '0'} p-1 ${isVisible ? backgroundColor : ''} ${isVisible ? borderColor : ''}`}
+      className={cn(
+        `absolute flex flex-row items-center justify-center rounded p-1
+        ${visibility === DropzoneVisibility.Partial ? 'border-dashed' : 'border-solid'}
+        ${isVisible ? 'border-2' : 'border-0'}
+        ${isVisible ? backgroundColor : ''}
+        ${isVisible ? borderColor : ''}`
+      )}
       style={{
         left,
         top,

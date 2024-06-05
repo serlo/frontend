@@ -1,6 +1,7 @@
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import { DragDropBgEditor } from './editor'
+import { BackgroundShape, DropzoneVisibility } from './types'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -38,10 +39,10 @@ export const answerZoneState = object({
 
 const dragDropBgState = object({
   answerZones: list(answerZoneState, 0),
-  canvasShape: string(''),
+  canvasShape: string(BackgroundShape.Unset),
   backgroundType: string(''),
   backgroundImage: optional(child({ plugin: EditorPluginType.Image })),
-  dropzoneVisibility: string('full'),
+  dropzoneVisibility: string(DropzoneVisibility.Full),
   extraDraggableAnswers: list(answerData, 0),
 })
 
