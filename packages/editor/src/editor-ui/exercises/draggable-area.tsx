@@ -1,20 +1,19 @@
-import { ReactNode } from 'react'
+import { LegacyRef, ReactNode } from 'react'
 import { useDrop } from 'react-dnd'
 
-import { blankDraggableAnswerDragType } from './blank-draggable-answer'
-import type { DraggableId } from '..'
 import { cn } from '@/helper/cn'
 
-interface BlankDraggableAreaProps {
+interface DraggableAreaProps {
   children: ReactNode
-  onDrop: (item: { draggableId: DraggableId }) => void
+  accept: string
+  onDrop?: (item: any) => void
 }
 
-export function BlankDraggableArea(props: BlankDraggableAreaProps) {
-  const { onDrop, children } = props
+export function DraggableArea(props: DraggableAreaProps) {
+  const { onDrop, accept, children } = props
 
   const [{ isOver }, dropRef] = useDrop({
-    accept: blankDraggableAnswerDragType,
+    accept,
     drop: onDrop,
     collect: (monitor) => ({
       isOver: monitor.isOver(),
@@ -28,7 +27,7 @@ export function BlankDraggableArea(props: BlankDraggableAreaProps) {
         isOver ? 'bg-slate-200' : ''
       )}
       data-qa="blank-solution-area"
-      ref={dropRef as unknown as React.LegacyRef<HTMLDivElement>}
+      ref={dropRef as LegacyRef<HTMLDivElement>}
     >
       {children}
     </div>

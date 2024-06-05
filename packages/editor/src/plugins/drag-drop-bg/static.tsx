@@ -1,4 +1,5 @@
 import { DndWrapper } from '@editor/core/components/dnd-wrapper'
+import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
 import {
   EditorDragDropBgDocument,
   EditorImageDocument,
@@ -6,9 +7,13 @@ import {
 import { isTextDocument } from '@editor/types/plugin-type-guards'
 import { useMemo, useState } from 'react'
 
-import { PossibleAnswers } from './components/shared/possible-answers'
+import { DraggableAnswer } from './components/shared/draggable-answer'
 import { BlankDropZone } from './components/static/blank-drop-zone'
-import { DropzoneVisibility } from './types'
+import type {
+  DraggableAnswerType,
+  DropzoneVisibility,
+  PossibleAnswerType,
+} from './types'
 
 export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
   const {
@@ -25,8 +30,6 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
   const correctAnswers = answerZones
     .map((zone) => {
       const answersForZone = zone.answers.map((answer) => {
-        const zoneId = zone.id
-
         const answerImageState = answer.image as EditorImageDocument
 
         const answerImageUrl = answerImageState.state.src as string
@@ -36,7 +39,7 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
           : undefined
 
         return {
-          id: zoneId,
+          id: answer.id,
           text: answerText,
           imageUrl: answerImageUrl,
         }
@@ -61,14 +64,47 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
     new Map<string, boolean | null>()
   )
 
-  const onDropAnswer = (answerId: string, dropzoneId: string) => {
+  const onAnswerDrop = (
+    answerId: string,
+    dropzoneId: string,
+    droppableBlankId: string
+  ) => {
     setDropzoneAnswerMap((prev) => {
       const updatedMap = new Map(prev)
       const existingAnswers = updatedMap.get(dropzoneId) || []
       updatedMap.set(dropzoneId, [...existingAnswers, answerId])
+      if (droppableBlankId) {
+        const existingAnswersFromOrigin = updatedMap.get(droppableBlankId) || []
+        updatedMap.set(
+          droppableBlankId,
+          existingAnswersFromOrigin.filter((id) => id !== answerId)
+        )
+      }
       return updatedMap
     })
     setIsCorrectMap((prev) => new Map(prev.set(dropzoneId, null)))
+  }
+
+  const onDraggableAreaAnswerDrop = (answer: DraggableAnswerType) => {
+    let zoneToReset: string = ''
+
+    setDropzoneAnswerMap((prev) => {
+      const updatedMap = new Map(prev)
+      updatedMap.forEach((value, key) => {
+        if (value.includes(answer.id)) {
+          zoneToReset = key
+          updatedMap.set(
+            key,
+            value.filter((id) => id !== answer.id)
+          )
+        }
+      })
+      return updatedMap
+    })
+
+    if (zoneToReset.length > 0) {
+      setIsCorrectMap((prev) => new Map(prev.set(zoneToReset, null)))
+    }
   }
 
   const checkAnswers = () => {
@@ -100,13 +136,30 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
               visibility={dropzoneVisibility as DropzoneVisibility}
               accept={['answer']}
               dropZone={dropZone}
-              onDropAnswer={onDropAnswer}
+              droppedAnswersIds={dropzoneAnswerMap.get(index.toString()) || []}
+              onAnswerDrop={onAnswerDrop}
               isCorrect={isCorrectMap.get(index.toString())}
             />
           )
         })}
       </div>
-      <PossibleAnswers canEdit={false} possibleAnswers={possibleAnswers} />
+      <DraggableArea accept="all" onDrop={onDraggableAreaAnswerDrop}>
+        {possibleAnswers
+          .filter(
+            (possibleAnswer: PossibleAnswerType) =>
+              !Array.from(dropzoneAnswerMap)
+                .reduce((acc: string[], curr) => acc.concat(curr[1]), [])
+                .includes(possibleAnswer.id)
+          )
+          .map((possibleAnswer: PossibleAnswerType, index) => (
+            <DraggableAnswer
+              draggableId={possibleAnswer.id}
+              key={index}
+              imageUrl={possibleAnswer.imageUrl}
+              text={possibleAnswer.text}
+            />
+          ))}
+      </DraggableArea>
       <button onClick={() => checkAnswers()}>Check Answers</button>
     </DndWrapper>
   )

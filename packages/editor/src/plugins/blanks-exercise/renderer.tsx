@@ -1,3 +1,4 @@
+import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
 import {
   lazy,
   Suspense,
@@ -11,8 +12,10 @@ import { v4 as uuid_v4 } from 'uuid'
 
 import type { BlankId, DraggableId, BlanksExerciseMode } from '.'
 import { BlankCheckButton } from './components/blank-check-button'
-import { BlankDraggableAnswer } from './components/blank-draggable-answer'
-import { BlankDraggableArea } from './components/blank-draggable-area'
+import {
+  BlankDraggableAnswer,
+  blankDraggableAnswerDragType,
+} from './components/blank-draggable-answer'
 import { BlanksContext } from './context/blank-context'
 import { Blank, type BlankType } from './types'
 import { cn } from '@/helper/cn'
@@ -213,13 +216,16 @@ export function BlanksExerciseRenderer(props: BlanksExerciseRendererProps) {
           </BlanksContext.Provider>
 
           {mode === 'drag-and-drop' ? (
-            <BlankDraggableArea onDrop={handleDraggableAreaDrop}>
+            <DraggableArea
+              accept={blankDraggableAnswerDragType}
+              onDrop={handleDraggableAreaDrop}
+            >
               {draggables.map((draggable, index) =>
                 locationOfDraggables.get(draggable.draggableId) ? null : (
                   <BlankDraggableAnswer key={index} {...draggable} />
                 )
               )}
-            </BlankDraggableArea>
+            </DraggableArea>
           ) : null}
 
           {!isEditing ? (
@@ -230,41 +236,6 @@ export function BlanksExerciseRenderer(props: BlanksExerciseRendererProps) {
               onClick={checkAnswers}
             />
           ) : null}
-
-          {/* Only debug output from here on */}
-          <div className="hidden">
-            Blanks state:
-            {blanks.map((blank, index) => (
-              <div key={index}>{JSON.stringify(blank)}</div>
-            ))}
-          </div>
-          <div className="hidden">
-            <div>State textUserTypedIntoBlank:</div>
-            {[...textUserTypedIntoBlanks].map((entry, index) => {
-              const blankId = entry[0]
-              const text = entry[1].text
-              return (
-                <div
-                  className="ml-5"
-                  key={index}
-                >{`Text: ${text} | BlankId: ${blankId}`}</div>
-              )
-            })}
-          </div>
-          <div className="hidden">
-            {[...locationOfDraggables].map((entry, index) => (
-              <div key={index}>
-                {`DraggableId: ${entry[0]} in blankId: ${entry[1]}`}
-              </div>
-            ))}
-          </div>
-          <div className="hidden">
-            {draggables.map((draggable, index) => (
-              <div key={index}>
-                {`DraggableId: ${draggable.draggableId} with text: ${draggable.text}`}
-              </div>
-            ))}
-          </div>
         </div>
       </DndWrapper>
     </Suspense>

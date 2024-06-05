@@ -26,6 +26,7 @@ export const layoutData = object({
 })
 
 export const answerData = object({
+  id: string(''),
   image: child({ plugin: EditorPluginType.Image }),
   text: child({ plugin: EditorPluginType.Text }),
 })

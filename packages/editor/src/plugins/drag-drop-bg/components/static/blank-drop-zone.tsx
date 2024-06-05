@@ -1,25 +1,32 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { useDrop } from 'react-dnd'
 
 import {
   BlankDropZoneSpec,
+  DraggableAnswerType,
   DropzoneVisibility,
   PossibleAnswerType,
 } from '../../types'
-import { AnswerContent } from '../answer-zone/answer-content'
+import { DraggableAnswer } from '../shared/draggable-answer'
 
 interface BlankDropZoneProps {
   accept: string[]
   onDrop?: (item: BlankDropZoneSpec) => void
   dropZone: BlankDropZoneSpec
-  onDropAnswer: (answerId: string, dropzoneId: string) => void
+  droppedAnswersIds: string[]
+  onAnswerDrop: (
+    answerId: string,
+    dropzoneId: string,
+    droppableBlankId: string
+  ) => void
   isCorrect?: boolean | null
   visibility?: DropzoneVisibility
 }
 
 export const BlankDropZone = memo(function BlankDropZone({
   dropZone,
-  onDropAnswer,
+  droppedAnswersIds,
+  onAnswerDrop,
   isCorrect,
   visibility,
 }: BlankDropZoneProps) {
@@ -31,15 +38,26 @@ export const BlankDropZone = memo(function BlankDropZone({
 
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: 'all',
-    drop: (answer: PossibleAnswerType) => {
-      setDroppedAnswers((prev) => [...prev, answer])
-      onDropAnswer(answer.id, dropZone.id)
+    drop: (answer: DraggableAnswerType) => {
+      const hasAnswerAlready = droppedAnswers.find(
+        (droppedAnswer) => droppedAnswer.id === answer.id
+      )
+      if (!hasAnswerAlready) {
+        setDroppedAnswers((prev) => [...prev, answer])
+        onAnswerDrop(answer.id, dropZone.id, answer.droppableBlankId)
+      }
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
     }),
   })
+
+  useEffect(() => {
+    setDroppedAnswers((prev) => {
+      return prev.filter((answer) => droppedAnswersIds.includes(answer.id))
+    })
+  }, [droppedAnswersIds])
 
   const isActive = isOver && canDrop
   const backgroundColor = isActive
@@ -72,7 +90,14 @@ export const BlankDropZone = memo(function BlankDropZone({
         <div className="absolute left-0 top-0 bg-white p-1 text-xs">{name}</div>
       )}
       {droppedAnswers.map((answer, index) => (
-        <AnswerContent key={index} url={answer.imageUrl} text={answer.text} />
+        <DraggableAnswer
+          key={index}
+          draggableId={answer.id}
+          droppableBlankId={dropZone.id}
+          text={answer.text}
+          imageUrl={answer.imageUrl}
+          isAnswerCorrect={isCorrect || false}
+        />
       ))}
     </div>
   )

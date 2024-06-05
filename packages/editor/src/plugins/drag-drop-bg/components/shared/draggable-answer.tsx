@@ -1,4 +1,3 @@
-// import { useEmptyPreview } from '@editor/core/helpers/use-empty-preview'
 import { useMemo } from 'react'
 import { useDrag } from 'react-dnd'
 import { Descendant } from 'slate'
@@ -13,13 +12,13 @@ interface DraggableAnswerProps {
   text?: Descendant[]
   imageUrl?: string
   draggableId: string
+  droppableBlankId?: string
   isAnswerCorrect?: boolean
-  canEdit?: boolean
-  onClickEdit?: (id: string) => void
 }
 
 export function DraggableAnswer({
   draggableId,
+  droppableBlankId,
   text,
   isAnswerCorrect,
   imageUrl,
@@ -28,26 +27,17 @@ export function DraggableAnswer({
     () => ({
       id: draggableId,
       draggableId,
+      droppableBlankId,
       imageUrl,
       text,
     }),
-    [draggableId, imageUrl, text]
+    [draggableId, droppableBlankId, imageUrl, text]
   )
 
-  const [collected, dragRef, dragPreview] = useDrag({
+  const [, dragRef] = useDrag({
     type: 'all',
     item: dragItem,
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-      hideSourceOnDrag: true,
-    }),
   })
-  /**
-   * Hide source element while dragging
-   */
-  if (collected.isDragging) {
-    return <div ref={dragPreview} />
-  }
   return (
     <span
       className={cn(

@@ -1,3 +1,4 @@
+import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
 import { selectStaticDocument, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
@@ -8,6 +9,7 @@ import {
 import { useContext, useState } from 'react'
 import { XYCoord, useDrop } from 'react-dnd'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { v4 as uuidv4 } from 'uuid'
 
 import type { DragDropBgProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
@@ -16,7 +18,7 @@ import { AnswerZone } from '../answer-zone/answer-zone'
 import { AnswerZoneSettingsForm } from '../answer-zone/answer-zone-settings-form'
 import { EditAnswerZone } from '../answer-zone/edit-answer-zone'
 import { NewAnswerZoneFlow } from '../answer-zone/new-answer-zone-flow'
-import { PossibleAnswers } from '../shared/possible-answers'
+import { DraggableAnswer } from '../shared/draggable-answer'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 const getAnswerZoneImageSrc = (answerZoneImageId: string) => {
@@ -122,6 +124,7 @@ export function EditorCanvas(props: DragDropBgProps) {
         lockedAspectRatio: true,
       },
       answers: toCopy.answers.map((answer) => ({
+        id: uuidv4(),
         image: {
           plugin: EditorPluginType.Image,
           state: getAnswerZoneImageState(answer.image.get()),
@@ -271,7 +274,16 @@ export function EditorCanvas(props: DragDropBgProps) {
         })}
       </div>
       <div className="mt-4">
-        <PossibleAnswers canEdit possibleAnswers={possibleAnswers} />
+        <DraggableArea accept="none">
+          {possibleAnswers.map((possibleAnswer, index) => (
+            <DraggableAnswer
+              draggableId={possibleAnswer.id}
+              key={index}
+              imageUrl={possibleAnswer.imageUrl}
+              text={possibleAnswer.text}
+            />
+          ))}
+        </DraggableArea>
       </div>
     </>
   )

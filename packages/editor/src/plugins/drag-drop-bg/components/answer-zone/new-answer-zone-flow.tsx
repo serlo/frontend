@@ -1,6 +1,7 @@
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faFont, faImage } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 import { AnswerZonesContext } from '../../context/context'
 import { FaIcon } from '@/components/fa-icon'
@@ -26,6 +27,7 @@ export function NewAnswerZoneFlow({
 
   const goToStepOne = (newStepOneType: 'text' | 'image') => {
     newAnswerZone?.answers.insert(newAnswerZone.answers.length, {
+      id: uuidv4(),
       text: { plugin: EditorPluginType.Text },
       image: { plugin: EditorPluginType.Image },
     })
