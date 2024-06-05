@@ -109,7 +109,7 @@ export function Node({
           )
         }
         if (
-          (!isProduction || !shouldUseFeature('authVidis')) &&
+          (!isProduction || shouldUseFeature('authVidis')) &&
           attributes.name === 'provider' &&
           attributes.value === 'vidis'
         ) {
