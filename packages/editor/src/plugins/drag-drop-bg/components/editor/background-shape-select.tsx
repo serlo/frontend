@@ -21,6 +21,7 @@ export function BackgroundShapeSelect(props: DragDropBgProps) {
       <div className="flex flex-row items-center justify-center">
         {shapeOptions.map((shape) => (
           <button
+            data-qa={`plugin-drag-drop-bg-background-shape-select-${shape}`}
             key={shape}
             className="m-[20px] rounded-[5px] bg-orange-100 p-[10px] pr-[20px]"
             onClick={() => canvasShape.set(shape)}
