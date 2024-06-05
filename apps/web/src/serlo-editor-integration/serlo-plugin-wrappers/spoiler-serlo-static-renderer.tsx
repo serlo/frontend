@@ -19,6 +19,7 @@ export function SpoilerSerloStaticRenderer({
   const { asPath } = useRouter()
 
   const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
+
   const trackSpoilerOpened = () => {
     if (hasSentSpoilerTrackingEvent) return
     // send tracking event

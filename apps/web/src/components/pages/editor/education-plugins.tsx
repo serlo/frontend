@@ -8,6 +8,7 @@ import {
   faNewspaper,
   faSquareCheck,
   faSquareRootVariable,
+  faPencilAlt,
   faTarp,
   faCaretSquareDown,
   faCode,
@@ -20,13 +21,14 @@ import {
 import { useRef, useState } from 'react'
 
 import {
-  boxExample,
-  highlighExample,
-  inputExample,
+  BoxExample,
+  FillInTheGapExample,
+  HighlightExample,
+  InputExample,
   MCExample,
   SCExample,
-  spoilerExample,
-  textExExample,
+  SpoilerExample,
+  TextExerciseExample,
 } from './education-plugin-examples'
 import { FaIcon } from '@/components/fa-icon'
 import { SerloEntityProvider } from '@/contexts/serlo-entity-context'
@@ -38,6 +40,14 @@ const h2Class =
 const categories = ['educational', 'basic'] as const
 
 const pluginData = [
+  {
+    title: 'Fill in the Gap Exercise',
+    icon: faPencilAlt,
+    description:
+      'Fill in the gap exercises allow students to either input an original answer, or drag & drop from a predefined list of answers. Authors can add additional wrong answers to the list to make the exercise more challenging.',
+    example: FillInTheGapExample,
+    category: 'educational',
+  },
   {
     title: 'Single-Choice Exercise',
     icon: faSquareCheck,
@@ -59,7 +69,7 @@ const pluginData = [
     icon: faTarp,
     description:
       'An input field appears below the task where a value or a character string can be entered and validated. Authors can add individual feedback to certain answers e.g. to explain misconceptions behind common mistakes.',
-    example: inputExample,
+    example: InputExample,
     category: 'educational',
   },
   {
@@ -67,7 +77,7 @@ const pluginData = [
     icon: faFileLines,
     description:
       'Text exercises give learners a task and access to a detailed solution to this task. They can be created using text and multimedia.',
-    example: textExExample,
+    example: TextExerciseExample,
     category: 'educational',
   },
   {
@@ -114,7 +124,7 @@ const pluginData = [
     icon: faExpand,
     description:
       'Boxes offer the possibility to highlight important sections for learners. With the various semantic box types e.g. “example,” “mnemonic” or “quote”, the content can be structured clearly.',
-    example: boxExample,
+    example: BoxExample,
     category: 'educational',
   },
   {
@@ -149,7 +159,7 @@ const pluginData = [
     icon: faCode,
     description:
       'This feature offers special formatting and automatic syntax highlighting for code examples.',
-    example: highlighExample,
+    example: HighlightExample,
     category: 'basic',
   },
   {
@@ -165,7 +175,7 @@ const pluginData = [
     icon: faCaretSquareDown,
     description:
       'Hide additional content – e.g. more detailed context, sub-topics or further information – easily accessible within your content.',
-    example: spoilerExample,
+    example: SpoilerExample,
     category: 'basic',
   },
 ]

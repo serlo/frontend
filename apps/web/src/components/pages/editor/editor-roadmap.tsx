@@ -4,38 +4,31 @@ const roadmapData = [
   {
     title: 'Latest Releases',
     steps: [
-      'Integrate H5P exercises in Serlo Editor content',
-      'Simple Autosave',
-      'Slash command to add new plugin',
-      'Import existing Serlo content',
-      'Redesigned plugin toolbar',
+      'Fill-in-the-gap exercise (new plugin)',
+      'Exercise generation with AI ✨',
+      'Copy & Paste content across plugins',
+      'Web Component release',
     ],
   },
   {
     title: 'Next up',
     steps: [
-      'Directly link to content sections',
-      'Exercise generation with AI ✨',
-      'Improved focus management',
-      'Integrated help section',
-      'Audio plugin',
+      'Improve Image plugin, easier uploads',
+      'Drag & Drop image exercise (fill-in-the-gap)',
+      'AI supported input exercises',
     ],
   },
   {
     title: 'Soon',
     steps: [
-      'Improve Image plugin, easier uploads',
       'Better keyboard navigation',
-      'Impact dashboard – supporting authors with usage data',
-      'Fill-in-the-gap exercise (new plugin)',
+      'Asset upload for Editor integrations',
     ],
   },
   {
     title: 'Later',
     steps: [
-      'Drag & Drop exercise (new plugin)',
       'Better support for LMS integrations',
-      'Copy & Paste content across plugins',
       'Automated OER license management',
     ],
   },
