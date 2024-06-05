@@ -1,9 +1,7 @@
-import { useContext } from 'react'
-
-import { AnswerZonesContext } from '../../context/context'
+import { AnswerRenderer } from './answer-renderer'
 import { AnswerType } from '../../types'
 
-interface NewAnswerZoneFlowProps {
+interface EditAnswerZoneProps {
   zoneId: string
   answerType: AnswerType
   answerIndex: number
@@ -15,25 +13,13 @@ export function EditAnswerZone({
   answerType,
   answerIndex,
   onSave,
-}: NewAnswerZoneFlowProps): JSX.Element {
-  const { zones } = useContext(AnswerZonesContext) || {}
-  const answerZone = zones?.find((z) => z.id.get() === zoneId)
-
-  const Text = <div>{answerZone?.answers[answerIndex]?.text.render()}</div>
-
-  const Image = (
-    <div>
-      {answerZone?.answers[answerIndex]?.image.render()}
-      <div>
-        <button
-          className="mt-2 flex rounded bg-orange-100 px-2 py-1"
-          onClick={onSave}
-        >
-          + Ablageobject hinzufügen
-        </button>
-      </div>
-    </div>
+}: EditAnswerZoneProps): JSX.Element {
+  return (
+    <AnswerRenderer
+      answerType={answerType === AnswerType.Text ? 'text' : 'image'}
+      answerIndex={answerIndex}
+      zoneId={zoneId}
+      onSave={onSave}
+    />
   )
-
-  return answerType === AnswerType.Text ? Text : Image
 }

@@ -3,6 +3,7 @@ import { faFont, faImage } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
+import { AnswerRenderer } from './answer-renderer'
 import { AnswerZonesContext } from '../../context/context'
 import { FaIcon } from '@/components/fa-icon'
 
@@ -60,22 +61,17 @@ export function NewAnswerFlow({
     </div>
   )
 
-  const stepOneText = (
-    <div>{answersList?.[answersList.length - 1]?.text.render()}</div>
+  const stepOne = answersList ? (
+    <AnswerRenderer
+      answerType={stepOneType}
+      answerIndex={answersList.length - 1}
+      isWrongAnswer={isWrongAnswer}
+      zoneId={zoneId}
+    />
+  ) : (
+    <>Error </>
   )
 
-  const stepOneImage = (
-    <div>
-      {answersList?.[answersList.length - 1]?.image.render()}
-      <div>
-        <button className="mt-2 flex rounded bg-orange-100 px-2 py-1">
-          + Ablageobject hinzufügen
-        </button>
-      </div>
-    </div>
-  )
-
-  const stepOne = stepOneType === 'text' ? stepOneText : stepOneImage
   const stepTwo = <div>Step Two</div>
 
   const steps = [stepZero, stepOne, stepTwo]
