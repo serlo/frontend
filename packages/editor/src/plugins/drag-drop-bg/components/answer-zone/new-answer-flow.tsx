@@ -6,23 +6,38 @@ import { v4 as uuidv4 } from 'uuid'
 import { AnswerZonesContext } from '../../context/context'
 import { FaIcon } from '@/components/fa-icon'
 
+interface NewAnswerFlowProps {
+  isWrongAnswer?: boolean
+  zoneId?: string
+}
+
 /**
  *
- * This component handles the flow for creating a wrong answer.
+ * This component handles the flow for creating a new answer zone or a wrong answer.
+ * It guides the user through selecting either text or image and configuring the answer.
  *
  */
-export function NewWrongAnswer(): JSX.Element {
+export function NewAnswerFlow({
+  isWrongAnswer = false,
+  zoneId,
+}: NewAnswerFlowProps): JSX.Element {
   const [currentStep, setCurrentStep] = useState(0)
   const [stepOneType, setStepOneType] = useState<'text' | 'image'>('image')
 
-  const { extraDraggableAnswers } = useContext(AnswerZonesContext) || {}
+  const { zones, extraDraggableAnswers } = useContext(AnswerZonesContext) || {}
+
+  const answersList = isWrongAnswer
+    ? extraDraggableAnswers
+    : zones?.find((z) => z.id.get() === zoneId)?.answers
 
   const goToStepOne = (newStepOneType: 'text' | 'image') => {
-    extraDraggableAnswers.insert(extraDraggableAnswers.length, {
-      id: uuidv4(),
-      text: { plugin: EditorPluginType.Text },
-      image: { plugin: EditorPluginType.Image },
-    })
+    if (answersList) {
+      answersList.insert(answersList.length, {
+        id: uuidv4(),
+        text: { plugin: EditorPluginType.Text },
+        image: { plugin: EditorPluginType.Image },
+      })
+    }
     setStepOneType(newStepOneType)
     setCurrentStep(1)
   }
@@ -46,14 +61,12 @@ export function NewWrongAnswer(): JSX.Element {
   )
 
   const stepOneText = (
-    <div>
-      {extraDraggableAnswers[extraDraggableAnswers.length - 1]?.text.render()}
-    </div>
+    <div>{answersList?.[answersList.length - 1]?.text.render()}</div>
   )
 
   const stepOneImage = (
     <div>
-      {extraDraggableAnswers[extraDraggableAnswers.length - 1]?.image.render()}
+      {answersList?.[answersList.length - 1]?.image.render()}
       <div>
         <button className="mt-2 flex rounded bg-orange-100 px-2 py-1">
           + Ablageobject hinzufügen

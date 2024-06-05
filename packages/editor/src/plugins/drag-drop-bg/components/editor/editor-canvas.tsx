@@ -5,7 +5,6 @@ import { useContext, useState } from 'react'
 import { XYCoord, useDrop } from 'react-dnd'
 import { useHotkeys } from 'react-hotkeys-hook'
 
-import { NewWrongAnswer } from './create-wrong-answer'
 import type { DragDropBgProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
 import { useAnswerZones } from '../../hooks/use-answer-zones'
@@ -13,7 +12,7 @@ import { AnswerZoneState, answerDataType } from '../../types'
 import { AnswerZone } from '../answer-zone/answer-zone'
 import { AnswerZoneSettingsForm } from '../answer-zone/answer-zone-settings-form'
 import { EditAnswerZone } from '../answer-zone/edit-answer-zone'
-import { NewAnswerZoneFlow } from '../answer-zone/new-answer-zone-flow'
+import { NewAnswerFlow } from '../answer-zone/new-answer-flow'
 import { DraggableAnswer } from '../shared/draggable-answer'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
@@ -171,7 +170,7 @@ export function EditorCanvas(props: DragDropBgProps) {
           />
         )}
         {showCreateDropZoneModal && (
-          <NewAnswerZoneFlow zoneId={currentAnswerZone.id.get()} />
+          <NewAnswerFlow zoneId={currentAnswerZone.id.get()} />
         )}
         {showEditModal && (
           <EditAnswerZone
@@ -181,7 +180,7 @@ export function EditorCanvas(props: DragDropBgProps) {
             onSave={() => setShowEditModal(false)}
           />
         )}
-        {showCreateWrongAnswerModal && <NewWrongAnswer />}
+        {showCreateWrongAnswerModal && <NewAnswerFlow isWrongAnswer />}
       </ModalWithCloseButton>
       <div
         ref={drop}
