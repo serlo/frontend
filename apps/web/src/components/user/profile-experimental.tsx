@@ -27,7 +27,7 @@ export const features = {
     cookieName: 'useAllowVidisLogin',
     isActive: false,
     activeInDev: false,
-    hideInProduction: true,
+    hideInProduction: false,
   },
 }
 
