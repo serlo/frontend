@@ -1,9 +1,10 @@
 import { useContext } from 'react'
 
 import { AnswerZonesContext } from '../../context/context'
+import { AnswerType } from '../../types'
 
 interface AnswerRendererProps {
-  answerType: 'text' | 'image'
+  answerType: AnswerType
   answerIndex: number
   onSave?: () => void
   isWrongAnswer?: boolean

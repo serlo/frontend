@@ -16,7 +16,9 @@ export function EditAnswerZone({
 }: EditAnswerZoneProps): JSX.Element {
   return (
     <AnswerRenderer
-      answerType={answerType === AnswerType.Text ? 'text' : 'image'}
+      answerType={
+        answerType === AnswerType.Text ? AnswerType.Text : AnswerType.Text
+      }
       answerIndex={answerIndex}
       zoneId={zoneId}
       onSave={onSave}

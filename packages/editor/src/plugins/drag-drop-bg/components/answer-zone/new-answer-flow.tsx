@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { AnswerRenderer } from './answer-renderer'
 import { AnswerZonesContext } from '../../context/context'
+import { AnswerType } from '../../types'
 import { FaIcon } from '@/components/fa-icon'
 
 interface NewAnswerFlowProps {
@@ -23,7 +24,7 @@ export function NewAnswerFlow({
   zoneId,
 }: NewAnswerFlowProps): JSX.Element {
   const [currentStep, setCurrentStep] = useState(0)
-  const [stepOneType, setStepOneType] = useState<'text' | 'image'>('image')
+  const [stepOneType, setStepOneType] = useState<AnswerType>(AnswerType.Image)
 
   const { zones, extraDraggableAnswers } = useContext(AnswerZonesContext) || {}
 
@@ -31,7 +32,7 @@ export function NewAnswerFlow({
     ? extraDraggableAnswers
     : zones?.find((z) => z.id.get() === zoneId)?.answers
 
-  const goToStepOne = (newStepOneType: 'text' | 'image') => {
+  const goToStepOne = (newStepOneType: AnswerType) => {
     if (answersList) {
       answersList.insert(answersList.length, {
         id: uuidv4(),
@@ -47,14 +48,14 @@ export function NewAnswerFlow({
     <div className="flex flex-row items-center justify-center">
       <button
         className="m-4 rounded bg-orange-100 px-4 py-2"
-        onClick={() => goToStepOne('text')}
+        onClick={() => goToStepOne(AnswerType.Text)}
       >
         Text <FaIcon icon={faFont} />
       </button>
       <span>oder</span>
       <button
         className="m-4 rounded bg-orange-100 px-4 py-2"
-        onClick={() => goToStepOne('image')}
+        onClick={() => goToStepOne(AnswerType.Image)}
       >
         Image <FaIcon icon={faImage} />
       </button>
