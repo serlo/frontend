@@ -9,12 +9,6 @@ const emptyVal = {
   set: (_value: number) => {},
 }
 
-const emptyBooleanVal = {
-  value: false,
-  get: () => false,
-  set: (_value: boolean) => {},
-}
-
 const emptyStrVal = {
   value: '',
   get: () => '',
