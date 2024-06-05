@@ -126,12 +126,18 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
   }
 
   const checkAnswers = () => {
-    answerZones.forEach((answerZone, index) => {
-      const expectedAnswerId = answerZone.id
-      const droppedAnswerIds = dropzoneAnswerMap.get(index.toString()) || []
-      const isAnswerCorrect = droppedAnswerIds.includes(expectedAnswerId)
+    answerZones.forEach((answerZone) => {
+      const expectedAnswerIds = answerZone.answers.map((a) => a.id)
+      const droppedAnswerIds = dropzoneAnswerMap.get(answerZone.id) || []
+      if (droppedAnswerIds.length === 0)
+        return setIsCorrectMap(
+          (prev) => new Map(prev.set(answerZone.id, false))
+        )
+      const isAnswerCorrect =
+        expectedAnswerIds.every((id) => droppedAnswerIds.includes(id)) &&
+        expectedAnswerIds.length === droppedAnswerIds.length
       setIsCorrectMap(
-        (prev) => new Map(prev.set(index.toString(), isAnswerCorrect))
+        (prev) => new Map(prev.set(answerZone.id, isAnswerCorrect))
       )
     })
   }
@@ -144,19 +150,19 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
           backgroundImage: `url(${backgroundImageUrlFromPlugin})`,
         }}
       >
-        {answerZones.map((answerZone, index) => {
+        {answerZones.map((answerZone) => {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { answers, id, ...rest } = answerZone
-          const dropZone = { ...rest, id: index.toString() }
+          const dropZone = { ...rest, id: id }
           return (
             <BlankDropZone
               key={id}
               visibility={dropzoneVisibility as DropzoneVisibility}
               accept={['answer']}
               dropZone={dropZone}
-              droppedAnswersIds={dropzoneAnswerMap.get(index.toString()) || []}
+              droppedAnswersIds={dropzoneAnswerMap.get(id) || []}
               onAnswerDrop={onAnswerDrop}
-              isCorrect={isCorrectMap.get(index.toString())}
+              isCorrect={isCorrectMap.get(id)}
             />
           )
         })}
