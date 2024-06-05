@@ -1,13 +1,13 @@
 /// <reference types="vite/client" />
 
-import { SerloRenderer } from '@serlo/editor'
+import { SerloRenderer, BaseEditor } from '@serlo/editor'
 import styles from '@serlo/editor/style.css?raw'
 import React, { Suspense, lazy } from 'react'
 import * as ReactDOM from 'react-dom/client'
 
 import {
   exampleInitialState,
-  isInitialState,
+  isValidState,
   type InitialState,
 } from './initial-state'
 
@@ -17,11 +17,15 @@ const LazySerloEditor = lazy(() =>
 
 type Mode = 'read' | 'write'
 
+type EditorHistory = BaseEditor['history']
+
 export class EditorWebComponent extends HTMLElement {
   private reactRoot: ReactDOM.Root | null = null
   private container: HTMLDivElement
 
   private _mode: Mode = 'read'
+
+  private _history: EditorHistory | null = null
 
   private _initialState: InitialState = exampleInitialState
   private _currentState: unknown
@@ -66,8 +70,9 @@ export class EditorWebComponent extends HTMLElement {
   }
 
   set initialState(newState) {
-    if (isInitialState(newState)) {
+    if (isValidState(newState)) {
       this._initialState = newState
+      this._currentState = newState
       // Update the attribute
       this.setAttribute('initial-state', JSON.stringify(newState))
       this.mountReactComponent()
@@ -102,6 +107,10 @@ export class EditorWebComponent extends HTMLElement {
     )
   }
 
+  get history(): EditorHistory | null {
+    return this._history
+  }
+
   connectedCallback() {
     if (!this.reactRoot) {
       this.reactRoot = ReactDOM.createRoot(this.container)
@@ -125,8 +134,15 @@ export class EditorWebComponent extends HTMLElement {
       ? (JSON.parse(initialStateAttr) as unknown as any)
       : exampleInitialState
 
-    if (!isInitialState(initialState)) {
+    if (!isValidState(initialState)) {
       throw new Error('Initial state is not of type InitialState')
+    }
+
+    // This works even with subsequent mounts and renders because the
+    // currentState is only null upon first render. Even if you delete all the
+    // contents of the editor, there is an empty text plugin or similar present.
+    if (!this._currentState && initialState) {
+      this._currentState = initialState
     }
 
     // eslint-disable-next-line no-console
@@ -143,6 +159,8 @@ export class EditorWebComponent extends HTMLElement {
             <Suspense fallback={<div>Loading editor...</div>}>
               <LazySerloEditor
                 initialState={this.initialState}
+                // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
+                _enableImagePlugin
                 onChange={({ changed, getDocument }) => {
                   if (changed) {
                     const newState = getDocument()
@@ -152,6 +170,7 @@ export class EditorWebComponent extends HTMLElement {
                 }}
               >
                 {(editor) => {
+                  this._history = editor.history
                   return <div>{editor.element}</div>
                 }}
               </LazySerloEditor>
