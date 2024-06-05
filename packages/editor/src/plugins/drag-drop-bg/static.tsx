@@ -69,7 +69,9 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
       .map((possibleAnswer) => ({ possibleAnswer, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
       .map(({ possibleAnswer }) => possibleAnswer)
-  }, [correctAnswers, wrongAnswers])
+    // Prevent re-shuffling on every render - only shuffle when answers change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(correctAnswers), JSON.stringify(wrongAnswers)])
 
   const [dropzoneAnswerMap, setDropzoneAnswerMap] = useState(
     new Map<string, string[]>()
