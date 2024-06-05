@@ -100,8 +100,7 @@ export function DragDropBgEditor(props: DragDropBgProps) {
           }}
           className="serlo-tooltip-trigger mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
         >
-          Preview
-          <FaIcon icon={previewActive ? faCheckCircle : faCircle} />
+          Vorschau <FaIcon icon={previewActive ? faCheckCircle : faCircle} />
         </button>
         <ToolbarSelect
           tooltipText="Dropzone Visibility"
