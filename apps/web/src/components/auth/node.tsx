@@ -7,6 +7,7 @@ import { FlowType } from './flow-type'
 import { LoginButtonBildungsraum } from './login-button-bildungsraum'
 import { LoginButtonVidis } from './login-button-vidis'
 import { FaIcon } from '../fa-icon'
+import { shouldUseFeature } from '../user/profile-experimental'
 import { Message, getKratosMessageString } from '@/components/auth/message'
 import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
@@ -108,7 +109,7 @@ export function Node({
           )
         }
         if (
-          !isProduction &&
+          (!isProduction || !shouldUseFeature('authVidis')) &&
           attributes.name === 'provider' &&
           attributes.value === 'vidis'
         ) {
