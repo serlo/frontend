@@ -95,6 +95,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
         <FaIcon icon={faCog} />
       </button>
       <button
+        data-qa={`answer-zone-${answerZone.id.get()}-add-answer-button`}
         className="rounded bg-orange-100 p-3"
         onClick={() => onClickPlusButton(answerZone.id.get())}
       >
@@ -107,12 +108,14 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   const renderButtonsSidebar = () => (
     <>
       <button
+        data-qa={`answer-zone-${answerZone.id.get()}-add-another-answer-button`}
         className="absolute right-2 top-1 z-20 rounded bg-orange-100 p-1 text-[0.5rem]"
         onClick={() => onClickPlusButton(answerZone.id.get())}
       >
         <FaIcon icon={faPlus} />
       </button>
       <button
+        data-qa={`answer-zone-${answerZone.id.get()}-settings-button`}
         className="absolute bottom-1 right-2 z-20 hidden rounded bg-orange-100 p-1  text-[0.5rem] group-hover:block"
         onClick={() => onClickSettingsButton(answerZone.id.get())}
       >
