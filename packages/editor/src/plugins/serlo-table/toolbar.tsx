@@ -1,5 +1,4 @@
-import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
-import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar/components/toolbar-select'
+import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'

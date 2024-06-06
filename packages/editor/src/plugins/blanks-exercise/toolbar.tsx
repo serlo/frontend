@@ -1,9 +1,9 @@
-import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
-import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar/components/toolbar-select'
+import {
+  PluginToolbar,
+  PreviewButton,
+  ToolbarSelect,
+} from '@editor/editor-ui/plugin-toolbar'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { Dispatch, SetStateAction } from 'react'
 
@@ -30,22 +30,10 @@ export const BlanksExerciseToolbar = ({
       className="top-[-33px]"
       pluginSettings={
         <>
-          <button
-            onClick={() => setPreviewActive(!previewActive)}
-            className="serlo-tooltip-trigger mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
-            data-qa="plugin-blanks-exercise-preview-button"
-          >
-            <EditorTooltip
-              text={
-                previewActive
-                  ? blanksExerciseStrings.previewIsActiveHint
-                  : blanksExerciseStrings.previewIsDeactiveHint
-              }
-              className="-ml-5 !pb-1"
-            />
-            {blanksExerciseStrings.previewMode}{' '}
-            <FaIcon icon={previewActive ? faCheckCircle : faCircle} />
-          </button>
+          <PreviewButton
+            previewActive={previewActive}
+            setPreviewActive={setPreviewActive}
+          />
           <ToolbarSelect
             tooltipText={blanksExerciseStrings.chooseType}
             value={state.mode.value}

@@ -14,10 +14,6 @@ interface DragDropBgToolbarProps {
   showSettingsButton?: boolean
 }
 
-// Buttons:
-// Blank canvas: preview button
-// Image canvas: preview button, settings button
-
 export const DragDropBgToolbar = ({
   id,
   onClickAddAnswerZone,

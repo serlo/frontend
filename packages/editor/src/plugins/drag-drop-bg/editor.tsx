@@ -1,4 +1,4 @@
-import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar/components/toolbar-select'
+import { PreviewButton, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import {
   selectDocument,
   selectStaticDocument,
@@ -8,8 +8,6 @@ import type {
   EditorDragDropBgDocument,
   EditorImageDocument,
 } from '@editor/types/editor-plugins'
-import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useState } from 'react'
 
 import type { DragDropBgProps } from '.'
@@ -94,14 +92,10 @@ export function DragDropBgEditor(props: DragDropBgProps) {
         id={id}
         showSettingsButton={isBackgroundTypeImage}
       >
-        <button
-          onClick={() => {
-            setPreviewActive(!previewActive)
-          }}
-          className="serlo-tooltip-trigger mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
-        >
-          Vorschau <FaIcon icon={previewActive ? faCheckCircle : faCircle} />
-        </button>
+        <PreviewButton
+          previewActive={previewActive}
+          setPreviewActive={setPreviewActive}
+        />
         <ToolbarSelect
           tooltipText="Dropzone Visibility"
           value={dropzoneVisibility.value}
