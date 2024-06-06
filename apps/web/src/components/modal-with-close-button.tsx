@@ -1,27 +1,10 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import * as Dialog from '@radix-ui/react-dialog'
-import { useState, type ReactNode, useCallback, useEffect } from 'react'
+import { useState, type ReactNode, useCallback } from 'react'
 
 import { FaIcon } from './fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
-
-// let isAppElementSet = false
-
-// export function useLazySetAppElement(
-//   selectorOrElement: string | HTMLElement = '#serlo-root'
-// ) {
-//   console.log('useLazySetAppElement called with', selectorOrElement)
-//   useEffect(() => {
-//     if (!isAppElementSet && selectorOrElement) {
-//       // const element = document.querySelector(selector)
-//       // if (element) {
-//       BaseModal.setAppElement(selectorOrElement)
-//       isAppElementSet = true
-//       // }
-//     }
-//   }, [selectorOrElement])
-// }
 
 interface ModalWithCloseButtonProps {
   isOpen: boolean
@@ -32,7 +15,6 @@ interface ModalWithCloseButtonProps {
   confirmCloseDescription?: string | undefined
   extraTitleClassName?: string
   extraCloseButtonClassName?: string
-  parentSelector?: () => HTMLElement
   appElement?: HTMLElement
 }
 
@@ -45,9 +27,12 @@ export function ModalWithCloseButton({
   extraTitleClassName,
   confirmCloseDescription,
   extraCloseButtonClassName,
+  /**
+   * The root element that should render the modal. Defaults to the HTML
+   * document
+   */
   appElement,
 }: ModalWithCloseButtonProps) {
-  console.log('Modal with close button', { isOpen, appElement, className })
   const { strings } = useInstanceData()
   const [showConfirmation, setShowConfirmation] = useState(false)
 

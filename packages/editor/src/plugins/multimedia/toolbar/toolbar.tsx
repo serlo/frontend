@@ -1,4 +1,7 @@
-import { useShadowRoot } from '@editor/core/helpers/use-shadow-root'
+import {
+  getFirstElementOrUndefined,
+  useShadowRoot,
+} from '@editor/core/helpers/use-shadow-root'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
@@ -38,11 +41,7 @@ export const MultimediaToolbar = ({ id, children }: MultimediaToolbarProps) => {
             isOpen={showSettingsModal}
             onCloseClick={() => setShowSettingsModal(false)}
             className="top-8 max-w-xl translate-y-0 sm:top-1/3"
-            appElement={
-              shadowRoot
-                ? (shadowRoot?.firstElementChild as HTMLElement)
-                : undefined
-            }
+            appElement={getFirstElementOrUndefined(shadowRoot)}
           >
             <h3 className="serlo-h3 mt-4">
               {editorStrings.edtrIo.settings}:{' '}

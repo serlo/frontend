@@ -1,5 +1,5 @@
 import {
-  isShadowRoot,
+  getFirstElementOrUndefined,
   useShadowRoot,
 } from '@editor/core/helpers/use-shadow-root'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
@@ -45,11 +45,7 @@ export const ImageToolbar = (
             isOpen={showSettingsModal}
             onCloseClick={() => setShowSettingsModal(false)}
             className="top-8 max-w-xl translate-y-0 sm:top-1/3"
-            appElement={
-              shadowRoot
-                ? (shadowRoot?.firstElementChild as HTMLElement)
-                : undefined
-            }
+            appElement={getFirstElementOrUndefined(shadowRoot)}
           >
             <h3 className="serlo-h3 mt-4">
               {editorStrings.edtrIo.settings}: {imageStrings.title}

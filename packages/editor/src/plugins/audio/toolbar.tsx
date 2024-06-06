@@ -1,3 +1,7 @@
+import {
+  getFirstElementOrUndefined,
+  useShadowRoot,
+} from '@editor/core/helpers/use-shadow-root'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
@@ -9,6 +13,7 @@ import {
   KeyboardEvent as ReactKeyboardEvent,
   Dispatch,
   SetStateAction,
+  useRef,
 } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { Key } from 'ts-key-enum'
@@ -26,6 +31,8 @@ export const AudioToolbar = ({
   setShowSettingsModal: Dispatch<SetStateAction<boolean>>
 }) => {
   const audioStrings = useEditorStrings().plugins.audio
+  const ref = useRef<HTMLButtonElement>(null)
+  const shadowRoot = useShadowRoot(ref)
 
   useHotkeys(
     [Key.Escape],
@@ -54,6 +61,7 @@ export const AudioToolbar = ({
           <button
             onClick={() => setShowSettingsModal(true)}
             className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+            ref={ref}
           >
             {audioStrings.audioUrl} <FaIcon icon={faPencilAlt} />
           </button>
@@ -61,6 +69,7 @@ export const AudioToolbar = ({
             isOpen={showSettingsModal}
             onCloseClick={() => setShowSettingsModal(false)}
             className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+            appElement={getFirstElementOrUndefined(shadowRoot) ?? document.body}
           >
             <h3 className="serlo-h3 mt-4">{audioStrings.title}</h3>
 

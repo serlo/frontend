@@ -28,3 +28,13 @@ export function isShadowRoot(
 ): shadowRoot is ShadowRoot {
   return shadowRoot instanceof ShadowRoot
 }
+
+export function getFirstElementOrUndefined(
+  shadowRoot: ShadowRoot | null | undefined
+): HTMLElement | undefined {
+  if (!shadowRoot) {
+    return undefined
+  }
+
+  return shadowRoot?.firstElementChild as HTMLElement
+}

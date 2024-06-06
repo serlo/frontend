@@ -1,10 +1,14 @@
+import {
+  getFirstElementOrUndefined,
+  useShadowRoot,
+} from '@editor/core/helpers/use-shadow-root'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 import type { SolutionProps } from '.'
 import { cn } from '@/helper/cn'
@@ -20,6 +24,9 @@ export function SerloLicenseChooser({
 }: SerloLicenseChooserProps) {
   const solutionStrings = useEditorStrings().templatePlugins.solution
   const [showLicenseModal, setShowLicenseModal] = useState(false)
+  const ref = useRef<HTMLButtonElement>(null)
+
+  const shadowRoot = useShadowRoot(ref)
 
   const { licenses } = useInstanceData()
 
@@ -37,6 +44,7 @@ export function SerloLicenseChooser({
           e.stopPropagation()
         }}
         onClick={() => setShowLicenseModal(true)}
+        ref={ref}
       >
         <EditorTooltip text={solutionStrings.changeLicense} />
         <FaIcon icon={faCreativeCommons} />
@@ -45,6 +53,7 @@ export function SerloLicenseChooser({
         isOpen={showLicenseModal}
         onCloseClick={() => setShowLicenseModal(false)}
         className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+        appElement={getFirstElementOrUndefined(shadowRoot)}
       >
         <h3 className="serlo-h3 mt-4">{solutionStrings.changeLicense}:</h3>
 

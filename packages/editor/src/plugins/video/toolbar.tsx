@@ -1,3 +1,7 @@
+import {
+  getFirstElementOrUndefined,
+  useShadowRoot,
+} from '@editor/core/helpers/use-shadow-root'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
@@ -5,7 +9,7 @@ import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useRef } from 'react'
 
 import type { VideoProps } from '.'
 import type { SettingsModalState } from './editor'
@@ -21,6 +25,9 @@ export const VideoToolbar = ({
   setShowSettingsModal: Dispatch<SetStateAction<SettingsModalState>>
 }) => {
   const videoStrings = useEditorStrings().plugins.video
+  const ref = useRef<HTMLButtonElement>(null)
+
+  const shadowRoot = useShadowRoot(ref)
 
   return (
     <PluginToolbar
@@ -30,6 +37,7 @@ export const VideoToolbar = ({
           <button
             onClick={() => setShowSettingsModal('url')}
             className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+            ref={ref}
           >
             {videoStrings.videoUrl} <FaIcon icon={faPencilAlt} />
           </button>
@@ -43,6 +51,7 @@ export const VideoToolbar = ({
             isOpen={!!showSettingsModal}
             onCloseClick={() => setShowSettingsModal(false)}
             className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+            appElement={getFirstElementOrUndefined(shadowRoot)}
           >
             <h3 className="serlo-h3 mt-4">{videoStrings.title}</h3>
 
