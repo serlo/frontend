@@ -1,22 +1,18 @@
-import { getFirstElementOrUndefined } from '@editor/core/helpers/use-shadow-root'
 import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 export const MathHelpModal = ({
   isHelpOpen,
   setIsHelpOpen,
-  shadowRoot,
 }: {
   isHelpOpen: boolean
   setIsHelpOpen: (isOpen: boolean) => void
-  shadowRoot: ShadowRoot | null
 }) => {
   const mathStrings = useEditorStrings().plugins.text.math
   return (
     <ModalWithCloseButton
       isOpen={isHelpOpen}
       onCloseClick={() => void setIsHelpOpen(false)}
-      appElement={getFirstElementOrUndefined(shadowRoot)}
     >
       <>
         {mathStrings.shortcuts}:
