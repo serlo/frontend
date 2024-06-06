@@ -710,6 +710,7 @@ export const loggedInData = {
             landscape: 'Querformat',
             portrait: 'Hochformat',
           },
+          or: 'or',
         },
         unsupported: {
           title: 'Unsupported',

@@ -1,12 +1,12 @@
+import IconAnswerImage from '@editor/editor-ui/assets/plugin-icons/drag-drop/answer-image.svg'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { faFont, faImage } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import { AnswerRenderer } from './answer-renderer'
 import { AnswerZonesContext } from '../../context/context'
 import { AnswerType } from '../../types'
-import { FaIcon } from '@/components/fa-icon'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface NewAnswerFlowProps {
   isWrongAnswer?: boolean
@@ -24,6 +24,8 @@ export function NewAnswerFlow(props: NewAnswerFlowProps) {
   const { isWrongAnswer = false, zoneId, onSave } = props
   const [currentStep, setCurrentStep] = useState(0)
   const [stepOneType, setStepOneType] = useState<AnswerType>(AnswerType.Image)
+
+  const editorPluginsStrings = useEditorStrings().plugins
 
   const { zones, extraDraggableAnswers } = useContext(AnswerZonesContext) || {}
 
@@ -46,17 +48,22 @@ export function NewAnswerFlow(props: NewAnswerFlowProps) {
   const stepZero = (
     <div className="flex flex-row items-center justify-center">
       <button
-        className="m-4 rounded bg-orange-100 px-4 py-2"
+        className="mx-4 rounded-lg bg-orange-100 p-4 hover:bg-orange-200"
         onClick={() => goToStepOne(AnswerType.Text)}
       >
-        Text <FaIcon icon={faFont} />
+        <div className="border border-2 border-black px-1 text-lg font-bold">
+          {editorPluginsStrings.text.title}...
+        </div>
       </button>
-      <span>oder</span>
+      <span>{editorPluginsStrings.dragDropBg.or}</span>
       <button
-        className="m-4 rounded bg-orange-100 px-4 py-2"
+        className="mx-4 rounded-lg bg-orange-100 px-4 pb-2 pt-4 hover:bg-orange-200"
         onClick={() => goToStepOne(AnswerType.Image)}
       >
-        Image <FaIcon icon={faImage} />
+        <IconAnswerImage className="mx-auto mb-1" />
+        <span className="text-lg font-bold">
+          {editorPluginsStrings.image.title}
+        </span>
       </button>
     </div>
   )
