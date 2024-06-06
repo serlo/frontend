@@ -249,8 +249,6 @@ Scenario('Small subject', ({ I }) => {
   I.see('¡Bienvenidos a la')
 })*/
 
-// TODO: activate after migration is done (or bugs are fixed)
-
 Scenario('Course', ({ I }) => {
   I.amOnPage('/1327')
   I.see('Kurse')
