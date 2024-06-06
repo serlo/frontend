@@ -62,7 +62,7 @@
   }
   .serlo-modal {
     @apply fixed left-1/2 max-w-[85%] -translate-x-1/2 -translate-y-1/2;
-    @apply top-[40%] bottom-0 w-[500px] h-fit pb-10 outline-none;
+    @apply bottom-0 top-[40%] h-fit w-[500px] pb-10 outline-none;
     @apply rounded-xl border-none bg-white px-2.5 pt-2.5 shadow-modal;
     @apply z-[101];
   }
