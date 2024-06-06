@@ -27,10 +27,6 @@ export const ImageToolbar = (
   const imageStrings = editorStrings.plugins.image
   const ref = useRef<HTMLButtonElement>(null)
   const shadowRoot = useShadowRoot(ref)
-  console.log('Image Toolbar Shadowoot: ', {
-    shadowRoot,
-    isShadowRoot: isShadowRoot(shadowRoot),
-  })
 
   return (
     <PluginToolbar
@@ -45,45 +41,24 @@ export const ImageToolbar = (
           >
             {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
           </button>
-          {shadowRoot === null ? (
-            <span>{/* null */}</span>
-          ) : isShadowRoot(shadowRoot) ? (
-            <ModalWithCloseButton
-              isOpen={showSettingsModal}
-              onCloseClick={() => setShowSettingsModal(false)}
-              className="top-8 max-w-xl translate-y-0 sm:top-1/3"
-              parentSelector={() => {
-                console.log(
-                  'Marking shadowRoot as parentSelector in image plugin toolbar',
-                  { shadowRoot, host: shadowRoot.host }
-                )
-                return shadowRoot.host as HTMLElement
-              }}
-              appElement={shadowRoot?.host as HTMLElement}
-            >
-              <h3 className="serlo-h3 mt-4">
-                {editorStrings.edtrIo.settings}: {imageStrings.title}
-              </h3>
+          <ModalWithCloseButton
+            isOpen={showSettingsModal}
+            onCloseClick={() => setShowSettingsModal(false)}
+            className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+            appElement={
+              shadowRoot
+                ? (shadowRoot?.firstElementChild as HTMLElement)
+                : undefined
+            }
+          >
+            <h3 className="serlo-h3 mt-4">
+              {editorStrings.edtrIo.settings}: {imageStrings.title}
+            </h3>
 
-              <div className="mx-side mb-3">
-                <SettingsModalControls state={props.state} />
-              </div>
-            </ModalWithCloseButton>
-          ) : (
-            <ModalWithCloseButton
-              isOpen={showSettingsModal}
-              onCloseClick={() => setShowSettingsModal(false)}
-              className="top-8 max-w-xl translate-y-0 sm:top-1/3"
-            >
-              <h3 className="serlo-h3 mt-4">
-                {editorStrings.edtrIo.settings}: {imageStrings.title}
-              </h3>
-
-              <div className="mx-side mb-3">
-                <SettingsModalControls state={props.state} />
-              </div>
-            </ModalWithCloseButton>
-          )}
+            <div className="mx-side mb-3">
+              <SettingsModalControls state={props.state} />
+            </div>
+          </ModalWithCloseButton>
 
           {disableFileUpload ? null : <UploadButton {...props} />}
         </>

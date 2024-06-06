@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom'
 interface ClientOnlyPortalProps {
   children: ReactNode
   selector: string
-  shadowRootRef: ShadowRoot | null | false
+  shadowRootRef: ShadowRoot | null
 }
 
 export function ClientOnlyPortal(props: ClientOnlyPortalProps) {
