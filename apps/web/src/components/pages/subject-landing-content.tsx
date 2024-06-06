@@ -76,7 +76,7 @@ export function SubjectLandingContent({
             href="/mathe-pruefungen"
             className="group mb-10 mt-10 block bg-newgreen bg-opacity-20 p-3 text-lg text-black hover:!no-underline mobile:text-center sm:py-4 md:text-[22px] lg:mb-0"
           >
-            🎓 Ui, fast schon Prüfungszeit?{' '}
+            🎓 Ui, schon Prüfungszeit?{' '}
             <b className="serlo-link group-hover:underline">
               Hier geht&apos;s zur Mathe-Prüfungsvorbereitung
             </b>

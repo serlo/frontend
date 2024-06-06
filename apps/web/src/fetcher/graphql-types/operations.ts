@@ -1721,7 +1721,6 @@ export interface UserMutation {
   deleteRegularUser: DefaultResponse;
   removeRole: DefaultResponse;
   setDescription: DefaultResponse;
-  setEmail: DefaultResponse;
 }
 
 
@@ -1747,11 +1746,6 @@ export interface UserMutationRemoveRoleArgs {
 
 export interface UserMutationSetDescriptionArgs {
   input: UserSetDescriptionInput;
-}
-
-
-export interface UserMutationSetEmailArgs {
-  input: UserSetEmailInput;
 }
 
 export interface UserQuery {
@@ -1788,11 +1782,6 @@ export interface UserRoleInput {
 
 export interface UserSetDescriptionInput {
   description: Scalars['String']['input'];
-}
-
-export interface UserSetEmailInput {
-  email: Scalars['String']['input'];
-  userId: Scalars['Int']['input'];
 }
 
 export interface UuidMutation {
