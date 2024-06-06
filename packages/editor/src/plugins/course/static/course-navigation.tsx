@@ -51,7 +51,6 @@ export function CourseNavigation({
                 void router.push(newPath, undefined, {
                   shallow: true,
                 })
-                setTimeout(() => setCourseNavOpen(false), 100)
               }}
             >
               {title}
