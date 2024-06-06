@@ -22,7 +22,7 @@ export function useBlurOnOutsideClick(
         root.contains(clickedElement) && // clicked element is present in the document
         editorWrapperRef.current && // provided wrapper is defined
         !editorWrapperRef.current.contains(clickedElement) && // clicked element is not a child of the provided wrapper
-        !clickedElement.closest('.ReactModalPortal') // clicked element is not a part of a modal
+        !clickedElement.closest('.serlo-modal') // clicked element is not a part of a modal
       ) {
         dispatch(focus(null)) // reset the focus state (blur the editor)
       }
