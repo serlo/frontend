@@ -1,6 +1,5 @@
 import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 
 import { buildNewPathWithCourseId } from '../helper/get-course-id-from-path'
 import { CourseNavigationRenderer } from '../renderer/course-navigation'
@@ -9,11 +8,14 @@ import { cn } from '@/helper/cn'
 export function CourseNavigation({
   pages,
   activePageId,
+  courseNavOpen,
+  setCourseNavOpen,
 }: {
   pages: EditorCourseDocument['state']['pages']
   activePageId?: string
+  courseNavOpen: boolean
+  setCourseNavOpen: (open: boolean) => void
 }) {
-  const [courseNavOpen, setCourseNavOpen] = useState(pages?.length < 4)
   const router = useRouter()
   if (!pages) return null
 

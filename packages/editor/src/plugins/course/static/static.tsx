@@ -33,12 +33,17 @@ export function CourseStaticRenderer({
 
   const openCourseNav = (e?: MouseEvent) => {
     e?.preventDefault()
-    setCourseNavOpen(!courseNavOpen)
+    setCourseNavOpen(true)
   }
 
   return (
     <>
-      <CourseNavigation {...state} activePageId={activePage?.id} />
+      <CourseNavigation
+        {...state}
+        activePageId={activePage?.id}
+        courseNavOpen={courseNavOpen}
+        setCourseNavOpen={setCourseNavOpen}
+      />
 
       {pages.length ? (
         <>
