@@ -1,4 +1,5 @@
 import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg'
+import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg'
 import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg'
 import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
@@ -9,6 +10,7 @@ import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
 import type { PluginsConfig } from '@editor/package/config'
 import { blanksExercise } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
+import { createDragDropBgPlugin } from '@editor/plugins/drag-drop-bg'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
@@ -49,9 +51,9 @@ export function createBasicPlugins(props: Required<PluginsConfig>) {
     },
     {
       type: EditorPluginType.DragDropBg,
-      plugin: createSpoilerPlugin(),
+      plugin: createDragDropBgPlugin(),
       visibleInSuggestions: true,
-      icon: <div>!!!</div>,
+      icon: <IconDropzones />,
     },
     {
       type: EditorPluginType.Equations,
