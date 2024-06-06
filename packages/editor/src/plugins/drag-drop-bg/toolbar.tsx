@@ -12,7 +12,7 @@ import { BackgroundImageSettings } from './components/editor/background-image-se
 
 interface DragDropBgToolbarProps {
   id: string
-  backgroundImageState: {
+  backgroundImageState?: {
     id: string | null
     state?: ImageProps['state']
   }
@@ -53,28 +53,30 @@ export const DragDropBgToolbar = (props: DragDropBgToolbarProps) => {
       contentControls={addButton}
       pluginSettings={
         <>
-          {showSettingsButton && (
-            <button
-              onClick={() => setShowSettingsModal(true)}
-              className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
-            >
-              {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
-            </button>
-          )}
-          <ModalWithCloseButton
-            isOpen={showSettingsModal}
-            onCloseClick={() => setShowSettingsModal(false)}
-            className="top-8 max-w-xl translate-y-0 sm:top-1/3"
-          >
-            <h3 className="serlo-h3 mt-4">
-              {editorStrings.edtrIo.settings}:{' '}
-              {editorStrings.plugins.dragDropBg.title}
-            </h3>
+          {showSettingsButton && backgroundImageState && (
+            <>
+              <button
+                onClick={() => setShowSettingsModal(true)}
+                className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+              >
+                {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
+              </button>
+              <ModalWithCloseButton
+                isOpen={showSettingsModal}
+                onCloseClick={() => setShowSettingsModal(false)}
+                className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+              >
+                <h3 className="serlo-h3 mt-4">
+                  {editorStrings.edtrIo.settings}:{' '}
+                  {editorStrings.plugins.dragDropBg.title}
+                </h3>
 
-            <div className="mx-side mb-3">
-              <BackgroundImageSettings {...backgroundImageState} />
-            </div>
-          </ModalWithCloseButton>
+                <div className="mx-side mb-3">
+                  <BackgroundImageSettings {...backgroundImageState} />
+                </div>
+              </ModalWithCloseButton>
+            </>
+          )}
           {children}
         </>
       }
