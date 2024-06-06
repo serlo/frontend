@@ -1,4 +1,5 @@
 import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
+import { RemovableInputWrapper } from '@editor/editor-ui/removable-input-wrapper'
 import { selectStaticDocument, store } from '@editor/store'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
 import { useContext, useState } from 'react'
@@ -12,6 +13,7 @@ import { useAnswerZones } from '../../hooks/use-answer-zones'
 import { AnswerZoneState, ModalType, answerDataType } from '../../types'
 import { AnswerZone } from '../answer-zone/answer-zone'
 import { DraggableAnswer } from '../shared/draggable-answer'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 const getCanvasDimensions = (shape: string) => {
   switch (shape) {
@@ -42,6 +44,7 @@ export function EditorCanvas(props: DragDropBgProps) {
     useAnswerZones(props)
 
   const context = useContext(AnswerZonesContext)
+  const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
   const {
     zones,
@@ -113,7 +116,6 @@ export function EditorCanvas(props: DragDropBgProps) {
     .map(({ answers }) => answers.map(convertAnswer))
     .flat()
   const wrongAnswers = extraDraggableAnswers.map(convertAnswer)
-  const possibleAnswers = [...correctAnswers, ...wrongAnswers]
 
   return (
     <>
@@ -162,13 +164,31 @@ export function EditorCanvas(props: DragDropBgProps) {
 
       <div className="mt-4">
         <DraggableArea accept="none">
-          {possibleAnswers.map((possibleAnswer, index) => (
+          {correctAnswers.map((possibleAnswer, index) => (
             <DraggableAnswer
               draggableId={possibleAnswer.id}
               key={index}
               imageUrl={possibleAnswer.imageUrl}
               text={possibleAnswer.text}
             />
+          ))}
+        </DraggableArea>
+        <span className="mx-4">{blanksExerciseStrings.dummyAnswers}:</span>
+        <DraggableArea accept="none">
+          {wrongAnswers.map((possibleAnswer, index) => (
+            <RemovableInputWrapper
+              key={index}
+              onRemoveClick={() => {
+                extraDraggableAnswers.remove(index)
+              }}
+              tooltipText={blanksExerciseStrings.removeDummyAnswer}
+            >
+              <DraggableAnswer
+                draggableId={possibleAnswer.id}
+                imageUrl={possibleAnswer.imageUrl}
+                text={possibleAnswer.text}
+              />
+            </RemovableInputWrapper>
           ))}
         </DraggableArea>
         <div className="flex justify-center">
