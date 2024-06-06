@@ -48,6 +48,7 @@ export function NewAnswerFlow(props: NewAnswerFlowProps) {
   const stepZero = (
     <div className="flex flex-row items-center justify-center">
       <button
+        data-qa="plugin-drag-drop-bg-answer-zone-new-answer-type-text"
         className="mx-4 rounded-lg bg-orange-100 p-4 hover:bg-orange-200"
         onClick={() => goToStepOne(AnswerType.Text)}
       >
@@ -57,6 +58,7 @@ export function NewAnswerFlow(props: NewAnswerFlowProps) {
       </button>
       <span>{editorPluginsStrings.dragDropBg.or}</span>
       <button
+        data-qa="plugin-drag-drop-bg-answer-zone-new-answer-type-image"
         className="mx-4 rounded-lg bg-orange-100 px-4 pb-2 pt-4 hover:bg-orange-200"
         onClick={() => goToStepOne(AnswerType.Image)}
       >
