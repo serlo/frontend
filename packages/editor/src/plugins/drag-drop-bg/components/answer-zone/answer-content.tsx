@@ -29,7 +29,7 @@ export const AnswerContent = ({
     />
   ) : text ? (
     <span
-      className="mx-1 rounded-full border border-brand px-0"
+      className="mx-0 rounded-full border border-brand px-2"
       style={{ display }}
     >
       <StaticSlate element={text} />
