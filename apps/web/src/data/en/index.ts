@@ -698,6 +698,18 @@ export const loggedInData = {
           backgroundImage: 'Background image',
           dropZone: 'Drop zone',
           dropZoneTooltip: 'Choose the drop zone',
+          backgroundType: {
+            description:
+              'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund',
+            image: 'Hintergrundbild hinzufügen',
+            blank: 'Leerer Hintergrund',
+          },
+          backgroundShapes: {
+            description: 'Lege die Ausrichtung des Hintergrundes fest',
+            square: 'Quadratisch',
+            landscape: 'Querformat',
+            portrait: 'Hochformat',
+          },
         },
         unsupported: {
           title: 'Unsupported',

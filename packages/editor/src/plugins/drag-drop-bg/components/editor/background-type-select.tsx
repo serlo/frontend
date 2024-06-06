@@ -1,33 +1,28 @@
+import IconBlankBg from '@editor/editor-ui/assets/plugin-icons/drag-drop/blank-landscape.svg'
+import IconImageBg from '@editor/editor-ui/assets/plugin-icons/drag-drop/image-background.svg'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { faImage } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 
 import type { DragDropBgProps } from '../..'
 import { DragDropBgToolbar } from '../../toolbar'
 import { BackgroundShape, BackgroundType } from '../../types'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function BackgroundTypeSelect(props: DragDropBgProps) {
   const { state, id } = props
   const { backgroundType, backgroundImage, canvasShape } = state
+  const backgroundTypeStrings =
+    useEditorStrings().plugins.dragDropBg.backgroundType
 
   return (
     <>
       <DragDropBgToolbar id={id} />
-      <div className="flex flex-row items-center justify-center">
-        <button
-          data-qa="plugin-drag-drop-bg-background-type-select-blank"
-          className="m-[20px] rounded-[5px] bg-orange-100 p-[10px] pr-[20px]"
-          onClick={() => {
-            backgroundType.set(BackgroundType.Blank)
-            canvasShape.set(BackgroundShape.Unset)
-          }}
-        >
-          Blank
-        </button>
-        <span>oder</span>
+      <div className="m-6 flex items-center justify-center p-6 py-8 text-gray-500">
+        {backgroundTypeStrings.description}
+      </div>
+      <div className="flex flex-row items-center justify-center gap-6">
         <button
           data-qa="plugin-drag-drop-bg-background-type-select-image"
-          className="m-[20px] rounded-[5px] bg-orange-100 p-[10px] pr-[20px]"
+          className="m-q[20px] flex flex-col items-center justify-center gap-4 rounded-[5px] bg-orange-100 p-[10px] py-4 font-bold text-almost-black  hover:bg-orange-200"
           onClick={() => {
             backgroundType.set(BackgroundType.Image)
             if (!backgroundImage.defined)
@@ -36,7 +31,20 @@ export function BackgroundTypeSelect(props: DragDropBgProps) {
             canvasShape.set(BackgroundShape.Unset)
           }}
         >
-          Image <FaIcon icon={faImage} />
+          <IconImageBg />
+          {backgroundTypeStrings.image}
+        </button>
+        <span>oder</span>
+        <button
+          data-qa="plugin-drag-drop-bg-background-type-select-blank"
+          className="qm-[20px] flex flex-col items-center justify-center gap-4 rounded-[5px] bg-orange-100 p-[10px] py-4 font-bold text-almost-black hover:bg-orange-200"
+          onClick={() => {
+            backgroundType.set(BackgroundType.Blank)
+            canvasShape.set(BackgroundShape.Unset)
+          }}
+        >
+          <IconBlankBg />
+          {backgroundTypeStrings.blank}
         </button>
       </div>
     </>
