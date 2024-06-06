@@ -1,4 +1,5 @@
 import { PreviewButton, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
+import { ImageProps } from '@editor/plugins/image'
 import {
   selectDocument,
   selectStaticDocument,
@@ -91,6 +92,12 @@ export function DragDropBgEditor(props: DragDropBgProps) {
         onClickAddAnswerZone={insertAnswerZone}
         id={id}
         showSettingsButton={isBackgroundTypeImage}
+        backgroundImageState={{
+          id: isBackgroundImagePluginDefined ? backgroundImage.get() : null,
+          state: backgroundImagePluginState?.state as unknown as
+            | ImageProps['state']
+            | undefined,
+        }}
       >
         <PreviewButton
           previewActive={previewActive}

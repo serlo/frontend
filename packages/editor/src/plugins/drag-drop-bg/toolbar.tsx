@@ -1,5 +1,6 @@
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import type { ImageProps } from '@editor/plugins/image'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
@@ -7,19 +8,28 @@ import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { ReactNode, useState } from 'react'
 
+import { BackgroundImageSettings } from './components/editor/background-image-settings'
+
 interface DragDropBgToolbarProps {
   id: string
+  backgroundImageState: {
+    id: string | null
+    state?: ImageProps['state']
+  }
   children?: ReactNode
   onClickAddAnswerZone?: () => void
   showSettingsButton?: boolean
 }
 
-export const DragDropBgToolbar = ({
-  id,
-  onClickAddAnswerZone,
-  showSettingsButton = false,
-  children,
-}: DragDropBgToolbarProps) => {
+export const DragDropBgToolbar = (props: DragDropBgToolbarProps) => {
+  const {
+    id,
+    backgroundImageState,
+    onClickAddAnswerZone,
+    showSettingsButton = false,
+    children,
+  } = props
+
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const editorStrings = useEditorStrings()
 
@@ -47,7 +57,6 @@ export const DragDropBgToolbar = ({
             <button
               onClick={() => setShowSettingsModal(true)}
               className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
-              data-qa="plugin-multimedia-settings-button"
             >
               {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
             </button>
@@ -61,6 +70,10 @@ export const DragDropBgToolbar = ({
               {editorStrings.edtrIo.settings}:{' '}
               {editorStrings.plugins.dragDropBg.title}
             </h3>
+
+            <div className="mx-side mb-3">
+              <BackgroundImageSettings {...backgroundImageState} />
+            </div>
           </ModalWithCloseButton>
           {children}
         </>
