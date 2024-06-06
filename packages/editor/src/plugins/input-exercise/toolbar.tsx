@@ -1,9 +1,10 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
-import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar/components/toolbar-select'
+import {
+  PluginToolbar,
+  PreviewButton,
+  ToolbarSelect,
+} from '@editor/editor-ui/plugin-toolbar'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { Dispatch, SetStateAction } from 'react'
@@ -22,28 +23,16 @@ export const InputExerciseToolbar = ({
   setPreviewActive: Dispatch<SetStateAction<boolean>>
 }) => {
   const inputExStrings = useEditorStrings().templatePlugins.inputExercise
-  const scMcStrings = useEditorStrings().templatePlugins.scMcExercise
 
   return (
     <PluginToolbar
       pluginType={EditorPluginType.InputExercise}
       pluginSettings={
         <>
-          <button
-            onClick={() => setPreviewActive(!previewActive)}
-            className="serlo-tooltip-trigger mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
-          >
-            <EditorTooltip
-              text={
-                previewActive
-                  ? scMcStrings.previewIsActiveHint
-                  : scMcStrings.previewIsDeactiveHint
-              }
-              className="-ml-5 !pb-1"
-            />
-            {scMcStrings.previewMode}{' '}
-            <FaIcon icon={previewActive ? faCheckCircle : faCircle} />
-          </button>
+          <PreviewButton
+            previewActive={previewActive}
+            setPreviewActive={setPreviewActive}
+          />
           <ToolbarSelect
             tooltipText={inputExStrings.chooseType}
             value={state.type.value}
