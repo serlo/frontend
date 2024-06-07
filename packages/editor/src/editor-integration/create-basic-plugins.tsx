@@ -2,6 +2,7 @@ import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg'
 import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg'
 import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
+import IconImage from '@editor/editor-ui/assets/plugin-icons/icon-image.svg'
 import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedia.svg'
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
@@ -13,6 +14,7 @@ import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
+import { ImageConfig, createImagePlugin } from '@editor/plugins/image'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
 import { createMultimediaPlugin } from '@editor/plugins/multimedia'
 import { createRowsPlugin } from '@editor/plugins/rows'
@@ -27,7 +29,11 @@ import { unsupportedPlugin } from '@editor/plugins/unsupported'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
-export function createBasicPlugins(props: Required<PluginsConfig>) {
+type CreateBasicPluginsConfig = Required<Omit<PluginsConfig, 'image'>> & {
+  image: CreateImagePluginConfig
+}
+
+export function createBasicPlugins(config: CreateBasicPluginsConfig) {
   return [
     {
       type: EditorPluginType.Text,
@@ -37,13 +43,13 @@ export function createBasicPlugins(props: Required<PluginsConfig>) {
     },
     {
       type: EditorPluginType.Multimedia,
-      plugin: createMultimediaPlugin(props.multimedia),
+      plugin: createMultimediaPlugin(config.multimedia),
       visibleInSuggestions: true,
       icon: <IconMultimedia />,
     },
     {
       type: EditorPluginType.Spoiler,
-      plugin: createSpoilerPlugin(props.spoiler),
+      plugin: createSpoilerPlugin(config.spoiler),
       visibleInSuggestions: true,
       icon: <IconSpoiler />,
     },
@@ -55,13 +61,13 @@ export function createBasicPlugins(props: Required<PluginsConfig>) {
     },
     {
       type: EditorPluginType.Box,
-      plugin: createBoxPlugin(props.box),
+      plugin: createBoxPlugin(config.box),
       visibleInSuggestions: true,
       icon: <IconBox />,
     },
     {
       type: EditorPluginType.SerloTable,
-      plugin: createSerloTablePlugin(props.table),
+      plugin: createSerloTablePlugin(config.table),
       visibleInSuggestions: true,
       icon: <IconTable />,
     },
@@ -77,15 +83,27 @@ export function createBasicPlugins(props: Required<PluginsConfig>) {
       visibleInSuggestions: true,
       icon: <IconHighlight />,
     },
+    // Image plugin will have the `validate` prop by default, but if the user
+    // didn't provide the `upload` prop, Image plugin will not be created
+    ...(hasImagePluginConfigUploadPropertyDefined(config.image)
+      ? [
+          {
+            type: EditorPluginType.Image,
+            plugin: createImagePlugin(config.image),
+            visibleInSuggestions: true,
+            icon: <IconImage />,
+          },
+        ]
+      : []),
 
     // Exercises etc.
     // ===================================================
     {
       type: EditorPluginType.Exercise,
       plugin: exercisePlugin,
-      visibleInSuggestions: props.general.exerciseVisibleInSuggestion,
+      visibleInSuggestions: config.general.exerciseVisibleInSuggestion,
     },
-    ...(props.general.enableTextAreaExercise
+    ...(config.general.enableTextAreaExercise
       ? [
           {
             type: EditorPluginType.TextAreaExercise,
@@ -117,4 +135,16 @@ export function createBasicPlugins(props: Required<PluginsConfig>) {
       plugin: genericContentTypePlugin,
     },
   ]
+}
+
+interface CreateImagePluginConfig {
+  disableFileUpload?: ImageConfig['disableFileUpload']
+  upload?: ImageConfig['upload']
+  validate: ImageConfig['validate']
+}
+
+function hasImagePluginConfigUploadPropertyDefined(
+  imagePluginConfig: CreateImagePluginConfig
+): imagePluginConfig is ImageConfig {
+  return imagePluginConfig.upload !== undefined
 }

@@ -4,9 +4,9 @@ This is an early version of the [Serlo Editor](https://de.serlo.org/editor). Be 
 
 If you are not using React, consider using the Serlo Editor as a [web component](https://www.npmjs.com/package/@serlo/editor-web-component).
 
-## Using the Serlo Editor
+# Using the Serlo Editor
 
-### Installation
+## Installation
 
 In your React project
 
@@ -14,7 +14,7 @@ In your React project
 yarn add @serlo/editor
 ```
 
-### Usage
+## Usage
 
 You can see a complete working example of the usage [here](https://github.com/serlo/serlo-editor-for-edusharing/blob/main/src/frontend/editor.tsx#L32).
 
@@ -26,6 +26,7 @@ type InitialState = SerloEditorProps['initialState']
 function MyCustomSerloEditor({ initialState }: { initialState: InitialState }) {
   return (
     <SerloEditor
+      pluginsProps={pluginsProps}
       initialState={initialState}
       onChange={({ changed, getDocument }) => {
         if (changed){
@@ -79,34 +80,53 @@ See below for the current API specification.
 - **Long-Term Support**: Yes
 - **Needs Change?**: No
 
-### `SerloEditor` component props
+## `SerloEditor` component props
 
-- **`children`**: When passed in a function as the `children` prop, the `SerloEditor` component provides an `editor` render prop as the argument to the `children` function. This `editor` object provides:
+### **`children`**
 
-  - `element` - a React node for rendering the editor
-  - `i18n` - for customizing translation strings
-  - `history` - for persisting, undo, redo
-  - `selectRootDocument` - a function for selecting the current state
+When passed in a function as the `children` prop, the `SerloEditor` component provides an `editor` render prop as the argument to the `children` function. This `editor` object provides:
 
-- **`pluginsConfig` (optional)**: Serlo Editor plugins can be configured to an extent, this configuration is currently done via the `pluginsConfig` prop of the `SerloEditor` component. Each plugin can be configured separately. There are currently two special rules that apply to the Editor in general:
+- `element` - a React node for rendering the editor
+- `i18n` - for customizing translation strings
+- `history` - for persisting, undo, redo
+- `selectRootDocument` - a function for selecting the current state
 
-  - `enableTextAreaExercise`: A flag that enables the TextAreaExercise plugin. TextAreaExercise plugin is currently not yet ready for serlo.org, but it is enabled in Edusharing integration. **To be deprecated once more features are added to the TextAreaExercise plugin and it's ready for serlo.org.**
-  - `exerciseVisibleInSuggestion`: A flag that defines if Exercise plugin is visible in Text plugin suggestions. **Not necessary for Serlo Editor package, instead used by serlo.org, could be removed.**
+### **`pluginsConfig` (optional)**
 
-- **`customPlugins` (optional)**: An array of custom plugins. **To be deprecated, only used in Edusharing integration**.
+Serlo Editor plugins can be configured to an extent, this configuration is currently done via the `pluginsConfig` prop of the `SerloEditor` component. Each plugin can be configured separately.
+
+#### **Image** plugin
+
+The Image plugin currently accepts two props. **The API of the Image plugin is subject to changes in the future**.
+
+- `upload`: `(file: File) => Promise<string>` - used for uploading an image to the desired storage.
+- `validate` (optional): `(file: File) => { valid: true } | { valid: false; errors: FileError[] }` - used for validating the uploaded file. A default validator function is used if no validator function is provided by the user.
+
+#### General Editor config
+
+- `enableTextAreaExercise`: A flag that enables the TextAreaExercise plugin. TextAreaExercise plugin is currently not yet ready for serlo.org, but it is enabled in Edusharing integration. **To be deprecated once more features are added to the TextAreaExercise plugin and it's ready for serlo.org.**
+- `exerciseVisibleInSuggestion`: A flag that defines if Exercise plugin is visible in Text plugin suggestions. **Not necessary for Serlo Editor package, instead used by serlo.org, could be removed.**
+
+### **`customPlugins` (optional)**
+
+An array of custom plugins. **To be deprecated, only used in Edusharing integration**.
 
 - **`initialState` (optional)**: Pass in an `initialState` to the `SerloEditor` component to prevent seeing an empty editor state.
 
-- **`onChange` (optional)**: To receive state changes of the editor and persist the content into your own infrastructure, use the `onChange` callback of the `SerloEditor` component. It's a function with the signature `({ changed, getDocument }) => void` of which you can call `getDocument()` to fetch the latest editor state.
+### **`onChange` (optional)**
 
-- **`language` (optional)**: The default language is `de`.
+To receive state changes of the editor and persist the content into your own infrastructure, use the `onChange` callback of the `SerloEditor` component. It's a function with the signature `({ changed, getDocument }) => void` of which you can call `getDocument()` to fetch the latest editor state.
 
-## Releasing a new version to npm
+### **`language` (optional)**
+
+The default language is `de`.
+
+# Releasing a new version to npm
 
 Bump the version number in the package.json and
 the github workflow seen inside `editor.yaml` will take care of the publishing.
 
-## Linking for local development with integrations
+# Linking for local development with integrations
 
 In order to avoid publishing the editor to NPM or dealing with tarballs every time you need to test your changes in an integration locally, you can use `yalc` to link the editor package to your integration locally.
 

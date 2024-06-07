@@ -39,6 +39,11 @@ export function SerloEditor(props: SerloEditorProps) {
   const pluginsConfig = {
     ...defaultSerloEditorProps.pluginsConfig,
     ...props.pluginsConfig,
+    // Merge image user-provided `upload` and the default `validate` props
+    image: {
+      ...defaultSerloEditorProps.pluginsConfig.image,
+      ...props.pluginsConfig?.image,
+    },
   }
 
   const { instanceData, loggedInData } = editorData[language]
