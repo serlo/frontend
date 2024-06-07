@@ -68,7 +68,6 @@ function getStateFromSession(): SessionState {
       const obj = JSON.parse(rawState) as SessionState
 
       if (typeof obj === 'object' && 'state' in obj && 'ts' in obj) {
-        console.log(obj)
         return obj
       }
     }
