@@ -4,7 +4,7 @@ import {
 } from '@editor/core/helpers/use-shadow-root'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import * as Dialog from '@radix-ui/react-dialog'
-import { useState, type ReactNode, useCallback, useRef } from 'react'
+import { useState, type ReactNode, useCallback, useRef, useEffect } from 'react'
 
 import { FaIcon } from './fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -35,6 +35,7 @@ export function ModalWithCloseButton({
   const [showConfirmation, setShowConfirmation] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   const shadowRoot = useShadowRoot(ref)
+  const previouslyFocusedElementRef = useRef<HTMLElement | null>(null)
 
   const appElement = getFirstElementOrUndefined(shadowRoot)
 
@@ -43,6 +44,23 @@ export function ModalWithCloseButton({
       confirmCloseDescription ? setShowConfirmation(true) : onCloseClick(),
     [confirmCloseDescription, onCloseClick]
   )
+
+  // Restores focus to previous element!
+  useEffect(() => {
+    if (isOpen) {
+      if (shadowRoot) {
+        previouslyFocusedElementRef.current =
+          shadowRoot.activeElement as HTMLElement
+      } else {
+        previouslyFocusedElementRef.current =
+          document.activeElement as HTMLElement
+      }
+    } else {
+      if (previouslyFocusedElementRef.current) {
+        previouslyFocusedElementRef.current.focus()
+      }
+    }
+  }, [isOpen, shadowRoot])
 
   return (
     <>
@@ -56,6 +74,8 @@ export function ModalWithCloseButton({
                 {title}
               </Dialog.Title>
             ) : null}
+
+            {children}
             <button
               onClick={onRequestClose}
               title={title}
@@ -69,8 +89,6 @@ export function ModalWithCloseButton({
             >
               <FaIcon icon={faXmark} className="h-5" />
             </button>
-
-            {children}
 
             {showConfirmation && (
               <div className="absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-gray-500 bg-opacity-75 px-4">
