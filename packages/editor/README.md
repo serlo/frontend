@@ -56,25 +56,25 @@ See below for the current API specification.
 - **Long-Term Support**: Will stay
 - **Needs Change?**: Configuration props need restructuring
 
-#### 2. `SerloRenderer`, `type SerloRendererProps`
+### 2. `SerloRenderer`, `type SerloRendererProps`
 
 - **Why Exported/How Used**: `SerloRenderer` is a component provided by the `@serlo/editor` for rendering content in a non-editable format. This is particularly useful for displaying the content to users who are not currently editing or are not allowed to edit.
 - **Long-Term Support**: Will stay
 - **Needs Change?**: Same changes as `SerloEditor`
 
-#### 3. `type BaseEditor`
+### 3. `type BaseEditor`
 
 - **Why Exported/How Used**: This type describes the `editor` render prop provided by the `SerloEditor` component.
 - **Long-Term Support**: Will stay unless a better solution is found
 - **Needs Change?**: Unclear
 
-#### 4. Exports from from `@editor/plugin`, `@/components/fa-icon`, `@editor/editor-ui`
+### 4. Exports from from `@editor/plugin`, `@/components/fa-icon`, `@editor/editor-ui`
 
 - **Why Exported/How Used**: These exports are currently necessary for defining custom Edusharing plugins. We don't plan to support custom plugins in the future.
 - **Long-Term Support**: To be deprecated
 - **Needs Change?**: No
 
-#### 5. Style (css) export `@serlo/editor/styles.css`
+### 5. Style (css) export `@serlo/editor/styles.css`
 
 - **Why Exported/How Used**: Styles the editor with our custom css. Just import `import '@serlo/editor/style.css'` wherever you render the editor. Mostly used in the web component. The css already comes bundled within the JS of the editor package. Therefore, you shouldn't need to import this, unless you plan to render the editor within the Shadow DOM.
 - **Long-Term Support**: Yes
