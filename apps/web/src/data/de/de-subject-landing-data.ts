@@ -76,6 +76,8 @@ export interface FeaturedContentData {
 
 // Will probably be fetched dynamically in the future:
 
+// TODO: Adapt Course urls to new url format manually
+
 export const featuredContent: Record<string, FeaturedContentData[]> = {
   informatik: [
     {

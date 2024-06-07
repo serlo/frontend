@@ -1,4 +1,4 @@
-import { getCourseIdFromPath } from '@editor/plugins/course/helper/get-course-id-from-path'
+import { getCoursePageIdFromPath } from '@editor/plugins/course/helper/get-course-id-from-path'
 import { faClock, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { TaxonomyTerm, Uuid } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
@@ -92,7 +92,7 @@ export function EditOrInvite({
     const revisionId = data.revisionId
     const { typename, id } = data
 
-    const coursePageId = getCourseIdFromPath(router.asPath)
+    const coursePageId = getCoursePageIdFromPath(router.asPath)
 
     const url = isCourse
       ? getEditUrl(data.courseId ?? id, undefined, false) + '#' + coursePageId

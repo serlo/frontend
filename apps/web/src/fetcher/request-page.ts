@@ -1,4 +1,4 @@
-import { getCourseIdFromPath } from '@editor/plugins/course/helper/get-course-id-from-path'
+import { getCoursePageIdFromPath } from '@editor/plugins/course/helper/get-course-id-from-path'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
@@ -259,13 +259,17 @@ export async function requestPage(
   }
 
   if (uuid.__typename === UuidType.Course) {
-    const coursePageId = getCourseIdFromPath(requestPath)
-    const coursePages = (content as unknown as EditorCourseDocument).state.pages
-    if (!coursePages || !coursePages.length) return { kind: 'not-found' }
+    const pageId = getCoursePageIdFromPath(requestPath)
 
-    const coursePage = coursePageId
-      ? coursePages.find((page) => page.id === coursePageId)
-      : coursePages[0]
+    const pages = (content as unknown as EditorCourseDocument).state.pages
+    if (!pages || !pages.length) return { kind: 'not-found' }
+
+    const page = pageId ? pages.find((page) => page.id === pageId) : pages[0]
+    if (!page) return { kind: 'not-found' }
+
+    const fullTitle = page.title ? `${page.title} – ${uuid.title}` : uuid.title
+    const metaTitle =
+      fullTitle.length <= 60 ? fullTitle : page.title ?? uuid.title
 
     return {
       kind: 'single-entity',
@@ -275,10 +279,10 @@ export async function requestPage(
         content: {
           ...content,
           // @ts-expect-error passing down additional data
-          serloContext: { activeCoursePageId: coursePageId },
+          serloContext: { activeCoursePageId: pageId },
         },
         typename: UuidType.Course,
-        title: coursePage?.title ?? uuid.title,
+        title: uuid.title,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
           useArticleTag: true,
@@ -287,6 +291,7 @@ export async function requestPage(
       },
       metaData: {
         ...sharedMetadata,
+        title: metaTitle,
         contentType: 'course',
       },
       horizonData,

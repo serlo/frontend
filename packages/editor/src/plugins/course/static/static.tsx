@@ -6,7 +6,7 @@ import { useState, MouseEvent } from 'react'
 
 import { CourseFooter } from './course-footer'
 import { CourseNavigation } from './course-navigation'
-import { getCourseIdFromPath } from '../helper/get-course-id-from-path'
+import { getCoursePageIdFromPath } from '../helper/get-course-id-from-path'
 import { InfoPanel } from '@/components/info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
@@ -17,7 +17,7 @@ export function CourseStaticRenderer({
 }: EditorCourseDocument) {
   const { pages } = state
   const router = useRouter()
-  const routerCourseId = getCourseIdFromPath(router.asPath)
+  const routerCourseId = getCoursePageIdFromPath(router.asPath)
   const queryPageId = routerCourseId ?? serloContext?.activeCoursePageId
   // courseNav: start opened when only some entries
   const [courseNavOpen, setCourseNavOpen] = useState(pages.length < 4 ?? false)

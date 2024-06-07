@@ -28,7 +28,8 @@ export function CourseNavigation({
       pages={pages.map(({ id: rawId, title }) => {
         const id = rawId.split('-')[0]
         const active = activePageId && activePageId.startsWith(id)
-        const href = active ? undefined : `?page=${id}`
+        // TODO: set final alias as href
+        const href = '' //active ? undefined : `?page=${id}`
 
         return {
           key: id + title,
@@ -51,6 +52,10 @@ export function CourseNavigation({
                 void router.push(newPath, undefined, {
                   shallow: true,
                 })
+                setTimeout(() => {
+                  console.log(title)
+                  document.title = title
+                }, 100)
               }}
             >
               {title}
