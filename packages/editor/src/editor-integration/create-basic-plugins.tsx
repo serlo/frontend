@@ -43,7 +43,7 @@ export function createBasicPlugins(config: CreateBasicPluginsConfig) {
     },
     {
       type: EditorPluginType.Multimedia,
-      plugin: createMultimediaPlugin(config.multimedia),
+      plugin: createMultimediaPlugin(createMultimediaPluginConfig(config)),
       visibleInSuggestions: true,
       icon: <IconMultimedia />,
     },
@@ -147,4 +147,23 @@ function hasImagePluginConfigUploadPropertyDefined(
   imagePluginConfig: CreateImagePluginConfig
 ): imagePluginConfig is ImageConfig {
   return imagePluginConfig.upload !== undefined
+}
+
+function createMultimediaPluginConfig(config: CreateBasicPluginsConfig) {
+  const { image, multimedia } = config
+
+  return {
+    ...multimedia,
+    allowedPlugins: multimedia.allowedPlugins.filter((allowedPlugin) => {
+      if (
+        // If the user didn't provide the `upload` prop for the Image plugin,
+        // remove the Image plugin from Multimedia config allowed plugins
+        allowedPlugin === EditorPluginType.Image &&
+        !hasImagePluginConfigUploadPropertyDefined(image)
+      ) {
+        return false
+      }
+      return true
+    }),
+  }
 }
