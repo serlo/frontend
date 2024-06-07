@@ -50,7 +50,9 @@ export function useHandleSave(
           setHasError(false)
         }, 200)
       })
-      .catch(() => {
+      .catch((e) => {
+        // eslint-disable-next-line no-console
+        console.log('error', e)
         setTimeout(() => {
           setPending(false)
           setHasError(true)
