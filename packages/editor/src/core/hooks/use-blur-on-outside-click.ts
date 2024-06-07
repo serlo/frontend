@@ -21,13 +21,9 @@ export function useBlurOnOutsideClick(
 
       const isModalOpen =
         root.querySelector('[data-modal-state="open"]') !== null
-      console.log('UseBlurOnOutsideClick IsModalOpen', {
-        isModalOpen,
-        querySelector: root.querySelector('[data-modal-state="open"]'),
-      })
 
-      // We let the modal close by itself and don't steal the focus as it'll
-      // restore the focus!
+      // We let the modal close by itself and don't steal the focus here as
+      // it'll restore the focus to the previous focused element!
       if (isModalOpen) {
         return
       }
