@@ -11,9 +11,14 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
 
 interface ModalWithCloseButtonProps {
-  isOpen: boolean
+  trigger?: ReactNode
   title?: string
-  onCloseClick: () => void
+  /**
+   * Only needed for a managed component. If trigger is used, no need to define
+   * this or onCloseClick.
+   */
+  isOpen?: boolean
+  onCloseClick?: () => void
   children: ReactNode
   className?: string
   confirmCloseDescription?: string | undefined
@@ -22,7 +27,8 @@ interface ModalWithCloseButtonProps {
 }
 
 export function ModalWithCloseButton({
-  isOpen,
+  trigger,
+  isOpen: isOpenProps = false,
   title,
   onCloseClick,
   children,
@@ -32,6 +38,17 @@ export function ModalWithCloseButton({
   extraCloseButtonClassName,
 }: ModalWithCloseButtonProps) {
   const { strings } = useInstanceData()
+  const [isOpen, setIsOpen] = useState(isOpenProps)
+
+  const isControlled = isOpenProps !== undefined
+  console.log('IsOpenProps vs isOpen', { isOpenProps, isOpen })
+
+  useEffect(() => {
+    if (isControlled) {
+      setIsOpen(isOpenProps)
+    }
+  }, [isOpenProps, isControlled])
+
   const [showConfirmation, setShowConfirmation] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   const shadowRoot = useShadowRoot(ref)
@@ -39,9 +56,33 @@ export function ModalWithCloseButton({
 
   const appElement = getFirstElementOrUndefined(shadowRoot)
 
-  const onRequestClose = useCallback(
-    () =>
-      confirmCloseDescription ? setShowConfirmation(true) : onCloseClick(),
+  console.log('ModalWithCloseButtonProps', { isOpen })
+  const onOpenChange = useCallback(
+    (open: boolean) => {
+      if (!open && confirmCloseDescription) {
+        setShowConfirmation(true)
+        return
+      }
+
+      // Need to add this tiny delay when unmounting the modal, so that the
+      // use-blur-on-outside-click has time to detect whether the modal is open
+      // or not.
+      if (open === false) {
+        setTimeout(() => {
+          setIsOpen(open)
+        }, 1)
+      } else {
+        setIsOpen(open)
+      }
+
+      console.log('OnOpenChange called with ', {
+        open,
+        confirmCloseDescription,
+      })
+      if (!open && onCloseClick) {
+        onCloseClick()
+      }
+    },
     [confirmCloseDescription, onCloseClick]
   )
 
@@ -65,10 +106,15 @@ export function ModalWithCloseButton({
   return (
     <>
       <div ref={ref}></div>
-      <Dialog.Root open={isOpen} onOpenChange={onRequestClose}>
+      <Dialog.Root open={isOpen} onOpenChange={onOpenChange}>
+        {trigger ? <Dialog.Trigger asChild>{trigger}</Dialog.Trigger> : null}
+
         <Dialog.Portal container={appElement}>
           <Dialog.Overlay className={defaultModalOverlayStyles} />
-          <Dialog.Content className={cn('serlo-modal', className)}>
+          <Dialog.Content
+            className={cn('serlo-modal', className)}
+            data-modal-state={isOpen ? 'open' : 'closed'}
+          >
             {title ? (
               <Dialog.Title className={cn('serlo-h2', extraTitleClassName)}>
                 {title}
@@ -76,8 +122,9 @@ export function ModalWithCloseButton({
             ) : null}
 
             {children}
-            <button
-              onClick={onRequestClose}
+            <Dialog.Close
+              aria-label="Close"
+              onClick={() => onOpenChange(false)}
               title={title}
               className={cn(
                 `z-2 absolute right-3.5 top-3.5 inline-flex h-9 w-9 cursor-pointer items-center
@@ -88,7 +135,7 @@ export function ModalWithCloseButton({
               data-qa="modal-close-button"
             >
               <FaIcon icon={faXmark} className="h-5" />
-            </button>
+            </Dialog.Close>
 
             {showConfirmation && (
               <div className="absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-gray-500 bg-opacity-75 px-4">
@@ -97,7 +144,7 @@ export function ModalWithCloseButton({
                   <div className="mt-4 flex space-x-4">
                     <button
                       className="serlo-button-blue-transparent mr-4"
-                      onClick={onCloseClick}
+                      onClick={() => setIsOpen(false)}
                     >
                       {strings.modal.leaveNow}
                     </button>

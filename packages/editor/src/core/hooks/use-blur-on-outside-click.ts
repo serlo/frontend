@@ -18,6 +18,20 @@ export function useBlurOnOutsideClick(
     function handleClickOutside(event: Event) {
       const mouseEvent = event as MouseEvent
       const clickedElement = mouseEvent.target as Element
+
+      const isModalOpen =
+        root.querySelector('[data-modal-state="open"]') !== null
+      console.log('UseBlurOnOutsideClick IsModalOpen', {
+        isModalOpen,
+        querySelector: root.querySelector('[data-modal-state="open"]'),
+      })
+
+      // We let the modal close by itself and don't steal the focus as it'll
+      // restore the focus!
+      if (isModalOpen) {
+        return
+      }
+
       if (
         root.contains(clickedElement) && // clicked element is present in the document
         editorWrapperRef.current && // provided wrapper is defined

@@ -27,16 +27,18 @@ export const ImageToolbar = (
       pluginType={EditorPluginType.Image}
       pluginSettings={
         <>
-          <button
-            onClick={() => setShowSettingsModal(true)}
-            className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
-            data-qa="plugin-image-settings"
-          >
-            {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
-          </button>
           <ModalWithCloseButton
-            isOpen={showSettingsModal}
-            onCloseClick={() => setShowSettingsModal(false)}
+            // {/* isOpen={showSettingsModal} */}
+            trigger={
+              <button
+                // onClick={() => setShowSettingsModal(true)}
+                className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+                data-qa="plugin-image-settings"
+              >
+                {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
+              </button>
+            }
+            // onCloseClick={() => setShowSettingsModal(false)}
             className="top-8 max-w-xl translate-y-0 sm:top-1/3"
           >
             <h3 className="serlo-h3 mt-4">
