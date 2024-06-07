@@ -5,7 +5,7 @@ import {
   faPlus,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
-import React, { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { useDrag } from 'react-dnd'
 import { ResizableBox, ResizableBoxProps } from 'react-resizable'
 import { Descendant } from 'slate'
@@ -49,12 +49,6 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     getAnswerZoneText,
   } = props
 
-  const [isResizing, setIsResizing] = useState(false)
-  const [dimensions, setDimensions] = useState({
-    width: answerZone.layout.width.get(),
-    height: answerZone.layout.height.get(),
-  })
-
   const context = useContext(AnswerZonesContext)
 
   const { dropzoneVisibility } = context || {}
@@ -62,7 +56,6 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   const [collected, drag, dragPreview] = useDrag({
     type: 'all',
     item: answerZone,
-    canDrag: !isResizing,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
       hideSourceOnDrag: true,
@@ -70,14 +63,8 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   })
 
   const handleResize: ResizableBoxProps['onResize'] = (_, { size }) => {
-    setIsResizing(true)
-    setDimensions(size)
     answerZone.layout.width.set(size.width)
     answerZone.layout.height.set(size.height)
-  }
-
-  const handleResizeStop: ResizableBoxProps['onResizeStop'] = () => {
-    setIsResizing(false)
   }
 
   // Renders the answer zone description
@@ -193,19 +180,18 @@ export const AnswerZone = (props: AnswerZoneProps) => {
       style={{
         left,
         top,
-        width: dimensions.width,
-        height: dimensions.height,
+        width: answerZone.layout.width.get(),
+        height: answerZone.layout.height.get(),
       }}
       data-qa={`answer-zone-${answerZone.id.get()}`}
     >
       <ResizableBox
         className="h-full w-full p-[6px]"
-        width={dimensions.width}
-        height={dimensions.height}
+        width={answerZone.layout.width.get()}
+        height={answerZone.layout.height.get()}
         minConstraints={[100, 50]}
         maxConstraints={[500, 300]}
         onResize={handleResize}
-        onResizeStop={handleResizeStop}
         resizeHandles={['nw', 'ne', 'sw', 'se']}
       >
         <div
