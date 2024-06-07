@@ -11,14 +11,9 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
 
 interface ModalWithCloseButtonProps {
-  trigger?: ReactNode
   title?: string
-  /**
-   * Only needed for a managed component. If trigger is used, no need to define
-   * this or onCloseClick.
-   */
-  isOpen?: boolean
-  onCloseClick?: () => void
+  isOpen: boolean
+  setIsOpen: (open: boolean) => void
   children: ReactNode
   className?: string
   confirmCloseDescription?: string | undefined
@@ -27,10 +22,9 @@ interface ModalWithCloseButtonProps {
 }
 
 export function ModalWithCloseButton({
-  trigger,
-  isOpen: isOpenProps = false,
+  isOpen,
   title,
-  onCloseClick,
+  setIsOpen,
   children,
   className,
   extraTitleClassName,
@@ -38,16 +32,6 @@ export function ModalWithCloseButton({
   extraCloseButtonClassName,
 }: ModalWithCloseButtonProps) {
   const { strings } = useInstanceData()
-  const [isOpen, setIsOpen] = useState(isOpenProps)
-
-  const isControlled = isOpenProps !== undefined
-  console.log('IsOpenProps vs isOpen', { isOpenProps, isOpen })
-
-  useEffect(() => {
-    if (isControlled) {
-      setIsOpen(isOpenProps)
-    }
-  }, [isOpenProps, isControlled])
 
   const [showConfirmation, setShowConfirmation] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
@@ -56,7 +40,6 @@ export function ModalWithCloseButton({
 
   const appElement = getFirstElementOrUndefined(shadowRoot)
 
-  console.log('ModalWithCloseButtonProps', { isOpen })
   const onOpenChange = useCallback(
     (open: boolean) => {
       if (!open && confirmCloseDescription) {
@@ -74,16 +57,8 @@ export function ModalWithCloseButton({
       } else {
         setIsOpen(open)
       }
-
-      console.log('OnOpenChange called with ', {
-        open,
-        confirmCloseDescription,
-      })
-      if (!open && onCloseClick) {
-        onCloseClick()
-      }
     },
-    [confirmCloseDescription, onCloseClick]
+    [confirmCloseDescription, setIsOpen]
   )
 
   // Restores focus to previous element!
@@ -107,8 +82,6 @@ export function ModalWithCloseButton({
     <>
       <div ref={ref}></div>
       <Dialog.Root open={isOpen} onOpenChange={onOpenChange}>
-        {trigger ? <Dialog.Trigger asChild>{trigger}</Dialog.Trigger> : null}
-
         <Dialog.Portal container={appElement}>
           <Dialog.Overlay className={defaultModalOverlayStyles} />
           <Dialog.Content

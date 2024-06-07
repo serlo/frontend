@@ -28,7 +28,11 @@ export function InviteModal({ isOpen, onClose, type }: InviteModalProps) {
   return (
     <ModalWithCloseButton
       isOpen={isOpen}
-      onCloseClick={onClose}
+      setIsOpen={(open) => {
+        if (!open) {
+          onClose()
+        }
+      }}
       title={modalStrings.title}
       className="top-1/2"
     >

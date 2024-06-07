@@ -38,7 +38,7 @@ export const PageLayoutToolbar = ({
           </button>
           <ModalWithCloseButton
             isOpen={showSettingsModal}
-            onCloseClick={() => setShowSettingsModal(false)}
+            setIsOpen={setShowSettingsModal}
             className="top-8 max-w-xl translate-y-0 sm:top-1/3"
           >
             <LayoutChooser {...state} />
