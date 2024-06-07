@@ -2,12 +2,15 @@ import React, { memo, useEffect, useState } from 'react'
 import { useDrop } from 'react-dnd'
 
 import {
-  BlankDropZoneSpec,
-  DraggableAnswerType,
+  type BlankDropZoneSpec,
+  type DraggableAnswerType,
   DropzoneVisibility,
-  PossibleAnswerType,
+  type PossibleAnswerType,
 } from '../../types'
-import { DraggableAnswer } from '../shared/draggable-answer'
+import {
+  DraggableAnswer,
+  draggableAnswerDragType,
+} from '../shared/draggable-answer'
 import { cn } from '@/helper/cn'
 
 interface BlankDropZoneProps {
@@ -38,7 +41,7 @@ export const BlankDropZone = memo(function BlankDropZone({
   const { height, width } = dropZone.layout ?? { height: 0, width: 0 }
 
   const [{ isOver, canDrop }, drop] = useDrop({
-    accept: 'all',
+    accept: draggableAnswerDragType,
     drop: (answer: DraggableAnswerType) => {
       const hasAnswerAlready = droppedAnswers.find(
         (droppedAnswer) => droppedAnswer.id === answer.id

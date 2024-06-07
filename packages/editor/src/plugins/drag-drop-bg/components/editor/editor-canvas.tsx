@@ -11,7 +11,7 @@ import type { DragDropBgProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
 import { useAnswerZones } from '../../hooks/use-answer-zones'
 import { AnswerZoneState, ModalType, answerDataType } from '../../types'
-import { AnswerZone } from '../answer-zone/answer-zone'
+import { AnswerZone, answerZoneDragType } from '../answer-zone/answer-zone'
 import { DraggableAnswer } from '../shared/draggable-answer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
@@ -61,7 +61,7 @@ export function EditorCanvas(props: DragDropBgProps) {
 
   const [, drop] = useDrop(
     () => ({
-      accept: 'all',
+      accept: answerZoneDragType,
       drop(answerZone: AnswerZoneState, monitor) {
         const change = monitor.getDifferenceFromInitialOffset()
         const delta = change || ({ x: 0, y: 0 } as XYCoord)

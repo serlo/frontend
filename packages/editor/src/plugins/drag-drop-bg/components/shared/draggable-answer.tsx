@@ -6,7 +6,7 @@ import type { DraggableAnswerType } from '../../types'
 import { AnswerContent } from '../answer-zone/answer-content'
 import { cn } from '@/helper/cn'
 
-export const blankDraggableAnswerDragType = 'blank-solution'
+export const draggableAnswerDragType = 'draggableAnswer'
 
 interface DraggableAnswerProps {
   text?: Descendant[]
@@ -35,7 +35,7 @@ export function DraggableAnswer({
   )
 
   const [, dragRef] = useDrag({
-    type: 'all',
+    type: draggableAnswerDragType,
     item: dragItem,
   })
   return (

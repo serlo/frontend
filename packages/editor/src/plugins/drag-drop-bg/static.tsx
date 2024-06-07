@@ -6,7 +6,10 @@ import type {
 } from '@editor/types/editor-plugins'
 import { useMemo, useState } from 'react'
 
-import { DraggableAnswer } from './components/shared/draggable-answer'
+import {
+  DraggableAnswer,
+  draggableAnswerDragType,
+} from './components/shared/draggable-answer'
 import { BlankDropZone } from './components/static/blank-drop-zone'
 import {
   getAnswerZoneImageSrc,
@@ -157,7 +160,10 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
           )
         })}
       </div>
-      <DraggableArea accept="all" onDrop={onDraggableAreaAnswerDrop}>
+      <DraggableArea
+        accept={draggableAnswerDragType}
+        onDrop={onDraggableAreaAnswerDrop}
+      >
         {possibleAnswers
           .filter(
             (possibleAnswer: PossibleAnswerType) =>

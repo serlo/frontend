@@ -19,6 +19,8 @@ import { AnswerType, AnswerZoneState, DropzoneVisibility } from '../../types'
 import { FaIcon } from '@/components/fa-icon'
 import { cn } from '@/helper/cn'
 
+export const answerZoneDragType = 'answerZone'
+
 export interface AnswerZoneProps {
   answerZone: AnswerZoneState
   onClickSettingsButton: (id: string) => void
@@ -54,7 +56,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   const { dropzoneVisibility } = context || {}
 
   const [collected, drag, dragPreview] = useDrag({
-    type: 'all',
+    type: answerZoneDragType,
     item: answerZone,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
