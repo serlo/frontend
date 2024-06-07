@@ -7,14 +7,6 @@ const key = 'serlo_frontend_session_duration_event'
 
 export function SessionDurationEvent() {
   const auth = useAuthentication()
-  // no content, just a hook
-
-  // Store timestamp in session storage
-  // opt out for auth-users
-  // event trigger: scroll, mount
-  // only send event once
-
-  // log debug output in console
 
   function trigger() {
     if (typeof window !== 'undefined') {
@@ -42,10 +34,8 @@ export function SessionDurationEvent() {
             )
           }
         }
-
-        // make transition
       } catch (e) {
-        // something failed
+        // ignore failures
       }
     }
   }
@@ -78,11 +68,13 @@ function getStateFromSession(): SessionState {
       const obj = JSON.parse(rawState) as SessionState
 
       if (typeof obj === 'object' && 'state' in obj && 'ts' in obj) {
+        console.log(obj)
         return obj
       }
     }
   } catch (e) {
-    //
+    // ignore parse error
   }
+  sessionStorage.removeItem(key)
   return { state: 'unvisited', ts: -1 }
 }
