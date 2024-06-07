@@ -26,7 +26,7 @@ type InitialState = SerloEditorProps['initialState']
 function MyCustomSerloEditor({ initialState }: { initialState: InitialState }) {
   return (
     <SerloEditor
-      pluginsProps={pluginsProps}
+      pluginsConfig={pluginsConfig}
       initialState={initialState}
       onChange={({ changed, getDocument }) => {
         if (changed){
