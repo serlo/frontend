@@ -184,8 +184,8 @@ export function EditorCanvas(props: DropzoneImageProps) {
             <AnswerZone
               key={index}
               answerZone={answerZone}
-              maxHeight={canvasHeight}
-              maxWidth={canvasWidth}
+              maxHeight={canvasDimensions.height.get()}
+              maxWidth={canvasDimensions.width.get()}
               onClick={() => selectAnswerZone(answerZone.id.get())}
               onClickSettingsButton={() => {
                 selectAnswerZone(answerZone.id.get())
