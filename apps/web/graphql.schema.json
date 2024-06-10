@@ -12182,6 +12182,18 @@
         "description": null,
         "fields": [
           {
+            "name": "entity",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "INTERFACE",
+              "name": "AbstractEntity",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "query",
             "description": null,
             "args": [],
@@ -12204,6 +12216,18 @@
             "type": {
               "kind": "INTERFACE",
               "name": "AbstractEntity",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "revision",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "INTERFACE",
+              "name": "AbstractEntityRevision",
               "ofType": null
             },
             "isDeprecated": false,

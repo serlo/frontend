@@ -1259,8 +1259,10 @@ export interface SetAbstractEntityInput {
 
 export interface SetEntityResponse {
   __typename?: 'SetEntityResponse';
+  entity?: Maybe<AbstractEntity>;
   query: Query;
   record?: Maybe<AbstractEntity>;
+  revision?: Maybe<AbstractEntityRevision>;
   success: Scalars['Boolean']['output'];
 }
 
