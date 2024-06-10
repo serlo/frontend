@@ -20,6 +20,8 @@ export const answerZoneDragType = 'answerZone'
 
 export interface AnswerZoneProps {
   answerZone: AnswerZoneState
+  maxHeight: number
+  maxWidth: number
   onClick?: (id: string) => void
   onClickSettingsButton: (id: string) => void
   onClickPlusButton: (id: string) => void
@@ -33,6 +35,8 @@ export interface AnswerZoneProps {
 export const AnswerZone = (props: AnswerZoneProps) => {
   const {
     answerZone,
+    maxHeight,
+    maxWidth,
     onClick,
     onClickSettingsButton,
     onClickPlusButton,
@@ -84,7 +88,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
         width={answerZone.layout.width.get()}
         height={answerZone.layout.height.get()}
         minConstraints={[100, 50]}
-        maxConstraints={[500, 300]}
+        maxConstraints={[maxWidth, maxHeight]}
         onResize={handleResize}
         resizeHandles={['nw', 'ne', 'sw', 'se']}
       >

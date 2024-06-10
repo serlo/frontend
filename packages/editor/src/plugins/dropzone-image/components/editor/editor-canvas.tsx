@@ -22,13 +22,13 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 const getCanvasDimensions = (shape: string) => {
   switch (shape) {
     case 'square':
-      return { canvasHeight: '786px', canvasWidth: '786px' }
+      return { canvasHeight: 786, canvasWidth: 786 }
     case 'landscape':
-      return { canvasHeight: '786px', canvasWidth: '1024px' }
+      return { canvasHeight: 786, canvasWidth: 1024 }
     case 'portrait':
-      return { canvasHeight: '1024px', canvasWidth: '786px' }
+      return { canvasHeight: 1024, canvasWidth: 786 }
     default:
-      return { canvasHeight: '786px', canvasWidth: '786px' }
+      return { canvasHeight: 786, canvasWidth: 786 }
   }
 }
 
@@ -143,6 +143,9 @@ export function EditorCanvas(props: DropzoneImageProps) {
           return (
             <AnswerZone
               key={index}
+              answerZone={answerZone}
+              maxHeight={canvasHeight}
+              maxWidth={canvasWidth}
               onClick={() => selectAnswerZone(answerZone.id.get())}
               onClickSettingsButton={() => {
                 selectAnswerZone(answerZone.id.get())
@@ -157,7 +160,6 @@ export function EditorCanvas(props: DropzoneImageProps) {
                 selectCurrentAnswer(answerIndex, answerType)
                 setModalType(ModalType.Edit)
               }}
-              answerZone={answerZone}
             />
           )
         })}
