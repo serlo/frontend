@@ -150,18 +150,17 @@ export function DropzoneImageStaticRenderer({
         }}
       >
         {answerZones.map((answerZone) => {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { answers, id, ...rest } = answerZone
-          const dropZone = { ...rest, id: id }
+          const dropZone = { ...rest, id }
           return (
             <BlankDropZone
               key={id}
-              visibility={dropzoneVisibility as DropzoneVisibility}
-              accept={['answer']}
               dropZone={dropZone}
               droppedAnswersIds={dropzoneAnswerMap.get(id) || []}
-              onAnswerDrop={onAnswerDrop}
+              isBackgroundTypeImage={!!backgroundImageUrlFromPlugin}
               isCorrect={isCorrectMap.get(id)}
+              visibility={dropzoneVisibility as DropzoneVisibility}
+              onAnswerDrop={onAnswerDrop}
             />
           )
         })}
