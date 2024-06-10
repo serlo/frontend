@@ -134,8 +134,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
         <div
           className={cn(`
             absolute bottom-0 left-0 right-0 top-0 mx-1 hidden h-full
-            items-center justify-center rounded-full
-            bg-white bg-opacity-95 group-hover/edit:flex
+            items-center justify-center rounded-full group-hover/edit:flex
           `)}
         >
           <button
