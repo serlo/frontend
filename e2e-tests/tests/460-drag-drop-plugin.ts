@@ -17,7 +17,7 @@ Scenario('Create a drag drop exercise with two dropzones', async ({ I }) => {
   I.click('$plugin-dropzone-image-background-type-select-blank')
   I.click('$plugin-dropzone-image-background-shape-select-square')
 
-  I.seeNumberOfElements('$plugin-drag-drop-editor-canvas', 1)
+  I.seeNumberOfElements('$plugin-dropzone-image-editor-canvas', 1)
 
   I.say('Add an answer zone')
 
@@ -99,7 +99,7 @@ Scenario(
     I.click('$plugin-dropzone-image-background-type-select-blank')
     I.click('$plugin-dropzone-image-background-shape-select-square')
 
-    I.seeNumberOfElements('$plugin-drag-drop-editor-canvas', 1)
+    I.seeNumberOfElements('$plugin-dropzone-image-editor-canvas', 1)
 
     I.say('Add an answer zone')
 

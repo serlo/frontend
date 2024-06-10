@@ -3,15 +3,15 @@ import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import type { DropzoneImageProps } from '..'
-import { AnswerType, AnswerZoneState } from '../types'
+import { AnswerType, type AnswerZoneState } from '../types'
 import {
   getAnswerZoneImageState,
   getAnswerZoneText,
 } from '../utils/answer-zone'
 
-export function useAnswerZones({ state }: DropzoneImageProps) {
-  const { answerZones } = state
-
+export function useAnswerZones(
+  answerZones: DropzoneImageProps['state']['answerZones']
+) {
   const [currentAnswerZone, setCurrentAnswerZone] = useState<AnswerZoneState>(
     answerZones[0]
   )

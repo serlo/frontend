@@ -20,7 +20,8 @@ export function AnswerRenderer({
   zoneId,
 }: AnswerRendererProps): JSX.Element {
   const dispatch = useAppDispatch()
-  const { zones, extraDraggableAnswers } = useContext(AnswerZonesContext) || {}
+  const { answerZones, extraDraggableAnswers } =
+    useContext(AnswerZonesContext) || {}
 
   useEffect(() => {
     if (isAnswerTypeText) {
@@ -30,7 +31,7 @@ export function AnswerRenderer({
 
   const answersList = isWrongAnswer
     ? extraDraggableAnswers
-    : zones?.find((z) => z.id.get() === zoneId)?.answers
+    : answerZones?.find(({ id }) => id.get() === zoneId)?.answers
 
   if (!answersList || answerIndex >= answersList.length) return <></>
 

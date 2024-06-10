@@ -168,6 +168,7 @@ export function DropzoneImageStaticRenderer({
       <DraggableArea
         accept={draggableAnswerDragType}
         onDrop={onDraggableAreaAnswerDrop}
+        className="mx-side"
       >
         {possibleAnswers
           .filter(

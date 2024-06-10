@@ -14,6 +14,9 @@ import { useState } from 'react'
 import { BackgroundShapeSelect } from './background-shape-select'
 import { BackgroundTypeSelect } from './background-type-select'
 import { EditorCanvas } from './editor-canvas'
+import { EditorCanvasModal } from './editor-canvas-modal'
+import { ExtraIncorrectAnswers } from './extra-incorrect-answers'
+import { PossibleAnswers } from './possible-answers'
 import type { DropzoneImageProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
 import { useAnswerZones } from '../../hooks/use-answer-zones'
@@ -22,15 +25,28 @@ import {
   BackgroundType,
   BackgroundShape,
   DropzoneVisibility,
+  ModalType,
 } from '../../types'
 import { DropzoneImageStaticRenderer } from '../static/static'
 
+const visibilityOptions = [
+  DropzoneVisibility.Full,
+  DropzoneVisibility.Partial,
+  DropzoneVisibility.None,
+]
+
 export function DropzoneImageEditor(props: DropzoneImageProps) {
   const { state, id } = props
-  const { backgroundImage, dropzoneVisibility, extraDraggableAnswers } = state
+  const {
+    answerZones,
+    backgroundImage,
+    dropzoneVisibility,
+    extraDraggableAnswers,
+  } = state
   const isBackgroundImagePluginDefined = backgroundImage.defined
 
   const [previewActive, setPreviewActive] = useState(false)
+  const [modalType, setModalType] = useState<ModalType>(ModalType.Unset)
 
   const staticDocument = useAppSelector(
     (storeState) =>
@@ -52,7 +68,8 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
     selectAnswerZone,
     selectCurrentAnswer,
     insertAnswerZone,
-  } = useAnswerZones(props)
+    duplicateAnswerZone,
+  } = useAnswerZones(answerZones)
 
   const backgroundType = state.backgroundType.get()
   const isBackgroundTypeBlank = backgroundType === BackgroundType.Blank
@@ -74,16 +91,10 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
     return backgroundImage.render()
   }
 
-  const visibilityOptions = [
-    DropzoneVisibility.Full,
-    DropzoneVisibility.Partial,
-    DropzoneVisibility.None,
-  ]
-
   return (
     <AnswerZonesContext.Provider
       value={{
-        zones: state.answerZones,
+        answerZones,
         canvasShape,
         currentAnswerZone,
         currentAnswerIndex,
@@ -123,7 +134,20 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
       {previewActive ? (
         <DropzoneImageStaticRenderer {...staticDocument} />
       ) : (
-        <EditorCanvas state={state} config={{}} id={id} focused={false} />
+        <div className="mx-side">
+          <EditorCanvasModal
+            answerZones={answerZones}
+            modalType={modalType}
+            duplicateAnswerZone={duplicateAnswerZone}
+            setModalType={setModalType}
+          />
+          <EditorCanvas state={state} setModalType={setModalType} />
+          <PossibleAnswers answerZones={answerZones} />
+          <ExtraIncorrectAnswers
+            extraDraggableAnswers={extraDraggableAnswers}
+            setModalType={setModalType}
+          />
+        </div>
       )}
     </AnswerZonesContext.Provider>
   )

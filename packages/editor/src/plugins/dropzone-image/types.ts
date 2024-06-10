@@ -42,8 +42,7 @@ export interface AnswerZoneSettings {
   width: number
 }
 
-export interface answerDataType
-  extends StateTypeReturnType<typeof answerData> {}
+export interface AnswerData extends StateTypeReturnType<typeof answerData> {}
 
 export interface AnswerZoneState
   extends StateTypeReturnType<typeof answerZoneState> {}

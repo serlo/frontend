@@ -1,47 +1,30 @@
-import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
-import { RemovableInputWrapper } from '@editor/editor-ui/removable-input-wrapper'
 import { selectStaticDocument, store } from '@editor/store'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
 import { useContext, useEffect, useState } from 'react'
 import { XYCoord, useDrop } from 'react-dnd'
 import { useHotkeys } from 'react-hotkeys-hook'
 
-import { EditorCanvasModal } from './editor-canvas-modal'
 import type { DropzoneImageProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
 import { useAnswerZones } from '../../hooks/use-answer-zones'
-import { AnswerZoneState, ModalType, answerDataType } from '../../types'
-import {
-  getAnswerZoneImageSrc,
-  getAnswerZoneText,
-} from '../../utils/answer-zone'
+import { AnswerZoneState, ModalType } from '../../types'
 import { AnswerZone, answerZoneDragType } from '../answer-zone/answer-zone'
-import { DraggableAnswer } from '../shared/draggable-answer'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { cn } from '@/helper/cn'
 
-/**
- *
- * This component represents the canvas area where answer zones and possible answers are managed and displayed.
- * It supports adding, editing, and deleting answer zones as well as managing possible answers.
- *
- */
+interface EditorCanvasProps {
+  state: DropzoneImageProps['state']
+  setModalType: (type: ModalType) => void
+}
 
-export function EditorCanvas(props: DropzoneImageProps) {
-  const { state } = props
-  const {
-    answerZones,
-    backgroundImage,
-    extraDraggableAnswers,
-    canvasDimensions,
-  } = state
+export function EditorCanvas(props: EditorCanvasProps) {
+  const { state, setModalType } = props
+  const { answerZones, backgroundImage, canvasDimensions } = state
 
-  const [modalType, setModalType] = useState<ModalType>(ModalType.Unset)
-  const { duplicateAnswerZone } = useAnswerZones(props)
+  const { duplicateAnswerZone } = useAnswerZones(answerZones)
 
   const context = useContext(AnswerZonesContext)
-  const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
-  const { zones, selectAnswerZone, selectCurrentAnswer, currentAnswerZone } =
+  const { selectAnswerZone, selectCurrentAnswer, currentAnswerZone } =
     context || {}
 
   const [answerZoneClipboardItem, setAnswerZoneClipboardItem] =
@@ -102,13 +85,13 @@ export function EditorCanvas(props: DropzoneImageProps) {
         answerZone.position.top.set(top)
       },
     }),
-    [zones]
+    [answerZones]
   )
 
   useHotkeys('backspace, del', (event) => {
     if (!currentAnswerZone) return
     const index = answerZones.findIndex(
-      (a) => a.id.get() === currentAnswerZone.id.get()
+      ({ id }) => id.get() === currentAnswerZone.id.get()
     )
     index !== -1 && answerZones.remove(index)
     event.preventDefault()
@@ -126,40 +109,23 @@ export function EditorCanvas(props: DropzoneImageProps) {
     event.preventDefault()
   })
 
-  const convertAnswer = (answer: answerDataType) => {
-    const zoneImageId = answer.image.get()
-    const zoneImgUrl = getAnswerZoneImageSrc(zoneImageId)
-    const zoneTextId = answer.text.get()
-    const zoneText = getAnswerZoneText(zoneTextId)
-    return { id: zoneImageId, imageUrl: zoneImgUrl, text: zoneText }
-  }
-
-  const correctAnswers = zones
-    .map(({ answers }) => answers.map(convertAnswer))
-    .flat()
-  const wrongAnswers = extraDraggableAnswers.map(convertAnswer)
-
   return (
-    <>
-      <EditorCanvasModal
-        answerZones={answerZones}
-        modalType={modalType}
-        duplicateAnswerZone={duplicateAnswerZone}
-        setModalType={setModalType}
-      />
-
+    <div className="flex justify-center">
       <div
-        data-qa="plugin-drag-drop-editor-canvas"
         ref={drop}
-        className="overflow-hidden rounded-lg border border-almost-black bg-center bg-no-repeat"
+        className={cn(`
+          relative overflow-hidden rounded-lg
+          border border-almost-black
+          bg-cover bg-center bg-no-repeat
+        `)}
         style={{
           backgroundImage: `url(${backgroundImageUrl})`,
           height: `${canvasDimensions.height.get()}px`,
           width: `${canvasDimensions.width.get()}px`,
-          backgroundSize: 'cover',
         }}
+        data-qa="plugin-dropzone-image-editor-canvas"
       >
-        {zones?.map((answerZone, index) => {
+        {answerZones?.map((answerZone, index) => {
           return (
             <AnswerZone
               key={index}
@@ -184,50 +150,6 @@ export function EditorCanvas(props: DropzoneImageProps) {
           )
         })}
       </div>
-
-      <div className="mt-4">
-        <DraggableArea accept="none">
-          {correctAnswers.map((possibleAnswer, index) => (
-            <DraggableAnswer
-              data-qa="plugin-drag-drop-correct-possible-answer"
-              draggableId={possibleAnswer.id}
-              key={index}
-              imageUrl={possibleAnswer.imageUrl}
-              text={possibleAnswer.text}
-            />
-          ))}
-        </DraggableArea>
-        <span className="mx-4">{blanksExerciseStrings.dummyAnswers}:</span>
-        <DraggableArea accept="none">
-          {wrongAnswers.map((possibleAnswer, index) => (
-            <RemovableInputWrapper
-              key={index}
-              onRemoveClick={() => {
-                extraDraggableAnswers.remove(index)
-              }}
-              tooltipText={blanksExerciseStrings.removeDummyAnswer}
-            >
-              <DraggableAnswer
-                data-qa="plugin-dropzone-image-alternative-answer"
-                draggableId={possibleAnswer.id}
-                imageUrl={possibleAnswer.imageUrl}
-                text={possibleAnswer.text}
-              />
-            </RemovableInputWrapper>
-          ))}
-        </DraggableArea>
-        <div className="flex justify-center">
-          <button
-            data-qa="plugin-dropzone-image-add-wrong-answer-button"
-            onClick={() => {
-              setModalType(ModalType.CreateWrongAnswer)
-            }}
-            className="rounded bg-orange-100 px-4 py-2"
-          >
-            Add wrong answer
-          </button>
-        </div>
-      </div>
-    </>
+    </div>
   )
 }

@@ -27,11 +27,12 @@ export function NewAnswerFlow(props: NewAnswerFlowProps) {
 
   const editorPluginsStrings = useEditorStrings().plugins
 
-  const { zones, extraDraggableAnswers } = useContext(AnswerZonesContext) || {}
+  const { answerZones, extraDraggableAnswers } =
+    useContext(AnswerZonesContext) || {}
 
   const answersList = isWrongAnswer
     ? extraDraggableAnswers
-    : zones?.find((z) => z.id.get() === zoneId)?.answers
+    : answerZones?.find(({ id }) => id.get() === zoneId)?.answers
 
   const goToStepOne = (newStepOneType: AnswerType) => {
     if (answersList) {

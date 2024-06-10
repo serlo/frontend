@@ -23,7 +23,7 @@ const emptyStrVal = {
 const emptyAnswersArray = [] as any[] as AnswerZoneState['answers']
 
 export interface AnswerZonesContextType {
-  zones: AnswerZoneState[]
+  answerZones: AnswerZoneState[]
   canvasShape: BackgroundShape
   currentAnswerZone: AnswerZoneState
   currentAnswerIndex: number
@@ -50,7 +50,7 @@ const defaultAnswerZone: AnswerZoneState = {
 }
 
 export const defaultAnswerZonesContext: AnswerZonesContextType = {
-  zones: [],
+  answerZones: [],
   canvasShape: BackgroundShape.Square,
   currentAnswerZone: defaultAnswerZone,
   currentAnswerIndex: 0,

@@ -220,6 +220,7 @@ export function BlanksExerciseRenderer(props: BlanksExerciseRendererProps) {
             <DraggableArea
               accept={blankDraggableAnswerDragType}
               onDrop={handleDraggableAreaDrop}
+              className="mx-side"
             >
               {draggables.map((draggable, index) =>
                 locationOfDraggables.get(draggable.draggableId) ? null : (

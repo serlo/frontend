@@ -4,6 +4,8 @@ import {
   isTextDocument,
 } from '@editor/types/plugin-type-guards'
 
+import type { AnswerData } from '../types'
+
 export const getAnswerZoneImageState = (answerZoneImageId: string) => {
   const answerImageDocument = selectStaticDocument(
     store.getState(),
@@ -31,4 +33,12 @@ export const getAnswerZoneText = (answerZoneTextId: string) => {
   return isTextDocument(answerTextDocument)
     ? answerTextDocument.state
     : undefined
+}
+
+export const convertAnswer = (answer: AnswerData) => {
+  const id = answer.image.get()
+  const imageUrl = getAnswerZoneImageSrc(id)
+  const zoneTextId = answer.text.get()
+  const text = getAnswerZoneText(zoneTextId)
+  return { id, imageUrl, text }
 }
