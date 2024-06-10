@@ -81,7 +81,7 @@ const SpoilerSerloStaticRenderer = dynamic<
 const DragDropBgSerloStaticRenderer = dynamic<
   EditorDragDropBgDocument & { openOverwrite?: boolean; onOpen?: () => void }
 >(() =>
-  import('@editor/plugins/drag-drop-bg/static').then(
+  import('@editor/plugins/drag-drop-bg/components/static/static').then(
     (mod) => mod.DragDropBgStaticRenderer
   )
 )

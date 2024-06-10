@@ -1,6 +1,6 @@
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { DragDropBgEditor } from './editor'
+import { DragDropBgEditor } from './components/editor/editor'
 import { BackgroundShape, DropzoneVisibility } from './types'
 import {
   type EditorPlugin,

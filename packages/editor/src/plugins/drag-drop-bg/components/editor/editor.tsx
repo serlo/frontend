@@ -11,15 +11,19 @@ import type {
 } from '@editor/types/editor-plugins'
 import { useState } from 'react'
 
-import type { DragDropBgProps } from '.'
-import { BackgroundShapeSelect } from './components/editor/background-shape-select'
-import { BackgroundTypeSelect } from './components/editor/background-type-select'
-import { EditorCanvas } from './components/editor/editor-canvas'
-import { AnswerZonesContext } from './context/context'
-import { useAnswerZones } from './hooks/use-answer-zones'
-import { DragDropBgStaticRenderer } from './static'
-import { DragDropBgToolbar } from './toolbar'
-import { BackgroundType, BackgroundShape, DropzoneVisibility } from './types'
+import { BackgroundShapeSelect } from './background-shape-select'
+import { BackgroundTypeSelect } from './background-type-select'
+import { EditorCanvas } from './editor-canvas'
+import type { DragDropBgProps } from '../..'
+import { AnswerZonesContext } from '../../context/context'
+import { useAnswerZones } from '../../hooks/use-answer-zones'
+import { DragDropBgToolbar } from '../../toolbar'
+import {
+  BackgroundType,
+  BackgroundShape,
+  DropzoneVisibility,
+} from '../../types'
+import { DragDropBgStaticRenderer } from '../static/static'
 
 export function DragDropBgEditor(props: DragDropBgProps) {
   const { state, id } = props

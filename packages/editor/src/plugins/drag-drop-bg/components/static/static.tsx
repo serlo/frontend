@@ -6,20 +6,20 @@ import type {
 } from '@editor/types/editor-plugins'
 import { useMemo, useState } from 'react'
 
-import {
-  DraggableAnswer,
-  draggableAnswerDragType,
-} from './components/shared/draggable-answer'
-import { BlankDropZone } from './components/static/blank-drop-zone'
+import { BlankDropZone } from './blank-drop-zone'
 import {
   getAnswerZoneImageSrc,
   getAnswerZoneText,
-} from './hooks/use-answer-zones'
+} from '../../hooks/use-answer-zones'
 import type {
   DraggableAnswerType,
   DropzoneVisibility,
   PossibleAnswerType,
-} from './types'
+} from '../../types'
+import {
+  DraggableAnswer,
+  draggableAnswerDragType,
+} from '../shared/draggable-answer'
 
 export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
   const {
