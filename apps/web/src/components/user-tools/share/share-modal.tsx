@@ -10,7 +10,7 @@ import {
   faEnvelope,
 } from '@fortawesome/free-solid-svg-icons'
 import QRCode from 'qrcode.react'
-import { MouseEvent, useRef, useState, useEffect } from 'react'
+import { MouseEvent, useState, useEffect } from 'react'
 
 import { FaIcon, FaIconProps } from '../../fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
@@ -42,7 +42,6 @@ export function ShareModal({
   showPdf,
   path,
 }: ShareModalProps) {
-  const shareInputRef = useRef<HTMLInputElement>(null)
   const { strings, lang } = useInstanceData()
   const { entityId } = useEntityData()
   const pathOrId = path ?? entityId
@@ -54,15 +53,13 @@ export function ShareModal({
 
   if (!isOpen || !pathOrId) return null
 
-  async function copyToClipboard(event: MouseEvent, text?: string) {
+  async function copyToClipboard(text?: string) {
     try {
-      if (shareInputRef.current) {
-        await navigator.clipboard.writeText(shareInputRef.current.value)
-        showToastNotice(
-          '👌 ' + (text ? text : strings.share.copySuccess),
-          'success'
-        )
-      }
+      await navigator.clipboard.writeText(shareUrl)
+      showToastNotice(
+        '👌 ' + (text ? text : strings.share.copySuccess),
+        'success'
+      )
     } catch (err) {
       showToastNotice(
         '❌ ' + (text ? text : strings.share.copyFailed),
@@ -106,12 +103,10 @@ export function ShareModal({
     {
       title: 'Mebis',
       icon: faCompass,
-      onClick: (event: MouseEvent) => {
-        copyToClipboard(
-          event,
+      onClick: () =>
+        void copyToClipboard(
           'Link in die Zwischenablage kopiert.\r\nEinfach auf Mebis (www.mebis.bayern.de) einfügen!'
-        ).catch(() => void null)
-      },
+        ),
     },
   ]
 
@@ -171,14 +166,13 @@ export function ShareModal({
             border-none bg-brandgreen-50 px-2.5 py-1
             focus:shadow-input focus:outline-none
           `)}
-          ref={shareInputRef}
           onFocus={(e) => e.target.select()}
           defaultValue={shareUrl}
         />
         {isClipboardSupported && (
           <>
             <br />
-            <button className={shareButton} onClick={copyToClipboard}>
+            <button className={shareButton} onClick={() => copyToClipboard()}>
               <FaIcon icon={faCopy} /> {strings.share.copyLink}
             </button>
           </>
