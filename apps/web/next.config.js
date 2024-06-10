@@ -80,7 +80,6 @@ const nextConfig = {
   transpilePackages: ['ramda', '@serlo/editor'], // context: https://github.com/vercel/next.js/issues/40183
   experimental: {
     scrollRestoration: true,
-    optimisticClientCache: false,
   },
   images: {
     dangerouslyAllowSVG: true,
