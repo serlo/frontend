@@ -491,7 +491,8 @@ export const instanceLandingData = {
   }
 };
 export const serverSideStrings = {
-  title: "Serlo உடன் கற்றுக்கொள்ளுங்கள்!"
+  title: "Serlo உடன் கற்றுக்கொள்ளுங்கள்!",
+  topicTitleAffix: 'Basics & Exercises'
 };
 export const loggedInData = {
   authMenu: [{
