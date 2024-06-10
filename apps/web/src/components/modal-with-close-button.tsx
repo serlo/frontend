@@ -47,6 +47,10 @@ export function ModalWithCloseButton({
         return
       }
 
+      if (open !== false) {
+        setIsOpen(open)
+        return
+      }
       // Need to add this tiny delay when unmounting the modal, so that the
       // use-blur-on-outside-click has time to detect whether the modal is open
       // or not.
@@ -54,27 +58,26 @@ export function ModalWithCloseButton({
         setTimeout(() => {
           setIsOpen(open)
         }, 1)
-      } else {
-        setIsOpen(open)
       }
     },
     [confirmCloseDescription, setIsOpen]
   )
 
-  // Restores focus to previous element!
+  // Restores the focus to the previous element!
   useEffect(() => {
-    if (isOpen) {
-      if (shadowRoot) {
-        previouslyFocusedElementRef.current =
-          shadowRoot.activeElement as HTMLElement
-      } else {
-        previouslyFocusedElementRef.current =
-          document.activeElement as HTMLElement
-      }
-    } else {
+    if (!isOpen) {
       if (previouslyFocusedElementRef.current) {
         previouslyFocusedElementRef.current.focus()
       }
+      return
+    }
+
+    if (shadowRoot) {
+      previouslyFocusedElementRef.current =
+        shadowRoot.activeElement as HTMLElement
+    } else {
+      previouslyFocusedElementRef.current =
+        document.activeElement as HTMLElement
     }
   }, [isOpen, shadowRoot])
 
