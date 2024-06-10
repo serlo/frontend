@@ -7,15 +7,15 @@ import type {
 import { useMemo, useState } from 'react'
 
 import { BlankDropZone } from './blank-drop-zone'
-import {
-  getAnswerZoneImageSrc,
-  getAnswerZoneText,
-} from '../../hooks/use-answer-zones'
 import type {
   DraggableAnswerType,
   DropzoneVisibility,
   PossibleAnswerType,
 } from '../../types'
+import {
+  getAnswerZoneImageSrc,
+  getAnswerZoneText,
+} from '../../utils/answer-zone'
 import {
   DraggableAnswer,
   draggableAnswerDragType,

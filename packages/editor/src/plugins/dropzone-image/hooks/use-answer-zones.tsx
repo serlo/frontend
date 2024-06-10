@@ -1,43 +1,13 @@
-import { selectStaticDocument, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import {
-  isImageDocument,
-  isTextDocument,
-} from '@editor/types/plugin-type-guards'
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import type { DropzoneImageProps } from '..'
 import { AnswerType, AnswerZoneState } from '../types'
-
-export const getAnswerZoneImageState = (answerZoneImageId: string) => {
-  const answerImageDocument = selectStaticDocument(
-    store.getState(),
-    answerZoneImageId
-  )
-  return isImageDocument(answerImageDocument) ? answerImageDocument.state : ''
-}
-
-export const getAnswerZoneImageSrc = (answerZoneImageId: string) => {
-  const answerImageDocument = selectStaticDocument(
-    store.getState(),
-    answerZoneImageId
-  )
-  return isImageDocument(answerImageDocument)
-    ? (answerImageDocument.state.src as string)
-    : ''
-}
-
-export const getAnswerZoneText = (answerZoneTextId: string) => {
-  const answerTextDocument = selectStaticDocument(
-    store.getState(),
-    answerZoneTextId
-  )
-
-  return isTextDocument(answerTextDocument)
-    ? answerTextDocument.state
-    : undefined
-}
+import {
+  getAnswerZoneImageState,
+  getAnswerZoneText,
+} from '../utils/answer-zone'
 
 export function useAnswerZones({ state }: DropzoneImageProps) {
   const { answerZones } = state
@@ -114,7 +84,5 @@ export function useAnswerZones({ state }: DropzoneImageProps) {
     selectCurrentAnswer,
     insertAnswerZone,
     duplicateAnswerZone,
-    getAnswerZoneImageSrc,
-    getAnswerZoneText,
   }
 }
