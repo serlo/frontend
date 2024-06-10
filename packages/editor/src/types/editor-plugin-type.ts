@@ -24,7 +24,7 @@ export enum EditorPluginType {
   Text = 'text',
   Video = 'video',
 
-  DragDropBg = 'dragDropBg',
+  DropzoneImage = 'dropzoneImage',
   ExerciseGroup = 'exerciseGroup',
   Exercise = 'exercise',
   ScMcExercise = 'scMcExercise',

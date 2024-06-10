@@ -10,7 +10,7 @@ import { ReactNode, useState } from 'react'
 
 import { BackgroundImageSettings } from './components/editor/background-image-settings'
 
-interface DragDropBgToolbarProps {
+interface DropzoneImageToolbarProps {
   id: string
   backgroundImageState?: {
     id: string | null
@@ -21,7 +21,7 @@ interface DragDropBgToolbarProps {
   showSettingsButton?: boolean
 }
 
-export const DragDropBgToolbar = (props: DragDropBgToolbarProps) => {
+export const DropzoneImageToolbar = (props: DropzoneImageToolbarProps) => {
   const {
     id,
     backgroundImageState,
@@ -37,7 +37,7 @@ export const DragDropBgToolbar = (props: DragDropBgToolbarProps) => {
 
   const addButton = onClickAddAnswerZone ? (
     <button
-      data-qa="plugin-drag-drop-bg-add-answer-zone-button"
+      data-qa="plugin-dropzone-image-add-answer-zone-button"
       onClick={onClickAddAnswerZone}
       className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
     >
@@ -49,7 +49,7 @@ export const DragDropBgToolbar = (props: DragDropBgToolbarProps) => {
 
   return (
     <PluginToolbar
-      pluginType={EditorPluginType.DragDropBg}
+      pluginType={EditorPluginType.DropzoneImage}
       contentControls={addButton}
       pluginSettings={
         <>
@@ -68,7 +68,7 @@ export const DragDropBgToolbar = (props: DragDropBgToolbarProps) => {
               >
                 <h3 className="serlo-h3 mt-4">
                   {editorStrings.edtrIo.settings}:{' '}
-                  {editorStrings.plugins.dragDropBg.title}
+                  {editorStrings.plugins.dropzoneImage.title}
                 </h3>
 
                 <div className="mx-side mb-3">

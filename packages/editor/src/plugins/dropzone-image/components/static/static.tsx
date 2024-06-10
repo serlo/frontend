@@ -1,7 +1,7 @@
 import { DndWrapper } from '@editor/core/components/dnd-wrapper'
 import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
 import type {
-  EditorDragDropBgDocument,
+  EditorDropzoneImageDocument,
   EditorImageDocument,
 } from '@editor/types/editor-plugins'
 import { useMemo, useState } from 'react'
@@ -21,7 +21,9 @@ import {
   draggableAnswerDragType,
 } from '../shared/draggable-answer'
 
-export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
+export function DropzoneImageStaticRenderer({
+  state,
+}: EditorDropzoneImageDocument) {
   const {
     answerZones,
     backgroundImage,
@@ -34,7 +36,7 @@ export function DragDropBgStaticRenderer({ state }: EditorDragDropBgDocument) {
     '') as string
 
   const convertAnswers = (
-    answers: EditorDragDropBgDocument['state']['extraDraggableAnswers']
+    answers: EditorDropzoneImageDocument['state']['extraDraggableAnswers']
   ) => {
     return answers.map((answer) => {
       const answerImageUrl = getAnswerZoneImageSrc(answer.image.id || '')

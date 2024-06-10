@@ -2,8 +2,8 @@ import IconLandscape from '@editor/editor-ui/assets/plugin-icons/drag-drop/blank
 import IconPortrait from '@editor/editor-ui/assets/plugin-icons/drag-drop/portrait.svg'
 import IconSquare from '@editor/editor-ui/assets/plugin-icons/drag-drop/square.svg'
 
-import type { DragDropBgProps } from '../..'
-import { DragDropBgToolbar } from '../../toolbar'
+import type { DropzoneImageProps } from '../..'
+import { DropzoneImageToolbar } from '../../toolbar'
 import { BackgroundShape } from '../../types'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
@@ -20,21 +20,21 @@ const IconMap = {
   [BackgroundShape.Landscape]: <IconLandscape />,
 }
 
-export function BackgroundShapeSelect(props: DragDropBgProps) {
+export function BackgroundShapeSelect(props: DropzoneImageProps) {
   const { state, id } = props
   const { canvasShape } = state
-  const shapeStrings = useEditorStrings().plugins.dragDropBg.backgroundShapes
+  const shapeStrings = useEditorStrings().plugins.dropzoneImage.backgroundShapes
 
   return (
     <>
-      <DragDropBgToolbar id={id} />
+      <DropzoneImageToolbar id={id} />
       <h2 className="mt-6 flex flex-row items-center justify-center pt-10 font-bold text-almost-black">
         {shapeStrings.description}
       </h2>
       <div className="flex flex-row items-center justify-center">
         {shapeOptions.map((shape) => (
           <button
-            data-qa={`plugin-drag-drop-bg-background-shape-select-${shape}`}
+            data-qa={`plugin-dropzone-image-background-shape-select-${shape}`}
             key={shape}
             className="m-[20px] flex h-32 w-32 flex-col items-center justify-between rounded-[5px] bg-orange-100 p-[10px] hover:bg-orange-200"
             onClick={() => canvasShape.set(shape)}

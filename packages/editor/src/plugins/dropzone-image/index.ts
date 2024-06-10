@@ -1,6 +1,6 @@
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { DragDropBgEditor } from './components/editor/editor'
+import { DropzoneImageEditor } from './components/editor/editor'
 import { BackgroundShape, DropzoneVisibility } from './types'
 import {
   type EditorPlugin,
@@ -37,7 +37,7 @@ export const answerZoneState = object({
   answers: list(answerData, 0),
 })
 
-const dragDropBgState = object({
+const dropzoneImageState = object({
   answerZones: list(answerZoneState, 0),
   canvasShape: string(BackgroundShape.Unset),
   backgroundType: string(''),
@@ -46,21 +46,21 @@ const dragDropBgState = object({
   extraDraggableAnswers: list(answerData, 0),
 })
 
-export const defaultConfig: DragDropBgConfig = {}
+export const defaultConfig: DropzoneImageConfig = {}
 
-export function createDragDropBgPlugin(): EditorPlugin<DragDropBgPluginState> {
+export function createDropzoneImagePlugin(): EditorPlugin<DropzoneImagePluginState> {
   // config = defaultConfig
   return {
-    Component: DragDropBgEditor,
-    state: dragDropBgState,
+    Component: DropzoneImageEditor,
+    state: dropzoneImageState,
     config: {},
   }
 }
 
-export interface DragDropBgConfig {
+export interface DropzoneImageConfig {
   allowedPlugins?: (EditorPluginType | string)[]
 }
 
-export type DragDropBgPluginState = typeof dragDropBgState
+export type DropzoneImagePluginState = typeof dropzoneImageState
 
-export type DragDropBgProps = EditorPluginProps<DragDropBgPluginState>
+export type DropzoneImageProps = EditorPluginProps<DropzoneImagePluginState>

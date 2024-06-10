@@ -692,7 +692,7 @@ export const loggedInData = {
           anchorId: 'Anchor ID',
           emptyContentWarning: 'Boxes without content will not be displayed',
         },
-        dragDropBg: {
+        dropzoneImage: {
           title: 'Drag & Drop Background',
           description: 'Add a background image for drag & drop exercises.',
           backgroundImage: 'Background image',

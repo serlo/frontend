@@ -20,7 +20,7 @@ export const AnswerContent = ({
 
   return url ? (
     <img
-      data-qa="plugin-drag-drop-bg-answer-content-image"
+      data-qa="plugin-dropzone-image-answer-content-image"
       src={url}
       className={
         isPreview
@@ -30,7 +30,7 @@ export const AnswerContent = ({
     />
   ) : text ? (
     <span
-      data-qa="plugin-drag-drop-bg-answer-content-text"
+      data-qa="plugin-dropzone-image-answer-content-text"
       className="mx-0 rounded-full border border-brand px-2"
       style={{ display }}
     >

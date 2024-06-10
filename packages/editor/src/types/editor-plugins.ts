@@ -4,7 +4,7 @@ import type { ArticlePluginState } from '@editor/plugins/article'
 import { AudioPluginState } from '@editor/plugins/audio'
 import { BlanksExerciseState } from '@editor/plugins/blanks-exercise'
 import { BoxPluginState } from '@editor/plugins/box'
-import { DragDropBgPluginState } from '@editor/plugins/drag-drop-bg'
+import { DropzoneImagePluginState } from '@editor/plugins/dropzone-image'
 import { EquationsPluginState } from '@editor/plugins/equations'
 import type { ExercisePluginState } from '@editor/plugins/exercise'
 import { ExerciseGroupPluginState } from '@editor/plugins/exercise-group'
@@ -137,9 +137,9 @@ export interface EditorBlanksExerciseDocument {
   state: PrettyStaticState<BlanksExerciseState>
   id?: string
 }
-export interface EditorDragDropBgDocument {
-  plugin: EditorPluginType.DragDropBg
-  state: PrettyStaticState<DragDropBgPluginState>
+export interface EditorDropzoneImageDocument {
+  plugin: EditorPluginType.DropzoneImage
+  state: PrettyStaticState<DropzoneImagePluginState>
   id?: string
 }
 export interface EditorSpoilerDocument {

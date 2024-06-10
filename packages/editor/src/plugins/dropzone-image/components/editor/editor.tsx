@@ -6,7 +6,7 @@ import {
   useAppSelector,
 } from '@editor/store'
 import type {
-  EditorDragDropBgDocument,
+  EditorDropzoneImageDocument,
   EditorImageDocument,
 } from '@editor/types/editor-plugins'
 import { useState } from 'react'
@@ -14,18 +14,18 @@ import { useState } from 'react'
 import { BackgroundShapeSelect } from './background-shape-select'
 import { BackgroundTypeSelect } from './background-type-select'
 import { EditorCanvas } from './editor-canvas'
-import type { DragDropBgProps } from '../..'
+import type { DropzoneImageProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
 import { useAnswerZones } from '../../hooks/use-answer-zones'
-import { DragDropBgToolbar } from '../../toolbar'
+import { DropzoneImageToolbar } from '../../toolbar'
 import {
   BackgroundType,
   BackgroundShape,
   DropzoneVisibility,
 } from '../../types'
-import { DragDropBgStaticRenderer } from '../static/static'
+import { DropzoneImageStaticRenderer } from '../static/static'
 
-export function DragDropBgEditor(props: DragDropBgProps) {
+export function DropzoneImageEditor(props: DropzoneImageProps) {
   const { state, id } = props
   const { backgroundImage, dropzoneVisibility, extraDraggableAnswers } = state
   const isBackgroundImagePluginDefined = backgroundImage.defined
@@ -34,7 +34,7 @@ export function DragDropBgEditor(props: DragDropBgProps) {
 
   const staticDocument = useAppSelector(
     (storeState) =>
-      selectStaticDocument(storeState, id) as EditorDragDropBgDocument
+      selectStaticDocument(storeState, id) as EditorDropzoneImageDocument
   )
   const backgroundImagePluginState = useAppSelector((state) =>
     selectDocument(
@@ -94,7 +94,7 @@ export function DragDropBgEditor(props: DragDropBgProps) {
         extraDraggableAnswers,
       }}
     >
-      <DragDropBgToolbar
+      <DropzoneImageToolbar
         onClickAddAnswerZone={insertAnswerZone}
         id={id}
         showSettingsButton={isBackgroundTypeImage}
@@ -119,9 +119,9 @@ export function DragDropBgEditor(props: DragDropBgProps) {
             value: option,
           }))}
         />
-      </DragDropBgToolbar>
+      </DropzoneImageToolbar>
       {previewActive ? (
-        <DragDropBgStaticRenderer {...staticDocument} />
+        <DropzoneImageStaticRenderer {...staticDocument} />
       ) : (
         <EditorCanvas state={state} config={{}} id={id} focused={false} />
       )}

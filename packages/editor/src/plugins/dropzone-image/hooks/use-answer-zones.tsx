@@ -7,7 +7,7 @@ import {
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
-import type { DragDropBgProps } from '..'
+import type { DropzoneImageProps } from '..'
 import { AnswerType, AnswerZoneState } from '../types'
 
 export const getAnswerZoneImageState = (answerZoneImageId: string) => {
@@ -39,7 +39,7 @@ export const getAnswerZoneText = (answerZoneTextId: string) => {
     : undefined
 }
 
-export function useAnswerZones({ state }: DragDropBgProps) {
+export function useAnswerZones({ state }: DropzoneImageProps) {
   const { answerZones } = state
 
   const [currentAnswerZone, setCurrentAnswerZone] = useState<AnswerZoneState>(

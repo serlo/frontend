@@ -7,7 +7,7 @@ import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BlanksExerciseStaticRenderer } from '@editor/plugins/blanks-exercise/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
-import { DragDropBgStaticRenderer } from '@editor/plugins/drag-drop-bg/components/static/static'
+import { DropzoneImageStaticRenderer } from '@editor/plugins/dropzone-image/components/static/static'
 import { EquationsStaticRenderer } from '@editor/plugins/equations/static'
 import { ExerciseStaticRenderer } from '@editor/plugins/exercise/static'
 import { GeogebraStaticRenderer } from '@editor/plugins/geogebra/static'
@@ -50,8 +50,8 @@ export function createRenderers(
         renderer: SpoilerStaticRenderer,
       },
       {
-        type: EditorPluginType.DragDropBg,
-        renderer: DragDropBgStaticRenderer,
+        type: EditorPluginType.DropzoneImage,
+        renderer: DropzoneImageStaticRenderer,
       },
       { type: EditorPluginType.Box, renderer: BoxStaticRenderer },
       { type: EditorPluginType.SerloTable, renderer: SerloTableStaticRenderer },

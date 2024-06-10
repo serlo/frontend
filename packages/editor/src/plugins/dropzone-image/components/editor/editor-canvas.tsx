@@ -7,7 +7,7 @@ import { XYCoord, useDrop } from 'react-dnd'
 import { useHotkeys } from 'react-hotkeys-hook'
 
 import { EditorCanvasModal } from './editor-canvas-modal'
-import type { DragDropBgProps } from '../..'
+import type { DropzoneImageProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
 import { useAnswerZones } from '../../hooks/use-answer-zones'
 import { AnswerZoneState, ModalType, answerDataType } from '../../types'
@@ -35,7 +35,7 @@ const getCanvasDimensions = (shape: string) => {
  *
  */
 
-export function EditorCanvas(props: DragDropBgProps) {
+export function EditorCanvas(props: DropzoneImageProps) {
   const { state } = props
   const { answerZones, backgroundImage, extraDraggableAnswers } = state
 
@@ -185,7 +185,7 @@ export function EditorCanvas(props: DragDropBgProps) {
               tooltipText={blanksExerciseStrings.removeDummyAnswer}
             >
               <DraggableAnswer
-                data-qa="plugin-drag-drop-bg-alternative-answer"
+                data-qa="plugin-dropzone-image-alternative-answer"
                 draggableId={possibleAnswer.id}
                 imageUrl={possibleAnswer.imageUrl}
                 text={possibleAnswer.text}
@@ -195,7 +195,7 @@ export function EditorCanvas(props: DragDropBgProps) {
         </DraggableArea>
         <div className="flex justify-center">
           <button
-            data-qa="plugin-drag-drop-bg-add-wrong-answer-button"
+            data-qa="plugin-dropzone-image-add-wrong-answer-button"
             onClick={() => {
               setModalType(ModalType.CreateWrongAnswer)
             }}

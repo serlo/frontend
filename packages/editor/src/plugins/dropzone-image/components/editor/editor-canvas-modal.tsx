@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import type { DragDropBgProps } from '../..'
+import type { DropzoneImageProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
 import { ModalType } from '../../types'
 import { AnswerRenderer } from '../answer-zone/answer-renderer'
@@ -9,7 +9,7 @@ import { NewAnswerFlow } from '../answer-zone/new-answer-flow'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 interface EditorCanvasModalProps {
-  answerZones: DragDropBgProps['state']['answerZones']
+  answerZones: DropzoneImageProps['state']['answerZones']
   modalType: ModalType
   duplicateAnswerZone: (idToDuplicate: string) => void
   setModalType: (modalType: ModalType) => void
