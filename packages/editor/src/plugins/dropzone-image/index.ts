@@ -41,8 +41,8 @@ const dropzoneImageState = object({
   answerZones: list(answerZoneState, 0),
   canvasShape: string(BackgroundShape.Unset),
   canvasDimensions: object({
-    height: number(0),
-    width: number(0),
+    height: number(786),
+    width: number(786),
   }),
   backgroundType: string(''),
   backgroundImage: optional(child({ plugin: EditorPluginType.Image })),
