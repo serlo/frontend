@@ -1,6 +1,6 @@
-import IconLandscape from '@editor/editor-ui/assets/plugin-icons/drag-drop/blank-landscape.svg'
-import IconPortrait from '@editor/editor-ui/assets/plugin-icons/drag-drop/portrait.svg'
-import IconSquare from '@editor/editor-ui/assets/plugin-icons/drag-drop/square.svg'
+import IconLandscape from '@editor/editor-ui/assets/plugin-icons/dropzone-image/blank-landscape.svg'
+import IconPortrait from '@editor/editor-ui/assets/plugin-icons/dropzone-image/portrait.svg'
+import IconSquare from '@editor/editor-ui/assets/plugin-icons/dropzone-image/square.svg'
 
 import type { DropzoneImageProps } from '../..'
 import { DropzoneImageToolbar } from '../../toolbar'

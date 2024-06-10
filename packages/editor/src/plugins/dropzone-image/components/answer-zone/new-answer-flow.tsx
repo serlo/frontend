@@ -1,4 +1,4 @@
-import IconAnswerImage from '@editor/editor-ui/assets/plugin-icons/drag-drop/answer-image.svg'
+import IconAnswerImage from '@editor/editor-ui/assets/plugin-icons/dropzone-image/answer-image.svg'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useContext, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'

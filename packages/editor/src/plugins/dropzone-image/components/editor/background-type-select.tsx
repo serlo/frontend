@@ -1,5 +1,5 @@
-import IconBlankBg from '@editor/editor-ui/assets/plugin-icons/drag-drop/blank-landscape.svg'
-import IconImageBg from '@editor/editor-ui/assets/plugin-icons/drag-drop/image-background.svg'
+import IconBlankBg from '@editor/editor-ui/assets/plugin-icons/dropzone-image/blank-landscape.svg'
+import IconImageBg from '@editor/editor-ui/assets/plugin-icons/dropzone-image/image-background.svg'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import type { DropzoneImageProps } from '../..'
