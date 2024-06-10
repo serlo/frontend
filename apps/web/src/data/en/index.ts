@@ -547,6 +547,7 @@ export const instanceLandingData = {
 }
 export const serverSideStrings = {
   title: 'learn with Serlo!',
+  topicTitleAffix: 'Basics & Exercises',
 }
 export const loggedInData = {
   authMenu: [
