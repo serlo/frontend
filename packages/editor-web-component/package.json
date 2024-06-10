@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-replace": "^5.0.5",
-    "@serlo/editor": "0.8.0",
+    "@serlo/editor": "0.8.1",
     "@serlo/typescript-config": "workspace:*",
     "@types/escodegen": "^0.0.10",
     "@types/estraverse": "^5.1.7",

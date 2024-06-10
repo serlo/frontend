@@ -84,7 +84,7 @@ export function ArticleAddModal({
   return (
     <ModalWithCloseButton
       isOpen={open}
-      onCloseClick={() => setModalOpen(false)}
+      setIsOpen={setModalOpen}
       className="top-8 max-h-[90vh] w-auto translate-y-0 overflow-y-scroll"
     >
       <h3 className="serlo-h3 mb-4 mt-5">{articleStrings.addModal.title}</h3>

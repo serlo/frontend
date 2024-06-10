@@ -3854,7 +3854,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@radix-ui/react-dialog@npm:^1.0.4":
+"@radix-ui/react-dialog@npm:^1.0.4, @radix-ui/react-dialog@npm:^1.0.5":
   version: 1.0.5
   resolution: "@radix-ui/react-dialog@npm:1.0.5"
   dependencies:
@@ -4848,7 +4848,7 @@ __metadata:
   resolution: "@serlo/editor-web-component@workspace:packages/editor-web-component"
   dependencies:
     "@rollup/plugin-replace": ^5.0.5
-    "@serlo/editor": 0.8.0
+    "@serlo/editor": 0.8.1
     "@serlo/typescript-config": "workspace:*"
     "@types/escodegen": ^0.0.10
     "@types/estraverse": ^5.1.7
@@ -4883,14 +4883,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@serlo/editor@npm:0.8.0":
-  version: 0.8.0
-  resolution: "@serlo/editor@npm:0.8.0"
+"@serlo/editor@npm:0.8.1":
+  version: 0.8.1
+  resolution: "@serlo/editor@npm:0.8.1"
   dependencies:
     "@serlo/katex-styles": 1.0.1
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: dcaa13c1194779abf95d248aad7def17f2d8e768a8e9897a63167eb6cdb40be84fbbb7c55eb0b0c178da23853030cb54f3e9e153f1bb2da980fc5b2fff76317e
+  checksum: 553f838ed7021986f10f02df9f5a2b809630f3db21af83def044f87cfb08e8a2f78d6ed82990e799178ba44d199ee0ef84d8dfdd4f94fc08a1066b693f10c1a2
   languageName: node
   linkType: hard
 
@@ -4913,6 +4913,7 @@ __metadata:
     "@ory/client": ^1.9.0
     "@ory/integrations": ^1.1.5
     "@prezly/slate-lists": ^0.97.0
+    "@radix-ui/react-dialog": ^1.0.5
     "@radix-ui/react-navigation-menu": ^1.1.4
     "@radix-ui/react-select": ^1.2.2
     "@reduxjs/toolkit": ^1.9.7
@@ -4939,7 +4940,6 @@ __metadata:
     "@types/react-dnd-multi-backend": ^6.0.6
     "@types/react-dom": ^18.0.8
     "@types/react-lazyload": ^3.2.1
-    "@types/react-modal": ^3.16.1
     "@types/react-notify-toast": ^0.5.6
     "@types/react-syntax-highlighter": ^15.5.11
     "@types/slate-react": ^0.50.1
@@ -5002,7 +5002,6 @@ __metadata:
     react-is: ^18.2.0
     react-lazyload: ^3.2.0
     react-mathquill: Entkenntnis/tmp-react-mathquill
-    react-modal: ^3.16.1
     react-notify-toast: Entkenntnis/tmp-react-notify-toast
     react-redux: ^8.1.3
     react-simple-star-rating: ^5.1.7
@@ -5071,6 +5070,7 @@ __metadata:
     "@ory/client": ^1.9.0
     "@ory/integrations": ^1.1.5
     "@prezly/slate-lists": ^0.97.0
+    "@radix-ui/react-dialog": ^1.0.5
     "@radix-ui/react-navigation-menu": ^1.1.4
     "@radix-ui/react-select": ^1.2.2
     "@reduxjs/toolkit": ^1.9.7
@@ -5099,7 +5099,6 @@ __metadata:
     "@types/react-dnd-multi-backend": ^6.0.6
     "@types/react-dom": ^18.0.8
     "@types/react-lazyload": ^3.2.1
-    "@types/react-modal": ^3.16.1
     "@types/react-notify-toast": ^0.5.6
     "@types/react-syntax-highlighter": ^15.5.11
     "@types/slate-react": ^0.50.1
@@ -5163,7 +5162,6 @@ __metadata:
     react-is: ^18.2.0
     react-lazyload: ^3.2.0
     react-mathquill: Entkenntnis/tmp-react-mathquill
-    react-modal: ^3.16.1
     react-redux: ^8.1.3
     react-simple-star-rating: ^5.1.7
     react-syntax-highlighter: ^15.5.0
@@ -5952,15 +5950,6 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: a49540f576009d9655a25efcd4f3b5835fb49799e1a2c55886edd2983feceacb6cdfc9d96485289a826d8236cf8fc414d5cf9137413323f93382d275346a96d0
-  languageName: node
-  linkType: hard
-
-"@types/react-modal@npm:^3.16.1":
-  version: 3.16.3
-  resolution: "@types/react-modal@npm:3.16.3"
-  dependencies:
-    "@types/react": "*"
-  checksum: 53c92dfbe46aae6f4ca4d96a166fd69a4b8dc539c5e8f755086dd1471656924ca6dd0a179be746c634686a0073aef67bb9615ee8600d9536cc1521b738e48453
   languageName: node
   linkType: hard
 
@@ -9692,13 +9681,6 @@ __metadata:
     signal-exit: ^3.0.3
     strip-final-newline: ^2.0.0
   checksum: fba9022c8c8c15ed862847e94c252b3d946036d7547af310e344a527e59021fd8b6bb0723883ea87044dc4f0201f949046993124a42ccb0855cae5bf8c786343
-  languageName: node
-  linkType: hard
-
-"exenv@npm:^1.2.0":
-  version: 1.2.2
-  resolution: "exenv@npm:1.2.2"
-  checksum: a894f3b60ab8419e0b6eec99c690a009c8276b4c90655ccaf7d28faba2de3a6b93b3d92210f9dc5efd36058d44f04098f6bbccef99859151104bfd49939904dc
   languageName: node
   linkType: hard
 
@@ -15262,7 +15244,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.5.8, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.5.8, prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -15573,34 +15555,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-lifecycles-compat@npm:^3.0.0":
-  version: 3.0.4
-  resolution: "react-lifecycles-compat@npm:3.0.4"
-  checksum: a904b0fc0a8eeb15a148c9feb7bc17cec7ef96e71188280061fc340043fd6d8ee3ff233381f0e8f95c1cf926210b2c4a31f38182c8f35ac55057e453d6df204f
-  languageName: node
-  linkType: hard
-
 react-mathquill@Entkenntnis/tmp-react-mathquill:
   version: 1.0.3
   resolution: "react-mathquill@https://github.com/Entkenntnis/tmp-react-mathquill.git#commit=c0766224949465d8c8776ec0464130ecad8d3381"
   peerDependencies:
     react: ^18.2.0
   checksum: 50f47865bc754ecd655b4608efc3f861230e69076c37696b8cd99264f47dd22846979fc3f4e39c95dd1be150bd21053bb519425d85d9eb7c20360e062c426458
-  languageName: node
-  linkType: hard
-
-"react-modal@npm:^3.16.1":
-  version: 3.16.1
-  resolution: "react-modal@npm:3.16.1"
-  dependencies:
-    exenv: ^1.2.0
-    prop-types: ^15.7.2
-    react-lifecycles-compat: ^3.0.0
-    warning: ^4.0.3
-  peerDependencies:
-    react: ^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18
-    react-dom: ^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18
-  checksum: 978936e9320fad839c039b9ee4de55d40888156cb40e093615d6fbc2ff07139d5db06f14782cb7767f780bd5fb57956778669426c535ebc0068a7a03882c7e75
   languageName: node
   linkType: hard
 

@@ -54,7 +54,11 @@ export const InjectionToolbar = ({
           </button>
           <ModalWithCloseButton
             isOpen={showSettingsModal}
-            onCloseClick={validateBeforeClose}
+            setIsOpen={(open) => {
+              if (!open) {
+                validateBeforeClose()
+              }
+            }}
             className="top-8 max-w-xl translate-y-0 sm:top-1/3"
           >
             <h3 className="serlo-h3 mt-4">{injectionStrings.title}</h3>
