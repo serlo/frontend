@@ -86,7 +86,7 @@ export const BlankDropZone = memo(function BlankDropZone({
       className={cn(
         `absolute flex flex-row items-center justify-center rounded p-1
         ${visibility === DropzoneVisibility.Partial ? 'border-dashed' : 'border-solid'}
-        ${isVisible ? backgroundColor : ''}
+        ${visibility === DropzoneVisibility.Full ? backgroundColor : ''}
         ${isVisible ? 'border-2' : 'border-0'}
         ${isVisible ? borderColor : ''}`
       )}
