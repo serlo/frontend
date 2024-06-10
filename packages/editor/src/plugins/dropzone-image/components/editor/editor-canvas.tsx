@@ -2,7 +2,7 @@ import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
 import { RemovableInputWrapper } from '@editor/editor-ui/removable-input-wrapper'
 import { selectStaticDocument, store } from '@editor/store'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { XYCoord, useDrop } from 'react-dnd'
 import { useHotkeys } from 'react-hotkeys-hook'
 
@@ -18,13 +18,13 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 const getCanvasDimensions = (shape: string) => {
   switch (shape) {
     case 'square':
-      return { canvasHeight: '786px', canvasWidth: '786px' }
+      return { canvasHeight: 786, canvasWidth: 786 }
     case 'landscape':
-      return { canvasHeight: '786px', canvasWidth: '1024px' }
+      return { canvasHeight: 786, canvasWidth: 1024 }
     case 'portrait':
-      return { canvasHeight: '1024px', canvasWidth: '786px' }
+      return { canvasHeight: 1024, canvasWidth: 786 }
     default:
-      return { canvasHeight: '786px', canvasWidth: '786px' }
+      return { canvasHeight: 786, canvasWidth: 786 }
   }
 }
 
@@ -37,7 +37,12 @@ const getCanvasDimensions = (shape: string) => {
 
 export function EditorCanvas(props: DropzoneImageProps) {
   const { state } = props
-  const { answerZones, backgroundImage, extraDraggableAnswers } = state
+  const {
+    answerZones,
+    backgroundImage,
+    extraDraggableAnswers,
+    canvasDimensions,
+  } = state
 
   const [modalType, setModalType] = useState<ModalType>(ModalType.Unset)
   const { getAnswerZoneImageSrc, getAnswerZoneText, duplicateAnswerZone } =
@@ -57,7 +62,50 @@ export function EditorCanvas(props: DropzoneImageProps) {
   const [answerZoneClipboardItem, setAnswerZoneClipboardItem] =
     useState<AnswerZoneState | null>(null)
 
-  const { canvasHeight, canvasWidth } = getCanvasDimensions(canvasShape)
+  const initialCanvasDimensions = getCanvasDimensions(canvasShape)
+
+  const backgroundImageDocument = backgroundImage.defined
+    ? (selectStaticDocument(
+        store.getState(),
+        backgroundImage.get()
+      ) as EditorImageDocument)
+    : null
+  const backgroundImageUrl = (backgroundImageDocument?.state?.src ||
+    '') as string
+
+  const [didAdjustCanvasDimensions, setDidAdjustCanvasDimensions] =
+    useState(false)
+
+  // adjust canvas size to fit the background image
+  useEffect(() => {
+    if (!backgroundImageDocument || didAdjustCanvasDimensions) return
+    const img = new Image()
+    img.src = backgroundImageUrl
+    img.onload = () => {
+      const imgAspectRatio = img.width / img.height
+      const maxCanvasWidth = initialCanvasDimensions.canvasWidth
+      const maxCanvasHeight = initialCanvasDimensions.canvasHeight
+      let newCanvasWidth = maxCanvasWidth
+      let newCanvasHeight = maxCanvasHeight
+
+      if (maxCanvasWidth / maxCanvasHeight > imgAspectRatio) {
+        newCanvasHeight = maxCanvasWidth / imgAspectRatio
+        if (newCanvasHeight > maxCanvasHeight) {
+          newCanvasHeight = maxCanvasHeight
+          newCanvasWidth = newCanvasHeight * imgAspectRatio
+        }
+      } else {
+        newCanvasWidth = maxCanvasHeight * imgAspectRatio
+        if (newCanvasWidth > maxCanvasWidth) {
+          newCanvasWidth = maxCanvasWidth
+          newCanvasHeight = newCanvasWidth / imgAspectRatio
+        }
+      }
+      canvasDimensions.width.set(newCanvasWidth)
+      canvasDimensions.height.set(newCanvasHeight)
+      setDidAdjustCanvasDimensions(true)
+    }
+  })
 
   const [, drop] = useDrop(
     () => ({
@@ -95,15 +143,6 @@ export function EditorCanvas(props: DropzoneImageProps) {
     event.preventDefault()
   })
 
-  const backgroundImageDocument = backgroundImage.defined
-    ? (selectStaticDocument(
-        store.getState(),
-        backgroundImage.get()
-      ) as EditorImageDocument)
-    : null
-  const backgroundImageUrl = (backgroundImageDocument?.state?.src ||
-    '') as string
-
   const convertAnswer = (answer: answerDataType) => {
     const zoneImageId = answer.image.get()
     const zoneImgUrl = getAnswerZoneImageSrc(zoneImageId)
@@ -132,8 +171,9 @@ export function EditorCanvas(props: DropzoneImageProps) {
         className="overflow-hidden rounded-lg border border-almost-black bg-center bg-no-repeat"
         style={{
           backgroundImage: `url(${backgroundImageUrl})`,
-          height: canvasHeight,
-          width: canvasWidth,
+          height: `${canvasDimensions.height.get()}px`,
+          width: `${canvasDimensions.width.get()}px`,
+          backgroundSize: 'cover',
         }}
       >
         {zones?.map((answerZone, index) => {

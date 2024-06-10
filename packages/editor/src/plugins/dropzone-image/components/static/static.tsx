@@ -27,6 +27,7 @@ export function DropzoneImageStaticRenderer({
   const {
     answerZones,
     backgroundImage,
+    canvasDimensions,
     extraDraggableAnswers,
     dropzoneVisibility,
   } = state
@@ -143,6 +144,9 @@ export function DropzoneImageStaticRenderer({
         className="relative mx-auto h-[786px] w-[786px] overflow-hidden rounded-lg border border-brand-500 bg-center bg-no-repeat"
         style={{
           backgroundImage: `url(${backgroundImageUrlFromPlugin})`,
+          height: `${canvasDimensions.height}px`,
+          width: `${canvasDimensions.width}px`,
+          backgroundSize: 'cover',
         }}
       >
         {answerZones.map((answerZone) => {

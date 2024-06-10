@@ -40,6 +40,10 @@ export const answerZoneState = object({
 const dropzoneImageState = object({
   answerZones: list(answerZoneState, 0),
   canvasShape: string(BackgroundShape.Unset),
+  canvasDimensions: object({
+    height: number(0),
+    width: number(0),
+  }),
   backgroundType: string(''),
   backgroundImage: optional(child({ plugin: EditorPluginType.Image })),
   dropzoneVisibility: string(DropzoneVisibility.Full),
