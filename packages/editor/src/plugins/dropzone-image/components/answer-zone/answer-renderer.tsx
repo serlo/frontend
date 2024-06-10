@@ -47,7 +47,7 @@ export function AnswerRenderer({
           className="mt-2 flex rounded bg-orange-100 px-2 py-1"
           onClick={onSave}
         >
-          + Ablageobject hinzufügen
+          + Ablageobjekt hinzufügen
         </button>
       </div>
     </div>
