@@ -92,7 +92,7 @@ export function ProfileChatButton({
     return (
       <ModalWithCloseButton
         isOpen={showInviteModal}
-        onCloseClick={() => setShowInviteModal(false)}
+        setIsOpen={setShowInviteModal}
         title={strings.profiles.inviteToChat}
       >
         <p className="serlo-p">
