@@ -129,7 +129,7 @@ export function EditorCanvas(props: DropzoneImageProps) {
       <div
         data-qa="plugin-drag-drop-editor-canvas"
         ref={drop}
-        className="mx-auto overflow-hidden rounded-lg border border-almost-black bg-center bg-no-repeat"
+        className="overflow-hidden rounded-lg border border-almost-black bg-center bg-no-repeat"
         style={{
           backgroundImage: `url(${backgroundImageUrl})`,
           height: canvasHeight,
