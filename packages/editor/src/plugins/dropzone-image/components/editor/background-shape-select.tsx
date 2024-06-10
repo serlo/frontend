@@ -20,10 +20,30 @@ const IconMap = {
   [BackgroundShape.Landscape]: <IconLandscape />,
 }
 
+export const getCanvasDimensions = (shape: string) => {
+  switch (shape) {
+    case 'square':
+      return { canvasHeight: 786, canvasWidth: 786 }
+    case 'landscape':
+      return { canvasHeight: 786, canvasWidth: 1024 }
+    case 'portrait':
+      return { canvasHeight: 1024, canvasWidth: 786 }
+    default:
+      return { canvasHeight: 786, canvasWidth: 786 }
+  }
+}
+
 export function BackgroundShapeSelect(props: DropzoneImageProps) {
   const { state, id } = props
-  const { canvasShape } = state
+  const { canvasShape, canvasDimensions } = state
   const shapeStrings = useEditorStrings().plugins.dropzoneImage.backgroundShapes
+
+  const onSelectShape = (shape: string) => {
+    const dimensions = getCanvasDimensions(shape)
+    canvasDimensions.height.set(dimensions.canvasHeight)
+    canvasDimensions.width.set(dimensions.canvasWidth)
+    canvasShape.set(shape)
+  }
 
   return (
     <>
@@ -37,7 +57,7 @@ export function BackgroundShapeSelect(props: DropzoneImageProps) {
             data-qa={`plugin-dropzone-image-background-shape-select-${shape}`}
             key={shape}
             className="m-[20px] flex h-32 w-32 flex-col items-center justify-between rounded-[5px] bg-orange-100 p-[10px] hover:bg-orange-200"
-            onClick={() => canvasShape.set(shape)}
+            onClick={() => onSelectShape(shape)}
           >
             <div className="flex flex-grow items-center justify-center">
               {IconMap[shape]}

@@ -19,19 +19,6 @@ import { AnswerZone, answerZoneDragType } from '../answer-zone/answer-zone'
 import { DraggableAnswer } from '../shared/draggable-answer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
-const getCanvasDimensions = (shape: string) => {
-  switch (shape) {
-    case 'square':
-      return { canvasHeight: 786, canvasWidth: 786 }
-    case 'landscape':
-      return { canvasHeight: 786, canvasWidth: 1024 }
-    case 'portrait':
-      return { canvasHeight: 1024, canvasWidth: 786 }
-    default:
-      return { canvasHeight: 786, canvasWidth: 786 }
-  }
-}
-
 /**
  *
  * This component represents the canvas area where answer zones and possible answers are managed and displayed.
@@ -54,18 +41,11 @@ export function EditorCanvas(props: DropzoneImageProps) {
   const context = useContext(AnswerZonesContext)
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
-  const {
-    zones,
-    selectAnswerZone,
-    selectCurrentAnswer,
-    currentAnswerZone,
-    canvasShape,
-  } = context || {}
+  const { zones, selectAnswerZone, selectCurrentAnswer, currentAnswerZone } =
+    context || {}
 
   const [answerZoneClipboardItem, setAnswerZoneClipboardItem] =
     useState<AnswerZoneState | null>(null)
-
-  const initialCanvasDimensions = getCanvasDimensions(canvasShape)
 
   const backgroundImageDocument = backgroundImage.defined
     ? (selectStaticDocument(
@@ -86,8 +66,8 @@ export function EditorCanvas(props: DropzoneImageProps) {
     img.src = backgroundImageUrl
     img.onload = () => {
       const imgAspectRatio = img.width / img.height
-      const maxCanvasWidth = initialCanvasDimensions.canvasWidth
-      const maxCanvasHeight = initialCanvasDimensions.canvasHeight
+      const maxCanvasWidth = canvasDimensions.width.get()
+      const maxCanvasHeight = canvasDimensions.height.get()
       let newCanvasWidth = maxCanvasWidth
       let newCanvasHeight = maxCanvasHeight
 
