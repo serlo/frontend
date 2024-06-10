@@ -38,6 +38,7 @@
     "@fortawesome/free-solid-svg-icons": "6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@hello-pangea/dnd": "^16.6.0",
+    "@lumieducation/h5p-react": "^9.3.2",
     "@ory/client": "^1.9.0",
     "@ory/integrations": "^1.1.5",
     "@prezly/slate-lists": "^0.97.0",
