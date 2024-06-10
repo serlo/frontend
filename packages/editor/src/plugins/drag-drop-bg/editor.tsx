@@ -58,7 +58,9 @@ export function DragDropBgEditor(props: DragDropBgProps) {
 
   const canvasShape = state.canvasShape.get() as BackgroundShape
 
-  if (!canvasShape) return <BackgroundShapeSelect {...props} />
+  if (!canvasShape && isBackgroundTypeBlank) {
+    return <BackgroundShapeSelect {...props} />
+  }
 
   const hasBackgroundImageUrl = !!backgroundImageUrlFromPlugin
   const isBackgroundSelected =

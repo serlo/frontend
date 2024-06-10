@@ -24,7 +24,7 @@ const getCanvasDimensions = (shape: string) => {
     case 'portrait':
       return { canvasHeight: '1024px', canvasWidth: '786px' }
     default:
-      return { canvasHeight: '1px', canvasWidth: '1px' }
+      return { canvasHeight: '786px', canvasWidth: '786px' }
   }
 }
 
