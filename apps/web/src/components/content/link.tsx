@@ -53,7 +53,7 @@ function InternalLink({
   children,
   className,
   noExternalIcon,
-  forceNoCSR,
+  // forceNoCSR,
   onClick,
   unreviewed,
   ref,
@@ -61,13 +61,13 @@ function InternalLink({
 }: LinkProps & { ref?: ForwardedRef<HTMLAnchorElement> }) {
   const router = useRouter()
 
-  const { parsedHref, clientSide, isExternal, isContentOnly } = parseLink()
+  const { parsedHref, /* clientSide,*/ isExternal, isContentOnly } = parseLink()
 
   if (parsedHref === '') renderEmptyLink()
 
-  return forceNoCSR || !clientSide
-    ? renderDefaultLink(parsedHref)
-    : renderClientSideLink(parsedHref)
+  // return forceNoCSR || !clientSide
+  return renderDefaultLink(parsedHref)
+  // : renderClientSideLink(parsedHref)
 
   function parseLink() {
     if (!href || href === undefined || href === '' || !router.locale)
