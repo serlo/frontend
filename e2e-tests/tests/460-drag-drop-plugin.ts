@@ -37,6 +37,18 @@ Scenario('Create a drag drop exercise with two dropzones', async ({ I }) => {
 
   I.seeNumberOfElements('$plugin-drag-drop-bg-answer-content-image', 2)
 
+  I.say('Click settings button of first answer zone')
+  I.moveCursorTo('$answer-zone-answerZone-0')
+  I.click('$answer-zone-answerZone-0-settings-button')
+  I.seeNumberOfElements('$answer-zone-settings-form-duplicate-button', 1)
+  I.seeNumberOfElements('$answer-zone-settings-form-delete-button', 1)
+
+  I.say('Change name (beschriftung) of first answer zone')
+  I.click('$answer-zone-settings-form-name-input')
+  I.type('Skateboard')
+  I.click('$modal-close-button')
+  I.see('Skateboard')
+
   I.say('Add a text answer to first drop zone')
 
   I.click('$answer-zone-answerZone-0-add-another-answer-button')
@@ -48,11 +60,70 @@ Scenario('Create a drag drop exercise with two dropzones', async ({ I }) => {
 
   I.seeNumberOfElements('$plugin-drag-drop-bg-answer-content-text', 2)
 
+  I.say('Duplicate first answer zone')
+  I.moveCursorTo('$answer-zone-answerZone-0')
+  I.click('$answer-zone-answerZone-0-settings-button')
+  I.click('$answer-zone-settings-form-duplicate-button')
+  I.click('$modal-close-button')
+
+  I.seeNumberOfElements('$answer-zone-answerZone-1', 1)
+  I.seeNumberOfElements('$plugin-drag-drop-bg-answer-content-text', 4)
+
+  I.say('Delete delete text answer from second drop zone')
+  I.moveCursorTo(
+    locate('$plugin-drag-drop-bg-answer-content-text').inside(
+      '$answer-zone-answerZone-1'
+    )
+  )
+  I.click('$answer-zone-answerZone-1-remove-answer-button')
+
+  I.seeNumberOfElements('$plugin-drag-drop-bg-answer-content-text', 2)
+
+  I.seeNumberOfElements('$plugin-drag-drop-bg-add-wrong-answer-button', 1)
+
   // Todo: Check if images and text are correctly renderered, rather than just checking the number of elements
 })
 
-Scenario.todo('Test for inserting image answer')
+Scenario(
+  'Create a drag drop exercise with two dropzones and wrong answers',
+  async ({ I }) => {
+    I.amOnPage('/entity/create/Article/1377')
 
-Scenario.todo('Tests for inserting text answer')
+    I.say('Add drag drop plugin')
 
-Scenario.todo('Tests for duplicating answer')
+    I.click('Füge ein Element hinzu')
+    I.click('$plugin-suggestion-dragDropBg')
+
+    I.say('Select background type and shape')
+
+    I.click('$plugin-drag-drop-bg-background-type-select-blank')
+    I.click('$plugin-drag-drop-bg-background-shape-select-square')
+
+    I.seeNumberOfElements('$plugin-drag-drop-editor-canvas', 1)
+
+    I.say('Add an answer zone')
+
+    I.click('$plugin-drag-drop-bg-add-answer-zone-button')
+    I.seeNumberOfElements('$answer-zone-answerZone-0', 1)
+
+    I.say('Add an image answer to first drop zone')
+    I.click('$answer-zone-answerZone-0-add-answer-button')
+    I.click('Bild')
+
+    I.click('$plugin-image-src')
+    I.type(
+      'https://upload.wikimedia.org/wikipedia/en/a/aa/Bart_Simpson_200px.png'
+    )
+    I.click('$modal-close-button')
+    I.seeNumberOfElements('$answer-zone-answerZone-0', 1)
+
+    I.say('Add wrong answer')
+    I.click('$plugin-drag-drop-bg-add-wrong-answer-button')
+    I.click('$plugin-drag-drop-bg-answer-zone-new-answer-type-text')
+    I.click(locate('$plugin-text-editor').last())
+    I.type('Incorrect')
+    I.click('$modal-close-button')
+
+    I.seeNumberOfElements('$plugin-drag-drop-bg-answer-content-text', 1)
+  }
+)

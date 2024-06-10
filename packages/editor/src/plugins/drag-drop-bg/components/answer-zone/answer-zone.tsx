@@ -148,6 +148,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
             <EditorTooltip text="Edit answer" className="!-ml-2 !pb-2" />
           </button>
           <button
+            data-qa={`answer-zone-${answerZone.id.get()}-remove-answer-button`}
             onClick={() => {
               answerZone.answers.remove(index)
             }}

@@ -47,6 +47,7 @@ export function AnswerZoneSettingsForm({
         <div className="mt-2 flex justify-center">
           <input
             type="text"
+            data-qa="answer-zone-settings-form-name-input"
             defaultValue={initialSettings.name}
             onChange={(e) => answerZone.name.set(e.target.value)}
             className="w-full rounded border border-gray-300 bg-orange-100 p-2"
@@ -87,6 +88,7 @@ export function AnswerZoneSettingsForm({
 
       <div className="flex w-full gap-4">
         <button
+          data-qa="answer-zone-settings-form-duplicate-button"
           onClick={onDuplicate}
           className="flex flex-1 cursor-pointer items-center justify-center rounded border-none bg-orange-100 p-2"
         >
@@ -95,6 +97,7 @@ export function AnswerZoneSettingsForm({
         </button>
 
         <button
+          data-qa="answer-zone-settings-form-delete-button"
           onClick={onDelete}
           className="flex flex-1 cursor-pointer items-center justify-center rounded border-none bg-orange-100 p-2"
         >

@@ -166,6 +166,7 @@ export function EditorCanvas(props: DragDropBgProps) {
         <DraggableArea accept="none">
           {correctAnswers.map((possibleAnswer, index) => (
             <DraggableAnswer
+              data-qa="plugin-drag-drop-correct-possible-answer"
               draggableId={possibleAnswer.id}
               key={index}
               imageUrl={possibleAnswer.imageUrl}
@@ -184,6 +185,7 @@ export function EditorCanvas(props: DragDropBgProps) {
               tooltipText={blanksExerciseStrings.removeDummyAnswer}
             >
               <DraggableAnswer
+                data-qa="plugin-drag-drop-bg-alternative-answer"
                 draggableId={possibleAnswer.id}
                 imageUrl={possibleAnswer.imageUrl}
                 text={possibleAnswer.text}
@@ -193,6 +195,7 @@ export function EditorCanvas(props: DragDropBgProps) {
         </DraggableArea>
         <div className="flex justify-center">
           <button
+            data-qa="plugin-drag-drop-bg-add-wrong-answer-button"
             onClick={() => {
               setModalType(ModalType.CreateWrongAnswer)
             }}
