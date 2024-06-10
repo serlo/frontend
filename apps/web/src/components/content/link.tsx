@@ -1,5 +1,5 @@
 import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
-import { default as NextLink } from 'next/link'
+// import { default as NextLink } from 'next/link'
 import { useRouter } from 'next/router'
 import { ForwardedRef, forwardRef, ReactNode, MouseEvent } from 'react'
 
@@ -135,7 +135,7 @@ function InternalLink({
     )
   }
 
-  function renderClientSideLink(_href: string) {
+  /*function renderClientSideLink(_href: string) {
     return (
       <NextLink
         id={id}
@@ -148,5 +148,5 @@ function InternalLink({
         {children}
       </NextLink>
     )
-  }
+  }*/
 }
