@@ -76,9 +76,7 @@ export function SaveModal({
   return (
     <ModalWithCloseButton
       isOpen={open}
-      onCloseClick={() => {
-        setOpen(false)
-      }}
+      setIsOpen={setOpen}
       title={editorStrings.save}
       className={cn(
         !isOnlyText &&

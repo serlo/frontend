@@ -56,7 +56,7 @@ export function ExternalRevisionLoader<T>({
 
       <ModalWithCloseButton
         isOpen={showRevisions}
-        onCloseClick={() => setShowRevisions(false)}
+        setIsOpen={setShowRevisions}
         title={editorStrings.edtrIo.importOther}
         className="max-h-[80vh] w-[900px] max-w-[90vw] -translate-x-1/2 overflow-y-auto pt-0"
       >

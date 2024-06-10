@@ -36,7 +36,11 @@ export function useSetEntityMutation() {
       savedParentId,
       taxonomyParentId,
     }: SetEntityMutationRunnerData) {
-      if (!data.__typename) return
+      if (!data.__typename) {
+        // eslint-disable-next-line no-console
+        console.error('no typename')
+        return false
+      }
 
       // persist current alias here since it might change on mutation
       const oldAlias = await getAliasById(data.id)
@@ -48,7 +52,11 @@ export function useSetEntityMutation() {
           data,
           needsReview
         )
-        if (!genericInput) return
+        if (!genericInput) {
+          // eslint-disable-next-line no-console
+          console.error('no generic input data')
+          return false
+        }
         const additionalInput = getAdditionalInputData(mutationStrings, data)
         input = {
           ...genericInput,
@@ -61,7 +69,7 @@ export function useSetEntityMutation() {
         }
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error('error collecting data, probably missing value?')
+        console.error('error collecting data, probably missing value?', error)
         return false
       }
 
@@ -69,10 +77,14 @@ export function useSetEntityMutation() {
       try {
         //here we rely on the api not to create an empty revision
         savedId = await mutationFetch(setAbstractEntityMutation, input)
-        if (!Number.isInteger(savedId)) return false
+        if (!Number.isInteger(savedId)) {
+          // eslint-disable-next-line no-console
+          console.error('no valid savedId returned')
+          return false
+        }
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error('error saving main uuid')
+        console.error('error saving main uuid', error)
         return false
       }
 
@@ -96,7 +108,11 @@ export function useSetEntityMutation() {
 
         if (oldAlias) await revalidatePath(oldAlias)
 
-        void router.push(redirectHref + successHash)
+        setTimeout(() => {
+          void router.push(redirectHref + successHash)
+        }, 200)
+
+        return true
       }
     }
   }

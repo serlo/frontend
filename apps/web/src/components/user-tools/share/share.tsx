@@ -39,7 +39,7 @@ export function Share({ data, aboveContent }: MoreAuthorToolsProps) {
       {shareOpen ? (
         <ShareModal
           isOpen={shareOpen}
-          onClose={() => setShareOpen(false)}
+          setIsOpen={setShareOpen}
           showPdf={showPdf}
         />
       ) : null}

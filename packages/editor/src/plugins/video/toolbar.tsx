@@ -41,7 +41,11 @@ export const VideoToolbar = ({
           </button>
           <ModalWithCloseButton
             isOpen={!!showSettingsModal}
-            onCloseClick={() => setShowSettingsModal(false)}
+            setIsOpen={(open) => {
+              if (!open) {
+                setShowSettingsModal(false)
+              }
+            }}
             className="top-8 max-w-xl translate-y-0 sm:top-1/3"
           >
             <h3 className="serlo-h3 mt-4">{videoStrings.title}</h3>
