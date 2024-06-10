@@ -11,6 +11,10 @@ import type { DropzoneImageProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
 import { useAnswerZones } from '../../hooks/use-answer-zones'
 import { AnswerZoneState, ModalType, answerDataType } from '../../types'
+import {
+  getAnswerZoneImageSrc,
+  getAnswerZoneText,
+} from '../../utils/answer-zone'
 import { AnswerZone, answerZoneDragType } from '../answer-zone/answer-zone'
 import { DraggableAnswer } from '../shared/draggable-answer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -40,8 +44,7 @@ export function EditorCanvas(props: DropzoneImageProps) {
   const { answerZones, backgroundImage, extraDraggableAnswers } = state
 
   const [modalType, setModalType] = useState<ModalType>(ModalType.Unset)
-  const { getAnswerZoneImageSrc, getAnswerZoneText, duplicateAnswerZone } =
-    useAnswerZones(props)
+  const { duplicateAnswerZone } = useAnswerZones(props)
 
   const context = useContext(AnswerZonesContext)
   const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
@@ -154,8 +157,6 @@ export function EditorCanvas(props: DropzoneImageProps) {
                 selectCurrentAnswer(answerIndex, answerType)
                 setModalType(ModalType.Edit)
               }}
-              getAnswerZoneImageSrc={getAnswerZoneImageSrc}
-              getAnswerZoneText={getAnswerZoneText}
               answerZone={answerZone}
             />
           )
