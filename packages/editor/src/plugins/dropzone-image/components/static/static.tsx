@@ -20,10 +20,13 @@ import {
   DraggableAnswer,
   draggableAnswerDragType,
 } from '../shared/draggable-answer'
+import { useInstanceData } from '@/contexts/instance-context'
+import { cn } from '@/helper/cn'
 
-export function DropzoneImageStaticRenderer({
-  state,
-}: EditorDropzoneImageDocument) {
+export function DropzoneImageStaticRenderer(
+  props: EditorDropzoneImageDocument
+) {
+  const { state } = props
   const {
     answerZones,
     backgroundImage,
@@ -31,6 +34,8 @@ export function DropzoneImageStaticRenderer({
     extraDraggableAnswers,
     dropzoneVisibility,
   } = state
+
+  const exercisesStrings = useInstanceData().strings.content.exercises
 
   const bgImagePluginState = backgroundImage as EditorImageDocument
   const backgroundImageUrlFromPlugin = (bgImagePluginState?.state?.src ||
@@ -139,54 +144,65 @@ export function DropzoneImageStaticRenderer({
   }
 
   return (
-    <DndWrapper>
-      <div
-        className="relative mx-auto h-[786px] w-[786px] overflow-hidden rounded-lg border border-brand-500 bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url(${backgroundImageUrlFromPlugin})`,
-          height: `${canvasDimensions.height}px`,
-          width: `${canvasDimensions.width}px`,
-          backgroundSize: 'cover',
-        }}
-      >
-        {answerZones.map((answerZone) => {
-          const { answers, id, ...rest } = answerZone
-          const dropZone = { ...rest, id }
-          return (
-            <BlankDropZone
-              key={id}
-              dropZone={dropZone}
-              droppedAnswersIds={dropzoneAnswerMap.get(id) || []}
-              isBackgroundTypeImage={!!backgroundImageUrlFromPlugin}
-              isCorrect={isCorrectMap.get(id)}
-              visibility={dropzoneVisibility as DropzoneVisibility}
-              onAnswerDrop={onAnswerDrop}
-            />
-          )
-        })}
-      </div>
-      <DraggableArea
-        accept={draggableAnswerDragType}
-        onDrop={onDraggableAreaAnswerDrop}
-        className="mx-side"
-      >
-        {possibleAnswers
-          .filter(
-            (possibleAnswer: PossibleAnswerType) =>
-              !Array.from(dropzoneAnswerMap)
-                .reduce((acc: string[], curr) => acc.concat(curr[1]), [])
-                .includes(possibleAnswer.id)
-          )
-          .map((possibleAnswer: PossibleAnswerType, index) => (
-            <DraggableAnswer
-              draggableId={possibleAnswer.id}
-              key={index}
-              imageUrl={possibleAnswer.imageUrl}
-              text={possibleAnswer.text}
-            />
-          ))}
-      </DraggableArea>
-      <button onClick={() => checkAnswers()}>Check Answers</button>
-    </DndWrapper>
+    <div className="mx-side">
+      <DndWrapper>
+        <div
+          className={cn(`
+            relative mx-auto h-[786px] w-[786px] overflow-hidden rounded-lg
+            border border-brand-500 bg-cover bg-center bg-no-repeat
+          `)}
+          style={{
+            backgroundImage: `url(${backgroundImageUrlFromPlugin})`,
+            height: `${canvasDimensions.height}px`,
+            width: `${canvasDimensions.width}px`,
+          }}
+        >
+          {answerZones.map((answerZone) => {
+            const { answers, id, ...rest } = answerZone
+            const dropZone = { ...rest, id }
+            return (
+              <BlankDropZone
+                key={id}
+                dropZone={dropZone}
+                droppedAnswersIds={dropzoneAnswerMap.get(id) || []}
+                isBackgroundTypeImage={!!backgroundImageUrlFromPlugin}
+                isCorrect={isCorrectMap.get(id)}
+                visibility={dropzoneVisibility as DropzoneVisibility}
+                onAnswerDrop={onAnswerDrop}
+              />
+            )
+          })}
+        </div>
+
+        <DraggableArea
+          accept={draggableAnswerDragType}
+          onDrop={onDraggableAreaAnswerDrop}
+        >
+          {possibleAnswers
+            .filter(
+              (possibleAnswer: PossibleAnswerType) =>
+                !Array.from(dropzoneAnswerMap)
+                  .reduce((acc: string[], curr) => acc.concat(curr[1]), [])
+                  .includes(possibleAnswer.id)
+            )
+            .map((possibleAnswer: PossibleAnswerType, index) => (
+              <DraggableAnswer
+                draggableId={possibleAnswer.id}
+                key={index}
+                imageUrl={possibleAnswer.imageUrl}
+                text={possibleAnswer.text}
+              />
+            ))}
+        </DraggableArea>
+
+        <button
+          className="serlo-button-blue mr-3 h-8"
+          onClick={checkAnswers}
+          data-qa="plugin-exercise-check-answer-button"
+        >
+          {exercisesStrings.check}
+        </button>
+      </DndWrapper>
+    </div>
   )
 }
