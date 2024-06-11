@@ -3,6 +3,7 @@ import { useContext, useEffect } from 'react'
 
 import { AnswerZonesContext } from '../../context/context'
 import { AnswerType } from '../../types'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface AnswerRendererProps {
   answerType: AnswerType
@@ -29,6 +30,8 @@ export function AnswerRenderer({
     }
   })
 
+  const pluginStrings = useEditorStrings().plugins.dropzoneImage
+
   const answersList = isWrongAnswer
     ? extraDraggableAnswers
     : answerZones?.find(({ id }) => id.get() === zoneId)?.answers
@@ -47,7 +50,7 @@ export function AnswerRenderer({
           className="mt-2 flex rounded bg-orange-100 px-2 py-1"
           onClick={onSave}
         >
-          + Ablageobjekt hinzufügen
+          + {pluginStrings.insertDropZone}
         </button>
       </div>
     </div>

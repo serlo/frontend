@@ -7,6 +7,7 @@ import { AnswerRenderer } from '../answer-zone/answer-renderer'
 import { AnswerZoneSettingsForm } from '../answer-zone/answer-zone-settings-form'
 import { NewAnswerFlow } from '../answer-zone/new-answer-flow'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface EditorCanvasModalProps {
   answerZones: DropzoneImageProps['state']['answerZones']
@@ -17,6 +18,8 @@ interface EditorCanvasModalProps {
 
 export function EditorCanvasModal(props: EditorCanvasModalProps) {
   const { answerZones, modalType, duplicateAnswerZone, setModalType } = props
+
+  const pluginStrings = useEditorStrings().plugins.dropzoneImage
 
   const context = useContext(AnswerZonesContext)
   if (!context) return null
@@ -39,13 +42,13 @@ export function EditorCanvasModal(props: EditorCanvasModalProps) {
   function renderTitle() {
     switch (modalType) {
       case ModalType.Settings:
-        return 'Settings'
+        return <>{pluginStrings.modal.settings}</>
       case ModalType.CreateDropZone:
-        return 'Neues Ablageobjekt'
+        return <>{pluginStrings.modal.new}</>
       case ModalType.Edit:
-        return 'Edit answer'
+        return <>{pluginStrings.modal.edit}</>
       case ModalType.CreateWrongAnswer:
-        return 'Create wrong answer'
+        return <>{pluginStrings.modal.wrong}</>
       default:
         return null
     }

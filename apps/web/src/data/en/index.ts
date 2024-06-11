@@ -693,11 +693,25 @@ export const loggedInData = {
           emptyContentWarning: 'Boxes without content will not be displayed',
         },
         dropzoneImage: {
-          title: 'Drag & Drop Background',
-          description: 'Add a background image for drag & drop exercises.',
+          title: 'Image Dropzones',
+          description:
+            'Create an exercise with interactive images for matching and labeling',
           backgroundImage: 'Background image',
           dropZone: 'Drop zone',
           dropZoneTooltip: 'Choose the drop zone',
+          insertDropZone: 'Insert drop zone',
+          removeDropZone: 'Remove drop zone',
+          dropzoneVisibility: 'Dropzone Visibility',
+          answers: {
+            remove: 'Remove answer',
+            edit: 'Edit answer',
+          },
+          answerZone: {
+            description: 'Description (optional)',
+            sizeLabel: 'Configure the size of the drop zone',
+            duplicate: 'Duplicate zone',
+            delete: 'Delete zone',
+          },
           backgroundType: {
             description:
               'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund',
@@ -711,6 +725,12 @@ export const loggedInData = {
             portrait: 'Hochformat',
           },
           or: 'or',
+          modal: {
+            settings: 'Settings',
+            new: 'Neue Ablagezone',
+            edit: 'Edit Answer',
+            wrong: 'Create Wrong Answer',
+          },
         },
         unsupported: {
           title: 'Unsupported',

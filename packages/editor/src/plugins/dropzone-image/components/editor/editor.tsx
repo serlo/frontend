@@ -28,6 +28,7 @@ import {
   ModalType,
 } from '../../types'
 import { DropzoneImageStaticRenderer } from '../static/static'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 const visibilityOptions = [
   DropzoneVisibility.Full,
@@ -43,6 +44,9 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
     dropzoneVisibility,
     extraDraggableAnswers,
   } = state
+
+  const pluginStrings = useEditorStrings().plugins.dropzoneImage
+
   const isBackgroundImagePluginDefined = backgroundImage.defined
 
   const [previewActive, setPreviewActive] = useState(false)
@@ -121,7 +125,7 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
           setPreviewActive={setPreviewActive}
         />
         <ToolbarSelect
-          tooltipText="Dropzone Visibility"
+          tooltipText={pluginStrings.dropzoneVisibility}
           value={dropzoneVisibility.value}
           dataQa="plugin-blanks-mode-switch"
           changeValue={(value) => dropzoneVisibility.set(value)}

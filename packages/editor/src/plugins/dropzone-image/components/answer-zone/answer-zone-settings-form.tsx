@@ -3,6 +3,7 @@ import React from 'react'
 
 import type { AnswerZoneState } from '../../types'
 import { FaIcon } from '@/components/fa-icon'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface AnswerZoneSettingsFormProps {
   answerZone: AnswerZoneState
@@ -22,6 +23,8 @@ export function AnswerZoneSettingsForm({
   onDuplicate,
   onDelete,
 }: AnswerZoneSettingsFormProps): JSX.Element | null {
+  const pluginStrings = useEditorStrings().plugins.dropzoneImage
+
   if (!answerZone) return null
 
   const initialSettings = {
@@ -43,7 +46,7 @@ export function AnswerZoneSettingsForm({
   return (
     <div className="mx-auto flex w-full max-w-sm flex-col items-center justify-center rounded-lg bg-white p-2">
       <label className="mb-4 w-full">
-        Beschriftung (optional)
+        {pluginStrings.answerZone.description}
         <div className="mt-2 flex justify-center">
           <input
             type="text"
@@ -56,7 +59,7 @@ export function AnswerZoneSettingsForm({
       </label>
 
       <label className="mb-4 w-full">
-        Größe der Zone manuell festlegen
+        {pluginStrings.answerZone.sizeLabel}
         <div className="mt-2 flex  gap-2">
           <input
             type="number"
@@ -78,14 +81,6 @@ export function AnswerZoneSettingsForm({
         </div>
       </label>
 
-      <label className="items-left mb-4 flex w-full ">
-        Automatisches Ausrichten
-        <input
-          type="checkbox"
-          className="ml-2 rounded border border-gray-300 bg-orange-100"
-        />
-      </label>
-
       <div className="flex w-full gap-4">
         <button
           data-qa="answer-zone-settings-form-duplicate-button"
@@ -93,7 +88,7 @@ export function AnswerZoneSettingsForm({
           className="flex flex-1 cursor-pointer items-center justify-center rounded border-none bg-orange-100 p-2"
         >
           <FaIcon icon={faClone} className="mr-2" />
-          Zone duplizieren
+          {pluginStrings.answerZone.duplicate}
         </button>
 
         <button
@@ -102,7 +97,7 @@ export function AnswerZoneSettingsForm({
           className="flex flex-1 cursor-pointer items-center justify-center rounded border-none bg-orange-100 p-2"
         >
           <FaIcon icon={faTrashCan} className="mr-2" />
-          Zone löschen
+          {pluginStrings.answerZone.delete}
         </button>
       </div>
     </div>

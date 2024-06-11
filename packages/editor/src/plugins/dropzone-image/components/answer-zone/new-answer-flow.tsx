@@ -85,9 +85,7 @@ export function NewAnswerFlow(props: NewAnswerFlowProps) {
     <>Error </>
   )
 
-  const stepTwo = <div>Step Two</div>
-
-  const steps = [stepZero, stepOne, stepTwo]
+  const steps = [stepZero, stepOne]
 
   return steps[currentStep]
 }

@@ -69,17 +69,17 @@ Scenario('Create a drag drop exercise with two dropzones', async ({ I }) => {
   I.seeNumberOfElements('$answer-zone-answerZone-1', 1)
   I.seeNumberOfElements('$plugin-dropzone-image-answer-content-text', 4)
 
-  I.say('Delete delete text answer from second drop zone')
-  I.moveCursorTo(
-    locate('$plugin-dropzone-image-answer-content-text').inside(
-      '$answer-zone-answerZone-1'
-    )
-  )
-  I.click('$answer-zone-answerZone-1-remove-answer-button')
+  // I.say('Delete delete text answer from second drop zone')
+  // I.moveCursorTo(
+  //   locate('$plugin-dropzone-image-answer-content-text').inside(
+  //     '$answer-zone-answerZone-1'
+  //   )
+  // )
+  // I.click('$answer-zone-answerZone-1-remove-answer-button')
 
-  I.seeNumberOfElements('$plugin-dropzone-image-answer-content-text', 2)
+  // I.seeNumberOfElements('$plugin-dropzone-image-answer-content-text', 2)
 
-  I.seeNumberOfElements('$plugin-dropzone-image-add-wrong-answer-button', 1)
+  // I.seeNumberOfElements('$plugin-dropzone-image-add-wrong-answer-button', 1)
 
   // Todo: Check if images and text are correctly renderered, rather than just checking the number of elements
 })

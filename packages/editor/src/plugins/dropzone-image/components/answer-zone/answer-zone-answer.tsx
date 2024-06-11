@@ -5,6 +5,7 @@ import type { Descendant } from 'slate'
 import { AnswerContent } from './answer-content'
 import { AnswerType } from '../../types'
 import { FaIcon } from '@/components/fa-icon'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 
 export const answerZoneDragType = 'answerZone'
@@ -28,6 +29,8 @@ export const AnswerZoneAnswer = (props: AnswerZoneAnswerProps) => {
     onRemoveAnswer,
   } = props
 
+  const pluginStrings = useEditorStrings().plugins.dropzoneImage
+
   return (
     <div
       className={cn(`
@@ -46,7 +49,10 @@ export const AnswerZoneAnswer = (props: AnswerZoneAnswerProps) => {
           className="serlo-button-editor-secondary serlo-tooltip-trigger mx-1 h-6 w-6 p-0"
         >
           <FaIcon icon={faPencilAlt} className="text-xs" />
-          <EditorTooltip text="Edit answer" className="!-ml-2 !pb-2" />
+          <EditorTooltip
+            text={pluginStrings.answers.edit}
+            className="!-ml-2 !pb-2"
+          />
         </button>
         <button
           data-qa={dataQa}
@@ -54,7 +60,10 @@ export const AnswerZoneAnswer = (props: AnswerZoneAnswerProps) => {
           className="serlo-button-editor-secondary serlo-tooltip-trigger mx-1 h-6 w-6 p-0"
         >
           <FaIcon icon={faTrashAlt} className="text-xs" />
-          <EditorTooltip text="Remove answer" className="!-ml-2 !pb-2" />
+          <EditorTooltip
+            text={pluginStrings.answers.remove}
+            className="!-ml-2 !pb-2"
+          />
         </button>
       </div>
 
