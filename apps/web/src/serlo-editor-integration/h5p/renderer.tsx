@@ -54,7 +54,12 @@ export function H5pRenderer({ url }: H5pRendererProps) {
             )
           }
 
-          console.log(data)
+          contents.contentUrl = contents.contentUrl!.replace(
+            'https://app.lumi.education',
+            '/api/frontend/lumi/proxy'
+          )
+
+          // console.log(data)
           return data
         }}
       />
@@ -139,8 +144,9 @@ function rewriteDependencies(deps: string[]) {
     if (localMap.has(dep)) {
       return dep.replace('https://app.lumi.education', '/_assets')
     }
+    // eslint-disable-next-line no-console
     console.log('external dependency', dep)
-    return dep
+    return dep.replace('https://app.lumi.education', '/api/frontend/lumi/proxy')
   })
 }
 
