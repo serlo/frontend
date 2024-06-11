@@ -10,6 +10,11 @@ import { useEntityData } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
 
+const H5PPlayerUI = dynamic(
+  () => import('@lumieducation/h5p-react').then((mod) => mod.H5PPlayerUI),
+  { ssr: false }
+)
+
 // Special version for serlo.org with exercise submission events
 export function H5pSerloStaticRenderer(props: EditorH5PDocument) {
   const { asPath } = useRouter()
@@ -70,12 +75,8 @@ export function H5pSerloStaticRenderer(props: EditorH5PDocument) {
 
   console.log('why is this renderer on the server?')
 
-  return <ClientUI id={id} />
-}
-
-function ClientUIRaw({ id }: { id: string }) {
   return (
-    <div className="mx-side mb-block" style={{ width: 727 }}>
+    <div className="mx-side mb-block" style={{ width: 727, minHeight: 500 }}>
       <H5PPlayerUI
         contentId={id}
         loadContentCallback={async (contentId) => {
@@ -90,9 +91,3 @@ function ClientUIRaw({ id }: { id: string }) {
     </div>
   )
 }
-
-const ClientUI = dynamic(() => Promise.resolve(ClientUIRaw), { ssr: false })
-
-const H5PPlayerUI = dynamic(() =>
-  import('@lumieducation/h5p-react').then((mod) => mod.H5PPlayerUI)
-)
