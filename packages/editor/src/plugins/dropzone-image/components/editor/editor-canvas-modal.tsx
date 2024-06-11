@@ -29,8 +29,9 @@ export function EditorCanvasModal(props: EditorCanvasModalProps) {
   return (
     <ModalWithCloseButton
       isOpen={modalType !== ModalType.Unset}
-      onCloseClick={() => {
-        setModalType(ModalType.Unset)
+      setIsOpen={(open) => {
+        const isModalClosing = !open
+        if (isModalClosing) setModalType(ModalType.Unset)
       }}
       className=" max-w-md translate-y-0 sm:top-1/4"
     >
