@@ -122,9 +122,17 @@ export function DropzoneImageStaticRenderer(
     })
 
     if (zoneToReset.length > 0) {
-      setIsCorrectMap((prev) => new Map(prev.set(zoneToReset, null)))
+      setIsCorrectMap((prev) => {
+        const updatedMap = new Map(prev)
+        updatedMap.delete(zoneToReset)
+        return updatedMap
+      })
     }
   }
+
+  const isCheckAnswersButtonVisible = useMemo(() => {
+    return isCorrectMap.size === answerZones.length
+  }, [isCorrectMap.size, answerZones.length])
 
   const checkAnswers = () => {
     answerZones.forEach((answerZone) => {
@@ -195,13 +203,15 @@ export function DropzoneImageStaticRenderer(
             ))}
         </DraggableArea>
 
-        <button
-          className="serlo-button-blue mr-3 h-8"
-          onClick={checkAnswers}
-          data-qa="plugin-exercise-check-answer-button"
-        >
-          {exercisesStrings.check}
-        </button>
+        {isCheckAnswersButtonVisible ? (
+          <button
+            className="serlo-button-blue mr-3 h-8"
+            onClick={checkAnswers}
+            data-qa="plugin-exercise-check-answer-button"
+          >
+            {exercisesStrings.check}
+          </button>
+        ) : null}
       </DndWrapper>
     </div>
   )
