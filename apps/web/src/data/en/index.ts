@@ -714,20 +714,20 @@ export const loggedInData = {
           },
           backgroundType: {
             description:
-              'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund',
-            image: 'Hintergrundbild hinzufügen',
-            blank: 'Leerer Hintergrund',
+              'Insert a background image or proceed with a blank background', // 'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund'
+            image: 'Background Image', // 'Hintergrundbild hinzufügen'
+            blank: 'Blank background', //  'Leerer Hintergrund'
           },
           backgroundShapes: {
-            description: 'Lege die Ausrichtung des Hintergrundes fest',
-            square: 'Quadratisch',
-            landscape: 'Querformat',
-            portrait: 'Hochformat',
+            description: 'Choose the layout of the background', // 'Lege die Ausrichtung des Hintergrundes fest'
+            square: 'Square', //'Quadradtisch',
+            landscape: 'Landscape', //'Querformat',
+            portrait: 'Portrait', // 'Hochformat'
           },
           or: 'or',
           modal: {
             settings: 'Settings',
-            new: 'Neue Ablagezone',
+            new: 'New Drop Zone',
             edit: 'Edit Answer',
             wrong: 'Create Wrong Answer',
           },
