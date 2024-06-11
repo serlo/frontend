@@ -32,14 +32,20 @@ export function DraggableAnswer({
     <span
       className={cn(
         'flex cursor-grab items-center justify-center',
-        hasBackgroundColor ? 'bg-brand-50' : '',
-        isAnswerCorrect === true ? 'border-3 border-green-500' : '',
-        isAnswerCorrect === false ? 'border-3 border-red-500' : '',
-        imageUrl ? 'rounded border border-brand' : 'p-1'
+        hasBackgroundColor ? 'bg-brand-50' : 'bg-transparent'
       )}
       ref={dragRef}
     >
-      <AnswerContent url={imageUrl} text={text} isPreview />
+      <AnswerContent
+        className={cn(
+          isAnswerCorrect === true ? 'border-3 border-green-500' : '',
+          isAnswerCorrect === false ? 'border-3 border-red-500' : '',
+          imageUrl ? 'rounded border border-brand' : 'p-1'
+        )}
+        url={imageUrl}
+        text={text}
+        isPreview
+      />
     </span>
   )
 }
