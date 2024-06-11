@@ -88,7 +88,6 @@ function H5pEditor({ state, id }: H5pProps) {
         }
       } catch (e) {
         // e.g. invalid id
-        console.log(e)
         setError(
           'H5P-Inhalt konnte nicht geladen werden, prüfe nochmal die URL'
         )
