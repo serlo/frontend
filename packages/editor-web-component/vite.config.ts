@@ -16,12 +16,8 @@ import replace from '@rollup/plugin-replace'
 
 // We already strip most of the env variables in the built of the editor,
 // however React seems to reintroduce this one!
-const productionKeys = ['process.env.NODE_ENV']
-
 const envReplacements = {
-  ...Object.fromEntries(
-    productionKeys.map((key) => [key, JSON.stringify('production')])
-  ),
+  'process.env.NODE_ENV': JSON.stringify('production'),
 }
 
 function parseCodeToAST(code: string): Program {
