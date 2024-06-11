@@ -5,12 +5,14 @@ import {
   type EditorPluginProps,
   type StringStateType,
   string,
+  PrettyStaticState,
 } from '@editor/plugin'
+import { InteractiveToolbarTools } from '@editor/plugins/exercise/toolbar/interactive-toolbar-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { AnyEditorDocument } from '@editor/types/editor-plugins'
 import { useEffect, useState } from 'react'
 
 import { H5pRenderer, parseH5pUrl } from './renderer'
-import { InteractiveToolbarTools } from '../../../../../packages/editor/src/plugins/exercise/toolbar/interactive-toolbar-tools'
 
 export type H5pPluginState = StringStateType
 export type H5pProps = EditorPluginProps<H5pPluginState>
@@ -210,4 +212,16 @@ function H5pEditor({ state, id }: H5pProps) {
       <H5pRenderer url={state.value} />
     </>
   )
+}
+
+export interface EditorH5PDocument {
+  plugin: EditorPluginType.H5p
+  state: PrettyStaticState<H5pPluginState>
+  id?: string
+}
+
+export function isH5PDocument(
+  document: AnyEditorDocument
+): document is EditorH5PDocument {
+  return document.plugin === EditorPluginType.H5p
 }

@@ -13,7 +13,6 @@ import type {
   EditorBlanksExerciseDocument,
   EditorEquationsDocument,
   EditorExerciseDocument,
-  EditorH5PDocument,
   EditorHighlightDocument,
   EditorInjectionDocument,
   EditorInputExerciseDocument,
@@ -30,6 +29,7 @@ import dynamic from 'next/dynamic'
 import { ComponentProps } from 'react'
 
 import { ExtraInfoIfRevisionView } from './extra-info-if-revision-view'
+import { EditorH5PDocument } from './h5p'
 import { GeogebraSerloStaticRenderer } from './serlo-plugin-wrappers/geogebra-serlo-static-renderer'
 import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-static-renderer'
 import { VideoSerloStaticRenderer } from './serlo-plugin-wrappers/video-serlo-static-renderer'

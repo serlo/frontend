@@ -8,7 +8,6 @@ import { EquationsPluginState } from '@editor/plugins/equations'
 import type { ExercisePluginState } from '@editor/plugins/exercise'
 import { ExerciseGroupPluginState } from '@editor/plugins/exercise-group'
 import type { GeogebraPluginState } from '@editor/plugins/geogebra'
-import { H5pPluginState } from '@serlo/frontend/src/serlo-editor-integration/h5p'
 import type { HighlightPluginState } from '@editor/plugins/highlight'
 import type { ImagePluginState } from '@editor/plugins/image'
 import type { InjectionPluginState } from '@editor/plugins/injection'
@@ -193,11 +192,6 @@ export interface EditorPageTeamDocument {
 export interface EditorPagePartnersDocument {
   plugin: EditorPluginType.PagePartners
   state: PrettyStaticState<PagePartnersPluginState>
-  id?: string
-}
-export interface EditorH5PDocument {
-  plugin: EditorPluginType.H5p
-  state: PrettyStaticState<H5pPluginState>
   id?: string
 }
 
