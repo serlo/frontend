@@ -3058,6 +3058,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@lumieducation/h5p-react@npm:^9.3.2":
+  version: 9.3.2
+  resolution: "@lumieducation/h5p-react@npm:9.3.2"
+  dependencies:
+    "@lumieducation/h5p-webcomponents": ^9.3.2
+    react: 18.2.0
+  checksum: 61ce2902c22656958163d113768af517974adbb84c447323096e63ce6eaaad791040112f1e88df70a703c60839c2a4289cf09c5c2c634a782910eb34dc52dff8
+  languageName: node
+  linkType: hard
+
+"@lumieducation/h5p-webcomponents@npm:^9.3.2":
+  version: 9.3.2
+  resolution: "@lumieducation/h5p-webcomponents@npm:9.3.2"
+  dependencies:
+    await-lock: ^2.2.2
+    deepmerge: ^4.3.1
+  checksum: 4eb3eed255f1601f629b137b55661885c1f91ee13e1f4683a0282aeac3372b4192f73de8400f5a4f5dedec4a82573a20335f12b182ef2e2389cc1be92bb45ddb
+  languageName: node
+  linkType: hard
+
 "@microsoft/api-extractor-model@npm:7.28.13":
   version: 7.28.13
   resolution: "@microsoft/api-extractor-model@npm:7.28.13"
@@ -5066,6 +5086,7 @@ __metadata:
     "@graphql-codegen/typescript": 4.0.6
     "@graphql-codegen/typescript-operations": 4.2.0
     "@hello-pangea/dnd": ^16.6.0
+    "@lumieducation/h5p-react": ^9.3.2
     "@next/bundle-analyzer": ^13.5.6
     "@ory/client": ^1.9.0
     "@ory/integrations": ^1.1.5
@@ -6986,6 +7007,13 @@ __metadata:
   dependencies:
     possible-typed-array-names: ^1.0.0
   checksum: 1aa3ffbfe6578276996de660848b6e95669d9a95ad149e3dd0c0cda77db6ee1dbd9d1dd723b65b6d277b882dd0c4b91a654ae9d3cf9e1254b7e93e4908d78fd3
+  languageName: node
+  linkType: hard
+
+"await-lock@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "await-lock@npm:2.2.2"
+  checksum: feb11f36768a8545879ed2d214b46aae484e6564ffa466af9212d5782897203770795cae01f813de04a46f66c0b8ee6bc690a0c435b04e00cad5a18ef0842e25
   languageName: node
   linkType: hard
 
@@ -15706,7 +15734,7 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"react@npm:^18.2.0":
+"react@npm:18.2.0, react@npm:^18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
   dependencies:

@@ -1,9 +1,9 @@
-import { parseH5pUrl } from '@editor/plugins/h5p/renderer'
-import { H5pStaticRenderer } from '@editor/plugins/h5p/static'
-import type { EditorH5PDocument } from '@editor/types/editor-plugins'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
+import { EditorH5PDocument } from '.'
+import { parseH5pUrl } from './renderer'
+import { H5pStaticRenderer } from './static'
 import { useAB } from '@/contexts/ab'
 import { useEntityData } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
