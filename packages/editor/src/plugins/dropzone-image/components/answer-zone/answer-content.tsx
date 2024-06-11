@@ -8,31 +8,34 @@ interface AnswerContentProps {
   url?: string
   text?: Descendant[]
   className?: string
-  // TODO: This prop is a temporary solution for text border visual bug
-  display?: 'inline' | 'block'
 }
 
-export const AnswerContent = ({
-  url,
-  text,
-  className,
-  display = 'inline',
-}: AnswerContentProps) => {
-  if (!url && !text) return null
+export function AnswerContent(props: AnswerContentProps) {
+  const { url, text, className } = props
 
-  return url ? (
-    <img
-      data-qa="plugin-dropzone-image-answer-content-image"
-      src={url}
-      className={cn('h-full w-full object-contain', className)}
-    />
-  ) : text ? (
-    <span
-      data-qa="plugin-dropzone-image-answer-content-text"
-      className={`mx-0 rounded-full border border-brand px-2 ${className}`}
-      style={{ display }}
-    >
-      <StaticSlate element={text} />
-    </span>
-  ) : null
+  if (url) {
+    return (
+      <img
+        data-qa="plugin-dropzone-image-answer-content-image"
+        src={url}
+        className={cn('h-full w-full object-contain', className)}
+      />
+    )
+  }
+
+  if (text) {
+    return (
+      <span
+        data-qa="plugin-dropzone-image-answer-content-text"
+        className={cn(
+          'mx-0 block rounded-full border border-brand px-2',
+          className
+        )}
+      >
+        <StaticSlate element={text} />
+      </span>
+    )
+  }
+
+  return null
 }

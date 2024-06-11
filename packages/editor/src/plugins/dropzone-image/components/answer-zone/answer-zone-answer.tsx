@@ -20,7 +20,7 @@ interface AnswerZoneAnswerProps {
   onRemoveAnswer: () => void
 }
 
-export const AnswerZoneAnswer = (props: AnswerZoneAnswerProps) => {
+export function AnswerZoneAnswer(props: AnswerZoneAnswerProps) {
   const { answer, isOnlyAnswer, onEditAnswer, onRemoveAnswer } = props
 
   const pluginStrings = useEditorStrings().plugins.dropzoneImage
@@ -70,7 +70,6 @@ export const AnswerZoneAnswer = (props: AnswerZoneAnswerProps) => {
       <AnswerContent
         url={answerImageUrl}
         text={answerText}
-        display="block"
         className={getAnswerBorder(answerImageUrl, isOnlyAnswer)}
       />
     </div>
