@@ -113,7 +113,7 @@ export function Header() {
         href="/mathe-pruefungen"
         className="group block bg-newgreen bg-opacity-20 p-3 text-black hover:!no-underline mobile:text-center sm:py-2"
       >
-        🎓 Ui, fast schon Prüfungszeit?{' '}
+        🎓 Ui, schon Prüfungszeit?{' '}
         <b className="serlo-link group-hover:underline">
           Hier geht&apos;s zur Mathe-Prüfungsvorbereitung
         </b>

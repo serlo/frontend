@@ -5,7 +5,7 @@ import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import type { Dispatch, SetStateAction } from 'react'
+import { type Dispatch, type SetStateAction } from 'react'
 
 import { LayoutChooser } from './layout-chooser'
 import type { PageLayoutPluginProps } from '..'
@@ -38,7 +38,7 @@ export const PageLayoutToolbar = ({
           </button>
           <ModalWithCloseButton
             isOpen={showSettingsModal}
-            onCloseClick={() => setShowSettingsModal(false)}
+            setIsOpen={setShowSettingsModal}
             className="top-8 max-w-xl translate-y-0 sm:top-1/3"
           >
             <LayoutChooser {...state} />

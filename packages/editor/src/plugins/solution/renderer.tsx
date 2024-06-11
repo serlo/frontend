@@ -40,12 +40,14 @@ export function SolutionRenderer({
         )}
         {elementAfterToggle}
       </nav>
-      {visible ? (
-        <div className="serlo-solution-box">
-          {visible === 'solution' ? renderSolutionContent() : null}
-          {visible === 'strategy' ? strategy : null}
+      <div className={cn('serlo-solution-box', visible ? '' : 'hidden')}>
+        <div className={cn(visible === 'solution' ? '' : 'hidden')}>
+          {renderSolutionContent()}
         </div>
-      ) : null}
+        <div className={cn(visible === 'strategy' ? '' : 'hidden')}>
+          {strategy}
+        </div>
+      </div>
     </>
   )
 
