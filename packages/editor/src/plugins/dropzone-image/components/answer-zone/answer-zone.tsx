@@ -90,7 +90,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
         minConstraints={[100, 50]}
         maxConstraints={[maxWidth, maxHeight]}
         onResize={handleResize}
-        resizeHandles={['nw', 'ne', 'sw', 'se']}
+        resizeHandles={['se']}
       >
         <div
           ref={drag}
