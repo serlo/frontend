@@ -32,6 +32,7 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
   const isRevisionView = useContext(RevisionViewContext)
 
   const exerciseContextValue = useBuildExerciseContext(props)
+  console.log('Building exercise context value: ', exerciseContextValue)
 
   const context = props.serloContext
 

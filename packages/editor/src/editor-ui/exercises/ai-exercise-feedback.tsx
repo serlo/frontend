@@ -1,96 +1,108 @@
+import { FeedbackData } from '@editor/plugins/input-exercise/renderer'
+import { useInputFeedbackAiExerciseState } from '@editor/plugins/input-exercise/use-ai-exercise-context'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { useEffect, useMemo, useState } from 'react'
+import Image from 'next/image'
+import { useEffect, useRef, useState } from 'react'
 
+import { ExerciseFeedback } from './exercise-feedback'
 import {
   useExecuteAIPrompt,
   ExecutePromptStatus,
   ChatCompletionMessageParam,
 } from '../../../../../apps/web/src/components/exercise-generation/exercise-generation-wizard/execute-ai-prompt'
-import { useExerciseContext } from '@/contexts/exercise-context'
 
-interface AIExerciseFeedbackProps {
+interface AIExerciseFeedbackProps
+  extends ReturnType<typeof useInputFeedbackAiExerciseState> {
   value: string
+  feedback: FeedbackData | null
 }
 
-export function AIExerciseFeedback({ value }: AIExerciseFeedbackProps) {
-  const { question, steps, strategy: solution } = useExerciseContext()
+export function AIExerciseFeedback({
+  value,
+  feedback,
+  aiMessages,
+  setAiMessages,
+}: AIExerciseFeedbackProps) {
   const exStrings = useInstanceData().strings.content.exercises
 
-  const hasSolutionSteps = steps.trim().length > 0
-  const hasSolution = solution.trim().length > 0
-
-  const aiMessages = useMemo<ChatCompletionMessageParam[]>(
-    () => [
-      {
-        role: 'system',
-        content:
-          // 'Du bist ein innovativer KI-Tutor auf einer Lernplattform für Mathematik. Schüler bearbeiten Aufgaben auf deiner Plattform, um ihr Wissen zu überprüfen und zu vertiefen. Gib ihnen Feedback für ihre Ergebnisse bei Mathematikaufgaben. Ist das Ergebnis einer Aufgabe richtig, gib das Feedback: "Sehr gut!" Ist das Ergebnis nicht richtig, gib das Feedback: "Das ist nicht richtig.", wobei hier noch ein Satz folgen soll, der dem Schüler hilft, zum richtigen Ergebnis zu kommen. Verrate nicht die Lösung. Verwende beim Geben von Feedback einfache Sprache und vermeide es, Fachbegriffe zu verwenden. Nenne die einfachste Methode, die zum Ergebnis der Rechnung führt. Nenne UNBEDINGT die Formel zum Lösen der Aufgabe. Gib die Antwort in JSON an.',
-          'Du bist ein innovativer KI-Tutor auf einer Lernplattform für Mathematik. Schüler bearbeiten Aufgaben auf deiner Plattform, um ihr Wissen zu überprüfen und zu vertiefen. Gib ihnen Feedback für ihre Ergebnisse bei Mathematikaufgaben. Ist das Ergebnis einer Aufgabe richtig, gib das Feedback: "Sehr gut!" Ist das Ergebnis nicht richtig, gib das Feedback: "Das ist nicht richtig.", wobei hier noch ein Satz folgen soll, der dem Schüler hilft, zum richtigen Ergebnis zu kommen. Verrate nicht die Lösung. Verwende beim Geben von Feedback einfache Sprache und vermeide es, Fachbegriffe zu verwenden. Nenne die einfachste Methode, die zum Ergebnis der Rechnung führt. Falls nötig, nenne wichtige Formeln. Wichtig: Überlege was der Schüler falsch gemacht hat und passe das Feedback der Lösung an. Gib die Antwort in JSON als value des keys "feedback" an.',
-      },
-      {
-        role: 'user',
-        content: `Die Frage war: ${question}`,
-      },
-      ...(hasSolution || hasSolutionSteps
-        ? ([
-            {
-              role: 'user',
-              content: `Autor*innen der Lernplattform haben ${
-                hasSolution ? 'eine Lösung' : ''
-              }${hasSolution && hasSolutionSteps ? ' und ' : ''}${
-                hasSolutionSteps ? 'Lösungsschritte' : ''
-              } mitgeschrieben. Bitte berücksichtige dies bei der Bewertung der Antwort und gib dem Schüler einen kurzen Hinweis zur richtigen Lösung.`,
-            },
-            ...(hasSolution
-              ? [{ role: 'user', content: `Lösung: ${solution}` }]
-              : []),
-            ...(hasSolutionSteps
-              ? [
-                  {
-                    role: 'user',
-                    content: `Lösungsschritte: ${steps}`,
-                  },
-                ]
-              : []),
-          ] as ChatCompletionMessageParam[])
-        : []),
-      {
-        role: 'user',
-        content: `Der Schüler hat folgendes geantwortet: ${value}`,
-      },
-    ],
-    [value, question, hasSolution, hasSolutionSteps, solution, steps]
-  )
+  const [aiFeedback, setAiFeedback] = useState<string | null>(null)
 
   const {
     data: aiData,
     status: aiExecuteStatus,
     errorMessage,
   } = useExecuteAIPrompt<{ feedback: string }>({
-    messages: aiMessages,
+    messages: aiMessages as ChatCompletionMessageParam[],
     submitEventPrefix: 'input-exercise-feedback',
     skipAuth: true,
   })
 
-  console.log('Executed AI prompt: ', { aiMessages, aiData })
+  // Only when the value of the user changes, we want to recompute the AI
+  // messages and add the previous feedback. This is why we store the AI feedback in the ref
+  const lastFeedbackRef = useRef<string | null>(null)
+  useEffect(() => {
+    setAiMessages((currentAiMessages) => [
+      ...currentAiMessages,
+      ...(lastFeedbackRef.current
+        ? ([
+            {
+              role: 'user',
+              content: `Du hast folgendes geantwortet. Stell sicher, dass du bei den künftigen Antworten den Studenten besser zu der Lösung leitest und nicht mehrmals die gleiche Antwort gibst. '${lastFeedbackRef.current}'`,
+            },
+          ] as ChatCompletionMessageParam[])
+        : []),
+      {
+        role: 'user',
+        content: `Der Schüler hat folgendes geantwortet: ${value}`,
+      },
+    ])
+  }, [value, setAiMessages])
 
-  const [aiFeedback, setAiFeedback] = useState<string | null>(null)
+  console.log('Executed AI prompt: ', { aiMessages, aiData })
 
   useEffect(() => {
     if (aiExecuteStatus === ExecutePromptStatus.Success && aiData) {
       setAiFeedback(aiData.feedback)
+      lastFeedbackRef.current = aiData.feedback
     } else if (aiExecuteStatus === ExecutePromptStatus.Error && errorMessage) {
       setAiFeedback(errorMessage)
     }
   }, [aiExecuteStatus, aiData, errorMessage])
 
-  if (aiExecuteStatus === ExecutePromptStatus.Loading) {
-    return <div className="ml-3 mt-1">Loading KI feedback...</div>
+  if (feedback && feedback.correct) {
+    // Should we render it within the little birdy icon
+    return (
+      <ExerciseFeedback correct={feedback.correct}>
+        {feedback.message}
+      </ExerciseFeedback>
+    )
   }
 
   return (
-    <div className="ml-3 mt-1 flex text-lg animate-in fade-in">
-      <div className="serlo-p mb-0 ml-1">{aiFeedback ?? exStrings.wrong}</div>
+    <div className="ml-3 flex items-center rounded-lg border-2 border-blueish-200 bg-blueish-100 p-4 text-lg animate-in fade-in">
+      <div className="serlo-p mb-0 ml-1 flex-1">
+        {aiExecuteStatus === ExecutePromptStatus.Loading ? (
+          <Skeleton />
+        ) : (
+          aiFeedback ?? exStrings.wrong
+        )}
+      </div>
+      <Image
+        src="/_assets/img/birdie.svg"
+        alt="Feedback Birdie"
+        width={50}
+        height={50}
+        className="ml-4"
+      />
+    </div>
+  )
+}
+
+function Skeleton() {
+  return (
+    <div className="flex min-w-60 animate-pulse flex-col space-y-4">
+      <div className="h-4 w-2/4 rounded bg-gray-300"></div>
+      <div className="h-4 w-3/4 rounded bg-gray-300"></div>
     </div>
   )
 }

@@ -61,6 +61,10 @@ export function useExecuteAIPrompt<T extends UnknownRecord>({
   const [numberOfRegenerations, setNumberOfRegenerations] = useState(0)
 
   const executePrompt = useCallback(async () => {
+    if (messages.length === 0) {
+      return
+    }
+
     const abortController = new AbortController()
     abortControllerRef.current = abortController
 
@@ -138,6 +142,7 @@ export function useExecuteAIPrompt<T extends UnknownRecord>({
         } else {
           setErrorMessage(`Error: Received status code ${response.status}`)
         }
+
         setStatus(ExecutePromptStatus.Error)
         submitEvent(`${submitEventPrefix}-failure`)
         return

@@ -1,7 +1,8 @@
 import { EditorInputExerciseDocument } from '@editor/types/editor-plugins'
 import type { Element } from 'slate'
 
-import type { InputExerciseType } from './input-exercise-type'
+import { AiInputExerciseRenderer } from './ai-renderer'
+import { InputExerciseType } from './input-exercise-type'
 import { InputExerciseRenderer } from './renderer'
 import { StaticSlate } from '../text/static-components/static-slate'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
@@ -23,9 +24,21 @@ export function InputExerciseStaticRenderer({
     }
   })
 
+  const inputType = state.type as InputExerciseType
+
+  if (inputType === InputExerciseType.AiFeedback) {
+    return (
+      <AiInputExerciseRenderer
+        unit={state.unit}
+        answers={answers}
+        onEvaluate={onEvaluate}
+      />
+    )
+  }
+
   return (
     <InputExerciseRenderer
-      type={state.type as InputExerciseType}
+      type={inputType}
       unit={state.unit}
       answers={answers}
       onEvaluate={onEvaluate}

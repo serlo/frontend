@@ -1,10 +1,11 @@
-import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
+import { AIExerciseFeedback } from '@editor/editor-ui/exercises/ai-exercise-feedback'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { useEffect, useState } from 'react'
 
 import { getMatchingAnswer } from './helper/get-matching-answer'
 import { InputExerciseType } from './input-exercise-type'
+import { useInputFeedbackAiExerciseState } from './use-ai-exercise-context'
 
 export type MathjsImport = typeof import('mathjs')
 
@@ -15,7 +16,6 @@ export interface InputExerciseAnswer {
 }
 
 interface InputExerciseRendererProps {
-  type: InputExerciseType
   unit: string
   answers: InputExerciseAnswer[]
   onEvaluate?: (correct: boolean, val: string) => void
@@ -26,14 +26,14 @@ export interface FeedbackData {
   message: JSX.Element
 }
 
-export function InputExerciseRenderer({
-  type,
+export function AiInputExerciseRenderer({
   unit,
   answers,
   onEvaluate,
 }: InputExerciseRendererProps) {
   const [feedback, setFeedback] = useState<FeedbackData | null>(null)
   const [value, setValue] = useState('')
+  const { aiMessages, setAiMessages } = useInputFeedbackAiExerciseState()
   const exStrings = useInstanceData().strings.content.exercises
 
   const [mathjs, setMathjs] = useState<MathjsImport | null>(null)
@@ -42,7 +42,12 @@ export function InputExerciseRenderer({
   function handleEvaluate() {
     if (!mathjs) return
 
-    const answer = getMatchingAnswer(answers, value, type, mathjs.evaluate)
+    const answer = getMatchingAnswer(
+      answers,
+      value,
+      InputExerciseType.AiFeedback,
+      mathjs.evaluate
+    )
     const hasCorrectAnswer = !!answer?.isCorrect
     const customFeedbackNode = answer?.feedback ?? null
 
@@ -54,6 +59,8 @@ export function InputExerciseRenderer({
       ),
     })
   }
+
+  console.log('Feedback and value: ', { feedback, value })
 
   return (
     <div className="mx-side mb-7">
@@ -89,11 +96,15 @@ export function InputExerciseRenderer({
         >
           {exStrings.check}
         </button>
-        {feedback && value ? (
-          <ExerciseFeedback correct={feedback.correct}>
-            {feedback.message}
-          </ExerciseFeedback>
-        ) : null}
+
+        {feedback && (
+          <AIExerciseFeedback
+            value={value}
+            feedback={feedback}
+            aiMessages={aiMessages}
+            setAiMessages={setAiMessages}
+          />
+        )}
       </div>
     </div>
   )

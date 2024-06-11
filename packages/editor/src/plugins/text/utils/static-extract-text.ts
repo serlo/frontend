@@ -13,7 +13,12 @@ export function extractDescendant(node: Descendant): string {
 }
 
 export function extractStringFromTextDocument(document?: AnyEditorDocument) {
-  if (document && isTextDocument(document) && document.state.length > 0) {
+  if (
+    document &&
+    isTextDocument(document) &&
+    document.state &&
+    document.state.length > 0
+  ) {
     return document.state.map(extractDescendant).join(' ').trim()
   }
   return ''

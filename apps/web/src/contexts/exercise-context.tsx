@@ -18,12 +18,13 @@ export const ExerciseContext = createContext<ExerciseContextProps | undefined>(
 
 export function useExerciseContext(): ExerciseContextProps {
   const context = useContext(ExerciseContext)
-  if (!context) {
-    throw new Error(
-      'useExerciseContext must be used within an ExerciseProvider'
-    )
-  }
-  return context
+  // if (!context) {
+  //   throw new Error(
+  //     'useExerciseContext must be used within an ExerciseProvider'
+  //   )
+  // }
+
+  return context as ExerciseContextProps
 }
 
 export function useBuildExerciseContext(

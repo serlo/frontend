@@ -60,6 +60,10 @@ export default {
           200: colors.orange[200],
           50: colors.orange[50],
         },
+        blueish: {
+          100: '#cce5f3',
+          200: '#007ec1',
+        },
         red: {
           DEFAULT: colors.red[900],
           100: colors.red[100],
