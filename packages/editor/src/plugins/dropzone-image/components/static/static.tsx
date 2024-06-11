@@ -79,8 +79,12 @@ export function DropzoneImageStaticRenderer(
   )
 
   // dropzone id to true/false
-  const [isCorrectMap, setIsCorrectMap] = useState(
+  const [isAnswerZoneCorrectMap, setIsAnswerZoneCorrectMap] = useState(
     new Map<string, boolean | null>()
+  )
+
+  const [isCorrectAnswerMap, setIsCorrectAnswerMap] = useState(
+    new Map<string, Map<string, boolean | null> | null>()
   )
 
   const onAnswerDrop = (
@@ -98,10 +102,14 @@ export function DropzoneImageStaticRenderer(
           droppableBlankId,
           existingAnswersFromOrigin.filter((id) => id !== answerId)
         )
+        setIsAnswerZoneCorrectMap(
+          (prev) => new Map(prev.set(droppableBlankId, null))
+        )
+        setIsCorrectAnswerMap((prev) => new Map(prev.set(answerId, null)))
       }
       return updatedMap
     })
-    setIsCorrectMap((prev) => new Map(prev.set(dropzoneId, null)))
+    setIsAnswerZoneCorrectMap((prev) => new Map(prev.set(dropzoneId, null)))
   }
 
   const onDraggableAreaAnswerDrop = (answer: DraggableAnswerType) => {
@@ -122,7 +130,7 @@ export function DropzoneImageStaticRenderer(
     })
 
     if (zoneToReset.length > 0) {
-      setIsCorrectMap((prev) => {
+      setIsAnswerZoneCorrectMap((prev) => {
         const updatedMap = new Map(prev)
         updatedMap.delete(zoneToReset)
         return updatedMap
@@ -131,21 +139,29 @@ export function DropzoneImageStaticRenderer(
   }
 
   const isCheckAnswersButtonVisible = useMemo(() => {
-    return isCorrectMap.size === answerZones.length
-  }, [isCorrectMap.size, answerZones.length])
+    return isAnswerZoneCorrectMap.size === answerZones.length
+  }, [isAnswerZoneCorrectMap.size, answerZones.length])
 
   const checkAnswers = () => {
     answerZones.forEach((answerZone) => {
       const expectedAnswerIds = answerZone.answers.map((a) => a.id)
       const droppedAnswerIds = dropzoneAnswerMap.get(answerZone.id) || []
       if (droppedAnswerIds.length === 0)
-        return setIsCorrectMap(
+        return setIsAnswerZoneCorrectMap(
           (prev) => new Map(prev.set(answerZone.id, false))
         )
       const isAnswerCorrect =
         expectedAnswerIds.every((id) => droppedAnswerIds.includes(id)) &&
         expectedAnswerIds.length === droppedAnswerIds.length
-      setIsCorrectMap(
+
+      const correctAnswerMap = new Map<string, boolean | null>()
+      droppedAnswerIds.forEach((id) => {
+        correctAnswerMap.set(id, expectedAnswerIds.includes(id))
+      })
+      setIsCorrectAnswerMap(
+        (prev) => new Map(prev.set(answerZone.id, correctAnswerMap))
+      )
+      setIsAnswerZoneCorrectMap(
         (prev) => new Map(prev.set(answerZone.id, isAnswerCorrect))
       )
     })
@@ -174,7 +190,8 @@ export function DropzoneImageStaticRenderer(
                 dropZone={dropZone}
                 droppedAnswersIds={dropzoneAnswerMap.get(id) || []}
                 isBackgroundTypeImage={!!backgroundImageUrlFromPlugin}
-                isCorrect={isCorrectMap.get(id)}
+                isCorrect={isAnswerZoneCorrectMap.get(id)}
+                isCorrectAnswerMap={isCorrectAnswerMap.get(id)}
                 visibility={dropzoneVisibility as DropzoneVisibility}
                 onAnswerDrop={onAnswerDrop}
               />

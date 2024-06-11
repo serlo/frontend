@@ -18,6 +18,7 @@ interface BlankDropZoneProps {
   droppedAnswersIds: string[]
   isBackgroundTypeImage: boolean
   isCorrect?: boolean | null
+  isCorrectAnswerMap?: Map<string, boolean | null> | null
   visibility: DropzoneVisibility
   onAnswerDrop: (
     answerId: string,
@@ -34,6 +35,7 @@ export const BlankDropZone = memo(function BlankDropZone(
     droppedAnswersIds,
     isBackgroundTypeImage,
     isCorrect,
+    isCorrectAnswerMap,
     visibility,
     onAnswerDrop,
   } = props
@@ -89,7 +91,7 @@ export const BlankDropZone = memo(function BlankDropZone(
           droppableBlankId={id}
           text={answer.text}
           imageUrl={answer.imageUrl}
-          isAnswerCorrect={isCorrect}
+          isAnswerCorrect={isCorrectAnswerMap?.get(answer.id)}
           hasBackgroundColor={isBackgroundTypeImage}
         />
       ))}
