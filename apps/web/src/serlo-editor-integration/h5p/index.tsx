@@ -66,7 +66,7 @@ function H5pEditor({ state, id }: H5pProps) {
       validateInput(state.value)
     } else {
       try {
-        const res = await fetch('https://app.lumi.education/api/v1/run/' + id)
+        const res = await fetch('/api/frontend/lumi/embed/' + id)
         const json = (await res.json()) as {
           downloadPath: string
           integration: {
@@ -88,6 +88,7 @@ function H5pEditor({ state, id }: H5pProps) {
         }
       } catch (e) {
         // e.g. invalid id
+        console.log(e)
         setError(
           'H5P-Inhalt konnte nicht geladen werden, prüfe nochmal die URL'
         )
