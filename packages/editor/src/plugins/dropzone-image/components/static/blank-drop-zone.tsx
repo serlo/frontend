@@ -18,7 +18,7 @@ interface BlankDropZoneProps {
   droppedAnswersIds: string[]
   isBackgroundTypeImage: boolean
   isCorrect?: boolean | null
-  visibility?: DropzoneVisibility
+  visibility: DropzoneVisibility
   onAnswerDrop: (
     answerId: string,
     dropzoneId: string,
@@ -26,19 +26,22 @@ interface BlankDropZoneProps {
   ) => void
 }
 
-export const BlankDropZone = memo(function BlankDropZone({
-  dropZone,
-  droppedAnswersIds,
-  isBackgroundTypeImage,
-  isCorrect,
-  visibility,
-  onAnswerDrop,
-}: BlankDropZoneProps) {
-  const [droppedAnswers, setDroppedAnswers] = useState<PossibleAnswerType[]>([])
+export const BlankDropZone = memo(function BlankDropZone(
+  props: BlankDropZoneProps
+) {
+  const {
+    dropZone,
+    droppedAnswersIds,
+    isBackgroundTypeImage,
+    isCorrect,
+    visibility,
+    onAnswerDrop,
+  } = props
+  const { id, name, position, layout } = dropZone
+  const { left, top } = position
+  const { height, width } = layout
 
-  const { name } = dropZone
-  const { left, top } = dropZone.position ?? { left: 0, top: 0 }
-  const { height, width } = dropZone.layout ?? { height: 0, width: 0 }
+  const [droppedAnswers, setDroppedAnswers] = useState<PossibleAnswerType[]>([])
 
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: draggableAnswerDragType,
@@ -48,7 +51,7 @@ export const BlankDropZone = memo(function BlankDropZone({
       )
       if (!hasAnswerAlready) {
         setDroppedAnswers((prev) => [...prev, answer])
-        onAnswerDrop(answer.id, dropZone.id, answer.droppableBlankId)
+        onAnswerDrop(answer.id, id, answer.droppableBlankId)
       }
     },
     collect: (monitor) => ({
@@ -58,54 +61,32 @@ export const BlankDropZone = memo(function BlankDropZone({
   })
 
   useEffect(() => {
-    setDroppedAnswers((prev) => {
-      return prev.filter((answer) => droppedAnswersIds.includes(answer.id))
-    })
+    setDroppedAnswers((prev) =>
+      prev.filter((answer) => droppedAnswersIds.includes(answer.id))
+    )
   }, [droppedAnswersIds])
-
-  const isActive = isOver && canDrop
-  const backgroundColor = isActive
-    ? 'bg-brand-400'
-    : canDrop
-      ? 'bg-brand-200'
-      : 'bg-white'
-  const borderColor =
-    isCorrect === true
-      ? 'border-green-500'
-      : isCorrect === false
-        ? 'border-red-500'
-        : 'border-brand-500'
-
-  const isVisible =
-    visibility === DropzoneVisibility.Full ||
-    visibility === DropzoneVisibility.Partial
 
   return (
     <div
       ref={drop}
       className={cn(
-        `absolute flex flex-row items-center justify-center rounded p-1
-        ${visibility === DropzoneVisibility.Partial ? 'border-dashed' : 'border-solid'}
-        ${visibility === DropzoneVisibility.Full ? backgroundColor : ''}
-        ${isVisible ? 'border-2' : 'border-0'}
-        ${isVisible ? borderColor : ''}`
+        `absolute flex flex-row items-center justify-center rounded p-1`,
+        getBackgroundColor(visibility, isOver, canDrop),
+        getBorderWidth(visibility, isCorrect),
+        getBorderColor(isCorrect),
+        getBorderType(visibility)
       )}
-      style={{
-        left,
-        top,
-        height,
-        width,
-      }}
-      data-qa={`blank-drop-zone-${dropZone.id}`}
+      style={{ left, top, height, width }}
+      data-qa={`blank-drop-zone-${id}`}
     >
-      {isVisible && name && name.length > 0 && (
+      {visibility !== DropzoneVisibility.None && name ? (
         <div className="absolute left-0 top-0 bg-white p-1 text-xs">{name}</div>
-      )}
+      ) : null}
       {droppedAnswers.map((answer, index) => (
         <DraggableAnswer
           key={index}
           draggableId={answer.id}
-          droppableBlankId={dropZone.id}
+          droppableBlankId={id}
           text={answer.text}
           imageUrl={answer.imageUrl}
           isAnswerCorrect={isCorrect || false}
@@ -115,3 +96,34 @@ export const BlankDropZone = memo(function BlankDropZone({
     </div>
   )
 })
+
+function getBackgroundColor(
+  visibility: DropzoneVisibility,
+  isOver: boolean,
+  canDrop: boolean
+) {
+  if (visibility !== DropzoneVisibility.Full) return ''
+  if (isOver && canDrop) return 'bg-brand-400'
+  if (canDrop) return 'bg-brand-200'
+  return 'bg-white'
+}
+
+function getBorderColor(isCorrect: boolean | null | undefined) {
+  if (isCorrect === true) return 'border-green-500'
+  if (isCorrect === false) return 'border-red-500'
+  return 'border-brand-500'
+}
+
+function getBorderWidth(
+  visibility: DropzoneVisibility,
+  isCorrect: boolean | null | undefined
+) {
+  if (isCorrect === true || isCorrect === false) return 'border-4'
+  if (visibility === DropzoneVisibility.None) return 'border-0'
+  return 'border-2'
+}
+
+function getBorderType(visibility: DropzoneVisibility) {
+  if (visibility === DropzoneVisibility.Full) return 'border-solid'
+  return 'border-dashed'
+}
