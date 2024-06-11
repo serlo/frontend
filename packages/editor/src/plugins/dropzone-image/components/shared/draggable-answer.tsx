@@ -11,7 +11,7 @@ interface DraggableAnswerProps {
   droppableBlankId?: string
   text?: Descendant[]
   imageUrl?: string
-  isAnswerCorrect?: boolean
+  isAnswerCorrect?: boolean | null
   hasBackgroundColor?: boolean
 }
 
@@ -33,8 +33,8 @@ export function DraggableAnswer({
       className={cn(
         'flex cursor-grab items-center justify-center',
         hasBackgroundColor ? 'bg-brand-50' : '',
-        isAnswerCorrect ? 'border-green-500' : '',
-        isAnswerCorrect === false ? 'border-red-500' : '',
+        isAnswerCorrect === true ? 'border-3 border-green-500' : '',
+        isAnswerCorrect === false ? 'border-3 border-red-500' : '',
         imageUrl ? 'rounded border border-brand' : 'p-1'
       )}
       ref={dragRef}

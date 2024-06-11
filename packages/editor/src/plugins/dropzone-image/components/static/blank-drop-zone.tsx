@@ -70,7 +70,7 @@ export const BlankDropZone = memo(function BlankDropZone(
     <div
       ref={drop}
       className={cn(
-        `absolute flex flex-row items-center justify-center rounded p-1`,
+        `absolute flex flex-row items-center justify-center gap-2 rounded p-1`,
         getBackgroundColor(visibility, isOver, canDrop),
         getBorderWidth(visibility, isCorrect),
         getBorderColor(isCorrect),
@@ -89,7 +89,7 @@ export const BlankDropZone = memo(function BlankDropZone(
           droppableBlankId={id}
           text={answer.text}
           imageUrl={answer.imageUrl}
-          isAnswerCorrect={isCorrect || false}
+          isAnswerCorrect={isCorrect}
           hasBackgroundColor={isBackgroundTypeImage}
         />
       ))}

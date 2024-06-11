@@ -95,7 +95,9 @@ export const AnswerZone = (props: AnswerZoneProps) => {
         <div
           ref={drag}
           className={cn(
-            'group relative flex h-full w-full flex-row flex-wrap items-center justify-center gap-1 border-2 border-blue-500 bg-white',
+            `group relative flex h-full w-full
+            flex-row flex-wrap items-center justify-center gap-1
+            border-2 border-blue-500 bg-white`,
             (dropzoneVisibility === DropzoneVisibility.None ||
               dropzoneVisibility === DropzoneVisibility.Partial) &&
               'border-dashed'
