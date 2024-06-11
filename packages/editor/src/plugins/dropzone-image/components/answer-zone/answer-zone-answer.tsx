@@ -1,9 +1,12 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import type { Descendant } from 'slate'
 
 import { AnswerContent } from './answer-content'
-import { AnswerType } from '../../types'
+import { AnswerType, type AnswerZoneState } from '../../types'
+import {
+  getAnswerZoneImageSrc,
+  getAnswerZoneText,
+} from '../../utils/answer-zone'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
@@ -11,32 +14,27 @@ import { cn } from '@/helper/cn'
 export const answerZoneDragType = 'answerZone'
 
 interface AnswerZoneAnswerProps {
-  answerImageUrl: string
-  answerText?: Descendant[]
-  answerType: string
-  dataQa: string
-  onEditAnswer: () => void
+  answer: AnswerZoneState['answers'][0]
+  isOnlyAnswer: boolean
+  onEditAnswer: (answerType: AnswerType) => void
   onRemoveAnswer: () => void
 }
 
 export const AnswerZoneAnswer = (props: AnswerZoneAnswerProps) => {
-  const {
-    answerImageUrl,
-    answerText,
-    answerType,
-    dataQa,
-    onEditAnswer,
-    onRemoveAnswer,
-  } = props
+  const { answer, isOnlyAnswer, onEditAnswer, onRemoveAnswer } = props
 
   const pluginStrings = useEditorStrings().plugins.dropzoneImage
 
+  const answerImageUrl = getAnswerZoneImageSrc(answer.image.get())
+  const answerText = getAnswerZoneText(answer.text.get())
+
   return (
     <div
-      className={cn(`
-        group/edit relative
-        ${answerType === AnswerType.Image ? 'h-full object-contain' : ''}
-      `)}
+      className={cn(
+        'group/edit relative',
+        getSize(answerImageUrl, isOnlyAnswer),
+        getBorder(answerImageUrl, isOnlyAnswer)
+      )}
     >
       <div
         className={cn(`
@@ -45,7 +43,9 @@ export const AnswerZoneAnswer = (props: AnswerZoneAnswerProps) => {
         `)}
       >
         <button
-          onClick={onEditAnswer}
+          onClick={() => {
+            onEditAnswer(answerImageUrl ? AnswerType.Image : AnswerType.Text)
+          }}
           className="serlo-button-editor-secondary serlo-tooltip-trigger mx-1 h-6 w-6 p-0"
         >
           <FaIcon icon={faPencilAlt} className="text-xs" />
@@ -55,7 +55,7 @@ export const AnswerZoneAnswer = (props: AnswerZoneAnswerProps) => {
           />
         </button>
         <button
-          data-qa={dataQa}
+          data-qa={`answer-zone-${answer.id.get()}-remove-answer-button`}
           onClick={onRemoveAnswer}
           className="serlo-button-editor-secondary serlo-tooltip-trigger mx-1 h-6 w-6 p-0"
         >
@@ -70,9 +70,26 @@ export const AnswerZoneAnswer = (props: AnswerZoneAnswerProps) => {
       <AnswerContent
         url={answerImageUrl}
         text={answerText}
-        isPreview={false}
         display="block"
+        className={getAnswerBorder(answerImageUrl, isOnlyAnswer)}
       />
     </div>
   )
+}
+
+function getSize(imageUrl: string | undefined, isOnlyAnswer: boolean) {
+  if (!imageUrl) return ''
+  if (isOnlyAnswer) return 'h-full object-contain'
+  return 'h-16 object-contain'
+}
+
+function getBorder(imageUrl: string | undefined, isOnlyAnswer: boolean) {
+  if (imageUrl && isOnlyAnswer) return ''
+  return 'border-3 border-transparent'
+}
+
+function getAnswerBorder(imageUrl: string | undefined, isOnlyAnswer: boolean) {
+  if (isOnlyAnswer) return ''
+  if (imageUrl) return 'rounded border border-brand'
+  return ''
 }

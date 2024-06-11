@@ -16,7 +16,6 @@ import { cn } from '@/helper/cn'
 interface BlankDropZoneProps {
   dropZone: BlankDropZoneSpec
   droppedAnswersIds: string[]
-  isBackgroundTypeImage: boolean
   isCorrect?: boolean | null
   isCorrectAnswerMap?: Map<string, boolean | null> | null
   visibility: DropzoneVisibility
@@ -33,7 +32,6 @@ export const BlankDropZone = memo(function BlankDropZone(
   const {
     dropZone,
     droppedAnswersIds,
-    isBackgroundTypeImage,
     isCorrect,
     isCorrectAnswerMap,
     visibility,
@@ -72,7 +70,7 @@ export const BlankDropZone = memo(function BlankDropZone(
     <div
       ref={drop}
       className={cn(
-        `absolute flex flex-row items-center justify-center gap-2 rounded p-1`,
+        `absolute flex flex-wrap items-center justify-center gap-2 rounded p-1`,
         getBackgroundColor(visibility, isOver, canDrop),
         getBorderWidth(visibility, isCorrect),
         getBorderColor(isCorrect),
@@ -87,12 +85,10 @@ export const BlankDropZone = memo(function BlankDropZone(
       {droppedAnswers.map((answer, index) => (
         <DraggableAnswer
           key={index}
-          draggableId={answer.id}
+          answer={answer}
           droppableBlankId={id}
-          text={answer.text}
-          imageUrl={answer.imageUrl}
           isAnswerCorrect={isCorrectAnswerMap?.get(answer.id)}
-          hasBackgroundColor={isBackgroundTypeImage}
+          isOnlyDroppedAnswer={droppedAnswers.length === 1}
         />
       ))}
     </div>

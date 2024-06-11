@@ -7,7 +7,6 @@ import { cn } from '@/helper/cn'
 interface AnswerContentProps {
   url?: string
   text?: Descendant[]
-  isPreview?: boolean
   className?: string
   // TODO: This prop is a temporary solution for text border visual bug
   display?: 'inline' | 'block'
@@ -17,7 +16,6 @@ export const AnswerContent = ({
   url,
   text,
   className,
-  isPreview = false,
   display = 'inline',
 }: AnswerContentProps) => {
   if (!url && !text) return null
@@ -26,12 +24,7 @@ export const AnswerContent = ({
     <img
       data-qa="plugin-dropzone-image-answer-content-image"
       src={url}
-      className={cn(
-        className,
-        isPreview
-          ? 'border-lightblue h-16 border-2 object-contain'
-          : 'h-full w-full object-contain'
-      )}
+      className={cn('h-full w-full object-contain', className)}
     />
   ) : text ? (
     <span

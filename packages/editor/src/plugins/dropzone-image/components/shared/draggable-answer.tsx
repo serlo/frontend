@@ -1,51 +1,78 @@
 import { useDrag } from 'react-dnd'
-import { Descendant } from 'slate'
 
+import type { PossibleAnswerType } from '../../types'
 import { AnswerContent } from '../answer-zone/answer-content'
 import { cn } from '@/helper/cn'
 
 export const draggableAnswerDragType = 'draggableAnswer'
 
 interface DraggableAnswerProps {
-  draggableId: string
+  answer: PossibleAnswerType
   droppableBlankId?: string
-  text?: Descendant[]
-  imageUrl?: string
   isAnswerCorrect?: boolean | null
-  hasBackgroundColor?: boolean
+  isOnlyDroppedAnswer?: boolean
 }
 
-export function DraggableAnswer({
-  draggableId,
-  droppableBlankId,
-  text,
-  imageUrl,
-  isAnswerCorrect,
-  hasBackgroundColor = false,
-}: DraggableAnswerProps) {
+export function DraggableAnswer(props: DraggableAnswerProps) {
+  const {
+    answer,
+    droppableBlankId,
+    isAnswerCorrect,
+    isOnlyDroppedAnswer = false,
+  } = props
+  const { id, imageUrl, text } = answer
+
   const [, dragRef] = useDrag({
     type: draggableAnswerDragType,
-    item: { id: draggableId, droppableBlankId, imageUrl, text },
+    item: { id, droppableBlankId, imageUrl, text },
   })
 
   return (
     <span
       className={cn(
         'flex cursor-grab items-center justify-center',
-        hasBackgroundColor ? 'bg-brand-50' : 'bg-transparent'
+        getSize(imageUrl, isOnlyDroppedAnswer),
+        getBorder(imageUrl, isAnswerCorrect, isOnlyDroppedAnswer)
       )}
       ref={dragRef}
     >
       <AnswerContent
-        className={cn(
-          isAnswerCorrect === true ? 'border-3 border-green-500' : '',
-          isAnswerCorrect === false ? 'border-3 border-red-500' : '',
-          imageUrl ? 'rounded border border-brand' : 'p-1'
-        )}
         url={imageUrl}
         text={text}
-        isPreview
+        className={getAnswerBorder(
+          imageUrl,
+          isAnswerCorrect,
+          isOnlyDroppedAnswer
+        )}
       />
     </span>
   )
+}
+
+function getSize(imageUrl: string | undefined, isOnlyAnswer: boolean) {
+  if (!imageUrl) return ''
+  if (isOnlyAnswer) return 'h-full object-contain'
+  return 'h-16 object-contain'
+}
+
+function getBorder(
+  imageUrl: string | undefined,
+  isAnswerCorrect: boolean | null | undefined,
+  isOnlyAnswer: boolean
+) {
+  if (imageUrl && isOnlyAnswer) return ''
+  if (isAnswerCorrect === true || isAnswerCorrect === false) return ''
+  return 'border-3 border-transparent'
+}
+
+function getAnswerBorder(
+  imageUrl: string | undefined,
+  isAnswerCorrect: boolean | null | undefined,
+  isOnlyAnswer: boolean
+) {
+  if (isOnlyAnswer) return ''
+  if (isAnswerCorrect === true) return 'rounded border-3 border-green-500'
+  if (isAnswerCorrect === false) return 'rounded border-3 border-red-500'
+  if (imageUrl) return 'rounded border border-brand'
+  return ''
 }

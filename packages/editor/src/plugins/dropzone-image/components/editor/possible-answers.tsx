@@ -19,11 +19,9 @@ export function PossibleAnswers(props: PossibleAnswersProps) {
     <DraggableArea accept="none" className="mt-4">
       {correctAnswers.map((possibleAnswer, index) => (
         <DraggableAnswer
-          data-qa="plugin-dropzone-image-correct-possible-answer"
-          draggableId={possibleAnswer.id}
           key={index}
-          imageUrl={possibleAnswer.imageUrl}
-          text={possibleAnswer.text}
+          answer={possibleAnswer}
+          data-qa="plugin-dropzone-image-correct-possible-answer"
         />
       ))}
     </DraggableArea>

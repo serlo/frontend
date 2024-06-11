@@ -33,10 +33,8 @@ export function ExtraIncorrectAnswers(props: ExtraIncorrectAnswersProps) {
             tooltipText={blanksExerciseStrings.removeDummyAnswer}
           >
             <DraggableAnswer
+              answer={possibleAnswer}
               data-qa="plugin-dropzone-image-alternative-answer"
-              draggableId={possibleAnswer.id}
-              imageUrl={possibleAnswer.imageUrl}
-              text={possibleAnswer.text}
             />
           </RemovableInputWrapper>
         ))}

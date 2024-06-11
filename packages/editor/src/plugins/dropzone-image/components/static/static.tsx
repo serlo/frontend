@@ -126,16 +126,19 @@ export function DropzoneImageStaticRenderer(
           )
         }
       })
+
+      if (zoneToReset.length > 0) {
+        setIsAnswerZoneCorrectMap((prev) => {
+          const updatedIsCorrectMap = new Map(prev)
+          if (!updatedMap.get(zoneToReset)?.length) {
+            updatedIsCorrectMap.delete(zoneToReset)
+          }
+          return updatedIsCorrectMap
+        })
+      }
+
       return updatedMap
     })
-
-    if (zoneToReset.length > 0) {
-      setIsAnswerZoneCorrectMap((prev) => {
-        const updatedMap = new Map(prev)
-        updatedMap.delete(zoneToReset)
-        return updatedMap
-      })
-    }
   }
 
   const isCheckAnswersButtonVisible = useMemo(() => {
@@ -189,7 +192,6 @@ export function DropzoneImageStaticRenderer(
                 key={id}
                 dropZone={dropZone}
                 droppedAnswersIds={dropzoneAnswerMap.get(id) || []}
-                isBackgroundTypeImage={!!backgroundImageUrlFromPlugin}
                 isCorrect={isAnswerZoneCorrectMap.get(id)}
                 isCorrectAnswerMap={isCorrectAnswerMap.get(id)}
                 visibility={dropzoneVisibility as DropzoneVisibility}
@@ -211,12 +213,7 @@ export function DropzoneImageStaticRenderer(
                   .includes(possibleAnswer.id)
             )
             .map((possibleAnswer: PossibleAnswerType, index) => (
-              <DraggableAnswer
-                draggableId={possibleAnswer.id}
-                key={index}
-                imageUrl={possibleAnswer.imageUrl}
-                text={possibleAnswer.text}
-              />
+              <DraggableAnswer answer={possibleAnswer} key={index} />
             ))}
         </DraggableArea>
 
