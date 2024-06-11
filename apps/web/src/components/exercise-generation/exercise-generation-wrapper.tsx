@@ -55,9 +55,12 @@ export const ExerciseGenerationWrapper = ({
   return (
     <>
       <ModalWithCloseButton
-        onCloseClick={() => {
-          submitEvent('exercise-generation-wizard-prompt-generation-closed')
-          closeWizard()
+        setIsOpen={(open) => {
+          const isModalClosing = !open
+          if (isModalClosing) {
+            submitEvent('exercise-generation-wizard-prompt-generation-closed')
+            closeWizard()
+          }
         }}
         isOpen={activePage === ActivePage.ExerciseGenerationWizard}
         title={exGenerationStrings.initialModalTitle}

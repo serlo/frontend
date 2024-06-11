@@ -62,7 +62,7 @@ export function CheckoutRejectButtons({
 
       <ModalWithCloseButton
         isOpen={modalMode !== null}
-        onCloseClick={onCloseClick}
+        setIsOpen={(open) => (open ? void null : onCloseClick())}
         title={
           modalMode !== null ? strings.revisions[modalMode].title : undefined
         }

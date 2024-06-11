@@ -71,9 +71,7 @@ export function RevisionHistoryLoader<T>({
 
       <ModalWithCloseButton
         isOpen={showRevisions}
-        onCloseClick={() => {
-          setShowRevisions(false)
-        }}
+        setIsOpen={setShowRevisions}
         title={editorStrings.edtrIo.switchRevision}
         className="top-12 max-h-[80vh] w-[900px] max-w-[90vw] translate-y-0 overflow-y-auto pt-0"
       >

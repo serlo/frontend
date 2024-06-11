@@ -137,7 +137,12 @@ export function ExercisePreviewPage({
   return (
     <ModalWithCloseButton
       isOpen
-      onCloseClick={closePage}
+      setIsOpen={(open) => {
+        const isModalClosing = !open
+        if (isModalClosing) {
+          closePage()
+        }
+      }}
       confirmCloseDescription={exGenerationStrings.confirmCloseDescription}
       className="fixed left-1/2 top-0 flex h-full max-h-none w-full max-w-none translate-y-0 flex-col items-center justify-center rounded-none bg-gray-100"
       extraCloseButtonClassName={cn('z-30 bg-brand-200')}

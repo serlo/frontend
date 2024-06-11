@@ -10,7 +10,6 @@ import { BoxStaticRenderer } from '@editor/plugins/box/static'
 import { EquationsStaticRenderer } from '@editor/plugins/equations/static'
 import { ExerciseStaticRenderer } from '@editor/plugins/exercise/static'
 import { GeogebraStaticRenderer } from '@editor/plugins/geogebra/static'
-import { H5pStaticRenderer } from '@editor/plugins/h5p/static'
 import { HighlightStaticRenderer } from '@editor/plugins/highlight/static'
 import { ImageStaticRenderer } from '@editor/plugins/image/static'
 import { InputExerciseStaticRenderer } from '@editor/plugins/input-exercise/static'
@@ -77,7 +76,6 @@ export function createRenderers(
         type: EditorPluginType.Highlight,
         renderer: HighlightStaticRenderer,
       },
-      { type: EditorPluginType.H5p, renderer: H5pStaticRenderer },
       {
         type: EditorPluginType.InputExercise,
         renderer: InputExerciseStaticRenderer,
