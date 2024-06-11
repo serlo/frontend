@@ -10,7 +10,7 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEffect, useState } from 'react'
 
 import { H5pRenderer, parseH5pUrl } from './renderer'
-import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
+import { InteractiveToolbarTools } from '../../../../../packages/editor/src/plugins/exercise/toolbar/interactive-toolbar-tools'
 
 export type H5pPluginState = StringStateType
 export type H5pProps = EditorPluginProps<H5pPluginState>

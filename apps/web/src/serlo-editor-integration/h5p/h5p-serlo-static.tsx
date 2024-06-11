@@ -1,9 +1,9 @@
-import { parseH5pUrl } from '@editor/plugins/h5p/renderer'
 import type { EditorH5PDocument } from '@editor/types/editor-plugins'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+import { parseH5pUrl } from './renderer'
 import { useAB } from '@/contexts/ab'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEntityData } from '@/contexts/uuids-context'
@@ -89,7 +89,20 @@ export function H5pSerloStaticRenderer(props: EditorH5PDocument) {
           const id = data.contentId
           const contents = data.integration.contents![`cid-${id}`]
 
-          console.log(id, contents)
+          contents.scripts = rewriteDependencies(contents.scripts!)
+          contents.styles = rewriteDependencies(contents.styles!)
+
+          data.scripts = rewriteDependencies(data.scripts)
+          data.styles = rewriteDependencies(data.styles)
+
+          if (data.integration.core) {
+            data.integration.core.styles = rewriteDependencies(
+              data.integration.core.styles!
+            )
+            data.integration.core.scripts = rewriteDependencies(
+              data.integration.core.scripts!
+            )
+          }
 
           console.log(data)
           return data
@@ -97,6 +110,76 @@ export function H5pSerloStaticRenderer(props: EditorH5PDocument) {
       />
     </div>
   )
+}
+
+// reduce load on lumi server
+const localMap: { [key: string]: boolean } = {
+  'https://app.lumi.education/h5p/libraries/H5P.DragQuestion-1.14/h5p-drag-question.js?version=1.14.15':
+    true,
+  'https://app.lumi.education/h5p/libraries/H5P.DragQuestion-1.14/css/dragquestion.css?version=1.14.15':
+    true,
+  'https://app.lumi.education/h5p/libraries/H5P.Question-1.5/scripts/score-points.js?version=1.5.15':
+    true,
+  'https://app.lumi.education/h5p/libraries/H5P.Question-1.5/scripts/explainer.js?version=1.5.15':
+    true,
+  'https://app.lumi.education/h5p/libraries/H5P.Question-1.5/scripts/question.js?version=1.5.15':
+    true,
+  'https://app.lumi.education/h5p/libraries/H5P.Question-1.5/styles/explainer.css?version=1.5.15':
+    true,
+  'https://app.lumi.education/h5p/libraries/H5P.Question-1.5/styles/question.css?version=1.5.15':
+    true,
+  'https://app.lumi.education/h5p/libraries/H5P.Image-1.1/image.js?version=1.1.22':
+    true,
+  'https://app.lumi.education/h5p/libraries/H5P.Image-1.1/image.css?version=1.1.22':
+    true,
+  'https://app.lumi.education/h5p/libraries/FontAwesome-4.5/h5p-font-awesome.min.css?version=4.5.4':
+    true,
+  'https://app.lumi.education/h5p/libraries/H5P.FontIcons-1.0/styles/h5p-font-icons.css?version=1.0.11':
+    true,
+  'https://app.lumi.education/h5p/core/styles/h5p.css?version=1.24-master':
+    true,
+  'https://app.lumi.education/h5p/core/styles/h5p-core-button.css?version=1.24-master':
+    true,
+  'https://app.lumi.education/h5p/core/styles/h5p-confirmation-dialog.css?version=1.24-master':
+    true,
+  'https://app.lumi.education/h5p/core/js/jquery.js?version=1.24-master': true,
+  'https://app.lumi.education/h5p/core/js/h5p.js?version=1.24-master': true,
+  'https://app.lumi.education/h5p/core/js/h5p-event-dispatcher.js?version=1.24-master':
+    true,
+  'https://app.lumi.education/h5p/core/js/h5p-x-api-event.js?version=1.24-master':
+    true,
+  'https://app.lumi.education/h5p/core/js/h5p-x-api.js?version=1.24-master':
+    true,
+  'https://app.lumi.education/h5p/core/js/h5p-content-type.js?version=1.24-master':
+    true,
+  'https://app.lumi.education/h5p/core/js/h5p-action-bar.js?version=1.24-master':
+    true,
+  'https://app.lumi.education/h5p/core/js/request-queue.js?version=1.24-master':
+    true,
+  'https://app.lumi.education/h5p/core/js/h5p-confirmation-dialog.js?version=1.24-master':
+    true,
+  'https://app.lumi.education/h5p/core/js/h5p-tooltip.js': true,
+  'https://app.lumi.education/h5p/core/styles/h5p-tooltip.css': true,
+  'https://app.lumi.education/h5p/libraries/H5P.AdvancedText-1.1/text.css?version=1.1.14':
+    true,
+  'https://app.lumi.education/h5p/libraries/H5P.AdvancedText-1.1/text.js?version=1.1.14':
+    true,
+  'https://app.lumi.education/h5p/libraries/jQuery.ui-1.10/h5p-jquery-ui.js?version=1.10.22':
+    true,
+  'https://app.lumi.education/h5p/libraries/jQuery.ui-1.10/h5p-jquery-ui.css?version=1.10.22':
+    true,
+  'https://app.lumi.education/h5p/libraries/H5P.Transition-1.0/transition.js?version=1.0.4':
+    true,
+}
+
+function rewriteDependencies(deps: string[]) {
+  return deps.map((dep) => {
+    if (dep in localMap) {
+      return dep.replace('https://app.lumi.education', '/_assets')
+    }
+    console.log('external dependency', dep)
+    return dep
+  })
 }
 
 // helper types

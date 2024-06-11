@@ -1,15 +1,14 @@
 /* Import common fonts */
-@import 'font-open-sans.css';
+// @import 'font-open-sans.css';
 /* General CSS for H5P. Licensed under the MIT License.*/
 /* Custom H5P font to use for icons. */
 @font-face {
   font-family: 'h5p';
-  src: url('../fonts/h5p-core-27.eot?h1atjl');
-  src:
-    url('../fonts/h5p-core-27.eot?h1atjl#iefix') format('embedded-opentype'),
-    url('../fonts/h5p-core-27.ttf?h1atjl') format('truetype'),
-    url('../fonts/h5p-core-27.woff?h1atjl') format('woff'),
-    url('../fonts/h5p-core-27.svg?h1atjl#h5p-core-27') format('svg');
+  src:  url('../fonts/h5p-core-28.eot?h1atjl');
+  src:  url('../fonts/h5p-core-28.eot?h1atjl#iefix') format('embedded-opentype'),
+    url('../fonts/h5p-core-28.ttf?h1atjl') format('truetype'),
+    url('../fonts/h5p-core-28.woff?h1atjl') format('woff'),
+    url('../fonts/h5p-core-28.svg?h1atjl#h5p-core-28') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -17,38 +16,35 @@
 @font-face {
   font-family: 'h5p-hub-publish';
   src: url('../fonts/h5p-hub-publish.eot?wy8ylc');
-  src:
-    url('../fonts/h5p-hub-publish.eot?wy8ylc#iefix') format('embedded-opentype'),
-    url('../fonts/h5p-hub-publish.ttf?wy8ylc') format('truetype'),
-    url('../fonts/h5p-hub-publish.woff?wy8ylc') format('woff'),
-    url('../fonts/h5p-hub-publish.svg?wy8ylc#h5p-hub') format('svg');
+  src: url('../fonts/h5p-hub-publish.eot?wy8ylc#iefix') format('embedded-opentype'),
+  url('../fonts/h5p-hub-publish.ttf?wy8ylc') format('truetype'),
+  url('../fonts/h5p-hub-publish.woff?wy8ylc') format('woff'),
+  url('../fonts/h5p-hub-publish.svg?wy8ylc#h5p-hub') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
 
-html.h5p-iframe,
-html.h5p-iframe > body {
+html.h5p-iframe, html.h5p-iframe > body {
   font-family: Sans-Serif; /* Use the browser's default sans-serif font. (Since Heletica doesn't look nice on Windows, and Arial on OS X.) */
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
 }
-.h5p-semi-fullscreen,
-.h5p-fullscreen,
-html.h5p-iframe .h5p-container {
+.h5p-semi-fullscreen, .h5p-fullscreen, html.h5p-iframe .h5p-container {
   overflow: hidden;
 }
 .h5p-content {
   position: relative;
   background: #fefefe;
-  border: 1px solid #eee;
+  border: 1px solid #EEE;
   border-bottom: none;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
-.h5p-noselect {
+.h5p-noselect
+{
   -khtml-user-select: none;
   -ms-user-select: none;
   -moz-user-select: none;
@@ -91,7 +87,7 @@ body.h5p-semi-fullscreen {
   z-index: 101;
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: #FFF;
 }
 
 .h5p-content-controls {
@@ -105,27 +101,23 @@ body.h5p-semi-fullscreen {
   display: none;
 }
 
-.h5p-content-controls > a:link,
-.h5p-content-controls > a:visited,
-a.h5p-disable-fullscreen:link,
-a.h5p-disable-fullscreen:visited {
+.h5p-content-controls > a:link, .h5p-content-controls > a:visited, a.h5p-disable-fullscreen:link, a.h5p-disable-fullscreen:visited {
   color: #e5eef6;
 }
 
 .h5p-enable-fullscreen:before {
   font-family: 'H5P';
-  content: '\e88c';
+  content: "\e88c";
 }
 .h5p-disable-fullscreen:before {
   font-family: 'H5P';
-  content: '\e891';
+  content: "\e891";
 }
-.h5p-enable-fullscreen,
-.h5p-disable-fullscreen {
+.h5p-enable-fullscreen, .h5p-disable-fullscreen {
   cursor: pointer;
-  color: #eee;
-  background: rgb(0, 0, 0);
-  background: rgba(0, 0, 0, 0.3);
+  color: #EEE;
+  background: rgb(0,0,0);
+  background: rgba(0,0,0,0.3);
   line-height: 0.975em;
   font-size: 2em;
   width: 1.125em;
@@ -145,9 +137,8 @@ a.h5p-disable-fullscreen:visited {
   outline-offset: 0.25em;
 }
 
-.h5p-enable-fullscreen:hover,
-.h5p-disable-fullscreen:hover {
-  background: rgba(0, 0, 0, 0.5);
+.h5p-enable-fullscreen:hover, .h5p-disable-fullscreen:hover {
+  background: rgba(0,0,0,0.5);
 }
 .h5p-semi-fullscreen .h5p-enable-fullscreen {
   display: none;
@@ -189,7 +180,7 @@ div.h5p-fullscreen {
   /* Hack for IOS landscape / portrait */
   width: 10px;
   min-width: 100%;
-  width: 100%;
+  *width: 100%;
   /* End of hack */
   height: 100%;
   z-index: 10;
@@ -206,14 +197,13 @@ div.h5p-fullscreen {
   margin: 0;
   height: 25px;
   font-size: 12px;
-  background: #fafafa;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
+  background: #FAFAFA;
+  border-top: 1px solid #EEE;
+  border-bottom: 1px solid #EEE;
   clear: both;
   font-family: Sans-Serif;
 }
-.h5p-fullscreen .h5p-actions,
-.h5p-semi-fullscreen .h5p-actions {
+.h5p-fullscreen .h5p-actions, .h5p-semi-fullscreen .h5p-actions {
   display: none;
 }
 .h5p-actions > .h5p-button {
@@ -241,7 +231,7 @@ div.h5p-fullscreen {
   display: inline-flex;
   padding: 0;
   margin: 0;
-  color: #6a6a6a;
+  color: #6A6A6A;
   position: relative;
 
   /* Disable default button style */
@@ -257,7 +247,7 @@ div.h5p-fullscreen {
   outline-style: solid;
   outline-width: thin;
   outline-offset: -2px;
-  outline-color: #5981a1;
+  outline-color: #5981A1;
 }
 .h5p-actions button:before {
   font-family: 'H5P';
@@ -267,18 +257,18 @@ div.h5p-fullscreen {
   padding-right: 0;
 }
 .h5p-actions > .h5p-button.h5p-export > button:before {
-  content: '\e90b';
+  content: "\e90b";
 }
 .h5p-actions > .h5p-button.h5p-copyrights > button:before {
-  content: '\e88f';
+  content: "\e88f";
 }
 .h5p-actions > .h5p-button.h5p-embed > button:before {
-  content: '\e892';
+  content: "\e892";
 }
 .h5p-actions .h5p-link {
   float: right;
   margin-right: 0;
-  font-size: 2em;
+  font-size: 2.0em;
   line-height: 23px;
   position: relative;
   color: #6a6a6a;
@@ -287,7 +277,7 @@ div.h5p-fullscreen {
 }
 .h5p-actions .h5p-link:before {
   font-family: 'H5P';
-  content: '\e88e';
+  content: "\e88e";
   vertical-align: bottom;
 }
 .h5p-actions > li {
@@ -309,8 +299,8 @@ div.h5p-fullscreen {
   -moz-transition: opacity 0.2s;
   -o-transition: opacity 0.2s;
   transition: opacity 0.2s;
-  background: #000;
-  background: rgba(0, 0, 0, 0.75);
+  background:#000;
+  background:rgba(0,0,0,0.75);
 }
 .h5p-popup-dialog.h5p-open {
   opacity: 1;
@@ -416,11 +406,11 @@ div.h5p-fullscreen {
   color: #656565;
   cursor: pointer;
   text-indent: -0.065em;
-  z-index: 3;
+  z-index: 3
 }
 .h5p-popup-dialog .h5p-close:after {
   font-family: 'H5P';
-  content: '\e894';
+  content: "\e894";
 }
 .h5p-popup-dialog .h5p-close:hover:after,
 .h5p-popup-dialog .h5p-close:focus:after {
@@ -455,13 +445,13 @@ div.h5p-fullscreen {
   display: inline-block;
 }
 .h5p-expander:before {
-  content: '+';
+  content: "+";
   width: 1em;
   display: inline-block;
   font-weight: bold;
 }
 .h5p-expander.h5p-open:before {
-  content: '-';
+  content: "-";
   text-indent: 0.125em;
 }
 .h5p-expander:hover,
@@ -517,7 +507,7 @@ div.h5p-fullscreen {
 }
 .h5p-big-button:before {
   font-family: 'h5p';
-  content: '\e893';
+  content: "\e893";
   line-height: 1;
   font-size: 3em;
   color: #2747f7;
@@ -526,7 +516,7 @@ div.h5p-fullscreen {
   top: 0.125em;
 }
 .h5p-copy-button:before {
-  content: '\e905';
+  content: "\e905";
 }
 .h5p-big-button:hover {
   border: 1px solid #2747f7;
@@ -601,6 +591,7 @@ div.h5p-fullscreen {
   overflow: auto;
 }
 
+
 /* This is loaded as part of Core and not Editor since this needs to be outside the editor iframe */
 .h5peditor-semi-fullscreen {
   width: 100%;
@@ -622,19 +613,19 @@ iframe.h5peditor-semi-fullscreen {
 }
 
 .h5p-content-hub-button:before {
-  font-family: 'h5p';
+  font-family: "h5p";
   margin-right: 0.5em;
   font-size: 0.7em;
   line-height: 1;
 }
 
 .h5p-content-hub-button.unpublish:before {
-  content: '\e916';
+  content: "\e916";
 }
 
 .h5p-content-hub-button.waiting:before,
 .h5p-content-hub-button.sync:before {
-  content: '\e917';
+  content: "\e917";
 }
 
 .h5p-content-hub-button.waiting:before {
