@@ -1,5 +1,5 @@
-import { H5PPlayerUI } from '@lumieducation/h5p-react'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
+import Script from 'next/script'
 
 export interface H5pRendererProps {
   url: string
@@ -18,19 +18,18 @@ export function H5pRenderer({ url }: H5pRendererProps) {
     return <p className="serlo-p">{strings.errors.defaultMessage}</p>
   }
 
+  const src = `/api/frontend/lumi/embed/${id}`
+
   return (
-    <div className="mx-side mb-block" style={{ width: '727px' }}>
-      <H5PPlayerUI
-        contentId={id}
-        loadContentCallback={async (contentId) => {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          const data = await (
-            await fetch(`/api/frontend/lumi/embed/${contentId}`)
-          ).json()
-          console.log(data)
-          return data
-        }}
-      />
+    <div className="mx-side mb-block">
+      <iframe
+        src={src}
+        width="727"
+        height="500"
+        allowFullScreen
+        allow="geolocation *; microphone *; camera *; midi *; encrypted-media *"
+      ></iframe>
+      <Script src="/_assets/h5p-resizer.js" />
     </div>
   )
 }
