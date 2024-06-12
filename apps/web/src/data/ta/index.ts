@@ -89,6 +89,7 @@ export const instanceData = {
       title: "பகிர்!",
       copyLink: "இணைப்பை நகலெடுக்கவும்",
       copySuccess: "இணைப்பு நகலெடுக்கப்பட்டது!",
+      copyFailed: 'Error copying link! ',
       close: "நெருக்கமான",
       pdf: 'Download as PDF',
       pdfNoSolutions: 'PDF without solutions'
