@@ -23,7 +23,7 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 
 export interface ShareModalProps {
   isOpen: boolean
-  onClose: () => void
+  setIsOpen: (open: boolean) => void
   showPdf?: boolean
   path?: string
 }
@@ -38,7 +38,7 @@ interface EntryData {
 
 export function ShareModal({
   isOpen,
-  onClose,
+  setIsOpen,
   showPdf,
   path,
 }: ShareModalProps) {
@@ -130,7 +130,7 @@ export function ShareModal({
   return (
     <ModalWithCloseButton
       isOpen={isOpen}
-      onCloseClick={onClose}
+      setIsOpen={setIsOpen}
       title={strings.share.title}
       className="top-1/2"
     >

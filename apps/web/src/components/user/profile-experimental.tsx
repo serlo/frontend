@@ -17,6 +17,12 @@ export const features = {
     activeInDev: true,
     hideInProduction: true,
   },
+  authVidis: {
+    cookieName: 'useAllowVidisLogin',
+    isActive: false,
+    activeInDev: false,
+    hideInProduction: false,
+  },
 }
 
 const showExperimentsStorageKey = 'showExperiments'
@@ -101,6 +107,16 @@ export function ProfileExperimental() {
           </h3>
           <p className="serlo-p">
             Experimentelles Feature: nur aktivieren wenn du weißt was du tust.
+          </p>
+        </div>
+      ) : null}
+      {shouldBeVisible('authVidis') ? (
+        <div>
+          <h3 className="serlo-h3 mb-3">
+            {renderFeatureButton('authVidis')} ✹
+          </h3>
+          <p className="serlo-p">
+            Experimentelles Feature: Login mit VIDIS SSO anzeigen
           </p>
         </div>
       ) : null}

@@ -9,7 +9,6 @@ import type {
   EditorEquationsDocument,
   EditorExerciseDocument,
   EditorGeogebraDocument,
-  EditorH5PDocument,
   EditorHighlightDocument,
   EditorImageDocument,
   EditorInjectionDocument,
@@ -161,11 +160,6 @@ export function isPagePartnersDocument(
   document: AnyEditorDocument
 ): document is EditorPagePartnersDocument {
   return document.plugin === EditorPluginType.PagePartners
-}
-export function isH5PDocument(
-  document: AnyEditorDocument
-): document is EditorH5PDocument {
-  return document.plugin === EditorPluginType.H5p
 }
 export function isTemplateExerciseGroupDocument(
   document: AnyEditorDocument

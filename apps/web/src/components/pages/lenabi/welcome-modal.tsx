@@ -74,7 +74,7 @@ export function WelcomeModal({
       </button>
       <ModalWithCloseButton
         isOpen={showModal}
-        onCloseClick={() => setShowModal(false)}
+        setIsOpen={setShowModal}
         title="Eigenen Lernstand laden"
       >
         <p className="serlo-p">

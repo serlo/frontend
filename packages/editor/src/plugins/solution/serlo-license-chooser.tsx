@@ -43,7 +43,7 @@ export function SerloLicenseChooser({
       </button>
       <ModalWithCloseButton
         isOpen={showLicenseModal}
-        onCloseClick={() => setShowLicenseModal(false)}
+        setIsOpen={setShowLicenseModal}
         className="top-8 max-w-xl translate-y-0 sm:top-1/3"
       >
         <h3 className="serlo-h3 mt-4">{solutionStrings.changeLicense}:</h3>
