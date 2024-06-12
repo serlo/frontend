@@ -27,7 +27,7 @@ export interface BasicDropZone {
 
 export interface DraggableAnswerType {
   id: string
-  droppableBlankId?: string
+  originDropzoneId?: string
   text?: Descendant[]
   imageUrl?: string
 }

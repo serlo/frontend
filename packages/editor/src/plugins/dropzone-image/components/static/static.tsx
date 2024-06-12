@@ -78,7 +78,6 @@ export function DropzoneImageStaticRenderer(
     new Map<string, string[]>()
   )
 
-  // dropzone id to true/false
   const [isAnswerZoneCorrectMap, setIsAnswerZoneCorrectMap] = useState(
     new Map<string, boolean | null>()
   )
@@ -90,23 +89,35 @@ export function DropzoneImageStaticRenderer(
   const onAnswerDrop = (
     answerId: string,
     dropzoneId: string,
-    droppableBlankId?: string
+    originDropzoneId?: string
   ) => {
     setDropzoneAnswerMap((prev) => {
       const updatedMap = new Map(prev)
       const existingAnswers = updatedMap.get(dropzoneId) || []
       updatedMap.set(dropzoneId, [...existingAnswers, answerId])
-      if (droppableBlankId) {
-        const existingAnswersFromOrigin = updatedMap.get(droppableBlankId) || []
+      if (originDropzoneId) {
+        const existingAnswersFromOrigin = updatedMap.get(originDropzoneId) || []
         updatedMap.set(
-          droppableBlankId,
+          originDropzoneId,
           existingAnswersFromOrigin.filter((id) => id !== answerId)
-        )
-        setIsAnswerZoneCorrectMap(
-          (prev) => new Map(prev.set(droppableBlankId, null))
         )
         setIsCorrectAnswerMap((prev) => new Map(prev.set(answerId, null)))
       }
+      setIsAnswerZoneCorrectMap((prev) => {
+        const updatedIsCorrectMap = new Map(prev)
+        if (updatedMap.get(dropzoneId)?.length) {
+          updatedIsCorrectMap.set(dropzoneId, null)
+        } else {
+          updatedIsCorrectMap.delete(dropzoneId)
+        }
+        if (!originDropzoneId) return updatedIsCorrectMap
+        if (updatedMap.get(originDropzoneId)?.length) {
+          updatedIsCorrectMap.set(originDropzoneId, null)
+        } else {
+          updatedIsCorrectMap.delete(originDropzoneId)
+        }
+        return updatedIsCorrectMap
+      })
       return updatedMap
     })
     setIsAnswerZoneCorrectMap((prev) => new Map(prev.set(dropzoneId, null)))
@@ -114,6 +125,7 @@ export function DropzoneImageStaticRenderer(
 
   const onDraggableAreaAnswerDrop = (answer: DraggableAnswerType) => {
     let zoneToReset: string = ''
+    const originDropzoneId = answer.originDropzoneId || ''
 
     setDropzoneAnswerMap((prev) => {
       const updatedMap = new Map(prev)
@@ -130,8 +142,15 @@ export function DropzoneImageStaticRenderer(
       if (zoneToReset.length > 0) {
         setIsAnswerZoneCorrectMap((prev) => {
           const updatedIsCorrectMap = new Map(prev)
-          if (!updatedMap.get(zoneToReset)?.length) {
+          if (updatedMap.get(zoneToReset)?.length) {
+            updatedIsCorrectMap.set(zoneToReset, null)
+          } else {
             updatedIsCorrectMap.delete(zoneToReset)
+          }
+          if (updatedMap.get(originDropzoneId)?.length) {
+            updatedIsCorrectMap.set(originDropzoneId, null)
+          } else {
+            updatedIsCorrectMap.delete(originDropzoneId)
           }
           return updatedIsCorrectMap
         })
@@ -173,6 +192,7 @@ export function DropzoneImageStaticRenderer(
   return (
     <div className="mx-side">
       <DndWrapper>
+        {/* TODO: Extract this into a StaticCanvas component */}
         <div
           className={cn(`
             relative mx-auto h-[786px] w-[786px] overflow-hidden rounded-lg
@@ -195,6 +215,7 @@ export function DropzoneImageStaticRenderer(
                 isCorrect={isAnswerZoneCorrectMap.get(id)}
                 isCorrectAnswerMap={isCorrectAnswerMap.get(id)}
                 visibility={dropzoneVisibility as DropzoneVisibility}
+                answersCount={answers.length}
                 onAnswerDrop={onAnswerDrop}
               />
             )

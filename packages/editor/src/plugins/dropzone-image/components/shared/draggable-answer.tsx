@@ -8,23 +8,27 @@ export const draggableAnswerDragType = 'draggableAnswer'
 
 interface DraggableAnswerProps {
   answer: PossibleAnswerType
-  droppableBlankId?: string
+  originDropzoneId?: string
+  isCorrect?: boolean | null
   isAnswerCorrect?: boolean | null
   isOnlyDroppedAnswer?: boolean
+  hasEnoughDroppedAnswers?: boolean
 }
 
 export function DraggableAnswer(props: DraggableAnswerProps) {
   const {
     answer,
-    droppableBlankId,
+    originDropzoneId,
+    isCorrect,
     isAnswerCorrect,
     isOnlyDroppedAnswer = false,
+    hasEnoughDroppedAnswers = true,
   } = props
   const { id, imageUrl, text } = answer
 
   const [, dragRef] = useDrag({
     type: draggableAnswerDragType,
-    item: { id, droppableBlankId, imageUrl, text },
+    item: { id, originDropzoneId, imageUrl, text },
   })
 
   return (
@@ -32,17 +36,22 @@ export function DraggableAnswer(props: DraggableAnswerProps) {
       className={cn(
         'flex cursor-grab items-center justify-center',
         getSize(imageUrl, isOnlyDroppedAnswer),
-        getBorder(imageUrl, isAnswerCorrect, isOnlyDroppedAnswer)
+        getBorder(imageUrl, isCorrect, isOnlyDroppedAnswer)
       )}
       ref={dragRef}
     >
       <AnswerContent
         url={imageUrl}
         text={text}
-        className={getAnswerBorder(
-          imageUrl,
-          isAnswerCorrect,
-          isOnlyDroppedAnswer
+        className={cn(
+          'bg-brand-50',
+          getAnswerBorder(
+            imageUrl,
+            isCorrect,
+            isAnswerCorrect,
+            isOnlyDroppedAnswer,
+            hasEnoughDroppedAnswers
+          )
         )}
       />
     </span>
@@ -57,22 +66,26 @@ function getSize(imageUrl: string | undefined, isOnlyAnswer: boolean) {
 
 function getBorder(
   imageUrl: string | undefined,
-  isAnswerCorrect: boolean | null | undefined,
+  isCorrect: boolean | null | undefined,
   isOnlyAnswer: boolean
 ) {
   if (imageUrl && isOnlyAnswer) return ''
-  if (isAnswerCorrect === true || isAnswerCorrect === false) return ''
+  if (isCorrect === true || isCorrect === false) return ''
   return 'border-3 border-transparent'
 }
 
 function getAnswerBorder(
   imageUrl: string | undefined,
+  isCorrect: boolean | null | undefined,
   isAnswerCorrect: boolean | null | undefined,
-  isOnlyAnswer: boolean
+  isOnlyAnswer: boolean,
+  hasEnoughDroppedAnswers: boolean
 ) {
-  if (isOnlyAnswer) return ''
-  if (isAnswerCorrect === true) return 'rounded border-3 border-green-500'
-  if (isAnswerCorrect === false) return 'rounded border-3 border-red-500'
+  if (imageUrl && isOnlyAnswer) return ''
+  if (isCorrect === true && isAnswerCorrect && !hasEnoughDroppedAnswers)
+    return 'rounded border-3 border-red-500'
+  if (isCorrect === true) return 'rounded border-3 border-green-500'
+  if (isCorrect === false) return 'rounded border-3 border-red-500'
   if (imageUrl) return 'rounded border border-brand'
   return ''
 }

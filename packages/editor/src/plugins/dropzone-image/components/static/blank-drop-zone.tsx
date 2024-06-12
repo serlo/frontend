@@ -19,10 +19,11 @@ interface BlankDropZoneProps {
   isCorrect?: boolean | null
   isCorrectAnswerMap?: Map<string, boolean | null> | null
   visibility: DropzoneVisibility
+  answersCount: number
   onAnswerDrop: (
     answerId: string,
     dropzoneId: string,
-    droppableBlankId?: string
+    originDropzoneId?: string
   ) => void
 }
 
@@ -35,6 +36,7 @@ export const BlankDropZone = memo(function BlankDropZone(
     isCorrect,
     isCorrectAnswerMap,
     visibility,
+    answersCount,
     onAnswerDrop,
   } = props
   const { id, name, position, layout } = dropZone
@@ -51,7 +53,7 @@ export const BlankDropZone = memo(function BlankDropZone(
       )
       if (!hasAnswerAlready) {
         setDroppedAnswers((prev) => [...prev, answer])
-        onAnswerDrop(answer.id, id, answer.droppableBlankId)
+        onAnswerDrop(answer.id, id, answer.originDropzoneId)
       }
     },
     collect: (monitor) => ({
@@ -66,14 +68,17 @@ export const BlankDropZone = memo(function BlankDropZone(
     )
   }, [droppedAnswersIds])
 
+  const hasOnlyOneAnswer = droppedAnswers.length === 1
+  const isOnlyAnswerTypeImage = hasOnlyOneAnswer && !!droppedAnswers[0].imageUrl
+
   return (
     <div
       ref={drop}
       className={cn(
         `absolute flex flex-wrap items-center justify-center gap-2 rounded p-1`,
         getBackgroundColor(visibility, isOver, canDrop),
-        getBorderWidth(visibility, isCorrect),
-        getBorderColor(isCorrect),
+        getBorderWidth(visibility, isCorrect, isOnlyAnswerTypeImage),
+        getBorderColor(isCorrect, isOnlyAnswerTypeImage),
         getBorderType(visibility)
       )}
       style={{ left, top, height, width }}
@@ -86,9 +91,11 @@ export const BlankDropZone = memo(function BlankDropZone(
         <DraggableAnswer
           key={index}
           answer={answer}
-          droppableBlankId={id}
+          originDropzoneId={id}
+          isCorrect={isCorrect}
           isAnswerCorrect={isCorrectAnswerMap?.get(answer.id)}
-          isOnlyDroppedAnswer={droppedAnswers.length === 1}
+          isOnlyDroppedAnswer={hasOnlyOneAnswer}
+          hasEnoughDroppedAnswers={droppedAnswers.length === answersCount}
         />
       ))}
     </div>
@@ -106,19 +113,24 @@ function getBackgroundColor(
   return 'bg-white'
 }
 
-function getBorderColor(isCorrect: boolean | null | undefined) {
-  if (isCorrect === true) return 'border-green-500'
-  if (isCorrect === false) return 'border-red-500'
-  return 'border-brand-500'
-}
-
 function getBorderWidth(
   visibility: DropzoneVisibility,
-  isCorrect: boolean | null | undefined
+  isCorrect: boolean | null | undefined,
+  isOnlyAnswerTypeImage: boolean
 ) {
-  if (isCorrect === true || isCorrect === false) return 'border-4'
+  if ((isCorrect === true || isCorrect === false) && isOnlyAnswerTypeImage)
+    return 'border-4'
   if (visibility === DropzoneVisibility.None) return 'border-0'
   return 'border-2'
+}
+
+function getBorderColor(
+  isCorrect: boolean | null | undefined,
+  isOnlyAnswerTypeImage: boolean
+) {
+  if (isCorrect === true && isOnlyAnswerTypeImage) return 'border-green-500'
+  if (isCorrect === false && isOnlyAnswerTypeImage) return 'border-red-500'
+  return 'border-brand-500'
 }
 
 function getBorderType(visibility: DropzoneVisibility) {
