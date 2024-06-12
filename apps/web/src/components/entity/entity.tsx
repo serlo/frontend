@@ -153,11 +153,10 @@ export function Entity({ data }: EntityProps) {
     const content = isExercise ? (
       <ExerciseContext.Provider
         value={{
-          hasEntityId: true,
+          isEntity: true,
           isInExerciseGroup: false,
         }}
       >
-        {' '}
         <StaticRenderer document={document} />
       </ExerciseContext.Provider>
     ) : (

@@ -177,7 +177,7 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
               <UuidsProvider value={{ entityId }}>
                 <ExerciseContext.Provider
                   value={{
-                    hasEntityId:
+                    isEntity:
                       exerciseOrGroup.plugin === EditorPluginType.Exercise, // Exercises have an entityId, Exercises in ExerciseGroups don't have an entityId
                   }}
                 >

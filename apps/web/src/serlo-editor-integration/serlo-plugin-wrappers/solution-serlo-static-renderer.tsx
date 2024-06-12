@@ -31,7 +31,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const isRevisionView = useContext(RevisionViewContext)
 
   const { entityId, revisionId } = useEntityData()
-  const { exerciseTrackingId, isInExerciseGroup, hasEntityId } =
+  const { exerciseTrackingId, isInExerciseGroup, isEntity } =
     useContext(ExerciseContext)
 
   const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
@@ -75,7 +75,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
     if (isRevisionView || !entityId) return null
 
     // Exercise has its own entity ID
-    if (hasEntityId) {
+    if (isEntity) {
       return (
         <Lazy>
           <CommentAreaEntity entityId={entityId} />
