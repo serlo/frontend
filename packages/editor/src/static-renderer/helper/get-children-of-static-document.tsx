@@ -45,8 +45,8 @@ export function getChildrenOfStaticDocument(
                   isImageDocument(document)
                   ? [document.state.caption]
                   : //
-                    isCourseDocument(document) // TODO: Test if that works
-                    ? [document.state.pages.map(({ content }) => content)]
+                    isCourseDocument(document)
+                    ? document.state.pages.map(({ content }) => content)
                     : //
                       []
 

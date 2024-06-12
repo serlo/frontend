@@ -268,17 +268,15 @@ export async function requestPage(
     const pageId = getCoursePageIdFromPath(requestPath)
 
     const pages = (content as unknown as EditorCourseDocument).state.pages
+    if (!pages || !pages.length) return { kind: 'not-found' }
+
     const coursePageUrls = pages.map((page) =>
       buildCoursePageUrl(uuid.alias, page.id, page.title)
     )
-    if (!pages || !pages.length) return { kind: 'not-found' }
-
-    const pageIndex = pageId
-      ? Math.max(
-          pages.findIndex(({ id }) => id.startsWith(pageId)),
-          0
-        )
-      : 0
+    const pageIndex = Math.max(
+      pages.findIndex(({ id }) => pageId && id.startsWith(pageId)),
+      0
+    )
     const page = pages.at(pageIndex)
 
     if (!page) return { kind: 'not-found' }
