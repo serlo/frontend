@@ -12,7 +12,6 @@ export function useInputFeedbackAiExerciseState() {
   const hasSolutionSteps = steps?.trim().length > 0
   const hasSolution = solution?.trim().length > 0
 
-  console.log({ hasSolution, hasSolutionSteps, question, solution, steps })
   const initialMessages = useMemo<ChatCompletionMessageParam[]>(
     () =>
       question

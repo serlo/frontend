@@ -1,8 +1,8 @@
 import { FeedbackData } from '@editor/plugins/input-exercise/renderer'
-import { useInputFeedbackAiExerciseState } from '@editor/plugins/input-exercise/use-ai-exercise-context'
+import { useInputFeedbackAiExerciseState } from '@editor/plugins/input-exercise/use-input-feedback-ai-exercise-state'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import Image from 'next/image'
-import { MutableRefObject, useEffect, useRef, useState } from 'react'
+import { MutableRefObject, useEffect, useState } from 'react'
 
 import { ExerciseFeedback } from './exercise-feedback'
 import {
@@ -19,10 +19,8 @@ interface AIExerciseFeedbackProps
 }
 
 export function AIExerciseFeedback({
-  value,
   feedback,
   aiMessages,
-  setAiMessages,
   lastAiFeedbackRef,
 }: AIExerciseFeedbackProps) {
   const exStrings = useInstanceData().strings.content.exercises
@@ -38,33 +36,6 @@ export function AIExerciseFeedback({
     submitEventPrefix: 'input-exercise-feedback',
     skipAuth: true,
   })
-
-  console.log('LastFeedbackRef: ', lastAiFeedbackRef.current)
-  useEffect(() => {
-    console.log('Value und feedback: ', {
-      lastAiFeedbackRef: lastAiFeedbackRef.current,
-      value,
-    })
-    setAiMessages((currentAiMessages) => {
-      const newMessages = [
-        ...currentAiMessages,
-        ...(lastAiFeedbackRef.current
-          ? ([
-              {
-                role: 'user',
-                content: `Du (die KI) hast folgendes geantwortet. Stell sicher, dass du bei den künftigen Antworten den Studenten besser zu der Lösung leitest und nicht mehrmals die gleiche Antwort gibst. '${lastAiFeedbackRef.current}'`,
-              },
-            ] as ChatCompletionMessageParam[])
-          : []),
-        {
-          role: 'user',
-          content: `Der Schüler hat folgendes geantwortet: ${value}`,
-        },
-      ]
-
-      return newMessages
-    })
-  }, [value, setAiMessages, lastAiFeedbackRef])
 
   console.log('Executed AI prompt: ', { aiMessages, aiData })
 

@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react'
 
 import { getMatchingAnswer } from './helper/get-matching-answer'
 import { InputExerciseType } from './input-exercise-type'
-import { useInputFeedbackAiExerciseState } from './use-ai-exercise-context'
+import { useInputFeedbackAiExerciseState } from './use-input-feedback-ai-exercise-state'
+import { ChatCompletionMessageParam } from '@/components/exercise-generation/exercise-generation-wizard/execute-ai-prompt'
 
 export type MathjsImport = typeof import('mathjs')
 
@@ -53,6 +54,27 @@ export function AiInputExerciseRenderer({
     const customFeedbackNode = answer?.feedback ?? null
 
     if (onEvaluate) onEvaluate(hasCorrectAnswer, value)
+
+    setAiMessages((currentAiMessages) => {
+      const newMessages = [
+        ...currentAiMessages,
+        ...(lastAiFeedbackRef.current
+          ? ([
+              {
+                role: 'user',
+                content: `Du (die KI) hast folgendes geantwortet. Stell sicher, dass du bei den künftigen Antworten den Studenten besser zu der Lösung leitest und auf keinen Fall mehrmals die gleiche Antwort gibst. '${lastAiFeedbackRef.current}'`,
+              },
+            ] as ChatCompletionMessageParam[])
+          : []),
+        {
+          role: 'user',
+          content: `Der Schüler hat folgendes geantwortet: ${value}`,
+        },
+      ]
+
+      return newMessages
+    })
+
     setFeedback({
       correct: hasCorrectAnswer,
       message: customFeedbackNode ?? (
