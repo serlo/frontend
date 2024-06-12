@@ -53,13 +53,9 @@ export function EditOrInvite({
 
   const isCourse = data.typename === UuidType.Course
 
-  const href = isCourse
-    ? data.unrevisedCourseRevisions && data.unrevisedCourseRevisions > 0
-      ? getHistoryUrl(data.courseId ?? data.id)
-      : getEditHref()
-    : hasUnrevised
-      ? getHistoryUrl(data.id)
-      : getEditHref()
+  const href = hasUnrevised
+    ? getHistoryUrl(data.courseId ?? data.id)
+    : getEditHref()
   if (!href && !isInvite) return null
 
   const title = hasUnrevised

@@ -76,7 +76,6 @@ export interface AuthorToolsData {
     current: boolean
   }
   unrevisedRevisions?: number
-  unrevisedCourseRevisions?: number
 }
 
 export interface AuthorToolsProps {

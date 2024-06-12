@@ -281,7 +281,6 @@ export interface EntityData {
   content?: AnyEditorDocument | AnyEditorDocument[]
   licenseId?: number
   unrevisedRevisions?: number
-  unrevisedCourseRevisions?: number
   isUnrevised: boolean
 }
 
