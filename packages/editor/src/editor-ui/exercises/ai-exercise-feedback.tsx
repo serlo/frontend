@@ -2,7 +2,7 @@ import { FeedbackData } from '@editor/plugins/input-exercise/renderer'
 import { useInputFeedbackAiExerciseState } from '@editor/plugins/input-exercise/use-ai-exercise-context'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
+import { MutableRefObject, useEffect, useRef, useState } from 'react'
 
 import { ExerciseFeedback } from './exercise-feedback'
 import {
@@ -15,6 +15,7 @@ interface AIExerciseFeedbackProps
   extends ReturnType<typeof useInputFeedbackAiExerciseState> {
   value: string
   feedback: FeedbackData | null
+  lastAiFeedbackRef: MutableRefObject<string | null>
 }
 
 export function AIExerciseFeedback({
@@ -22,6 +23,7 @@ export function AIExerciseFeedback({
   feedback,
   aiMessages,
   setAiMessages,
+  lastAiFeedbackRef,
 }: AIExerciseFeedbackProps) {
   const exStrings = useInstanceData().strings.content.exercises
 
@@ -37,37 +39,43 @@ export function AIExerciseFeedback({
     skipAuth: true,
   })
 
-  // Only when the value of the user changes, we want to recompute the AI
-  // messages and add the previous feedback. This is why we store the AI feedback in the ref
-  const lastFeedbackRef = useRef<string | null>(null)
+  console.log('LastFeedbackRef: ', lastAiFeedbackRef.current)
   useEffect(() => {
-    setAiMessages((currentAiMessages) => [
-      ...currentAiMessages,
-      ...(lastFeedbackRef.current
-        ? ([
-            {
-              role: 'user',
-              content: `Du hast folgendes geantwortet. Stell sicher, dass du bei den künftigen Antworten den Studenten besser zu der Lösung leitest und nicht mehrmals die gleiche Antwort gibst. '${lastFeedbackRef.current}'`,
-            },
-          ] as ChatCompletionMessageParam[])
-        : []),
-      {
-        role: 'user',
-        content: `Der Schüler hat folgendes geantwortet: ${value}`,
-      },
-    ])
-  }, [value, setAiMessages])
+    console.log('Value und feedback: ', {
+      lastAiFeedbackRef: lastAiFeedbackRef.current,
+      value,
+    })
+    setAiMessages((currentAiMessages) => {
+      const newMessages = [
+        ...currentAiMessages,
+        ...(lastAiFeedbackRef.current
+          ? ([
+              {
+                role: 'user',
+                content: `Du (die KI) hast folgendes geantwortet. Stell sicher, dass du bei den künftigen Antworten den Studenten besser zu der Lösung leitest und nicht mehrmals die gleiche Antwort gibst. '${lastAiFeedbackRef.current}'`,
+              },
+            ] as ChatCompletionMessageParam[])
+          : []),
+        {
+          role: 'user',
+          content: `Der Schüler hat folgendes geantwortet: ${value}`,
+        },
+      ]
+
+      return newMessages
+    })
+  }, [value, setAiMessages, lastAiFeedbackRef])
 
   console.log('Executed AI prompt: ', { aiMessages, aiData })
 
   useEffect(() => {
     if (aiExecuteStatus === ExecutePromptStatus.Success && aiData) {
       setAiFeedback(aiData.feedback)
-      lastFeedbackRef.current = aiData.feedback
+      lastAiFeedbackRef.current = aiData.feedback
     } else if (aiExecuteStatus === ExecutePromptStatus.Error && errorMessage) {
       setAiFeedback(errorMessage)
     }
-  }, [aiExecuteStatus, aiData, errorMessage])
+  }, [aiExecuteStatus, aiData, errorMessage, lastAiFeedbackRef])
 
   if (feedback && feedback.correct) {
     // Should we render it within the little birdy icon
@@ -80,7 +88,7 @@ export function AIExerciseFeedback({
 
   return (
     <div className="ml-3 flex items-center rounded-lg border-2 border-blueish-200 bg-blueish-100 p-4 text-lg animate-in fade-in">
-      <div className="serlo-p mb-0 ml-1 flex-1">
+      <div className="serlo-p">
         {aiExecuteStatus === ExecutePromptStatus.Loading ? (
           <Skeleton />
         ) : (
@@ -92,7 +100,7 @@ export function AIExerciseFeedback({
         alt="Feedback Birdie"
         width={50}
         height={50}
-        className="ml-4"
+        className="ml-4 size-14 max-w-fit"
       />
     </div>
   )

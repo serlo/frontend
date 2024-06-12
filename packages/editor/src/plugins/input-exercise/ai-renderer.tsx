@@ -33,7 +33,8 @@ export function AiInputExerciseRenderer({
 }: InputExerciseRendererProps) {
   const [feedback, setFeedback] = useState<FeedbackData | null>(null)
   const [value, setValue] = useState('')
-  const { aiMessages, setAiMessages } = useInputFeedbackAiExerciseState()
+  const { aiMessages, setAiMessages, lastAiFeedbackRef } =
+    useInputFeedbackAiExerciseState()
   const exStrings = useInstanceData().strings.content.exercises
 
   const [mathjs, setMathjs] = useState<MathjsImport | null>(null)
@@ -59,8 +60,6 @@ export function AiInputExerciseRenderer({
       ),
     })
   }
-
-  console.log('Feedback and value: ', { feedback, value })
 
   return (
     <div className="mx-side mb-7">
@@ -103,6 +102,7 @@ export function AiInputExerciseRenderer({
             feedback={feedback}
             aiMessages={aiMessages}
             setAiMessages={setAiMessages}
+            lastAiFeedbackRef={lastAiFeedbackRef}
           />
         )}
       </div>
