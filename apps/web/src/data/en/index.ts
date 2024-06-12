@@ -96,6 +96,7 @@ export const instanceData = {
       title: 'Share!',
       copyLink: 'Copy link',
       copySuccess: 'Link copied! ',
+      copyFailed: 'Error copying link! ',
       close: 'Close',
       pdf: 'Download as PDF',
       pdfNoSolutions: 'PDF without solutions',
