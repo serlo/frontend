@@ -70,8 +70,8 @@ export function AIExerciseFeedback({
         src="/_assets/img/birdie.svg"
         alt="Feedback Birdie"
         width={50}
-        height={50}
-        className="max-w-fit"
+        height={30}
+        className="h-24 w-auto "
       />
     </div>
   )
