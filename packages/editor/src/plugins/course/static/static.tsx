@@ -19,7 +19,7 @@ export function CourseStaticRenderer({
   const router = useRouter()
   const routerCourseId = getCoursePageIdFromPath(router.asPath)
   const queryPageId = routerCourseId ?? serloContext?.activeCoursePageId
-  // courseNav: start opened when only some entries
+  // load nav opened when only some entries
   const [courseNavOpen, setCourseNavOpen] = useState(pages.length < 4 ?? false)
   const { strings } = useInstanceData()
 

@@ -234,6 +234,7 @@ export interface BreadcrumbEllipsis extends BreadcrumbLinkEntry {
 
 export interface HeadData {
   title: string
+  canonicalUrl?: string
   contentType?: string
   metaDescription?: string
   metaImage?: string

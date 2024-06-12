@@ -43,7 +43,7 @@ export async function requestPage(
     {
       // alias: { instance, path: requestPath },
       // TODO: only until api supports new alias
-      alias: { instance, path: '/mathe/51979/title' },
+      alias: { instance, path: '/mathe/307521/title' },
     }
   )
   const uuid = response.uuid
@@ -235,6 +235,7 @@ export async function requestPage(
       uuid.currentRevision?.metaDescription ?? getMetaDescription(content),
     dateCreated: uuid.date,
     dateModified: uuid.currentRevision?.date,
+    canonicalUrl: uuid.alias,
   }
 
   if (uuid.__typename === UuidType.Article) {
@@ -272,15 +273,24 @@ export async function requestPage(
     )
     if (!pages || !pages.length) return { kind: 'not-found' }
 
-    const page = pageId
-      ? pages.find(({ id }) => id.startsWith(pageId))
-      : pages[0]
+    const pageIndex = pageId
+      ? Math.max(
+          pages.findIndex(({ id }) => id.startsWith(pageId)),
+          0
+        )
+      : 0
+    const page = pages.at(pageIndex)
 
     if (!page) return { kind: 'not-found' }
 
     const fullTitle = page.title ? `${page.title} – ${uuid.title}` : uuid.title
     const metaTitle =
-      fullTitle.length <= 60 ? fullTitle : page.title ?? uuid.title
+      fullTitle.length < 75 ? fullTitle : page.title ?? uuid.title
+
+    const canonicalUrl = pageIndex ? coursePageUrls[pageIndex] : uuid.alias
+    const metaDescription = sharedMetadata.metaDescription?.length
+      ? sharedMetadata.metaDescription
+      : uuid.title
 
     return {
       kind: 'single-entity',
@@ -289,7 +299,6 @@ export async function requestPage(
         ...sharedEntityData,
         content: {
           ...(content as EditorCourseDocument),
-          // TODO: use courseTitle in rest of code
           serloContext: {
             activeCoursePageId: pageId,
             courseTitle: uuid.title,
@@ -308,6 +317,8 @@ export async function requestPage(
         ...sharedMetadata,
         title: metaTitle,
         contentType: 'course',
+        canonicalUrl,
+        metaDescription,
       },
       horizonData,
       breadcrumbsData,
