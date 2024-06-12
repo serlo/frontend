@@ -58,12 +58,12 @@ export function AIExerciseFeedback({
   }
 
   return (
-    <div className="ml-3 flex items-center rounded-lg border-2 border-blueish-200 bg-blueish-100 p-4 text-lg animate-in fade-in">
-      <div className="serlo-p">
+    <div className="ml-3 flex max-w-[500px] items-center rounded-lg border-2 border-blueish-200 bg-blueish-100 p-4 text-lg animate-in fade-in">
+      <div className="mr-4 min-w-96">
         {aiExecuteStatus === ExecutePromptStatus.Loading ? (
           <Skeleton />
         ) : (
-          aiFeedback ?? exStrings.wrong
+          <p className="serlo-p">{aiFeedback ?? exStrings.wrong}</p>
         )}
       </div>
       <Image
@@ -71,7 +71,7 @@ export function AIExerciseFeedback({
         alt="Feedback Birdie"
         width={50}
         height={50}
-        className="ml-4 size-14 max-w-fit"
+        className="max-w-fit"
       />
     </div>
   )
@@ -79,9 +79,10 @@ export function AIExerciseFeedback({
 
 function Skeleton() {
   return (
-    <div className="flex min-w-60 animate-pulse flex-col space-y-4">
-      <div className="h-4 w-2/4 rounded bg-gray-300"></div>
+    <div className="flex animate-pulse flex-col gap-y-4">
       <div className="h-4 w-3/4 rounded bg-gray-300"></div>
+      <div className="h-4 w-3/4 rounded bg-gray-300"></div>
+      <div className="h-4 w-2/4 rounded bg-gray-300"></div>
     </div>
   )
 }

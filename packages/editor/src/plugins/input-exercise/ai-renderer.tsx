@@ -41,6 +41,13 @@ export function AiInputExerciseRenderer({
   const [mathjs, setMathjs] = useState<MathjsImport | null>(null)
   useEffect(() => void import('mathjs').then((math) => setMathjs(math)), [])
 
+  // Preload birdie here, so that it shows up immediately when the feedback is
+  // rendered.
+  useEffect(() => {
+    const img = new Image()
+    img.src = '/_assets/img/birdie.svg'
+  }, [])
+
   function handleEvaluate() {
     if (!mathjs) return
 
