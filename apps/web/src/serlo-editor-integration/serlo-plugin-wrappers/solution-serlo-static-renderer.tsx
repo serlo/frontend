@@ -33,8 +33,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const exerciseGroupId = useContext(ExerciseGroupIdContext)
   const context = props.serloContext
 
-  const { entityId: exerciseUuid } = useEntityData()
-
+  const { entityId: exerciseUuid, revisionId } = useEntityData()
   const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
 
   if (isPrintMode && !printModeSolutionVisible) return null
@@ -76,6 +75,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
         entityId: context?.exerciseId ?? exerciseUuid,
         type: 'text',
         result: 'open',
+        revisionId,
       },
       ab,
       trackExperiment

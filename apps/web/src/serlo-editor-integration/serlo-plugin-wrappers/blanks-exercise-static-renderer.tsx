@@ -13,6 +13,7 @@ export function BlanksExerciseSerloStaticRenderer(
   const { asPath } = useRouter()
   const ab = useAB()
   const { entityId, revisionId } = useEntityData()
+
   const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
 
   return <BlanksExerciseStaticRenderer {...props} onEvaluate={onEvaluate} />

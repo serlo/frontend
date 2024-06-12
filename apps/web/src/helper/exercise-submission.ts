@@ -9,9 +9,8 @@ export interface ExerciseSubmissionData {
   revisionId?: number
   type: 'sc' | 'mc' | 'input' | 'h5p' | 'text' | 'ival' | 'blanks' | 'spoiler'
   result: 'correct' | 'wrong' | 'open' | string
+  sessionId?: string
 }
-
-const sesionStorageKey = 'frontend_exercise_submission_session_id'
 
 const handleDreisatzNewDesign = (
   data: ExerciseSubmissionData,
@@ -38,6 +37,8 @@ const handleDreisatzNewDesign = (
   }
 }
 
+const sessionStorageKey = 'frontend_exercise_submission_session_id'
+
 export function exerciseSubmission(
   data: ExerciseSubmissionData,
   ab: ABValue,
@@ -49,33 +50,19 @@ export function exerciseSubmission(
     handleDreisatzNewDesign(data, entityId)
   }
 
+  if (!sessionStorage.getItem(sessionStorageKey)) {
+    // set new session id
+    sessionStorage.setItem(sessionStorageKey, uuidv4())
+  }
+
+  const sessionId = sessionStorage.getItem(sessionStorageKey) as string
+  const { revisionId, path } = data
+
   if (!isProduction) {
     // eslint-disable-next-line no-console
     console.log(data)
     return // don't submit outside of production
   }
-
-  if (!sessionStorage.getItem(sesionStorageKey)) {
-    // set new session id
-    sessionStorage.setItem(sesionStorageKey, uuidv4())
-  }
-
-  const sessionId = sessionStorage.getItem(sesionStorageKey)
-
-  const { revisionId, path } = data
-
-  // eslint-disable-next-line no-warning-comments
-  // TODO: Remove commented code or fix check
-  // Shane: This is removed as we are receiving suspiciously a low number of submissions
-  //        I suspect the revisionId part of the check is the problem
-  //        Easier to filter out bad data than to fix the check in this moment
-
-  // const isValid =
-  //   data.path.length < 1024 &&
-  //   Math.floor(entityId) === entityId &&
-  //   revisionId &&
-  //   Math.floor(revisionId) === revisionId &&
-  //   entityId > 0
 
   void (async () => {
     await submitFn({

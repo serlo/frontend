@@ -10,10 +10,7 @@ export const MathHelpModal = ({
 }) => {
   const mathStrings = useEditorStrings().plugins.text.math
   return (
-    <ModalWithCloseButton
-      isOpen={isHelpOpen}
-      onCloseClick={() => void setIsHelpOpen(false)}
-    >
+    <ModalWithCloseButton isOpen={isHelpOpen} setIsOpen={setIsHelpOpen}>
       <>
         {mathStrings.shortcuts}:
         <br />
