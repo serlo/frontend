@@ -89,7 +89,7 @@ export const instanceData = {
       title: "Weitergeben!",
       copyLink: "Link kopieren",
       copySuccess: "In die Zwischenablage kopiert!",
-      copyFailed: 'Error copying link! ',
+      copyFailed: "Sorry, Link konnte nicht automatisch kopiert werden.",
       close: "Schließen",
       pdf: "Als PDF herunterladen",
       pdfNoSolutions: "PDF ohne Lösungen"
