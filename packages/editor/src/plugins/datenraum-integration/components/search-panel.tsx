@@ -1,4 +1,3 @@
-import { H5pRenderer } from '@editor/plugins/h5p/renderer'
 import { faPlus, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRef, useState } from 'react'
@@ -6,6 +5,7 @@ import { useRef, useState } from 'react'
 import { FaIcon } from '@/components/fa-icon'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { H5pRenderer } from '@/serlo-editor-integration/h5p/renderer'
 
 interface SearchPanelProps {
   onSelect: () => void

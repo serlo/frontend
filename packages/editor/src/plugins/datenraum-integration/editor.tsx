@@ -15,8 +15,8 @@ import { useState } from 'react'
 import type { DatenraumIntegrationProps } from '.'
 import { SearchPanel } from './components/search-panel'
 import { hardcodedExerciseState } from './const'
-import { H5pRenderer } from '../h5p/renderer'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { H5pRenderer } from '@/serlo-editor-integration/h5p/renderer'
 
 export function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
   const [showSearch, setShowSearch] = useState(true)

@@ -1,6 +1,6 @@
 import { DatenraumIntegrationState } from './state'
 import type { PrettyStaticState } from '../../plugin'
-import { H5pRenderer } from '../h5p/renderer'
+import { H5pRenderer } from '@/serlo-editor-integration/h5p/renderer'
 
 export interface DatenraumIntegrationDocument {
   state: PrettyStaticState<DatenraumIntegrationState>
