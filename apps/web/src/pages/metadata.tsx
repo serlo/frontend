@@ -1,4 +1,4 @@
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { MetadataApiPresentation } from '@/components/pages/metadata-api/metadata-api-presentation'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 

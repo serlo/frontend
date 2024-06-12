@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next'
 
 import { PageTitle } from '@/components/content/page-title'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { UnrevisedRevisionsOverview } from '@/components/pages/unrevised-revisions'
 import { useInstanceData } from '@/contexts/instance-context'
 import {

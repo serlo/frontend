@@ -9,18 +9,8 @@ export const UuidsProvider = UuidsContext.Provider
 
 const errorMessage = 'attempted to use uuid data outside of provider!'
 
-export function useEntityId() {
+export function useEntityData() {
   const data = useContext(UuidsContext)
-  if (data === null) {
-    throw new Error(errorMessage)
-  }
-  return data.entityId
-}
-
-export function useRevisionId() {
-  const data = useContext(UuidsContext)
-  if (data === null) {
-    throw new Error(errorMessage)
-  }
-  return data.revisionId
+  if (data === null) throw new Error(errorMessage)
+  return data
 }

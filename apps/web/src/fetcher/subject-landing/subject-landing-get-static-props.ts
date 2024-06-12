@@ -10,11 +10,19 @@ export async function subjectLandingGetStaticProps(
   const pageData = await fetchPageData(
     `/${locale}/${deSubjectLandingData[subject].allTopicsTaxonomyId}`
   )
+
+  if (pageData.kind !== 'taxonomy') {
+    return {
+      notFound: true,
+      props: { pageData: {} as TaxonomyPage },
+      revalidate: 60 * 5, // 5 mins
+    }
+  }
+
   return {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as TaxonomyPage, // remove undefined values
     },
     revalidate: 60 * 60 * 24 * 2, // 2 days
-    notFound: pageData.kind !== 'taxonomy',
   }
 }

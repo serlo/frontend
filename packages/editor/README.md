@@ -1,10 +1,55 @@
 # Serlo Editor
 
-This is an early beta version of the [Serlo Editor](https://de.serlo.org/editor). Be aware that we are currently working on this package and thus there will be breaking changes. The repository [serlo/serlo-editor-for-edusharing](https://github.com/serlo/serlo-editor-for-edusharing) shows how this package can be used.
+This is an early version of the [Serlo Editor](https://de.serlo.org/editor). Be aware that we are actively working on this package and thus there will be breaking changes before v1 is reached. The repository [serlo/serlo-editor-for-edusharing](https://github.com/serlo/serlo-editor-for-edusharing) shows an example of how this package can be used in production.
+
+If you are not using React, consider using the Serlo Editor as a [web component](https://www.npmjs.com/package/@serlo/editor-web-component).
+
+## Using the Serlo Editor
+
+### Installation
+
+In your React project
+
+```bash
+yarn add @serlo/editor
+```
+
+### Usage
+
+You can see a complete working example of the usage [here](https://github.com/serlo/serlo-editor-for-edusharing/blob/main/src/frontend/editor.tsx#L32).
+
+```tsx
+import { SerloEditor, SerloEditorProps } from '@serlo/editor'
+
+type InitialState = SerloEditorProps['initialState']
+
+function MyCustomSerloEditor({ initialState }: { initialState: InitialState }) {
+  return (
+    <SerloEditor
+      initialState={initialState}
+      onChange={({ changed, getDocument }) => {
+        if (changed){
+          console.log(`New state: `, getDocument())
+        }
+      }}
+    >
+      {({ editor }) => (
+        {/* Optionally configure plugins or i18n strings via the editor object */}
+        <div>
+          {/* Renders the actual editor content */}
+          {editor.element}
+        </div>
+      )}
+    </SerloEditor>
+  )
+}
+```
+
+See below for the current API specification.
 
 ## Current Editor package API
 
-#### 1. `SerloEditor`, `type SerloEditorProps`
+### 1. `SerloEditor`, `type SerloEditorProps`
 
 - **Why Exported/How Used**: `SerloEditor` is the core component of the `@serlo/editor` package, providing the main editor functionality. It's exported to allow users to embed the editor into their applications, passing in initial state, configuration, and custom render props to tailor the editor's functionality to their needs.
 - **Long-Term Support**: Will stay

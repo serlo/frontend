@@ -491,7 +491,8 @@ export const instanceLandingData = {
   }
 };
 export const serverSideStrings = {
-  title: "Serlo உடன் கற்றுக்கொள்ளுங்கள்!"
+  title: "Serlo உடன் கற்றுக்கொள்ளுங்கள்!",
+  topicTitleAffix: 'Basics & Exercises'
 };
 export const loggedInData = {
   authMenu: [{
@@ -866,15 +867,12 @@ export const loggedInData = {
         }
       },
       templatePlugins: {
-        applet: {
+        entity: {
+          titlePlaceholder: "தலைப்பு",
           seoTitle: 'Title for search engines',
-          seoDesc: 'Description for search engines',
-          placeholder: "தலைப்பு"
+          seoDesc: 'Description for search engines'
         },
         article: {
-          seoTitle: 'Title for search engines',
-          seoDesc: 'Description for search engines',
-          title: "தலைப்பு",
           writeShortIntro: "ஒரு சிறிய அறிமுகத்தை எழுதுங்கள்",
           stillWantMore: 'Still want more?',
           moreOnTopic: 'You can find more content on this topic here',
@@ -907,8 +905,6 @@ export const loggedInData = {
           }
         },
         course: {
-          seoDesc: 'Description for search engines',
-          title: "தலைப்பு",
           removeCoursePage: 'Remove course page',
           addCoursePage: 'Add course page'
         },
@@ -930,11 +926,6 @@ export const loggedInData = {
           createSolution: 'Create solution',
           removeSolution: 'Remove solution'
         },
-        event: {
-          seoTitle: 'Title for search engines',
-          seoDesc: 'Description for search engines',
-          title: "தலைப்பு"
-        },
         inputExercise: {
           chooseType: 'Choose the exercise type',
           unit: "அலகுகள்",
@@ -947,9 +938,6 @@ export const loggedInData = {
             'input-number-exact-match-challenge': "Number (exact, e.g. '0.5')",
             'input-expression-equal-match-challenge': "Mathematical expression (equivalent, e.g. '0.5' or '1/2' or '2/4'"
           }
-        },
-        page: {
-          title: "தலைப்பு"
         },
         scMcExercise: {
           singleChoice: 'Single-choice',
@@ -1016,9 +1004,6 @@ export const loggedInData = {
         ready: "சேமிக்கத் தயாரா?",
         pluginCopyInfo: 'You can now paste this plugin into text plugins',
         pluginCopyButtonLabel: 'Copy plugin to clipboard'
-      },
-      taxonomy: {
-        title: "தலைப்பு"
       }
     },
     profileSettings: {

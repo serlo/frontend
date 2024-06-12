@@ -1,6 +1,5 @@
 import type { StateTypeReturnType } from '@editor/plugin'
 import { entity } from '@editor/plugins/serlo-template-plugins/common/common'
-import { useHandleSave } from '@editor/plugins/serlo-template-plugins/helpers/use-handle-save'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useEffect, useState } from 'react'
 
@@ -13,6 +12,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { getLicense } from '@/data/licenses/licenses-helpers'
 import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { useHandleSave } from '@/serlo-editor-integration/use-handle-save'
 
 export interface SaveModalProps {
   open: boolean
@@ -76,9 +76,7 @@ export function SaveModal({
   return (
     <ModalWithCloseButton
       isOpen={open}
-      onCloseClick={() => {
-        setOpen(false)
-      }}
+      setIsOpen={setOpen}
       title={editorStrings.save}
       className={cn(
         !isOnlyText &&

@@ -15,7 +15,7 @@ import { MouseEvent, useRef } from 'react'
 import { FaIcon, FaIconProps } from '../../fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useEntityId } from '@/contexts/uuids-context'
+import { useEntityData } from '@/contexts/uuids-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { cn } from '@/helper/cn'
 import { colors } from '@/helper/colors'
@@ -23,7 +23,7 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 
 export interface ShareModalProps {
   isOpen: boolean
-  onClose: () => void
+  setIsOpen: (open: boolean) => void
   showPdf?: boolean
   path?: string
 }
@@ -38,14 +38,14 @@ interface EntryData {
 
 export function ShareModal({
   isOpen,
-  onClose,
+  setIsOpen,
   showPdf,
   path,
 }: ShareModalProps) {
   const shareInputRef = useRef<HTMLInputElement>(null)
   const { strings, lang } = useInstanceData()
-  const id = useEntityId()
-  const pathOrId = path ?? id
+  const { entityId } = useEntityData()
+  const pathOrId = path ?? entityId
 
   if (!isOpen || !pathOrId) return null
 
@@ -105,9 +105,9 @@ export function ShareModal({
   ]
 
   const getPdfData = (noSolutions?: boolean) => {
-    if (!id) return null
+    if (!entityId) return null
     const pathName = window.location.pathname
-    const fileName = `serlo__${pathName.split('/').pop() ?? id}.pdf`
+    const fileName = `serlo__${pathName.split('/').pop() ?? entityId}.pdf`
     const host =
       window.location.hostname === 'localhost'
         ? `https://${lang}.serlo.org`
@@ -120,7 +120,7 @@ export function ShareModal({
       onClick: () => {
         showToastNotice('🐒 ' + strings.loading.oneMomentPlease)
       },
-      href: `${host}/api/pdf/${id}${noSolutions ? '?noSolutions' : ''}`,
+      href: `${host}/api/pdf/${entityId}${noSolutions ? '?noSolutions' : ''}`,
     }
   }
 
@@ -130,7 +130,7 @@ export function ShareModal({
   return (
     <ModalWithCloseButton
       isOpen={isOpen}
-      onCloseClick={onClose}
+      setIsOpen={setIsOpen}
       title={strings.share.title}
       className="top-1/2"
     >

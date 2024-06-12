@@ -1,8 +1,8 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 
-import { Entity } from '@/components/content/entity'
-import { EntityBase } from '@/components/entity-base'
-import { FrontendClientBase } from '@/components/frontend-client-base'
+import { Entity } from '@/components/entity/entity'
+import { EntityBase } from '@/components/entity/entity-base'
+import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Topic } from '@/components/taxonomy/topic'
 import { SlugProps } from '@/data-types'
@@ -69,14 +69,17 @@ export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
     pageData.kind !== 'redirect' &&
     !isEntity
   ) {
-    return { notFound: true }
+    return { notFound: true, revalidate: 60 * 5 }
   }
+
+  // revalidation settings: 20 mins for taxonomies, 24h for entities
+  const revalidate = !isEntity ? 60 * 20 : 60 * 60 * 24
 
   return {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as SlugProps['pageData'], // remove undefined values
     },
-    revalidate: isEntity ? 60 * 60 * 24 : 60 * 15, // 1 day for entities or 15 min for taxonomies
+    revalidate,
   }
 }
 

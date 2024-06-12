@@ -7,7 +7,7 @@ export default async function handler(
   const url = req.url ?? ''
   const lumiUrl = url.replace(
     '/api/frontend/lumi/proxy',
-    'https://app.lumi.education/api/v1/h5p'
+    'https://app.lumi.education'
   )
   const lumiRes = await fetch(lumiUrl, { method: req.method })
   //console.log(lumiRes.headers.get('Content-Type'))

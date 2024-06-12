@@ -7,6 +7,7 @@ import { FlowType } from './flow-type'
 import { LoginButtonBildungsraum } from './login-button-bildungsraum'
 import { LoginButtonVidis } from './login-button-vidis'
 import { FaIcon } from '../fa-icon'
+import { shouldUseFeature } from '../user/profile-experimental'
 import { Message, getKratosMessageString } from '@/components/auth/message'
 import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
@@ -94,7 +95,11 @@ export function Node({
       }
       // provider: Mein Bildungsraum
       case 'button': {
-        if (attributes.name === 'provider' && attributes.value === 'nbp') {
+        if (
+          !isProduction &&
+          attributes.name === 'provider' &&
+          attributes.value === 'nbp'
+        ) {
           return (
             <LoginButtonBildungsraum
               attributes={attributes}
@@ -103,7 +108,11 @@ export function Node({
             />
           )
         }
-        if (attributes.name === 'provider' && attributes.value === 'vidis') {
+        if (
+          (!isProduction || shouldUseFeature('authVidis')) &&
+          attributes.name === 'provider' &&
+          attributes.value === 'vidis'
+        ) {
           return (
             <LoginButtonVidis
               attributes={attributes}

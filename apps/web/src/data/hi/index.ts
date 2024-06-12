@@ -491,7 +491,8 @@ export const instanceLandingData = {
   }
 };
 export const serverSideStrings = {
-  title: "सेर्लो के साथ सीखें!"
+  title: "सेर्लो के साथ सीखें!",
+  topicTitleAffix: 'Basics & Exercises'
 };
 export const loggedInData = {
   authMenu: [{
@@ -866,15 +867,12 @@ export const loggedInData = {
         }
       },
       templatePlugins: {
-        applet: {
+        entity: {
+          titlePlaceholder: "शीर्षक",
           seoTitle: 'Title for search engines',
-          seoDesc: 'Description for search engines',
-          placeholder: "शीर्षक"
+          seoDesc: 'Description for search engines'
         },
         article: {
-          seoTitle: 'Title for search engines',
-          seoDesc: 'Description for search engines',
-          title: "शीर्षक",
           writeShortIntro: 'Write a short introduction',
           stillWantMore: 'Still want more?',
           moreOnTopic: 'You can find more content on this topic here',
@@ -907,8 +905,6 @@ export const loggedInData = {
           }
         },
         course: {
-          seoDesc: 'Description for search engines',
-          title: "शीर्षक",
           removeCoursePage: 'Remove course page',
           addCoursePage: 'Add course page'
         },
@@ -930,11 +926,6 @@ export const loggedInData = {
           createSolution: 'Create solution',
           removeSolution: 'Remove solution'
         },
-        event: {
-          seoTitle: 'Title for search engines',
-          seoDesc: 'Description for search engines',
-          title: "शीर्षक"
-        },
         inputExercise: {
           chooseType: 'Choose the exercise type',
           unit: 'Unit',
@@ -947,9 +938,6 @@ export const loggedInData = {
             'input-number-exact-match-challenge': "Number (exact, e.g. '0.5')",
             'input-expression-equal-match-challenge': "Mathematical expression (equivalent, e.g. '0.5' or '1/2' or '2/4'"
           }
-        },
-        page: {
-          title: "शीर्षक"
         },
         scMcExercise: {
           singleChoice: 'Single-choice',
@@ -1016,9 +1004,6 @@ export const loggedInData = {
         ready: 'Ready to save?',
         pluginCopyInfo: 'You can now paste this plugin into text plugins',
         pluginCopyButtonLabel: 'Copy plugin to clipboard'
-      },
-      taxonomy: {
-        title: "शीर्षक"
       }
     },
     profileSettings: {

@@ -50,7 +50,7 @@ Scenario('Open Editor from article', async ({ I }) => {
 /*
 Scenario('Add Revision and reject', async ({ I }) => {
   I.amOnPage('/entity/repository/add-revision/74888')
-  I.click("input[placeholder='Titel']")
+  I.click("$entity-title-input")
   I.pressKey('-')
   I.pressKey('T')
   I.pressKey('e')
@@ -149,14 +149,14 @@ Scenario('Sort exercise folder', async ({ I }) => {
 
 Scenario("Switching tabs shouldn't lose work", async ({ I }) => {
   I.amOnPage('/entity/repository/add-revision/74888')
-  I.click("input[placeholder='Titel']")
+  I.click('$entity-title-input')
   I.pressKey('-')
   I.pressKey('T')
   I.pressKey('e')
   I.pressKey('s')
   I.pressKey('t')
 
-  I.seeInField("input[placeholder='Titel']", 'Treibhausgase-Test')
+  I.seeInField('$entity-title-input', 'Treibhausgase-Test')
 
   I.openNewTab()
   I.wait(2)
@@ -164,5 +164,5 @@ Scenario("Switching tabs shouldn't lose work", async ({ I }) => {
 
   I.wait(2)
 
-  I.seeInField("input[placeholder='Titel']", 'Treibhausgase-Test')
+  I.seeInField('$entity-title-input', 'Treibhausgase-Test')
 })

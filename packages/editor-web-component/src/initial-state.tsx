@@ -2,7 +2,7 @@ import { SerloEditorProps } from '@serlo/editor'
 
 export type InitialState = SerloEditorProps['initialState']
 
-export function isInitialState(obj: any): obj is InitialState {
+export function isValidState(obj: any): obj is InitialState {
   return (
     obj !== null &&
     obj !== undefined &&
@@ -47,11 +47,11 @@ export const exampleInitialState: InitialState = {
             },
             {
               type: 'math',
-              src: '\\\\left[1;3\\\\right]',
+              src: '\\left[1;3\\right]',
               inline: true,
               children: [
                 {
-                  text: '\\\\left[1;3\\\\right]',
+                  text: '\\left[1;3\\right]',
                 },
               ],
             },
@@ -60,11 +60,11 @@ export const exampleInitialState: InitialState = {
             },
             {
               type: 'math',
-              src: '\\\\Rightarrow x_1=1',
+              src: '\\Rightarrow x_1=1',
               inline: true,
               children: [
                 {
-                  text: '\\\\Rightarrow x_1=1\\\\;x_2=3',
+                  text: '\\Rightarrow x_1=1\\;x_2=3',
                 },
               ],
             },
@@ -105,7 +105,7 @@ export const exampleInitialState: InitialState = {
           {
             left: 'm',
             sign: 'equals',
-            right: '\\\\frac{f(3)-f(1)}{3-1}',
+            right: '\\frac{f(3)-f(1)}{3-1}',
             transform: '',
             explanation: {
               plugin: 'text',

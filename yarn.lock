@@ -3058,6 +3058,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@lumieducation/h5p-react@npm:^9.3.2":
+  version: 9.3.2
+  resolution: "@lumieducation/h5p-react@npm:9.3.2"
+  dependencies:
+    "@lumieducation/h5p-webcomponents": ^9.3.2
+    react: 18.2.0
+  checksum: 61ce2902c22656958163d113768af517974adbb84c447323096e63ce6eaaad791040112f1e88df70a703c60839c2a4289cf09c5c2c634a782910eb34dc52dff8
+  languageName: node
+  linkType: hard
+
+"@lumieducation/h5p-webcomponents@npm:^9.3.2":
+  version: 9.3.2
+  resolution: "@lumieducation/h5p-webcomponents@npm:9.3.2"
+  dependencies:
+    await-lock: ^2.2.2
+    deepmerge: ^4.3.1
+  checksum: 4eb3eed255f1601f629b137b55661885c1f91ee13e1f4683a0282aeac3372b4192f73de8400f5a4f5dedec4a82573a20335f12b182ef2e2389cc1be92bb45ddb
+  languageName: node
+  linkType: hard
+
 "@microsoft/api-extractor-model@npm:7.28.13":
   version: 7.28.13
   resolution: "@microsoft/api-extractor-model@npm:7.28.13"
@@ -3855,7 +3875,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@radix-ui/react-dialog@npm:^1.0.4":
+"@radix-ui/react-dialog@npm:^1.0.4, @radix-ui/react-dialog@npm:^1.0.5":
   version: 1.0.5
   resolution: "@radix-ui/react-dialog@npm:1.0.5"
   dependencies:
@@ -4849,12 +4869,16 @@ __metadata:
   resolution: "@serlo/editor-web-component@workspace:packages/editor-web-component"
   dependencies:
     "@rollup/plugin-replace": ^5.0.5
-    "@serlo/editor": 0.7.0
+    "@serlo/editor": 0.8.2
     "@serlo/typescript-config": "workspace:*"
+    "@types/escodegen": ^0.0.10
+    "@types/estraverse": ^5.1.7
     "@types/react": ^18.0.25
     "@types/react-dom": ^18.0.8
     "@vitejs/plugin-react": ^4.2.1
+    acorn: ^8.11.3
     dotenv: ^16.4.5
+    escodegen: ^2.1.0
     eslint: ^8.57.0
     eslint-config-next: ^14.2.2
     eslint-config-prettier: ^9.1.0
@@ -4862,6 +4886,7 @@ __metadata:
     eslint-plugin-import: ^2.29.1
     eslint-plugin-react: ^7.34.1
     eslint-plugin-react-hooks: ^4.6.0
+    estraverse: ^5.3.0
     jest: ^27.5.1
     npm: ^10.5.2
     npm-run-all: ^4.1.5
@@ -4879,14 +4904,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@serlo/editor@npm:0.7.0":
-  version: 0.7.0
-  resolution: "@serlo/editor@npm:0.7.0"
+"@serlo/editor@npm:0.8.2":
+  version: 0.8.2
+  resolution: "@serlo/editor@npm:0.8.2"
   dependencies:
-    "@serlo/katex-styles": ^1.0.1
+    "@serlo/katex-styles": 1.0.1
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: a693ebf9f14b91d7c7e0e9545d4d603e30d6c547ee0d6c1f657d5318c60d5cf989dceb5827b18c25450d9d72a60f31e988ac0d745f6d90281d184309b5594110
+  checksum: 1fef81683f3a8c4ba81d5a1613f32096495a836757cb93c1536832560a03600f96c7856ca3a41b3b2e5a01982eae30a9bbf08b97ea24d3af26b22194928ef661
   languageName: node
   linkType: hard
 
@@ -4909,12 +4934,13 @@ __metadata:
     "@ory/client": ^1.9.0
     "@ory/integrations": ^1.1.5
     "@prezly/slate-lists": ^0.107.0
+    "@radix-ui/react-dialog": ^1.0.5
     "@radix-ui/react-navigation-menu": ^1.1.4
     "@radix-ui/react-select": ^1.2.2
     "@reduxjs/toolkit": ^1.9.7
     "@serlo/authorization": ^0.60.0
     "@serlo/frontend": "workspace:*"
-    "@serlo/katex-styles": ^1.0.1
+    "@serlo/katex-styles": 1.0.1
     "@serlo/typescript-config": "workspace:*"
     "@svgr/webpack": ^8.1.0
     "@tailwindcss/typography": ^0.5.12
@@ -4935,7 +4961,6 @@ __metadata:
     "@types/react-dnd-multi-backend": ^6.0.6
     "@types/react-dom": ^18.0.8
     "@types/react-lazyload": ^3.2.1
-    "@types/react-modal": ^3.16.1
     "@types/react-notify-toast": ^0.5.6
     "@types/react-syntax-highlighter": ^15.5.11
     "@types/slate-react": ^0.50.1
@@ -4998,7 +5023,6 @@ __metadata:
     react-is: ^18.2.0
     react-lazyload: ^3.2.0
     react-mathquill: Entkenntnis/tmp-react-mathquill
-    react-modal: ^3.16.1
     react-notify-toast: Entkenntnis/tmp-react-notify-toast
     react-redux: ^8.1.3
     react-simple-star-rating: ^5.1.7
@@ -5063,17 +5087,19 @@ __metadata:
     "@graphql-codegen/typescript": 4.0.6
     "@graphql-codegen/typescript-operations": 4.2.0
     "@hello-pangea/dnd": ^16.6.0
+    "@lumieducation/h5p-react": ^9.3.2
     "@next/bundle-analyzer": ^13.5.6
     "@ory/client": ^1.9.0
     "@ory/integrations": ^1.1.5
     "@prezly/slate-lists": ^0.107.0
+    "@radix-ui/react-dialog": ^1.0.5
     "@radix-ui/react-navigation-menu": ^1.1.4
     "@radix-ui/react-select": ^1.2.2
     "@reduxjs/toolkit": ^1.9.7
     "@serlo/authorization": ^0.60.0
     "@serlo/editor": "workspace:*"
     "@serlo/eslint-config": "workspace:*"
-    "@serlo/katex-styles": ^1.0.1
+    "@serlo/katex-styles": 1.0.1
     "@serlo/typescript-config": "workspace:*"
     "@svgr/webpack": ^8.1.0
     "@tailwindcss/typography": ^0.5.12
@@ -5095,7 +5121,6 @@ __metadata:
     "@types/react-dnd-multi-backend": ^6.0.6
     "@types/react-dom": ^18.0.8
     "@types/react-lazyload": ^3.2.1
-    "@types/react-modal": ^3.16.1
     "@types/react-notify-toast": ^0.5.6
     "@types/react-syntax-highlighter": ^15.5.11
     "@types/slate-react": ^0.50.1
@@ -5159,7 +5184,6 @@ __metadata:
     react-is: ^18.2.0
     react-lazyload: ^3.2.0
     react-mathquill: Entkenntnis/tmp-react-mathquill
-    react-modal: ^3.16.1
     react-redux: ^8.1.3
     react-simple-star-rating: ^5.1.7
     react-syntax-highlighter: ^15.5.0
@@ -5186,12 +5210,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@serlo/katex-styles@npm:^1.0.1":
+"@serlo/katex-styles@npm:1.0.1":
   version: 1.0.1
   resolution: "@serlo/katex-styles@npm:1.0.1"
   checksum: b8e50847d42669b78a14ee972348457573d806f487b099bf7a552d98cd734abce502be029b2125df0d20dcffc9f51ab1c365965f2c23eafec9aaeddfbc7859d1
   languageName: node
   linkType: hard
+
+"@serlo/katex-styles@workspace:packages/katex-styles":
+  version: 0.0.0-use.local
+  resolution: "@serlo/katex-styles@workspace:packages/katex-styles"
+  languageName: unknown
+  linkType: soft
 
 "@serlo/monorepo@workspace:.":
   version: 0.0.0-use.local
@@ -5209,12 +5239,6 @@ __metadata:
 "@serlo/typescript-config@workspace:*, @serlo/typescript-config@workspace:packages/typescript-config":
   version: 0.0.0-use.local
   resolution: "@serlo/typescript-config@workspace:packages/typescript-config"
-  languageName: unknown
-  linkType: soft
-
-"@serlo/workspace-katex-styles@workspace:packages/katex-styles":
-  version: 0.0.0-use.local
-  resolution: "@serlo/workspace-katex-styles@workspace:packages/katex-styles"
   languageName: unknown
   linkType: soft
 
@@ -5671,6 +5695,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/escodegen@npm:^0.0.10":
+  version: 0.0.10
+  resolution: "@types/escodegen@npm:0.0.10"
+  checksum: 270fb286cc2a901963ecab0273435ca30dbd1cbd69c9562be9826342888a938e30fd8446af0cd1c0a679420f5923d1ef10696c6fbad2a1e249d5f04a5ee43729
+  languageName: node
+  linkType: hard
+
+"@types/estraverse@npm:^5.1.7":
+  version: 5.1.7
+  resolution: "@types/estraverse@npm:5.1.7"
+  dependencies:
+    "@types/estree": "*"
+  checksum: e598a73ec90c0b1989b55d55271742a7abfaa873ebe5041bfb1fbfe44fa5e64e5d759a60f4cb0a3f24b90c4ba98d87955aa836a8eea796ad4d880e4def92c23d
+  languageName: node
+  linkType: hard
+
 "@types/estree@npm:*, @types/estree@npm:1.0.5, @types/estree@npm:^1.0.0":
   version: 1.0.5
   resolution: "@types/estree@npm:1.0.5"
@@ -5932,15 +5972,6 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: a49540f576009d9655a25efcd4f3b5835fb49799e1a2c55886edd2983feceacb6cdfc9d96485289a826d8236cf8fc414d5cf9137413323f93382d275346a96d0
-  languageName: node
-  linkType: hard
-
-"@types/react-modal@npm:^3.16.1":
-  version: 3.16.3
-  resolution: "@types/react-modal@npm:3.16.3"
-  dependencies:
-    "@types/react": "*"
-  checksum: 53c92dfbe46aae6f4ca4d96a166fd69a4b8dc539c5e8f755086dd1471656924ca6dd0a179be746c634686a0073aef67bb9615ee8600d9536cc1521b738e48453
   languageName: node
   linkType: hard
 
@@ -6522,6 +6553,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"acorn@npm:^8.11.3":
+  version: 8.11.3
+  resolution: "acorn@npm:8.11.3"
+  bin:
+    acorn: bin/acorn
+  checksum: 76d8e7d559512566b43ab4aadc374f11f563f0a9e21626dd59cb2888444e9445923ae9f3699972767f18af61df89cd89f5eaaf772d1327b055b45cb829b4a88c
+  languageName: node
+  linkType: hard
+
 "agent-base@npm:6":
   version: 6.0.2
   resolution: "agent-base@npm:6.0.2"
@@ -6971,6 +7011,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"await-lock@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "await-lock@npm:2.2.2"
+  checksum: feb11f36768a8545879ed2d214b46aae484e6564ffa466af9212d5782897203770795cae01f813de04a46f66c0b8ee6bc690a0c435b04e00cad5a18ef0842e25
+  languageName: node
+  linkType: hard
+
 "aws-sign2@npm:~0.7.0":
   version: 0.7.0
   resolution: "aws-sign2@npm:0.7.0"
@@ -7292,11 +7339,11 @@ __metadata:
   linkType: hard
 
 "braces@npm:^3.0.2, braces@npm:~3.0.2":
-  version: 3.0.2
-  resolution: "braces@npm:3.0.2"
+  version: 3.0.3
+  resolution: "braces@npm:3.0.3"
   dependencies:
-    fill-range: ^7.0.1
-  checksum: e2a8e769a863f3d4ee887b5fe21f63193a891c68b612ddb4b68d82d1b5f3ff9073af066c343e9867a393fe4c2555dcb33e89b937195feb9c1613d259edfcd459
+    fill-range: ^7.1.1
+  checksum: b95aa0b3bd909f6cd1720ffcf031aeaf46154dd88b4da01f9a1d3f7ea866a79eba76a6d01cbc3c422b2ee5cdc39a4f02491058d5df0d7bf6e6a162a832df1f69
   languageName: node
   linkType: hard
 
@@ -9258,7 +9305,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"escodegen@npm:^2.0.0":
+"escodegen@npm:^2.0.0, escodegen@npm:^2.1.0":
   version: 2.1.0
   resolution: "escodegen@npm:2.1.0"
   dependencies:
@@ -9659,13 +9706,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"exenv@npm:^1.2.0":
-  version: 1.2.2
-  resolution: "exenv@npm:1.2.2"
-  checksum: a894f3b60ab8419e0b6eec99c690a009c8276b4c90655ccaf7d28faba2de3a6b93b3d92210f9dc5efd36058d44f04098f6bbccef99859151104bfd49939904dc
-  languageName: node
-  linkType: hard
-
 "exit@npm:^0.1.2":
   version: 0.1.2
   resolution: "exit@npm:0.1.2"
@@ -9888,12 +9928,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fill-range@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "fill-range@npm:7.0.1"
+"fill-range@npm:^7.1.1":
+  version: 7.1.1
+  resolution: "fill-range@npm:7.1.1"
   dependencies:
     to-regex-range: ^5.0.1
-  checksum: cc283f4e65b504259e64fd969bcf4def4eb08d85565e906b7d36516e87819db52029a76b6363d0f02d0d532f0033c9603b9e2d943d56ee3b0d4f7ad3328ff917
+  checksum: b4abfbca3839a3d55e4ae5ec62e131e2e356bf4859ce8480c64c4876100f4df292a63e5bb1618e1d7460282ca2b305653064f01654474aa35c68000980f17798
   languageName: node
   linkType: hard
 
@@ -15226,7 +15266,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.5.8, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.5.8, prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -15537,34 +15577,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-lifecycles-compat@npm:^3.0.0":
-  version: 3.0.4
-  resolution: "react-lifecycles-compat@npm:3.0.4"
-  checksum: a904b0fc0a8eeb15a148c9feb7bc17cec7ef96e71188280061fc340043fd6d8ee3ff233381f0e8f95c1cf926210b2c4a31f38182c8f35ac55057e453d6df204f
-  languageName: node
-  linkType: hard
-
 react-mathquill@Entkenntnis/tmp-react-mathquill:
   version: 1.0.3
   resolution: "react-mathquill@https://github.com/Entkenntnis/tmp-react-mathquill.git#commit=c0766224949465d8c8776ec0464130ecad8d3381"
   peerDependencies:
     react: ^18.2.0
   checksum: 50f47865bc754ecd655b4608efc3f861230e69076c37696b8cd99264f47dd22846979fc3f4e39c95dd1be150bd21053bb519425d85d9eb7c20360e062c426458
-  languageName: node
-  linkType: hard
-
-"react-modal@npm:^3.16.1":
-  version: 3.16.1
-  resolution: "react-modal@npm:3.16.1"
-  dependencies:
-    exenv: ^1.2.0
-    prop-types: ^15.7.2
-    react-lifecycles-compat: ^3.0.0
-    warning: ^4.0.3
-  peerDependencies:
-    react: ^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18
-    react-dom: ^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18
-  checksum: 978936e9320fad839c039b9ee4de55d40888156cb40e093615d6fbc2ff07139d5db06f14782cb7767f780bd5fb57956778669426c535ebc0068a7a03882c7e75
   languageName: node
   linkType: hard
 
@@ -15710,7 +15728,7 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"react@npm:^18.2.0":
+"react@npm:18.2.0, react@npm:^18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
   dependencies:

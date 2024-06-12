@@ -491,7 +491,8 @@ export const instanceLandingData = {
   }
 };
 export const serverSideStrings = {
-  title: "lernen mit Serlo!"
+  title: "lernen mit Serlo!",
+  topicTitleAffix: "Grundlagen & Übungen"
 };
 export const loggedInData = {
   authMenu: [{
@@ -866,15 +867,12 @@ export const loggedInData = {
         }
       },
       templatePlugins: {
-        applet: {
+        entity: {
+          titlePlaceholder: "Titel",
           seoTitle: "Titel für Suchmaschinen",
-          seoDesc: "Beschreibung für Suchmaschinen",
-          placeholder: "Titel"
+          seoDesc: "Beschreibung für Suchmaschinen"
         },
         article: {
-          seoTitle: "Titel für Suchmaschinen",
-          seoDesc: "Beschreibung für Suchmaschinen",
-          title: "Titel",
           writeShortIntro: "Fasse das Thema des Artikels kurz zusammen",
           stillWantMore: "Du hast noch nicht genug vom Thema?",
           moreOnTopic: "Hier findest du noch weitere passende Inhalte zum Thema",
@@ -907,8 +905,6 @@ export const loggedInData = {
           }
         },
         course: {
-          seoDesc: "Beschreibung für Suchmaschinen",
-          title: "Titel",
           removeCoursePage: "Kursseite entfernen",
           addCoursePage: "Kursseite hinzufügen"
         },
@@ -930,11 +926,6 @@ export const loggedInData = {
           createSolution: "Lösung hinzufügen",
           removeSolution: "Lösung entfernen"
         },
-        event: {
-          seoTitle: "Titel für Suchmaschinen",
-          seoDesc: "Beschreibung für Suchmaschinen",
-          title: "Titel"
-        },
         inputExercise: {
           chooseType: "Wähle den Antworttyp",
           unit: "Einheit (optional)",
@@ -947,9 +938,6 @@ export const loggedInData = {
             'input-number-exact-match-challenge': "Zahl (genau, z.B. '0.5')",
             'input-expression-equal-match-challenge': "Mathematischer Ausdruck (gleichwertig, z.B. \"0,5\", \"1/2\" oder \"2/4\")"
           }
-        },
-        page: {
-          title: "Titel"
         },
         scMcExercise: {
           singleChoice: "Single Choice",
@@ -1016,9 +1004,6 @@ export const loggedInData = {
         ready: "Bereit zum Speichern?",
         pluginCopyInfo: "Du kannst das Plugin jetzt in Text-Plugins einfügen",
         pluginCopyButtonLabel: "Plugin in die Zwischenablage kopieren"
-      },
-      taxonomy: {
-        title: "Titel"
       }
     },
     profileSettings: {

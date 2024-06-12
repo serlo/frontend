@@ -1,10 +1,11 @@
+import { isShadowRoot } from '@editor/core/helpers/use-shadow-root'
 import { MutableRefObject, ReactNode, useRef, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 interface ClientOnlyPortalProps {
   children: ReactNode
   selector: string
-  shadowRootRef?: MutableRefObject<ShadowRoot | null> | null
+  shadowRootRef: ShadowRoot | null
 }
 
 export function ClientOnlyPortal(props: ClientOnlyPortalProps) {
@@ -13,9 +14,9 @@ export function ClientOnlyPortal(props: ClientOnlyPortalProps) {
   const [mount, setMount] = useState(false)
 
   useEffect(() => {
-    ref.current =
-      shadowRootRef?.current?.querySelector<HTMLDivElement>(selector) ??
-      document.querySelector<HTMLDivElement>(selector)
+    ref.current = isShadowRoot(shadowRootRef)
+      ? shadowRootRef?.querySelector<HTMLDivElement>(selector)
+      : document.querySelector<HTMLDivElement>(selector)
 
     setMount(true)
   }, [selector, shadowRootRef])

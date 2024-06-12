@@ -1,3 +1,4 @@
+import { isShadowRoot } from '@editor/core/helpers/use-shadow-root'
 import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar/components/toolbar-select'
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
@@ -34,9 +35,7 @@ export interface MathEditorProps {
 export function MathEditor(props: MathEditorProps) {
   const [isHelpOpen, setIsHelpOpen] = useState(false)
   const [hasError, setHasError] = useState(false)
-  // Need to attach a ref to the container to be able to select the shadow DOM
   const containerRef = useRef<HTMLDivElement>(null)
-
   const mathStrings = useEditorStrings().plugins.text.math
 
   const { visual, readOnly, state, disableBlock } = props
@@ -161,10 +160,10 @@ export function MathEditor(props: MathEditorProps) {
   function renderControlsPortal(children: JSX.Element) {
     const root = containerRef.current?.getRootNode()
 
-    const isShadowRoot = root instanceof ShadowRoot
     const isDocument = root instanceof Document
+    const isShadowRootNode = isShadowRoot(root)
     const target =
-      (isShadowRoot || isDocument
+      (isShadowRootNode || isDocument
         ? root.querySelector<HTMLDivElement>('.toolbar-controls-target')
         : document.body) ?? document.body
 

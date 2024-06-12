@@ -32,9 +32,9 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
 
   const type = getTranslatedType(
     strings,
-    data.type === ExerciseInlineType.Exercise
+    data.typename === ExerciseInlineType.Exercise
       ? UuidType.Exercise
-      : data.type === ExerciseInlineType.ExerciseGroup
+      : data.typename === ExerciseInlineType.ExerciseGroup
         ? UuidType.ExerciseGroup
         : UuidType.Exercise
   )

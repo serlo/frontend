@@ -1,5 +1,5 @@
 {
-  "name": "@serlo/workspace-katex-styles",
+  "name": "@serlo/katex-styles",
   "version": "1.0.1",
   "description": "CSS styles for katex",
   "keywords": [
