@@ -69,6 +69,8 @@ export interface EditorCourseDocument {
   // additional data for serlo, not part of normal state
   serloContext?: {
     activeCoursePageId?: string
+    courseTitle: string
+    coursePageUrls: string[]
   }
 }
 export interface EditorUnsupportedDocument {

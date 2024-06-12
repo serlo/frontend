@@ -7,7 +7,6 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { MouseEvent } from 'react'
 
-import { buildNewPathWithCourseId } from '../helper/get-course-id-from-path'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
@@ -17,10 +16,12 @@ export function CourseFooter({
   activePageIndex: index,
   pages,
   onOverviewButtonClick,
+  pageUrls,
 }: {
   activePageIndex: number
   pages: EditorCourseDocument['state']['pages']
   onOverviewButtonClick: (e: MouseEvent<HTMLButtonElement>) => void
+  pageUrls?: string[]
 }) {
   const onOverviewClick = (e: MouseEvent<HTMLButtonElement>) => {
     location.href = '#course-overview'
@@ -31,16 +32,13 @@ export function CourseFooter({
   const nextIndex = index + 1
   const previousPage = pages[previousIndex]
   const nextPage = pages[nextIndex]
-  const previousHref = previousPage ? `?page=${previousPage.id}` : undefined
-  const nextHref = nextPage ? `?page=${nextPage.id}` : undefined
+  const previousHref = previousPage ? pageUrls?.[previousIndex] : undefined
+  const nextHref = nextPage ? pageUrls?.[nextIndex] : undefined
 
   const { strings } = useInstanceData()
 
-  function navigate(page: EditorCourseDocument['state']['pages'][number]) {
-    const newPath = buildNewPathWithCourseId(router.asPath, page.title, page.id)
-    void router.push(newPath, undefined, {
-      shallow: true,
-    })
+  function navigate(toPath: string) {
+    void router.push(toPath, undefined, { shallow: true })
     scrollIfNeeded(document.querySelector('#course-title'))
   }
 
@@ -51,25 +49,25 @@ export function CourseFooter({
         {nextHref ? <link rel="next" href={nextHref} /> : null}
       </Head>
       <nav className="mb-8 mt-10 flex justify-between bg-brand-50 py-5 align-top sm:bg-white">
-        {previousPage && (
+        {previousHref ? (
           <a
             href={previousHref}
             onClick={(e) => {
               e.preventDefault()
-              navigate(previousPage)
+              navigate(previousHref)
             }}
             className="serlo-button-light mx-side h-fit hover:no-underline"
           >
             <FaIcon icon={faArrowCircleRight} className="-scale-x-100" />{' '}
             {strings.course.back}
           </a>
-        )}
+        ) : null}
         {nextHref ? (
           <a
             href={nextHref}
             onClick={(e) => {
               e.preventDefault()
-              navigate(nextPage)
+              navigate(nextHref)
             }}
             className="ml-auto mr-side text-right hover:no-underline"
           >

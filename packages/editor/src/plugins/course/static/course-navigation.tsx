@@ -1,7 +1,6 @@
 import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { useRouter } from 'next/router'
 
-import { buildNewPathWithCourseId } from '../helper/get-course-id-from-path'
 import { CourseNavigationRenderer } from '../renderer/course-navigation'
 import { cn } from '@/helper/cn'
 
@@ -10,11 +9,13 @@ export function CourseNavigation({
   activePageId,
   courseNavOpen,
   setCourseNavOpen,
+  pageUrls,
 }: {
   pages: EditorCourseDocument['state']['pages']
   activePageId?: string
   courseNavOpen: boolean
   setCourseNavOpen: (open: boolean) => void
+  pageUrls?: string[]
 }) {
   const router = useRouter()
   if (!pages) return null
@@ -25,11 +26,10 @@ export function CourseNavigation({
     <CourseNavigationRenderer
       open={courseNavOpen}
       onOverviewButtonClick={toggleCourseNav}
-      pages={pages.map(({ id: rawId, title }) => {
+      pages={pages.map(({ id: rawId, title }, index) => {
         const id = rawId.split('-')[0]
         const active = activePageId && activePageId.startsWith(id)
-        // TODO: set final alias as href
-        const href = '' //active ? undefined : `?page=${id}`
+        const href = active ? undefined : pageUrls?.[index]
 
         return {
           key: id + title,
@@ -42,18 +42,9 @@ export function CourseNavigation({
               href={href}
               onClick={(e) => {
                 e.preventDefault()
-                if (active) return
-
-                const newPath = buildNewPathWithCourseId(
-                  router.asPath,
-                  title,
-                  id
-                )
-                void router.push(newPath, undefined, {
-                  shallow: true,
-                })
+                if (!href) return
+                void router.push(href, undefined, { shallow: true })
                 setTimeout(() => {
-                  console.log(title)
                   document.title = title
                 }, 100)
               }}

@@ -43,6 +43,7 @@ export function CourseStaticRenderer({
         activePageId={activePage?.id}
         courseNavOpen={courseNavOpen}
         setCourseNavOpen={setCourseNavOpen}
+        pageUrls={serloContext?.coursePageUrls}
       />
 
       {pages.length ? (
@@ -53,6 +54,7 @@ export function CourseStaticRenderer({
             pages={pages}
             onOverviewButtonClick={openCourseNav}
             activePageIndex={activePageIndex}
+            pageUrls={serloContext?.coursePageUrls}
           />
         </>
       ) : (

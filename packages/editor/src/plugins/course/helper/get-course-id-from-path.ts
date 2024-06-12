@@ -1,24 +1,40 @@
 export function getCoursePageIdFromPath(path: string) {
-  const parts = path.split('/')
-  if (parts.length < 3) return undefined
+  const regex =
+    /^\/(?<subject>[^/]+\/)?(?<courseId>\d+)\/(?<coursePageId>[0-9a-f]+)\/(?<title>[^/]*)$/
+  const match = regex.exec(path)
 
-  const coursePageId = path.split('/').at(-1)?.split('-')[0]
-  return coursePageId?.length ? coursePageId : undefined
+  if (match && match.groups) return match.groups.coursePageId
 }
 
-// TODO: adapt to final alias format
-export function buildNewPathWithCourseId(
-  path: string,
-  title: string,
-  id: string
+export function buildCoursePageUrl(
+  courseAlias: string,
+  coursePageId: string,
+  title: string
 ) {
-  const parts = path.split('/')
-  const base = (parts.length > 2 ? parts.slice(0, -1) : parts).join('/')
+  const aliasParts = courseAlias.split('/')
+  if (aliasParts.length !== 4) {
+    throw new Error('Invalid course alias')
+  }
+  const base = aliasParts.slice(0, -1).join('/')
+  return `${base}/${coursePageId.split('-')[0]}/${toSlug(title)}`
+}
 
-  const slugTitle = title
-    .toLocaleLowerCase()
-    .replace(/['"`=+*&^%$#@!.<>?]/g, '')
-    .replace(/[[\]{}() ,;:/|-]+/g, '-')
-
-  return `${base}/${id}-${slugTitle}`
+function toSlug(title: string) {
+  return title
+    .toLowerCase()
+    .replace(/ä/g, 'ae')
+    .replace(/ö/g, 'oe')
+    .replace(/ü/g, 'ue')
+    .replace(/ß/g, 'ss')
+    .replace(/á/g, 'a')
+    .replace(/é/g, 'e')
+    .replace(/í/g, 'i')
+    .replace(/ó/g, 'o')
+    .replace(/ú/g, 'u')
+    .replace(/ñ/g, 'n')
+    .replace(/ /g, '-') // replace spaces with hyphens
+    .replace(/[^\w-]+/g, '') // remove all non-word chars including _
+    .replace(/--+/g, '-') // replace multiple hyphens
+    .replace(/^-+/, '') // trim starting hyphen
+    .replace(/-+$/, '') // trim end hyphen
 }

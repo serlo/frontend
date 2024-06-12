@@ -1,4 +1,7 @@
-import { getCoursePageIdFromPath } from '@editor/plugins/course/helper/get-course-id-from-path'
+import {
+  buildCoursePageUrl,
+  getCoursePageIdFromPath,
+} from '@editor/plugins/course/helper/get-course-id-from-path'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
@@ -38,7 +41,9 @@ export async function requestPage(
     endpoint,
     dataQuery,
     {
-      alias: { instance, path: requestPath },
+      // alias: { instance, path: requestPath },
+      // TODO: only until api supports new alias
+      alias: { instance, path: '/mathe/51979/title' },
     }
   )
   const uuid = response.uuid
@@ -54,7 +59,7 @@ export async function requestPage(
   if (
     uuid.__typename === UuidRevType.Article ||
     uuid.__typename === UuidRevType.Page ||
-    uuid.__typename === UuidRevType.CoursePage ||
+    uuid.__typename === UuidRevType.CoursePage || // TODO: remove at some point
     uuid.__typename === UuidRevType.Video ||
     uuid.__typename === UuidRevType.Event ||
     uuid.__typename === UuidRevType.Applet ||
@@ -158,7 +163,7 @@ export async function requestPage(
     uuid.currentRevision?.content
       ? parseDocumentString(uuid.currentRevision?.content)
       : undefined
-  )) as EditorRowsDocument
+  )) as EditorRowsDocument | EditorCourseDocument
 
   if (uuid.__typename === UuidType.Event) {
     return {
@@ -262,9 +267,15 @@ export async function requestPage(
     const pageId = getCoursePageIdFromPath(requestPath)
 
     const pages = (content as unknown as EditorCourseDocument).state.pages
+    const coursePageUrls = pages.map((page) =>
+      buildCoursePageUrl(uuid.alias, page.id, page.title)
+    )
     if (!pages || !pages.length) return { kind: 'not-found' }
 
-    const page = pageId ? pages.find((page) => page.id === pageId) : pages[0]
+    const page = pageId
+      ? pages.find(({ id }) => id.startsWith(pageId))
+      : pages[0]
+
     if (!page) return { kind: 'not-found' }
 
     const fullTitle = page.title ? `${page.title} – ${uuid.title}` : uuid.title
@@ -277,10 +288,14 @@ export async function requestPage(
       entityData: {
         ...sharedEntityData,
         content: {
-          ...content,
-          // @ts-expect-error passing down additional data
-          serloContext: { activeCoursePageId: pageId },
-        },
+          ...(content as EditorCourseDocument),
+          // TODO: use courseTitle in rest of code
+          serloContext: {
+            activeCoursePageId: pageId,
+            courseTitle: uuid.title,
+            coursePageUrls,
+          },
+        } as EditorCourseDocument,
         typename: UuidType.Course,
         title: uuid.title,
         schemaData: {
