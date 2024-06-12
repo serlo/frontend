@@ -61,9 +61,10 @@
     @apply mx-side mb-5 mt-0;
   }
   .serlo-modal {
-    @apply absolute left-1/2 -mr-[50%] max-w-[85%] -translate-x-1/2 -translate-y-1/2;
+    @apply fixed left-1/2 max-w-[85%] -translate-x-1/2 -translate-y-1/2;
+    @apply bottom-0 top-[40%] h-fit w-[500px] pb-10 outline-none;
     @apply rounded-xl border-none bg-white px-2.5 pt-2.5 shadow-modal;
-    @apply top-[40%] w-[500px] pb-10 outline-none;
+    @apply z-[101];
   }
   .serlo-table {
     @apply mx-side border-separate border-spacing-0 hyphens-auto whitespace-nowrap break-normal border-brand-200 mobile:whitespace-normal;
@@ -435,7 +436,7 @@
     }
   }
 
-  /* heavily inspired by Shaw (https://css-tricks.com/auto-growing-inputs-textareas/#aa-other-ideas) 
+  /* heavily inspired by Shaw (https://css-tricks.com/auto-growing-inputs-textareas/#aa-other-ideas)
     this needs a data-value on the wrapping element equal to the value of the input
   */
   .serlo-autogrow-input {
