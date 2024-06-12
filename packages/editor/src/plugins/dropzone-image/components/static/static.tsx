@@ -1,5 +1,6 @@
 import { DndWrapper } from '@editor/core/components/dnd-wrapper'
 import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
+import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
 import type {
   EditorDropzoneImageDocument,
   EditorImageDocument,
@@ -22,6 +23,13 @@ import {
 } from '../shared/draggable-answer'
 import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
+
+enum FeedbackData {
+  Unset = 'unset',
+  Correct = 'correct',
+  Wrong = 'wrong',
+  MissedSome = 'missedSome',
+}
 
 export function DropzoneImageStaticRenderer(
   props: EditorDropzoneImageDocument
@@ -85,6 +93,8 @@ export function DropzoneImageStaticRenderer(
   const [isCorrectAnswerMap, setIsCorrectAnswerMap] = useState(
     new Map<string, Map<string, boolean | null> | null>()
   )
+
+  const [feedback, setFeedback] = useState<FeedbackData>(FeedbackData.Unset)
 
   const onAnswerDrop = (
     answerId: string,
@@ -172,17 +182,23 @@ export function DropzoneImageStaticRenderer(
   }, [isAnswerZoneCorrectMap.size, answerZones.length])
 
   const checkAnswers = () => {
+    let newFeedback = FeedbackData.Unset
+
     answerZones.forEach((answerZone) => {
-      const expectedAnswerIds = answerZone.answers.map((a) => a.id)
+      const expectedAnswerIds = answerZone.answers.map(({ id }) => id)
       const droppedAnswerIds = dropzoneAnswerMap.get(answerZone.id) || []
-      if (droppedAnswerIds.length === 0)
-        return setIsAnswerZoneCorrectMap(
-          (prev) => new Map(prev.set(answerZone.id, false))
-        )
-      const isAnswerCorrect =
+
+      // Check if the answer zone has only and all expected answers,
+      // and mark the answer zone as correct or incorrect accordingly
+      const isAnswerZoneCorrect =
         expectedAnswerIds.every((id) => droppedAnswerIds.includes(id)) &&
         expectedAnswerIds.length === droppedAnswerIds.length
+      setIsAnswerZoneCorrectMap(
+        (prev) => new Map(prev.set(answerZone.id, isAnswerZoneCorrect))
+      )
 
+      // Compare expected answers with dropped answers,
+      // and mark each dropped answer as correct or incorrect accordingly
       const correctAnswerMap = new Map<string, boolean | null>()
       droppedAnswerIds.forEach((id) => {
         correctAnswerMap.set(id, expectedAnswerIds.includes(id))
@@ -190,9 +206,27 @@ export function DropzoneImageStaticRenderer(
       setIsCorrectAnswerMap(
         (prev) => new Map(prev.set(answerZone.id, correctAnswerMap))
       )
-      setIsAnswerZoneCorrectMap(
-        (prev) => new Map(prev.set(answerZone.id, isAnswerCorrect))
-      )
+
+      // If an answer zone doesn't have enough dropped answers,
+      // show a feedback message accordingly
+      if (expectedAnswerIds.length > droppedAnswerIds.length) {
+        newFeedback = FeedbackData.MissedSome
+        setFeedback(newFeedback)
+      }
+
+      // If an answer zone has wrong answers,
+      // show a feedback message accordingly
+      if (!isAnswerZoneCorrect && newFeedback === FeedbackData.Unset) {
+        newFeedback = FeedbackData.Wrong
+        setFeedback(newFeedback)
+      }
+
+      // If an answer zone is correct,
+      // show a feedback message accordingly
+      if (newFeedback === FeedbackData.Unset) {
+        newFeedback = FeedbackData.Correct
+        setFeedback(newFeedback)
+      }
     })
   }
 
@@ -248,15 +282,23 @@ export function DropzoneImageStaticRenderer(
             ))}
         </DraggableArea>
 
-        {isCheckAnswersButtonVisible ? (
-          <button
-            className="serlo-button-blue mr-3 h-8"
-            onClick={checkAnswers}
-            data-qa="plugin-exercise-check-answer-button"
-          >
-            {exercisesStrings.check}
-          </button>
-        ) : null}
+        <div className="flex">
+          {isCheckAnswersButtonVisible ? (
+            <button
+              className="serlo-button-blue mr-3 h-8"
+              onClick={checkAnswers}
+              data-qa="plugin-exercise-check-answer-button"
+            >
+              {exercisesStrings.check}
+            </button>
+          ) : null}
+          {feedback !== FeedbackData.Unset ? (
+            <ExerciseFeedback
+              correct={feedback === FeedbackData.Correct}
+              missedSome={feedback === FeedbackData.MissedSome}
+            />
+          ) : null}
+        </div>
       </DndWrapper>
     </div>
   )
