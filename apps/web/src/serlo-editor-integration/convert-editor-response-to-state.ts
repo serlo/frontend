@@ -236,7 +236,6 @@ export function convertEditorResponseToState(
         id: uuid.id,
         parent: uuid.parent?.id ?? 0,
         position: uuid.weight,
-        taxonomy: uuid.taxonomyId,
         term: {
           name: uuid.name,
         },
