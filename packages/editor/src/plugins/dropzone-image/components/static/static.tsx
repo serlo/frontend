@@ -1,32 +1,26 @@
 import { DndWrapper } from '@editor/core/components/dnd-wrapper'
 import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
-import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
 import type { EditorDropzoneImageDocument } from '@editor/types/editor-plugins'
 import { useMemo, useState } from 'react'
 
+import { FeedbackButton } from './feedback-button'
 import { StaticCanvas } from './static-canvas'
-import type { DraggableAnswerType, PossibleAnswerType } from '../../types'
+import {
+  FeedbackData,
+  type DraggableAnswerType,
+  type PossibleAnswerType,
+} from '../../types'
 import { convertStaticAnswers } from '../../utils/answer-zone'
 import {
   DraggableAnswer,
   draggableAnswerDragType,
 } from '../shared/draggable-answer'
-import { useInstanceData } from '@/contexts/instance-context'
-
-enum FeedbackData {
-  Unset = 'unset',
-  Correct = 'correct',
-  Wrong = 'wrong',
-  MissedSome = 'missedSome',
-}
 
 export function DropzoneImageStaticRenderer(
   props: EditorDropzoneImageDocument
 ) {
   const { state } = props
   const { answerZones, extraDraggableAnswers } = state
-
-  const exercisesStrings = useInstanceData().strings.content.exercises
 
   const correctAnswers = answerZones
     .map(({ answers }) => convertStaticAnswers(answers))
@@ -218,23 +212,11 @@ export function DropzoneImageStaticRenderer(
             ))}
         </DraggableArea>
 
-        <div className="flex">
-          {isCheckAnswersButtonVisible ? (
-            <button
-              className="serlo-button-blue mr-3 h-8"
-              onClick={checkAnswers}
-              data-qa="plugin-exercise-check-answer-button"
-            >
-              {exercisesStrings.check}
-            </button>
-          ) : null}
-          {feedback !== FeedbackData.Unset ? (
-            <ExerciseFeedback
-              correct={feedback === FeedbackData.Correct}
-              missedSome={feedback === FeedbackData.MissedSome}
-            />
-          ) : null}
-        </div>
+        <FeedbackButton
+          feedback={feedback}
+          isButtonVisible={isCheckAnswersButtonVisible}
+          onClick={checkAnswers}
+        />
       </DndWrapper>
     </div>
   )

@@ -78,3 +78,10 @@ export enum ModalType {
   Edit = 'edit',
   CreateWrongAnswer = 'createWrongAnswer',
 }
+
+export enum FeedbackData {
+  Unset = 'unset',
+  Correct = 'correct',
+  Wrong = 'wrong',
+  MissedSome = 'missedSome',
+}
