@@ -3,11 +3,46 @@ import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 import svgr from 'vite-plugin-svgr'
+import replace from '@rollup/plugin-replace'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
 
 // https://vitejs.dev/guide/build.html#library-mode
 /* we use vite only for building the serlo editor package */
+
+const js = (value: string) => JSON.stringify(value)
+
+const productionKeys = ['process.env.NODE_ENV', 'process.env.NEXT_PUBLIC_ENV']
+
+const notProvidedKeys = [
+  '__NEXT_I18N_SUPPORT',
+  '__NEXT_ROUTER_BASEPATH',
+  '__NEXT_CLIENT_ROUTER_D_FILTER',
+  '__NEXT_CLIENT_ROUTER_S_FILTER',
+  '__NEXT_LINK_NO_TOUCH_START',
+  '__NEXT_OPTIMISTIC_CLIENT_CACHE',
+  '__NEXT_SCROLL_RESTORATION',
+  '__NEXT_HAS_REWRITES',
+  '__NEXT_CROSS_ORIGIN',
+  '__NEXT_MANUAL_CLIENT_BASE_PATH',
+  '__NEXT_STRICT_NEXT_HEAD',
+  '__NEXT_TRAILING_SLASH',
+  '__NEXT_EXTERNAL_MIDDLEWARE_REWRITE_RESOLVE',
+  '__NEXT_CLIENT_ROUTER_FILTER_ENABLED',
+  '__NEXT_MIDDLEWARE_PREFETCH',
+  'NEXT_RUNTIME',
+  'NEXT_DEPLOYMENT_ID',
+]
+
+const envReplacements = {
+  ...Object.fromEntries(productionKeys.map((key) => [key, js('production')])),
+  ...Object.fromEntries(
+    notProvidedKeys.map((key) => [
+      `process.env.${key}`,
+      js(`NOT_PROVIDED_${key}`),
+    ])
+  ),
+}
 
 // eslint-disable-next-line import/no-default-export
 export default defineConfig({
@@ -35,6 +70,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    replace({ ...envReplacements, preventAssignment: false }),
     react(),
     dts({
       outDir: 'dist',
