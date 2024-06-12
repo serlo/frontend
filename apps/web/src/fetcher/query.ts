@@ -98,7 +98,6 @@ export const dataQuery = gql`
         name
         description
         weight
-        taxonomyId
         trashed
         parent {
           id
