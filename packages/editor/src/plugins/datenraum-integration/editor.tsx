@@ -75,7 +75,7 @@ export function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
         title=""
         isOpen={showSearch}
         className="top-1/2 max-h-[80vh] min-h-[60vh] w-[900px] max-w-[90vw] -translate-x-1/2 overflow-y-auto"
-        onCloseClick={() => setShowSearch(false)}
+        setIsOpen={setShowSearch}
       >
         <SearchPanel onSelect={handleSelectResource} />
       </ModalWithCloseButton>
