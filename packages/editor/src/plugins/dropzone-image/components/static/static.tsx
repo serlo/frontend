@@ -28,15 +28,6 @@ export function DropzoneImageStaticRenderer(
 
   const wrongAnswers = convertStaticAnswers(extraDraggableAnswers)
 
-  const possibleAnswers = useMemo(() => {
-    return [...correctAnswers, ...wrongAnswers]
-      .map((possibleAnswer) => ({ possibleAnswer, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
-      .map(({ possibleAnswer }) => possibleAnswer)
-    // Prevent re-shuffling on every render - only shuffle when answers change
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(correctAnswers), JSON.stringify(wrongAnswers)])
-
   const [dropzoneAnswerMap, setDropzoneAnswerMap] = useState(
     new Map<string, string[]>()
   )
@@ -50,6 +41,24 @@ export function DropzoneImageStaticRenderer(
   )
 
   const [feedback, setFeedback] = useState<FeedbackData>(FeedbackData.Unset)
+
+  // Merge and shuffle correct and wrong answers
+  const correctAnswersStringified = JSON.stringify(correctAnswers)
+  const wrongAnswersStringified = JSON.stringify(wrongAnswers)
+  const shuffledAnswers = useMemo(() => {
+    return [...correctAnswers, ...wrongAnswers]
+      .map((possibleAnswer) => ({ possibleAnswer, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ possibleAnswer }) => possibleAnswer)
+    // Prevent re-shuffling on every render - only shuffle when answers change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [correctAnswersStringified, wrongAnswersStringified])
+
+  // Filter out answers that are already in an answer zone
+  const possibleAnswers = shuffledAnswers.filter(
+    ({ id }: PossibleAnswerType) =>
+      !Array.from(dropzoneAnswerMap.values()).flat().includes(id)
+  )
 
   const onAnswerDrop = (
     answerId: string,
@@ -200,16 +209,9 @@ export function DropzoneImageStaticRenderer(
           accept={draggableAnswerDragType}
           onDrop={onDraggableAreaAnswerDrop}
         >
-          {possibleAnswers
-            .filter(
-              (possibleAnswer: PossibleAnswerType) =>
-                !Array.from(dropzoneAnswerMap)
-                  .reduce((acc: string[], curr) => acc.concat(curr[1]), [])
-                  .includes(possibleAnswer.id)
-            )
-            .map((possibleAnswer: PossibleAnswerType, index) => (
-              <DraggableAnswer answer={possibleAnswer} key={index} />
-            ))}
+          {possibleAnswers.map((possibleAnswer, index) => (
+            <DraggableAnswer answer={possibleAnswer} key={index} />
+          ))}
         </DraggableArea>
 
         <FeedbackButton
