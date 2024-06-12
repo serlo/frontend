@@ -17,7 +17,7 @@ interface BlankDropZoneProps {
   dropZone: BlankDropZoneSpec
   droppedAnswersIds: string[]
   isCorrect?: boolean | null
-  isCorrectAnswerMap?: Map<string, boolean | null> | null
+  isAnswerCorrectMap?: Map<string, boolean | null> | null
   visibility: DropzoneVisibility
   answersCount: number
   onAnswerDrop: (
@@ -34,7 +34,7 @@ export const BlankDropZone = memo(function BlankDropZone(
     dropZone,
     droppedAnswersIds,
     isCorrect,
-    isCorrectAnswerMap,
+    isAnswerCorrectMap,
     visibility,
     answersCount,
     onAnswerDrop,
@@ -100,7 +100,7 @@ export const BlankDropZone = memo(function BlankDropZone(
           answer={answer}
           originDropzoneId={id}
           isCorrect={isCorrect}
-          isAnswerCorrect={isCorrectAnswerMap?.get(answer.id)}
+          isAnswerCorrect={isAnswerCorrectMap?.get(answer.id)}
           isOnlyDroppedAnswer={hasOnlyOneAnswer}
           hasEnoughDroppedAnswers={droppedAnswers.length === answersCount}
         />

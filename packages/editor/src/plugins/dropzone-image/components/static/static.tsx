@@ -1,28 +1,17 @@
 import { DndWrapper } from '@editor/core/components/dnd-wrapper'
 import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
 import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
-import type {
-  EditorDropzoneImageDocument,
-  EditorImageDocument,
-} from '@editor/types/editor-plugins'
+import type { EditorDropzoneImageDocument } from '@editor/types/editor-plugins'
 import { useMemo, useState } from 'react'
 
-import { BlankDropZone } from './blank-drop-zone'
-import type {
-  DraggableAnswerType,
-  DropzoneVisibility,
-  PossibleAnswerType,
-} from '../../types'
-import {
-  getAnswerZoneImageSrc,
-  getAnswerZoneText,
-} from '../../utils/answer-zone'
+import { StaticCanvas } from './static-canvas'
+import type { DraggableAnswerType, PossibleAnswerType } from '../../types'
+import { convertStaticAnswers } from '../../utils/answer-zone'
 import {
   DraggableAnswer,
   draggableAnswerDragType,
 } from '../shared/draggable-answer'
 import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 
 enum FeedbackData {
   Unset = 'unset',
@@ -35,43 +24,15 @@ export function DropzoneImageStaticRenderer(
   props: EditorDropzoneImageDocument
 ) {
   const { state } = props
-  const {
-    answerZones,
-    backgroundImage,
-    canvasDimensions,
-    extraDraggableAnswers,
-    dropzoneVisibility,
-  } = state
+  const { answerZones, extraDraggableAnswers } = state
 
   const exercisesStrings = useInstanceData().strings.content.exercises
 
-  const bgImagePluginState = backgroundImage as EditorImageDocument
-  const backgroundImageUrlFromPlugin = (bgImagePluginState?.state?.src ||
-    '') as string
-
-  const convertAnswers = (
-    answers: EditorDropzoneImageDocument['state']['extraDraggableAnswers']
-  ) => {
-    return answers.map((answer) => {
-      const answerImageUrl = getAnswerZoneImageSrc(answer.image.id || '')
-      const answerText = getAnswerZoneText(answer.text.id || '')
-
-      return {
-        id: answer.id,
-        text: answerText,
-        imageUrl: answerImageUrl,
-      }
-    })
-  }
-
   const correctAnswers = answerZones
-    .map((zone) => {
-      const answersForZone = convertAnswers(zone.answers)
-      return answersForZone
-    })
+    .map(({ answers }) => convertStaticAnswers(answers))
     .flat()
 
-  const wrongAnswers = convertAnswers(extraDraggableAnswers)
+  const wrongAnswers = convertStaticAnswers(extraDraggableAnswers)
 
   const possibleAnswers = useMemo(() => {
     return [...correctAnswers, ...wrongAnswers]
@@ -90,7 +51,7 @@ export function DropzoneImageStaticRenderer(
     new Map<string, boolean | null>()
   )
 
-  const [isCorrectAnswerMap, setIsCorrectAnswerMap] = useState(
+  const [isAnswerCorrectMap, setIsAnswerCorrectMap] = useState(
     new Map<string, Map<string, boolean | null> | null>()
   )
 
@@ -116,7 +77,7 @@ export function DropzoneImageStaticRenderer(
           originDropzoneId,
           existingAnswersFromOrigin.filter((id) => id !== answerId)
         )
-        setIsCorrectAnswerMap((prev) => new Map(prev.set(answerId, null)))
+        setIsAnswerCorrectMap((prev) => new Map(prev.set(answerId, null)))
       }
 
       // Reset the correct/incorrect state of origin and target zones.
@@ -203,7 +164,7 @@ export function DropzoneImageStaticRenderer(
       droppedAnswerIds.forEach((id) => {
         correctAnswerMap.set(id, expectedAnswerIds.includes(id))
       })
-      setIsCorrectAnswerMap(
+      setIsAnswerCorrectMap(
         (prev) => new Map(prev.set(answerZone.id, correctAnswerMap))
       )
 
@@ -230,41 +191,16 @@ export function DropzoneImageStaticRenderer(
     })
   }
 
-  const isSmallScreen = () => window.innerWidth < 1024
-  const scaler = isSmallScreen() ? 0.4 : 1
-
   return (
     <div className="mx-side">
       <DndWrapper>
-        {/* TODO: Extract this into a StaticCanvas component */}
-        <div
-          className={cn(`
-            relative mx-auto h-[786px] w-[786px] overflow-hidden rounded-lg
-            border border-brand-500 bg-cover bg-center bg-no-repeat
-          `)}
-          style={{
-            backgroundImage: `url(${backgroundImageUrlFromPlugin})`,
-            height: `${canvasDimensions.height * scaler}px`,
-            width: `${canvasDimensions.width * scaler}px`,
-          }}
-        >
-          {answerZones.map((answerZone) => {
-            const { answers, id, ...rest } = answerZone
-            const dropZone = { ...rest, id }
-            return (
-              <BlankDropZone
-                key={id}
-                dropZone={dropZone}
-                droppedAnswersIds={dropzoneAnswerMap.get(id) || []}
-                isCorrect={isAnswerZoneCorrectMap.get(id)}
-                isCorrectAnswerMap={isCorrectAnswerMap.get(id)}
-                visibility={dropzoneVisibility as DropzoneVisibility}
-                answersCount={answers.length}
-                onAnswerDrop={onAnswerDrop}
-              />
-            )
-          })}
-        </div>
+        <StaticCanvas
+          state={state}
+          dropzoneAnswerMap={dropzoneAnswerMap}
+          isAnswerZoneCorrectMap={isAnswerZoneCorrectMap}
+          isAnswerCorrectMap={isAnswerCorrectMap}
+          onAnswerDrop={onAnswerDrop}
+        />
 
         <DraggableArea
           accept={draggableAnswerDragType}
