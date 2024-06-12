@@ -82,9 +82,19 @@ function getAnswerBorder(
   hasEnoughDroppedAnswers: boolean
 ) {
   if (imageUrl && isOnlyAnswer) return ''
-  if (isCorrect === true && isAnswerCorrect && !hasEnoughDroppedAnswers)
+  if (
+    isCorrect === true &&
+    isAnswerCorrect === true &&
+    !hasEnoughDroppedAnswers
+  )
     return 'rounded border-3 border-red-500'
   if (isCorrect === true) return 'rounded border-3 border-green-500'
+  if (
+    isCorrect === false &&
+    isAnswerCorrect === true &&
+    hasEnoughDroppedAnswers
+  )
+    return 'rounded border-3 border-green-500'
   if (isCorrect === false) return 'rounded border-3 border-red-500'
   if (imageUrl) return 'rounded border border-brand'
   return ''

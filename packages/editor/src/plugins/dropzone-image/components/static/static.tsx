@@ -94,7 +94,12 @@ export function DropzoneImageStaticRenderer(
     setDropzoneAnswerMap((prev) => {
       const updatedMap = new Map(prev)
       const existingAnswers = updatedMap.get(dropzoneId) || []
+
+      // Add the dropped answer to the target zone.
       updatedMap.set(dropzoneId, [...existingAnswers, answerId])
+
+      // If the answer was dragged from another zone,
+      // remove it from there and reset its correct/incorrect state.
       if (originDropzoneId) {
         const existingAnswersFromOrigin = updatedMap.get(originDropzoneId) || []
         updatedMap.set(
@@ -103,14 +108,20 @@ export function DropzoneImageStaticRenderer(
         )
         setIsCorrectAnswerMap((prev) => new Map(prev.set(answerId, null)))
       }
+
+      // Reset the correct/incorrect state of origin and target zones.
       setIsAnswerZoneCorrectMap((prev) => {
         const updatedIsCorrectMap = new Map(prev)
-        if (updatedMap.get(dropzoneId)?.length) {
-          updatedIsCorrectMap.set(dropzoneId, null)
-        } else {
-          updatedIsCorrectMap.delete(dropzoneId)
-        }
+
+        // Set the target zone as unchecked.
+        updatedIsCorrectMap.set(dropzoneId, null)
+
+        // If the answer was not dragged from another dropzone,
+        // return early.
         if (!originDropzoneId) return updatedIsCorrectMap
+
+        // If the origin zone still has answers, set it as unchecked.
+        // Otherwise, set it as empty.
         if (updatedMap.get(originDropzoneId)?.length) {
           updatedIsCorrectMap.set(originDropzoneId, null)
         } else {
@@ -120,46 +131,42 @@ export function DropzoneImageStaticRenderer(
       })
       return updatedMap
     })
-    setIsAnswerZoneCorrectMap((prev) => new Map(prev.set(dropzoneId, null)))
   }
 
-  const onDraggableAreaAnswerDrop = (answer: DraggableAnswerType) => {
-    let zoneToReset: string = ''
-    const originDropzoneId = answer.originDropzoneId || ''
+  const onDraggableAreaAnswerDrop = (droppedAnswer: DraggableAnswerType) => {
+    const originDropzoneId = droppedAnswer.originDropzoneId || ''
 
     setDropzoneAnswerMap((prev) => {
       const updatedMap = new Map(prev)
-      updatedMap.forEach((value, key) => {
-        if (value.includes(answer.id)) {
-          zoneToReset = key
-          updatedMap.set(
-            key,
-            value.filter((id) => id !== answer.id)
-          )
-        }
-      })
+      const originAnswerZoneAnswersIds = updatedMap.get(originDropzoneId)
 
-      if (zoneToReset.length > 0) {
-        setIsAnswerZoneCorrectMap((prev) => {
-          const updatedIsCorrectMap = new Map(prev)
-          if (updatedMap.get(zoneToReset)?.length) {
-            updatedIsCorrectMap.set(zoneToReset, null)
-          } else {
-            updatedIsCorrectMap.delete(zoneToReset)
-          }
-          if (updatedMap.get(originDropzoneId)?.length) {
-            updatedIsCorrectMap.set(originDropzoneId, null)
-          } else {
-            updatedIsCorrectMap.delete(originDropzoneId)
-          }
-          return updatedIsCorrectMap
-        })
+      // Remove the dropped answer from its origin zone.
+      // This automatically places the answer in the draggable area.
+      if (originAnswerZoneAnswersIds?.includes(droppedAnswer.id)) {
+        updatedMap.set(
+          originDropzoneId,
+          originAnswerZoneAnswersIds.filter((id) => id !== droppedAnswer.id)
+        )
       }
+
+      // Reset the correct/incorrect state of the origin zone.
+      setIsAnswerZoneCorrectMap((prev) => {
+        const updatedIsCorrectMap = new Map(prev)
+        // If the origin zone still has answers, set it as unchecked.
+        // Otherwise, set it as empty.
+        if (updatedMap.get(originDropzoneId)?.length) {
+          updatedIsCorrectMap.set(originDropzoneId, null)
+        } else {
+          updatedIsCorrectMap.delete(originDropzoneId)
+        }
+        return updatedIsCorrectMap
+      })
 
       return updatedMap
     })
   }
 
+  // Show answer button if none of the zones are empty
   const isCheckAnswersButtonVisible = useMemo(() => {
     return isAnswerZoneCorrectMap.size === answerZones.length
   }, [isAnswerZoneCorrectMap.size, answerZones.length])
