@@ -12,6 +12,7 @@ interface AnswerContentProps {
 
 export function AnswerContent(props: AnswerContentProps) {
   const { url, text, className } = props
+  const isSmallScreen = () => window.innerWidth < 1024
 
   if (url) {
     return (
@@ -24,15 +25,28 @@ export function AnswerContent(props: AnswerContentProps) {
   }
 
   if (text) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const el = text[0] as any
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const content = isSmallScreen() ? (
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      el?.children?.[0]?.text
+    ) : (
+      <StaticSlate element={text} />
+    )
+
+    const classNames = cn(
+      'block rounded-full border border-brand',
+      isSmallScreen() ? 'object-contain px-1 text-xs' : 'mx-0 px-2',
+      className
+    )
+
     return (
       <span
         data-qa="plugin-dropzone-image-answer-content-text"
-        className={cn(
-          'mx-0 block rounded-full border border-brand px-2',
-          className
-        )}
+        className={classNames}
       >
-        <StaticSlate element={text} />
+        {content}
       </span>
     )
   }

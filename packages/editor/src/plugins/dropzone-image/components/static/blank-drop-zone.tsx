@@ -70,18 +70,25 @@ export const BlankDropZone = memo(function BlankDropZone(
 
   const hasOnlyOneAnswer = droppedAnswers.length === 1
   const isOnlyAnswerTypeImage = hasOnlyOneAnswer && !!droppedAnswers[0].imageUrl
+  const isSmallScreen = () => window.innerWidth < 1024
+  const scaler = isSmallScreen() ? 0.4 : 1
 
   return (
     <div
       ref={drop}
       className={cn(
-        `absolute flex flex-wrap items-center justify-center gap-2 rounded p-1`,
+        `absolute flex flex-wrap items-center justify-center gap-2 rounded p-0`,
         getBackgroundColor(visibility, isOver, canDrop),
         getBorderWidth(visibility, isCorrect, isOnlyAnswerTypeImage),
         getBorderColor(isCorrect, isOnlyAnswerTypeImage),
         getBorderType(visibility)
       )}
-      style={{ left, top, height, width }}
+      style={{
+        left: left * scaler,
+        top: top * scaler,
+        width: width * scaler,
+        height: height * scaler,
+      }}
       data-qa={`blank-drop-zone-${id}`}
     >
       {visibility !== DropzoneVisibility.None && name ? (

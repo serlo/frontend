@@ -34,7 +34,7 @@ export function DraggableAnswer(props: DraggableAnswerProps) {
   return (
     <span
       className={cn(
-        'flex cursor-grab items-center justify-center',
+        'flex max-h-full cursor-grab items-center justify-center',
         getSize(imageUrl, isOnlyDroppedAnswer),
         getBorder(imageUrl, isCorrect, isOnlyDroppedAnswer)
       )}

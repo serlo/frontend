@@ -189,6 +189,9 @@ export function DropzoneImageStaticRenderer(
     })
   }
 
+  const isSmallScreen = () => window.innerWidth < 1024
+  const scaler = isSmallScreen() ? 0.4 : 1
+
   return (
     <div className="mx-side">
       <DndWrapper>
@@ -200,8 +203,8 @@ export function DropzoneImageStaticRenderer(
           `)}
           style={{
             backgroundImage: `url(${backgroundImageUrlFromPlugin})`,
-            height: `${canvasDimensions.height}px`,
-            width: `${canvasDimensions.width}px`,
+            height: `${canvasDimensions.height * scaler}px`,
+            width: `${canvasDimensions.width * scaler}px`,
           }}
         >
           {answerZones.map((answerZone) => {
