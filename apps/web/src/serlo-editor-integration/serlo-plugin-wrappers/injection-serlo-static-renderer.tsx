@@ -49,6 +49,7 @@ export function InjectionSerloStaticRenderer({
           const uuid = data.data.uuid
           if (
             uuid.__typename === 'Article' ||
+            uuid.__typename === 'Course' ||
             uuid.__typename === 'TaxonomyTerm'
           ) {
             if (!uuid.alias) setContent([])

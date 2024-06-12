@@ -19,6 +19,7 @@ export function buildCoursePageUrl(
   return `${base}/${coursePageId.split('-')[0]}/${toSlug(title)}`
 }
 
+// Copied from https://github.com/serlo/api.serlo.org/blob/ce94045b513e59da1ddd191b498fe01f6ff6aa0a/packages/server/src/schema/uuid/abstract-uuid/resolvers.ts#L685-L703
 function toSlug(title: string) {
   return title
     .toLowerCase()
