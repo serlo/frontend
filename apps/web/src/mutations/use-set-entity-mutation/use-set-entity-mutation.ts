@@ -136,18 +136,17 @@ function getGenericInputData(
   data: SetEntityMutationData,
   needsReview: boolean
 ): SetAbstractEntityInput | undefined {
-  if (!data.__typename) return
-  const content =
-    data.__typename === UuidType.Course ? data.description : data.content
+  const { __typename, changes, content, controls, id } = data
+  if (!__typename) return
 
   return {
-    entityType: data.__typename,
-    changes: getRequiredString(mutationStrings, 'changes', data.changes),
+    entityType: __typename,
+    changes: getRequiredString(mutationStrings, 'changes', changes),
     content: getRequiredString(mutationStrings, 'content', content),
-    entityId: data.id ? data.id : undefined,
+    entityId: id ? id : undefined,
     needsReview,
-    subscribeThis: data.controls.notificationSubscription ?? false,
-    subscribeThisByEmail: data.controls.emailSubscription ?? false,
+    subscribeThis: controls.notificationSubscription ?? false,
+    subscribeThisByEmail: controls.emailSubscription ?? false,
   }
 }
 
