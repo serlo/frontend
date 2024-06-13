@@ -190,7 +190,7 @@ export const instanceData = {
     },
     comments: {
       question: "क्या आपका कोई प्रश्न है?",
-      questionLink: 'Write it below',
+      questionLink: 'Write it here',
       commentsOne: "टिप्पणियां",
       commentsMany: "टिप्पणियां",
       submit: "जमा करें",
