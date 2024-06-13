@@ -1,5 +1,5 @@
 import { isShadowRoot } from '@editor/core/helpers/use-shadow-root'
-import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar/components/toolbar-select'
+import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
