@@ -48,6 +48,7 @@ export function AnswerContent(props: AnswerContentProps) {
       <span
         data-qa="plugin-dropzone-image-answer-content-text"
         className={classNames}
+        suppressHydrationWarning
       >
         {content}
       </span>
