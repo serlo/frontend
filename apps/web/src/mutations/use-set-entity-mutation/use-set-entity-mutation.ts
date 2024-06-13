@@ -154,30 +154,38 @@ function getAdditionalInputData(
   mutationStrings: LoggedInData['strings']['mutations'],
   data: SetEntityMutationData
 ) {
+  const {
+    title,
+    url,
+    meta_title: metaTitle,
+    meta_description: metaDescription,
+    content,
+    description,
+  } = data
   switch (data.__typename) {
     case UuidType.Applet:
       return {
-        title: getRequiredString(mutationStrings, 'title', data.title),
-        url: getRequiredString(mutationStrings, 'url', data.url),
-        metaTitle: data['meta_title'],
-        metaDescription: data['meta_description'],
+        title: getRequiredString(mutationStrings, 'title', title),
+        url: getRequiredString(mutationStrings, 'url', url),
+        metaTitle,
+        metaDescription,
       }
     case UuidType.Article:
       return {
-        title: getRequiredString(mutationStrings, 'title', data.title),
-        metaTitle: data['meta_title'],
-        metaDescription: data['meta_description'],
+        title: getRequiredString(mutationStrings, 'title', title),
+        metaTitle,
+        metaDescription,
       }
     case UuidType.Course:
       return {
-        title: getRequiredString(mutationStrings, 'title', data.title),
-        metaDescription: data['meta_description'],
+        title: getRequiredString(mutationStrings, 'title', title),
+        metaDescription,
       }
     case UuidType.Event:
       return {
-        title: getRequiredString(mutationStrings, 'title', data.title),
-        metaTitle: data['meta_title'],
-        metaDescription: data['meta_description'],
+        title: getRequiredString(mutationStrings, 'title', title),
+        metaTitle,
+        metaDescription,
       }
     case UuidType.Exercise:
       return {}
@@ -185,13 +193,10 @@ function getAdditionalInputData(
       return {}
     case UuidType.Video:
       return {
-        title: getRequiredString(mutationStrings, 'title', data.title),
-        url: getRequiredString(mutationStrings, 'url', data.content), // url is stored in content for some reason
-        content: getRequiredString(
-          mutationStrings,
-          'content',
-          data.description
-        ),
+        title: getRequiredString(mutationStrings, 'title', title),
+        // url is stored in content for some reason
+        url: getRequiredString(mutationStrings, 'url', content),
+        content: getRequiredString(mutationStrings, 'content', description),
       }
   }
   return {}

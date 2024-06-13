@@ -3,6 +3,7 @@ import { EntityTitleInput } from '@editor/plugins/serlo-template-plugins/common/
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useEffect, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 import { CourseNavigation } from './course-navigation'
 import type { CourseProps } from '..'
@@ -86,10 +87,8 @@ export function CourseEditor(props: CourseProps) {
   }
 
   function generateNewId() {
-    const newId = Math.random().toString(36).substring(2, 6)
-    if (pages.some(({ id }) => id.value === newId)) {
-      return generateNewId()
-    }
+    const newId = uuidv4().slice(0, 5)
+    if (pages.some(({ id }) => id.value === newId)) return generateNewId()
     return newId
   }
 }
