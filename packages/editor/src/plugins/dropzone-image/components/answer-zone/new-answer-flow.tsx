@@ -32,7 +32,8 @@ export function NewAnswerFlow(props: NewAnswerFlowProps) {
 
   const answersList = isWrongAnswer
     ? extraDraggableAnswers
-    : answerZones?.find(({ id }) => id.get() === zoneId)?.answers
+    : (answerZones?.find(({ id }) => id.get() === zoneId)
+        ?.answers as typeof extraDraggableAnswers)
 
   const goToStepOne = (newStepOneType: AnswerType) => {
     if (answersList) {
@@ -71,7 +72,7 @@ export function NewAnswerFlow(props: NewAnswerFlowProps) {
     </div>
   )
 
-  const stepOne = answersList ? (
+  const stepOne = (
     <div className="mt-16">
       <AnswerRenderer
         answerType={stepOneType}
@@ -81,8 +82,6 @@ export function NewAnswerFlow(props: NewAnswerFlowProps) {
         onSave={onSave}
       />
     </div>
-  ) : (
-    <>Error </>
   )
 
   const steps = [stepZero, stepOne]
