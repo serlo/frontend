@@ -53,7 +53,6 @@ const dropzoneImageState = object({
 export const defaultConfig: DropzoneImageConfig = {}
 
 export function createDropzoneImagePlugin(): EditorPlugin<DropzoneImagePluginState> {
-  // config = defaultConfig
   return {
     Component: DropzoneImageEditor,
     state: dropzoneImageState,
