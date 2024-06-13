@@ -1,6 +1,6 @@
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
-Feature('Serlo Editor - Blank exercise')
+Feature('Serlo Editor - Dropzone Image plugin')
 
 Before(popupWarningFix)
 
