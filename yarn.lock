@@ -4962,6 +4962,7 @@ __metadata:
     "@types/react-dom": ^18.0.8
     "@types/react-lazyload": ^3.2.1
     "@types/react-notify-toast": ^0.5.6
+    "@types/react-resizable": ^3.0.7
     "@types/react-syntax-highlighter": ^15.5.11
     "@types/slate-react": ^0.50.1
     "@types/uuid": ^9.0.8
@@ -5025,6 +5026,7 @@ __metadata:
     react-mathquill: Entkenntnis/tmp-react-mathquill
     react-notify-toast: Entkenntnis/tmp-react-notify-toast
     react-redux: ^8.1.3
+    react-resizable: ^3.0.5
     react-simple-star-rating: ^5.1.7
     react-syntax-highlighter: ^15.5.0
     react-textarea-autosize: ^8.5.3
@@ -5981,6 +5983,15 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: efa6f0f1879b0be63a574a171884db1b4c70ce3bea705d9d01d74ba6e1299a5eb098aacd57b04737794ad39d5d62ef5bf2202b713dd2c08b43e58b50a75015bf
+  languageName: node
+  linkType: hard
+
+"@types/react-resizable@npm:^3.0.7":
+  version: 3.0.7
+  resolution: "@types/react-resizable@npm:3.0.7"
+  dependencies:
+    "@types/react": "*"
+  checksum: e66dfabcb614f1da1f561d0ecaf1dc384fc0e361d97fa7b219f04f8b85ad9dd2576437117af52ae6bf33644061db2d9452e0a4aadfe457588d93a36d2db8de0b
   languageName: node
   linkType: hard
 
@@ -7893,7 +7904,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:^1.2.1":
+"clsx@npm:^1.1.1, clsx@npm:^1.2.1":
   version: 1.2.1
   resolution: "clsx@npm:1.2.1"
   checksum: 30befca8019b2eb7dbad38cff6266cf543091dae2825c856a62a8ccf2c3ab9c2907c4d12b288b73101196767f66812365400a227581484a05f968b0307cfaf12
@@ -15273,7 +15284,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.5.8, prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
+"prop-types@npm:15.x, prop-types@npm:^15.5.8, prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -15531,6 +15542,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-draggable@npm:^4.0.3":
+  version: 4.4.6
+  resolution: "react-draggable@npm:4.4.6"
+  dependencies:
+    clsx: ^1.1.1
+    prop-types: ^15.8.1
+  peerDependencies:
+    react: ">= 16.3.0"
+    react-dom: ">= 16.3.0"
+  checksum: 9b15aac59244873ac4561c5a2bead43a56e18d406e0a5f242bd4f9d151c074530c02b99387983104bf43417292f9cf8d063e554ed08d88792235e3fbc965f1b8
+  languageName: node
+  linkType: hard
+
 "react-hot-toast@npm:^2.4.1":
   version: 2.4.1
   resolution: "react-hot-toast@npm:2.4.1"
@@ -15677,6 +15701,18 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
     "@types/react":
       optional: true
   checksum: 2c7fe9cbd766f5e54beb4bec2e2efb2de3583037b23fef8fa511ab426ed7f1ae992382db5acd8ab5bfb030a4b93a06a2ebca41377d6eeaf0e6791bb0a59616a4
+  languageName: node
+  linkType: hard
+
+"react-resizable@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "react-resizable@npm:3.0.5"
+  dependencies:
+    prop-types: 15.x
+    react-draggable: ^4.0.3
+  peerDependencies:
+    react: ">= 16.3"
+  checksum: 616a10205acfaf8cc3aa0824b60f6d037eef87143d8f338cf826deb74a353db9b9baad67a65dc8535fe90840bfc3e1b8a901f9c247033ffeec2f30405ac7528e
   languageName: node
   linkType: hard
 

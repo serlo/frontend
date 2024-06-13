@@ -1,5 +1,6 @@
 import IconAudio from '@editor/editor-ui/assets/plugin-icons/icon-audio.svg'
 import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg'
+import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg'
 import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg'
 import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
@@ -16,6 +17,7 @@ import { articlePlugin } from '@editor/plugins/article'
 import { audioPlugin } from '@editor/plugins/audio'
 import { blanksExercise } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
+import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
 import { exerciseGroupPlugin } from '@editor/plugins/exercise-group'
@@ -84,6 +86,16 @@ export function createPlugins({
       visibleInSuggestions: true,
       icon: <IconMultimedia />,
     },
+    ...(isProduction
+      ? []
+      : [
+          {
+            type: EditorPluginType.DropzoneImage,
+            plugin: createDropzoneImagePlugin(),
+            visibleInSuggestions: true,
+            icon: <IconDropzones />,
+          },
+        ]),
     {
       type: EditorPluginType.Spoiler,
       plugin: createSpoilerPlugin(),

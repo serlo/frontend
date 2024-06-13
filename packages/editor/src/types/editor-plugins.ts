@@ -4,6 +4,7 @@ import type { ArticlePluginState } from '@editor/plugins/article'
 import { AudioPluginState } from '@editor/plugins/audio'
 import { BlanksExerciseState } from '@editor/plugins/blanks-exercise'
 import { BoxPluginState } from '@editor/plugins/box'
+import { DropzoneImagePluginState } from '@editor/plugins/dropzone-image'
 import { EquationsPluginState } from '@editor/plugins/equations'
 import type { ExercisePluginState } from '@editor/plugins/exercise'
 import { ExerciseGroupPluginState } from '@editor/plugins/exercise-group'
@@ -133,6 +134,11 @@ export interface EditorScMcExerciseDocument {
 export interface EditorBlanksExerciseDocument {
   plugin: EditorPluginType.BlanksExercise
   state: PrettyStaticState<BlanksExerciseState>
+  id?: string
+}
+export interface EditorDropzoneImageDocument {
+  plugin: EditorPluginType.DropzoneImage
+  state: PrettyStaticState<DropzoneImagePluginState>
   id?: string
 }
 export interface EditorSpoilerDocument {

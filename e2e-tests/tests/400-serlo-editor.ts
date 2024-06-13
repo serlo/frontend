@@ -31,7 +31,7 @@ Scenario('Add new plugins', async ({ I }) => {
   I.click('$entity-title-input')
   I.click('$add-new-plugin-row-button')
 
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 4; i++) {
     I.pressKey('ArrowDown')
   }
   // Spoiler
@@ -43,7 +43,7 @@ Scenario('Add new plugins', async ({ I }) => {
 
   I.pressKey('ArrowDown')
   I.pressKey('/')
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 5; i++) {
     I.pressKey('ArrowDown')
   }
   // Box
