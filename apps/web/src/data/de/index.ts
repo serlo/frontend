@@ -190,7 +190,7 @@ export const instanceData = {
     },
     comments: {
       question: "Hast du eine Frage oder Feedback?",
-      questionLink: "Kommentiere unten",
+      questionLink: 'Write it here',
       commentsOne: "Kommentar",
       commentsMany: "Kommentare",
       submit: "Abschicken",
@@ -627,47 +627,47 @@ export const loggedInData = {
         },
         dropzoneImage: {
           title: "Bilder mit Ablagezonen",
-          description: 'Create an exercise with interactive images for matching and labeling',
-          backgroundImage: 'Background image',
-          dropZone: 'Drop zone',
-          dropZoneTooltip: 'Choose the drop zone',
-          insertDropZone: 'Insert drop zone',
-          removeDropZone: 'Remove drop zone',
-          dropzoneVisibility: 'Dropzone Visibility',
+          description: "Erstelle eine Aufgabe mit interaktiven Bildern für Zuordnungen und Beschriftungen",
+          backgroundImage: "Hintergrundbild",
+          dropZone: "Ablagezone",
+          dropZoneTooltip: "Ablagezone hinzufügen",
+          insertDropZone: "Ablagezone hinzufügen",
+          removeDropZone: "Ablagezone entfernen",
+          dropzoneVisibility: "Ablagezone Sichtbarkeit",
           answers: {
-            remove: 'Remove answer',
-            edit: 'Edit answer'
+            remove: "Antwort entfernen",
+            edit: "Antwort bearbeiten"
           },
           answerZone: {
-            description: 'Description (optional)',
-            sizeLabel: 'Configure the size of the drop zone',
-            duplicate: 'Duplicate zone',
-            delete: 'Delete zone'
+            description: "Beschreibung (optional)",
+            sizeLabel: "Größe der Zone manuell festlegen",
+            duplicate: "Zone duplizieren",
+            delete: "Zone entfernen"
           },
           backgroundType: {
-            description: 'Insert a background image or proceed with a blank background',
+            description: "Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund",
             // 'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund'
-            image: 'Background Image',
+            image: "Hintergrundbild hinzufügen",
             // 'Hintergrundbild hinzufügen'
-            blank: 'Blank background' //  'Leerer Hintergrund'
+            blank: "Leerer Hintergrund" //  'Leerer Hintergrund'
 
           },
           backgroundShapes: {
-            description: 'Choose the layout of the background',
+            description: "Lege die Ausrichtung des Hintergrundes fest",
             // 'Lege die Ausrichtung des Hintergrundes fest'
-            square: 'Square',
+            square: "Quadratisch",
             //'Quadradtisch',
-            landscape: 'Landscape',
+            landscape: "Querformat",
             //'Querformat',
-            portrait: 'Portrait' // 'Hochformat'
+            portrait: "Hochformat" // 'Hochformat'
 
           },
           or: "oder",
           modal: {
             settings: "Einstellungen",
-            new: 'New Drop Zone',
-            edit: 'Edit Answer',
-            wrong: 'Create Wrong Answer'
+            new: "Neue Ablagezone",
+            edit: "Antwort bearbeiten",
+            wrong: "Falsche Antwort hinzufügen"
           }
         },
         unsupported: {
