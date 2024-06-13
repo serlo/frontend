@@ -5,11 +5,7 @@ import { useMemo, useState } from 'react'
 
 import { FeedbackButton } from './feedback-button'
 import { StaticCanvas } from './static-canvas'
-import {
-  FeedbackData,
-  type DraggableAnswerType,
-  type PossibleAnswerType,
-} from '../../types'
+import { FeedbackData, type DraggableAnswerType } from '../../types'
 import { convertStaticAnswers } from '../../utils/answer-zone'
 import {
   DraggableAnswer,
@@ -56,8 +52,7 @@ export function DropzoneImageStaticRenderer(
 
   // Filter out answers that are already in an answer zone
   const possibleAnswers = shuffledAnswers.filter(
-    ({ id }: PossibleAnswerType) =>
-      !Array.from(dropzoneAnswerMap.values()).flat().includes(id)
+    ({ id }) => !Array.from(dropzoneAnswerMap.values()).flat().includes(id)
   )
 
   const onAnswerDrop = (
