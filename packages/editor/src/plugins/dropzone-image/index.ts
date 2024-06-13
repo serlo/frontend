@@ -1,3 +1,4 @@
+import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import { DropzoneImageEditor } from './components/editor/editor'
@@ -26,7 +27,18 @@ export const layoutData = object({
 export const answerData = object({
   id: string(''),
   image: child({ plugin: EditorPluginType.Image }),
-  text: child({ plugin: EditorPluginType.Text }),
+  text: child({
+    plugin: EditorPluginType.Text,
+    config: {
+      formattingOptions: [
+        TextEditorFormattingOption.richTextBold,
+        TextEditorFormattingOption.richTextItalic,
+        TextEditorFormattingOption.colors,
+        TextEditorFormattingOption.math,
+        TextEditorFormattingOption.code,
+      ],
+    },
+  }),
 })
 
 export const answerZoneState = object({
