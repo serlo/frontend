@@ -204,31 +204,29 @@ export const instanceData = {
       general: 'Aktivieren',
     },
     comments: {
-      question: 'Hast du eine Frage oder Feedback?',
-      questionLink: 'Kommentiere unten',
-      commentsOne: 'Kommentar',
-      commentsMany: 'Kommentare',
-      submit: 'Abschicken',
-      archiveThread: 'Thread archivieren',
-      restoreThread: 'Thread wiederherstellen',
-      deleteThread: 'Thread löschen',
-      deleteComment: 'Kommentar löschen',
-      postedOn: 'Gepostet am',
-      placeholder: 'Deine Frage oder Vorschlag…',
-      placeholderReply: 'Deine Antwort…',
-      loading: 'Kommentare werden geladen…',
-      error:
-        'Die Kommentare konnten leider nicht geladen werden. Bitte versuch es später noch einmal.',
-      showMoreReply: 'Einen weiteren Kommentar',
-      showMoreReplies: '%number% weitere Kommentare',
-      hideReplies: 'Einklappen',
-      showArchived: 'Archivierte %threads% anzeigen',
-      copyLink: 'Kommentarlink kopieren',
-      commentsOverviewExplanation:
-        'Hier siehst du eine Liste mit allen Kommentaren, die zu den Inhalten auf %instance%.serlo.org hinterlassen wurden. %break% Beantworte Fragen oder finde Inhalte, die du verbessern und überarbeiten kannst. %break% Der Link über dem Kommentar bringt dich zum entsprechenden Inhalt.',
-      edit: 'Kommentar bearbeiten',
-      cancelEdit: 'Abbrechen',
-      saveEdit: 'Speichern',
+      question: "Hast du eine Frage oder Feedback?",
+      questionLink: "Kommentiere hier",
+      commentsOne: "Kommentar",
+      commentsMany: "Kommentare",
+      submit: "Abschicken",
+      archiveThread: "Thread archivieren",
+      restoreThread: "Thread wiederherstellen",
+      deleteThread: "Thread löschen",
+      deleteComment: "Kommentar löschen",
+      postedOn: "Gepostet am",
+      placeholder: "Deine Frage oder Vorschlag…",
+      placeholderReply: "Deine Antwort…",
+      loading: "Kommentare werden geladen…",
+      error: "Die Kommentare konnten leider nicht geladen werden. Bitte versuch es später noch einmal.",
+      showMoreReply: "Einen weiteren Kommentar",
+      showMoreReplies: "%number% weitere Kommentare",
+      hideReplies: "Einklappen",
+      showArchived: "Archivierte %threads% anzeigen",
+      copyLink: "Kommentarlink kopieren",
+      commentsOverviewExplanation: "Hier siehst du eine Liste mit allen Kommentaren, die zu den Inhalten auf %instance%.serlo.org hinterlassen wurden. %break% Beantworte Fragen oder finde Inhalte, die du verbessern und überarbeiten kannst. %break% Der Link über dem Kommentar bringt dich zum entsprechenden Inhalt.",
+      edit: "Kommentar bearbeiten",
+      cancelEdit: "Abbrechen",
+      saveEdit: "Speichern"
     },
     revisions: {
       toOverview: 'Zurück zur Übersicht',
@@ -713,6 +711,51 @@ export const loggedInData = {
           anchorId: 'Sprungmarke (anchor id)',
           emptyContentWarning: 'Boxen ohne Inhalt werden nicht angezeigt',
         },
+        dropzoneImage: {
+          title: "Bilder mit Ablagezonen",
+          description: "Erstelle eine Aufgabe mit interaktiven Bildern für Zuordnungen und Beschriftungen",
+          backgroundImage: "Hintergrundbild",
+          dropZone: "Ablagezone",
+          dropZoneTooltip: "Ablagezone hinzufügen",
+          insertDropZone: "Ablagezone hinzufügen",
+          removeDropZone: "Ablagezone entfernen",
+          dropzoneVisibility: "Ablagezone Sichtbarkeit",
+          answers: {
+            remove: "Antwort entfernen",
+            edit: "Antwort bearbeiten"
+          },
+          answerZone: {
+            description: "Beschreibung (optional)",
+            sizeLabel: "Größe der Zone manuell festlegen",
+            duplicate: "Zone duplizieren",
+            delete: "Zone entfernen"
+          },
+          backgroundType: {
+            description: "Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund",
+            // 'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund'
+            image: "Hintergrundbild hinzufügen",
+            // 'Hintergrundbild hinzufügen'
+            blank: "Leerer Hintergrund" //  'Leerer Hintergrund'
+
+          },
+          backgroundShapes: {
+            description: "Lege die Ausrichtung des Hintergrundes fest",
+            // 'Lege die Ausrichtung des Hintergrundes fest'
+            square: "Quadratisch",
+            //'Quadradtisch',
+            landscape: "Querformat",
+            //'Querformat',
+            portrait: "Hochformat" // 'Hochformat'
+
+          },
+          or: "oder",
+          modal: {
+            settings: "Einstellungen",
+            new: "Neue Ablagezone",
+            edit: "Antwort bearbeiten",
+            wrong: "Falsche Antwort hinzufügen"
+          }
+        },
         unsupported: {
           title: 'Nicht unterstützt',
           notSupported: 'Sorry, dieses Plugin wird nicht unterstützt:',
@@ -958,18 +1001,14 @@ export const loggedInData = {
             typing: 'Tippen',
             'drag-and-drop': 'Drag & Drop',
           },
-          previewMode: 'Vorschau',
-          previewIsActiveHint: 'Die Aufgabe wieder bearbeiten',
-          previewIsDeactiveHint: 'Vorschau der Aufgabe anzeigen',
-          dummyAnswers: 'Falsche Antwortmöglichkeiten',
-          addDummyAnswer: 'Falsche Antwort hinzufügen',
-          removeDummyAnswer: 'Falsche Antwort entfernen',
-          addAlternativeAnswer: 'Alternative Antwort hinzufügen',
-          removeAlternativeAnswer: 'Alternative Antwort entfernen',
-          alternativeAnswers: 'Alternative Antworten',
-          acceptMathEquivalents:
-            'Mathematisch gleichwertige Ausdrücke als gültige Antwort',
-        },
+          dummyAnswers: "Falsche Antwortmöglichkeiten",
+          addDummyAnswer: "Falsche Antwort hinzufügen",
+          removeDummyAnswer: "Falsche Antwort entfernen",
+          addAlternativeAnswer: "Alternative Antwort hinzufügen",
+          removeAlternativeAnswer: "Alternative Antwort entfernen",
+          alternativeAnswers: "Alternative Antworten",
+          acceptMathEquivalents: "Mathematisch gleichwertige Ausdrücke als gültige Antwort"
+        }
       },
       templatePlugins: {
         entity: {

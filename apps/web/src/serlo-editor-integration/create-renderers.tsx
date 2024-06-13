@@ -25,6 +25,7 @@ import type {
   EditorSolutionDocument,
   EditorSpoilerDocument,
   EditorExerciseGroupDocument,
+  EditorDropzoneImageDocument,
 } from '@editor/types/editor-plugins'
 import dynamic from 'next/dynamic'
 import { ComponentProps } from 'react'
@@ -75,6 +76,14 @@ const SpoilerSerloStaticRenderer = dynamic<
 >(() =>
   import('./serlo-plugin-wrappers/spoiler-serlo-static-renderer').then(
     (mod) => mod.SpoilerSerloStaticRenderer
+  )
+)
+
+const DropzoneImageSerloStaticRenderer = dynamic<
+  EditorDropzoneImageDocument & { openOverwrite?: boolean; onOpen?: () => void }
+>(() =>
+  import('@editor/plugins/dropzone-image/components/static/static').then(
+    (mod) => mod.DropzoneImageStaticRenderer
   )
 )
 
@@ -149,6 +158,10 @@ export function createRenderers(): InitRenderersArgs {
             />
           )
         },
+      },
+      {
+        type: EditorPluginType.DropzoneImage,
+        renderer: DropzoneImageSerloStaticRenderer,
       },
       { type: EditorPluginType.Box, renderer: BoxStaticRenderer },
       { type: EditorPluginType.Course, renderer: CourseStaticRenderer },

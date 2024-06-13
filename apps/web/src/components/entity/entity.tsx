@@ -2,6 +2,7 @@ import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { isEmptyArticle } from '@editor/plugins/article/utils/static-is-empty'
 import { CourseHeader } from '@editor/plugins/course/renderer/course-header'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { isArticleDocument } from '@editor/types/plugin-type-guards'
 import {
   faExclamationCircle,
@@ -16,6 +17,7 @@ import { FaIcon } from '../fa-icon'
 import { InfoPanel } from '../info-panel'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
+import { ExerciseContext } from '@/contexts/exercise-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, UuidType } from '@/data-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
@@ -104,7 +106,22 @@ export function Entity({ data }: EntityProps) {
   }
 
   function renderContent(document: EntityData['content']) {
-    const content = <StaticRenderer document={document} />
+    const isExercise =
+      document &&
+      !Array.isArray(document) &&
+      document.plugin === EditorPluginType.Exercise
+    const content = isExercise ? (
+      <ExerciseContext.Provider
+        value={{
+          isEntity: true,
+          isInExerciseGroup: false,
+        }}
+      >
+        <StaticRenderer document={document} />
+      </ExerciseContext.Provider>
+    ) : (
+      <StaticRenderer document={document} />
+    )
 
     if (data.schemaData?.setContentAsSection) {
       return <section itemProp="articleBody">{content}</section>
