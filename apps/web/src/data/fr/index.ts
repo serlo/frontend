@@ -190,7 +190,7 @@ export const instanceData = {
     },
     comments: {
       question: "As-tu une question?",
-      questionLink: 'Write it below',
+      questionLink: 'Write it here',
       commentsOne: "Commentaire",
       commentsMany: "Commentaires",
       submit: "Soumettre",
