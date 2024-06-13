@@ -89,6 +89,7 @@ export const instanceData = {
       title: "Partager",
       copyLink: "Copier le lien",
       copySuccess: "Lien copié!",
+      copyFailed: 'Error copying link! ',
       close: "Fermer",
       pdf: "Télécharger comme PDF",
       pdfNoSolutions: "PDF sans solutions"

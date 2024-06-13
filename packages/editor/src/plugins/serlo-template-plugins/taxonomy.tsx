@@ -15,7 +15,6 @@ export const taxonomyTypeState = object({
   term: object({
     name: string(),
   }),
-  taxonomy: number(),
   parent: number(),
   position: number(),
   description: editorContent(),

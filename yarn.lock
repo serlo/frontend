@@ -3058,6 +3058,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@lumieducation/h5p-react@npm:^9.3.2":
+  version: 9.3.2
+  resolution: "@lumieducation/h5p-react@npm:9.3.2"
+  dependencies:
+    "@lumieducation/h5p-webcomponents": ^9.3.2
+    react: 18.2.0
+  checksum: 61ce2902c22656958163d113768af517974adbb84c447323096e63ce6eaaad791040112f1e88df70a703c60839c2a4289cf09c5c2c634a782910eb34dc52dff8
+  languageName: node
+  linkType: hard
+
+"@lumieducation/h5p-webcomponents@npm:^9.3.2":
+  version: 9.3.2
+  resolution: "@lumieducation/h5p-webcomponents@npm:9.3.2"
+  dependencies:
+    await-lock: ^2.2.2
+    deepmerge: ^4.3.1
+  checksum: 4eb3eed255f1601f629b137b55661885c1f91ee13e1f4683a0282aeac3372b4192f73de8400f5a4f5dedec4a82573a20335f12b182ef2e2389cc1be92bb45ddb
+  languageName: node
+  linkType: hard
+
 "@microsoft/api-extractor-model@npm:7.28.13":
   version: 7.28.13
   resolution: "@microsoft/api-extractor-model@npm:7.28.13"
@@ -4917,6 +4937,7 @@ __metadata:
     "@radix-ui/react-navigation-menu": ^1.1.4
     "@radix-ui/react-select": ^1.2.2
     "@reduxjs/toolkit": ^1.9.7
+    "@rollup/plugin-replace": ^5.0.5
     "@serlo/authorization": ^0.60.0
     "@serlo/frontend": "workspace:*"
     "@serlo/katex-styles": 1.0.1
@@ -5066,6 +5087,7 @@ __metadata:
     "@graphql-codegen/typescript": 4.0.6
     "@graphql-codegen/typescript-operations": 4.2.0
     "@hello-pangea/dnd": ^16.6.0
+    "@lumieducation/h5p-react": ^9.3.2
     "@next/bundle-analyzer": ^13.5.6
     "@ory/client": ^1.9.0
     "@ory/integrations": ^1.1.5
@@ -6989,6 +7011,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"await-lock@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "await-lock@npm:2.2.2"
+  checksum: feb11f36768a8545879ed2d214b46aae484e6564ffa466af9212d5782897203770795cae01f813de04a46f66c0b8ee6bc690a0c435b04e00cad5a18ef0842e25
+  languageName: node
+  linkType: hard
+
 "aws-sign2@npm:~0.7.0":
   version: 0.7.0
   resolution: "aws-sign2@npm:0.7.0"
@@ -7310,11 +7339,11 @@ __metadata:
   linkType: hard
 
 "braces@npm:^3.0.2, braces@npm:~3.0.2":
-  version: 3.0.2
-  resolution: "braces@npm:3.0.2"
+  version: 3.0.3
+  resolution: "braces@npm:3.0.3"
   dependencies:
-    fill-range: ^7.0.1
-  checksum: e2a8e769a863f3d4ee887b5fe21f63193a891c68b612ddb4b68d82d1b5f3ff9073af066c343e9867a393fe4c2555dcb33e89b937195feb9c1613d259edfcd459
+    fill-range: ^7.1.1
+  checksum: b95aa0b3bd909f6cd1720ffcf031aeaf46154dd88b4da01f9a1d3f7ea866a79eba76a6d01cbc3c422b2ee5cdc39a4f02491058d5df0d7bf6e6a162a832df1f69
   languageName: node
   linkType: hard
 
@@ -9906,12 +9935,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fill-range@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "fill-range@npm:7.0.1"
+"fill-range@npm:^7.1.1":
+  version: 7.1.1
+  resolution: "fill-range@npm:7.1.1"
   dependencies:
     to-regex-range: ^5.0.1
-  checksum: cc283f4e65b504259e64fd969bcf4def4eb08d85565e906b7d36516e87819db52029a76b6363d0f02d0d532f0033c9603b9e2d943d56ee3b0d4f7ad3328ff917
+  checksum: b4abfbca3839a3d55e4ae5ec62e131e2e356bf4859ce8480c64c4876100f4df292a63e5bb1618e1d7460282ca2b305653064f01654474aa35c68000980f17798
   languageName: node
   linkType: hard
 
@@ -15706,7 +15735,7 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"react@npm:^18.2.0":
+"react@npm:18.2.0, react@npm:^18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
   dependencies:
