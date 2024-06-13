@@ -40,7 +40,7 @@ export function StaticCanvas(props: StaticCanvasProps) {
   return (
     <div
       className={cn(`
-        relative mx-auto h-[786px] w-[786px] overflow-hidden rounded-lg
+        relative mx-auto overflow-hidden rounded-lg
         border border-brand-500 bg-cover bg-center bg-no-repeat
       `)}
       style={{

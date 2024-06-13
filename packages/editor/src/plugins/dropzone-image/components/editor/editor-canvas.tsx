@@ -110,46 +110,44 @@ export function EditorCanvas(props: EditorCanvasProps) {
   })
 
   return (
-    <div className="flex justify-center">
-      <div
-        ref={drop}
-        className={cn(`
-          relative overflow-hidden rounded-lg
+    <div
+      ref={drop}
+      className={cn(`
+          relative mx-auto overflow-hidden rounded-lg
           border border-almost-black
           bg-cover bg-center bg-no-repeat
         `)}
-        style={{
-          backgroundImage: `url(${backgroundImageUrl})`,
-          height: `${canvasDimensions.height.get()}px`,
-          width: `${canvasDimensions.width.get()}px`,
-        }}
-        data-qa="plugin-dropzone-image-editor-canvas"
-      >
-        {answerZones?.map((answerZone, index) => {
-          return (
-            <AnswerZone
-              key={index}
-              answerZone={answerZone}
-              maxHeight={canvasDimensions.height.get()}
-              maxWidth={canvasDimensions.width.get()}
-              onClick={() => selectAnswerZone(answerZone.id.get())}
-              onClickSettingsButton={() => {
-                selectAnswerZone(answerZone.id.get())
-                setModalType(ModalType.Settings)
-              }}
-              onClickPlusButton={() => {
-                selectAnswerZone(answerZone.id.get())
-                setModalType(ModalType.CreateDropZone)
-              }}
-              onClickEditAnswerButton={(zoneId, answerIndex, answerType) => {
-                selectAnswerZone(zoneId)
-                selectCurrentAnswer(answerIndex, answerType)
-                setModalType(ModalType.Edit)
-              }}
-            />
-          )
-        })}
-      </div>
+      style={{
+        backgroundImage: `url(${backgroundImageUrl})`,
+        height: `${canvasDimensions.height.get()}px`,
+        width: `${canvasDimensions.width.get()}px`,
+      }}
+      data-qa="plugin-dropzone-image-editor-canvas"
+    >
+      {answerZones?.map((answerZone, index) => {
+        return (
+          <AnswerZone
+            key={index}
+            answerZone={answerZone}
+            maxHeight={canvasDimensions.height.get()}
+            maxWidth={canvasDimensions.width.get()}
+            onClick={() => selectAnswerZone(answerZone.id.get())}
+            onClickSettingsButton={() => {
+              selectAnswerZone(answerZone.id.get())
+              setModalType(ModalType.Settings)
+            }}
+            onClickPlusButton={() => {
+              selectAnswerZone(answerZone.id.get())
+              setModalType(ModalType.CreateDropZone)
+            }}
+            onClickEditAnswerButton={(zoneId, answerIndex, answerType) => {
+              selectAnswerZone(zoneId)
+              selectCurrentAnswer(answerIndex, answerType)
+              setModalType(ModalType.Edit)
+            }}
+          />
+        )
+      })}
     </div>
   )
 }
