@@ -29,6 +29,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const ab = useAB()
   const commentStrings = useInstanceData().strings.comments
   const isRevisionView = useContext(RevisionViewContext)
+  const currentPath = useRouter().asPath
 
   const { entityId, revisionId } = useEntityData()
   const { exerciseTrackingId, isInExerciseGroup, isEntity } =
@@ -83,7 +84,9 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
       )
     }
 
-    // Exercise is part of another entity
+    // if already on entity, just scroll down. Otherwise open entity in new tab.
+    const onlyScroll = currentPath.includes(String(entityId))
+
     return (
       <>
         <h2 className="serlo-h2 mt-10 border-b-0">
@@ -92,12 +95,12 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
         </h2>
         <p className="serlo-p">
           <a
-            target="_blank"
-            rel="noreferrer"
-            href={`/${entityId}#comment-area-begin-scrollpoint`}
+            target={onlyScroll ? undefined : '_blank'}
+            rel={onlyScroll ? undefined : 'noreferrer'}
+            href={`${entityId}#comment-area-begin-scrollpoint`}
             className="serlo-button-light"
           >
-            {commentStrings.questionLink} 👉
+            {commentStrings.questionLink} {onlyScroll ? '👇' : '👉'}
           </a>
         </p>
       </>

@@ -178,7 +178,8 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
                 <ExerciseContext.Provider
                   value={{
                     isEntity:
-                      exerciseOrGroup.plugin === EditorPluginType.Exercise, // Exercises have an entityId, Exercises in ExerciseGroups don't have an entityId
+                      // Exercises have an entityId, exercises in ExerciseGroups don't have an entityId
+                      exerciseOrGroup.plugin === EditorPluginType.Exercise,
                   }}
                 >
                   <ExerciseNumbering href={`/${entityId}`} index={i} />
