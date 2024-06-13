@@ -77,7 +77,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
       data-qa={`answer-zone-${answerZone.id.get()}`}
     >
       <ResizableBox
-        className="h-full w-full p-[6px]"
+        className="h-full w-full"
         width={width}
         height={height}
         minConstraints={[100, 50]}
