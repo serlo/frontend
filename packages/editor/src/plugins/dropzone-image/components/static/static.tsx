@@ -94,6 +94,8 @@ export function DropzoneImageStaticRenderer(
       })
       return updatedMap
     })
+
+    setFeedback(FeedbackData.Unset)
   }
 
   const onDraggableAreaAnswerDrop = (droppedAnswer: DraggableAnswerType) => {
@@ -127,6 +129,8 @@ export function DropzoneImageStaticRenderer(
 
       return updatedMap
     })
+
+    setFeedback(FeedbackData.Unset)
   }
 
   // Show answer button if none of the zones are empty
@@ -169,7 +173,11 @@ export function DropzoneImageStaticRenderer(
 
       // If an answer zone has wrong answers,
       // show a feedback message accordingly
-      if (!isAnswerZoneCorrect && newFeedback === FeedbackData.Unset) {
+      if (
+        !isAnswerZoneCorrect &&
+        (newFeedback === FeedbackData.Unset ||
+          newFeedback === FeedbackData.Correct)
+      ) {
         newFeedback = FeedbackData.Wrong
         setFeedback(newFeedback)
       }
