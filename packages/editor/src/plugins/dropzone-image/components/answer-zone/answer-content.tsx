@@ -2,6 +2,7 @@ import { StaticSlate } from '@editor/plugins/text/static-components/static-slate
 import React from 'react'
 import { Descendant } from 'slate'
 
+import { isSmallScreen } from '../../utils/is-small-screen'
 import { cn } from '@/helper/cn'
 
 interface AnswerContentProps {
@@ -12,7 +13,6 @@ interface AnswerContentProps {
 
 export function AnswerContent(props: AnswerContentProps) {
   const { url, text, className } = props
-  const isSmallScreen = () => window.innerWidth < 1024
 
   if (url) {
     return (

@@ -5,6 +5,7 @@ import type {
 
 import { BlankDropZone } from './blank-drop-zone'
 import type { DropzoneVisibility } from '../../types'
+import { isSmallScreen } from '../../utils/is-small-screen'
 import { cn } from '@/helper/cn'
 
 interface StaticCanvasProps {
@@ -34,7 +35,6 @@ export function StaticCanvas(props: StaticCanvasProps) {
   const backgroundImageUrlFromPlugin = (bgImagePluginState?.state?.src ||
     '') as string
 
-  const isSmallScreen = () => window.innerWidth < 1024
   const scaler = isSmallScreen() ? 0.4 : 1
 
   return (
