@@ -33,6 +33,7 @@ export const BlanksExerciseToolbar = ({
           <PreviewButton
             previewActive={previewActive}
             setPreviewActive={setPreviewActive}
+            dataQa="plugin-blanks-exercise-preview-button"
           />
           <ToolbarSelect
             tooltipText={blanksExerciseStrings.chooseType}

@@ -6,17 +6,19 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface PreviewButtonProps {
   previewActive: boolean
+  dataQa?: string
   setPreviewActive: (value: boolean) => void
 }
 
 export function PreviewButton(props: PreviewButtonProps) {
-  const { previewActive, setPreviewActive } = props
+  const { previewActive, dataQa, setPreviewActive } = props
   const scMcStrings = useEditorStrings().templatePlugins.scMcExercise
 
   return (
     <button
       onClick={() => setPreviewActive(!previewActive)}
       className="serlo-tooltip-trigger mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+      data-qa={dataQa}
     >
       <EditorTooltip
         text={
