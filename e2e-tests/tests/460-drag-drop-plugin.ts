@@ -30,7 +30,7 @@ Scenario('Create a drag drop exercise with two dropzones', async ({ I }) => {
 
   I.click('$plugin-image-src')
   I.type(
-    'https://upload.wikimedia.org/wikipedia/en/a/aa/Bart_Simpson_200px.png'
+    'https://assets.serlo.org/5ab7c782ad7f7_f4111037d697776c337e7bffd142cedd01324bc9.png'
   )
   I.click('$modal-close-button')
   I.seeNumberOfElements('$answer-zone-answerZone-0', 1)
@@ -112,7 +112,7 @@ Scenario(
 
     I.click('$plugin-image-src')
     I.type(
-      'https://upload.wikimedia.org/wikipedia/en/a/aa/Bart_Simpson_200px.png'
+      'https://assets.serlo.org/5ab7c782ad7f7_f4111037d697776c337e7bffd142cedd01324bc9.png'
     )
     I.click('$modal-close-button')
     I.seeNumberOfElements('$answer-zone-answerZone-0', 1)
