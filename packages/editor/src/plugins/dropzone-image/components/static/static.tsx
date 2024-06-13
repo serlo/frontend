@@ -1,7 +1,7 @@
 import { DndWrapper } from '@editor/core/components/dnd-wrapper'
 import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
 import type { EditorDropzoneImageDocument } from '@editor/types/editor-plugins'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { FeedbackButton } from './feedback-button'
 import { StaticCanvas } from './static-canvas'
@@ -11,6 +11,7 @@ import {
   DraggableAnswer,
   draggableAnswerDragType,
 } from '../shared/draggable-answer'
+import { shuffleArray } from '@/helper/shuffle-array'
 
 export function DropzoneImageStaticRenderer(
   props: EditorDropzoneImageDocument
@@ -18,42 +19,35 @@ export function DropzoneImageStaticRenderer(
   const { state } = props
   const { answerZones, extraDraggableAnswers } = state
 
-  const correctAnswers = answerZones
-    .map(({ answers }) => convertStaticAnswers(answers))
-    .flat()
+  const allAnswers = useMemo(() => {
+    const correctAnswers = answerZones
+      .map(({ answers }) => convertStaticAnswers(answers))
+      .flat()
+    const wrongAnswers = convertStaticAnswers(extraDraggableAnswers)
+    return [...correctAnswers, ...wrongAnswers]
+  }, [answerZones, extraDraggableAnswers])
 
-  const wrongAnswers = convertStaticAnswers(extraDraggableAnswers)
-
+  const [shuffledAnswers, setShuffledAnswers] = useState(allAnswers)
   const [dropzoneAnswerMap, setDropzoneAnswerMap] = useState(
     new Map<string, string[]>()
   )
-
   const [isAnswerZoneCorrectMap, setIsAnswerZoneCorrectMap] = useState(
     new Map<string, boolean | null>()
   )
-
   const [isAnswerCorrectMap, setIsAnswerCorrectMap] = useState(
     new Map<string, Map<string, boolean | null> | null>()
   )
-
   const [feedback, setFeedback] = useState<FeedbackData>(FeedbackData.Unset)
 
-  // Merge and shuffle correct and wrong answers
-  const correctAnswersStringified = JSON.stringify(correctAnswers)
-  const wrongAnswersStringified = JSON.stringify(wrongAnswers)
-  const shuffledAnswers = useMemo(() => {
-    return [...correctAnswers, ...wrongAnswers]
-      .map((possibleAnswer) => ({ possibleAnswer, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
-      .map(({ possibleAnswer }) => possibleAnswer)
-    // Prevent re-shuffling on every render - only shuffle when answers change
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [correctAnswersStringified, wrongAnswersStringified])
+  useEffect(() => {
+    setShuffledAnswers(shuffleArray(allAnswers))
+  }, [allAnswers])
 
   // Filter out answers that are already in an answer zone
-  const possibleAnswers = shuffledAnswers.filter(
-    ({ id }) => !Array.from(dropzoneAnswerMap.values()).flat().includes(id)
-  )
+  const possibleAnswers = useMemo(() => {
+    const droppedAnswers = Array.from(dropzoneAnswerMap.values()).flat()
+    return shuffledAnswers.filter(({ id }) => !droppedAnswers.includes(id))
+  }, [shuffledAnswers, dropzoneAnswerMap])
 
   const onAnswerDrop = (
     answerId: string,
