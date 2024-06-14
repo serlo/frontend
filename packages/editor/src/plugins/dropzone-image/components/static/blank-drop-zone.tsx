@@ -7,6 +7,7 @@ import {
   DropzoneVisibility,
   type PossibleAnswerType,
 } from '../../types'
+import { isSmallScreen } from '../../utils/is-small-screen'
 import {
   DraggableAnswer,
   draggableAnswerDragType,
@@ -70,7 +71,7 @@ export const BlankDropZone = memo(function BlankDropZone(
 
   const hasOnlyOneAnswer = droppedAnswers.length === 1
   const isOnlyAnswerTypeImage = hasOnlyOneAnswer && !!droppedAnswers[0].imageUrl
-  const isSmallScreen = () => window.innerWidth < 1024
+
   const scaler = isSmallScreen() ? 0.4 : 1
 
   return (

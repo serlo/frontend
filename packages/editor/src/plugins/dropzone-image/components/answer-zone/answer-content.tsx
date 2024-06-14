@@ -1,18 +1,18 @@
 import { StaticSlate } from '@editor/plugins/text/static-components/static-slate'
 import React from 'react'
-import { Descendant } from 'slate'
+import { Descendant, Node } from 'slate'
 
+import { isSmallScreen } from '../../utils/is-small-screen'
 import { cn } from '@/helper/cn'
 
 interface AnswerContentProps {
   url?: string
-  text?: Descendant[]
+  text?: Descendant[] | string
   className?: string
 }
 
 export function AnswerContent(props: AnswerContentProps) {
   const { url, text, className } = props
-  const isSmallScreen = () => window.innerWidth < 1024
 
   if (url) {
     return (
@@ -25,12 +25,15 @@ export function AnswerContent(props: AnswerContentProps) {
   }
 
   if (text) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const el = text[0] as any
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const textString =
+      typeof text === 'string'
+        ? text
+        : text.map((node) => Node.string(node)).join('\n')
+
     const content = isSmallScreen() ? (
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      el?.children?.[0]?.text
+      textString
+    ) : typeof text === 'string' ? (
+      textString
     ) : (
       <StaticSlate element={text} />
     )

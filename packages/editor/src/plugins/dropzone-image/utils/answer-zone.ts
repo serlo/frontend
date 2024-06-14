@@ -4,8 +4,9 @@ import {
   isImageDocument,
   isTextDocument,
 } from '@editor/types/plugin-type-guards'
+import { Node } from 'slate'
 
-import type { AnswerData } from '../types'
+import type { AnswerData, StaticPossibleAnswerType } from '../types'
 
 export const getAnswerZoneImageState = (answerZoneImageId: string) => {
   const answerImageDocument = selectStaticDocument(
@@ -46,10 +47,14 @@ export const convertAnswer = (answer: AnswerData) => {
 
 export const convertStaticAnswers = (
   answers: EditorDropzoneImageDocument['state']['extraDraggableAnswers']
-) => {
+): StaticPossibleAnswerType[] => {
   return answers.map((answer) => {
-    const imageUrl = getAnswerZoneImageSrc(answer.image.id || '')
-    const text = getAnswerZoneText(answer.text.id || '')
+    const imageUrl = isImageDocument(answer.image)
+      ? (answer.image.state?.src as string).toString()
+      : ''
+    const text = isTextDocument(answer.text)
+      ? answer.text.state.map((node) => Node.string(node)).join('\n')
+      : ''
     return { id: answer.id, text, imageUrl }
   })
 }
