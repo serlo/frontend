@@ -19,6 +19,10 @@ export const deRegions = {
     title: 'Nordrhein-Westfalen',
     code: 'NW',
   },
+  'schleswig-holstein': {
+    title: 'Schleswig-Holstein',
+    code: 'SH',
+  },
 } as const
 export type SupportedRegion = keyof typeof deRegions
 export const regionKeys = Object.keys(deRegions) as SupportedRegion[]
@@ -133,7 +137,7 @@ export const examsFoldersNW: ExamsFolders = {
 export const examsFoldersBE: ExamsFolders = {
   msa: {
     id: 305819,
-    displayTitle: 'Mittlere Schulabschluss (MSA)',
+    displayTitle: 'Mittlerer Schulabschluss (MSA)',
     schoolType: 'alle',
   },
   ebbr: {
@@ -156,12 +160,21 @@ export const examsFoldersBB: ExamsFolders = {
   },
 }
 
+export const examsFoldersSH: ExamsFolders = {
+  msa: {
+    id: 308610,
+    displayTitle: 'Mittlerer Schulabschluss (MSA)',
+    schoolType: 'alle',
+  },
+}
+
 export const mathExamTaxDataStatic: Record<SupportedRegion, ExamsFolders> = {
   bayern: examsFoldersBY,
   berlin: examsFoldersBE,
   brandenburg: examsFoldersBB,
   niedersachsen: examsFoldersNI,
   nrw: examsFoldersNW,
+  'schleswig-holstein': examsFoldersSH,
 }
 
 function extractIds(folders: ExamsFolders) {
@@ -177,6 +190,7 @@ export const mathExamsTaxIds: Record<SupportedRegion, number[]> = {
   brandenburg: extractIds(examsFoldersBB),
   niedersachsen: extractIds(examsFoldersNI),
   nrw: extractIds(examsFoldersNW),
+  'schleswig-holstein': extractIds(examsFoldersSH),
 }
 
 export const allMathExamTaxIds = Object.values(mathExamsTaxIds).flatMap(
@@ -245,6 +259,11 @@ export const extraMetaTags = {
     metaDescription:
       'Kostenlose Prüfungsvorbereitung für A-Kurs/EBR-Klasse und B-Kurs/FOR-Klasse sowie Grund- und Erweiterungskurs der Gesamtschule in Brandenburg. Mit Serlo schaffst du das!',
   },
+  308610: {
+    title: 'Mathe MSA Abschlussprüfungen mit Lösungen | Schleswig-Holstein',
+    metaDescription:
+      'Mathe lernen für den Mittleren Schulabschluss (MSA) mit den originalen Prüfungsaufgaben und Lösungen aus Schleswig-Holstein. Mit Serlo schaffst du das!',
+  },
 } as const
 
 export const landingMetaTags: Record<
@@ -275,6 +294,11 @@ export const landingMetaTags: Record<
     title: 'Zentrale Prüfungen (ZAP) Mathe NRW',
     metaDescription:
       'Mathe lernen für die ZAP in Nordrhein-Westfalen - mit den originalen Prüfungsaufgaben samt Musterlösungen der vergangenen Jahre.',
+  },
+  'schleswig-holstein': {
+    title: 'Mathe Abschlussprüfungen Schleswig-Holstein',
+    metaDescription:
+      'Mathe lernen für den Mittleren Schulabschluss (MSA) in Schleswig-Holstein. Mit Serlo schaffst du das!',
   },
 }
 
