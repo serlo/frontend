@@ -2033,9 +2033,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphiql/react@npm:^0.21.0":
-  version: 0.21.0
-  resolution: "@graphiql/react@npm:0.21.0"
+"@graphiql/react@npm:^0.22.2":
+  version: 0.22.2
+  resolution: "@graphiql/react@npm:0.22.2"
   dependencies:
     "@graphiql/toolkit": ^0.9.1
     "@headlessui/react": ^1.7.15
@@ -2046,17 +2046,17 @@ __metadata:
     "@types/codemirror": ^5.60.8
     clsx: ^1.2.1
     codemirror: ^5.65.3
-    codemirror-graphql: ^2.0.11
+    codemirror-graphql: ^2.0.12
     copy-to-clipboard: ^3.2.0
     framer-motion: ^6.5.1
-    graphql-language-service: ^5.2.0
+    graphql-language-service: ^5.2.1
     markdown-it: ^14.1.0
     set-value: ^4.1.0
   peerDependencies:
     graphql: ^15.5.0 || ^16.0.0
     react: ^16.8.0 || ^17 || ^18
     react-dom: ^16.8.0 || ^17 || ^18
-  checksum: a0515477b06afdbfa032475456ac08133e10d85d58f332048e38a54c7c4d02e62354996abad7f42d194c6e1dc7fb8365e3ac739f4ae51bf4a8f80403abb81be3
+  checksum: 48d9fa93fef067c20cc6b8e48b2a25311589dfc03573ce70c2cca993b0561a0b2f281d8111508ad5c19887b91c077d20bdcb0eb16cb3f15842f8432cf937431b
   languageName: node
   linkType: hard
 
@@ -4983,7 +4983,7 @@ __metadata:
     eslint-plugin-react-hooks: ^4.6.0
     fast-xml-parser: ^4.3.6
     fp-ts: ^2.16.5
-    graphiql: ^3.2.0
+    graphiql: ^3.2.3
     graphql: ^16.8.1
     graphql-request: ^6.1.0
     graphql-tag: 2.12.6
@@ -5144,7 +5144,7 @@ __metadata:
     eslint-plugin-react-hooks: ^4.6.0
     fast-xml-parser: ^4.3.6
     fp-ts: ^2.16.5
-    graphiql: ^3.2.0
+    graphiql: ^3.2.3
     graphql: ^16.8.1
     graphql-request: ^6.1.0
     graphql-tag: 2.12.6
@@ -7932,17 +7932,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"codemirror-graphql@npm:^2.0.11":
-  version: 2.0.11
-  resolution: "codemirror-graphql@npm:2.0.11"
+"codemirror-graphql@npm:^2.0.12":
+  version: 2.0.12
+  resolution: "codemirror-graphql@npm:2.0.12"
   dependencies:
     "@types/codemirror": ^0.0.90
-    graphql-language-service: 5.2.0
+    graphql-language-service: 5.2.1
   peerDependencies:
     "@codemirror/language": 6.0.0
     codemirror: ^5.65.3
     graphql: ^15.5.0 || ^16.0.0
-  checksum: cdbeb713af63a069c5526f864edf4f71dd811437e44dba7967164ea2d380c52dfe51d3ea3fde06c94ffeb596b93af737767923d6fc434c628fa4241621684950
+  checksum: 1824d0fb64f4d2547fcb9c3c5e53541dc73deccdc69f2cb987409121c0ce79158268b57a4accac1d4108b340facb12763622b44d75e12c4e2185d09c359fb030
   languageName: node
   linkType: hard
 
@@ -10504,19 +10504,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphiql@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "graphiql@npm:3.2.0"
+"graphiql@npm:^3.2.3":
+  version: 3.2.3
+  resolution: "graphiql@npm:3.2.3"
   dependencies:
-    "@graphiql/react": ^0.21.0
+    "@graphiql/react": ^0.22.2
     "@graphiql/toolkit": ^0.9.1
-    graphql-language-service: ^5.2.0
+    graphql-language-service: ^5.2.1
     markdown-it: ^14.1.0
   peerDependencies:
     graphql: ^15.5.0 || ^16.0.0
     react: ^16.8.0 || ^17 || ^18
     react-dom: ^16.8.0 || ^17 || ^18
-  checksum: 7e49324b97c21312cb7e646d90ef6cc69824c0caf9bc957d5dd42b88d8992472c82301664454cfa3327b3bdf331b524bfa1c6ee5cc02f0917e6a5daa79114dff
+  checksum: 838a29c654ab058ac5c30f614331837cf6d5ae88f148ec206277159f41dfdcd1c8940a4cc72c1e88bd82fdee9bcb480ff79c6e52e48d23c5fe494fdb3c32f6fc
   languageName: node
   linkType: hard
 
@@ -10545,9 +10545,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql-language-service@npm:5.2.0, graphql-language-service@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "graphql-language-service@npm:5.2.0"
+"graphql-language-service@npm:5.2.1, graphql-language-service@npm:^5.2.1":
+  version: 5.2.1
+  resolution: "graphql-language-service@npm:5.2.1"
   dependencies:
     nullthrows: ^1.0.0
     vscode-languageserver-types: ^3.17.1
@@ -10555,7 +10555,7 @@ __metadata:
     graphql: ^15.5.0 || ^16.0.0
   bin:
     graphql: dist/temp-bin.js
-  checksum: b053c6b7158d0ee7a3e55391bfd8be956fc5380211ca586b3a252007845e119540fb40efcc438975eaebc5ef25f46973f7ff4d9543c66e14ebd992957e0299b7
+  checksum: e29034aceeae9f05895cf2932ea71a454ae787f82c1585bd2d6e197d93d32a444b87f44cb50d045cce908da66d39b6177f39deef6f318ca077386b845a644195
   languageName: node
   linkType: hard
 
