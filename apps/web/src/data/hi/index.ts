@@ -89,6 +89,7 @@ export const instanceData = {
       title: "सांझा करें",
       copyLink: "लिंक कॉपी करें",
       copySuccess: "लिंक कॉपी किया गया!",
+      copyFailed: 'Error copying link! ',
       close: "बंद करें",
       pdf: 'Download as PDF',
       pdfNoSolutions: 'PDF without solutions'
@@ -189,7 +190,7 @@ export const instanceData = {
     },
     comments: {
       question: "क्या आपका कोई प्रश्न है?",
-      questionLink: 'Write it below',
+      questionLink: 'Write it here',
       commentsOne: "टिप्पणियां",
       commentsMany: "टिप्पणियां",
       submit: "जमा करें",
@@ -624,6 +625,51 @@ export const loggedInData = {
           anchorId: 'Anchor ID',
           emptyContentWarning: 'Boxes without content will not be displayed'
         },
+        dropzoneImage: {
+          title: 'Image Dropzones',
+          description: 'Create an exercise with interactive images for matching and labeling',
+          backgroundImage: 'Background image',
+          dropZone: 'Drop zone',
+          dropZoneTooltip: 'Choose the drop zone',
+          insertDropZone: 'Insert drop zone',
+          removeDropZone: 'Remove drop zone',
+          dropzoneVisibility: 'Dropzone Visibility',
+          answers: {
+            remove: 'Remove answer',
+            edit: 'Edit answer'
+          },
+          answerZone: {
+            description: 'Description (optional)',
+            sizeLabel: 'Configure the size of the drop zone',
+            duplicate: 'Duplicate zone',
+            delete: 'Delete zone'
+          },
+          backgroundType: {
+            description: 'Insert a background image or proceed with a blank background',
+            // 'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund'
+            image: 'Background Image',
+            // 'Hintergrundbild hinzufügen'
+            blank: 'Blank background' //  'Leerer Hintergrund'
+
+          },
+          backgroundShapes: {
+            description: 'Choose the layout of the background',
+            // 'Lege die Ausrichtung des Hintergrundes fest'
+            square: 'Square',
+            //'Quadradtisch',
+            landscape: 'Landscape',
+            //'Querformat',
+            portrait: 'Portrait' // 'Hochformat'
+
+          },
+          or: 'or',
+          modal: {
+            settings: "सेटिंग्स",
+            new: 'New Drop Zone',
+            edit: 'Edit Answer',
+            wrong: 'Create Wrong Answer'
+          }
+        },
         unsupported: {
           title: 'Unsupported',
           notSupported: 'Sorry, this plugin is not supported:',
@@ -854,9 +900,6 @@ export const loggedInData = {
             typing: 'Typing',
             'drag-and-drop': 'Drag & Drop'
           },
-          previewMode: "पूर्वावलोकन",
-          previewIsActiveHint: 'Edit the exercise again',
-          previewIsDeactiveHint: 'Preview the exercise',
           dummyAnswers: 'Extra incorrect answers',
           addDummyAnswer: 'Add an incorrect answer',
           removeDummyAnswer: 'Remove extra answer',

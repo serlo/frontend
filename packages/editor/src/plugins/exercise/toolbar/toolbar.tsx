@@ -1,5 +1,4 @@
-import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
-import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar/components/toolbar-select'
+import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { DropdownButton } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/dropdown-button'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { selectDocument, store } from '@editor/store'

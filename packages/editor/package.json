@@ -1,6 +1,6 @@
 {
   "name": "@serlo/editor",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "homepage": "https://de.serlo.org/editor",
   "bugs": {
     "url": "https://github.com/serlo/frontend/issues"
@@ -46,7 +46,8 @@
   "dependencies": {
     "@serlo/katex-styles": "1.0.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-resizable": "^3.0.5"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "6.5.2",
@@ -68,6 +69,7 @@
     "@radix-ui/react-navigation-menu": "^1.1.4",
     "@radix-ui/react-select": "^1.2.2",
     "@reduxjs/toolkit": "^1.9.7",
+    "@rollup/plugin-replace": "^5.0.5",
     "@serlo/authorization": "^0.60.0",
     "@serlo/frontend": "workspace:*",
     "@serlo/typescript-config": "workspace:*",
@@ -91,6 +93,7 @@
     "@types/react-dom": "^18.0.8",
     "@types/react-lazyload": "^3.2.1",
     "@types/react-notify-toast": "^0.5.6",
+    "@types/react-resizable": "^3.0.7",
     "@types/react-syntax-highlighter": "^15.5.11",
     "@types/slate-react": "^0.50.1",
     "@types/uuid": "^9.0.8",
@@ -111,7 +114,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "fast-xml-parser": "^4.3.6",
     "fp-ts": "^2.16.5",
-    "graphiql": "^3.2.0",
+    "graphiql": "^3.2.3",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
     "graphql-tag": "2.12.6",

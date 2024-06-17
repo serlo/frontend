@@ -89,6 +89,7 @@ export const instanceData = {
       title: "Weitergeben!",
       copyLink: "Link kopieren",
       copySuccess: "In die Zwischenablage kopiert!",
+      copyFailed: "Sorry, Link konnte nicht automatisch kopiert werden.",
       close: "Schließen",
       pdf: "Als PDF herunterladen",
       pdfNoSolutions: "PDF ohne Lösungen"
@@ -189,7 +190,7 @@ export const instanceData = {
     },
     comments: {
       question: "Hast du eine Frage oder Feedback?",
-      questionLink: "Kommentiere unten",
+      questionLink: "Kommentiere hier",
       commentsOne: "Kommentar",
       commentsMany: "Kommentare",
       submit: "Abschicken",
@@ -624,6 +625,51 @@ export const loggedInData = {
           anchorId: "Sprungmarke (anchor id)",
           emptyContentWarning: "Boxen ohne Inhalt werden nicht angezeigt"
         },
+        dropzoneImage: {
+          title: "Bilder mit Ablagezonen",
+          description: "Erstelle eine Aufgabe mit interaktiven Bildern für Zuordnungen und Beschriftungen",
+          backgroundImage: "Hintergrundbild",
+          dropZone: "Ablagezone",
+          dropZoneTooltip: "Ablagezone hinzufügen",
+          insertDropZone: "Ablagezone hinzufügen",
+          removeDropZone: "Ablagezone entfernen",
+          dropzoneVisibility: "Ablagezone Sichtbarkeit",
+          answers: {
+            remove: "Antwort entfernen",
+            edit: "Antwort bearbeiten"
+          },
+          answerZone: {
+            description: "Beschreibung (optional)",
+            sizeLabel: "Größe der Zone manuell festlegen",
+            duplicate: "Zone duplizieren",
+            delete: "Zone entfernen"
+          },
+          backgroundType: {
+            description: "Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund",
+            // 'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund'
+            image: "Hintergrundbild hinzufügen",
+            // 'Hintergrundbild hinzufügen'
+            blank: "Leerer Hintergrund" //  'Leerer Hintergrund'
+
+          },
+          backgroundShapes: {
+            description: "Lege die Ausrichtung des Hintergrundes fest",
+            // 'Lege die Ausrichtung des Hintergrundes fest'
+            square: "Quadratisch",
+            //'Quadradtisch',
+            landscape: "Querformat",
+            //'Querformat',
+            portrait: "Hochformat" // 'Hochformat'
+
+          },
+          or: "oder",
+          modal: {
+            settings: "Einstellungen",
+            new: "Neue Ablagezone",
+            edit: "Antwort bearbeiten",
+            wrong: "Falsche Antwort hinzufügen"
+          }
+        },
         unsupported: {
           title: "Nicht unterstützt",
           notSupported: "Sorry, dieses Plugin wird nicht unterstützt:",
@@ -854,9 +900,6 @@ export const loggedInData = {
             typing: "Tippen",
             'drag-and-drop': 'Drag & Drop'
           },
-          previewMode: "Vorschau",
-          previewIsActiveHint: "Die Aufgabe wieder bearbeiten",
-          previewIsDeactiveHint: "Vorschau der Aufgabe anzeigen",
           dummyAnswers: "Falsche Antwortmöglichkeiten",
           addDummyAnswer: "Falsche Antwort hinzufügen",
           removeDummyAnswer: "Falsche Antwort entfernen",

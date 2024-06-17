@@ -89,6 +89,7 @@ export const instanceData = {
       title: "¡Comparte!",
       copyLink: "Copiar enlace",
       copySuccess: "¡Enlace copiado!",
+      copyFailed: 'Error copying link! ',
       close: "Cerrar",
       pdf: "Descargar PDF",
       pdfNoSolutions: "PDF sin soluciones"
@@ -189,7 +190,7 @@ export const instanceData = {
     },
     comments: {
       question: "¿Tienes una pregunta?",
-      questionLink: 'Write it below',
+      questionLink: 'Write it here',
       commentsOne: "Comentario",
       commentsMany: "Comentarios",
       submit: "Enviar",
@@ -624,6 +625,51 @@ export const loggedInData = {
           anchorId: "ID de Ancla (marca de posición)",
           emptyContentWarning: "Los contenedores sin contenido no se visualizarán"
         },
+        dropzoneImage: {
+          title: 'Image Dropzones',
+          description: 'Create an exercise with interactive images for matching and labeling',
+          backgroundImage: 'Background image',
+          dropZone: 'Drop zone',
+          dropZoneTooltip: 'Choose the drop zone',
+          insertDropZone: 'Insert drop zone',
+          removeDropZone: 'Remove drop zone',
+          dropzoneVisibility: 'Dropzone Visibility',
+          answers: {
+            remove: 'Remove answer',
+            edit: 'Edit answer'
+          },
+          answerZone: {
+            description: 'Description (optional)',
+            sizeLabel: 'Configure the size of the drop zone',
+            duplicate: 'Duplicate zone',
+            delete: 'Delete zone'
+          },
+          backgroundType: {
+            description: 'Insert a background image or proceed with a blank background',
+            // 'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund'
+            image: 'Background Image',
+            // 'Hintergrundbild hinzufügen'
+            blank: 'Blank background' //  'Leerer Hintergrund'
+
+          },
+          backgroundShapes: {
+            description: 'Choose the layout of the background',
+            // 'Lege die Ausrichtung des Hintergrundes fest'
+            square: 'Square',
+            //'Quadradtisch',
+            landscape: 'Landscape',
+            //'Querformat',
+            portrait: 'Portrait' // 'Hochformat'
+
+          },
+          or: "ó",
+          modal: {
+            settings: "Configuración",
+            new: 'New Drop Zone',
+            edit: 'Edit Answer',
+            wrong: 'Create Wrong Answer'
+          }
+        },
         unsupported: {
           title: "Sin soporte",
           notSupported: "Lo sentimos, este plugin no es compatible:",
@@ -854,9 +900,6 @@ export const loggedInData = {
             typing: "Tecleando/escribir",
             'drag-and-drop': "Arrastrar y colocar"
           },
-          previewMode: "Vista Previa",
-          previewIsActiveHint: "Vuelve a editar el ejercicio",
-          previewIsDeactiveHint: "Vista preliminar del ejercicio",
           dummyAnswers: "Respuestas incorrectas adicionales",
           addDummyAnswer: "Añadir una respuesta incorrecta",
           removeDummyAnswer: "Eliminar la respuesta adicional",
