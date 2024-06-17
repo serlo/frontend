@@ -1404,7 +1404,6 @@ export interface TaxonomyTerm extends AbstractUuid, InstanceAware, ThreadAware {
   name: Scalars['String']['output'];
   parent?: Maybe<TaxonomyTerm>;
   path: Array<Maybe<TaxonomyTerm>>;
-  taxonomyId: Scalars['Int']['output'];
   threads: ThreadConnection;
   title: Scalars['String']['output'];
   trashed: Scalars['Boolean']['output'];
