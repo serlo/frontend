@@ -25,18 +25,16 @@ export function AnswerContent(props: AnswerContentProps) {
 
   if (text) {
     return (
-      <span
+      <div
         data-qa="plugin-dropzone-image-answer-content-text"
         className={cn(
           'mx-0 block rounded-full border border-brand px-2',
+          '[&>p]:text-xs [&>p]:sm:text-sm [&>p]:md:text-base [&>p]:lg:text-lg',
           className
         )}
       >
-        <StaticSlate
-          element={text}
-          pClassName="mobile:text-xs sm:text-sm md:text-base lg:text-lg"
-        />
-      </span>
+        <StaticSlate element={text} />
+      </div>
     )
   }
 
