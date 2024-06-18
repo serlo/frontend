@@ -96,23 +96,24 @@ export function EditorCanvas(props: EditorCanvasProps) {
       data-qa="plugin-dropzone-image-editor-canvas"
     >
       {answerZones?.map((answerZone, index) => {
+        const id = answerZone.id.get()
         return (
           <AnswerZone
             key={index}
             answerZone={answerZone}
             maxHeight={canvasDimensions.height.get()}
             maxWidth={canvasDimensions.width.get()}
-            onClick={() => selectAnswerZone(answerZone.id.get())}
+            onClick={() => selectAnswerZone(id)}
             onClickSettingsButton={() => {
-              selectAnswerZone(answerZone.id.get())
+              selectAnswerZone(id)
               setModalType(ModalType.Settings)
             }}
             onClickPlusButton={() => {
-              selectAnswerZone(answerZone.id.get())
+              selectAnswerZone(id)
               setModalType(ModalType.CreateDropZone)
             }}
-            onClickEditAnswerButton={(zoneId, answerIndex, answerType) => {
-              selectAnswerZone(zoneId)
+            onClickEditAnswerButton={(answerIndex, answerType) => {
+              selectAnswerZone(id)
               selectCurrentAnswer(answerIndex, answerType)
               setModalType(ModalType.Edit)
             }}

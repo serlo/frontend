@@ -19,13 +19,9 @@ export interface AnswerZoneProps {
   maxHeight: number
   maxWidth: number
   onClick: () => void
-  onClickSettingsButton: (id: string) => void
-  onClickPlusButton: (id: string) => void
-  onClickEditAnswerButton: (
-    answerZoneId: string,
-    answerIndex: number,
-    answerType: AnswerType
-  ) => void
+  onClickSettingsButton: () => void
+  onClickPlusButton: () => void
+  onClickEditAnswerButton: (answerIndex: number, answerType: AnswerType) => void
 }
 
 export const AnswerZone = (props: AnswerZoneProps) => {
@@ -114,7 +110,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
               answer={answer}
               isOnlyAnswer={answerZone.answers.length === 1}
               onEditAnswer={(answerType: AnswerType) => {
-                onClickEditAnswerButton(answerZone.id.get(), index, answerType)
+                onClickEditAnswerButton(index, answerType)
               }}
               onRemoveAnswer={() => {
                 answerZone.answers.remove(index)
