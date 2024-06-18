@@ -66,7 +66,6 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     () => canvasWidth * (left / 100),
     [canvasWidth, left]
   )
-
   const absoluteTop = useMemo(
     () => canvasHeight * (top / 100),
     [canvasHeight, top]
@@ -76,15 +75,13 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     () => canvasHeight * (height / 100),
     [canvasHeight, height]
   )
-
   const absoluteWidth = useMemo(
     () => canvasWidth * (width / 100),
     [canvasWidth, width]
   )
 
-  const minHeight = useMemo(() => canvasHeight * 0.01, [canvasHeight])
-
-  const minWidth = useMemo(() => canvasHeight * 0.02, [canvasHeight])
+  const minHeight = useMemo(() => canvasHeight * 0.09, [canvasHeight])
+  const minWidth = useMemo(() => canvasHeight * 0.2, [canvasHeight])
 
   // Hide source element while dragging
   if (collected.isDragging) {
