@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useMemo } from 'react'
 import { useDrag } from 'react-dnd'
 import { ResizableBox, ResizableBoxProps } from 'react-resizable'
 
@@ -10,14 +10,15 @@ import { AnswerZoneEmpty } from './answer-zone-empty'
 import { AnswerZoneSidebar } from './answer-zone-sidebar'
 import { AnswerZonesContext } from '../../context/context'
 import { AnswerType, AnswerZoneState, DropzoneVisibility } from '../../types'
+import { getPercentageRounded } from '../../utils/percentage'
 import { cn } from '@/helper/cn'
 
 export const answerZoneDragType = 'answerZone'
 
 export interface AnswerZoneProps {
   answerZone: AnswerZoneState
-  maxHeight: number
-  maxWidth: number
+  canvasHeight: number
+  canvasWidth: number
   onClick: () => void
   onClickSettingsButton: () => void
   onClickPlusButton: () => void
@@ -27,8 +28,8 @@ export interface AnswerZoneProps {
 export const AnswerZone = (props: AnswerZoneProps) => {
   const {
     answerZone,
-    maxHeight,
-    maxWidth,
+    canvasHeight,
+    canvasWidth,
     onClick,
     onClickSettingsButton,
     onClickPlusButton,
@@ -49,8 +50,10 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   })
 
   const handleResize: ResizableBoxProps['onResize'] = (_, { size }) => {
-    answerZone.layout.width.set(size.width)
-    answerZone.layout.height.set(size.height)
+    const width = getPercentageRounded(canvasWidth, size.width)
+    const height = getPercentageRounded(canvasHeight, size.height)
+    answerZone.layout.width.set(width)
+    answerZone.layout.height.set(height)
   }
 
   const left = answerZone.position.left.get()
@@ -58,6 +61,30 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   const height = answerZone.layout.height.get()
   const width = answerZone.layout.width.get()
   const name = answerZone.name.get()
+
+  const absoluteLeft = useMemo(
+    () => canvasWidth * (left / 100),
+    [canvasWidth, left]
+  )
+
+  const absoluteTop = useMemo(
+    () => canvasHeight * (top / 100),
+    [canvasHeight, top]
+  )
+
+  const absoluteHeight = useMemo(
+    () => canvasHeight * (height / 100),
+    [canvasHeight, height]
+  )
+
+  const absoluteWidth = useMemo(
+    () => canvasWidth * (width / 100),
+    [canvasWidth, width]
+  )
+
+  const minHeight = useMemo(() => canvasHeight * 0.01, [canvasHeight])
+
+  const minWidth = useMemo(() => canvasHeight * 0.02, [canvasHeight])
 
   // Hide source element while dragging
   if (collected.isDragging) {
@@ -69,15 +96,20 @@ export const AnswerZone = (props: AnswerZoneProps) => {
       ref={dragPreview}
       className="absolute flex cursor-move items-center justify-center rounded bg-transparent"
       onClick={onClick}
-      style={{ left, top, width, height }}
+      style={{
+        left: absoluteLeft,
+        top: absoluteTop,
+        width: absoluteWidth,
+        height: absoluteHeight,
+      }}
       data-qa={`answer-zone-${answerZone.id.get()}`}
     >
       <ResizableBox
         className="h-full w-full"
-        width={width}
-        height={height}
-        minConstraints={[100, 50]}
-        maxConstraints={[maxWidth, maxHeight]}
+        width={absoluteWidth}
+        height={absoluteHeight}
+        minConstraints={[minWidth, minHeight]}
+        maxConstraints={[canvasWidth, canvasHeight]}
         onResize={handleResize}
         resizeHandles={['se']}
       >

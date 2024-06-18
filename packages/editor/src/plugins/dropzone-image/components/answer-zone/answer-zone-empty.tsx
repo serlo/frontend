@@ -14,14 +14,14 @@ export const AnswerZoneEmpty = (props: AnswerZoneEmptyProps) => {
   return (
     <div className="absolute inset-0 flex items-center justify-center">
       <button
-        className="absolute right-2 top-2 z-10 rounded bg-orange-100 p-1"
+        className="absolute right-2 top-2 rounded bg-orange-100 p-1"
         onClick={() => onClickSettingsButton(answerZoneId)}
       >
         <FaIcon icon={faCog} />
       </button>
       <button
         data-qa={`answer-zone-${answerZoneId}-add-answer-button`}
-        className="rounded bg-orange-100 p-3"
+        className="rounded bg-orange-100 px-3 py-2"
         onClick={() => onClickPlusButton(answerZoneId)}
       >
         <FaIcon icon={faPlus} />

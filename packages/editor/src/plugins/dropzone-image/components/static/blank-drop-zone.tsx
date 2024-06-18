@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useEffect, useMemo, useState } from 'react'
 import { useDrop } from 'react-dnd'
 
 import {
@@ -20,6 +20,7 @@ interface BlankDropZoneProps {
   isCorrect?: boolean | null
   isAnswerCorrectMap?: Map<string, boolean | null> | null
   visibility: DropzoneVisibility
+  canvasDimensions: { height: number; width: number }
   answersCount: number
   onAnswerDrop: (
     answerId: string,
@@ -37,6 +38,7 @@ export const BlankDropZone = memo(function BlankDropZone(
     isCorrect,
     isAnswerCorrectMap,
     visibility,
+    canvasDimensions,
     answersCount,
     onAnswerDrop,
   } = props
@@ -72,6 +74,24 @@ export const BlankDropZone = memo(function BlankDropZone(
   const hasOnlyOneAnswer = droppedAnswers.length === 1
   const isOnlyAnswerTypeImage = hasOnlyOneAnswer && !!droppedAnswers[0].imageUrl
 
+  const absoluteLeft = useMemo(
+    () => canvasDimensions.width * (left / 100),
+    [canvasDimensions.width, left]
+  )
+
+  const absoluteTop = useMemo(
+    () => canvasDimensions.height * (top / 100),
+    [canvasDimensions.height, top]
+  )
+
+  const absoluteHeight = useMemo(() => {
+    return canvasDimensions.height * (height / 100)
+  }, [canvasDimensions.height, height])
+
+  const absoluteWidth = useMemo(() => {
+    return canvasDimensions.width * (width / 100)
+  }, [canvasDimensions.width, width])
+
   const scaler = isSmallScreen() ? 0.4 : 1
 
   return (
@@ -85,10 +105,10 @@ export const BlankDropZone = memo(function BlankDropZone(
         getBorderType(visibility)
       )}
       style={{
-        left: left * scaler,
-        top: top * scaler,
-        width: width * scaler,
-        height: height * scaler,
+        left: absoluteLeft * scaler,
+        top: absoluteTop * scaler,
+        width: absoluteWidth * scaler,
+        height: absoluteHeight * scaler,
       }}
       data-qa={`blank-drop-zone-${id}`}
     >

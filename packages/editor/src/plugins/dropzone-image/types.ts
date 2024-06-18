@@ -18,12 +18,10 @@ export interface StaticPossibleAnswerType {
 export interface BasicDropZone {
   id: string
   name: string
-
   position: {
     top: number
     left: number
   }
-
   layout: {
     width: number
     height: number

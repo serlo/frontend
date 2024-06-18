@@ -60,6 +60,7 @@ export function StaticCanvas(props: StaticCanvasProps) {
             isCorrect={isAnswerZoneCorrectMap.get(id)}
             isAnswerCorrectMap={isAnswerCorrectMap.get(id)}
             visibility={dropzoneVisibility as DropzoneVisibility}
+            canvasDimensions={canvasDimensions}
             answersCount={answers.length}
             onAnswerDrop={onAnswerDrop}
           />

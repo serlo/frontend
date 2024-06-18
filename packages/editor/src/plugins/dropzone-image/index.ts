@@ -3,6 +3,10 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import { defaultLargeCanvasDimension } from './components/editor/background-shape-select'
 import { DropzoneImageEditor } from './components/editor/editor'
+import {
+  defaultAnswerZoneLayout,
+  defaultAnswerZonePosition,
+} from './hooks/use-answer-zones'
 import { BackgroundShape, DropzoneVisibility } from './types'
 import {
   type EditorPlugin,
@@ -15,15 +19,7 @@ import {
   optional,
 } from '../../plugin'
 
-export const positionData = object({
-  top: number(0),
-  left: number(0),
-})
-
-export const layoutData = object({
-  width: number(200),
-  height: number(70),
-})
+// TODO: Maybe use decimals instead of percentages for position and layout
 
 export const answerData = object({
   id: string(''),
@@ -45,8 +41,14 @@ export const answerData = object({
 export const answerZoneState = object({
   id: string(''),
   name: string(''),
-  position: positionData,
-  layout: layoutData,
+  position: object({
+    top: number(defaultAnswerZonePosition.top),
+    left: number(defaultAnswerZonePosition.left),
+  }),
+  layout: object({
+    width: number(defaultAnswerZoneLayout.width),
+    height: number(defaultAnswerZoneLayout.height),
+  }),
   answers: list(answerData),
 })
 

@@ -1,11 +1,12 @@
 import { selectStaticDocument, store } from '@editor/store'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
 import { useContext, useEffect, useState } from 'react'
-import { XYCoord, useDrop } from 'react-dnd'
+import { useDrop } from 'react-dnd'
 
 import type { DropzoneImageProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
 import { AnswerZoneState, ModalType } from '../../types'
+import { getPercentageRounded } from '../../utils/percentage'
 import { AnswerZone, answerZoneDragType } from '../answer-zone/answer-zone'
 import { cn } from '@/helper/cn'
 
@@ -17,6 +18,8 @@ interface EditorCanvasProps {
 export function EditorCanvas(props: EditorCanvasProps) {
   const { state, setModalType } = props
   const { answerZones, backgroundImage, canvasDimensions } = state
+  const canvasWidth = canvasDimensions.width.get()
+  const canvasHeight = canvasDimensions.height.get()
 
   const context = useContext(AnswerZonesContext)
 
@@ -41,21 +44,19 @@ export function EditorCanvas(props: EditorCanvasProps) {
     img.src = backgroundImageUrl
     img.onload = () => {
       const imgAspectRatio = img.width / img.height
-      const maxCanvasWidth = canvasDimensions.width.get()
-      const maxCanvasHeight = canvasDimensions.height.get()
-      let newCanvasWidth = maxCanvasWidth
-      let newCanvasHeight = maxCanvasHeight
+      let newCanvasWidth = canvasWidth
+      let newCanvasHeight = canvasHeight
 
-      if (maxCanvasWidth / maxCanvasHeight > imgAspectRatio) {
-        newCanvasHeight = maxCanvasWidth / imgAspectRatio
-        if (newCanvasHeight > maxCanvasHeight) {
-          newCanvasHeight = maxCanvasHeight
+      if (canvasWidth / canvasHeight > imgAspectRatio) {
+        newCanvasHeight = canvasWidth / imgAspectRatio
+        if (newCanvasHeight > canvasHeight) {
+          newCanvasHeight = canvasHeight
           newCanvasWidth = newCanvasHeight * imgAspectRatio
         }
       } else {
-        newCanvasWidth = maxCanvasHeight * imgAspectRatio
-        if (newCanvasWidth > maxCanvasWidth) {
-          newCanvasWidth = maxCanvasWidth
+        newCanvasWidth = canvasHeight * imgAspectRatio
+        if (newCanvasWidth > canvasWidth) {
+          newCanvasWidth = canvasWidth
           newCanvasHeight = newCanvasWidth / imgAspectRatio
         }
       }
@@ -70,9 +71,19 @@ export function EditorCanvas(props: EditorCanvasProps) {
       accept: answerZoneDragType,
       drop(answerZone: AnswerZoneState, monitor) {
         const change = monitor.getDifferenceFromInitialOffset()
-        const delta = change || ({ x: 0, y: 0 } as XYCoord)
-        const left = Math.round(answerZone.position.left.get() + delta.x)
-        const top = Math.round(answerZone.position.top.get() + delta.y)
+        if (!change) return
+        const currentAbsoluteLeft =
+          canvasWidth * (answerZone.position.left.get() / 100)
+        const left = getPercentageRounded(
+          canvasWidth,
+          currentAbsoluteLeft + change.x
+        )
+        const currentAbsoluteTop =
+          canvasHeight * (answerZone.position.top.get() / 100)
+        const top = getPercentageRounded(
+          canvasHeight,
+          currentAbsoluteTop + change.y
+        )
         answerZone.position.left.set(left)
         answerZone.position.top.set(top)
       },
@@ -90,8 +101,8 @@ export function EditorCanvas(props: EditorCanvasProps) {
         `)}
       style={{
         backgroundImage: `url(${backgroundImageUrl})`,
-        height: `${canvasDimensions.height.get()}px`,
-        width: `${canvasDimensions.width.get()}px`,
+        height: `${canvasHeight}px`,
+        width: `${canvasWidth}px`,
       }}
       data-qa="plugin-dropzone-image-editor-canvas"
     >
@@ -101,8 +112,8 @@ export function EditorCanvas(props: EditorCanvasProps) {
           <AnswerZone
             key={index}
             answerZone={answerZone}
-            maxHeight={canvasDimensions.height.get()}
-            maxWidth={canvasDimensions.width.get()}
+            canvasHeight={canvasHeight}
+            canvasWidth={canvasWidth}
             onClick={() => selectAnswerZone(id)}
             onClickSettingsButton={() => {
               selectAnswerZone(id)

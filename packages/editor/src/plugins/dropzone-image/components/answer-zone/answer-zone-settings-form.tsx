@@ -67,7 +67,7 @@ export function AnswerZoneSettingsForm({
             onChange={handleInputChange((value: string) =>
               answerZone.layout.height.set(parseInt(value))
             )}
-            className="w-16 rounded border border-gray-300 bg-orange-100 p-2 text-center"
+            className="w-24 rounded border border-gray-300 bg-orange-100 p-2 text-center"
           />
           <span className="self-center">x</span>
           <input
@@ -76,7 +76,7 @@ export function AnswerZoneSettingsForm({
             onChange={handleInputChange((value: string) =>
               answerZone.layout.width.set(parseInt(value))
             )}
-            className="w-16 rounded border border-gray-300 bg-orange-100 p-2 text-center"
+            className="w-24 rounded border border-gray-300 bg-orange-100 p-2 text-center"
           />
         </div>
       </label>
