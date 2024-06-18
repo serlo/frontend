@@ -37,9 +37,9 @@ export function StaticCanvas(props: StaticCanvasProps) {
   return (
     <div
       className={cn(`
-        relative mx-auto max-w-full overflow-hidden
-        rounded-lg border border-brand-500
-        bg-cover bg-center bg-no-repeat
+        relative mx-auto box-content max-w-full
+        overflow-hidden rounded-lg border
+        border-brand-500 bg-cover bg-center bg-no-repeat
       `)}
       style={{
         backgroundImage: `url(${backgroundImageUrlFromPlugin})`,
