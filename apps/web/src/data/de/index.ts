@@ -631,7 +631,6 @@ export const loggedInData = {
           backgroundImage: "Hintergrundbild",
           dropZone: "Ablagezone",
           dropZoneTooltip: "Ablagezone hinzufügen",
-          insertDropZone: "Ablagezone hinzufügen",
           removeDropZone: "Ablagezone entfernen",
           dropzoneVisibility: "Ablagezone Sichtbarkeit",
           answers: {

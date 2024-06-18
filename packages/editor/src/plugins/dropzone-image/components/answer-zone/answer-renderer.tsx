@@ -3,12 +3,10 @@ import { useContext, useEffect } from 'react'
 
 import { AnswerZonesContext } from '../../context/context'
 import { AnswerType } from '../../types'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface AnswerRendererProps {
   answerType: AnswerType
   answerIndex: number
-  onSave: () => void
   isWrongAnswer?: boolean
   zoneId?: string
 }
@@ -16,7 +14,6 @@ interface AnswerRendererProps {
 export function AnswerRenderer({
   answerType,
   answerIndex,
-  onSave,
   isWrongAnswer = false,
   zoneId,
 }: AnswerRendererProps): JSX.Element {
@@ -30,8 +27,6 @@ export function AnswerRenderer({
     }
   })
 
-  const pluginStrings = useEditorStrings().plugins.dropzoneImage
-
   const answersList = isWrongAnswer
     ? extraDraggableAnswers
     : answerZones?.find(({ id }) => id.get() === zoneId)?.answers
@@ -43,16 +38,6 @@ export function AnswerRenderer({
   const isAnswerTypeText = answerType === AnswerType.Text
 
   return (
-    <div>
-      {isAnswerTypeText ? answer.text.render() : answer.image.render()}
-      <div>
-        <button
-          className="mt-2 flex rounded bg-orange-100 px-2 py-1"
-          onClick={onSave}
-        >
-          + {pluginStrings.insertDropZone}
-        </button>
-      </div>
-    </div>
+    <div>{isAnswerTypeText ? answer.text.render() : answer.image.render()}</div>
   )
 }

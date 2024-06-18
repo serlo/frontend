@@ -74,28 +74,17 @@ export function EditorCanvasModal(props: EditorCanvasModalProps) {
           />
         )
       case ModalType.CreateDropZone:
-        return (
-          <NewAnswerFlow
-            zoneId={currentAnswerZone.id.get()}
-            onSave={() => setModalType(ModalType.Unset)}
-          />
-        )
+        return <NewAnswerFlow zoneId={currentAnswerZone.id.get()} />
       case ModalType.Edit:
         return (
           <AnswerRenderer
             zoneId={currentAnswerZone.id.get()}
             answerType={currentAnswerType}
             answerIndex={currentAnswerIndex}
-            onSave={() => setModalType(ModalType.Unset)}
           />
         )
       case ModalType.CreateWrongAnswer:
-        return (
-          <NewAnswerFlow
-            isWrongAnswer
-            onSave={() => setModalType(ModalType.Unset)}
-          />
-        )
+        return <NewAnswerFlow isWrongAnswer />
       default:
         return null
     }
