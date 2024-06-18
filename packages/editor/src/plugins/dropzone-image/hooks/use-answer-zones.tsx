@@ -1,5 +1,6 @@
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useState } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { v4 as uuidv4 } from 'uuid'
 
 import type { DropzoneImageProps } from '..'
@@ -75,6 +76,30 @@ export function useAnswerZones(
     }
     answerZones.insert(currentLength, newZone)
   }
+
+  const [answerZoneClipboardItem, setAnswerZoneClipboardItem] =
+    useState<AnswerZoneState | null>(null)
+
+  useHotkeys('backspace, del', (event) => {
+    if (!currentAnswerZone) return
+    const index = answerZones.findIndex(
+      ({ id }) => id.get() === currentAnswerZone.id.get()
+    )
+    index !== -1 && answerZones.remove(index)
+    event.preventDefault()
+  })
+
+  useHotkeys(['ctrl+c, meta+c'], (event) => {
+    setAnswerZoneClipboardItem(currentAnswerZone)
+    event.preventDefault()
+  })
+
+  useHotkeys(['ctrl+v, meta+v'], (event) => {
+    if (!answerZoneClipboardItem) return
+    const idToDuplicate = answerZoneClipboardItem.id.get()
+    duplicateAnswerZone(idToDuplicate)
+    event.preventDefault()
+  })
 
   return {
     currentAnswerZone,

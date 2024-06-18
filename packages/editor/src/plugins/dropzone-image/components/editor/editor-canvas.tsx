@@ -2,11 +2,9 @@ import { selectStaticDocument, store } from '@editor/store'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
 import { useContext, useEffect, useState } from 'react'
 import { XYCoord, useDrop } from 'react-dnd'
-import { useHotkeys } from 'react-hotkeys-hook'
 
 import type { DropzoneImageProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
-import { useAnswerZones } from '../../hooks/use-answer-zones'
 import { AnswerZoneState, ModalType } from '../../types'
 import { AnswerZone, answerZoneDragType } from '../answer-zone/answer-zone'
 import { cn } from '@/helper/cn'
@@ -20,15 +18,9 @@ export function EditorCanvas(props: EditorCanvasProps) {
   const { state, setModalType } = props
   const { answerZones, backgroundImage, canvasDimensions } = state
 
-  const { duplicateAnswerZone } = useAnswerZones(answerZones)
-
   const context = useContext(AnswerZonesContext)
 
-  const { selectAnswerZone, selectCurrentAnswer, currentAnswerZone } =
-    context || {}
-
-  const [answerZoneClipboardItem, setAnswerZoneClipboardItem] =
-    useState<AnswerZoneState | null>(null)
+  const { selectAnswerZone, selectCurrentAnswer } = context || {}
 
   const backgroundImageDocument = backgroundImage.defined
     ? (selectStaticDocument(
@@ -87,27 +79,6 @@ export function EditorCanvas(props: EditorCanvasProps) {
     }),
     [answerZones]
   )
-
-  useHotkeys('backspace, del', (event) => {
-    if (!currentAnswerZone) return
-    const index = answerZones.findIndex(
-      ({ id }) => id.get() === currentAnswerZone.id.get()
-    )
-    index !== -1 && answerZones.remove(index)
-    event.preventDefault()
-  })
-
-  useHotkeys(['ctrl+c, meta+c'], (event) => {
-    setAnswerZoneClipboardItem(currentAnswerZone)
-    event.preventDefault()
-  })
-
-  useHotkeys(['ctrl+v, meta+v'], (event) => {
-    if (!answerZoneClipboardItem) return
-    const idToDuplicate = answerZoneClipboardItem.id.get()
-    duplicateAnswerZone(idToDuplicate)
-    event.preventDefault()
-  })
 
   return (
     <div
