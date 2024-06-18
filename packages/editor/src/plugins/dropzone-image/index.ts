@@ -47,11 +47,11 @@ export const answerZoneState = object({
   name: string(''),
   position: positionData,
   layout: layoutData,
-  answers: list(answerData, 0),
+  answers: list(answerData),
 })
 
 const dropzoneImageState = object({
-  answerZones: list(answerZoneState, 0),
+  answerZones: list(answerZoneState),
   canvasShape: string(BackgroundShape.Unset),
   canvasDimensions: object({
     height: number(defaultLargeCanvasDimension),
@@ -60,7 +60,7 @@ const dropzoneImageState = object({
   backgroundType: string(''),
   backgroundImage: optional(child({ plugin: EditorPluginType.Image })),
   dropzoneVisibility: string(DropzoneVisibility.Full),
-  extraDraggableAnswers: list(answerData, 0),
+  extraDraggableAnswers: list(answerData),
 })
 
 export const defaultConfig: DropzoneImageConfig = {}
