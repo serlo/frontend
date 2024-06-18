@@ -1,13 +1,13 @@
 import { useDrag } from 'react-dnd'
 
-import type { PossibleAnswerType, StaticPossibleAnswerType } from '../../types'
+import type { PossibleAnswerType } from '../../types'
 import { AnswerContent } from '../answer-zone/answer-content'
 import { cn } from '@/helper/cn'
 
 export const draggableAnswerDragType = 'draggableAnswer'
 
 interface DraggableAnswerProps {
-  answer: PossibleAnswerType | StaticPossibleAnswerType
+  answer: PossibleAnswerType
   originDropzoneId?: string
   isCorrect?: boolean | null
   isAnswerCorrect?: boolean | null
@@ -53,6 +53,8 @@ export function DraggableAnswer(props: DraggableAnswerProps) {
             hasEnoughDroppedAnswers
           )
         )}
+        // TODO: Media query utilities aren't working
+        pClassName="mobile:text-xs sm:text-sm md:text-base lg:text-lg"
       />
     </span>
   )

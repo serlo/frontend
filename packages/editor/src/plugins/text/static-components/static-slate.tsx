@@ -5,17 +5,21 @@ import { Descendant, Element } from 'slate'
 
 import { TextLeafRenderer } from '../components/text-leaf-renderer'
 import { ListElementType } from '../types/text-editor'
+import { cn } from '@/helper/cn'
 
-export function StaticSlate({
-  element,
-}: {
+interface StaticSlateProps {
   element: Descendant | Descendant[]
-}): JSX.Element | null {
+  pClassName?: string
+}
+
+export function StaticSlate(props: StaticSlateProps): JSX.Element | null {
+  const { element, pClassName } = props
+
   if (Array.isArray(element))
     return (
       <>
         {element.map((item, index) => (
-          <StaticSlate key={index} element={item} />
+          <StaticSlate key={index} element={item} pClassName={pClassName} />
         ))}
       </>
     )
@@ -107,8 +111,8 @@ export function StaticSlate({
     }
 
     return (
-      <p className="slate-p serlo-p mb-0 min-h-[1.33em]">
-        <StaticSlate element={children} />
+      <p className={cn('slate-p serlo-p mb-0 min-h-[1.33em]', pClassName)}>
+        <StaticSlate element={children} pClassName={pClassName} />
       </p>
     )
   }

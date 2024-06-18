@@ -5,7 +5,6 @@ import type {
 
 import { BlankDropZone } from './blank-drop-zone'
 import type { DropzoneVisibility } from '../../types'
-import { isSmallScreen } from '../../utils/is-small-screen'
 import { cn } from '@/helper/cn'
 
 interface StaticCanvasProps {
@@ -35,18 +34,17 @@ export function StaticCanvas(props: StaticCanvasProps) {
   const backgroundImageUrlFromPlugin = (bgImagePluginState?.state?.src ||
     '') as string
 
-  const scaler = isSmallScreen() ? 0.4 : 1
-
   return (
     <div
       className={cn(`
-        relative mx-auto overflow-hidden rounded-lg
-        border border-brand-500 bg-cover bg-center bg-no-repeat
+        relative mx-auto max-w-full overflow-hidden
+        rounded-lg border border-brand-500
+        bg-cover bg-center bg-no-repeat
       `)}
       style={{
         backgroundImage: `url(${backgroundImageUrlFromPlugin})`,
-        height: `${canvasDimensions.height * scaler}px`,
-        width: `${canvasDimensions.width * scaler}px`,
+        width: canvasDimensions.width,
+        aspectRatio: `${canvasDimensions.width} / ${canvasDimensions.height}`,
       }}
     >
       {answerZones.map((answerZone) => {

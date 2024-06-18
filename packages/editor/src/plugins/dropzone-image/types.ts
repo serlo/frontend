@@ -9,12 +9,6 @@ export interface PossibleAnswerType {
   text?: Descendant[]
 }
 
-export interface StaticPossibleAnswerType {
-  id: string
-  imageUrl: string
-  text: string
-}
-
 export interface BasicDropZone {
   id: string
   name: string
