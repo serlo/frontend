@@ -29,7 +29,8 @@ export function AnswerContent(props: AnswerContentProps) {
         data-qa="plugin-dropzone-image-answer-content-text"
         className={cn(
           'mx-0 block rounded-full border border-brand px-2',
-          '[&>p]:text-xs [&>p]:sm:text-sm [&>p]:md:text-base [&>p]:lg:text-lg',
+          '[&>p]:mx-1 [&>p]:sm:mx-2 [&>p]:md:mx-4',
+          '[&>p]:text-xs [&>p]:sm:text-base [&>p]:md:text-lg',
           className
         )}
       >
