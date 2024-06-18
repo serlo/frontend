@@ -69,6 +69,7 @@ export function AnswerZoneSettingsForm({
             )}
             className="w-24 rounded border border-gray-300 bg-orange-100 p-2 text-center"
           />
+          <span className="self-center">%</span>
           <span className="self-center">x</span>
           <input
             type="number"
@@ -78,6 +79,7 @@ export function AnswerZoneSettingsForm({
             )}
             className="w-24 rounded border border-gray-300 bg-orange-100 p-2 text-center"
           />
+          <span className="self-center">%</span>
         </div>
       </label>
 

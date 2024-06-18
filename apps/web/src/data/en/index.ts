@@ -710,7 +710,7 @@ export const loggedInData = {
           },
           answerZone: {
             description: 'Description (optional)',
-            sizeLabel: 'Configure the size of the drop zone (in percentages)',
+            sizeLabel: 'Configure the size of the drop zone',
             duplicate: 'Duplicate zone',
             delete: 'Delete zone',
           },
