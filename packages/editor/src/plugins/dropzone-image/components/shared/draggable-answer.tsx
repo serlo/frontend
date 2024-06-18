@@ -53,8 +53,6 @@ export function DraggableAnswer(props: DraggableAnswerProps) {
             hasEnoughDroppedAnswers
           )
         )}
-        // TODO: Media query utilities aren't working
-        pClassName="mobile:text-xs sm:text-sm md:text-base lg:text-lg"
       />
     </span>
   )

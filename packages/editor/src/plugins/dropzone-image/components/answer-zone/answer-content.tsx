@@ -8,11 +8,10 @@ interface AnswerContentProps {
   url?: string
   text?: Descendant[]
   className?: string
-  pClassName?: string
 }
 
 export function AnswerContent(props: AnswerContentProps) {
-  const { url, text, className, pClassName } = props
+  const { url, text, className } = props
 
   if (url) {
     return (
@@ -33,7 +32,10 @@ export function AnswerContent(props: AnswerContentProps) {
           className
         )}
       >
-        <StaticSlate element={text} pClassName={pClassName} />
+        <StaticSlate
+          element={text}
+          pClassName="mobile:text-xs sm:text-sm md:text-base lg:text-lg"
+        />
       </span>
     )
   }
