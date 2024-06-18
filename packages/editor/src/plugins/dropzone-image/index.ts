@@ -44,7 +44,7 @@ export const answerData = object({
 
 export const answerZoneState = object({
   id: string(''),
-  name: string('aaa'),
+  name: string(''),
   position: positionData,
   layout: layoutData,
   answers: list(answerData, 0),
