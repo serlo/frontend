@@ -127,7 +127,6 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
         <ToolbarSelect
           tooltipText={pluginStrings.dropzoneVisibility}
           value={dropzoneVisibility.value}
-          dataQa="plugin-blanks-mode-switch"
           changeValue={(value) => dropzoneVisibility.set(value)}
           options={visibilityOptions.map((option) => ({
             text: option.charAt(0).toUpperCase() + option.slice(1),

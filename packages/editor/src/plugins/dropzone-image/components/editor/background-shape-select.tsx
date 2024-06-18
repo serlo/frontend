@@ -7,30 +7,39 @@ import { DropzoneImageToolbar } from '../../toolbar'
 import { BackgroundShape } from '../../types'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
-const shapeOptions = [
+export const defaultLargeCanvasDimension = 600
+export const defaultSmallCanvasDimension = 400
+
+type SelectableShapeOption =
+  | BackgroundShape.Square
+  | BackgroundShape.Landscape
+  | BackgroundShape.Portrait
+
+const shapeOptions: SelectableShapeOption[] = [
   BackgroundShape.Square,
   BackgroundShape.Landscape,
   BackgroundShape.Portrait,
 ]
 
-const IconMap = {
-  [BackgroundShape.Unset]: <> </>,
+const iconMap = {
   [BackgroundShape.Square]: <IconSquare />,
   [BackgroundShape.Portrait]: <IconPortrait />,
   [BackgroundShape.Landscape]: <IconLandscape />,
 }
 
-export const getCanvasDimensions = (shape: string) => {
-  switch (shape) {
-    case 'square':
-      return { canvasHeight: 786, canvasWidth: 786 }
-    case 'landscape':
-      return { canvasHeight: 786, canvasWidth: 1024 }
-    case 'portrait':
-      return { canvasHeight: 1024, canvasWidth: 786 }
-    default:
-      return { canvasHeight: 786, canvasWidth: 786 }
-  }
+const canvasDimensionsMap = {
+  [BackgroundShape.Square]: {
+    canvasHeight: defaultLargeCanvasDimension,
+    canvasWidth: defaultLargeCanvasDimension,
+  },
+  [BackgroundShape.Landscape]: {
+    canvasHeight: defaultSmallCanvasDimension,
+    canvasWidth: defaultLargeCanvasDimension,
+  },
+  [BackgroundShape.Portrait]: {
+    canvasHeight: defaultLargeCanvasDimension,
+    canvasWidth: defaultSmallCanvasDimension,
+  },
 }
 
 export function BackgroundShapeSelect(props: DropzoneImageProps) {
@@ -38,8 +47,8 @@ export function BackgroundShapeSelect(props: DropzoneImageProps) {
   const { canvasShape, canvasDimensions } = state
   const shapeStrings = useEditorStrings().plugins.dropzoneImage.backgroundShapes
 
-  const onSelectShape = (shape: string) => {
-    const dimensions = getCanvasDimensions(shape)
+  const onSelectShape = (shape: SelectableShapeOption) => {
+    const dimensions = canvasDimensionsMap[shape]
     canvasDimensions.height.set(dimensions.canvasHeight)
     canvasDimensions.width.set(dimensions.canvasWidth)
     canvasShape.set(shape)
@@ -60,15 +69,11 @@ export function BackgroundShapeSelect(props: DropzoneImageProps) {
             onClick={() => onSelectShape(shape)}
           >
             <div className="flex flex-grow items-center justify-center">
-              {IconMap[shape]}
+              {iconMap[shape]}
             </div>
-            {shape !== BackgroundShape.Unset ? (
-              <div className="mb-2 font-bold text-almost-black">
-                {shapeStrings[shape]}
-              </div>
-            ) : (
-              ''
-            )}
+            <div className="mb-2 font-bold text-almost-black">
+              {shapeStrings[shape]}
+            </div>
           </button>
         ))}
       </div>

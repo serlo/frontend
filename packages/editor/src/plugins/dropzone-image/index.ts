@@ -1,6 +1,7 @@
 import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
+import { defaultLargeCanvasDimension } from './components/editor/background-shape-select'
 import { DropzoneImageEditor } from './components/editor/editor'
 import { BackgroundShape, DropzoneVisibility } from './types'
 import {
@@ -53,8 +54,8 @@ const dropzoneImageState = object({
   answerZones: list(answerZoneState, 0),
   canvasShape: string(BackgroundShape.Unset),
   canvasDimensions: object({
-    height: number(786),
-    width: number(786),
+    height: number(defaultLargeCanvasDimension),
+    width: number(defaultLargeCanvasDimension),
   }),
   backgroundType: string(''),
   backgroundImage: optional(child({ plugin: EditorPluginType.Image })),
