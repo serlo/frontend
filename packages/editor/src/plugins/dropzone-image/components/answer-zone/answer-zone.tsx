@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { useDrag } from 'react-dnd'
 import { ResizableBox, ResizableBoxProps } from 'react-resizable'
 
@@ -68,8 +68,19 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   const absoluteHeight = canvasHeight * height
   const absoluteWidth = canvasWidth * width
 
-  const minHeight = canvasHeight * 0.09
-  const minWidth = canvasHeight * 0.2
+  const minHeight = Math.max(canvasHeight * 0.09, 45)
+  const minWidth = Math.max(canvasHeight * 0.2, 110)
+
+  useEffect(() => {
+    if (absoluteHeight < minHeight) {
+      answerZone.layout.height.set(minHeight / canvasHeight)
+    }
+    if (absoluteWidth < minWidth) {
+      answerZone.layout.width.set(minWidth / canvasWidth)
+    }
+    // Only check once
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // Hide source element while dragging
   if (collected.isDragging) {

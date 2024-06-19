@@ -20,7 +20,7 @@ export const AnswerZoneSidebar = (props: AnswerZoneSidebarProps) => {
     <>
       <button
         className={cn(`
-          serlo-tooltip-trigger absolute right-2 top-1 z-20 rounded bg-orange-100 p-1 text-[0.5rem]
+          serlo-tooltip-trigger absolute right-2 top-1 rounded bg-orange-100 p-1 text-[0.5rem]
         `)}
         onClick={() => onClickPlusButton(answerZoneId)}
         data-qa={`answer-zone-${answerZoneId}-add-another-answer-button`}
@@ -33,7 +33,7 @@ export const AnswerZoneSidebar = (props: AnswerZoneSidebarProps) => {
       </button>
       <button
         className={cn(`
-          serlo-tooltip-trigger absolute bottom-1 right-2 z-20 hidden
+          serlo-tooltip-trigger absolute bottom-1 right-2 hidden
           rounded bg-orange-100 p-1  text-[0.5rem] group-hover:block
         `)}
         onClick={() => onClickSettingsButton(answerZoneId)}
