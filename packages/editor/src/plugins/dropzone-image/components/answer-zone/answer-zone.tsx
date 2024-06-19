@@ -15,6 +15,13 @@ import { cn } from '@/helper/cn'
 
 export const answerZoneDragType = 'answerZone'
 
+interface PositionState {
+  left: number
+  top: number
+  width: number
+  height: number
+}
+
 export interface AnswerZoneProps {
   answerZone: AnswerZoneState
   canvasHeight: number
@@ -41,14 +48,20 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   const width = answerZone.layout.width.get()
   const name = answerZone.name.get()
 
-  const [absoluteLeft, setaAbsoluteLeft] = useState<number>(canvasWidth * left)
-  const [absoluteTop, setAbsoluteTop] = useState<number>(canvasHeight * top)
-  const [absoluteWidth, setAbsoluteWidth] = useState<number>(
-    canvasWidth * width
-  )
-  const [absoluteHeight, setAbsoluteHeight] = useState<number>(
-    canvasHeight * height
-  )
+  const [positionState, setPositionState] = useState<PositionState>({
+    left: canvasWidth * left,
+    top: canvasHeight * top,
+    width: canvasWidth * width,
+    height: canvasHeight * height,
+  })
+  useEffect(() => {
+    setPositionState({
+      left: canvasWidth * left,
+      top: canvasHeight * top,
+      width: canvasWidth * width,
+      height: canvasHeight * height,
+    })
+  }, [canvasHeight, canvasWidth, height, left, top, width])
 
   const context = useContext(AnswerZonesContext)
   const { dropzoneVisibility } = context || {}
@@ -63,32 +76,46 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   })
 
   const handleResize: ResizableBoxProps['onResize'] = (_, { size, handle }) => {
-    setAbsoluteWidth((previousWidth) => {
+    setPositionState((previous) => {
+      const newPositionState = { ...previous }
+
       if (handle === 'nw' || handle === 'sw') {
-        setaAbsoluteLeft(
-          (previousLeft) => previousLeft + previousWidth - size.width
-        )
+        const newLeft = previous.left + previous.width - size.width
+        const isOverflowingLeft = newLeft < 0
+        newPositionState.left = isOverflowingLeft ? 0 : newLeft
+        newPositionState.width = isOverflowingLeft ? previous.width : size.width
+      } else {
+        const newRight = previous.left + size.width
+        const isOverflowingRight = newRight > canvasWidth
+        newPositionState.width = isOverflowingRight
+          ? previous.width
+          : size.width
       }
 
-      return size.width
-    })
-
-    setAbsoluteHeight((previousHeight) => {
       if (handle === 'nw' || handle === 'ne') {
-        setAbsoluteTop(
-          (previousTop) => previousTop + previousHeight - size.height
-        )
+        const newTop = previous.top + previous.height - size.height
+        const isOverflowingTop = newTop < 0
+        newPositionState.top = isOverflowingTop ? 0 : newTop
+        newPositionState.height = isOverflowingTop
+          ? previous.height
+          : size.height
+      } else {
+        const newBottom = previous.top + size.height
+        const isOverflowingBottom = newBottom > canvasHeight
+        newPositionState.height = isOverflowingBottom
+          ? previous.height
+          : size.height
       }
 
-      return size.height
+      return newPositionState
     })
   }
 
   const handleResizeStop: ResizableBoxProps['onResizeStop'] = () => {
-    const left = getPercentageRounded(canvasWidth, absoluteLeft)
-    const top = getPercentageRounded(canvasHeight, absoluteTop)
-    const width = getPercentageRounded(canvasWidth, absoluteWidth)
-    const height = getPercentageRounded(canvasHeight, absoluteHeight)
+    const left = getPercentageRounded(canvasWidth, positionState.left)
+    const top = getPercentageRounded(canvasHeight, positionState.top)
+    const width = getPercentageRounded(canvasWidth, positionState.width)
+    const height = getPercentageRounded(canvasHeight, positionState.height)
     answerZone.position.left.set(left)
     answerZone.position.top.set(top)
     answerZone.layout.width.set(width)
@@ -99,12 +126,15 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   const minHeight = Math.max(canvasHeight * 0.09, 45)
 
   useEffect(() => {
-    if (absoluteWidth < minWidth) {
-      setAbsoluteWidth(minWidth)
+    setPositionState((previous) => ({
+      ...previous,
+      width: positionState.width < minWidth ? minWidth : previous.width,
+      height: positionState.width < minWidth ? minHeight : previous.height,
+    }))
+    if (positionState.width < minWidth) {
       answerZone.layout.width.set(minWidth / canvasWidth)
     }
-    if (absoluteHeight < minHeight) {
-      setAbsoluteHeight(minHeight)
+    if (positionState.height < minHeight) {
       answerZone.layout.height.set(minHeight / canvasHeight)
     }
     // Only check once
@@ -121,18 +151,13 @@ export const AnswerZone = (props: AnswerZoneProps) => {
       ref={dragPreview}
       className="absolute flex cursor-move items-center justify-center rounded bg-transparent"
       onClick={onClick}
-      style={{
-        left: absoluteLeft,
-        top: absoluteTop,
-        width: absoluteWidth,
-        height: absoluteHeight,
-      }}
+      style={positionState}
       data-qa={`answer-zone-${answerZone.id.get()}`}
     >
       <ResizableBox
         className="h-full w-full"
-        width={absoluteWidth}
-        height={absoluteHeight}
+        width={positionState.width}
+        height={positionState.height}
         minConstraints={[minWidth, minHeight]}
         maxConstraints={[canvasWidth, canvasHeight]}
         onResize={handleResize}
