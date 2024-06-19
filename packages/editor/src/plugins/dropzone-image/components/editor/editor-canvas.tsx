@@ -105,8 +105,8 @@ export function EditorCanvas(props: EditorCanvasProps) {
     <div
       ref={drop}
       className={cn(`
-        relative mx-auto box-content max-w-full overflow-auto rounded-lg
-        border border-almost-black bg-cover bg-center bg-no-repeat
+        relative mx-auto box-content max-w-full overflow-auto overflow-hidden
+        rounded-lg border border-almost-black bg-cover bg-center bg-no-repeat
       `)}
       style={{
         backgroundImage: `url(${backgroundImageUrl})`,
@@ -115,36 +115,31 @@ export function EditorCanvas(props: EditorCanvasProps) {
       }}
       data-qa="plugin-dropzone-image-editor-canvas"
     >
-      <div
-        className="overflow-hidden"
-        style={{ width: canvasWidth, height: canvasHeight }}
-      >
-        {answerZones?.map((answerZone, index) => {
-          const id = answerZone.id.get()
-          return (
-            <AnswerZone
-              key={index}
-              answerZone={answerZone}
-              canvasHeight={canvasHeight}
-              canvasWidth={canvasWidth}
-              onClick={() => selectAnswerZone(id)}
-              onClickSettingsButton={() => {
-                selectAnswerZone(id)
-                setModalType(ModalType.Settings)
-              }}
-              onClickPlusButton={() => {
-                selectAnswerZone(id)
-                setModalType(ModalType.CreateDropZone)
-              }}
-              onClickEditAnswerButton={(answerIndex, answerType) => {
-                selectAnswerZone(id)
-                selectCurrentAnswer(answerIndex, answerType)
-                setModalType(ModalType.Edit)
-              }}
-            />
-          )
-        })}
-      </div>
+      {answerZones?.map((answerZone, index) => {
+        const id = answerZone.id.get()
+        return (
+          <AnswerZone
+            key={index}
+            answerZone={answerZone}
+            canvasHeight={canvasHeight}
+            canvasWidth={canvasWidth}
+            onClick={() => selectAnswerZone(id)}
+            onClickSettingsButton={() => {
+              selectAnswerZone(id)
+              setModalType(ModalType.Settings)
+            }}
+            onClickPlusButton={() => {
+              selectAnswerZone(id)
+              setModalType(ModalType.CreateDropZone)
+            }}
+            onClickEditAnswerButton={(answerIndex, answerType) => {
+              selectAnswerZone(id)
+              selectCurrentAnswer(answerIndex, answerType)
+              setModalType(ModalType.Edit)
+            }}
+          />
+        )
+      })}
     </div>
   )
 }
