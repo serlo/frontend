@@ -11,13 +11,13 @@ import {
 } from '../utils/answer-zone'
 
 export const defaultAnswerZonePosition = {
-  left: 5,
-  top: 5,
+  left: 0.05,
+  top: 0.05,
 }
 
 export const defaultAnswerZoneLayout = {
-  width: 20,
-  height: 10,
+  width: 0.2,
+  height: 0.1,
 }
 
 export function useAnswerZones(

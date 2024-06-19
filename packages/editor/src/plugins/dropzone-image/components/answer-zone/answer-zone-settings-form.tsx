@@ -11,13 +11,6 @@ interface AnswerZoneSettingsFormProps {
   onDelete: () => void
 }
 
-/**
- *
- * This component renders a settings form for configuring an answer zone.
- * It allows users to duplicate, delete, and adjust settings such as
- * name, visibility, height, and width of the answer zone.
- *
- */
 export function AnswerZoneSettingsForm({
   answerZone,
   onDuplicate,
@@ -25,23 +18,15 @@ export function AnswerZoneSettingsForm({
 }: AnswerZoneSettingsFormProps): JSX.Element | null {
   const pluginStrings = useEditorStrings().plugins.dropzoneImage
 
-  if (!answerZone) return null
-
   const initialSettings = {
     name: answerZone.name.value,
-    height: answerZone.layout.height.value,
-    width: answerZone.layout.width.value,
+    height: answerZone.layout.height.value * 100,
+    width: answerZone.layout.width.value * 100,
   }
 
-  const handleInputChange =
-    (setter: (value: any) => void) =>
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const value =
-        event.target.type === 'checkbox'
-          ? event.target.checked
-          : event.target.value
-      setter(value)
-    }
+  function handleSizeChange(prop: 'height' | 'width', value: string) {
+    answerZone.layout[prop].set(parseInt(value) / 100)
+  }
 
   return (
     <div className="mx-auto flex w-full max-w-sm flex-col items-center justify-center rounded-lg bg-white p-2">
@@ -64,9 +49,7 @@ export function AnswerZoneSettingsForm({
           <input
             type="number"
             defaultValue={initialSettings.height}
-            onChange={handleInputChange((value: string) =>
-              answerZone.layout.height.set(parseInt(value))
-            )}
+            onChange={(event) => handleSizeChange('height', event.target.value)}
             className="w-24 rounded border border-gray-300 bg-orange-100 p-2 text-center"
           />
           <span className="self-center">%</span>
@@ -74,9 +57,7 @@ export function AnswerZoneSettingsForm({
           <input
             type="number"
             defaultValue={initialSettings.width}
-            onChange={handleInputChange((value: string) =>
-              answerZone.layout.width.set(parseInt(value))
-            )}
+            onChange={(event) => handleSizeChange('width', event.target.value)}
             className="w-24 rounded border border-gray-300 bg-orange-100 p-2 text-center"
           />
           <span className="self-center">%</span>

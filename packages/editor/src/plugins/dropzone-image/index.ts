@@ -19,8 +19,6 @@ import {
   optional,
 } from '../../plugin'
 
-// TODO: Maybe use decimals instead of percentages for position and layout
-
 export const answerData = object({
   id: string(''),
   image: child({ plugin: EditorPluginType.Image }),

@@ -72,14 +72,12 @@ export function EditorCanvas(props: EditorCanvasProps) {
       drop(answerZone: AnswerZoneState, monitor) {
         const change = monitor.getDifferenceFromInitialOffset()
         if (!change) return
-        const currentAbsoluteLeft =
-          canvasWidth * (answerZone.position.left.get() / 100)
+        const currentAbsoluteLeft = canvasWidth * answerZone.position.left.get()
         const left = getPercentageRounded(
           canvasWidth,
           currentAbsoluteLeft + change.x
         )
-        const currentAbsoluteTop =
-          canvasHeight * (answerZone.position.top.get() / 100)
+        const currentAbsoluteTop = canvasHeight * answerZone.position.top.get()
         const top = getPercentageRounded(
           canvasHeight,
           currentAbsoluteTop + change.y

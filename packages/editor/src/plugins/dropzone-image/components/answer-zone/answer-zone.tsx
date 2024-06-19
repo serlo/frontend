@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react'
+import { useContext } from 'react'
 import { useDrag } from 'react-dnd'
 import { ResizableBox, ResizableBoxProps } from 'react-resizable'
 
@@ -62,26 +62,14 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   const width = answerZone.layout.width.get()
   const name = answerZone.name.get()
 
-  const absoluteLeft = useMemo(
-    () => canvasWidth * (left / 100),
-    [canvasWidth, left]
-  )
-  const absoluteTop = useMemo(
-    () => canvasHeight * (top / 100),
-    [canvasHeight, top]
-  )
+  const absoluteLeft = canvasWidth * left
+  const absoluteTop = canvasHeight * top
 
-  const absoluteHeight = useMemo(
-    () => canvasHeight * (height / 100),
-    [canvasHeight, height]
-  )
-  const absoluteWidth = useMemo(
-    () => canvasWidth * (width / 100),
-    [canvasWidth, width]
-  )
+  const absoluteHeight = canvasHeight * height
+  const absoluteWidth = canvasWidth * width
 
-  const minHeight = useMemo(() => canvasHeight * 0.09, [canvasHeight])
-  const minWidth = useMemo(() => canvasHeight * 0.2, [canvasHeight])
+  const minHeight = canvasHeight * 0.09
+  const minWidth = canvasHeight * 0.2
 
   // Hide source element while dragging
   if (collected.isDragging) {
