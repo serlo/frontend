@@ -130,7 +130,9 @@ Scenario('Subject landing page', ({ I }) => {
 })
 
 Scenario('Geogebra', ({ I }) => {
-  I.amOnPage('/43563')
+  I.amOnPage(
+    '/mathe/44647/43563/applet-flaechenberechnung-in-abhaengigkeit-von-x'
+  )
   I.click('Applet laden von GeoGebra')
   I.waitForElement('canvas[data-test="euclidianView"]', 10)
 
