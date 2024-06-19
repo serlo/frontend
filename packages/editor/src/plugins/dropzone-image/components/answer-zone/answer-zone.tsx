@@ -76,50 +76,64 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   })
 
   const handleResize: ResizableBoxProps['onResize'] = (_, { size, handle }) => {
-    setPositionState((previous) => {
-      const newPositionState = { ...previous }
-
-      if (handle === 'nw' || handle === 'sw') {
-        const newLeft = previous.left + previous.width - size.width
-        const isOverflowingLeft = newLeft < 0
-        newPositionState.left = isOverflowingLeft ? 0 : newLeft
-        newPositionState.width = isOverflowingLeft ? previous.width : size.width
-      } else {
-        const newRight = previous.left + size.width
-        const isOverflowingRight = newRight > canvasWidth
-        newPositionState.width = isOverflowingRight
-          ? previous.width
-          : size.width
-      }
-
-      if (handle === 'nw' || handle === 'ne') {
-        const newTop = previous.top + previous.height - size.height
-        const isOverflowingTop = newTop < 0
-        newPositionState.top = isOverflowingTop ? 0 : newTop
-        newPositionState.height = isOverflowingTop
-          ? previous.height
-          : size.height
-      } else {
-        const newBottom = previous.top + size.height
-        const isOverflowingBottom = newBottom > canvasHeight
-        newPositionState.height = isOverflowingBottom
-          ? previous.height
-          : size.height
-      }
-
-      return newPositionState
-    })
+    setPositionState((previous) => ({
+      ...size,
+      left:
+        handle === 'nw' || handle === 'sw'
+          ? previous.left + previous.width - size.width
+          : previous.left,
+      top:
+        handle === 'nw' || handle === 'ne'
+          ? previous.top + previous.height - size.height
+          : previous.top,
+    }))
   }
 
-  const handleResizeStop: ResizableBoxProps['onResizeStop'] = () => {
-    const left = getPercentageRounded(canvasWidth, positionState.left)
-    const top = getPercentageRounded(canvasHeight, positionState.top)
-    const width = getPercentageRounded(canvasWidth, positionState.width)
-    const height = getPercentageRounded(canvasHeight, positionState.height)
-    answerZone.position.left.set(left)
-    answerZone.position.top.set(top)
-    answerZone.layout.width.set(width)
-    answerZone.layout.height.set(height)
+  const handleResizeStop: ResizableBoxProps['onResizeStop'] = (
+    _,
+    { size, handle }
+  ) => {
+    if (handle === 'nw' || handle === 'sw') {
+      const leftOnResizeStop =
+        positionState.left + positionState.width - size.width
+      const isOverflowingLeft = leftOnResizeStop < 0
+      const newLeft = isOverflowingLeft ? 0 : leftOnResizeStop
+      const newWidth = isOverflowingLeft
+        ? positionState.width + leftOnResizeStop
+        : size.width
+      answerZone.position.left.set(getPercentageRounded(canvasWidth, newLeft))
+      answerZone.layout.width.set(getPercentageRounded(canvasWidth, newWidth))
+    } else {
+      const rightOnResizeStop = positionState.left + size.width
+      const isOverflowingRight = rightOnResizeStop > canvasWidth
+      const newWidth = isOverflowingRight
+        ? positionState.width + (canvasWidth - rightOnResizeStop)
+        : size.width
+      answerZone.layout.width.set(getPercentageRounded(canvasWidth, newWidth))
+    }
+
+    if (handle === 'nw' || handle === 'ne') {
+      const topOnResizeStop =
+        positionState.top + positionState.height - size.height
+      const isOverflowingTop = topOnResizeStop < 0
+      const newTop = isOverflowingTop ? 0 : topOnResizeStop
+      const newHeight = isOverflowingTop
+        ? positionState.height + topOnResizeStop
+        : size.height
+      answerZone.position.top.set(getPercentageRounded(canvasHeight, newTop))
+      answerZone.layout.height.set(
+        getPercentageRounded(canvasHeight, newHeight)
+      )
+    } else {
+      const bottomOnResizeStop = positionState.top + size.height
+      const isOverflowingBottom = bottomOnResizeStop > canvasHeight
+      const newHeight = isOverflowingBottom
+        ? positionState.height + (canvasHeight - bottomOnResizeStop)
+        : size.height
+      answerZone.layout.height.set(
+        getPercentageRounded(canvasHeight, newHeight)
+      )
+    }
   }
 
   const minWidth = Math.max(canvasHeight * 0.2, 110)
