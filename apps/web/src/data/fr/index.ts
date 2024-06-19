@@ -529,10 +529,6 @@ export const loggedInData = {
     authorMenu: {
       log: "Historique",
       settings: "Réglages",
-      moveCoursePage: "Déplacer cette page vers un autre cours",
-      thisCoursePage: "Cette page de cours",
-      addCoursePage: "Ajouter une page de cours",
-      wholeCourse: "Tout le cours",
       moveOrCopyItems: 'Move or copy items',
       addGroupedTextExercise: "Ajouter un exercice de texte groupé",
       changeLicense: "Modifier la licence",
@@ -691,7 +687,6 @@ export const loggedInData = {
           combineLikeTerms: 'Combine like terms.',
           setEqual: 'Set the terms equal to each other.',
           firstExplanation: 'First explanation',
-          moveUpLabel: 'Move up',
           removeRowLabel: 'Remove row'
         },
         geogebra: {
@@ -913,7 +908,9 @@ export const loggedInData = {
         entity: {
           titlePlaceholder: "Titre",
           seoTitle: "Titre pour les moteurs de recherche",
-          seoDesc: "Description pour les moteurs de recherche"
+          seoDesc: "Description pour les moteurs de recherche",
+          moveUpLabel: 'Move up',
+          moveDownLabel: 'Move down'
         },
         article: {
           writeShortIntro: "Écrire une courte introduction",
@@ -921,7 +918,6 @@ export const loggedInData = {
           moreOnTopic: "Tu peux en trouver plus ici :",
           addSource: "Ajouter une source",
           removeLabel: "Supprimer",
-          moveUpLabel: 'Move up',
           dragLabel: 'Drag to change order',
           openInTab: "Ouvrir dans un nouvel onglet",
           sources: 'Sources',
@@ -949,13 +945,8 @@ export const loggedInData = {
         },
         course: {
           removeCoursePage: "Supprimer la page de cours",
-          addCoursePage: "Ajouter une page de cours"
-        },
-        coursePage: {
-          explanation: "Explication",
-          video: "Vidéo",
-          question: 'Question',
-          title: "Titre"
+          addCoursePage: "Ajouter une page de cours",
+          confirmDelete: 'Are you sure you want to delete this course page?'
         },
         exercise: {
           scMcExercise: 'Choice Exercise',

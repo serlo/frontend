@@ -529,10 +529,6 @@ export const loggedInData = {
     authorMenu: {
       log: "लॉग",
       settings: "सेटिंग्स",
-      moveCoursePage: "इस पृष्ठ को दूसरे कोर्स में ले जाएं",
-      thisCoursePage: "यह कोर्स पृष्ठ",
-      addCoursePage: "कोर्स पृष्ठ जोड़ें",
-      wholeCourse: "पूरे कोर्स",
       moveOrCopyItems: 'Move or copy items',
       addGroupedTextExercise: "समूहीकृत-पाठ-व्यायाम",
       changeLicense: "लायसेंस परिवर्तित करें",
@@ -691,7 +687,6 @@ export const loggedInData = {
           combineLikeTerms: 'Combine like terms.',
           setEqual: 'Set the terms equal to each other.',
           firstExplanation: 'First explanation',
-          moveUpLabel: 'Move up',
           removeRowLabel: 'Remove row'
         },
         geogebra: {
@@ -913,7 +908,9 @@ export const loggedInData = {
         entity: {
           titlePlaceholder: "शीर्षक",
           seoTitle: 'Title for search engines',
-          seoDesc: 'Description for search engines'
+          seoDesc: 'Description for search engines',
+          moveUpLabel: 'Move up',
+          moveDownLabel: 'Move down'
         },
         article: {
           writeShortIntro: 'Write a short introduction',
@@ -921,7 +918,6 @@ export const loggedInData = {
           moreOnTopic: 'You can find more content on this topic here',
           addSource: 'Add source',
           removeLabel: 'Remove',
-          moveUpLabel: 'Move up',
           dragLabel: 'Drag to change order',
           openInTab: 'Open in new tab',
           sources: 'Sources',
@@ -949,13 +945,8 @@ export const loggedInData = {
         },
         course: {
           removeCoursePage: 'Remove course page',
-          addCoursePage: 'Add course page'
-        },
-        coursePage: {
-          explanation: 'Explanation',
-          video: "वीडियो",
-          question: 'Question',
-          title: "शीर्षक"
+          addCoursePage: 'Add course page',
+          confirmDelete: 'Are you sure you want to delete this course page?'
         },
         exercise: {
           scMcExercise: 'Choice Exercise',
