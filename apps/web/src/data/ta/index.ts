@@ -529,10 +529,6 @@ export const loggedInData = {
     authorMenu: {
       log: "பதிவு",
       settings: "அமைப்புகள்",
-      moveCoursePage: 'Move this page to another course',
-      thisCoursePage: 'This course-page',
-      addCoursePage: 'Add course-page',
-      wholeCourse: 'Whole course',
       moveOrCopyItems: 'Move or copy items',
       addGroupedTextExercise: 'Add grouped-text-exercise',
       changeLicense: 'Change License',
@@ -691,7 +687,6 @@ export const loggedInData = {
           combineLikeTerms: 'Combine like terms.',
           setEqual: 'Set the terms equal to each other.',
           firstExplanation: 'First explanation',
-          moveUpLabel: 'Move up',
           removeRowLabel: 'Remove row'
         },
         geogebra: {
@@ -913,7 +908,9 @@ export const loggedInData = {
         entity: {
           titlePlaceholder: "தலைப்பு",
           seoTitle: 'Title for search engines',
-          seoDesc: 'Description for search engines'
+          seoDesc: 'Description for search engines',
+          moveUpLabel: 'Move up',
+          moveDownLabel: 'Move down'
         },
         article: {
           writeShortIntro: "ஒரு சிறிய அறிமுகத்தை எழுதுங்கள்",
@@ -921,7 +918,6 @@ export const loggedInData = {
           moreOnTopic: 'You can find more content on this topic here',
           addSource: 'Add source',
           removeLabel: "நீக்கு",
-          moveUpLabel: 'Move up',
           dragLabel: 'Drag to change order',
           openInTab: "புதியத் தாவலில் திற",
           sources: 'Sources',
@@ -949,13 +945,8 @@ export const loggedInData = {
         },
         course: {
           removeCoursePage: 'Remove course page',
-          addCoursePage: 'Add course page'
-        },
-        coursePage: {
-          explanation: "விளக்கம்",
-          video: "காணொளி",
-          question: "கேள்வி",
-          title: "தலைப்பு"
+          addCoursePage: 'Add course page',
+          confirmDelete: 'Are you sure you want to delete this course page?'
         },
         exercise: {
           scMcExercise: 'Choice Exercise',
