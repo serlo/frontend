@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useDrag } from 'react-dnd'
 import { ResizableBox, ResizableBoxProps } from 'react-resizable'
 
@@ -35,9 +35,22 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     onClickPlusButton,
     onClickEditAnswerButton,
   } = props
+  const left = answerZone.position.left.get()
+  const top = answerZone.position.top.get()
+  const height = answerZone.layout.height.get()
+  const width = answerZone.layout.width.get()
+  const name = answerZone.name.get()
+
+  const absoluteLeft = canvasWidth * left
+  const absoluteTop = canvasHeight * top
+  const [absoluteWidth, setAbsoluteWidth] = useState<number>(
+    canvasWidth * width
+  )
+  const [absoluteHeight, setAbsoluteHeight] = useState<number>(
+    canvasHeight * height
+  )
 
   const context = useContext(AnswerZonesContext)
-
   const { dropzoneVisibility } = context || {}
 
   const [collected, drag, dragPreview] = useDrag({
@@ -50,33 +63,28 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   })
 
   const handleResize: ResizableBoxProps['onResize'] = (_, { size }) => {
+    setAbsoluteWidth(size.width)
+    setAbsoluteHeight(size.height)
+  }
+
+  const handleResizeStop: ResizableBoxProps['onResizeStop'] = (_, { size }) => {
     const width = getPercentageRounded(canvasWidth, size.width)
     const height = getPercentageRounded(canvasHeight, size.height)
     answerZone.layout.width.set(width)
     answerZone.layout.height.set(height)
   }
 
-  const left = answerZone.position.left.get()
-  const top = answerZone.position.top.get()
-  const height = answerZone.layout.height.get()
-  const width = answerZone.layout.width.get()
-  const name = answerZone.name.get()
-
-  const absoluteLeft = canvasWidth * left
-  const absoluteTop = canvasHeight * top
-
-  const absoluteHeight = canvasHeight * height
-  const absoluteWidth = canvasWidth * width
-
-  const minHeight = Math.max(canvasHeight * 0.09, 45)
   const minWidth = Math.max(canvasHeight * 0.2, 110)
+  const minHeight = Math.max(canvasHeight * 0.09, 45)
 
   useEffect(() => {
-    if (absoluteHeight < minHeight) {
-      answerZone.layout.height.set(minHeight / canvasHeight)
-    }
     if (absoluteWidth < minWidth) {
+      setAbsoluteWidth(minWidth)
       answerZone.layout.width.set(minWidth / canvasWidth)
+    }
+    if (absoluteHeight < minHeight) {
+      setAbsoluteHeight(minHeight)
+      answerZone.layout.height.set(minHeight / canvasHeight)
     }
     // Only check once
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -107,6 +115,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
         minConstraints={[minWidth, minHeight]}
         maxConstraints={[canvasWidth, canvasHeight]}
         onResize={handleResize}
+        onResizeStop={handleResizeStop}
         resizeHandles={['se']}
       >
         <div
