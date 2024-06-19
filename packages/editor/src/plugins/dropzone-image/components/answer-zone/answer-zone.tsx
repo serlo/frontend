@@ -41,8 +41,8 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   const width = answerZone.layout.width.get()
   const name = answerZone.name.get()
 
-  const absoluteLeft = canvasWidth * left
-  const absoluteTop = canvasHeight * top
+  const [absoluteLeft, setaAbsoluteLeft] = useState<number>(canvasWidth * left)
+  const [absoluteTop, setAbsoluteTop] = useState<number>(canvasHeight * top)
   const [absoluteWidth, setAbsoluteWidth] = useState<number>(
     canvasWidth * width
   )
@@ -62,14 +62,35 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     }),
   })
 
-  const handleResize: ResizableBoxProps['onResize'] = (_, { size }) => {
-    setAbsoluteWidth(size.width)
-    setAbsoluteHeight(size.height)
+  const handleResize: ResizableBoxProps['onResize'] = (_, { size, handle }) => {
+    setAbsoluteWidth((previousWidth) => {
+      if (handle === 'nw' || handle === 'sw') {
+        setaAbsoluteLeft(
+          (previousLeft) => previousLeft + previousWidth - size.width
+        )
+      }
+
+      return size.width
+    })
+
+    setAbsoluteHeight((previousHeight) => {
+      if (handle === 'nw' || handle === 'ne') {
+        setAbsoluteTop(
+          (previousTop) => previousTop + previousHeight - size.height
+        )
+      }
+
+      return size.height
+    })
   }
 
-  const handleResizeStop: ResizableBoxProps['onResizeStop'] = (_, { size }) => {
-    const width = getPercentageRounded(canvasWidth, size.width)
-    const height = getPercentageRounded(canvasHeight, size.height)
+  const handleResizeStop: ResizableBoxProps['onResizeStop'] = () => {
+    const left = getPercentageRounded(canvasWidth, absoluteLeft)
+    const top = getPercentageRounded(canvasHeight, absoluteTop)
+    const width = getPercentageRounded(canvasWidth, absoluteWidth)
+    const height = getPercentageRounded(canvasHeight, absoluteHeight)
+    answerZone.position.left.set(left)
+    answerZone.position.top.set(top)
     answerZone.layout.width.set(width)
     answerZone.layout.height.set(height)
   }
@@ -116,7 +137,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
         maxConstraints={[canvasWidth, canvasHeight]}
         onResize={handleResize}
         onResizeStop={handleResizeStop}
-        resizeHandles={['se']}
+        resizeHandles={['ne', 'se', 'sw', 'nw']}
       >
         <div
           ref={drag}
