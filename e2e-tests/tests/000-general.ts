@@ -116,7 +116,7 @@ Scenario('Quickbar', ({ I }) => {
 
   I.click('Aufgaben zum Baumdiagramm ')
   I.seeInTitle('Aufgaben zum Baumdiagramm')
-  I.see('Baumdiagramm und Vierfeldertafel')
+  I.see('Daten und Zufallsexperimente')
 })
 
 Scenario('Share modal', ({ I }) => {

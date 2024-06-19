@@ -123,7 +123,7 @@ Scenario('Quickbar @mobile', ({ I }) => {
 
   I.click('Aufgaben zum Baumdiagramm ')
   I.seeInTitle('Aufgaben zum Baumdiagramm')
-  I.see('Baumdiagramm und Vierfeldertafel')
+  I.see('Daten und Zufallsexperimente')
 })
 
 Scenario('Share modal @mobile', ({ I }) => {
