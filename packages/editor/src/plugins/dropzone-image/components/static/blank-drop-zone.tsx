@@ -83,10 +83,10 @@ export const BlankDropZone = memo(function BlankDropZone(
         getBorderType(visibility)
       )}
       style={{
-        left: left + '%',
-        top: top + '%',
-        width: width + '%',
-        height: height + '%',
+        left: left * 100 + '%',
+        top: top * 100 + '%',
+        width: width * 100 + '%',
+        height: height * 100 + '%',
       }}
       data-qa={`blank-drop-zone-${id}`}
     >
