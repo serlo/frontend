@@ -41,9 +41,7 @@ export async function requestPage(
     endpoint,
     dataQuery,
     {
-      // alias: { instance, path: requestPath },
-      // TODO: only until api supports new alias
-      alias: { instance, path: '/mathe/307521/title' },
+      alias: { instance, path: requestPath },
     }
   )
   const uuid = response.uuid
