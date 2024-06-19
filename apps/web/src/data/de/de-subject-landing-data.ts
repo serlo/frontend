@@ -74,7 +74,7 @@ export interface FeaturedContentData {
   img?: string
 }
 
-// Will probably be fetched dynamically in the future:
+// Might at some point be fetched dynamically, until then static is fine
 
 export const featuredContent: Record<string, FeaturedContentData[]> = {
   informatik: [

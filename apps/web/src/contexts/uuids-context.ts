@@ -1,9 +1,13 @@
 import { createContext, useContext } from 'react'
 
-export const UuidsContext = createContext<{
+export interface UuidsContextData {
   entityId?: number
   revisionId?: number
-} | null>(null)
+}
+
+export const UuidsContext = createContext<UuidsContextData | null>(null)
+
+UuidsContext['Provider']['propTypes']
 
 export const UuidsProvider = UuidsContext.Provider
 

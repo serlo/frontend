@@ -249,24 +249,23 @@ Scenario('Small subject', ({ I }) => {
   I.see('¡Bienvenidos a la')
 })*/
 
-// TODO: activate after migration is done (or bugs are fixed)
-
-// Scenario('Course', ({ I }) => {
-//   I.amOnPage('/1327')
-//   I.see('Kurse')
-//   I.click('Kursübersicht')
-//   I.see('1', 'span.rounded-full')
-//   I.see('Kursübersicht', 'h1')
-//   I.click('Weiter')
-//   I.see('2', 'span.rounded-full')
-//   I.see('Aufstieg zur Zugspitze', 'h1')
-//   I.click('Zurück')
-//   I.see('Kursübersicht', 'h1')
-//   I.click('Kursübersicht')
-//   I.see('Zusammenfassung')
-//   I.click('Weiterführende Übungen')
-//   I.see('Lösung')
-// })
+Scenario('Course', ({ I }) => {
+  I.amOnPage('/1327')
+  I.see('Kurse')
+  I.click('Einführung lineare Funktionen')
+  I.see('1', 'span.rounded-full')
+  I.see('Kursübersicht', 'h1')
+  I.see('Einführung lineare Funktionen')
+  I.click('Weiter')
+  I.see('2', 'span.rounded-full')
+  I.see('Aufstieg zur Zugspitze', 'h1')
+  I.click('Zurück')
+  I.see('Kursübersicht', 'h1')
+  I.click('Kursübersicht')
+  I.see('Zusammenfassung')
+  I.click('Weiterführende Übungen')
+  I.see('Lösungsvorschlag')
+})
 
 Scenario('Comments', ({ I }) => {
   // End of entity

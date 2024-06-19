@@ -9,7 +9,7 @@ import {
 } from '@/components/navigation/header/menu/use-nav-menu-trigger-fix'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { ExerciseInlineType, UuidType } from '@/data-types'
+import { UuidType } from '@/data-types'
 
 export interface MoreAuthorToolsProps {
   data?: AuthorToolsData
@@ -17,18 +17,6 @@ export interface MoreAuthorToolsProps {
   taxNewItems?: boolean
   title?: string
 }
-
-const supportedTypes: AuthorToolsData['typename'][] = [
-  UuidType.Page,
-  UuidType.Article,
-  UuidType.Video,
-  UuidType.Applet,
-  UuidType.Event,
-  UuidType.CoursePage,
-  UuidType.TaxonomyTerm,
-  ExerciseInlineType.Exercise,
-  ExerciseInlineType.ExerciseGroup,
-]
 
 export function MoreAuthorTools({
   data,
@@ -43,7 +31,9 @@ export function MoreAuthorTools({
 
   if (!data || !loggedInData) return null
 
-  if (!supportedTypes.includes(data.typename)) return null
+  const toolsArray = getToolsArray()
+
+  if (!toolsArray.length) return null
 
   return (
     <Item>
@@ -62,11 +52,7 @@ export function MoreAuthorTools({
       <Content onPointerEnter={preventHover}>
         <List className="absolute right-0 z-50 w-56 pt-2 lg:bottom-0 lg:mr-44">
           <div className="serlo-sub-list-hover">
-            <AuthorTools
-              entityId={data.id}
-              data={data}
-              tools={getToolsArray()}
-            />
+            <AuthorTools entityId={data.id} data={data} tools={toolsArray} />
           </div>
         </List>
       </Content>
@@ -81,6 +67,7 @@ export function MoreAuthorTools({
       case UuidType.Article:
       case UuidType.Video:
       case UuidType.Applet:
+      case UuidType.Course:
         return [
           Tool.Abo,
           Tool.History,

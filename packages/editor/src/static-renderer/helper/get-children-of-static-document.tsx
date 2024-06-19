@@ -8,6 +8,7 @@ import {
   isPageLayoutDocument,
   isRowsDocument,
   isSolutionDocument,
+  isCourseDocument,
 } from '@editor/types/plugin-type-guards'
 
 /**
@@ -44,7 +45,10 @@ export function getChildrenOfStaticDocument(
                   isImageDocument(document)
                   ? [document.state.caption]
                   : //
-                    []
+                    isCourseDocument(document)
+                    ? document.state.pages.map(({ content }) => content)
+                    : //
+                      []
 
   return children as AnyEditorDocument[]
 

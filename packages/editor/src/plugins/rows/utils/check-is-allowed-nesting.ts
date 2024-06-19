@@ -51,7 +51,7 @@ export function checkIsAllowedNesting(
     )
       return false
 
-    // Allow exercise only inside Article, CoursePage & GenericContent and on ___editor_preview (rows plugin at the root)
+    // Allow exercise only inside Article, Course & GenericContent and on ___editor_preview (rows plugin at the root)
     const hasValidRoot =
       rootPluginType &&
       [

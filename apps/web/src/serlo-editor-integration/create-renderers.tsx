@@ -5,6 +5,7 @@ import {
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
+import { CourseStaticRenderer } from '@editor/plugins/course/static/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
 import type { MathElement } from '@editor/plugins/text'
 import { TextStaticRenderer } from '@editor/plugins/text/static'
@@ -163,6 +164,7 @@ export function createRenderers(): InitRenderersArgs {
         renderer: DropzoneImageSerloStaticRenderer,
       },
       { type: EditorPluginType.Box, renderer: BoxStaticRenderer },
+      { type: EditorPluginType.Course, renderer: CourseStaticRenderer },
       { type: EditorPluginType.SerloTable, renderer: SerloTableStaticRenderer },
       {
         type: EditorPluginType.Injection,
