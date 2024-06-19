@@ -910,7 +910,7 @@ export const loggedInData = {
           seoTitle: "Titel für Suchmaschinen",
           seoDesc: "Beschreibung für Suchmaschinen",
           moveUpLabel: "Eins nach oben verschieben",
-          moveDownLabel: 'Move down'
+          moveDownLabel: "Nach unten verschieben"
         },
         article: {
           writeShortIntro: "Fasse das Thema des Artikels kurz zusammen",
@@ -946,7 +946,7 @@ export const loggedInData = {
         course: {
           removeCoursePage: "Kursseite entfernen",
           addCoursePage: "Kursseite hinzufügen",
-          confirmDelete: 'Are you sure you want to delete this course page?'
+          confirmDelete: "Sicher, dass du diese Kursseite löschen willst?"
         },
         exercise: {
           scMcExercise: "Auswahlaufgabe",
