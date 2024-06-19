@@ -529,10 +529,6 @@ export const loggedInData = {
     authorMenu: {
       log: "Aktivitätenlog",
       settings: "Einstellungen",
-      moveCoursePage: "Kursseite in einen anderen Kurs verschieben",
-      thisCoursePage: "Diese Kursseite",
-      addCoursePage: "Kursseite hinzufügen",
-      wholeCourse: "Gesamter Kurs",
       moveOrCopyItems: "Elemente verschieben oder kopieren",
       addGroupedTextExercise: "Textaufgabe mit Teilaufgaben hinzufügen",
       changeLicense: "Lizenz auswählen",
@@ -691,7 +687,6 @@ export const loggedInData = {
           combineLikeTerms: "Fasse die Terme zusammen.",
           setEqual: "Setze die Terme gleich.",
           firstExplanation: "Erste Erklärung",
-          moveUpLabel: "Zeile eins nach oben verschieben",
           removeRowLabel: "Zeile entfernen"
         },
         geogebra: {
@@ -913,7 +908,9 @@ export const loggedInData = {
         entity: {
           titlePlaceholder: "Titel",
           seoTitle: "Titel für Suchmaschinen",
-          seoDesc: "Beschreibung für Suchmaschinen"
+          seoDesc: "Beschreibung für Suchmaschinen",
+          moveUpLabel: "Eins nach oben verschieben",
+          moveDownLabel: 'Move down'
         },
         article: {
           writeShortIntro: "Fasse das Thema des Artikels kurz zusammen",
@@ -921,7 +918,6 @@ export const loggedInData = {
           moreOnTopic: "Hier findest du noch weitere passende Inhalte zum Thema",
           addSource: "Quellenangabe hinzufügen",
           removeLabel: "Löschen",
-          moveUpLabel: "Eins nach oben verschieben",
           dragLabel: "Ziehen, um die Reihenfolge zu ändern",
           openInTab: "Öffne den Link in einem neuen Tab",
           sources: "Quellen",
@@ -949,13 +945,8 @@ export const loggedInData = {
         },
         course: {
           removeCoursePage: "Kursseite entfernen",
-          addCoursePage: "Kursseite hinzufügen"
-        },
-        coursePage: {
-          explanation: "Erklärung",
-          video: 'Video',
-          question: "Frage",
-          title: "Titel"
+          addCoursePage: "Kursseite hinzufügen",
+          confirmDelete: 'Are you sure you want to delete this course page?'
         },
         exercise: {
           scMcExercise: "Auswahlaufgabe",
