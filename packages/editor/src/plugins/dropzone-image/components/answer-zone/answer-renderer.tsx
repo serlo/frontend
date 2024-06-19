@@ -38,6 +38,8 @@ export function AnswerRenderer({
   const isAnswerTypeText = answerType === AnswerType.Text
 
   return (
-    <div>{isAnswerTypeText ? answer.text.render() : answer.image.render()}</div>
+    <div className="[&_textarea]:w-[430px] [&_textarea]:max-w-[100%]">
+      {isAnswerTypeText ? answer.text.render() : answer.image.render()}
+    </div>
   )
 }
