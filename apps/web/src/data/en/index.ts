@@ -594,10 +594,6 @@ export const loggedInData = {
     authorMenu: {
       log: 'Log',
       settings: 'Settings',
-      moveCoursePage: 'Move this page to another course',
-      thisCoursePage: 'This course-page',
-      addCoursePage: 'Add course-page',
-      wholeCourse: 'Whole course',
       moveOrCopyItems: 'Move or copy items',
       addGroupedTextExercise: 'Add grouped-text-exercise',
       changeLicense: 'Change License',
@@ -757,7 +753,6 @@ export const loggedInData = {
           combineLikeTerms: 'Combine like terms.',
           setEqual: 'Set the terms equal to each other.',
           firstExplanation: 'First explanation',
-          moveUpLabel: 'Move up',
           removeRowLabel: 'Remove row',
         },
         geogebra: {
@@ -987,6 +982,8 @@ export const loggedInData = {
           titlePlaceholder: 'Title',
           seoTitle: 'Title for search engines',
           seoDesc: 'Description for search engines',
+          moveUpLabel: 'Move up',
+          moveDownLabel: 'Move down',
         },
         article: {
           writeShortIntro: 'Write a short introduction',
@@ -994,7 +991,6 @@ export const loggedInData = {
           moreOnTopic: 'You can find more content on this topic here',
           addSource: 'Add source',
           removeLabel: 'Remove',
-          moveUpLabel: 'Move up',
           dragLabel: 'Drag to change order',
           openInTab: 'Open in new tab',
           sources: 'Sources',
@@ -1025,12 +1021,7 @@ export const loggedInData = {
         course: {
           removeCoursePage: 'Remove course page',
           addCoursePage: 'Add course page',
-        },
-        coursePage: {
-          explanation: 'Explanation',
-          video: 'Video',
-          question: 'Question',
-          title: 'Title',
+          confirmDelete: 'Are you sure you want to delete this course page?',
         },
         exercise: {
           scMcExercise: 'Choice Exercise',
