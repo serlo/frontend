@@ -72,18 +72,30 @@ export function EditorCanvas(props: EditorCanvasProps) {
       drop(answerZone: AnswerZoneState, monitor) {
         const change = monitor.getDifferenceFromInitialOffset()
         if (!change) return
+
+        const width = answerZone.layout.width.get()
         const currentAbsoluteLeft = canvasWidth * answerZone.position.left.get()
-        const left = getPercentageRounded(
-          canvasWidth,
-          currentAbsoluteLeft + change.x
-        )
+        const newAbsoluteLeft = currentAbsoluteLeft + change.x
+        const left = getPercentageRounded(canvasWidth, newAbsoluteLeft)
+        const right = left + width
+        // If overflowing on the left, snap to left edge
+        if (left < 0) answerZone.position.left.set(0)
+        // If overflowing on the right, snap to right edge
+        else if (right > 1) answerZone.position.left.set(1 - width)
+        // Otherwise, position horizontally exactly as dropped
+        else answerZone.position.left.set(left)
+
+        const height = answerZone.layout.height.get()
         const currentAbsoluteTop = canvasHeight * answerZone.position.top.get()
-        const top = getPercentageRounded(
-          canvasHeight,
-          currentAbsoluteTop + change.y
-        )
-        answerZone.position.left.set(left)
-        answerZone.position.top.set(top)
+        const newAbsoluteTop = currentAbsoluteTop + change.y
+        const top = getPercentageRounded(canvasHeight, newAbsoluteTop)
+        const bottom = top + height
+        // If overflowing on the top, snap to top edge
+        if (top < 0) answerZone.position.top.set(0)
+        // If overflowing on the bottom, snap to bottom edge
+        else if (bottom > 1) answerZone.position.top.set(1 - height)
+        // Otherwise, position vertically exactly as dropped
+        else answerZone.position.top.set(top)
       },
     }),
     [answerZones]
@@ -93,9 +105,9 @@ export function EditorCanvas(props: EditorCanvasProps) {
     <div
       ref={drop}
       className={cn(`
-          relative mx-auto box-content max-w-full overflow-auto rounded-lg
-          border border-almost-black bg-cover bg-center bg-no-repeat
-        `)}
+        relative mx-auto box-content max-w-full overflow-auto rounded-lg
+        border border-almost-black bg-cover bg-center bg-no-repeat
+      `)}
       style={{
         backgroundImage: `url(${backgroundImageUrl})`,
         width: canvasWidth,
