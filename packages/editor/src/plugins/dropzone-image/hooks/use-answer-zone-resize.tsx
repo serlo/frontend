@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { ResizableBoxProps } from 'react-resizable'
+import { useEffect, useMemo, useState } from 'react'
+import type { ResizableProps } from 'react-resizable'
 
 import type { AnswerZoneState } from '../types'
 import { getPercentageRounded } from '../utils/percentage'
@@ -15,12 +15,14 @@ interface PositionState {
 
 export interface UseAnswerZoneResizeArgs {
   answerZone: AnswerZoneState
-  canvasHeight: number
-  canvasWidth: number
+  canvasSize: [number, number]
 }
 
+const resizeHandles: ResizableProps['resizeHandles'] = ['ne', 'se', 'sw', 'nw']
+
 export const useAnswerZoneResize = (args: UseAnswerZoneResizeArgs) => {
-  const { answerZone, canvasHeight, canvasWidth } = args
+  const { answerZone, canvasSize } = args
+  const [canvasWidth, canvasHeight] = canvasSize
   const left = answerZone.position.left.get()
   const top = answerZone.position.top.get()
   const height = answerZone.layout.height.get()
@@ -39,6 +41,11 @@ export const useAnswerZoneResize = (args: UseAnswerZoneResizeArgs) => {
   // fall back to an absolute minimum size.
   const minWidth = Math.max(canvasHeight * 0.2, 110)
   const minHeight = Math.max(canvasHeight * 0.09, 45)
+
+  const minSize: ResizableProps['minConstraints'] = useMemo(
+    () => [minWidth, minHeight],
+    [minHeight, minWidth]
+  )
 
   // On mount, ensure that the answer zone is at least as large as the minimum size.
   useEffect(() => {
@@ -67,7 +74,7 @@ export const useAnswerZoneResize = (args: UseAnswerZoneResizeArgs) => {
   }, [canvasHeight, canvasWidth, height, left, top, width])
 
   // Handle resizing for all four corners
-  const handleResize: ResizableBoxProps['onResize'] = (_, { size, handle }) => {
+  const handleResize: ResizableProps['onResize'] = (_, { size, handle }) => {
     setPositionState((previous) => ({
       ...size,
       left:
@@ -84,7 +91,7 @@ export const useAnswerZoneResize = (args: UseAnswerZoneResizeArgs) => {
   // Update the percentage values in plugin state on resize stop.
   // But, if the edges of the answer zone overflow the edges of the canvas,
   // snap the edges of the answer zone to the edges of the canvas.
-  const handleResizeStop: ResizableBoxProps['onResizeStop'] = (
+  const handleResizeStop: ResizableProps['onResizeStop'] = (
     _,
     { size, handle }
   ) => {
@@ -131,5 +138,17 @@ export const useAnswerZoneResize = (args: UseAnswerZoneResizeArgs) => {
     }
   }
 
-  return { positionState, minWidth, minHeight, handleResize, handleResizeStop }
+  return {
+    positionState,
+    resizableBoxProps: {
+      className: 'h-full w-full',
+      width: positionState.width,
+      height: positionState.height,
+      minConstraints: minSize,
+      maxConstraints: canvasSize,
+      resizeHandles,
+      onResize: handleResize,
+      onResizeStop: handleResizeStop,
+    },
+  }
 }

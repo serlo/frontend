@@ -21,8 +21,7 @@ export const answerZoneDragType = 'answerZone'
 
 export interface AnswerZoneProps {
   answerZone: AnswerZoneState
-  canvasHeight: number
-  canvasWidth: number
+  canvasSize: [number, number]
   onClick: () => void
   onClickSettingsButton: () => void
   onClickPlusButton: () => void
@@ -32,8 +31,7 @@ export interface AnswerZoneProps {
 export const AnswerZone = (props: AnswerZoneProps) => {
   const {
     answerZone,
-    canvasHeight,
-    canvasWidth,
+    canvasSize,
     onClick,
     onClickSettingsButton,
     onClickPlusButton,
@@ -44,8 +42,10 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   const context = useContext(AnswerZonesContext)
   const { dropzoneVisibility } = context || {}
 
-  const { positionState, minWidth, minHeight, handleResize, handleResizeStop } =
-    useAnswerZoneResize({ answerZone, canvasHeight, canvasWidth })
+  const { positionState, resizableBoxProps } = useAnswerZoneResize({
+    answerZone,
+    canvasSize,
+  })
 
   const [collected, drag, dragPreview] = useDrag({
     type: answerZoneDragType,
@@ -65,26 +65,16 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     <div
       ref={dragPreview}
       className="absolute flex cursor-move items-center justify-center rounded bg-transparent"
-      onClick={onClick}
       style={positionState}
+      onClick={onClick}
       data-qa={`answer-zone-${answerZone.id.get()}`}
     >
-      <ResizableBox
-        className="h-full w-full"
-        width={positionState.width}
-        height={positionState.height}
-        minConstraints={[minWidth, minHeight]}
-        maxConstraints={[canvasWidth, canvasHeight]}
-        onResize={handleResize}
-        onResizeStop={handleResizeStop}
-        resizeHandles={['ne', 'se', 'sw', 'nw']}
-      >
+      <ResizableBox {...resizableBoxProps}>
         <div
           ref={drag}
           className={cn(
-            `group relative flex h-full w-full
-            flex-wrap items-center justify-center gap-1
-            border-2 border-blue-500 bg-white`,
+            `group relative flex h-full w-full flex-wrap items-center
+            justify-center gap-1 border-2 border-blue-500 bg-white`,
             dropzoneVisibility !== DropzoneVisibility.Full && 'border-dashed'
           )}
         >

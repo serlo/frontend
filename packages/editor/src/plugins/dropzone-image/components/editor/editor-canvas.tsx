@@ -121,8 +121,7 @@ export function EditorCanvas(props: EditorCanvasProps) {
           <AnswerZone
             key={index}
             answerZone={answerZone}
-            canvasHeight={canvasHeight}
-            canvasWidth={canvasWidth}
+            canvasSize={[canvasWidth, canvasHeight]}
             onClick={() => selectAnswerZone(id)}
             onClickSettingsButton={() => {
               selectAnswerZone(id)
