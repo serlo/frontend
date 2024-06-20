@@ -26,6 +26,7 @@ import {
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
 import { submitEvent } from '@/helper/submit-event'
+import { shuffleArray } from '@/helper/shuffle-array'
 
 export interface EntityBaseProps {
   children: ReactNode
@@ -71,9 +72,34 @@ const ids = [
   76761, 76762, 76763,
 ]
 
+const options = [
+  ['Wissenslücken erkennen und beheben', 'wissensluecken'],
+  ['Viele Aufgaben zum Üben', 'vieleaufgaben'],
+  ['Aufgaben, die ich thematisch interessant finde', 'interessanteaufgaben'],
+  ['Schwierigkeitsgrad von Aufgaben auswählen können', 'schwierigkeitsgrad'],
+  ['Meinen Lernfortschritt sehen', 'lernfortschritt'],
+  ['Gute Übersicht über Prüfungsthemen', 'uebersicht'],
+  ['Mit Freunden zusammen lernen', 'freunde'],
+  [
+    'Unterstützung bekommen, wenn man irgendwo hängt/nicht weiterkommt',
+    'unterstuetzung',
+  ],
+  [
+    'Gezielte Unterstützung in den letzten Wochen vor der Prüfung',
+    'vorpruefung',
+  ],
+  ['Lernbegleitung während des ganzen Schuljahres', 'lernbegleitung'],
+  ['Persönlichen Bezug zur Prüfung herstellen können', 'bezug'],
+  ['Lerntipps/Hilfe zur besseren Selbstorganisation', 'lerntipps'],
+  ['Hilfe bei Prüfungsangst', 'angst'],
+  ['Hilfe im Umgang mit Frust', 'frust'],
+  ['Motivationshilfen', 'motivation'],
+]
+
 export function EntityBase({ children, page, entityId }: EntityBaseProps) {
   const { lang } = useInstanceData()
   const [survey, setSurvey] = useState(false)
+  const [answers] = useState(shuffleArray(options))
 
   function handler(e: KeyboardEvent) {
     if (e.key === 'Escape') {
@@ -104,7 +130,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
     <ABProvider value={abValue}>
       {survey && (
         <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/30">
-          <div className="relative z-[1200] mx-side w-[500px] rounded-xl bg-white text-center">
+          <div className="relative z-[1200] mx-side w-[550px] rounded-xl bg-white text-center">
             <button
               className="serlo-button-blue absolute -right-3 -top-3 flex h-12 w-12 items-center justify-center rounded-full"
               onClick={() => {
@@ -114,64 +140,26 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
               <FaIcon icon={faTimes} className="text-2xl text-white"></FaIcon>
             </button>
             <p className="mx-side mt-4 italic text-almost-black">
-              Wir stellen regelmäßig Fragen auf der Plattform, um unser
-              Lernangebot für dich weiter zu verbessern.
+              Wir möchten unser Angebot verbessern und dich optimal
+              bei&nbsp;der&nbsp;Prüfungsvorbereitung unterstützen.
             </p>
             <p className="serlo-p mt-6 text-2xl font-bold">
-              Wir möchten die Prüfungsvorbereitung besser machen für dich. Was
-              würde dir am meisten helfen?
+              Was findest du besonders hilfreich, um dich gut auf deine Prüfung
+              vorzubereiten?
             </p>
 
-            <div className="mx-12 text-left text-lg [&_input]:cursor-pointer [&_label]:cursor-pointer [&_p]:my-2">
-              <p>
-                <label>
-                  <input type="checkbox" /> Effizienteres Üben
-                </label>
-              </p>
-              <p>
-                <label>
-                  <input type="checkbox" /> Mehr Aufgaben
-                </label>
-              </p>
-              <p>
-                <label>
-                  <input type="checkbox" /> Bessere Übersicht über
-                  Prüfungsthemen
-                </label>
-              </p>
-              <p>
-                <label>
-                  <input type="checkbox" /> Mit Freunden zusammen lernen
-                </label>
-              </p>
-              <p>
-                <label>
-                  <input type="checkbox" /> Gezielte Unterstützung in den
-                  letzten Wochen vor der Prüfung
-                </label>
-              </p>
-              <p>
-                <label>
-                  <input type="checkbox" /> Begleitung in der Vorbereitung auf
-                  die Prüfung während des ganzen Schuljahres
-                </label>
-              </p>
-              <p>
-                <label>
-                  <input type="checkbox" /> Hilfe bei Prüfungsangst
-                </label>
-              </p>
-              <p>
-                <label>
-                  <input type="checkbox" /> Hilfe, wie ich mich besser
-                  organisieren kann
-                </label>
-              </p>
-              <p>
-                <label>
-                  <input type="checkbox" /> Motivationshilfen
-                </label>
-              </p>
+            <p className="-mt-3 mb-3">(Mehrfach-Nennung möglich)</p>
+
+            <div className="mx-12 max-h-[300px] overflow-auto overscroll-none text-left text-lg [&_input]:cursor-pointer [&_label]:cursor-pointer [&_p]:my-2">
+              {answers.map(([text, key]) => {
+                return (
+                  <p key={key}>
+                    <label>
+                      <input type="checkbox" /> {text}
+                    </label>
+                  </p>
+                )
+              })}
             </div>
 
             <p className="mt-6">
@@ -253,8 +241,13 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       return
     }
 
-    // pop-up already shown - but only for production
+    // not optimized for small screens
+    if (window.innerWidth < 600 || window.innerHeight < 800) {
+      return
+    }
+
     if (Cookies.get('serlo-survey-beta-123-shown')) {
+      // pop-up already shown - but only for production
       return
     }
 
