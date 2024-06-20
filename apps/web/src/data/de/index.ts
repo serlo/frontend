@@ -630,8 +630,10 @@ export const loggedInData = {
           removeDropZone: "Ablagezone entfernen",
           dropzoneVisibility: "Ablagezone Sichtbarkeit",
           answers: {
+            add: "Antwort hinzufügen",
             remove: "Antwort entfernen",
-            edit: "Antwort bearbeiten"
+            edit: "Antwort bearbeiten",
+            settings: "Antworteinstellungen"
           },
           answerZone: {
             description: "Beschreibung (optional)",
