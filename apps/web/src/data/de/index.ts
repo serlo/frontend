@@ -627,12 +627,13 @@ export const loggedInData = {
           backgroundImage: "Hintergrundbild",
           dropZone: "Ablagezone",
           dropZoneTooltip: "Ablagezone hinzufügen",
-          insertDropZone: "Ablagezone hinzufügen",
           removeDropZone: "Ablagezone entfernen",
           dropzoneVisibility: "Ablagezone Sichtbarkeit",
           answers: {
+            add: "Antwort hinzufügen",
             remove: "Antwort entfernen",
-            edit: "Antwort bearbeiten"
+            edit: "Antwort bearbeiten",
+            settings: 'Answer settings'
           },
           answerZone: {
             description: "Beschreibung (optional)",
