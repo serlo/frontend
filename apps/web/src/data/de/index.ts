@@ -633,7 +633,7 @@ export const loggedInData = {
             add: "Antwort hinzufügen",
             remove: "Antwort entfernen",
             edit: "Antwort bearbeiten",
-            settings: 'Answer settings'
+            settings: "Antworteinstellungen"
           },
           answerZone: {
             description: "Beschreibung (optional)",
