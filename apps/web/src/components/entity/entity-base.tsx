@@ -25,8 +25,8 @@ import {
 } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
-import { submitEvent } from '@/helper/submit-event'
 import { shuffleArray } from '@/helper/shuffle-array'
+import { submitEvent } from '@/helper/submit-event'
 
 export interface EntityBaseProps {
   children: ReactNode
