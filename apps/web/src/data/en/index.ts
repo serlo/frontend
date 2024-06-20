@@ -697,12 +697,13 @@ export const loggedInData = {
           backgroundImage: 'Background image',
           dropZone: 'Drop zone',
           dropZoneTooltip: 'Choose the drop zone',
-          insertDropZone: 'Insert drop zone',
           removeDropZone: 'Remove drop zone',
           dropzoneVisibility: 'Dropzone Visibility',
           answers: {
+            add: 'Add answer',
             remove: 'Remove answer',
             edit: 'Edit answer',
+            settings: 'Answer settings',
           },
           answerZone: {
             description: 'Description (optional)',

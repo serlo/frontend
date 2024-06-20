@@ -1,5 +1,5 @@
+import { OverlayInput } from '@editor/editor-ui/overlay-input'
 import type { ImageProps } from '@editor/plugins/image'
-import { OverlayInput } from '@editor/plugins/image/controls/overlay-input' // TODO: Extract as editor-ui component
 import { runChangeDocumentSaga, useAppDispatch } from '@editor/store'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'

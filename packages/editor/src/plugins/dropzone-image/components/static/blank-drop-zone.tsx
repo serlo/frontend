@@ -7,7 +7,6 @@ import {
   DropzoneVisibility,
   type PossibleAnswerType,
 } from '../../types'
-import { isSmallScreen } from '../../utils/is-small-screen'
 import {
   DraggableAnswer,
   draggableAnswerDragType,
@@ -20,6 +19,7 @@ interface BlankDropZoneProps {
   isCorrect?: boolean | null
   isAnswerCorrectMap?: Map<string, boolean | null> | null
   visibility: DropzoneVisibility
+  canvasDimensions: { height: number; width: number }
   answersCount: number
   onAnswerDrop: (
     answerId: string,
@@ -72,23 +72,21 @@ export const BlankDropZone = memo(function BlankDropZone(
   const hasOnlyOneAnswer = droppedAnswers.length === 1
   const isOnlyAnswerTypeImage = hasOnlyOneAnswer && !!droppedAnswers[0].imageUrl
 
-  const scaler = isSmallScreen() ? 0.4 : 1
-
   return (
     <div
       ref={drop}
       className={cn(
-        `absolute flex flex-wrap items-center justify-center gap-2 rounded p-0`,
+        `absolute flex flex-wrap items-center justify-center gap-1 rounded p-0`,
         getBackgroundColor(visibility, isOver, canDrop),
         getBorderWidth(visibility, isCorrect, isOnlyAnswerTypeImage),
         getBorderColor(isCorrect, isOnlyAnswerTypeImage),
         getBorderType(visibility)
       )}
       style={{
-        left: left * scaler,
-        top: top * scaler,
-        width: width * scaler,
-        height: height * scaler,
+        left: left * 100 + '%',
+        top: top * 100 + '%',
+        width: width * 100 + '%',
+        height: height * 100 + '%',
       }}
       data-qa={`blank-drop-zone-${id}`}
     >

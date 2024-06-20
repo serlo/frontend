@@ -1,13 +1,13 @@
 import { useDrag } from 'react-dnd'
 
-import type { PossibleAnswerType, StaticPossibleAnswerType } from '../../types'
+import type { PossibleAnswerType } from '../../types'
 import { AnswerContent } from '../answer-zone/answer-content'
 import { cn } from '@/helper/cn'
 
 export const draggableAnswerDragType = 'draggableAnswer'
 
 interface DraggableAnswerProps {
-  answer: PossibleAnswerType | StaticPossibleAnswerType
+  answer: PossibleAnswerType
   originDropzoneId?: string
   isCorrect?: boolean | null
   isAnswerCorrect?: boolean | null

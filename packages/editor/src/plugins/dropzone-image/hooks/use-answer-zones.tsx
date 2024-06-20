@@ -1,5 +1,6 @@
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useState } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { v4 as uuidv4 } from 'uuid'
 
 import type { DropzoneImageProps } from '..'
@@ -8,6 +9,16 @@ import {
   getAnswerZoneImageState,
   getAnswerZoneText,
 } from '../utils/answer-zone'
+
+export const defaultAnswerZonePosition = {
+  left: 0.05,
+  top: 0.05,
+}
+
+export const defaultAnswerZoneLayout = {
+  width: 0.2,
+  height: 0.1,
+}
 
 export function useAnswerZones(
   answerZones: DropzoneImageProps['state']['answerZones']
@@ -37,11 +48,8 @@ export function useAnswerZones(
     answerZones.insert(currentLength, {
       id: `answerZone-${currentLength}`,
       name: '',
-      position: { left: 20 * currentLength + 1, top: 20 },
-      layout: {
-        width: 200,
-        height: 70,
-      },
+      position: defaultAnswerZonePosition,
+      layout: defaultAnswerZoneLayout,
       answers: [],
     })
   }
@@ -54,8 +62,8 @@ export function useAnswerZones(
       id: `answerZone-${currentLength}`,
       name: toCopy.name.get(),
       position: {
-        left: toCopy.position.left.get() + 70,
-        top: toCopy.position.top.get() + 50,
+        left: toCopy.position.left.get() + defaultAnswerZonePosition.left,
+        top: toCopy.position.top.get() + defaultAnswerZonePosition.top,
       },
       layout: {
         width: toCopy.layout.width.get(),
@@ -75,6 +83,30 @@ export function useAnswerZones(
     }
     answerZones.insert(currentLength, newZone)
   }
+
+  const [answerZoneClipboardItem, setAnswerZoneClipboardItem] =
+    useState<AnswerZoneState | null>(null)
+
+  useHotkeys('backspace, del', (event) => {
+    if (!currentAnswerZone) return
+    const index = answerZones.findIndex(
+      ({ id }) => id.get() === currentAnswerZone.id.get()
+    )
+    index !== -1 && answerZones.remove(index)
+    event.preventDefault()
+  })
+
+  useHotkeys(['ctrl+c, meta+c'], (event) => {
+    setAnswerZoneClipboardItem(currentAnswerZone)
+    event.preventDefault()
+  })
+
+  useHotkeys(['ctrl+v, meta+v'], (event) => {
+    if (!answerZoneClipboardItem) return
+    const idToDuplicate = answerZoneClipboardItem.id.get()
+    duplicateAnswerZone(idToDuplicate)
+    event.preventDefault()
+  })
 
   return {
     currentAnswerZone,

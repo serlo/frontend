@@ -46,7 +46,7 @@ export function AnswerZoneAnswer(props: AnswerZoneAnswerProps) {
           onClick={() => {
             onEditAnswer(answerImageUrl ? AnswerType.Image : AnswerType.Text)
           }}
-          className="serlo-button-editor-secondary serlo-tooltip-trigger mx-1 h-6 w-6 p-0"
+          className="serlo-button-editor-secondary serlo-tooltip-trigger z-10 mx-1 h-6 w-6 p-0"
         >
           <FaIcon icon={faPencilAlt} className="text-xs" />
           <EditorTooltip
@@ -57,7 +57,7 @@ export function AnswerZoneAnswer(props: AnswerZoneAnswerProps) {
         <button
           data-qa={`answer-zone-${answer.id.get()}-remove-answer-button`}
           onClick={onRemoveAnswer}
-          className="serlo-button-editor-secondary serlo-tooltip-trigger mx-1 h-6 w-6 p-0"
+          className="serlo-button-editor-secondary serlo-tooltip-trigger z-10 mx-1 h-6 w-6 p-0"
         >
           <FaIcon icon={faTrashAlt} className="text-xs" />
           <EditorTooltip

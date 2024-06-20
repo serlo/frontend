@@ -11,7 +11,6 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 interface NewAnswerFlowProps {
   isWrongAnswer?: boolean
   zoneId?: string
-  onSave: () => void
 }
 
 /**
@@ -21,7 +20,7 @@ interface NewAnswerFlowProps {
  *
  */
 export function NewAnswerFlow(props: NewAnswerFlowProps) {
-  const { isWrongAnswer = false, zoneId, onSave } = props
+  const { isWrongAnswer = false, zoneId } = props
   const [currentStep, setCurrentStep] = useState(0)
   const [stepOneType, setStepOneType] = useState<AnswerType>(AnswerType.Image)
 
@@ -79,7 +78,6 @@ export function NewAnswerFlow(props: NewAnswerFlowProps) {
         answerIndex={answersList.length - 1}
         isWrongAnswer={isWrongAnswer}
         zoneId={zoneId}
-        onSave={onSave}
       />
     </div>
   )

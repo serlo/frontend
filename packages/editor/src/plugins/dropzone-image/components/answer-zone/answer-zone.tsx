@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { useDrag } from 'react-dnd'
-import { ResizableBox, ResizableBoxProps } from 'react-resizable'
+import { ResizableBox } from 'react-resizable'
 
 // eslint-disable-next-line import/no-unassigned-import
 import 'react-resizable/css/styles.css'
@@ -9,39 +9,43 @@ import { AnswerZoneAnswer } from './answer-zone-answer'
 import { AnswerZoneEmpty } from './answer-zone-empty'
 import { AnswerZoneSidebar } from './answer-zone-sidebar'
 import { AnswerZonesContext } from '../../context/context'
-import { AnswerType, AnswerZoneState, DropzoneVisibility } from '../../types'
+import { useAnswerZoneResize } from '../../hooks/use-answer-zone-resize'
+import {
+  type AnswerType,
+  type AnswerZoneState,
+  DropzoneVisibility,
+} from '../../types'
 import { cn } from '@/helper/cn'
 
 export const answerZoneDragType = 'answerZone'
 
 export interface AnswerZoneProps {
   answerZone: AnswerZoneState
-  maxHeight: number
-  maxWidth: number
+  canvasSize: [number, number]
   onClick: () => void
-  onClickSettingsButton: (id: string) => void
-  onClickPlusButton: (id: string) => void
-  onClickEditAnswerButton: (
-    answerZoneId: string,
-    answerIndex: number,
-    answerType: AnswerType
-  ) => void
+  onClickSettingsButton: () => void
+  onClickPlusButton: () => void
+  onClickEditAnswerButton: (answerIndex: number, answerType: AnswerType) => void
 }
 
 export const AnswerZone = (props: AnswerZoneProps) => {
   const {
     answerZone,
-    maxHeight,
-    maxWidth,
+    canvasSize,
     onClick,
     onClickSettingsButton,
     onClickPlusButton,
     onClickEditAnswerButton,
   } = props
+  const name = answerZone.name.get()
 
   const context = useContext(AnswerZonesContext)
-
   const { dropzoneVisibility } = context || {}
+
+  const { positionState, resizableBoxProps } = useAnswerZoneResize({
+    answerZone,
+    canvasSize,
+  })
 
   const [collected, drag, dragPreview] = useDrag({
     type: answerZoneDragType,
@@ -52,17 +56,6 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     }),
   })
 
-  const handleResize: ResizableBoxProps['onResize'] = (_, { size }) => {
-    answerZone.layout.width.set(size.width)
-    answerZone.layout.height.set(size.height)
-  }
-
-  const left = answerZone.position.left.get()
-  const top = answerZone.position.top.get()
-  const height = answerZone.layout.height.get()
-  const width = answerZone.layout.width.get()
-  const name = answerZone.name.get()
-
   // Hide source element while dragging
   if (collected.isDragging) {
     return <div ref={dragPreview} />
@@ -72,25 +65,16 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     <div
       ref={dragPreview}
       className="absolute flex cursor-move items-center justify-center rounded bg-transparent"
+      style={positionState}
       onClick={onClick}
-      style={{ left, top, width, height }}
       data-qa={`answer-zone-${answerZone.id.get()}`}
     >
-      <ResizableBox
-        className="h-full w-full"
-        width={width}
-        height={height}
-        minConstraints={[100, 50]}
-        maxConstraints={[maxWidth, maxHeight]}
-        onResize={handleResize}
-        resizeHandles={['se']}
-      >
+      <ResizableBox {...resizableBoxProps}>
         <div
           ref={drag}
           className={cn(
-            `group relative flex h-full w-full
-            flex-wrap items-center justify-center gap-1
-            border-2 border-blue-500 bg-white`,
+            `group relative flex h-full w-full flex-wrap items-center
+            justify-center gap-1 border-2 border-blue-500 bg-white`,
             dropzoneVisibility !== DropzoneVisibility.Full && 'border-dashed'
           )}
         >
@@ -114,7 +98,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
               answer={answer}
               isOnlyAnswer={answerZone.answers.length === 1}
               onEditAnswer={(answerType: AnswerType) => {
-                onClickEditAnswerButton(answerZone.id.get(), index, answerType)
+                onClickEditAnswerButton(index, answerType)
               }}
               onRemoveAnswer={() => {
                 answerZone.answers.remove(index)
