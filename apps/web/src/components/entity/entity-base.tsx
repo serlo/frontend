@@ -25,7 +25,6 @@ import {
 } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
-import { shuffleArray } from '@/helper/shuffle-array'
 import { submitEvent } from '@/helper/submit-event'
 
 export interface EntityBaseProps {
@@ -75,64 +74,6 @@ const ids = [
 export function EntityBase({ children, page, entityId }: EntityBaseProps) {
   const { lang } = useInstanceData()
   const [survey, setSurvey] = useState(false)
-  const [answers] = useState(
-    shuffleArray([
-      <button
-        key="yes"
-        className="serlo-button-blue mx-3"
-        onClick={() => {
-          handleModalInput('yes')
-        }}
-      >
-        Effizienteres Üben
-      </button>,
-      <button
-        key="yes"
-        className="serlo-button-blue mx-3"
-        onClick={() => {
-          handleModalInput('yes')
-        }}
-      >
-        Effizienteres Üben
-      </button>,
-      <button
-        key="yes"
-        className="serlo-button-blue mx-3"
-        onClick={() => {
-          handleModalInput('yes')
-        }}
-      >
-        Effizienteres Üben
-      </button>,
-      <button
-        key="yes"
-        className="serlo-button-blue mx-3"
-        onClick={() => {
-          handleModalInput('yes')
-        }}
-      >
-        Effizienteres Üben
-      </button>,
-      <button
-        key="rarely"
-        className="serlo-button-blue w-24"
-        onClick={() => {
-          handleModalInput('rarely')
-        }}
-      >
-        SELTEN
-      </button>,
-      <button
-        key="no"
-        className="serlo-button-blue w-24"
-        onClick={() => {
-          handleModalInput('no')
-        }}
-      >
-        NEIN
-      </button>,
-    ])
-  )
 
   function handler(e: KeyboardEvent) {
     if (e.key === 'Escape') {
