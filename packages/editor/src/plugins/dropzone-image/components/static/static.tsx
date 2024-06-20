@@ -7,10 +7,7 @@ import { FeedbackButton } from './feedback-button'
 import { StaticCanvas } from './static-canvas'
 import { FeedbackData, type DraggableAnswerType } from '../../types'
 import { convertStaticAnswers } from '../../utils/answer-zone'
-import {
-  DraggableAnswer,
-  draggableAnswerDragType,
-} from '../shared/draggable-answer'
+import { DraggableAnswer } from '../shared/draggable-answer'
 import { shuffleArray } from '@/helper/shuffle-array'
 
 export function DropzoneImageStaticRenderer(
@@ -18,6 +15,8 @@ export function DropzoneImageStaticRenderer(
 ) {
   const { state } = props
   const { answerZones, extraDraggableAnswers } = state
+
+  const draggableAnswerDragType = 'draggableAnswer' + props.id
 
   const allAnswers = useMemo(() => {
     const correctAnswers = answerZones
@@ -199,6 +198,7 @@ export function DropzoneImageStaticRenderer(
           dropzoneAnswerMap={dropzoneAnswerMap}
           isAnswerZoneCorrectMap={isAnswerZoneCorrectMap}
           isAnswerCorrectMap={isAnswerCorrectMap}
+          draggableAnswerDragType={draggableAnswerDragType}
           onAnswerDrop={onAnswerDrop}
         />
 
@@ -207,7 +207,11 @@ export function DropzoneImageStaticRenderer(
           onDrop={onDraggableAreaAnswerDrop}
         >
           {possibleAnswers.map((possibleAnswer, index) => (
-            <DraggableAnswer answer={possibleAnswer} key={index} />
+            <DraggableAnswer
+              key={index}
+              answer={possibleAnswer}
+              type={draggableAnswerDragType}
+            />
           ))}
         </DraggableArea>
 

@@ -12,6 +12,7 @@ interface StaticCanvasProps {
   dropzoneAnswerMap: Map<string, string[]>
   isAnswerZoneCorrectMap: Map<string, boolean | null>
   isAnswerCorrectMap: Map<string, Map<string, boolean | null> | null>
+  draggableAnswerDragType: string
   onAnswerDrop: (
     answerId: string,
     dropzoneId: string,
@@ -25,6 +26,7 @@ export function StaticCanvas(props: StaticCanvasProps) {
     dropzoneAnswerMap,
     isAnswerZoneCorrectMap,
     isAnswerCorrectMap,
+    draggableAnswerDragType,
     onAnswerDrop,
   } = props
   const { answerZones, backgroundImage, canvasDimensions, dropzoneVisibility } =
@@ -60,6 +62,7 @@ export function StaticCanvas(props: StaticCanvasProps) {
             visibility={dropzoneVisibility as DropzoneVisibility}
             canvasDimensions={canvasDimensions}
             answersCount={answers.length}
+            accept={draggableAnswerDragType}
             onAnswerDrop={onAnswerDrop}
           />
         )
