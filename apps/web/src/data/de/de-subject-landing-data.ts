@@ -93,7 +93,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
     {
       title: 'Einführung in die Pixel- und Vektorgrafik',
       type: UuidType.Course,
-      url: '/informatik/93484/pixelgrafik',
+      url: '/informatik/93450/einfuehrung-in-die-pixel-und-vektorgrafik',
       img: 'https://assets.serlo.org/5a4f9574a8bba_0e16bbe25658c9d1ceb68425e781f7985817f0ca.png',
     },
     {
@@ -159,7 +159,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
     {
       title: 'Einführung in Robot Karol',
       type: UuidType.Course,
-      url: '/informatik/72987/%C3%BCbersicht',
+      url: '/informatik/72912/einfuehrung-in-robot-karol',
       img: 'https://assets.serlo.org/legacy/58dcc2061f778_88bc000e1fd062dc60d159db1625b08eaeefe3e9.png',
     },
     {
@@ -177,7 +177,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
     {
       title: 'Objekte',
       type: UuidType.Course,
-      url: '/informatik/65009/bauernhof',
+      url: '/informatik/65007/objekte',
       img: 'https://assets.serlo.org/legacy/58b81febf334a_aab028f7c60aed6f8d489045726e2fd37fada38c.svg',
     },
     {
@@ -406,7 +406,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
     {
       title: 'Challenge Klimafreundlich leben',
       type: UuidType.Course,
-      url: '/nachhaltigkeit/222226/%C3%BCberblick',
+      url: '/nachhaltigkeit/222208/challenge-klimafreundlich-leben',
       img: 'https://assets.serlo.org/61412b52289b5_843a1296e719fd60514f5fc6058d38791a0e2ca2.jpg',
     },
     {
@@ -430,7 +430,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
     {
       title: 'Die Minimalismus Challenge: Worauf kann ich verzichten?',
       type: UuidType.Course,
-      url: '/nachhaltigkeit/141280/%C3%BCberblick',
+      url: '/nachhaltigkeit/136866/die-minimalismus-challenge-worauf-kann-ich-verzichten',
       img: 'https://assets.serlo.org/5d36024306c47_25e4b476742a15f30e653321772b33f3b006009b.jpg',
     },
     {
@@ -442,13 +442,13 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
     {
       title: 'Salatturm',
       type: UuidType.Course,
-      url: '/nachhaltigkeit/36733/%C3%BCbersicht',
+      url: '/nachhaltigkeit/36731/anleitung-zum-bau-eines-salatturms',
       img: 'https://assets.serlo.org/legacy/553fabdaee91b_9e290e4a04ffe886273dd5ee0ba7456ed673b0f1.jpg',
     },
     {
       title: 'Verbindung mit der Erde',
       type: UuidType.Course,
-      url: '/nachhaltigkeit/238261/wann-f%C3%BChlst-du-dich...',
+      url: '/nachhaltigkeit/238259/verbindung-mit-der-erde',
       img: 'https://assets.serlo.org/60a3d5b663ab6_2ad45a6c1cf3c90395c8d4062f818f0258ddb7dd.jpg',
     },
     {
@@ -466,7 +466,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
     {
       title: 'Selbsttest: Wie viel Plastikmüll verursache ich?',
       type: UuidType.Course,
-      url: '/nachhaltigkeit/141361/%C3%BCbersicht',
+      url: '/nachhaltigkeit/135563/selbsttest-wie-viel-plastikmuell-verursache-ich',
       img: 'https://assets.serlo.org/5cab62b9bc10b_0145c552fccc72c8abff8758b47fbc1ecb2dbeae.JPG',
     },
     {
@@ -479,7 +479,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
     {
       title: 'Anbauplanung - Schritt für Schritt',
       type: UuidType.Course,
-      url: '/nachhaltigkeit/65417/einf%C3%BChrung',
+      url: '/nachhaltigkeit/65414/anbauplanung-schritt-fuer-schritt',
       img: 'https://assets.serlo.org/legacy/56d6bb394c111_f72caab7165fea99d6bfb00828203c6ee746bb8e.JPG',
     },
     {
@@ -509,19 +509,19 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
     {
       title: 'Schnecken! Was tun?',
       type: UuidType.Course,
-      url: '/nachhaltigkeit/75945/einf%C3%BChrung',
+      url: '/nachhaltigkeit/75941/schnecken-was-tun',
       img: 'https://assets.serlo.org/legacy/5891d85b3af04_db01e11c6f20465916ac724f114be413b8b6fc41.jpg',
     },
     {
       title: 'Wir bringen Klimaschutz ins Klassenzimmer',
       type: UuidType.Course,
-      url: '/nachhaltigkeit/249350/lernmaterial-unterrichtsmaterial-für-jugendliche',
+      url: '/nachhaltigkeit/249349/wir-bringen-klimaschutz-ins-klassenzimmer',
       img: 'https://assets.serlo.org/1617fef0-3829-11ee-b962-1fa7d97ba81a/281710.jpg',
     },
     {
       title: 'Krieg und Klima',
       type: UuidType.Course,
-      url: '/nachhaltigkeit/249364/jugendliche-zum-krieg-in-der-ukraine',
+      url: '/nachhaltigkeit/249363/krieg-und-klima',
       img: 'https://assets.serlo.org/4c3bb4e0-3829-11ee-b962-1fa7d97ba81a/jugendlichezumkrieginderukraine.jpg',
     },
   ],
@@ -577,7 +577,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
     {
       title: 'Vertiefungskurs - RedOx',
       type: UuidType.Course,
-      url: '/chemie/127661/%C3%BCbersicht',
+      url: '/chemie/127658/vertiefungskurs-redox',
       img: 'https://assets.serlo.org/5e552785562ce_21f32943b922fe46349d196ef9dedb90cf481300.jpg',
     },
     {
@@ -639,7 +639,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
     {
       title: 'Wie erstelle ich eine Mind-Map?',
       type: UuidType.Course,
-      url: '/lerntipps/131063/%C3%BCbersicht',
+      url: '/lerntipps/131029/wie-erstelle-ich-eine-mindmap',
       img: 'https://assets.serlo.org/5badd741ceb26_cb17d98e0869f816100bd1db533c5ebba7877e2c.png',
     },
     {
@@ -657,13 +657,13 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
     {
       title: 'Selbstmanagement',
       type: UuidType.Course,
-      url: '/lerntipps/117447/%C3%BCberblick',
+      url: '/lerntipps/117443/wie-kann-ich-mein-lernen-planen-selbstmanagement',
       img: 'https://assets.serlo.org/5bac900a8b26c_02184861ea47478570725a07627f4b04d2f137dd.jpg',
     },
     {
       title: 'Die WOOP-Methode',
       type: UuidType.Course,
-      url: '/lerntipps/134372/%C3%BCbersicht',
+      url: '/lerntipps/134369/die-woop-methode',
       img: 'https://assets.serlo.org/5ca1dcc619367_0c605aef299a36d8eb99488f153630f77d883710.png',
     },
     {
@@ -674,7 +674,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
     },
     {
       title: 'Einführung in den Umgang mit Stress',
-      type: UuidType.Course,
+      type: TaxonomyTermType.Topic,
       url: '/lerntipps/135480/umgang-mit-stress',
       img: 'https://assets.serlo.org/5d0a32b88e94c_305945792e02e20b47079e9e07d6e8cd3bac63eb.jpeg',
     },
@@ -687,7 +687,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
     {
       title: 'Tipps und Tricks für die Bearbeitung von Textaufgaben',
       type: UuidType.Course,
-      url: '/lerntipps/118042/%C3%BCbersicht',
+      url: '/lerntipps/118030/tipps-und-tricks-fuer-die-bearbeitung-von-textaufgaben',
       img: 'https://assets.serlo.org/5bab7d1d6539e_832f8562a1d4f4718edbd05fc544199cfd51ea4c.png',
     },
     {
@@ -711,7 +711,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
     {
       title: 'Negative Emotionen beim Lernen',
       type: UuidType.Course,
-      url: '/lerntipps/118552/übersicht',
+      url: '/lerntipps/118459/unangenehme-emotionen-beim-lernen',
       img: 'https://assets.serlo.org/5bac96c5e1c4e_dbda5d3464866cea7b86d6676f848f880512918f.jpg',
     },
     {
@@ -723,7 +723,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
     {
       title: 'Lernen mit Texten',
       type: UuidType.Course,
-      url: '/lerntipps/118315/%C3%BCberblick',
+      url: '/lerntipps/118313/wie-lerne-ich-mit-texten',
       img: 'https://assets.serlo.org/5badd741ceb26_cb17d98e0869f816100bd1db533c5ebba7877e2c.png',
     },
     {
@@ -735,7 +735,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
     {
       title: 'Virtuelles Lernen',
       type: UuidType.Course,
-      url: '/lerntipps/120637/%C3%BCbersicht',
+      url: '/lerntipps/120634/lernen-mit-visuellen-methoden-mit-dem-sinnesorgan-auge',
       img: 'https://assets.serlo.org/5bbdbac67fdca_d58b38c68fdd97d2c19333c5b4df6fed4495b1b6.jpg',
     },
     {
