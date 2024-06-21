@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import { memo } from 'react'
 import { useDrop } from 'react-dnd'
 
 import {
@@ -12,7 +12,7 @@ import { cn } from '@/helper/cn'
 
 interface BlankDropZoneProps {
   dropZone: BlankDropZoneSpec
-  droppedAnswersIds: string[]
+  droppedAnswers: PossibleAnswerType[]
   isCorrect?: boolean | null
   isAnswerCorrectMap?: Map<string, boolean | null> | null
   visibility: DropzoneVisibility
@@ -20,7 +20,7 @@ interface BlankDropZoneProps {
   answersCount: number
   accept: string
   onAnswerDrop: (
-    answerId: string,
+    answer: DraggableAnswerType,
     dropzoneId: string,
     originDropzoneId?: string
   ) => void
@@ -31,7 +31,7 @@ export const BlankDropZone = memo(function BlankDropZone(
 ) {
   const {
     dropZone,
-    droppedAnswersIds,
+    droppedAnswers,
     isCorrect,
     isAnswerCorrectMap,
     visibility,
@@ -43,8 +43,6 @@ export const BlankDropZone = memo(function BlankDropZone(
   const { left, top } = position
   const { height, width } = layout
 
-  const [droppedAnswers, setDroppedAnswers] = useState<PossibleAnswerType[]>([])
-
   const [{ isOver, canDrop }, drop] = useDrop({
     accept,
     drop: (answer: DraggableAnswerType) => {
@@ -52,8 +50,7 @@ export const BlankDropZone = memo(function BlankDropZone(
         (droppedAnswer) => droppedAnswer.id === answer.id
       )
       if (!hasAnswerAlready) {
-        setDroppedAnswers((prev) => [...prev, answer])
-        onAnswerDrop(answer.id, id, answer.originDropzoneId)
+        onAnswerDrop(answer, id, answer.originDropzoneId)
       }
     },
     collect: (monitor) => ({
@@ -61,12 +58,6 @@ export const BlankDropZone = memo(function BlankDropZone(
       canDrop: monitor.canDrop(),
     }),
   })
-
-  useEffect(() => {
-    setDroppedAnswers((prev) =>
-      prev.filter((answer) => droppedAnswersIds.includes(answer.id))
-    )
-  }, [droppedAnswersIds])
 
   const hasOnlyOneAnswer = droppedAnswers.length === 1
   const isOnlyAnswerTypeImage = hasOnlyOneAnswer && !!droppedAnswers[0].imageUrl

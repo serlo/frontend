@@ -4,17 +4,21 @@ import type {
 } from '@editor/types/editor-plugins'
 
 import { BlankDropZone } from './blank-drop-zone'
-import type { DropzoneVisibility } from '../../types'
+import type {
+  DraggableAnswerType,
+  DropzoneVisibility,
+  PossibleAnswerType,
+} from '../../types'
 import { cn } from '@/helper/cn'
 
 interface StaticCanvasProps {
   state: EditorDropzoneImageDocument['state']
-  dropzoneAnswerMap: Map<string, string[]>
-  isAnswerZoneCorrectMap: Map<string, boolean | null>
+  dropzoneAnswerMap: Map<string, PossibleAnswerType[]>
+  isZoneCorrectMap: Map<string, boolean | null>
   isAnswerCorrectMap: Map<string, Map<string, boolean | null> | null>
   draggableAnswerDragType: string
   onAnswerDrop: (
-    answerId: string,
+    answerId: DraggableAnswerType,
     dropzoneId: string,
     originDropzoneId?: string
   ) => void
@@ -24,7 +28,7 @@ export function StaticCanvas(props: StaticCanvasProps) {
   const {
     state,
     dropzoneAnswerMap,
-    isAnswerZoneCorrectMap,
+    isZoneCorrectMap,
     isAnswerCorrectMap,
     draggableAnswerDragType,
     onAnswerDrop,
@@ -56,8 +60,8 @@ export function StaticCanvas(props: StaticCanvasProps) {
           <BlankDropZone
             key={id}
             dropZone={dropZone}
-            droppedAnswersIds={dropzoneAnswerMap.get(id) || []}
-            isCorrect={isAnswerZoneCorrectMap.get(id)}
+            droppedAnswers={dropzoneAnswerMap.get(id) || []}
+            isCorrect={isZoneCorrectMap.get(id)}
             isAnswerCorrectMap={isAnswerCorrectMap.get(id)}
             visibility={dropzoneVisibility as DropzoneVisibility}
             canvasDimensions={canvasDimensions}
