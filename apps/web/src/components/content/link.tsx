@@ -1,5 +1,5 @@
 import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
-// import { default as NextLink } from 'next/link'
+import { default as NextLink } from 'next/link'
 import { useRouter } from 'next/router'
 import { ForwardedRef, forwardRef, ReactNode, MouseEvent } from 'react'
 
@@ -53,7 +53,7 @@ function InternalLink({
   children,
   className,
   noExternalIcon,
-  // forceNoCSR,
+  forceNoCSR,
   onClick,
   unreviewed,
   ref,
@@ -61,13 +61,13 @@ function InternalLink({
 }: LinkProps & { ref?: ForwardedRef<HTMLAnchorElement> }) {
   const router = useRouter()
 
-  const { parsedHref, /* clientSide,*/ isExternal, isContentOnly } = parseLink()
+  const { parsedHref, clientSide, isExternal, isContentOnly } = parseLink()
 
   if (parsedHref === '') renderEmptyLink()
 
-  // return forceNoCSR || !clientSide
-  return renderDefaultLink(parsedHref)
-  // : renderClientSideLink(parsedHref)
+  return forceNoCSR || !clientSide
+    ? renderDefaultLink(parsedHref)
+    : renderClientSideLink(parsedHref)
 
   function parseLink() {
     if (!href || href === undefined || href === '' || !router.locale)
@@ -135,7 +135,7 @@ function InternalLink({
     )
   }
 
-  /*function renderClientSideLink(_href: string) {
+  function renderClientSideLink(_href: string) {
     return (
       <NextLink
         id={id}
@@ -148,5 +148,5 @@ function InternalLink({
         {children}
       </NextLink>
     )
-  }*/
+  }
 }
