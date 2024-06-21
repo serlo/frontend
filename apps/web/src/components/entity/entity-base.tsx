@@ -100,6 +100,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
   const { lang } = useInstanceData()
   const [survey, setSurvey] = useState(false)
   const [answers] = useState(shuffleArray(options))
+  const [selected, setSelected] = useState<string[]>([])
 
   function handler(e: KeyboardEvent) {
     if (e.key === 'Escape') {
@@ -148,14 +149,27 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
               vorzubereiten?
             </p>
 
-            <p className="-mt-3 mb-3">(Mehrfach-Nennung möglich)</p>
+            <p className="-mt-5 mb-5">(Mehrfach-Nennung möglich)</p>
 
             <div className="mx-12 max-h-[300px] overflow-auto overscroll-none text-left text-lg [&_input]:cursor-pointer [&_label]:cursor-pointer [&_p]:my-2">
               {answers.map(([text, key]) => {
                 return (
                   <p key={key}>
                     <label>
-                      <input type="checkbox" /> {text}
+                      <input
+                        type="checkbox"
+                        checked={selected.includes(key)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            if (!selected.includes(key)) {
+                              setSelected([...selected, key])
+                            }
+                          } else {
+                            setSelected(selected.filter((x) => x !== key))
+                          }
+                        }}
+                      />{' '}
+                      {text}
                     </label>
                   </p>
                 )
@@ -163,7 +177,18 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
             </div>
 
             <p className="mt-6">
-              <button className="serlo-button-blue">Abschicken</button>
+              <button
+                className="serlo-button-blue"
+                onClick={() => {
+                  setSurvey(false)
+                  document.removeEventListener('keydown', handler)
+                  for (const s of selected) {
+                    submitEvent(`oam_survey_${s}`)
+                  }
+                }}
+              >
+                Abschicken
+              </button>
             </p>
 
             <p className="mb-8 mt-8">
@@ -283,9 +308,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
     document.addEventListener('keydown', handler)
   }
 
-  function handleModalInput(
-    event: 'exit' | 'noStudent' | 'yes' | 'no' | 'rarely'
-  ) {
+  function handleModalInput(event: 'exit' | 'noStudent') {
     submitEvent(`oam_survey_${event}`)
     setSurvey(false)
     document.removeEventListener('keydown', handler)
