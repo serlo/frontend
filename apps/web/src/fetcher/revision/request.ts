@@ -30,19 +30,13 @@ export async function requestRevision(
 
   const uuid = response.uuid
 
-  if (!uuid)
-    return {
-      kind: 'not-found',
-    }
+  if (!uuid) return { kind: 'not-found' }
 
   const authorization = response.authorization as AuthorizationPayload
-
-  const cacheKey = `/${instance}/${revisionId}`
 
   if (
     uuid.__typename === UuidRevType.Article ||
     uuid.__typename === UuidRevType.Page ||
-    uuid.__typename === UuidRevType.CoursePage ||
     uuid.__typename === UuidRevType.Video ||
     uuid.__typename === UuidRevType.Event ||
     uuid.__typename === UuidRevType.Applet ||
@@ -163,12 +157,9 @@ export async function requestRevision(
         contentType: 'revision',
         metaDescription: '',
       },
-      cacheKey,
       authorization,
     }
   }
 
-  return {
-    kind: 'not-found',
-  }
+  return { kind: 'not-found' }
 }

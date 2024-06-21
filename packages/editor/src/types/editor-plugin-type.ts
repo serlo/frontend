@@ -4,6 +4,7 @@ export enum EditorPluginType {
   Audio = 'audio',
   ArticleIntroduction = 'articleIntroduction',
   Box = 'box',
+  Course = 'course',
   Equations = 'equations',
   Geogebra = 'geogebra',
   H5p = 'h5p',
@@ -24,6 +25,7 @@ export enum EditorPluginType {
   Text = 'text',
   Video = 'video',
 
+  DropzoneImage = 'dropzoneImage',
   ExerciseGroup = 'exerciseGroup',
   Exercise = 'exercise',
   ScMcExercise = 'scMcExercise',

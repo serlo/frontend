@@ -73,14 +73,11 @@ export function ExternalRevisionLoader<T>({
                 _typename: string,
                 id: number,
                 _title: string,
-                _taxType?: unknown,
-                coursePageId?: number
+                _taxType?: unknown
               ) => (
                 <SerloAddButton
                   text={editorStrings.edtrIo.importOtherButton}
-                  onClick={() =>
-                    fetchRevisionDataByUuid(coursePageId ? coursePageId : id)
-                  }
+                  onClick={() => fetchRevisionDataByUuid(id)}
                 />
               )}
               supportedEntityTypes={supportedEntityTypes}

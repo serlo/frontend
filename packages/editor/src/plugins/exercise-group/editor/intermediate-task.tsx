@@ -52,7 +52,7 @@ export function IntermediateTask({
                 task.afterIndex.set(exerciseIndex - 1)
               }}
             >
-              <EditorTooltip text={templateStrings.article.moveUpLabel} />
+              <EditorTooltip text={templateStrings.entity.moveUpLabel} />
               <FaIcon icon={faArrowCircleUp} />
             </button>
           ) : null}

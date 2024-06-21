@@ -89,6 +89,7 @@ export const instanceData = {
       title: "Partager",
       copyLink: "Copier le lien",
       copySuccess: "Lien copié!",
+      copyFailed: 'Error copying link! ',
       close: "Fermer",
       pdf: "Télécharger comme PDF",
       pdfNoSolutions: "PDF sans solutions"
@@ -189,7 +190,7 @@ export const instanceData = {
     },
     comments: {
       question: "As-tu une question?",
-      questionLink: 'Write it below',
+      questionLink: 'Write it here',
       commentsOne: "Commentaire",
       commentsMany: "Commentaires",
       submit: "Soumettre",
@@ -528,10 +529,6 @@ export const loggedInData = {
     authorMenu: {
       log: "Historique",
       settings: "Réglages",
-      moveCoursePage: "Déplacer cette page vers un autre cours",
-      thisCoursePage: "Cette page de cours",
-      addCoursePage: "Ajouter une page de cours",
-      wholeCourse: "Tout le cours",
       moveOrCopyItems: 'Move or copy items',
       addGroupedTextExercise: "Ajouter un exercice de texte groupé",
       changeLicense: "Modifier la licence",
@@ -624,6 +621,52 @@ export const loggedInData = {
           anchorId: 'Anchor ID',
           emptyContentWarning: 'Boxes without content will not be displayed'
         },
+        dropzoneImage: {
+          title: 'Image Dropzones',
+          description: 'Create an exercise with interactive images for matching and labeling',
+          backgroundImage: 'Background image',
+          dropZone: 'Drop zone',
+          dropZoneTooltip: 'Choose the drop zone',
+          removeDropZone: 'Remove drop zone',
+          dropzoneVisibility: 'Dropzone Visibility',
+          answers: {
+            add: "Ajouter une réponse",
+            remove: 'Remove answer',
+            edit: 'Edit answer',
+            settings: 'Answer settings'
+          },
+          answerZone: {
+            description: 'Description (optional)',
+            sizeLabel: 'Configure the size of the drop zone',
+            duplicate: 'Duplicate zone',
+            delete: 'Delete zone'
+          },
+          backgroundType: {
+            description: 'Insert a background image or proceed with a blank background',
+            // 'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund'
+            image: 'Background Image',
+            // 'Hintergrundbild hinzufügen'
+            blank: 'Blank background' //  'Leerer Hintergrund'
+
+          },
+          backgroundShapes: {
+            description: 'Choose the layout of the background',
+            // 'Lege die Ausrichtung des Hintergrundes fest'
+            square: 'Square',
+            //'Quadradtisch',
+            landscape: 'Landscape',
+            //'Querformat',
+            portrait: 'Portrait' // 'Hochformat'
+
+          },
+          or: "ou",
+          modal: {
+            settings: "Réglages",
+            new: 'New Drop Zone',
+            edit: 'Edit Answer',
+            wrong: 'Create Wrong Answer'
+          }
+        },
         unsupported: {
           title: 'Unsupported',
           notSupported: 'Sorry, this plugin is not supported:',
@@ -645,7 +688,6 @@ export const loggedInData = {
           combineLikeTerms: 'Combine like terms.',
           setEqual: 'Set the terms equal to each other.',
           firstExplanation: 'First explanation',
-          moveUpLabel: 'Move up',
           removeRowLabel: 'Remove row'
         },
         geogebra: {
@@ -854,9 +896,6 @@ export const loggedInData = {
             typing: 'Typing',
             'drag-and-drop': 'Drag & Drop'
           },
-          previewMode: "Aperçu",
-          previewIsActiveHint: 'Edit the exercise again',
-          previewIsDeactiveHint: 'Preview the exercise',
           dummyAnswers: 'Extra incorrect answers',
           addDummyAnswer: 'Add an incorrect answer',
           removeDummyAnswer: 'Remove extra answer',
@@ -870,7 +909,9 @@ export const loggedInData = {
         entity: {
           titlePlaceholder: "Titre",
           seoTitle: "Titre pour les moteurs de recherche",
-          seoDesc: "Description pour les moteurs de recherche"
+          seoDesc: "Description pour les moteurs de recherche",
+          moveUpLabel: 'Move up',
+          moveDownLabel: 'Move down'
         },
         article: {
           writeShortIntro: "Écrire une courte introduction",
@@ -878,7 +919,6 @@ export const loggedInData = {
           moreOnTopic: "Tu peux en trouver plus ici :",
           addSource: "Ajouter une source",
           removeLabel: "Supprimer",
-          moveUpLabel: 'Move up',
           dragLabel: 'Drag to change order',
           openInTab: "Ouvrir dans un nouvel onglet",
           sources: 'Sources',
@@ -906,13 +946,8 @@ export const loggedInData = {
         },
         course: {
           removeCoursePage: "Supprimer la page de cours",
-          addCoursePage: "Ajouter une page de cours"
-        },
-        coursePage: {
-          explanation: "Explication",
-          video: "Vidéo",
-          question: 'Question',
-          title: "Titre"
+          addCoursePage: "Ajouter une page de cours",
+          confirmDelete: 'Are you sure you want to delete this course page?'
         },
         exercise: {
           scMcExercise: 'Choice Exercise',

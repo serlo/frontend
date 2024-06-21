@@ -48,7 +48,7 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
     <FrontendClientBase
       noContainers
       noHeaderFooter
-      entityId={entityId}
+      serloEntityData={{ entityId }}
       authorization={pageData.authorization}
     >
       <LazyIframeResizer />

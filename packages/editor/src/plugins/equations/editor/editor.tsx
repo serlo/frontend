@@ -168,6 +168,7 @@ export function EquationsEditor(props: EquationsProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nestedFocus])
 
+  const entityStrings = useEditorStrings().templatePlugins.entity
   const equationsStrings = useEditorStrings().plugins.equations
 
   if (!nestedFocus) {
@@ -344,7 +345,7 @@ export function EquationsEditor(props: EquationsProps) {
             onClick={() => state.steps.move(row, row - 1)}
             className={buttonClass}
           >
-            <EditorTooltip text={equationsStrings.moveUpLabel} />
+            <EditorTooltip text={entityStrings.moveUpLabel} />
             <FaIcon icon={faArrowCircleUp} className="-ml-0.25 align-[-3px]" />
           </button>
         )}

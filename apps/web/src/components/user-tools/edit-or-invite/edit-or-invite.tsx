@@ -1,6 +1,8 @@
+import { getCoursePageIdFromPath } from '@editor/plugins/course/helper/get-course-id-from-path'
 import { faClock, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { TaxonomyTerm, Uuid } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 
 import type { InviteModalProps } from './invite-modal'
@@ -32,6 +34,7 @@ export function EditOrInvite({
 }: EditOrInviteProps) {
   const auth = useAuthentication()
   const canDo = useCanDo()
+  const router = useRouter()
   const { strings } = useInstanceData()
   const [inviteOpen, setInviteOpen] = useState(false)
 
@@ -48,16 +51,11 @@ export function EditOrInvite({
   const hasUnrevised =
     unrevisedRevisions !== undefined && unrevisedRevisions > 0
 
-  const isCourse =
-    data.typename === UuidType.Course || data.typename === UuidType.CoursePage
+  const isCourse = data.typename === UuidType.Course
 
-  const href = isCourse
-    ? data.unrevisedCourseRevisions && data.unrevisedCourseRevisions > 0
-      ? getHistoryUrl(data.courseId ?? data.id)
-      : getEditHref()
-    : hasUnrevised
-      ? getHistoryUrl(data.id)
-      : getEditHref()
+  const href = hasUnrevised
+    ? getHistoryUrl(data.courseId ?? data.id)
+    : getEditHref()
   if (!href && !isInvite) return null
 
   const title = hasUnrevised
@@ -90,8 +88,10 @@ export function EditOrInvite({
     const revisionId = data.revisionId
     const { typename, id } = data
 
+    const coursePageId = getCoursePageIdFromPath(router.asPath)
+
     const url = isCourse
-      ? getEditUrl(data.courseId ?? id, undefined, false) + '#' + data.id
+      ? getEditUrl(data.courseId ?? id, undefined, false) + '#' + coursePageId
       : getEditUrl(id, revisionId, typename.startsWith('Taxonomy'))
 
     if (typename === UuidType.Page || typename === UuidRevType.Page) {

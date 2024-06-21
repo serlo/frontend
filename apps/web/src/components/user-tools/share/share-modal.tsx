@@ -10,7 +10,7 @@ import {
   faEnvelope,
 } from '@fortawesome/free-solid-svg-icons'
 import QRCode from 'qrcode.react'
-import { MouseEvent, useRef } from 'react'
+import { MouseEvent, useState, useEffect } from 'react'
 
 import { FaIcon, FaIconProps } from '../../fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
@@ -42,22 +42,30 @@ export function ShareModal({
   showPdf,
   path,
 }: ShareModalProps) {
-  const shareInputRef = useRef<HTMLInputElement>(null)
   const { strings, lang } = useInstanceData()
   const { entityId } = useEntityData()
   const pathOrId = path ?? entityId
+  const [isClipboardSupported, setIsClipboardSupported] = useState(false)
+
+  useEffect(() => {
+    setIsClipboardSupported(navigator.clipboard !== undefined)
+  }, [])
 
   if (!isOpen || !pathOrId) return null
 
-  function copyToClipboard(event: MouseEvent, text?: string) {
-    const target = event.target as HTMLAnchorElement
-    shareInputRef.current!.select()
-    document.execCommand('copy')
-    target.focus()
-    showToastNotice(
-      '👌 ' + (text ? text : strings.share.copySuccess),
-      'success'
-    )
+  async function copyToClipboard(text?: string) {
+    try {
+      await navigator.clipboard.writeText(shareUrl)
+      showToastNotice(
+        '👌 ' + (text ? text : strings.share.copySuccess),
+        'success'
+      )
+    } catch (err) {
+      showToastNotice(
+        '❌ ' + (text ? text : strings.share.copyFailed),
+        'warning'
+      )
+    }
   }
 
   const shareUrl = `${window.location.protocol}//${window.location.host}/${pathOrId}`
@@ -95,12 +103,10 @@ export function ShareModal({
     {
       title: 'Mebis',
       icon: faCompass,
-      onClick: (event: MouseEvent) => {
-        copyToClipboard(
-          event,
+      onClick: () =>
+        void copyToClipboard(
           'Link in die Zwischenablage kopiert.\r\nEinfach auf Mebis (www.mebis.bayern.de) einfügen!'
-        )
-      },
+        ),
     },
   ]
 
@@ -124,7 +130,7 @@ export function ShareModal({
     }
   }
 
-  const lmsData = lang === Instance.De ? lmsShare : [lmsShare[0]] //mebis only in de
+  const lmsData = lang === Instance.De ? lmsShare : [lmsShare[0]] // mebis only in de
   const pdfData = [getPdfData(), getPdfData(true)]
 
   return (
@@ -154,20 +160,19 @@ export function ShareModal({
   function renderShareInput() {
     return (
       <>
-        <input /*ShareInput*/
+        <input
           className={cn(`
             mb-2 ml-3 mr-0 w-[250px] rounded-2xl
             border-none bg-brandgreen-50 px-2.5 py-1
             focus:shadow-input focus:outline-none
           `)}
-          ref={shareInputRef}
           onFocus={(e) => e.target.select()}
           defaultValue={shareUrl}
-        />{' '}
-        {document.queryCommandSupported('copy') && (
+        />
+        {isClipboardSupported && (
           <>
             <br />
-            <button className={shareButton} onClick={copyToClipboard}>
+            <button className={shareButton} onClick={() => copyToClipboard()}>
               <FaIcon icon={faCopy} /> {strings.share.copyLink}
             </button>
           </>

@@ -1,5 +1,6 @@
 import IconAudio from '@editor/editor-ui/assets/plugin-icons/icon-audio.svg'
 import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg'
+import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg'
 import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg'
 import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
@@ -16,6 +17,8 @@ import { articlePlugin } from '@editor/plugins/article'
 import { audioPlugin } from '@editor/plugins/audio'
 import { blanksExercise } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
+import { coursePlugin } from '@editor/plugins/course'
+import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
 import { exerciseGroupPlugin } from '@editor/plugins/exercise-group'
@@ -33,8 +36,7 @@ import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
 import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
 import { appletTypePlugin } from '@editor/plugins/serlo-template-plugins/applet'
 import { articleTypePlugin } from '@editor/plugins/serlo-template-plugins/article'
-import { courseTypePlugin } from '@editor/plugins/serlo-template-plugins/course/course'
-import { coursePageTypePlugin } from '@editor/plugins/serlo-template-plugins/course/course-page'
+import { courseTypePlugin } from '@editor/plugins/serlo-template-plugins/course'
 import { eventTypePlugin } from '@editor/plugins/serlo-template-plugins/event'
 import { textExerciseGroupTypePlugin } from '@editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
 import { pageTypePlugin } from '@editor/plugins/serlo-template-plugins/page'
@@ -84,6 +86,16 @@ export function createPlugins({
       visibleInSuggestions: true,
       icon: <IconMultimedia />,
     },
+    ...(isProduction
+      ? []
+      : [
+          {
+            type: EditorPluginType.DropzoneImage,
+            plugin: createDropzoneImagePlugin(),
+            visibleInSuggestions: true,
+            icon: <IconDropzones />,
+          },
+        ]),
     {
       type: EditorPluginType.Spoiler,
       plugin: createSpoilerPlugin(),
@@ -179,7 +191,7 @@ export function createPlugins({
     {
       type: EditorPluginType.Exercise,
       plugin: exercisePlugin,
-      visibleInSuggestions: shouldUseFeature('editorExercisesInContent'),
+      visibleInSuggestions: true,
     },
     { type: EditorPluginType.Solution, plugin: solutionPlugin },
     { type: EditorPluginType.H5p, plugin: H5pPlugin },
@@ -210,13 +222,12 @@ export function createPlugins({
         allowedPlugins: [EditorPluginType.Image],
       }),
     },
-
+    { type: EditorPluginType.Course, plugin: coursePlugin },
     // Internal plugins for our content types
     // ===================================================
     { type: TemplatePluginType.Applet, plugin: appletTypePlugin },
     { type: TemplatePluginType.Article, plugin: articleTypePlugin },
     { type: TemplatePluginType.Course, plugin: courseTypePlugin },
-    { type: TemplatePluginType.CoursePage, plugin: coursePageTypePlugin },
     { type: TemplatePluginType.Event, plugin: eventTypePlugin },
     { type: TemplatePluginType.Page, plugin: pageTypePlugin },
     { type: TemplatePluginType.Taxonomy, plugin: taxonomyTypePlugin },

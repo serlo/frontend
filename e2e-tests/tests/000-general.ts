@@ -112,11 +112,11 @@ Scenario('Quickbar', ({ I }) => {
   I.say('Perform another search')
   I.amOnPage('/')
   I.click('$quickbar-input')
-  I.type('Beispiel zu Zufallsexperimente und Wahrscheinlichkeit')
+  I.type('Aufgaben Baumdiagramm ')
 
-  I.click('Beispiel zu Zufallsexperimente und Wahrscheinlichkeit')
-  I.seeInTitle('Beispiel zu Zufallsexperimente und Wahrscheinlichkeit')
-  I.see('Abiturkurs Stochastik')
+  I.click('Aufgaben zum Baumdiagramm ')
+  I.seeInTitle('Aufgaben zum Baumdiagramm')
+  I.see('Daten und Zufallsexperimente')
 })
 
 Scenario('Share modal', ({ I }) => {
