@@ -66,7 +66,7 @@ export function StaticCanvas(props: StaticCanvasProps) {
             visibility={dropzoneVisibility as DropzoneVisibility}
             canvasDimensions={canvasDimensions}
             answersCount={answers.length}
-            accept={draggableAnswerDragType}
+            acceptedDragType={draggableAnswerDragType}
             onAnswerDrop={onAnswerDrop}
           />
         )

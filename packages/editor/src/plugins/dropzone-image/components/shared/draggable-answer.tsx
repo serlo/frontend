@@ -6,7 +6,7 @@ import { cn } from '@/helper/cn'
 
 interface DraggableAnswerProps {
   answer: PossibleAnswerType
-  type?: string
+  dragType?: string
   originDropzoneId?: string
   isCorrect?: boolean | null
   isAnswerCorrect?: boolean | null
@@ -17,7 +17,7 @@ interface DraggableAnswerProps {
 export function DraggableAnswer(props: DraggableAnswerProps) {
   const {
     answer,
-    type = 'undroppableAnswer',
+    dragType = 'undroppableAnswer',
     originDropzoneId,
     isCorrect,
     isAnswerCorrect,
@@ -27,7 +27,7 @@ export function DraggableAnswer(props: DraggableAnswerProps) {
   const { id, imageUrl, text } = answer
 
   const [, dragRef] = useDrag({
-    type,
+    type: dragType,
     item: { id, originDropzoneId, imageUrl, text },
   })
 

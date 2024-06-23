@@ -227,7 +227,7 @@ export function DropzoneImageStaticRenderer(
             <DraggableAnswer
               key={index}
               answer={possibleAnswer}
-              type={draggableAnswerDragType}
+              dragType={draggableAnswerDragType}
             />
           ))}
         </DraggableArea>

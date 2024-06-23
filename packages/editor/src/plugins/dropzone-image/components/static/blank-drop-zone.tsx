@@ -18,7 +18,7 @@ interface BlankDropZoneProps {
   visibility: DropzoneVisibility
   canvasDimensions: { height: number; width: number }
   answersCount: number
-  accept: string
+  acceptedDragType: string
   onAnswerDrop: (
     answer: DraggableAnswerType,
     dropzoneId: string,
@@ -36,7 +36,7 @@ export const BlankDropZone = memo(function BlankDropZone(
     isAnswerCorrectMap,
     visibility,
     answersCount,
-    accept,
+    acceptedDragType,
     onAnswerDrop,
   } = props
   const { id, name, position, layout } = dropZone
@@ -44,7 +44,7 @@ export const BlankDropZone = memo(function BlankDropZone(
   const { height, width } = layout
 
   const [{ isOver, canDrop }, drop] = useDrop({
-    accept,
+    accept: acceptedDragType,
     drop: (answer: DraggableAnswerType) => {
       const hasAnswerAlready = droppedAnswers.find(
         (droppedAnswer) => droppedAnswer.id === answer.id
@@ -87,7 +87,7 @@ export const BlankDropZone = memo(function BlankDropZone(
         <DraggableAnswer
           key={index}
           answer={answer}
-          type={accept}
+          dragType={acceptedDragType}
           originDropzoneId={id}
           isCorrect={isCorrect}
           isAnswerCorrect={isAnswerCorrectMap?.get(answer.id)}
