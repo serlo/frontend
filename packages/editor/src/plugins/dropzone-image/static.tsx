@@ -3,15 +3,15 @@ import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
 import type { EditorDropzoneImageDocument } from '@editor/types/editor-plugins'
 import { useEffect, useMemo, useState } from 'react'
 
-import { FeedbackButton } from './feedback-button'
-import { StaticCanvas } from './static-canvas'
+import { DraggableAnswer } from './components/shared/draggable-answer'
+import { FeedbackButton } from './components/static/feedback-button'
+import { StaticCanvas } from './components/static/static-canvas'
 import {
   FeedbackData,
   type PossibleAnswerType,
   type DraggableAnswerType,
-} from '../../types'
-import { convertStaticAnswers } from '../../utils/answer-zone'
-import { DraggableAnswer } from '../shared/draggable-answer'
+} from './types'
+import { convertStaticAnswers } from './utils/answer-zone'
 import { shuffleArray } from '@/helper/shuffle-array'
 
 export function DropzoneImageStaticRenderer(

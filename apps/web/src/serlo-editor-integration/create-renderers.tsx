@@ -82,7 +82,7 @@ const SpoilerSerloStaticRenderer = dynamic<
 const DropzoneImageSerloStaticRenderer = dynamic<
   EditorDropzoneImageDocument & { openOverwrite?: boolean; onOpen?: () => void }
 >(() =>
-  import('@editor/plugins/dropzone-image/components/static/static').then(
+  import('@editor/plugins/dropzone-image/static').then(
     (mod) => mod.DropzoneImageStaticRenderer
   )
 )
