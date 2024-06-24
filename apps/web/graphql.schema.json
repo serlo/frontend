@@ -12182,18 +12182,6 @@
         "description": null,
         "fields": [
           {
-            "name": "entity",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "INTERFACE",
-              "name": "AbstractEntity",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "query",
             "description": null,
             "args": [],
@@ -12216,18 +12204,6 @@
             "type": {
               "kind": "INTERFACE",
               "name": "AbstractEntity",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "revision",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "INTERFACE",
-              "name": "AbstractEntityRevision",
               "ofType": null
             },
             "isDeprecated": false,
@@ -13553,6 +13529,22 @@
                   "name": "TaxonomyTerm",
                   "ofType": null
                 }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxonomyId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
               }
             },
             "isDeprecated": false,
