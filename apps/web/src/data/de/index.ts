@@ -445,7 +445,6 @@ export const instanceData = {
       createEntity: "%actor% hat %object% erstellt.",
       setLicense: "%actor% hat die Lizenz von %repository% geändert.",
       createEntityLink: "%actor% hat %child% zugewiesen zu %parent%.",
-      removeEntityLink: "%actor% hat die Zuweisung von %child% zu %parent% entfernt.",
       createEntityRevision: "%actor% hat eine %revision% von %entity% erstellt.",
       checkoutRevision: "%actor% hat eine %revision% von %repository% übernommen.",
       rejectRevision: "%actor% hat eine %revision% in %repository% nicht übernommen.",

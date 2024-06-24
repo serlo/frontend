@@ -123,16 +123,7 @@ export const sharedEventFragments = gql`
       }
       reason
     }
-    ... on RemoveEntityLinkNotificationEvent {
-      parent {
-        ...withTaxonomyTerms
-        ...entityInfo
-      }
-      child {
-        ...withTaxonomyTerms
-        ...entityInfo
-      }
-    }
+
     ... on RemoveTaxonomyLinkNotificationEvent {
       child {
         ...withTaxonomyTerms

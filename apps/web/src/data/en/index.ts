@@ -493,7 +493,6 @@ export const instanceData = {
       createEntity: '%actor% created %object%.',
       setLicense: '%actor% changed the license of %repository%.',
       createEntityLink: '%actor% associated %child% with %parent%.',
-      removeEntityLink: '%actor% dissociated %child% from %parent%.',
       createEntityRevision: '%actor% created %revision% of %entity%.',
       checkoutRevision: '%actor% checked out %revision% in %repository%.',
       rejectRevision: '%actor% did not accept %revision% in %repository%.',
