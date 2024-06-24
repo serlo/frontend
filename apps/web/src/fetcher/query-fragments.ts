@@ -123,7 +123,6 @@ export const sharedEventFragments = gql`
       }
       reason
     }
-
     ... on RemoveTaxonomyLinkNotificationEvent {
       child {
         ...withTaxonomyTerms
