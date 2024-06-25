@@ -791,6 +791,7 @@ export const loggedInData = {
           maxWidth: 'Maximum width',
           maxWidthPlaceholder: 'Enter the maximum width',
           helpTooltipText: 'More information and help related to Image Plugin',
+          change: 'Change image',
         },
         injection: {
           title: 'serlo.org Content',

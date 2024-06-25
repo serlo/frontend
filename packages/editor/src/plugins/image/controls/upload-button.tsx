@@ -1,6 +1,10 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { TempFile, isTempFile } from '@editor/plugin'
-import { faCircleArrowUp, faRedoAlt } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCircleArrowUp,
+  faRedoAlt,
+  faUpload,
+} from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
@@ -14,14 +18,10 @@ export function UploadButton({ config, state }: ImageProps) {
 
   return (
     <>
-      <label
-        className={cn(`
-          mr-2 cursor-pointer rounded-md border border-gray-500
-          px-1 text-sm transition-all focus-within:bg-editor-primary-200 hover:bg-editor-primary-200
-          focus-visible:bg-editor-primary-200
-        `)}
-      >
-        {imageStrings.upload} <FaIcon icon={faCircleArrowUp} />
+      <label className="mb-4 flex w-full items-center justify-center rounded-lg bg-editor-primary-200 py-2 font-semibold text-gray-800 hover:bg-editor-primary-300">
+        <span className="mr-2 inline-block">
+          <FaIcon icon={faUpload} />
+        </span>
         <input
           type="file"
           accept="image/*"
@@ -33,6 +33,7 @@ export function UploadButton({ config, state }: ImageProps) {
           }}
           data-qa="plugin-image-upload"
         />
+        {imageStrings.upload}
       </label>
       {isFailed ? (
         <button

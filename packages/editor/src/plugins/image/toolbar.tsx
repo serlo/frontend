@@ -2,7 +2,11 @@ import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { faCog, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCog,
+  faQuestionCircle,
+  faSyncAlt,
+} from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
@@ -18,6 +22,7 @@ export const ImageToolbar = (
     showSettingsButtons?: boolean
     showSettingsModal: boolean
     setShowSettingsModal: Dispatch<SetStateAction<boolean>>
+    onClickChangeImage: () => void
   }
 ) => {
   const {
@@ -25,6 +30,7 @@ export const ImageToolbar = (
     showSettingsModal,
     setShowSettingsModal,
     showSettingsButtons = true,
+    onClickChangeImage,
   } = props
   const disableFileUpload = props.config.disableFileUpload // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
   const editorStrings = useEditorStrings()
@@ -33,11 +39,18 @@ export const ImageToolbar = (
   const pluginSettings = showSettingsButtons ? (
     <>
       <button
+        onClick={() => onClickChangeImage()}
+        className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+        data-qa="plugin-image-settings"
+      >
+        {imageStrings.change} <FaIcon className="ml-1" icon={faSyncAlt} />
+      </button>
+      <button
         onClick={() => setShowSettingsModal(true)}
         className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
         data-qa="plugin-image-settings"
       >
-        {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
+        {editorStrings.edtrIo.settings} <FaIcon className="ml-1" icon={faCog} />
       </button>
       <ModalWithCloseButton
         isOpen={showSettingsModal}
@@ -53,7 +66,7 @@ export const ImageToolbar = (
         </div>
       </ModalWithCloseButton>
 
-      {disableFileUpload ? null : <UploadButton {...props} />}
+      {/* {disableFileUpload ? null : <UploadButton {...props} />} */}
     </>
   ) : undefined
 

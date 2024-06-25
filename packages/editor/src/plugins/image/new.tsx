@@ -5,9 +5,11 @@ import React from 'react'
 import type { ImageProps } from '.'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { UploadButton } from './controls/upload-button'
 
-export function NewImageRendererChoice({ state }: ImageProps) {
+export function ImageSelectionScreen(props: ImageProps) {
   const editorStrings = useEditorStrings()
+  const { config, state } = props
   const { src } = state
 
   const imageStrings = editorStrings.plugins.image
@@ -21,13 +23,7 @@ export function NewImageRendererChoice({ state }: ImageProps) {
   return (
     <div className="mx-auto rounded-md bg-yellow-50 p-8 shadow-md">
       <div className="mx-auto my-8 w-[60%]">
-        <button className="mb-4 flex w-full items-center justify-center rounded-lg bg-editor-primary-200 py-2 font-semibold text-gray-800 hover:bg-editor-primary-300">
-          <span className="mr-2 inline-block">
-            <FaIcon icon={faUpload} />
-          </span>
-          {imageStrings.upload}
-        </button>
-
+        <UploadButton {...props} />
         <button className="mb-4 flex w-full items-center justify-center rounded-lg bg-editor-primary-200 py-2 font-semibold text-gray-800 hover:bg-editor-primary-300">
           <span className="mr-2 inline-block">
             <FaIcon icon={faMagnifyingGlass} />
