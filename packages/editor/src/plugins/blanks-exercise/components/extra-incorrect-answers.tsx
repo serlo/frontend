@@ -2,7 +2,7 @@ import { AutogrowInput } from '@editor/editor-ui/autogrow-input'
 import { RemovableInputWrapper } from '@editor/editor-ui/removable-input-wrapper'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 import type { BlanksExerciseProps } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -21,16 +21,23 @@ export function ExtraIncorrectAnswers(props: ExtraIncorrectAnswersProps) {
     ? extraDraggableAnswers.map(({ answer }) => answer.value)
     : []
 
+  const [onBlurEnabled, setOnBlurEnabled] = useState(true)
+
+  function focusOnLastInput() {
+    setTimeout(() => {
+      const inputs = areaWrapper.current?.querySelectorAll('input')
+      inputs?.[inputs.length - 1].focus()
+      setOnBlurEnabled(true)
+    }, 10)
+  }
+
   function handleExtraIncorrectAnswerAdd() {
     if (extraDraggableAnswers.defined) {
       extraDraggableAnswers.insert()
     } else {
       extraDraggableAnswers.create([{ answer: '' }])
     }
-    setTimeout(() => {
-      const inputs = areaWrapper.current?.querySelectorAll('input')
-      inputs?.[inputs.length - 1].focus()
-    }, 10)
+    focusOnLastInput()
   }
 
   function handleExtraIncorrectAnswerRemove(index: number) {
@@ -69,10 +76,13 @@ export function ExtraIncorrectAnswers(props: ExtraIncorrectAnswersProps) {
                   }}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
+                      setOnBlurEnabled(false)
                       extraDraggableAnswers.insert()
+                      focusOnLastInput()
                     }
                   }}
                   onBlur={() => {
+                    if (!onBlurEnabled) return
                     extraDraggableAnswers.forEach(({ answer }, index) => {
                       const trimmedAnswer = answer.value.trim()
                       if (!trimmedAnswer.length) {
