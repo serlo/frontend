@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
 import { isTempFile, usePendingFileUploader } from '@editor/plugin'
 import { selectIsFocused, useAppSelector } from '@editor/store'
@@ -10,7 +9,6 @@ import { cn } from '@serlo/frontend/src/helper/cn'
 import { useEffect, useRef, useState } from 'react'
 
 import type { ImageProps } from '.'
-import { InlineSrcControls } from './controls/inline-src-controls'
 import { ImageSelectionScreen } from './image-selection-screen'
 import { ImageRenderer } from './renderer'
 import { ImageToolbar } from './toolbar'
