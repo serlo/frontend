@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
 import { isTempFile, usePendingFileUploader } from '@editor/plugin'
 import { selectIsFocused, useAppSelector } from '@editor/store'
@@ -10,6 +11,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import type { ImageProps } from '.'
 import { InlineSrcControls } from './controls/inline-src-controls'
+import { NewImageRendererChoice } from './new'
 import { ImageRenderer } from './renderer'
 import { ImageToolbar } from './toolbar'
 import { TextEditorConfig } from '../text'
@@ -84,51 +86,35 @@ export function ImageEditor(props: ImageProps) {
         )}
         data-qa="plugin-image-editor"
       >
-        {hasFocus && showInlineImageUrl ? (
-          <div className="absolute left-side top-side z-[3]">
-            <InlineSrcControls {...props} urlInputRef={urlInputRef} />
-          </div>
-        ) : null}
-
-        <ImageRenderer
-          image={{
-            src,
-            href: state.link.defined ? state.link.href.value : undefined,
-            alt: state.alt.defined ? state.alt.value : undefined,
-            maxWidth: state.maxWidth.defined ? state.maxWidth.value : undefined,
-          }}
-          caption={renderCaption()}
-          placeholder={renderPlaceholder()}
-          forceNewTab
-        />
+        <NewImageRendererChoice {...props} />
       </div>
     </>
   )
 
-  function renderPlaceholder() {
-    if (!isLoading && src.length) return null
-    return (
-      <div
-        className="relative w-full rounded-lg bg-editor-primary-50 px-side py-32 text-center"
-        data-qa="plugin-image-placeholder"
-      >
-        <FaIcon
-          icon={faImages}
-          className="mb-4 text-7xl text-editor-primary-200"
-        />
-      </div>
-    )
-  }
+  // function renderPlaceholder() {
+  //   if (!isLoading && src.length) return null
+  //   return (
+  //     <div
+  //       className="relative w-full rounded-lg bg-editor-primary-50 px-side py-32 text-center"
+  //       data-qa="plugin-image-placeholder"
+  //     >
+  //       <FaIcon
+  //         icon={faImages}
+  //         className="mb-4 text-7xl text-editor-primary-200"
+  //       />
+  //     </div>
+  //   )
+  // }
 
-  function renderCaption() {
-    if (!state.caption.defined) return null
+  // function renderCaption() {
+  //   if (!state.caption.defined) return null
 
-    return state.caption.render({
-      config: {
-        placeholder: imageStrings.captionPlaceholder,
-        formattingOptions: captionFormattingOptions,
-        isInlineChildEditor: true,
-      } as TextEditorConfig,
-    })
-  }
+  //   return state.caption.render({
+  //     config: {
+  //       placeholder: imageStrings.captionPlaceholder,
+  //       formattingOptions: captionFormattingOptions,
+  //       isInlineChildEditor: true,
+  //     } as TextEditorConfig,
+  //   })
+  // }
 }

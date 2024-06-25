@@ -775,8 +775,9 @@ export const loggedInData = {
         image: {
           title: 'Image',
           description: 'Upload images.',
-          upload: 'Upload',
+          upload: 'Upload Image',
           imageUrl: 'Image URL',
+          searchOnline: 'Search online for licence-free images',
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: 'Uploading…',
           placeholderFailed: 'Upload failed…',
