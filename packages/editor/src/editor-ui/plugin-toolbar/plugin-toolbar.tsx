@@ -11,6 +11,7 @@ interface PluginToolbarProps {
   contentControls?: ReactElement
   pluginSettings?: ReactElement
   pluginControls?: ReactElement
+  pluginTooltip?: ReactElement
   className?: string
   noWhiteShadow?: true
 }
@@ -20,6 +21,7 @@ export function PluginToolbar({
   contentControls,
   pluginSettings,
   pluginControls,
+  pluginTooltip,
   className,
   noWhiteShadow,
 }: PluginToolbarProps) {
@@ -53,6 +55,7 @@ export function PluginToolbar({
           {getPluginTitle(pluginStrings, pluginType)}
         </div>
 
+        {pluginTooltip ? pluginTooltip : null}
         {pluginSettings ? (
           <>
             {/* Separator */}

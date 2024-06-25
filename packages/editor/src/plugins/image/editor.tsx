@@ -74,6 +74,7 @@ export function ImageEditor(props: ImageProps) {
       {hasFocus ? (
         <ImageToolbar
           {...props}
+          showSettingsButtons={false}
           showSettingsModal={showSettingsModal}
           setShowSettingsModal={setShowSettingsModal}
         />
