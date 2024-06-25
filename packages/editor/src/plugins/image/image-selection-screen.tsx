@@ -2,7 +2,7 @@ import { isTempFile } from '@editor/plugin'
 import { faMagnifyingGlass, faUpload } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
 
-import type { ImageProps } from '.'
+import type { ImageProps } from './index.js'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UploadButton } from './controls/upload-button'
@@ -33,11 +33,6 @@ export function ImageSelectionScreen(props: ImageProps) {
         <span className="mb-1 flex w-full justify-center font-bold">
           {imageStrings.imageUrl}
         </span>
-        {/* <input
-          type="text"
-          className="w-full rounded-lg  bg-yellow-100 px-4 py-2 text-gray-600"
-          placeholder={imagePluginStrings.placeholderEmpty}
-        /> */}
         <input
           placeholder={placeholder}
           value={!isTempFile(src.value) ? src.value : ''}

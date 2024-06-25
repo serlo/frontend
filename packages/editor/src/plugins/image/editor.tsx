@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import type { ImageProps } from '.'
 import { InlineSrcControls } from './controls/inline-src-controls'
-import { ImageSelectionScreen } from './new'
+import { ImageSelectionScreen } from './image-selection-screen'
 import { ImageRenderer } from './renderer'
 import { ImageToolbar } from './toolbar'
 import { TextEditorConfig } from '../text'
