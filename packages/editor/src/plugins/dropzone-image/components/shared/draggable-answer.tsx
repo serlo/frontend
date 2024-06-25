@@ -4,10 +4,9 @@ import type { PossibleAnswerType } from '../../types'
 import { AnswerContent } from '../answer-zone/answer-content'
 import { cn } from '@/helper/cn'
 
-export const draggableAnswerDragType = 'draggableAnswer'
-
 interface DraggableAnswerProps {
   answer: PossibleAnswerType
+  dragType?: string
   originDropzoneId?: string
   isCorrect?: boolean | null
   isAnswerCorrect?: boolean | null
@@ -18,6 +17,7 @@ interface DraggableAnswerProps {
 export function DraggableAnswer(props: DraggableAnswerProps) {
   const {
     answer,
+    dragType = 'undroppableAnswer',
     originDropzoneId,
     isCorrect,
     isAnswerCorrect,
@@ -27,7 +27,7 @@ export function DraggableAnswer(props: DraggableAnswerProps) {
   const { id, imageUrl, text } = answer
 
   const [, dragRef] = useDrag({
-    type: draggableAnswerDragType,
+    type: dragType,
     item: { id, originDropzoneId, imageUrl, text },
   })
 

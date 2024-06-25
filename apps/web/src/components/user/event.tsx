@@ -168,12 +168,6 @@ export function Event({
           parent: renderObject(event.parent),
         })
 
-      case 'RemoveEntityLinkNotificationEvent':
-        return parseString(strings.events.removeEntityLink, {
-          child: renderObject(event.child),
-          parent: renderObject(event.parent),
-        })
-
       case 'CreateEntityRevisionNotificationEvent':
         return parseString(strings.events.createEntityRevision, {
           revision: renderRevision(event.entityRevision.id),

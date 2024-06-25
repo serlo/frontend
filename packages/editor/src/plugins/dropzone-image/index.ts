@@ -2,7 +2,7 @@ import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/tex
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import { defaultLargeCanvasDimension } from './components/editor/background-shape-select'
-import { DropzoneImageEditor } from './components/editor/editor'
+import { DropzoneImageEditor } from './editor'
 import {
   defaultAnswerZoneLayout,
   defaultAnswerZonePosition,
