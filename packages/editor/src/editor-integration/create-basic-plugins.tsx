@@ -83,7 +83,7 @@ export function createBasicPlugins(props: Required<PluginsConfig>) {
     {
       type: EditorPluginType.Exercise,
       plugin: exercisePlugin,
-      visibleInSuggestions: props.general.exerciseVisibleInSuggestion,
+      visibleInSuggestions: true,
     },
     ...(props.general.enableTextAreaExercise
       ? [
