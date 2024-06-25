@@ -21,13 +21,13 @@ export function ExtraIncorrectAnswers(props: ExtraIncorrectAnswersProps) {
     ? extraDraggableAnswers.map(({ answer }) => answer.value)
     : []
 
-  const [onBlurEnabled, setOnBlurEnabled] = useState(true)
+  const [isOnBlurEnabled, setIsOnBlurEnabled] = useState(true)
 
   function focusOnLastInput() {
     setTimeout(() => {
       const inputs = areaWrapper.current?.querySelectorAll('input')
       inputs?.[inputs.length - 1].focus()
-      setOnBlurEnabled(true)
+      setIsOnBlurEnabled(true)
     }, 10)
   }
 
@@ -76,13 +76,14 @@ export function ExtraIncorrectAnswers(props: ExtraIncorrectAnswersProps) {
                   }}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
-                      setOnBlurEnabled(false)
+                      if (answer.length === 0) return
+                      setIsOnBlurEnabled(false)
                       extraDraggableAnswers.insert()
                       focusOnLastInput()
                     }
                   }}
                   onBlur={() => {
-                    if (!onBlurEnabled) return
+                    if (!isOnBlurEnabled) return
                     extraDraggableAnswers.forEach(({ answer }, index) => {
                       const trimmedAnswer = answer.value.trim()
                       if (!trimmedAnswer.length) {
