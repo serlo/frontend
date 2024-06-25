@@ -59,17 +59,12 @@ export const ImageToolbar = (
           <SettingsModalControls state={props.state} />
         </div>
       </ModalWithCloseButton>
-
-      {/* {disableFileUpload ? null : <UploadButton {...props} />} */}
     </>
   ) : undefined
 
   const pluginTooltip = (
-    <span className="serlo-tooltip-trigger">
-      <EditorTooltip
-        text={editorStrings.plugins.image.helpTooltipText}
-        className="-ml-5 !pb-1"
-      />
+    <span className="serlo-tooltip-trigger ml-[-8px]">
+      <EditorTooltip text={editorStrings.plugins.image.helpTooltipText} />
       <FaIcon icon={faCircleQuestion} className="mr-2" />
     </span>
   )
