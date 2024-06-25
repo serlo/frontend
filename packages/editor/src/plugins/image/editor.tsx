@@ -74,6 +74,9 @@ export function ImageEditor(props: ImageProps) {
           {...props}
           onClickChangeImage={() => {
             state.src.set('')
+            state.alt.defined && state.alt.remove()
+            state.caption.defined && state.caption.remove()
+            state.link.defined && state.link.remove()
           }}
           showSettingsButtons={src.length > 0}
           showSettingsModal={showSettingsModal}
