@@ -27,7 +27,7 @@ export function ImageSelectionScreen(props: ImageProps) {
         <UploadButton {...props} />
         {/* TODO: Before this goes to production, hide search button until functionality is added */}
         {!disableFileUpload && (
-          <button className="mb-4 flex w-full items-center justify-center rounded-lg bg-editor-primary-200 py-2 font-semibold text-gray-800 hover:bg-editor-primary-300">
+          <button className="mb-4 flex min-w-full flex-shrink-0 items-center justify-center rounded-lg bg-editor-primary-200 p-1 py-2 font-semibold text-gray-800 hover:bg-editor-primary-300">
             <span className="mr-2 inline-block">
               <FaIcon icon={faMagnifyingGlass} />
             </span>
@@ -42,7 +42,7 @@ export function ImageSelectionScreen(props: ImageProps) {
           value={!isTempFile(src.value) ? src.value : ''}
           disabled={isTempFile(src.value) && !src.value.failed}
           onChange={(e) => state.src.set(e.target.value)}
-          className="w-full rounded-lg  border-0 bg-yellow-100 px-4 py-2 text-gray-600"
+          className="w-full rounded-lg border-0 bg-yellow-100 px-4 py-2 text-gray-600"
           data-qa="plugin-image-src"
         />
       </div>
