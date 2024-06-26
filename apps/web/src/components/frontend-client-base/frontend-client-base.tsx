@@ -11,7 +11,7 @@ import {
   getCachedLoggedInData,
 } from './logged-on-data-helper'
 import { MaxWidthDiv } from '../navigation/max-width-div'
-import { SessionDurationEvent } from '../session-duration-event'
+// import { SessionDurationEvent } from '../session-duration-event'
 import { AuthProvider } from '@/auth/auth-provider'
 import { checkLoggedIn } from '@/auth/cookie/check-logged-in'
 import { PrintMode } from '@/components/print-mode'
@@ -116,7 +116,7 @@ export function FrontendClientBase({
         <LoggedInDataProvider value={loggedInData}>
           <UuidsProvider value={serloEntityData ?? null}>
             <Toaster />
-            <SessionDurationEvent />
+            {/*<SessionDurationEvent /> */}
             <ConditionalWrap
               condition={!noHeaderFooter}
               wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
