@@ -1,17 +1,20 @@
 import { getPluginTitle } from '@editor/plugin/helpers/get-plugin-title'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { ReactElement } from 'react'
 
 import { PluginToolMenu } from './plugin-tool-menu/plugin-tool-menu'
+import { EditorTooltip } from '../editor-tooltip'
+import { FaIcon } from '@/components/fa-icon'
 
 interface PluginToolbarProps {
   pluginType: EditorPluginType | string
   contentControls?: ReactElement
   pluginSettings?: ReactElement
   pluginControls?: ReactElement
-  pluginTooltip?: ReactElement
+  pluginTooltipText?: string
   className?: string
   noWhiteShadow?: true
 }
@@ -21,11 +24,18 @@ export function PluginToolbar({
   contentControls,
   pluginSettings,
   pluginControls,
-  pluginTooltip,
+  pluginTooltipText,
   className,
   noWhiteShadow,
 }: PluginToolbarProps) {
   const pluginStrings = useEditorStrings().plugins
+
+  const pluginTooltip = pluginTooltipText ? (
+    <span className="serlo-tooltip-trigger ml-[-8px]">
+      <EditorTooltip text={pluginTooltipText} />
+      <FaIcon icon={faCircleQuestion} className="mr-2" />
+    </span>
+  ) : null
 
   return (
     <div

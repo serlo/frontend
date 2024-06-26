@@ -13,23 +13,27 @@ export function UploadButton({ config, state }: ImageProps) {
 
   return (
     <>
-      <label className="mb-4 flex w-full items-center justify-center rounded-lg bg-editor-primary-200 py-2 font-semibold text-gray-800 hover:bg-editor-primary-300">
-        <span className="mr-2 inline-block">
-          <FaIcon icon={faUpload} />
-        </span>
-        <input
-          type="file"
-          accept="image/*"
-          className="sr-only"
-          onChange={({ target }) => {
-            if (target.files && target.files.length) {
-              void src.upload(target.files[0], config.upload)
-            }
-          }}
-          data-qa="plugin-image-upload"
-        />
-        {imageStrings.upload}
-      </label>
+      <button className="z-0 mb-4 flex w-full  items-center justify-center rounded-lg bg-editor-primary-200 font-semibold text-gray-800 hover:bg-editor-primary-300 ">
+        <label tabIndex={-1} className="z-10 h-full w-full cursor-pointer py-2">
+          <span className="mr-2 inline-block">
+            <FaIcon icon={faUpload} />
+          </span>
+          <input
+            tabIndex={-1}
+            type="file"
+            accept="image/*"
+            className="sr-only"
+            onChange={({ target }) => {
+              if (target.files && target.files.length) {
+                void src.upload(target.files[0], config.upload)
+              }
+            }}
+            data-qa="plugin-image-upload"
+          />
+          {imageStrings.upload}
+        </label>
+      </button>
+
       {isFailed ? (
         <button
           className="serlo-button-editor-primary serlo-tooltip-trigger mr-2 scale-90"

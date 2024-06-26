@@ -1,8 +1,6 @@
-import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'
 import { faCog, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
@@ -62,17 +60,11 @@ export const ImageToolbar = (
     </>
   ) : undefined
 
-  const pluginTooltip = (
-    <span className="serlo-tooltip-trigger ml-[-8px]">
-      <EditorTooltip text={editorStrings.plugins.image.helpTooltipText} />
-      <FaIcon icon={faCircleQuestion} className="mr-2" />
-    </span>
-  )
   return (
     <PluginToolbar
       pluginType={EditorPluginType.Image}
       pluginSettings={pluginSettings}
-      pluginTooltip={pluginTooltip}
+      pluginTooltipText={editorStrings.plugins.image.helpTooltipText}
       pluginControls={<PluginDefaultTools pluginId={id} />}
     />
   )

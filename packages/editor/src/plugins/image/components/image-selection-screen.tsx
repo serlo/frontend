@@ -2,8 +2,8 @@ import { isTempFile } from '@editor/plugin'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
 
-import type { ImageProps } from '.'
-import { UploadButton } from './controls/upload-button'
+import type { ImageProps } from '..'
+import { UploadButton } from '../controls/upload-button'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
