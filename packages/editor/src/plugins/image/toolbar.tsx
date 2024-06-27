@@ -64,7 +64,7 @@ export const ImageToolbar = (
     <PluginToolbar
       pluginType={EditorPluginType.Image}
       pluginSettings={pluginSettings}
-      pluginTooltipText={editorStrings.plugins.image.helpTooltipText}
+      // pluginTooltipText={editorStrings.plugins.image.helpTooltipText}
       pluginControls={<PluginDefaultTools pluginId={id} />}
     />
   )
