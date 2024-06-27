@@ -52,7 +52,7 @@ export function ImageSelectionScreen(props: ImageProps) {
           />
           {showErrorMessage && (
             <>
-              <span className=" mt-1 inline-block pl-1 text-base font-semibold text-red-500">
+              <span className="mt-1 inline-block pl-1 text-sm font-semibold text-red-500">
                 {imageStrings.invalidImageUrl}
               </span>
               <EditorTooltip text={imageStrings.invalidImageUrlMessage} />
