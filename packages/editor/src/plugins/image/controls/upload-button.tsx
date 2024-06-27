@@ -1,6 +1,9 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { TempFile, isTempFile } from '@editor/plugin'
-import { faRedoAlt, faUpload } from '@fortawesome/free-solid-svg-icons'
+import {
+  faArrowUpFromBracket,
+  faRedoAlt,
+} from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useState } from 'react'
@@ -34,8 +37,8 @@ export function UploadButton({ config, state }: ImageProps) {
           isLabelFocused ? 'outline outline-2 outline-red-400' : ''
         )}
       >
-        <span className="mr-2 inline-block">
-          <FaIcon icon={faUpload} />
+        <span className="almost-black mr-2 inline-block">
+          <FaIcon icon={faArrowUpFromBracket} />
         </span>
         <input
           type="file"
