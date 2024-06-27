@@ -27,6 +27,7 @@ export function ImageSelectionScreen(props: ImageProps) {
 
   const imgUrl = src.get() as string
   const showErrorMessage = imgUrl.length > 5 && !isImageUrl(imgUrl)
+
   return (
     <div className="mx-auto rounded-md bg-yellow-50 p-8 shadow-md">
       <div className="mx-auto my-8 w-[60%]">

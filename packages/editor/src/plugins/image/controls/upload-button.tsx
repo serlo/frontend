@@ -34,7 +34,7 @@ export function UploadButton({ config, state }: ImageProps) {
           'cursor-pointer rounded-lg',
           'font-semibold text-gray-800',
           'bg-editor-primary-200 hover:bg-editor-primary-300',
-          isLabelFocused ? 'outline outline-2 outline-red-400' : ''
+          isLabelFocused ? 'outline outline-2 outline-brand' : ''
         )}
       >
         <span className="almost-black mr-2 inline-block">
