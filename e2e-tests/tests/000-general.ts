@@ -265,7 +265,7 @@ Scenario('Meta robots tags', ({ I }) => {
   I.seeElementInDOM('meta[content=noindex]')
 
   // hide trashed
-  I.amOnPage('/268814')
+  I.amOnPage('/271924')
   I.seeElementInDOM('meta[content=noindex]')
 })
 
