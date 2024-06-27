@@ -778,6 +778,8 @@ export const loggedInData = {
           upload: 'Upload Image',
           imageUrl: 'Image URL',
           invalidImageUrl: 'Error: Invalid or Incomplete URL',
+          invalidImageUrlMessage:
+            'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
           searchOnline: 'Search online for licence-free images',
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: 'Uploading…',

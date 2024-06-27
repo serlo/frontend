@@ -1,3 +1,4 @@
+import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { isTempFile } from '@editor/plugin'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
@@ -7,6 +8,7 @@ import { UploadButton } from '../controls/upload-button'
 import { isImageUrl } from '../utils/check-image-url'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { isProduction } from '@/helper/is-production'
 
 export function ImageSelectionScreen(props: ImageProps) {
   const editorStrings = useEditorStrings()
@@ -29,7 +31,7 @@ export function ImageSelectionScreen(props: ImageProps) {
       <div className="mx-auto my-8 w-[60%]">
         <UploadButton {...props} />
         {/* TODO: Before this goes to production, hide search button until functionality is added */}
-        {!disableFileUpload && (
+        {!disableFileUpload && !isProduction && (
           <button className="mb-4 flex min-w-full flex-shrink-0 items-center justify-center rounded-lg bg-editor-primary-200 p-1 py-2 font-semibold text-gray-800 hover:bg-editor-primary-300">
             <span className="mr-2 inline-block">
               <FaIcon icon={faMagnifyingGlass} />
@@ -40,19 +42,24 @@ export function ImageSelectionScreen(props: ImageProps) {
         <span className="mb-1 flex w-full justify-center font-bold">
           {imageStrings.imageUrl}
         </span>
-        <input
-          placeholder={placeholder}
-          value={!isTempFile(src.value) ? src.value : ''}
-          disabled={isTempFile(src.value) && !src.value.failed}
-          onChange={(e) => state.src.set(e.target.value)}
-          className="w-full rounded-lg border-0 bg-yellow-100 px-4 py-2 text-gray-600"
-          data-qa="plugin-image-src"
-        />
-        {showErrorMessage && (
-          <span className="mt-1 inline-block pl-1 text-base font-semibold text-red-500">
-            {imageStrings.invalidImageUrl}
-          </span>
-        )}
+        <span className="serlo-tooltip-trigger">
+          <input
+            placeholder={placeholder}
+            value={!isTempFile(src.value) ? src.value : ''}
+            disabled={isTempFile(src.value) && !src.value.failed}
+            onChange={(e) => state.src.set(e.target.value)}
+            className="w-full rounded-lg border-0 bg-yellow-100 px-4 py-2 text-gray-600"
+            data-qa="plugin-image-src"
+          />
+          {showErrorMessage && (
+            <>
+              <span className=" mt-1 inline-block pl-1 text-base font-semibold text-red-500">
+                {imageStrings.invalidImageUrl}
+              </span>
+              <EditorTooltip text={imageStrings.invalidImageUrlMessage} />
+            </>
+          )}
+        </span>
       </div>
     </div>
   )
