@@ -777,6 +777,7 @@ export const loggedInData = {
           description: 'Upload images.',
           upload: 'Upload Image',
           imageUrl: 'Image URL',
+          invalidImageUrl: 'Error: Invalid or Incomplete URL',
           searchOnline: 'Search online for licence-free images',
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: 'Uploading…',

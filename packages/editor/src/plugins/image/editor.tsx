@@ -12,6 +12,7 @@ import type { ImageProps } from '.'
 import { ImageSelectionScreen } from './components/image-selection-screen'
 import { ImageRenderer } from './renderer'
 import { ImageToolbar } from './toolbar'
+import { isImageUrl } from './utils/check-image-url'
 import { TextEditorConfig } from '../text'
 
 const captionFormattingOptions = [
@@ -67,6 +68,8 @@ export function ImageEditor(props: ImageProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const hasValidUrl = isImageUrl(src)
+
   return (
     <>
       {hasFocus ? (
@@ -78,7 +81,7 @@ export function ImageEditor(props: ImageProps) {
             state.caption.defined && state.caption.remove()
             state.link.defined && state.link.remove()
           }}
-          showSettingsButtons={src.length > 0}
+          showSettingsButtons={hasValidUrl}
           showSettingsModal={showSettingsModal}
           setShowSettingsModal={setShowSettingsModal}
         />
@@ -91,8 +94,8 @@ export function ImageEditor(props: ImageProps) {
         )}
         data-qa="plugin-image-editor"
       >
-        {src.length === 0 && <ImageSelectionScreen {...props} />}
-        {src.length > 0 && (
+        {!hasValidUrl && <ImageSelectionScreen {...props} />}
+        {hasValidUrl && (
           <ImageRenderer
             image={{
               src,

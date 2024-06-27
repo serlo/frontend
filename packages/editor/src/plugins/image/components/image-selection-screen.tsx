@@ -4,6 +4,7 @@ import React from 'react'
 
 import type { ImageProps } from '..'
 import { UploadButton } from '../controls/upload-button'
+import { isImageUrl } from '../utils/check-image-url'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
@@ -21,6 +22,8 @@ export function ImageSelectionScreen(props: ImageProps) {
       ? imageStrings.placeholderUploading
       : imageStrings.placeholderFailed
 
+  const imgUrl = src.get() as string
+  const showErrorMessage = imgUrl.length > 5 && !isImageUrl(imgUrl)
   return (
     <div className="mx-auto rounded-md bg-yellow-50 p-8 shadow-md">
       <div className="mx-auto my-8 w-[60%]">
@@ -45,6 +48,11 @@ export function ImageSelectionScreen(props: ImageProps) {
           className="w-full rounded-lg border-0 bg-yellow-100 px-4 py-2 text-gray-600"
           data-qa="plugin-image-src"
         />
+        {showErrorMessage && (
+          <span className="mt-1 inline-block pl-1 text-base font-semibold text-red-500">
+            {imageStrings.invalidImageUrl}
+          </span>
+        )}
       </div>
     </div>
   )
