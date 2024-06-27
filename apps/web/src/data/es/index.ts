@@ -89,7 +89,7 @@ export const instanceData = {
       title: "¡Comparte!",
       copyLink: "Copiar enlace",
       copySuccess: "¡Enlace copiado!",
-      copyFailed: 'Error copying link! ',
+      copyFailed: "¡Error al copiar enlace!",
       close: "Cerrar",
       pdf: "Descargar PDF",
       pdfNoSolutions: "PDF sin soluciones"
@@ -155,7 +155,7 @@ export const instanceData = {
         printModeChooseOption: "Elige una de las opciones.",
         strategy: "Estrategia",
         solution: "Solución propuesta",
-        showHiddenInteractive: 'Check your solution here'
+        showHiddenInteractive: "Comprueba tu solución aquí"
       },
       boxTypes: {
         blank: "Blanco",
@@ -190,7 +190,7 @@ export const instanceData = {
     },
     comments: {
       question: "¿Tienes una pregunta?",
-      questionLink: 'Write it here',
+      questionLink: "Escríbelo aquí",
       commentsOne: "Comentario",
       commentsMany: "Comentarios",
       submit: "Enviar",
@@ -624,29 +624,29 @@ export const loggedInData = {
         dropzoneImage: {
           title: 'Image Dropzones',
           description: 'Create an exercise with interactive images for matching and labeling',
-          backgroundImage: 'Background image',
+          backgroundImage: "Imagen de fondo",
           dropZone: 'Drop zone',
           dropZoneTooltip: 'Choose the drop zone',
           removeDropZone: 'Remove drop zone',
           dropzoneVisibility: 'Dropzone Visibility',
           answers: {
             add: "Añadir respuesta",
-            remove: 'Remove answer',
-            edit: 'Edit answer',
-            settings: 'Answer settings'
+            remove: "Eliminar respuesta",
+            edit: "Editar respuesta",
+            settings: "Configuración de respuestas"
           },
           answerZone: {
-            description: 'Description (optional)',
+            description: "Descripción (opcional)",
             sizeLabel: 'Configure the size of the drop zone',
-            duplicate: 'Duplicate zone',
-            delete: 'Delete zone'
+            duplicate: "Duplicar zona",
+            delete: "Eliminar zona\n"
           },
           backgroundType: {
             description: 'Insert a background image or proceed with a blank background',
             // 'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund'
-            image: 'Background Image',
+            image: "Imagen de fondo",
             // 'Hintergrundbild hinzufügen'
-            blank: 'Blank background' //  'Leerer Hintergrund'
+            blank: "Fondo en blanco" //  'Leerer Hintergrund'
 
           },
           backgroundShapes: {
