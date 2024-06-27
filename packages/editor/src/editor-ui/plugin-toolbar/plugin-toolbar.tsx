@@ -30,13 +30,6 @@ export function PluginToolbar({
 }: PluginToolbarProps) {
   const pluginStrings = useEditorStrings().plugins
 
-  const pluginTooltip = pluginTooltipText ? (
-    <span className="serlo-tooltip-trigger ml-[-8px]">
-      <EditorTooltip text={pluginTooltipText} />
-      <FaIcon icon={faCircleQuestion} className="mr-2" />
-    </span>
-  ) : null
-
   return (
     <div
       className={cn(
@@ -65,7 +58,13 @@ export function PluginToolbar({
           {getPluginTitle(pluginStrings, pluginType)}
         </div>
 
-        {pluginTooltip ? pluginTooltip : null}
+        {pluginTooltipText ? (
+          <span className="serlo-tooltip-trigger ml-[-8px]">
+            <EditorTooltip text={pluginTooltipText} />
+            <FaIcon icon={faCircleQuestion} className="mr-2" />
+          </span>
+        ) : null}
+
         {pluginSettings ? (
           <>
             {/* Separator */}
