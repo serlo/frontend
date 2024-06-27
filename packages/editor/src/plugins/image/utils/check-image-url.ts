@@ -1,6 +1,5 @@
-const imageRegex =
-  /^(https?:\/\/(?:www\.)?[\w.-]+\.[a-z]{2,}(?:\/[\w.-]*)*\.(?:jpg|jpeg|png|gif|bmp|tiff|webp|svg))$/
+const imgFileExtensionRegex = /\.(gif|jpe?g|png|svg|webp)$/
 
 export const isImageUrl = (url: string) => {
-  return imageRegex.test(url)
+  return imgFileExtensionRegex.test(url)
 }
