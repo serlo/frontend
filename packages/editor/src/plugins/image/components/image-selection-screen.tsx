@@ -30,7 +30,6 @@ export function ImageSelectionScreen(props: ImageProps) {
     <div className="mx-auto rounded-md bg-yellow-50 p-8 shadow-md">
       <div className="mx-auto my-8 w-[60%]">
         <UploadButton {...props} />
-        {/* TODO: Before this goes to production, hide search button until functionality is added */}
         {!disableFileUpload && !isProduction && (
           <button className="mb-4 flex min-w-full flex-shrink-0 items-center justify-center rounded-lg bg-editor-primary-200 p-1 py-2 font-semibold text-gray-800 hover:bg-editor-primary-300">
             <span className="mr-2 inline-block">
