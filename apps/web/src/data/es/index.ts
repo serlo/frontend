@@ -493,7 +493,7 @@ export const instanceLandingData = {
 };
 export const serverSideStrings = {
   title: "¡Aprende con Serlo!",
-  topicTitleAffix: 'Basics & Exercises'
+  topicTitleAffix: "Básicos y ejercicios"
 };
 export const loggedInData = {
   authMenu: [{
@@ -663,8 +663,8 @@ export const loggedInData = {
           modal: {
             settings: "Configuración",
             new: 'New Drop Zone',
-            edit: 'Edit Answer',
-            wrong: 'Create Wrong Answer'
+            edit: "Editar respuesta",
+            wrong: "Crear respuesta incorrecta"
           }
         },
         unsupported: {
@@ -709,9 +709,9 @@ export const loggedInData = {
         image: {
           title: "Imagen",
           description: "Subir imágenes.",
-          upload: 'Upload Image',
+          upload: "Subir imagen",
           imageUrl: "URL de la imagen",
-          invalidImageUrl: 'Error: Invalid or Incomplete URL',
+          invalidImageUrl: "Error: URL inválida o incompleta",
           invalidImageUrlMessage: 'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
           searchOnline: 'Search online for licence-free images',
           placeholderEmpty: "https://www.ejemplo.com/imagen.png",
@@ -727,7 +727,7 @@ export const loggedInData = {
           maxWidth: "Ancho máximo",
           maxWidthPlaceholder: "Introduce la anchura máxima",
           helpTooltipText: 'More information and help related to Image Plugin',
-          change: 'Change image'
+          change: "Cambiar imagen"
         },
         injection: {
           title: "serlo.org Contenido",
@@ -824,7 +824,7 @@ export const loggedInData = {
           unorderedList: "Lista sin ordenar",
           lists: "Listas",
           mathFormula: "Fórmula matemática (%ctrlOrCmd% + M)",
-          code: 'Code (%ctrlOrCmd% + ⇧ + C)',
+          code: "Código (%ctrlOrCmd% + ⇧ + C)",
           blank: "Blanco",
           createBlank: "Crear espacio en blanco",
           removeBlank: "Eliminar espacio en blanc",
@@ -896,7 +896,7 @@ export const loggedInData = {
           description: "Textos con blancos",
           placeholder: "Escribe un texto y añade espacios en blanco",
           chooseType: "Elige el tipo de ejercicio",
-          chooseChildPluginType: 'Choose the answer type',
+          chooseChildPluginType: "Elije el tipo de respuesta",
           modes: {
             typing: "Tecleando/escribir",
             'drag-and-drop': "Arrastrar y colocar"
