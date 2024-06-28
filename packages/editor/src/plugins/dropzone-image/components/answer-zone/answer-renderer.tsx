@@ -20,7 +20,7 @@ export function AnswerRenderer({
   zoneId,
   onSave,
 }: AnswerRendererProps): JSX.Element {
-  const dropzoneImageStrings = useEditorStrings().plugins.dropzoneImage
+  const editorStrings = useEditorStrings().edtrIo
 
   const dispatch = useAppDispatch()
   const { answerZones, extraDraggableAnswers } =
@@ -48,7 +48,7 @@ export function AnswerRenderer({
         {isAnswerTypeText ? answer.text.render() : answer.image.render()}
       </div>
       <button className="serlo-button-editor-primary mt-4" onClick={onSave}>
-        {dropzoneImageStrings.modal.save}
+        {editorStrings.save}
       </button>
     </>
   )
