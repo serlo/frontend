@@ -77,11 +77,16 @@ export function EditorCanvasModal(props: EditorCanvasModalProps) {
         return <NewAnswerFlow zoneId={currentAnswerZone.id.get()} />
       case ModalType.Edit:
         return (
-          <AnswerRenderer
-            zoneId={currentAnswerZone.id.get()}
-            answerType={currentAnswerType}
-            answerIndex={currentAnswerIndex}
-          />
+          <>
+            <AnswerRenderer
+              zoneId={currentAnswerZone.id.get()}
+              answerType={currentAnswerType}
+              answerIndex={currentAnswerIndex}
+            />
+            <button className="serlo-button-editor-primary mt-4">
+              {pluginStrings.modal.save}
+            </button>
+          </>
         )
       case ModalType.CreateWrongAnswer:
         return <NewAnswerFlow isWrongAnswer />

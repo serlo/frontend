@@ -729,6 +729,7 @@ export const loggedInData = {
             new: 'New Drop Zone',
             edit: 'Edit Answer',
             wrong: 'Create Wrong Answer',
+            save: 'Save',
           },
         },
         unsupported: {

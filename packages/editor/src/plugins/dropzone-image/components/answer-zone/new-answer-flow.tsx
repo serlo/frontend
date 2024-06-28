@@ -72,14 +72,17 @@ export function NewAnswerFlow(props: NewAnswerFlowProps) {
   )
 
   const stepOne = (
-    <div className="mt-16">
+    <>
       <AnswerRenderer
         answerType={stepOneType}
         answerIndex={answersList.length - 1}
         isWrongAnswer={isWrongAnswer}
         zoneId={zoneId}
       />
-    </div>
+      <button className="serlo-button-editor-primary mt-4">
+        {editorPluginsStrings.dropzoneImage.modal.save}
+      </button>
+    </>
   )
 
   const steps = [stepZero, stepOne]
