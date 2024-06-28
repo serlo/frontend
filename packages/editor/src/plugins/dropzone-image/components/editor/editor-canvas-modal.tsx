@@ -74,22 +74,28 @@ export function EditorCanvasModal(props: EditorCanvasModalProps) {
           />
         )
       case ModalType.CreateDropZone:
-        return <NewAnswerFlow zoneId={currentAnswerZone.id.get()} />
+        return (
+          <NewAnswerFlow
+            zoneId={currentAnswerZone.id.get()}
+            onSave={() => setModalType(ModalType.Unset)}
+          />
+        )
       case ModalType.Edit:
         return (
-          <>
-            <AnswerRenderer
-              zoneId={currentAnswerZone.id.get()}
-              answerType={currentAnswerType}
-              answerIndex={currentAnswerIndex}
-            />
-            <button className="serlo-button-editor-primary mt-4">
-              {pluginStrings.modal.save}
-            </button>
-          </>
+          <AnswerRenderer
+            zoneId={currentAnswerZone.id.get()}
+            answerType={currentAnswerType}
+            answerIndex={currentAnswerIndex}
+            onSave={() => setModalType(ModalType.Unset)}
+          />
         )
       case ModalType.CreateWrongAnswer:
-        return <NewAnswerFlow isWrongAnswer />
+        return (
+          <NewAnswerFlow
+            isWrongAnswer
+            onSave={() => setModalType(ModalType.Unset)}
+          />
+        )
       default:
         return null
     }
