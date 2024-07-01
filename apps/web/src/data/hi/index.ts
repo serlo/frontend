@@ -533,8 +533,8 @@ export const loggedInData = {
       addGroupedTextExercise: "समूहीकृत-पाठ-व्यायाम",
       changeLicense: "लायसेंस परिवर्तित करें",
       subscribe: "सदस्य बनें",
-      subscribeNotifications: "सूचनाएं प्राप्त करें",
-      subscribeNotificationsAndMail: "ईमेल के माध्यम से सूचनाएं प्राप्त करें ।",
+      subscribeNotifications: 'Receive notifications',
+      subscribeNotificationsAndMail: 'Receive notifications and emails',
       unsubscribeNotifications: "सदस्यता रद्द",
       convert: "धर्मांतरित (बीटा)",
       history: "इतिहास",
@@ -709,8 +709,11 @@ export const loggedInData = {
         image: {
           title: 'Image',
           description: 'Upload images.',
-          upload: 'Upload',
+          upload: 'Upload Image',
           imageUrl: 'Image URL',
+          invalidImageUrl: 'Error: Invalid or Incomplete URL',
+          invalidImageUrlMessage: 'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
+          searchOnline: 'Search online for licence-free images',
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: 'Uploading…',
           placeholderFailed: 'Upload failed…',
@@ -722,7 +725,9 @@ export const loggedInData = {
           alt: 'Description (hidden)',
           altPlaceholder: 'Describe what the image shows',
           maxWidth: 'Maximum width',
-          maxWidthPlaceholder: 'Enter the maximum width'
+          maxWidthPlaceholder: 'Enter the maximum width',
+          helpTooltipText: 'More information and help related to Image Plugin',
+          change: 'Change image'
         },
         injection: {
           title: 'serlo.org Content',

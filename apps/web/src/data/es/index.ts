@@ -89,7 +89,7 @@ export const instanceData = {
       title: "¡Comparte!",
       copyLink: "Copiar enlace",
       copySuccess: "¡Enlace copiado!",
-      copyFailed: 'Error copying link! ',
+      copyFailed: "¡Error al copiar enlace!",
       close: "Cerrar",
       pdf: "Descargar PDF",
       pdfNoSolutions: "PDF sin soluciones"
@@ -155,7 +155,7 @@ export const instanceData = {
         printModeChooseOption: "Elige una de las opciones.",
         strategy: "Estrategia",
         solution: "Solución propuesta",
-        showHiddenInteractive: 'Check your solution here'
+        showHiddenInteractive: "Comprueba tu solución aquí"
       },
       boxTypes: {
         blank: "Blanco",
@@ -190,7 +190,7 @@ export const instanceData = {
     },
     comments: {
       question: "¿Tienes una pregunta?",
-      questionLink: 'Write it here',
+      questionLink: "Escríbelo aquí",
       commentsOne: "Comentario",
       commentsMany: "Comentarios",
       submit: "Enviar",
@@ -493,7 +493,7 @@ export const instanceLandingData = {
 };
 export const serverSideStrings = {
   title: "¡Aprende con Serlo!",
-  topicTitleAffix: 'Basics & Exercises'
+  topicTitleAffix: "Básicos y ejercicios"
 };
 export const loggedInData = {
   authMenu: [{
@@ -533,8 +533,8 @@ export const loggedInData = {
       addGroupedTextExercise: "Añade un grupo de ejercicios de texto",
       changeLicense: "Cambiar licencia",
       subscribe: "Suscribirse",
-      subscribeNotifications: "Recibir notificaciones",
-      subscribeNotificationsAndMail: "Recibir notificaciones y correos electrónicos",
+      subscribeNotifications: 'Receive notifications',
+      subscribeNotificationsAndMail: 'Receive notifications and emails',
       unsubscribeNotifications: "Cancelar suscripción",
       convert: "Convertir (beta)",
       history: "Historial",
@@ -624,29 +624,29 @@ export const loggedInData = {
         dropzoneImage: {
           title: 'Image Dropzones',
           description: 'Create an exercise with interactive images for matching and labeling',
-          backgroundImage: 'Background image',
+          backgroundImage: "Imagen de fondo",
           dropZone: 'Drop zone',
           dropZoneTooltip: 'Choose the drop zone',
           removeDropZone: 'Remove drop zone',
           dropzoneVisibility: 'Dropzone Visibility',
           answers: {
             add: "Añadir respuesta",
-            remove: 'Remove answer',
-            edit: 'Edit answer',
-            settings: 'Answer settings'
+            remove: "Eliminar respuesta",
+            edit: "Editar respuesta",
+            settings: "Configuración de respuestas"
           },
           answerZone: {
-            description: 'Description (optional)',
+            description: "Descripción (opcional)",
             sizeLabel: 'Configure the size of the drop zone',
-            duplicate: 'Duplicate zone',
-            delete: 'Delete zone'
+            duplicate: "Duplicar zona",
+            delete: "Eliminar zona\n"
           },
           backgroundType: {
             description: 'Insert a background image or proceed with a blank background',
             // 'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund'
-            image: 'Background Image',
+            image: "Imagen de fondo",
             // 'Hintergrundbild hinzufügen'
-            blank: 'Blank background' //  'Leerer Hintergrund'
+            blank: "Fondo en blanco" //  'Leerer Hintergrund'
 
           },
           backgroundShapes: {
@@ -663,8 +663,8 @@ export const loggedInData = {
           modal: {
             settings: "Configuración",
             new: 'New Drop Zone',
-            edit: 'Edit Answer',
-            wrong: 'Create Wrong Answer'
+            edit: "Editar respuesta",
+            wrong: "Crear respuesta incorrecta"
           }
         },
         unsupported: {
@@ -709,8 +709,11 @@ export const loggedInData = {
         image: {
           title: "Imagen",
           description: "Subir imágenes.",
-          upload: "Subir",
+          upload: "Subir imagen",
           imageUrl: "URL de la imagen",
+          invalidImageUrl: "Error: URL inválida o incompleta",
+          invalidImageUrlMessage: 'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
+          searchOnline: 'Search online for licence-free images',
           placeholderEmpty: "https://www.ejemplo.com/imagen.png",
           placeholderUploading: "Subiendo…",
           placeholderFailed: "Carga fallida...",
@@ -722,7 +725,9 @@ export const loggedInData = {
           alt: "Descripción (no es visible)",
           altPlaceholder: "Describe lo que muestra la imagen",
           maxWidth: "Ancho máximo",
-          maxWidthPlaceholder: "Introduce la anchura máxima"
+          maxWidthPlaceholder: "Introduce la anchura máxima",
+          helpTooltipText: 'More information and help related to Image Plugin',
+          change: "Cambiar imagen"
         },
         injection: {
           title: "serlo.org Contenido",
@@ -819,7 +824,7 @@ export const loggedInData = {
           unorderedList: "Lista sin ordenar",
           lists: "Listas",
           mathFormula: "Fórmula matemática (%ctrlOrCmd% + M)",
-          code: 'Code (%ctrlOrCmd% + ⇧ + C)',
+          code: "Código (%ctrlOrCmd% + ⇧ + C)",
           blank: "Blanco",
           createBlank: "Crear espacio en blanco",
           removeBlank: "Eliminar espacio en blanc",
@@ -891,7 +896,7 @@ export const loggedInData = {
           description: "Textos con blancos",
           placeholder: "Escribe un texto y añade espacios en blanco",
           chooseType: "Elige el tipo de ejercicio",
-          chooseChildPluginType: 'Choose the answer type',
+          chooseChildPluginType: "Elije el tipo de respuesta",
           modes: {
             typing: "Tecleando/escribir",
             'drag-and-drop': "Arrastrar y colocar"
