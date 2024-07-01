@@ -40,8 +40,9 @@ export function CourseStaticRenderer({
     setCourseNavOpen(true)
   }
 
-  const pageUrls =
-    serloContext?.coursePageUrls ?? isRevisionView
+  const pageUrls = serloContext?.coursePageUrls
+    ? serloContext.coursePageUrls
+    : isRevisionView
       ? pages.map(({ id }) => `#${id.split('-')[0]}`)
       : undefined
 
