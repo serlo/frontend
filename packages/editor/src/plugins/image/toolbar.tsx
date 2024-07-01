@@ -33,7 +33,6 @@ export const ImageToolbar = (
       <button
         onClick={() => onClickChangeImage()}
         className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
-        data-qa="plugin-image-settings"
       >
         {imageStrings.change} <FaIcon className="ml-1" icon={faSyncAlt} />
       </button>
