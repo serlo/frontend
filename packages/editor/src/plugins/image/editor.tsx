@@ -94,7 +94,9 @@ export function ImageEditor(props: ImageProps) {
         )}
         data-qa="plugin-image-editor"
       >
-        {!hasValidUrl && <ImageSelectionScreen {...props} />}
+        {!hasValidUrl && (
+          <ImageSelectionScreen {...props} urlInputRef={urlInputRef} />
+        )}
         {hasValidUrl && (
           <ImageRenderer
             image={{
@@ -107,7 +109,7 @@ export function ImageEditor(props: ImageProps) {
             }}
             caption={renderCaption()}
             placeholder={renderPlaceholder()}
-            {...props}
+            forceNewTab
           />
         )}
       </div>

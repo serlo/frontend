@@ -1,7 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { isTempFile } from '@editor/plugin'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import React from 'react'
+import React, { type RefObject } from 'react'
 
 import type { ImageProps } from '..'
 import { UploadButton } from '../controls/upload-button'
@@ -11,9 +11,11 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 import { isProduction } from '@/helper/is-production'
 
-export function ImageSelectionScreen(props: ImageProps) {
+export function ImageSelectionScreen(
+  props: ImageProps & { urlInputRef: RefObject<HTMLInputElement> }
+) {
   const editorStrings = useEditorStrings()
-  const { state } = props
+  const { state, urlInputRef } = props
   const { src } = state
 
   const imageStrings = editorStrings.plugins.image
@@ -29,7 +31,10 @@ export function ImageSelectionScreen(props: ImageProps) {
   const showErrorMessage = imgUrl.length > 5 && !isImageUrl(imgUrl)
 
   return (
-    <div className="mx-auto rounded-md bg-yellow-50 p-8 shadow-md">
+    <div
+      className="mx-auto rounded-md bg-yellow-50 p-8 shadow-md"
+      data-qa="plugin-image-empty-wrapper"
+    >
       <div className="mx-auto my-8 w-[60%]">
         <UploadButton {...props} />
         {!disableFileUpload && !isProduction && (
@@ -45,6 +50,7 @@ export function ImageSelectionScreen(props: ImageProps) {
         </span>
         <span className="serlo-tooltip-trigger">
           <input
+            ref={urlInputRef}
             placeholder={placeholder}
             value={!isTempFile(src.value) ? src.value : ''}
             disabled={isTempFile(src.value) && !src.value.failed}
@@ -57,7 +63,10 @@ export function ImageSelectionScreen(props: ImageProps) {
           />
           {showErrorMessage && (
             <>
-              <span className="mt-1 inline-block pl-1 text-sm font-semibold text-red-500">
+              <span
+                className="mt-1 inline-block pl-1 text-sm font-semibold text-red-500"
+                data-qa="plugin-image-src-error"
+              >
                 {imageStrings.invalidImageUrl}
               </span>
               <EditorTooltip text={imageStrings.invalidImageUrlMessage} />
