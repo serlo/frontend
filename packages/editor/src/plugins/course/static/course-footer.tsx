@@ -37,9 +37,14 @@ export function CourseFooter({
 
   const { strings } = useInstanceData()
 
-  function navigate(toPath: string) {
+  function navigate(toPath: string, newIndex: number) {
     void router.push(toPath, undefined, { shallow: true })
     scrollIfNeeded(document.querySelector('#course-title'))
+
+    void router.push(toPath, undefined, { shallow: true })
+    setTimeout(() => {
+      document.title = pages[newIndex].title
+    }, 100)
   }
 
   return (
@@ -54,7 +59,7 @@ export function CourseFooter({
             href={previousHref}
             onClick={(e) => {
               e.preventDefault()
-              navigate(previousHref)
+              navigate(previousHref, previousIndex)
             }}
             className="serlo-button-light mx-side h-fit hover:no-underline"
           >
@@ -67,7 +72,7 @@ export function CourseFooter({
             href={nextHref}
             onClick={(e) => {
               e.preventDefault()
-              navigate(nextHref)
+              navigate(nextHref, nextIndex)
             }}
             className="ml-auto mr-side text-right hover:no-underline"
           >
