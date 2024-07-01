@@ -709,11 +709,11 @@ export const loggedInData = {
         image: {
           title: "Bild",
           description: "Lade Bilder hoch oder verwende Bilder, die bereits online sind.",
-          upload: 'Upload Image',
+          upload: "Bild hochladen",
           imageUrl: "Bild-URL",
-          invalidImageUrl: 'Error: Invalid or Incomplete URL',
-          invalidImageUrlMessage: 'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
-          searchOnline: 'Search online for licence-free images',
+          invalidImageUrl: "Fehler: Ungültige oder unvollständige URL",
+          invalidImageUrlMessage: "Die eingegebene URL ist entweder ungültig oder unvollständig. Bitte stelle sicher, dass du die vollständige URL korrekt kopiert und eingefügt hast. Die URL sollte mit \"http://\" oder \"https://\" beginnen.",
+          searchOnline: "Online nach lizenzfreien Bildern suchen",
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: "Wird hochgeladen …",
           placeholderFailed: "Hochladen fehlgeschlagen",
@@ -726,8 +726,8 @@ export const loggedInData = {
           altPlaceholder: "Was ist auf dem Bild zu sehen?",
           maxWidth: "Maximale Breite",
           maxWidthPlaceholder: "Gib die maximal Breite an",
-          helpTooltipText: 'More information and help related to Image Plugin',
-          change: 'Change image'
+          helpTooltipText: "Mehr Informationen und Hilfe",
+          change: "Bild ändern"
         },
         injection: {
           title: "serlo.org Inhalt",
