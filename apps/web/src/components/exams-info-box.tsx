@@ -116,9 +116,6 @@ export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
             #secondary-menu {
               display: none !important;
             }
-            #oam-banner {
-              display: none !important;
-            }
           `}
         </style>
       </div>

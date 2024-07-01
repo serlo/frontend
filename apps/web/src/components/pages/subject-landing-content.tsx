@@ -1,5 +1,4 @@
 import type { deSubjectLandingSubjects } from './subject-landing'
-import { Link } from '../content/link'
 import { HeadTags } from '../head-tags'
 import { FooterNew } from '../landing/rework/footer-new'
 import { SubjectIcon } from '../landing/rework/subject-icon'
@@ -15,7 +14,6 @@ import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { cn } from '@/helper/cn'
 import { getServerSideStrings } from '@/helper/feature-i18n'
-import { submitEvent } from '@/helper/submit-event'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
 interface SubjectLandingContentProps {
@@ -70,20 +68,7 @@ export function SubjectLandingContent({
           </div>
           {renderIcon()}
         </section>
-        {subject === 'mathe' ? (
-          <Link
-            onClick={() => submitEvent('oam-banner-click-math-landing')}
-            href="/mathe-pruefungen"
-            className="group mb-10 mt-10 block bg-newgreen bg-opacity-20 p-3 text-lg text-black hover:!no-underline mobile:text-center sm:py-4 md:text-[22px] lg:mb-0"
-          >
-            🎓 Ui, schon Prüfungszeit?{' '}
-            <b className="serlo-link group-hover:underline">
-              Hier geht&apos;s zur Mathe-Prüfungsvorbereitung
-            </b>
-            .
-          </Link>
-        ) : null}
-        <section className="mx-auto mt-10 max-w-3xl text-center sm:mt-12 sm:text-left">
+        <section className="mx-auto mt-10 max-w-3xl text-center sm:mt-16 sm:text-left">
           <h2 className="mb-2 text-lg font-bold text-almost-black">
             Durchsuche den Bereich {data.title}
           </h2>
