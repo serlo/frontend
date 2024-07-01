@@ -17,7 +17,6 @@ export interface PluginsConfig {
   table?: SerloTableConfig
   general?: {
     enableTextAreaExercise: boolean
-    exerciseVisibleInSuggestion: boolean
   }
 }
 
@@ -37,7 +36,6 @@ const defaultPluginsConfig: Required<PluginsConfig> = {
     allowImageInTableCells: true,
   },
   general: {
-    exerciseVisibleInSuggestion: true,
     enableTextAreaExercise: false,
   },
 }

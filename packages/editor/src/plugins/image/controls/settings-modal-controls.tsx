@@ -1,8 +1,8 @@
+import { OverlayInput } from '@editor/editor-ui/overlay-input'
 import { isTempFile } from '@editor/plugin'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
 
-import { OverlayInput } from './overlay-input'
 import type { ImageProps } from '..'
 
 export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {

@@ -33,9 +33,9 @@ export function EditorCanvasModal(props: EditorCanvasModalProps) {
         const isModalClosing = !open
         if (isModalClosing) setModalType(ModalType.Unset)
       }}
-      className=" max-w-md translate-y-0 sm:top-1/4"
+      className="top-[10%] max-h-[80%] translate-y-0 overflow-auto pb-40"
     >
-      <h3 className="serlo-h3 mb-16 mt-4 px-3">{renderTitle()}</h3>
+      <h3 className="serlo-h3 mb-16 px-3">{renderTitle()}</h3>
       {renderForm()}
     </ModalWithCloseButton>
   )

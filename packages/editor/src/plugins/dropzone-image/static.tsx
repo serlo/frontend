@@ -3,14 +3,15 @@ import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
 import type { EditorDropzoneImageDocument } from '@editor/types/editor-plugins'
 import { useEffect, useMemo, useState } from 'react'
 
-import { FeedbackButton } from './feedback-button'
-import { StaticCanvas } from './static-canvas'
-import { FeedbackData, type DraggableAnswerType } from '../../types'
-import { convertStaticAnswers } from '../../utils/answer-zone'
+import { DraggableAnswer } from './components/shared/draggable-answer'
+import { FeedbackButton } from './components/static/feedback-button'
+import { StaticCanvas } from './components/static/static-canvas'
 import {
-  DraggableAnswer,
-  draggableAnswerDragType,
-} from '../shared/draggable-answer'
+  FeedbackData,
+  type PossibleAnswerType,
+  type DraggableAnswerType,
+} from './types'
+import { convertStaticAnswers } from './utils/answer-zone'
 import { shuffleArray } from '@/helper/shuffle-array'
 
 export function DropzoneImageStaticRenderer(
@@ -18,6 +19,8 @@ export function DropzoneImageStaticRenderer(
 ) {
   const { state } = props
   const { answerZones, extraDraggableAnswers } = state
+
+  const draggableAnswerDragType = 'draggableAnswer' + props.id
 
   const allAnswers = useMemo(() => {
     const correctAnswers = answerZones
@@ -29,9 +32,9 @@ export function DropzoneImageStaticRenderer(
 
   const [shuffledAnswers, setShuffledAnswers] = useState(allAnswers)
   const [dropzoneAnswerMap, setDropzoneAnswerMap] = useState(
-    new Map<string, string[]>()
+    new Map<string, PossibleAnswerType[]>()
   )
-  const [isAnswerZoneCorrectMap, setIsAnswerZoneCorrectMap] = useState(
+  const [isZoneCorrectMap, setIsZoneCorrectMap] = useState(
     new Map<string, boolean | null>()
   )
   const [isAnswerCorrectMap, setIsAnswerCorrectMap] = useState(
@@ -46,11 +49,13 @@ export function DropzoneImageStaticRenderer(
   // Filter out answers that are already in an answer zone
   const possibleAnswers = useMemo(() => {
     const droppedAnswers = Array.from(dropzoneAnswerMap.values()).flat()
-    return shuffledAnswers.filter(({ id }) => !droppedAnswers.includes(id))
+    return shuffledAnswers.filter(({ id }) => {
+      return !droppedAnswers.some((droppedAnswer) => droppedAnswer.id === id)
+    })
   }, [shuffledAnswers, dropzoneAnswerMap])
 
-  const onAnswerDrop = (
-    answerId: string,
+  const handleAnswerDrop = (
+    answer: DraggableAnswerType,
     dropzoneId: string,
     originDropzoneId?: string
   ) => {
@@ -59,7 +64,7 @@ export function DropzoneImageStaticRenderer(
       const existingAnswers = updatedMap.get(dropzoneId) || []
 
       // Add the dropped answer to the target zone.
-      updatedMap.set(dropzoneId, [...existingAnswers, answerId])
+      updatedMap.set(dropzoneId, [...existingAnswers, answer])
 
       // If the answer was dragged from another zone,
       // remove it from there and reset its correct/incorrect state.
@@ -67,13 +72,13 @@ export function DropzoneImageStaticRenderer(
         const existingAnswersFromOrigin = updatedMap.get(originDropzoneId) || []
         updatedMap.set(
           originDropzoneId,
-          existingAnswersFromOrigin.filter((id) => id !== answerId)
+          existingAnswersFromOrigin.filter(({ id }) => id !== answer.id)
         )
-        setIsAnswerCorrectMap((prev) => new Map(prev.set(answerId, null)))
+        setIsAnswerCorrectMap((prev) => new Map(prev.set(answer.id, null)))
       }
 
       // Reset the correct/incorrect state of origin and target zones.
-      setIsAnswerZoneCorrectMap((prev) => {
+      setIsZoneCorrectMap((prev) => {
         const updatedIsCorrectMap = new Map(prev)
 
         // Set the target zone as unchecked.
@@ -98,24 +103,24 @@ export function DropzoneImageStaticRenderer(
     setFeedback(FeedbackData.Unset)
   }
 
-  const onDraggableAreaAnswerDrop = (droppedAnswer: DraggableAnswerType) => {
+  const handleDraggableAreaDrop = (droppedAnswer: DraggableAnswerType) => {
     const originDropzoneId = droppedAnswer.originDropzoneId || ''
 
     setDropzoneAnswerMap((prev) => {
       const updatedMap = new Map(prev)
-      const originAnswerZoneAnswersIds = updatedMap.get(originDropzoneId)
+      const originAnswerZoneAnswers = updatedMap.get(originDropzoneId)
 
       // Remove the dropped answer from its origin zone.
       // This automatically places the answer in the draggable area.
-      if (originAnswerZoneAnswersIds?.includes(droppedAnswer.id)) {
+      if (originAnswerZoneAnswers?.find(({ id }) => id === droppedAnswer.id)) {
         updatedMap.set(
           originDropzoneId,
-          originAnswerZoneAnswersIds.filter((id) => id !== droppedAnswer.id)
+          originAnswerZoneAnswers.filter(({ id }) => id !== droppedAnswer.id)
         )
       }
 
       // Reset the correct/incorrect state of the origin zone.
-      setIsAnswerZoneCorrectMap((prev) => {
+      setIsZoneCorrectMap((prev) => {
         const updatedIsCorrectMap = new Map(prev)
         // If the origin zone still has answers, set it as unchecked.
         // Otherwise, set it as empty.
@@ -135,38 +140,49 @@ export function DropzoneImageStaticRenderer(
 
   // Show answer button if none of the zones are empty
   const isCheckAnswersButtonVisible = useMemo(() => {
-    return isAnswerZoneCorrectMap.size === answerZones.length
-  }, [isAnswerZoneCorrectMap.size, answerZones.length])
+    return isZoneCorrectMap.size === answerZones.length
+  }, [isZoneCorrectMap.size, answerZones.length])
 
   const checkAnswers = () => {
     let newFeedback = FeedbackData.Unset
 
     answerZones.forEach((answerZone) => {
-      const expectedAnswerIds = answerZone.answers.map(({ id }) => id)
-      const droppedAnswerIds = dropzoneAnswerMap.get(answerZone.id) || []
-
-      // Check if the answer zone has only and all expected answers,
-      // and mark the answer zone as correct or incorrect accordingly
-      const isAnswerZoneCorrect =
-        expectedAnswerIds.every((id) => droppedAnswerIds.includes(id)) &&
-        expectedAnswerIds.length === droppedAnswerIds.length
-      setIsAnswerZoneCorrectMap(
-        (prev) => new Map(prev.set(answerZone.id, isAnswerZoneCorrect))
-      )
+      const expectedAnswers = convertStaticAnswers(answerZone.answers)
+      const droppedAnswers = dropzoneAnswerMap.get(answerZone.id) || []
 
       // Compare expected answers with dropped answers,
       // and mark each dropped answer as correct or incorrect accordingly
-      const correctAnswerMap = new Map<string, boolean | null>()
-      droppedAnswerIds.forEach((id) => {
-        correctAnswerMap.set(id, expectedAnswerIds.includes(id))
+      const updatedIsAnswerCorrectMap = new Map<string, boolean | null>()
+      const correctAnswers = droppedAnswers.filter((droppedAnswer) => {
+        const isAnswerCorrect = expectedAnswers.some((expectedAnswer) => {
+          // If the IDs match, the answer is correct
+          if (expectedAnswer.id === droppedAnswer.id) return true
+          // If the image URL is empty, it means the answer is a text answer,
+          // so compare the text values.
+          if (expectedAnswer.imageUrl === '' || droppedAnswer.imageUrl === '')
+            return expectedAnswer.text === droppedAnswer.text
+          // Otherwise, the answer is an image answer, so compare the image URLs.
+          return expectedAnswer.imageUrl === droppedAnswer.imageUrl
+        })
+        updatedIsAnswerCorrectMap.set(droppedAnswer.id, isAnswerCorrect)
+        return isAnswerCorrect
       })
       setIsAnswerCorrectMap(
-        (prev) => new Map(prev.set(answerZone.id, correctAnswerMap))
+        (prev) => new Map(prev.set(answerZone.id, updatedIsAnswerCorrectMap))
+      )
+
+      // If there is an equal amount of expected, dropped and correct answers,
+      // the answer zone is correct.
+      const isZoneCorrect =
+        expectedAnswers.length === droppedAnswers.length &&
+        correctAnswers.length === expectedAnswers.length
+      setIsZoneCorrectMap(
+        (prev) => new Map(prev.set(answerZone.id, isZoneCorrect))
       )
 
       // If an answer zone doesn't have enough dropped answers,
       // show a feedback message accordingly
-      if (expectedAnswerIds.length > droppedAnswerIds.length) {
+      if (expectedAnswers.length > droppedAnswers.length) {
         newFeedback = FeedbackData.MissedSome
         setFeedback(newFeedback)
       }
@@ -174,7 +190,7 @@ export function DropzoneImageStaticRenderer(
       // If an answer zone has wrong answers,
       // show a feedback message accordingly
       if (
-        !isAnswerZoneCorrect &&
+        !isZoneCorrect &&
         (newFeedback === FeedbackData.Unset ||
           newFeedback === FeedbackData.Correct)
       ) {
@@ -197,17 +213,22 @@ export function DropzoneImageStaticRenderer(
         <StaticCanvas
           state={state}
           dropzoneAnswerMap={dropzoneAnswerMap}
-          isAnswerZoneCorrectMap={isAnswerZoneCorrectMap}
+          isZoneCorrectMap={isZoneCorrectMap}
           isAnswerCorrectMap={isAnswerCorrectMap}
-          onAnswerDrop={onAnswerDrop}
+          draggableAnswerDragType={draggableAnswerDragType}
+          onAnswerDrop={handleAnswerDrop}
         />
 
         <DraggableArea
           accept={draggableAnswerDragType}
-          onDrop={onDraggableAreaAnswerDrop}
+          onDrop={handleDraggableAreaDrop}
         >
           {possibleAnswers.map((possibleAnswer, index) => (
-            <DraggableAnswer answer={possibleAnswer} key={index} />
+            <DraggableAnswer
+              key={index}
+              answer={possibleAnswer}
+              dragType={draggableAnswerDragType}
+            />
           ))}
         </DraggableArea>
 

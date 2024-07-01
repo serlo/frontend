@@ -13,12 +13,12 @@ interface HeadTagsProps {
 }
 
 export function HeadTags({ data, breadcrumbsData, noindex }: HeadTagsProps) {
-  const { title, contentType, metaDescription, metaImage } = data
+  const { title, contentType, metaDescription, metaImage, canonicalUrl } = data
   const { strings, lang } = useInstanceData()
   const router = useRouter()
 
   const canonicalHref =
-    `https://${lang}.serlo.org` + router.asPath.split('?')[0]
+    canonicalUrl ?? `https://${lang}.serlo.org` + router.asPath.split('?')[0]
 
   return (
     <Head>

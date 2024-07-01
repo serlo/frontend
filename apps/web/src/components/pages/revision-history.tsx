@@ -1,4 +1,4 @@
-import { faEye, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faPencilAlt, faUpload } from '@fortawesome/free-solid-svg-icons'
 
 import { FaIcon } from '../fa-icon'
 import { UserLink } from '../user/user-link'
@@ -27,10 +27,6 @@ export function RevisionHistory({
   const { strings } = useInstanceData()
   if (!data) return null
   const { changes, status, author, date, view, edit } = strings.revisionHistory
-
-  function handleOnClick(id: number) {
-    onSelectRevision && onSelectRevision(id)
-  }
 
   return (
     <table
@@ -76,7 +72,14 @@ export function RevisionHistory({
                 isActiveEditorLink ? 'cursor-pointer' : ''
               )}
               onClick={
-                isActiveEditorLink ? () => handleOnClick(entry.id) : undefined
+                isActiveEditorLink
+                  ? (e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      onSelectRevision?.(entry.id)
+                      return
+                    }
+                  : undefined
               }
             >
               {changes}
@@ -96,18 +99,26 @@ export function RevisionHistory({
         <td
           className="serlo-td border-x-transparent text-center"
           onClick={
-            isActiveEditorLink ? () => handleOnClick(entry.id) : undefined
+            isActiveEditorLink ? () => onSelectRevision?.(entry.id) : undefined
           }
         >
-          {(isActiveEditorLink || !isEditorLink) && (
+          {isActiveEditorLink ? (
+            <span
+              className="serlo-button-light mx-auto my-0 cursor-pointer text-base"
+              title="Laden"
+            >
+              <FaIcon icon={faUpload} />
+            </span>
+          ) : null}
+          {!isEditorLink ? (
             <Link
               className="serlo-button-light mx-auto my-0 text-base"
               title={strings.revisionHistory.viewLabel}
-              href={isEditorLink ? undefined : viewUrl}
+              href={viewUrl}
             >
               <FaIcon icon={faEye} />
             </Link>
-          )}
+          ) : null}
         </td>
         {!hideEdit && (
           <td className="serlo-td border-x-transparent text-center">

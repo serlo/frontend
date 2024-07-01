@@ -529,16 +529,12 @@ export const loggedInData = {
     authorMenu: {
       log: "Historique",
       settings: "Réglages",
-      moveCoursePage: "Déplacer cette page vers un autre cours",
-      thisCoursePage: "Cette page de cours",
-      addCoursePage: "Ajouter une page de cours",
-      wholeCourse: "Tout le cours",
       moveOrCopyItems: 'Move or copy items',
       addGroupedTextExercise: "Ajouter un exercice de texte groupé",
       changeLicense: "Modifier la licence",
       subscribe: "S'abonner",
-      subscribeNotifications: "Recevoir des notifications",
-      subscribeNotificationsAndMail: "Recevoir des notifications et des courriels",
+      subscribeNotifications: 'Receive notifications',
+      subscribeNotificationsAndMail: 'Receive notifications and emails',
       unsubscribeNotifications: "Désabonner",
       convert: "Convertir (beta)",
       history: "Histoire",
@@ -631,12 +627,13 @@ export const loggedInData = {
           backgroundImage: 'Background image',
           dropZone: 'Drop zone',
           dropZoneTooltip: 'Choose the drop zone',
-          insertDropZone: 'Insert drop zone',
           removeDropZone: 'Remove drop zone',
           dropzoneVisibility: 'Dropzone Visibility',
           answers: {
+            add: "Ajouter une réponse",
             remove: 'Remove answer',
-            edit: 'Edit answer'
+            edit: 'Edit answer',
+            settings: 'Answer settings'
           },
           answerZone: {
             description: 'Description (optional)',
@@ -691,7 +688,6 @@ export const loggedInData = {
           combineLikeTerms: 'Combine like terms.',
           setEqual: 'Set the terms equal to each other.',
           firstExplanation: 'First explanation',
-          moveUpLabel: 'Move up',
           removeRowLabel: 'Remove row'
         },
         geogebra: {
@@ -713,8 +709,11 @@ export const loggedInData = {
         image: {
           title: 'Image',
           description: "Télécharger des images.",
-          upload: 'Upload',
+          upload: 'Upload Image',
           imageUrl: 'Image URL',
+          invalidImageUrl: 'Error: Invalid or Incomplete URL',
+          invalidImageUrlMessage: 'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
+          searchOnline: 'Search online for licence-free images',
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: 'Uploading…',
           placeholderFailed: 'Upload failed…',
@@ -726,7 +725,9 @@ export const loggedInData = {
           alt: 'Description (hidden)',
           altPlaceholder: 'Describe what the image shows',
           maxWidth: 'Maximum width',
-          maxWidthPlaceholder: 'Enter the maximum width'
+          maxWidthPlaceholder: 'Enter the maximum width',
+          helpTooltipText: 'More information and help related to Image Plugin',
+          change: 'Change image'
         },
         injection: {
           title: "Contenu de serlo.org",
@@ -913,7 +914,9 @@ export const loggedInData = {
         entity: {
           titlePlaceholder: "Titre",
           seoTitle: "Titre pour les moteurs de recherche",
-          seoDesc: "Description pour les moteurs de recherche"
+          seoDesc: "Description pour les moteurs de recherche",
+          moveUpLabel: 'Move up',
+          moveDownLabel: 'Move down'
         },
         article: {
           writeShortIntro: "Écrire une courte introduction",
@@ -921,7 +924,6 @@ export const loggedInData = {
           moreOnTopic: "Tu peux en trouver plus ici :",
           addSource: "Ajouter une source",
           removeLabel: "Supprimer",
-          moveUpLabel: 'Move up',
           dragLabel: 'Drag to change order',
           openInTab: "Ouvrir dans un nouvel onglet",
           sources: 'Sources',
@@ -949,13 +951,8 @@ export const loggedInData = {
         },
         course: {
           removeCoursePage: "Supprimer la page de cours",
-          addCoursePage: "Ajouter une page de cours"
-        },
-        coursePage: {
-          explanation: "Explication",
-          video: "Vidéo",
-          question: 'Question',
-          title: "Titre"
+          addCoursePage: "Ajouter une page de cours",
+          confirmDelete: 'Are you sure you want to delete this course page?'
         },
         exercise: {
           scMcExercise: 'Choice Exercise',

@@ -121,7 +121,9 @@ export function Node({
             />
           )
         }
-        triggerSentry({ message: 'kratos: unexpected button node' })
+        if (!isProduction) {
+          triggerSentry({ message: 'kratos: unexpected button node' })
+        }
         return null
       }
 

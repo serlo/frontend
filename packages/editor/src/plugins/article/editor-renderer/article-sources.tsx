@@ -16,6 +16,7 @@ interface ArticleSourcesProps {
 }
 
 export function ArticleSources({ sources }: ArticleSourcesProps) {
+  const entityStrings = useEditorStrings().templatePlugins.entity
   const articleStrings = useEditorStrings().templatePlugins.article
   const linkToolRef = useRef<HTMLDivElement>(null)
   const listRef = useRef<HTMLUListElement>(null)
@@ -76,7 +77,7 @@ export function ArticleSources({ sources }: ArticleSourcesProps) {
               onClick={() => sources.move(index, index - 1)}
               className={buttonClass + ' relative'}
             >
-              <EditorTooltip text={articleStrings.moveUpLabel} />
+              <EditorTooltip text={entityStrings.moveUpLabel} />
               <FaIcon icon={faCircleArrowUp} />
             </button>
           )}

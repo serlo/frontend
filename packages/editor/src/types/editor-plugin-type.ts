@@ -4,6 +4,7 @@ export enum EditorPluginType {
   Audio = 'audio',
   ArticleIntroduction = 'articleIntroduction',
   Box = 'box',
+  Course = 'course',
   Equations = 'equations',
   Geogebra = 'geogebra',
   H5p = 'h5p',

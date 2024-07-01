@@ -1,13 +1,12 @@
 import { selectStaticDocument, store } from '@editor/store'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
 import { useContext, useEffect, useState } from 'react'
-import { XYCoord, useDrop } from 'react-dnd'
-import { useHotkeys } from 'react-hotkeys-hook'
+import { useDrop } from 'react-dnd'
 
 import type { DropzoneImageProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
-import { useAnswerZones } from '../../hooks/use-answer-zones'
 import { AnswerZoneState, ModalType } from '../../types'
+import { getPercentageRounded } from '../../utils/percentage'
 import { AnswerZone, answerZoneDragType } from '../answer-zone/answer-zone'
 import { cn } from '@/helper/cn'
 
@@ -19,16 +18,12 @@ interface EditorCanvasProps {
 export function EditorCanvas(props: EditorCanvasProps) {
   const { state, setModalType } = props
   const { answerZones, backgroundImage, canvasDimensions } = state
-
-  const { duplicateAnswerZone } = useAnswerZones(answerZones)
+  const canvasWidth = canvasDimensions.width.get()
+  const canvasHeight = canvasDimensions.height.get()
 
   const context = useContext(AnswerZonesContext)
 
-  const { selectAnswerZone, selectCurrentAnswer, currentAnswerZone } =
-    context || {}
-
-  const [answerZoneClipboardItem, setAnswerZoneClipboardItem] =
-    useState<AnswerZoneState | null>(null)
+  const { selectAnswerZone, selectCurrentAnswer } = context || {}
 
   const backgroundImageDocument = backgroundImage.defined
     ? (selectStaticDocument(
@@ -49,21 +44,19 @@ export function EditorCanvas(props: EditorCanvasProps) {
     img.src = backgroundImageUrl
     img.onload = () => {
       const imgAspectRatio = img.width / img.height
-      const maxCanvasWidth = canvasDimensions.width.get()
-      const maxCanvasHeight = canvasDimensions.height.get()
-      let newCanvasWidth = maxCanvasWidth
-      let newCanvasHeight = maxCanvasHeight
+      let newCanvasWidth = canvasWidth
+      let newCanvasHeight = canvasHeight
 
-      if (maxCanvasWidth / maxCanvasHeight > imgAspectRatio) {
-        newCanvasHeight = maxCanvasWidth / imgAspectRatio
-        if (newCanvasHeight > maxCanvasHeight) {
-          newCanvasHeight = maxCanvasHeight
+      if (canvasWidth / canvasHeight > imgAspectRatio) {
+        newCanvasHeight = canvasWidth / imgAspectRatio
+        if (newCanvasHeight > canvasHeight) {
+          newCanvasHeight = canvasHeight
           newCanvasWidth = newCanvasHeight * imgAspectRatio
         }
       } else {
-        newCanvasWidth = maxCanvasHeight * imgAspectRatio
-        if (newCanvasWidth > maxCanvasWidth) {
-          newCanvasWidth = maxCanvasWidth
+        newCanvasWidth = canvasHeight * imgAspectRatio
+        if (newCanvasWidth > canvasWidth) {
+          newCanvasWidth = canvasWidth
           newCanvasHeight = newCanvasWidth / imgAspectRatio
         }
       }
@@ -78,70 +71,68 @@ export function EditorCanvas(props: EditorCanvasProps) {
       accept: answerZoneDragType,
       drop(answerZone: AnswerZoneState, monitor) {
         const change = monitor.getDifferenceFromInitialOffset()
-        const delta = change || ({ x: 0, y: 0 } as XYCoord)
-        const left = Math.round(answerZone.position.left.get() + delta.x)
-        const top = Math.round(answerZone.position.top.get() + delta.y)
-        answerZone.position.left.set(left)
-        answerZone.position.top.set(top)
+        if (!change) return
+
+        const width = answerZone.layout.width.get()
+        const currentAbsoluteLeft = canvasWidth * answerZone.position.left.get()
+        const newAbsoluteLeft = currentAbsoluteLeft + change.x
+        const left = getPercentageRounded(canvasWidth, newAbsoluteLeft)
+        const right = left + width
+        // If overflowing on the left, snap to left edge
+        if (left < 0) answerZone.position.left.set(0)
+        // If overflowing on the right, snap to right edge
+        else if (right > 1) answerZone.position.left.set(1 - width)
+        // Otherwise, position horizontally exactly as dropped
+        else answerZone.position.left.set(left)
+
+        const height = answerZone.layout.height.get()
+        const currentAbsoluteTop = canvasHeight * answerZone.position.top.get()
+        const newAbsoluteTop = currentAbsoluteTop + change.y
+        const top = getPercentageRounded(canvasHeight, newAbsoluteTop)
+        const bottom = top + height
+        // If overflowing on the top, snap to top edge
+        if (top < 0) answerZone.position.top.set(0)
+        // If overflowing on the bottom, snap to bottom edge
+        else if (bottom > 1) answerZone.position.top.set(1 - height)
+        // Otherwise, position vertically exactly as dropped
+        else answerZone.position.top.set(top)
       },
     }),
     [answerZones]
   )
 
-  useHotkeys('backspace, del', (event) => {
-    if (!currentAnswerZone) return
-    const index = answerZones.findIndex(
-      ({ id }) => id.get() === currentAnswerZone.id.get()
-    )
-    index !== -1 && answerZones.remove(index)
-    event.preventDefault()
-  })
-
-  useHotkeys(['ctrl+c, meta+c'], (event) => {
-    setAnswerZoneClipboardItem(currentAnswerZone)
-    event.preventDefault()
-  })
-
-  useHotkeys(['ctrl+v, meta+v'], (event) => {
-    if (!answerZoneClipboardItem) return
-    const idToDuplicate = answerZoneClipboardItem.id.get()
-    duplicateAnswerZone(idToDuplicate)
-    event.preventDefault()
-  })
-
   return (
     <div
       ref={drop}
       className={cn(`
-          relative mx-auto overflow-hidden rounded-lg
-          border border-almost-black
-          bg-cover bg-center bg-no-repeat
-        `)}
+        relative mx-auto box-content max-w-full overflow-auto overflow-hidden
+        rounded-lg border border-almost-black bg-cover bg-center bg-no-repeat
+      `)}
       style={{
         backgroundImage: `url(${backgroundImageUrl})`,
-        height: `${canvasDimensions.height.get()}px`,
-        width: `${canvasDimensions.width.get()}px`,
+        width: canvasWidth,
+        aspectRatio: `${canvasWidth} / ${canvasHeight}`,
       }}
       data-qa="plugin-dropzone-image-editor-canvas"
     >
       {answerZones?.map((answerZone, index) => {
+        const id = answerZone.id.get()
         return (
           <AnswerZone
             key={index}
             answerZone={answerZone}
-            maxHeight={canvasDimensions.height.get()}
-            maxWidth={canvasDimensions.width.get()}
-            onClick={() => selectAnswerZone(answerZone.id.get())}
+            canvasSize={[canvasWidth, canvasHeight]}
+            onClick={() => selectAnswerZone(id)}
             onClickSettingsButton={() => {
-              selectAnswerZone(answerZone.id.get())
+              selectAnswerZone(id)
               setModalType(ModalType.Settings)
             }}
             onClickPlusButton={() => {
-              selectAnswerZone(answerZone.id.get())
+              selectAnswerZone(id)
               setModalType(ModalType.CreateDropZone)
             }}
-            onClickEditAnswerButton={(zoneId, answerIndex, answerType) => {
-              selectAnswerZone(zoneId)
+            onClickEditAnswerButton={(answerIndex, answerType) => {
+              selectAnswerZone(id)
               selectCurrentAnswer(answerIndex, answerType)
               setModalType(ModalType.Edit)
             }}

@@ -88,10 +88,9 @@ See below for the current API specification.
   - `history` - for persisting, undo, redo
   - `selectRootDocument` - a function for selecting the current state
 
-- **`pluginsConfig` (optional)**: Serlo Editor plugins can be configured to an extent, this configuration is currently done via the `pluginsConfig` prop of the `SerloEditor` component. Each plugin can be configured separately. There are currently two special rules that apply to the Editor in general:
+- **`pluginsConfig` (optional)**: Serlo Editor plugins can be configured to an extent, this configuration is currently done via the `pluginsConfig` prop of the `SerloEditor` component. Each plugin can be configured separately. There is currently ony one special rule that applies to the Editor in general:
 
   - `enableTextAreaExercise`: A flag that enables the TextAreaExercise plugin. TextAreaExercise plugin is currently not yet ready for serlo.org, but it is enabled in Edusharing integration. **To be deprecated once more features are added to the TextAreaExercise plugin and it's ready for serlo.org.**
-  - `exerciseVisibleInSuggestion`: A flag that defines if Exercise plugin is visible in Text plugin suggestions. **Not necessary for Serlo Editor package, instead used by serlo.org, could be removed.**
 
 - **`customPlugins` (optional)**: An array of custom plugins. **To be deprecated, only used in Edusharing integration**.
 

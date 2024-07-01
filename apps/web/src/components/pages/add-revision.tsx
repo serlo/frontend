@@ -104,7 +104,6 @@ export function AddRevision({
                 __typename: type,
               } as SetEntityMutationData,
               willNeedReview,
-              initialState,
               taxonomyParentId
             )
 

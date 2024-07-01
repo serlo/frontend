@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import { memo } from 'react'
 import { useDrop } from 'react-dnd'
 
 import {
@@ -7,22 +7,20 @@ import {
   DropzoneVisibility,
   type PossibleAnswerType,
 } from '../../types'
-import { isSmallScreen } from '../../utils/is-small-screen'
-import {
-  DraggableAnswer,
-  draggableAnswerDragType,
-} from '../shared/draggable-answer'
+import { DraggableAnswer } from '../shared/draggable-answer'
 import { cn } from '@/helper/cn'
 
 interface BlankDropZoneProps {
   dropZone: BlankDropZoneSpec
-  droppedAnswersIds: string[]
+  droppedAnswers: PossibleAnswerType[]
   isCorrect?: boolean | null
   isAnswerCorrectMap?: Map<string, boolean | null> | null
   visibility: DropzoneVisibility
+  canvasDimensions: { height: number; width: number }
   answersCount: number
+  acceptedDragType: string
   onAnswerDrop: (
-    answerId: string,
+    answer: DraggableAnswerType,
     dropzoneId: string,
     originDropzoneId?: string
   ) => void
@@ -33,28 +31,26 @@ export const BlankDropZone = memo(function BlankDropZone(
 ) {
   const {
     dropZone,
-    droppedAnswersIds,
+    droppedAnswers,
     isCorrect,
     isAnswerCorrectMap,
     visibility,
     answersCount,
+    acceptedDragType,
     onAnswerDrop,
   } = props
   const { id, name, position, layout } = dropZone
   const { left, top } = position
   const { height, width } = layout
 
-  const [droppedAnswers, setDroppedAnswers] = useState<PossibleAnswerType[]>([])
-
   const [{ isOver, canDrop }, drop] = useDrop({
-    accept: draggableAnswerDragType,
+    accept: acceptedDragType,
     drop: (answer: DraggableAnswerType) => {
       const hasAnswerAlready = droppedAnswers.find(
         (droppedAnswer) => droppedAnswer.id === answer.id
       )
       if (!hasAnswerAlready) {
-        setDroppedAnswers((prev) => [...prev, answer])
-        onAnswerDrop(answer.id, id, answer.originDropzoneId)
+        onAnswerDrop(answer, id, answer.originDropzoneId)
       }
     },
     collect: (monitor) => ({
@@ -63,32 +59,24 @@ export const BlankDropZone = memo(function BlankDropZone(
     }),
   })
 
-  useEffect(() => {
-    setDroppedAnswers((prev) =>
-      prev.filter((answer) => droppedAnswersIds.includes(answer.id))
-    )
-  }, [droppedAnswersIds])
-
   const hasOnlyOneAnswer = droppedAnswers.length === 1
   const isOnlyAnswerTypeImage = hasOnlyOneAnswer && !!droppedAnswers[0].imageUrl
-
-  const scaler = isSmallScreen() ? 0.4 : 1
 
   return (
     <div
       ref={drop}
       className={cn(
-        `absolute flex flex-wrap items-center justify-center gap-2 rounded p-0`,
+        `absolute flex flex-wrap items-center justify-center gap-1 rounded p-0`,
         getBackgroundColor(visibility, isOver, canDrop),
         getBorderWidth(visibility, isCorrect, isOnlyAnswerTypeImage),
         getBorderColor(isCorrect, isOnlyAnswerTypeImage),
         getBorderType(visibility)
       )}
       style={{
-        left: left * scaler,
-        top: top * scaler,
-        width: width * scaler,
-        height: height * scaler,
+        left: left * 100 + '%',
+        top: top * 100 + '%',
+        width: width * 100 + '%',
+        height: height * 100 + '%',
       }}
       data-qa={`blank-drop-zone-${id}`}
     >
@@ -99,6 +87,7 @@ export const BlankDropZone = memo(function BlankDropZone(
         <DraggableAnswer
           key={index}
           answer={answer}
+          dragType={acceptedDragType}
           originDropzoneId={id}
           isCorrect={isCorrect}
           isAnswerCorrect={isAnswerCorrectMap?.get(answer.id)}

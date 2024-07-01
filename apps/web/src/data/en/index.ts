@@ -594,16 +594,12 @@ export const loggedInData = {
     authorMenu: {
       log: 'Log',
       settings: 'Settings',
-      moveCoursePage: 'Move this page to another course',
-      thisCoursePage: 'This course-page',
-      addCoursePage: 'Add course-page',
-      wholeCourse: 'Whole course',
       moveOrCopyItems: 'Move or copy items',
       addGroupedTextExercise: 'Add grouped-text-exercise',
       changeLicense: 'Change License',
       subscribe: 'Subscribe',
-      subscribeNotifications: 'Recieve notifications',
-      subscribeNotificationsAndMail: 'Recieve notifications and emails',
+      subscribeNotifications: 'Receive notifications',
+      subscribeNotificationsAndMail: 'Receive notifications and emails',
       unsubscribeNotifications: 'Unsubscribe',
       convert: 'Convert (beta)',
       history: 'History',
@@ -701,12 +697,13 @@ export const loggedInData = {
           backgroundImage: 'Background image',
           dropZone: 'Drop zone',
           dropZoneTooltip: 'Choose the drop zone',
-          insertDropZone: 'Insert drop zone',
           removeDropZone: 'Remove drop zone',
           dropzoneVisibility: 'Dropzone Visibility',
           answers: {
+            add: 'Add answer',
             remove: 'Remove answer',
             edit: 'Edit answer',
+            settings: 'Answer settings',
           },
           answerZone: {
             description: 'Description (optional)',
@@ -757,7 +754,6 @@ export const loggedInData = {
           combineLikeTerms: 'Combine like terms.',
           setEqual: 'Set the terms equal to each other.',
           firstExplanation: 'First explanation',
-          moveUpLabel: 'Move up',
           removeRowLabel: 'Remove row',
         },
         geogebra: {
@@ -779,8 +775,12 @@ export const loggedInData = {
         image: {
           title: 'Image',
           description: 'Upload images.',
-          upload: 'Upload',
+          upload: 'Upload Image',
           imageUrl: 'Image URL',
+          invalidImageUrl: 'Error: Invalid or Incomplete URL',
+          invalidImageUrlMessage:
+            'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
+          searchOnline: 'Search online for licence-free images',
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: 'Uploading…',
           placeholderFailed: 'Upload failed…',
@@ -793,6 +793,8 @@ export const loggedInData = {
           altPlaceholder: 'Describe what the image shows',
           maxWidth: 'Maximum width',
           maxWidthPlaceholder: 'Enter the maximum width',
+          helpTooltipText: 'More information and help related to Image Plugin',
+          change: 'Change image',
         },
         injection: {
           title: 'serlo.org Content',
@@ -987,6 +989,8 @@ export const loggedInData = {
           titlePlaceholder: 'Title',
           seoTitle: 'Title for search engines',
           seoDesc: 'Description for search engines',
+          moveUpLabel: 'Move up',
+          moveDownLabel: 'Move down',
         },
         article: {
           writeShortIntro: 'Write a short introduction',
@@ -994,7 +998,6 @@ export const loggedInData = {
           moreOnTopic: 'You can find more content on this topic here',
           addSource: 'Add source',
           removeLabel: 'Remove',
-          moveUpLabel: 'Move up',
           dragLabel: 'Drag to change order',
           openInTab: 'Open in new tab',
           sources: 'Sources',
@@ -1025,12 +1028,7 @@ export const loggedInData = {
         course: {
           removeCoursePage: 'Remove course page',
           addCoursePage: 'Add course page',
-        },
-        coursePage: {
-          explanation: 'Explanation',
-          video: 'Video',
-          question: 'Question',
-          title: 'Title',
+          confirmDelete: 'Are you sure you want to delete this course page?',
         },
         exercise: {
           scMcExercise: 'Choice Exercise',

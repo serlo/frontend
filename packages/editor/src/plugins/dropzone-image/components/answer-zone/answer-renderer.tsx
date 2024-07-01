@@ -8,18 +8,20 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 interface AnswerRendererProps {
   answerType: AnswerType
   answerIndex: number
-  onSave: () => void
   isWrongAnswer?: boolean
   zoneId?: string
+  onSave: () => void
 }
 
 export function AnswerRenderer({
   answerType,
   answerIndex,
-  onSave,
   isWrongAnswer = false,
   zoneId,
+  onSave,
 }: AnswerRendererProps): JSX.Element {
+  const editorStrings = useEditorStrings().edtrIo
+
   const dispatch = useAppDispatch()
   const { answerZones, extraDraggableAnswers } =
     useContext(AnswerZonesContext) || {}
@@ -29,8 +31,6 @@ export function AnswerRenderer({
       dispatch(focus(answer.text.get()))
     }
   })
-
-  const pluginStrings = useEditorStrings().plugins.dropzoneImage
 
   const answersList = isWrongAnswer
     ? extraDraggableAnswers
@@ -43,16 +43,13 @@ export function AnswerRenderer({
   const isAnswerTypeText = answerType === AnswerType.Text
 
   return (
-    <div>
-      {isAnswerTypeText ? answer.text.render() : answer.image.render()}
-      <div>
-        <button
-          className="mt-2 flex rounded bg-orange-100 px-2 py-1"
-          onClick={onSave}
-        >
-          + {pluginStrings.insertDropZone}
-        </button>
+    <>
+      <div className="[&_textarea]:w-[430px] [&_textarea]:max-w-[100%]">
+        {isAnswerTypeText ? answer.text.render() : answer.image.render()}
       </div>
-    </div>
+      <button className="serlo-button-editor-primary mt-4" onClick={onSave}>
+        {editorStrings.save}
+      </button>
+    </>
   )
 }

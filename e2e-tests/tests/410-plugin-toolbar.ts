@@ -5,9 +5,8 @@ Feature('Serlo Editor - plugin toolbar')
 Before(popupWarningFix)
 
 // First Text plugin is the multimedia explanation,
-// second is multimedia image caption,
-// third is default empty text plugin
-const initialTextPluginCount = 3
+// second is the default empty Text plugin.
+const initialTextPluginCount = 2
 
 Scenario('Duplicate plugin', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')

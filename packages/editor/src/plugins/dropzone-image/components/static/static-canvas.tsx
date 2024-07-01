@@ -4,17 +4,21 @@ import type {
 } from '@editor/types/editor-plugins'
 
 import { BlankDropZone } from './blank-drop-zone'
-import type { DropzoneVisibility } from '../../types'
-import { isSmallScreen } from '../../utils/is-small-screen'
+import type {
+  DraggableAnswerType,
+  DropzoneVisibility,
+  PossibleAnswerType,
+} from '../../types'
 import { cn } from '@/helper/cn'
 
 interface StaticCanvasProps {
   state: EditorDropzoneImageDocument['state']
-  dropzoneAnswerMap: Map<string, string[]>
-  isAnswerZoneCorrectMap: Map<string, boolean | null>
+  dropzoneAnswerMap: Map<string, PossibleAnswerType[]>
+  isZoneCorrectMap: Map<string, boolean | null>
   isAnswerCorrectMap: Map<string, Map<string, boolean | null> | null>
+  draggableAnswerDragType: string
   onAnswerDrop: (
-    answerId: string,
+    answerId: DraggableAnswerType,
     dropzoneId: string,
     originDropzoneId?: string
   ) => void
@@ -24,8 +28,9 @@ export function StaticCanvas(props: StaticCanvasProps) {
   const {
     state,
     dropzoneAnswerMap,
-    isAnswerZoneCorrectMap,
+    isZoneCorrectMap,
     isAnswerCorrectMap,
+    draggableAnswerDragType,
     onAnswerDrop,
   } = props
   const { answerZones, backgroundImage, canvasDimensions, dropzoneVisibility } =
@@ -35,18 +40,17 @@ export function StaticCanvas(props: StaticCanvasProps) {
   const backgroundImageUrlFromPlugin = (bgImagePluginState?.state?.src ||
     '') as string
 
-  const scaler = isSmallScreen() ? 0.4 : 1
-
   return (
     <div
       className={cn(`
-        relative mx-auto overflow-hidden rounded-lg
-        border border-brand-500 bg-cover bg-center bg-no-repeat
+        relative mx-auto box-content max-w-full
+        overflow-hidden rounded-lg border
+        border-brand-500 bg-cover bg-center bg-no-repeat
       `)}
       style={{
         backgroundImage: `url(${backgroundImageUrlFromPlugin})`,
-        height: `${canvasDimensions.height * scaler}px`,
-        width: `${canvasDimensions.width * scaler}px`,
+        width: canvasDimensions.width,
+        aspectRatio: `${canvasDimensions.width} / ${canvasDimensions.height}`,
       }}
     >
       {answerZones.map((answerZone) => {
@@ -56,11 +60,13 @@ export function StaticCanvas(props: StaticCanvasProps) {
           <BlankDropZone
             key={id}
             dropZone={dropZone}
-            droppedAnswersIds={dropzoneAnswerMap.get(id) || []}
-            isCorrect={isAnswerZoneCorrectMap.get(id)}
+            droppedAnswers={dropzoneAnswerMap.get(id) || []}
+            isCorrect={isZoneCorrectMap.get(id)}
             isAnswerCorrectMap={isAnswerCorrectMap.get(id)}
             visibility={dropzoneVisibility as DropzoneVisibility}
+            canvasDimensions={canvasDimensions}
             answersCount={answers.length}
+            acceptedDragType={draggableAnswerDragType}
             onAnswerDrop={onAnswerDrop}
           />
         )

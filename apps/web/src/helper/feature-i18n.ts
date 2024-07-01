@@ -162,7 +162,6 @@ export function getEntityStringByTypename(
     Article: strings.entities.article,
     Video: strings.entities.video,
     Applet: strings.entities.applet,
-    CoursePage: strings.entities.coursePage,
     Exercise: strings.entities.exercise,
     ExerciseGroup: strings.entities.exerciseGroup,
     Event: strings.entities.event,

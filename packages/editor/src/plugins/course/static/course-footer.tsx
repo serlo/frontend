@@ -1,37 +1,51 @@
+import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import {
   faArrowCircleRight,
   faArrowCircleUp,
 } from '@fortawesome/free-solid-svg-icons'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { MouseEvent } from 'react'
 
-import { Link } from '../content/link'
-import { FaIcon } from '../fa-icon'
+import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { CoursePagesData } from '@/data-types'
 import { cn } from '@/helper/cn'
-
-export interface CourseFooterProps {
-  onOverviewButtonClick: (e: MouseEvent<HTMLButtonElement>) => void
-  index: number
-  pages: CoursePagesData
-}
+import { scrollIfNeeded } from '@/helper/scroll'
 
 export function CourseFooter({
-  index,
+  activePageIndex: index,
   pages,
   onOverviewButtonClick,
-}: CourseFooterProps) {
+  pageUrls,
+}: {
+  activePageIndex: number
+  pages: EditorCourseDocument['state']['pages']
+  onOverviewButtonClick: (e: MouseEvent<HTMLButtonElement>) => void
+  pageUrls?: string[]
+}) {
   const onOverviewClick = (e: MouseEvent<HTMLButtonElement>) => {
     location.href = '#course-overview'
     onOverviewButtonClick(e)
   }
+  const router = useRouter()
   const previousIndex = index - 1
   const nextIndex = index + 1
-  const previousHref = pages[previousIndex]?.url
-  const nextHref = pages[nextIndex]?.url
+  const previousPage = pages[previousIndex]
+  const nextPage = pages[nextIndex]
+  const previousHref = previousPage ? pageUrls?.[previousIndex] : undefined
+  const nextHref = nextPage ? pageUrls?.[nextIndex] : undefined
 
   const { strings } = useInstanceData()
+
+  function navigate(toPath: string, newIndex: number) {
+    void router.push(toPath, undefined, { shallow: true })
+    scrollIfNeeded(document.querySelector('#course-title'))
+
+    void router.push(toPath, undefined, { shallow: true })
+    setTimeout(() => {
+      document.title = pages[newIndex].title
+    }, 100)
+  }
 
   return (
     <>
@@ -40,18 +54,26 @@ export function CourseFooter({
         {nextHref ? <link rel="next" href={nextHref} /> : null}
       </Head>
       <nav className="mb-8 mt-10 flex justify-between bg-brand-50 py-5 align-top sm:bg-white">
-        {previousHref && (
-          <Link
+        {previousHref ? (
+          <a
             href={previousHref}
+            onClick={(e) => {
+              e.preventDefault()
+              navigate(previousHref, previousIndex)
+            }}
             className="serlo-button-light mx-side h-fit hover:no-underline"
           >
             <FaIcon icon={faArrowCircleRight} className="-scale-x-100" />{' '}
             {strings.course.back}
-          </Link>
-        )}
+          </a>
+        ) : null}
         {nextHref ? (
-          <Link
+          <a
             href={nextHref}
+            onClick={(e) => {
+              e.preventDefault()
+              navigate(nextHref, nextIndex)
+            }}
             className="ml-auto mr-side text-right hover:no-underline"
           >
             <div className="serlo-button-blue mb-2 hover:no-underline">
@@ -66,9 +88,9 @@ export function CourseFooter({
               >
                 {nextIndex + 1}
               </b>{' '}
-              {pages[nextIndex].title}
+              {nextPage.title}
             </div>
-          </Link>
+          </a>
         ) : (
           <button
             className="serlo-button-blue mx-side"

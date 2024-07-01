@@ -7,7 +7,8 @@ Before(popupWarningFix)
 Scenario('Basic text interactions', async ({ I }) => {
   I.amOnPage('/entity/repository/add-revision/74888')
 
-  I.click('$plugin-text-editor')
+  I.click('$add-new-plugin-row-button')
+  I.pressKey('Enter')
 
   const testString = 'TESTTESTTEST'
   I.type(testString)

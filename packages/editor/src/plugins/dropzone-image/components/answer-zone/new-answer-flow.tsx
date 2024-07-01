@@ -73,15 +73,13 @@ export function NewAnswerFlow(props: NewAnswerFlowProps) {
   )
 
   const stepOne = (
-    <div className="mt-16">
-      <AnswerRenderer
-        answerType={stepOneType}
-        answerIndex={answersList.length - 1}
-        isWrongAnswer={isWrongAnswer}
-        zoneId={zoneId}
-        onSave={onSave}
-      />
-    </div>
+    <AnswerRenderer
+      answerType={stepOneType}
+      answerIndex={answersList.length - 1}
+      isWrongAnswer={isWrongAnswer}
+      zoneId={zoneId}
+      onSave={onSave}
+    />
   )
 
   const steps = [stepZero, stepOne]

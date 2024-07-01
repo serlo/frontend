@@ -11,23 +11,23 @@ import type {
 } from '@editor/types/editor-plugins'
 import { useState } from 'react'
 
-import { BackgroundShapeSelect } from './background-shape-select'
-import { BackgroundTypeSelect } from './background-type-select'
-import { EditorCanvas } from './editor-canvas'
-import { EditorCanvasModal } from './editor-canvas-modal'
-import { ExtraIncorrectAnswers } from './extra-incorrect-answers'
-import { PossibleAnswers } from './possible-answers'
-import type { DropzoneImageProps } from '../..'
-import { AnswerZonesContext } from '../../context/context'
-import { useAnswerZones } from '../../hooks/use-answer-zones'
-import { DropzoneImageToolbar } from '../../toolbar'
+import type { DropzoneImageProps } from '.'
+import { BackgroundShapeSelect } from './components/editor/background-shape-select'
+import { BackgroundTypeSelect } from './components/editor/background-type-select'
+import { EditorCanvas } from './components/editor/editor-canvas'
+import { EditorCanvasModal } from './components/editor/editor-canvas-modal'
+import { ExtraIncorrectAnswers } from './components/editor/extra-incorrect-answers'
+import { PossibleAnswers } from './components/editor/possible-answers'
+import { AnswerZonesContext } from './context/context'
+import { useAnswerZones } from './hooks/use-answer-zones'
+import { DropzoneImageStaticRenderer } from './static'
+import { DropzoneImageToolbar } from './toolbar'
 import {
   BackgroundType,
   BackgroundShape,
   DropzoneVisibility,
   ModalType,
-} from '../../types'
-import { DropzoneImageStaticRenderer } from '../static/static'
+} from './types'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 const visibilityOptions = [
@@ -127,7 +127,6 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
         <ToolbarSelect
           tooltipText={pluginStrings.dropzoneVisibility}
           value={dropzoneVisibility.value}
-          dataQa="plugin-blanks-mode-switch"
           changeValue={(value) => dropzoneVisibility.set(value)}
           options={visibilityOptions.map((option) => ({
             text: option.charAt(0).toUpperCase() + option.slice(1),
