@@ -2,13 +2,14 @@ import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/router'
-import { useState, MouseEvent } from 'react'
+import { useState, MouseEvent, useContext } from 'react'
 
 import { CourseFooter } from './course-footer'
 import { CourseNavigation } from './course-navigation'
 import { getCoursePageIdFromPath } from '../helper/get-course-id-from-path'
 import { InfoPanel } from '@/components/info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
+import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { cn } from '@/helper/cn'
 
 export function CourseStaticRenderer({
@@ -20,7 +21,10 @@ export function CourseStaticRenderer({
   const routerCourseId = getCoursePageIdFromPath(router.asPath)
   const queryPageId = routerCourseId ?? serloContext?.activeCoursePageId
   // load nav opened when only some entries
-  const [courseNavOpen, setCourseNavOpen] = useState(pages.length < 4 ?? false)
+  const isRevisionView = useContext(RevisionViewContext)
+  const [courseNavOpen, setCourseNavOpen] = useState(
+    pages.length < 4 || (isRevisionView ?? false)
+  )
   const { strings } = useInstanceData()
 
   const activePageIndex = queryPageId
@@ -36,6 +40,11 @@ export function CourseStaticRenderer({
     setCourseNavOpen(true)
   }
 
+  const pageUrls =
+    serloContext?.coursePageUrls ?? isRevisionView
+      ? pages.map(({ id }) => `#${id.split('-')[0]}`)
+      : undefined
+
   return (
     <>
       <CourseNavigation
@@ -43,7 +52,7 @@ export function CourseStaticRenderer({
         activePageId={activePage?.id}
         courseNavOpen={courseNavOpen}
         setCourseNavOpen={setCourseNavOpen}
-        pageUrls={serloContext?.coursePageUrls}
+        pageUrls={pageUrls}
       />
 
       {pages.length ? (
