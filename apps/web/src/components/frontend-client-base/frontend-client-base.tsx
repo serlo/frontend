@@ -10,7 +10,6 @@ import {
   fetchLoggedInData,
   getCachedLoggedInData,
 } from './logged-on-data-helper'
-import { MaintenanceBanner } from '../maintenance'
 import { MaxWidthDiv } from '../navigation/max-width-div'
 import { SessionDurationEvent } from '../session-duration-event'
 import { AuthProvider } from '@/auth/auth-provider'
@@ -134,7 +133,6 @@ export function FrontendClientBase({
               >
                 {children}
               </ConditionalWrap>
-              <MaintenanceBanner />
             </ConditionalWrap>
           </UuidsProvider>
         </LoggedInDataProvider>
