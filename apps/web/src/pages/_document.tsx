@@ -26,6 +26,12 @@ const sentryLoader = `
           error.message &&
           error.message.startsWith('r["@context"].toLowerCase')
         ) {
+          return null;
+        }
+        /* Ignore Sistrix crawler */
+        if (
+          window.navigator.userAgent.includes('Mozilla/5.0 (compatible; Optimizer)')
+        ) {
           return null
         }
         return event;
