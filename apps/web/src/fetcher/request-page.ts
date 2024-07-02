@@ -56,9 +56,13 @@ export async function requestPage(
 
   // temporary redirect course pages to course as a fallback for client side navigation
   // that does not go through cf-worker
-  if (uuid.__typename === 'CoursePage'){
-    const target = buildCoursePageUrl(uuid.course.alias, String(uuid.id), uuid.title)
-    return { kind: 'redirect', target}
+  if (uuid.__typename === 'CoursePage') {
+    const target = buildCoursePageUrl(
+      uuid.course.alias,
+      String(uuid.id),
+      uuid.title
+    )
+    return { kind: 'redirect', target }
   }
 
   if (
