@@ -16,6 +16,7 @@ export interface PluginsConfig {
   spoiler?: SpoilerConfig
   table?: SerloTableConfig
   general?: {
+    testingSecret?: string
     enableTextAreaExercise: boolean
   }
 }
