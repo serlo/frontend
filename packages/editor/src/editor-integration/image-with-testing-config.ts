@@ -1,10 +1,27 @@
-import { LoadedFile, UploadValidator } from '@editor/plugin'
+import type { LoadedFile, UploadValidator } from '@editor/plugin'
 import { createImagePlugin } from '@editor/plugins/image'
-import { gql } from 'graphql-request'
 
-import { createGraphqlFetch } from '@/api/graphql-fetch'
-import { MediaType, MediaUploadQuery } from '@/fetcher/graphql-types/operations'
 import { showToastNotice } from '@/helper/show-toast-notice'
+
+interface MediaUploadQuery {
+  __typename?: 'Query'
+  media: {
+    __typename?: 'MediaQuery'
+    newUpload: {
+      __typename?: 'MediaUpload'
+      uploadUrl: string
+      urlAfterUpload: string
+    }
+  }
+}
+
+enum MediaType {
+  ImageGif = 'IMAGE_GIF',
+  ImageJpeg = 'IMAGE_JPEG',
+  ImagePng = 'IMAGE_PNG',
+  ImageSvgXml = 'IMAGE_SVG_XML',
+  ImageWebp = 'IMAGE_WEBP',
+}
 
 const maxFileSize = 2 * 1024 * 1024
 const allowedExtensions = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'webp']
@@ -78,21 +95,27 @@ function createUploadImageHandler(secret: string) {
 export function createReadFile(secret: string) {
   return async function readFile(file: File): Promise<LoadedFile> {
     return new Promise((resolve, reject) => {
-      const gqlFetch = createGraphqlFetch()
-      const args = JSON.stringify({
-        query: uploadUrlQuery,
-        context: {
-          headers: {
-            'X-SERLO-EDITOR-TESTING': secret,
-          },
-        },
-        variables: {
-          mediaType: mimeTypesToMediaType[file.type as SupportedMimeType],
-        },
-      })
-
       async function runFetch() {
-        const data = (await gqlFetch(args)) as MediaUploadQuery
+        const endpoint = 'https://api.serlo.org/graphql'
+        const response = await fetch(endpoint, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          body: JSON.stringify({
+            query: uploadUrlQuery,
+            context: {
+              headers: {
+                'X-SERLO-EDITOR-TESTING': secret,
+              },
+            },
+            variables: {
+              mediaType: mimeTypesToMediaType[file.type as SupportedMimeType],
+            },
+          }),
+        })
+        const data = (await response.json()) as MediaUploadQuery
         const reader = new FileReader()
 
         reader.onload = async function (e: ProgressEvent) {
@@ -152,6 +175,16 @@ function errorCodeToMessage(error: FileErrorCode) {
     case FileErrorCode.UPLOAD_FAILED:
       return 'Error while uploading'
   }
+}
+
+/**
+ * This marker is used by https://github.com/serlo/unused-graphql-properties
+ * to detect graphql statements.
+ */
+function gql(strings: TemplateStringsArray, ...expr: string[]): string {
+  return strings.reduce((result, str, i) => {
+    return result + expr[i - 1] + str
+  })
 }
 
 const uploadUrlQuery = gql`
