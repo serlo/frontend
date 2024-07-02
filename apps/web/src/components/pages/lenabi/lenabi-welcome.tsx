@@ -20,7 +20,7 @@ const landingSubjectsData: LandingSubjectsData = {
     { url: '/chemie', title: 'Chemie', icon: 'chemistry' },
     { url: '/informatik', title: 'Informatik', icon: 'informatics' },
     {
-      url: '/community/neue-fächer-themen',
+      url: '/106081',
       title: 'Fächer im Aufbau',
       icon: 'new',
     },

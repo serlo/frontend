@@ -54,6 +54,13 @@ export const dataQuery = gql`
         ...taxonomyTermsV2
       }
 
+      ... on CoursePage {
+        course {
+          id
+          alias
+        }
+      }
+
       ... on TaxonomyTerm {
         alias
         title
