@@ -4,14 +4,21 @@ import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-co
 import { cn } from '@serlo/frontend/src/helper/cn'
 
 import type { ImageProps } from '..'
+import { LicenseDropdown } from '../components/licence-dropdown'
 
 export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
-  const { link, alt, src, maxWidth } = state
+  const { link, alt, src, maxWidth, licence } = state
   const imageStrings = useEditorStrings().plugins.image
 
   const isTemp = isTempFile(src.value)
   const isFailed = isTempFile(src.value) && src.value.failed
 
+  const updateOrCreateLicence = (newLicence: string) => {
+    if (!licence?.defined) licence.create(newLicence)
+    else {
+      licence.set(newLicence)
+    }
+  }
   return (
     <>
       <OverlayInput
@@ -27,7 +34,15 @@ export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
         // eslint-disable-next-line @typescript-eslint/no-base-to-string
         value={isTemp ? '' : src.value.toString()}
         disabled={isTemp && !isFailed}
-        onChange={(e) => src.set(e.target.value)}
+        onChange={(e) => {
+          src.set(e.target.value)
+        }}
+      />
+      <LicenseDropdown
+        defaultLicense={licence?.defined ? licence.value : undefined}
+        onLicenseChange={updateOrCreateLicence}
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
+        isPixabayImage={src.get().toString().includes('Pixabay Lizenz')}
       />
       <label className="mx-auto mb-0 mt-5 flex flex-row justify-between">
         <span className="w-[20%]">{imageStrings.alt}</span>
