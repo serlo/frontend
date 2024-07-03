@@ -94,15 +94,17 @@ export const LicenseDropdown = ({
             sideOffset={0}
             position="popper"
           >
-            {Object.entries(licences).map(([licenseId, licenceName]) => (
-              <Select.Item
-                key={licenceName}
-                value={licenseId}
-                className="serlo-input-font-reset my-0 px-3 hover:bg-editor-primary-100"
-              >
-                <Select.ItemText>{licenceName}</Select.ItemText>
-              </Select.Item>
-            ))}
+            <Select.Viewport>
+              {Object.entries(licences).map(([licenseId, licenceName]) => (
+                <Select.Item
+                  key={licenceName}
+                  value={licenseId}
+                  className="serlo-input-font-reset my-0 px-3 hover:bg-editor-primary-100 focus:bg-editor-primary-100"
+                >
+                  <Select.ItemText>{licenceName}</Select.ItemText>
+                </Select.Item>
+              ))}
+            </Select.Viewport>
           </Select.Content>
         </Select.Root>
         {isConfirmed && (
