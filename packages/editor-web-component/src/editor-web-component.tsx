@@ -166,7 +166,6 @@ export class EditorWebComponent extends HTMLElement {
     this.reactRoot.render(
       <React.StrictMode>
         <div id="serlo-root" className="relative">
-          <span>{testingSecretAttr}</span>
           {this._mode === 'write' ? (
             <Suspense fallback={<div>Loading editor...</div>}>
               <LazySerloEditor
