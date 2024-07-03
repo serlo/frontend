@@ -47,7 +47,7 @@ export function ImageSelectionScreen(
       <ModalWithCloseButton
         isOpen={showPixabayModal}
         setIsOpen={setShowPixabayModal}
-        className="max-h-[80vh] min-h-[] w-[900px] max-w-[90vw] -translate-x-1/2 overflow-y-hidden pt-0"
+        className="max-h-[700px] w-[900px] max-w-[90vw] pt-0"
       >
         <PixabayImageSearch onSelectImage={onSelectPixabayImage} />
       </ModalWithCloseButton>

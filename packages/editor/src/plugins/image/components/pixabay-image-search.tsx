@@ -103,14 +103,11 @@ export const PixabayImageSearch = ({
               </button>
             ))}
           </div>
-          <div className="w-full justify-center pt-4 text-center text-sm">
-            {imageStrings.pixabayText}
-          </div>
         </div>
       )}
       <div
         className={cn(
-          'max-h-[100vw] overflow-y-auto',
+          'max-h-[500px]',
           'mt-4 flex flex-wrap px-8 ',
           isLoadingImage && 'max-h-100',
           isLoadingImage && 'border-1 border border-red-500'
@@ -131,6 +128,11 @@ export const PixabayImageSearch = ({
         )}
 
         {/* Images grid */}
+        {!showTags && images.length === 0 && (
+          <div className="mt-10 w-full text-center text-lg">
+            {imageStrings.noImagesFound}
+          </div>
+        )}
         {images.map((image) => (
           <div
             className="mb-4 w-1/2 cursor-pointer px-2"
@@ -147,6 +149,9 @@ export const PixabayImageSearch = ({
             />
           </div>
         ))}
+      </div>
+      <div className="w-full justify-center pt-4 text-center text-sm">
+        {showTags ? imageStrings.pixabayText : imageStrings.pixabayLoadedText}
       </div>
     </div>
   )
