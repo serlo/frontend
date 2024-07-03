@@ -14,11 +14,11 @@ interface LicenseDropdownProps {
   currentLicence?: string
 }
 
-export const LicenseDropdown: React.FC<LicenseDropdownProps> = ({
+export const LicenseDropdown = ({
   onLicenseChange,
   src,
   currentLicence,
-}) => {
+}: LicenseDropdownProps) => {
   const editorStrings = useEditorStrings()
   const imageStrings = editorStrings.plugins.image
   const { licences, licenceHelpText } = imageStrings
