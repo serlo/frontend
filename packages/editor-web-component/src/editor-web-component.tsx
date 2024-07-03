@@ -30,6 +30,8 @@ export class EditorWebComponent extends HTMLElement {
   private _initialState: InitialState = exampleInitialState
   private _currentState: unknown
 
+  private _testingSecret: string | null = null
+
   constructor() {
     super()
 
@@ -50,7 +52,7 @@ export class EditorWebComponent extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['initial-state', 'mode']
+    return ['initial-state', 'mode', 'testing-secret']
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
@@ -111,6 +113,14 @@ export class EditorWebComponent extends HTMLElement {
     return this._history
   }
 
+  get testingSecret(): string | null {
+    return this._testingSecret
+  }
+
+  set testingSecret(newTestingSecret) {
+    if (newTestingSecret) this.setAttribute('testing-secret', newTestingSecret)
+  }
+
   connectedCallback() {
     if (!this.reactRoot) {
       this.reactRoot = ReactDOM.createRoot(this.container)
@@ -128,6 +138,7 @@ export class EditorWebComponent extends HTMLElement {
 
   mountReactComponent() {
     const initialStateAttr = this.getAttribute('initial-state')
+    const testingSecretAttr = this.getAttribute('testing-secret')
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const initialState: InitialState = initialStateAttr
@@ -159,6 +170,16 @@ export class EditorWebComponent extends HTMLElement {
             <Suspense fallback={<div>Loading editor...</div>}>
               <LazySerloEditor
                 initialState={this.initialState}
+                pluginsConfig={
+                  testingSecretAttr
+                    ? {
+                        general: {
+                          testingSecret: testingSecretAttr,
+                          enableTextAreaExercise: false,
+                        },
+                      }
+                    : {}
+                }
                 // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
                 _enableImagePlugin
                 onChange={({ changed, getDocument }) => {
