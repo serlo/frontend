@@ -78,7 +78,7 @@ export const LicenseDropdown = ({
               'serlo-input-font-reset rounded-md border-2 border-editor-primary-100 bg-editor-primary-100 px-2 text-left focus:border-2 focus:border-editor-primary',
               'flex flex-row justify-between',
               isOpen &&
-                'mb-[-1] rounded-b-none border-b-0 border-editor-primary-300'
+                'rounded-b-none border-editor-primary-300 border-b-transparent'
             )}
             style={{ width: `${triggerWidth}px` }}
           >
