@@ -19,6 +19,10 @@ export const deRegions = {
     title: 'Nordrhein-Westfalen',
     code: 'NW',
   },
+  "schleswig-holstein": {
+    title: 'Schleswig-Holstein',
+    code: 'SH',
+  },
 } as const
 export type SupportedRegion = keyof typeof deRegions
 export const regionKeys = Object.keys(deRegions) as SupportedRegion[]
@@ -155,6 +159,13 @@ export const examsFoldersBB: ExamsFolders = {
     schoolType: 'gesamtschule',
   },
 }
+export const examsFoldersSH: ExamsFolders = {
+  alle: {
+    id: 308610,
+    displayTitle: 'Mittlerer Schulabschluss (MSA)',
+    schoolType: 'alle',
+  },
+}
 
 export const mathExamTaxDataStatic: Record<SupportedRegion, ExamsFolders> = {
   bayern: examsFoldersBY,
@@ -162,6 +173,7 @@ export const mathExamTaxDataStatic: Record<SupportedRegion, ExamsFolders> = {
   brandenburg: examsFoldersBB,
   niedersachsen: examsFoldersNI,
   nrw: examsFoldersNW,
+  "schleswig-holstein": examsFoldersSH
 }
 
 function extractIds(folders: ExamsFolders) {
@@ -177,6 +189,7 @@ export const mathExamsTaxIds: Record<SupportedRegion, number[]> = {
   brandenburg: extractIds(examsFoldersBB),
   niedersachsen: extractIds(examsFoldersNI),
   nrw: extractIds(examsFoldersNW),
+  "schleswig-holstein": extractIds(examsFoldersSH),
 }
 
 export const allMathExamTaxIds = Object.values(mathExamsTaxIds).flatMap(
@@ -274,8 +287,13 @@ export const landingMetaTags: Record<
   nrw: {
     title: 'Zentrale Prüfungen (ZAP) Mathe NRW',
     metaDescription:
-      'Mathe lernen für die ZAP in Nordrhein-Westfalen - mit den originalen Prüfungsaufgaben samt Musterlösungen der vergangenen Jahre.',
+      'Mathe lernen für die ZAP in Nordrhein-Westfalen – mit den originalen Prüfungsaufgaben samt Musterlösungen der vergangenen Jahre.',
   },
+  "schleswig-holstein": {
+    title: 'Mathe-Prüfungen Mittlerer Schulabschluss MSA Schleswig-Holstein',
+    metaDescription:
+      'Mathe lernen für den MSA in Schleswig-Holstein – mit den originalen Prüfungsaufgaben und Musterlösungen der vergangenen Jahre (2021,2022,2023).',
+  }
 }
 
 export interface ExamsTaxonomyData {
