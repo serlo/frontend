@@ -9,14 +9,13 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 
 interface LicenseDropdownProps {
-  defaultLicense?: string
   onLicenseChange?: (license: string) => void
-  isPixabayImage?: boolean
+  src?: string
 }
 
 export const LicenseDropdown: React.FC<LicenseDropdownProps> = ({
   onLicenseChange,
-  isPixabayImage = false,
+  src,
 }) => {
   const editorStrings = useEditorStrings()
   const imageStrings = editorStrings.plugins.image
@@ -30,6 +29,7 @@ export const LicenseDropdown: React.FC<LicenseDropdownProps> = ({
 
   const triggerRef = useRef<HTMLLabelElement>(null)
 
+  const isPixabayImage = src?.includes('pixabay')
   useEffect(() => {
     if (isPixabayImage) {
       const pixabayLicence =
@@ -57,7 +57,7 @@ export const LicenseDropdown: React.FC<LicenseDropdownProps> = ({
       className="mx-auto mb-0 mt-5 flex items-center text-almost-black"
     >
       <span className="serlo-tooltip-trigger w-1/4">
-        Lizenz
+        {imageStrings.licence}
         <FaIcon className="ml-2" icon={faQuestionCircle} />
         <EditorTooltip text={licenceHelpText} />
       </span>

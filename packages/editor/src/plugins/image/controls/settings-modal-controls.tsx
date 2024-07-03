@@ -15,9 +15,7 @@ export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
 
   const updateOrCreateLicence = (newLicence: string) => {
     if (!licence?.defined) licence.create(newLicence)
-    else {
-      licence.set(newLicence)
-    }
+    else licence.set(newLicence)
   }
   return (
     <>
@@ -39,10 +37,9 @@ export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
         }}
       />
       <LicenseDropdown
-        defaultLicense={licence?.defined ? licence.value : undefined}
         onLicenseChange={updateOrCreateLicence}
         // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        isPixabayImage={src.get().toString().includes('Pixabay Lizenz')}
+        src={src.get().toString()}
       />
       <label className="mx-auto mb-0 mt-5 flex flex-row justify-between">
         <span className="w-[20%]">{imageStrings.alt}</span>
