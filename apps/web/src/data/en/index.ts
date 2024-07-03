@@ -806,6 +806,7 @@ export const loggedInData = {
           licence: 'Licence',
           licenceHelpText:
             'External content with the following licenses may be integrated on serlo.org:',
+          loadingImage: 'Downloading image ...', // "Bild wird heruntergeladen..."
         },
         injection: {
           title: 'serlo.org Content',

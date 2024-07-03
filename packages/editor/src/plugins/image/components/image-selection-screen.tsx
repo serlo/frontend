@@ -1,12 +1,14 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { isTempFile } from '@editor/plugin'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import React, { type RefObject } from 'react'
+import React, { useState, type RefObject } from 'react'
 
+import { PixabayImageSearch } from './pixabay-image-search'
 import type { ImageProps } from '..'
 import { UploadButton } from '../controls/upload-button'
 import { isImageUrl } from '../utils/check-image-url'
 import { FaIcon } from '@/components/fa-icon'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 import { isProduction } from '@/helper/is-production'
@@ -30,15 +32,33 @@ export function ImageSelectionScreen(
   const imgUrl = src.get() as string
   const showErrorMessage = imgUrl.length > 5 && !isImageUrl(imgUrl)
 
+  const [showPixabayModal, setShowPixabayModal] = useState(false)
+
+  const onSelectPixabayImage = (imageUrl: string) => {
+    state.src.set(imageUrl)
+    setShowPixabayModal(false)
+  }
+
   return (
     <div
       className="mx-auto rounded-md bg-yellow-50 p-8 shadow-md"
       data-qa="plugin-image-empty-wrapper"
     >
+      <ModalWithCloseButton
+        isOpen={showPixabayModal}
+        setIsOpen={setShowPixabayModal}
+        title="Pixabayyyy"
+        className="max-h-[80vh] min-h-[] w-[900px] max-w-[90vw] -translate-x-1/2 overflow-y-hidden pt-0"
+      >
+        <PixabayImageSearch onSelectImage={onSelectPixabayImage} />
+      </ModalWithCloseButton>
       <div className="mx-auto my-8 w-[60%]">
         <UploadButton {...props} />
         {!disableFileUpload && !isProduction && (
-          <button className="almost-black mb-4 flex min-w-full flex-shrink-0 items-center justify-center rounded-lg bg-editor-primary-200 p-1 py-2 font-semibold text-gray-800 hover:bg-editor-primary-300">
+          <button
+            onClick={() => setShowPixabayModal(true)}
+            className="almost-black mb-4 flex min-w-full flex-shrink-0 items-center justify-center rounded-lg bg-editor-primary-200 p-1 py-2 font-semibold text-gray-800 hover:bg-editor-primary-300"
+          >
             <span className="mr-2 inline-block">
               <FaIcon icon={faMagnifyingGlass} />
             </span>
