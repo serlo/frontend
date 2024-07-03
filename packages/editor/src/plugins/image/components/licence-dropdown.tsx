@@ -25,7 +25,9 @@ export const LicenseDropdown: React.FC<LicenseDropdownProps> = ({
 
   const licenceNames = Object.values(licences)
 
-  const [selectedLicense, setSelectedLicense] = useState(currentLicence)
+  const [selectedLicense, setSelectedLicense] = useState(
+    currentLicence ?? 'CC4'
+  )
   const [isConfirmed, setIsConfirmed] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [triggerWidth, setTriggerWidth] = useState(0)
