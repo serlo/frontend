@@ -115,7 +115,7 @@ export function createReadFile(secret: string) {
             },
           }),
         })
-        const data = (await response.json()) as MediaUploadQuery
+        const { data } = (await response.json()) as { data: MediaUploadQuery }
         const reader = new FileReader()
 
         reader.onload = async function (e: ProgressEvent) {
