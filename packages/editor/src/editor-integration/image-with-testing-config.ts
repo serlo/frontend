@@ -101,15 +101,11 @@ export function createReadFile(secret: string) {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
+            'X-SERLO-EDITOR-TESTING': secret,
           },
           method: 'POST',
           body: JSON.stringify({
             query: uploadUrlQuery,
-            context: {
-              headers: {
-                'X-SERLO-EDITOR-TESTING': secret,
-              },
-            },
             variables: {
               mediaType: mimeTypesToMediaType[file.type as SupportedMimeType],
             },
